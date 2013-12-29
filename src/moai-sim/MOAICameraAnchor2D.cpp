@@ -28,7 +28,7 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setRect
-	@text	Set the dinemsions (in world units) of the anchor.
+	@text	Set the dimensions (in world units) of the anchor.
 	
 	@in		MOAICameraAnchor2D self
 	@in		number xMin

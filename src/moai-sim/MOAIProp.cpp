@@ -27,7 +27,7 @@
 /**	@name	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
-			be overidden by the prop's bounds if it's been set (using
+			be overridden by the prop's bounds if it's been set (using
 			setBounds ())
 	
 	@in		MOAIProp self

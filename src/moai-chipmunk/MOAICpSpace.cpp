@@ -345,7 +345,7 @@ int MOAICpSpace::_removeProp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	resizeActiveHash
-	@text	Sets the dimenstions of the active object hash.
+	@text	Sets the dimensions of the active object hash.
 
 	@in		MOAICpSpace self
 	@in		number dim
@@ -364,7 +364,7 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	resizeStaticHash
-	@text	Sets the dimenstions of the static object hash.
+	@text	Sets the dimensions of the static object hash.
 
 	@in		MOAICpSpace self
 	@in		number dim
@@ -623,7 +623,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForPoint
-	@text	Retrieves a list of shaps that overlap the point specified, that exists
+	@text	Retrieves a list of shapes that overlap the point specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			
@@ -661,7 +661,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForRect
-	@text	Retrieves a list of shaps that overlap the rect specified, that exists
+	@text	Retrieves a list of shapes that overlap the rect specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			
@@ -706,7 +706,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForSegment
-	@text	Retrieves a list of shaps that overlap the segment specified, that exists
+	@text	Retrieves a list of shapes that overlap the segment specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			

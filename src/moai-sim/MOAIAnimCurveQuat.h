@@ -11,7 +11,7 @@
 // MOAIAnimCurveQuat
 //================================================================//
 /**	@name	MOAIAnimCurveQuat
-	@text	Implementation of anim curve for rotation (via quaternion) values.
+	@text	Implementation of animation curve for rotation (via quaternion) values.
 */
 class MOAIAnimCurveQuat :
 	public virtual MOAIAnimCurveBase {

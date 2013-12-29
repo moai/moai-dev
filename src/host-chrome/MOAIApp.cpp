@@ -156,7 +156,7 @@ int MOAIApp::_alert( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	canMakePayments
-	@text	Verify that app has permission to request payments.
+	@text	Verify that the app has permission to request payments.
 	
 	@out	bool canMakePayments
 */
@@ -202,7 +202,7 @@ int MOAIApp::_requestPaymentForProduct ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	requestProductIdentifiers
-	@text	Varify the validity of a set of products.
+	@text	Verify the validity of a set of products.
 	
 	@in		table productIdentifiers			A table of product identifiers.
 	@out	nil

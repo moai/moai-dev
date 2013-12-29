@@ -297,10 +297,10 @@ int MOAIProfilerReportBox::_setTextColor ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setOrientation
-	@text	Sets the orienation.
+	@text	Sets the orientation.
 	
 	@in		MOAIProfilerReportBox self
-	@in		number orienatation	Default value is 0.
+	@in		number orientation	Default value is 0.
 	@out	nil
 */
 int MOAIProfilerReportBox::_setOrientation ( lua_State* L ) {

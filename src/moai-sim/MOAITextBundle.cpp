@@ -59,7 +59,7 @@ int MOAITextBundle::_load( lua_State* L ) {
 /**	@name	lookup
  @text	Look up a string in the bundle (defaulting to the lookup string itself). In the case
 	of defaulting, a false value is returned as the second value (useful for falling back to
-	less-specific bundles if desireable).
+	less-specific bundles if desirable).
  
  @in MOAITextBundle self
  @in string key A text string to use as a "key"

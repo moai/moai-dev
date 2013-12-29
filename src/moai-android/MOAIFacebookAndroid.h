@@ -14,7 +14,7 @@
 /**	@name	MOAIFacebookAndroid
 	@text	Wrapper for Facebook integration on Android devices.
 			Facebook provides social integration for sharing on
-			www.facebook.com. Exposed to lua via MOAIFacebook on
+			www.facebook.com. Exposed to Lua via MOAIFacebook on
 			all mobile platforms.
 
 	@const	DIALOG_DID_COMPLETE			Event code for a successfully completed Facebook dialog.

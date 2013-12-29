@@ -108,7 +108,7 @@ int MOAIParser::_setCallbacks ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	traverse
-	@text	Top down traversal of the abstract syntax tree.
+	@text	Top-down traversal of the abstract syntax tree.
 
 	@in		MOAIParser self
 	@out	nil

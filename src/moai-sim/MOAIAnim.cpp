@@ -11,15 +11,15 @@
 
 //----------------------------------------------------------------//
 /**	@name	apply
-	@text	Apply the anim at a given time or time step.
+	@text	Apply the animation at a given time or time step.
 
-	@overload	Apply the anim at time t0.
+	@overload	Apply the animation at time t0.
 
 		@in		MOAIAnim self
 		@opt	number t0 - Default value is 0.
 		@out	nil
 	
-	@overload	Apply the anim for the step t0 to t1.
+	@overload	Apply the animation for the step t0 to t1.
 
 		@in		MOAIAnim self
 		@in		number t0

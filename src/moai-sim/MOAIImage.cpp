@@ -330,7 +330,7 @@ int MOAIImage::_getSize ( lua_State* L ) {
 	@in		number height
 	@opt	colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
 							MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
-							Default valus is MOAIImage.COLOR_FMT_RGBA_8888.
+							Default value is MOAIImage.COLOR_FMT_RGBA_8888.
 	@out	nil
 */
 int MOAIImage::_init ( lua_State* L ) {
@@ -455,7 +455,7 @@ int MOAIImage::_resize ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	resizeCanvas
 	@text	Copies the image to a canvas with a new size. If the canvas
-			is larger than the original image, the exta pixels will be
+			is larger than the original image, the extra pixels will be
 			initialized with 0. Pass in a new frame or just a new width
 			and height. Negative values are permitted for the frame.
 

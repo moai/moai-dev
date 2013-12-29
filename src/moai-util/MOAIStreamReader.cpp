@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	close
-	@text	Detach the target stream. (This only detatches the target
+	@text	Detach the target stream. (This only detaches the target
 			from the formatter; it does not also close the target stream).
 	
 	@in		MOAIStreamReader self

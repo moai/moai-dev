@@ -448,7 +448,7 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 				
 	@in		int 	type
 	@opt	string 	continuation
-	@out 	string	json string of products
+	@out 	string	JSON string of products
 */
 int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	
@@ -534,7 +534,7 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 				
     @in		table   skus
 	@in	    int		type
-	@out 	string	json string of products
+	@out 	string	JSON string of products
 */
 int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 	

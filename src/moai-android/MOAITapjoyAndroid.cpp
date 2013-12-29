@@ -19,7 +19,7 @@ extern JavaVM* jvm;
 
 //----------------------------------------------------------------//
 /**	@name	getUserId
- 	@text	Gets the tapjoy user ID.
+ 	@text	Gets the Tapjoy user ID.
  
  	@out	string userId
  */
