@@ -404,7 +404,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
 
 	if ( this->mIsPaused || this->IsBlocked ()){
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
+		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further updates
 			step = 0.0f;
 			checkPass = false;
 			this->mPass = 0;
