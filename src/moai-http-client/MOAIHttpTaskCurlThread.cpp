@@ -5,7 +5,7 @@
 //  Created by Brendan Ragan on 14/12/13.
 //
 //
-
+#include "pch.h"
 #include "MOAIHttpTaskCurlThread.h"
 
 // private const/dest

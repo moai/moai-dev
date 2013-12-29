@@ -8,11 +8,14 @@
 
 #include "pch.h"
 #include "MOAIHusky.h"
-
-#include <dirent.h>
 #include <iterator>
 
-#import <Foundation/Foundation.h>
+#ifdef __APPLE__
+	#include <dirent.h>
+	#import <Foundation/Foundation.h>
+#elif WIN32
+	#define strcasecmp(a, b) lstrcmpiA(a,b)
+#endif
 
 HuskyLoaderHandle::HuskyLoaderHandle() {
 	this->dllhandle = NULL;
@@ -39,6 +42,7 @@ MOAIHusky::MOAIHusky() {
 	_currentHuskyHandle = NULL;
 	_instance = NULL;
 	
+#ifdef __APPLE__ 
 	const char* extension = ".dylib";
 	
 	/** Grab the directory the exectuable is in, by default we want to load Huskies from where the moai exe is **/
@@ -88,6 +92,9 @@ MOAIHusky::MOAIHusky() {
 			}
 		}
 	}
+#elif WIN32
+	
+#endif
 }
 
 MOAIHusky::~MOAIHusky() {
@@ -118,7 +125,7 @@ int MOAIHusky::_getAvailable( lua_State* L ) {
 int MOAIHusky::_getCurrent( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "U" );
 
-	if (self->_instance != nil) {
+	if (self->_instance != NULL) {
 		lua_pushstring(L, self->_fHuskyName());
 		return 1;
 	}
@@ -135,7 +142,7 @@ int MOAIHusky::_setCurrent( lua_State* L ) {
 int MOAIHusky::_hasLeaderboards( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "U" )
 
-	if (self->_instance != nil) {
+	if (self->_instance != NULL) {
 		state.Push(self->_huskyCapabilities && HuskyHasLeaderboards);
 		return 1;
 	}
@@ -146,7 +153,7 @@ int MOAIHusky::_hasLeaderboards( lua_State* L ) {
 int MOAIHusky::_hasAchievements( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "U" )
 	
-	if (self->_instance != nil) {
+	if (self->_instance != NULL) {
 		state.Push(self->_huskyCapabilities && HuskyHasAchievements);
 		return 1;
 	}
@@ -158,7 +165,7 @@ int MOAIHusky::_hasAchievements( lua_State* L ) {
 int MOAIHusky::_hasCloudSaves( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "U" )
 
-	if (self->_instance != nil) {
+	if (self->_instance != NULL) {
 		state.Push(self->_huskyCapabilities && HuskyHasCloudSaves);
 		return 1;
 	}
@@ -220,7 +227,7 @@ int MOAIHusky::_leaderboardGetScores( lua_State* L ) {
 	
 	cc8* name = state.GetValue<cc8*>(2, 0);
 	bool friends = state.GetValue<bool>(3,0);
-	bool near = state.GetValue<bool>(4,0);
+	bool around = state.GetValue<bool>(4,0);
 	cc8* timeframestring = state.GetValue<cc8*>(5,0);
 	int32_t offset = state.GetValue<int>(6, 0);
 	int32_t number = state.GetValue<int>(7, 0);
@@ -231,7 +238,7 @@ int MOAIHusky::_leaderboardGetScores( lua_State* L ) {
 	else if (strcasecmp(timeframestring, "day"))
 		timeframe = HuskyLeaderboardTodaysScores;
 		
-	if (near)
+	if (around)
 		self->_instance->requestLeaderboardScoresNearPlayer(name, friends, timeframe, offset, number);
 	else
 		self->_instance->requestLeaderboardScores(name, friends, timeframe, offset, number);
@@ -291,7 +298,7 @@ int MOAIHusky::_doTick(lua_State *L) {
 
 	MOAI_LUA_SETUP(MOAIHusky, "U");
 	
-	if (self->_instance != nil) {
+	if (self->_instance != NULL) {
 		self->_instance->doTick();
 	}
 	

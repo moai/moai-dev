@@ -84,7 +84,6 @@ void MOAIEnvironment::DetectEnvironment () {
 		this->SetValue ( MOAI_ENV_udid, buf );
 		
 		char path[MAX_PATH];
-<<<<<<< HEAD
 		SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
 		this->SetValue ( MOAI_ENV_documentDirectory, path );
 		
@@ -93,12 +92,6 @@ void MOAIEnvironment::DetectEnvironment () {
 		sprintf(cachePath, "%s/../cache", path);
 		this->SetValue ( MOAI_ENV_cacheDirectory, path );
 	
-=======
-		//HRESULT hr = SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
-		SHGetFolderPath(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, path);
-		this->SetValue ( MOAI_ENV_documentDirectory, path );
-		
->>>>>>> 42c4960cd82f1623d693f652277b75e037c49984
 		const int BUFSIZE = 256;
 		TCHAR pszOS[BUFSIZE];
 
@@ -120,7 +113,6 @@ void MOAIEnvironment::DetectEnvironment () {
 			GetSystemInfo(&si);
 		}
 
-<<<<<<< HEAD
 		// --------------------------------------------
 		switch (si.wProcessorArchitecture) {
 			case PROCESSOR_ARCHITECTURE_AMD64:
@@ -181,9 +173,6 @@ void MOAIEnvironment::DetectEnvironment () {
 		}
 		RegCloseKey(hKey);
 
-	
-=======
->>>>>>> 42c4960cd82f1623d693f652277b75e037c49984
 		if ( VER_PLATFORM_WIN32_NT==osvi.dwPlatformId && osvi.dwMajorVersion > 4 ) {
 		
 			strcpy ( pszOS, TEXT ( "Win" ));			
@@ -198,7 +187,6 @@ void MOAIEnvironment::DetectEnvironment () {
 						strcat(pszOS, TEXT("Vista"));
 					else strcat(pszOS, TEXT("Server2008" ));
 				}
-<<<<<<< HEAD
 			} else if ( osvi.dwMinorVersion == 2 ) {
 				if( osvi.wProductType == VER_NT_WORKSTATION )
 				{
@@ -208,8 +196,6 @@ void MOAIEnvironment::DetectEnvironment () {
 				{
 					strcat(pszOS, TEXT("2012" ));
 				}
-=======
->>>>>>> 42c4960cd82f1623d693f652277b75e037c49984
 			}
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				

@@ -9,8 +9,12 @@
 #ifndef __libmoai__MOAIHusky__
 #define __libmoai__MOAIHusky__
 
-#include <dlfcn.h>
-#include "Husky.h"
+#ifdef __APPLE__
+	#include <dlfcn.h>
+#elif WIN32
+	
+#endif
+#include <Husky.h>
 
 bool endsWith(const char *string, const char *ending);
 
@@ -21,7 +25,8 @@ public:
 	void* dllhandle;
 };
 
-using LoaderHandleMap = std::map<std::string, HuskyLoaderHandle>;
+typedef std::map<std::string, HuskyLoaderHandle> LoaderHandleMap;
+//using LoaderHandleMap = std::map<std::string, HuskyLoaderHandle>;
 
 class MOAIHusky : public MOAIGlobalClass <MOAIHusky, MOAILuaObject>, public HuskyObserver {
 private:
