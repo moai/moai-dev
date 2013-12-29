@@ -196,7 +196,18 @@ int MOAIHusky::_leaderboardUploadScore( lua_State* L ) {
 	cc8* name = lua_tostring ( state, 2 );
 	int32_t score = lua_tointeger( state, 3 );
 	cc8* replacement = lua_tostring ( state, 4 );
-	int64_t data = lua_tointeger( state, 5 );
+	MOAIStream* moaistream = state.GetLuaObject < MOAIStream >( 5, true );
+	int64_t data = 0;
+	if (moaistream != NULL) {
+		ZLStream *stream = moaistream->GetZLStream();
+		stream->Seek(0, SEEK_SET);
+		if (stream->GetLength() < 8) {
+			stream->ReadBytes((void*)&data, stream->GetLength());
+		} else {
+			stream->ReadBytes((void*)&data, 8);
+		}
+	}
+	
 	HuskyLeaderboardScoreToKeep update = HuskyLeaderboardScoreToKeepNone;
 	if (strcasecmp(replacement, "best") == 0) {
 		update = HuskyLeaderboardScoreToKeepBest;
@@ -383,7 +394,13 @@ void MOAIHusky::HuskyObserverLeaderboardScoreGetCallback(const char *name, Husky
 		state.Push(entries[i].score);
 		lua_settable(state, -3);
 		state.Push("data");
-		state.Push((u64)entries[i].data);
+		if (entries[i].data != 0) {
+			MOAIDataBuffer *moaibuffer = new MOAIDataBuffer();
+			moaibuffer->Load((void*)&(entries[i].data), 8);
+			state.Push(moaibuffer);
+		} else {
+			state.Push();
+		}
 		lua_settable(state, -3);
 		lua_settable(state, -3);
 	}
