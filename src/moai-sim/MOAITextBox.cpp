@@ -119,7 +119,7 @@ int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getRect
-	@text	Returns the two dimensional boundary of the text box.
+	@text	Returns the two-dimensional boundary of the text box.
 
 	@in		MOAITextBox self
 	@out	number xMin
@@ -143,7 +143,7 @@ int MOAITextBox::_getRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getStringBounds
-	@text	Returns the bounding rectange of a given substring on a
+	@text	Returns the bounding rectangle of a given substring on a
 			single line in the local space of the text box.
 
 	@in		MOAITextBox self
@@ -384,7 +384,7 @@ int MOAITextBox::_setHighlight ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
-			the default spacing. Valus must be positive.
+			the default spacing. Values must be positive.
 
 	@in		MOAITextBox self
 	@in		number lineSpacing		Default value is 0.

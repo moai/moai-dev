@@ -19,7 +19,7 @@ extern JavaVM* jvm;
 
 //----------------------------------------------------------------//
 /**	@name	authTstore	
-	@text	Authorizes the app throught Tstore
+	@text	Authorizes the app through Tstore
 	
 	@in		bool wantsLogin			
 	@out	nil

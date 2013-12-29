@@ -10,7 +10,7 @@
 // MOAIFileStream
 //================================================================//
 /**	@name	MOAIFileStream
-	@text	MOAIFileStream opens a system file handle for eading or writing.
+	@text	MOAIFileStream opens a system file handle for reading or writing.
 	
 	@const	READ
 	@const	READ_WRITE

@@ -330,10 +330,10 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	@text	Initializes a level previously created by reserveLevels ().
 			This will trigger a full rebuild of the partition if it contains any props.
 			Each level is a loose grid. Props of a given size may be placed by
-			the system into any level with cells large enough to accomodate them.
+			the system into any level with cells large enough to accommodate them.
 			The dimensions of a level control how many cells the level contains.
 			If an object goes off of the edge of a level, it will wrap around
-			to the other side. It is possible to model a quad tree by initalizing
+			to the other side. It is possible to model a quad tree by initializing
 			levels correctly, but for some simulations better structures
 			may be possible.
 	

@@ -38,7 +38,7 @@ private:
 	@text	Deck of lists of textured quads. UV and model space quads are
 			specified independently and associated via pairs. Pairs are referenced
 			by lists sequentially. There may be multiple pairs with the same
-			UV/model quad indicices if geometry is used in multiple lists.
+			UV/model quad indices if geometry is used in multiple lists.
 */
 class MOAIGfxQuadListDeck2D :
 	public MOAIDeck {

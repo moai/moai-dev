@@ -43,7 +43,7 @@ int MOAIEnvironment::_getMACAddress ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setValue
-	@text	Sets an evironment value and also triggers the listener
+	@text	Sets an environment value and also triggers the listener
 			callback (if any).
 
 	@in		string key

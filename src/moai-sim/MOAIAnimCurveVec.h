@@ -11,7 +11,7 @@
 // MOAIAnimCurveVec
 //================================================================//
 /**	@name	MOAIAnimCurveVec
-	@text	Implementation of anim curve for 3D vector values.
+	@text	Implementation of animation curve for 3D vector values.
 */
 class MOAIAnimCurveVec :
 	public virtual MOAIAnimCurveBase {

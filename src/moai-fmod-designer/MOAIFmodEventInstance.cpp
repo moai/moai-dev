@@ -18,7 +18,7 @@
 
 //----------------------------------------------------------------//
 /**	@name   isValid
-	@text   Checks to see if the instance is valid (ie, currently playing)
+	@text   Checks to see if the instance is valid (i.e., currently playing)
 
 	@in     MOAIFmodEventInstance    self
 
@@ -414,7 +414,7 @@ int MOAIFmodEventInstance::_getDominantFrequency ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getTempo
-    @text	Returns the tempo of this Event Instance (useful for music, obv)
+    @text	Returns the tempo of this Event Instance (useful for music)
 	
 	@in		MOAIFmodEventInstance self    
 

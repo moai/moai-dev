@@ -235,7 +235,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	performAsync
-	@text	Perform the http task asynchronously.
+	@text	Perform the HTTP task asynchronously.
 
 	@in		MOAIHttpTaskBase self
 	@out	nil
@@ -250,7 +250,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	performSync
-	@text	Perform the http task synchronously ( blocking).
+	@text	Perform the HTTP task synchronously ( blocking).
 
 	@in		MOAIHttpTaskBase self
 	@out	nil
@@ -357,7 +357,7 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setFailOnError
- @text	Sets whether or not curl calls will fail if the http status code is above 400
+ @text	Sets whether or not curl calls will fail if the HTTP status code is above 400
  
  @in	MOAIHttpTaskBase self
  @in	bool enable
@@ -375,7 +375,7 @@ int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setFollowRedirects
- @text	Sets whether or not curl should follow http header redirects.
+ @text	Sets whether or not curl should follow HTTP header redirects.
  
  @in	MOAIHttpTaskBase self
  @in	bool follow
@@ -472,7 +472,7 @@ int  MOAIHttpTaskBase::_setUserAgent ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setVerb
-	@text	Sets the http verb.
+	@text	Sets the HTTP verb.
 
 	@in		MOAIHttpTaskBase self
 	@in		number verb		One of MOAIHttpTaskBase.HTTP_GET, MOAIHttpTaskBase.HTTP_HEAD,

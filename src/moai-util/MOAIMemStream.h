@@ -11,7 +11,7 @@
 //================================================================//
 /**	@name	MOAIMemStream
 	@text	MOAIMemStream implements an in-memory stream and grows as
-			needed. The mem stream expands on demands by allocating
+			needed. The memory stream expands on demands by allocating
 			additional 'chunks' or memory. The chunk size may be configured
 			by the user. Note that the chunks are not guaranteed to be
 			contiguous in memory.

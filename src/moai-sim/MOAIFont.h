@@ -32,7 +32,7 @@ class MOAITexture;
 			are used to retrieve glyphs from a font file format on an as-needed basis.
 			Static fonts have no associated font file format and therefore contain a fixed
 			set of glyphs at runtime. For languages demanding very large character sets
-			(such as Chinese), dynamic fonts ae typically used. For languages where it is
+			(such as Chinese), dynamic fonts are typically used. For languages where it is
 			feasible to pre-render a full set of glyphs to texture (or bitmap fonts), static
 			fonts may be used.</p>
 			
@@ -40,8 +40,8 @@ class MOAITexture;
 			to render glyphs into glyph sets. MOAIFontReader is responsible for interpreting
 			the font file format (if any), retrieving glyph metrics (including kerning)
 			and rendering glyphs to texture. MOAIGlyphCache is responsible for
-			allocating textures to hold glyphs and for manageing glyph placement within
-			textures. For dyanmic fonts, the typical setup uses MOAIFreeTypeFontReader
+			allocating textures to hold glyphs and for managing glyph placement within
+			textures. For dynamic fonts, the typical setup uses MOAIFreeTypeFontReader
 			and MOAIGlyphCache. For static fonts, there is usually no font reader;
 			MOAIStaticGlyphCache is loaded directly from a serialized file and its texture
 			memory is initialized with MOAIFont's setImage () command.</p>

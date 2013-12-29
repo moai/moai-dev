@@ -13,7 +13,7 @@
 //================================================================//
 /**	@name	MOAINotificationsAndroid
 	@text	Wrapper for push notification integration on Android 
-			devices. Exposed to lua via MOAINotifications on all
+			devices. Exposed to Lua via MOAINotifications on all
 			mobile platforms.
 
 	@const	LOCAL_NOTIFICATION_MESSAGE_RECEIVED			Event code for a local notification message receipt.

@@ -8,7 +8,7 @@
 //----------------------------------------------------------------//
 /**	@name	blockOnAction
 	@text	Skip updating current thread until the specified action is
-			no longer busy. A little more efficient that spinlocking from
+			no longer busy. A little more efficient than spinlocking from
 			Lua.
 
 	@in		MOAIAction blocker

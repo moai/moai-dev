@@ -214,7 +214,7 @@ int MOAINotificationsAndroid::_setListener ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unregisterForRemoteNotifications
-	@text	Dregister for remote notifications.
+	@text	Unregister for remote notifications.
 			
 	@out 	nil
 */

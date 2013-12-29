@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------//
 /**   @name addChain
-@text Create and add a set of collision edges to teh body.
+@text Create and add a set of collision edges to the body.
  
 @in         MOAIBox2DBody self
 @in         table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
@@ -152,7 +152,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	@text	Create and add a polygon fixture to the body.
 	
 	@in		MOAIBox2DBody self
-	@in		table verts					Array containg vertex coordinate components in units, world coordinates, converted to meters. ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@in		table verts					Array containing vertex coordinate components in units, world coordinates, converted to meters. ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
 	@out	MOAIBox2DFixture fixture	Returns nil on failure.
 */
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
@@ -399,7 +399,7 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@out	number omega		Anglular velocity in degrees/s, converted from radians/s
+	@out	number omega		Angular velocity in degrees/s, converted from radians/s
 */
 int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )

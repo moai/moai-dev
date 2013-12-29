@@ -55,7 +55,7 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	crash
-	@text	Crashes moai with a null pointer dereference.
+	@text	Crashes Moai with a null pointer dereference.
  
 	@out	nil
 */
@@ -129,7 +129,7 @@ int MOAISim::_forceGC ( lua_State* L ) {
 	@text	Converts the number of frames to time passed in seconds.
 
 	@in		number frames		The number of frames.
-	@out	number time			The equivilant number of seconds for the specified number of frames.
+	@out	number time			The equivalent number of seconds for the specified number of frames.
 */
 int MOAISim::_framesToTime ( lua_State* L ) {
 
@@ -499,8 +499,8 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setLongDelayThreshold
-	@text	Sets the long delay threshold. If the sim step falls behind
-			the given threshold, the deficit will be dropped: sim will
+	@text	Sets the long delay threshold. If the simulation step falls behind
+			the given threshold, the deficit will be dropped: the simulation will
 			neither spin nor boost to catch up.
 
 	@opt	number longDelayThreshold		Default value is DEFAULT_LONG_DELAY_THRESHOLD.
@@ -517,10 +517,10 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 	@text	Fine tune behavior of the simulation loop. MOAISim.SIM_LOOP_ALLOW_SPIN
 			will allow the simulation step to run multiple times per update to try
 			and catch up with device time, but will abort if processing the simulation
-			exceeds the configfured step time. MOAISim.SIM_LOOP_ALLOW_BOOST will permit
+			exceeds the configured step time. MOAISim.SIM_LOOP_ALLOW_BOOST will permit
 			a *variable* update step if simulation time falls too far behind
 			device time (based on the boost threshold). Be warned: this can wreak
-			havok with physics and stepwise animation or game AI.
+			havoc with physics and stepwise animation or game AI.
 			
 			Three presets are provided: MOAISim.LOOP_FLAGS_DEFAULT, MOAISim.LOOP_FLAGS_FIXED,
 			and MOAISim.LOOP_FLAGS_MULTISTEP.
@@ -594,7 +594,7 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setTraceback
-	@text	Sets the function to call when a traceback occurs in lua
+	@text	Sets the function to call when a traceback occurs in Lua
  
 	@in		function callback		Function to execute when the traceback occurs
 	@out	nil
@@ -612,7 +612,7 @@ int MOAISim::_setTraceback ( lua_State* L ) {
 	@text	Converts the number of time passed in seconds to frames.
 
 	@in		number time			The number of seconds.
-	@out	number frames		The equivilant number of frames for the specified number of seconds.
+	@out	number frames		The equivalent number of frames for the specified number of seconds.
 */
 int MOAISim::_timeToFrames ( lua_State* L ) {
 
