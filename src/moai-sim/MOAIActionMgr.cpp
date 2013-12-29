@@ -132,6 +132,12 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIActionMgr::SetDefaultParent () {
+
+	this->mDefaultParent = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIActionMgr::SetDefaultParent ( MOAIAction* defaultParent ) {
 
 	this->mDefaultParent = defaultParent;

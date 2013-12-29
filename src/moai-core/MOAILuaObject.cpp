@@ -168,7 +168,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	assert ( !this->mUserdata );
 	
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
+		MOAILuaRuntime::Get ().RegisterObject ( state, *this );
 	}
 	
 	MOAILuaClass* type = this->GetLuaClass ();
