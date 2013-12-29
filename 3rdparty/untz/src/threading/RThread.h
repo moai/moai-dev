@@ -46,6 +46,7 @@ public:
 #endif
 		mIsRunning = false;
 		mStopRunning = false;
+		mSelfDeleting = false;
 	}
 
 	virtual ~RThread()
@@ -129,9 +130,14 @@ private:
 		thread->mStopRunning = false;
 		thread->run();
 		thread->mIsRunning = false;
+		if (thread->mSelfDeleting)
+			delete(thread);
 		return NULL;
 	}
 
+protected:
+	bool mSelfDeleting;
+		
 private:
 	bool mStopRunning;
 	bool mIsRunning;

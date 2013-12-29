@@ -23,8 +23,8 @@ void MOAIHttpTaskCurlThread::run() {
 		return;
 	
 	RScopedLock l(&mLock);
+	mSelfDeleting = true;
 	mTask->AsyncThreadRunner();
-	delete(this);
 }
 
 void MOAIHttpTaskCurlThread::setTask(MOAIHttpTaskCurl *task) {

@@ -16,8 +16,8 @@ MOAIImageAsyncLoadThread::~MOAIImageAsyncLoadThread() {
 }
 
 void MOAIImageAsyncLoadThread::run() {
+	mSelfDeleting = true;
 	if ((mParamImage == NULL) || (mParamFilename == NULL)) {
-		delete(this);
 		return;
 	}
 
@@ -25,7 +25,6 @@ void MOAIImageAsyncLoadThread::run() {
 
 	mParamImage->Load(mParamFilename, mParamTransform);
 	mParamImage->mLoading = false;
-	delete(this);
 }
 
 void MOAIImageAsyncLoadThread::setParams(MOAIImage *image, char *filename, u32 transform) {
