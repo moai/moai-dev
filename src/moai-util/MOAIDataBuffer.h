@@ -19,10 +19,13 @@ class MOAIDataIOTask;
 */
 class MOAIDataBuffer :
 	public virtual MOAILuaObject {
+public:
+	ZLLeanArray < u8 >	mBytes;
+		
 private:
 	
 	MOAIMutex			mMutex;
-	ZLLeanArray < u8 >	mBytes;
+
 	
 	//----------------------------------------------------------------//
 	static int		_base64Decode		( lua_State* L );
