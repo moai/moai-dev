@@ -175,11 +175,6 @@ namespace {
 #include <uslscore/STLList.h>
 #include <uslscore/STLSet.h>
 #include <uslscore/STLMap.h>*/
-#define SLEDGE_HOST_USE_LUAEXT
-#ifdef SLEDGE_HOST_USE_LUAEXT
-//#include <aku/AKU-luaext.h>
-#endif
-//#include <aku/AKU-untz.h>
 #ifdef SLEDGE_HOST_USE_AUDIOSAMPLER
 #include <aku/AKU-audiosampler.h>
 #endif
