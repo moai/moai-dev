@@ -16,6 +16,18 @@
 class MOAILuaObject;
 
 //================================================================//
+// MOAILuaObjectInfo
+//================================================================//
+class MOAILuaObjectInfo {
+private:
+
+	friend class MOAILuaRuntime;
+	
+	STLString	mTrackingGroup;
+	STLString	mStackTrace;
+};
+
+//================================================================//
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
@@ -29,17 +41,16 @@ private:
 	static const u32 WEAK_REF_BIT	= 0x80000000;
 	static const u32 REF_MASK		= 0x7fffffff;
 
-	typedef STLMap < MOAILuaObject*, STLString >	TrackingMap;
-	typedef STLArray < MOAILuaObject* >				LeakPtrList;
-	typedef STLMap < STLString, LeakPtrList >		LeakStackMap;
+	typedef STLMap < MOAILuaObject*, MOAILuaObjectInfo >	TrackingMap;
+	typedef TrackingMap::iterator							TrackingMapIt;
+	typedef TrackingMap::const_iterator						TrackingMapConstIt;
+	
+	typedef STLArray < MOAILuaObject* >						LeakPtrList;
+	typedef STLMap < STLString, LeakPtrList >				LeakStackMap;
+	typedef STLMap < STLString, size_t >					HistMap;
 
-	typedef STLMap < STLString, size_t >			HistMap;
-	typedef STLSet < MOAILuaObject* >				HistSet;
-
-	bool				mHistogramEnabled;
-	HistSet				mHistSet;
-
-	bool				mTrackingEnabled;
+	STLString			mTrackingGroup;
+	u32					mTrackingFlags;
 	TrackingMap			mTrackingMap;
 
 	MOAILuaRefTable		mStrongRefs;
@@ -61,24 +72,32 @@ private:
 	static int				_deref					( lua_State* L );
 	static int				_dump					( lua_State* L );
 	static int				_dumpStack				( lua_State* L );
+	static int				_getHistogram			( lua_State* L );
 	static int				_getRef					( lua_State* L );
 	static int				_panic					( lua_State *L );
 	static int				_reportGC				( lua_State* L );
-	static int				_setTrackingEnabled		( lua_State* L );
+	static int				_reportHistogram		( lua_State* L );
+	static int				_reportLeaks			( lua_State* L );
+	static int				_setTrackingFlags		( lua_State* L );
 	static void*			_trackingAlloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 	static int				_traceback				( lua_State *L );
 
 	//----------------------------------------------------------------//
-	void					BuildHistogram			( HistMap& histogram );
+	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();
 	void					OnGlobalsRetire			();
-	void					RegisterObject			( MOAILuaObject& object );
+	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
 public:
+
+	enum {
+		TRACK_OBJECTS				= 0x01,
+		TRACK_OBJECTS_STACK_TRACE	= 0x02,
+	};
 
 	friend class MOAILuaObject;
 	friend class MOAILuaRef;
@@ -90,6 +109,8 @@ public:
 
 	GET ( size_t, ObjectCount, mObjectCount )
 	GET ( MOAILuaStrongRef&, TracebackRef, mTracebackRef )
+	GET ( u32, TrackingFlags, mTrackingFlags )
+	
 	GET_SET ( bool, AllocLogEnabled, mAllocLogEnabled )
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
@@ -105,23 +126,22 @@ public:
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
-	void					PushHistogram				( MOAILuaState& state );
+	void					PushHistogram				( MOAILuaState& state, cc8* trackingGroup );
 	bool					PushRef						( MOAILuaState& state, int ref );
 	void					PushTraceback				( MOAILuaState& state );
 	void					PrintTracking				( MOAILuaObject& object );
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
-	void					ReportHistogram				( FILE *f );
-	void					ReportLeaksFormatted		( FILE *f );
-	void					ReportLeaksRaw				( FILE *f );
-	void					ReportLuaRefs				( FILE *f );
-	void					ResetHistogram				();
-	void					ResetLeakTracking			();
-	void					SetHistogramEnabled			( bool enabled );
+	void					ReportHistogram				( cc8* filename, cc8* trackingGroup );
+	void					ReportLeaksFormatted		( cc8* filename, cc8* trackingGroup );
+	void					ReportLeaksRaw				( cc8* filename, cc8* trackingGroup );
+	void					ResetTracking				();
 	void					SetPath						( cc8* path );
-	void					SetTrackingEnabled			( bool enabled );
-	MOAIScopedLuaState		State						();
+	void					SetTrackingFlags			( u32 flags );
+	void					SetTrackingGroup			();
+	void					SetTrackingGroup			( const STLString& trackingGroup );
+	MOAIScopedLuaState		State						();	
 };
 
 #endif
