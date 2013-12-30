@@ -16,8 +16,6 @@ class MOAICoroutine :
 	public MOAIAction {
 private:
 
-	MOAILuaSharedPtr < MOAIAction > mDefaultParent;
-
 	MOAILuaMemberRef	mRef; // reference to the coroutine
 	lua_State*			mState;
 	u32					mNarg;

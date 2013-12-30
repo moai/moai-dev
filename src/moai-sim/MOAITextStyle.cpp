@@ -136,6 +136,9 @@ int MOAITextStyle::_setColor ( lua_State* L ) {
 int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2, true );
+	
+	assert ( font );
+	
 	self->SetFont ( font );
 	
 	if ( self->mSize == 0.0f ) {
