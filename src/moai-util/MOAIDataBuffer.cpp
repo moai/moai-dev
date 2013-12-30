@@ -650,3 +650,8 @@ void MOAIDataBuffer::Unlock () {
 
 	this->mMutex.Unlock ();
 }
+
+//----------------------------------------------------------------//
+ZLLeanArray<u8> *MOAIDataBuffer::GetBuffer() {
+	return &mBytes;
+}

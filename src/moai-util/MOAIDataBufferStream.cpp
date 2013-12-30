@@ -93,7 +93,7 @@ bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
 	
 	buffer->Lock ( &bytes, &size );
 	
-	this->mByteStream.SetBuffer ( buffer->mBytes, size );
+	this->mByteStream.SetBuffer ( buffer->GetBuffer(), size );
 	this->mByteStream.SetLength ( size );
 	
 	this->SetZLStream ( &this->mByteStream );
