@@ -126,7 +126,6 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 	for ( u32 i = 0; i < totalTextures; ++i ) {
 		
 		MOAITexture* texture = new MOAITexture ();
-		this->mTextures [ i ] = texture;
 		
 		u32 textureHeight = height - y;
 		textureHeight = textureHeight > width ? width : textureHeight;
@@ -135,6 +134,8 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 		texture->SetFilter ( ZGL_SAMPLE_LINEAR, ZGL_SAMPLE_LINEAR );
 		
 		y += textureHeight;
+		
+		this->SetTexture ( i, texture );
 	}
 }
 

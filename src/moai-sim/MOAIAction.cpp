@@ -315,6 +315,7 @@ STLString MOAIAction::GetDebugInfo() const {
 MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
+	mIsDefaultParent ( 0 ),
 	mParent ( 0 ),
 	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),

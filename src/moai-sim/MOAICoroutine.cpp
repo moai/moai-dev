@@ -148,14 +148,8 @@ int MOAICoroutine::_run ( lua_State* L ) {
 int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
 	
-	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+	self->SetIsDefaultParent ( state.GetValue < bool >( 2, true ));
 	
-	MOAIAction* defaultParent = state.GetLuaObject < MOAIAction >( 2, true );
-	self->mDefaultParent.Set ( *self, defaultParent );
-	
-	if ( actionMgr.GetCurrentAction () == self ) {
-		MOAIActionMgr::Get ().SetDefaultParent ( defaultParent );
-	}
 	return 0;
 }
 
@@ -200,8 +194,6 @@ MOAICoroutine::MOAICoroutine () :
 
 //----------------------------------------------------------------//
 MOAICoroutine::~MOAICoroutine () {
-
-	this->mDefaultParent.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -209,7 +201,6 @@ void MOAICoroutine::OnUpdate ( float step ) {
 	UNUSED ( step );
 	
 	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
-	MOAIActionMgr::Get ().SetDefaultParent ( this->mDefaultParent );
 	
 	if ( this->mState ) {
 		
@@ -257,15 +248,10 @@ void MOAICoroutine::OnUpdate ( float step ) {
 	}
 	
 	MOAILuaRuntime::Get ().SetTrackingGroup ();
-	MOAIActionMgr::Get ().SetDefaultParent ();
 }
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnStart () {
-
-	if ( !this->mDefaultParent ) {
-		this->mDefaultParent.Set ( *this, MOAIActionMgr::Get ().GetDefaultParent ());
-	}
 }
 
 //----------------------------------------------------------------//

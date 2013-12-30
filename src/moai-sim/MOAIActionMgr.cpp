@@ -90,7 +90,13 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 //----------------------------------------------------------------//
 MOAIAction* MOAIActionMgr::GetDefaultParent () {
 
-	return this->mDefaultParent ? this->mDefaultParent : this->AffirmRoot ();
+	MOAIAction* cursor = this->mCurrentAction;
+	for ( ; cursor; cursor = cursor->mParent ) {
+		if ( cursor->mIsDefaultParent ) {
+			return cursor;
+		}
+	}
+	return this->AffirmRoot ();
 }
 
 //----------------------------------------------------------------//
