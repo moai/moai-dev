@@ -6,6 +6,8 @@
 //
 //
 
+#include "pch.h"
+
 #ifndef __libmoai__MOAIHusky__
 #define __libmoai__MOAIHusky__
 

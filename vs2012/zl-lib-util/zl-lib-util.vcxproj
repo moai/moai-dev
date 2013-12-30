@@ -244,7 +244,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -316,7 +316,7 @@
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
@@ -392,7 +392,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -464,7 +464,7 @@
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
@@ -540,7 +540,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -612,7 +612,7 @@
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>

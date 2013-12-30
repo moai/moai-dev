@@ -6,7 +6,6 @@
 //
 //
 
-#include "pch.h"
 #include "MOAIHusky.h"
 #include <iterator>
 
