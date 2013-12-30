@@ -570,7 +570,7 @@ void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
 void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
-	( *bytes ) = this->mBytes;
+	( *bytes ) = this->mBytes.Data();
 	( *size ) = this->mBytes.Size ();
 }
 
@@ -649,9 +649,4 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 void MOAIDataBuffer::Unlock () {
 
 	this->mMutex.Unlock ();
-}
-
-//----------------------------------------------------------------//
-ZLLeanArray<u8> *MOAIDataBuffer::GetBuffer() {
-	return &mBytes;
 }
