@@ -41,57 +41,29 @@ MOAIUrlMgrCurl::~MOAIUrlMgrCurl () {
 void MOAIUrlMgrCurl::Process () {
 	if (mTasks.size() == 0)
 		return;
-	
+
+	std::vector<int> delindexes;
+
 	STLArray < MOAIHttpTaskCurl*>::iterator it = mTasks.begin();
+	int index = 0;
 	while(it != mTasks.end() && mTasks.size() > 0) {
 		MOAIHttpTaskCurl *task = *it;
 		if (!task->inProgress()) {
 			task->CurlFinish();
 			task->LatchRelease();
-			mTasks.erase(it);
-		} else {
-			it++;
+			delindexes.push_back(index);
 		}
+		it++;
+		index++;
 	}
-	
-/*
-	STLMap < CURL*, MOAIHttpTaskCurl* >& handleMap = this->mHandleMap;
-	CURLM* multiHandle = this->mMultiHandle;
 
-	if ( !this->mMore ) return;
-	this->mMore = false;
-
-	if ( !multiHandle ) return;
-	
-	// pump the multi handle
-	int stillRunning;
-	while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform ( multiHandle, &stillRunning ));
-
-	int msgsInQueue;
-	CURLMsg* msg;
-	do {
-		
-		msg = curl_multi_info_read ( multiHandle, &msgsInQueue );
-	
-		if ( msg && ( msg->msg == CURLMSG_DONE )) {
-		
-			CURL* handle = msg->easy_handle;
-			if ( handleMap.contains ( handle )) {
-				MOAIHttpTaskCurl* task = handleMap [ handle ];
-				handleMap.erase ( handle );
-				
-				task->CurlFinish ();
-				task->LatchRelease ();
-			}
-		}
+	index = 0;
+	std::vector<int>::iterator di = delindexes.begin();
+	while(di != delindexes.end()) {
+		mTasks.erase(mTasks.begin() + (*di - index));
+		di++;
+		index++;
 	}
-	while ( msg );
-
-	// bail if nothing left running
-	if ( !stillRunning ) return;
-	
-	this->mMore = true;
-*/
  }
 
 #endif

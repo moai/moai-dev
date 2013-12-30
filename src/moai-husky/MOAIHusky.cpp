@@ -18,11 +18,11 @@
 #endif
 
 HuskyLoaderHandle::HuskyLoaderHandle() {
-	this->dllhandle = NULL;
+	dllhandle = NULL;
 }
 
 HuskyLoaderHandle::HuskyLoaderHandle(void *handle) {
-	this->dllhandle = handle;
+	dllhandle = handle;
 }
 
 bool endsWith(const char *string, const char *ending) {
@@ -41,7 +41,10 @@ MOAIHusky::MOAIHusky() {
 	_map = new LoaderHandleMap();
 	_currentHuskyHandle = NULL;
 	_instance = NULL;
-	
+	_fHuskyName = NULL;
+	_fHuskyShutdown = NULL;
+	_huskyCapabilities = 0;
+
 #ifdef __APPLE__ 
 	const char* extension = ".dylib";
 	
