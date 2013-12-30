@@ -11,8 +11,10 @@
 
 #ifdef __APPLE__
 	#include <dlfcn.h>
+	typedef void* HuskyDLLHandle;
 #elif WIN32
-	
+	#include <Windows.h>
+	typedef HMODULE HuskyDLLHandle;
 #endif
 #include <Husky.h>
 
@@ -21,8 +23,8 @@ bool endsWith(const char *string, const char *ending);
 class HuskyLoaderHandle {
 public:
 	HuskyLoaderHandle();
-	HuskyLoaderHandle(void* dllhandle);
-	void* dllhandle;
+	HuskyLoaderHandle(HuskyDLLHandle dllhandle);
+	HuskyDLLHandle dllhandle;
 };
 
 typedef std::map<std::string, HuskyLoaderHandle> LoaderHandleMap;
@@ -30,23 +32,23 @@ typedef std::map<std::string, HuskyLoaderHandle> LoaderHandleMap;
 
 class MOAIHusky : public MOAIGlobalClass <MOAIHusky, MOAILuaObject>, public HuskyObserver {
 private:
-	static int _getAvailable							( lua_State *L );
+	static int _getAvailable						( lua_State *L );
 	static int _getCurrent							( lua_State *L );
 	static int _setCurrent							( lua_State *L );
 	static int _hasLeaderboards						( lua_State *L );
 	static int _hasAchievements						( lua_State *L );
 	static int _hasCloudSaves						( lua_State *L );
-	static int _achievementReset						( lua_State *L );
+	static int _achievementReset					( lua_State *L );
 	static int _achievementSet						( lua_State *L );
 	static int _achievementSetCallback				( lua_State *L );
 	static int _leaderboardUploadScore				( lua_State *L );
 	static int _leaderboardSetScoreCallback			( lua_State *L );
-	static int _leaderboardGetScores					( lua_State *L );
+	static int _leaderboardGetScores				( lua_State *L );
 	static int _leaderboardSetGetScoresCallback		( lua_State *L );
 	static int _cloudDataUpload						( lua_State *L );
 	static int _cloudDataSetUploadCallback			( lua_State *L );
 	static int _cloudDataDownload					( lua_State *L );
-	static int _cloudDataSetDownloadCallback			( lua_State *L );
+	static int _cloudDataSetDownloadCallback		( lua_State *L );
 	static int _doTick								( lua_State *L );
 	
 	void HuskyObserverAchievementCallback(const char *name, bool success);
@@ -62,7 +64,7 @@ private:
 	MOAILuaLocal _cloudDataDownloadCallback;
 
 	LoaderHandleMap *_map;
-	void* _currentHuskyHandle;
+	HuskyDLLHandle _currentHuskyHandle;
 	Husky* _instance;
 	HuskyGetName* _fHuskyName;
 	HuskyShutdownStaticInstance* _fHuskyShutdown;

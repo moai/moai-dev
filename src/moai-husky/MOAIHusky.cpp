@@ -15,16 +15,19 @@
 	#import <Foundation/Foundation.h>
 #elif WIN32
 	#define strcasecmp(a, b) lstrcmpiA(a,b)
+	#include <Shlwapi.h>
+	#pragma comment(lib, "Shlwapi.lib")
 #endif
 
 HuskyLoaderHandle::HuskyLoaderHandle() {
 	dllhandle = NULL;
 }
 
-HuskyLoaderHandle::HuskyLoaderHandle(void *handle) {
+HuskyLoaderHandle::HuskyLoaderHandle(HuskyDLLHandle handle) {
 	dllhandle = handle;
 }
 
+#ifdef __APPLE__
 bool endsWith(const char *string, const char *ending) {
 	unsigned long length1, length2;
 	length1 = strlen(string);
@@ -32,6 +35,7 @@ bool endsWith(const char *string, const char *ending) {
 	const char *endofstring = string + (length1 - length2);
 	return strcmp(ending, endofstring) == 0;
 }
+#endif
 
 MOAIHusky::MOAIHusky() {
 	RTTI_BEGIN
@@ -96,7 +100,47 @@ MOAIHusky::MOAIHusky() {
 		}
 	}
 #elif WIN32
-	
+	LPTSTR extension = "\*.dll";
+
+	LPTSTR search;
+	DWORD length = 255;
+	search = (LPTSTR)malloc(sizeof(char) * length);
+	DWORD result = GetModuleFileName(NULL, search, length - 1);
+	if (result == 0) {
+		strcpy(search, ".");
+	}
+	PathRemoveFileSpec(search);
+
+	PathAppend(search, extension);
+	WIN32_FIND_DATA findfiledata;
+	HANDLE hFind = FindFirstFile(search, &findfiledata);
+	if (hFind != INVALID_HANDLE_VALUE ) {
+		do {
+			HMODULE dll_handle = LoadLibrary(findfiledata.cFileName);
+			if (dll_handle) {
+				HuskyGetStaticInstance* fHuskyInstance = (HuskyGetStaticInstance*)GetProcAddress(dll_handle, "getHuskyInstance");
+				HuskyGetName* fHuskyName = (HuskyGetName*)GetProcAddress(dll_handle, "getHuskyName");
+				HuskyShutdownStaticInstance* fHuskyShutdown;
+				fHuskyShutdown = (HuskyShutdownStaticInstance*)GetProcAddress(dll_handle, "shutdownHuskyInstance");
+				if (fHuskyName && fHuskyInstance && fHuskyShutdown) {
+					HuskyLoaderHandle *handleObj = new HuskyLoaderHandle(dll_handle);
+					std::string *name = new std::string(fHuskyName());
+					if (_currentHuskyHandle == NULL) {
+						_currentHuskyHandle = handleObj->dllhandle;
+						_instance = fHuskyInstance();
+						_fHuskyName = fHuskyName;
+						_fHuskyShutdown = fHuskyShutdown;
+						_instance->setObserver(this);
+						_huskyCapabilities = _instance->getCapabilities();
+					}
+					_map->insert(LoaderHandleMap::value_type(*name, *handleObj));
+				}
+			}
+		} while(FindNextFile(hFind, &findfiledata) != 0);
+		FindClose(hFind);
+	}
+
+	free(search);
 #endif
 }
 
