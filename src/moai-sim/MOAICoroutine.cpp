@@ -46,6 +46,46 @@ int MOAICoroutine::_currentThread ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_getHistogram ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	MOAILuaRuntime::Get ().PushHistogram ( state, self->mTrackingGroup );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_getTrackingGroup ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	state.Push ( self->mTrackingGroup );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_reportHistogram ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+
+	cc8* filename = state.GetValue < cc8* >( 1, 0 );
+	MOAILuaRuntime::Get ().ReportHistogram ( filename, self->mTrackingGroup );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_reportLeaks ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	cc8* filename = state.GetValue < cc8* >( 1, 0 );
+	MOAILuaRuntime::Get ().ReportLeaksFormatted ( filename, self->mTrackingGroup );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
@@ -108,13 +148,20 @@ int MOAICoroutine::_run ( lua_State* L ) {
 int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
 	
-	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+	self->SetIsDefaultParent ( state.GetValue < bool >( 2, true ));
 	
-	MOAIAction* defaultParent = state.GetLuaObject < MOAIAction >( 2, true );
-	self->mDefaultParent.Set ( *self, defaultParent );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
 	
-	if ( actionMgr.GetCurrentAction () == self ) {
-		MOAIActionMgr::Get ().SetDefaultParent ( defaultParent );
+	self->mTrackingGroup = state.GetValue < cc8* >( 2, "" );
+	
+	if (  MOAIActionMgr::Get ().GetCurrentAction () == self ) {
+		MOAILuaRuntime::Get ().SetTrackingGroup ( self->mTrackingGroup );
 	}
 	return 0;
 }
@@ -141,19 +188,19 @@ MOAICoroutine::MOAICoroutine () :
 	mIsFirstRun ( true ) {
 
 	RTTI_SINGLE ( MOAIAction )
+	
+	this->mTrackingGroup.write ( "MOAICoroutine: 0x%p", this );
 }
 
 //----------------------------------------------------------------//
 MOAICoroutine::~MOAICoroutine () {
-
-	this->mDefaultParent.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnUpdate ( float step ) {
 	UNUSED ( step );
 	
-	MOAIActionMgr::Get ().SetDefaultParent ( this->mDefaultParent );
+	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
 	
 	if ( this->mState ) {
 		
@@ -199,14 +246,12 @@ void MOAICoroutine::OnUpdate ( float step ) {
 			this->mState = 0;
 		}
 	}
+	
+	MOAILuaRuntime::Get ().SetTrackingGroup ();
 }
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnStart () {
-
-	if ( !this->mDefaultParent ) {
-		this->mDefaultParent.Set ( *this, MOAIActionMgr::Get ().GetDefaultParent ());
-	}
 }
 
 //----------------------------------------------------------------//
@@ -238,12 +283,19 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getHistogram",			_getHistogram },
+		{ "getTrackingGroup",		_getTrackingGroup },
+		{ "reportHistogram",		_reportHistogram },
+		{ "reportLeaks",			_reportLeaks },
 		{ "run",					_run },
 		{ "setDefaultParent",		_setDefaultParent },
+		{ "setTrackingGroup",		_setTrackingGroup },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
+	
+	// ?
 	
 	lua_getglobal ( state, "coroutine" );
 	

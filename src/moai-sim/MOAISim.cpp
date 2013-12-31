@@ -177,20 +177,6 @@ int MOAISim::_getElapsedTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getHistogram
-	@text	Generates a histogram of active MOAIObjects and returns it
-			in a table containing object tallies indexed by object
-			class names.
-
-	@out	table histogram
-*/
-int MOAISim::_getHistogram ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().PushHistogram ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getLoopFlags
 	@text	Returns the current loop flags.
 
@@ -371,88 +357,6 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportHistogram
-	@text	Generates a histogram of active MOAIObjects.
-
-	@opt	string filename
-	@opt	bool clearAfter
-	@out	nil
-*/
-int MOAISim::_reportHistogram ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	cc8* filename		= state.GetValue < cc8* >( 1, 0 );
-	bool clearAfter		= state.GetValue < bool >( 2, false );
-	
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-	FILE* log	= 0;
-	
-	if ( filename ) {
-		log = fopen ( filename, "w" );
-		file = log;
-		assert ( log );
-	}
-	
-	MOAILuaRuntime::Get ().ReportHistogram ( file );
-	
-	if ( clearAfter ) {
-		MOAILuaRuntime::Get ().ResetHistogram ();
-	}
-	
-	if ( log ) {
-		fclose ( log );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	reportLeaks
-	@text	Analyze the currently allocated MOAI objects and create a textual
-			report of where they were declared, and what Lua references (if any)
-			can be found. NOTE: This is incredibly slow, so only use to debug
-			leaking memory issues.
- 
-			This will also trigger a full garbage collection before performing
-			the required report. (Equivalent of collectgarbage("collect").)
- 
-	@opt	string filename
-	@opt	bool clearAfter	If true, it will reset the allocation tables (without
-				freeing the underlying objects). This allows this
-				method to be called after a known operation and
-				get only those allocations created since the last call
-				to this function.
-	@out	nil
-*/
-int MOAISim::_reportLeaks ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	cc8* filename		= state.GetValue < cc8* >( 1, 0 );
-	bool clearAfter		= state.GetValue < bool >( 2, false );
-	
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-	FILE* log	= 0;
-	
-	if ( filename ) {
-		log = fopen ( filename, "w" );
-		file = log;
-		assert ( log );
-	}
-	
-	MOAILuaRuntime::Get ().ReportLeaksFormatted ( file );
-
-	if ( clearAfter ) {
-		MOAILuaRuntime::Get ().ResetLeakTracking ();
-	}
-	
-	if ( log ) {
-		fclose ( log );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setBoostThreshold
 	@text	Sets the boost threshold, a scalar applied to step. If the gap
 			between simulation time and device time is greater than the step
@@ -496,38 +400,6 @@ int MOAISim::_setGCActive ( lua_State* L ) {
 int MOAISim::_setGCStep ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCStep = state.GetValue < u32 >( 1, 0 );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setHistogramEnabled
-	@text	Enable tracking of every MOAILuaObject so that an object count
-			histogram may be generated.
- 
-	@opt	bool enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setHistogramEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetHistogramEnabled ( state.GetValue < bool >( 1, false ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setLeakTrackingEnabled
-	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
-			tracked back to their point of allocation (in Lua). Use together with
-			MOAISim.reportLeaks() to determine exactly where your memory usage is
-			being created. NOTE: This is very expensive in terms of both CPU and
-			the extra memory associated with the stack info book-keeping. Use only
-			when tracking down leaks.
- 
-	@opt	bool enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetTrackingEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -833,7 +705,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
-		{ "getHistogram",				_getHistogram },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
@@ -842,14 +713,10 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getStep",					_getStep },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
-		{ "reportHistogram",			_reportHistogram },
-		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
 		{ "setCpuBudget",				_setCpuBudget},
 		{ "setGCActive",				_setGCActive },
 		{ "setGCStep",					_setGCStep },
-		{ "setHistogramEnabled",		_setHistogramEnabled },
-		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
 		{ "setLongDelayThreshold",		_setLongDelayThreshold },
 		{ "setLoopFlags",				_setLoopFlags },

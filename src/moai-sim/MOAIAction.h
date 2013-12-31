@@ -22,6 +22,7 @@ private:
 	
 	bool	mNew;
 	u32		mPass;
+	bool	mIsDefaultParent;
 	
 	MOAIAction* mParent;
 	
@@ -55,6 +56,8 @@ private:
 	void				Update					( float step, u32 pass, bool checkPass );
 
 protected:
+
+	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )
 
 	//----------------------------------------------------------------//
 	virtual void		OnStart					();
