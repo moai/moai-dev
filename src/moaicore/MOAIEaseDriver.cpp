@@ -41,7 +41,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
 										MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
-										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.LINEAR.
 		@out	nil
 	
 	@overload	Target is a node.
@@ -55,7 +55,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
 										MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
-										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.LINEAR.
 		@out	nil
 
 	
@@ -74,7 +74,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	if ( source ) {
 	
 		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttrOp::NULL_ATTR );
-		u32 mode			= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
+		u32 mode			= state.GetValue < u32 >( 7, USInterpolate::kLinear );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
 	}
@@ -87,7 +87,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 			self->SetLink( idx, dest, destAttrID, v1, ease );
 		}
 		else{
-			u32 mode			= state.GetValue < u32 >( 6, USInterpolate::kSmooth );
+			u32 mode			= state.GetValue < u32 >( 6, USInterpolate::kLinear );
 		
 			self->SetLink ( idx, dest, destAttrID, v1, mode );
 		}
