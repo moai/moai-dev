@@ -1,6 +1,6 @@
 /*
  
- File: Reachability.h
+ File: MOAIReachability.h
  Abstract: Basic demonstration of how to use the SystemConfiguration Reachablity APIs.
  
  Version: 2.2
@@ -54,26 +54,27 @@ typedef enum {
 	ReachableViaWiFi,
 	ReachableViaWWAN
 } NetworkStatus;
+
 #define kReachabilityChangedNotification @"kNetworkReachabilityChangedNotification"
 
-@interface Reachability: NSObject
+@interface MOAIReachability: NSObject
 {
 	BOOL localWiFiRef;
 	SCNetworkReachabilityRef reachabilityRef;
 }
 
 //reachabilityWithHostName- Use to check the reachability of a particular host name. 
-+ (Reachability*) reachabilityWithHostName: (NSString*) hostName;
++ (MOAIReachability*) reachabilityWithHostName: (NSString*) hostName;
 
 //reachabilityWithAddress- Use to check the reachability of a particular IP address. 
-+ (Reachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
++ (MOAIReachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
 
 //reachabilityForInternetConnection- checks whether the default route is available.  
 //  Should be used by applications that do not connect to a particular host
-+ (Reachability*) reachabilityForInternetConnection;
++ (MOAIReachability*) reachabilityForInternetConnection;
 
 //reachabilityForLocalWiFi- checks whether a local wifi connection is available.
-+ (Reachability*) reachabilityForLocalWiFi;
++ (MOAIReachability*) reachabilityForLocalWiFi;
 
 //Start listening for reachability notifications on the current run loop
 - (BOOL) startNotifier;

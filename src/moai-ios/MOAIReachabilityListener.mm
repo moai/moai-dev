@@ -1,30 +1,30 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <ReachabilityListener.h>
-#import <Reachability.h>
+#import <moai-ios/MOAIReachabilityListener.h>
+#import <moai-ios/MOAIReachability.h>
 #import <moai-sim/headers.h>
 
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
 //================================================================//
-// ReachabilityListener
+// MOAIReachabilityListener
 //================================================================//
-@implementation ReachabilityListener
+@implementation MOAIReachabilityListener
 
 
 //----------------------------------------------------------------//
 -(void) reachabilityChanged: ( NSNotification* )note {
 	UNUSED ( note );
-	[ ReachabilityListener updateMoaiEnvironment ];
+	[ MOAIReachabilityListener updateMoaiEnvironment ];
 }
 
 //----------------------------------------------------------------//
 - ( void ) startListener {
 
 	[[ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector ( reachabilityChanged: ) name: kReachabilityChangedNotification object: nil ];
-	mReach = [[ Reachability reachabilityForInternetConnection ] retain ];
+	mReach = [[ MOAIReachability reachabilityForInternetConnection ] retain ];
 	[ mReach startNotifier ];
 }
 
@@ -37,7 +37,7 @@
 //----------------------------------------------------------------//
 +( void ) updateMoaiEnvironment {
 
-	NetworkStatus status = [[ Reachability reachabilityForInternetConnection ] currentReachabilityStatus ];
+	NetworkStatus status = [[ MOAIReachability reachabilityForInternetConnection ] currentReachabilityStatus ];
 	
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 	environment.SetValue ( MOAI_ENV_connectionType, ( int )status );

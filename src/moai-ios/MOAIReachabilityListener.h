@@ -2,14 +2,14 @@
 // http://getmoai.com
 #import <Foundation/Foundation.h>
 
-@class Reachability;
+@class MOAIReachability;
 
 //================================================================//
-// ReachabilityListener
+// MOAIReachabilityListener
 //================================================================//
-@interface ReachabilityListener : NSObject {
+@interface MOAIReachabilityListener : NSObject {
 
-	Reachability*		mReach;
+	MOAIReachability*		mReach;
 }
 
 	//----------------------------------------------------------------//
