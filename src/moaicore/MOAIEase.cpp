@@ -9,12 +9,6 @@
 #include "pch.h"
 #include "MOAIEase.h"
 
-
-int MOAIEase::_setEaseType(lua_State *L){
-	UNUSED(L);
-	return 0;
-}
-
 float MOAIEase::DistortedTime(float inputTime){
 	return inputTime;
 }
@@ -35,7 +29,6 @@ void MOAIEase::RegisterLuaClass(MOAILuaState &state){
 
 void MOAIEase::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_Reg regTable [] = {
-		{ "setEaseType",				_setEaseType },
 		{ NULL, NULL }
 	};
 	

@@ -14,14 +14,6 @@
 // Abstract superclass of all eases.
 
 class MOAIEase : public virtual MOAILuaObject {
-private:
-	int mEaseType;  // default to linear
-	
-	//----------------------------------------------------------------//
-	
-	static int _setEaseType( lua_State* L );
-	
-	
 public:
 	
 	DECL_LUA_FACTORY(MOAIEase);
