@@ -9,9 +9,9 @@
 #ifndef __libmoai__MOAIEaseSimpleInOut__
 #define __libmoai__MOAIEaseSimpleInOut__
 
-#include <moaicore/MOAIEaseRate.h>
+#include <moaicore/MOAIEaseSimpleBase.h>
 
-class MOAIEaseSimpleInOut : public virtual MOAIEaseRate {
+class MOAIEaseSimpleInOut : public virtual MOAIEaseSimpleBase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseSimpleInOut );
 	

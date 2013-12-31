@@ -9,9 +9,9 @@
 #ifndef __libmoai__MOAIEaseSimpleIn__
 #define __libmoai__MOAIEaseSimpleIn__
 
-#include <moaicore/MOAIEaseRate.h>
+#include <moaicore/MOAIEaseSimpleBase.h>
 
-class MOAIEaseSimpleIn : public virtual MOAIEaseRate {
+class MOAIEaseSimpleIn : public virtual MOAIEaseSimpleBase {
 
 public:
 	

@@ -15,9 +15,8 @@ float MOAIEaseSimpleIn::DistortedTime(float inputTime){
 }
 
 MOAIEaseSimpleIn::MOAIEaseSimpleIn()
-//: mRate(2.0f)
 {
-	RTTI_SINGLE(MOAIEaseRate)
+	RTTI_SINGLE(MOAIEaseSimpleBase)
 }
 
 MOAIEaseSimpleIn::~MOAIEaseSimpleIn(){
@@ -26,9 +25,9 @@ MOAIEaseSimpleIn::~MOAIEaseSimpleIn(){
 
 
 void MOAIEaseSimpleIn::RegisterLuaClass(MOAILuaState &state){
-	MOAIEaseRate::RegisterLuaClass(state);
+	MOAIEaseSimpleBase::RegisterLuaClass(state);
 }
 
 void MOAIEaseSimpleIn::RegisterLuaFuncs(MOAILuaState &state){
-	MOAIEaseRate::RegisterLuaFuncs(state);
+	MOAIEaseSimpleBase::RegisterLuaFuncs(state);
 }

@@ -1,5 +1,5 @@
 //
-//  MOAIEaseRate.cpp
+//  MOAIEaseSimpleBase.cpp
 //  libmoai
 //
 //  Created by Aaron Barrett on 12/30/13.
@@ -7,10 +7,10 @@
 //
 
 #include "pch.h"
-#include "MOAIEaseRate.h"
+#include "MOAIEaseSimpleBase.h"
 
-int MOAIEaseRate::_setRate( lua_State *L ){
-	MOAI_LUA_SETUP( MOAIEaseRate, "UN" );
+int MOAIEaseSimpleBase::_setRate( lua_State *L ){
+	MOAI_LUA_SETUP( MOAIEaseSimpleBase, "UN" );
 	
 	float rate = state.GetValue < float >( 2, 0 );
 	self->SetRate(rate);
@@ -18,21 +18,21 @@ int MOAIEaseRate::_setRate( lua_State *L ){
 	return 0;
 }
 
-MOAIEaseRate::MOAIEaseRate()
+MOAIEaseSimpleBase::MOAIEaseSimpleBase()
 	:mRate(2.0f)
 {
 	RTTI_SINGLE(MOAIEase)
 }
 
-MOAIEaseRate::~MOAIEaseRate(){
+MOAIEaseSimpleBase::~MOAIEaseSimpleBase(){
 	
 }
 
-void MOAIEaseRate::RegisterLuaClass(MOAILuaState &state){
+void MOAIEaseSimpleBase::RegisterLuaClass(MOAILuaState &state){
 	MOAIEase::RegisterLuaClass(state);
 }
 
-void MOAIEaseRate::RegisterLuaFuncs(MOAILuaState &state){
+void MOAIEaseSimpleBase::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIEase::RegisterLuaFuncs(state);
 	
 	luaL_Reg regTable [] = {
@@ -43,6 +43,6 @@ void MOAIEaseRate::RegisterLuaFuncs(MOAILuaState &state){
 	luaL_register ( state, 0, regTable );
 }
 
-void MOAIEaseRate::SetRate(float inputRate){
+void MOAIEaseSimpleBase::SetRate(float inputRate){
 	this->mRate = inputRate;
 }
