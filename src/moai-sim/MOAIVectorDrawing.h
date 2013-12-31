@@ -70,6 +70,7 @@ private:
 	static int		_setLineStyle			( lua_State* L );
 	static int		_setLineWidth			( lua_State* L );
 	static int		_setMiterLimit			( lua_State* L );
+	static int		_setPolyClosed			( lua_State* L );
 	static int		_setShadowColor			( lua_State* L );
 	static int		_setShadowCurve			( lua_State* L );
 	static int		_setStrokeColor			( lua_State* L );

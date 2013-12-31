@@ -324,6 +324,14 @@ int MOAIVectorDrawing::_setMiterLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setPolyClosed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	self->mPolyClosed = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setShadowColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -701,6 +709,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineStyle",			_setLineStyle },
 		{ "setLineWidth",			_setLineWidth },
 		{ "setMiterLimit",			_setMiterLimit },
+		{ "setPolyClosed",			_setPolyClosed },
 		{ "setShadowColor",			_setShadowColor },
 		{ "setShadowCurve",			_setShadowCurve },
 		{ "setStrokeColor",			_setStrokeColor },
