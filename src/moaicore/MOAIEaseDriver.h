@@ -7,6 +7,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAIWeakPtr.h>
+#include <moaicore/MOAIEase.h>
 
 class MOAINode;
 
@@ -25,6 +26,8 @@ public:
 	float						mV0;
 	float						mV1;
 	u32							mMode;
+	
+	MOAIWeakPtr < MOAIEase >	mEase;
 };
 
 //================================================================//
@@ -57,6 +60,7 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 total );
 	void			SetLink				( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode );
+	void			SetLink				( u32 idx, MOAINode* dest, u32 destAttrID, float v1, MOAIEase* ease);
 	void			SetLink				( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode );
 };
 

@@ -43,6 +43,12 @@
 #include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>
+#include <moaicore/MOAIEase.h>
+#include <moaicore/MOAIEaseLinear.h>
+#include <moaicore/MOAIEaseSimpleIn.h>
+#include <moaicore/MOAIEaseSimpleInOut.h>
+#include <moaicore/MOAIEaseSimpleOut.h>
+#include <moaicore/MOAIEaseCustom.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIEventSource.h>
