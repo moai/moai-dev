@@ -73,7 +73,7 @@ void AKUIosContextInitialize () {
 		environment.SetValue ( MOAI_ENV_iosIFA, [[[[ identifierManagerClass sharedManager ] advertisingIdentifier ] UUIDString ] UTF8String ]);
     }
 	
-	[ ReachabilityListener updateMoaiEnvironment ];
+	[ MOAIReachabilityListener updateMoaiEnvironment ];
 }
 
 //----------------------------------------------------------------//

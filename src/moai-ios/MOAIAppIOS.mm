@@ -165,7 +165,7 @@ MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	this->mReachabilityListener = [ ReachabilityListener alloc ];
+	this->mReachabilityListener = [ MOAIReachabilityListener alloc ];
 	[ this->mReachabilityListener startListener ];
 }
 

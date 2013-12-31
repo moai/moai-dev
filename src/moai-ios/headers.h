@@ -12,8 +12,6 @@
 #import <moai-ios/NSNumber+MOAILib.h>
 #import <moai-ios/NSObject+MOAILib.h>
 #import <moai-ios/NSString+MOAILib.h>
-#import <moai-ios/Reachability.h>
-#import <moai-ios/ReachabilityListener.h>
 
 #import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAIBrowserIOS.h>
@@ -21,6 +19,8 @@
 #import <moai-ios/MOAIHttpTaskNSURL.h>
 #import <moai-ios/MOAIKeyboardIOS.h>
 #import <moai-ios/MOAINotificationsIOS.h>
+#import <moai-ios/MOAIReachability.h>
+#import <moai-ios/MOAIReachabilityListener.h>
 #import <moai-ios/MOAIWebViewDelegate.h>
 #import <moai-ios/MOAIWebViewIOS.h>
 

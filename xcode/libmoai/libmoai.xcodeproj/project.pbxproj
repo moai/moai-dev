@@ -3615,10 +3615,10 @@
 		CD9F76641808CE9D0001EF0C /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5917FA56A100EBA2DB /* NSObject+MOAILib.mm */; };
 		CD9F76651808CE9D0001EF0C /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5A17FA56A100EBA2DB /* NSString+MOAILib.h */; };
 		CD9F76661808CE9D0001EF0C /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */; };
-		CD9F76671808CE9D0001EF0C /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5C17FA56A100EBA2DB /* Reachability.h */; };
-		CD9F76681808CE9D0001EF0C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* Reachability.m */; };
-		CD9F76691808CE9D0001EF0C /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* ReachabilityListener.h */; };
-		CD9F766A1808CE9D0001EF0C /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* ReachabilityListener.mm */; };
+		CD9F76671808CE9D0001EF0C /* MOAIReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5C17FA56A100EBA2DB /* MOAIReachability.h */; };
+		CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */; };
+		CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */; };
+		CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */; };
 		CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FA173C12CE00DFE837 /* host.cpp */; };
 		CDC122A517FA7E9F00FB64BB /* b2DistanceJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEBDE051468C1EC00C86DF9 /* b2DistanceJoint.cpp */; };
 		CDC122A617FA7E9F00FB64BB /* b2DistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEBDE061468C1EC00C86DF9 /* b2DistanceJoint.h */; };
@@ -6472,10 +6472,10 @@
 		CD2B7C5917FA56A100EBA2DB /* NSObject+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSObject+MOAILib.mm"; path = "moai-ios/NSObject+MOAILib.mm"; sourceTree = "<group>"; };
 		CD2B7C5A17FA56A100EBA2DB /* NSString+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MOAILib.h"; path = "moai-ios/NSString+MOAILib.h"; sourceTree = "<group>"; };
 		CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+MOAILib.mm"; path = "moai-ios/NSString+MOAILib.mm"; sourceTree = "<group>"; };
-		CD2B7C5C17FA56A100EBA2DB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moai-ios/Reachability.h"; sourceTree = "<group>"; };
-		CD2B7C5D17FA56A100EBA2DB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moai-ios/Reachability.m"; sourceTree = "<group>"; };
-		CD2B7C5E17FA56A100EBA2DB /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moai-ios/ReachabilityListener.h"; sourceTree = "<group>"; };
-		CD2B7C5F17FA56A100EBA2DB /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moai-ios/ReachabilityListener.mm"; sourceTree = "<group>"; };
+		CD2B7C5C17FA56A100EBA2DB /* MOAIReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIReachability.h; path = "moai-ios/MOAIReachability.h"; sourceTree = "<group>"; };
+		CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIReachability.m; path = "moai-ios/MOAIReachability.m"; sourceTree = "<group>"; };
+		CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIReachabilityListener.h; path = "moai-ios/MOAIReachabilityListener.h"; sourceTree = "<group>"; };
+		CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIReachabilityListener.mm; path = "moai-ios/MOAIReachabilityListener.mm"; sourceTree = "<group>"; };
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
@@ -10188,6 +10188,10 @@
 				CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */,
 				CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */,
 				CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */,
+				CD2B7C5C17FA56A100EBA2DB /* MOAIReachability.h */,
+				CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */,
+				CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */,
+				CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */,
 				CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */,
 				CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */,
 				CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */,
@@ -10208,10 +10212,6 @@
 				CD2B7C5917FA56A100EBA2DB /* NSObject+MOAILib.mm */,
 				CD2B7C5A17FA56A100EBA2DB /* NSString+MOAILib.h */,
 				CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */,
-				CD2B7C5C17FA56A100EBA2DB /* Reachability.h */,
-				CD2B7C5D17FA56A100EBA2DB /* Reachability.m */,
-				CD2B7C5E17FA56A100EBA2DB /* ReachabilityListener.h */,
-				CD2B7C5F17FA56A100EBA2DB /* ReachabilityListener.mm */,
 			);
 			name = "moai-ios";
 			sourceTree = "<group>";
@@ -12813,11 +12813,11 @@
 				CD4C3EA9180A63BB00C02381 /* MOAIPvrHeader.h in Headers */,
 				CD4C3E43180A63BB00C02381 /* MOAIGridDeck2D.h in Headers */,
 				CD9F764D1808CE9D0001EF0C /* MOAIDialogIOS.h in Headers */,
-				CD9F76691808CE9D0001EF0C /* ReachabilityListener.h in Headers */,
+				CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */,
 				CD4C3E84180A63BB00C02381 /* MOAIPartitionLevel.h in Headers */,
 				CD4C3ED4180A63BB00C02381 /* MOAITextureBase.h in Headers */,
 				CD4C3E8E180A63BB00C02381 /* MOAIPathTerrainDeck.h in Headers */,
-				CD9F76671808CE9D0001EF0C /* Reachability.h in Headers */,
+				CD9F76671808CE9D0001EF0C /* MOAIReachability.h in Headers */,
 				CD4C3E06180A63BB00C02381 /* MOAICamera2D.h in Headers */,
 				89BE7243173AD0CB00DFE837 /* MOAIDeck2DShader-fsh.h in Headers */,
 				CDEFD56C181ECB3E0058D772 /* MOAITextLabel.h in Headers */,
@@ -16495,7 +16495,7 @@
 				CDEFD576181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
 				CDEFD56E181ECB3E0058D772 /* MOAITextLayout.cpp in Sources */,
 				CD4C3EE9180A63BB00C02381 /* MOAIVectorDrawingDeck.cpp in Sources */,
-				CD9F766A1808CE9D0001EF0C /* ReachabilityListener.mm in Sources */,
+				CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */,
 				CD4C3DE8180A63BB00C02381 /* host_particles.cpp in Sources */,
 				CD4C3E46180A63BB00C02381 /* MOAIGridSpace.cpp in Sources */,
 				CD4C3E5C180A63BB00C02381 /* MOAILayoutFrame.cpp in Sources */,
@@ -16503,7 +16503,7 @@
 				CD4C3DF6180A63BB00C02381 /* MOAIAnimCurveVec.cpp in Sources */,
 				CD4C3E1D180A63BB00C02381 /* MOAIEaseType.cpp in Sources */,
 				CD9F76641808CE9D0001EF0C /* NSObject+MOAILib.mm in Sources */,
-				CD9F76681808CE9D0001EF0C /* Reachability.m in Sources */,
+				CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */,
 				CD4C3E87180A63BB00C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD4C3E5E180A63BB00C02381 /* MOAILocationSensor.cpp in Sources */,
 				CD4C3E49180A63BB00C02381 /* MOAIImage-png.cpp in Sources */,

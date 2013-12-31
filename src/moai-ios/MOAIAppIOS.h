@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import <moai-core/headers.h>
-#import <moai-ios/ReachabilityListener.h>
+#import <moai-ios/MOAIReachabilityListener.h>
 
 //================================================================//
 // MOAIAppIOS
@@ -69,7 +69,7 @@ public:
 	};
 
 	MOAILuaStrongRef			mListeners [ TOTAL ];
-	ReachabilityListener*		mReachabilityListener;
+	MOAIReachabilityListener*	mReachabilityListener;
 
 	//----------------------------------------------------------------//
 	
