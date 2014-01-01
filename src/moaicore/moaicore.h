@@ -51,6 +51,7 @@
 #include <moaicore/MOAIEaseBackIn.h>
 #include <moaicore/MOAIEaseBackInOut.h>
 #include <moaicore/MOAIEaseBackOut.h>
+#include <moaicore/MOAIEaseElasticIn.h>
 #include <moaicore/MOAIEaseCustom.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
