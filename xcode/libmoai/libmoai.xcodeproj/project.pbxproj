@@ -887,6 +887,22 @@
 		4D49736B1872793400D46882 /* MOAIEaseCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D4973691872793400D46882 /* MOAIEaseCustom.h */; };
 		4D49736C18727DCC00D46882 /* MOAIEaseCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4973681872793400D46882 /* MOAIEaseCustom.cpp */; };
 		4D49736D18727DD000D46882 /* MOAIEaseCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D4973691872793400D46882 /* MOAIEaseCustom.h */; };
+		4D851D8B1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D891873DAB7009DF1C4 /* MOAIEaseBackBase.cpp */; };
+		4D851D8C1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D891873DAB7009DF1C4 /* MOAIEaseBackBase.cpp */; };
+		4D851D8D1873DAB7009DF1C4 /* MOAIEaseBackBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D8A1873DAB7009DF1C4 /* MOAIEaseBackBase.h */; };
+		4D851D8E1873DAB7009DF1C4 /* MOAIEaseBackBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D8A1873DAB7009DF1C4 /* MOAIEaseBackBase.h */; };
+		4D851D911873DC56009DF1C4 /* MOAIEaseBackIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D8F1873DC56009DF1C4 /* MOAIEaseBackIn.cpp */; };
+		4D851D921873DC56009DF1C4 /* MOAIEaseBackIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D8F1873DC56009DF1C4 /* MOAIEaseBackIn.cpp */; };
+		4D851D931873DC56009DF1C4 /* MOAIEaseBackIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D901873DC56009DF1C4 /* MOAIEaseBackIn.h */; };
+		4D851D941873DC56009DF1C4 /* MOAIEaseBackIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D901873DC56009DF1C4 /* MOAIEaseBackIn.h */; };
+		4D851D971873DDE6009DF1C4 /* MOAIEaseBackOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D951873DDE6009DF1C4 /* MOAIEaseBackOut.cpp */; };
+		4D851D981873DDE6009DF1C4 /* MOAIEaseBackOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D951873DDE6009DF1C4 /* MOAIEaseBackOut.cpp */; };
+		4D851D991873DDE6009DF1C4 /* MOAIEaseBackOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D961873DDE6009DF1C4 /* MOAIEaseBackOut.h */; };
+		4D851D9A1873DDE6009DF1C4 /* MOAIEaseBackOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D961873DDE6009DF1C4 /* MOAIEaseBackOut.h */; };
+		4D851D9D1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D9B1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp */; };
+		4D851D9E1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851D9B1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp */; };
+		4D851D9F1873DED9009DF1C4 /* MOAIEaseBackInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D9C1873DED9009DF1C4 /* MOAIEaseBackInOut.h */; };
+		4D851DA01873DED9009DF1C4 /* MOAIEaseBackInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851D9C1873DED9009DF1C4 /* MOAIEaseBackInOut.h */; };
 		663703C916127FFD002D0D27 /* USHexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 663703C816127FFD002D0D27 /* USHexWriter.h */; };
 		663703CA16127FFD002D0D27 /* USHexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 663703C816127FFD002D0D27 /* USHexWriter.h */; };
 		663703E016128038002D0D27 /* USHashWriterAdler32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663703CB16128038002D0D27 /* USHashWriterAdler32.cpp */; };
@@ -2585,6 +2601,14 @@
 		4D4973591872634A00D46882 /* MOAIEaseSimpleInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseSimpleInOut.h; sourceTree = "<group>"; };
 		4D4973681872793400D46882 /* MOAIEaseCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseCustom.cpp; sourceTree = "<group>"; };
 		4D4973691872793400D46882 /* MOAIEaseCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseCustom.h; sourceTree = "<group>"; };
+		4D851D891873DAB7009DF1C4 /* MOAIEaseBackBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseBackBase.cpp; sourceTree = "<group>"; };
+		4D851D8A1873DAB7009DF1C4 /* MOAIEaseBackBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseBackBase.h; sourceTree = "<group>"; };
+		4D851D8F1873DC56009DF1C4 /* MOAIEaseBackIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseBackIn.cpp; sourceTree = "<group>"; };
+		4D851D901873DC56009DF1C4 /* MOAIEaseBackIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseBackIn.h; sourceTree = "<group>"; };
+		4D851D951873DDE6009DF1C4 /* MOAIEaseBackOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseBackOut.cpp; sourceTree = "<group>"; };
+		4D851D961873DDE6009DF1C4 /* MOAIEaseBackOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseBackOut.h; sourceTree = "<group>"; };
+		4D851D9B1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseBackInOut.cpp; sourceTree = "<group>"; };
+		4D851D9C1873DED9009DF1C4 /* MOAIEaseBackInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseBackInOut.h; sourceTree = "<group>"; };
 		5751E6CC18565F8B00775234 /* base-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "base-debug.xcconfig"; path = "../configs/base-debug.xcconfig"; sourceTree = "<group>"; };
 		5751E6CD18565F8B00775234 /* base-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "base-release.xcconfig"; path = "../configs/base-release.xcconfig"; sourceTree = "<group>"; };
 		5751E6CE18565F8B00775234 /* libmoai-ios-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "libmoai-ios-debug.xcconfig"; path = "../configs/libmoai-ios-debug.xcconfig"; sourceTree = "<group>"; };
@@ -4475,6 +4499,14 @@
 				4D49735118725EC400D46882 /* MOAIEaseSimpleOut.h */,
 				4D4973581872634A00D46882 /* MOAIEaseSimpleInOut.cpp */,
 				4D4973591872634A00D46882 /* MOAIEaseSimpleInOut.h */,
+				4D851D891873DAB7009DF1C4 /* MOAIEaseBackBase.cpp */,
+				4D851D8A1873DAB7009DF1C4 /* MOAIEaseBackBase.h */,
+				4D851D8F1873DC56009DF1C4 /* MOAIEaseBackIn.cpp */,
+				4D851D901873DC56009DF1C4 /* MOAIEaseBackIn.h */,
+				4D851D951873DDE6009DF1C4 /* MOAIEaseBackOut.cpp */,
+				4D851D961873DDE6009DF1C4 /* MOAIEaseBackOut.h */,
+				4D851D9B1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp */,
+				4D851D9C1873DED9009DF1C4 /* MOAIEaseBackInOut.h */,
 				4D4973681872793400D46882 /* MOAIEaseCustom.cpp */,
 				4D4973691872793400D46882 /* MOAIEaseCustom.h */,
 			);
@@ -5432,6 +5464,7 @@
 				0324E83713564BC8000ADC60 /* pch.h in Headers */,
 				0324E83913564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E83B13564BC8000ADC60 /* MOAIAnim.h in Headers */,
+				4D851D9A1873DDE6009DF1C4 /* MOAIEaseBackOut.h in Headers */,
 				0324E83D13564BC8000ADC60 /* MOAIAnimCurve.h in Headers */,
 				0324E83F13564BC8000ADC60 /* MOAIBlocker.h in Headers */,
 				0324E84113564BC8000ADC60 /* MOAIBox2DArbiter.h in Headers */,
@@ -5494,6 +5527,7 @@
 				0324E8CB13564BC8000ADC60 /* MOAISurfaceDeck2D.h in Headers */,
 				0324E8CD13564BC8000ADC60 /* MOAISurfaceSampler2D.h in Headers */,
 				0324E8CF13564BC8000ADC60 /* MOAITextBox.h in Headers */,
+				4D851DA01873DED9009DF1C4 /* MOAIEaseBackInOut.h in Headers */,
 				0324E8D113564BC8000ADC60 /* MOAITexture.h in Headers */,
 				0324E8D513564BC8000ADC60 /* MOAITileDeck2D.h in Headers */,
 				0324E8D713564BC8000ADC60 /* MOAITimer.h in Headers */,
@@ -5567,6 +5601,7 @@
 				CDE0AB3713EE03E200CB9F35 /* MOAIFontShader-fsh.h in Headers */,
 				CDE0AB3813EE03E200CB9F35 /* MOAIFontShader-vsh.h in Headers */,
 				CDE0AB3913EE03E200CB9F35 /* MOAILineShader-fsh.h in Headers */,
+				4D851D941873DC56009DF1C4 /* MOAIEaseBackIn.h in Headers */,
 				CDE0AB3A13EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */,
 				07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
@@ -5622,6 +5657,7 @@
 				E9940DF114B7A4A0006465CC /* USLexStream.h in Headers */,
 				E9940DF314B7A4A0006465CC /* USMathConsts.h in Headers */,
 				E9940DF514B7A4A0006465CC /* USMatrix.h in Headers */,
+				4D851D8E1873DAB7009DF1C4 /* MOAIEaseBackBase.h in Headers */,
 				E9940DF714B7A4A0006465CC /* USMatrix3x3.h in Headers */,
 				E9940DF914B7A4A0006465CC /* USMatrix4x4.h in Headers */,
 				E9940DFD14B7A4A0006465CC /* USMercator.h in Headers */,
@@ -5927,9 +5963,11 @@
 				0324E6B313564BC8000ADC60 /* MOAICompassSensor.h in Headers */,
 				0324E6B613564BC8000ADC60 /* moaicore.h in Headers */,
 				0324E6B813564BC8000ADC60 /* MOAICp.h in Headers */,
+				4D851D9F1873DED9009DF1C4 /* MOAIEaseBackInOut.h in Headers */,
 				4D49734F18725B5600D46882 /* MOAIEaseSimpleIn.h in Headers */,
 				0324E6BA13564BC8000ADC60 /* MOAICpArbiter.h in Headers */,
 				0324E6BC13564BC8000ADC60 /* MOAICpBody.h in Headers */,
+				4D851D8D1873DAB7009DF1C4 /* MOAIEaseBackBase.h in Headers */,
 				0324E6BE13564BC8000ADC60 /* MOAICpConstraint.h in Headers */,
 				0324E6C013564BC8000ADC60 /* MOAICpDebugDraw.h in Headers */,
 				0324E6C213564BC8000ADC60 /* MOAICpShape.h in Headers */,
@@ -5972,6 +6010,7 @@
 				0324E72313564BC8000ADC60 /* MOAISerializer.h in Headers */,
 				0324E72513564BC8000ADC60 /* MOAIShader.h in Headers */,
 				0324E72713564BC8000ADC60 /* MOAISim.h in Headers */,
+				4D851D991873DDE6009DF1C4 /* MOAIEaseBackOut.h in Headers */,
 				0324E72B13564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */,
 				0324E72D13564BC8000ADC60 /* MOAISurfaceDeck2D.h in Headers */,
 				0324E72F13564BC8000ADC60 /* MOAISurfaceSampler2D.h in Headers */,
@@ -6173,6 +6212,7 @@
 				66C5727B1575709400A486AB /* USDeflateReader.h in Headers */,
 				66C57281157570A800A486AB /* USDeflateWriter.h in Headers */,
 				66C57287157570FF00A486AB /* USStreamWriter.h in Headers */,
+				4D851D931873DC56009DF1C4 /* MOAIEaseBackIn.h in Headers */,
 				66C5728F1575711000A486AB /* USBase64Reader.h in Headers */,
 				66C572931575711000A486AB /* USBase64Writer.h in Headers */,
 				66C572A51575713C00A486AB /* USStreamReader.h in Headers */,
@@ -6863,6 +6903,7 @@
 				CD7C726D13B947AC006CFA19 /* AKU-particles.cpp in Sources */,
 				0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */,
 				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
+				4D851D8C1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */,
 				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
 				CDEFB41413E37F3C000A9523 /* MOAIDraw.cpp in Sources */,
@@ -6884,6 +6925,7 @@
 				CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */,
 				CDBD3D1C1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */,
 				CDBD3D1E1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */,
+				4D851D921873DC56009DF1C4 /* MOAIEaseBackIn.cpp in Sources */,
 				CDBD3D201425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */,
 				CDBD3D241425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp in Sources */,
 				CDBD3D261425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp in Sources */,
@@ -6917,6 +6959,7 @@
 				E9940DC714B7A4A0006465CC /* USCgt.cpp in Sources */,
 				E9940DCB14B7A4A0006465CC /* USColor.cpp in Sources */,
 				E9940DCF14B7A4A0006465CC /* USCurve.cpp in Sources */,
+				4D851D9E1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp in Sources */,
 				E9940DDF14B7A4A0006465CC /* USDistance.cpp in Sources */,
 				E9940DE314B7A4A0006465CC /* USHexDump.cpp in Sources */,
 				E9940DE714B7A4A0006465CC /* USInterpolate.cpp in Sources */,
@@ -7017,6 +7060,7 @@
 				66E62C3916AE312A009B9C29 /* MOAIMutex_posix.cpp in Sources */,
 				66E62C3D16AE312A009B9C29 /* MOAIMutex_win32.cpp in Sources */,
 				66E62C4116AE312A009B9C29 /* MOAIMutex.cpp in Sources */,
+				4D851D981873DDE6009DF1C4 /* MOAIEaseBackOut.cpp in Sources */,
 				DD80D65616D8021D00C172D2 /* MOAIMath.cpp in Sources */,
 				DD80D67E16D8025000C172D2 /* MOAIFrameBufferTexture.cpp in Sources */,
 				DD80D6A616D8029700C172D2 /* SFMT.c in Sources */,
@@ -7271,6 +7315,7 @@
 				E9C4063A1518643E00C7AB04 /* MOAILayerBridge.cpp in Sources */,
 				E9C406391518642F00C7AB04 /* MOAIHttpTaskBase.cpp in Sources */,
 				E9C406381518642100C7AB04 /* MOAIStaticGlyphCache.cpp in Sources */,
+				4D851D911873DC56009DF1C4 /* MOAIEaseBackIn.cpp in Sources */,
 				E9C406371518640C00C7AB04 /* MOAIImageTexture.cpp in Sources */,
 				E9C406361518640100C7AB04 /* USPrism.cpp in Sources */,
 				E9C40635151863E400C7AB04 /* MOAICamera.cpp in Sources */,
@@ -7301,6 +7346,7 @@
 				0324E6AC13564BC8000ADC60 /* MOAIBox2DWorld.cpp in Sources */,
 				0324E6AE13564BC8000ADC60 /* MOAIButtonSensor.cpp in Sources */,
 				0324E6B013564BC8000ADC60 /* MOAIColor.cpp in Sources */,
+				4D851D8B1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */,
 				0324E6B213564BC8000ADC60 /* MOAICompassSensor.cpp in Sources */,
 				0324E6B513564BC8000ADC60 /* moaicore.cpp in Sources */,
 				0324E6B713564BC8000ADC60 /* MOAICp.cpp in Sources */,
@@ -7435,6 +7481,7 @@
 				CD18CEC014693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */,
 				CD18CEC814693BC100990FE1 /* MOAILuaState.cpp in Sources */,
 				CD18CECC14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */,
+				4D851D9D1873DED9009DF1C4 /* MOAIEaseBackInOut.cpp in Sources */,
 				CD18CED014693BC100990FE1 /* MOAIObject.cpp in Sources */,
 				CD18CED414693BC100990FE1 /* MOAIRtti.cpp in Sources */,
 				CD18CED814693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
@@ -7517,6 +7564,7 @@
 				0755162615A6CA2D00161409 /* MOAIHashWriter.cpp in Sources */,
 				663703E016128038002D0D27 /* USHashWriterAdler32.cpp in Sources */,
 				663703E416128038002D0D27 /* USHashWriterCRC32.cpp in Sources */,
+				4D851D971873DDE6009DF1C4 /* MOAIEaseBackOut.cpp in Sources */,
 				663703E816128038002D0D27 /* USHashWriterMD5.cpp in Sources */,
 				663703EC16128038002D0D27 /* USHashWriterSHA1.cpp in Sources */,
 				663703F016128038002D0D27 /* USHashWriterSHA224.cpp in Sources */,

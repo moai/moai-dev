@@ -48,6 +48,9 @@
 #include <moaicore/MOAIEaseSimpleIn.h>
 #include <moaicore/MOAIEaseSimpleInOut.h>
 #include <moaicore/MOAIEaseSimpleOut.h>
+#include <moaicore/MOAIEaseBackIn.h>
+#include <moaicore/MOAIEaseBackInOut.h>
+#include <moaicore/MOAIEaseBackOut.h>
 #include <moaicore/MOAIEaseCustom.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
