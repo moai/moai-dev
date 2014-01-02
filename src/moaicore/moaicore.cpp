@@ -101,6 +101,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIEaseBackInOut )
 	REGISTER_LUA_CLASS ( MOAIEaseBackOut )
 	REGISTER_LUA_CLASS ( MOAIEaseElasticIn )
+	REGISTER_LUA_CLASS ( MOAIEaseElasticInOut )
+	REGISTER_LUA_CLASS ( MOAIEaseElasticOut )
 	REGISTER_LUA_CLASS ( MOAIEaseCustom )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )

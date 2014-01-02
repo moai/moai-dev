@@ -2105,6 +2105,14 @@
 		EB665DED1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */; };
 		EB665DEE1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */ = {isa = PBXBuildFile; fileRef = EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */; };
 		EB6FB01317725BF700F164E5 /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
+		EB70430E187601CC0057E450 /* MOAIEaseElasticOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70430C187601CC0057E450 /* MOAIEaseElasticOut.cpp */; };
+		EB70430F187601CC0057E450 /* MOAIEaseElasticOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70430C187601CC0057E450 /* MOAIEaseElasticOut.cpp */; };
+		EB704310187601CC0057E450 /* MOAIEaseElasticOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70430D187601CC0057E450 /* MOAIEaseElasticOut.h */; };
+		EB704311187601CC0057E450 /* MOAIEaseElasticOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70430D187601CC0057E450 /* MOAIEaseElasticOut.h */; };
+		EB7043141876030B0057E450 /* MOAIEaseElasticInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB7043121876030B0057E450 /* MOAIEaseElasticInOut.cpp */; };
+		EB7043151876030B0057E450 /* MOAIEaseElasticInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB7043121876030B0057E450 /* MOAIEaseElasticInOut.cpp */; };
+		EB7043161876030B0057E450 /* MOAIEaseElasticInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB7043131876030B0057E450 /* MOAIEaseElasticInOut.h */; };
+		EB7043171876030B0057E450 /* MOAIEaseElasticInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB7043131876030B0057E450 /* MOAIEaseElasticInOut.h */; };
 		EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */; };
 		EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */; };
 		EBC495FA184D21840059FBDE /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
@@ -3289,6 +3297,10 @@
 		E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moaiext-iphone/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
 		EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveCustom.cpp; sourceTree = "<group>"; };
 		EB665DEA1756B13B009A8F29 /* MOAIAnimCurveCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveCustom.h; sourceTree = "<group>"; };
+		EB70430C187601CC0057E450 /* MOAIEaseElasticOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseElasticOut.cpp; sourceTree = "<group>"; };
+		EB70430D187601CC0057E450 /* MOAIEaseElasticOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseElasticOut.h; sourceTree = "<group>"; };
+		EB7043121876030B0057E450 /* MOAIEaseElasticInOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseElasticInOut.cpp; sourceTree = "<group>"; };
+		EB7043131876030B0057E450 /* MOAIEaseElasticInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseElasticInOut.h; sourceTree = "<group>"; };
 		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 		F055A9491846ABF40031F295 /* sha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.h"; sourceTree = "<group>"; };
@@ -4523,6 +4535,10 @@
 				4D851DA21873E5ED009DF1C4 /* MOAIEaseElasticBase.h */,
 				4D851DA71873E760009DF1C4 /* MOAIEaseElasticIn.cpp */,
 				4D851DA81873E760009DF1C4 /* MOAIEaseElasticIn.h */,
+				EB70430C187601CC0057E450 /* MOAIEaseElasticOut.cpp */,
+				EB70430D187601CC0057E450 /* MOAIEaseElasticOut.h */,
+				EB7043121876030B0057E450 /* MOAIEaseElasticInOut.cpp */,
+				EB7043131876030B0057E450 /* MOAIEaseElasticInOut.h */,
 				4D4973681872793400D46882 /* MOAIEaseCustom.cpp */,
 				4D4973691872793400D46882 /* MOAIEaseCustom.h */,
 			);
@@ -5639,6 +5655,7 @@
 				CD18CEAB14693BC100990FE1 /* MOAIDeserializer.h in Headers */,
 				CD18CEAF14693BC100990FE1 /* MOAIGlobals.h in Headers */,
 				CD18CEB514693BC100990FE1 /* MOAILua.h in Headers */,
+				EB7043171876030B0057E450 /* MOAIEaseElasticInOut.h in Headers */,
 				CD18CEB714693BC100990FE1 /* MOAILuaObject-impl.h in Headers */,
 				CD18CEBB14693BC100990FE1 /* MOAILuaObject.h in Headers */,
 				CD18CEBF14693BC100990FE1 /* MOAILuaRef.h in Headers */,
@@ -5703,6 +5720,7 @@
 				E91A4C6B151820CF0008F1A5 /* MOAIBitmapFontReader.h in Headers */,
 				E91A4C6D151820CF0008F1A5 /* MOAICamera.h in Headers */,
 				E91A4C6F151820CF0008F1A5 /* MOAICollisionShape.h in Headers */,
+				EB704311187601CC0057E450 /* MOAIEaseElasticOut.h in Headers */,
 				E91A4C71151820CF0008F1A5 /* MOAIFontReader.h in Headers */,
 				4D49736D18727DD000D46882 /* MOAIEaseCustom.h in Headers */,
 				E91A4C73151820CF0008F1A5 /* MOAIFreeTypeFontReader.h in Headers */,
@@ -6008,6 +6026,7 @@
 				0324E6F613564BC8000ADC60 /* MOAILayoutFrame.h in Headers */,
 				0324E6FA13564BC8000ADC60 /* MOAILocationSensor.h in Headers */,
 				0324E6FB13564BC8000ADC60 /* MOAILogMessages.h in Headers */,
+				EB7043161876030B0057E450 /* MOAIEaseElasticInOut.h in Headers */,
 				0324E6FD13564BC8000ADC60 /* MOAILogMgr.h in Headers */,
 				0324E6FF13564BC8000ADC60 /* MOAIMesh.h in Headers */,
 				0324E70113564BC8000ADC60 /* MOAINode.h in Headers */,
@@ -6142,6 +6161,7 @@
 				CD18CEB414693BC100990FE1 /* MOAILua.h in Headers */,
 				CD18CEB614693BC100990FE1 /* MOAILuaObject-impl.h in Headers */,
 				CD18CEBA14693BC100990FE1 /* MOAILuaObject.h in Headers */,
+				EB704310187601CC0057E450 /* MOAIEaseElasticOut.h in Headers */,
 				CD18CEBE14693BC100990FE1 /* MOAILuaRef.h in Headers */,
 				4D4973571872608C00D46882 /* MOAIEaseSimpleBase.h in Headers */,
 				CD18CEC214693BC100990FE1 /* MOAILuaRuntime.h in Headers */,
@@ -6838,6 +6858,7 @@
 				0324E84E13564BC8000ADC60 /* MOAIColor.cpp in Sources */,
 				0324E85013564BC8000ADC60 /* MOAICompassSensor.cpp in Sources */,
 				0324E85313564BC8000ADC60 /* moaicore.cpp in Sources */,
+				EB70430F187601CC0057E450 /* MOAIEaseElasticOut.cpp in Sources */,
 				0324E85513564BC8000ADC60 /* MOAICp.cpp in Sources */,
 				0324E85713564BC8000ADC60 /* MOAICpArbiter.cpp in Sources */,
 				0324E85913564BC8000ADC60 /* MOAICpBody.cpp in Sources */,
@@ -6878,6 +6899,7 @@
 				0324E8B213564BC8000ADC60 /* MOAIPartitionCell.cpp in Sources */,
 				0324E8B413564BC8000ADC60 /* MOAIPartitionLevel.cpp in Sources */,
 				0324E8B613564BC8000ADC60 /* MOAIPointerSensor.cpp in Sources */,
+				EB7043151876030B0057E450 /* MOAIEaseElasticInOut.cpp in Sources */,
 				0324E8B813564BC8000ADC60 /* MOAIProp.cpp in Sources */,
 				0324E8BC13564BC8000ADC60 /* MOAIScriptNode.cpp in Sources */,
 				0324E8BE13564BC8000ADC60 /* MOAISensor.cpp in Sources */,
@@ -7468,6 +7490,7 @@
 				07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */,
 				033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1413C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
+				EB70430E187601CC0057E450 /* MOAIEaseElasticOut.cpp in Sources */,
 				CDEFB3F913E37F3C000A9523 /* MOAIDraw.cpp in Sources */,
 				CDEFB3FD13E37F3C000A9523 /* MOAIGfxDevice.cpp in Sources */,
 				CDEFB3FF13E37F3C000A9523 /* MOAIGlyph.cpp in Sources */,
@@ -7518,6 +7541,7 @@
 				E9940DC214B7A4A0006465CC /* USBox.cpp in Sources */,
 				E9940DC614B7A4A0006465CC /* USCgt.cpp in Sources */,
 				E9940DCA14B7A4A0006465CC /* USColor.cpp in Sources */,
+				EB7043141876030B0057E450 /* MOAIEaseElasticInOut.cpp in Sources */,
 				E9940DCE14B7A4A0006465CC /* USCurve.cpp in Sources */,
 				E9940DDE14B7A4A0006465CC /* USDistance.cpp in Sources */,
 				E9940DE214B7A4A0006465CC /* USHexDump.cpp in Sources */,
