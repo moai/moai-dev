@@ -48,6 +48,9 @@
 #include <moaicore/MOAIEaseSineIn.h>
 #include <moaicore/MOAIEaseSineInOut.h>
 #include <moaicore/MOAIEaseSineOut.h>
+#include <moaicore/MOAIEaseExponentialIn.h>
+#include <moaicore/MOAIEaseExponentialInOut.h>
+#include <moaicore/MOAIEaseExponentialOut.h>
 #include <moaicore/MOAIEaseSimpleIn.h>
 #include <moaicore/MOAIEaseSimpleInOut.h>
 #include <moaicore/MOAIEaseSimpleOut.h>

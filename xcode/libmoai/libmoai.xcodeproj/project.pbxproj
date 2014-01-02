@@ -2125,6 +2125,18 @@
 		EB70433318761E630057E450 /* MOAIEaseSineInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70433018761E630057E450 /* MOAIEaseSineInOut.cpp */; };
 		EB70433418761E630057E450 /* MOAIEaseSineInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433118761E630057E450 /* MOAIEaseSineInOut.h */; };
 		EB70433518761E630057E450 /* MOAIEaseSineInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433118761E630057E450 /* MOAIEaseSineInOut.h */; };
+		EB70433818761FBD0057E450 /* MOAIEaseExponentialIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70433618761FBD0057E450 /* MOAIEaseExponentialIn.cpp */; };
+		EB70433918761FBD0057E450 /* MOAIEaseExponentialIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70433618761FBD0057E450 /* MOAIEaseExponentialIn.cpp */; };
+		EB70433A18761FBD0057E450 /* MOAIEaseExponentialIn.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433718761FBD0057E450 /* MOAIEaseExponentialIn.h */; };
+		EB70433B18761FBD0057E450 /* MOAIEaseExponentialIn.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433718761FBD0057E450 /* MOAIEaseExponentialIn.h */; };
+		EB70433E18761FCB0057E450 /* MOAIEaseExponentialOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70433C18761FCB0057E450 /* MOAIEaseExponentialOut.cpp */; };
+		EB70433F18761FCB0057E450 /* MOAIEaseExponentialOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70433C18761FCB0057E450 /* MOAIEaseExponentialOut.cpp */; };
+		EB70434018761FCB0057E450 /* MOAIEaseExponentialOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433D18761FCB0057E450 /* MOAIEaseExponentialOut.h */; };
+		EB70434118761FCB0057E450 /* MOAIEaseExponentialOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70433D18761FCB0057E450 /* MOAIEaseExponentialOut.h */; };
+		EB70434418761FDE0057E450 /* MOAIEaseExponentialInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70434218761FDE0057E450 /* MOAIEaseExponentialInOut.cpp */; };
+		EB70434518761FDE0057E450 /* MOAIEaseExponentialInOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB70434218761FDE0057E450 /* MOAIEaseExponentialInOut.cpp */; };
+		EB70434618761FDE0057E450 /* MOAIEaseExponentialInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70434318761FDE0057E450 /* MOAIEaseExponentialInOut.h */; };
+		EB70434718761FDE0057E450 /* MOAIEaseExponentialInOut.h in Headers */ = {isa = PBXBuildFile; fileRef = EB70434318761FDE0057E450 /* MOAIEaseExponentialInOut.h */; };
 		EB92A50816B6671000FC326E /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */; };
 		EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */; };
 		EBC495FA184D21840059FBDE /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
@@ -3319,6 +3331,12 @@
 		EB70432B18761D9A0057E450 /* MOAIEaseSineOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseSineOut.h; sourceTree = "<group>"; };
 		EB70433018761E630057E450 /* MOAIEaseSineInOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseSineInOut.cpp; sourceTree = "<group>"; };
 		EB70433118761E630057E450 /* MOAIEaseSineInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseSineInOut.h; sourceTree = "<group>"; };
+		EB70433618761FBD0057E450 /* MOAIEaseExponentialIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseExponentialIn.cpp; sourceTree = "<group>"; };
+		EB70433718761FBD0057E450 /* MOAIEaseExponentialIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseExponentialIn.h; sourceTree = "<group>"; };
+		EB70433C18761FCB0057E450 /* MOAIEaseExponentialOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseExponentialOut.cpp; sourceTree = "<group>"; };
+		EB70433D18761FCB0057E450 /* MOAIEaseExponentialOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseExponentialOut.h; sourceTree = "<group>"; };
+		EB70434218761FDE0057E450 /* MOAIEaseExponentialInOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseExponentialInOut.cpp; sourceTree = "<group>"; };
+		EB70434318761FDE0057E450 /* MOAIEaseExponentialInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseExponentialInOut.h; sourceTree = "<group>"; };
 		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 		F055A9491846ABF40031F295 /* sha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.h"; sourceTree = "<group>"; };
@@ -4539,6 +4557,12 @@
 				EB70432B18761D9A0057E450 /* MOAIEaseSineOut.h */,
 				EB70433018761E630057E450 /* MOAIEaseSineInOut.cpp */,
 				EB70433118761E630057E450 /* MOAIEaseSineInOut.h */,
+				EB70433618761FBD0057E450 /* MOAIEaseExponentialIn.cpp */,
+				EB70433718761FBD0057E450 /* MOAIEaseExponentialIn.h */,
+				EB70433C18761FCB0057E450 /* MOAIEaseExponentialOut.cpp */,
+				EB70433D18761FCB0057E450 /* MOAIEaseExponentialOut.h */,
+				EB70434218761FDE0057E450 /* MOAIEaseExponentialInOut.cpp */,
+				EB70434318761FDE0057E450 /* MOAIEaseExponentialInOut.h */,
 				4D4973541872608C00D46882 /* MOAIEaseSimpleBase.cpp */,
 				4D4973551872608C00D46882 /* MOAIEaseSimpleBase.h */,
 				4D49734C18725B5600D46882 /* MOAIEaseSimpleIn.cpp */,
@@ -5525,6 +5549,7 @@
 				0324E83F13564BC8000ADC60 /* MOAIBlocker.h in Headers */,
 				0324E84113564BC8000ADC60 /* MOAIBox2DArbiter.h in Headers */,
 				0324E84313564BC8000ADC60 /* MOAIBox2DBody.h in Headers */,
+				EB70434118761FCB0057E450 /* MOAIEaseExponentialOut.h in Headers */,
 				0324E84513564BC8000ADC60 /* MOAIBox2DDebugDraw.h in Headers */,
 				0324E84713564BC8000ADC60 /* MOAIBox2DFixture.h in Headers */,
 				0324E84913564BC8000ADC60 /* MOAIBox2DJoint.h in Headers */,
@@ -5600,6 +5625,7 @@
 				0324E8E713564BC8000ADC60 /* pch.h in Headers */,
 				0324E8E913564BC8000ADC60 /* pch.h in Headers */,
 				0324E8EA13564BC9000ADC60 /* STLArray.h in Headers */,
+				EB70434718761FDE0057E450 /* MOAIEaseExponentialInOut.h in Headers */,
 				0324E8EB13564BC9000ADC60 /* STLIteration.h in Headers */,
 				0324E8EC13564BC9000ADC60 /* STLList.h in Headers */,
 				0324E8ED13564BC9000ADC60 /* STLMap.h in Headers */,
@@ -5611,6 +5637,7 @@
 				0324E90213564BC9000ADC60 /* USDirectoryItr.h in Headers */,
 				0324E90513564BC9000ADC60 /* USFactory.h in Headers */,
 				0324E90913564BC9000ADC60 /* USFileStream.h in Headers */,
+				EB70433B18761FBD0057E450 /* MOAIEaseExponentialIn.h in Headers */,
 				0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */,
 				0324E90C13564BC9000ADC60 /* USFloat.h in Headers */,
 				0324E91113564BC9000ADC60 /* USLeanArray.h in Headers */,
@@ -6013,6 +6040,7 @@
 				0324E69913564BC8000ADC60 /* pch.h in Headers */,
 				0324E69B13564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E69D13564BC8000ADC60 /* MOAIAnim.h in Headers */,
+				EB70434618761FDE0057E450 /* MOAIEaseExponentialInOut.h in Headers */,
 				0324E69F13564BC8000ADC60 /* MOAIAnimCurve.h in Headers */,
 				0324E6A113564BC8000ADC60 /* MOAIBlocker.h in Headers */,
 				0324E6A313564BC8000ADC60 /* MOAIBox2DArbiter.h in Headers */,
@@ -6108,6 +6136,7 @@
 				0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */,
 				0324E76E13564BC8000ADC60 /* USFloat.h in Headers */,
 				0324E77313564BC8000ADC60 /* USLeanArray.h in Headers */,
+				EB70434018761FCB0057E450 /* MOAIEaseExponentialOut.h in Headers */,
 				0324E77413564BC8000ADC60 /* USLeanList.h in Headers */,
 				0324E77513564BC8000ADC60 /* USLeanPool.h in Headers */,
 				0324E77613564BC8000ADC60 /* USLeanStack.h in Headers */,
@@ -6132,6 +6161,7 @@
 				031FA4D2138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
 				039C283E138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */,
 				CDD06EF41398BA6300AB0420 /* moaiext-iphone.h in Headers */,
+				EB70433A18761FBD0057E450 /* MOAIEaseExponentialIn.h in Headers */,
 				CDD06EF71398BA6300AB0420 /* NSArray+MOAILib.h in Headers */,
 				CDD06EF91398BA6300AB0420 /* NSData+MOAILib.h in Headers */,
 				4D49734B187258FA00D46882 /* MOAIEaseLinear.h in Headers */,
@@ -6881,6 +6911,7 @@
 				0324E84013564BC8000ADC60 /* MOAIBox2DArbiter.cpp in Sources */,
 				0324E84213564BC8000ADC60 /* MOAIBox2DBody.cpp in Sources */,
 				EB70433318761E630057E450 /* MOAIEaseSineInOut.cpp in Sources */,
+				EB70434518761FDE0057E450 /* MOAIEaseExponentialInOut.cpp in Sources */,
 				0324E84413564BC8000ADC60 /* MOAIBox2DDebugDraw.cpp in Sources */,
 				0324E84613564BC8000ADC60 /* MOAIBox2DFixture.cpp in Sources */,
 				0324E84813564BC8000ADC60 /* MOAIBox2DJoint.cpp in Sources */,
@@ -6970,6 +7001,7 @@
 				039C283F138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */,
 				CDBC711A1398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
 				CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
+				EB70433F18761FCB0057E450 /* MOAIEaseExponentialOut.cpp in Sources */,
 				031BBA5E13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */,
 				CD7C726113B9477B006CFA19 /* USLog.cpp in Sources */,
 				CD7C726713B9479C006CFA19 /* MOAIParticlePlugin.cpp in Sources */,
@@ -6977,6 +7009,7 @@
 				0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */,
 				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
 				4D851D8C1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */,
+				EB70433918761FBD0057E450 /* MOAIEaseExponentialIn.cpp in Sources */,
 				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
 				CDEFB41413E37F3C000A9523 /* MOAIDraw.cpp in Sources */,
@@ -7439,6 +7472,7 @@
 				0324E6CB13564BC8000ADC60 /* MOAIDeck.cpp in Sources */,
 				0324E6CF13564BC8000ADC60 /* MOAIEaseDriver.cpp in Sources */,
 				0324E6D113564BC8000ADC60 /* MOAIEaseType.cpp in Sources */,
+				EB70433E18761FCB0057E450 /* MOAIEaseExponentialOut.cpp in Sources */,
 				0324E6DD13564BC8000ADC60 /* MOAIGfxQuad2D.cpp in Sources */,
 				0324E6E113564BC8000ADC60 /* MOAIGfxQuadListDeck2D.cpp in Sources */,
 				0324E6E313564BC8000ADC60 /* MOAIGrid.cpp in Sources */,
@@ -7458,6 +7492,7 @@
 				0324E70613564BC8000ADC60 /* MOAIParticleEmitter.cpp in Sources */,
 				0324E70A13564BC8000ADC60 /* MOAIParticleForce.cpp in Sources */,
 				0324E70C13564BC8000ADC60 /* MOAIParticleScript.cpp in Sources */,
+				EB70433818761FBD0057E450 /* MOAIEaseExponentialIn.cpp in Sources */,
 				0324E70E13564BC8000ADC60 /* MOAIParticleState.cpp in Sources */,
 				0324E71013564BC8000ADC60 /* MOAIParticleSystem.cpp in Sources */,
 				0324E71213564BC8000ADC60 /* MOAIPartition.cpp in Sources */,
@@ -7502,6 +7537,7 @@
 				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 				031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
+				EB70434418761FDE0057E450 /* MOAIEaseExponentialInOut.cpp in Sources */,
 				031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */,
 				039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */,
 				CDD06EF81398BA6300AB0420 /* NSArray+MOAILib.mm in Sources */,
