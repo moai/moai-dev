@@ -15,8 +15,7 @@ float MOAIEaseBackIn::DistortedTime(float inputTime){
 	return inputTime * inputTime * ( ( overshoot + 1.0f ) * inputTime - overshoot );
 }
 
-MOAIEaseBackIn::MOAIEaseBackIn()
-{
+MOAIEaseBackIn::MOAIEaseBackIn(){
 	RTTI_SINGLE(MOAIEaseBackBase)
 }
 

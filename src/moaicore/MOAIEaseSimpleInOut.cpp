@@ -19,8 +19,7 @@ float MOAIEaseSimpleInOut::DistortedTime(float inputTime){
 	return 1.0 - 0.5 * powf(2.0 - t, this->mRate);
 }
 
-MOAIEaseSimpleInOut::MOAIEaseSimpleInOut()
-{
+MOAIEaseSimpleInOut::MOAIEaseSimpleInOut(){
 	
 }
 

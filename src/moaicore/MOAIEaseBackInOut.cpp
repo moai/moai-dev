@@ -24,8 +24,7 @@ float MOAIEaseBackInOut::DistortedTime(float inputTime){
 	}
 }
 
-MOAIEaseBackInOut::MOAIEaseBackInOut()
-{
+MOAIEaseBackInOut::MOAIEaseBackInOut(){
 	RTTI_SINGLE(MOAIEaseBackBase)
 }
 

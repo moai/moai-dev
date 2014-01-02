@@ -14,8 +14,7 @@ float MOAIEaseSimpleOut::DistortedTime(float inputTime){
 	return powf(inputTime, invertedRate);
 }
 
-MOAIEaseSimpleOut::MOAIEaseSimpleOut()
-{
+MOAIEaseSimpleOut::MOAIEaseSimpleOut(){
 	RTTI_SINGLE(MOAIEaseSimpleBase)
 }
 
