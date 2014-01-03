@@ -14,6 +14,11 @@
 // Abstract superclass of all eases.
 
 class MOAIEase : public virtual MOAILuaObject {
+private:
+	
+	//----------------------------------------------------------------//
+	static int		_getValueAtTime		( lua_State* L );
+	
 public:
 	
 	DECL_LUA_FACTORY(MOAIEase);
