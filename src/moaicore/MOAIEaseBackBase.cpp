@@ -19,7 +19,7 @@ int MOAIEaseBackBase::_setOvershoot( lua_State *L ){
 }
 
 MOAIEaseBackBase::MOAIEaseBackBase()
-:mOvershoot(1.70158)
+:mOvershoot(1.70158f)
 {
 	RTTI_SINGLE(MOAIEase)
 }

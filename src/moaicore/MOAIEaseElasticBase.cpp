@@ -19,7 +19,7 @@ int MOAIEaseElasticBase::_setPeriod( lua_State *L ){
 }
 
 MOAIEaseElasticBase::MOAIEaseElasticBase()
-:mPeriod(0.3)
+:mPeriod(0.3f)
 {
 	RTTI_SINGLE(MOAIEase)
 }
