@@ -33,8 +33,24 @@ void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 		return;
 	}
 
-	ZLVec2D* verts = this->mVertices;
-	int nJoins = ( int )this->mVertices.Size ();
+	int nVerts = ( int )this->mVertices.Size ();
+	if ( nVerts < 2 ) return;
+
+	// filter out duplicate vertices
+	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * nVerts );
+	verts [ 0 ] = this->mVertices [ 0 ];
+
+	int nJoins = 1;
+	for ( int i = 1; i < nVerts; ++i ) {
+		
+		const ZLVec2D& v0 = verts [ nJoins - 1 ];
+		const ZLVec2D& v1 = this->mVertices [ i ];
+	
+		if (( v1.mX != v0.mX ) || ( v1.mY != v0.mY )) {
+			verts [ nJoins++ ] = v1;
+		}
+	}
+	if ( nJoins < 2 ) return;
 
 	MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nJoins * 2 );
 	
@@ -46,19 +62,19 @@ void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 	
 	float width = this->mStyle.GetStrokeWidth () * 0.5f;
 	
-	int nVerts0 = MOAIVectorUtil::StrokeLine ( this->mStyle, 0, joins0, nJoins, width, false );
-	int nVerts1 = MOAIVectorUtil::StrokeLine ( this->mStyle, 0, joins1, nJoins, width, false );
-	int nVerts = nVerts0 + nVerts1;
+	int nContourVerts0 = MOAIVectorUtil::StrokeLine ( this->mStyle, 0, joins0, nJoins, width, false );
+	int nContourVerts1 = MOAIVectorUtil::StrokeLine ( this->mStyle, 0, joins1, nJoins, width, false );
+	int nContourVerts = nContourVerts0 + nContourVerts1;
 	
-	ZLVec2D* contour = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * nVerts );
+	ZLVec2D* contour = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * nContourVerts );
 	
 	ZLVec2D* contour0 = contour;
-	ZLVec2D* contour1 = &contour [ nVerts0 ];
+	ZLVec2D* contour1 = &contour [ nContourVerts0 ];
 	
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour0, joins0, nJoins, width, false );
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour1, joins1, nJoins, width, false );
 	
-	tessAddContour ( tess, 2, contour, sizeof ( ZLVec2D ), nVerts );
+	tessAddContour ( tess, 2, contour, sizeof ( ZLVec2D ), nContourVerts );
 }
 
 //----------------------------------------------------------------//
