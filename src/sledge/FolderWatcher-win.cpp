@@ -1,10 +1,9 @@
 #include "stdafx.h"
-#include <windows.h>
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
 
-#include <FolderWatcher-win.h>
+#include "FolderWatcher-win.h"
 #include <moai-sim/host.h>
 
 #ifdef WIN32
