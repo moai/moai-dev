@@ -2325,6 +2325,7 @@
 					"\"../../3rdparty/Husky/shared\"",
 					"\"../../3rdparty/tinyxml\"",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
@@ -2365,6 +2366,7 @@
 					"\"../../3rdparty/Husky/shared\"",
 					"\"../../3rdparty/tinyxml\"",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
