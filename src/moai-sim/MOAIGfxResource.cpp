@@ -58,7 +58,7 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 			runtime which can significantly degrade performance.
  
 	@in		MOAIGfxResource self
-	@opt	int age					Release only if the texture hasn't been used in X frames.
+	@opt	number age				Release only if the texture hasn't been used in X frames.
 	@out	boolean released		True if the texture was actually released.
 */
 int MOAIGfxResource::_softRelease ( lua_State* L ) {
