@@ -36,7 +36,7 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-glut" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework CoreServices -framework ApplicationServices" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
 endif ( BUILD_OSX )
 
 add_executable ( moai
@@ -46,7 +46,6 @@ add_executable ( moai
 )
 
 target_link_libraries ( moai 
-  freeglut-static
   moai-sim
   moai-util
   moai-core
@@ -72,6 +71,7 @@ endif ( MOAI_UNTZ )
 
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
+    freeglut-static
     ${OPENGL_LIBRARIES}
   )
 endif (BUILD_WINDOWS)
@@ -80,6 +80,7 @@ if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
   rt
+  freeglut-static
   ${OpenGL_LIBRARIES}
 )
 endif ( BUILD_LINUX )
