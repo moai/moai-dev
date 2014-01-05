@@ -27,7 +27,6 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSourceThread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MemoryAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UserAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/native/win/DShowAudioSource.cpp
@@ -38,7 +37,13 @@ if ( MOAI_UNTZ )
     "../../3rdparty/rtaudio-4.0.8/include/asiolist.cpp" 
     "../../3rdparty/rtaudio-4.0.8/include/iasiothiscallresolver.cpp"
   CACHE INTERNAL "doc string" )
-
+   if (MOAI_VORBIS)   
+     set ( UNTZ_SOURCES 
+       ${UNTZ_SOURCES}
+       ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
+       CACHE INTERNAL "doc string" )
+   endif (MOAI_VORBIS)
+  
 
 else ( MOAI_UNTZ )
 
