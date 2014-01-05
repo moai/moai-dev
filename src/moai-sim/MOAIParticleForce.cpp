@@ -15,8 +15,8 @@
 			attractor.
 	
 	@in		MOAIParticleForce self
-	@in		number radius Size of the attractor.
-	@opt	number magnitude Strength of the attractor.
+	@in		number radius			Size of the attractor.
+	@opt	number magnitude		Strength of the attractor.
 	@out	nil
 */
 int MOAIParticleForce::_initAttractor ( lua_State* L ) {
@@ -37,8 +37,8 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 			attractor.
 	
 	@in		MOAIParticleForce self
-	@in		number radius Size of the attractor.
-	@opt	number magnitude Strength of the attractor.
+	@in		number radius				Size of the attractor.
+	@opt	number magnitude			Strength of the attractor.
 	@out	nil
 */
 int MOAIParticleForce::_initBasin ( lua_State* L ) {

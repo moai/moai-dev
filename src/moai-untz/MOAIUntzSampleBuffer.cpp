@@ -52,10 +52,10 @@ int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
 }
 
 /**	@name	getData
- @text	Retrieve every sample data in buffer
- 
- @in		MOAIUntzSampleBuffer self
- @out		table array of sample data number ( -1 ~ 1 as sample level)
+	@text	Retrieve every sample data in buffer
+	
+	@in		MOAIUntzSampleBuffer self
+	@out	table data					Array of sample data numbers ( -1 ~ 1 as sample level)
  */
 int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "U" );
@@ -68,12 +68,12 @@ int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
 	return 1;
 }
 /**	@name	setData
- @text	Write sample data into buffer
- 
- @in		MOAIUntzSampleBuffer self
- @in		table array of sample data number ( -1 ~ 1 as sample level )
- @in		number index of sample buffer start copying from (1 for the first sample)
- @out		nil
+	@text	Write sample data into buffer
+	
+	@in		MOAIUntzSampleBuffer self
+	@in		table data					Array of sample data numbers ( -1 ~ 1 as sample level )
+	@in		number index				Index within sample buffer to start copying from (1 for the first sample)
+	@out	nil
  */
 
 int MOAIUntzSampleBuffer::_setData( lua_State* L ) {

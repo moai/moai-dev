@@ -24,10 +24,10 @@
 /**	@name	getMemoryStats
 	@text	Get memory usage.
 
-	@opt	boolean    blocking - Default value is 'false.'
+	@opt	boolean blocking		Default value is 'false.'
 	
-    @out	number     currentAlloc
-	@out	number     maxAlloc
+	@out	number currentAlloc
+	@out	number maxAlloc
 */
 int	MOAIFmodEventMgr::_getMemoryStats ( lua_State* L ) {
 	MOAILuaState state ( L );

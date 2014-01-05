@@ -632,7 +632,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	@in		number y
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -672,7 +672,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	@in		number yMax
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -717,7 +717,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	@in		number y2
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )

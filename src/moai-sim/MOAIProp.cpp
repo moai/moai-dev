@@ -172,7 +172,7 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 	@text	Returns true if the given prop is visible.
 	
 	@in		MOAIProp self
-	@out	boolean is visible
+	@out	boolean isVisible
 */
 int	MOAIProp::_isVisible ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )

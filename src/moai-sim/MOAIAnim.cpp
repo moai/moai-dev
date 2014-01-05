@@ -16,7 +16,7 @@
 	@overload	Apply the animation at time t0.
 
 		@in		MOAIAnim self
-		@opt	number t0 - Default value is 0.
+		@opt	number t0		Default value is 0.
 		@out	nil
 	
 	@overload	Apply the animation for the step t0 to t1.
@@ -76,9 +76,9 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	@in		MOAIAnim self
 	@in		number linkID
 	@in		MOAIAnimCurveBase curve
-	@in		MOAINode target - Target node.
-	@in		number attrID - Attribute of the target node to be driven by the curve.
-	@opt	boolean asDelta - 'true' to apply the curve as a delta instead of an absolute. Default value is false.
+	@in		MOAINode target				Target node.
+	@in		number attrID				Attribute of the target node to be driven by the curve.
+	@opt	boolean asDelta				'true' to apply the curve as a delta instead of an absolute. Default value is false.
 	@out	nil
 */
 int	MOAIAnim::_setLink ( lua_State* L ) {

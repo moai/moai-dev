@@ -446,9 +446,9 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 /**	@name	getPurchasedProducts
 	@text	Gets the user's purchased products 
 				
-	@in		int 	type
-	@opt	string 	continuation
-	@out 	string	JSON string of products
+	@in		int type
+	@opt	string continuation
+	@out 	string products			JSON string of products
 */
 int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	
@@ -532,9 +532,9 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 /**	@name	requestProductsSync
 	@text	Gets the products from Google Play for the current app
 				
-    @in		table   skus
-	@in	    int		type
-	@out 	string	JSON string of products
+    @in		table skus
+	@in	    int type
+	@out 	string products			JSON string of products
 */
 int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 	

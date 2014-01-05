@@ -80,8 +80,8 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	@text	Returns the alignment of the text
 
 	@in		MOAITextBox self
-	@out	enum horizontal alignment
-	@out	enum vertical alignment
+	@out	enum hAlign			horizontal alignment
+	@out	enum vAlign			vertical alignment
 */
 int MOAITextBox::_getAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )

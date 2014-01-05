@@ -351,8 +351,8 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 /**	@name	drawLine
 	@text	Draw a line.
 	
-	@in		...		List of vertices (x, y) or an array of vertices
-					{ x0, y0, x1, y1, ... , xn, yn }
+	@in		... vertices		List of vertices (x, y) or an array of vertices
+								{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_drawLine ( lua_State* L ) {
@@ -369,8 +369,8 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 /**	@name	drawPoints
 	@text	Draw a list of points.
 	
-	@in		...		List of vertices (x, y) or an array of vertices
-					{ x0, y0, x1, y1, ... , xn, yn }
+	@in		... vertices		List of vertices (x, y) or an array of vertices
+								{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_drawPoints ( lua_State* L ) {
@@ -482,8 +482,8 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 /**	@name	fillFan
 	@text	Draw a filled fan.
 	
-	@in		...		List of vertices (x, y) or an array of vertices
-					{ x0, y0, x1, y1, ... , xn, yn }
+	@in		... vertices		List of vertices (x, y) or an array of vertices
+								{ x0, y0, x1, y1, ... , xn, yn }
 	@out	nil
 */
 int MOAIDraw::_fillFan ( lua_State* L ) {

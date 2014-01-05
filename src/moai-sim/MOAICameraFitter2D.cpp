@@ -356,7 +356,7 @@ int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
 	@overload	Snap a passed in transform to the target.
 	
 		@in		MOAICameraFitter2D self
-		@in		MOAITransform
+		@in		MOAITransform transform
 		@out	nil
 */
 int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {

@@ -34,8 +34,8 @@ int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	anchorX		in units, in world coordinates, converted to meters
-	@out	anchorY		in units, in world coordinates, converted to meters
+	@out	number anchorX		in units, in world coordinates, converted to meters
+	@out	number anchorY		in units, in world coordinates, converted to meters
 */
 int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -58,8 +58,8 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	anchorX		in units, in world coordinates, converted from meters
-	@out	anchorY		in units, in world coordinates, converted from meters
+	@out	number anchorX		in units, in world coordinates, converted from meters
+	@out	number anchorY		in units, in world coordinates, converted from meters
 */
 int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )

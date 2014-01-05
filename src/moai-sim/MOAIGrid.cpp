@@ -104,7 +104,7 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 
 	@in		MOAIGrid self
 	@in		number row
-	@in		...
+	@in		... values
 	@out	nil
 */
 int MOAIGrid::_setRow ( lua_State* L ) {
