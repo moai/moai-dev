@@ -122,6 +122,10 @@ if ( DEBUG )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O4")
 endif ( DEBUG )
 
+#missing cmake modules
+
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
 
 #
 # Libraries

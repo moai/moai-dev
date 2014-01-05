@@ -32,6 +32,7 @@ endif ( BUILD_OSX )
 add_executable ( moai
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHost.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostMain.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/../host-modules/aku_modules.cpp
 )
 
 target_link_libraries ( moai 
