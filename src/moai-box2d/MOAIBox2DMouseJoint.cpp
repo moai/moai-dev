@@ -39,7 +39,7 @@ int MOAIBox2DMouseJoint::_getDampingRatio ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number frequency in Hz
+	@out	number frequency			in Hz
 */
 int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
@@ -60,7 +60,7 @@ int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number maxForce in kg * units / s^2 converted from N [kg * m / s^2]
+	@out	number maxForce				in kg * units / s^2 converted from N [kg * m / s^2]
 */
 int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
@@ -82,8 +82,8 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number x in units, world coordinates, converted from meters
-	@out	number y in units, world coordinates, converted from meters
+	@out	number x					in units, world coordinates, converted from meters
+	@out	number y					in units, world coordinates, converted from meters
 */
 int MOAIBox2DMouseJoint::_getTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )

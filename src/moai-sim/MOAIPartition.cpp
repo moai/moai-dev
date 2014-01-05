@@ -155,7 +155,7 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point, all pushed onto the stack.
+	@out	... props				The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -200,7 +200,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point in order of depth, all pushed onto the stack.
+	@out	... props				The props under the point in order of depth, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -251,7 +251,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the rect, all pushed onto the stack.
+	@out	... props				The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )

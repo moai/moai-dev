@@ -21,7 +21,7 @@ int MOAIRenderMgr::_getBufferTable ( lua_State* L ) {
 /**	@name	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
-	@out	number count Number of underlying graphics "draw" calls last frame.	
+	@out	number count		Number of underlying graphics "draw" calls last frame.	
 */	
 int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
 

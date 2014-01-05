@@ -39,10 +39,10 @@ int MOAIBox2DRopeJoint::_getLimitState ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getMaxLength
- @text	See Box2D documentation.
- 
- @in		MOAIBox2DRopeJoint self
- @out	number maxLength in units, converted from meters.
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DRopeJoint self
+	@out	number maxLength			in units, converted from meters.
  */
 int MOAIBox2DRopeJoint::_getMaxLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRopeJoint, "U" )
@@ -62,11 +62,11 @@ int MOAIBox2DRopeJoint::_getMaxLength ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setMaxLength
- @text	See Box2D documentation.
- 
- @in		MOAIBox2DRopeJoint self
- @in	number	maxLength in units, converted to meters. Default is 0.
- @out	nil
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DRopeJoint self
+	@in		number maxLength			in units, converted to meters. Default is 0.
+	@out	nil
  */
 int MOAIBox2DRopeJoint::_setMaxLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRopeJoint, "U" )

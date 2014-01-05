@@ -18,7 +18,7 @@
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number angle in degrees, converted from radians
+	@out	number angle					in degrees, converted from radians
 */
 int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )

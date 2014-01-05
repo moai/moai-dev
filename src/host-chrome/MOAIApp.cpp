@@ -134,11 +134,11 @@ void MOAIApp::HandleStoreMessage ( std::string & message ) {
 			cancel button. This will not halt execution (this function returns immediately),
 			so if you need to respond to the user's selection, pass a callback.
 
-	@in string title The title of the dialog box.
-	@in string message The message to display.
-	@in function callback The function that will receive an integer index as which button was pressed.
-	@in string cancelTitle The title of the cancel button.
-	@in string... buttons Other buttons to add to the alert box.
+	@in		string title		The title of the dialog box.
+	@in		string message		The message to display.
+	@in		function callback	The function that will receive an integer index as which button was pressed.
+	@in		string cancelTitle	The title of the cancel button.
+	@in		string... buttons	Other buttons to add to the alert box.
 	@out nil
  
 */
@@ -279,8 +279,8 @@ int MOAIApp::_setListener ( lua_State* L ) {
 	@text	Search the platform's internal directory structure for a special directory
 			as defined by the platform.
  
-	@in		string domain	One of MOAIApp.DOMAIN_DOCUMENTS, MOAIApp.DOMAIN_APP_SUPPORT
-	@out	string directory The directory associated with the given domain.
+	@in		string domain		One of MOAIApp.DOMAIN_DOCUMENTS, MOAIApp.DOMAIN_APP_SUPPORT
+	@out	string directory	The directory associated with the given domain.
 */
 int MOAIApp::_getDirectoryInDomain ( lua_State* L ) {
 	MOAILuaState state ( L );

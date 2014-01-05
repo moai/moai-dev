@@ -51,7 +51,7 @@ int MOAICoroutine::_currentThread ( lua_State* L ) {
 	
 	@in		MOAICoroutine self
 	@in		function threadFunc
-	@in		...
+	@in		... parameters
 	@out	nil
 */
 int MOAICoroutine::_run ( lua_State* L ) {

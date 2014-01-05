@@ -127,8 +127,8 @@ int MOAIFmodEventInstance::_setVolume ( lua_State* L ) {
 	@text	Gets the volume of the Event Instance.
 	
 	@in		MOAIFmodEventInstance self	
-
-    @out	number                volume of this Event Instance
+	
+	@out	number volume					volume of this Event Instance
 */
 int MOAIFmodEventInstance::_getVolume ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodEventInstance, "U" )
@@ -173,7 +173,7 @@ int MOAIFmodEventInstance::_setPitch ( lua_State* L ) {
 	
 	@in		MOAIFmodEventInstance self	
 
-    @out	number                pitch of this Event Instance
+	@out	number pitch					pitch of this Event Instance
 */
 int MOAIFmodEventInstance::_getPitch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodEventInstance, "U" )

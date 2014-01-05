@@ -212,7 +212,7 @@ int MOAIAdColonyAndroid::_setListener ( lua_State* L ) {
 	@text	Check the readiness of a video ad for a given zone.
 
 	@in 	string	zone			The zone from which to check for a video ad.
-	@out 	bool					True, if a video ad is ready to play.
+	@out 	bool isReady			True, if a video ad is ready to play.
 */
 int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 

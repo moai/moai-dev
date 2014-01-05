@@ -19,7 +19,7 @@ extern JavaVM* jvm;
 /**	@name	getUTCTime
 	@text	Gets the UTC time.
 
-	@out 	num		UTC Time
+	@out 	num time		UTC Time
 */
 int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 

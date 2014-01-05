@@ -22,7 +22,7 @@ class MOAIDataBuffer;
 			is full. Wrapping will overwrite the oldest particles with new particles.
 	
 	@in		MOAIParticleSystem self
-	@opt	boolean cap Default value is true.
+	@opt	boolean cap					Default value is true.
 	@out	nil
 */
 int MOAIParticleSystem::_capParticles ( lua_State* L ) {
@@ -37,7 +37,7 @@ int MOAIParticleSystem::_capParticles ( lua_State* L ) {
 	@text	Controls capping vs. wrapping of sprites.
 	
 	@in		MOAIParticleSystem self
-	@opt	boolean cap Default value is true.
+	@opt	boolean cap					Default value is true.
 	@out	nil
 */
 int MOAIParticleSystem::_capSprites ( lua_State* L ) {
@@ -82,12 +82,12 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**  @name  isIdle	
-  @text  Returns true if the current system is not currently
-      processing any particles.
-  
-  @in    MOAIParticleSystem self
-  @out  boolean whether the system is currently idle	
+/** @name	isIdle
+	@text	Returns true if the current system is not currently
+			processing any particles.
+			
+	@in		MOAIParticleSystem self
+	@out	boolean isIdle				Indicates whether the system is currently idle.
 */
 int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 	
@@ -105,11 +105,11 @@ int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 	@text	Adds a particle to the system.
 	
 	@in		MOAIParticleSystem self
-	@opt	number x Default value is 0.
-	@opt	number y Default value is 0.
-	@opt	number dx Default value is 0.
-	@opt	number dy Default value is 0.
-	@out	boolean result 'true' is particle was added, 'false' if not.
+	@opt	number x					Default value is 0.
+	@opt	number y					Default value is 0.
+	@opt	number dx					Default value is 0.
+	@opt	number dy					Default value is 0.
+	@out	boolean result				true if particle was added, false if not.
 */
 int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
@@ -133,10 +133,10 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	@in		MOAIParticleSystem self
 	@in		number x
 	@in		number y
-	@opt	number rot Rotation in degrees. Default value is 0.
-	@opt	number xScale Default value is 1.
-	@opt	number yScale Default value is 1.
-	@out	boolean result 'true' is sprite was added, 'false' if not.
+	@opt	number rot			Rotation in degrees. Default value is 0.
+	@opt	number xScale		Default value is 1.
+	@opt	number yScale		Default value is 1.
+	@out	boolean result		true is sprite was added, false if not.
 */
 int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
@@ -171,7 +171,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	
 	@in		MOAIParticleSystem self
 	@in		number nParticles		Total number of particle records.
-	@in		number particleSize		Number of params reserved for the particle.
+	@in		number particleSize		Number of parameters reserved for the particle.
 	@out	nil
 */
 int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
@@ -306,11 +306,11 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 	@text	Release a batch emission or particles into the system.
 	
 	@in		MOAIParticleSystem self
-	@opt	number total Default value is 1.
-	@opt	number x Default value is 0.
-	@opt	number y Default value is 0.
-	@opt	number dx Default value is 0.
-	@opt	number dy Default value is 0.
+	@opt	number total			Default value is 1.
+	@opt	number x				Default value is 0.
+	@opt	number y				Default value is 0.
+	@opt	number dx				Default value is 0.
+	@opt	number dy				Default value is 0.
 	@out	nil
 */
 int MOAIParticleSystem::_surge ( lua_State* L ) {

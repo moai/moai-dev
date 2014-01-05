@@ -112,7 +112,7 @@ int MOAIParticleState::_setMass ( lua_State* L ) {
 	@text	Sets the next state (if any).
 	
 	@in		MOAIParticleState self
-	@opt	MOAIParticleState next Default value is nil.
+	@opt	MOAIParticleState next		Default value is nil.
 	@out	nil
 */
 int MOAIParticleState::_setNext ( lua_State* L ) {

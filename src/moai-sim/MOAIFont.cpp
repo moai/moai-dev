@@ -22,7 +22,7 @@
 	@text	Requests the font's default size
 	
 	@in		MOAIFont self
-	@out	float default size
+	@out	float defaultSize
 */
 int MOAIFont::_getDefaultSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )

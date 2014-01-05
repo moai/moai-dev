@@ -328,9 +328,9 @@ int MOAIImage::_getSize ( lua_State* L ) {
 	@in		MOAIImage self
 	@in		number width
 	@in		number height
-	@opt	colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
-							MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
-							Default value is MOAIImage.COLOR_FMT_RGBA_8888.
+	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
+								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
+								Default value is MOAIImage.COLOR_FMT_RGBA_8888.
 	@out	nil
 */
 int MOAIImage::_init ( lua_State* L ) {
@@ -371,9 +371,9 @@ int MOAIImage::_load ( lua_State* L ) {
 	@text	Loads an image from a buffer.
 
 	@in		MOAIImage self
-	@in		MOAIDataBuffer		Buffer containing the image
-	@opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
-								One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+	@in		MOAIDataBuffer buffer		Buffer containing the image
+	@opt	number transform			One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+										One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
 	@out	nil
 */
 int MOAIImage::_loadFromBuffer ( lua_State* L ) {

@@ -178,7 +178,7 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 	
 	@in		MOAIStream self
 	@in		string format
-	@out	...					Values read from the stream or 'nil'.
+	@out	...	values			Values read from the stream or 'nil'.
 	@out	number size			Number of bytes successfully read.
 */
 int MOAIStream::_readFormat ( lua_State* L ) {
@@ -347,7 +347,7 @@ int MOAIStream::_writeFloat ( lua_State* L ) {
 	
 	@in		MOAIStream self
 	@in		string format
-	@in		...					Values to be written to the stream.
+	@in		... values			Values to be written to the stream.
 	@out	number size			Number of bytes successfully written.
 */
 int MOAIStream::_writeFormat ( lua_State* L ) {
