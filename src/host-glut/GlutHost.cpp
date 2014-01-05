@@ -11,7 +11,11 @@
 #include <string.h>
 #include <host-modules/aku_modules.h>
 
+#ifdef FREEGLUT_STATIC
 #include <GL/freeglut.h>
+#else
+#include <GLUT/glut.h>
+#endif
 
 #if LUA_VERSION_NUM >= 502
 	#ifdef MOAI_WITH_LUAEXT
@@ -290,8 +294,12 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 	glutMouseFunc ( _onMouseButton );
 	glutMotionFunc ( _onMouseDrag );
+
+	#ifdef FREEGLUT_STATIC 
 	glutMultiButtonFunc ( _onMultiButton );
 	glutMultiMotionFunc ( _onMultiMotion );
+	#endif
+	
 	glutPassiveMotionFunc ( _onMouseMove );
 
 	glutDisplayFunc ( _onPaint );
