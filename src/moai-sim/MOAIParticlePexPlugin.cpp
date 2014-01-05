@@ -102,7 +102,7 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 /**	@name	load
 	@text	Create a particle plugin from an XML file
 	
-	@in		String fileName					file to load
+	@in		string fileName					file to load
 	@out	MOAIParticlePexPlugin plugin	The plugin object that has been initialized with XML's data
 */
 int MOAIParticlePexPlugin::_load( lua_State* L ){

@@ -17,7 +17,7 @@
 /**	@name	getProgress
 	@text	Returns the progress of the download.
 	
-	@in		MOAIHttpTask self
+	@in		MOAIHttpTaskBase self
 	@out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
  */
 int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
@@ -32,7 +32,7 @@ int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 /**	@name	getResponseCode
 	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
-	@in		MOAIHttpTask self
+	@in		MOAIHttpTaskBase self
 	@out	number code			The numeric response code returned by the server.
  */
 int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
@@ -49,7 +49,7 @@ int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
 			Header names are case-insensitive and if multiple responses are given, they will be
 			concatenated with a comma separating the values.
 			
-	@in		MOAIHttpTask self
+	@in		MOAIHttpTaskBase self
 	@in		string header			The name of the header to return (case-insensitive).
 	@out	string response			The response given by the server or nil if none was specified.
 */

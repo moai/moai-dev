@@ -35,7 +35,7 @@ int MOAIFont::_getDefaultSize ( lua_State* L ) {
 	@text	Returns the filename of the font.
 	
 	@in		MOAIFont self
-	@out	name
+	@out	string name
 */
 int MOAIFont::_getFilename ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
