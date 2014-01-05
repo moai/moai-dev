@@ -188,7 +188,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DJoint jointA
 	@in		MOAIBox2DJoint jointB
-	@in		float ratio
+	@in		number ratio
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {

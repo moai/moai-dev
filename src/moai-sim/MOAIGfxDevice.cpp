@@ -87,8 +87,8 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 /**	@name	getViewSize
 	@text	Returns the width and height of the view
 	
-	@out	int width
-	@out	int height
+	@out	number width
+	@out	number height
 */
 int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 

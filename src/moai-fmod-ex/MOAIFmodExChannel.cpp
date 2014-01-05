@@ -15,7 +15,7 @@
  @text	Returns the current volume of the channel.
  
  @in	MOAIFmodExChannel self
- @out	float volume				the volume currently set in this channel.
+ @out	number volume				the volume currently set in this channel.
  */
 int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
 	

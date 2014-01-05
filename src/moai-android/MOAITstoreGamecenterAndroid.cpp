@@ -299,7 +299,7 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 /**	@name	startGamecenter	
 	@text	Starts the gamecenter app
 	
-	@out	int status		Can be GAMECENTER_INSTALLED, GAMECENTER_UPGRADING, GAMECENTER_NOT_INSTALLED
+	@out	number status		Can be GAMECENTER_INSTALLED, GAMECENTER_UPGRADING, GAMECENTER_NOT_INSTALLED
 */
 int MOAITstoreGamecenterAndroid::_startGamecenter ( lua_State* L ) {
 	

@@ -302,8 +302,8 @@ int MOAIUntzSound::_setLooping ( lua_State* L ) {
 	@text	Sets the start and end looping positions for the sound
 	
 	@in		MOAIUntzSound self
-	@in		double startTime
-	@in		double endTime
+	@in		number startTime
+	@in		number endTime
 	
 	@out	nil
 */

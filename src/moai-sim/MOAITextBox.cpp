@@ -80,8 +80,8 @@ int MOAITextBox::_clearHighlights ( lua_State* L ) {
 	@text	Returns the alignment of the text
 
 	@in		MOAITextBox self
-	@out	enum hAlign			horizontal alignment
-	@out	enum vAlign			vertical alignment
+	@out	number hAlign			horizontal alignment
+	@out	number vAlign			vertical alignment
 */
 int MOAITextBox::_getAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
@@ -274,8 +274,8 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 	@text	Sets the horizontal and/or vertical alignment of the text in the text box.
 
 	@in		MOAITextBox self
-	@in		enum hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
-	@in		enum vAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		number hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		number vAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
 	@out	nil
 */
 int MOAITextBox::_setAlignment ( lua_State* L ) {
