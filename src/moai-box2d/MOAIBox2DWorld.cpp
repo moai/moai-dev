@@ -699,7 +699,7 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 /**	@name	setDebugDrawEnabled
 	@text	enable/disable debug drawing.
  
-	@in		MOAIBox2dWorld self
+	@in		MOAIBox2DWorld self
 	@in		number bEnable
 	@out	nil
 */
