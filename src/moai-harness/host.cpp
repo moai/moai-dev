@@ -8,40 +8,29 @@
 // aku
 //================================================================//
 
-static bool sIsInitialized = false;
-
 //----------------------------------------------------------------//
-void AKUFinalizeDebugger () {
-	
-	if ( !sIsInitialized ) return;
-	sIsInitialized = false;
+void AKUHarnessAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUHandleError ( const char* message, struct lua_State* L, int level ) {
-    MOAIHarness::Get().HandleError ( message, L, level );
+void AKUHarnessAppInitialize () {
+
+	// disable buffering on stdout so that piped output gets flushed immediately
+	setvbuf ( stdout, NULL, _IONBF, 0 );
 }
 
 //----------------------------------------------------------------//
-void AKUInitializeDebugger () {
-
-	if ( !sIsInitialized ) {
-		sIsInitialized = true;
-	}
+void AKUHarnessContextInitialize () {
 
 	REGISTER_LUA_CLASS ( MOAIHarness )
 
-	lua_State* L = AKUGetLuaState ();
-	
 	// Hook lua debug callbacks here
+	lua_State* L = AKUGetLuaState ();
 	MOAIHarness::Get().HookLua ( L, "127.0.0.1", 7018 );
-	
-	// disable buffering on stdout so that piped output gets flushed immediately
-	setvbuf(stdout, NULL, _IONBF, 0);
 }
 
 //----------------------------------------------------------------//
-void AKUUpdateDebugger () {
+void AKUHarnessUpdate () {
 	lua_State* L = AKUGetLuaState ();
-	MOAIHarness::Get().Update(L);
+	MOAIHarness::Get ().Update ( L );
 }

@@ -75,12 +75,12 @@ public:
 		INTERFACE_ORIENTATION_LANDSCAPE_RIGHT      = UIInterfaceOrientationLandscapeRight,
 	};
 
-	UIApplication*			mApplication;
-	MOAILuaRef				mListeners [ TOTAL ];
-	ReachabilityListener*	mReachabilityListener;
-	MOAILuaRef				mOnTakeCameraCallback;
-	MOAITakeCameraListener* mTakeCameraListener;
-	UIPopoverController*	mImagePickerPopover;
+	UIApplication*				mApplication;
+	MOAILuaStrongRef			mListeners [ TOTAL ];
+	ReachabilityListener*		mReachabilityListener;
+	MOAILuaStrongRef			mOnTakeCameraCallback;
+	MOAITakeCameraListener*		mTakeCameraListener;
+	UIPopoverController*		mImagePickerPopover;
 
 			MOAIAppIOS			();
 			~MOAIAppIOS			();

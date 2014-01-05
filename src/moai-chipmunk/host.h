@@ -9,7 +9,8 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFinalizeChipmunk			();
-AKU_API void	AKUInitializeChipmunk		();
+AKU_API void	AKUChipmunkAppFinalize				();
+AKU_API void	AKUChipmunkAppInitialize			();
+AKU_API void	AKUChipmunkContextInitialize		();
 
 #endif

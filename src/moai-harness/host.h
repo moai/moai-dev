@@ -9,9 +9,10 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFinalizeDebugger			();
-AKU_API void    AKUHandleError				( const char* message, struct lua_State* L, int level );
-AKU_API void	AKUInitializeDebugger		();
-AKU_API void	AKUUpdateDebugger			();
+AKU_API void	AKUHarnessAppFinalize				();
+AKU_API void	AKUHarnessAppInitialize				();
+AKU_API void	AKUHarnessContextInitialize			();
+
+AKU_API void	AKUHarnessUpdate					();
 
 #endif

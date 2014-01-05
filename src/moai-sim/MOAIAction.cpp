@@ -143,6 +143,14 @@ int MOAIAction::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_setAutoStop ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+	self->mAutoStop = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
@@ -220,17 +228,6 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	
 	if ( oldParent ) {
 		
-		// if we're detaching the action while the parent action is updating
-		// then we need to handle the edge case where the action is referenced
-		// by mChildIt
-		if ( oldParent->mChildIt == &this->mLink ) {
-			oldParent->mChildIt = oldParent->mChildIt->Next ();
-			if ( oldParent->mChildIt ) {
-				oldParent->mChildIt->Data ()->Retain ();
-			}
-			this->Release ();
-		}
-		
 		oldParent->mChildren.Remove ( this->mLink );
 		
 		this->UnblockSelf ();
@@ -296,7 +293,7 @@ bool MOAIAction::IsCurrent () {
 //----------------------------------------------------------------//
 bool MOAIAction::IsDone () {
 
-	return ( this->mChildren.Count () == 0 );
+	return ( this->mAutoStop && ( this->mChildren.Count () == 0 ));
 }
 
 //----------------------------------------------------------------//
@@ -309,9 +306,9 @@ MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
 	mParent ( 0 ),
-	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
-	mIsPaused ( false ) {
+	mIsPaused ( false ),
+	mAutoStop ( true ) {
 
 	this->mLink.Data ( this );
 
@@ -378,6 +375,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isBusy",				_isBusy },
 		{ "isDone",				_isDone },
 		{ "pause",				_pause },
+		{ "setAutoStop",		_setAutoStop },
 		{ "start",				_start },
 		{ "stop",				_stop },
 		{ "throttle",			_throttle },
@@ -431,39 +429,16 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mPass = 0;
 	this->mNew = false;
 	
-	// the trick below is to alway retain the current child plus the
-	// *next* child in the list. each child is processed once and 
-	// released after processing, so all the children should be 
-	// retain/release'd exactly once.
-	
-	// we retain the head child in the list (if any)
-	// here because the first child retained inside the loop (below)
-	// is the *second* child in the list
-	this->mChildIt = this->mChildren.Head ();
-	if ( this->mChildIt ) {
-		this->mChildIt->Data ()->Retain ();
-	}
-	
-	MOAIAction* child = 0;
-	while ( this->mChildIt ) {
+	ChildIt childIt = this->mChildren.Head ();
+	while ( childIt ) {
 		
-		child = this->mChildIt->Data ();
-		
-		// retain the *next* child in the list (if any)
-		this->mChildIt = this->mChildIt->Next ();
-		if ( this->mChildIt ) {
-			this->mChildIt->Data ()->Retain ();
-		}
+		MOAIAction* child = childIt->Data ();
+		childIt = childIt->Next ();
 		
 		if ( child->mParent ) {
 			child->Update ( step, pass, checkPass );
 		}
-		
-		// release the *current* child
-		child->Release ();
 	}
-	
-	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Attach ();

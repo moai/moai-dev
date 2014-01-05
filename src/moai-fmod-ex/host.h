@@ -9,10 +9,10 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFmodExInit				();
-AKU_API void	AKUFmodExMuteSystem			( bool mute );
-AKU_API void	AKUFmodExRelease			();
-AKU_API void	AKUFmodExRestoreSession		();
-AKU_API void	AKUFmodExUpdate				();
+AKU_API void	AKUFmodExAppFinalize				();
+AKU_API void	AKUFmodExAppInitialize				();
+AKU_API void	AKUFmodExContextInitialize			();
+
+AKU_API void	AKUFmodExUpdate						();
 
 #endif

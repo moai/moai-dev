@@ -13,30 +13,12 @@
 //	#include <lualib.h>
 //}
 
+#import <host-modules/aku_modules.h>
 #import <moai-iphone/AKU-iphone.h>
-#import <moai-luaext/host.h>
-#import <moai-util/host.h>
-#import <moai-sim/host.h>
-#import <moai-http-client/host.h>
+
 #import <moai-audiosampler/MOAIAudioSampler.h>
 #import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
-
-#if MOAI_WITH_BOX2D
-	#include <moai-box2d/host.h>
-#endif
-
-#if MOAI_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
-#endif
-
-#if MOAI_WITH_UNTZ
-	#import <moai-untz/host.h>
-#endif
-
-#if MOAI_WITH_FMOD_EX
-	#include <moai-fmod-ex/host.h>
-#endif
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -180,33 +162,10 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
-        AKUInitializeUtil ();
-        AKUInitializeSim ();
-        AKUInitializeHttpClient ();
-        
-		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuasocket ();
-		
-        #if MOAI_WITH_BOX2D
-		AKUInitializeBox2D ();
-        #endif
-
-        #if MOAI_WITH_CHIPMUNK
-		AKUInitializeChipmunk ();
-        #endif
-
-		#if MOAI_WITH_UNTZ
-			AKUInitializeUntz ();
-		#endif
-        
-		#if MOAI_WITH_FMOD_EX
-			AKUFmodExInit ();
-		#endif
-        
+		AKUModulesContextInitialize ();
 		AKUAudioSamplerInit ();
-        
+        AKUModulesRunLuaAPIWrapper ();
+		
 		AKUSetInputConfigurationName ( "iPhone" );
 
 		AKUReserveInputDevices			( MoaiInputDeviceID::TOTAL );
@@ -243,7 +202,6 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 		
 		// add in the particle presets
 		ParticlePresets ();
@@ -270,10 +228,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		[ self openContext ];
 		AKUSetContext ( mAku );
-		AKUUpdate ();
-		#if MOAI_WITH_FMOD_EX
-			AKUFmodExUpdate ();
-		#endif
+		AKUModulesUpdate ();
 		[ self drawView ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run

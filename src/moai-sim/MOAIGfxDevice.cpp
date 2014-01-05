@@ -624,6 +624,7 @@ void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
 	deleter.mResourceID = id;
 	
 	this->mDeleterStack.Push ( deleter );
+	this->ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//

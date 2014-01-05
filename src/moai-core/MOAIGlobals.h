@@ -4,7 +4,7 @@
 #ifndef	MOAIGLOBALS_H
 #define	MOAIGLOBALS_H
 
-#include <moai-core/MOAIObject.h>
+#include <moai-core/MOAIRtti.h>
 
 //================================================================//
 // MOAIGlobalIDBase
@@ -36,14 +36,12 @@ public:
 };
 
 //================================================================//
-// MOAIGlobalClassFinalizer
+// MOAIGlobalClassBase
 //================================================================//
-class MOAIGlobalClassFinalizer {
+class MOAIGlobalClassBase {
 private:
 
 	friend class MOAIGlobals;
-	
-	MOAIGlobalClassFinalizer* mNext;
 
 protected:
 
@@ -51,8 +49,8 @@ protected:
 	virtual void	OnGlobalsFinalize			();
 	virtual void	OnGlobalsRestore			();
 	virtual void	OnGlobalsRetire				();
-					MOAIGlobalClassFinalizer		();
-	virtual			~MOAIGlobalClassFinalizer		();
+					MOAIGlobalClassBase			();
+	virtual			~MOAIGlobalClassBase		();
 };
 
 //================================================================//
@@ -62,8 +60,9 @@ class MOAIGlobalPair {
 private:
 	friend class MOAIGlobals;
 
-	MOAIObject*					mObject;
+	MOAIGlobalClassBase*		mGlobal;
 	void*						mPtr;
+	bool						mIsValid;
 };
 
 //================================================================//
@@ -80,7 +79,6 @@ private:
 	};
 
 	ZLLeanArray < MOAIGlobalPair >	mGlobals;
-	MOAIGlobalClassFinalizer*		mFinalizers;
 
 	//----------------------------------------------------------------//
 	void		Restore				();
@@ -96,19 +94,26 @@ public:
 		
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		
-		if ( !this->IsValid < TYPE >()) {
-			
-			TYPE* global = new TYPE;
-			global->Retain ();
-			
+		if ( this->mGlobals.Size () <= id ) {
+
 			MOAIGlobalPair pair;
-			pair.mObject	= 0;
+			pair.mGlobal	= 0;
 			pair.mPtr		= 0;
+			pair.mIsValid	= true;
 			
-			this->mGlobals.Grow ( id + 1, CHUNK_SIZE, pair );
-			this->mGlobals [ id ].mObject = global;
-			this->mGlobals [ id ].mPtr = global;
+			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
+		
+		if ( !this->mGlobals [ id ].mIsValid ) {
+			return 0;
+		}
+		
+		if ( !this->mGlobals [ id ].mPtr ) {
+			TYPE* global = new TYPE;
+			this->mGlobals [ id ].mGlobal	= global;
+			this->mGlobals [ id ].mPtr		= global;
+		}
+		
 		return ( TYPE* )this->mGlobals [ id ].mPtr;
 	}
 	
@@ -118,7 +123,9 @@ public:
 		
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
-			return ( TYPE* )this->mGlobals [ id ].mPtr;
+			if ( this->mGlobals [ id ].mIsValid ) {
+				return ( TYPE* )this->mGlobals [ id ].mPtr;
+			}
 		}
 		return 0;
 	}
@@ -130,9 +137,7 @@ public:
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
-			if ( this->mGlobals [ id ].mPtr ) {
-				return true;
-			}
+			return this->mGlobals [ id ].mIsValid;
 		}
 		return false;
 	}
@@ -167,9 +172,10 @@ public:
 //================================================================//
 // MOAIGlobalClass
 //================================================================//
-template < typename TYPE, typename SUPER = MOAIObject >
+template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
-public virtual SUPER {
+	public MOAIGlobalClassBase,
+	public virtual SUPER {
 public:
 	
 	//----------------------------------------------------------------//

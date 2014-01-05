@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CD04AABB14725568009C20E5"
-               BuildableName = "libmoai-ios-zlcore.a"
-               BlueprintName = "libmoai-ios-zlcore"
+               BuildableName = "libmoai-ios-zl-core.a"
+               BlueprintName = "libmoai-ios-zl-core"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

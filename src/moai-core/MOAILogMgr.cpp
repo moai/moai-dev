@@ -5,6 +5,9 @@
 #include <moai-core/MOAILogMgr.h>
 #include <moai-core/MOAILogMessages.h>
 
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
+
 //================================================================//
 // helpers
 //================================================================//

@@ -30,10 +30,9 @@ private:
 	
 	ZLLeanLink < MOAIAction* > mLink;
 	
-	ChildIt mChildIt; // this iterator is used when updating the action tree
-	
 	float	mThrottle;
 	bool	mIsPaused;
+	bool	mAutoStop;
 	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
@@ -44,6 +43,7 @@ private:
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
 	static int			_pause					( lua_State* L );
+	static int			_setAutoStop			( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 	static int			_throttle				( lua_State* L );

@@ -29,7 +29,7 @@
 int MOAIScriptDeck::_setDrawCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->SetLocal ( state, 2, self->mOnDraw );
+	self->mOnDraw.SetRef ( *self, state, 2 );
 	return 0;
 }
 
@@ -65,7 +65,7 @@ int MOAIScriptDeck::_setRect ( lua_State* L ) {
 int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->SetLocal ( state, 2, self->mOnRect );
+	self->mOnRect.SetRef ( *self, state, 2 );
 	return 0;
 }
 
@@ -82,7 +82,7 @@ int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 int MOAIScriptDeck::_setTotalRectCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->SetLocal ( state, 2, self->mOnTotalRect );
+	self->mOnTotalRect.SetRef ( *self, state, 2 );
 	self->SetBoundsDirty ();
 	return 0;
 }
@@ -99,16 +99,17 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 	if ( this->mOnTotalRect ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnTotalRect );
+		if ( this->mOnTotalRect.PushRef ( state )) {
 		
-		state.DebugCall ( 0, 4 );
-		
-		rect.mXMin = state.GetValue < float >( -4, 0.0f );
-		rect.mYMin = state.GetValue < float >( -3, 0.0f );
-		rect.mXMax = state.GetValue < float >( -2, 0.0f );
-		rect.mYMax = state.GetValue < float >( -1, 0.0f );
-		
-		rect.Bless ();
+			state.DebugCall ( 0, 4 );
+			
+			rect.mXMin = state.GetValue < float >( -4, 0.0f );
+			rect.mYMin = state.GetValue < float >( -3, 0.0f );
+			rect.mXMax = state.GetValue < float >( -2, 0.0f );
+			rect.mYMax = state.GetValue < float >( -1, 0.0f );
+			
+			rect.Bless ();
+		}
 	}
 	
 	ZLBox bounds;
@@ -123,22 +124,23 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 	
 	if ( this->mOnDraw ) {
 	
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnDraw );
+		if ( this->mOnDraw.PushRef ( state )) {
+	
+			MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+			gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
+			
+			gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+			gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
-		// TODO: fix this to take all offset/scale params
-		lua_pushnumber ( state, idx );
-		lua_pushnumber ( state, xOff );
-		lua_pushnumber ( state, yOff );
-		lua_pushnumber ( state, xScl );
-		lua_pushnumber ( state, yScl );
-		state.DebugCall ( 5, 0 );
+			// TODO: fix this to take all offset/scale params
+			lua_pushnumber ( state, idx );
+			lua_pushnumber ( state, xOff );
+			lua_pushnumber ( state, yOff );
+			lua_pushnumber ( state, xScl );
+			lua_pushnumber ( state, yScl );
+			state.DebugCall ( 5, 0 );
+		}
 	}
 }
 
@@ -150,17 +152,18 @@ ZLBox MOAIScriptDeck::GetItemBounds ( u32 idx ) {
 	if ( this->mOnRect ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnRect );
+		if ( this->mOnRect.PushRef ( state )) {
 		
-		lua_pushnumber ( state, idx );
-		state.DebugCall ( 1, 4 );
-		
-		rect.mXMin = state.GetValue < float >( -4, 0.0f );
-		rect.mYMin = state.GetValue < float >( -3, 0.0f );
-		rect.mXMax = state.GetValue < float >( -2, 0.0f );
-		rect.mYMax = state.GetValue < float >( -1, 0.0f );
-		
-		rect.Bless ();
+			lua_pushnumber ( state, idx );
+			state.DebugCall ( 1, 4 );
+			
+			rect.mXMin = state.GetValue < float >( -4, 0.0f );
+			rect.mYMin = state.GetValue < float >( -3, 0.0f );
+			rect.mXMax = state.GetValue < float >( -2, 0.0f );
+			rect.mYMax = state.GetValue < float >( -1, 0.0f );
+			
+			rect.Bless ();
+		}
 	}
 	
 	ZLBox bounds;

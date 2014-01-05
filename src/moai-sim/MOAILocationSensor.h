@@ -25,7 +25,7 @@ private:
 
 	float mSpeed;
 
-	MOAILuaRef mCallback;
+	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getLocation	( lua_State* L );

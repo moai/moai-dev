@@ -148,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -227,7 +227,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -307,7 +307,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -382,7 +382,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -457,7 +457,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -536,7 +536,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -616,7 +616,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -691,7 +691,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -766,7 +766,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
@@ -845,7 +845,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>
 			<Tool
@@ -925,7 +925,7 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalOptions="/LTCG"
-				AdditionalDependencies="freetype.lib glew.lib zl-lib-gfx.lib"
+				AdditionalDependencies="freetype.lib zl-lib-gfx.lib glew.lib opengl32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			/>

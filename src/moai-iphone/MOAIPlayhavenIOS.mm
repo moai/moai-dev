@@ -36,7 +36,7 @@ int MOAIPlayhavenIOS::_setListener(lua_State* L) {
 	u32 idx = state.GetValue<u32>(1, TOTAL);
 	
 	if (idx < TOTAL) {
-		MOAIPlayhavenIOS::Get().mListeners[idx].SetStrongRef(state, 2);
+		MOAIPlayhavenIOS::Get().mListeners[idx].SetRef(state, 2);
 	}
 	
 	return 0;
@@ -170,10 +170,12 @@ void MOAIPlayhavenIOS::notifyShouldMakeIAP(cc8* id) {
 }
 */
 -(void)request:(PHPublisherContentRequest *)request unlockedReward:(PHReward *)reward {
+	UNUSED ( request );
 	MOAIPlayhavenIOS::Get().notifyUnlockedReward([reward.name UTF8String], reward.quantity);
 }
 
 -(void)request:(PHPublisherContentRequest *)request makePurchase:(PHPurchase *)purchase {
+	UNUSED ( request );
 	MOAIPlayhavenIOS::Get().phPurchase = purchase;
 	MOAIPlayhavenIOS::Get().notifyShouldMakeIAP([purchase.productIdentifier UTF8String]);
 }

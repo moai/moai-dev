@@ -6,26 +6,21 @@
 #include <moai-box2d/headers.h>
 
 //================================================================//
-// aku-util
+// aku-box2d
 //================================================================//
 
-static bool sIsInitialized = false;
-
 //----------------------------------------------------------------//
-void AKUFinalizeBox2D () {
-	
-	if ( !sIsInitialized ) return;
-	sIsInitialized = false;
+void AKUBox2DAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUInitializeBox2D () {
+void AKUBox2DAppInitialize () {
+}
 
-	if ( !sIsInitialized ) {
-		sIsInitialized = true;
-	}
+//----------------------------------------------------------------//
+void AKUBox2DContextInitialize () {
 
-    REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
+	REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
 	REGISTER_LUA_CLASS ( MOAIBox2DBody )
 	REGISTER_LUA_CLASS ( MOAIBox2DDistanceJoint )
 	REGISTER_LUA_CLASS ( MOAIBox2DFixture )

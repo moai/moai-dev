@@ -8,7 +8,9 @@
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
+
 #include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
 
 #if !MOAI_WITH_LUAJIT
 	#include <lstate.h>
@@ -185,17 +187,6 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAILuaRuntime::_deleteLuaData ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1, false );
-	delete self;
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAILuaRuntime::_dump ( lua_State* L ) {
 	UNUSED ( L );
 
@@ -254,42 +245,46 @@ int MOAILuaRuntime::_panic ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAILuaRuntime::_register ( lua_State* L ) {
+int MOAILuaRuntime::_reportGC ( lua_State* L ) {
 
-	STLString name = lua_tostring ( L, 1 );
-
-	luaL_Reg regTable [] = {
-		{ "debugCall",		_debugCall },
-		{ "deleteLuaData",	_deleteLuaData },
-		{ "dump",			_dump },
-		{ "dumpStack",		_dumpStack },
-		{ "traceback",		_traceback },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( L, name, regTable );
-	return 1;
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().mReportGC = state.GetValue < bool >( -1, false );
+	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_traceback ( lua_State *L ) {
-
+	
+	MOAILuaRuntime& runtime = MOAILuaRuntime::Get ();
+	MOAILuaState state ( L );
+	
 	cc8* msg = NULL;
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 		msg = lua_tostring ( L, 1 );
 	}
 	
-	TracebackFunc tracebackFunc = MOAILuaRuntime::Get ().mTracebackFunc;
-	if ( tracebackFunc ) {
-		tracebackFunc ( msg, L, 0 );
+	if ( runtime.mTracebackFunc ) {
+		runtime.mTracebackFunc ( msg, L, 0 );
 	}
-	else {
-		if ( msg ) {
-			ZLLog::Print ( "%s\n", msg );
+	
+	if ( runtime.mTracebackRef ) {
+		
+		if ( runtime.mTracebackRef.PushRef ( state )) {
+			
+			lua_pushvalue ( state, 1 );
+			int result = lua_pcall ( state, 1, 0, 2 );
+			if ( result ) {
+				ZLLog::Print ( "error in user supplied traceback func\n" );
+				ZLLog::Print ( "falling back on default error handler:\n" );
+			}
 		}
-		MOAIScopedLuaState state ( L );
-		state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
 	}
+
+	if ( msg ) {
+		ZLLog::Print ( "%s\n", msg );
+	}
+	state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
+
 	return 0;
 }
 
@@ -356,10 +351,9 @@ void MOAILuaRuntime::ClearObjectStackTrace ( MOAILuaObject* object ) {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::Close () {
 
-	if ( this->mMainState ) {
-		this->mWeakRefTable.Clear ();
-		lua_close ( this->mMainState );
-		this->mMainState = 0;
+	if ( this->mState ) {
+		lua_close ( this->mState );
+		this->mState = 0;
 	}
 }
 
@@ -395,7 +389,7 @@ void MOAILuaRuntime::EnableLeakTracking ( bool enable ) {
 // track who is pointing to it.
 void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects ) {
 
-	lua_State* L = this->mMainState;
+	lua_State* L = this->mState;
 
 	// Convert to absolute index
 	if ( idx < 0 ) {
@@ -506,7 +500,7 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ForceGarbageCollection () {
 
-	lua_State* L = this->mMainState;
+	lua_State* L = this->mState;
 
 	// Make sure that anything that can be collected, is. Note: we collect
 	// more than once because of this scary snippet:
@@ -540,7 +534,7 @@ size_t MOAILuaRuntime::GetMemoryUsage() {
 
 //----------------------------------------------------------------//
 MOAILuaState& MOAILuaRuntime::GetMainState () {
-	return this->mMainState;
+	return this->mState;
 }
 
 //----------------------------------------------------------------//
@@ -555,20 +549,42 @@ bool MOAILuaRuntime::IsLuaIdentifier ( const char *str ) {
 //----------------------------------------------------------------//
 bool MOAILuaRuntime::IsOpen () {
 
-	return ( this->mMainState != 0 );
+	return ( this->mState != 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::LoadLibs ( cc8* runtimeLibName ) {
+void MOAILuaRuntime::LoadLibs () {
 
 	// Load the standard Lua libs
-	luaL_openlibs ( this->mMainState );
+	luaL_openlibs ( this->mState );
+}
 
-	this->RegisterModule ( runtimeLibName, _register, true );
-	
-	this->mMainState.Push ( _traceback );
-	this->mTracebackRef.SetStrongRef ( this->mMainState, -1 );
-	this->mMainState.Pop ( 1 );
+//----------------------------------------------------------------//
+MOAILuaRuntime::MOAILuaRuntime () :
+	mHistogramEnabled ( false ),
+	mLeakTrackingEnabled ( false ),
+	mTracebackFunc ( 0 ),
+	mTotalBytes ( 0 ),
+	mObjectCount ( 0 ),
+	mAllocLogEnabled ( false ),
+	mReportGC ( false ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaRuntime::~MOAILuaRuntime () {
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::OnGlobalsFinalize () {
+	this->Close ();
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::OnGlobalsRestore () {
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
@@ -579,14 +595,14 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	}
 
 	// open the main state
-	this->mMainState = lua_newstate ( _trackingAlloc, NULL );
-	lua_atpanic ( this->mMainState, &_panic );
+	this->mState = lua_newstate ( _trackingAlloc, NULL );
+	lua_atpanic ( this->mState, &_panic );
 
 	// set up the ref tables
-	this->mWeakRefTable.InitWeak ();
-	this->mStrongRefTable.InitStrong ();
+	this->mStrongRefs.InitStrong ();
+	this->mWeakRefs.InitWeak ();
 	
-	return MOAIScopedLuaState ( this->mMainState );
+	return MOAIScopedLuaState ( this->mState );
 }
 
 //----------------------------------------------------------------//
@@ -615,9 +631,35 @@ void MOAILuaRuntime::PushHistogram ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::PushTraceback ( MOAILuaState& state ) {
+	
+	state.Push ( _traceback );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "debugCall",		_debugCall },
+		{ "dump",			_dump },
+		{ "dumpStack",		_dumpStack },
+		{ "reportGC",		_reportGC },
+		{ "traceback",		_traceback },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
 
-	this->mMainState.RegisterModule ( loader, name, autoLoad );
+	this->mState.RegisterModule ( loader, name, autoLoad );
 }
 
 //----------------------------------------------------------------//
@@ -658,7 +700,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 
 	this->ForceGarbageCollection ();
 
-	lua_State* L = this->mMainState;
+	lua_State* L = this->mState;
 		
 	// First, correlate leaks by identical stack traces.
 	LeakStackMap stacks;
@@ -680,7 +722,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		MOAILuaObject *o = list.front ();
 		fprintf ( f, "Allocation: %lu x %s\n", list.size (), o->TypeName ()); 
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
-			fprintf ( f, "\t(%6d) %p\n", ( *j )->GetRefCount (), *j );
+			fprintf ( f, "\t%p\n", *j );
 		}
 		// A table to use as a traversal set.
 		lua_newtable ( L );
@@ -724,7 +766,7 @@ void MOAILuaRuntime::SetObjectStackTrace ( MOAILuaObject* object ) {
 
 	if ( object && this->mLeakTrackingEnabled ) {
 	
-		STLString trace = this->mMainState.GetStackTrace ( 1 );
+		STLString trace = this->mState.GetStackTrace ( 1 );
 		this->mLeaks [ object ] = trace;
 	}
 }
@@ -732,42 +774,21 @@ void MOAILuaRuntime::SetObjectStackTrace ( MOAILuaObject* object ) {
 //----------------------------------------------------------------//
 void MOAILuaRuntime::SetPath ( cc8* path ) {
 
-	int top = lua_gettop ( this->mMainState );
+	int top = lua_gettop ( this->mState );
 
-	lua_getglobal ( this->mMainState, "package" );
-	int packageIdx = lua_gettop ( this->mMainState );
+	lua_getglobal ( this->mState, "package" );
+	int packageIdx = lua_gettop ( this->mState );
 
-	lua_pushstring ( this->mMainState, "path" );
-	lua_pushstring ( this->mMainState, path );
-	lua_settable ( this->mMainState, packageIdx );
+	lua_pushstring ( this->mState, "path" );
+	lua_pushstring ( this->mState, path );
+	lua_settable ( this->mState, packageIdx );
 
-	lua_settop ( this->mMainState, top );
+	lua_settop ( this->mState, top );
 }
 
 //----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaRuntime::State () {
 
-	return MOAIScopedLuaState ( this->mMainState );
+	return MOAIScopedLuaState ( this->mState );
 }
 
-//----------------------------------------------------------------//
-MOAILuaRuntime::MOAILuaRuntime () :
-	mHistogramEnabled ( false ),
-	mLeakTrackingEnabled ( false ),
-	mTracebackFunc ( 0 ),
-	mTotalBytes ( 0 ),
-	mObjectCount ( 0 ),
-	mAllocLogEnabled ( false ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaRuntime::~MOAILuaRuntime () {
-
-	if ( this->mMainState ) {
-		// run a full cycle of the garbage collector here in case any Lua bound objects
-		// need to send callbacks on destruction
-		lua_gc ( this->mMainState, LUA_GCCOLLECT, 0 );
-		lua_close ( this->mMainState );
-	}
-	this->mMainState = 0;
-}

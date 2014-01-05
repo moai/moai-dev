@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USLUASHAREDPTR_H
-#define	USLUASHAREDPTR_H
+#ifndef	MOAILUASHAREDPTR_H
+#define	MOAILUASHAREDPTR_H
 
 #include <moai-core/MOAILuaObject.h>
 
@@ -23,13 +23,11 @@ protected:
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
-	
 		return this->mObject;
 	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE* Get () const {
-	
 		return this->mObject;
 	}
 
@@ -86,7 +84,6 @@ public:
 	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
-		
 			owner.LuaRetain ( assign );
 			owner.LuaRelease ( this->mObject );
 			this->mObject = assign;

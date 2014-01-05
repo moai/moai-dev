@@ -235,6 +235,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|x64'">
     <Midl>
@@ -280,6 +284,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'">
     <Midl>
@@ -323,6 +331,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'">
     <Midl>
@@ -368,6 +380,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|x64'">
     <Midl>
@@ -411,6 +427,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|x64'">
     <Midl>
@@ -456,6 +476,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'">
     <Midl>

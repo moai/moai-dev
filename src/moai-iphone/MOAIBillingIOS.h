@@ -61,7 +61,7 @@ public:
 		TRANSACTION_STATE_CANCELLED,
 	};
 	
-	MOAILuaRef				mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 	MOAIStoreKitListener*	mStoreKitListener;
 
 			MOAIBillingIOS						();

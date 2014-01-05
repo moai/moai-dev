@@ -9,8 +9,8 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUInitializeUntz		();
-AKU_API void	AKUUntzResume			();
-AKU_API void	AKUUntzSuspend			();
+AKU_API void	AKUUntzAppFinalize					();
+AKU_API void	AKUUntzAppInitialize				();
+AKU_API void	AKUUntzContextInitialize			();
 
 #endif
