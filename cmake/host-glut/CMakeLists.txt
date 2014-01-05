@@ -4,14 +4,16 @@ cmake_minimum_required(VERSION 2.8.5)
 
 project(host-glut)
 
-add_subdirectory ( freeglut )
+
 
 if ( BUILD_LINUX )
+  add_subdirectory ( freeglut )
   find_package ( OpenGL REQUIRED )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
 endif ( BUILD_LINUX )
 
 if ( BUILD_WINDOWS )
+   add_subdirectory ( freeglut )
    find_package( OpenGL REQUIRED )
    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static -Os" )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os" )
