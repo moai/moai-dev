@@ -300,9 +300,9 @@ int MOAIFmodEventMgr::_unloadGroup ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unloadPendingUnloads
-    @text	Unloads all the pending unload groups. Use between act changes in the game.
+	@text	Unloads all the pending unload groups. Use between act changes in the game.
 
-    @opt   bool blockOnUnload        Passing true means that the main thread will block while unloading
+	@opt	boolean blockOnUnload		Passing true means that the main thread will block while unloading
 	@out	nil
 */
 
@@ -629,14 +629,14 @@ int MOAIFmodEventMgr::_playVoiceLine ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unloadEvent
-    @text	Unloads the data associated with an Event. 
-           All instances of this Event will be stopped when this call is made.
-           Returns true if the Event is no longer loaded after this call.
+	@text	Unloads the data associated with an Event. 
+			All instances of this Event will be stopped when this call is made.
+			Returns true if the Event is no longer loaded after this call.
 
-    @in    string eventName      The name of the Event
-    @opt   bool   blockOnUnload  Passing true means that the main thread will block while unloading
+	@in		string eventName		The name of the Event
+	@opt	boolean blockOnUnload	Passing true means that the main thread will block while unloading
 	
-    @out	bool   eventUnloaded  True if the Event is no longer loaded after this call.
+	@out	boolean eventUnloaded	True if the Event is no longer loaded after this call.
 */
 
 int MOAIFmodEventMgr::_unloadEvent ( lua_State* L ) {

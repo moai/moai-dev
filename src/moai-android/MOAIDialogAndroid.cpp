@@ -24,7 +24,7 @@ extern JavaVM* jvm;
 	@in		string		positive		The text for the positive response dialog button. Can be nil.
 	@in		string		neutral			The text for the neutral response dialog button. Can be nil.
 	@in		string		negative		The text for the negative response dialog button. Can be nil.
-	@in		bool		cancelable		Specifies whether or not the dialog is cancelable
+	@in		boolean		cancelable		Specifies whether or not the dialog is cancelable
 	@opt	function	callback		A function to callback when the dialog is dismissed. Default is nil.
 	@out 	nil
 */

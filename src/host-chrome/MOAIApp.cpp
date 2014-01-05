@@ -158,7 +158,7 @@ int MOAIApp::_alert( lua_State* L ) {
 /**	@name	canMakePayments
 	@text	Verify that the app has permission to request payments.
 	
-	@out	bool canMakePayments
+	@out	boolean canMakePayments
 */
 int MOAIApp::_canMakePayments ( lua_State* L ) {
 	MOAILuaState state ( L );
