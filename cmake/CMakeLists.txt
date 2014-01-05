@@ -166,6 +166,10 @@ if ( BUILD_OSX )
   add_subdirectory ( host-test )
 endif ( BUILD_OSX )
 
+if ( BUILD_WINDOWS )
+  add_subdirectory ( host-glut )
+endif ( BUILD_WINDOWS )
+
 if ( BUILD_SERVER )
   add_subdirectory ( moaiext-server )
   add_subdirectory ( http-host )

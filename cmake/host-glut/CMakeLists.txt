@@ -1,18 +1,28 @@
 cmake_minimum_required(VERSION 2.8.5)
+
+
+
 project(host-glut)
+
+add_subdirectory ( freeglut )
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )
-  find_package ( GLUT REQUIRED )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
 endif ( BUILD_LINUX )
+
+if ( BUILD_WINDOWS )
+   find_package( OpenGL REQUIRED )
+   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static -Os" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os" )
+endif ( BUILD_WINDOWS )
 
 set ( INCLUDES_MOAIHOSTGLUT 
   "../../src/"
   "../../src/config-default/"
   "../../src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
-  ${GLUT_INCLUDE_DIRS}
+  ${FREEGLUT_INCLUDES}
   ${THIRD_PARTY_INCLUDES}
   CACHE INTERNAL "doc string" )
 
@@ -26,7 +36,7 @@ set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-glut" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework CoreServices -framework ApplicationServices" )
 endif ( BUILD_OSX )
 
 add_executable ( moai
@@ -36,6 +46,7 @@ add_executable ( moai
 )
 
 target_link_libraries ( moai 
+  freeglut-static
   moai-sim
   moai-util
   moai-core
@@ -58,12 +69,18 @@ if ( MOAI_UNTZ )
   target_link_libraries ( moai moai-untz )
 endif ( MOAI_UNTZ )
 
+
+if ( BUILD_WINDOWS )
+  target_link_libraries ( moai 
+    ${OPENGL_LIBRARIES}
+  )
+endif (BUILD_WINDOWS)
+
 if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
   rt
   ${OpenGL_LIBRARIES}
-  ${GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 
