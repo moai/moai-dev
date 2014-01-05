@@ -197,7 +197,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 	@text	Returns whether or not the task is busy.
  
 	@in		MOAIHttpTaskBase self
-	@out	bool busy
+	@out	boolean busy
 */
 int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -360,7 +360,7 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
  @text	Sets whether or not curl calls will fail if the HTTP status code is above 400
  
  @in	MOAIHttpTaskBase self
- @in	bool enable
+ @in	boolean enable
  @out	nil
  */
 int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
@@ -378,7 +378,7 @@ int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
  @text	Sets whether or not curl should follow HTTP header redirects.
  
  @in	MOAIHttpTaskBase self
- @in	bool follow
+ @in	boolean follow
  @out	nil
  */
 int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {

@@ -21,7 +21,7 @@ extern JavaVM* jvm;
 /**	@name	authTstore	
 	@text	Authorizes the app through Tstore
 	
-	@in		bool wantsLogin			
+	@in		boolean wantsLogin			
 	@out	nil
 */
 int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
@@ -54,7 +54,7 @@ int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
 /**	@name	checkTstoreInstalled	
 	@text	Checks if the Tstore app is installed
 	
-	@out	bool installed
+	@out	boolean installed
 */
 int MOAITstoreGamecenterAndroid::_checkTstoreInstalled ( lua_State* L ) {
 	

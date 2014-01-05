@@ -17,12 +17,12 @@
 #endif
 
 //----------------------------------------------------------------//
-/**	@name   isValid
-	@text   Checks to see if the instance is valid (i.e., currently playing)
+/**	@name	isValid
+	@text	Checks to see if the instance is valid (i.e., currently playing)
+	
+	@in		MOAIFmodEventInstance self
 
-	@in     MOAIFmodEventInstance    self
-
-	@out    bool                     valid  True if the instance is currently playing, false otherwise
+	@out	boolean valid				True if the instance is currently playing, false otherwise
 */
 int	MOAIFmodEventInstance::_isValid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodEventInstance, "U" )

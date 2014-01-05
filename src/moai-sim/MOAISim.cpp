@@ -387,11 +387,11 @@ int MOAISim::_reportHistogram ( lua_State* L ) {
 			This will also trigger a full garbage collection before performing
 			the required report. (Equivalent of collectgarbage("collect").)
  
-	@in		bool clearAfter	If true, it will reset the allocation tables (without
-							freeing the underlying objects). This allows this
-							method to be called after a known operation and
-							get only those allocations created since the last call
-							to this function.
+	@in		boolean clearAfter	If true, it will reset the allocation tables (without
+								freeing the underlying objects). This allows this
+								method to be called after a known operation and
+								get only those allocations created since the last call
+								to this function.
 	@out	nil
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
@@ -444,7 +444,7 @@ int MOAISim::_setCpuBudget ( lua_State* L ) {
 	@text	Enable tracking of every MOAILuaObject so that an object count
 			histogram may be generated.
  
-	@opt	bool enable		Default value is false.
+	@opt	boolean enable		Default value is false.
 	@out	nil
 */
 int MOAISim::_setHistogramEnabled ( lua_State* L ) {
@@ -462,7 +462,7 @@ int MOAISim::_setHistogramEnabled ( lua_State* L ) {
 			the extra memory associated with the stack info book-keeping. Use only
 			when tracking down leaks.
  
-	@opt	bool enable		Default value is false.
+	@opt	boolean enable		Default value is false.
 	@out	nil
 */
 int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
