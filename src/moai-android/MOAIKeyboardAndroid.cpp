@@ -66,7 +66,7 @@ int MOAIKeyboardAndroid::_setListener ( lua_State* L ) {
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 
 	if ( idx < TOTAL ) {
-		MOAIKeyboardAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIKeyboardAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 
 	return 0;
