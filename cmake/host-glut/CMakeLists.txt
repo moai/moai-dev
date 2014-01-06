@@ -9,7 +9,7 @@ project(host-glut)
 if ( BUILD_LINUX )
   add_subdirectory ( freeglut )
   find_package ( OpenGL REQUIRED )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
 endif ( BUILD_LINUX )
 
 if ( BUILD_WINDOWS )
@@ -83,7 +83,8 @@ target_link_libraries ( moai
   pthread 
   rt
   freeglut-static
-  ${OpenGL_LIBRARIES}
+  Xi
+  ${OPENGL_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 

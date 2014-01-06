@@ -105,7 +105,7 @@
 /* Non-Windows definition of FGAPI and FGAPIENTRY  */
 #        define FGAPI
 #        define FGAPIENTRY
-
+#     include "linux_config/config.h"
 #endif
 
 /*
