@@ -3,15 +3,17 @@ project ( moai-luaext )
 
 if (MOAI_LUAEXT)
 
-if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
-endif ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
+
 
 set ( MOAI_LUAEXT_INCLUDES "../../src/;../../3rdparty/;../../src/config-default/;../../3rdparty/mongoose/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
+
+  if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
+endif ( BUILD_ANDROID )
 
 include_directories ( 
   ${THIRD_PARTY_INCLUDES}

@@ -121,6 +121,8 @@ public class Moai {
 
 	public static final Object		sAkuLock = new Object ();
 
+ 	protected static native void    AKUAppInitialize				();
+ 	protected static native void    AKUModulesRunLuaAPIWrapper      ();
 	protected static native boolean	AKUAppBackButtonPressed			();
 	protected static native void    AKUModulesContextInitialize     ();
 	protected static native void	AKUAppDialogDismissed			( int dialogResult );
@@ -182,6 +184,8 @@ public class Moai {
 		synchronized ( sAkuLock ) {
 			contextId = AKUCreateContext ();
 			AKUSetContext ( contextId );
+			AKUModulesContextInitialize ();
+			AKUModulesRunLuaAPIWrapper ();
 		}
 		return contextId;
 	}
@@ -250,8 +254,6 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void init () {
 		synchronized ( sAkuLock ) {
-			AKUModulesContextInitialize();
-			
 
 			AKUSetInputConfigurationName ( "Android" );
 
@@ -264,8 +266,8 @@ public class Moai {
 			AKUSetInputDeviceLocation ( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
 			AKUSetInputDeviceTouch ( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-
 			AKUInit ();
+			
 
 		
 
@@ -292,6 +294,7 @@ public class Moai {
 
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 			AKUSetDeviceLocale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
+
 		}
 	}
 
@@ -312,6 +315,7 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 		sActivity = activity;
+		AKUAppInitialize();
 		MoaiMoviePlayer.onCreate ( activity );
 		MoaiBrowser.onCreate ( activity );
 		for ( Class < ? > theClass : sAvailableClasses ) {

@@ -19,6 +19,7 @@
 #include <moai-sim/headers.h>
 
 
+ 
 //================================================================//
 // Input event locking queue
 //================================================================//
@@ -237,6 +238,7 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
         AKUModulesAppFinalize();
+        AKUAppFinalize ();
 	}
 
 
@@ -309,10 +311,14 @@
 		MOAITstoreWallAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
 #endif
-		AKUAppInitialize();
-		AKUModulesAppInitialize();
+		
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
+	
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
+		AKUAppInitialize();
+		AKUModulesAppInitialize();
+	}	
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesContextInitialize ( JNIEnv* env, jclass obj ) {
