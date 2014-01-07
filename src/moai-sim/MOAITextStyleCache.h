@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTSTYLER_H
-#define	MOAITEXTSTYLER_H
+#ifndef	MOAITEXTSTYLECACHE_H
+#define	MOAITEXTSTYLECACHE_H
 
 class MOAINode;
 class MOAITextStyle;
@@ -15,7 +15,7 @@ class MOAITextStyleRef {
 private:
 
 	friend class MOAITextLabel;
-	friend class MOAITextStyler;
+	friend class MOAITextStyleCache;
 
 	MOAITextStyle*			mStyle;
 	MOAITextStyleState		mState;
@@ -30,20 +30,9 @@ public:
 };
 
 //================================================================//
-// MOAITextStyleSpan
+// MOAITextStyleCache
 //================================================================//
-class MOAITextStyleSpan {
-public:
-
-	int					mBase;		// base index of first utf-8 character in span
-	int					mTop;		// size of span
-	MOAITextStyle*		mStyle;		// style for span
-};
-
-//================================================================//
-// MOAITextStyler
-//================================================================//
-class MOAITextStyler {
+class MOAITextStyleCache {
 private:
 
 	friend class MOAITextDesignParser;
@@ -60,14 +49,8 @@ private:
 	// anonymous styles - these are created on the fly as text is being styled
 	ZLLeanStack < MOAITextStyleRef, 8 > mAnonymousStyles;
 	
-	// this is the style map. it is produced by analyzing the text and creating a
-	// 'style span' for each styled token. this is the preprocessing step to
-	// actually layout out a page of text. text is laid out based on the style spans.
-	ZLLeanStack < MOAITextStyleSpan, 64 > mStyleMap; // each span represents a stretch of 'styled' text
-	
 	//----------------------------------------------------------------//
 	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
-	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	void				ReleaseStyle			( MOAITextStyle* style );
 	void				RetainStyle				( MOAITextStyle* style );
 
@@ -76,18 +59,16 @@ public:
 	GET_SET ( MOAINode*, Owner, mOwner )
 	
 	//----------------------------------------------------------------//
-	void				BuildStyleMap			( cc8* str );
 	bool				CheckStylesChanged		();
-	u32					CountSpans				();
+	void				Clear					();
+	void				ClearAnonymousStyles	();
+	void				ClearNamedStyles		();
 	MOAITextStyle*		GetStyle				();
 	MOAITextStyle*		GetStyle				( cc8* styleName );
-						MOAITextStyler			();
-						~MOAITextStyler			();
-	void				RefreshStyleGlyphs		( cc8* str );
-	void				ResetStyleSet			();
+						MOAITextStyleCache		();
+						~MOAITextStyleCache		();
 	void				SetStyle				( MOAITextStyle* style );
 	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
-	void				ResetStyleMap			();
 };
 
 #endif

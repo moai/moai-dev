@@ -33,10 +33,19 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Push ( const TYPE& type ) {
+	TYPE& Push () {
 	
-		this->Grow ( this->mTop + 1, CHUNKSIZE );
-		this->mData [ this->mTop++ ] = type;
+		this->Grow ( ++this->mTop, CHUNKSIZE );
+		return this->mData [ this->mTop - 1 ];
+	}
+	
+	//----------------------------------------------------------------//
+	TYPE& Push ( const TYPE& type ) {
+		
+		u32 idx = this->mTop;
+		this->Grow ( ++this->mTop, CHUNKSIZE );
+		this->mData [ idx ] = type;
+		return this->mData [ idx ];
 	}
 	
 	//----------------------------------------------------------------//

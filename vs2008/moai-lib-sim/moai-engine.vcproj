@@ -2042,19 +2042,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleMap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAITextStyleParser.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITextStyleParser.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAITextStyler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAITextStyler.h"
 				>
 			</File>
 		</Filter>

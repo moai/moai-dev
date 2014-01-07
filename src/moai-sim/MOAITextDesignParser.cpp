@@ -5,12 +5,11 @@
 #include <contrib/utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
 // MOAITextDesignParser
@@ -86,10 +85,11 @@ void MOAITextDesignParser::AcceptToken () {
 //----------------------------------------------------------------//
 void MOAITextDesignParser::Align () {
 
-	ZLRect bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	ZLRect bounds = this->mLayout->mBounds;
 
 	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
+	
+	u32 baseLine = this->mBaseLine;
 	u32 totalLines = this->mLayout->mLines.GetTop ();
 
 	bool limitWidth = this->mDesigner->mLimitWidth;
@@ -132,7 +132,7 @@ void MOAITextDesignParser::Align () {
 	MOAIAnimCurve** curves = this->mDesigner->mCurves;
 	u32 totalCurves = this->mDesigner->mCurves.Size ();
 	
-	for ( u32 i = 0; i < totalLines; ++i ) {
+	for ( u32 i = baseLine; i < totalLines; ++i ) {
 		
 		MOAITextLine& line = this->mLayout->mLines [ i ];
 		ZLRect& lineRect = line.mRect;
@@ -158,11 +158,11 @@ void MOAITextDesignParser::Align () {
 				break;
 		}
 
-		lineX = ZLFloat::Floor ( lineX + 0.5f );
-		lineY = ZLFloat::Floor ( lineY + 0.5f );
+		lineX = ZLFloat::Floor ( lineX + this->mOffset.mX + 0.5f );
+		lineY = ZLFloat::Floor ( lineY + this->mOffset.mY + 0.5f );
 		
-		float xOff = lineX - lineRect.mXMin;
-		float yOff = lineY + line.mAscent;
+		float xOff = ( lineX - lineRect.mXMin );
+		float yOff = ( lineY + line.mAscent );
 		
 		lineRect.Init ( lineX, lineY, lineX + lineWidth, lineY + line.mHeight );
 		
@@ -171,7 +171,7 @@ void MOAITextDesignParser::Align () {
 			//yOff = 0.0f;
 			//float spriteYOff = yOff + line.mAscent;
 			
-			MOAIAnimCurve* curve = curves ? curves [ i % totalCurves ] : 0;
+			MOAIAnimCurve* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
 			
 			for ( u32 j = 0; j < line.mSize; ++j ) {	
 				MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
@@ -317,12 +317,12 @@ void MOAITextDesignParser::BuildLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyler& styler, MOAITextDesigner& designer, cc8* str, u32 idx ) {
+void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset ) {
 	
-	if ( styler.CountSpans () == 0 ) return;
+	if ( styleMap.CountSpans () == 0 ) return;
 	
 	this->mLayout = &layout;
-	this->mStyler = &styler;
+	this->mStyleMap = &styleMap;
 	this->mDesigner = &designer;
 	
 	this->mStr = str;
@@ -352,9 +352,12 @@ void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyler&
 	this->mLayoutHeight = 0.0f;
 	
 	this->mPen.Init ( 0.0f, 0.0f );
+	this->mOffset = offset;
 	this->mPrevGlyph = 0;
 	
 	this->mMore = true;
+	
+	this->mBaseLine = layout.mLines.GetTop ();
 	
 	this->BuildLayout ();
 }
@@ -379,7 +382,7 @@ u32 MOAITextDesignParser::NextChar () {
 	bool newSpan = false;
 
 	if ( !this->mStyleSpan ) {
-		this->mStyleSpan = &this->mStyler->mStyleMap.Elem ( 0 );
+		this->mStyleSpan = &this->mStyleMap->Elem ( 0 );
 		this->mSpanIdx = 0;
 		newSpan = true;
 	}
@@ -388,9 +391,9 @@ u32 MOAITextDesignParser::NextChar () {
 		
 		this->mStyleSpan = 0;
 		
-		u32 totalStyles = this->mStyler->mStyleMap.GetTop ();
+		u32 totalStyles = this->mStyleMap->GetTop ();
 		for ( this->mSpanIdx++; this->mSpanIdx < totalStyles; this->mSpanIdx++ ) {
-			MOAITextStyleSpan& styleSpan = this->mStyler->mStyleMap.Elem ( this->mSpanIdx );
+			MOAITextStyleSpan& styleSpan = this->mStyleMap->Elem ( this->mSpanIdx );
 			
 			if ( this->mIdx < styleSpan.mTop ) {
 				this->mStyleSpan = &styleSpan;
@@ -420,6 +423,7 @@ u32 MOAITextDesignParser::NextChar () {
 		
 		this->mPrevIdx = this->mIdx;
 		u32 c = u8_nextchar ( this->mStr, &this->mIdx );
+		
 		return c;
 	}
 	return 0;

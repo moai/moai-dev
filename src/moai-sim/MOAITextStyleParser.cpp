@@ -6,7 +6,8 @@
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleCache.h>
+#include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
 // MOAITextStyleParser
@@ -22,17 +23,15 @@
 	}
 
 //----------------------------------------------------------------//
-void MOAITextStyleParser::BuildStyleMap ( MOAITextStyler& styler, cc8* str ) {
-
-	// throw out any existing style map
-	styler.ResetStyleMap ();
+void MOAITextStyleParser::BuildStyleMap ( MOAITextStyleMap& styleMap, MOAITextStyleCache& styleCache, cc8* str ) {
 	
-	MOAITextStyle* defaultStyle = styler.GetStyle ();
+	MOAITextStyle* defaultStyle = styleCache.GetStyle ();
 	if ( !defaultStyle ) return;
 	
 	this->mIdx = 0;
 	this->mPrev = 0;
-	this->mStyler = &styler;
+	this->mStyleCache = &styleCache;
+	this->mStyleMap = &styleMap;
 	this->mStr = str;
 	
 	this->mTokenBase = 0;
@@ -46,7 +45,7 @@ void MOAITextStyleParser::BuildStyleMap ( MOAITextStyler& styler, cc8* str ) {
 void MOAITextStyleParser::FinishToken () {
 
 	if ( this->mCurrentStyle && ( this->mTokenBase < this->mTokenTop )) {
-		this->mStyler->PushStyleSpan ( this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
+		this->mStyleMap->PushStyleSpan ( this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
 	}
 	
 	this->mTokenBase = this->mIdx;
@@ -280,7 +279,7 @@ bool MOAITextStyleParser::ParseStyle () {
 				
 				this->FinishToken ();
 				
-				MOAITextStyle* style = this->mStyler->AddAnonymousStyle ( this->mCurrentStyle );
+				MOAITextStyle* style = this->mStyleCache->AddAnonymousStyle ( this->mCurrentStyle );
 				style->mColor = this->PackColor ( color, colorSize );
 				this->PushStyle ( style );
 				
@@ -316,7 +315,7 @@ bool MOAITextStyleParser::ParseStyle () {
 				memcpy ( name, &this->mStr [ startIdx + 1 ], namesize );
 				name [ namesize ] = 0;
 				
-				MOAITextStyle* style = this->mStyler->GetStyle ( name );
+				MOAITextStyle* style = this->mStyleCache->GetStyle ( name );
 				this->PushStyle ( style );
 				
 				TRANSITION ( DONE );

@@ -139,7 +139,8 @@
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleCache.h>
+#include <moai-sim/MOAITextStyleMap.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
 #endif

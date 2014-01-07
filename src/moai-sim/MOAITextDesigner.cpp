@@ -9,7 +9,7 @@
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
 // MOAITextDesigner
@@ -25,13 +25,11 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyler& styler, cc8* str, u32 idx, bool* more, u32* nextIdx ) {
-
-	layout.Reset ();
+void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
 
 	MOAITextDesignParser parser;
 	
-	parser.BuildLayout ( layout, styler, *this, str, idx );
+	parser.BuildLayout ( layout, styleMap, *this, str, idx, offset );
 	layout.ApplyHighlights ();
 	
 	if ( more ) {
@@ -40,6 +38,29 @@ void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyler& styler, 
 	
 	if ( nextIdx ) {
 		*nextIdx = parser.GetIndex ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextDesigner::Init ( const MOAITextDesigner& designer ) {
+
+	this->ClearCurves ();
+
+	this->mOwner			= designer.mOwner;
+	this->mFrame			= designer.mFrame;
+	this->mLimitWidth		= designer.mLimitWidth;
+	this->mLimitHeight		= designer.mLimitHeight;
+	this->mHAlign			= designer.mHAlign;
+	this->mVAlign			= designer.mVAlign;
+	this->mYFlip			= designer.mYFlip;
+	this->mWordBreak		= designer.mWordBreak;
+	this->mGlyphScale		= designer.mGlyphScale;
+	this->mLineSpacing		= designer.mLineSpacing;
+	
+	u32 totalCurves = designer.mCurves.Size ();
+	this->ReserveCurves ( totalCurves );
+	for ( u32 i = 0; i < totalCurves; ++i ) {
+		this->SetCurve ( i, designer.mCurves [ i ]);
 	}
 }
 

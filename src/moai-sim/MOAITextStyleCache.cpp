@@ -5,7 +5,7 @@
 #include <contrib/utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleCache.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
 #define DEFAULT_STYLE_NAME ""
@@ -41,11 +41,11 @@ void MOAITextStyleRef::UpdateState () {
 }
 
 //================================================================//
-// MOAITextStyler
+// MOAITextStyleCache
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITextStyle* MOAITextStyler::AddAnonymousStyle ( MOAITextStyle* source ) {
+MOAITextStyle* MOAITextStyleCache::AddAnonymousStyle ( MOAITextStyle* source ) {
 
 	MOAITextStyle* style = new MOAITextStyle ();
 	style->Init ( *source );
@@ -61,16 +61,7 @@ MOAITextStyle* MOAITextStyler::AddAnonymousStyle ( MOAITextStyle* source ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::BuildStyleMap ( cc8* str ) {
-
-	if ( !this->mStyleMap.GetTop ()) {
-		MOAITextStyleParser parser;
-		parser.BuildStyleMap ( *this, str );
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAITextStyler::CheckStylesChanged () {
+bool MOAITextStyleCache::CheckStylesChanged () {
 
 	bool status = false;
 
@@ -98,19 +89,40 @@ bool MOAITextStyler::CheckStylesChanged () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextStyler::CountSpans () {
+void MOAITextStyleCache::Clear () {
 
-	return this->mStyleMap.GetTop ();
+	this->ClearAnonymousStyles ();
+	this->ClearNamedStyles ();
 }
 
 //----------------------------------------------------------------//
-MOAITextStyle* MOAITextStyler::GetStyle () {
+void MOAITextStyleCache::ClearAnonymousStyles () {
+
+	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
+	for ( u32 i = 0; i < totalAnonymous; i++ ) {
+		this->ReleaseStyle ( this->mAnonymousStyles [ i ].mStyle );
+	}
+	this->mAnonymousStyles.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleCache::ClearNamedStyles () {
+	
+	StyleSetIt styleSetIt = this->mStyleSet.begin ();
+	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
+		this->ReleaseStyle ( styleSetIt->second.mStyle );
+	}
+	this->mStyleSet.clear ();
+}
+
+//----------------------------------------------------------------//
+MOAITextStyle* MOAITextStyleCache::GetStyle () {
 
 	return this->GetStyle ( DEFAULT_STYLE_NAME );
 }
 
 //----------------------------------------------------------------//
-MOAITextStyle* MOAITextStyler::GetStyle ( cc8* styleName ) {
+MOAITextStyle* MOAITextStyleCache::GetStyle ( cc8* styleName ) {
 
 	if ( styleName && this->mStyleSet.contains ( styleName )) {
 		return this->mStyleSet [ styleName ].mStyle;
@@ -119,62 +131,18 @@ MOAITextStyle* MOAITextStyler::GetStyle ( cc8* styleName ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextStyler::MOAITextStyler () :
+MOAITextStyleCache::MOAITextStyleCache () :
 	mOwner ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextStyler::~MOAITextStyler () {
+MOAITextStyleCache::~MOAITextStyleCache () {
 
-	this->ResetStyleMap ();
-	this->ResetStyleSet ();
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
-
-	MOAITextStyleSpan span;
-	
-	span.mBase		= base;
-	span.mTop		= top;
-	span.mStyle		= &style;
-
-	this->mStyleMap.Push ( span );
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyler::RefreshStyleGlyphs ( cc8* str ) {
-
-	u32 totalSpans = this->mStyleMap.GetTop ();
-	if ( !totalSpans ) return;
-	
-	for ( u32 i = 0; i < totalSpans; ++i ) {
-		MOAITextStyleSpan& span = this->mStyleMap [ i ];
-		
-		int idx = span.mBase;
-		while ( idx < span.mTop ) {
-			u32 c = u8_nextchar ( str, &idx );
-			span.mStyle->AffirmGlyph ( c );
-		}
-	}
-	
-	// TODO: think about keeping list of currently active styles instead of iterating through everything
-	
-	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
-	for ( u32 i = 0; i < totalAnonymous; i++ ) {
-		MOAITextStyleRef& styleRef = this->mAnonymousStyles [ i ];
-		styleRef.mStyle->mFont->ProcessGlyphs ();
-	}
-
-	StyleSetIt styleSetIt = this->mStyleSet.begin ();
-	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
-		MOAITextStyleRef& styleRef = styleSetIt->second;
-		styleRef.mStyle->mFont->ProcessGlyphs ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyler::ReleaseStyle ( MOAITextStyle* style ) {
+void MOAITextStyleCache::ReleaseStyle ( MOAITextStyle* style ) {
 
 	if ( style ) {
 		if ( this->mOwner ) {
@@ -186,28 +154,7 @@ void MOAITextStyler::ReleaseStyle ( MOAITextStyle* style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::ResetStyleMap () {
-
-	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
-	for ( u32 i = 0; i < totalAnonymous; i++ ) {
-		this->ReleaseStyle ( this->mAnonymousStyles [ i ].mStyle );
-	}
-	this->mAnonymousStyles.Reset ();
-	this->mStyleMap.Reset ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyler::ResetStyleSet () {
-	
-	StyleSetIt styleSetIt = this->mStyleSet.begin ();
-	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
-		this->ReleaseStyle ( styleSetIt->second.mStyle );
-	}
-	this->mStyleSet.clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyler::RetainStyle ( MOAITextStyle* style ) {
+void MOAITextStyleCache::RetainStyle ( MOAITextStyle* style ) {
 
 	if ( style ) {
 	
@@ -221,13 +168,13 @@ void MOAITextStyler::RetainStyle ( MOAITextStyle* style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::SetStyle ( MOAITextStyle* style ) {
+void MOAITextStyleCache::SetStyle ( MOAITextStyle* style ) {
 
 	this->SetStyle ( DEFAULT_STYLE_NAME, style );
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
+void MOAITextStyleCache::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
 
 	styleName = styleName ? styleName : DEFAULT_STYLE_NAME;
 		
@@ -250,9 +197,5 @@ void MOAITextStyler::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
 		if ( this->mStyleSet.contains ( styleName )) {
 			this->mStyleSet.erase ( styleName );
 		}
-	}
-	
-	if ( prevStyle ) {
-		this->ResetStyleMap ();
 	}
 }

@@ -9,7 +9,8 @@
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleCache.h>
+#include <moai-sim/MOAITextStyleMap.h>
 
 class MOAIAnimCurve;
 class MOAIFont;
@@ -125,6 +126,10 @@ class MOAIFont;
 class MOAITextLabel :
 	public MOAIProp,
 	public MOAIAction {
+private:
+
+	bool				mNeedsLayout;
+
 protected:
 
 	static const u32 REVEAL_ALL = 0xffffffff;
@@ -135,14 +140,13 @@ protected:
 	float				mThrottle;
 	u32					mReveal;
 	
-	bool				mNeedsLayout;
-	
 	u32					mCurrentPageIdx;
 	u32					mNextPageIdx;
 	bool				mMore;
 	
-	MOAITextStyler		mStyler;
 	MOAITextDesigner	mDesigner;
+	MOAITextStyleCache	mStyleCache;
+	MOAITextStyleMap	mStyleMap;
 	MOAITextLayout		mLayout;
 	
 	STLString			mText;
@@ -153,9 +157,9 @@ protected:
 	static int			_getGlyphScale			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );
-	static int			_getString				( lua_State* L );
-	static int			_getStringBounds		( lua_State* L );
 	static int			_getStyle				( lua_State* L );
+	static int			_getText				( lua_State* L );
+	static int			_getTextBounds			( lua_State* L );
 	static int			_more					( lua_State* L );
 	static int			_nextPage				( lua_State* L );
 	static int			_revealAll				( lua_State* L );
@@ -168,10 +172,9 @@ protected:
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );
 	static int			_setReveal				( lua_State* L );
-	static int			_setSnapToViewportScale	( lua_State* L );
 	static int			_setSpeed				( lua_State* L );
-	static int			_setString				( lua_State* L );
 	static int			_setStyle				( lua_State* L );
+	static int			_setText				( lua_State* L );
 	static int			_setWordBreak			( lua_State* L );
 	static int			_setYFlip				( lua_State* L );
 	static int			_spool					( lua_State* L );
@@ -184,13 +187,15 @@ protected:
 	#endif
 	
 	//----------------------------------------------------------------//
-	void				Layout					();
 	void				OnDepNodeUpdate			();
 	void				ResetLayout				();
 	void				ScheduleLayout			();
-	
-public:
+	void				Refresh					();
+	virtual void		RefreshLayout			();
+	virtual void		RefreshStyleGlyphs		();
 
+public:
+	
 	DECL_LUA_FACTORY ( MOAITextLabel )
 	
 	//----------------------------------------------------------------//
