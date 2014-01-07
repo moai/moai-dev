@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">@NAME@</string>
+    <string name="app_id">449851565116862</string>
+    <string name="facebook_login">Facebook Login</string>
 </resources>
