@@ -44,7 +44,8 @@ private:
 	friend class MOAITextDesignParser;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;
-	friend class MOAITextStyler;
+	friend class MOAITextStyleCache;
+	friend class MOAITextStyleMap;
 
 	//----------------------------------------------------------------//
 	static int		_getColor				( lua_State* L );

@@ -7,7 +7,8 @@
 class MOAIAnimCurve;
 class MOAIFont;
 class MOAITextStyle;
-class MOAITextStyler;
+class MOAITextStyleCache;
+class MOAITextStyleMap;
 
 //================================================================//
 // MOAITextStyleParser
@@ -15,7 +16,8 @@ class MOAITextStyler;
 class MOAITextStyleParser {
 private:
 
-	friend class MOAITextStyler;
+	friend class MOAITextStyleCache;
+	friend class MOAITextStyleMap;
 
 	// max color hex digits
 	static const u32 COLOR_MAX = 8;
@@ -40,6 +42,9 @@ private:
 		COLOR_START,
 		COLOR_BODY,
 		COLOR_FINISH,
+		
+		PEN_START,
+		PEN_FINISH,
 	};
 
 	// color sizes
@@ -61,7 +66,8 @@ private:
 	int						mTokenTop;
 	
 	cc8*					mStr;
-	MOAITextStyler*			mStyler;
+	MOAITextStyleCache*		mStyleCache;
+	MOAITextStyleMap*		mStyleMap;
 
 	ZLLeanStack < MOAITextStyle*, 8 > mStyleStack;
 	ZLLeanStack < MOAITextStyle*, 8 > mActiveStyles;
@@ -69,8 +75,7 @@ private:
 	MOAITextStyle* mCurrentStyle;
 
 	//----------------------------------------------------------------//
-	u32				AffirmStyle					( MOAITextStyle& style );
-	void			BuildStyleMap				( MOAITextStyler& styler, cc8* str );
+	void			BuildStyleMap				( MOAITextStyleMap& styleMap, MOAITextStyleCache& styleCache, cc8* str );
 	void			FinishToken					();
 	u32				GetChar						();
 	u32				PackColor					( const u8* color, u32 colorSize );

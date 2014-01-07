@@ -49,15 +49,18 @@ private:
 	float				mLayoutHeight;
 	
 	ZLVec2D				mPen;
+	ZLVec2D				mOffset;
 	MOAIGlyph*			mPrevGlyph;
 	bool				mMore;
+	
+	u32					mBaseLine;
 	
 	//----------------------------------------------------------------//
 	// layout settings
 	
-	MOAITextDesigner*	mDesigner;
-	MOAITextLayout*		mLayout;
-	MOAITextStyler*		mStyler;
+	MOAITextDesigner*		mDesigner;
+	MOAITextLayout*			mLayout;
+	MOAITextStyleMap*		mStyleMap;
 	
 	//----------------------------------------------------------------//
 	void				AcceptLine					();
@@ -71,11 +74,10 @@ public:
 	GET ( u32, Index, mIdx )
 
 	//----------------------------------------------------------------//
-	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyler& styler, MOAITextDesigner& designer, cc8* str, u32 idx );
+	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset );
 						MOAITextDesignParser		();
 	virtual				~MOAITextDesignParser		();
 	bool				More						();
-	
 };
 
 #endif

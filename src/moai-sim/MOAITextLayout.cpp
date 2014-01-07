@@ -337,9 +337,9 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 		
 			// Update the glyphRect height with the size of the of the glyphset's height for
 			// the max possible line height.
-			float fontSize = sprite.mStyle->GetSize();
-			MOAIGlyphSet* glyphSet = sprite.mStyle->GetFont()->GetGlyphSet(fontSize);
-			float deckHeight = glyphSet->GetHeight() * sprite.mScale;
+			float fontSize = sprite.mStyle->GetSize ();
+			MOAIGlyphSet* glyphSet = sprite.mStyle->GetFont ()->GetGlyphSet ( fontSize );
+			float deckHeight = glyphSet->GetHeight () * sprite.mScale;
 			glyphRect.mYMax = glyphRect.mYMin + deckHeight;
 
 			if ( result ) {
