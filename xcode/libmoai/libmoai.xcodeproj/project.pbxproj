@@ -4310,10 +4310,6 @@
 		CD74EA08137805920093EE68 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
 		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
-		CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
-		CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
-		CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
-		CDD06D8D1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
 		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
 		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
 		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
@@ -7258,8 +7254,6 @@
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
-		CDD06D891398832300AB0420 /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.h"; sourceTree = SOURCE_ROOT; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
 		CDD06D8F1398838D00AB0420 /* auxiliar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = auxiliar.h; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.h"; sourceTree = SOURCE_ROOT; };
 		CDD06D901398838D00AB0420 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = "../../3rdparty/luasocket-2.0.2/src/buffer.c"; sourceTree = SOURCE_ROOT; };
@@ -7692,7 +7686,6 @@
 				03240B5813564CB0000ADC60 /* libpng */,
 				CD74E44A1377D6780093EE68 /* libssl */,
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
-				CDD06BD21398824F00AB0420 /* luacrypto */,
 				CD218F8213A7FD18008337E7 /* luacurl */,
 				669C0566155DB5D500A5CE7F /* luasocket-embed */,
 				E9940D6414B7A217006465CC /* luafilesystem */,
@@ -11810,15 +11803,6 @@
 			name = luasocket;
 			sourceTree = "<group>";
 		};
-		CDD06BD21398824F00AB0420 /* luacrypto */ = {
-			isa = PBXGroup;
-			children = (
-				CDD06D881398832300AB0420 /* lcrypto.c */,
-				CDD06D891398832300AB0420 /* lcrypto.h */,
-			);
-			name = luacrypto;
-			sourceTree = "<group>";
-		};
 		CDEBDD3B1468C12F00C86DF9 /* Rope */ = {
 			isa = PBXGroup;
 			children = (
@@ -13998,7 +13982,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */,
 				CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */,
 				CDD06DB31398838D00AB0420 /* buffer.h in Headers */,
 				CDD06DB51398838D00AB0420 /* except.h in Headers */,
@@ -14023,7 +14006,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD06D8D1398832300AB0420 /* lcrypto.h in Headers */,
 				CDD06DD11398838D00AB0420 /* auxiliar.h in Headers */,
 				CDD06DD31398838D00AB0420 /* buffer.h in Headers */,
 				CDD06DD51398838D00AB0420 /* except.h in Headers */,
@@ -17652,7 +17634,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */,
 				CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */,
 				CDD06DB21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DB41398838D00AB0420 /* except.c in Sources */,
@@ -17676,7 +17657,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */,
 				CDD06DD01398838D00AB0420 /* auxiliar.c in Sources */,
 				CDD06DD21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DD41398838D00AB0420 /* except.c in Sources */,
