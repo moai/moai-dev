@@ -39,6 +39,20 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setCallback
+ @text	Sets a Lua function to be called whenever the node is updated.
+
+ @in		MOAIScriptNode self
+ @in		function onUpdate
+ @out	nil
+ */
+int MOAIRenderMgr::_setPreRenderCallback ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAIRenderMgr::Get ().mPreRenderCallback.SetStrongRef ( state, 1 );
+	return 0;
+}
+
 //================================================================//
 // DOXYGEN
 //================================================================//
@@ -145,6 +159,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getBufferTable",				_getBufferTable },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "setBufferTable",				_setBufferTable },
+		{ "setPreRenderCallback",		_setPreRenderCallback },
 		{ NULL, NULL }
 	};
 
@@ -159,6 +174,11 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
+	if (this->mPreRenderCallback) {
+		MOAILuaStateHandle state = this->mPreRenderCallback.GetSelf ();
+
+		state.DebugCall ( 0, 0 );
+	}
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	device.ResetDrawCount ();
 
