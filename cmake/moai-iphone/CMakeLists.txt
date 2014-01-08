@@ -6,11 +6,11 @@ set (LINK_LIBS "")
 macro(ADD_EXT_FRAMEWORK fwname altpaths)
    find_library(FRAMEWORK_${fwname}
        NAMES ${fwname}
-       PATHS ${altpaths} ${CMAKE_SYSTEM_FRAMEWORK_PATH} 
-       NO_DEFAULT_PATH)
+       PATHS "/Users/david/sdks/moaiforge/3rdparty/Tapjoy.embeddedframework" 
+       )
 
    if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND)
-       MESSAGE(ERROR ": Framework ${fwname} not found")
+       MESSAGE(ERROR ": Framework ${fwname} not found in ${altpaths}")
    else()
        MARK_AS_ADVANCED (${FRAMEWORK_${fwname}})
        set (LINK_LIBS ${LINK_LIBS} ${FRAMEWORK_${fwname}})
@@ -82,7 +82,8 @@ if (NOT DISABLE_TAPJOY)
    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
        ../../src/moai-iphone/MOAITapjoyIOS.mm 
    )
-   ADD_EXT_FRAMEWORK(Tapjoy "../../3rdparty/TapjoySDK_iOS_v9.1.0/Libraries/Tapjoy.embeddedframework")
+
+ set (LINK_LIBS ${LINK_LIBS} "${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/TapjoySDK_iOS_v9.1.0/Libraries/Tapjoy.embeddedframework/Tapjoy.framework")
 endif (NOT DISABLE_TAPJOY )
 
 
