@@ -745,7 +745,7 @@ MOAITextLabel::MOAITextLabel () :
 	mMore ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
@@ -794,7 +794,7 @@ void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
 
-	MOAIProp::OnDepNodeUpdate ();
+	MOAIGraphicsProp::OnDepNodeUpdate ();
 
 	if ( this->mDesigner.GetYFlip ()) {
 			
@@ -844,11 +844,10 @@ void MOAITextLabel::RefreshStyleGlyphs () {
 	this->mStyleMap.RefreshStyleGlyphs ( this->mText.c_str ());
 }
 
-
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
@@ -865,7 +864,7 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -917,13 +916,13 @@ void MOAITextLabel::ScheduleLayout () {
 
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {	
-	MOAIProp::SerializeIn ( state, serializer );
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIProp::SerializeOut ( state, serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }
 

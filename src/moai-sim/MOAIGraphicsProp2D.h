@@ -4,12 +4,12 @@
 #ifdef DOXYGEN
 
 //================================================================//
-// MOAIProp2D
+// MOAIGraphicsProp2D
 //================================================================//
-/**	@name	MOAIProp2D
+/**	@name	MOAIGraphicsProp2D
 	@text	2D prop.
 */
-class MOAIProp2D :
+class MOAIGraphicsProp2D :
 	public MOAITransform2D,
 	public MOAIColor,
 	public MOAIRenderable {

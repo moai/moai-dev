@@ -188,38 +188,6 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTexture
-	@text	Returns the texture.
-	
-	@in		MOAIProp self
-	@out	MOAITexture texture
-*/
-int MOAIProp::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-//----------------------------------------------------------------//
-/**	@name	isVisible
-	@text	Returns true if the given prop is visible.
-	
-	@in		MOAIProp self
-	@out	boolean isVisible
-*/
-int	MOAIProp::_isVisible ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	bool result = self->IsVisible();
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	inside
 	@text	Returns true if the given world space point falls inside
 			the prop's bounds.
@@ -245,101 +213,6 @@ int	MOAIProp::_inside ( lua_State* L ) {
 	lua_pushboolean ( state, result );
 	
 	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_setBillboard ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( state.IsType ( 2, LUA_TBOOLEAN )) {
-		bool billboard = state.GetValue < bool >( 2, false );
-		self->mBillboard = billboard ? BILLBOARD_NORMAL : BILLBOARD_NONE;
-	}
-	else {
-		self->mBillboard = state.GetValue < u32 >( 2, BILLBOARD_NONE );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/** @name	setBlendEquation
-	@text	Set the blend equation. This determines how the srcFactor and dstFactor values set with setBlendMode are interpreted.
-
-	@overload	Reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIProp self
-		@out	nil
-
-	@overload	Set the blend equation.
-
-		@in		MOAIProp self
-		@in		number equation				One of GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT.
-		@out	nil
-	
-*/
-int MOAIProp::_setBlendEquation ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		u32 equation = state.GetValue < u32 >( 2, ZGL_BLEND_MODE_ADD );
-		self->mBlendMode.SetBlendEquation ( equation );
-	}
-	else {
-		self->mBlendMode.SetBlendEquation ( ZGL_BLEND_MODE_ADD );
-	}
-	
-	self->ScheduleUpdate ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/** @name	setBlendMode
-	@text	Set the blend mode.
-
-	@overload	Reset the blend mode to MOAIProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIProp self
-		@out	nil
-
-	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIProp self
-		@in		number mode					One of MOAIProp.BLEND_NORMAL, MOAIProp.BLEND_ADD, MOAIProp.BLEND_MULTIPLY.
-		@out	nil
-	
-	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIProp.
-				See the OpenGL documentation for an explanation of blending constants.
-
-		@in		MOAIProp self
-		@in		number srcFactor
-		@in		number dstFactor
-		@out	nil
-*/
-int MOAIProp::_setBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		if ( state.IsType ( 3, LUA_TNUMBER )) {
-		
-			u32 srcFactor = state.GetValue < u32 >( 2, 0 );
-			u32 dstFactor = state.GetValue < u32 >( 3, 0 );
-			self->mBlendMode.SetBlend ( srcFactor, dstFactor );
-		}
-		else {
-			
-			u32 blendMode = state.GetValue < u32 >( 2, MOAIBlendMode::BLEND_NORMAL );
-			self->mBlendMode.SetBlend ( blendMode );
-		}
-	}
-	else {
-		self->mBlendMode.SetBlend ( MOAIBlendMode::BLEND_NORMAL );
-	}
-	
-	self->ScheduleUpdate ();
-	
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -379,22 +252,6 @@ int MOAIProp::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCullMode
-	@text	Sets and enables face culling.
-	
-	@in		MOAIProp self
-	@opt	number cullMode			Default value is MOAIProp.CULL_NONE.
-	@out	nil
-*/
-int MOAIProp::_setCullMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->mCullMode = state.GetValue < int >( 2, 0 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
@@ -413,38 +270,6 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 	else {
 		self->SetMask ( 0 );
 	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setDepthMask
-	@text	Disables or enables depth writing.
-	
-	@in		MOAIProp self
-	@opt	boolean depthMask		Default value is true.
-	@out	nil
-*/
-int MOAIProp::_setDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->mDepthMask = state.GetValue < bool >( 2, true );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setDepthTest
-	@text	Sets and enables depth testing (assuming depth buffer is present).
-	
-	@in		MOAIProp self
-	@opt	number depthFunc		Default value is MOAIProp.DEPTH_TEST_DISABLE.
-	@out	nil
-*/
-int MOAIProp::_setDepthTest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->mDepthTest = state.GetValue < int >( 2, 0 );
 	
 	return 0;
 }
@@ -535,28 +360,6 @@ int MOAIProp::_setIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
-	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
-	
-	@in		MOAIProp self
-	@opt	MOAINode parent		Default value is nil.
-	@out	nil
-*/
-int MOAIProp::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	
-	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAIProp, INHERIT_VISIBLE ), parent, PACK_ATTR ( MOAIProp, ATTR_VISIBLE ));
-	
-	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setPriority
 	@text	Sets or clears the node's priority. Clear the priority
 			to have MOAIPartition automatically assign a priority
@@ -595,99 +398,6 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2, true );
 	self->SetDependentMember < MOAIDeckRemapper >( self->mRemapper, remapper );
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setScissorRect
-	@text	Set or clear the prop's scissor rect.
-	
-	@in		MOAIProp self
-	@opt	MOAIScissorRect scissorRect		Default value is nil.
-	@out	nil
-*/
-int MOAIProp::_setScissorRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	MOAIScissorRect* scissorRect = state.GetLuaObject < MOAIScissorRect >( 2, true );
-	self->mScissorRect.Set ( *self, scissorRect );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setShader
-	@text	Sets or clears the prop's shader. The prop's shader takes
-			precedence over any shader specified by the deck or its
-			elements.
-	
-	@in		MOAIProp self
-	@opt	MOAIShader shader	Default value is nil.
-	@out	nil
-*/
-int MOAIProp::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
-	self->SetDependentMember < MOAIShader >( self->mShader, shader );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this prop. The prop's texture will
-			override the deck's texture.
-	
-	@in		MOAIProp self
-	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
-	@out	MOAIGfxState texture
-*/
-int MOAIProp::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
-	self->mTexture.Set ( *self, texture );
-
-	if ( texture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setUVTransform
-	@text	Sets or clears the prop's UV transform.
-	
-	@in		MOAIProp self
-	@opt	MOAITransformBase transform	Default value is nil.
-	@out	nil
-*/
-int MOAIProp::_setUVTransform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
-	self->SetDependentMember < MOAITransformBase >( self->mUVTransform, transform );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setVisible
-	@text	Sets or clears the prop's visibility.
-	
-	@in		MOAIProp self
-	@opt	boolean visible		Default value is true.
-	@out	nil
-*/
-int MOAIProp::_setVisible ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	bool visible = state.GetValue < bool >( 2, true );
-	self->SetVisible ( visible );
-
 	return 0;
 }
 
@@ -750,136 +460,45 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_PARTITION:
 				this->SetPartition ( attrOp.ApplyNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
-			case ATTR_SHADER:
-				this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE ));
-				return true;
-			case ATTR_BLEND_MODE:
-				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
-				return true;
-			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
-				return true;
-			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible () ), op , MOAIAttrOp::ATTR_READ );
-				return true;
-			//case FRAME_TRAIT:
-			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
-			//	return true;
 		}
 	}
 	
-	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp, op )) return true;
 	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-
-	if ( !this->IsVisible () ) return;
-	if ( !this->mDeck ) return;
-
-	this->LoadGfxState ();
-	this->LoadTransforms (); // do this *after* setting the shader; TODO: fix this so order doesn't matter
-	
-	if ( this->mGrid ) {
-		this->DrawGrid ( subPrimID );
-	}
-	else {
-		this->mDeck->Draw ( this->mIndex, this->mRemapper );
-	}
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	draw.Bind ();
-	
-	this->LoadTransforms ();
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
-		
-		ZLBox bounds;
-		u32 status = this->GetPropBounds ( bounds );
-		if ( status == BOUNDS_OK ) {
-			draw.DrawBoxOutline ( bounds );
-		}
-	}
-	
-	// clear out the world transform (draw in world space)
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
-		draw.DrawBoxOutline ( this->GetBounds ());
-	}
-	
-	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-		
-		ZLRect cellRect;
-		ZLRect paddedRect;
-		
-		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
-			
-			if ( cellRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
-					draw.DrawRectOutline ( cellRect );
-				}
-			}
-			
-			if ( paddedRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-					draw.DrawRectOutline ( paddedRect );
-				}
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::DrawGrid ( int subPrimID ) {
-
-	MOAIGrid& grid = *this->mGrid;
-	MOAICellCoord c0, c1;
-
-	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
-		this->GetGridBoundsInView ( c0, c1 );
-	} else {
-		c0 = c1 = grid.GetCellCoord ( subPrimID );
-	}
-	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+	UNUSED ( sampler );
 
-	if ( !this->mDeck ) return;
-		
-	sampler.SetSourcePrim ( this );
-	
-	if ( this->mGrid ) {
-		
-		ZLRect localRect = sampler.GetLocalRect ();
-		
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
-		ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
+	//if ( !this->mDeck ) return;
+	//
+	//sampler.SetSourcePrim ( this );
+	//
+	//if ( this->mGrid ) {
+	//	
+	//	ZLRect localRect = sampler.GetLocalRect ();
+	//	
+	//	MOAICellCoord c0;
+	//	MOAICellCoord c1;
+	//	
+	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
 
-		this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
-		//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
-	}
-	else {
-		//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
-	}
+	//	this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
+	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
+	//}
+	//else {
+	//	//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
+	//}
 }
 
 //----------------------------------------------------------------//
@@ -915,11 +534,6 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 	}
 	
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::GetCollisionShape ( MOAICollisionShape& shape ) {
-	UNUSED ( shape );
 }
 
 //----------------------------------------------------------------//
@@ -993,122 +607,6 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp::IsVisible() {
-	return this->mFlags & FLAGS_LOCAL_VISIBLE && this->mFlags & FLAGS_VISIBLE;
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::LoadGfxState () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	MOAIDeckGfxState gfxState;
-
-	if ( this->mDeck ) {
-		this->mDeck->GetGfxState ( gfxState );
-	}
-
-	gfxState.SetShader ( this->mShader );
-	gfxState.SetTexture ( this->mTexture );
-
-	gfxDevice.SetGfxState ( gfxState.GetShader ());
-	gfxDevice.SetGfxState ( gfxState.GetTexture ());
-
-	gfxDevice.SetPenColor ( this->mColor );
-	gfxDevice.SetCullFunc ( this->mCullMode );
-	gfxDevice.SetDepthFunc ( this->mDepthTest );
-	gfxDevice.SetDepthMask ( this->mDepthMask );
-	gfxDevice.SetBlendMode ( this->mBlendMode );
-	
-	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());		
-		gfxDevice.SetScissorRect ( scissorRect );
-	}
-	else {
-		gfxDevice.SetScissorRect ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::LoadTransforms () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-
-	MOAIViewport* viewport = renderMgr.GetViewport ();
-	MOAICamera* camera = renderMgr.GetCamera ();
-	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
-	
-
-	switch ( billboard ) {
-	
-		case BILLBOARD_NORMAL: {
-			
-			ZLAffine3D billboardMtx;
-			billboardMtx.Init ( camera->GetBillboardMtx ());
-			billboardMtx = this->GetBillboardMtx ( billboardMtx );
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-
-			break;
-		}
-		
-		case BILLBOARD_ORTHO: {
-		
-			ZLMatrix4x4 view = camera->GetViewMtx ();
-			ZLMatrix4x4 proj = camera->GetProjMtx ( *viewport );
-			
-			ZLMatrix4x4 invViewProj = view;
-			invViewProj.Append ( proj );
-			invViewProj.Inverse ();
-			
-			ZLMatrix4x4 billboardMtx;
-			billboardMtx.Init ( this->GetLocalToWorldMtx ());
-			
-			// world space location for prop
-			ZLVec3D worldLoc;
-			worldLoc.mX = billboardMtx.m [ ZLMatrix4x4::C3_R0 ];
-			worldLoc.mY = billboardMtx.m [ ZLMatrix4x4::C3_R1 ];
-			worldLoc.mZ = billboardMtx.m [ ZLMatrix4x4::C3_R2 ];
-			
-			billboardMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
-			billboardMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
-			billboardMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			view.Transform ( worldLoc );
-			proj.Project ( worldLoc );
-			
-			viewport->GetProjMtxInv ().Transform ( worldLoc );
-			
-			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
-			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
-			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			proj = viewport->GetProjMtx ();
-			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
-			
-			billboardMtx.Append ( view );
-			billboardMtx.Append ( proj );
-			billboardMtx.Append ( invViewProj );
-			
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-			break;
-		}
-		
-		case BILLBOARD_NONE:
-		default:
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
-	}
-
-	if ( this->mUVTransform ) {
-		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
-	}
-	else {
-		gfxDevice.SetUVTransform ();
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIProp::MOAIProp () :
 	mPartition ( 0 ),
 	mCell ( 0 ),
@@ -1116,18 +614,12 @@ MOAIProp::MOAIProp () :
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
-	mBillboard ( BILLBOARD_NONE ),
-	mFlags ( DEFAULT_FLAGS ),
+	mFlags ( 0 ),
 	mIndex( 1 ),
-	mGridScale ( 1.0f, 1.0f ),
-	mCullMode ( 0 ),
-	mDepthTest ( 0 ),
-	mDepthMask ( true ) {
+	mGridScale ( 1.0f, 1.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
-		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
@@ -1144,16 +636,11 @@ MOAIProp::~MOAIProp () {
 	this->mDeck.Set ( *this, 0 );
 	this->mRemapper.Set ( *this, 0 );
 	this->mGrid.Set ( *this, 0 );
-	this->mShader.Set ( *this, 0 );
-	this->mTexture.Set ( *this, 0 );
-	this->mUVTransform.Set ( *this, 0 );
-	this->mScissorRect.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::OnDepNodeUpdate () {
 	
-	MOAIColor::OnDepNodeUpdate ();
 	MOAITransform::OnDepNodeUpdate ();
 	
 	ZLBox propBounds;
@@ -1162,75 +649,21 @@ void MOAIProp::OnDepNodeUpdate () {
 	// update the prop location in the partition
 	propBounds.Transform ( this->mLocalToWorldMtx );
 	this->UpdateBounds ( propBounds, propBoundsStatus );
-	
-	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
-	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
-	MOAIColor::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
 	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
-	state.SetField ( -1, "ATTR_SHADER",					MOAIPropAttr::Pack ( ATTR_SHADER ));
-	state.SetField ( -1, "ATTR_BLEND_MODE",				MOAIPropAttr::Pack ( ATTR_BLEND_MODE ));
-	state.SetField ( -1, "ATTR_VISIBLE",				MOAIPropAttr::Pack ( ATTR_VISIBLE ));
-
-	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			MOAIPropAttr::Pack ( ATTR_LOCAL_VISIBLE ));
-	state.SetField ( -1, "ATTR_VISIBLE",				MOAIPropAttr::Pack ( ATTR_VISIBLE ));
-	state.SetField ( -1, "INHERIT_VISIBLE",				MOAIPropAttr::Pack ( INHERIT_VISIBLE ));
-
-	state.SetField ( -1, "INHERIT_FRAME",				MOAIPropAttr::Pack ( INHERIT_FRAME ));
-	state.SetField ( -1, "FRAME_TRAIT",					MOAIPropAttr::Pack ( FRAME_TRAIT ));
-	
-	state.SetField ( -1, "BLEND_ADD",					( u32 )MOAIBlendMode::BLEND_ADD );
-	state.SetField ( -1, "BLEND_MULTIPLY",				( u32 )MOAIBlendMode::BLEND_MULTIPLY );
-	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
-
-	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
-	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
-	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )ZGL_BLEND_MODE_REVERSE_SUBTRACT );
-	
-	state.SetField ( -1, "GL_ONE",						( u32 )ZGL_BLEND_FACTOR_ONE );
-	state.SetField ( -1, "GL_ZERO",						( u32 )ZGL_BLEND_FACTOR_ZERO );
-	state.SetField ( -1, "GL_DST_ALPHA",				( u32 )ZGL_BLEND_FACTOR_DST_ALPHA );
-	state.SetField ( -1, "GL_DST_COLOR",				( u32 )ZGL_BLEND_FACTOR_DST_COLOR );
-	state.SetField ( -1, "GL_SRC_COLOR",				( u32 )ZGL_BLEND_FACTOR_SRC_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR );
-	state.SetField ( -1, "GL_SRC_ALPHA",				( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA );
-	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE",		( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE );
-	
-	state.SetField ( -1, "DEPTH_TEST_DISABLE",			( u32 )0 );
-	state.SetField ( -1, "DEPTH_TEST_NEVER",			( u32 )ZGL_DEPTH_NEVER );
-	state.SetField ( -1, "DEPTH_TEST_LESS",				( u32 )ZGL_DEPTH_LESS );
-	state.SetField ( -1, "DEPTH_TEST_EQUAL",			( u32 )ZGL_DEPTH_EQUAL );
-	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL",		( u32 )ZGL_DEPTH_LEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER",			( u32 )ZGL_DEPTH_GREATER );
-	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL",			( u32 )ZGL_DEPTH_NOTEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )ZGL_DEPTH_GEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )ZGL_DEPTH_ALWAYS );
-	
-	state.SetField ( -1, "CULL_NONE",					( u32 )0 );
-	state.SetField ( -1, "CULL_ALL",					( u32 )ZGL_CULL_ALL );
-	state.SetField ( -1, "CULL_BACK",					( u32 )ZGL_CULL_BACK );
-	state.SetField ( -1, "CULL_FRONT",					( u32 )ZGL_CULL_FRONT );
-	
-	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
-	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
-	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
-	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
@@ -1239,30 +672,16 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
-		{ "getTexture",			_getTexture },
 		{ "getWorldBounds",		_getWorldBounds },
-		{ "isVisible",			_isVisible },
 		{ "inside",				_inside },
-		{ "setBillboard",		_setBillboard },
-		{ "setBlendEquation",	_setBlendEquation },
-		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
-		{ "setCullMode",		_setCullMode },
 		{ "setDeck",			_setDeck },
-		{ "setDepthMask",		_setDepthMask },
-		{ "setDepthTest",		_setDepthTest },
 		{ "setExpandForSort",	_setExpandForSort },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
-		{ "setParent",			_setParent },
 		{ "setPriority",		_setPriority },
 		{ "setRemapper",		_setRemapper },
-		{ "setScissorRect",		_setScissorRect },
-		{ "setShader",			_setShader },
-		{ "setTexture",			_setTexture },
-		{ "setUVTransform",		_setUVTransform },
-		{ "setVisible",			_setVisible },
 		{ NULL, NULL }
 	};
 	
@@ -1270,13 +689,9 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::Render () {
-
-	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
-}
-
-//----------------------------------------------------------------//
 void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	
+	MOAITransform::SerializeIn ( state, serializer );
 	
 	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < uintptr >( -1, "mDeck", 0 )));
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < uintptr >( -1, "mGrid", 0 )));
@@ -1284,6 +699,8 @@ void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 
 //----------------------------------------------------------------//
 void MOAIProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	
+	MOAITransform::SerializeOut ( state, serializer );
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
@@ -1300,13 +717,6 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 			this->mPartition->RemoveProp ( *this );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::SetVisible ( bool visible ) {
-
-	this->mFlags = visible ? this->mFlags | FLAGS_LOCAL_VISIBLE : this->mFlags & ~FLAGS_LOCAL_VISIBLE;
-	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

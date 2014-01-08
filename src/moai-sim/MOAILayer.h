@@ -5,8 +5,8 @@
 #define	MOAILAYER_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartition.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIViewport.h>
 
 class MOAIBox2DWorld;
@@ -33,7 +33,7 @@ class MOAICpSpace;
 	@const	SORT_VECTOR_DESCENDING
 */
 class MOAILayer :
-	public virtual MOAIProp,
+	public virtual MOAIGraphicsProp,
 	public MOAIClearableView {
 private:
 

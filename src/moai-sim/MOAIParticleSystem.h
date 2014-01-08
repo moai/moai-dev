@@ -6,8 +6,8 @@
 
 #include <moai-sim/host_particles.h>
 #include <moai-sim/MOAIAction.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIParticle.h>
-#include <moai-sim/MOAIProp.h>
 
 class MOAIDeck;
 class MOAIParticleScript;
@@ -20,7 +20,7 @@ class MOAIParticleState;
 	@text	Particle system.
 */
 class MOAIParticleSystem :
-	public MOAIProp,
+	public MOAIGraphicsProp,
 	public MOAIAction {
 private:
 

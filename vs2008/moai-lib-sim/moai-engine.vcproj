@@ -1642,19 +1642,27 @@
 			Name="prop"
 			>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIProp.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIProp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIProp2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIProp2D.h"
 				>
 			</File>
 			<File
@@ -1919,6 +1927,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAICollisionShape.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionWorld.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionWorld.h"
 				>
 			</File>
 		</Filter>
