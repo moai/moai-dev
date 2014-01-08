@@ -474,8 +474,6 @@
 		0324E79B13564BC8000ADC60 /* USZip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FC13564BC8000ADC60 /* USZip.h */; };
 		0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FD13564BC8000ADC60 /* USZipFile.cpp */; };
 		0324E79D13564BC8000ADC60 /* USZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FE13564BC8000ADC60 /* USZipFile.h */; };
-		0324E83213564BC8000ADC60 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
-		0324E83313564BC8000ADC60 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F413564BC7000ADC60 /* AKU.h */; };
 		0324E83613564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F713564BC7000ADC60 /* pch.cpp */; };
 		0324E83713564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F813564BC7000ADC60 /* pch.h */; };
 		0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4FA13564BC7000ADC60 /* MOAIAction.cpp */; };
@@ -1057,6 +1055,9 @@
 		66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
 		B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
+		B464B3AF187E057A002E4E0C /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
+		B464B3B1187E07CC002E4E0C /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F413564BC7000ADC60 /* AKU.h */; };
+		B464B3B2187E07D0002E4E0C /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
 		CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
@@ -5372,7 +5373,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0324E83313564BC8000ADC60 /* AKU.h in Headers */,
 				0324E83713564BC8000ADC60 /* pch.h in Headers */,
 				0324E83913564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E83B13564BC8000ADC60 /* MOAIAnim.h in Headers */,
@@ -5670,6 +5670,7 @@
 				DD80D69116D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
 				DD9C3F6617440A1E005BDA76 /* MOAITimerCoroutine.h in Headers */,
 				EB665DEE1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
+				B464B3B1187E07CC002E4E0C /* AKU.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6692,7 +6693,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0324E83213564BC8000ADC60 /* AKU.cpp in Sources */,
 				0324E83613564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */,
 				0324E83A13564BC8000ADC60 /* MOAIAnim.cpp in Sources */,
@@ -6946,6 +6946,8 @@
 				DD9C3F6517440A1E005BDA76 /* MOAITimerCoroutine.cpp in Sources */,
 				EB665DEC1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 				EB6FB01317725BF700F164E5 /* MOAIFreeTypeFont.cpp in Sources */,
+				B464B3AF187E057A002E4E0C /* moaicore-pch.cpp in Sources */,
+				B464B3B2187E07D0002E4E0C /* AKU.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7585,6 +7587,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7611,6 +7614,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -7619,6 +7623,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -7647,6 +7652,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -7655,12 +7661,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -7668,6 +7676,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7675,6 +7684,7 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -7903,7 +7913,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.8;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -8109,7 +8119,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.8;
+				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -8143,12 +8153,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
@@ -8158,12 +8170,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -8234,6 +8248,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8260,6 +8275,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -8268,6 +8284,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8294,6 +8311,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
