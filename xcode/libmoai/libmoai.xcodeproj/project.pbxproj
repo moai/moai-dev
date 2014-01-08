@@ -1542,8 +1542,6 @@
 		CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7001173AD0CA00DFE837 /* MOAITextDesigner.h */; };
 		CD4C3ECD180A63BB00C02381 /* MOAITextStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7002173AD0CA00DFE837 /* MOAITextStyle.cpp */; };
 		CD4C3ECE180A63BB00C02381 /* MOAITextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */; };
-		CD4C3ECF180A63BB00C02381 /* MOAITextStyler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7004173AD0CA00DFE837 /* MOAITextStyler.cpp */; };
-		CD4C3ED0180A63BB00C02381 /* MOAITextStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7005173AD0CA00DFE837 /* MOAITextStyler.h */; };
 		CD4C3ED1180A63BB00C02381 /* MOAITexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */; };
 		CD4C3ED2180A63BB00C02381 /* MOAITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7007173AD0CA00DFE837 /* MOAITexture.h */; };
 		CD4C3ED3180A63BB00C02381 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */; };
@@ -1819,8 +1817,6 @@
 		CD4C40FE180A63C200C02381 /* MOAITextDesigner.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7001173AD0CA00DFE837 /* MOAITextDesigner.h */; };
 		CD4C40FF180A63C200C02381 /* MOAITextStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7002173AD0CA00DFE837 /* MOAITextStyle.cpp */; };
 		CD4C4100180A63C200C02381 /* MOAITextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */; };
-		CD4C4101180A63C200C02381 /* MOAITextStyler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7004173AD0CA00DFE837 /* MOAITextStyler.cpp */; };
-		CD4C4102180A63C200C02381 /* MOAITextStyler.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7005173AD0CA00DFE837 /* MOAITextStyler.h */; };
 		CD4C4103180A63C200C02381 /* MOAITexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */; };
 		CD4C4104180A63C200C02381 /* MOAITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7007173AD0CA00DFE837 /* MOAITexture.h */; };
 		CD4C4105180A63C200C02381 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */; };
@@ -1968,6 +1964,14 @@
 		CD70C2141844999E005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C2101844999E005CEBC0 /* host.mm */; };
 		CD70C2151844999E005CEBC0 /* MOAIKontagentIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C2111844999E005CEBC0 /* MOAIKontagentIOS.h */; };
 		CD70C2161844999E005CEBC0 /* MOAIKontagentIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C2121844999E005CEBC0 /* MOAIKontagentIOS.mm */; };
+		CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */; };
+		CD781096187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */; };
+		CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */; };
+		CD781098187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */; };
+		CD781099187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */; };
+		CD78109A187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */; };
+		CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
+		CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
 		CD795CC217F08459006AEB47 /* SDL_assert_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBB17F08459006AEB47 /* SDL_assert_c.h */; };
 		CD795CC317F08459006AEB47 /* SDL_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CBC17F08459006AEB47 /* SDL_assert.c */; };
 		CD795CC417F08459006AEB47 /* SDL_error_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBD17F08459006AEB47 /* SDL_error_c.h */; };
@@ -6149,8 +6153,6 @@
 		89BE7001173AD0CA00DFE837 /* MOAITextDesigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextDesigner.h; sourceTree = "<group>"; };
 		89BE7002173AD0CA00DFE837 /* MOAITextStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyle.cpp; sourceTree = "<group>"; };
 		89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyle.h; sourceTree = "<group>"; };
-		89BE7004173AD0CA00DFE837 /* MOAITextStyler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyler.cpp; sourceTree = "<group>"; };
-		89BE7005173AD0CA00DFE837 /* MOAITextStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyler.h; sourceTree = "<group>"; };
 		89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITexture.cpp; sourceTree = "<group>"; };
 		89BE7007173AD0CA00DFE837 /* MOAITexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITexture.h; sourceTree = "<group>"; };
 		89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextureBase.cpp; sourceTree = "<group>"; };
@@ -7310,6 +7312,10 @@
 		CD74E9CF137805910093EE68 /* t1_reneg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_reneg.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_reneg.c"; sourceTree = "<group>"; };
 		CD74E9D0137805910093EE68 /* t1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_srvr.c"; sourceTree = "<group>"; };
 		CD74E9D1137805910093EE68 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = "../../3rdparty/openssl-1.0.0d/ssl/tls1.h"; sourceTree = "<group>"; };
+		CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleCache.cpp; sourceTree = "<group>"; };
+		CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleCache.h; sourceTree = "<group>"; };
+		CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleMap.cpp; sourceTree = "<group>"; };
+		CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleMap.h; sourceTree = "<group>"; };
 		CD795CBB17F08459006AEB47 /* SDL_assert_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_assert_c.h; path = "../../3rdparty/sdl2-2.0.0/src/SDL_assert_c.h"; sourceTree = "<group>"; };
 		CD795CBC17F08459006AEB47 /* SDL_assert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_assert.c; path = "../../3rdparty/sdl2-2.0.0/src/SDL_assert.c"; sourceTree = "<group>"; };
 		CD795CBD17F08459006AEB47 /* SDL_error_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_error_c.h; path = "../../3rdparty/sdl2-2.0.0/src/SDL_error_c.h"; sourceTree = "<group>"; };
@@ -9656,10 +9662,12 @@
 				CDEFD55F181ECB3E0058D772 /* MOAITextLayout.h */,
 				89BE7002173AD0CA00DFE837 /* MOAITextStyle.cpp */,
 				89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */,
+				CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */,
+				CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */,
+				CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */,
+				CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */,
 				CDEFD560181ECB3E0058D772 /* MOAITextStyleParser.cpp */,
 				CDEFD561181ECB3E0058D772 /* MOAITextStyleParser.h */,
-				89BE7004173AD0CA00DFE837 /* MOAITextStyler.cpp */,
-				89BE7005173AD0CA00DFE837 /* MOAITextStyler.h */,
 				89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */,
 				89BE7007173AD0CA00DFE837 /* MOAITexture.h */,
 				89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */,
@@ -12740,6 +12748,7 @@
 				CD4C3E7E180A63BB00C02381 /* MOAIParticleTimedEmitter.h in Headers */,
 				CD4C3E6E180A63BB00C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
 				CD4C3E96180A63BB00C02381 /* MOAIProfilerAutoScope.h in Headers */,
+				CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */,
 				CD4C3E29180A63BB00C02381 /* MOAIFrameBufferTexture.h in Headers */,
 				CD4C3E0A180A63BB00C02381 /* MOAICameraFitter2D.h in Headers */,
 				CD4C3E1E180A63BB00C02381 /* MOAIEaseType.h in Headers */,
@@ -12775,6 +12784,7 @@
 				CD4C3EF9180A63BB00C02381 /* MOAIViewport.h in Headers */,
 				CD4C3E55180A63BB00C02381 /* MOAIJoystickSensor.h in Headers */,
 				CD9F76651808CE9D0001EF0C /* NSString+MOAILib.h in Headers */,
+				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */,
 				CD4C3E2B180A63BB00C02381 /* MOAIFreeTypeFontReader.h in Headers */,
 				CD4C3DE9180A63BB00C02381 /* host_particles.h in Headers */,
@@ -12869,7 +12879,6 @@
 				89BE7251173AD0CB00DFE837 /* MOAILineShader-vsh.h in Headers */,
 				CD4C3E63180A63BB00C02381 /* MOAIMotionSensor.h in Headers */,
 				CD4C3E2F180A63BB00C02381 /* MOAIGfxQuad2D.h in Headers */,
-				CD4C3ED0180A63BB00C02381 /* MOAITextStyler.h in Headers */,
 				CD4C3E92180A63BB00C02381 /* MOAIPointerSensor.h in Headers */,
 				89BE7253173AD0CB00DFE837 /* MOAIMeshShader-fsh.h in Headers */,
 				CD4C3EA2180A63BB00C02381 /* MOAIProfilerReportBox.h in Headers */,
@@ -12918,7 +12927,6 @@
 				CD4C4125180A63C200C02381 /* MOAIVertexBuffer.h in Headers */,
 				CD4C4040180A63C200C02381 /* MOAIColor.h in Headers */,
 				CD4C40C2180A63C200C02381 /* MOAIPinTransform.h in Headers */,
-				CD4C4102180A63C200C02381 /* MOAITextStyler.h in Headers */,
 				CD4C4034180A63C200C02381 /* MOAIButtonSensor.h in Headers */,
 				CD4C4071180A63C200C02381 /* MOAIGlyphSet.h in Headers */,
 				CD4C40AC180A63C200C02381 /* MOAIParticleState.h in Headers */,
@@ -12931,6 +12939,7 @@
 				CD4C40BA180A63C200C02381 /* MOAIPartitionResultMgr.h in Headers */,
 				CD4C40D6180A63C200C02381 /* MOAIProfilerScope.h in Headers */,
 				CD4C4104180A63C200C02381 /* MOAITexture.h in Headers */,
+				CD781098187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C4097180A63C200C02381 /* MOAIMultiTexture.h in Headers */,
 				CD4C40E7180A63C200C02381 /* MOAIScriptNode.h in Headers */,
 				CD4C404C180A63C200C02381 /* MOAIDraw.h in Headers */,
@@ -12990,6 +12999,7 @@
 				CD4C40ED180A63C200C02381 /* MOAIShaderMgr.h in Headers */,
 				CD4C404A180A63C200C02381 /* MOAIDeckRemapper.h in Headers */,
 				CD4C4059180A63C200C02381 /* MOAIFrameBuffer.h in Headers */,
+				CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */,
 				CD4C40FE180A63C200C02381 /* MOAITextDesigner.h in Headers */,
 				CD4C401D180A63C200C02381 /* MOAIAction.h in Headers */,
 				CD4C4029180A63C200C02381 /* MOAIAnimCurveVec.h in Headers */,
@@ -16464,6 +16474,7 @@
 				CD4C3E0D180A63BB00C02381 /* MOAIColor.cpp in Sources */,
 				CD4C3EE7180A63BB00C02381 /* MOAIVectorDrawing.cpp in Sources */,
 				CD4C3EC9180A63BB00C02381 /* MOAITextBundle.cpp in Sources */,
+				CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */,
 				CD4C3E68180A63BB00C02381 /* MOAINodeMgr.cpp in Sources */,
 				CD9F765A1808CE9D0001EF0C /* NSData+MOAILib.mm in Sources */,
 				CD4C3EA1180A63BB00C02381 /* MOAIProfilerReportBox.cpp in Sources */,
@@ -16522,7 +16533,6 @@
 				CD4C3DEE180A63BB00C02381 /* MOAIAnim.cpp in Sources */,
 				CD4C3EC3180A63BB00C02381 /* MOAISurfaceDeck2D.cpp in Sources */,
 				CD4C3E36180A63BB00C02381 /* MOAIGlyph.cpp in Sources */,
-				CD4C3ECF180A63BB00C02381 /* MOAITextStyler.cpp in Sources */,
 				CD4C3E23180A63BB00C02381 /* MOAIFont_bmfont.cpp in Sources */,
 				CD4C3DEA180A63BB00C02381 /* MOAIAction.cpp in Sources */,
 				CD9F764E1808CE9D0001EF0C /* MOAIDialogIOS.mm in Sources */,
@@ -16598,6 +16608,7 @@
 				CD4C3DFF180A63BB00C02381 /* MOAIBoundsDeck.cpp in Sources */,
 				CD4C051018500C18005B0520 /* MOAIVectorUtil.cpp in Sources */,
 				CD4C3E3E180A63BB00C02381 /* MOAIGlyphSet.cpp in Sources */,
+				CD781099187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */,
 				CD4C3E44180A63BB00C02381 /* MOAIGridPathGraph.cpp in Sources */,
 				CD4C3EEF180A63BB00C02381 /* MOAIVectorShape.cpp in Sources */,
 				CD4C3E3A180A63BB00C02381 /* MOAIGlyphCacheBase.cpp in Sources */,
@@ -16644,6 +16655,7 @@
 				CD4C40CD180A63C200C02381 /* MOAIProfilerEntryBase.cpp in Sources */,
 				CD4C4037180A63C200C02381 /* MOAICamera2D.cpp in Sources */,
 				CD4C40BD180A63C200C02381 /* MOAIPathGraph.cpp in Sources */,
+				CD78109A187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */,
 				CD4C4090180A63C200C02381 /* MOAILocationSensor.cpp in Sources */,
 				CD4C404F180A63C200C02381 /* MOAIEaseType.cpp in Sources */,
 				CD4C40F1180A63C200C02381 /* MOAIStaticGlyphCache.cpp in Sources */,
@@ -16710,11 +16722,11 @@
 				CD4C40A9180A63C200C02381 /* MOAIParticleScript.cpp in Sources */,
 				CD4C4018180A63C200C02381 /* host.cpp in Sources */,
 				CD4C4024180A63C200C02381 /* MOAIAnimCurveBase.cpp in Sources */,
+				CD781096187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */,
 				CD4C411B180A63C200C02381 /* MOAIVectorDrawingDeck.cpp in Sources */,
 				CD4C401A180A63C200C02381 /* host_particles.cpp in Sources */,
 				CD4C409D180A63C200C02381 /* MOAIParticleCallbackPlugin.cpp in Sources */,
 				CD4C402F180A63C200C02381 /* MOAIBlocker.cpp in Sources */,
-				CD4C4101180A63C200C02381 /* MOAITextStyler.cpp in Sources */,
 				CD4C4035180A63C200C02381 /* MOAICamera.cpp in Sources */,
 				CD4C40B9180A63C200C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD4C4068180A63C200C02381 /* MOAIGlyph.cpp in Sources */,

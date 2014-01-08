@@ -146,7 +146,7 @@ void MOAITextDesignParser::Align () {
 		switch ( this->mDesigner->mHAlign ) {
 		
 			case MOAITextDesigner::CENTER_JUSTIFY:
-				lineX = limitWidth ? ( xMin + ( width * 0.5f )) - ( lineWidth * 0.5f ) : -( width * 0.5f );
+				lineX = limitWidth ? ( xMin + ( width * 0.5f )) - ( lineWidth * 0.5f ) : -( lineWidth * 0.5f );
 				break;
 				
 			case MOAITextDesigner::LEFT_JUSTIFY:
