@@ -98,11 +98,9 @@ int MOAILayer::_getFitting ( lua_State* L ) {
 int	MOAILayer::_getPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
-	if ( self->mPartition ) {
-		self->mPartition->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
+	self->AffirmPartition ();
+	self->mPartition->PushLuaUserdata ( state );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -719,7 +717,7 @@ MOAILayer::MOAILayer () :
 	mPartitionCull2D ( true ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIClearableView )
 	RTTI_END
 	
@@ -746,7 +744,7 @@ MOAILayer::~MOAILayer () {
 //----------------------------------------------------------------//
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIClearableView::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
@@ -766,7 +764,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIClearableView::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -804,10 +802,10 @@ void MOAILayer::Render () {
 
 //----------------------------------------------------------------//
 void MOAILayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIProp::SerializeIn ( state, serializer );
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIProp::SerializeOut ( state, serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
 }

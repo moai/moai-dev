@@ -5,7 +5,7 @@
 #define	MOAITEXTLABEL_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -124,7 +124,7 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIProp,
+	public MOAIGraphicsProp,
 	public MOAIAction {
 private:
 

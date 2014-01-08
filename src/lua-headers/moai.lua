@@ -286,11 +286,11 @@ MOAILayer.extend (
 )
 
 --============================================================--
--- MOAIProp
+-- MOAIGraphicsProp
 --============================================================--
-MOAIProp.extend (
+MOAIGraphicsProp.extend (
 
-	'MOAIProp2D',
+	'MOAIGraphicsProp2D',
 	
 	----------------------------------------------------------------
 	function ( interface, class, superInterface, superClass )
@@ -512,6 +512,9 @@ MOAIXmlParser.extend (
 MOAIHashWriter	= MOAIHashWriterCrypto or MOAIHashWriter
 MOAITextBox		= MOAITextLabel
 MOAIThread		= MOAICoroutine
+
+MOAIProp		= MOAIGraphicsProp
+MOAIProp2D		= MOAIGraphicsProp2D
 
 --============================================================--
 -- Cross Platform

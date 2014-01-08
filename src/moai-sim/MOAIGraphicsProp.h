@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPROP_H
-#define	MOAIPROP_H
+#ifndef	MOAIGRAPHICSPROP_H
+#define	MOAIGRAPHICSPROP_H
 
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
@@ -28,9 +28,9 @@ class MOAISurfaceSampler2D;
 class MOAITextureBase;
 
 //================================================================//
-// MOAIProp
+// MOAIGraphicsProp
 //================================================================//
-/**	@name	MOAIProp
+/**	@name	MOAIGraphicsProp
 	@text	Base class for props.
 	
 	@attr	ATTR_INDEX
@@ -74,26 +74,11 @@ class MOAITextureBase;
 	@const	CULL_BACK
 	@const	CULL_FRONT
 */
-class MOAIProp :
-	public MOAITransform {
+class MOAIGraphicsProp :
+	public MOAIProp,
+	public MOAIColor,
+	public MOAIRenderable {
 private:
-
-	friend class MOAIPartition;
-	friend class MOAIPartitionCell;
-	friend class MOAIPartitionLevel;
-
-	MOAIPartition*				mPartition;
-	MOAIPartitionCell*			mCell;
-	
-	// this is only for debug draw
-	MOAIPartitionLevel*			mLayer;
-	
-	ZLLeanLink < MOAIProp* >	mLinkInCell;
-	MOAIProp*					mNextResult;
-
-	u32				mMask;
-	ZLBox			mBounds;
-	s32				mPriority;
 	
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
@@ -102,56 +87,81 @@ private:
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
 	static int		_getWorldBounds		( lua_State* L );
+	static int		_isVisible			( lua_State* L );
 	static int		_inside				( lua_State* L );
+	static int		_setBillboard		( lua_State* L );
+	static int		_setBlendEquation	( lua_State* L );
+	static int		_setBlendMode		( lua_State* L );
 	static int		_setBounds			( lua_State* L );
+	static int		_setCullMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
+	static int		_setDepthMask		( lua_State* L );
+	static int		_setDepthTest		( lua_State* L );
 	static int		_setExpandForSort	( lua_State* L );
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
+	static int		_setParent			( lua_State* L );
 	static int		_setPriority		( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
+	static int		_setScissorRect		( lua_State* L );
+	static int		_setShader			( lua_State* L );
+	static int		_setTexture			( lua_State* L );
+	static int		_setUVTransform		( lua_State* L );
+	static int		_setVisible			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			DrawGrid			( int subPrimID );
 
 protected:
 
 	u32										mFlags;
-
-	MOAILuaSharedPtr < MOAIDeck >			mDeck;
-	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
-	u32										mIndex;
+	u32										mBillboard;
 	
-	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	ZLVec2D									mGridScale;
+	// TODO: these should all be attributes
+	MOAILuaSharedPtr < MOAIShader >			mShader;
+	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
+	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
+	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
+	
+	int										mCullMode;
+	int										mDepthTest;
+	bool									mDepthMask;
+	MOAIBlendMode							mBlendMode;
 
 	ZLBox									mBoundsOverride;
 
 	//----------------------------------------------------------------//
-	virtual u32		GetPropBounds			( ZLBox& bounds ); // get the prop bounds in model space
-	void			UpdateBounds			( u32 status );
-	void			UpdateBounds			( const ZLBox& bounds, u32 status );
+	u32				GetFrameFitting			( ZLBox& bounds, ZLVec3D& offset, ZLVec3D& scale );
+	void			LoadGfxState			();
+	void			LoadTransforms			();
 
 public:
 
-	DECL_ATTR_HELPER ( MOAIProp )
+	DECL_LUA_FACTORY ( MOAIGraphicsProp )
+	DECL_ATTR_HELPER ( MOAIGraphicsProp )
 
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
 	static const int NO_SUBPRIM_ID		= 0xffffffff;
-	
-	enum {
-		BOUNDS_EMPTY,
-		BOUNDS_GLOBAL,
-		BOUNDS_OK,
-	};
 
 	enum {
-		CAN_DRAW					= 0x01,
-		CAN_DRAW_DEBUG				= 0x02,
-		CAN_GATHER_SURFACES			= 0x04,
+		BILLBOARD_NONE,
+		BILLBOARD_NORMAL,
+		BILLBOARD_ORTHO,
 	};
 
 	enum {
 		ATTR_INDEX,
 		ATTR_PARTITION,
+		ATTR_SHADER,
+		ATTR_BLEND_MODE,
+		
+		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
+		ATTR_VISIBLE,			// read only - reflects the composite state of visibility
+		INHERIT_VISIBLE,		// used to *pull* parent visibility via inheritance
+		
+		INHERIT_FRAME,
+		FRAME_TRAIT,
 		
 		TOTAL_ATTR,
 	};
@@ -159,37 +169,31 @@ public:
 	enum {
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_EXPAND_FOR_SORT		= 0x02,
+		FLAGS_LOCAL_VISIBLE			= 0x04,
+		FLAGS_VISIBLE				= 0x08, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
-	GET_SET ( u32, Index, mIndex )
-	GET_SET ( u32, Mask, mMask )
-	GET ( s32, Priority, mPriority )
-	GET ( MOAIPartition*, Partition, mPartition )
-	
-	GET ( MOAIDeck*, Deck, mDeck )
-	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
-	GET ( ZLBox, Bounds, mBounds )
-	GET ( ZLVec3D, BoundsMax, mBounds.mMax )
-	GET ( ZLVec3D, BoundsMin, mBounds.mMin )
+	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
+
+	GET_SET ( int, CullMode, mCullMode )
+	GET_SET ( int, DepthTest, mDepthTest )
+	GET_SET ( bool, DepthMask, mDepthMask )
+	GET_SET ( const MOAIBlendMode&, BlendMode, mBlendMode )
 
 	//----------------------------------------------------------------//
-	void				AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void		Draw					( int subPrimID );
-	virtual void		DrawDebug				( int subPrimID );
-	void				GatherSurfaces			( MOAISurfaceSampler2D& sampler );
-	void				GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
-	MOAIPartition*		GetPartitionTrait		();
-	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
-	virtual bool		Inside					( ZLVec3D vec, float pad );
-						MOAIProp				();
-	virtual				~MOAIProp				();
+	void				Draw					( int subPrimID );
+	void				DrawDebug				( int subPrimID );
+	bool				IsVisible				();
+						MOAIGraphicsProp		();
+	virtual				~MOAIGraphicsProp		();
 	void				OnDepNodeUpdate			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Render					();
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetPartition			( MOAIPartition* partition );
+	void				SetVisible				( bool visible );
 };
 
 #endif
