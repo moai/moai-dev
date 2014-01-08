@@ -1,17 +1,33 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-iphone )
 
+set (LINK_LIBS "")
+#frameworks
+macro(ADD_EXT_FRAMEWORK fwname altpaths)
+   find_library(FRAMEWORK_${fwname}
+       NAMES ${fwname}
+       PATHS ${altpaths} ${CMAKE_SYSTEM_FRAMEWORK_PATH} 
+       NO_DEFAULT_PATH)
+
+   if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND)
+       MESSAGE(ERROR ": Framework ${fwname} not found")
+   else()
+       MARK_AS_ADVANCED (${FRAMEWORK_${fwname}})
+       set (LINK_LIBS ${LINK_LIBS} ${FRAMEWORK_${fwname}})
+       MESSAGE(STATUS "Framework ${fwname} found at ${FRAMEWORK_${fwname}}")
+   endif()
+endmacro(ADD_EXT_FRAMEWORK)
+
+
 set ( MOAI_IPHONE_INCLUDES 
   ${THIRD_PARTY_INCLUDES}
   "../../src/"
   "../../src/moai-iphone/"
   "../../src/moai-util/"
   "../../src/config-default/"
-  "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly"
+  "../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK"
   "../../3rdparty/facebookiOS-3.0.6.b/src"
   "../../3rdparty/playhaven-ios-1.13.1/src"
-
-
  CACHE INTERNAL "doc string" )
 
 
@@ -53,9 +69,6 @@ set ( MOAI_IPHONE_SRC
 
 # Extensions
 
-set (LINK_LIBS "")
-
-
 if (NOT DISABLE_TWITTER)
     set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
        ../../src/moai-iphone/MOAITwitterIOS.mm 
@@ -69,9 +82,7 @@ if (NOT DISABLE_TAPJOY)
    set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
        ../../src/moai-iphone/MOAITapjoyIOS.mm 
    )
-   add_subdirectory(tapjoy)
-   set (MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} ${TAPJOY_INCLUDES})
-   set (LINK_LIBS ${LINK_LIBS} tapjoy-ios)
+   ADD_EXT_FRAMEWORK(Tapjoy "../../3rdparty/TapjoySDK_iOS_v9.1.0/Libraries/Tapjoy.embeddedframework")
 endif (NOT DISABLE_TAPJOY )
 
 
@@ -81,13 +92,13 @@ if (NOT DISABLE_VUNGLE)
       ../../src/moai-iphone/AKU-vungle.mm
   )
   set ( MOAI_IPHONE_INCLUDES ${MOAI_IPHONE_INCLUDES} 
-     ../../3rdparty/vungle116/lib
-     ../../3rdparty/vungle116/lib/vunglepub
+     ../../3rdparty/vungle-1.3.3/lib
+     ../../3rdparty/vungle-1.3.3/lib/vunglepub
   )
   
    add_library(libVungle STATIC IMPORTED)
    set_property(TARGET libVungle PROPERTY
-                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle116/lib/vunglepub/bin/libvunglepub.a)
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/vungle-1.3.3/lib/vunglepub/bin/libvunglepub.a)
 
    set (LINK_LIBS ${LINK_LIBS} libVungle)
 
@@ -147,7 +158,7 @@ if (NOT DISABLE_CRITTERCISM)
 
    add_library(libCrittercism STATIC IMPORTED)
    set_property(TARGET libCrittercism PROPERTY
-                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a)
+                IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK/libCrittercism_v4_0_6.a)
 
    set (LINK_LIBS ${LINK_LIBS} libCrittercism)
 
