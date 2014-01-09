@@ -8,6 +8,9 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai )
 
+# Setup the "MOAI_ROOT" variable
+get_filename_component(MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+
 #
 # Multi-platform flags
 #
@@ -26,19 +29,18 @@ option ( BUILD_WINDOWS     FALSE )
 #set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
 
-
 #
 # Platform Definitions
 #
 if ( BUILD_OSX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DMACOSX -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY " CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DMACOSX -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__ -DMACOSX" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
 if ( BUILD_BLACKBERRY )
   # set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -V4.6.3,gcc_ntoarmv7le -w1 -D__QNX__")
   # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__ -V4.6.3,gcc_ntoarmv7le_cpp")
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__" CACHE INTERNAL "doc string")
 
   set ( CMAKE_RANLIB $ENV{QNX_HOST}/usr/bin/ntoarmv7-ranlib )
@@ -47,27 +49,27 @@ if ( BUILD_BLACKBERRY )
 endif ( BUILD_BLACKBERRY )
 
 if ( BUILD_HTML )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -DFT2_BUILD_LIBRARY -Wno-warn-absolute-paths" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -DFT2_BUILD_LIBRARY -Wno-warn-absolute-paths"  CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"  CACHE INTERNAL "doc string" )
 endif (BUILD_HTML )
 
 if ( BUILD_WINDOWS)
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY -Werror-implicit-function-declaration" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -DFT2_BUILD_LIBRARY -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 -DHAVE_MEMMOVE -Werror-implicit-function-declaration" CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500" CACHE INTERNAL "doc string" )
 endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " CACHE INTERNAL "doc string")
 endif ( BUILD_LINUX )
 
 if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
 endif ( BUILD_IOS )
 

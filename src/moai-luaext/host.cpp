@@ -27,9 +27,20 @@ void AKULuaExtAppInitialize () {
 void AKULuaExtContextInitialize () {
 
 	lua_State* state = AKUGetLuaState ();
-	luaopen_crypto ( state );
-	luaopen_luacurl ( state );
+
+	#if MOAI_WITH_LIBCRYPTO
+		luaopen_crypto ( state );
+	#endif
+
+	#if MOAI_WITH_CURL
+		luaopen_luacurl ( state );
+	#endif
+
+    #if MOAI_WITH_SQLITE
+  		luaopen_luasql_sqlite3 ( state );
+   	#endif
+	
 	luaopen_lfs ( state );
 	luapreload_fullluasocket ( state );
-	luaopen_luasql_sqlite3 ( state );
+
 }

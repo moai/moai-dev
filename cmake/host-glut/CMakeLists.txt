@@ -19,10 +19,17 @@ if ( BUILD_WINDOWS )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os" )
 endif ( BUILD_WINDOWS )
 
+if ( BUILD_OSX )
+  find_library ( APPLICATION_SERVICES_LIBRARY ApplicationServices )
+  find_library ( CORE_SERVICES_LIBRARY CoreServices )
+  find_package ( OpenGL REQUIRED )
+  find_package ( GLUT REQUIRED )
+endif ( BUILD_OSX )
+
 set ( INCLUDES_MOAIHOSTGLUT 
-  "../../src/"
-  "../../src/config-default/"
-  "../../src/host-glut/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
+  "${MOAI_ROOT}/src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
   ${FREEGLUT_INCLUDES}
   ${THIRD_PARTY_INCLUDES}
@@ -34,12 +41,8 @@ include_directories ( ${INCLUDES_MOAIHOSTGLUT} )
 #   "third-party"
 # )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-glut" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-glut" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
-
-if ( BUILD_OSX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -framework OpenGL -framework GLUT -framework CoreServices -framework ApplicationServices" )
-endif ( BUILD_OSX )
 
 add_executable ( moai
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHost.cpp
@@ -89,6 +92,13 @@ target_link_libraries ( moai
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
+  target_link_libraries ( moai 
+    ${APPLICATION_SERVICES_LIBRARY}
+    ${CORE_SERVICES_LIBRARY}
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+  )
+
   macro(ADD_FRAMEWORK fwname appname)
     find_library(FRAMEWORK_${fwname}
         NAMES ${fwname}

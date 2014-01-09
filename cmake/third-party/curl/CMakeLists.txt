@@ -4,6 +4,7 @@ project ( curl )
 
 if ( MOAI_CURL )
 
+  
 
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" CACHE INTERNAL "doc string")
@@ -17,7 +18,7 @@ if ( MOAI_CURL )
   set ( CARES_SRC "" )
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
-        "../../3rdparty/curl-7.19.7/include/" 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
 		"${CMAKE_CURRENT_SOURCE_DIR}"
       CACHE INTERNAL "doc string" )
@@ -26,87 +27,87 @@ if ( MOAI_CURL )
 
   if (BUILD_WINDOWS)
       set ( CURL_INCLUDES 
-        "../../3rdparty/curl-7.19.7/include/" 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
       CACHE INTERNAL "doc string" )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
         set ( CURL_INCLUDES
-          "../../3rdparty/curl-7.19.7/include-osx/"
+          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
         CACHE INTERNAL "doc string" )
     endif (BUILD_OSX)
 
 
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
-        "../../3rdparty/curl-7.19.7/include-android/" 
-        "../../3rdparty/c-ares-1.7.5/"
-        "../../3rdparty/c-ares-1.7.5/include-android/"
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
+        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
+        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-android/"
       CACHE INTERNAL "doc string" )
   endif (BUILD_ANDROID)
 
 if (BUILD_IOS)
     set ( CURL_INCLUDES 
-        "../../3rdparty/curl-7.19.7/include-iphone/"
-        "../../3rdparty/c-ares-1.7.5/"
-        "../../3rdparty/c-ares-1.7.5/include-apple/" 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
+        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
+        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-apple/" 
       CACHE INTERNAL "doc string" )
   endif (BUILD_IOS)
 
   if (BUILD_ANDROID OR BUILD_IOS)  
     set (CARES_SRC 
-      ../../3rdparty/c-ares-1.7.5/ares__close_sockets.c
-	../../3rdparty/c-ares-1.7.5/ares__get_hostent.c
-	../../3rdparty/c-ares-1.7.5/ares__read_line.c
-	../../3rdparty/c-ares-1.7.5/ares__timeval.c
-	../../3rdparty/c-ares-1.7.5/ares_cancel.c
-	../../3rdparty/c-ares-1.7.5/ares_data.c
-	../../3rdparty/c-ares-1.7.5/ares_destroy.c
-	../../3rdparty/c-ares-1.7.5/ares_expand_name.c
-	../../3rdparty/c-ares-1.7.5/ares_expand_string.c
-	../../3rdparty/c-ares-1.7.5/ares_fds.c
-	../../3rdparty/c-ares-1.7.5/ares_free_hostent.c
-	../../3rdparty/c-ares-1.7.5/ares_free_string.c
-	../../3rdparty/c-ares-1.7.5/ares_getenv.c
-	../../3rdparty/c-ares-1.7.5/ares_gethostbyaddr.c
-	../../3rdparty/c-ares-1.7.5/ares_gethostbyname.c
-	../../3rdparty/c-ares-1.7.5/ares_getnameinfo.c
-	../../3rdparty/c-ares-1.7.5/ares_getopt.c
-	../../3rdparty/c-ares-1.7.5/ares_getsock.c
-	../../3rdparty/c-ares-1.7.5/ares_init.c
-	../../3rdparty/c-ares-1.7.5/ares_library_init.c
-	../../3rdparty/c-ares-1.7.5/ares_llist.c
-	../../3rdparty/c-ares-1.7.5/ares_mkquery.c
-	../../3rdparty/c-ares-1.7.5/ares_nowarn.c
-	../../3rdparty/c-ares-1.7.5/ares_options.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_a_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_aaaa_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_mx_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_ns_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_ptr_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_srv_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_parse_txt_reply.c
-	../../3rdparty/c-ares-1.7.5/ares_platform.c
-	../../3rdparty/c-ares-1.7.5/ares_process.c
-	../../3rdparty/c-ares-1.7.5/ares_query.c
-	../../3rdparty/c-ares-1.7.5/ares_search.c
-	../../3rdparty/c-ares-1.7.5/ares_send.c
-	../../3rdparty/c-ares-1.7.5/ares_strcasecmp.c
-	../../3rdparty/c-ares-1.7.5/ares_strdup.c
-	../../3rdparty/c-ares-1.7.5/ares_strerror.c
-	../../3rdparty/c-ares-1.7.5/ares_timeout.c
-	../../3rdparty/c-ares-1.7.5/ares_version.c
-	../../3rdparty/c-ares-1.7.5/ares_writev.c
-	../../3rdparty/c-ares-1.7.5/bitncmp.c
-	../../3rdparty/c-ares-1.7.5/inet_net_pton.c
-	../../3rdparty/c-ares-1.7.5/ares_inet_ntop.c
+         ${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__close_sockets.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__get_hostent.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__read_line.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__timeval.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_cancel.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_data.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_destroy.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_expand_name.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_expand_string.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_fds.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_free_hostent.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_free_string.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getenv.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_gethostbyaddr.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_gethostbyname.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getnameinfo.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getopt.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getsock.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_init.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_library_init.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_llist.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_mkquery.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_nowarn.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_options.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_a_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_aaaa_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_mx_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_ns_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_ptr_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_srv_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_txt_reply.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_platform.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_process.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_query.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_search.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_send.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strcasecmp.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strdup.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strerror.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_timeout.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_version.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_writev.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/bitncmp.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/inet_net_pton.c
+	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_inet_ntop.c
     
     )
     
   endif (BUILD_ANDROID OR BUILD_IOS)
 
-       set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/curl-7.19.7/lib" )
+       set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
   set ( CURL_SOURCES 
     ${CARES_SRC}
     #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
