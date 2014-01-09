@@ -5,8 +5,8 @@ project ( third-party )
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" CACHE INTERNAL "doc string")
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
 
-#set ( CMAKE_CURRENT_SOURCE_DIR "${ROOT_DIR}../../../3rdparty" )
 
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
@@ -52,13 +52,13 @@ endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
 
 if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CMAKE_CURRENT_SOURCE_DIR}/../../src/zl-vfs/zl_replace.h" ) 
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
 endif ( BUILD_ANDROID )
 
 
 set ( THIRD_PARTY_INCLUDES 
-  "../../src/"
+  "${MOAI_ROOT}/src/"
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -82,8 +82,8 @@ set ( THIRD_PARTY_INCLUDES
   ${VORBIS_INCLUDES}
   ${ZLIB_INCLUDES}
   ${GLEW_INCLUDES}
-  "../../3rdparty/ooid-0.99/"
-  
+  "${MOAI_ROOT}/3rdparty/ooid-0.99/"
+
 CACHE INTERNAL "doc string" )
 
 include_directories ( ${THIRD_PARTY_INCLUDES} )
@@ -92,7 +92,7 @@ if ( BUILD_BLACKBERRY )
   include_directories ( ${BLACKBERRY_INCLUDES} )
 endif ( BUILD_BLACKBERRY)
 
-add_library ( third-party STATIC 
+add_library ( third-party STATIC
   ${BOX2D_SOURCES}
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
@@ -102,13 +102,13 @@ add_library ( third-party STATIC
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
   ${JPG_SOURCES}
-  ${LUA_SOURCES} 
+  ${LUA_SOURCES}
   ${LUAEXT_SOURCES}
-  ${MONGOOSE_SOURCES} 
-  ${OGG_SOURCES} 
-  ${PNG_SOURCES} 
+  ${MONGOOSE_SOURCES}
+  ${OGG_SOURCES}
+  ${PNG_SOURCES}
   ${SFMT_SOURCES}
-  ${SQLITE3_SOURCES} 
+  ${SQLITE3_SOURCES}
   ${TINYXML_SOURCES}
   ${TLSF_SOURCES}
   ${UNTZ_SOURCES}

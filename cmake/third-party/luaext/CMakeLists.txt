@@ -3,25 +3,47 @@ project ( luaext )
 
 if ( MOAI_LUAEXT )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/" )
+
   
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LUAEXT=1" CACHE INTERNAL "doc string" )
 
-  set ( LUAEXT_INCLUDES "../../3rdparty/lua-5.1.3/src/"  CACHE INTERNAL "doc string" )
+  set ( LUAEXT_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/"  CACHE INTERNAL "doc string" )
 
 
   
 
   set ( LUAEXT_SOURCES 
-    ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
-     ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
-     ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/luasql.c
     ${CMAKE_CURRENT_SOURCE_DIR}/luafilesystem-1.5.0/src/lfs.c
   CACHE INTERNAL "doc string" )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/" )
+if ( MOAI_SQLITE3 )
+	 set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+      ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
+      ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/luasql.c
+      CACHE INTERNAL "doc string"
+    )
+endif ( MOAI_SQLITE3 )
+
+if ( MOAI_CURL )
+    set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+      ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
+      CACHE INTERNAL "doc string"
+    )
+  endif ( MOAI_CURL )
+
+  if ( MOAI_CRYPTO )
+    set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+      ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
+      CACHE INTERNAL "doc string"
+    )
+  endif ( MOAI_CRYPTO )
+
+
+
+
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/" )
 
  include_directories ( "${CMAKE_CURRENT_SOURCE_DIR}/lua-5.1.3/src/" 
                         "${CMAKE_CURRENT_SOURCE_DIR}/luasocket-2.0.2/src" 

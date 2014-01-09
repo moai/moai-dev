@@ -18,15 +18,19 @@ extern "C" {
 //----------------------------------------------------------------//
 void AKUExtLoadLuacrypto () {
 
-	lua_State* state = AKUGetLuaState ();
-	luaopen_crypto ( state );
+	#if MOAI_WITH_LIBCRYPTO
+		lua_State* state = AKUGetLuaState ();
+		luaopen_crypto ( state );
+	#endif
 }
 
 //----------------------------------------------------------------//
 void AKUExtLoadLuacurl () {
 
-	lua_State* state = AKUGetLuaState ();
-	luaopen_luacurl ( state );
+	#if MOAI_WITH_LIBCRYPTO
+		lua_State* state = AKUGetLuaState ();
+		luaopen_luacurl ( state );
+	#endif
 }
 
 //----------------------------------------------------------------//
