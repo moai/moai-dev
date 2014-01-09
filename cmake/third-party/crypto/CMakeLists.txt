@@ -3,7 +3,7 @@ project ( crypto )
 
 if ( MOAI_CRYPTO )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/openssl-1.0.0d/crypto/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1 -DOPENSSL_NO_ASM" CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" CACHE INTERNAL "doc string")
@@ -11,11 +11,11 @@ if ( MOAI_CRYPTO )
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
   set ( CRYPTO_INCLUDES 
-    "../../3rdparty/openssl-1.0.0d/crypto/"
-    "../../3rdparty/openssl-1.0.0d/include/"
-    "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "../../3rdparty/openssl-1.0.0d/crypto/evp/"
-    "../../3rdparty/openssl-1.0.0d/" 
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" 
   CACHE INTERNAL "doc string" )
 
     if ( BUILD_OSX )
@@ -23,7 +23,7 @@ if ( MOAI_CRYPTO )
      set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENSSL_NO_ASM" CACHE INTERNAL "doc string")
        set( CRYPTO_INCLUDES
        	        ${CRYPTO_INCLUDES}
-           		"../../3rdparty/openssl-1.0.0d/include-linux"
+           		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
            		CACHE INTERNAL "doc string"
            		)
     endif ( BUILD_OSX )
@@ -33,7 +33,7 @@ if ( MOAI_CRYPTO )
     if ( BUILD_LINUX )
   	  set( CRYPTO_INCLUDES
   	        ${CRYPTO_INCLUDES}
-      		"../../3rdparty/openssl-1.0.0d/include-linux"
+      		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
       		CACHE INTERNAL "doc string"
       		)
     endif ( BUILD_LINUX )
@@ -43,7 +43,7 @@ if ( MOAI_CRYPTO )
   	  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" CACHE INTERNAL "doc string" )
 	  endif (NOT MOAI_OPENSSL)  	  	
   	  set( CRYPTO_INCLUDES
-            "../../3rdparty/openssl-1.0.0d/include-mingw"
+            "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw"
   	        ${CRYPTO_INCLUDES}
       		CACHE INTERNAL "doc string"
       		)
@@ -52,7 +52,7 @@ if ( MOAI_CRYPTO )
  if ( BUILD_ANDROID )
   	  set( CRYPTO_INCLUDES
   	        ${CRYPTO_INCLUDES}
-      		"../../3rdparty/openssl-1.0.0d/include-android"
+      		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android"
       		CACHE INTERNAL "doc string"
       		)
      endif ( BUILD_ANDROID )
@@ -60,7 +60,7 @@ if ( MOAI_CRYPTO )
 if ( BUILD_IOS )
       set( CRYPTO_INCLUDES
             ${CRYPTO_INCLUDES}
-            "../../3rdparty/openssl-1.0.0d/include-iphone"
+            "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone"
             CACHE INTERNAL "doc string"
             )
      endif ( BUILD_IOS)

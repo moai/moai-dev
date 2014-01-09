@@ -277,9 +277,6 @@
 /* Define if you have the <string.h> header file. */
 #define HAVE_STRING_H
 
-/* Define if you have the `strlcat' function. */
-#undef HAVE_STRLCAT
-
 /* Define if you have the `strlcpy' function. */
 #undef HAVE_STRLCPY
 

@@ -4,15 +4,15 @@ project ( freetype )
 
 if ( MOAI_FREETYPE )
 
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_FREETYPE=1" CACHE INTERNAL "doc string")
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_FREETYPE=1" CACHE INTERNAL "doc string")
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_FREETYPE=1 -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_FREETYPE=1 -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
 
     # add_definitions("-DFT2_BUILD_LIBRARY -D__MOAI_LINUX_BUILD")
 
-    set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/freetype-2.4.4/src/" )
+    set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4/src/" )
 
-    set ( FREETYPE_INCLUDES "../../3rdparty/freetype-2.4.4/include" CACHE INTERNAL "doc string" )
-	set ( FT_DIR "../../3rdparty/freetype-2.4.4" )
+    set ( FREETYPE_INCLUDES "${MOAI_ROOT}/3rdparty/freetype-2.4.4/include" CACHE INTERNAL "doc string" )
+	set ( FT_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4" )
 
     set ( FREETYPE_SOURCES 
 #source
