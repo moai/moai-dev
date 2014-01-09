@@ -18,10 +18,11 @@
 //================================================================//
 //----------------------------------------------------------------//
 /** @name	processOptimalSize
-	@text	Does one iteration of the binary search for the optimal size.  Returns the result
-			when finished, otherwise returns nil. Each iteration sets adjusts the minimum and 
-			maximum size parameters closer to the optimal size.
- 
+	@text	Does one iteration of the binary search for the optimal size. Each iteration
+			adjusts the minimum and maximum size parameters closer to the optimal size.
+			Returns nil until the final iteration, at which point it either returns the
+			result, or a negative value if it didn't fit.
+
 	@in		MOAITextRenderer	self
 	@in		string				text
 	@out	number				optimalSize		Returns nil before processing is complete.
@@ -37,13 +38,17 @@ int	MOAITextRenderer::_processOptimalSize( lua_State *L ){
 	cc8* text = state.GetValue < cc8* > (2, "");
 	
 	float optimalSize = self->ProcessOptimalSize(text);
-	// if the method returns a valid number
-	if (optimalSize != (float)PROCESSING_IN_PROGRESS) {
-		state.Push(optimalSize);
-		return 1;
+	switch ((int)optimalSize)
+	{
+		case PROCESSING_IN_PROGRESS:
+			return 0;
+		case PROCESSING_FAILED:
+			state.Push((float)-1);
+			return 1;
+		default:
+			state.Push(optimalSize);
+			return 1;
 	}
-	
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -121,7 +126,7 @@ int MOAITextRenderer::_renderSingleLine ( lua_State *L ){
  
 int MOAITextRenderer::_resetProcess( lua_State *L ){
 	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
-	self->mFirstProcessRun = true;
+	self->mProcessRunning = false;
 	return 0;
 }
 
@@ -310,21 +315,6 @@ int MOAITextRenderer::_setLineSpacing ( lua_State *L ){
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRoundToInteger
-	@text	Set the boolean parameter that controls whether the result of optimal size processing is rounded to the nearest integer less than or equal to the return value.
- 
-	@in		MOAITextRenderer self
-	@opt	bool returnGlyphBounds	default true
-	@out	nil
- 
- */
-int MOAITextRenderer::_setRoundToInteger(lua_State *L){
-	MOAI_LUA_SETUP ( MOAITextRenderer, "U" );
-	self->mRoundToInteger = state.GetValue < bool > ( 2, true );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setWidth
 	@text	Set the width of the text box to render.
  
@@ -354,75 +344,53 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 	return 0;
 }
 
+bool MOAITextRenderer::TextFitsWithFontSize(cc8 *text, float fontSize){
+	this->mFont->SetCharacterSize(fontSize);
+	int maxLines = this->mForceSingleLine ? 1 : (this->mHeight / this->mFont->GetLineHeight());
+	int numLines = this->mFont->NumberOfLinesToDisplayText(text, this->mWidth, this->mWordBreak, false);
+	return numLines > 0 && numLines <= maxLines;
+}
+
 //----------------------------------------------------------------//
 float MOAITextRenderer::ProcessOptimalSize(cc8 *text){
-	
-	
+
 	if (! (this->mFont->IsFreeTypeInitialized()) ) {
 		FT_Library library;
 		FT_Init_FreeType( &library );
 		this->mFont->LoadFreeTypeFace(&library);
 	}
-	
-	
-	
-	
-	float lowerBoundSize = this->mMinFontSize;
-	float upperBoundSize = this->mMaxFontSize;
-	if (this->mFirstProcessRun) {
-		upperBoundSize += 1.0f;
-		this->mFirstProcessRun = false;
+
+	if (!this->mProcessRunning) {
+		if (this->mMaxFontSize < this->mMinFontSize) {
+			return (float)PROCESSING_FAILED;
+		}
+
+		this->mProcessUpperBound = this->mMaxFontSize;
+		this->mProcessLowerBound = this->mMinFontSize;
+		this->mProcessNextCheckFontSize = this->mProcessUpperBound;
+		this->mProcessRunning = true;
 	}
-	
-	
-	this->mFont->SetCharacterSize(this->mMaxFontSize);
-	
-	float estimatedMaxSize = this->mFont->EstimatedMaxFontSize(this->mHeight, this->mMaxFontSize);
-	
-	if (estimatedMaxSize < this->mMaxFontSize) {
-		//this->mMaxFontSize = ceilf(estimatedMaxSize);
-		upperBoundSize = ceilf(estimatedMaxSize) + 1.0f;
+
+	const float testedFontSize = this->mProcessNextCheckFontSize;
+	const bool fontSizeFits = this->TextFitsWithFontSize(text, testedFontSize);
+	if (fontSizeFits) {
+		this->mProcessLowerBound = testedFontSize;
+	} else {
+		this->mProcessUpperBound = testedFontSize;
 	}
-	
-	FT_Int imageWidth = (FT_Int)this->mWidth;
-	
-	int numLines = 0;
-	
-	float testSize = (upperBoundSize + lowerBoundSize) / 2.0f;
-	
-	// set character size to test size
-	this->mFont->SetCharacterSize(testSize);
-	
-	// compute maximum number of lines allowed at font size.
-	// forceSingleLine sets this value to one if true.
-	FT_Int lineHeight = this->mFont->GetLineHeight();
-	int maxLines = (this->mHeight / lineHeight);
-	if (this->mForceSingleLine && maxLines > 1) {
-		maxLines = 1;
-	}
-	
-	numLines = this->mFont->NumberOfLinesToDisplayText(text, imageWidth, this->mWordBreak, false);
-	
-	if (numLines > maxLines || numLines < 0) {
-		upperBoundSize = this->mMaxFontSize = testSize;
-	}
-	else{
-		 lowerBoundSize = this->mMinFontSize = testSize;
-	}
-	
-	if (this->mMaxFontSize - this->mMinFontSize >= this->mGranularity) {
+
+	float halfDifference = (this->mProcessUpperBound - this->mProcessLowerBound) / 2.0f;
+	halfDifference -= fmodf(halfDifference, this->mGranularity);
+	float nextFontSize = this->mProcessLowerBound + halfDifference;
+	const bool fontSizeChanged = nextFontSize != testedFontSize;
+
+	if (fontSizeChanged) {
+		this->mProcessNextCheckFontSize = nextFontSize;
 		return (float)PROCESSING_IN_PROGRESS;
+	} else {
+		this->mProcessRunning = false;
+		return fontSizeFits ? testedFontSize : (float)PROCESSING_FAILED;
 	}
-	
-	if (this->mRoundToInteger) {
-		testSize = floorf(lowerBoundSize);
-	}
-	else{
-		testSize = lowerBoundSize;
-	}
-	
-	
-	return testSize;
 }
 
 //----------------------------------------------------------------//
@@ -440,8 +408,7 @@ MOAITextRenderer::MOAITextRenderer ( ):
 	mMinFontSize(1.0f),
 	mForceSingleLine(false),
 	mGranularity(1.0f),
-	mRoundToInteger(true),
-	mFirstProcessRun(true)
+	mProcessRunning(false)
 {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -476,7 +443,6 @@ void MOAITextRenderer::RegisterLuaFuncs ( MOAILuaState &state ) {
 		{ "setMaxFontSize",			_setMaxFontSize },
 		{ "setMinFontSize",			_setMinFontSize },
 		{ "setReturnGlyphBounds",	_setReturnGlyphBounds },
-		{ "setRoundToInteger",		_setRoundToInteger },
 		{ "setWidth",				_setWidth },
 		{ "setWordBreak",			_setWordBreak },
 		{ "setLineSpacing",			_setLineSpacing },

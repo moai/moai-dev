@@ -399,8 +399,8 @@ void GlutRefreshContext () {
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuacurl ();
+		//AKUExtLoadLuacrypto ();
+		//AKUExtLoadLuacurl ();
 		AKUExtLoadLuafilesystem ();
 		AKUExtLoadLuasocket ();
 		AKUExtLoadLuasql ();
