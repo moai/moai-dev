@@ -3,7 +3,7 @@
 // Copyright (c) 2013-present:
 //		Author(s):
 //				* An Nguyen (MeYuMe http://www.meyume.com)
-//				* Ricard Sole (gh: rcsole)
+//				* Ricard Sole (gh: rcsole, Herding Cats)
 //----------------------------------------------------------------//
 
 package com.ziplinegames.moai;

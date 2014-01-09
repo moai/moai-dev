@@ -3,7 +3,7 @@
 // Copyright (c) 2013-present:
 //		Author(s):
 //				* An Nguyen (MeYuMe http://www.meyume.com)
-//				* Ricard Sole (gh: rcsole)
+//				* Ricard Sole (gh: rcsole, Herding Cats)
 //----------------------------------------------------------------//
 
 #ifndef DISABLE_FACEBOOK
@@ -265,6 +265,9 @@ int MOAIFacebookAndroid::_publish ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	openRequestDialog
 	@text	Provides a builder that allows construction of the parameters for showing the Requests Dialog.
+
+	@in		String		title
+	@in		String		message
 
 	@docs	https://developers.facebook.com/docs/reference/android/current/WebDialog.RequestsDialogBuilder
 

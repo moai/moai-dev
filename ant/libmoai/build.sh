@@ -167,9 +167,6 @@
 
 	fi
 
-	echo "Skipping cleaning"
-	should_clean=false
-
 	if [ x"$should_clean" = xtrue ]; then
 		./clean.sh
 	fi
