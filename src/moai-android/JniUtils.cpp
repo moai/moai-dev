@@ -53,7 +53,7 @@ jobject JniUtils::bundleFromLua ( lua_State* L, int index ) {
     MOAILuaState state ( L );
 	JNI_GET_ENV ( jvm, env );
 
-    STLString className = "android.os.Bundle";
+    STLString className = "android/os/Bundle";
     jobject bundle = JniUtils::createObjectOfClass( className );
     jmethodID put = JniUtils::getMethod( className, "putString", "(Ljava/lang/String;Ljava/lang/String;)V" );
 
@@ -69,7 +69,7 @@ jobject JniUtils::bundleFromLua ( lua_State* L, int index ) {
                 JNI_GET_JSTRING ( key, jkey );
                 JNI_GET_JSTRING ( value, jvalue );
 
-                env->CallObjectMethod( bundle, put, jkey, jvalue );
+                env->CallVoidMethod( bundle, put, jkey, jvalue );
             }
         }
 

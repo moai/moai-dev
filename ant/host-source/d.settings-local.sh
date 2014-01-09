@@ -7,19 +7,21 @@
 #================================================================#
 
 #----------------------------------------------------------------#
-# path to Android SDK folder (on Windows, you MUST use forward 
+# path to Android SDK folder (on Windows, you MUST use forward
 # slashes as directory separators, e.g. C:/android-sdk)
 #----------------------------------------------------------------#
 
-	android_sdk_root=""
+	# ANDROID SDK PATH
+	android_sdk_root="$HOME/Software/sdk"
 
 #----------------------------------------------------------------#
-# space-delimited list of source lua directories to add to the 
-# application bundle and corresponding destination directories in 
+# space-delimited list of source lua directories to add to the
+# application bundle and corresponding destination directories in
 # the assets directory of the bundle
 #----------------------------------------------------------------#
 
-	src_dirs=( "../../samples/anim/anim-basic" )
+	# SOURCE DIR
+	src_dirs=( "$HOME/Projects/projects/moai/moai-samples/facebook" )
 	dest_dirs=(	"lua" )
 
 #----------------------------------------------------------------#
@@ -29,8 +31,8 @@
 	screenOrientation="landscape"
 
 #----------------------------------------------------------------#
-# space-delimited list of asset directories to add to the 
-# application bundle in the assets directory 
+# space-delimited list of asset directories to add to the
+# application bundle in the assets directory
 #----------------------------------------------------------------#
 
 	asset_dirs=( )

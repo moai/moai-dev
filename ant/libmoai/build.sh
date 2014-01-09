@@ -7,7 +7,7 @@
 #================================================================#
 
 	set -e
-	
+
 	# check for command line switches
 	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] \
         [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
@@ -27,7 +27,7 @@
 	push_flags=
 	tapjoy_flags=
 	twitter_flags=
-	
+
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 			-v)  verbose="V=1";;
@@ -56,12 +56,12 @@
 
 	if [ x"$arm_mode" != xarm ] && [ x"$arm_mode" != xthumb ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
 	if [ x"$arm_arch" != xarmeabi ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	elif [ x"$arm_arch" = xall ]; then
 		arm_arch="armeabi armeabi-v7a"
 	fi
@@ -70,17 +70,17 @@
 
 	if [ x"$use_fmod" != xtrue ] && [ x"$use_fmod" != xfalse ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
 	if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
     if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	fi
 
 	if [ x"$use_fmod" == xtrue ] && [ x"$FMOD_ANDROID_SDK_ROOT" == x ]; then
@@ -88,7 +88,7 @@
 		echo "*** Programmers API SDK from http://fmod.org and install it. Then ensure that the"
 		echo "*** FMOD_ANDROID_SDK_ROOT environment variable is set and points to the root of the"
 		echo "*** FMOD SDK installation; e.g., /FMOD/Android"
-		exit 1		
+		exit 1
 	fi
 
 	should_clean=false
@@ -166,7 +166,7 @@
 		fi
 
 	fi
-	
+
 	if [ x"$should_clean" = xtrue ]; then
 		./clean.sh
 	fi
@@ -176,55 +176,55 @@
 
 	if [ x"$use_fmod" != xtrue ]; then
 		echo "FMOD will be disabled"
-	fi 
+	fi
 
 	if [ x"$use_untz" != xtrue ]; then
 		echo "UNTZ will be disabled"
-	fi 
+	fi
 
     if [ x"$use_luajit" != xtrue ]; then
 		echo "LuaJIT will be disabled"
-	fi 
+	fi
 
 
 	if [ x"$adcolony_flags" != x ]; then
 		echo "AdColony will be disabled"
-	fi 
+	fi
 
 	if [ x"$billing_flags" != x ]; then
 		echo "Billing will be disabled"
-	fi 
+	fi
 
 	if [ x"$chartboost_flags" != x ]; then
 		echo "ChartBoost will be disabled"
-	fi 
+	fi
 
 	if [ x"$crittercism_flags" != x ]; then
 		echo "Crittercism will be disabled"
-	fi 
+	fi
 
 	if [ x"$facebook_flags" != x ]; then
 		echo "Facebook will be disabled"
-	fi 
+	fi
 
 	if [ x"$push_flags" != x ]; then
 		echo "Push Notifications will be disabled"
-	fi 
+	fi
 
 	if [ x"$tapjoy_flags" != x ]; then
 		echo "Tapjoy will be disabled"
-	fi 
-    
+	fi
+
     if [ x"$twitter_flags" != x ]; then
 		echo "Twitter will be disabled"
-	fi 
+	fi
 
 	pushd jni > /dev/null
 		cp -f AppPlatform.mk AppPlatformDefined.mk
 		sed -i.backup s%@APP_PLATFORM@%"$app_platform"%g AppPlatformDefined.mk
 		rm -f AppPlatformDefined.mk.backup
 	popd > /dev/null
-	
+
 	pushd jni > /dev/null
 		cp -f ArmMode.mk ArmModeDefined.mk
 		sed -i.backup s%@ARM_MODE@%"$arm_mode"%g ArmModeDefined.mk
@@ -247,7 +247,7 @@
 		sed -i.backup s%@USE_LUAJIT@%"$use_luajit"%g OptionalComponentsDefined.mk
 		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
-	
+
 	# build libcrypto
 	pushd jni/crypto > /dev/null
 		bash build.sh
@@ -259,7 +259,7 @@
             bash build.sh
         popd > /dev/null
     fi
-	
+
 	# build libmoai
 	pushd jni > /dev/null
 		ndk-build $verbose
@@ -269,10 +269,10 @@
 	rm -f jni/ArmModeDefined.mk
 	rm -f jni/AppPlatformDefined.mk
 	rm -f jni/OptionalComponentsDefined.mk
-		
+
 	# remove packaged-moai.cpp
 	rm -f jni/src/packaged-moai.cpp
-	
+
 	# create text file that shows the settings libmoai.so was built with (this time)
 	rm -f libs/package.txt
 	echo "$arm_mode" >> libs/package.txt

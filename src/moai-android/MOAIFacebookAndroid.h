@@ -1,5 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
-// http://getmoai.com
+//----------------------------------------------------------------//
+// Using Facebook Android SDK 3.6 (January 2014)
+// Copyright (c) 2013-present:
+//		Author(s):
+//				* An Nguyen (MeYuMe http://www.meyume.com)
+//				* Ricard Sole (gh: rcsole, Herding Cats)
+//----------------------------------------------------------------//
 
 #ifndef	MOAIFACEBOOKANDROID_H
 #define	MOAIFACEBOOKANDROID_H
@@ -17,61 +22,79 @@
 			www.facebook.com. Exposed to lua via MOAIFacebook on
 			all mobile platforms.
 
-	@const	DIALOG_DID_COMPLETE			Event code for a successfully completed Facebook dialog.
-	@const	DIALOG_DID_NOT_COMPLETE		Event code for a failed (or canceled) Facebook dialog.
-	@const	SESSION_DID_LOGIN			Event code for a successfully completed Facebook login.
-	@const	SESSION_DID_NOT_LOGIN		Event code for a failed (or canceled) Facebook login.
-	@const	REQUEST_RESPONSE			Event code for graph request responses.
-	@const	REQUEST_RESPONSE_FAILED		Event code for failed graph request responses.
+			DID_LOGIN,
+			DID_LOGOUT,
+			RETRIEVED_USER_DETAILS,
+			REQUEST_DIALOG_CLOSED,
+			PUBLISH_DIALOG_CLOSED,
+			RETRIEVED_SCORES,
+			RETRIEVED_APP_REQUESTS,
+			RETRIEVED_FRIENDS,
+			RETRIEVED_PERMISSIONS,
+			REQUESTED_PERMISSIONS,
+			RETRIEVED_PROFILE_PICTURE,
+			RETRIEVED_GRAPH_REQUEST_DATA,
 */
 class MOAIFacebookAndroid :
-	public MOAIGlobalClass < MOAIFacebookAndroid, MOAILuaObject > {
-private:
+		public MOAIGlobalClass < MOAIFacebookAndroid, MOAILuaObject > {
 
-	//----------------------------------------------------------------//
-	static int	_extendToken	( lua_State* L );
-	static int	_getExpirationDate	( lua_State* L );
-	static int	_getToken		( lua_State* L );
-	static int	_graphRequest	( lua_State* L );
-	static int	_init			( lua_State* L );
-	static int	_login			( lua_State* L );
-	static int	_logout			( lua_State* L );
-	static int	_postToFeed		( lua_State* L );
-	static int	_sendRequest	( lua_State* L );
-	static int	_sessionValid	( lua_State* L );
-	static int	_setListener 	( lua_State* L );
-	static int	_setExpirationDate	( lua_State* L );
-	static int	_setToken	 	( lua_State* L );
+private:
+	static int _init ( lua_State* L );
+	static int _login (  lua_State* L  );
+	static int _logout (  lua_State* L  );
+	static int _getPermissions (  lua_State* L  );
+	static int _requestPermissions (  lua_State* L  );
+	static int _publish (  lua_State* L  );
+	static int _openRequestDialog (  lua_State* L  );
+	static int _sendRequest (  lua_State* L  );
+	static int _getAppRequests (  lua_State* L  );
+	static int _deleteRequest (  lua_State* L  );
+	static int _getUserDetails (  lua_State* L  );
+	static int _loadProfilePicture (  lua_State* L  );
+	static int _getFriends (  lua_State* L  );
+	static int _sendScore (  lua_State* L  );
+	static int _getScores (  lua_State* L  );
+	static int _graphRequest (  lua_State* L  );
+	static int _setListener (  lua_State* L  );
 
 public:
-
 	DECL_LUA_SINGLETON ( MOAIFacebookAndroid );
 
 	enum {
-		DIALOG_DID_COMPLETE,
-		DIALOG_DID_NOT_COMPLETE,
-		SESSION_DID_LOGIN,
-		SESSION_DID_NOT_LOGIN,
-        REQUEST_RESPONSE,
-		REQUEST_RESPONSE_FAILED,
+		DID_LOGIN,
+		DID_LOGOUT,
+		RETRIEVED_USER_DETAILS,
+		REQUEST_DIALOG_CLOSED,
+		PUBLISH_DIALOG_CLOSED,
+		RETRIEVED_SCORES,
+		RETRIEVED_APP_REQUESTS,
+		RETRIEVED_FRIENDS,
+		RETRIEVED_PERMISSIONS,
+		REQUESTED_PERMISSIONS,
+		RETRIEVED_PROFILE_PICTURE,
+		RETRIEVED_GRAPH_REQUEST_DATA,
 		TOTAL,
 	};
 
-	enum {
-        DIALOG_RESULT_SUCCESS,
-        DIALOG_RESULT_CANCEL,
-        DIALOG_RESULT_ERROR,
-	};
+	MOAILuaRef mListeners [ TOTAL ];
 
-	MOAILuaRef		mListeners [ TOTAL ];
+		 MOAIFacebookAndroid ();
+		 ~MOAIFacebookAndroid ();
+	void RegisterLuaClass ( MOAILuaState& state );
 
-			MOAIFacebookAndroid		();
-			~MOAIFacebookAndroid	();
-	void 	NotifyLoginComplete		( int code );
-	void 	NotifyDialogComplete	( int code );
-	void 	NotifyRequestComplete	( cc8* result );
-	void 	NotifyRequestFailed	    ();
-	void	RegisterLuaClass		( MOAILuaState& state );
+	void notifyFBDidLogin ();
+	void notifyFBDidLogout ();
+	void notifyFBDidRetrieveUserDetails ( cc8* jsonResult );
+	void notifyFBDidRetrieveFriends ( cc8* jsonResult );
+	void notifyFBDidClosePublishDialog ( bool success );
+	void notifyFBDidCloseRequestDialog ( bool success );
+	void notifyFBDidRetrieveScores ( cc8* jsonResult );
+	void notifyFBDidRetrieveAppRequests ( cc8* jsonResult );
+	void notifyFBDidRetrievePermissions ( cc8* jsonResult );
+	void notifyFBDidRequestPermissions ();
+	void notifyFBDidLoadProfilePicture ( cc8* userId, cc8* picturePath );
+	void notifyFBDidReceiveGraphRequestData ( cc8* jsonResult );
+
 };
 
 #endif  //DISABLE_FACEBOOK
