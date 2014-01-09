@@ -24,8 +24,11 @@ int MOAIBrowserIOS::_canOpenURL ( lua_State* L ) {
 	cc8* url = state.GetValue < cc8* >( 1, "" );
 
 	if ( url && url [ 0 ] != '\0' ) {
-		lua_pushboolean (state, [[ UIApplication sharedApplication ] 
-            canOpenURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]]);
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		lua_pushboolean (state, [[ UIApplication sharedApplication ]
+								 canOpenURL:myURL]);
+		[myURL release];
 		return 1;
 	}
 
@@ -48,8 +51,11 @@ int MOAIBrowserIOS::_openURL ( lua_State* L ) {
 	cc8* url = state.GetValue < cc8* >( 1, "" );
 	
 	if ( url && url [ 0 ] != '\0' ) {
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[[ UIApplication sharedApplication ] openURL:myURL];
 		
-		[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]];
+		[myURL release];
 	}
 	
 	return 1;
