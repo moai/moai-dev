@@ -671,7 +671,7 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 	this->mMutex.Lock ();
 	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
 	this->mMutex.Unlock ();
-
+	out.Close();
 	return true;
 }
 

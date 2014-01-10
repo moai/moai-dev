@@ -60,9 +60,6 @@
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c">
       <Filter>luasocket</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c">
-      <Filter>luacrypto</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\luacurl-1.2.1\luacurl.c">
       <Filter>luacurl</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c">
       <Filter>luasocket-embed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luacrypto\src\lcrypto.c">
+      <Filter>luacrypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +125,6 @@
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h">
       <Filter>luasocket</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.h">
-      <Filter>luacrypto</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\luasql-2.2.0\src\luasql.h">
       <Filter>luasql</Filter>
     </ClInclude>
@@ -139,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
       <Filter>luasocket-embed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luacrypto\src\lcrypto.h">
+      <Filter>luacrypto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

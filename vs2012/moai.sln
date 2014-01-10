@@ -896,8 +896,8 @@ Global
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release|x64.ActiveCfg = Release|x64
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release|x64.Build.0 = Release|x64
-		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|x64.ActiveCfg = Release|x64
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.1|x64.Build.0 = Release|x64
 		{76508AAD-7030-4FD2-9D05-99184AF2BAF5}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
@@ -1045,6 +1045,7 @@ Global
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{7B02E245-7904-4DAA-AD0C-2C9CE881F35B}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1065,6 +1066,7 @@ Global
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{E91C1EC3-9421-41F1-95C8-77E4F796F6E9}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1663,6 +1665,7 @@ Global
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{83DE7C0A-667A-4B75-8D00-B575501BC289}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1683,6 +1686,7 @@ Global
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{50162269-783B-46FA-A636-ACA4CAF31EE0}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1703,6 +1707,7 @@ Global
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1723,6 +1728,7 @@ Global
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{E2A74094-D98E-40F2-9123-6E12BD6BBB5D}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1783,6 +1789,7 @@ Global
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1803,6 +1810,7 @@ Global
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|x64.ActiveCfg = Release-Lua-5.1|x64
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|x64.Build.0 = Release-Lua-5.1|x64
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release-Lua-5.1|x64.ActiveCfg = Release-Lua-5.1|x64
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release-Lua-5.2|Win32.ActiveCfg = Release-Lua-5.2|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release-Lua-5.2|x64.ActiveCfg = Release-Lua-5.2|x64
@@ -1822,8 +1830,8 @@ Global
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release|Win32.ActiveCfg = Release-Lua-5.1|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release|x64.ActiveCfg = Release|Win32
-		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.1|x64.ActiveCfg = Release|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
 		{DC12AEAA-D6B5-4FF7-88A4-F1273B05B61C}.Release-Lua-5.2|Win32.Build.0 = Release|Win32
@@ -1851,8 +1859,8 @@ Global
 		{219EC965-228A-1824-174D-96449D05F88A}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.Release|x64.ActiveCfg = Release|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Release|x64.Build.0 = Release|x64
-		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|x64.ActiveCfg = Release|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.1|x64.Build.0 = Release|x64
 		{219EC965-228A-1824-174D-96449D05F88A}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
@@ -1883,8 +1891,8 @@ Global
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release|x64.ActiveCfg = Release|x64
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release|x64.Build.0 = Release|x64
-		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|x64.ActiveCfg = Release|x64
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.1|x64.Build.0 = Release|x64
 		{245603E3-F580-41A5-9632-B25FE3372CBF}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
@@ -1915,8 +1923,8 @@ Global
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release|x64.ActiveCfg = Release|x64
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release|x64.Build.0 = Release|x64
-		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|x64.ActiveCfg = Release|x64
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.1|x64.Build.0 = Release|x64
 		{C303D2FC-FF97-49B8-9DDD-467B4C9A0B16}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
@@ -1947,8 +1955,8 @@ Global
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release|x64.ActiveCfg = Release|x64
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release|x64.Build.0 = Release|x64
-		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|x64.ActiveCfg = Release|x64
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.1|x64.Build.0 = Release|x64
 		{9C4961D2-5DDB-40C7-9BE8-CA918DC4E782}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
@@ -2006,8 +2014,8 @@ Global
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|Win32.ActiveCfg = Release-Lua-5.1|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|Win32.Build.0 = Release-Lua-5.1|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release|x64.ActiveCfg = Release|Win32
-		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.1|Win32.ActiveCfg = Release|Win32
-		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.1|Win32.Build.0 = Release|Win32
+		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.1|Win32.ActiveCfg = Release-Lua-5.1|Win32
+		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.1|Win32.Build.0 = Release-Lua-5.1|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.1|x64.ActiveCfg = Release|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.2|Win32.ActiveCfg = Release|Win32
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA}.Release-Lua-5.2|Win32.Build.0 = Release|Win32
@@ -2086,8 +2094,8 @@ Global
 		{1A4B5203-52EB-4805-9511-84B1BD094FCA} = {D1B0D04A-5661-4039-AC0B-006CC8951FE3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaPersistentConfig = Debug|Win32
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
 	EndGlobalSection
 EndGlobal

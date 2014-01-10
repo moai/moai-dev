@@ -13,3 +13,6 @@
 [submodule "3rdparty/Husky"]
 	path = 3rdparty/Husky
 url=git://github.com/StirfireStudios/Husky.git
+[submodule "3rdparty/luacrypto"]
+	path = 3rdparty/luacrypto
+	url = https://github.com/mkottman/luacrypto.git
