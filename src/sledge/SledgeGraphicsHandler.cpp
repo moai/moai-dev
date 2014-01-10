@@ -283,6 +283,12 @@ int SledgeGraphicsHandler::DoSetResolution( lua_State* L )
 	{
 		bFullscreen = SDL_TRUE;
 	}
+	SDL_bool bVsync = SDL_TRUE;
+	if (state.GetValue<int>(7, 1) == 0) {
+		bVsync = SDL_FALSE;
+		printf("Turn VSync off");
+	}
+
 	printf("setRes call: [%dx%d @ %dHz, %dbpp][%d]\n", width, height, refresh, bpp, bFullscreen);
 
 	if(bFullscreen == SDL_FALSE)
@@ -301,7 +307,9 @@ int SledgeGraphicsHandler::DoSetResolution( lua_State* L )
 		SDL_SetWindowDisplayMode(m_window, &fullscreenMode);
 		SDL_SetWindowFullscreen(m_window, !bFullscreen);
 		SDL_SetWindowFullscreen(m_window, bFullscreen);
-		
+
+		SDL_GL_SetSwapInterval(bVsync == SDL_TRUE);
+				
 		SDL_ShowCursor(0);
 	}
 	AKUSetScreenSize (width, height);
