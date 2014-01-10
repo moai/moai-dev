@@ -26,7 +26,6 @@ option ( BUILD_WINDOWS     FALSE )
 #set ( BUILD_NACL        FALSE CACHE STRING "Build Moai SDK for Native Client"     FORCE )
 
 # We won't be adding these to CMake for now:
-#set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
 
 #
@@ -179,6 +178,7 @@ endif ( BUILD_SERVER )
 
 if ( BUILD_ANDROID)
   add_subdirectory ( moai-android )
+  add_subdirectory ( host-android )
 endif ( BUILD_ANDROID)
 
 if ( BUILD_IOS)
