@@ -11,8 +11,8 @@
 class MOAIColor;
 class MOAITransformBase;
 	
-#define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n"
-#define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n"
+#define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n #define HIGHP\n"
+#define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n #define HIGHP highp\n"
 
 //================================================================//
 // MOAIShaderUniform
