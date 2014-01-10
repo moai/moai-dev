@@ -201,7 +201,7 @@ int MOAIAdColonyAndroid::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 
-		MOAIAdColonyAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIAdColonyAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 
 	return 0;
