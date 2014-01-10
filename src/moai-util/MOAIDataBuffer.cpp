@@ -88,15 +88,29 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 	int level = state.GetValue < int >( 2, ZLDeflateWriter::DEFAULT_LEVEL );
 	int windowBits = state.GetValue < int >( 3, ZLDeflateWriter::DEFAULT_WBITS );
 
-	if ( state.IsType ( 1, LUA_TSTRING )) {
-		return state.Deflate ( 1, level, windowBits ) ? 1 : 0;
-	}
-	
 	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1, true );
 	if ( self ) {
 		self->Deflate ( level, windowBits );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	deflate (class)
+ @text	Compresses the string using the DEFLATE algorithm.
+ 
+ @opt	string data				The string data to deflate.
+ @in		number level			The level used in the DEFLATE algorithm.  Pass nil to use the default value.
+ @in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+ @out	string output			If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
+ */
+int MOAIDataBuffer::_deflatec ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	int level = state.GetValue < int >( 1, ZLDeflateWriter::DEFAULT_LEVEL );
+	int windowBits = state.GetValue < int >( 2, ZLDeflateWriter::DEFAULT_WBITS );
+
+	return state.Deflate ( 3, level, windowBits ) ? 1 : 0;
 }
 
 //----------------------------------------------------------------//
@@ -217,6 +231,22 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 		self->Inflate ( windowBits );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	inflate (class)
+ @text	Decompresses the string using the DEFLATE algorithm.
+ 
+ @opt	string data				The string data to inflate.
+ @in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+ @out	string output			If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
+ */
+int MOAIDataBuffer::_inflatec ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	int windowBits = state.GetValue < int >( 2, ZLDeflateReader::DEFAULT_WBITS );
+
+	return state.Inflate ( 1, windowBits ) ? 1 : 0;
 }
 
 //----------------------------------------------------------------//
@@ -596,10 +626,10 @@ void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
-		{ "deflate",		_deflate },
+		{ "deflate",		_deflatec },
 		{ "hexDecode",		_hexDecode },
 		{ "hexEncode",		_hexEncode },
-		{ "inflate",		_inflate },
+		{ "inflate",		_inflatec },
 		{ "toCppHeader",	_toCppHeader },
 		{ NULL, NULL }
 	};
