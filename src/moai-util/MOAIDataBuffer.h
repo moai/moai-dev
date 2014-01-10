@@ -75,6 +75,7 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	bool			Save					( cc8* filename );
 	void			Unlock					();
+	ZLLeanArray<u8> *getBuffer				();
 };
 
 #endif
