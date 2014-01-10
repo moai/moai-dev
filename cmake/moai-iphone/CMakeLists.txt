@@ -2,21 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-iphone )
 
 set (LINK_LIBS "")
-#frameworks
-macro(ADD_EXT_FRAMEWORK fwname altpaths)
-   find_library(FRAMEWORK_${fwname}
-       NAMES ${fwname}
-       PATHS "/Users/david/sdks/moaiforge/3rdparty/Tapjoy.embeddedframework" 
-       )
 
-   if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND)
-       MESSAGE(ERROR ": Framework ${fwname} not found in ${altpaths}")
-   else()
-       MARK_AS_ADVANCED (${FRAMEWORK_${fwname}})
-       set (LINK_LIBS ${LINK_LIBS} ${FRAMEWORK_${fwname}})
-       MESSAGE(STATUS "Framework ${fwname} found at ${FRAMEWORK_${fwname}}")
-   endif()
-endmacro(ADD_EXT_FRAMEWORK)
 
 
 set ( MOAI_IPHONE_INCLUDES 
@@ -28,6 +14,7 @@ set ( MOAI_IPHONE_INCLUDES
   "../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK"
   "../../3rdparty/facebookiOS-3.0.6.b/src"
   "../../3rdparty/playhaven-ios-1.13.1/src"
+  
  CACHE INTERNAL "doc string" )
 
 
@@ -178,6 +165,15 @@ if (NOT DISABLE_FACEBOOK)
  set (LINK_LIBS ${LINK_LIBS} libFacebook)
 endif (NOT DISABLE_FACEBOOK)
 
+
+if (NOT DISABLE_MOBILEAPPTRACKER)
+   set ( MOAI_IPHONE_SRC ${MOAI_IPHONE_SRC} 
+       ../../src/moai-iphone/MOAIMobileAppTrackerIOS.mm 
+   )
+
+ set (LINK_LIBS ${LINK_LIBS} "${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/MobileAppTracking-ios/MobileAppTracker.framework")
+
+endif (NOT DISABLE_MOBILEAPPTRACKER)
 
 include_directories ( ${MOAI_IPHONE_INCLUDES} )
 add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )

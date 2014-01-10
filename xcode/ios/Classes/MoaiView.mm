@@ -18,7 +18,7 @@
 
 #import <moai-audiosampler/MOAIAudioSampler.h>
 #import <moai-audiosampler/AKU-audiosampler.h>
-#import <lua-headers/moai_lua.h>
+
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
