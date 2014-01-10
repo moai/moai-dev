@@ -188,13 +188,7 @@ void SledgeHost::RunGame()
 				case SDL_WINDOWEVENT:
 					m_InputManager->inputNotify_onWindowEnterLeave((SDL_WindowEventID)event.window.event);
 					break;
-				//case SDL_WINDOWEVENT_LEAVE:
-				//	m_InputManager->inputNotify_onWindowLeave();
-				//	break;
 				case SDL_USEREVENT:
-					// Render updates not being received and updates not tied to
-					// render causes stuttering
-					//ProcessUserEvent(event.user.code);
 					break;
 
 				case SDL_CONTROLLERAXISMOTION:

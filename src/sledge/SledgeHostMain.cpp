@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "SledgeHost.h"
-#include <shellapi.h>
 
 /**
 #ifdef WIN32
+#include <shellapi.h> 
+ 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 #ifdef _DEBUG
 	printf("MOAI-OPEN DEBUG\n");
