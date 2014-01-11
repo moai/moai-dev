@@ -326,6 +326,24 @@ int MOAISim::_getTaskSubscriber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isDebug
+ @text	Returns whether the runtime environment was built in debug or release mode.
+
+ @in		MOAIAction self
+ @out	bool true if in debug mode, false if in release mode.
+ */
+int MOAISim::_isDebug ( lua_State* L ) {
+
+#if DEBUG
+	bool isDebug = true;
+#else
+	bool isDebug = false;
+#endif
+
+	lua_pushboolean ( L, isDebug );
+	return 1;
+}
+//----------------------------------------------------------------//
 /**	@name	openWindow
 	@text	Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
 
@@ -515,6 +533,17 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 int MOAISim::_setLoopFlags ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setLoopFlagFixed
+ @text	Set Loop Flags to MOAISim.LOOP_FLAGS_FIXED
+ @out	nil
+ */
+int MOAISim::_setLoopFlagFixed ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAISim::Get ().mLoopFlags = LOOP_FLAGS_FIXED;
 	return 0;
 }
 
@@ -784,6 +813,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
 		{ "getTaskSubscriber",			_getTaskSubscriber },
+		{ "isDebug",					_isDebug },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "reportHistogram",			_reportHistogram },
@@ -795,6 +825,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
 		{ "setLongDelayThreshold",		_setLongDelayThreshold },
 		{ "setLoopFlags",				_setLoopFlags },
+		{ "setLoopFlagFixed",			_setLoopFlagFixed },
 		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "setStep",					_setStep },
 		{ "setStepMultiplier",			_setStepMultiplier },

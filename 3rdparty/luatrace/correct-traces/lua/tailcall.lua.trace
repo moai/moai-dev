@@ -1,0 +1,66 @@
+> test/tailcall.lua 0 0
+16 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+12 0
+> test/tailcall.lua 7 13
+8 0
+8 0
+9 0
+10 0
+<
+<
+<
+<
+<
+<
+<
+<
+<
+<
+16 0
+16 0
+17 0
+> ./luatrace.lua 348 354

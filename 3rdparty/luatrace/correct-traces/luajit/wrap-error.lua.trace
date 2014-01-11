@@ -1,0 +1,54 @@
+> test/wrap-error.lua 0 28
+27 0
+> test/wrap-error.lua 20 23
+20 0
+21 0
+22 0
+P
+> test/wrap-error.lua 14 17
+14 0
+15 0
+R 2
+> test/wrap-error.lua 5 11
+5 0
+6 0
+9 0
+Y
+16 0
+R 2
+10 0
+T test/wrap-error.lua 5 11
+5 0
+6 0
+9 0
+Y
+16 0
+R 2
+10 0
+T test/wrap-error.lua 5 11
+5 0
+6 0
+9 0
+Y
+16 0
+R 2
+10 0
+T test/wrap-error.lua 5 11
+5 0
+6 0
+9 0
+Y
+16 0
+R 2
+10 0
+T test/wrap-error.lua 5 11
+5 0
+6 0
+7 0
+E
+23 0
+<
+27 0
+28 0
+> ./luatrace.lua 348 354
+348 0

@@ -1,0 +1,49 @@
+> test/inner-function.lua 0 0
+16 0
+> test/inner-function.lua 11 13
+12 0
+> test/inner-function.lua 5 9
+6 0
+7 0
+> test/inner-function.lua 12 12
+12 0
+12 0
+<
+7 0
+6 0
+7 0
+> test/inner-function.lua 12 12
+12 0
+12 0
+<
+7 0
+6 0
+7 0
+> test/inner-function.lua 12 12
+12 0
+12 0
+<
+7 0
+6 0
+7 0
+> test/inner-function.lua 12 12
+12 0
+12 0
+<
+7 0
+6 0
+7 0
+> test/inner-function.lua 12 12
+12 0
+12 0
+<
+7 0
+6 0
+9 0
+<
+12 0
+13 0
+<
+16 0
+17 0
+> ./luatrace.lua 348 354

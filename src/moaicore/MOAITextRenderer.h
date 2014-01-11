@@ -34,10 +34,12 @@ private:
 	float			mMinFontSize;
 	bool			mForceSingleLine;
 	float			mGranularity;
-	bool			mRoundToInteger;
-	
-	bool			mFirstProcessRun;
-	
+
+	bool			mProcessRunning;
+	float			mProcessLowerBound;
+	float			mProcessUpperBound;
+	float			mProcessNextCheckFontSize;
+
 	
 	static int			_processOptimalSize		( lua_State* L );
 	static int			_render					( lua_State* L );
@@ -53,7 +55,6 @@ private:
 	static int			_setMaxFontSize			( lua_State* L );
 	static int			_setMinFontSize			( lua_State* L );
 	static int			_setReturnGlyphBounds	( lua_State* L );
-	static int			_setRoundToInteger		( lua_State* L );
 	static int			_setWidth				( lua_State* L );
 	static int			_setWordBreak			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
@@ -63,11 +64,13 @@ public:
 	DECL_LUA_FACTORY ( MOAITextRenderer )
 	
 	static const int PROCESSING_IN_PROGRESS = -1;
-	
+	static const int PROCESSING_FAILED      = -2;
+
 	MOAITextRenderer ();
 	~MOAITextRenderer ();
 	
 	float				ProcessOptimalSize		(cc8 *text);
+	bool				TextFitsWithFontSize	(cc8 *text, float fontSize);
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
