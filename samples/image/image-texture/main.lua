@@ -15,45 +15,16 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 texture = MOAIImageTexture.new ()
-texture:init ( 16, 16 )
-
-for i = 0,15 do
-	texture:setRGBA ( i, i, 1, 0, 0, 1 )
-end
+texture:load("IMG_0168.JPG")
+texture1a = texture:resizeCanvas(0,0,2048,2048)
+texture2 = texture1a:resize(256,256, MOAIImage.FILTER_NEAREST)
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( texture )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setTexture ( texture2 )
+gfxQuad:setRect ( -60, -60, 60, 60 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 1.5 )
-
-function onMouseLeftEvent ( down )
-	if down == true then
-	
-		for i = 0,15 do
-			texture:setRGBA ( i, i, 1, 1, 1, 1 )
-		end
-	
-		texture:invalidate ()
-	end
-end
-
-MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
-
-function onMouseRightEvent ( down )
-	if down == true then
-	
-		for i = 0,15 do
-			texture:setRGBA ( i, i, 0, 0, 1, 1 )
-		end
-	
-		texture:invalidate ( 4, 4, 12, 12 )
-	end
-end
-
-MOAIInputMgr.device.mouseRight:setCallback ( onMouseRightEvent )

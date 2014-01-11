@@ -24,3 +24,11 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
+
+
+function onMessageReceived( msg ) 
+	print("RECEIVED: " .. msg )
+end
+
+ws = MOAIWebSocket.new()
+ws:start("ws://10.41.18.247:8080/ws", onMessageReceived)

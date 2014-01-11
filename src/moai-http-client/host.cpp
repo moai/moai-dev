@@ -52,4 +52,6 @@ void AKUInitializeHttpClient () {
 		MOAIUrlMgrnaCl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
 	#endif
+	
+	REGISTER_LUA_CLASS ( MOAIWebSocket )
 }
