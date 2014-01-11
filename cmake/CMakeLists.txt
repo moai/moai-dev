@@ -12,6 +12,12 @@ project ( moai )
 get_filename_component(MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
 
 #
+# Is this makefile also meant to generate the sample hosts, or just used for the libs
+#
+option ( BUILD_HOST "Build the bundled sample host for platform" TRUE ) 
+
+
+#
 # Multi-platform flags
 #
 option ( BUILD_LINUX       FALSE )
@@ -68,8 +74,20 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
+   if (${IOS_PLATFORM} STREQUAL "SIMULATOR")
+     set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphonesimulator")
+     set (CMAKE_OSX_ARCHITECTURES "i386" CACHE string  "Build architecture for iOS" )
+     set (CMAKE_OSX_ARCHITECTURES "i386")
+   else (${IOS_PLATFORM} STREQUAL "SIMULATOR")
+     set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos")
+     set (CMAKE_OSX_ARCHITECTURES "armv7" CACHE string  "Build architecture for iOS" )
+     set (CMAKE_OSX_ARCHITECTURES "armv7")
+   endif (${IOS_PLATFORM} STREQUAL "SIMULATOR")
+
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+
+
 endif ( BUILD_IOS )
 
 #
@@ -152,23 +170,31 @@ add_subdirectory ( moai-luaext )
 # Hosts
 #
 if ( BUILD_HTML ) 
-  add_subdirectory ( host-html )
+  if ( BUILD_HOST )
+    add_subdirectory ( host-html )
+  endif ( BUILD_HOST )
 endif ( BUILD_HTML )
 
 if ( BUILD_LINUX )
-  add_subdirectory ( host-glut )
+  if ( BUILD_HOST )
+     add_subdirectory ( host-glut )
+  endif ( BUILD_HOST )
   add_subdirectory ( moai-test )
   add_subdirectory ( host-test )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
-  add_subdirectory ( host-glut )
+  if ( BUILD_HOST )
+    add_subdirectory ( host-glut )
+  endif (BUILD_HOST )
   add_subdirectory ( moai-test )
   add_subdirectory ( host-test )
 endif ( BUILD_OSX )
 
 if ( BUILD_WINDOWS )
-  add_subdirectory ( host-glut )
+  if ( BUILD_HOST )
+    add_subdirectory ( host-glut )
+  endif ( BUILD_HOST )
 endif ( BUILD_WINDOWS )
 
 if ( BUILD_SERVER )
@@ -176,12 +202,17 @@ if ( BUILD_SERVER )
   add_subdirectory ( http-host )
 endif ( BUILD_SERVER )
 
-if ( BUILD_ANDROID)
+if ( BUILD_ANDROID )
   add_subdirectory ( moai-android )
-  add_subdirectory ( host-android )
-endif ( BUILD_ANDROID)
+  if ( BUILD_HOST )
+    add_subdirectory ( host-android )
+  endif ( BUILD_HOST )
+endif ( BUILD_ANDROID )
 
-if ( BUILD_IOS)
+if ( BUILD_IOS )
   add_subdirectory ( moai-iphone )
   add_subdirectory ( moai-audiosampler )
-endif ( BUILD_IOS)
+  if ( BUILD_HOST )
+     add_subdirectory ( host-ios )
+  endif (BUILD_HOST )
+endif ( BUILD_IOS )

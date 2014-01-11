@@ -7,15 +7,17 @@
 #================================================================#
 
 	set -e
-  if [ x"$ANDROID_NDK" == x ]; then
-  echo "ANDROID_NDK not defined. Please set to the location of your emscripten install (path)"
-exit 1
-fi
-	# check for command line switches
+
+   APP_NAME='Moai App'
+   APP_ID='com.getmoai.moaiapp'
+   APP_VERSION='1.0'
+
+
+   # check for command line switches
 	usage="usage: $0  \
         [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
         [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-        [--disable-twitter] [--windows] [--release]"
+        [--disable-twitter] [--simulator] [--release]"
 	
 	use_untz="true"
 	
@@ -29,8 +31,9 @@ fi
 	twitter_flags=
 	buildtype_flags="Debug"
     windows_flags=
-	
-	while [ $# -gt 0 ];	do
+	simulator="false"
+
+	while [ $# -gt 1 ];	do
 	    case "$1" in
 			--use-untz)  use_untz="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
@@ -42,7 +45,7 @@ fi
 			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
 			--disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
 			--release) buildtype_flags="Release";;
-			--windows) windows_flags='-G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows/bin/make.exe"';; 
+			--simulator) simulator="true";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -52,71 +55,38 @@ fi
 	    shift
 	done
 
+LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$1")
+
+if [ ! -f "${LUASRC}/main.lua" ]; then
+  echo "Could not find main.lua in specified lua source directory [${LUASRC}]"
+  exit 1
+fi
+
+
+
+
 	if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
 		echo $usage
 		exit 1		
 	fi
 
-	should_clean=false
+#get some required variables
+XCODEPATH=$(xcode-select --print-path)
 
-	# if libmoai already exists, find out which package it was build for
-	if [ -f libs/package.txt ]; then
-		existing_use_untz=$( sed -n '1p' libs/package.txt )
-		existing_adcolony_flags=$( sed -n '2p' libs/package.txt )
-		existing_billing_flags=$( sed -n '3p' libs/package.txt )
-		existing_chartboost_flags=$( sed -n '4p' libs/package.txt )
-		existing_crittercism_flags=$( sed -n '5p' libs/package.txt )
-		existing_facebook_flags=$( sed -n '6p' libs/package.txt )
-		existing_push_flags=$( sed -n '7p' libs/package.txt )
-		existing_tapjoy_flags=$( sed -n '8p' libs/package.txt )
-		existing_twitter_flags=$( sed -n '9p' libs/package.txt )
+if [ x"$simulator" == xtrue ]; then
+PLATFORM_PATH=${XCODEPATH}/Platforms/iPhoneSimulator.platform/Developer
+PLATFORM=SIMULATOR
+else
+PLATFORM_PATH=${XCODEPATH}/Platforms/iPhone.platform/Developer
+PLATFORM=OS
+fi
 
-	
+SIGN_IDENTITY='iPhone Developer'
 
-		if [ x"$existing_use_untz" != x"$use_untz" ]; then
-			should_clean=true
-		fi
 
-    
-		if [ x"$existing_adcolony_flags" != x"$adcolony_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_billing_flags" != x"$billing_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_chartboost_flags" != x"$chartboost_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_crittercism_flags" != x"$crittercism_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_facebook_flags" != x"$facebook_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_push_flags" != x"$push_flags" ]; then
-			should_clean=true
-		fi
-
-		if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
-			should_clean=true
-		fi
-        if [ x"$existing_twitter_flags" != x"$twitter_flags" ]; then
-			should_clean=true
-		fi
-
-	fi
-	
-	if [ x"$should_clean" = xtrue ]; then
-		./clean.sh
-	fi
 
 	# echo message about what we are doing
-	echo "Building libmoai.so via CMAKE"
+	echo "Building moai.app via CMAKE"
     
     disabled_ext=
         
@@ -169,44 +139,39 @@ fi
 		disabled_ext="$disabled_extTWITTER;"
 	fi 
 
-     build_dir=${PWD}
-	 cd ../../cmake
+build_dir=${PWD}
+
+	 cd cmake
 	 rm -rf build
 	 mkdir build
 	 cd build
-	 
-	 #create our makefiles
+
+     echo "Building resource list from ${LUASRC}"
+     ruby ../host-ios/build_resources.rb "${LUASRC}"
+
+     echo "Creating xcode project"
+
+      #create our makefiles
       cmake -DDISABLED_EXT="$disabled_ext" -DMOAI_BOX2D=1 \
      -DMOAI_CHIPMUNK=1 -DMOAI_CURL=1 -DMOAI_CRYPTO=1 -DMOAI_EXPAT=1 -DMOAI_FREETYPE=1 \
      -DMOAI_HTTP_CLIENT=1 -DMOAI_JSON=1 -DMOAI_JPG=1 -DMOAI_LUAEXT=1 \
      -DMOAI_MONGOOSE=1 -DMOAI_OGG=1 -DMOAI_OPENSSL=1 -DMOAI_SQLITE3=1 \
      -DMOAI_TINYXML=1 -DMOAI_PNG=1 -DMOAI_SFMT=1 -DMOAI_VORBIS=1 $untz_param \
-     -DBUILD_ANDROID=true \
-     -DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-android/android.toolchain.cmake" \
-     -DLIBRARY_OUTPUT_PATH_ROOT="${build_dir}" \
-     -DANDROID_NDK="${ANDROID_NDK}" $windows_flags \
+     -DBUILD_IOS=true \
+     -DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-ios/iOS.cmake" \
+     -DIOS_PLATFORM=${PLATFORM}  \
+     -DCMAKE_IOS_DEVELOPER_ROOT="${PLATFORM_PATH}" \
+     -DSIGN_IDENTITY="${SIGN_IDENTITY}" \
+     -DAPP_NAME="${APP_NAME}" \
+     -DAPP_ID="${APP_ID}" \
+     -DAPP_VERSION="${APP_VERSION}" \
      -DCMAKE_BUILD_TYPE=$buildtype_flags \
+     -G "Xcode" \
       ../
 
 
       #build them
-	  cmake --build . --target all
+	  xcodebuild -target moai
 
     cd ${build_dir}
 
-	# create text file that shows the settings libmoai.so was built with (this time)
-	rm -f libs/package.txt
-	echo "$arm_mode" >> libs/package.txt
-	echo "$arm_arch" >> libs/package.txt
-	echo "$app_platform" >> libs/package.txt
-	echo "$use_fmod" >> libs/package.txt
-	echo "$use_untz" >> libs/package.txt
-	echo "$use_luajit" >> libs/package.txt
-	echo "$adcolony_flags" >> libs/package.txt
-	echo "$billing_flags" >> libs/package.txt
-	echo "$chartboost_flags" >> libs/package.txt
-	echo "$crittercism_flags" >> libs/package.txt
-	echo "$facebook_flags" >> libs/package.txt
-	echo "$push_flags" >> libs/package.txt
-	echo "$tapjoy_flags" >> libs/package.txt
-	echo "$twitter_flags" >> libs/package.txt
