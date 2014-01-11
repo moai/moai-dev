@@ -18,7 +18,6 @@ float MOAIEaseElasticOut::DistortedTime(float inputTime){
 	float period = this->mPeriod;
 	float s = period / 4.0f;
 	return powf(2.0f, -10.0f * inputTime) * sinf((inputTime - s) * M_PI * 2.0f / period) + 1.0f;
-//	return -powf(2.0f, 10.0f * adjustedTime) * sinf((adjustedTime - s) * M_PI * 2.0f / period);
 }
 
 MOAIEaseElasticOut::MOAIEaseElasticOut(){
