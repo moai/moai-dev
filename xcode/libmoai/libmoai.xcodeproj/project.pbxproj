@@ -1076,6 +1076,10 @@
 		B46C29681880D3710051E166 /* AKU-test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B46C29651880D3710051E166 /* AKU-test.cpp */; };
 		B46C29691880D3710051E166 /* AKU-test.h in Headers */ = {isa = PBXBuildFile; fileRef = B46C29661880D3710051E166 /* AKU-test.h */; };
 		B46C296A1880D3710051E166 /* AKU-test.h in Headers */ = {isa = PBXBuildFile; fileRef = B46C29661880D3710051E166 /* AKU-test.h */; };
+		B46C29721880D8A50051E166 /* MOAIXmlWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B46C29701880D8A50051E166 /* MOAIXmlWriter.cpp */; };
+		B46C29741880D8A50051E166 /* MOAIXmlWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = B46C29711880D8A50051E166 /* MOAIXmlWriter.h */; };
+		B46C29761880D8B90051E166 /* MOAIXmlWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B46C29701880D8A50051E166 /* MOAIXmlWriter.cpp */; };
+		B46C29771880D8BD0051E166 /* MOAIXmlWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = B46C29711880D8A50051E166 /* MOAIXmlWriter.h */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
 		CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
@@ -2691,6 +2695,8 @@
 		B46C29561880D1380051E166 /* MOAITestMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestMgr.h; sourceTree = "<group>"; };
 		B46C29651880D3710051E166 /* AKU-test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-test.cpp"; path = "../aku/AKU-test.cpp"; sourceTree = "<group>"; };
 		B46C29661880D3710051E166 /* AKU-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-test.h"; path = "../aku/AKU-test.h"; sourceTree = "<group>"; };
+		B46C29701880D8A50051E166 /* MOAIXmlWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIXmlWriter.cpp; sourceTree = "<group>"; };
+		B46C29711880D8A50051E166 /* MOAIXmlWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIXmlWriter.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
 		CB4B0B8E1858F1B80020381E /* c_hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = c_hook.c; sourceTree = "<group>"; };
@@ -4140,6 +4146,8 @@
 				CDF0E6B6155C90920028E770 /* MOAITextBundle.h */,
 				0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */,
 				0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */,
+				B46C29701880D8A50051E166 /* MOAIXmlWriter.cpp */,
+				B46C29711880D8A50051E166 /* MOAIXmlWriter.h */,
 			);
 			name = util;
 			sourceTree = "<group>";
@@ -5721,6 +5729,7 @@
 				B46C29601880D1380051E166 /* MOAITestKeywords.h in Headers */,
 				B46C29641880D1380051E166 /* MOAITestMgr.h in Headers */,
 				B46C296A1880D3710051E166 /* AKU-test.h in Headers */,
+				B46C29771880D8BD0051E166 /* MOAIXmlWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6197,6 +6206,7 @@
 				B46C295F1880D1380051E166 /* MOAITestKeywords.h in Headers */,
 				B46C29631880D1380051E166 /* MOAITestMgr.h in Headers */,
 				B46C29691880D3710051E166 /* AKU-test.h in Headers */,
+				B46C29741880D8A50051E166 /* MOAIXmlWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7007,6 +7017,7 @@
 				B46C29581880D1380051E166 /* MOAITest.cpp in Sources */,
 				B46C29621880D1380051E166 /* MOAITestMgr.cpp in Sources */,
 				B46C29681880D3710051E166 /* AKU-test.cpp in Sources */,
+				B46C29761880D8B90051E166 /* MOAIXmlWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7527,6 +7538,7 @@
 				B46C29571880D1380051E166 /* MOAITest.cpp in Sources */,
 				B46C29611880D1380051E166 /* MOAITestMgr.cpp in Sources */,
 				B46C29671880D3710051E166 /* AKU-test.cpp in Sources */,
+				B46C29721880D8A50051E166 /* MOAIXmlWriter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
