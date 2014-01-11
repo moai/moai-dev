@@ -86,6 +86,7 @@
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>..\..\3rdparty\SDL2-2.0.1\lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <TargetName>moai-sdl</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

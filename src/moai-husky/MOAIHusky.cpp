@@ -315,13 +315,9 @@ int MOAIHusky::_cloudDataUpload( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHusky, "US" )
 	
 	cc8* cloudpath = state.GetValue<cc8*>(2, 0);
-	MOAIStream* moaistream = state.GetLuaObject < MOAIStream >( 3, true );
-	ZLStream *stream = moaistream->GetZLStream();
-	stream->Seek(0, SEEK_SET);
-	size_t bytes = stream->GetLength();
-	void *buffer = malloc(bytes);
-	stream->ReadBytes(buffer, bytes);
-	self->_instance->uploadCloudData(cloudpath, buffer, bytes);
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3, true );
+	ZLLeanArray<u8> *array = data->getBuffer();
+	self->_instance->uploadCloudData(cloudpath, array->Data(), array->Size());
 	return 0;
 }
 
