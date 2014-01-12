@@ -4,51 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <moai_config.h>
-#include <lua-headers/moai_lua.h>
+
 #include <host-html/HtmlHost.h>
 #include <string.h>
+#include <host-modules/aku_modules.h>
 
 #define UNUSED(p) (( void )p)
 
-#include <moai-sim/host.h>
-#include <moai-util/host.h>
-
-#if MOAI_WITH_BOX2D
-	#include <moai-box2d/host.h>
-#endif
-
-#if MOAI_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
-#endif
-
-#if MOAI_WITH_FMOD_DESIGNER
-	#include <moai-fmod-designer/host.h>
-#endif
-
-#if MOAI_WITH_FMOD_EX
-	#include <moai-fmod-ex/host.h>
-#endif
-
-#if MOAI_WITH_HARNESS
-	#include <moai-harness/host.h>
-#endif
-
-#if MOAI_WITH_HTTP_CLIENT
-	#include <moai-http-client/host.h>
-#endif
-
-#if MOAI_WITH_LUAEXT
-	#include <moai-luaext/host.h>
-#endif
-
-#if MOAI_WITH_PARTICLE_PRESETS
-	#include <ParticlePresets.h>
-#endif
-
-#if MOAI_WITH_UNTZ
-	#include <moai-untz/host.h>
-#endif
 
 
 namespace HtmlInputDeviceID {
@@ -152,14 +114,9 @@ void onTimer ( ) {
 	int timerInterval = ( int )( fSimStep * 1000.0 );
 	
 	AKUUpdate ();
+	AKUModulesUpdate ();
 	
-	#if MOAI_HOST_USE_FMOD_EX
-		AKUFmodUpdate ();
-	#endif
 	
-	#if MOAI_HOST_USE_FMOD_DESIGNER
-		AKUFmodDesignerUpdate (( float )fSimStep );
-	#endif
 }
 
 //================================================================//
@@ -198,21 +155,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 void Cleanup () {
 
 	
-	#if MOAI_WITH_BOX2D
-		AKUFinalizeBox2D ();
-	#endif
-	
-	#if MOAI_WITH_CHIPMUNK
-		AKUFinalizeChipmunk ();
-	#endif
-	
-	#if MOAI_WITH_HTTP_CLIENT
-		AKUFinalizeHttpClient ();
-	#endif
-
-	AKUFinalizeUtil ();
-	AKUFinalizeSim ();
-	AKUFinalize ();
+	AKUModulesAppFinalize();
+	AKUAppFinalize ();
 	
 }
 
@@ -222,56 +166,14 @@ void Dummy() {
 
 void RefreshContext () {
 
-	AKUContextID context = AKUGetContext ();
-	if ( context ) {
-		AKUDeleteContext ( context );
-	}
+	AKUAppInitialize ();
+	AKUModulesAppInitialize ();
+
 	AKUCreateContext ();
-	
-	AKUInitializeUtil ();
-	AKUInitializeSim ();
-  
-	#if MOAI_WITH_BOX2D
-		AKUInitializeBox2D ();
-	#endif
-	
-	#if MOAI_WITH_CHIPMUNK
-		AKUInitializeChipmunk ();
-	#endif
 
-	#if MOAI_WITH_FMOD_EX
-		AKUFmodLoad ();
-	#endif
+    AKUModulesContextInitialize ();
+	AKUModulesRunLuaAPIWrapper ();
 	
-	#if MOAI_WITH_FMOD_DESIGNER
-		AKUFmodDesignerInit ();
-	#endif
-	
-	#if MOAI_WITH_LUAEXT
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuafilesystem ();
-		AKUExtLoadLuasocket ();
-		AKUExtLoadLuasql ();
-	#endif
-	
-	#if MOAI_WITH_HARNESS
-		AKUSetFunc_ErrorTraceback ( _debuggerTracebackFunc );
-		AKUDebugHarnessInit ();
-	#endif
-	
-	#if MOAI_WITH_HTTP_CLIENT
-		AKUInitializeHttpClient ();
-	#endif 
-
-	#if MOAI_WITH_PARTICLE_PRESETS
-		ParticlePresets ();
-	#endif
-	
-	#if MOAI_WITH_UNTZ
-		AKUInitializeUntz ();
-	#endif
-
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( HtmlInputDeviceID::TOTAL );
@@ -288,5 +190,5 @@ void RefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	AKURunData ( moai_lua, moai_lua_SIZE,  AKU_DATA_STRING, AKU_DATA_ZIPPED);
+	//AKUModulesParseArgs ( argc, argv );
 }
