@@ -19,7 +19,7 @@ private:
 	float mX;
 	float mY;
 	
-	MOAILuaRef	mOnStick;
+	MOAILuaStrongRef	mOnStick;
 
 	//----------------------------------------------------------------//
 	static int		_getVector				( lua_State* L );

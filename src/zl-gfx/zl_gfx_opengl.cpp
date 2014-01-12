@@ -52,6 +52,17 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
+#ifdef MOAI_OS_HTML
+	#include <GLES/gl.h>
+	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+	#define MOAI_OS_NACL 1
+	#define GL_RGBA8 GL_RGBA8_OES
+#endif
+
+
+
 #ifdef MOAI_OS_BLACKBERRY
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
@@ -223,7 +234,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		
 		case ZGL_PIXEL_FORMAT_RGB5_A1:						return GL_RGB5_A1;
 
-		#if defined ( MOAI_OS_ANDROID )
+		#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_FORMAT_RGB565:							return GL_RGB565;
 		#endif
 		

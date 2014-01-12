@@ -28,9 +28,10 @@ private:
 		TOTAL,
 	};
 
-	MOAILuaRef	mListeners [ TOTAL ];
+	MOAILuaStrongRef	mListeners [ TOTAL ];
 
 	//----------------------------------------------------------------//
+	static int	_exitGame			( lua_State* L );
 	static int	_getUTCTime			( lua_State* L );
 	static int 	_getStatusBarHeight ( lua_State* L );
 	static int	_sendMail			( lua_State* L );

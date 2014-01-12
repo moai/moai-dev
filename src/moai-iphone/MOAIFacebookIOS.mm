@@ -5,6 +5,7 @@
 //----------------------------------------------------------------//
 
 #import <moai-iphone/MOAIFacebookIOS.h>
+#import <moai-iphone/NSData+MOAILib.h>
 #import <moai-iphone/NSDictionary+MOAILib.h>
 #import <moai-iphone/NSString+MOAILib.h>
 
@@ -20,7 +21,7 @@
  @out	nil
  */
 int MOAIFacebookIOS::_extendToken ( lua_State* L ) {
-	
+	UNUSED ( L );
 	printf ( "extending token....\n" );
 	[ MOAIFacebookIOS::Get ().mFacebook extendAccessTokenIfNeeded ];
 	return 0;
@@ -89,7 +90,7 @@ int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	NSString* httpMethod = [ NSString stringWithString:@"GET" ];
+	NSString* httpMethod = @"GET";
 	
     cc8* path = state.GetValue < cc8* >( 1, "" );
 	NSString* nsPath = [[[ NSString alloc ] initWithUTF8String:path ] autorelease ];
@@ -97,7 +98,7 @@ int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
     NSMutableDictionary* paramsDict = [[ NSMutableDictionary alloc ] init ];
 	if (state.IsTableOrUserdata(2)) {
 		[ paramsDict initWithLua:state stackIndex:2 ];
-		httpMethod = [ NSString stringWithString:@"POST" ];
+		httpMethod = @"POST";
 	}
 	
 	[ MOAIFacebookIOS::Get ().mFacebook requestWithGraphPath:nsPath
@@ -537,12 +538,13 @@ void MOAIFacebookIOS::SessionExtended ( cc8* token, cc8* expDate ) {
 //================================================================//
 
 - ( void )request:( FBRequest* )request didLoadRawResponse:( NSData * )response {
-	
+	UNUSED ( request );
 	MOAIFacebookIOS::Get ().ReceivedRequestResponse ( response );
 }
 
 - ( void )request:( FBRequest* )request didFailWithError:(NSError *)error {
-	
+	UNUSED ( request );
+	UNUSED ( error );
     MOAIFacebookIOS::Get ().ReceivedRequestResponseFailure ();
 }
 @end

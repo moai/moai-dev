@@ -1,29 +1,7 @@
-# cmake_minimum_required ( VERSION 2.8.5 )
-# project ( untz )
-# 
-# if ( MOAI_UNTZ )
-# 
-#   
-#   
-#   
-#   include_directories ( 
-#     ${SDL_INCLUDES}
-#     ${UNTZ_INCLUDES}
-#     ${VORBIS_INCLUDES}
-#     ${OGG_INCLUDES}
-#   )
-#   
-#   
-#   add_library ( untz STATIC 
-#   )
-# 
-# endif ( MOAI_UNTZ )
-
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 if ( MOAI_UNTZ )
-
   if ( MOAI_SDL OR BUILD_BLACKBERRY )
     # TODO: Use 3rdparty's SDL
   
@@ -66,6 +44,7 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
 
   CACHE INTERNAL "doc string" )
+
 
 else ( MOAI_UNTZ )
 

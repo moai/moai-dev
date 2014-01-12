@@ -7,7 +7,9 @@
 #include <math.h>
 #include <string.h>
 
-#include <lua-headers/moai_lua.h>
+
+
+#include <host-modules/aku_modules.h>
 
 #include <moai-android/moaiext-android.h>
 #include <moai-android/moaiext-jni.h>
@@ -15,27 +17,9 @@
 #include <moai-core/headers.h>
 #include <moai-core/host.h>
 #include <moai-sim/headers.h>
-#include <moai-sim/host.h>
-#include <moai-util/host.h>
-#include <moai-http-client/host.h>
-#include <moai-luaext/host.h>
 
-#if MOAI_WITH_BOX2D
-	#include <moai-box2d/host.h>
-#endif
 
-#if MOAI_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
-#endif
-
-#if MOAI_WITH_FMOD_EX
-	#include <moai-fmod-ex/host.h>
-#endif
-
-#if MOAI_WITH_UNTZ
-	#include <moai-untz/host.h>
-#endif
-
+ 
 //================================================================//
 // Input event locking queue
 //================================================================//
@@ -249,52 +233,15 @@
 		inputQueue->Push ( ievent );
 	}
 
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacrypto ( JNIEnv* env, jclass obj ) {
 
-		AKUExtLoadLuacrypto ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacurl ( JNIEnv* env, jclass obj ) {
-
-		AKUExtLoadLuacurl ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasocket ( JNIEnv* env, jclass obj ) {
-
-		AKUExtLoadLuasocket ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasql ( JNIEnv* env, jclass obj ) {
-
-		AKUExtLoadLuasql ();
-	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
-        #if MOAI_WITH_BOX2D
-            AKUFinalizeBox2D ();
-        #endif
-
-        #if MOAI_WITH_CHIPMUNK
-            AKUFinalizeChipmunk ();
-        #endif
-
-        AKUFinalizeUtil ();
-        AKUFinalizeSim ();
-		AKUFinalize ();
+        AKUModulesAppFinalize();
+        AKUAppFinalize ();
 	}
 
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFMODExInit ( JNIEnv* env, jclass obj ) {
 
-#if MOAI_WITH_FMOD_EX
-		AKUFmodExInit ();
-#endif
-	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
@@ -314,13 +261,6 @@
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
-#if MOAI_WITH_BOX2D
-		AKUInitializeBox2D ();
-#endif
-
-#if MOAI_WITH_CHIPMUNK
-		AKUInitializeChipmunk ();
-#endif
 
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
@@ -371,26 +311,26 @@
 		MOAITstoreWallAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
 #endif
-
-		AKURunData ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
-
+		
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
+	
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
+		AKUAppInitialize();
+		AKUModulesAppInitialize();
+	}	
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeUtil ( JNIEnv* env, jclass obj ) {
-        AKUInitializeUtil ();
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesContextInitialize ( JNIEnv* env, jclass obj ) {
+        AKUModulesContextInitialize ();
     }
 
     //----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeSim ( JNIEnv* env, jclass obj ) {
-        AKUInitializeSim ();
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesRunLuaAPIWrapper ( JNIEnv* env, jclass obj ) {
+        AKUModulesRunLuaAPIWrapper ();
     }
 
-    //----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInitializeHttpClient ( JNIEnv* env, jclass obj ) {
-        AKUInitializeHttpClient ();
-    }
+  
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
@@ -408,18 +348,6 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 
 		AKUPause ( paused );
-
-		if ( paused ) {
-
-#if MOAI_WITH_UNTZ
-			AKUUntzSuspend ();
-#endif
-		} else {
-
-#if MOAI_WITH_UNTZ
-			AKUUntzResume ();
-#endif
-		}
 	}
 
 	//----------------------------------------------------------------//
@@ -613,16 +541,9 @@
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}
 
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
-
-#if MOAI_WITH_UNTZ
-		AKUInitializeUntz ();
-#endif
-	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUpdate ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {
 
 		InputEvent ievent;
 		while ( inputQueue->Pop ( ievent )) {
@@ -644,7 +565,7 @@
 			}
 		}
 
-		AKUUpdate ();
+		AKUModulesUpdate ();
 	}
 
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {

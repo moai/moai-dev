@@ -12,12 +12,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUTestInit () {
+void AKUTestAppFinalize () {
+}
+
+//----------------------------------------------------------------//
+void AKUTestAppInitialize () {
+}
+
+//----------------------------------------------------------------//
+void AKUTestContextInitialize () {
 
 	MOAITestMgr::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAITestMgr )
-	
 	REGISTER_MOAI_TEST ( MOAITest_sample )
 	REGISTER_MOAI_TEST ( MOAITest_USQuaternion )
 }

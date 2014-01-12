@@ -23,7 +23,7 @@ class MOAIDialogAndroid :
 	public MOAIGlobalClass < MOAIDialogAndroid, MOAILuaObject > {
 private:
 
-	MOAILuaRef	mDialogCallback;
+	MOAILuaStrongRef	mDialogCallback;
 	
 	//----------------------------------------------------------------//
 	static int	_showDialog	( lua_State* L );

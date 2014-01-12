@@ -127,6 +127,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	MOAIBox2DDistanceJoint* joint = new MOAIBox2DDistanceJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -175,6 +177,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -266,6 +270,8 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAIBox2DMouseJoint* joint = new MOAIBox2DMouseJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -312,6 +318,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	MOAIBox2DPrismaticJoint* joint = new MOAIBox2DPrismaticJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -378,6 +386,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	MOAIBox2DPulleyJoint* joint = new MOAIBox2DPulleyJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -418,6 +428,8 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -470,6 +482,8 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	MOAIBox2DRopeJoint* joint = new MOAIBox2DRopeJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -511,6 +525,8 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -557,6 +573,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	MOAIBox2DWheelJoint* joint = new MOAIBox2DWheelJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
 	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
@@ -905,7 +923,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	this->mWorld = new b2World ( gravity);
 	this->mWorld->SetContactListener ( this->mArbiter );
 	this->mWorld->SetDestructionListener ( this );
-	this->mWorld->SetAllowSleeping(true);
+	this->mWorld->SetAllowSleeping ( true );
 	this->mDebugDraw = new MOAIBox2DDebugDraw ();
 	this->mWorld->SetDebugDraw ( this->mDebugDraw );
 	

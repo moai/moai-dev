@@ -45,7 +45,7 @@ int MOAIJoystickSensor::_getVector ( lua_State* L ) {
 int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIJoystickSensor, "U" )
 	
-	self->mOnStick.SetStrongRef ( state, 2 );
+	self->mOnStick.SetRef ( state, 2 );
 	
 	return 0;
 }

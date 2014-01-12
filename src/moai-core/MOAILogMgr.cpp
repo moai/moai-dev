@@ -5,6 +5,9 @@
 #include <moai-core/MOAILogMgr.h>
 #include <moai-core/MOAILogMessages.h>
 
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
+
 //================================================================//
 // helpers
 //================================================================//
@@ -90,9 +93,9 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	cc8* msg = state.GetValue < cc8* >( 1, "" );
 	
 	// TODO: Fix this on Android
-	#ifndef MOAI_OS_ANDROID
+	//#ifndef MOAI_OS_ANDROID
 		ZLLog::PrintFile ( ZLLog::CONSOLE, msg );
-	#endif
+	//#endif
 	
 	return 0;
 }

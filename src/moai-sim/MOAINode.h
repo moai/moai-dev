@@ -106,44 +106,6 @@ protected:
 		this->ScheduleUpdate ();
 	}
 
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	void SetDependentMember ( MOAISharedPtr < TYPE >& member, TYPE* ref ) {
-		
-		if ( member == ref ) return;
-	
-		if ( member ) {
-			this->ClearNodeLink ( *member );
-		}
-		
-		member = ref;
-		
-		if ( ref ) {
-			this->SetNodeLink ( *ref );
-		}
-		
-		this->ScheduleUpdate ();
-	}
-
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	void SetDependentMember ( MOAIWeakPtr < TYPE >& member, TYPE* ref ) {
-		
-		if ( member == ref ) return;
-		
-		if ( member ) {
-			this->ClearNodeLink ( *member );
-		}
-		
-		member = ref;
-		
-		if ( ref ) {
-			this->SetNodeLink ( *ref );
-		}
-		
-		this->ScheduleUpdate ();
-	}
-
 public:
 	
 	friend class MOAINodeMgr;

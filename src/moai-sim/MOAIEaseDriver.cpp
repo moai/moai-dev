@@ -95,6 +95,13 @@ MOAIEaseDriver::MOAIEaseDriver () {
 
 //----------------------------------------------------------------//
 MOAIEaseDriver::~MOAIEaseDriver () {
+
+	u32 total = this->mLinks.Size ();
+	for ( u32 i = 0; i < total; ++i ) {	
+		MOAIEaseDriverLink& link = this->mLinks [ i ];
+		link.mSource.Set ( *this, 0 );
+		link.mDest.Set ( *this, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -268,10 +275,10 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
-		link.mSource		= 0;
+		link.mSource.Set ( *this, 0 );
 		link.mSourceAttrID	= MOAIAttrOp::NULL_ATTR;
 
-		link.mDest			= dest;
+		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;
 		
 		link.mV0			= 0.0f;
@@ -287,10 +294,10 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
-		link.mSource		= source;
+		link.mSource.Set ( *this, source );
 		link.mSourceAttrID	= sourceAttrID;
 
-		link.mDest			= dest;
+		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;
 		
 		link.mV0			= dest->GetAttributeValue ( destAttrID, 0.0f );

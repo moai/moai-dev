@@ -470,6 +470,10 @@ MOAIGfxDevice.extend (
 	end
 )
 
+--============================================================--
+-- Cross Platform
+--============================================================--
+
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
 MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS
@@ -522,3 +526,4 @@ if MOAITwitterIOS then
         end
     end
 end
+

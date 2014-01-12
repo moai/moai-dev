@@ -86,7 +86,7 @@ int MOAIChartBoostIOS::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAIChartBoostIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIChartBoostIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;
