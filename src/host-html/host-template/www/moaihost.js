@@ -51,8 +51,8 @@ moaijs.mouseup = function(e) {
 moaijs.mousemove = function(e) {
 	
 	var can = Module.canvas;
-	var canX = e.pageX - can.offsetLeft;
-    var canY = e.pageY - can.offsetTop;
+	var canX = e.offsetX; 
+    var canY = e.offsetY;
     moaijs.onMouseMove(Math.floor(canX*moaijs.canvasScale),Math.floor(canY*moaijs.canvasScale));
 }
 
