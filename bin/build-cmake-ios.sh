@@ -74,11 +74,16 @@ fi
 XCODEPATH=$(xcode-select --print-path)
 
 if [ x"$simulator" == xtrue ]; then
+echo "RUNNING SIMULATOR $simulator"
 PLATFORM_PATH=${XCODEPATH}/Platforms/iPhoneSimulator.platform/Developer
 PLATFORM=SIMULATOR
+SDK=iphonesimulator
+ARCH=i386
 else
 PLATFORM_PATH=${XCODEPATH}/Platforms/iPhone.platform/Developer
 PLATFORM=OS
+SDK=iphoneos
+ARCH=armv7
 fi
 
 SIGN_IDENTITY='iPhone Developer'
@@ -158,9 +163,6 @@ build_dir=${PWD}
      -DMOAI_MONGOOSE=1 -DMOAI_OGG=1 -DMOAI_OPENSSL=1 -DMOAI_SQLITE3=1 \
      -DMOAI_TINYXML=1 -DMOAI_PNG=1 -DMOAI_SFMT=1 -DMOAI_VORBIS=1 $untz_param \
      -DBUILD_IOS=true \
-     -DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-ios/iOS.cmake" \
-     -DIOS_PLATFORM=${PLATFORM}  \
-     -DCMAKE_IOS_DEVELOPER_ROOT="${PLATFORM_PATH}" \
      -DSIGN_IDENTITY="${SIGN_IDENTITY}" \
      -DAPP_NAME="${APP_NAME}" \
      -DAPP_ID="${APP_ID}" \
@@ -169,9 +171,10 @@ build_dir=${PWD}
      -G "Xcode" \
       ../
 
-
+#-DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-ios/iOS.cmake" \
+#-DCMAKE_IOS_DEVELOPER_ROOT="${PLATFORM_PATH}" \
       #build them
-	  xcodebuild -target moai
+xcodebuild -target moai -sdk ${SDK} -arch ${ARCH}
 
     cd ${build_dir}
 

@@ -106,10 +106,12 @@ endif ( MOAI_BOX2D )
 
 #frameworks
 macro(ADD_FRAMEWORK fwname appname)
+     message(fw path ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks)
     find_library(FRAMEWORK_${fwname}
         NAMES ${fwname}
-        PATHS ${CMAKE_SYSTEM_FRAMEWORK_PATH}
-        NO_DEFAULT_PATH)
+   #     PATHS ${CMAKE_OSX_SYSROOT}/System/Library/Frameworks
+   #     NO_DEFAULT_PATH)
+   )
     if( ${FRAMEWORK_${fwname}} STREQUAL FRAMEWORK_${fwname}-NOTFOUND)
         MESSAGE(ERROR ": Framework ${fwname} not found")
     else()
@@ -120,7 +122,8 @@ endmacro(ADD_FRAMEWORK)
 
 macro(ADD_FRAMEWORKS appname fwnames)
   FOREACH(FW ${fwnames})
-    ADD_FRAMEWORK(${FW} ${appname})
+    #ADD_FRAMEWORK(${FW} ${appname})
+    TARGET_LINK_LIBRARIES( ${appname} "-framework ${FW}")
   ENDFOREACH(FW)
 endmacro(ADD_FRAMEWORKS)
 
@@ -137,7 +140,7 @@ set( FWORKS
                   GameKit
                   EventKit
                   MediaPlayer
-		  MobileCoreServices
+		          MobileCoreServices
                   MessageUI
                   OpenGLES
                   QuartzCore
