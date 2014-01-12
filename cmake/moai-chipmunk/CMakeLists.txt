@@ -2,14 +2,14 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-chipmunk )
 
 if ( MOAI_CHIPMUNK )
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moai-chipmunk/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-chipmunk/" )
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_CHIPMUNK=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_CHIPMUNK=1" CACHE INTERNAL "doc string" )
 
 set ( MOAI_CHIPMUNK_INCLUDES 
   ${THIRD_PARTY_INCLUDES}
-  "../../src/"
-  "../../src/config-default/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
 
  CACHE INTERNAL "doc string" )
 

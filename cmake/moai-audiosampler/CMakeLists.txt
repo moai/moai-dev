@@ -3,8 +3,8 @@ project ( moai-audiosampler )
 
 set ( MOAI_AUDIOSAMPLER_INCLUDES
   ${THIRD_PARTY_INCLUDES}
-  "../../src/"
-  "../../src/config-default/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
  CACHE INTERNAL "doc string" )
 
 include_directories (
@@ -15,8 +15,8 @@ include_directories (
 
 # Use all cpp files in directory as source code
 set ( MOAI_AUDIOSAMPLER_SRC
-	../../src/moai-audiosampler/AKU-audiosampler.cpp
-	../../src/moai-audiosampler/MOAIAudioSampler.cpp
+	${MOAI_ROOT}/src/moai-audiosampler/AKU-audiosampler.cpp
+	${MOAI_ROOT}/src/moai-audiosampler/MOAIAudioSampler.cpp
 )
 
 

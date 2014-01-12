@@ -40,9 +40,9 @@ if ( MOAI_OPENSSL )
     ${PLATFORM_INCLUDE}
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
     
-    "../../3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "../../3rdparty/openssl-1.0.0d/crypto/evp/"
-    "../../3rdparty/openssl-1.0.0d/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
+    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/"
     
     CACHE INTERNAL "doc string" )
 

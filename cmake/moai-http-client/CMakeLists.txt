@@ -2,16 +2,16 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-http-client )
 
 if ( MOAI_HTTP_CLIENT )
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/moai-http-client/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-http-client/" )
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_HTTP_CLIENT=1 -DAKU_WITH_HTTP_CLIENT=1" CACHE INTERNAL "doc string" )
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_HTTP_CLIENT=1 -DAKU_WITH_HTTP_CLIENT=1" CACHE INTERNAL "doc string" )
 
 set ( MOAI_HTTP_CLIENT_INCLUDES 
-  "../../src/moai-http-client"
+  "${MOAI_ROOT}/src/moai-http-client"
   ${THIRD_PARTY_INCLUDES}
-  "../../src/"
-  "../../src/config-default/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
 
  CACHE INTERNAL "doc string" )
 
@@ -26,8 +26,8 @@ file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 if (BUILD_IOS OR BUILD_OSX)
   set (MOAI_HTTP_CLIENT_SRC 
   	${MOAI_HTTP_CLIENT_SRC}  
-  	"../../src/moai-iphone/MOAIHttpTaskNSURL.mm" 
-  	"../../src/moai-iphone/MOAIUrlMgrNSURL.mm" 
+  	"${MOAI_ROOT}/src/moai-iphone/MOAIHttpTaskNSURL.mm" 
+  	"${MOAI_ROOT}/src/moai-iphone/MOAIUrlMgrNSURL.mm" 
   )	
  
 

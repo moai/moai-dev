@@ -4,16 +4,16 @@ project ( untz )
 
 if ( MOAI_UNTZ )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../3rdparty/untz/src/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
 
   set ( UNTZ_INCLUDES 
     ${SDL_INCLUDES}
-    "../../3rdparty/untz/include/"
-    "../../3rdparty/untz/src/"
-    "../../3rdparty/untz/src/native/android/" 
+    "${MOAI_ROOT}/3rdparty/untz/include/"
+    "${MOAI_ROOT}/3rdparty/untz/src/"
+    "${MOAI_ROOT}/3rdparty/untz/src/native/android/" 
   CACHE INTERNAL "doc string" )
 
   

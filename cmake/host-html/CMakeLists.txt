@@ -13,16 +13,16 @@ project(host-html)
 
 
 set ( INCLUDES_MOAIHOSTHTML 
-  "../../src/"
-  "../../src/config-default/"
-  "../../src/host-html/"
+  "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/src/config-default/"
+  "${MOAI_ROOT}/src/host-html/"
   ${OPENGL_INCLUDE_DIRS}
   CACHE INTERNAL "doc string" )
 
 
 include_directories ( ${INCLUDES_MOAIHOSTHTML} )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "../../src/host-html" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-html" )
 
 add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp
@@ -34,7 +34,7 @@ set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_o
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2 -s ASM_JS=0  -s TOTAL_MEMORY=48554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${CMAKE_CURRENT_LIST_DIR}/../../src/host-html/moaicallbacks.js --js-library ${CMAKE_CURRENT_LIST_DIR}/../../src/host-html/library_webuntz.js 
+                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2 -s ASM_JS=0  -s TOTAL_MEMORY=48554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${MOAI_ROOT}/src/host-html/moaicallbacks.js --js-library ${MOAI_ROOT}/src/host-html/library_webuntz.js 
 					-s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" -s INVOKE_RUN=0 ${MOAIHTMLOUTPUT} -o moaijs.js
 		 
                   )
@@ -66,7 +66,7 @@ target_link_libraries ( moaishared
 
 #build host template
  add_custom_target(host-html-template
-     ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_LIST_DIR}/../../src/host-html/host-template" "${PROJECT_BINARY_DIR}/host-template" 
+     ${CMAKE_COMMAND} -E copy_directory "${MOAI_ROOT}/src/host-html/host-template" "${PROJECT_BINARY_DIR}/host-template" 
      COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_BINARY_DIR}/moaijs.js" "${PROJECT_BINARY_DIR}/host-template/www/moaijs.js"
  )
 

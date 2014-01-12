@@ -1,7 +1,7 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( tapjoy-ios )
 
-set ( TAPJOY_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect")
+set ( TAPJOY_ROOT "${MOAI_ROOT}/3rdparty/tapjoyiOS-8.1.9/TapjoyConnect")
 set ( TAPJOY_COMP "${TAPJOY_ROOT}/Components")
 
 set ( TAPJOY_INCLUDES 

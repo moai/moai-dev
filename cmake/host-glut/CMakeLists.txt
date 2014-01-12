@@ -78,6 +78,7 @@ if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
     freeglut-static
     ${OPENGL_LIBRARIES}
+    winmm
   )
 endif (BUILD_WINDOWS)
 
