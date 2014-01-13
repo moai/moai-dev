@@ -32,3 +32,5 @@ end
 
 ws = MOAIWebSocket.new()
 ws:start("ws://10.41.18.247:8080/ws", onMessageReceived)
+
+ws:write("Hello");

@@ -1208,6 +1208,8 @@
 		61BFEF081880878400B0C289 /* MoaiWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61BFEF051880878400B0C289 /* MoaiWebSocket.cpp */; };
 		61BFEF091880878400B0C289 /* MoaiWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 61BFEF061880878400B0C289 /* MoaiWebSocket.h */; };
 		61BFEF0A1880878400B0C289 /* MoaiWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 61BFEF061880878400B0C289 /* MoaiWebSocket.h */; };
+		61D32888188473430023EB92 /* MOAIWebSocketMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D32886188473430023EB92 /* MOAIWebSocketMgr.h */; };
+		61D32889188475FA0023EB92 /* MOAIWebSocketMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D32885188473430023EB92 /* MOAIWebSocketMgr.cpp */; };
 		660EBB04160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB05160D184A000B1203 /* Crittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB03160D184A000B1203 /* Crittercism.h */; };
 		660EBB22160D1859000B1203 /* CrashReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 660EBB06160D1859000B1203 /* CrashReporter.h */; };
@@ -4703,6 +4705,8 @@
 		61BFEF051880878400B0C289 /* MoaiWebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MoaiWebSocket.cpp; sourceTree = "<group>"; };
 		61BFEF061880878400B0C289 /* MoaiWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiWebSocket.h; sourceTree = "<group>"; };
 		61BFEF221880ACE200B0C289 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib/libc++.dylib"; sourceTree = DEVELOPER_DIR; };
+		61D32885188473430023EB92 /* MOAIWebSocketMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWebSocketMgr.cpp; sourceTree = "<group>"; };
+		61D32886188473430023EB92 /* MOAIWebSocketMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWebSocketMgr.h; sourceTree = "<group>"; };
 		660EBB03160D184A000B1203 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Crittercism.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/Crittercism.h"; sourceTree = "<group>"; };
 		660EBB06160D1859000B1203 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrashReporter.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrashReporter.h"; sourceTree = "<group>"; };
 		660EBB07160D1859000B1203 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrittercismJSONKit.h; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/CrittercismJSONKit.h"; sourceTree = "<group>"; };
@@ -9422,6 +9426,8 @@
 				61BFEF061880878400B0C289 /* MoaiWebSocket.h */,
 				89BE7606173C12CE00DFE837 /* pch.cpp */,
 				89BE7607173C12CE00DFE837 /* pch.h */,
+				61D32885188473430023EB92 /* MOAIWebSocketMgr.cpp */,
+				61D32886188473430023EB92 /* MOAIWebSocketMgr.h */,
 			);
 			path = "moai-http-client";
 			sourceTree = "<group>";
@@ -12005,6 +12011,7 @@
 				89BE6C121739A05600DFE837 /* NSData+MOAILib.h in Headers */,
 				89BE6C141739A05600DFE837 /* NSDate+MOAILib.h in Headers */,
 				89BE6C161739A05600DFE837 /* NSDictionary+MOAILib.h in Headers */,
+				61D32888188473430023EB92 /* MOAIWebSocketMgr.h in Headers */,
 				89BE6C181739A05600DFE837 /* NSError+MOAILib.h in Headers */,
 				89BE6C1A1739A05600DFE837 /* NSNumber+MOAILib.h in Headers */,
 				89BE6C1C1739A05600DFE837 /* NSObject+MOAILib.h in Headers */,
@@ -15943,6 +15950,7 @@
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				89BE76D7173C6D4900DFE837 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE76DD173C6D8E00DFE837 /* MOAIUrlMgrNSURL.mm in Sources */,
+				61D32889188475FA0023EB92 /* MOAIWebSocketMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

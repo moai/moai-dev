@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-http-client/MOAIWebSocket.h>
+#include <moai-http-client/MOAIWebSocketMgr.h>
 
 //#include <chrono>
 
@@ -55,10 +56,10 @@ int MOAIWebSocket::_start ( lua_State* L ) {
 	self->mClient.set_message_handler(bind(&MOAIWebSocket::on_message,self,::_1,::_2));
 	self->mClient.set_fail_handler( bind( &MOAIWebSocket::on_fail, self, ::_1 ) );
 	
+	MOAIWebSocketMgr::Get().AddHandle(*self);
+
 	cc8* webUrl = state.GetValue < cc8* >( 2, "" );
 	self->SetLocal ( state, 3, self->mOnCallback );
-	
-	self->mClient.run();
 	
 	try {
 		websocketpp::lib::error_code err;
@@ -131,6 +132,10 @@ void MOAIWebSocket::on_fail( websocketpp::connection_hdl handle ) {
 //================================================================//
 // MOAIFoo
 //================================================================//
+
+void MOAIWebSocket::Process () {
+	mClient.poll();
+}
 
 //----------------------------------------------------------------//
 MOAIWebSocket::MOAIWebSocket () {

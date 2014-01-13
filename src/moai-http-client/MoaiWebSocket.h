@@ -28,6 +28,8 @@ class WebSocketWrapper {
 	MOAILuaRef 	callback;
 };
 
+class MOAIWebSocketMgr;
+
 class MOAIWebSocket :
 	public virtual MOAILuaObject {
 private:
@@ -45,6 +47,8 @@ private:
 	void on_message(websocketpp::connection_hdl hdl, message_ptr msg);
 	void on_fail( websocketpp::connection_hdl handle );
 
+	friend class MOAIWebSocketMgr;
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIWebSocket )
@@ -54,6 +58,9 @@ public:
 					~MOAIWebSocket			();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+
+	void			Process					();
+
 };
 
 #endif
