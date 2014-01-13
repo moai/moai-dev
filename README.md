@@ -1,3 +1,21 @@
+# Changes in quocble fork.
+
+* Integration with cross-platform websocket (https://github.com/zaphoyd/websocketpp). This library is very well tested with Autobahn and good API, and commits.
+* JPEG only load from power of 2. (BUG FIX)
+
+## WebSocket Usage:
+
+```
+function onMessageReceived( msg ) 
+	print("RECEIVED: " .. msg )
+end
+
+ws = MOAIWebSocket.new()
+ws:start("ws://10.41.18.247:8080/ws", onMessageReceived)
+
+ws:write("Hello");
+```
+
 # Welcome to Moai!
 
 Thanks for checking out the Moai source code. Here's the scoop.
