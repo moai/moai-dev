@@ -19,19 +19,34 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
-
-prop:moveRot ( 360, 1.5 )
-
-
-function onMessageReceived( msg ) 
-	print("RECEIVED: " .. msg )
-end
+----------------------------------------------------------------
+-- EXAMPLE
+----------------------------------------------------------------
 
 ws = MOAIWebSocket.new()
-ws:start("ws://10.41.18.247:8080/ws", onMessageReceived)
 
-ws:write("Hello");
+function onMessageReceived( msg ) 
+	print("WebSocket: " .. msg )
+end
+
+function onConnected( msg ) 
+	print("WebSocket: " .. msg )
+	ws:write("Hello")
+	ws:write("help")
+end
+
+function onClosed( msg ) 
+	print("WebSocket: " .. msg )
+end
+
+function onFailed( msg ) 
+	print("WebSocket: " .. msg )
+end
+
+ws:setListener ( MOAIWebSocket.ON_MESSAGE, onMessageReceived )
+ws:setListener ( MOAIWebSocket.ON_CONNECT, onConnected )
+ws:setListener ( MOAIWebSocket.ON_CLOSE, onClosed )
+ws:setListener ( MOAIWebSocket.ON_FAIL, onFailed )
+
+ws:start("ws://10.41.18.247:8080/ws")
 

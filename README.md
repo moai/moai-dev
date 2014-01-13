@@ -1,19 +1,37 @@
 # Changes in quocble fork.
 
-* Integration with cross-platform websocket (https://github.com/zaphoyd/websocketpp). This library is very well tested with Autobahn and good API, and commits.
+* Integration with cross-platform websocket (https://github.com/zaphoyd/websocketpp). This library is very well tested with Autobahn, and has a good API.
 * JPEG only load from power of 2. (BUG FIX)
 
 ## WebSocket Usage:
 
 ```
+ws = MOAIWebSocket.new()
+
 function onMessageReceived( msg ) 
-	print("RECEIVED: " .. msg )
+	print("WebSocket: " .. msg )
 end
 
-ws = MOAIWebSocket.new()
-ws:start("ws://10.41.18.247:8080/ws", onMessageReceived)
+function onConnected( msg ) 
+	print("WebSocket: " .. msg )
+	ws:write("Hello")
+	ws:write("help")
+end
 
-ws:write("Hello");
+function onClosed( msg ) 
+	print("WebSocket: " .. msg )
+end
+
+function onFailed( msg ) 
+	print("WebSocket: " .. msg )
+end
+
+ws:setListener ( MOAIWebSocket.ON_MESSAGE, onMessageReceived )
+ws:setListener ( MOAIWebSocket.ON_CONNECT, onConnected )
+ws:setListener ( MOAIWebSocket.ON_CLOSE, onClosed )
+ws:setListener ( MOAIWebSocket.ON_FAIL, onFailed )
+
+ws:start("ws://10.41.18.247:8080/ws")
 ```
 
 # Welcome to Moai!

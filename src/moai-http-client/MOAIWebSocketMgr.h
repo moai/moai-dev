@@ -7,7 +7,7 @@
 #include <moai-http-client/MoaiWebSocket.h>
 
 //================================================================//
-// MOAIUrlMgrCurl
+// MOAIWebSocketMgr
 //================================================================//
 class MOAIWebSocketMgr :
 	public MOAIGlobalClass < MOAIWebSocketMgr > {
