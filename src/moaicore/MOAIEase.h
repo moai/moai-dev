@@ -11,8 +11,12 @@
 
 #include <moaicore/MOAILua.h>
 
-// Abstract superclass of all eases.
-
+//================================================================//
+// MOAIEase
+//================================================================//
+/**	@name	MOAIEase
+ @text	Abstract superclass of all eases.
+ */
 class MOAIEase : public virtual MOAILuaObject {
 private:
 	
@@ -23,11 +27,14 @@ public:
 	
 	DECL_LUA_FACTORY(MOAIEase);
 	
+	//----------------------------------------------------------------//
 	MOAIEase();
 	~MOAIEase();
-	
+
+	//----------------------------------------------------------------//
 	virtual float DistortedTime(float inputTime);
-	
+
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	
