@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEaseSimpleBase.h>
 
+//================================================================//
+// MOAIEaseSimpleInOut
+//================================================================//
+/**	@name MOAIEaseSimpleInOut
+ @text A simple exponential ease in and out.
+ */
 class MOAIEaseSimpleInOut : public virtual MOAIEaseSimpleBase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseSimpleInOut );

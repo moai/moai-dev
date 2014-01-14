@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEaseSimpleBase.h>
 
+//================================================================//
+// MOAIEaseSimpleOut
+//================================================================//
+/**	@name MOAIEaseSimpleOut
+ @text A simple exponential ease out.
+ */
 class MOAIEaseSimpleOut : public virtual MOAIEaseSimpleBase {
 private:
 	

@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseSimpleBase
+//================================================================//
+/**	@name MOAIEaseSimpleBase
+ @text The superclass for all Simple eases.
+ */
 class MOAIEaseSimpleBase : public virtual MOAIEase {
 protected:
 	float mRate;

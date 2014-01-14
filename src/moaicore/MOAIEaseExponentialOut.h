@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseExponentialOut
+//================================================================//
+/**	@name MOAIEaseExponentailOut
+ @text An exponentially decreasing ease.
+ */
 class MOAIEaseExponentialOut : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseExponentialOut );

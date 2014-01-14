@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseBackBase
+//================================================================//
+/**	@name MOAIEaseBackBase
+ @text The supercalss for all back eases.
+ */
 class MOAIEaseBackBase : public virtual MOAIEase {
 protected:
 	float mOvershoot;

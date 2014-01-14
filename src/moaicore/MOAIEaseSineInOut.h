@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseSineInOut
+//================================================================//
+/**	@name MOAIEaseSineInOut
+ @text A sinusoidal ease in and out.
+ */
 class MOAIEaseSineInOut : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseSineInOut );

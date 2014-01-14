@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseLinear
+//================================================================//
+/**	@name MOAIEaseLinear
+ @text The default ease; undistorted.
+ */
 class MOAIEaseLinear : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseLinear );

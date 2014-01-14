@@ -9,21 +9,26 @@
 #include "pch.h"
 #include "MOAIEaseLinear.h"
 
+//================================================================//
+// local
+//================================================================//
 
-
-
+//----------------------------------------------------------------//
 MOAIEaseLinear::MOAIEaseLinear(){
 	RTTI_SINGLE(MOAIEase)
 }
 
+//----------------------------------------------------------------//
 MOAIEaseLinear::~MOAIEaseLinear(){
 	
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseLinear::RegisterLuaClass(MOAILuaState &state){
 	MOAIEase::RegisterLuaClass(state);
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseLinear::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIEase::RegisterLuaFuncs(state);
 }

@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEaseElasticBase.h>
 
+//================================================================//
+// MOAIEaseElasticIn
+//================================================================//
+/**	@name MOAIEaseElasticIn
+ @text A springy ease in.
+ */
 class MOAIEaseElasticIn : public virtual MOAIEaseElasticBase {
 	
 public:

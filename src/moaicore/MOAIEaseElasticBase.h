@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEase.h>
 
+//================================================================//
+// MOAIEaseElasticBase
+//================================================================//
+/**	@name MOAIEaseElasticBase
+ @text The superclass for all elastic eases.
+ */
 class MOAIEaseElasticBase : public virtual MOAIEase {
 protected:
 	float mPeriod;

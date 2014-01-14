@@ -11,6 +11,12 @@
 
 #include <moaicore/MOAIEaseBackBase.h>
 
+//================================================================//
+// MOAIEaseBackInOut
+//================================================================//
+/**	@name MOAIEaseBackInOut
+ @text A back ease in and out.
+ */
 class MOAIEaseBackInOut : public virtual MOAIEaseBackBase {
 	
 public:

@@ -11,6 +11,12 @@
 
 #include <MOAIEase.h>
 
+//================================================================//
+// MOAIEaseCuston
+//================================================================//
+/**	@name MOAIEaseCustom
+ @text An ease that can be assigned to use a Lua function for interpolation.
+ */
 class MOAIEaseCustom : public virtual MOAIEase {
 	
 private:
