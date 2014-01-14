@@ -16480,7 +16480,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -16496,7 +16495,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -18793,7 +18791,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -18809,7 +18806,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -18825,7 +18821,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -18841,7 +18836,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -20354,7 +20348,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -20968,7 +20961,6 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
