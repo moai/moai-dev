@@ -362,41 +362,7 @@ int GlutHost ( int argc, char** argv ) {
 
 	GlutRefreshContext ( argc, argv);
 
-	char* lastScript = NULL;
-
-	if ( argc < 2 ) {
-		AKURunScript ( "main.lua" );
-	}
-	else {
-
-		AKUSetArgv ( argv );
-
-		for ( int i = 1; i < argc; ++i ) {
-			char* arg = argv [ i ];
-			if ( strcmp( arg, "-e" ) == 0 ) {
-        // sDynamicallyReevaluateLuaFiles = true;
-			}
-			else if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
-				char* script = argv [ i ];
-				AKURunString ( script );
-			}
-			else {
-				AKURunScript ( arg );
-				lastScript = arg;
-			}
-		}
-	}
-
-	//assuming that the last script is the entry point we watch for that directory and its subdirectories
-	#if MOAI_WITH_FOLDER_WATCHER
-		if ( lastScript && sDynamicallyReevaluateLuaFiles ) {
-			#ifdef _WIN32
-				winhostext_WatchFolder ( lastScript );
-			#elif __APPLE__
-				FWWatchFolder( lastScript );
-			#endif
-		}
-	#endif
+ AKUModulesParseArgs ( argc, argv );
 
 	if ( sHasWindow ) {
 		glutTimerFunc ( 0, _onTimer, 0 );
@@ -431,6 +397,6 @@ void GlutRefreshContext (int argc, char** argv) {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-    AKUModulesParseArgs ( argc, argv );
+   
 
 }
