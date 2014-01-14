@@ -46,7 +46,7 @@ SIMVER=iPhoneSimulator6.1.sdk
 
 mkdir -p $DESTDIR
 rm "$DESTDIR"/*.a 2>/dev/null
-cd "$SRCDIR"
+cd $SRCDIR
 
 CC_ARGS="gcc -m32 -arch i386"
 CFLAGS=""
