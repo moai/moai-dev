@@ -23,12 +23,14 @@ public:
 	
 	DECL_LUA_FACTORY( MOAIEaseSimpleIn );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseSimpleIn();
 	~MOAIEaseSimpleIn();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	

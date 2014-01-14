@@ -10,6 +10,11 @@
 #include "MOAIEaseElasticInOut.h"
 
 
+//================================================================//
+// MOAIEaseElasticInOut
+//================================================================//
+
+//----------------------------------------------------------------//
 float MOAIEaseElasticInOut::DistortedTime(float inputTime){
 	if (inputTime == 0.0f || inputTime == 1.0f){
 		return inputTime;
@@ -27,19 +32,22 @@ float MOAIEaseElasticInOut::DistortedTime(float inputTime){
 	return powf(2.0f, -10.0 * adjustedTime) * sinf((adjustedTime - s) * M_PI * 2.0f / period) * 0.5f + 1.0f;
 }
 
+//----------------------------------------------------------------//
 MOAIEaseElasticInOut::MOAIEaseElasticInOut(){
 	RTTI_SINGLE(MOAIEaseElasticBase)
 }
 
+//----------------------------------------------------------------//
 MOAIEaseElasticInOut::~MOAIEaseElasticInOut(){
 	
 }
 
-
+//----------------------------------------------------------------//
 void MOAIEaseElasticInOut::RegisterLuaClass(MOAILuaState &state){
 	MOAIEaseElasticBase::RegisterLuaClass(state);
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseElasticInOut::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIEaseElasticBase::RegisterLuaFuncs(state);
 }

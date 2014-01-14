@@ -20,16 +20,18 @@
 class MOAIEaseBackBase : public virtual MOAIEase {
 protected:
 	float mOvershoot;
-	
 private:
 	static int _setOvershoot( lua_State *L );
 public:
 	
+	//----------------------------------------------------------------//
 	MOAIEaseBackBase();
 	~MOAIEaseBackBase();
 	
+	//----------------------------------------------------------------//
 	void SetOvershoot(float overshoot );
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	

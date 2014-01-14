@@ -18,27 +18,28 @@
  @text An ease that can be assigned to use a Lua function for interpolation.
  */
 class MOAIEaseCustom : public virtual MOAIEase {
-	
 private:
 	
+	//----------------------------------------------------------------//
 	MOAILuaRef mFunction;
 	
+	//----------------------------------------------------------------//
 	static int _setFunction( lua_State *L );
-	
 	
 public:
 	
 	DECL_LUA_FACTORY(MOAIEaseCustom);
 	
+	//----------------------------------------------------------------//
 	float			DistortedTime( float inputTime );
 	
+	//----------------------------------------------------------------//
 	MOAIEaseCustom();
 	~MOAIEaseCustom();
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	
-	
 };
 
 #endif /* defined(__libmoai__MOAIEaseCustom__) */

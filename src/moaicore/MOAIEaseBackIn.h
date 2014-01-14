@@ -18,17 +18,18 @@
  @text A back ease in.
  */
 class MOAIEaseBackIn : public virtual MOAIEaseBackBase {
-	
 public:
 	
 	DECL_LUA_FACTORY( MOAIEaseBackIn );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseBackIn();
 	~MOAIEaseBackIn();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	

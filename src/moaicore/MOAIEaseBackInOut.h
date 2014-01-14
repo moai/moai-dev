@@ -18,20 +18,20 @@
  @text A back ease in and out.
  */
 class MOAIEaseBackInOut : public virtual MOAIEaseBackBase {
-	
 public:
 	
 	DECL_LUA_FACTORY( MOAIEaseBackInOut );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseBackInOut();
 	~MOAIEaseBackInOut();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	
 };
 
 #endif /* defined(__libmoai__MOAIEaseBackInOut__) */

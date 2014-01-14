@@ -18,20 +18,20 @@
  @text A springy ease in.
  */
 class MOAIEaseElasticIn : public virtual MOAIEaseElasticBase {
-	
 public:
 	
 	DECL_LUA_FACTORY( MOAIEaseElasticIn );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseElasticIn();
 	~MOAIEaseElasticIn();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	
 };
 
 #endif /* defined(__libmoai__MOAIEaseElasticIn__) */

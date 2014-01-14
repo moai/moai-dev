@@ -9,7 +9,11 @@
 #include "pch.h"
 #include "MOAIEaseElasticIn.h"
 
+//================================================================//
+// MOAIEaseElasticIn
+//================================================================//
 
+//----------------------------------------------------------------//
 float MOAIEaseElasticIn::DistortedTime(float inputTime){
 	if (inputTime == 0.0f || inputTime == 1.0f){
 		return inputTime;
@@ -21,19 +25,22 @@ float MOAIEaseElasticIn::DistortedTime(float inputTime){
 	return -powf(2.0f, 10.0f * adjustedTime) * sinf((adjustedTime - s) * M_PI * 2.0f / period);
 }
 
+//----------------------------------------------------------------//
 MOAIEaseElasticIn::MOAIEaseElasticIn(){
 	RTTI_SINGLE(MOAIEaseElasticBase)
 }
 
+//----------------------------------------------------------------//
 MOAIEaseElasticIn::~MOAIEaseElasticIn(){
 	
 }
 
-
+//----------------------------------------------------------------//
 void MOAIEaseElasticIn::RegisterLuaClass(MOAILuaState &state){
 	MOAIEaseElasticBase::RegisterLuaClass(state);
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseElasticIn::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIEaseElasticBase::RegisterLuaFuncs(state);
 }

@@ -21,11 +21,14 @@ class MOAIEaseSimpleInOut : public virtual MOAIEaseSimpleBase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseSimpleInOut );
 	
+	//----------------------------------------------------------------//
 	MOAIEaseSimpleInOut();
 	~MOAIEaseSimpleInOut();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime( float inputTime );
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 };

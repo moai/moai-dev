@@ -9,6 +9,18 @@
 #include "pch.h"
 #include "MOAIEaseCustom.h"
 
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	setFunction
+ @text	Sets the lua callback function to use for this ease's interpolation.
+ 
+ @in		MOAIEaseCustom self
+ @in		function easeFunction
+ @out	nil
+ */
 int MOAIEaseCustom::_setFunction(lua_State *L){
 	MOAI_LUA_SETUP(MOAIEaseCustom, "U");
 	
@@ -17,6 +29,11 @@ int MOAIEaseCustom::_setFunction(lua_State *L){
 	return 0;
 }
 
+//================================================================//
+// MOAIEaseCustom
+//================================================================//
+
+//----------------------------------------------------------------//
 float MOAIEaseCustom::DistortedTime(float inputTime){
 	
 	if (this->mFunction) {
@@ -37,18 +54,22 @@ float MOAIEaseCustom::DistortedTime(float inputTime){
 	return inputTime;
 }
 
+//----------------------------------------------------------------//
 MOAIEaseCustom::MOAIEaseCustom(){
 	RTTI_SINGLE(MOAIEase);
 }
 
+//----------------------------------------------------------------//
 MOAIEaseCustom::~MOAIEaseCustom(){
 	
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseCustom::RegisterLuaClass(MOAILuaState &state){
 	MOAIEase::RegisterLuaClass(state);
 }
 
+//----------------------------------------------------------------//
 void MOAIEaseCustom::RegisterLuaFuncs(MOAILuaState &state){
 	MOAIEase::RegisterLuaFuncs(state);
 	

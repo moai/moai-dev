@@ -28,8 +28,10 @@ public:
 	MOAIEaseSimpleBase();
 	~MOAIEaseSimpleBase();
 	
+	//----------------------------------------------------------------//
 	void SetRate(float inputRate );
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	

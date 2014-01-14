@@ -21,12 +21,14 @@ class MOAIEaseExponentialIn : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseExponentialIn );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseExponentialIn();
 	~MOAIEaseExponentialIn();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
