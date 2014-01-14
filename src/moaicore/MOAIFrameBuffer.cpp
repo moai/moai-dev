@@ -210,12 +210,12 @@ int MOAIFrameBuffer::_getRenderTable ( lua_State* L ) {
 int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
 
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 1, true );
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
 	if ( image ) {
 		self->mFrameImage = image;
 	}
 
-	self->SetLocal ( state, 2, self->mOnFrameFinish );
+	self->SetLocal ( state, 3, self->mOnFrameFinish );
 	self->mGrabNextFrame = true;
 
 	return 0;
