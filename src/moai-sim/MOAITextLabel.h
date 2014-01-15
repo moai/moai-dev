@@ -187,6 +187,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	void				OnDepNodeUpdate			();
+	void				PostBuildTransforms		( ZLAffine3D& localToWorldMtx );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();

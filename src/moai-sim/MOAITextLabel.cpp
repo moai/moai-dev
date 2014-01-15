@@ -771,16 +771,7 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
-
 	MOAIProp::OnDepNodeUpdate ();
-
-	if ( this->mDesigner.GetYFlip ()) {
-			
-		ZLAffine3D mtx;
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
-		this->mLocalToWorldMtx.Prepend ( mtx );
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -788,6 +779,16 @@ void MOAITextLabel::OnUpdate ( float step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
+
+	if ( this->mDesigner.GetYFlip ()) {
+		ZLAffine3D mtx;
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
+		localToWorldMtx.Prepend ( mtx );
+	}
 }
 
 //----------------------------------------------------------------//
