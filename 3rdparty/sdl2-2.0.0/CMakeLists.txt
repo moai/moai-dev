@@ -45,13 +45,14 @@ set(LT_VERSION "${LT_CURRENT}.${LT_REVISION}.${LT_AGE}")
 set(LIBRARY_OUTPUT_DIRECTORY "build")
 # Check for 64 or 32 bit
 set(SIZEOF_VOIDP ${CMAKE_SIZEOF_VOID_P})
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+if(CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT GCC_FORCE_32_BIT)
   set(ARCH_64 TRUE)
   set(PROCESSOR_ARCH "x64")
 else()
   set(ARCH_64 FALSE)
   set(PROCESSOR_ARCH "x86")
-endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+
+endif(CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT GCC_FORCE_32_BIT)
 set(LIBNAME SDL2)
 if(NOT LIBTYPE)
   set(LIBTYPE SHARED)
@@ -146,7 +147,9 @@ endif("$ENV{CFLAGS}" STREQUAL "")
 if(NOT ("$ENV{CFLAGS}" STREQUAL "")) # Hackish, but does the trick on Win32
   list(APPEND EXTRA_LDFLAGS "$ENV{LDFLAGS}")
 endif(NOT ("$ENV{CFLAGS}" STREQUAL ""))
-
+  if (GCC_FORCE_32_BIT)
+        list(APPEND EXTRA_CFLAGS "-m32")
+  endif (GCC_FORCE_32_BIT)
 # Those are used for pkg-config and friends, so that the SDL2.pc, sdl2-config,
 # etc. are created correctly.
 set(SDL_LIBS "-lSDL2")

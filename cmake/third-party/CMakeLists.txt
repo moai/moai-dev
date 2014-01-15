@@ -118,6 +118,8 @@ add_library ( third-party STATIC
   ${SSL_SOURCES}
 )
 
+
+
 if (BUILD_WINDOWS AND MOAI_UNTZ)
   target_link_libraries ( third-party 
     winmm
@@ -134,3 +136,9 @@ target_link_libraries ( third-party
   luasocket
 )
 endif (MOAI_LUAEXT)
+#glew depends on opengl
+if ( GLEW_SOURCES )
+   target_link_libraries ( third-party 
+   ${OPENGL_LIBRARIES} 
+ )
+endif (GLEW_SOURCES)
