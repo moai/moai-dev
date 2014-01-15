@@ -23,7 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseExponentialInOut();
-	~MOAIEaseExponentialInOut();
+	virtual ~MOAIEaseExponentialInOut();
 	
 	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);

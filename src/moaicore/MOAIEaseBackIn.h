@@ -24,7 +24,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseBackIn();
-	~MOAIEaseBackIn();
+	virtual ~MOAIEaseBackIn();
 	
 	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);

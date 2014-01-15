@@ -26,7 +26,7 @@ private:
 public:
 	
 	MOAIEaseSimpleBase();
-	~MOAIEaseSimpleBase();
+	virtual ~MOAIEaseSimpleBase();
 	
 	//----------------------------------------------------------------//
 	void SetRate(float inputRate );

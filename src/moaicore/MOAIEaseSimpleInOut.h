@@ -23,7 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseSimpleInOut();
-	~MOAIEaseSimpleInOut();
+	virtual ~MOAIEaseSimpleInOut();
 	
 	//----------------------------------------------------------------//
 	float DistortedTime( float inputTime );

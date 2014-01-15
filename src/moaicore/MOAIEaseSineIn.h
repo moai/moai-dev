@@ -21,12 +21,14 @@ class MOAIEaseSineIn : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseSineIn );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseSineIn();
-	~MOAIEaseSineIn();
+	virtual ~MOAIEaseSineIn();
 	
+	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 };

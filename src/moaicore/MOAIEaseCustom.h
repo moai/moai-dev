@@ -35,7 +35,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseCustom();
-	~MOAIEaseCustom();
+	virtual ~MOAIEaseCustom();
 	
 	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );

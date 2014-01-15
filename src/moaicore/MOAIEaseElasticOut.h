@@ -24,7 +24,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseElasticOut();
-	~MOAIEaseElasticOut();
+	virtual ~MOAIEaseElasticOut();
 	
 	//----------------------------------------------------------------//
 	float DistortedTime(float inputTime);

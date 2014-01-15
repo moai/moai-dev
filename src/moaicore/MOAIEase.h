@@ -29,7 +29,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEase();
-	~MOAIEase();
+	virtual ~MOAIEase();
 
 	//----------------------------------------------------------------//
 	virtual float DistortedTime(float inputTime);

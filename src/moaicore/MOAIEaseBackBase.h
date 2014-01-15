@@ -26,7 +26,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseBackBase();
-	~MOAIEaseBackBase();
+	virtual ~MOAIEaseBackBase();
 	
 	//----------------------------------------------------------------//
 	void SetOvershoot(float overshoot );

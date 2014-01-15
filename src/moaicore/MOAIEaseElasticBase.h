@@ -26,7 +26,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIEaseElasticBase();
-	~MOAIEaseElasticBase();
+	virtual ~MOAIEaseElasticBase();
 	
 	//----------------------------------------------------------------//
 	void SetPeriod(float period );

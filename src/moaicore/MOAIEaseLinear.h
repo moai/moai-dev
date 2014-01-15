@@ -21,10 +21,11 @@ class MOAIEaseLinear : public virtual MOAIEase {
 public:
 	DECL_LUA_FACTORY( MOAIEaseLinear );
 	
-	
+	//----------------------------------------------------------------//
 	MOAIEaseLinear();
-	~MOAIEaseLinear();
+	virtual ~MOAIEaseLinear();
 	
+	//----------------------------------------------------------------//
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
