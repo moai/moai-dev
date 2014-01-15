@@ -133,10 +133,8 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 					t0 = c0 >= 1.0f ? 1.0f : t0;
 					t1 = c1 >= 1.0f ? 1.0f : t1;
 					
-					float v0 = 0.0f;
-					
 					if (link.mEase) {
-						v0 = link.mV0 + (link.mEase->DistortedTime(t0) * (link.mV1 - link.mV0 ) ) ;
+						float v0 = link.mV0 + (link.mEase->DistortedTime(t0) * (link.mV1 - link.mV0 ) ) ;
 						
 						link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
 						
@@ -145,7 +143,7 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 						delta = v1 - v0;
 					}
 					else{
-						v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
+						float v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
 						
 						link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
 						
