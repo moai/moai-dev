@@ -1123,6 +1123,7 @@
 		43BA2ECD177332B2007DCDF0 /* UIDevice+HardwareString.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */; };
 		43BA2ED41773355A007DCDF0 /* MOAIPlayhavenIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2ED21773355A007DCDF0 /* MOAIPlayhavenIOS.h */; };
 		43BA2ED51773355A007DCDF0 /* MOAIPlayhavenIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */; };
+		615B86CF18873F8100A26DF3 /* MOAIWebSocketMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61D32885188473430023EB92 /* MOAIWebSocketMgr.cpp */; };
 		61BFEEAC188082E100B0C289 /* base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 61BFEE47188082E000B0C289 /* base64.hpp */; };
 		61BFEEAD188082E100B0C289 /* client.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 61BFEE48188082E000B0C289 /* client.hpp */; };
 		61BFEEAE188082E100B0C289 /* close.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 61BFEE49188082E000B0C289 /* close.hpp */; };
@@ -15926,6 +15927,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				615B86CF18873F8100A26DF3 /* MOAIWebSocketMgr.cpp in Sources */,
 				89BE760B173C12CE00DFE837 /* host.cpp in Sources */,
 				89BE760F173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */,
 				89BE7613173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */,
@@ -19105,7 +19107,11 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/macosx\"";
+				OTHER_LDFLAGS = (
+					"-lboost_system",
+					"-lboost_random",
+				);
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
@@ -19142,7 +19148,11 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/macosx\"";
+				OTHER_LDFLAGS = (
+					"-lboost_system",
+					"-lboost_random",
+				);
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
@@ -19179,7 +19189,11 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/macosx\"";
+				OTHER_LDFLAGS = (
+					"-lboost_system",
+					"-lboost_random",
+				);
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
@@ -19216,7 +19230,11 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/macosx\"";
+				OTHER_LDFLAGS = (
+					"-lboost_system",
+					"-lboost_random",
+				);
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
