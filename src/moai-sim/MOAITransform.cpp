@@ -1058,6 +1058,8 @@ void MOAITransform::BuildTransforms () {
 		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
 		this->mLocalToWorldMtx.Prepend ( pivot );
 	}
+	
+	this->PostBuildTransforms ( this->mLocalToWorldMtx );
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
@@ -1138,6 +1140,11 @@ MOAITransform::~MOAITransform () {
 void MOAITransform::OnDepNodeUpdate () {
 	
 	this->BuildTransforms ();
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
 }
 
 //----------------------------------------------------------------//

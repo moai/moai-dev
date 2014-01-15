@@ -128,7 +128,7 @@ void MOAITextDesignParser::Align () {
 			penY = totalLines ? -this->mLayout->mLines [ 0 ].mAscent : yMin;
 			break;
 	}
-	
+
 	MOAIAnimCurve** curves = this->mDesigner->mCurves;
 	u32 totalCurves = this->mDesigner->mCurves.Size ();
 	

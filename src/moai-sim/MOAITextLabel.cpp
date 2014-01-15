@@ -793,6 +793,7 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
+<<<<<<< HEAD
 
 	MOAIGraphicsProp::OnDepNodeUpdate ();
 
@@ -803,6 +804,9 @@ void MOAITextLabel::OnDepNodeUpdate () {
 		this->mLocalToWorldMtx.Prepend ( mtx );
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
+=======
+	MOAIProp::OnDepNodeUpdate ();
+>>>>>>> added post-transform to MOAITransform dep node update (to allow subclasses to inject additional local transforms prior to world-space transform of prop bounds); added SetGlobal () to MOAILuaState; changed implementation of yFlip in MOAITextLabel to use new post-transform
 }
 
 //----------------------------------------------------------------//
@@ -810,6 +814,16 @@ void MOAITextLabel::OnUpdate ( float step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
+
+	if ( this->mDesigner.GetYFlip ()) {
+		ZLAffine3D mtx;
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
+		localToWorldMtx.Prepend ( mtx );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -136,6 +136,7 @@ public:
 	template < typename TYPE > void						ReadArray			( int size, TYPE* values, TYPE value );
 	template < typename TYPE > void						SetField			( int idx, cc8* key, TYPE value );
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );
+	template < typename TYPE > void						SetGlobal			( cc8* key, TYPE value );
 	template < typename TYPE > void						WriteArray			( int size, TYPE* values );
 };
 
