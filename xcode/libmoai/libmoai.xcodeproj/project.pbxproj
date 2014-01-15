@@ -19267,7 +19267,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
 				OTHER_LDFLAGS = (
 					"-lboost_system",
 					"-lboost_random",
@@ -19305,7 +19305,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
 				OTHER_LDFLAGS = (
 					"-lboost_system",
 					"-lboost_random",
@@ -19343,7 +19343,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
 				OTHER_LDFLAGS = (
 					"-lboost_system",
 					"-lboost_random",
@@ -19381,7 +19381,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib\"";
+				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/boost/lib/ios\"";
 				OTHER_LDFLAGS = (
 					"-lboost_system",
 					"-lboost_random",
