@@ -15,10 +15,6 @@
 
 //----------------------------------------------------------------//
 float MOAIEaseElasticIn::DistortedTime(float inputTime){
-	if (inputTime == 0.0f || inputTime == 1.0f){
-		return inputTime;
-	}
-	
 	float period = this->mPeriod;
 	float s = period / 4.0f;
 	float adjustedTime = inputTime - 1.0f;
