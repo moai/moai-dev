@@ -91,7 +91,7 @@ bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool clos
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetTransform (), vertices, total );
+		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetDrawingToWorld (), vertices, total );
 		this->mIsClosed = closed;
 		//this->SetOpen ( false );
 	}
