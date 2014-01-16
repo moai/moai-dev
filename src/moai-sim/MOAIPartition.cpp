@@ -416,7 +416,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	this->mEmpties.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -431,7 +431,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, point, orientation, mask );
 	this->mGlobals.GatherProps ( results, ignore, point, orientation, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -446,7 +446,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, point, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -462,7 +462,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, box, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -477,7 +477,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	
-	return results.mTotalResults;
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
@@ -501,6 +501,8 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	
 	prop.mPartition = this;
 	prop.ScheduleUpdate ();
+	
+	prop.mPartition->OnPropInserted ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -526,6 +528,21 @@ MOAIPartition::MOAIPartition () :
 //----------------------------------------------------------------//
 MOAIPartition::~MOAIPartition () {
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::OnPropInserted ( MOAIProp& prop ) {
+	UNUSED ( prop );
+}
+
+//----------------------------------------------------------------//	
+void MOAIPartition::OnPropRemoved ( MOAIProp& prop ) {
+	UNUSED ( prop );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::OnPropUpdated ( MOAIProp& prop ) {
+	UNUSED ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -585,6 +602,7 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 		prop.mCell->RemoveProp ( prop );
 	}
 
+	prop.mPartition->OnPropRemoved ( prop );
 	prop.mPartition = 0;
 	this->LuaRelease ( &prop );
 }
@@ -624,7 +642,7 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 		return;
 	}
 
-	ZLRect rect = prop.mBounds.GetRect ( this->mPlaneID );
+	ZLRect rect = prop.mWorldBounds.GetRect ( this->mPlaneID );
 
 	float width = rect.Width ();
 	float height = rect.Height ();

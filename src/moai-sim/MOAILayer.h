@@ -41,6 +41,9 @@ private:
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 
+	MOAILuaStrongRef						mOverlayTable;
+	MOAILuaStrongRef						mUnderlayTable;
+
 	#if MOAI_WITH_CHIPMUNK
 		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
 	#endif
@@ -68,11 +71,13 @@ private:
 	static int		_setBox2DWorld			( lua_State* L );
 	static int		_setCamera				( lua_State* L );
 	static int		_setCpSpace				( lua_State* L );
+	static int		_setOverlayTable		( lua_State* L );
 	static int		_setParallax			( lua_State* L );
 	static int		_setPartition			( lua_State* L );
 	static int		_setPartitionCull2D		( lua_State* L );
 	static int		_setSortMode			( lua_State* L );
 	static int		_setSortScale			( lua_State* L );
+	static int		_setUnderlayTable		( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 	static int		_showDebugLines			( lua_State* L );
 	static int		_wndToWorld				( lua_State* L );
@@ -83,6 +88,8 @@ private:
 	void			AffirmPartition			();
 	ZLMatrix4x4		GetProjectionMtx		() const;
 	ZLMatrix4x4		GetViewMtx				() const;
+	void			RenderTable				( MOAILuaRef& ref );
+	void			RenderTable				( MOAILuaState& state, int idx );
 
 public:
 	
@@ -91,11 +98,11 @@ public:
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID );
 	float			GetFitting				( ZLRect& worldRect, float hPad, float vPad );
-	u32				GetPropBounds			( ZLBox& bounds );
 	ZLMatrix4x4		GetWndToWorldMtx		() const;
 	ZLMatrix4x4		GetWorldToWndMtx		() const;
 					MOAILayer				();
 					~MOAILayer				();
+	u32				OnGetModelBounds		( ZLBox& bounds );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();

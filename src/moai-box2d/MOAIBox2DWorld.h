@@ -60,6 +60,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
+	public MOAIRenderable,
 	public b2DestructionListener {
 private:
 
@@ -135,7 +136,6 @@ public:
 	static const u32 DEBUG_DRAW_DEFAULT = DEBUG_DRAW_SHAPES | DEBUG_DRAW_JOINTS | DEBUG_DRAW_CENTERS;
 	
 	//----------------------------------------------------------------//
-	void			DrawDebug				();
 	bool			IsDone					();
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
@@ -143,6 +143,7 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Render					();
 };
 
 #endif

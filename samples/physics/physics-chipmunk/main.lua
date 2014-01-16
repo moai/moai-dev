@@ -14,7 +14,7 @@ MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/320), height / (height/480))
+viewport:setScale ( width, height )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -31,7 +31,7 @@ space:setIterations ( 5 )
 space:start ()
 
 -- attach the layer to the space for debug drawing
-layer:setCpSpace ( space )
+layer:setUnderlayTable ({ space })
 
 --polygon
 poly = {

@@ -46,7 +46,7 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 	
 	ZLBox bounds;
 
-	u32 status = self->GetPropBounds ( bounds );
+	u32 status = self->GetModelBounds ( bounds );
 	if ( status != BOUNDS_OK ) return 0;
 
 	state.Push ( bounds.mMin.mX );
@@ -83,7 +83,7 @@ int MOAIProp::_getWorldBounds ( lua_State* L ) {
 	if ( self->mPartition->IsGlobal ( *self )) return 0;
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
 	
-	ZLBox bounds = self->mBounds;
+	ZLBox bounds = self->mWorldBounds;
 
 	state.Push ( bounds.mMin.mX );
 	state.Push ( bounds.mMin.mY );
@@ -110,7 +110,7 @@ int MOAIProp::_getDims ( lua_State* L ) {
 
 	ZLBox bounds;
 
-	u32 status = self->GetPropBounds ( bounds );
+	u32 status = self->GetModelBounds ( bounds );
 	if ( status != BOUNDS_OK ) return 0;
  
 	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
@@ -401,6 +401,10 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
+		// TODO: this needs to be pushed up one level to GatherProps
+		// should not assume anything about the view or rendering
+		// only need to do this if we have a frustum - will break
+		// expected results for other queries
 		this->GetGridBoundsInView ( c0, c1 );
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
@@ -485,6 +489,11 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
+MOAICollisionProp* MOAIProp::GetCollisionProp () {
+	return 0;
+}
+
+//----------------------------------------------------------------//
 bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 
 	if ( !( cellRect || paddedRect )) return false;
@@ -492,7 +501,7 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 	if ( this->mLayer ) {
 	
 		ZLVec3D center;
-		this->mBounds.GetCenter ( center );
+		this->mWorldBounds.GetCenter ( center );
 		
 		MOAICellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center.mX, center.mY );
 		ZLRect rect = this->mLayer->mGridSpace.GetCellRect ( coord );
@@ -520,6 +529,11 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 }
 
 //----------------------------------------------------------------//
+MOAIGraphicsProp* MOAIProp::GetGraphicsProp () {
+	return 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const ZLFrustum& frustum = MOAIGfxDevice::Get ().GetViewVolume ();
@@ -537,30 +551,14 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProp::GetPropBounds ( ZLBox& bounds ) {
-	
+u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
+
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
 		bounds = this->mBoundsOverride;
 		return BOUNDS_OK;
 	}
 	
-	if ( this->mGrid ) {
-		
-		if ( this->mGrid->GetRepeat ()) {
-			return BOUNDS_GLOBAL;
-		}
-		
-		ZLRect rect = this->mGrid->GetBounds ();
-		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
-		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
-	}
-	else if ( this->mDeck ) {
-	
-		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
-		return BOUNDS_OK;
-	}
-	
-	return BOUNDS_EMPTY;
+	return this->OnGetModelBounds ( bounds );
 }
 
 //----------------------------------------------------------------//
@@ -577,7 +575,7 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 
 	ZLBox bounds;
 
-	u32 status = this->GetPropBounds ( bounds );
+	u32 status = this->GetModelBounds ( bounds );
 	
 	if ( status == BOUNDS_GLOBAL ) return true;
 	if ( status == BOUNDS_EMPTY ) return false;
@@ -604,15 +602,16 @@ MOAIProp::MOAIProp () :
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mWorldBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
 MOAIProp::~MOAIProp () {
 
-	if ( this->mCell ) {
-		this->mCell->RemoveProp ( *this );
-	}
+	// MOAIPartition retains member props so it *should* be impossible
+	// to destruct a prop without first removing it
+	assert ( !this->mPartition );
+	assert ( !this->mCell );
 	
 	this->mDeck.Set ( *this, 0 );
 	this->mRemapper.Set ( *this, 0 );
@@ -625,11 +624,33 @@ void MOAIProp::OnDepNodeUpdate () {
 	MOAITransform::OnDepNodeUpdate ();
 	
 	ZLBox propBounds;
-	u32 propBoundsStatus = this->GetPropBounds ( propBounds );
+	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
 	
 	// update the prop location in the partition
 	propBounds.Transform ( this->mLocalToWorldMtx );
-	this->UpdateBounds ( propBounds, propBoundsStatus );
+	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
+	
+	if ( this->mGrid ) {
+		
+		if ( this->mGrid->GetRepeat ()) {
+			return BOUNDS_GLOBAL;
+		}
+		
+		ZLRect rect = this->mGrid->GetBounds ();
+		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
+		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
+	}
+	else if ( this->mDeck ) {
+	
+		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
+		return BOUNDS_OK;
+	}
+	
+	return BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -700,7 +721,7 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::UpdateBounds ( u32 status ) {
+void MOAIProp::UpdateWorldBounds ( u32 status ) {
 
 	ZLBox bounds;
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
@@ -708,20 +729,27 @@ void MOAIProp::UpdateBounds ( u32 status ) {
 	if ( status == BOUNDS_OK ) {
 		status = BOUNDS_EMPTY;
 	}
-	this->UpdateBounds ( bounds, status );
+	this->UpdateWorldBounds ( bounds, status );
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::UpdateBounds ( const ZLBox& bounds, u32 status ) {
+void MOAIProp::UpdateWorldBounds ( const ZLBox& bounds, u32 status ) {
 
-	this->mBounds = bounds;
-	this->mBounds.Bless ();
+	MOAIPartitionCell* prevCell = this->mCell;
+	ZLBox prevBounds = this->mWorldBounds;
 
-	if (( status == BOUNDS_OK ) && this->mBounds.IsPoint ()) {
+	this->mWorldBounds = bounds;
+	this->mWorldBounds.Bless ();
+
+	if (( status == BOUNDS_OK ) && this->mWorldBounds.IsPoint ()) {
 		status = BOUNDS_EMPTY;
 	}
 
 	if ( this->mPartition ) {
 		this->mPartition->UpdateProp ( *this, status );
+		
+		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds ))) {
+			this->mPartition->OnPropUpdated ( *this );
+		}
 	}
 }

@@ -754,27 +754,6 @@ int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICpSpace::DrawDebug () {
-
-	if ( this->mSpace ) {
-
-		MOAICpDebugDrawOptions options;
-
-		options.drawHash = 0;
-		options.drawBBs = 0;
-		options.drawShapes = 1;
-		options.collisionPointSize = 4.0f;
-		options.bodyPointSize = 0.0f;
-		options.lineThickness = 1.5f;
-
-		MOAIGfxDevice::Get ().SetTexture ();
-
-		zglEnableClientState ( ZGL_PIPELINE_VERTEX_ARRAY );
-		MOAICpDebugDraw::DrawSpace ( this->mSpace, &options );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAICpArbiter* MOAICpSpace::GetArbiter () {
 
 	if ( !this->mArbiter ) {
@@ -812,6 +791,7 @@ MOAICpSpace::MOAICpSpace () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
+		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
 	
 	this->mSpace = cpSpaceNew ();
@@ -894,6 +874,7 @@ void MOAICpSpace::OnUpdate ( float step ) {
 void MOAICpSpace::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
+	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "BEGIN", ( u32 )BEGIN );
 	state.SetField ( -1, "PRE_SOLVE", ( u32 )PRE_SOLVE );
@@ -906,6 +887,7 @@ void MOAICpSpace::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICpSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
+	MOAIRenderable::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "activateShapesTouchingShape",	_activateShapesTouchingShape },
@@ -948,4 +930,25 @@ void MOAICpSpace::RemovePrim ( MOAICpPrim& prim ) {
 	
 	prim.mSpace = 0;
 	this->LuaRelease ( &prim );
+}
+
+//----------------------------------------------------------------//
+void MOAICpSpace::Render () {
+
+	if ( this->mSpace ) {
+
+		MOAICpDebugDrawOptions options;
+
+		options.drawHash = 0;
+		options.drawBBs = 0;
+		options.drawShapes = 1;
+		options.collisionPointSize = 4.0f;
+		options.bodyPointSize = 0.0f;
+		options.lineThickness = 1.5f;
+
+		MOAIGfxDevice::Get ().SetTexture ();
+
+		zglEnableClientState ( ZGL_PIPELINE_VERTEX_ARRAY );
+		MOAICpDebugDraw::DrawSpace ( this->mSpace, &options );
+	}
 }

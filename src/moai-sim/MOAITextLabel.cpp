@@ -692,17 +692,6 @@ void MOAITextLabel::DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLabel::GetPropBounds ( ZLBox& bounds ) {
-
-	ZLRect frame;
-	if ( this->mLayout.GetBounds ( frame )) {
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {
@@ -781,6 +770,17 @@ void MOAITextLabel::OnDepNodeUpdate () {
 		this->mLocalToWorldMtx.Prepend ( mtx );
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
+
+	ZLRect frame;
+	if ( this->mLayout.GetBounds ( frame )) {
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

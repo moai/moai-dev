@@ -15,7 +15,7 @@ class MOAICpCollisionHandler;
 // MOAICpPrim
 //================================================================//
 class MOAICpPrim :
-	public virtual MOAILuaObject  {
+	public virtual MOAILuaObject {
 protected:
 
 	ZLLeanLink < MOAICpPrim* > mLinkInSpace;
@@ -49,7 +49,8 @@ public:
 	@flag	ALL
 */
 class MOAICpSpace :
-	public MOAIAction {
+	public MOAIAction,
+	public MOAIRenderable {
 private:
 
 	cpSpace*							mSpace;
@@ -107,7 +108,6 @@ public:
 	DECL_LUA_FACTORY ( MOAICpSpace )
 	
 	//----------------------------------------------------------------//
-	void			DrawDebug				();
 	MOAICpArbiter*	GetArbiter				();
 	void			InsertPrim				( MOAICpPrim& prim );
 	bool			IsDone					();
@@ -117,6 +117,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemovePrim				( MOAICpPrim& prim );
+	void			Render					();
 };
 
 #endif

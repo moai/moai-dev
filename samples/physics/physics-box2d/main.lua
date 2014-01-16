@@ -14,7 +14,7 @@ MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/320), height / (height/480))
+viewport:setScale ( width, height )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -44,7 +44,7 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
-layer:setBox2DWorld ( world )
+layer:setUnderlayTable ({ world })
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = worldBody:addRect ( -(300/2), -200, 300/2, -300)

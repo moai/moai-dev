@@ -413,16 +413,6 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetPropBounds ( ZLBox& bounds ) {
-
-	if ( this->mComputeBounds ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
-	}
-	return BOUNDS_GLOBAL;
-}
-
-//----------------------------------------------------------------//
 MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 
 	if ( id < this->mStates.Size ()) {
@@ -474,6 +464,16 @@ MOAIParticleSystem::MOAIParticleSystem () :
 MOAIParticleSystem::~MOAIParticleSystem () {
 
 	this->ClearStates ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
+
+	if ( this->mComputeBounds ) {
+		bounds = this->mParticleBounds;
+		return BOUNDS_OK;
+	}
+	return BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//
