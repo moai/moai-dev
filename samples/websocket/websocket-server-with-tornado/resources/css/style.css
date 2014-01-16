@@ -1,0 +1,23 @@
+body {
+	font-family:Arial, Helvetica, sans-serif;
+}
+#container{
+	border:5px solid grey;
+	width:800px;
+	margin:0 auto;
+	padding:10px;
+}
+#chatLog{
+	padding:5px;
+	border:1px solid black;
+}
+#chatLog p {
+	margin:0;
+}
+.event {
+	color:#999;
+}
+.warning {
+	font-weight:bold;
+	color:#CCC;
+}
