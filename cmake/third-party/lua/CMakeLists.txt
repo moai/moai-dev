@@ -4,7 +4,7 @@ project(lua)
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" )
 
-set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" CACHE INTERNAL "doc string" )
+set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" PARENT_SCOPE )
 
 
 set ( LUA_SOURCES
@@ -39,18 +39,18 @@ set ( LUA_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}lzio.c
   ${CMAKE_CURRENT_SOURCE_DIR}print.c
 
-CACHE INTERNAL "doc string" )
+PARENT_SCOPE )
 
 if (BUILD_ANDROID)
   set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
-        CACHE INTERNAL "doc string"
+        PARENT_SCOPE
         )
 else (BUILD_ANDROID) 
 	set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
-        CACHE INTERNAL "doc string"
+        PARENT_SCOPE
         )
 endif (BUILD_ANDROID)

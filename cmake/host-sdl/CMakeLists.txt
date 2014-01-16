@@ -30,7 +30,7 @@ set ( INCLUDES_MOAIHOSTSDL
   "${MOAI_ROOT}/src/host-glut/"
   "${MOAI_ROOT}/3rdparty/sdl2-2.0.0/include"
    ${OPENGL_INCLUDE_DIRS}
-  CACHE INTERNAL "doc string" )
+   )
 
 
 include_directories ( ${INCLUDES_MOAIHOSTSDL} )

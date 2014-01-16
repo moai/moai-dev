@@ -7,12 +7,12 @@ if ( MOAI_CURL )
   
 
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" PARENT_SCOPE)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" PARENT_SCOPE)
 
   
   if (BUILD_ANDROID)
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL  -DUSE_ARES -DCARES_STATICLIB" CACHE INTERNAL "doc string" )
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL  -DUSE_ARES -DCARES_STATICLIB" PARENT_SCOPE)
   endif (BUILD_ANDROID)
 
   set ( CARES_SRC "" )
@@ -21,7 +21,7 @@ if ( MOAI_CURL )
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
 		"${CMAKE_CURRENT_SOURCE_DIR}"
-      CACHE INTERNAL "doc string" )
+      PARENT_SCOPE )
   endif (BUILD_LINUX)
 
 
@@ -29,13 +29,13 @@ if ( MOAI_CURL )
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-      CACHE INTERNAL "doc string" )
+     PARENT_SCOPE )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
         set ( CURL_INCLUDES
           "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
-        CACHE INTERNAL "doc string" )
+        PARENT_SCOPE )
     endif (BUILD_OSX)
 
 
@@ -44,7 +44,7 @@ if ( MOAI_CURL )
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-android/"
-      CACHE INTERNAL "doc string" )
+      PARENT_SCOPE )
   endif (BUILD_ANDROID)
 
 if (BUILD_IOS)
@@ -52,7 +52,7 @@ if (BUILD_IOS)
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-apple/" 
-      CACHE INTERNAL "doc string" )
+      PARENT_SCOPE )
   endif (BUILD_IOS)
 
   if (BUILD_ANDROID OR BUILD_IOS)  
@@ -102,7 +102,7 @@ if (BUILD_IOS)
 	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/bitncmp.c
 	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/inet_net_pton.c
 	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_inet_ntop.c
-    
+    PARENT_SCOPE
     )
     
   endif (BUILD_ANDROID OR BUILD_IOS)
@@ -186,11 +186,11 @@ if (BUILD_IOS)
     ${CMAKE_CURRENT_SOURCE_DIR}/url.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version.c
 
-  CACHE INTERNAL "doc string" )
+  PARENT_SCOPE )
 
 else ( MOAI_CURL )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" PARENT_SCOPE)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=0" PARENT_SCOPE)
 
 endif ( MOAI_CURL )

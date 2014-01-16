@@ -5,7 +5,7 @@ if ( NOT BUILD_BLACKBERRY )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/glew-1.5.6/src" )
 
-set ( GLEW_INCLUDES "${MOAI_ROOT}/3rdparty/glew-1.5.6/include" CACHE INTERNAL "doc string" )
+set ( GLEW_INCLUDES "${MOAI_ROOT}/3rdparty/glew-1.5.6/include" PARENT_SCOPE )
 
 set ( GLEW_SOURCES
 

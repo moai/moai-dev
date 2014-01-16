@@ -3,12 +3,12 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
+
 
 
 add_subdirectory ( box2d )
+
+message("BOX2d Includes = ${BOX2D_INCLUDES}")
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
 add_subdirectory ( crypto )
@@ -51,14 +51,10 @@ else (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
 
-if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
-endif ( BUILD_ANDROID )
-
 
 set ( THIRD_PARTY_INCLUDES 
   "${MOAI_ROOT}/src/"
+  "${MOAI_ROOT}/config-default"
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -84,7 +80,9 @@ set ( THIRD_PARTY_INCLUDES
   ${GLEW_INCLUDES}
   "${MOAI_ROOT}/3rdparty/ooid-0.99/"
 
-CACHE INTERNAL "doc string" )
+  )
+set (THIRD_PARTY_INCLUDES ${THIRD_PARTY_INCLUDES} PARENT_SCOPE) #export to rest of project
+set (UNTZ_INCLUDES ${UNTZ_INCLUDES} PARENT_SCOPE)
 
 include_directories ( ${THIRD_PARTY_INCLUDES} )
 
@@ -117,6 +115,18 @@ add_library ( third-party STATIC
   ${GLEW_SOURCES}
   ${SSL_SOURCES}
 )
+
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" PARENT_SCOPE)
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" PARENT_SCOPE)
+
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" )
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
+
+if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
+endif ( BUILD_ANDROID )
 
 
 

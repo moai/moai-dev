@@ -11,7 +11,7 @@ set ( MOAI_SIM_INCLUDES
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
 
- CACHE INTERNAL "doc string" )
+  )
 
 include_directories ( 
   ${MOAI_SIM_INCLUDES} 

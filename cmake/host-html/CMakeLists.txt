@@ -17,7 +17,7 @@ set ( INCLUDES_MOAIHOSTHTML
   "${MOAI_ROOT}/src/config-default/"
   "${MOAI_ROOT}/src/host-html/"
   ${OPENGL_INCLUDE_DIRS}
-  CACHE INTERNAL "doc string" )
+   )
 
 
 include_directories ( ${INCLUDES_MOAIHOSTHTML} )

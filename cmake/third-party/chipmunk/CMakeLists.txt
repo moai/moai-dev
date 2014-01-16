@@ -3,12 +3,12 @@ project ( chipmunk )
 
 if ( MOAI_CHIPMUNK )
 
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=1" CACHE INTERNAL "doc string")
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=1" CACHE INTERNAL "doc string")
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=1" PARENT_SCOPE)
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=1" PARENT_SCOPE)
 
     set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/src/" )
 
-    set ( CHIPMUNK_INCLUDES "${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/chipmunk/;${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/" CACHE INTERNAL "doc string" )
+    set ( CHIPMUNK_INCLUDES "${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/chipmunk/;${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/" PARENT_SCOPE )
 
     set ( CHIPMUNK_SOURCES 
 
@@ -39,11 +39,11 @@ if ( MOAI_CHIPMUNK )
         ${CMAKE_CURRENT_SOURCE_DIR}cpSpaceStep.c
         ${CMAKE_CURRENT_SOURCE_DIR}cpVect.c
 
-    CACHE INTERNAL "doc string" )
+    PARENT_SCOPE )
 
 else ( MOAI_CHIPMUNK )
 
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=0" CACHE INTERNAL "doc string")
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=0" CACHE INTERNAL "doc string")
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=0" PARENT_SCOPE)
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=0" PARENT_SCOPE)
 
 endif ( MOAI_CHIPMUNK )

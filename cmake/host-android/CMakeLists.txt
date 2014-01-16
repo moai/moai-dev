@@ -5,8 +5,8 @@ project ( moaiandroid )
 set ( ANDROID_FORCE_ARM_BUILD ON)
 
 FOREACH(DISABLED ${DISABLED_EXT} )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDISABLE_${DISABLED}" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDISABLE_${DISABLED}" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDISABLE_${DISABLED}"  )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDISABLE_${DISABLED}"  )
 ENDFOREACH()
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g -DNDEBUG -DANDROID_NDK -DDISABLE_IMPORTGL" )
@@ -20,7 +20,7 @@ set ( INCLUDES_MOAIANDROID
   "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib"
   "${MOAI_ROOT}/3rdparty/tinyxml"
   "${MOAI_ROOT}/3rdparty/freetype-2.4.4/include"
-    CACHE INTERNAL "doc string" )
+    )
 
 include_directories (
 

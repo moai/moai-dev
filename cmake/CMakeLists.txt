@@ -39,15 +39,15 @@ option ( BUILD_WINDOWS     FALSE )
 #
 if ( BUILD_OSX )
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DMACOSX -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__ -DMACOSX" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DMACOSX -DHAVE_MEMMOVE " )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__ -DMACOSX" )
 endif ( BUILD_OSX )
 
 if ( BUILD_BLACKBERRY )
   # set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -V4.6.3,gcc_ntoarmv7le -w1 -D__QNX__")
   # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__ -V4.6.3,gcc_ntoarmv7le_cpp")
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE ")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__" )
 
   set ( CMAKE_RANLIB $ENV{QNX_HOST}/usr/bin/ntoarmv7-ranlib )
   set ( CMAKE_AR $ENV{QNX_HOST}/usr/bin/ntoarmv7-ar )
@@ -55,25 +55,25 @@ if ( BUILD_BLACKBERRY )
 endif ( BUILD_BLACKBERRY )
 
 if ( BUILD_HTML )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"  CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" )
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"   )
 endif (BUILD_HTML )
 
 if ( BUILD_WINDOWS)
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 -DHAVE_MEMMOVE -Werror-implicit-function-declaration" CACHE INTERNAL "doc string")
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 -DHAVE_MEMMOVE -Werror-implicit-function-declaration" )
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500"  )
 endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " )
 endif ( BUILD_LINUX )
 
 if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " )
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
@@ -83,8 +83,8 @@ if ( BUILD_IOS )
     set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
 
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " )
 
 
 endif ( BUILD_IOS )
@@ -142,12 +142,13 @@ endif ( DEBUG )
 
 #missing cmake modules
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_HTTP_SERVER=0"  )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_HTTP_SERVER=0"  )
 
 #
 # Libraries
 #
+set (THIRD_PARTY_INCLUDES "")
 add_subdirectory ( third-party )
 add_subdirectory ( zlcore )
 

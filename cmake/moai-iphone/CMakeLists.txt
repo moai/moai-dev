@@ -15,7 +15,7 @@ set ( MOAI_IPHONE_INCLUDES
   "${MOAI_ROOT}/3rdparty/facebookiOS-3.0.6.b/src"
   "${MOAI_ROOT}/3rdparty/playhaven-ios-1.13.1/src"
   
- CACHE INTERNAL "doc string" )
+  )
 
 
 
