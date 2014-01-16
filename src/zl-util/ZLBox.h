@@ -43,6 +43,7 @@ public:
 	void		Init			( const ZLVec3D& vec );
 	void		Init			( float left, float top, float right, float bottom, float back, float front );
 	bool		IsPoint			();
+	bool		IsSame			( const ZLBox& box ) const;
 	void		Offset			( const ZLVec3D& offset );
 	bool		Overlap			( const ZLBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const ZLBox& box, u32 plane ) const;

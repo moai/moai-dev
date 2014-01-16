@@ -13,9 +13,9 @@ template < typename TYPE >
 class ZLList {
 private:
 
-	static const u32 CHUNK_SIZE = 32;
+	static const size_t CHUNK_SIZE = 32;
 
-	u32 mTopLink;
+	size_t mTopLink;
 	ZLLeanArray < ZLLeanLink < TYPE >* > mChunks;
 
 	ZLLeanList < TYPE > mFreeLinks;
@@ -26,17 +26,17 @@ private:
 	
 		if ( !this->mFreeLinks.Count ()) {
 			
-			u32 chunkID = ( this->mTopLink / CHUNK_SIZE );
-			u32 totalChunks = chunkID + 1;
+			size_t chunkID = ( this->mTopLink / CHUNK_SIZE );
+			size_t totalChunks = chunkID + 1;
 			
 			if ( totalChunks > this->mChunks.Size ()) {
 				
-				u32 i = this->mChunks.Size ();
+				size_t i = this->mChunks.Size ();
 				this->mChunks.Resize ( totalChunks );
 				
 				for ( ; i < totalChunks; ++i ) {
 				
-					u32 chunkSize = sizeof ( ZLLeanLink < TYPE >) * CHUNK_SIZE;
+					size_t chunkSize = sizeof ( ZLLeanLink < TYPE >) * CHUNK_SIZE;
 					ZLLeanLink < TYPE >* chunk = ( ZLLeanLink < TYPE >* )malloc ( chunkSize );
 					this->mChunks [ i ] = chunk;
 				}
@@ -95,7 +95,7 @@ public:
 		this->mList.Clear ();
 		this->mFreeLinks.Clear ();
 		
-		for ( u32 i = 0; i < this->mChunks.Size (); ++i ) {
+		for ( size_t i = 0; i < this->mChunks.Size (); ++i ) {
 			free ( this->mChunks [ i ]);
 			this->mChunks [ i ] = 0;
 		}
@@ -116,7 +116,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	u32 Count () {
+	size_t Count () {
 	
 		return this->mList.Count ();
 	}

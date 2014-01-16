@@ -9,27 +9,29 @@
 //================================================================//
 // ZLLeanStack
 //================================================================//
-template < typename TYPE, u32 CHUNKSIZE >
+template < typename TYPE, size_t CHUNKSIZE = 64 >
 class ZLLeanStack :
 	public ZLLeanArray < TYPE > {
 private:
 
-	u32 mTop;
+	size_t mTop;
 
 public:
 	
 	//----------------------------------------------------------------//
-	u32 GetTop () const {
+	size_t GetTop () const {
 		
 		return this->mTop;
 	}
 	
 	//----------------------------------------------------------------//
-	void Pop () {
+	TYPE& Pop () {
 	
 		if ( this->mTop ) {
-			--this->mTop;
+			return this->mData [ --this->mTop ];
 		}
+		assert ( false );
+		return this->mData [ 0 ];
 	}
 	
 	//----------------------------------------------------------------//
@@ -42,7 +44,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( const TYPE& type ) {
 		
-		u32 idx = this->mTop;
+		size_t idx = this->mTop;
 		this->Grow ( ++this->mTop, CHUNKSIZE );
 		this->mData [ idx ] = type;
 		return this->mData [ idx ];
@@ -54,7 +56,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void SetTop ( u32 top ) {
+	void SetTop ( size_t top ) {
 	
 		this->Grow ( top, CHUNKSIZE );
 		this->mTop = top;

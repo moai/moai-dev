@@ -1922,6 +1922,14 @@
 			Name="collision"
 			>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionProp.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAICollisionShape.cpp"
 				>
 			</File>

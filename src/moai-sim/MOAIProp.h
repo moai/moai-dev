@@ -11,10 +11,11 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAICellCoord;
-class MOAICollisionShape;
+class MOAICollisionProp;
 class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGfxState;
+class MOAIGraphicsProp;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
@@ -34,45 +35,7 @@ class MOAITextureBase;
 	@text	Base class for props.
 	
 	@attr	ATTR_INDEX
-	
-	@const	FRAME_FROM_DECK
-	@const	FRAME_FROM_PARENT
-	@const	FRAME_FROM_SELF
-	
-	@const	BLEND_NORMAL
-	@const	BLEND_ADD
-	@const	BLEND_MULTIPLY
-
-	@const  GL_FUNC_ADD
-	@const  GL_FUNC_SUBTRACT
-	@const  GL_FUNC_REVERSE_SUBTRACT
-	
-	@const	GL_ONE
-	@const	GL_ZERO
-	@const	GL_DST_ALPHA
-	@const	GL_DST_COLOR
-	@const	GL_SRC_COLOR
-	@const	GL_ONE_MINUS_DST_ALPHA
-	@const	GL_ONE_MINUS_DST_COLOR
-	@const	GL_ONE_MINUS_SRC_ALPHA
-	@const	GL_ONE_MINUS_SRC_COLOR
-	@const	GL_SRC_ALPHA
-	@const	GL_SRC_ALPHA_SATURATE
-	
-	@const	DEPTH_TEST_DISABLE
-	@const	DEPTH_TEST_NEVER
-	@const	DEPTH_TEST_LESS
-	@const	DEPTH_TEST_EQUAL
-	@const	DEPTH_TEST_LESS_EQUAL
-	@const	DEPTH_TEST_GREATER
-	@const	DEPTH_TEST_NOTEQUAL
-	@const	DEPTH_TEST_GREATER_EQUAL
-	@const	DEPTH_TEST_ALWAYS
-	
-	@const	CULL_NONE
-	@const	CULL_ALL
-	@const	CULL_BACK
-	@const	CULL_FRONT
+	@attr	ATTR_PARTITION
 */
 class MOAIProp :
 	public MOAITransform {
@@ -91,28 +54,26 @@ private:
 	ZLLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
 
-	u32				mMask;
-	ZLBox			mBounds;
-	s32				mPriority;
+	u32					mMask;
+	s32					mPriority;
+	ZLBox				mWorldBounds;
 	
 	//----------------------------------------------------------------//
-	static int		_getBounds			( lua_State* L );
-	static int		_getDims			( lua_State* L );
-	static int		_getDeck			( lua_State* L );
-	static int		_getGrid			( lua_State* L );
-	static int		_getIndex			( lua_State* L );
-	static int		_getPriority		( lua_State* L );
-	static int		_getTexture			( lua_State* L );
-	static int		_getWorldBounds		( lua_State* L );
-	static int		_inside				( lua_State* L );
-	static int		_setBounds			( lua_State* L );
-	static int		_setDeck			( lua_State* L );
-	static int		_setExpandForSort	( lua_State* L );
-	static int		_setGrid			( lua_State* L );
-	static int		_setGridScale		( lua_State* L );
-	static int		_setIndex			( lua_State* L );
-	static int		_setPriority		( lua_State* L );
-	static int		_setRemapper		( lua_State* L );
+	static int			_getBounds			( lua_State* L );
+	static int			_getDims			( lua_State* L );
+	static int			_getGrid			( lua_State* L );
+	static int			_getIndex			( lua_State* L );
+	static int			_getPriority		( lua_State* L );
+	static int			_getWorldBounds		( lua_State* L );
+	static int			_inside				( lua_State* L );
+	static int			_setBounds			( lua_State* L );
+	static int			_setDeck			( lua_State* L );
+	static int			_setExpandForSort	( lua_State* L );
+	static int			_setGrid			( lua_State* L );
+	static int			_setGridScale		( lua_State* L );
+	static int			_setIndex			( lua_State* L );
+	static int			_setPriority		( lua_State* L );
+	static int			_setRemapper		( lua_State* L );
 
 protected:
 
@@ -128,9 +89,10 @@ protected:
 	ZLBox									mBoundsOverride;
 
 	//----------------------------------------------------------------//
-	virtual u32		GetPropBounds			( ZLBox& bounds ); // get the prop bounds in model space
-	void			UpdateBounds			( u32 status );
-	void			UpdateBounds			( const ZLBox& bounds, u32 status );
+	virtual u32			OnGetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
+	u32					ResolveModelBounds		( ZLBox& bounds );
+	void				UpdateWorldBounds		( u32 status );
+	void				UpdateWorldBounds		( const ZLBox& bounds, u32 status ); // update bounds in world space
 
 public:
 
@@ -149,12 +111,12 @@ public:
 		CAN_DRAW					= 0x01,
 		CAN_DRAW_DEBUG				= 0x02,
 		CAN_GATHER_SURFACES			= 0x04,
+		CAN_OVERLAP					= 0x08,
 	};
 
 	enum {
 		ATTR_INDEX,
 		ATTR_PARTITION,
-		
 		TOTAL_ATTR,
 	};
 
@@ -170,28 +132,31 @@ public:
 	
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
-	GET ( ZLBox, Bounds, mBounds )
-	GET ( ZLVec3D, BoundsMax, mBounds.mMax )
-	GET ( ZLVec3D, BoundsMin, mBounds.mMin )
+	GET ( ZLBox, Bounds, mWorldBounds )
+	GET ( ZLVec3D, BoundsMax, mWorldBounds.mMax )
+	GET ( ZLVec3D, BoundsMin, mWorldBounds.mMin )
 
 	//----------------------------------------------------------------//
-	void				AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void		Draw					( int subPrimID );
-	virtual void		DrawDebug				( int subPrimID );
-	void				GatherSurfaces			( MOAISurfaceSampler2D& sampler );
-	void				GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
-	MOAIPartition*		GetPartitionTrait		();
-	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
-	virtual bool		Inside					( ZLVec3D vec, float pad );
-						MOAIProp				();
-	virtual				~MOAIProp				();
-	void				OnDepNodeUpdate			();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetPartition			( MOAIPartition* partition );
+	void							AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
+	bool							ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	virtual void					Draw					( int subPrimID );
+	virtual void					DrawDebug				( int subPrimID );
+	void							GatherSurfaces			( MOAISurfaceSampler2D& sampler );
+	virtual MOAICollisionProp*		GetCollisionProp		();
+	virtual MOAIGraphicsProp*		GetGraphicsProp			();
+	void							GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
+	u32								GetModelBounds			( ZLBox& bounds );
+	MOAIPartition*					GetPartitionTrait		();
+	bool							GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
+	virtual bool					Inside					( ZLVec3D vec, float pad );
+									MOAIProp				();
+	virtual							~MOAIProp				();
+	void							OnDepNodeUpdate			();
+	void							RegisterLuaClass		( MOAILuaState& state );
+	void							RegisterLuaFuncs		( MOAILuaState& state );
+	void							SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void							SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void							SetPartition			( MOAIPartition* partition );
 };
 
 #endif

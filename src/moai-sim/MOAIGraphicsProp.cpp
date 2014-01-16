@@ -386,7 +386,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID ) {
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
 		
 		ZLBox bounds;
-		u32 status = this->GetPropBounds ( bounds );
+		u32 status = this->OnGetModelBounds ( bounds );
 		if ( status == BOUNDS_OK ) {
 			draw.DrawBoxOutline ( bounds );
 		}
@@ -433,6 +433,12 @@ void MOAIGraphicsProp::DrawGrid ( int subPrimID ) {
 		c0 = c1 = grid.GetCellCoord ( subPrimID );
 	}
 	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
+}
+
+//----------------------------------------------------------------//
+MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
+
+	return this;
 }
 
 //----------------------------------------------------------------//
@@ -554,7 +560,6 @@ void MOAIGraphicsProp::LoadTransforms () {
 //----------------------------------------------------------------//
 MOAIGraphicsProp::MOAIGraphicsProp () :
 	mBillboard ( BILLBOARD_NONE ),
-	mFlags ( DEFAULT_FLAGS ),
 	mCullMode ( 0 ),
 	mDepthTest ( 0 ),
 	mDepthMask ( true ) {
@@ -566,6 +571,7 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 	RTTI_END
 	
 	this->mFlags = DEFAULT_FLAGS;
+	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

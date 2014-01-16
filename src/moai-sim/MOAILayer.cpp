@@ -241,6 +241,16 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_setOverlayTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	
+	self->mOverlayTable.SetRef ( state, 2 );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
@@ -334,6 +344,16 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 	self->mSortScale [ 1 ] = state.GetValue < float >( 3, 0.0f );
 	self->mSortScale [ 2 ] = state.GetValue < float >( 4, 0.0f );
 	self->mSortScale [ 3 ] = state.GetValue < float >( 5, 1.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_setUnderlayTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	
+	self->mUnderlayTable.SetRef ( state, 2 );
 
 	return 0;
 }
@@ -549,31 +569,14 @@ void MOAILayer::Draw ( int subPrimID ) {
 	ZLMatrix4x4 view = this->GetViewMtx ();
 	ZLMatrix4x4 proj = this->GetProjectionMtx ();
 	
-	if ( this->mShowDebugLines ) {
-		
-		// TODO: fix this - these should just be special layers
-		
-//		#if MOAI_WITH_CHIPMUNK
-//			if ( this->mCpSpace ) {
-//				this->mCpSpace->DrawDebug ();
-//				gfxDevice.Flush ();
-//			}
-//		#endif
-//		
-//		#if MOAI_WITH_BOX2D
-//			if ( this->mBox2DWorld ) {
-//				this->mBox2DWorld->DrawDebug ();
-//				gfxDevice.Flush ();
-//			}
-//		#endif
-	}
-	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
 	// recompute the frustum
 	gfxDevice.UpdateViewVolume ();
+	
+	this->RenderTable ( this->mUnderlayTable );
 	
 	if ( this->mPartition ) {
 		
@@ -626,6 +629,7 @@ void MOAILayer::Draw ( int subPrimID ) {
 		}
 	}
 	
+	this->RenderTable ( this->mOverlayTable );
 	gfxDevice.Flush ();
 }
 
@@ -646,17 +650,6 @@ float MOAILayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 ZLMatrix4x4 MOAILayer::GetProjectionMtx () const {
 	
 	return this->mCamera ? this->mCamera->GetProjMtx ( *this->mViewport ) : this->mViewport->GetProjMtx ();
-}
-
-//----------------------------------------------------------------//
-u32 MOAILayer::GetPropBounds ( ZLBox& bounds ) {
-	
-	if ( this->mViewport ) {
-		ZLRect frame = this->mViewport->GetRect ();
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -742,6 +735,17 @@ MOAILayer::~MOAILayer () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAILayer::OnGetModelBounds ( ZLBox& bounds ) {
+	
+	if ( this->mViewport ) {
+		ZLRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
@@ -778,11 +782,13 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
 		{ "setCpSpace",				_setCpSpace },
+		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },
+		{ "setUnderlayTable",		_setUnderlayTable },
 		{ "setViewport",			_setViewport },
 		{ "showDebugLines",			_showDebugLines },
 		{ "wndToWorld",				_wndToWorld },
@@ -798,6 +804,46 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILayer::Render () {
 	
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::RenderTable ( MOAILuaRef& ref ) {
+
+	if ( ref ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		state.Push ( ref );
+		this->RenderTable ( state, -1 );
+		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::RenderTable ( MOAILuaState& state, int idx ) {
+
+	idx = state.AbsIndex ( idx );
+
+	int n = 1;
+	while ( n ) {
+		
+		lua_rawgeti ( state, idx, n++ );
+		
+		int valType = lua_type ( state, -1 );
+		
+		if ( valType == LUA_TUSERDATA ) {
+			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
+			if ( renderable ) {
+				renderable->Render ();
+			}
+		}
+		else if ( valType == LUA_TTABLE ) {
+			this->RenderTable ( state, -1 );
+		}
+		else {
+			n = 0;
+		}
+		
+		lua_pop ( state, 1 );
+	}
 }
 
 //----------------------------------------------------------------//

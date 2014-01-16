@@ -158,7 +158,7 @@ void MOAIPartitionLevel::Init ( float cellSize, u32 width, u32 height ) {
 MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIProp& prop ) {
 
 	ZLVec3D loc;
-	prop.mBounds.GetCenter ( loc );
+	prop.mWorldBounds.GetCenter ( loc );
 	
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	u32 cellAddr = this->mGridSpace.GetCellAddr ( coord );
@@ -179,7 +179,7 @@ MOAIPartitionLevel::~MOAIPartitionLevel () {
 void MOAIPartitionLevel::PlaceProp ( MOAIProp& prop ) {
 
 	//ZLVec3D loc;
-	//prop.mBounds.GetCenter ( loc );
+	//prop.mWorldBounds.GetCenter ( loc );
 	//MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetCellAddr ( coord ), coord.mX, coord.mY );
 

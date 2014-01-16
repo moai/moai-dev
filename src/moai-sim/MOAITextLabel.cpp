@@ -714,17 +714,6 @@ void MOAITextLabel::DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLabel::GetPropBounds ( ZLBox& bounds ) {
-
-	ZLRect frame;
-	if ( this->mLayout.GetBounds ( frame )) {
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {
@@ -793,20 +782,18 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
-<<<<<<< HEAD
-
-	MOAIGraphicsProp::OnDepNodeUpdate ();
-
-	if ( this->mDesigner.GetYFlip ()) {
-			
-		ZLAffine3D mtx;
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
-		this->mLocalToWorldMtx.Prepend ( mtx );
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
-=======
 	MOAIProp::OnDepNodeUpdate ();
->>>>>>> added post-transform to MOAITransform dep node update (to allow subclasses to inject additional local transforms prior to world-space transform of prop bounds); added SetGlobal () to MOAILuaState; changed implementation of yFlip in MOAITextLabel to use new post-transform
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
+
+	ZLRect frame;
+	if ( this->mLayout.GetBounds ( frame )) {
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

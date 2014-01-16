@@ -46,6 +46,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
+	REGISTER_LUA_CLASS ( MOAICollisionProp )
+	REGISTER_LUA_CLASS ( MOAICollisionWorld )
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
 	REGISTER_LUA_CLASS ( MOAICoroutine )

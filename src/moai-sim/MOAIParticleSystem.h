@@ -66,6 +66,7 @@ private:
 	void					EnqueueParticle			( MOAIParticle& particle );
 	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
+	u32						OnGetModelBounds		( ZLBox& bounds );
 	void					OnUpdate				( float step );
 
 public:
@@ -78,7 +79,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID );
-	u32				GetPropBounds			( ZLBox& bounds );
 	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();

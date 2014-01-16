@@ -445,41 +445,6 @@ int MOAISim::_setGCStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-<<<<<<< HEAD
-/**	@name	setHistogramEnabled
-	@text	Enable tracking of every MOAILuaObject so that an object count
-			histogram may be generated.
- 
-	@opt	boolean enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setHistogramEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetHistogramEnabled ( state.GetValue < bool >( 1, false ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setLeakTrackingEnabled
-	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
-			tracked back to their point of allocation (in Lua). Use together with
-			MOAISim.reportLeaks() to determine exactly where your memory usage is
-			being created. NOTE: This is very expensive in terms of both CPU and
-			the extra memory associated with the stack info book-keeping. Use only
-			when tracking down leaks.
- 
-	@opt	boolean enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetTrackingEnabled ( state.GetValue < bool >( 1, false ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-=======
->>>>>>> cleaning up and consolidating Lua object tracking; added tracking group support to MOAICoroutine
 /**	@name	setLongDelayThreshold
 	@text	Sets the long delay threshold. If the simulation step falls behind
 			the given threshold, the deficit will be dropped: the simulation will

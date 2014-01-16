@@ -188,7 +188,8 @@ protected:
 	
 	//----------------------------------------------------------------//
 	void				OnDepNodeUpdate			();
-	void				PostBuildTransforms		( ZLAffine3D& localToWorldMtx );
+	u32					OnGetModelBounds		( ZLBox& bounds );
+	void				OnUpdate				( float step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
@@ -202,13 +203,11 @@ public:
 	//----------------------------------------------------------------//
 	void				Draw					( int subPrimID );
 	void				DrawDebug				( int subPrimID );
-	u32					GetPropBounds			( ZLBox& bounds );
 	bool				IsDone					();
 						MOAITextLabel			();
 						~MOAITextLabel			();
 	bool				More					();
 	void				NextPage				( bool reveal );
-	void				OnUpdate				( float step );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

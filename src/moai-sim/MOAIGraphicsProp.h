@@ -31,9 +31,7 @@ class MOAITextureBase;
 // MOAIGraphicsProp
 //================================================================//
 /**	@name	MOAIGraphicsProp
-	@text	Base class for props.
-	
-	@attr	ATTR_INDEX
+	@text	Base class for graphics props.
 	
 	@const	FRAME_FROM_DECK
 	@const	FRAME_FROM_PARENT
@@ -81,30 +79,15 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
-	static int		_getBounds			( lua_State* L );
-	static int		_getDims			( lua_State* L );
-	static int		_getGrid			( lua_State* L );
-	static int		_getIndex			( lua_State* L );
-	static int		_getPriority		( lua_State* L );
 	static int		_getTexture			( lua_State* L );
-	static int		_getWorldBounds		( lua_State* L );
 	static int		_isVisible			( lua_State* L );
-	static int		_inside				( lua_State* L );
 	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendEquation	( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
-	static int		_setBounds			( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
-	static int		_setDeck			( lua_State* L );
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
-	static int		_setExpandForSort	( lua_State* L );
-	static int		_setGrid			( lua_State* L );
-	static int		_setGridScale		( lua_State* L );
-	static int		_setIndex			( lua_State* L );
 	static int		_setParent			( lua_State* L );
-	static int		_setPriority		( lua_State* L );
-	static int		_setRemapper		( lua_State* L );
 	static int		_setScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
@@ -116,7 +99,6 @@ private:
 
 protected:
 
-	u32										mFlags;
 	u32										mBillboard;
 	
 	// TODO: these should all be attributes
@@ -130,20 +112,15 @@ protected:
 	bool									mDepthMask;
 	MOAIBlendMode							mBlendMode;
 
-	ZLBox									mBoundsOverride;
-
 	//----------------------------------------------------------------//
-	u32				GetFrameFitting			( ZLBox& bounds, ZLVec3D& offset, ZLVec3D& scale );
-	void			LoadGfxState			();
-	void			LoadTransforms			();
+	MOAIGraphicsProp*	GetGraphicsProp			();
+	void				LoadGfxState			();
+	void				LoadTransforms			();
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIGraphicsProp )
 	DECL_ATTR_HELPER ( MOAIGraphicsProp )
-
-	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
-	static const int NO_SUBPRIM_ID		= 0xffffffff;
 
 	enum {
 		BILLBOARD_NONE,
@@ -152,8 +129,6 @@ public:
 	};
 
 	enum {
-		ATTR_INDEX,
-		ATTR_PARTITION,
 		ATTR_SHADER,
 		ATTR_BLEND_MODE,
 		
@@ -168,8 +143,6 @@ public:
 	};
 
 	enum {
-		FLAGS_OVERRIDE_BOUNDS		= 0x01,
-		FLAGS_EXPAND_FOR_SORT		= 0x02,
 		FLAGS_LOCAL_VISIBLE			= 0x04,
 		FLAGS_VISIBLE				= 0x08, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};

@@ -313,6 +313,12 @@ bool ZLBox::IsPoint () {
 }
 
 //----------------------------------------------------------------//
+bool ZLBox::IsSame ( const ZLBox& box ) const {
+
+	return (( this->mMin.mX == box.mMax.mX ) && ( this->mMin.mY == box.mMax.mY ) && ( this->mMin.mZ == box.mMax.mZ ));
+}
+
+//----------------------------------------------------------------//
 void ZLBox::Offset ( const ZLVec3D& offset ) {
 
 	mMin.mX += offset.mX;
