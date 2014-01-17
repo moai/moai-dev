@@ -32,13 +32,15 @@ end
 
 function takeScreenshot ( fName )
 	continue = false
-	MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
+    frameBuffer:grabNextFrame ( img, afterGrab )
 	fileName = fName
 end
 
 function takeScreenshotTest ()
 	continue = false
-	MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
+    frameBuffer:grabNextFrame ( img, afterGrabTest )
 end
 
 function draw ( index, xOff, yOff, xFlip, yFlip )

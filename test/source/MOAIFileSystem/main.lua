@@ -348,11 +348,11 @@ function test ()
 	MOAIFileSystem.setWorkingDirectory ( dir )
 	
 	dirs = MOAIFileSystem.listDirectories ( 'testzip' )
-	evaluate ( dirs [ 2 ] == 'test1/' and dirs [ 1 ] == 'test2/',
+	evaluate ( dirs ~= nil and dirs [ 2 ] == 'test1/' and dirs [ 1 ] == 'test2/',
 		"10 \tMOAIFileSystem.listDirectories ( 'testzip' )" )
 	
 	files = MOAIFileSystem.listFiles ( 'testzip' )
-	evaluate ( files [ 4 ] == 'test.bmp' and files [ 3 ] == 'test.pdf' and files [ 2 ] == 'test.rtf' and files [ 1 ] == 'test.txt',
+	evaluate ( files ~= nil and files [ 4 ] == 'test.bmp' and files [ 3 ] == 'test.pdf' and files [ 2 ] == 'test.rtf' and files [ 1 ] == 'test.txt',
 		"11 \tMOAIFileSystem.listFiles ( 'testzip' )" )
 		
 	evaluate ( MOAIFileSystem.checkPathExists ( 'testzip' ),

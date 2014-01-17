@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+local frameBuffer = nil
+
 local function evaluate ( pass, str )
 	if not pass then
 		MOAITestMgr.comment ( "FAILED\t" .. str )
@@ -32,61 +34,99 @@ function afterGrabTest ()
 end
 
 function takeScreenshot ( fName )
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
+
 	continue = false
 	if action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+                frameBuffer:grabNextFrame ( img, afterGrab )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+        frameBuffer:grabNextFrame ( img, afterGrab )
 	end
 	fileName = fName
 end
 
 function takeScreenshotTest ()
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
+
 	continue = false
 	screenIMG = MOAIImage.new ()
 	if action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( screenIMG, afterGrabTest )
+                frameBuffer:grabNextFrame(  screenIMG, afterGrabTest )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( screenIMG, afterGrabTest )
+        frameBuffer:grabNextFrame ( screenIMG, afterGrabTest )
 	end
 end
 
 function getImages ()
-	action = MOAIAction.new ()
-	
-	prop:setColor ( .5, .6, 0, 0 )
+
+	action = MOAITimer.new ()
+    action:setSpan(0.3)
+    
+	prop:setColor ( .5, .6, 0, 1 )
+    action:start()
 	
 	takeScreenshot ( 'output/setColor.png' )
 	repeat coroutine.yield () until continue
 	resetProp ( prop )
 	
-	action = prop:seekColor ( .2, 0, .9, 0, 3 )
+	--action = prop:seekColor ( .2, 0, .9, 0, 3 )
+    action = MOAIEaseDriver.new()
+    action:reserveLinks(4)
+    action:setLink(1, prop, MOAIProp.ATTR_R_COL, 0.2, MOAIEaseType.LINEAR)
+    action:setLink(2, prop, MOAIProp.ATTR_G_COL, 0, MOAIEaseType.LINEAR)
+    action:setLink(3, prop, MOAIProp.ATTR_B_COL, .9, MOAIEaseType.LINEAR)
+    action:setLink(4, prop, MOAIProp.ATTR_A_COL, .3, MOAIEaseType.LINEAR)
+    
+    action:setSpan( 3 )
+    action:start()
 	
 	takeScreenshot ( 'output/seekColor.png' )
 	repeat coroutine.yield () until continue
+    
+    
 	resetProp ( prop )
 	
-	action = prop:moveColor ( 0, .9, .2, 1, 4 )
+
+	--action = prop:moveColor ( 0, .9, .2, .7, 4 )
+    local rr, gg, bb, aa = prop:getColor()
+
+    action = MOAIEaseDriver.new()
+    action:reserveLinks(4)
+    
+    action:setLink(1, prop, MOAIProp.ATTR_R_COL, rr + 0, MOAIEaseType.LINEAR)
+    action:setLink(2, prop, MOAIProp.ATTR_G_COL, gg + 0.9, MOAIEaseType.LINEAR)
+    action:setLink(3, prop, MOAIProp.ATTR_B_COL, bb + 0.2, MOAIEaseType.LINEAR)
+    action:setLink(4, prop, MOAIProp.ATTR_A_COL, aa + 0.7, MOAIEaseType.LINEAR)
+    
+
+    action:setSpan( 4 )
+    action:start()
 	
 	takeScreenshot ( 'output/moveColor.png' )
 	repeat coroutine.yield () until continue
+    
 
 	-- temporary until there's a nice way to close a window
 	print ( "Staging done. Please close the MOAI window now." )
 end
 
 function getImagesTest ()
-	action = MOAIAction.new ()
+    
+	action = MOAITimer.new ()
+    action:setSpan(0.3)
+
 	img1 = MOAIImage.new ()
+
+	prop:setColor ( .5, .6, 0, 1 )
 	
-	prop:setColor ( .5, .6, 0, 0 )
-	
+    action:start()
+
 	takeScreenshotTest ()
 	repeat coroutine.yield () until continue
 	
@@ -97,7 +137,17 @@ function getImagesTest ()
 	end
 	resetProp ( prop )
 	
-	action = prop:seekColor ( .2, 0, .9, 0, 3 )
+	--action = prop:seekColor ( .2, 0, .9, 0, 3 )
+    action = MOAIEaseDriver.new()
+    action:reserveLinks(4)
+    action:setLink(1, prop, MOAIProp.ATTR_R_COL, 0.2, MOAIEaseType.LINEAR)
+    action:setLink(2, prop, MOAIProp.ATTR_G_COL, 0, MOAIEaseType.LINEAR)
+    action:setLink(3, prop, MOAIProp.ATTR_B_COL, .9, MOAIEaseType.LINEAR)
+    action:setLink(4, prop, MOAIProp.ATTR_A_COL, .3, MOAIEaseType.LINEAR)
+    
+    action:setSpan( 3 )
+    action:start()
+
 	
 	takeScreenshotTest ()
 	repeat coroutine.yield () until continue
@@ -109,7 +159,19 @@ function getImagesTest ()
 	end
 	resetProp ( prop )
 	
-	action = prop:moveColor ( 0, .9, .2, 1, 4 )
+	--action = prop:moveColor ( 0, .9, .2, 1, 4 )
+    local rr, gg, bb, aa = prop:getColor()
+
+    action = MOAIEaseDriver.new()
+    action:reserveLinks(4)
+    
+    action:setLink(1, prop, MOAIProp.ATTR_R_COL, rr + 0, MOAIEaseType.LINEAR)
+    action:setLink(2, prop, MOAIProp.ATTR_G_COL, gg + 0.9, MOAIEaseType.LINEAR)
+    action:setLink(3, prop, MOAIProp.ATTR_B_COL, bb + 0.2, MOAIEaseType.LINEAR)
+    action:setLink(4, prop, MOAIProp.ATTR_A_COL, aa + 0.7, MOAIEaseType.LINEAR)
+
+    action:setSpan( 4 )
+    action:start()
 	
 	takeScreenshotTest ()
 	repeat coroutine.yield () until continue
