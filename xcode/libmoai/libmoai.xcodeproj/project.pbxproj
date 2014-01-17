@@ -7661,7 +7661,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7688,7 +7687,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -7697,7 +7696,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -7726,7 +7724,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -7735,14 +7733,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
+				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -7750,7 +7747,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7758,7 +7754,7 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
+				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -8227,14 +8223,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
@@ -8244,14 +8239,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -8322,7 +8316,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8349,7 +8342,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -8358,7 +8351,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8385,7 +8377,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
+				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
