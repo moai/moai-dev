@@ -47,19 +47,15 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-glut" )
 add_executable ( moai
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHost.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostMain.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/../host-modules/aku_modules.cpp
 )
 
 target_link_libraries ( moai 
+  host-modules
   moai-sim
   moai-util
   moai-core
   zlcore
 )
-
-if ( MOAI_BOX2D )
-  target_link_libraries ( moai moai-box2d )
-endif ( MOAI_BOX2D )
 
 if ( MOAI_CHIPMUNK )
   target_link_libraries ( moai moai-chipmunk )

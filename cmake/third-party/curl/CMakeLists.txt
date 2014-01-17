@@ -21,7 +21,7 @@ if ( MOAI_CURL )
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
 		"${CMAKE_CURRENT_SOURCE_DIR}"
-      PARENT_SCOPE )
+       )
   endif (BUILD_LINUX)
 
 
@@ -29,13 +29,13 @@ if ( MOAI_CURL )
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-     PARENT_SCOPE )
+      )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
         set ( CURL_INCLUDES
           "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
-        PARENT_SCOPE )
+        )
     endif (BUILD_OSX)
 
 
@@ -44,7 +44,7 @@ if ( MOAI_CURL )
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-android/"
-      PARENT_SCOPE )
+       )
   endif (BUILD_ANDROID)
 
 if (BUILD_IOS)
@@ -52,7 +52,7 @@ if (BUILD_IOS)
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
         "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-apple/" 
-      PARENT_SCOPE )
+       )
   endif (BUILD_IOS)
 
   if (BUILD_ANDROID OR BUILD_IOS)  
@@ -188,6 +188,7 @@ if (BUILD_IOS)
 
   PARENT_SCOPE )
 
+  set (CURL_INCLUDES ${CURL_INCLUDES} PARENT_SCOPE)
 else ( MOAI_CURL )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" PARENT_SCOPE)

@@ -14,7 +14,7 @@ if ( MOAI_SQLITE3 )
 
     ${CMAKE_CURRENT_SOURCE_DIR}/sqlite3.c
 
-  CACHE INTERNAL "doc string" )
+  PARENT_SCOPE )
 
 else ( MOAI_SQLITE3 )
 

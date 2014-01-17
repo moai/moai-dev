@@ -23,11 +23,13 @@ if ( MOAI_UNTZ )
     "${MOAI_ROOT}/3rdparty/untz/include/"
     "${MOAI_ROOT}/3rdparty/untz/src/"
     "${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" 
-  PARENT_SCOPE )
+   )
 
   if ( BUILD_BLACKBERRY )
     set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};${MOAI_ROOT}/3rdparty/SDL/include/" PARENT_SCOPE )
   endif ( BUILD_BLACKBERRY )
+
+  set ( UNTZ_INCLUDES ${UNTZ_INCLUDES} PARENT_SCOPE)
 
   set ( UNTZ_SOURCES 
 

@@ -16,7 +16,6 @@ set ( MOAI_LUAEXT_INCLUDES "${MOAI_ROOT}/src/;${MOAI_ROOT}/3rdparty/;${MOAI_ROOT
 endif ( BUILD_ANDROID )
 
 include_directories ( 
-  ${THIRD_PARTY_INCLUDES}
   ${MOAICORE_INCLUDES} 
   ${MOAI_LUAEXT_INCLUDES}
 )

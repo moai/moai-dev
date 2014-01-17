@@ -1,14 +1,10 @@
-cmake_minimum_required ( VERSION 2.8.5 )
+cmake_minimum_required ( VERSION 2.8.11 )
 project ( box2d )
 
-if ( MOAI_BOX2D )
-
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_BOX2D=1" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_BOX2D=1" PARENT_SCOPE)
 
     set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/box2d-2.2.1/" )
 
-    set ( BOX2D_INCLUDES "${MOAI_ROOT}/3rdparty/box2d-2.2.1/" PARENT_SCOPE )
+    set ( BOX2D_INCLUDES "${MOAI_ROOT}/3rdparty/box2d-2.2.1/" )
 
     set ( BOX2D_SOURCES 
 
@@ -58,11 +54,9 @@ if ( MOAI_BOX2D )
         ${CMAKE_CURRENT_SOURCE_DIR}Box2D/Dynamics/b2WorldCallbacks.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}Box2D/Rope/b2Rope.cpp
 
-    PARENT_SCOPE )
+     )
+  
+    add_library( box2d STATIC ${BOX2D_SOURCES})
 
-else ( MOAI_BOX2D )
+    target_include_directories ( box2d PUBLIC ${BOX2D_INCLUDES})
 
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_BOX2D=0" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_BOX2D=0" PARENT_SCOPE)
-
-endif ( MOAI_BOX2D )

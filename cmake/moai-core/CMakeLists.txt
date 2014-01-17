@@ -7,10 +7,8 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_CORE_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-
   )
 
 
@@ -28,4 +26,4 @@ include_directories ( ${MOAI_CORE_INCLUDES} )
 
 add_library ( moai-core STATIC ${MOAI_CORE_SRC} )
 
-target_link_libraries ( moai-core zlcore )
+target_link_libraries ( moai-core zlcore third-party )

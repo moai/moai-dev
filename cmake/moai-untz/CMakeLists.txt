@@ -1,12 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-untz )
 
-if ( MOAI_UNTZ )
+
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-untz/" )
   set ( MOAI_UNTZ_INCLUDES "${MOAI_ROOT}/src/;${MOAI_ROOT}/src/moai-untz/"  )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_UNTZ=1"  PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_UNTZ=1"  PARENT_SCOPE )
+
 
 
   if ( FLASCC_BUILD )
@@ -18,10 +17,8 @@ if ( MOAI_UNTZ )
   endif ( FLASCC_BUILD )
 
   include_directories ( 
-    ${THIRD_PARTY_INCLUDES}
-    ${MOAI_UNTZ_INCLUDES} 
+    "${MOAI_ROOT}/src/"
     "${MOAI_ROOT}/src/config-default/" 
-    ${UNTZ_INCLUDES}
   )
 
   add_library ( moai-untz STATIC 
@@ -30,8 +27,5 @@ if ( MOAI_UNTZ )
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSound.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
   )
-else ( MOAI_UNTZ )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_UNTZ=0"  PARENT_SCOPE)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_UNTZ=0"  PARENT_SCOPE )
-
-endif ( MOAI_UNTZ )
+   target_link_libraries (moai-untz untz)
+   

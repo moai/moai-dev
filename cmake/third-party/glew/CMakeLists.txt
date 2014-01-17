@@ -11,6 +11,6 @@ set ( GLEW_SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/glew.c
 
-CACHE INTERNAL "doc string" )
+PARENT_SCOPE )
 
 endif ( NOT BUILD_BLACKBERRY )

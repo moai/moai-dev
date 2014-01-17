@@ -7,10 +7,8 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_UTIL_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-
   )
 
 include_directories ( 
@@ -25,3 +23,5 @@ file ( GLOB MOAI_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_UTIL_INCLUDES} )
 
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
+
+target_link_libraries ( moai-util third-party )

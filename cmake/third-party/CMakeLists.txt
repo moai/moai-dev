@@ -53,8 +53,7 @@ endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
 
 set ( THIRD_PARTY_INCLUDES 
-  "${MOAI_ROOT}/src/"
-  "${MOAI_ROOT}/config-default"
+ 
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -84,7 +83,9 @@ set ( THIRD_PARTY_INCLUDES
 set (THIRD_PARTY_INCLUDES ${THIRD_PARTY_INCLUDES} PARENT_SCOPE) #export to rest of project
 set (UNTZ_INCLUDES ${UNTZ_INCLUDES} PARENT_SCOPE)
 
-include_directories ( ${THIRD_PARTY_INCLUDES} )
+include_directories ( "${MOAI_ROOT}/src/"
+                      "${MOAI_ROOT}/config-default" 
+                       ${THIRD_PARTY_INCLUDES} )
 
 if ( BUILD_BLACKBERRY )
   include_directories ( ${BLACKBERRY_INCLUDES} )
@@ -128,6 +129,7 @@ if ( BUILD_ANDROID )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
 endif ( BUILD_ANDROID )
 
+ target_include_directories ( third-party PUBLIC ${THIRD_PARTY_INCLUDES})
 
 
 if (BUILD_WINDOWS AND MOAI_UNTZ)

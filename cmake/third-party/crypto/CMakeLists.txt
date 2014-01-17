@@ -16,7 +16,7 @@ if ( MOAI_CRYPTO )
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" 
-  PARENT_SCOPE )
+   )
 
     if ( BUILD_OSX )
      set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_NO_ASM" PARENT_SCOPE )
@@ -24,7 +24,7 @@ if ( MOAI_CRYPTO )
        set( CRYPTO_INCLUDES
        	        ${CRYPTO_INCLUDES}
            		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
-           		PARENT_SCOPE
+           		
            		)
     endif ( BUILD_OSX )
 
@@ -34,7 +34,7 @@ if ( MOAI_CRYPTO )
   	  set( CRYPTO_INCLUDES
   	        ${CRYPTO_INCLUDES}
       		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
-      		PARENT_SCOPE
+      		
       		)
     endif ( BUILD_LINUX )
 
@@ -45,7 +45,7 @@ if ( MOAI_CRYPTO )
   	  set( CRYPTO_INCLUDES
             "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw"
   	        ${CRYPTO_INCLUDES}
-      		PARENT_SCOPE
+      		
       		)
      endif ( BUILD_WINDOWS )
 
@@ -53,7 +53,7 @@ if ( MOAI_CRYPTO )
   	  set( CRYPTO_INCLUDES
   	        ${CRYPTO_INCLUDES}
       		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android"
-      		PARENT_SCOPE
+      		
       		)
      endif ( BUILD_ANDROID )
 
@@ -61,7 +61,7 @@ if ( BUILD_IOS )
       set( CRYPTO_INCLUDES
             ${CRYPTO_INCLUDES}
             "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone"
-            PARENT_SCOPE
+            
             )
      endif ( BUILD_IOS)
 
@@ -609,6 +609,7 @@ if ( BUILD_IOS )
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_ecb.c  
       
   PARENT_SCOPE )
+  set (CRYPTO_INCLUDES ${CRYPTO_INCLUDES} PARENT_SCOPE)
 
 else ( MOAI_CRYPTO )
 

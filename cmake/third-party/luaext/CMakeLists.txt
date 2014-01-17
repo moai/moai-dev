@@ -16,31 +16,31 @@ if ( MOAI_LUAEXT )
 
   set ( LUAEXT_SOURCES 
     ${CMAKE_CURRENT_SOURCE_DIR}/luafilesystem-1.5.0/src/lfs.c
-  PARENT_SCOPE )
+  )
 
 if ( MOAI_SQLITE3 )
 	 set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
       ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/ls_sqlite3.c
       ${CMAKE_CURRENT_SOURCE_DIR}/luasql-2.2.0/src/luasql.c
-      PARENT_SCOPE
+      
     )
 endif ( MOAI_SQLITE3 )
 
 if ( MOAI_CURL )
     set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
       ${CMAKE_CURRENT_SOURCE_DIR}/luacurl-1.2.1/luacurl.c
-      PARENT_SCOPE
+     
     )
   endif ( MOAI_CURL )
 
   if ( MOAI_CRYPTO )
     set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
       ${CMAKE_CURRENT_SOURCE_DIR}/luacrypto-0.2.0/src/lcrypto.c
-      PARENT_SCOPE
+      
     )
   endif ( MOAI_CRYPTO )
 
-
+set (LUAEXT_SOURCES ${LUAEXT_SOURCES} PARENT_SCOPE)
 
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/" )

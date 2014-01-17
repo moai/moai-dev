@@ -7,7 +7,6 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_ANDROID_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
  )

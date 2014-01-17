@@ -40,7 +40,6 @@ set ( ZLCORE_INCLUDES
   #${PLATFORM_INCLUDE}
   "${MOAI_ROOT}/3rdparty/"
   "${MOAI_ROOT}/3rdparty/ooid-0.99/"
-  ${THIRD_PARTY_INCLUDES}
  # ${EXPAT_INCLUDES}
  ## ${TLSF_INCLUDES}
   #${GLEW_INCLUDES}
@@ -55,6 +54,8 @@ file ( GLOB SRC_ZLCORE "${CMAKE_CURRENT_SOURCE_DIR}/zl-*/*.cpp" )
 include_directories ( ${ZLCORE_INCLUDES} )
 
 add_library ( zlcore STATIC ${SRC_ZLCORE} )
+
+target_link_libraries ( zlcore third-party )
 
 if (BUILD_WINDOWS)
   target_link_libraries ( zlcore iphlpapi) #GetAdaptersAddresses

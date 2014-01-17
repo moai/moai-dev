@@ -6,7 +6,6 @@ set (LINK_LIBS "")
 
 
 set ( MOAI_IPHONE_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/moai-iphone/"
   "${MOAI_ROOT}/src/moai-util/"
@@ -186,4 +185,5 @@ include_directories (
 
 target_link_libraries ( moai-iphone 
 	${LINK_LIBS}
+  third-party
 )

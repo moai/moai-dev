@@ -7,7 +7,6 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_SIM_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
 
@@ -25,6 +24,12 @@ file ( GLOB MOAI_SIM_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
+
+target_link_libraries ( moai-sim third-party )
+
+if (MOAI_BOX2D)
+ target_link_libraries ( moai-sim box2d)
+endif (MOAI_BOX2D)
 
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential

@@ -8,10 +8,9 @@ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_HTTP_CLIENT=1 -DAKU_WITH_HTTP_
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_HTTP_CLIENT=1 -DAKU_WITH_HTTP_CLIENT=1"  PARENT_SCOPE )
 
 set ( MOAI_HTTP_CLIENT_INCLUDES 
-  "${MOAI_ROOT}/src/moai-http-client"
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
+  "${MOAI_ROOT}/src/moai-http-client"
 
  CACHE INTERNAL "doc string" )
 
@@ -34,6 +33,7 @@ if (BUILD_IOS OR BUILD_OSX)
 endif (BUILD_IOS OR BUILD_OSX)
 
 add_library ( moai-http-client STATIC ${MOAI_HTTP_CLIENT_SRC} )
+target_link_libraries ( moai-http-client third-party )
 
 else ( MOAI_HTTP_CLIENT )
 

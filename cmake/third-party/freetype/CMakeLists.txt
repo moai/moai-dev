@@ -57,7 +57,7 @@ if ( MOAI_FREETYPE )
     ${FT_DIR}/src/type42/type42.c
     ${FT_DIR}/src/winfonts/winfnt.c
         
-    CACHE INTERNAL "doc string" )
+    PARENT_SCOPE)
 
 else ( MOAI_FREETYPE )
 
