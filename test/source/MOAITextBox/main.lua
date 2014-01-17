@@ -363,7 +363,7 @@ function getImages ()
 	xmin, ymin, xmax, ymax = textbox4:getStringBounds ( 10, 50 )
 	
 	gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "numbers.png" ) -- "box.png"
+	gfxQuad:setTexture ( "numbers.png" )
 	gfxQuad:setRect ( xmin, ymin, xmax, ymax )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
@@ -932,7 +932,7 @@ function getImagesTest ()
 	xmin, ymin, xmax, ymax = textbox4:getStringBounds ( 10, 50 )
 	
 	gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "numbers.png" ) -- "box.png"
+	gfxQuad:setTexture ( "numbers.png" )
 	gfxQuad:setRect ( xmin, ymin, xmax, ymax )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 

@@ -75,7 +75,6 @@ function getImages ()
 	repeat coroutine.yield () until continue
 	resetProp ( prop )
 	
-	--action = prop:seekColor ( .2, 0, .9, 0, 3 )
     action = MOAIEaseDriver.new()
     action:reserveLinks(4)
     action:setLink(1, prop, MOAIProp.ATTR_R_COL, 0.2, MOAIEaseType.LINEAR)
@@ -93,7 +92,6 @@ function getImages ()
 	resetProp ( prop )
 	
 
-	--action = prop:moveColor ( 0, .9, .2, .7, 4 )
     local rr, gg, bb, aa = prop:getColor()
 
     action = MOAIEaseDriver.new()
@@ -137,7 +135,6 @@ function getImagesTest ()
 	end
 	resetProp ( prop )
 	
-	--action = prop:seekColor ( .2, 0, .9, 0, 3 )
     action = MOAIEaseDriver.new()
     action:reserveLinks(4)
     action:setLink(1, prop, MOAIProp.ATTR_R_COL, 0.2, MOAIEaseType.LINEAR)
@@ -159,7 +156,6 @@ function getImagesTest ()
 	end
 	resetProp ( prop )
 	
-	--action = prop:moveColor ( 0, .9, .2, 1, 4 )
     local rr, gg, bb, aa = prop:getColor()
 
     action = MOAIEaseDriver.new()
