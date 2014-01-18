@@ -7687,7 +7687,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -7724,7 +7723,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -7739,7 +7737,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
 			};
 			name = Debug;
 		};
@@ -7754,7 +7751,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
 			};
 			name = Release;
 		};
@@ -7983,7 +7979,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -8189,7 +8185,7 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
+				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -8229,7 +8225,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
@@ -8245,7 +8240,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -8342,7 +8336,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -8377,7 +8370,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
