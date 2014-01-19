@@ -28,5 +28,4 @@
 #include <moai-core/MOAIWeakPtr.h>
 
 #include <moai-core/MOAILuaState-impl.h>
-
 #endif

@@ -2177,7 +2177,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2194,7 +2193,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2247,6 +2245,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2289,9 +2289,10 @@
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
+					"\"../../3rdparty/websocketpp\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
@@ -2307,7 +2308,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv7 armv7s";
+				VALID_ARCHS = "i386 armv7";
 			};
 			name = Debug;
 		};
@@ -2315,6 +2316,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -2358,9 +2361,10 @@
 					"\"../../3rdparty/vungle116/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
+					"\"../../3rdparty/websocketpp\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
 					"\"$(SRCROOT)/../../3rdparty/facebookiOS-3.0.6.b\"",
@@ -2377,7 +2381,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv7 armv7s";
+				VALID_ARCHS = "i386 armv7";
 			};
 			name = Release;
 		};

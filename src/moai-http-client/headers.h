@@ -5,6 +5,8 @@
 #define	MOAI_HTTP_CLIENT_H
 
 #include <moai-http-client/pch.h>
+#include <moai-http-client/MOAIWebSocket.h>
+#include <moai-http-client/MOAIWebSocketMgr.h>
 
 #if MOAI_WITH_LIBCURL
 	#include <moai-http-client/MOAIHttpTaskCurl.h>
@@ -15,5 +17,7 @@
 	#include <moai-http-client/MOAIHttpTaskNaCl.h>
 	#include <moai-http-client/MOAIUrlMgrNaCl.h>
 #endif
+
+
 
 #endif

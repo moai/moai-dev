@@ -38,7 +38,7 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 	}
 	else {
 	
-		NSString *dir = [ NSSearchPathForDirectoriesInDomains ( dirCode, NSUserDomainMask, YES ) lastObject ];
+		NSString *dir = [ NSSearchPathForDirectoriesInDomains ( (NSSearchPathDirectory)dirCode, NSUserDomainMask, YES ) lastObject ];
 
 		if ( ![[ NSFileManager defaultManager ] fileExistsAtPath:dir ]) {
 			
@@ -229,7 +229,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	UIViewController* rootVC = [ window rootViewController ];
 
 	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-	ipc.sourceType = sourceType;
+	ipc.sourceType = (UIImagePickerControllerSourceType)sourceType;
 	
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 

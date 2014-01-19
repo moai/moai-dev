@@ -50,3 +50,9 @@ shader:setVertexAttribute ( 3, 'color' )
 shader:load ( vsh, fsh )
 
 gfxQuad:setShader ( shader )
+
+color = MOAIColor.new ()
+color:setColor ( 0, 0, 0, 1 )
+color:seekColor ( 0, 1, 0, 1, 1.5 )
+MOAIGfxDevice.setClearColor ( color )
+

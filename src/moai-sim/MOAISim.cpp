@@ -19,6 +19,8 @@
 	#include <moai-http-client/MOAIUrlMgrNaCl.h>
 #endif
 
+#include <moai-http-client/MoaiWebSocketMgr.h>
+
 #if defined(_WIN32)
 	#include <windows.h>
 	#include <Psapi.h>
@@ -884,6 +886,8 @@ void MOAISim::Update () {
 	#if MOAI_WITH_HTTP_CLIENT && MOAI_OS_NACL
 		MOAIUrlMgrNaCl::Get ().Process ();
 	#endif
+	
+	MOAIWebSocketMgr::Get().Process();
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
