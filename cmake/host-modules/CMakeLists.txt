@@ -6,47 +6,30 @@ set ( HOST_MODULES_INCLUDES
     "${MOAI_ROOT}/src/config-default/"
     )
 
-  # Use all cpp files in directory as source code
-  set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/*.cpp" )
+# Use all cpp files in directory as source code
+set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/*.cpp" )
 
-  include_directories ( ${MOAI_MODULES_INCLUDES} )
+include_directories ( ${MOAI_MODULES_INCLUDES} )
 
-  add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
+add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
 
   
 #BOX2D
-
-  if ( MOAI_BOX2D )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_BOX2D=1 -DMOAI_WITH_BOX2D=1"  PARENT_SCOPE )
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_BOX2D=1 -DMOAI_WITH_BOX2D=1"  PARENT_SCOPE)
-    target_link_libraries ( host-modules moai-box2d )
-  else ( MOAI_BOX2D )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_BOX2D=0 -DMOAI_WITH_BOX2D=0"   PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_BOX2D=0 -DMOAI_WITH_BOX2D=0"  PARENT_SCOPE)
-  endif ( MOAI_BOX2D )
+if ( MOAI_BOX2D )
+  target_link_libraries ( host-modules moai-box2d )
+endif ( MOAI_BOX2D )
 
 #UNTZ
 if ( MOAI_UNTZ )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_UNTZ=1 -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_UNTZ=1 -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
-  target_link_libraries ( host-modules moai-untz)
-else ( MOAI_UNTZ )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_UNTZ=0 -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_UNTZ=0 -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
-
+  target_link_libraries ( host-modules moai-untz )
 endif ( MOAI_UNTZ )
 
 #Chipmunk
 if ( MOAI_CHIPMUNK )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_CHIPMUNK=1"  PARENT_SCOPE )
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_CHIPMUNK=1"  PARENT_SCOPE )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=1" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=1" PARENT_SCOPE)
-
-    else ( MOAI_CHIPMUNK )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_CHIPMUNK=0"  PARENT_SCOPE )
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_CHIPMUNK=0"  PARENT_SCOPE )
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_CHIPMUNK=0" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_CHIPMUNK=0" PARENT_SCOPE)
-
+  target_link_libraries ( host-modules moai-chipmunk )
 endif ( MOAI_CHIPMUNK )
+
+#Http Client
+if ( MOAI_HTTP_CLIENT )
+  target_link_libraries ( host-modules moai-http-client )
+endif ( MOAI_HTTP_CLIENT )

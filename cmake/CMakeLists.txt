@@ -97,6 +97,8 @@ endif ( BUILD_IOS )
 
 #
 # Optional modules
+
+
 option ( MOAI_BOX2D          FALSE )
 option ( MOAI_CHIPMUNK       FALSE )
 option ( MOAI_CURL           FALSE )
@@ -116,13 +118,55 @@ option ( MOAI_SFMT           FALSE )
 option ( MOAI_VORBIS         FALSE )
 option ( MOAI_UNTZ           FALSE )
 
-# Not sure about this one
-#set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
+
 
 #
 # Moai SDK Extensions
 #
 option ( MOAI_HTTP_CLIENT    FALSE )
+
+
+
+macro(SETUP_MODULE module_name flag_name)
+  if (${module_name})
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=1" )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=1" )
+  else ()
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=0" )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=0" )
+  endif(${module_name})
+endmacro(SETUP_MODULE)
+
+SETUP_MODULE(MOAI_BOX2D MOAI_WITH_BOX2D)
+SETUP_MODULE(MOAI_BOX2D AKU_WITH_BOX2D)
+
+SETUP_MODULE(MOAI_CHIPMUNK MOAI_WITH_CHIPMUNK)
+SETUP_MODULE(MOAI_CHIPMUNK AKU_WITH_CHIPMUNK)
+
+SETUP_MODULE(MOAI_CURL MOAI_WITH_LIBCURL)
+
+SETUP_MODULE(MOAI_UNTZ MOAI_WITH_UNTZ)
+SETUP_MODULE(MOAI_UNTZ AKU_WITH_UNTZ)
+
+SETUP_MODULE(MOAI_TINYXML MOAI_WITH_TINYXML)
+
+SETUP_MODULE(MOAI_HTTP_CLIENT MOAI_WITH_HTTP_CLIENT)
+SETUP_MODULE(MOAI_HTTP_CLIENT AKU_WITH_HTTP_CLIENT)
+
+SETUP_MODULE(MOAI_EXPAT MOAI_WITH_EXPAT)
+
+
+SETUP_MODULE(MOAI_CRYPTO MOAI_WITH_LIBCRYPTO)
+SETUP_MODULE(MOAI_OPENSSL MOAI_WITH_OPENSSL)
+
+SETUP_MODULE(MOAI_FREETYPE MOAI_WITH_FREETYPE)
+#Flags for optional modules
+
+
+
+# Not sure about this one
+#set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
+
 
 
 #

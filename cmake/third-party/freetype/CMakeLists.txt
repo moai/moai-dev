@@ -2,16 +2,14 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( freetype )
 
-if ( MOAI_FREETYPE )
 
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_FREETYPE=1 -DFT2_BUILD_LIBRARY" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_FREETYPE=1 -DFT2_BUILD_LIBRARY" PARENT_SCOPE)
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DFT2_BUILD_LIBRARY" )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -DFT2_BUILD_LIBRARY" )
 
-    # add_definitions("-DFT2_BUILD_LIBRARY -D__MOAI_LINUX_BUILD")
-
+   
     set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4/src/" )
 
-    set ( FREETYPE_INCLUDES "${MOAI_ROOT}/3rdparty/freetype-2.4.4/include" PARENT_SCOPE )
+    set ( FREETYPE_INCLUDES "${MOAI_ROOT}/3rdparty/freetype-2.4.4/include"  )
 	set ( FT_DIR "${MOAI_ROOT}/3rdparty/freetype-2.4.4" )
 
     set ( FREETYPE_SOURCES 
@@ -57,11 +55,8 @@ if ( MOAI_FREETYPE )
     ${FT_DIR}/src/type42/type42.c
     ${FT_DIR}/src/winfonts/winfnt.c
         
-    PARENT_SCOPE)
+    )
 
-else ( MOAI_FREETYPE )
-
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_FREETYPE=0" PARENT_SCOPE)
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_FREETYPE=0" PARENT_SCOPE)
-
-endif ( MOAI_FREETYPE )
+add_library (freetype STATIC ${FREETYPE_SOURCES})
+target_include_directories (freetype PUBLIC ${FREETYPE_INCLUDES})
+target_link_libraries ( freetype zlib )

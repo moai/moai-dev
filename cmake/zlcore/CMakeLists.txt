@@ -22,23 +22,14 @@ include_directories ( ${ZLCORE_INCLUDES} )
 
 add_library ( zlcore STATIC ${SRC_ZLUTIL} ${SRC_ZLGFX} )
 
+target_include_directories ( zlcore PUBLIC "${MOAI_ROOT}/src/" "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib")
 
 if ( MOAI_EXPAT )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_EXPAT=1 " PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_EXPAT=1 " PARENT_SCOPE )
   target_link_libraries( zlcore expat)
-else ( MOAI_EXPAT )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_EXPAT=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_EXPAT=0" PARENT_SCOPE )
 endif ( MOAI_EXPAT )
 
 if ( MOAI_CRYPTO )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" PARENT_SCOPE )
   target_link_libraries( zlcore crypto)
-else ( MOAI_CRYPTO )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" PARENT_SCOPE )
 endif ( MOAI_CRYPTO )
 
 
