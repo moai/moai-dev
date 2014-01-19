@@ -18,7 +18,7 @@
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number angle in degrees, converted from radians
+	@out	number angle					in degrees, converted from radians
 */
 int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -296,10 +296,11 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setMotorSpeed
- @text	See Box2D documentation.
+	@text	See Box2D documentation.
 
- @in	MOAIBox2DRevoluteJoint self
- @opt	number motorSpeed		in degrees/s, converted to radians/s. Default value is 0.
+	@in		MOAIBox2DRevoluteJoint self
+	@opt	number motorSpeed		in degrees/s, converted to radians/s. Default value is 0.
+	@out	nil
 
  */
 int MOAIBox2DRevoluteJoint::_setMotorSpeed ( lua_State* L ) {

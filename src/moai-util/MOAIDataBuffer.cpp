@@ -258,7 +258,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@in		MOAITaskQueue queue		The queue to perform the loading operation.
 	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
 	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
-	@opt	bool inflateAsync		'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
+	@opt	boolean inflateAsync	'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
 */

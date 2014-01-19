@@ -87,7 +87,7 @@ int MOAIAction::_detach ( lua_State* L ) {
 	@text	Checks to see if an action is currently in the action tree.
 
 	@in		MOAIAction self
-	@out	bool isActive
+	@out	boolean isActive
 */
 int MOAIAction::_isActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -102,7 +102,7 @@ int MOAIAction::_isActive ( lua_State* L ) {
 			'busy' only if it is 'active' and not 'done.'
 
 	@in		MOAIAction self
-	@out	bool isBusy
+	@out	boolean isBusy
 */
 int MOAIAction::_isBusy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -117,7 +117,7 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 			is up to individual action implementations.
 
 	@in		MOAIAction self
-	@out	bool isDone
+	@out	boolean isDone
 */
 int MOAIAction::_isDone ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -132,7 +132,7 @@ int MOAIAction::_isDone ( lua_State* L ) {
 			receiving updates. Call pause ( false ) or start () to unpause.
 
 	@in		MOAIAction self
-	@opt	bool pause			Default value is 'true.'
+	@opt	boolean pause			Default value is 'true.'
 	@out	nil
 */
 int MOAIAction::_pause ( lua_State* L ) {

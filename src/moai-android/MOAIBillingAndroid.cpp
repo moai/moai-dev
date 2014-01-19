@@ -242,8 +242,8 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
 /**	@name	setBillingProvider
 	@text	Set the billing provider to use for in-app purchases.
 	
-	@in		int		provider		The billing provider.
-	@out 	boolean	success			True, if the provider was successfully set.
+	@in		number provider			The billing provider.
+	@out 	boolean success			True, if the provider was successfully set.
 */
 int MOAIBillingAndroid::_setBillingProvider ( lua_State* L ) {
 	
@@ -446,9 +446,9 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 /**	@name	getPurchasedProducts
 	@text	Gets the user's purchased products 
 				
-	@in		int 	type
-	@opt	string 	continuation
-	@out 	string	json string of products
+	@in		number type
+	@opt	string continuation
+	@out 	string products			JSON string of products
 */
 int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	
@@ -490,7 +490,7 @@ int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	@text	Starts a purchase intent for the desired product
 	
 	@in		string sku
-	@in		int type
+	@in		number type
 	@opt	string devPayload
 	@out 	nil
 */
@@ -532,9 +532,9 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 /**	@name	requestProductsSync
 	@text	Gets the products from Google Play for the current app
 				
-    @in		table   skus
-	@in	    int		type
-	@out 	string	json string of products
+    @in		table skus
+	@in	    number type
+	@out 	string products			JSON string of products
 */
 int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 	

@@ -28,11 +28,17 @@ inline unsigned long hashpjw(const char *str_param) {
 
 //----------------------------------------------------------------//
 /**	@name	load
- @text	Load a text bundle from a .mo file.
- 
- @in MOAITextBundle self
- @in mixed source A MOAIDataBuffer containing the text bundle, or a string containing the filename to load.
- @out	number size				The number of bytes in this data buffer object.
+	@text	Load a text bundle from a .mo file.
+	
+	@overload
+		@in		MOAITextBundle self
+		@in		MOAIDataBuffer buffer	A MOAIDataBuffer containing the text bundle.
+		@out	number size				The number of bytes in this data buffer object.
+	
+	@overload
+		@in		MOAITextBundle self
+		@in		string filename			The filename to load.
+		@out	number size				The number of bytes in this data buffer object.
  */
 int MOAITextBundle::_load( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "U" );
@@ -51,14 +57,14 @@ int MOAITextBundle::_load( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	lookup
- @text	Look up a string in the bundle (defaulting to the lookup string itself). In the case
-	of defaulting, a false value is returned as the second value (useful for falling back to
-	less-specific bundles if desireable).
- 
- @in MOAITextBundle self
- @in string key A text string to use as a "key"
- @out string value The value if found, otherwise it returns the original string if not found.
- @out boolean found True if the string was found in the table (regardless of returned value), or false if it couldn't be found.
+	@text	Look up a string in the bundle (defaulting to the lookup string itself). In the case
+			of defaulting, a false value is returned as the second value (useful for falling back to
+			less-specific bundles if desirable).
+	
+	@in		MOAITextBundle self
+	@in		string key				A text string to use as a "key"
+	@out	string value			The value if found, otherwise it returns the original string if not found.
+	@out	boolean found			True if the string was found in the table (regardless of returned value), or false if it couldn't be found.
  */
 int MOAITextBundle::_lookup( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "US" );

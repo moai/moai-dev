@@ -24,10 +24,10 @@
 /**	@name	getMemoryStats
 	@text	Get memory usage.
 
-	@opt	boolean    blocking - Default value is 'false.'
+	@opt	boolean blocking		Default value is 'false.'
 	
-    @out	number     currentAlloc
-	@out	number     maxAlloc
+	@out	number currentAlloc
+	@out	number maxAlloc
 */
 int	MOAIFmodEventMgr::_getMemoryStats ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -131,7 +131,7 @@ int MOAIFmodEventMgr::_loadProject ( lua_State* L ) {
 /**	@name	unloadProject
     @text	Unloads all data associated with a particular project.
            Completely flushes all memory associated with the project.
-           For special voice projects, use unloadVoiceProjects() 
+           For special voice projects, use unloadAllVoiceProjects() 
     
     @in    string  projectName   The name of the .fev file (path should be relative from project root)  
 
@@ -218,7 +218,7 @@ int MOAIFmodEventMgr::_loadVoiceProject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadVoiceProjects
+/**	@name	unloadAllVoiceProjects
     @text	Calls UnloadProject and does all attendant special voice unload stuff, as well.
            For regular projects, use unloadProject()
     
@@ -300,9 +300,9 @@ int MOAIFmodEventMgr::_unloadGroup ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unloadPendingUnloads
-    @text	Unloads all the pending unload groups. Use between act changes in the game.
+	@text	Unloads all the pending unload groups. Use between act changes in the game.
 
-    @opt   bool blockOnUnload        Passing true means that the main thread will block while unloading
+	@opt	boolean blockOnUnload		Passing true means that the main thread will block while unloading
 	@out	nil
 */
 
@@ -629,14 +629,14 @@ int MOAIFmodEventMgr::_playVoiceLine ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unloadEvent
-    @text	Unloads the data associated with an Event. 
-           All instances of this Event will be stopped when this call is made.
-           Returns true if the Event is no longer loaded after this call.
+	@text	Unloads the data associated with an Event. 
+			All instances of this Event will be stopped when this call is made.
+			Returns true if the Event is no longer loaded after this call.
 
-    @in    string eventName      The name of the Event
-    @opt   bool   blockOnUnload  Passing true means that the main thread will block while unloading
+	@in		string eventName		The name of the Event
+	@opt	boolean blockOnUnload	Passing true means that the main thread will block while unloading
 	
-    @out	bool   eventUnloaded  True if the Event is no longer loaded after this call.
+	@out	boolean eventUnloaded	True if the Event is no longer loaded after this call.
 */
 
 int MOAIFmodEventMgr::_unloadEvent ( lua_State* L ) {

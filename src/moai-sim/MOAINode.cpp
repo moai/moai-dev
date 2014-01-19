@@ -209,7 +209,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	scheduleUpdate
 	@text	Schedule the node for an update next time the dependency graph
-			is processed. Any depdendent nodes will also be updated.
+			is processed. Any dependent nodes will also be updated.
 	
 	@in		MOAINode self
 	@out	nil

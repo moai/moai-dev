@@ -7,10 +7,10 @@
 #include <moai-box2d/MOAIBox2DJoint.h>
 
 //================================================================//
-// MOAIBox2DWeldJoint
+// MOAIBox2DRopeJoint
 //================================================================//
-/**	@name MOAIBox2DWeldJoint
- @text Box2D weld joint.
+/**	@name MOAIBox2DRopeJoint
+	@text Box2D rope joint.
  */
 class MOAIBox2DRopeJoint :
 public MOAIBox2DJoint {

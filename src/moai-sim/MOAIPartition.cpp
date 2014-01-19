@@ -155,7 +155,7 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point, all pushed onto the stack.
+	@out	... props				The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -200,7 +200,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point in order of depth, all pushed onto the stack.
+	@out	... props				The props under the point in order of depth, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -251,7 +251,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the rect, all pushed onto the stack.
+	@out	... props				The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
@@ -306,7 +306,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveLayers
+/**	@name	reserveLevels
 	@text	Reserves a stack of levels in the partition. Levels must be
 			initialized with setLevel (). This will trigger a full rebuild
 			of the partition if it contains any props.
@@ -330,10 +330,10 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	@text	Initializes a level previously created by reserveLevels ().
 			This will trigger a full rebuild of the partition if it contains any props.
 			Each level is a loose grid. Props of a given size may be placed by
-			the system into any level with cells large enough to accomodate them.
+			the system into any level with cells large enough to accommodate them.
 			The dimensions of a level control how many cells the level contains.
 			If an object goes off of the edge of a level, it will wrap around
-			to the other side. It is possible to model a quad tree by initalizing
+			to the other side. It is possible to model a quad tree by initializing
 			levels correctly, but for some simulations better structures
 			may be possible.
 	

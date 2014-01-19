@@ -12,7 +12,7 @@ class MOAITextureBase;
 // MOAIMultiTexture
 //================================================================//
 /**	@name	MOAIMultiTexture
-	@text	Attay of textures for multi-texturing.
+	@text	Array of textures for multi-texturing.
 */
 class MOAIMultiTexture :
 	public virtual MOAILuaObject,

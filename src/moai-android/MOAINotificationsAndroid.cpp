@@ -36,7 +36,7 @@ cc8* MOAINotificationsAndroid::_luaParseTable ( lua_State* L, int idx ) {
 /**	@name	getAppIconBadgeNumber
 	@text	Get the current icon badge number. Always returns zero.
 				
-	@out 	integer	count
+	@out 	number	count
 */
 int MOAINotificationsAndroid::_getAppIconBadgeNumber ( lua_State* L ) {
 	
@@ -52,7 +52,7 @@ int MOAINotificationsAndroid::_getAppIconBadgeNumber ( lua_State* L ) {
 	@text	Schedules a local notification to show a number of seconds after calling.
 	
 	@in		string message
-	@in		integer seconds
+	@in		number seconds
 				
 	@out 	nil
 */
@@ -214,7 +214,7 @@ int MOAINotificationsAndroid::_setListener ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	unregisterForRemoteNotifications
-	@text	Dregister for remote notifications.
+	@text	Unregister for remote notifications.
 			
 	@out 	nil
 */

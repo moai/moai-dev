@@ -16,7 +16,7 @@
 	
 	@in		MOAIAnimCurve self
 	@in		number time
-	@out	number interpolated value
+	@out	number value	The interpolated value
 */
 int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );

@@ -31,7 +31,7 @@ MOAIGfxState::~MOAIGfxState () {
 			is the number of times MOAIRenderMgr has rendered a scene
 			since the resource was last bound. It is part of the
 			render count, not a timestamp. This may change to be
-			time-based in futurecreleases.
+			time-based in future releases.
  
 	@in		MOAIGfxResource self
 	@out	number age
@@ -49,7 +49,7 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 /**	@name	softRelease
 	@text	Attempt to release the resource. Generally this is used when
 			responding to a memory warning from the system. A resource
-			will only be released if it is reneweable (i.e. has a renew
+			will only be released if it is renewable (i.e. has a renew
 			callback or contains all information needed to reload the
 			resources on demand).
 			
@@ -58,8 +58,8 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 			runtime which can significantly degrade performance.
  
 	@in		MOAIGfxResource self
-	@opt	int age				Release only if the texture hasn't been used in X frames.
-	@out	boolean				True if the texture was actually released.
+	@opt	number age				Release only if the texture hasn't been used in X frames.
+	@out	boolean released		True if the texture was actually released.
 */
 int MOAIGfxResource::_softRelease ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )

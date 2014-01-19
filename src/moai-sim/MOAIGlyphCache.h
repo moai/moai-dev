@@ -32,7 +32,7 @@ class MOAIGlyphCachePage;
 			<p>This implementation of the dynamic glyph cache does not implement
 			setImage ().</p>
 			
-			<p>Of course, you can also derive your own implementaion
+			<p>Of course, you can also derive your own implementation
 			from MOAIGlyphCacheBase.</p>
 */
 class MOAIGlyphCache :

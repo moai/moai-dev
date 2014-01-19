@@ -14,8 +14,8 @@
 	@text	Set the size and angle of the emitter.
 	
 	@in		MOAIParticleEmitter self
-	@in		number min Minimum angle in degrees.
-	@in		number max Maximum angle in degrees.
+	@in		number min					Minimum angle in degrees.
+	@in		number max					Maximum angle in degrees.
 	@out	nil
 */
 int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
@@ -33,8 +33,8 @@ int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 	@text	Set the size of each emission.
 	
 	@in		MOAIParticleEmitter self
-	@in		number min Minimum emission size.
-	@opt	number max Maximum emission size. Defaults to min.
+	@in		number min					Minimum emission size.
+	@opt	number max					Maximum emission size. Defaults to min.
 	@out	nil
 */
 int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
@@ -52,8 +52,8 @@ int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 	@text	Set the starting magnitude of particles deltas.
 	
 	@in		MOAIParticleEmitter self
-	@in		number min Minimum magnitude.
-	@opt	number max Maximum magnitude. Defaults to min.
+	@in		number min					Minimum magnitude.
+	@opt	number max					Maximum magnitude. Defaults to min.
 	@out	nil
 */
 int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
@@ -149,7 +149,7 @@ int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	@text	Forces the emission of one or more particles.
 	
 	@in		MOAIParticleEmitter self
-	@opt	number total Size of sure. Default value is a random emission value for emitter.
+	@opt	number total				Size of surge. Default value is a random emission value for emitter.
 	@out	nil
 */
 int MOAIParticleEmitter::_surge ( lua_State* L ) {

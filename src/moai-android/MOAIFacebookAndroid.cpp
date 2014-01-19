@@ -54,8 +54,7 @@ int MOAIFacebookAndroid::_extendToken ( lua_State* L ) {
 /**	@name	getExpirationDate
 	@text	Retrieve the Facebook login token expiration date.
  
-	@in		nil
-	@out	string	token expiration date
+	@out	string expirationDate		token expiration date
  */
 int	MOAIFacebookAndroid::_getExpirationDate	( lua_State* L ) {
 	

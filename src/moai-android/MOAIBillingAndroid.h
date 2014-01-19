@@ -14,7 +14,7 @@
 /**	@name	MOAIBillingAndroid
 	@text	Wrapper for in-app purchase integration on Android 
 			devices using either Google Play or Amazon. Exposed 
-			to lua via MOAIBilling on all mobile platforms, but 
+			to Lua via MOAIBilling on all mobile platforms, but 
 			API differs on iOS and Android.
 
 	@const	CHECK_BILLING_SUPPORTED						Event code for billing support request completion.
