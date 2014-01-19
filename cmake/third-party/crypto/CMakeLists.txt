@@ -1,12 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( crypto )
 
-if ( MOAI_CRYPTO )
+
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=1 -DOPENSSL_NO_ASM" PARENT_SCOPE)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=1" PARENT_SCOPE)
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DOPENSSL_NO_ASM" )
 
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
@@ -19,52 +18,35 @@ if ( MOAI_CRYPTO )
    )
 
     if ( BUILD_OSX )
-     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_NO_ASM" PARENT_SCOPE )
-     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENSSL_NO_ASM" PARENT_SCOPE)
-       set( CRYPTO_INCLUDES
-       	        ${CRYPTO_INCLUDES}
-           		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
-           		
-           		)
+        set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENSSL_NO_ASM")
+        set ( PLATFORM_INCLUDE "include-linux")
+        
     endif ( BUILD_OSX )
-
-
   
     if ( BUILD_LINUX )
-  	  set( CRYPTO_INCLUDES
-  	        ${CRYPTO_INCLUDES}
-      		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux"
-      		
-      		)
+        set ( PLATFORM_INCLUDE "include-linux")
     endif ( BUILD_LINUX )
 
-     if ( BUILD_WINDOWS )
-	  if (NOT MOAI_OPENSSL)
-  	  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" PARENT_SCOPE )
-	  endif (NOT MOAI_OPENSSL)  	  	
-  	  set( CRYPTO_INCLUDES
-            "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw"
-  	        ${CRYPTO_INCLUDES}
-      		
-      		)
-     endif ( BUILD_WINDOWS )
+    if ( BUILD_WINDOWS )
+  	  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" )
+        set ( PLATFORM_INCLUDE "include-mingw")
+    endif ( BUILD_WINDOWS )
 
- if ( BUILD_ANDROID )
-  	  set( CRYPTO_INCLUDES
-  	        ${CRYPTO_INCLUDES}
-      		"${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android"
-      		
-      		)
+    if ( BUILD_ANDROID )
+        set ( PLATFORM_INCLUDE "include-android")
      endif ( BUILD_ANDROID )
 
-if ( BUILD_IOS )
-      set( CRYPTO_INCLUDES
-            ${CRYPTO_INCLUDES}
-            "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone"
-            
-            )
-     endif ( BUILD_IOS)
+    if ( BUILD_IOS )
+        set ( PLATFORM_INCLUDE "include-iphone")
+    endif ( BUILD_IOS)
 
+
+    set( CRYPTO_INCLUDES
+                "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
+                ${CRYPTO_INCLUDES}
+                )
+
+    message (CRYPTO_INCLUDES)
   set ( CRYPTO_SOURCES 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c
@@ -607,13 +589,7 @@ if ( BUILD_IOS )
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_cfb64.c
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_ofb64.c
     ${CMAKE_CURRENT_SOURCE_DIR}/bf/bf_ecb.c  
-      
-  PARENT_SCOPE )
-  set (CRYPTO_INCLUDES ${CRYPTO_INCLUDES} PARENT_SCOPE)
+   )
 
-else ( MOAI_CRYPTO )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCRYPTO=0" PARENT_SCOPE)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCRYPTO=0" PARENT_SCOPE)
-
-endif ( MOAI_CRYPTO )
+   add_library( crypto STATIC ${CRYPTO_SOURCES} )  
+   target_include_directories ( crypto PUBLIC ${CRYPTO_INCLUDES} )
