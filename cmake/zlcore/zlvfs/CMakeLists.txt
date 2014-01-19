@@ -18,3 +18,5 @@ include_directories ( ${ZLVFS_INCLUDES} )
 
 add_library ( zlvfs STATIC ${SRC_ZLVFS} )
 
+target_link_libraries ( zlvfs zlib tlsf )
+

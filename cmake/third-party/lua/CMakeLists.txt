@@ -4,7 +4,7 @@ project(lua)
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" )
 
-set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" PARENT_SCOPE )
+set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/"  )
 
 
 set ( LUA_SOURCES
@@ -47,12 +47,15 @@ if (BUILD_ANDROID)
   set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
-        PARENT_SCOPE
         )
 else (BUILD_ANDROID) 
 	set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
-        PARENT_SCOPE
         )
 endif (BUILD_ANDROID)
+
+
+add_library( lua STATIC ${LUA_SOURCES} )
+target_include_directories( lua PUBLIC ${LUA_INCLUDES} )
+

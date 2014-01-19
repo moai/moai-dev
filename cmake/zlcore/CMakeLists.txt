@@ -48,7 +48,7 @@ if (BUILD_LINUX OR BUILD_WINDOWS OR BUILD_OSX)
   target_link_libraries ( zlcore glew )
 endif (BUILD_LINUX OR BUILD_WINDOWS OR BUILD_OSX)
 
-target_link_libraries ( zlcore zlvfs zlib tlsf )
+target_link_libraries ( zlcore zlvfs zlib )
 
 if (BUILD_WINDOWS)
   target_link_libraries ( zlcore iphlpapi) #GetAdaptersAddresses
