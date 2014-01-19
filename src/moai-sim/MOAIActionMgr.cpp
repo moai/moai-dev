@@ -53,7 +53,7 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1, true );
-	MOAIActionMgr::Get ().mRoot = root;
+	MOAIActionMgr::Get ().SetRoot ( root );
 
 	return 0;
 }
@@ -82,8 +82,7 @@ int MOAIActionMgr::_setThreadInfoEnabled ( lua_State* L ) {
 MOAIAction* MOAIActionMgr::AffirmRoot () {
 
 	if ( !this->mRoot ) {
-		this->mRoot = new MOAIAction ();
-		this->LuaRetain ( this->mRoot );
+		this->mRoot.Set ( *this, new MOAIAction ());
 	}
 	return this->mRoot;
 }
@@ -100,7 +99,6 @@ MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
-	mRoot ( 0 ),
 	mCurrentAction ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -109,8 +107,7 @@ MOAIActionMgr::MOAIActionMgr () :
 //----------------------------------------------------------------//
 MOAIActionMgr::~MOAIActionMgr () {
 
-	this->LuaRelease ( this->mRoot );
-	this->mRoot = 0;
+	this->mRoot.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -128,6 +125,12 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
+
+	this->mRoot.Set ( *this, root );
+}
+
+//----------------------------------------------------------------//
 void MOAIActionMgr::Update ( float step ) {
 
 	MOAIAction* root = this->mRoot;
@@ -136,13 +139,9 @@ void MOAIActionMgr::Update ( float step ) {
 
 		this->GetNextPass ();
 		
-		root->Retain ();
-		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
 			root->Update ( step, this->mPass, true );
 		}
-
-		root->Release ();
 
 		this->mPass = RESET_PASS;
 		this->mCurrentAction = 0;

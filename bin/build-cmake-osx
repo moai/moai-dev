@@ -36,3 +36,23 @@ cmake \
 ../
 
 make -j8
+if [[ $? -ne 0 ]]; then
+    exit 1
+fi
+
+#
+# Copy libs to lib/blackberry
+#
+rm -rf ../../release/osx/x64/
+mkdir -p ../../release/osx/x64/lib/
+mkdir -p ../../release/osx/x64/bin/
+for i in * ; do
+  if [ -d "$i" ]; then
+    if [ -f $i/lib$i.a ]; then
+      echo "Copying $i/lib$i.a to release/osx/lib/x64"
+      cp $i/lib$i.a ../../release/osx/x64/lib/
+    fi
+  fi
+done
+pwd
+cp host-glut/moai ../../release/osx/x64/bin/

@@ -20,7 +20,7 @@ private:
 	float	mY;
 	float	mZ;
 
-	MOAILuaRef mCallback;
+	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getLevel		( lua_State* L );

@@ -9,7 +9,8 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFinalizeBox2D		();
-AKU_API void	AKUInitializeBox2D		();
+AKU_API void	AKUBox2DAppFinalize					();
+AKU_API void	AKUBox2DAppInitialize				();
+AKU_API void	AKUBox2DContextInitialize			();
 
 #endif

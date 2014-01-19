@@ -172,7 +172,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
-		this->Push ( MOAILuaRuntime::Get ().mTracebackRef );
+		MOAILuaRuntime::Get ().PushTraceback ( *this );
 		lua_insert ( this->mState, errIdx );
 
 		status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
@@ -483,14 +483,6 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaRef MOAILuaState::GetStrongRef ( int idx ) {
-
-	MOAILuaRef ref;
-	ref.SetStrongRef ( *this, idx );
-	return ref;
-}
-
-//----------------------------------------------------------------//
 int MOAILuaState::GetTop () {
 
 	return lua_gettop ( this->mState );
@@ -669,14 +661,6 @@ uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaRef MOAILuaState::GetWeakRef ( int idx ) {
-
-	MOAILuaRef ref;
-	ref.SetWeakRef ( *this, idx );
-	return ref;
-}
-
-//----------------------------------------------------------------//
 bool MOAILuaState::HasField ( int idx, cc8* name ) {
 
 	lua_getfield ( this->mState, idx, name );
@@ -811,9 +795,8 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
 			// TODO: Fix this on Android
-			#ifndef MOAI_OS_ANDROID
 				ZLLog::PrintFile ( file, "-- %s\n", msg.c_str ());
-			#endif
+			
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -826,9 +809,9 @@ void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
 	// TODO: Fix this on Android
-	#ifndef MOAI_OS_ANDROID
+	//#ifndef MOAI_OS_ANDROID
 		ZLLog::PrintFile ( file, stackTrace.str ());
-	#endif
+	//#endif
 }
 
 //----------------------------------------------------------------//

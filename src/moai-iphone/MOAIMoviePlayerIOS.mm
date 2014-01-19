@@ -112,7 +112,7 @@ int MOAIMoviePlayerIOS::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAIMoviePlayerIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIMoviePlayerIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

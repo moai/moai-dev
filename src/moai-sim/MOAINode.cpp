@@ -553,6 +553,10 @@ MOAINode::~MOAINode () {
 		link->mDestNode->RemoveDepLink ( *link );
 		delete link;
 	}
+ 
+   if ( this->mState != STATE_IDLE ) {
+     MOAINodeMgr::Get ().Remove ( *this );
+   }
 }
 
 //----------------------------------------------------------------//

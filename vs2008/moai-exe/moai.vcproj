@@ -45,8 +45,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -70,8 +70,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -100,7 +100,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -129,8 +129,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_DLL"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -154,10 +154,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -186,7 +186,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -214,8 +214,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -237,8 +237,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -268,7 +268,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -297,8 +297,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_DLL"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -320,9 +320,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -352,7 +352,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -381,8 +381,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;LUA_COMPAT_MODULE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -406,8 +406,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -436,7 +436,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -465,8 +465,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;LUA_COMPAT_MODULE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -490,10 +490,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -522,7 +522,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -550,8 +550,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;LUA_COMPAT_MODULE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -573,8 +573,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -604,7 +604,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -633,8 +633,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\lua-5.2.2\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;LUA_COMPAT_MODULE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -656,9 +656,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -688,7 +688,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -717,8 +717,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -742,8 +742,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -772,7 +772,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -801,8 +801,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_DLL"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -826,10 +826,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				ShowProgress="0"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -858,7 +858,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -886,8 +886,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -909,8 +909,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -940,7 +940,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -969,8 +969,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\luajit-2.0.1\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_DLL"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\config;&quot;..\..\src\config-default&quot;;&quot;..\..\3rdparty\sdl2-2.0.0\include&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -992,9 +992,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib glut32.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
+				AdditionalDependencies="sdl.lib moai-lib-box2d.lib moai-lib-chipmunk.lib moai-lib-core.lib moai-lib-harness.lib moai-lib-luaext.lib moai-lib-http-client.lib moai-lib-http-server.lib moai-lib-sim.lib moai-lib-untz.lib moai-lib-util.lib dsound.lib strmiids.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib imm32.lib version.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -1024,7 +1024,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>
@@ -1032,31 +1032,27 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\host-glut\FolderWatcher-win.cpp"
+			RelativePath="..\..\src\host-modules\aku_modules.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\host-glut\FolderWatcher-win.h"
+			RelativePath="..\..\src\host-modules\aku_modules.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\host-glut\GlutHost.cpp"
+			RelativePath="..\..\src\host-modules\aku_modules_config.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\host-glut\GlutHost.h"
+			RelativePath="..\..\src\host-sdl\SDLHost.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\host-glut\GlutHostMain.cpp"
+			RelativePath="..\..\src\host-sdl\SDLHost.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\host-glut\ParticlePresets.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\host-glut\ParticlePresets.h"
+			RelativePath="..\..\src\host-sdl\SDLHostMain.cpp"
 			>
 		</File>
 	</Files>

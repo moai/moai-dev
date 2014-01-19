@@ -4,7 +4,6 @@
 #ifndef MOAISERIALIZER_H
 #define MOAISERIALIZER_H
 
-#include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializerBase.h>
 
 //================================================================//

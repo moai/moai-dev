@@ -46,7 +46,7 @@ public:
 		TOTAL
 	};
   
-	MOAILuaRef  mListeners [ TOTAL ];
+	MOAILuaStrongRef  mListeners [ TOTAL ];
 
 	//----------------------------------------------------------------//
 	void      Finish                ();

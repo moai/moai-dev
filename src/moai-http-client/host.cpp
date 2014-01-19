@@ -13,35 +13,28 @@
 // aku-util
 //================================================================//
 
-static bool sIsInitialized = false;
-
 //----------------------------------------------------------------//
-void AKUFinalizeHttpClient () {
-	
-	if ( !sIsInitialized ) return;
-	
+void AKUHttpClientAppFinalize () {
+
 	#if MOAI_WITH_LIBCURL
 		curl_global_cleanup ();
 	#endif
-	
-	sIsInitialized = false;
 }
 
 //----------------------------------------------------------------//
-void AKUInitializeHttpClient () {
+void AKUHttpClientAppInitialize () {
 
-	if ( !sIsInitialized ) {
+	#if MOAI_WITH_ARES
+		ares_set_default_dns_addr ( 0x08080808 );
+	#endif
 	
-		#if MOAI_WITH_ARES
-			ares_set_default_dns_addr ( 0x08080808 );
-		#endif
-		
-		#if MOAI_WITH_LIBCURL
-			curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-		#endif
-	
-		sIsInitialized = true;
-	}
+	#if MOAI_WITH_LIBCURL
+		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+	#endif
+}
+
+//----------------------------------------------------------------//
+void AKUHttpClientContextInitialize () {
 
 	#if MOAI_WITH_LIBCURL
 		MOAIUrlMgrCurl::Affirm ();

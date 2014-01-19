@@ -4,23 +4,53 @@ project ( ssl )
 if ( MOAI_OPENSSL ) 
  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" )
  
- set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OPENSSL=1 " CACHE INTERNAL "doc string" )
+ set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OPENSSL=1" CACHE INTERNAL "doc string" )
  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_OPENSSL=1" CACHE INTERNAL "doc string" )
 
  if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN  -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"  )
  endif ( BUILD_LINUX)
 
+ if ( BUILD_WINDOWS )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 -DL_ENDIAN -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" CACHE INTERNAL "doc string" )
+  set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw" )
+ endif ( BUILD_WINDOWS )
+
+
+ if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_ANDROID -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android" )
+ endif ( BUILD_ANDROID )
+
+ if ( BUILD_IOS )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone" )
+ endif ( BUILD_IOS )
+
+  if ( BUILD_OSX )
+   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
+   set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/" )
+  endif ( BUILD_OSX )
+
+
+
+
  set ( SSL_INCLUDES 
+    ${PLATFORM_INCLUDE}
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"
+    
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
     "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/"
     
-  CACHE INTERNAL "doc string" )
+    CACHE INTERNAL "doc string" )
+
+
+
 
   set ( SSL_SOURCES 
+
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/bio_ssl.c
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/d1_both.c
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/d1_clnt.c
@@ -70,18 +100,7 @@ if ( MOAI_OPENSSL )
     ${CMAKE_CURRENT_SOURCE_DIR}ssl/t1_srvr.c
   CACHE INTERNAL "doc string" )
  
-  include_directories ( 
-    ${THIRD_PARTY_INCLUDES}
-    ${SSL_INCLUDES}
-  )
-
-  if ( BUILD_LINUX )
-    include_directories ( "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" )
-  endif ( BUILD_LINUX )
- 
-  add_library ( ssl STATIC 
-    ${SSL_SOURCES}
-  )
+  
 
 else ( MOAI_OPENSSL )
 

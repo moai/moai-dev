@@ -3,7 +3,10 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" CACHE INTERNAL "doc string")
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL -DGLEW_STATIC" CACHE INTERNAL "doc string")
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
+
 
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
@@ -12,7 +15,6 @@ add_subdirectory ( crypto )
 add_subdirectory ( curl )
 add_subdirectory ( expat )
 add_subdirectory ( freetype )
-add_subdirectory ( glew )
 add_subdirectory ( jansson )
 add_subdirectory ( jpg )
 add_subdirectory ( lua )
@@ -25,12 +27,38 @@ add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
-add_subdirectory ( untz )
+
+if (BUILD_ANDROID)
+  add_subdirectory (untz-android)
+elseif (BUILD_IOS OR BUILD_OSX)
+  add_subdirectory (untz-ios)
+elseif (BUILD_WINDOWS)
+  add_subdirectory (untz-windows)
+elseif (BUILD_HTML)
+  add_subdirectory (untz-html)
+else ()
+ add_subdirectory ( untz )
+endif ()
+
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
-set ( THIRD_PARTY_INCLUDES
+if (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
+	set ( GLEW_SOURCES "")
+	set ( GLEW_INCLUDES "")
+else (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
+	add_subdirectory ( glew )
+endif (BUILD_HTML OR BUILD_ANDROID OR BUILD_IOS)
 
+
+if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
+endif ( BUILD_ANDROID )
+
+
+set ( THIRD_PARTY_INCLUDES 
+  "${MOAI_ROOT}/src/"
   ${BOX2D_INCLUDES}
   ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
@@ -68,7 +96,8 @@ add_library ( third-party STATIC
   ${BOX2D_SOURCES}
   ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
-  # ${CURL_SOURCES}
+  ${CRYPTO_SOURCES}
+  ${CURL_SOURCES}
   ${EXPAT_SOURCES}
   ${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
@@ -86,21 +115,30 @@ add_library ( third-party STATIC
   ${VORBIS_SOURCES}
   ${ZLIB_SOURCES}
   ${GLEW_SOURCES}
+  ${SSL_SOURCES}
 )
 
-if( MOAI_OPENSSL )
-  target_link_libraries( third-party ssl )
-endif( MOAI_OPENSSL )
-
-if( MOAI_CRYPTO )
-  target_link_libraries( third-party crypto )
-endif( MOAI_CRYPTO )
-
-if( MOAI_CURL )
-  target_link_libraries( third-party curl )
-endif( MOAI_CURL )
 
 
+if (BUILD_WINDOWS AND MOAI_UNTZ)
+  target_link_libraries ( third-party 
+    winmm
+    uuid
+    dxguid
+    strmiids
+    dsound
+    oleaut32
+  )
+endif (BUILD_WINDOWS AND MOAI_UNTZ)
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL" CACHE INTERNAL "doc string")
+if (MOAI_LUAEXT)
+target_link_libraries ( third-party
+  luasocket
+)
+endif (MOAI_LUAEXT)
+#glew depends on opengl
+if ( GLEW_SOURCES )
+   target_link_libraries ( third-party 
+   ${OPENGL_LIBRARIES} 
+ )
+endif (GLEW_SOURCES)

@@ -60,7 +60,7 @@ public:
     	REMOTE_NOTIFICATION_RESULT_ERROR,
 	};
 	
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAINotificationsIOS				();
 			~MOAINotificationsIOS				();

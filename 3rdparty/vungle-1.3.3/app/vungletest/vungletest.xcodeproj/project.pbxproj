@@ -1,0 +1,736 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		439E754C15AD6AE20087B162 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439E754B15AD6AE20087B162 /* AudioToolbox.framework */; };
+		71917F3A16767F530069F61F /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71917F3916767F530069F61F /* AdSupport.framework */; };
+		71A3849C161FD4250053762E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71A3849B161FD4250053762E /* StoreKit.framework */; };
+		9F0581F814DA3A7E00A29004 /* VGConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F0581F714DA3A7E00A29004 /* VGConfigViewController.m */; };
+		9F05820414DA3ACE00A29004 /* VGConfigStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05820314DA3ACE00A29004 /* VGConfigStyle.m */; };
+		9F05821414DA3BDB00A29004 /* VGConfigItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05821314DA3BDB00A29004 /* VGConfigItem.m */; };
+		9F05822914DA3CBD00A29004 /* VGConfigDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05822814DA3CBD00A29004 /* VGConfigDataSource.m */; };
+		9F05823B14DA3DB500A29004 /* NSObjectExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05823A14DA3DB500A29004 /* NSObjectExtras.m */; };
+		9F05829B14DA417C00A29004 /* VGConfigGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F05829A14DA417C00A29004 /* VGConfigGroup.m */; };
+		9F387A1914D2DEC800978C85 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8A32A014B4AD8A005BFB82 /* CFNetwork.framework */; };
+		9F387A1C14D2DEDB00978C85 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		9F387A2214D2DEF600978C85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		9F387A2514D2DF0B00978C85 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC8702214BD0D6D001EC419 /* MediaPlayer.framework */; };
+		9F387A2814D2DF1100978C85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC086C914C97EEE00E2682D /* libz.dylib */; };
+		9F387A2B14D2DF2000978C85 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F79D81C14C11F260018E633 /* SystemConfiguration.framework */; };
+		9F387A2E14D2DF2800978C85 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		9F3D83F714D9D070009C53A7 /* UIControlExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3D83F614D9D070009C53A7 /* UIControlExtras.m */; };
+		9F3D841F14D9D317009C53A7 /* UIColorExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3D841E14D9D317009C53A7 /* UIColorExtras.m */; };
+		9F5A084D14DC67DF007AE303 /* Prefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5A084C14DC67DF007AE303 /* Prefs.m */; };
+		9F754C9714EAD1A10050F9D5 /* Echo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F754C9614EAD1A10050F9D5 /* Echo.m */; };
+		9F84778814D6411900E48E63 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F84778714D6411900E48E63 /* Default-Landscape.png */; };
+		9F84778A14D6411F00E48E63 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F84778914D6411F00E48E63 /* Default-Portrait.png */; };
+		9F84778C14D6412300E48E63 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F84778B14D6412300E48E63 /* Default.png */; };
+		9F84778E14D6412800E48E63 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F84778D14D6412800E48E63 /* Default@2x.png */; };
+		9F86458D14DAEC7A00A9BFBB /* NSArrayExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F86458C14DAEC7A00A9BFBB /* NSArrayExtras.m */; };
+		9FA0F44E14ED62EC000467B1 /* VGDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0F44D14ED62EC000467B1 /* VGDownload.m */; };
+		9FA1A69814BD4355009643CB /* Icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FA1A69714BD4355009643CB /* Icon57.png */; };
+		9FA1A69A14BD435A009643CB /* Icon57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FA1A69914BD435A009643CB /* Icon57@2x.png */; };
+		9FA1A69C14BD435F009643CB /* Icon72.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FA1A69B14BD435F009643CB /* Icon72.png */; };
+		9FA2EC9D14DBA947006FCF1E /* UIViewControllerExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA2EC9C14DBA947006FCF1E /* UIViewControllerExtras.m */; };
+		9FB4557C15209CA2005F8E9B /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB4557B15209CA2005F8E9B /* OpenUDID.m */; };
+		9FB5211315059609002E7457 /* vg_button_mute_plain.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB5211215059609002E7457 /* vg_button_mute_plain.png */; };
+		9FB521151505960F002E7457 /* vg_button_mute_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB521141505960F002E7457 /* vg_button_mute_selected.png */; };
+		9FB8E6621504609D00016A6F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB8E6611504609D00016A6F /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9FB8E6C215046AFE00016A6F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB8E62C1504605200016A6F /* AVFoundation.framework */; };
+		9FB8E6FE150472E300016A6F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB8E6FD150472E300016A6F /* QuartzCore.framework */; };
+		9FE45A1114C6A74F0031CF58 /* vg_button_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE45A1014C6A74F0031CF58 /* vg_button_close.png */; };
+		9FE7FB2B14E7ADB2000015B1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA621CD14BF8726001B6DCD /* CoreLocation.framework */; };
+		9FE9CEE514DC828F00D15D45 /* ConfigGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FE9CEE414DC828F00D15D45 /* ConfigGlue.m */; };
+		9FF01C0714DF82B800119087 /* UIScrollViewExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF01C0614DF82B800119087 /* UIScrollViewExtras.m */; };
+		9FF01C2214DF841300119087 /* UIViewExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF01C2114DF841300119087 /* UIViewExtras.m */; };
+		9FF01C4314DF857E00119087 /* UIFontExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF01C4214DF857E00119087 /* UIFontExtras.m */; };
+		9FF2DA2E14D9B55100205C73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2DA2714D9B55100205C73 /* AppDelegate.m */; };
+		9FF2DA3114D9B55100205C73 /* VGImageCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2DA2D14D9B55100205C73 /* VGImageCreator.m */; };
+		9FF2DA4314D9B5B000205C73 /* NSStringExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2DA4214D9B5B000205C73 /* NSStringExtras.m */; };
+		9FFC7F1A14DCAD2400AF7712 /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC7F1714DCAD2400AF7712 /* ConfigViewController.m */; };
+		9FFC7F1B14DCAD2400AF7712 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC7F1914DCAD2400AF7712 /* MainViewController.m */; };
+		9FFC7F2114DCAD4700AF7712 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC7F2014DCAD4700AF7712 /* MainView.m */; };
+		A9F3913A17663B6D00D7B917 /* libvunglepub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F3913917663B6D00D7B917 /* libvunglepub.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* Vungle Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vungle Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		439E754B15AD6AE20087B162 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		71917F3916767F530069F61F /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		71A3849B161FD4250053762E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		9F0581F614DA3A7900A29004 /* VGConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGConfigViewController.h; path = source/config/VGConfigViewController.h; sourceTree = SOURCE_ROOT; };
+		9F0581F714DA3A7E00A29004 /* VGConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGConfigViewController.m; path = source/config/VGConfigViewController.m; sourceTree = SOURCE_ROOT; };
+		9F05820214DA3AC700A29004 /* VGConfigStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGConfigStyle.h; path = source/config/VGConfigStyle.h; sourceTree = SOURCE_ROOT; };
+		9F05820314DA3ACE00A29004 /* VGConfigStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGConfigStyle.m; path = source/config/VGConfigStyle.m; sourceTree = SOURCE_ROOT; };
+		9F05821214DA3BD700A29004 /* VGConfigItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGConfigItem.h; path = source/config/VGConfigItem.h; sourceTree = SOURCE_ROOT; };
+		9F05821314DA3BDB00A29004 /* VGConfigItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGConfigItem.m; path = source/config/VGConfigItem.m; sourceTree = SOURCE_ROOT; };
+		9F05822714DA3CB800A29004 /* VGConfigDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGConfigDataSource.h; path = source/config/VGConfigDataSource.h; sourceTree = SOURCE_ROOT; };
+		9F05822814DA3CBD00A29004 /* VGConfigDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGConfigDataSource.m; path = source/config/VGConfigDataSource.m; sourceTree = SOURCE_ROOT; };
+		9F05823914DA3DB100A29004 /* NSObjectExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectExtras.h; path = source/extras/NSObjectExtras.h; sourceTree = SOURCE_ROOT; };
+		9F05823A14DA3DB500A29004 /* NSObjectExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSObjectExtras.m; path = source/extras/NSObjectExtras.m; sourceTree = SOURCE_ROOT; };
+		9F05829914DA417700A29004 /* VGConfigGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGConfigGroup.h; path = source/config/VGConfigGroup.h; sourceTree = SOURCE_ROOT; };
+		9F05829A14DA417C00A29004 /* VGConfigGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGConfigGroup.m; path = source/config/VGConfigGroup.m; sourceTree = SOURCE_ROOT; };
+		9F14151514BB85E300D7E3BF /* VGGraphicsMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGGraphicsMacros.h; path = headers/VGGraphicsMacros.h; sourceTree = SOURCE_ROOT; };
+		9F3D83F514D9D06B009C53A7 /* UIControlExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIControlExtras.h; path = source/extras/UIControlExtras.h; sourceTree = SOURCE_ROOT; };
+		9F3D83F614D9D070009C53A7 /* UIControlExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIControlExtras.m; path = source/extras/UIControlExtras.m; sourceTree = SOURCE_ROOT; };
+		9F3D841D14D9D310009C53A7 /* UIColorExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIColorExtras.h; path = source/extras/UIColorExtras.h; sourceTree = SOURCE_ROOT; };
+		9F3D841E14D9D317009C53A7 /* UIColorExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIColorExtras.m; path = source/extras/UIColorExtras.m; sourceTree = SOURCE_ROOT; };
+		9F3FE3C3152FCF7E00BA9752 /* vungletest.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vungletest.txt; path = docs/vungletest.txt; sourceTree = SOURCE_ROOT; };
+		9F5A084B14DC67D9007AE303 /* Prefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefs.h; path = source/app/Prefs.h; sourceTree = SOURCE_ROOT; };
+		9F5A084C14DC67DF007AE303 /* Prefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Prefs.m; path = source/app/Prefs.m; sourceTree = SOURCE_ROOT; };
+		9F754C9514EAD19C0050F9D5 /* Echo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Echo.h; path = source/app/Echo.h; sourceTree = SOURCE_ROOT; };
+		9F754C9614EAD1A10050F9D5 /* Echo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Echo.m; path = source/app/Echo.m; sourceTree = SOURCE_ROOT; };
+		9F754CA114EAD28F0050F9D5 /* VGMemoryMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGMemoryMacros.h; path = headers/VGMemoryMacros.h; sourceTree = SOURCE_ROOT; };
+		9F79D81C14C11F260018E633 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9F84778714D6411900E48E63 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "resources/base/Default-Landscape.png"; sourceTree = SOURCE_ROOT; };
+		9F84778914D6411F00E48E63 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "resources/base/Default-Portrait.png"; sourceTree = SOURCE_ROOT; };
+		9F84778B14D6412300E48E63 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = resources/base/Default.png; sourceTree = SOURCE_ROOT; };
+		9F84778D14D6412800E48E63 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "resources/base/Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		9F86458B14DAEC7400A9BFBB /* NSArrayExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArrayExtras.h; path = source/extras/NSArrayExtras.h; sourceTree = SOURCE_ROOT; };
+		9F86458C14DAEC7A00A9BFBB /* NSArrayExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArrayExtras.m; path = source/extras/NSArrayExtras.m; sourceTree = SOURCE_ROOT; };
+		9F884ABC14BD14040011E979 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
+		9F8A32A014B4AD8A005BFB82 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		9FA0F44C14ED62E7000467B1 /* VGDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGDownload.h; path = source/vungledownload/VGDownload.h; sourceTree = SOURCE_ROOT; };
+		9FA0F44D14ED62EC000467B1 /* VGDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGDownload.m; path = source/vungledownload/VGDownload.m; sourceTree = SOURCE_ROOT; };
+		9FA1A69714BD4355009643CB /* Icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon57.png; path = resources/base/Icon57.png; sourceTree = SOURCE_ROOT; };
+		9FA1A69914BD435A009643CB /* Icon57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon57@2x.png"; path = "resources/base/Icon57@2x.png"; sourceTree = SOURCE_ROOT; };
+		9FA1A69B14BD435F009643CB /* Icon72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon72.png; path = resources/base/Icon72.png; sourceTree = SOURCE_ROOT; };
+		9FA2EC9B14DBA942006FCF1E /* UIViewControllerExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewControllerExtras.h; path = source/extras/UIViewControllerExtras.h; sourceTree = SOURCE_ROOT; };
+		9FA2EC9C14DBA947006FCF1E /* UIViewControllerExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewControllerExtras.m; path = source/extras/UIViewControllerExtras.m; sourceTree = SOURCE_ROOT; };
+		9FA621CD14BF8726001B6DCD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9FB4557A15209C9D005F8E9B /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenUDID.h; path = source/vungledownload/OpenUDID.h; sourceTree = SOURCE_ROOT; };
+		9FB4557B15209CA2005F8E9B /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenUDID.m; path = source/vungledownload/OpenUDID.m; sourceTree = SOURCE_ROOT; };
+		9FB5211215059609002E7457 /* vg_button_mute_plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vg_button_mute_plain.png; path = ../../lib/vunglepub/resources/vg_button_mute_plain.png; sourceTree = SOURCE_ROOT; };
+		9FB521141505960F002E7457 /* vg_button_mute_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vg_button_mute_selected.png; path = ../../lib/vunglepub/resources/vg_button_mute_selected.png; sourceTree = SOURCE_ROOT; };
+		9FB8E62C1504605200016A6F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9FB8E6611504609D00016A6F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		9FB8E6FD150472E300016A6F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9FC086C914C97EEE00E2682D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9FC8702214BD0D6D001EC419 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		9FE3272A14B24FA7007D2D45 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/meta/Info.plist; sourceTree = SOURCE_ROOT; };
+		9FE3273514B25009007D2D45 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.pch; path = headers/prefix.pch; sourceTree = SOURCE_ROOT; };
+		9FE45A1014C6A74F0031CF58 /* vg_button_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vg_button_close.png; path = ../../lib/vunglepub/resources/vg_button_close.png; sourceTree = SOURCE_ROOT; };
+		9FE9CEE314DC828A00D15D45 /* ConfigGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigGlue.h; path = source/app/ConfigGlue.h; sourceTree = SOURCE_ROOT; };
+		9FE9CEE414DC828F00D15D45 /* ConfigGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigGlue.m; path = source/app/ConfigGlue.m; sourceTree = SOURCE_ROOT; };
+		9FF01C0514DF82B200119087 /* UIScrollViewExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIScrollViewExtras.h; path = source/extras/UIScrollViewExtras.h; sourceTree = SOURCE_ROOT; };
+		9FF01C0614DF82B800119087 /* UIScrollViewExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIScrollViewExtras.m; path = source/extras/UIScrollViewExtras.m; sourceTree = SOURCE_ROOT; };
+		9FF01C2014DF840600119087 /* UIViewExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewExtras.h; path = source/extras/UIViewExtras.h; sourceTree = SOURCE_ROOT; };
+		9FF01C2114DF841300119087 /* UIViewExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewExtras.m; path = source/extras/UIViewExtras.m; sourceTree = SOURCE_ROOT; };
+		9FF01C4114DF857900119087 /* UIFontExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIFontExtras.h; path = source/extras/UIFontExtras.h; sourceTree = SOURCE_ROOT; };
+		9FF01C4214DF857E00119087 /* UIFontExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIFontExtras.m; path = source/extras/UIFontExtras.m; sourceTree = SOURCE_ROOT; };
+		9FF2DA2614D9B55100205C73 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = source/app/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		9FF2DA2714D9B55100205C73 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = source/app/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		9FF2DA2C14D9B55100205C73 /* VGImageCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VGImageCreator.h; path = source/app/VGImageCreator.h; sourceTree = SOURCE_ROOT; };
+		9FF2DA2D14D9B55100205C73 /* VGImageCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VGImageCreator.m; path = source/app/VGImageCreator.m; sourceTree = SOURCE_ROOT; };
+		9FF2DA4114D9B5B000205C73 /* NSStringExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringExtras.h; path = source/extras/NSStringExtras.h; sourceTree = SOURCE_ROOT; };
+		9FF2DA4214D9B5B000205C73 /* NSStringExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSStringExtras.m; path = source/extras/NSStringExtras.m; sourceTree = SOURCE_ROOT; };
+		9FFC7F1614DCAD2400AF7712 /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigViewController.h; path = source/viewcontrollers/ConfigViewController.h; sourceTree = SOURCE_ROOT; };
+		9FFC7F1714DCAD2400AF7712 /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigViewController.m; path = source/viewcontrollers/ConfigViewController.m; sourceTree = SOURCE_ROOT; };
+		9FFC7F1814DCAD2400AF7712 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = source/viewcontrollers/MainViewController.h; sourceTree = SOURCE_ROOT; };
+		9FFC7F1914DCAD2400AF7712 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = source/viewcontrollers/MainViewController.m; sourceTree = SOURCE_ROOT; };
+		9FFC7F1F14DCAD4700AF7712 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainView.h; path = source/views/MainView.h; sourceTree = SOURCE_ROOT; };
+		9FFC7F2014DCAD4700AF7712 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainView.m; path = source/views/MainView.m; sourceTree = SOURCE_ROOT; };
+		A9F3913917663B6D00D7B917 /* libvunglepub.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvunglepub.a; path = ../../lib/vunglepub/bin/libvunglepub.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				71917F3A16767F530069F61F /* AdSupport.framework in Frameworks */,
+				71A3849C161FD4250053762E /* StoreKit.framework in Frameworks */,
+				439E754C15AD6AE20087B162 /* AudioToolbox.framework in Frameworks */,
+				9FB8E6C215046AFE00016A6F /* AVFoundation.framework in Frameworks */,
+				9F387A1914D2DEC800978C85 /* CFNetwork.framework in Frameworks */,
+				9F387A1C14D2DEDB00978C85 /* CoreGraphics.framework in Frameworks */,
+				9FE7FB2B14E7ADB2000015B1 /* CoreLocation.framework in Frameworks */,
+				9FB8E6621504609D00016A6F /* CoreMedia.framework in Frameworks */,
+				9F387A2214D2DEF600978C85 /* Foundation.framework in Frameworks */,
+				9F387A2514D2DF0B00978C85 /* MediaPlayer.framework in Frameworks */,
+				9FB8E6FE150472E300016A6F /* QuartzCore.framework in Frameworks */,
+				9F387A2B14D2DF2000978C85 /* SystemConfiguration.framework in Frameworks */,
+				9F387A2E14D2DF2800978C85 /* UIKit.framework in Frameworks */,
+				9F387A2814D2DF1100978C85 /* libz.dylib in Frameworks */,
+				A9F3913A17663B6D00D7B917 /* libvunglepub.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* Vungle Test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				9FF2DA3714D9B56D00205C73 /* Source */,
+				9FE3272614B24F95007D2D45 /* Resources */,
+				9F3FE3C2152FCF6800BA9752 /* Documentation */,
+				9FE3274614B25183007D2D45 /* Libraries */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71917F3916767F530069F61F /* AdSupport.framework */,
+				71A3849B161FD4250053762E /* StoreKit.framework */,
+				439E754B15AD6AE20087B162 /* AudioToolbox.framework */,
+				9FB8E62C1504605200016A6F /* AVFoundation.framework */,
+				9F8A32A014B4AD8A005BFB82 /* CFNetwork.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				9FA621CD14BF8726001B6DCD /* CoreLocation.framework */,
+				9FB8E6611504609D00016A6F /* CoreMedia.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				9FC086C914C97EEE00E2682D /* libz.dylib */,
+				9FC8702214BD0D6D001EC419 /* MediaPlayer.framework */,
+				9FB8E6FD150472E300016A6F /* QuartzCore.framework */,
+				9F79D81C14C11F260018E633 /* SystemConfiguration.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F3FE3C2152FCF6800BA9752 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				9F3FE3C3152FCF7E00BA9752 /* vungletest.txt */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		9FA0F44B14ED62C3000467B1 /* VGDownload */ = {
+			isa = PBXGroup;
+			children = (
+				9FB4557A15209C9D005F8E9B /* OpenUDID.h */,
+				9FB4557B15209CA2005F8E9B /* OpenUDID.m */,
+				9FA0F44C14ED62E7000467B1 /* VGDownload.h */,
+				9FA0F44D14ED62EC000467B1 /* VGDownload.m */,
+			);
+			name = VGDownload;
+			sourceTree = "<group>";
+		};
+		9FA1A68A14BD434C009643CB /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9F84778714D6411900E48E63 /* Default-Landscape.png */,
+				9F84778914D6411F00E48E63 /* Default-Portrait.png */,
+				9F84778B14D6412300E48E63 /* Default.png */,
+				9F84778D14D6412800E48E63 /* Default@2x.png */,
+				9FA1A69714BD4355009643CB /* Icon57.png */,
+				9FA1A69914BD435A009643CB /* Icon57@2x.png */,
+				9FA1A69B14BD435F009643CB /* Icon72.png */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		9FE3272614B24F95007D2D45 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9FA1A68A14BD434C009643CB /* Base */,
+				9FE3272914B24F9B007D2D45 /* Meta */,
+				9FE45A0F14C6A74F0031CF58 /* VungleSDK */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9FE3272914B24F9B007D2D45 /* Meta */ = {
+			isa = PBXGroup;
+			children = (
+				9F884ABC14BD14040011E979 /* Config.xcconfig */,
+				9FE3272A14B24FA7007D2D45 /* Info.plist */,
+			);
+			name = Meta;
+			sourceTree = "<group>";
+		};
+		9FE3273414B25000007D2D45 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				9FE3273514B25009007D2D45 /* prefix.pch */,
+				9F14151514BB85E300D7E3BF /* VGGraphicsMacros.h */,
+				9F754CA114EAD28F0050F9D5 /* VGMemoryMacros.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		9FE3274614B25183007D2D45 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				A9F3913917663B6D00D7B917 /* libvunglepub.a */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		9FE45A0F14C6A74F0031CF58 /* VungleSDK */ = {
+			isa = PBXGroup;
+			children = (
+				9FE45A1014C6A74F0031CF58 /* vg_button_close.png */,
+				9FB5211215059609002E7457 /* vg_button_mute_plain.png */,
+				9FB521141505960F002E7457 /* vg_button_mute_selected.png */,
+			);
+			name = VungleSDK;
+			sourceTree = SOURCE_ROOT;
+		};
+		9FF2DA2514D9B53800205C73 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9FF2DA2614D9B55100205C73 /* AppDelegate.h */,
+				9FF2DA2714D9B55100205C73 /* AppDelegate.m */,
+				9FE9CEE314DC828A00D15D45 /* ConfigGlue.h */,
+				9FE9CEE414DC828F00D15D45 /* ConfigGlue.m */,
+				9F754C9514EAD19C0050F9D5 /* Echo.h */,
+				9F754C9614EAD1A10050F9D5 /* Echo.m */,
+				9F5A084B14DC67D9007AE303 /* Prefs.h */,
+				9F5A084C14DC67DF007AE303 /* Prefs.m */,
+				9FF2DA2C14D9B55100205C73 /* VGImageCreator.h */,
+				9FF2DA2D14D9B55100205C73 /* VGImageCreator.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		9FF2DA3414D9B55700205C73 /* Extras */ = {
+			isa = PBXGroup;
+			children = (
+				9F86458B14DAEC7400A9BFBB /* NSArrayExtras.h */,
+				9F86458C14DAEC7A00A9BFBB /* NSArrayExtras.m */,
+				9F05823914DA3DB100A29004 /* NSObjectExtras.h */,
+				9F05823A14DA3DB500A29004 /* NSObjectExtras.m */,
+				9FF2DA4114D9B5B000205C73 /* NSStringExtras.h */,
+				9FF2DA4214D9B5B000205C73 /* NSStringExtras.m */,
+				9F3D841D14D9D310009C53A7 /* UIColorExtras.h */,
+				9F3D841E14D9D317009C53A7 /* UIColorExtras.m */,
+				9F3D83F514D9D06B009C53A7 /* UIControlExtras.h */,
+				9F3D83F614D9D070009C53A7 /* UIControlExtras.m */,
+				9FF01C4114DF857900119087 /* UIFontExtras.h */,
+				9FF01C4214DF857E00119087 /* UIFontExtras.m */,
+				9FF01C0514DF82B200119087 /* UIScrollViewExtras.h */,
+				9FF01C0614DF82B800119087 /* UIScrollViewExtras.m */,
+				9FA2EC9B14DBA942006FCF1E /* UIViewControllerExtras.h */,
+				9FA2EC9C14DBA947006FCF1E /* UIViewControllerExtras.m */,
+				9FF01C2014DF840600119087 /* UIViewExtras.h */,
+				9FF01C2114DF841300119087 /* UIViewExtras.m */,
+			);
+			name = Extras;
+			sourceTree = "<group>";
+		};
+		9FF2DA3714D9B56D00205C73 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				9FF2DA2514D9B53800205C73 /* App */,
+				9FF2DA4614D9B5C800205C73 /* Config */,
+				9FF2DA3414D9B55700205C73 /* Extras */,
+				9FE3273414B25000007D2D45 /* Headers */,
+				9FA0F44B14ED62C3000467B1 /* VGDownload */,
+				9FFC7F0C14DCAD0800AF7712 /* View Controllers */,
+				9FFC7F1E14DCAD2A00AF7712 /* Views */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		9FF2DA4614D9B5C800205C73 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				9F05822714DA3CB800A29004 /* VGConfigDataSource.h */,
+				9F05822814DA3CBD00A29004 /* VGConfigDataSource.m */,
+				9F05829914DA417700A29004 /* VGConfigGroup.h */,
+				9F05829A14DA417C00A29004 /* VGConfigGroup.m */,
+				9F05821214DA3BD700A29004 /* VGConfigItem.h */,
+				9F05821314DA3BDB00A29004 /* VGConfigItem.m */,
+				9F05820214DA3AC700A29004 /* VGConfigStyle.h */,
+				9F05820314DA3ACE00A29004 /* VGConfigStyle.m */,
+				9F0581F614DA3A7900A29004 /* VGConfigViewController.h */,
+				9F0581F714DA3A7E00A29004 /* VGConfigViewController.m */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		9FFC7F0C14DCAD0800AF7712 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC7F1614DCAD2400AF7712 /* ConfigViewController.h */,
+				9FFC7F1714DCAD2400AF7712 /* ConfigViewController.m */,
+				9FFC7F1814DCAD2400AF7712 /* MainViewController.h */,
+				9FFC7F1914DCAD2400AF7712 /* MainViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9FFC7F1E14DCAD2A00AF7712 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC7F1F14DCAD4700AF7712 /* MainView.h */,
+				9FFC7F2014DCAD4700AF7712 /* MainView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* vungletest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "vungletest" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = vungletest;
+			productName = vungletest;
+			productReference = 1D6058910D05DD3D006BFB54 /* Vungle Test.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "vungletest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* vungletest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FA1A69814BD4355009643CB /* Icon57.png in Resources */,
+				9FA1A69A14BD435A009643CB /* Icon57@2x.png in Resources */,
+				9FA1A69C14BD435F009643CB /* Icon72.png in Resources */,
+				9FE45A1114C6A74F0031CF58 /* vg_button_close.png in Resources */,
+				9F84778814D6411900E48E63 /* Default-Landscape.png in Resources */,
+				9F84778A14D6411F00E48E63 /* Default-Portrait.png in Resources */,
+				9F84778C14D6412300E48E63 /* Default.png in Resources */,
+				9F84778E14D6412800E48E63 /* Default@2x.png in Resources */,
+				9FB5211315059609002E7457 /* vg_button_mute_plain.png in Resources */,
+				9FB521151505960F002E7457 /* vg_button_mute_selected.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FF2DA2E14D9B55100205C73 /* AppDelegate.m in Sources */,
+				9FF2DA3114D9B55100205C73 /* VGImageCreator.m in Sources */,
+				9FF2DA4314D9B5B000205C73 /* NSStringExtras.m in Sources */,
+				9F3D83F714D9D070009C53A7 /* UIControlExtras.m in Sources */,
+				9F3D841F14D9D317009C53A7 /* UIColorExtras.m in Sources */,
+				9F0581F814DA3A7E00A29004 /* VGConfigViewController.m in Sources */,
+				9F05820414DA3ACE00A29004 /* VGConfigStyle.m in Sources */,
+				9F05821414DA3BDB00A29004 /* VGConfigItem.m in Sources */,
+				9F05822914DA3CBD00A29004 /* VGConfigDataSource.m in Sources */,
+				9F05823B14DA3DB500A29004 /* NSObjectExtras.m in Sources */,
+				9F05829B14DA417C00A29004 /* VGConfigGroup.m in Sources */,
+				9F86458D14DAEC7A00A9BFBB /* NSArrayExtras.m in Sources */,
+				9FA2EC9D14DBA947006FCF1E /* UIViewControllerExtras.m in Sources */,
+				9F5A084D14DC67DF007AE303 /* Prefs.m in Sources */,
+				9FE9CEE514DC828F00D15D45 /* ConfigGlue.m in Sources */,
+				9FFC7F1A14DCAD2400AF7712 /* ConfigViewController.m in Sources */,
+				9FFC7F1B14DCAD2400AF7712 /* MainViewController.m in Sources */,
+				9FFC7F2114DCAD4700AF7712 /* MainView.m in Sources */,
+				9FF01C0714DF82B800119087 /* UIScrollViewExtras.m in Sources */,
+				9FF01C2214DF841300119087 /* UIViewExtras.m in Sources */,
+				9FF01C4314DF857E00119087 /* UIFontExtras.m in Sources */,
+				9F754C9714EAD1A10050F9D5 /* Echo.m in Sources */,
+				9FA0F44E14ED62EC000467B1 /* VGDownload.m in Sources */,
+				9FB4557C15209CA2005F8E9B /* OpenUDID.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = resources/meta/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../lib/vunglepub/bin\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "Vungle Test";
+				PROVISIONING_PROFILE = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "64145B64-C9A0-4BCE-BF5B-D52347253204";
+				STRIP_INSTALLED_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				COPY_PHASE_STRIP = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "VG_DEBUG=0";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = resources/meta/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../lib/vunglepub/bin\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "Vungle Test";
+				PROVISIONING_PROFILE = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				STRIP_INSTALLED_PRODUCT = YES;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bryant Chou";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bryant Chou";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = headers/prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VG_DEBUG=1";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_WARN_ABOUT_GLOBAL_CONSTRUCTORS = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../lib/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-weak-ISystem",
+				);
+				PROVISIONING_PROFILE = "25826324-6066-420A-87A8-C09FBF2E004E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25826324-6066-420A-87A8-C09FBF2E004E";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bryant Chou";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bryant Chou";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = headers/prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VG_DEBUG=0";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_WARN_ABOUT_GLOBAL_CONSTRUCTORS = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../lib/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-weak-ISystem",
+				);
+				PROVISIONING_PROFILE = "25826324-6066-420A-87A8-C09FBF2E004E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25826324-6066-420A-87A8-C09FBF2E004E";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FB14D9EB1559062600E4FF54 /* adhoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = headers/prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "VG_DEBUG=1";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_WARN_ABOUT_GLOBAL_CONSTRUCTORS = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../lib/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-weak-ISystem",
+				);
+				PROVISIONING_PROFILE = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = adhoc;
+		};
+		FB14D9EC1559062600E4FF54 /* adhoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F884ABC14BD14040011E979 /* Config.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryant Chou (3ZS6795MP8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: bryant chou (KH7APZ2JUK)";
+				COPY_PHASE_STRIP = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "VG_DEBUG=0";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = resources/meta/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../lib/vunglepub/bin\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "Vungle Test";
+				PROVISIONING_PROFILE = "A0E165A5-7CA9-45A5-91D8-9F346E7F5E5B";
+				STRIP_INSTALLED_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = adhoc;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "vungletest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				FB14D9EC1559062600E4FF54 /* adhoc */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = adhoc;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "vungletest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				FB14D9EB1559062600E4FF54 /* adhoc */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = adhoc;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

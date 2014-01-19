@@ -33,8 +33,8 @@ private:
 	STLString		mXmlResultsFilename;
 	MOAIXmlWriter*	mXmlWriter;
 	
-	MOAILuaRef		mStagingFunc;
-	MOAILuaRef		mTestFunc;
+	MOAILuaStrongRef	mStagingFunc;
+	MOAILuaStrongRef	mTestFunc;
 	
 	bool			mStaging;
 
