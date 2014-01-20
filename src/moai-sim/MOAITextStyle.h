@@ -16,7 +16,7 @@ protected:
 
 	MOAIFont*	mFont;
 	float		mSize;
-	float		mScale;
+	ZLVec2D		mScale;
 	u32			mColor;
 
 public:

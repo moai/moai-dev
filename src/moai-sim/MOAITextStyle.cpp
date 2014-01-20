@@ -19,7 +19,7 @@
 MOAITextStyleState::MOAITextStyleState () :
 	mFont ( 0 ),
 	mSize ( 0.0f ),
-	mScale ( 1.0f ),
+	mScale ( 1.0f, 1.0f ),
 	mColor ( 0xffffffff ) {
 }
 
@@ -91,8 +91,9 @@ int MOAITextStyle::_getFont ( lua_State* L ) {
 */
 int MOAITextStyle::_getScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
-	state.Push ( self->mScale );
-	return 1;
+	state.Push ( self->mScale.mX );
+	state.Push ( self->mScale.mY );
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -161,7 +162,8 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 */
 int MOAITextStyle::_setScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
-	self->mScale = state.GetValue < float >( 2, 1.0f );
+	self->mScale.mX = state.GetValue < float >( 2, 1.0f );
+	self->mScale.mY = state.GetValue < float >( 3, self->mScale.mX );
 	return 0;
 }
 

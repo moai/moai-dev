@@ -23,10 +23,9 @@ private:
 	MOAITextStyle*			mStyle;
 	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	
-	u32			mIdx;	// index in original string
-	float		mX;		// The pen position's x coordinate
-	float		mY;		// The pen position's y coordinate
-	float		mScale;
+	u32			mIdx;		// index in original string
+	ZLVec2D		mPen;		// The pen x and y coordinates
+	ZLVec2D		mScale;
 	u32			mRGBA;
 	u32			mMask;
 	
@@ -96,7 +95,7 @@ private:
 	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float height, float ascent );
-	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale );
+	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float xScale, float yScale );
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	
 public:

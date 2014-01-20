@@ -45,6 +45,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
+	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
@@ -81,6 +82,7 @@ private:
 	static int		_setVerbose				( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
+	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
