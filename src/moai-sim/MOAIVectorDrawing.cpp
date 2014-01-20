@@ -67,7 +67,10 @@ int MOAIVectorDrawing::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
 	self->Finish ();
-	return 0;
+	
+	bool hasContent = self->mVtxBuffer.GetVertexCount () > 0;
+	state.Push ( hasContent );
+	return 1;
 }
 
 //----------------------------------------------------------------//
