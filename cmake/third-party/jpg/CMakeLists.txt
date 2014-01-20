@@ -1,14 +1,10 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( jpg )
 
-if ( MOAI_JPG )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBJPG=1" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBJPG=1" PARENT_SCOPE )
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/jpeg-8c/" )
 
-  set ( JPG_INCLUDES "${MOAI_ROOT}/3rdparty/jpeg-8c/" PARENT_SCOPE )
+  set ( JPG_INCLUDES "${MOAI_ROOT}/3rdparty/jpeg-8c/"  )
 
   set ( JPG_SOURCES 
 
@@ -72,11 +68,8 @@ if ( MOAI_JPG )
     ${CMAKE_CURRENT_SOURCE_DIR}/wrrle.c
     ${CMAKE_CURRENT_SOURCE_DIR}/wrtarga.c    
 
-  PARENT_SCOPE )
+   )
 
-else ( MOAI_JPG )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBJPG=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBJPG=0" PARENT_SCOPE )
-
-endif ( MOAI_JPG )
+include_directories (${JPG_INCLUDES})
+add_library(jpg STATIC ${JPG_SOURCES})
+target_include_directories(jpg PUBLIC ${JPG_INCLUDES})

@@ -1,14 +1,9 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( jansson )
 
-if ( MOAI_JSON )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_JANSSON=1" PARENT_SCOPE)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_JANSSON=1" PARENT_SCOPE)
-
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/jansson-2.1/src/" )
 
-  set ( JANSSON_INCLUDES "${MOAI_ROOT}/3rdparty/jansson-2.1/src/" PARENT_SCOPE)
+  set ( JANSSON_INCLUDES "${MOAI_ROOT}/3rdparty/jansson-2.1/src/" )
 
   set ( JANSSON_SOURCES 
 
@@ -22,11 +17,7 @@ if ( MOAI_JSON )
       ${CMAKE_CURRENT_SOURCE_DIR}/utf.c
       ${CMAKE_CURRENT_SOURCE_DIR}/value.c
       
-  PARENT_SCOPE )
-
-else ( MOAI_JSON )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_JANSSON=0" PARENT_SCOPE)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_JANSSON=0" PARENT_SCOPE)
-
-endif ( MOAI_JSON )
+  )
+  
+  add_library(jansson STATIC ${JANSSON_SOURCES})
+  target_include_directories(jansson PUBLIC ${JANSSON_INCLUDES})

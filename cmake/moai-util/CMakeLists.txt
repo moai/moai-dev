@@ -26,6 +26,13 @@ add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
 target_link_libraries ( moai-util moai-core zlcore  )
 
+if (MOAI_SFMT)
+	target_link_libraries (moai-util sfmt )
+endif (MOAI_SFMT)
+
+if ( MOAI_JSON )
+	target_link_libraries( moai-util jansson )
+endif (MOAI_JSON ) 
 
 if ( MOAI_TINYXML )
    target_link_libraries( moai-util tinyxml )
