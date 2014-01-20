@@ -227,7 +227,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
-			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mX, sprite.mY, sprite.mScale );
+			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 		}
 	}
 }
@@ -245,7 +245,7 @@ void MOAITextLayout::DrawDebug () {
 		u32 size = this->mSprites.GetTop ();
 		for ( u32 i = 0; i < size; ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
-			draw.DrawRectOutline ( sprite.mGlyph->GetRect ( sprite.mX, sprite.mY, sprite.mScale )); 
+			draw.DrawRectOutline ( sprite.mGlyph->GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY ));
 		}
 	}
 	
@@ -333,13 +333,13 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 		if ( glyph.mWidth > 0.0f ) {
 
-			ZLRect glyphRect = glyph.GetRect ( sprite.mX, sprite.mY, sprite.mScale );
+			ZLRect glyphRect = glyph.GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 		
 			// Update the glyphRect height with the size of the of the glyphset's height for
 			// the max possible line height.
 			float fontSize = sprite.mStyle->GetSize ();
 			MOAIGlyphSet* glyphSet = sprite.mStyle->GetFont ()->GetGlyphSet ( fontSize );
-			float deckHeight = glyphSet->GetHeight () * sprite.mScale;
+			float deckHeight = glyphSet->GetHeight () * sprite.mScale.mY;
 			glyphRect.mYMax = glyphRect.mYMin + deckHeight;
 
 			if ( result ) {
@@ -381,16 +381,17 @@ void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLRect& rect, float h
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float scale ) {
+void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float xScale, float yScale ) {
 	
 	MOAITextSprite textSprite;
 	
 	textSprite.mIdx			= idx;
 	textSprite.mGlyph		= &glyph;
 	textSprite.mStyle		= &style;
-	textSprite.mX			= x;
-	textSprite.mY			= y;
-	textSprite.mScale		= scale;
+	textSprite.mPen.mX		= x;
+	textSprite.mPen.mY		= y;
+	textSprite.mScale.mX	= xScale;
+	textSprite.mScale.mY	= yScale;
 	
 	textSprite.mRGBA		= style.mColor;
 	textSprite.mTexture		= style.mFont->GetGlyphTexture ( glyph );

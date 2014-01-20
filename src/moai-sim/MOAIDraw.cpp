@@ -234,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 			const GlyphPlacement& glyphPlacement = *it;
 			MOAIGlyph* glyph = glyphPlacement.glyph;
 			MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
-			glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale );
+			glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
 		}
 	}
 

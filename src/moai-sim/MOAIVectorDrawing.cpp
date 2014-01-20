@@ -63,6 +63,22 @@ int MOAIVectorDrawing::_drawingToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_drawingToWorldVec ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "UNN" )
+	
+	ZLVec2D vec;
+	vec.mX = state.GetValue ( 2, 0.0f );
+	vec.mY = state.GetValue ( 3, 0.0f );
+
+	self->mStyle.mDrawingToWorld.TransformVec ( vec );
+	
+	state.Push ( vec.mX );
+	state.Push ( vec.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -430,6 +446,22 @@ int MOAIVectorDrawing::_worldToDrawing ( lua_State* L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_worldToDrawingVec ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "UNN" )
+	
+	ZLVec2D vec;
+	vec.mX = state.GetValue ( 2, 0.0f );
+	vec.mY = state.GetValue ( 3, 0.0f );
+
+	self->mStyle.mWorldToDrawing.TransformVec ( vec );
+	
+	state.Push ( vec.mX );
+	state.Push ( vec.mY );
+	
+	return 2;
+}
+
 //================================================================//
 // MOAIVectorDrawing
 //================================================================//
@@ -722,6 +754,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearTransforms",		_clearTransforms },
 		{ "drawingToWorld",			_drawingToWorld },
+		{ "drawingToWorldVec",		_drawingToWorldVec },
 		{ "finish",					_finish },
 		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
@@ -758,6 +791,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setVerbose",				_setVerbose },
 		{ "setWindingRule",			_setWindingRule },
 		{ "worldToDrawing",			_worldToDrawing },
+		{ "worldToDrawingVec",		_worldToDrawingVec },
 		{ NULL, NULL }
 	};
 
