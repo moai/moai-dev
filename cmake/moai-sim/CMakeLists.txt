@@ -25,11 +25,19 @@ include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
 
-target_link_libraries ( moai-sim third-party )
+target_link_libraries ( moai-sim moai-core moai-util freetype )
+
+get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
+
+target_include_directories ( moai-sim PUBLIC ${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES} )
 
 if (MOAI_BOX2D)
- target_link_libraries ( moai-sim box2d)
+ target_link_libraries ( moai-sim moai-box2d)
 endif (MOAI_BOX2D)
+
+if (MOAI_CHIPMUNK)
+	target_link_libraries ( moai-sim moai-chipmunk)
+endif (MOAI_CHIPMUNK)
 
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential

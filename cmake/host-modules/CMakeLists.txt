@@ -33,3 +33,8 @@ endif ( MOAI_CHIPMUNK )
 if ( MOAI_HTTP_CLIENT )
   target_link_libraries ( host-modules moai-http-client )
 endif ( MOAI_HTTP_CLIENT )
+
+#LuaExt
+if ( MOAI_LUAEXT )
+  target_link_libraries ( host-modules moai-luaext )
+endif ( MOAI_LUAEXT )

@@ -24,7 +24,7 @@ include_directories ( ${MOAI_UTIL_INCLUDES} )
 
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
-target_link_libraries ( moai-util zlcore third-party )
+target_link_libraries ( moai-util moai-core zlcore  )
 
 
 if ( MOAI_TINYXML )

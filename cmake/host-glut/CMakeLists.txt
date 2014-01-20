@@ -32,7 +32,6 @@ set ( INCLUDES_MOAIHOSTGLUT
   "${MOAI_ROOT}/src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
   ${FREEGLUT_INCLUDES}
-  ${THIRD_PARTY_INCLUDES}
   )
 
 
@@ -55,19 +54,8 @@ target_link_libraries ( moai
   moai-util
   moai-core
   zlcore
+
 )
-
-if ( MOAI_CHIPMUNK )
-  target_link_libraries ( moai moai-chipmunk )
-endif ( MOAI_CHIPMUNK )
-
-if (MOAI_HTTP_CLIENT)
-  target_link_libraries ( moai moai-http-client )
-endif ( MOAI_HTTP_CLIENT)
-
-if ( MOAI_UNTZ )
-  target_link_libraries ( moai moai-untz )
-endif ( MOAI_UNTZ )
 
 
 if ( BUILD_WINDOWS )
@@ -133,14 +121,6 @@ ADD_FRAMEWORKS(moai "${FWORKS}")
 endif ( BUILD_OSX )
 
 
-target_link_libraries ( moai 
-  third-party
-)
-if (MOAI_LUAEXT)
- target_link_libraries ( moai moai-luaext )
-endif (MOAI_LUAEXT)
 
-if ( MOAI_UNTZ AND BUILD_LINUX )
-  target_link_libraries ( moai ${SDL_LIBRARY} )
-endif ( MOAI_UNTZ AND BUILD_LINUX )
+
 

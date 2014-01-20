@@ -27,5 +27,5 @@ project ( moai-untz )
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSound.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
   )
-   target_link_libraries (moai-untz untz)
+   target_link_libraries (moai-untz moai-sim moai-core moai-util untz)
    

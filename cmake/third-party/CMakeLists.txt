@@ -58,19 +58,19 @@ set ( THIRD_PARTY_INCLUDES
 #  ${CHIPMUNK_INCLUDES}
   ${CONTRIB_INCLUDES}
 #  ${CRYPTO_INCLUDES}
-  ${CURL_INCLUDES}
+#  ${CURL_INCLUDES}
 # ${EXPAT_INCLUDES}
 #  ${FREETYPE_INCLUDES}
   ${JANSSON_INCLUDES}
   ${JPG_INCLUDES}
   #${LUA_INCLUDES}
-  ${LUAEXT_INCLUDES}
+  #${LUAEXT_INCLUDES}
   ${MONGOOSE_INCLUDES}
   ${OGG_INCLUDES}
   ${PNG_INCLUDES}
   ${SFMT_INCLUDES}
-  ${SQLITE3_INCLUDES}
-  ${SSL_INCLUDES}
+# ${SQLITE3_INCLUDES}
+#  ${SSL_INCLUDES}
 #  ${TINYXML_INCLUDES}
 #  ${TLSF_INCLUDES}
 #  ${UNTZ_INCLUDES}
@@ -96,31 +96,31 @@ add_library ( third-party STATIC
 #  ${CHIPMUNK_SOURCES}
   ${CONTRIB_SOURCES}
 #  ${CRYPTO_SOURCES}
-  ${CURL_SOURCES}
+ # ${CURL_SOURCES}
 #  ${EXPAT_SOURCES}
   #${FREETYPE_SOURCES}
   ${JANSSON_SOURCES}
   ${JPG_SOURCES}
  # ${LUA_SOURCES}
-  ${LUAEXT_SOURCES}
+ # ${LUAEXT_SOURCES}
   ${MONGOOSE_SOURCES}
   ${OGG_SOURCES}
   ${PNG_SOURCES}
   ${SFMT_SOURCES}
-  ${SQLITE3_SOURCES}
+#  ${SQLITE3_SOURCES}
  # ${TINYXML_SOURCES}
 #  ${TLSF_SOURCES}
 #  ${UNTZ_SOURCES}
   ${VORBIS_SOURCES}
 #  ${ZLIB_SOURCES}
 #  ${GLEW_SOURCES}
-  ${SSL_SOURCES}
+#  ${SSL_SOURCES}
 )
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" PARENT_SCOPE)
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" PARENT_SCOPE)
+#set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" PARENT_SCOPE)
+#set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" PARENT_SCOPE)
 
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" )
+#set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DSQLITE_ENABLE_COLUMN_METADATA -Dfdatasync=fsync -DDARWIN_NO_CARBON" )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty" )
 
@@ -129,12 +129,12 @@ if ( BUILD_ANDROID )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" ) 
 endif ( BUILD_ANDROID )
 
- target_include_directories ( third-party PUBLIC ${THIRD_PARTY_INCLUDES})
-target_link_libraries ( third-party zlib )
+# target_include_directories ( third-party PUBLIC ${THIRD_PARTY_INCLUDES})
+#target_link_libraries ( third-party zlib )
 
-if ( MOAI_CURL)
-  target_link_libraries (third-party curl)
-endif ( MOAI_CURL )
+#if ( MOAI_CURL)
+#  target_link_libraries (third-party curl)
+#endif ( MOAI_CURL )
 
 if (BUILD_WINDOWS AND MOAI_UNTZ)
   target_link_libraries ( third-party 
@@ -147,11 +147,7 @@ if (BUILD_WINDOWS AND MOAI_UNTZ)
   )
 endif (BUILD_WINDOWS AND MOAI_UNTZ)
 
-if (MOAI_LUAEXT)
-target_link_libraries ( third-party
-  luasocket
-)
-endif (MOAI_LUAEXT)
+
 #glew depends on opengl
 if ( GLEW_SOURCES )
    target_link_libraries ( third-party 

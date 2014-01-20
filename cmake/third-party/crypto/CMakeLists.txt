@@ -46,9 +46,7 @@ project ( crypto )
                 ${CRYPTO_INCLUDES}
                 )
 
-    message (CRYPTO_INCLUDES)
   set ( CRYPTO_SOURCES 
-
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cfb.c
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_core.c

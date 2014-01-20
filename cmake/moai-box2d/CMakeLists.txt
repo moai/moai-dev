@@ -16,5 +16,10 @@ project ( moai-box2d )
   include_directories ( ${MOAI_BOX2D_INCLUDES} )
 
   add_library ( moai-box2d STATIC ${MOAI_BOX2D_SRC} )
-  target_link_libraries ( moai-box2d box2d zlcore )
 
+  get_target_property (BOX2D_INCLUDES box2d INCLUDE_DIRECTORIES)
+  target_include_directories (moai-box2d PUBLIC ${MOAI_BOX2D_INCLUDES} ${BOX2D_INCLUDES})
+
+
+  target_link_libraries ( moai-box2d moai-sim moai-core moai-util box2d zlcore )
+  
