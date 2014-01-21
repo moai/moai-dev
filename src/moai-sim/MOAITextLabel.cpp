@@ -761,7 +761,7 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
-	MOAIProp::OnDepNodeUpdate ();
+	MOAIGraphicsProp::OnDepNodeUpdate ();
 }
 
 //----------------------------------------------------------------//

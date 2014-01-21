@@ -638,8 +638,8 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::OnDepNodeUpdate () {
 	
-	MOAIProp::OnDepNodeUpdate ();
 	MOAIColor::OnDepNodeUpdate ();
+	MOAIProp::OnDepNodeUpdate ();
 	
 	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
