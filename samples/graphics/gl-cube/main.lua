@@ -33,15 +33,15 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	local function writeTri ( vbo, p1, p2, p3, uv1, uv2, uv3 )
 		
 		vbo:writeFloat ( p1.x, p1.y, p1.z )
-		--vbo:writeFloat ( uv1.x, uv1.y )
+		vbo:writeFloat ( uv1.x, uv1.y )
 		vbo:writeColor32 ( 1, 1, 1 )
 		
 		vbo:writeFloat ( p2.x, p2.y, p2.z )
-		--vbo:writeFloat ( uv2.x, uv2.y )
+		vbo:writeFloat ( uv2.x, uv2.y )
 		vbo:writeColor32 ( 1, 1, 1 )
 
 		vbo:writeFloat ( p3.x, p3.y, p3.z )
-		--vbo:writeFloat ( uv3.x, uv3.y  )
+		vbo:writeFloat ( uv3.x, uv3.y  )
 		vbo:writeColor32 ( 1, 1, 1 )
 	end
 	
@@ -72,8 +72,8 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	
 	local vertexFormat = MOAIVertexFormat.new ()
 	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
-	--vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
-	vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
+	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 	local vbo = MOAIVertexBuffer.new ()
 	vbo:setFormat ( vertexFormat )
@@ -106,7 +106,7 @@ local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:moveRot ( 360, 360, 0, 3 )
-prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
-prop:setCullMode ( MOAIProp.CULL_BACK )
+prop:moveRot ( 360, 360, 0, 6 )
+prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
+prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 layer:insertProp ( prop )

@@ -201,8 +201,8 @@ public:
 	DECL_LUA_FACTORY ( MOAITextLabel )
 	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID );
-	void				DrawDebug				( int subPrimID );
+	void				Draw					( int subPrimID, float lod );
+	void				DrawDebug				( int subPrimID, float lod );
 	bool				IsDone					();
 						MOAITextLabel			();
 						~MOAITextLabel			();

@@ -15,14 +15,6 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
 
-#if MOAI_WITH_BOX2D
-  #include <moai-box2d/MOAIBox2DWorld.h>
-#endif
-
-#if MOAI_WITH_CHIPMUNK
-  #include <moai-chipmunk/MOAICpSpace.h>
-#endif
-
 //================================================================//
 // local
 //================================================================//
@@ -182,23 +174,6 @@ int	MOAILayer::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBox2DWorld
-	@text	Sets a Box2D world for debug drawing.
-	
-	@in		MOAILayer self
-	@in		MOAIBox2DWorld world
-	@out	nil
-*/
-int MOAILayer::_setBox2DWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
-	
-	#if MOAI_WITH_BOX2D
-		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2, true ));
-	#endif
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setCamera
 	@text	Sets a camera for the layer. If no camera is supplied,
 			layer will render using the identity matrix as view/proj.
@@ -224,19 +199,13 @@ int MOAILayer::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCpSpace
-	@text	Sets a Chipmunk space for debug drawing.
+// TODO: doxygen
+int MOAILayer::_setLODMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	@in		MOAILayer self
-	@in		MOAICpSpace space
-	@out	nil
-*/
-int MOAILayer::_setCpSpace ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
+	self->mLODMode		= state.GetValue < u32 >( 2, LOD_CONSTANT );
+	self->mLODFactor	= state.GetValue < float >( 3, 0.0f );
 	
-	#if MOAI_WITH_CHIPMUNK
-		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2, true ));
-	#endif
 	return 0;
 }
 
@@ -311,17 +280,19 @@ int	MOAILayer::_setPartitionCull2D ( lua_State* L ) {
 	@text	Set the sort mode for rendering.
 	
 	@in		MOAILayer self
-	@in		number sortMode		One of MOAILayer.SORT_NONE, MOAILayer.SORT_PRIORITY_ASCENDING,
-								MOAILayer.SORT_PRIORITY_DESCENDING, MOAILayer.SORT_X_ASCENDING,
-								MOAILayer.SORT_X_DESCENDING, MOAILayer.SORT_Y_ASCENDING,
-								MOAILayer.SORT_Y_DESCENDING, MOAILayer.SORT_Z_ASCENDING,
-								MOAILayer.SORT_Z_DESCENDING
+	@in		number sortMode				One of MOAILayer.SORT_NONE, MOAILayer.SORT_PRIORITY_ASCENDING,
+										MOAILayer.SORT_PRIORITY_DESCENDING, MOAILayer.SORT_X_ASCENDING,
+										MOAILayer.SORT_X_DESCENDING, MOAILayer.SORT_Y_ASCENDING,
+										MOAILayer.SORT_Y_DESCENDING, MOAILayer.SORT_Z_ASCENDING,
+										MOAILayer.SORT_Z_DESCENDING
+	@in		boolean sortInViewSpace		Default value is 'false'.
 	@out	nil
 */
 int MOAILayer::_setSortMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	self->mSortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	self->mSortMode			= state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	self->mSortInViewSpace	= state.GetValue < bool >( 3, false );
 	
 	return 0;
 }
@@ -594,6 +565,10 @@ void MOAILayer::Draw ( int subPrimID ) {
 		
 		if ( !totalResults ) return;
 		
+		if ( this->mSortInViewSpace ) {
+			buffer.Transform ( view, false );
+		}
+		
 		buffer.GenerateKeys (
 			this->mSortMode,
 			this->mSortScale [ 0 ],
@@ -607,30 +582,77 @@ void MOAILayer::Draw ( int subPrimID ) {
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
-		// render the sorted list
-		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIProp* prop = result->mProp;
-			prop->Draw ( result->mSubPrimID );
+		// figure out the correct LOD factor
+		float lod = this->mLODFactor;
+		
+		if (( this->mLODMode == LOD_FROM_CAMERA_LOCAL_Z ) && ( this->mCamera )) {
+			MOAICamera* camera = this->mCamera;
+			ZLVec3D loc = camera->GetLoc ();
+			lod = loc.mZ;
 		}
 		
-		if ( this->mShowDebugLines ) {
+		if (( this->mLODMode == LOD_FROM_CAMERA_WORLD_Z ) && ( this->mCamera )) {
+			MOAICamera* camera = this->mCamera;
+			const ZLAffine3D& mtx = camera->GetLocalToWorldMtx ();
+			ZLVec3D worldLoc = mtx.GetTranslation ();
+			lod = worldLoc.mZ;
+		}
 		
+		this->DrawProps ( buffer, lod );
+		
+		if ( this->mShowDebugLines ) {
+			
 			// clear the ambient color and bind vector drawing
 			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
-			
-			// debug draw the sorted list
-			for ( u32 i = 0; i < totalResults; ++i ) {
-				MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-				MOAIProp* prop = result->mProp;
-				prop->DrawDebug ( result->mSubPrimID );
-			}
+			this->DrawPropsDebug ( buffer, lod );
 		}
 	}
 	
 	this->RenderTable ( this->mOverlayTable );
 	gfxDevice.Flush ();
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer, float lod ) {
+
+	u32 totalResults = buffer.GetTotalResults ();
+
+	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
+		for ( u32 i = 0; i < totalResults; ++i ) {
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			MOAIProp* prop = result->mProp;
+			prop->Draw ( result->mSubPrimID, result->mLoc.mZ );
+		}
+	}
+	else {
+		for ( u32 i = 0; i < totalResults; ++i ) {
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			MOAIProp* prop = result->mProp;
+			prop->Draw ( result->mSubPrimID, lod );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer, float lod ) {
+
+	u32 totalResults = buffer.GetTotalResults ();
+
+	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
+		for ( u32 i = 0; i < totalResults; ++i ) {
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			MOAIProp* prop = result->mProp;
+			prop->DrawDebug ( result->mSubPrimID, result->mLoc.mZ );
+		}
+	}
+	else {
+		for ( u32 i = 0; i < totalResults; ++i ) {
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			MOAIProp* prop = result->mProp;
+			prop->DrawDebug ( result->mSubPrimID, lod );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -707,6 +729,9 @@ MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
+	mSortInViewSpace ( false ),
+	mLODMode ( LOD_FROM_PROP_SORT_Z ),
+	mLODFactor ( 0.0f ),
 	mPartitionCull2D ( true ) {
 	
 	RTTI_BEGIN
@@ -724,14 +749,6 @@ MOAILayer::~MOAILayer () {
 	this->mCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
 	this->mPartition.Set ( *this, 0 );
-
-	#if MOAI_WITH_CHIPMUNK
-		this->mCpSpace.Set ( *this, 0 );
-	#endif
-	
-	#if MOAI_WITH_BOX2D
-		this->mBox2DWorld.Set ( *this, 0 );
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -763,6 +780,11 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SORT_Z_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Z_DESCENDING );
 	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
 	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
+
+	state.SetField ( -1, "LOD_CONSTANT",				( u32 )MOAILayer::LOD_CONSTANT );
+	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",		( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
+	state.SetField ( -1, "LOD_FROM_CAMERA_LOCAL_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_LOCAL_Z );
+	state.SetField ( -1, "LOD_FROM_CAMERA_WORLD_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_WORLD_Z );
 }
 
 //----------------------------------------------------------------//
@@ -779,9 +801,8 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSortScale",			_getSortScale },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
-		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
-		{ "setCpSpace",				_setCpSpace },
+		{ "setLODMode",				_setLODMode },
 		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },

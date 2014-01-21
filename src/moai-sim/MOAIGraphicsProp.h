@@ -86,6 +86,7 @@ private:
 	static int		_setCullMode		( lua_State* L );
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
+	static int		_setLODLimits		( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
@@ -97,6 +98,10 @@ private:
 	void			DrawGrid			( int subPrimID );
 
 protected:
+
+	// TODO: Most of these members should be moved into a latch or
+	// a subclass. 2D apps will rarely use these so they make
+	// MOAIGraphicsProp heavier than it needs to be.
 
 	u32										mBillboard;
 	
@@ -110,6 +115,10 @@ protected:
 	int										mDepthTest;
 	bool									mDepthMask;
 	MOAIBlendMode							mBlendMode;
+	
+	u32										mLODFlags;
+	float									mLODMin;
+	float									mLODMax;
 
 	//----------------------------------------------------------------//
 	MOAIGraphicsProp*	GetGraphicsProp			();
@@ -146,18 +155,26 @@ public:
 		FLAGS_VISIBLE				= 0x08, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
+	enum {
+		LOD_FLAGS_MIN_LIMIT			= 0x01,
+		LOD_FLAGS_MAX_LIMIT			= 0x02,
+	};
+
 	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
+	static const u32 DEFAULT_LOD_FLAGS	= 0;
 
 	GET_SET ( int, CullMode, mCullMode )
 	GET_SET ( int, DepthTest, mDepthTest )
 	GET_SET ( bool, DepthMask, mDepthMask )
 	GET_SET ( const MOAIBlendMode&, BlendMode, mBlendMode )
+	GET_SET ( u32, LODFlags, mLODFlags )
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void				Draw					( int subPrimID );
-	void				DrawDebug				( int subPrimID );
-	bool				IsVisible				();
+	void				Draw					( int subPrimID, float lod );
+	void				DrawDebug				( int subPrimID, float lod );
+	bool				IsVisible				(); // just check the visibility flags
+	bool				IsVisible				( float lod ); // check the visibility flags *and* the LOD
 						MOAIGraphicsProp		();
 	virtual				~MOAIGraphicsProp		();
 	void				OnDepNodeUpdate			();

@@ -619,10 +619,10 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextLabel::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAITextLabel::Draw ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
 	
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod )) return;
 	
 	if ( this->mReveal ) {
 		
@@ -653,8 +653,9 @@ void MOAITextLabel::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
+	UNUSED ( lod );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
