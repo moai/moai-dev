@@ -760,16 +760,7 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 void MOAITextLabel::OnDepNodeUpdate () {
 
 	this->Refresh ();
-
-	MOAIGraphicsProp::OnDepNodeUpdate ();
-
-	if ( this->mDesigner.GetYFlip ()) {
-			
-		ZLAffine3D mtx;
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
-		this->mLocalToWorldMtx.Prepend ( mtx );
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
+	MOAIProp::OnDepNodeUpdate ();
 }
 
 //----------------------------------------------------------------//
