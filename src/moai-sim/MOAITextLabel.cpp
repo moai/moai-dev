@@ -791,6 +791,16 @@ void MOAITextLabel::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextLabel::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
+
+	if ( this->mDesigner.GetYFlip ()) {
+		ZLAffine3D mtx;
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
+		localToWorldMtx.Prepend ( mtx );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::Refresh () {
 
 	if ( this->mStyleCache.CheckStylesChanged ()) {

@@ -75,8 +75,6 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 */
 int MOAIProp::_getWorldBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( !self->mPartition ) return 0;
 	
 	self->ForceUpdate ();
 	

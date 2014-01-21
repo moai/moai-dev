@@ -90,7 +90,7 @@ int MOAILayer::_getFitting ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getPartition
-	@text	Returns the partition (if any) currently attached to this layer.
+	@text	Returns the partition currently attached to this layer.
 	
 	@in		MOAILayer self
 	@out	MOAIPartition partition

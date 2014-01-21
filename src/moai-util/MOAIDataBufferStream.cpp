@@ -56,8 +56,7 @@ void MOAIDataBufferStream::Close () {
 
 	if ( this->mDataBuffer ) {
 		
-		this->mByteStream.SetBuffer ( 0, 0 );
-		this->mByteStream.SetLength ( 0 );
+		this->mByteStream.Clear ();
 		
 		this->SetZLStream ( 0 );
 		this->mDataBuffer->Unlock ();

@@ -44,7 +44,7 @@ void MOAITextDesignParser::AcceptLine () {
 		// slide the current token (if any) back to the origin
 		for ( u32 i = 0; i < this->mTokenSize; ++i ) {
 			MOAITextSprite& sprite = this->mLayout->mSprites [ this->mTokenSpriteID + i ];
-			sprite.mX -= this->mTokenRect.mXMin;
+			sprite.mPen.mX -= this->mTokenRect.mXMin;
 		}
 		
 		this->mPen.mX -= this->mTokenRect.mXMin;
@@ -128,7 +128,7 @@ void MOAITextDesignParser::Align () {
 			penY = totalLines ? -this->mLayout->mLines [ 0 ].mAscent : yMin;
 			break;
 	}
-	
+
 	MOAIAnimCurve** curves = this->mDesigner->mCurves;
 	u32 totalCurves = this->mDesigner->mCurves.Size ();
 	
@@ -175,8 +175,8 @@ void MOAITextDesignParser::Align () {
 			
 			for ( u32 j = 0; j < line.mSize; ++j ) {	
 				MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
-				sprite.mX += xOff;
-				sprite.mY += curve ? yOff + curve->GetValue (( sprite.mX - xMin ) / width ) : yOff;
+				sprite.mPen.mX += xOff;
+				sprite.mPen.mY += curve ? yOff + curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : yOff;
 			}
 		}
 		
@@ -205,7 +205,8 @@ void MOAITextDesignParser::BuildLayout () {
 	
 		u32 c = this->NextChar ();
 		
-		float scale = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale : 1.0f ) * this->mDeckScale;
+		float xScale = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * this->mDeckScale;
+		float yScale = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * this->mDeckScale;
 		
 		if ( MOAIFont::IsControl ( c )) {
 		
@@ -214,7 +215,7 @@ void MOAITextDesignParser::BuildLayout () {
 				this->AcceptToken ();
 				
 				if ( !this->mLineRect.Height ()) {
-					this->mLineRect.mYMax += this->mDeck->mHeight * scale;
+					this->mLineRect.mYMax += this->mDeck->mHeight * yScale;
 				}
 				
 				this->AcceptLine ();	
@@ -236,7 +237,7 @@ void MOAITextDesignParser::BuildLayout () {
 			// apply kerning
 			if ( this->mPrevGlyph ) {
 				MOAIKernVec kernVec = this->mPrevGlyph->GetKerning ( glyph->mCode );
-				this->mPen.mX += kernVec.mX * scale;
+				this->mPen.mX += kernVec.mX * xScale;
 			}
 			
 			this->mPrevGlyph = glyph;
@@ -246,15 +247,15 @@ void MOAITextDesignParser::BuildLayout () {
 			}
 			else {
 				
-				ZLRect glyphRect = glyph->GetRect ( this->mPen.mX, 0.0f, scale );
+				ZLRect glyphRect = glyph->GetRect ( this->mPen.mX, 0.0f, xScale, yScale );
 				
 				// handle new token
 				if ( this->mTokenSize == 0 ) {
 					this->mTokenIdx = this->mPrevIdx;
 					this->mTokenSpriteID = this->mLayout->mSprites.GetTop ();
 					this->mTokenRect = glyphRect;
-					this->mTokenHeight = this->mDeck->mHeight * scale;
-					this->mTokenAscent = this->mDeck->mAscent * scale;
+					this->mTokenHeight = this->mDeck->mHeight * yScale;
+					this->mTokenAscent = this->mDeck->mAscent * yScale;
 				}
 				
 				bool overrun = false;
@@ -274,7 +275,7 @@ void MOAITextDesignParser::BuildLayout () {
 				// discard the extra glyphs. later on this will be the place to implement fancy/custom token splitting.
 				if ( !discard ) {
 					// push the sprite
-					this->mLayout->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, 0.0f, scale );
+					this->mLayout->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, 0.0f, xScale, yScale );
 					this->mTokenRect.Grow ( glyphRect );
 					this->mTokenSize++;
 				}
@@ -289,7 +290,7 @@ void MOAITextDesignParser::BuildLayout () {
 			}
 			
 			// advance the pen
-			this->mPen.mX += glyph->mAdvanceX * scale;
+			this->mPen.mX += glyph->mAdvanceX * xScale;
 		}
 		
 		// if we overrun this->mHeight, then back up to the start of the current line

@@ -189,6 +189,7 @@ protected:
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				OnUpdate				( float step );
+	void				PostBuildTransforms		( ZLAffine3D& localToWorldMtx );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
