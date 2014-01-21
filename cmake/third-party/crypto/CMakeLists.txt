@@ -45,9 +45,9 @@ project ( crypto )
 
 
     set( CRYPTO_INCLUDES
-                "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
                 ${CRYPTO_INCLUDES}
-                )
+                "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
+       )
 
   set ( CRYPTO_SOURCES 
     ${CMAKE_CURRENT_SOURCE_DIR}/aes/aes_cbc.c

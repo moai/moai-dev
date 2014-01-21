@@ -25,7 +25,7 @@ private:
 	static int	_init 				( lua_State* L );
 	static int	_leaveBreadcrumb 	( lua_State* L );
 	static int	_setUser		 	( lua_State* L );
-	
+	static int  _forceException	    ( lua_State* L );
 public:
 
 	DECL_LUA_SINGLETON ( MOAICrittercismAndroid );
