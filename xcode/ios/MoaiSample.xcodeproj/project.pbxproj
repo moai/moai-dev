@@ -115,6 +115,8 @@
 		425145BE17E608070065B1C6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
 		425145BF17E608070065B1C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		425145C517E608270065B1C6 /* libmoai-ios-luajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4251451017E4FF070065B1C6 /* libmoai-ios-luajit.a */; };
+		4393A1D1188EA9FE004BF329 /* libmoai-ios-chartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */; };
+		4393A1D3188EAA4F004BF329 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4393A1D2188EAA4F004BF329 /* libChartboost.a */; };
 		43BA2EF117733741007DCDF0 /* libmoai-ios-playhaven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EEE1773368F007DCDF0 /* libmoai-ios-playhaven.a */; };
 		43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF217733819007DCDF0 /* CFNetwork.framework */; };
 		43BA2EF717733901007DCDF0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF617733901007DCDF0 /* AdSupport.framework */; };
@@ -887,6 +889,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
 		425145C317E608070065B1C6 /* moai-luajit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-luajit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4393A1D2188EAA4F004BF329 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libChartboost.a; path = "../../3rdparty/chartboostiOS-3.0.7/libChartboost.a"; sourceTree = "<group>"; };
 		43BA2EF217733819007DCDF0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		43BA2EF617733901007DCDF0 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercismCrashOnly_v3_3_3.a; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a"; sourceTree = "<group>"; };
@@ -928,12 +931,14 @@
 				89ADB9E71743039C00E8058B /* libmoai-ios-chipmunk.a in Frameworks */,
 				89ADB9E21743034600E8058B /* libmoai-ios-box2d.a in Frameworks */,
 				89ADB9E1174302E900E8058B /* libmoai-ios-sim.a in Frameworks */,
+				4393A1D3188EAA4F004BF329 /* libChartboost.a in Frameworks */,
 				665383F5160A7B65003D5529 /* libfacebook_ios_sdk.a in Frameworks */,
 				665383F1160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */,
 				07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */,
 				07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */,
 				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
+				4393A1D1188EA9FE004BF329 /* libmoai-ios-chartboost.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
 				43BA2EF117733741007DCDF0 /* libmoai-ios-playhaven.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
@@ -1199,6 +1204,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4393A1D2188EAA4F004BF329 /* libChartboost.a */,
 				43BA2EF617733901007DCDF0 /* AdSupport.framework */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
 				43BA2EF217733819007DCDF0 /* CFNetwork.framework */,
@@ -2178,7 +2184,10 @@
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/bogdan/work/moai-dev/3rdparty/chartboostiOS-3.0.7",
+				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-force_load",
@@ -2195,7 +2204,10 @@
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/bogdan/work/moai-dev/3rdparty/chartboostiOS-3.0.7",
+				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-force_load",
