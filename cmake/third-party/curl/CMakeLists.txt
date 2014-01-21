@@ -145,3 +145,7 @@ project ( curl )
   if (MOAI_OPENSSL)
      target_link_libraries( curl ssl )
   endif (MOAI_OPENSSL)
+ 
+  if (BUILD_WINDOWS)
+    target_link_libraries( curl ws2_32 )
+  endif (BUILD_WINDOWS)

@@ -591,3 +591,6 @@ project ( crypto )
 
    add_library( crypto STATIC ${CRYPTO_SOURCES} )  
    target_include_directories ( crypto PUBLIC ${CRYPTO_INCLUDES} )
+   if (BUILD_WINDOWS)
+     target_link_libraries( crypto ws2_32 )
+   endif (BUILD_WINDOWS)

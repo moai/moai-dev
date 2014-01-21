@@ -29,4 +29,5 @@ project ( png )
 
 include_directories (${PNG_INCLUDES})
 add_library(png STATIC ${PNG_SOURCES})
+target_link_libraries ( png zlib )
 target_include_directories(png PUBLIC ${PNG_INCLUDES})

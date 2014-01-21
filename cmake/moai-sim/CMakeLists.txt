@@ -25,11 +25,15 @@ include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
 
-target_link_libraries ( moai-sim moai-core moai-util freetype )
+target_link_libraries ( moai-sim moai-core moai-util freetype contrib)
 
 get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
 
 target_include_directories ( moai-sim PUBLIC ${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES} )
+
+if (MOAI_CURL)
+ 	target_link_libraries( moai-sim curl)
+endif (MOAI_CURL)
 
 if (MOAI_PNG)
 	target_link_libraries( moai-sim png)

@@ -1,24 +1,20 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( ogg )
 
-if ( MOAI_OGG )
+
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/libogg-1.2.2/src/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OGG=1" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_OGG=1" PARENT_SCOPE )
+  
 
-  set ( OGG_INCLUDES "${MOAI_ROOT}/3rdparty/libogg-1.2.2/include/" PARENT_SCOPE )
+  set ( OGG_INCLUDES "${MOAI_ROOT}/3rdparty/libogg-1.2.2/include/"  )
 
   set ( OGG_SOURCES 
     ${CMAKE_CURRENT_SOURCE_DIR}/bitwise.c
     ${CMAKE_CURRENT_SOURCE_DIR}/framing.c
 
-  PARENT_SCOPE )
+   )
 
-else ( MOAI_OGG )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_OGG=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_OGG=0" PARENT_SCOPE )
-
-endif ( MOAI_OGG )
+include_directories(${OGG_INCLUDES})
+add_library(ogg STATIC ${OGG_SOURCES})
+target_include_directories(ogg PUBLIC ${OGG_INCLUDES})

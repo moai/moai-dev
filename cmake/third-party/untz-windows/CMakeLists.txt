@@ -44,7 +44,18 @@ project ( untz )
    endif (MOAI_VORBIS)
 
 add_library (untz STATIC ${UNTZ_SOURCES})
-target_link_libraries (untz third-party)
+
+if (MOAI_VORBIS)
+  target_link_libraries (untz vorbis)
+endif (MOAI_VORBIS)
+
 target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
 
-
+ target_link_libraries ( untz 
+    winmm
+    uuid
+    dxguid
+    strmiids
+    dsound
+    oleaut32
+  )
