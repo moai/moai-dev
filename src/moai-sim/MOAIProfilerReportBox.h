@@ -3,9 +3,9 @@
 #ifndef	MOAIPROFILEREPORTBOX_H
 #define	MOAIPROFILEREPORTBOX_H
 
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIProfiler.h>
 #include <moai-sim/MOAIProfilerEntry.h>
-#include <moai-sim/MOAIProp.h>
 
 class MOAIFont;
 
@@ -13,7 +13,7 @@ class MOAIFont;
 // MOAIProfilerReportBox
 //================================================================//
 class MOAIProfilerReportBox :
-	public MOAIProp {
+	public MOAIGraphicsProp {
 private:
 	
 	struct Column {
@@ -120,8 +120,8 @@ public:
 						~MOAIProfilerReportBox	();
 	//----------------------------------------------------------------//
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Draw					( int subPrimID );
-	u32					GetPropBounds			( ZLBox& bounds );
+	void				Draw					( int subPrimID, float lod );
+	u32					OnGetModelBounds		( ZLBox& bounds );
 	//----------------------------------------------------------------//
 	void				SetRect					( float left, float top, float right, float bottom );
 };

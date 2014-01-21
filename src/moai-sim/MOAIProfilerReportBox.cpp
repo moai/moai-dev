@@ -340,8 +340,9 @@ int MOAIProfilerReportBox::_disableProfiling ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBox::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
+	UNUSED ( lod );
 	
 	if ( !mFont ) return;
 	
@@ -600,7 +601,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProfilerReportBox::GetPropBounds ( ZLBox& bounds ) {
+u32 MOAIProfilerReportBox::OnGetModelBounds ( ZLBox& bounds ) {
 
 	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;
@@ -617,7 +618,6 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mUserMemory ( 0 ),
 	mMemoryXRange ( 0, 0 ),
 	mLineHeight ( 0 ),
-	
 	mSummaryYRange ( 0, 0 ),
 	mOverviewXRange ( 0, 0 ),
 	mHeaderYRange ( 0, 0 ),
@@ -627,7 +627,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mOneOverTotalDurationMicroSec ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
@@ -642,7 +642,7 @@ MOAIProfilerReportBox::~MOAIProfilerReportBox () {
 //----------------------------------------------------------------//
 void MOAIProfilerReportBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getRect",				_getRect },
