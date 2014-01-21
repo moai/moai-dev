@@ -44,17 +44,13 @@ private:
 	MOAILuaStrongRef						mOverlayTable;
 	MOAILuaStrongRef						mUnderlayTable;
 
-	#if MOAI_WITH_CHIPMUNK
-		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
-	#endif
-	
-	#if MOAI_WITH_BOX2D
-		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
-	#endif
-
 	ZLVec3D		mParallax;
 	bool		mShowDebugLines;
 	u32			mSortMode;
+	bool		mSortInViewSpace;
+	
+	u32			mLODMode;
+	float		mLODFactor;
 
 	float		mSortScale [ 4 ];
 
@@ -68,9 +64,8 @@ private:
 	static int		_getSortScale			( lua_State* L );
 	static int		_insertProp				( lua_State* L );
 	static int		_removeProp				( lua_State* L );
-	static int		_setBox2DWorld			( lua_State* L );
 	static int		_setCamera				( lua_State* L );
-	static int		_setCpSpace				( lua_State* L );
+	static int		_setLODMode				( lua_State* L );
 	static int		_setOverlayTable		( lua_State* L );
 	static int		_setParallax			( lua_State* L );
 	static int		_setPartition			( lua_State* L );
@@ -86,12 +81,21 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
+	void			DrawProps				( MOAIPartitionResultBuffer& buffer, float lod );
+	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer, float lod );
 	ZLMatrix4x4		GetProjectionMtx		() const;
 	ZLMatrix4x4		GetViewMtx				() const;
 	void			RenderTable				( MOAILuaRef& ref );
 	void			RenderTable				( MOAILuaState& state, int idx );
 
 public:
+	
+	enum {
+		LOD_CONSTANT,				// use the LOD factor constant
+		LOD_FROM_PROP_SORT_Z,		// use the prop's Z coordinate in the sort results list (enable view space sort for depth) 
+		LOD_FROM_CAMERA_LOCAL_Z,	// use the camera's *local* Z offset as the LOD factor
+		LOD_FROM_CAMERA_WORLD_Z,	// use the camera's *world* Z offset as the LOD factor
+	};
 	
 	DECL_LUA_FACTORY ( MOAILayer )
 	

@@ -139,8 +139,8 @@ public:
 	//----------------------------------------------------------------//
 	void							AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	bool							ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void					Draw					( int subPrimID );
-	virtual void					DrawDebug				( int subPrimID );
+	virtual void					Draw					( int subPrimID, float lod );
+	virtual void					DrawDebug				( int subPrimID, float lod );
 	void							GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	virtual MOAICollisionProp*		GetCollisionProp		();
 	virtual MOAIGraphicsProp*		GetGraphicsProp			();

@@ -469,13 +469,15 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::Draw ( int subPrimID ) {
+void MOAIProp::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
+	UNUSED ( lod );
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::DrawDebug ( int subPrimID ) {
+void MOAIProp::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
+	UNUSED ( lod );
 }
 
 //----------------------------------------------------------------//

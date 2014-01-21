@@ -351,12 +351,11 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID ) {
+void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod ) ) return;
 	if ( !this->mDeck ) return;
-	
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	

@@ -45,17 +45,24 @@ int MOAIProp::_getTexture ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	isVisible
-	@text	Returns true if the given prop is visible.
+	@text	Returns true if the given prop is visible. An optional
+			LOD factor may be passed in to test the prop's LOD
+			settings.
 	
 	@in		MOAIGraphicsProp self
+	@opt	number lod
 	@out	boolean is visible
 */
 int	MOAIGraphicsProp::_isVisible ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 
-	bool result = self->IsVisible ();
-	lua_pushboolean ( state, result );
-	
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		float lod = state.GetValue < float >( 2, 0.0f );
+		lua_pushboolean ( state, self->IsVisible ( lod ));
+	}
+	else {
+		lua_pushboolean ( state, self->IsVisible ());
+	}
 	return 1;
 }
 
@@ -203,6 +210,27 @@ int MOAIGraphicsProp::_setDepthTest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	u32 flags = 0;
+	
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		self->mLODMin = state.GetValue < float >( 2, 0.0f );
+		flags |= LOD_FLAGS_MIN_LIMIT;
+	}
+	
+	if ( state.IsType ( 3, LUA_TNUMBER )) {
+		self->mLODMax = state.GetValue < float >( 3, 0.0f );
+		flags |= LOD_FLAGS_MAX_LIMIT;
+	}
+
+	self->mLODFlags = flags;	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
@@ -337,7 +365,7 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
 				return true;
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible () ), op , MOAIAttrOp::ATTR_READ );
+				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -350,10 +378,10 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::Draw ( int subPrimID ) {
+void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod )) return;
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
@@ -368,8 +396,9 @@ void MOAIGraphicsProp::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::DrawDebug ( int subPrimID ) {
+void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
+	UNUSED ( lod );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -442,8 +471,21 @@ MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::IsVisible() {
-	return this->mFlags & FLAGS_LOCAL_VISIBLE && this->mFlags & FLAGS_VISIBLE;
+bool MOAIGraphicsProp::IsVisible () {
+	return (( this->mFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mFlags & FLAGS_VISIBLE ));
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::IsVisible ( float lod ) {
+
+	if ( this->IsVisible ()) {
+	
+		if (( this->mLODFlags & LOD_FLAGS_MIN_LIMIT ) && ( lod < this->mLODMin )) return false;
+		if (( this->mLODFlags & LOD_FLAGS_MAX_LIMIT ) && ( lod > this->mLODMax )) return false;
+	
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -487,7 +529,6 @@ void MOAIGraphicsProp::LoadTransforms () {
 	MOAIViewport* viewport = renderMgr.GetViewport ();
 	MOAICamera* camera = renderMgr.GetCamera ();
 	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
-	
 
 	switch ( billboard ) {
 	
@@ -562,7 +603,10 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 	mBillboard ( BILLBOARD_NONE ),
 	mCullMode ( 0 ),
 	mDepthTest ( 0 ),
-	mDepthMask ( true ) {
+	mDepthMask ( true ),
+	mLODFlags ( DEFAULT_LOD_FLAGS ),
+	mLODMin ( 0.0f ),
+	mLODMax ( 0.0f ){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -669,6 +713,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setCullMode",		_setCullMode },
 		{ "setDepthMask",		_setDepthMask },
 		{ "setDepthTest",		_setDepthTest },
+		{ "setLODLimits",		_setLODLimits },
 		{ "setParent",			_setParent },
 		{ "setScissorRect",		_setScissorRect },
 		{ "setShader",			_setShader },
@@ -684,7 +729,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::Render () {
 
-	this->Draw ( MOAIGraphicsProp::NO_SUBPRIM_ID );
+	this->Draw ( MOAIGraphicsProp::NO_SUBPRIM_ID, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -692,6 +737,7 @@ void MOAIGraphicsProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 	
 	MOAIProp::SerializeIn ( state, serializer );
 	MOAIColor::SerializeIn ( state, serializer );
+	MOAIRenderable::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -699,6 +745,7 @@ void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 	
 	MOAIProp::SerializeOut ( state, serializer );
 	MOAIColor::SerializeOut ( state, serializer );
+	MOAIRenderable::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
