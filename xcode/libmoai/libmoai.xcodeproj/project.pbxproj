@@ -953,8 +953,6 @@
 		07F11A7D15391291004EAA24 /* TapjoyConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 07F11A0515391291004EAA24 /* TapjoyConnect.m */; };
 		07F11A7E15391291004EAA24 /* TapjoyConnectConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0615391291004EAA24 /* TapjoyConnectConstants.h */; };
 		07F11A7F15391291004EAA24 /* TJCConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F11A0715391291004EAA24 /* TJCConfig.h */; };
-		07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F390291626446E00673C6F /* CBAnalytics.h */; };
-		07F3902C1626446E00673C6F /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F3902A1626446E00673C6F /* Chartboost.h */; };
 		4262463817D234BC0053C0CD /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4262463617D234BC0053C0CD /* MOAIBrowserIOS.h */; };
 		4262463917D234BC0053C0CD /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */; };
 		427A324317DAB6EC00796DAA /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
@@ -1063,6 +1061,7 @@
 		427A3AE717DD412D00796DAA /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490070141AB6EC00913D80 /* lvm.c */; };
 		427A3AE817DD412D00796DAA /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490072141AB6EC00913D80 /* lzio.c */; };
 		427A3AE917DD412D00796DAA /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
+		432C56C6188EB39F00FA722B /* Chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = 432C56C5188EB39F00FA722B /* Chartboost.h */; };
 		43BA2E6117733267007DCDF0 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5A17733267007DCDF0 /* JSON.h */; };
 		43BA2E6217733267007DCDF0 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 43BA2E5B17733267007DCDF0 /* SBJsonBase.h */; };
 		43BA2E6317733267007DCDF0 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2E5C17733267007DCDF0 /* SBJsonBase.m */; };
@@ -4463,8 +4462,6 @@
 		07F11A0515391291004EAA24 /* TapjoyConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapjoyConnect.m; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TapjoyConnect.m"; sourceTree = "<group>"; };
 		07F11A0615391291004EAA24 /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapjoyConnectConstants.h; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TapjoyConnectConstants.h"; sourceTree = "<group>"; };
 		07F11A0715391291004EAA24 /* TJCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TJCConfig.h; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/TJCConfig.h"; sourceTree = "<group>"; };
-		07F390291626446E00673C6F /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CBAnalytics.h; path = "../../3rdparty/chartboostiOS-3.0.7/CBAnalytics.h"; sourceTree = "<group>"; };
-		07F3902A1626446E00673C6F /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-3.0.7/Chartboost.h"; sourceTree = "<group>"; };
 		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		425144F417E4FD140065B1C6 /* libmoai-ios-luajit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luajit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4251455217E5F9740065B1C6 /* libmoai-osx-luajit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luajit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4472,6 +4469,7 @@
 		4262463717D234BC0053C0CD /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIBrowserIOS.mm; sourceTree = "<group>"; };
 		427A369A17DAB6EC00796DAA /* libmoai-ios-lua.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-lua.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		427A3B5C17DD412D00796DAA /* libmoai-osx-lua.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-lua.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		432C56C5188EB39F00FA722B /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chartboost.h; path = "../../3rdparty/chartboostiOS-4.0/Chartboost.h"; sourceTree = "<group>"; };
 		43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-playhaven.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43BA2E5A17733267007DCDF0 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/JSON.h"; sourceTree = "<group>"; };
 		43BA2E5B17733267007DCDF0 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.h"; sourceTree = "<group>"; };
@@ -10652,8 +10650,7 @@
 		E98DBD911537A26700514387 /* chartboost */ = {
 			isa = PBXGroup;
 			children = (
-				07F390291626446E00673C6F /* CBAnalytics.h */,
-				07F3902A1626446E00673C6F /* Chartboost.h */,
+				432C56C5188EB39F00FA722B /* Chartboost.h */,
 			);
 			name = chartboost;
 			sourceTree = "<group>";
@@ -12674,9 +12671,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07F3902B1626446E00673C6F /* CBAnalytics.h in Headers */,
-				07F3902C1626446E00673C6F /* Chartboost.h in Headers */,
 				89BE76BC173C6C2900DFE837 /* AKU-chartboost.h in Headers */,
+				432C56C6188EB39F00FA722B /* Chartboost.h in Headers */,
 				89BE76C2173C6C5D00DFE837 /* MOAIChartBoostIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
