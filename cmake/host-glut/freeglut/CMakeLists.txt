@@ -14,3 +14,4 @@ file ( GLOB FREEGLUT_SRC "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.c" )
 
 add_library ( freeglut-static STATIC ${FREEGLUT_SRC} )
 target_include_directories (freeglut-static PUBLIC ${FREEGLUT_INCLUDES})
+target_link_libraries( freeglut-static ${OPENGL_LIBRARIES})

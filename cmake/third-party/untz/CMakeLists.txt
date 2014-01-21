@@ -1,22 +1,7 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
-if ( MOAI_UNTZ )
-  if ( MOAI_SDL OR BUILD_BLACKBERRY )
-    # TODO: Use 3rdparty's SDL
-  
-  
-  else ( MOAI_SDL OR BUILD_BLACKBERRY )
-    find_package(PkgConfig)
-    pkg_check_modules(SDL REQUIRED sdl)
-    set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
-    set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
-  endif ( MOAI_SDL OR BUILD_BLACKBERRY )
-
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" PARENT_SCOPE )
 
   set ( UNTZ_INCLUDES 
     ${SDL_INCLUDES}
@@ -25,11 +10,7 @@ if ( MOAI_UNTZ )
     "${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" 
    )
 
-  if ( BUILD_BLACKBERRY )
-    set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};${MOAI_ROOT}/3rdparty/SDL/include/" PARENT_SCOPE )
-  endif ( BUILD_BLACKBERRY )
-
-  set ( UNTZ_INCLUDES ${UNTZ_INCLUDES} PARENT_SCOPE)
+  set ( UNTZ_INCLUDES ${UNTZ_INCLUDES} )
 
   set ( UNTZ_SOURCES 
 
@@ -37,7 +18,6 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSourceThread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MemoryAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/UserAudioSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/RiffFile.cpp
@@ -45,12 +25,21 @@ if ( MOAI_UNTZ )
     ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
 
-  PARENT_SCOPE )
+  )
 
+  if (MOAI_VORBIS)   
+     set ( UNTZ_SOURCES 
+       ${UNTZ_SOURCES}
+       ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
+      )
+  endif (MOAI_VORBIS)
 
-else ( MOAI_UNTZ )
+  add_library (untz STATIC ${UNTZ_SOURCES})
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=0" PARENT_SCOPE )
+  target_link_libraries( untz SDL2-static )
 
-endif ( MOAI_UNTZ )
+  if (MOAI_VORBIS)
+    target_link_libraries (untz vorbis)
+  endif (MOAI_VORBIS)
+
+target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})

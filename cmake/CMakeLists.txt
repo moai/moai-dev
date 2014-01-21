@@ -67,7 +67,7 @@ endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DMOAI_OS_LINUX " )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " )
 endif ( BUILD_LINUX )
 
@@ -117,6 +117,7 @@ option ( MOAI_PNG            FALSE )
 option ( MOAI_SFMT           FALSE )
 option ( MOAI_VORBIS         FALSE )
 option ( MOAI_UNTZ           FALSE )
+option ( MOAI_SDL            FALSE )
 
 
 
@@ -173,6 +174,8 @@ SETUP_MODULE(MOAI_JPG MOAI_WITH_LIBJPG)
 SETUP_MODULE(MOAI_VORBIS MOAI_WITH_VORBIS)
 SETUP_MODULE(MOAI_OGG MOAI_WITH_OGG)
 
+SETUP_MODULE(MOAI_SDL MOAI_WITH_SDL)
+SETUP_MODULE(MOAI_MONGOOSE MOAI_WITH_MONGOOSE)
 
 #Flags for optional modules
 
@@ -212,7 +215,6 @@ endif ( DEBUG )
 #
 # Libraries
 #
-set (THIRD_PARTY_INCLUDES "")
 add_subdirectory ( third-party )
 add_subdirectory ( zlcore )
 

@@ -5,7 +5,8 @@ project ( crypto )
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DOPENSSL_NO_ASM" )
+  #set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DOPENSSL_NO_ASM" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_ASM  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE "  )
 
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
@@ -24,6 +25,7 @@ project ( crypto )
     endif ( BUILD_OSX )
   
     if ( BUILD_LINUX )
+         set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_LINUX"  )
         set ( PLATFORM_INCLUDE "include-linux")
     endif ( BUILD_LINUX )
 
@@ -34,6 +36,7 @@ project ( crypto )
 
     if ( BUILD_ANDROID )
         set ( PLATFORM_INCLUDE "include-android")
+        set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_ANDROID " )
      endif ( BUILD_ANDROID )
 
     if ( BUILD_IOS )

@@ -59,7 +59,6 @@ target_link_libraries ( moai
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
     freeglut-static
-    ${OPENGL_LIBRARIES}
     winmm
   )
 endif (BUILD_WINDOWS)
@@ -70,7 +69,6 @@ target_link_libraries ( moai
   rt
   freeglut-static
   Xi
-  ${OPENGL_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 

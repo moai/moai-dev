@@ -1,27 +1,11 @@
 cmake_minimum_required(VERSION 2.8.5)
 
-
-
 project(host-sdl)
 
-
-set ( GCC_FORCE_32_BIT   TRUE)
-add_subdirectory("${MOAI_ROOT}/3rdparty/sdl2-2.0.0" "sdl2")
-
-
-if ( BUILD_LINUX )
-  
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
-endif ( BUILD_LINUX )
-
-if ( BUILD_WINDOWS )
-    find_package( OpenGL REQUIRED )
-endif ( BUILD_WINDOWS )
 
 if ( BUILD_OSX )
   find_library ( APPLICATION_SERVICES_LIBRARY ApplicationServices )
   find_library ( CORE_SERVICES_LIBRARY CoreServices )
-   find_package ( OpenGL REQUIRED )
 endif ( BUILD_OSX )
 
 set ( INCLUDES_MOAIHOSTSDL 
@@ -30,44 +14,25 @@ set ( INCLUDES_MOAIHOSTSDL
   "${MOAI_ROOT}/src/host-glut/"
   "${MOAI_ROOT}/3rdparty/sdl2-2.0.0/include"
    ${OPENGL_INCLUDE_DIRS}
-   )
-
+)
 
 include_directories ( ${INCLUDES_MOAIHOSTSDL} )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-sdl" )
 
-
 add_executable ( moai
   ${CMAKE_CURRENT_SOURCE_DIR}/SDLHost.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SDLHostMain.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/../host-modules/aku_modules.cpp
 )
 
 target_link_libraries ( moai 
+  host-modules
   moai-sim
   moai-util
   moai-core
   zlcore
- 
+  SDL2-static
 )
-
-if ( MOAI_BOX2D )
-  target_link_libraries ( moai moai-box2d )
-endif ( MOAI_BOX2D )
-
-if ( MOAI_CHIPMUNK )
-  target_link_libraries ( moai moai-chipmunk )
-endif ( MOAI_CHIPMUNK )
-
-if (MOAI_HTTP_CLIENT)
-  target_link_libraries ( moai moai-http-client )
-endif ( MOAI_HTTP_CLIENT)
-
-if ( MOAI_UNTZ )
-  target_link_libraries ( moai moai-untz )
-endif ( MOAI_UNTZ )
-
 
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
@@ -78,10 +43,10 @@ if ( BUILD_WINDOWS )
 endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
-target_link_libraries ( moai 
-  pthread 
-  rt
-)
+  target_link_libraries ( moai 
+    pthread 
+    rt
+  )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
@@ -101,38 +66,26 @@ if ( BUILD_OSX )
         TARGET_LINK_LIBRARIES(${appname} "${FRAMEWORK_${fwname}}/${fwname}")
         MESSAGE(STATUS "Framework ${fwname} found at ${FRAMEWORK_${fwname}}")
     endif()
-endmacro(ADD_FRAMEWORK)
+  endmacro(ADD_FRAMEWORK)
 
-macro(ADD_FRAMEWORKS appname fwnames)
-  FOREACH(FW ${fwnames})
-    ADD_FRAMEWORK(${FW} ${appname})
-  ENDFOREACH(FW)
-endmacro(ADD_FRAMEWORKS)
+  macro(ADD_FRAMEWORKS appname fwnames)
+    FOREACH(FW ${fwnames})
+      ADD_FRAMEWORK(${FW} ${appname})
+    ENDFOREACH(FW)
+  endmacro(ADD_FRAMEWORKS)
 
-set( FWORKS
-                  AudioToolbox
-                  AudioUnit
-                  CoreAudio
-                  CoreGraphics
-                  CoreLocation
-                  Foundation
-                  GameKit
-                  QuartzCore
-                  StoreKit
-                  SystemConfiguration
-                  )
+  set( FWORKS
+                    AudioToolbox
+                    AudioUnit
+                    CoreAudio
+                    CoreGraphics
+                    CoreLocation
+                    Foundation
+                    GameKit
+                    QuartzCore
+                    StoreKit
+                    SystemConfiguration
+                    )
 
-ADD_FRAMEWORKS(moai "${FWORKS}")
-
+  ADD_FRAMEWORKS(moai "${FWORKS}")
 endif ( BUILD_OSX )
-
-
-target_link_libraries ( moai 
-  third-party
-)
-
-if (MOAI_LUAEXT)
- target_link_libraries ( moai moai-luaext )
-endif (MOAI_LUAEXT)
-
-
