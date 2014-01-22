@@ -7,7 +7,7 @@ set ( HOST_MODULES_INCLUDES
     )
 
 # Use all cpp files in directory as source code
-set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/*.cpp" )
+set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/aku_modules.cpp" )
 
 include_directories ( ${MOAI_MODULES_INCLUDES} )
 
