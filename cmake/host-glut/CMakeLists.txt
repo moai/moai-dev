@@ -9,8 +9,7 @@ project(host-glut)
 if ( BUILD_LINUX )
   add_subdirectory ( freeglut )
   find_package ( OpenGL REQUIRED )
-  find_package ( GLUT REQUIRED )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_LINUX -DFREEGLUT_STATIC" )
 endif ( BUILD_LINUX )
 
 if ( BUILD_WINDOWS )
@@ -32,7 +31,6 @@ set ( INCLUDES_MOAIHOSTGLUT
   "${MOAI_ROOT}/src/config-default/"
   "${MOAI_ROOT}/src/host-glut/"
   ${OPENGL_INCLUDE_DIRS}
-  ${GLUT_INCLUDE_DIRS}
   )
 
 
@@ -69,7 +67,8 @@ if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
   rt
-  ${GLUT_LIBRARIES}
+  freeglut-static
+  Xi
 )
 endif ( BUILD_LINUX )
 
