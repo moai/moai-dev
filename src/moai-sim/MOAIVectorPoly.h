@@ -21,6 +21,7 @@ public:
 	//----------------------------------------------------------------//
 	void			AddFillContours			( TESStesselator* tess );
 	void			AddStrokeContours		( TESStesselator* tess );
+	bool			IsClosed				();
 					MOAIVectorPoly			();
 					~MOAIVectorPoly			();
 	bool			SetVertices				( const ZLVec2D* vertices, u32 total, bool closed );
