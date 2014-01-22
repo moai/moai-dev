@@ -60,7 +60,7 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 	tessTesselate ( exterior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( stroke, exterior );
 	
-	this->StrokeBoundaries ( interior, outline, interiorWidth, true, true );
+	this->StrokeBoundaries ( interior, outline, interiorWidth, false, false );
 	tessTesselate ( interior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( stroke, interior );
 	
