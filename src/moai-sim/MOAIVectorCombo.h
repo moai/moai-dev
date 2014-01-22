@@ -19,6 +19,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			AddFillContours			( TESStesselator* tess );
+	bool			IsClosed				();
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();

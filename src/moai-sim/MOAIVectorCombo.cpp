@@ -17,7 +17,10 @@ void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
 	assert ( outline );
 
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
-		this->mShapes [ i ]->AddFillContours ( outline );
+		MOAIVectorShape& shape = *this->mShapes [ i ];
+		//if ( shape.IsClosed ()) {
+			shape.AddFillContours ( outline );
+		//}
 	}
 	
 	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
@@ -26,12 +29,19 @@ void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
 	tessDeleteTess ( outline );
 }
 
+
 //----------------------------------------------------------------//
 bool MOAIVectorCombo::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 	
 	this->mShapes.Init ( total );
 	memcpy ( this->mShapes.Data (), shapes, sizeof ( MOAIVectorShape** ) * total );
 	this->mCanGroup = false;
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorCombo::IsClosed () {
+
 	return true;
 }
 

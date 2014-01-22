@@ -78,6 +78,11 @@ void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIVectorPoly::IsClosed () {
+	return this->mIsClosed;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorPoly::MOAIVectorPoly () :
 	mIsClosed ( true ) {
 }

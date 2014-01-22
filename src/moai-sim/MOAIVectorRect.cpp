@@ -48,6 +48,11 @@ void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIVectorRect::IsClosed () {
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorRect::MOAIVectorRect () {
 }
 

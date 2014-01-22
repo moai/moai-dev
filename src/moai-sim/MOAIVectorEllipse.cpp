@@ -43,6 +43,11 @@ void MOAIVectorEllipse::Init ( float x, float y, float xRad, float yRad ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIVectorEllipse::IsClosed () {
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorEllipse::MOAIVectorEllipse () {
 }
 

@@ -37,6 +37,7 @@ public:
 	virtual void		AddStrokeContours			( TESStesselator* tess );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
+	virtual bool		IsClosed					() = 0;
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );

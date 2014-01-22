@@ -23,6 +23,7 @@ public:
 	void			AddFillContours			( TESStesselator* tess );
 	void			AddStrokeContours		( TESStesselator* tess );
 	void			Init					( float x, float y, float xRad, float yRad );
+	bool			IsClosed				();
 					MOAIVectorEllipse		();
 					~MOAIVectorEllipse		();
 	
