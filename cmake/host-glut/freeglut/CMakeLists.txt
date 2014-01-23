@@ -1,6 +1,6 @@
 cmake_minimum_required ( VERSION 2.8.8 )
 project ( freeglut )
-
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src" )
 set ( FREEGLUT_INCLUDES
   "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/include/GL"
   "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/include"
