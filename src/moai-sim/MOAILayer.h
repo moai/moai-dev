@@ -65,6 +65,7 @@ private:
 	static int		_insertProp				( lua_State* L );
 	static int		_removeProp				( lua_State* L );
 	static int		_setCamera				( lua_State* L );
+	static int		_setLODFactor			( lua_State* L );
 	static int		_setLODMode				( lua_State* L );
 	static int		_setOverlayTable		( lua_State* L );
 	static int		_setParallax			( lua_State* L );
@@ -90,11 +91,17 @@ private:
 
 public:
 	
+	
+	DECL_ATTR_HELPER ( MOAILayer )
+
 	enum {
-		LOD_CONSTANT,				// use the LOD factor constant
-		LOD_FROM_PROP_SORT_Z,		// use the prop's Z coordinate in the sort results list (enable view space sort for depth) 
-		LOD_FROM_CAMERA_LOCAL_Z,	// use the camera's *local* Z offset as the LOD factor
-		LOD_FROM_CAMERA_WORLD_Z,	// use the camera's *world* Z offset as the LOD factor
+		ATTR_LOD,
+		TOTAL_ATTR,
+	};
+	
+	enum {
+		LOD_CONSTANT,				// use the LOD factor
+		LOD_FROM_PROP_SORT_Z,		// use the prop's Z coordinate multiplied by the LOD factor in the sort results list (enable view space sort for depth)
 	};
 	
 	DECL_LUA_FACTORY ( MOAILayer )

@@ -14,6 +14,8 @@
 //----------------------------------------------------------------//
 void MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
 	
+	if ( this->mVertices.Size () < 3 ) return;
+	
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
 
