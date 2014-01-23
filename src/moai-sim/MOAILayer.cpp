@@ -200,11 +200,20 @@ int MOAILayer::_setCamera ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAILayer::_setLODFactor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	
+	self->mLODFactor	= state.GetValue < float >( 2, 1.0f );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAILayer::_setLODMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	self->mLODMode		= state.GetValue < u32 >( 2, LOD_CONSTANT );
-	self->mLODFactor	= state.GetValue < float >( 3, 0.0f );
 	
 	return 0;
 }
@@ -583,20 +592,20 @@ void MOAILayer::Draw ( int subPrimID ) {
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
-		float lod = this->mLODFactor;
+		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );;
 		
-		if (( this->mLODMode == LOD_FROM_CAMERA_LOCAL_Z ) && ( this->mCamera )) {
-			MOAICamera* camera = this->mCamera;
-			ZLVec3D loc = camera->GetLoc ();
-			lod = loc.mZ;
-		}
-		
-		if (( this->mLODMode == LOD_FROM_CAMERA_WORLD_Z ) && ( this->mCamera )) {
-			MOAICamera* camera = this->mCamera;
-			const ZLAffine3D& mtx = camera->GetLocalToWorldMtx ();
-			ZLVec3D worldLoc = mtx.GetTranslation ();
-			lod = worldLoc.mZ;
-		}
+//		if (( this->mLODMode == LOD_FROM_CAMERA_LOCAL_Z ) && ( this->mCamera )) {
+//			MOAICamera* camera = this->mCamera;
+//			ZLVec3D loc = camera->GetLoc ();
+//			lod = loc.mZ * this->mLODFactor;
+//		}
+//		
+//		if (( this->mLODMode == LOD_FROM_CAMERA_WORLD_Z ) && ( this->mCamera )) {
+//			MOAICamera* camera = this->mCamera;
+//			const ZLAffine3D& mtx = camera->GetLocalToWorldMtx ();
+//			ZLVec3D worldLoc = mtx.GetTranslation ();
+//			lod = worldLoc.mZ * this->mLODFactor;
+//		}
 		
 		this->DrawProps ( buffer, lod );
 		
@@ -622,7 +631,7 @@ void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer, float lod ) {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
 			MOAIProp* prop = result->mProp;
-			prop->Draw ( result->mSubPrimID, result->mLoc.mZ );
+			prop->Draw ( result->mSubPrimID, result->mLoc.mZ * lod );
 		}
 	}
 	else {
@@ -731,7 +740,7 @@ MOAILayer::MOAILayer () :
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mSortInViewSpace ( false ),
 	mLODMode ( LOD_FROM_PROP_SORT_Z ),
-	mLODFactor ( 0.0f ),
+	mLODFactor ( 1.0f ),
 	mPartitionCull2D ( true ) {
 	
 	RTTI_BEGIN
@@ -768,6 +777,8 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIClearableView::RegisterLuaClass ( state );
 	
+	state.SetField ( -1, "ATTR_LOD",					MOAILayerAttr::Pack ( ATTR_LOD ));
+	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
 	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
@@ -783,8 +794,8 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "LOD_CONSTANT",				( u32 )MOAILayer::LOD_CONSTANT );
 	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",		( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
-	state.SetField ( -1, "LOD_FROM_CAMERA_LOCAL_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_LOCAL_Z );
-	state.SetField ( -1, "LOD_FROM_CAMERA_WORLD_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_WORLD_Z );
+	//state.SetField ( -1, "LOD_FROM_CAMERA_LOCAL_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_LOCAL_Z );
+	//state.SetField ( -1, "LOD_FROM_CAMERA_WORLD_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_WORLD_Z );
 }
 
 //----------------------------------------------------------------//
@@ -802,6 +813,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setCamera",				_setCamera },
+		{ "setLODFactor",			_setLODFactor },
 		{ "setLODMode",				_setLODMode },
 		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
