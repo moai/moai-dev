@@ -28,7 +28,8 @@ add_subdirectory ( zlib )
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set ( GCC_FORCE_32_BIT   TRUE)
-  add_subdirectory("${MOAI_ROOT}/3rdparty/sdl2-2.0.0" "sdl2")
+  set(DIRECTX OFF CACHE BOOL "Use some expat option")
+  add_subdirectory("${MOAI_ROOT}/3rdparty/sdl2-2.0.0" "${CMAKE_CURRENT_BINARY_DIRECTORY}/sdl2")
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 
