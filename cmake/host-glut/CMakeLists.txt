@@ -13,7 +13,7 @@ if ( BUILD_LINUX )
 endif ( BUILD_LINUX )
 
 if ( BUILD_WINDOWS )
-   add_subdirectory ( freeglut )
+   add_subdirectory ( freeglut ./freeglut2 )
    find_package( OpenGL REQUIRED )
    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static -Os -DFREEGLUT_STATIC" )
    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os -DFREEGLUT_STATIC" )
