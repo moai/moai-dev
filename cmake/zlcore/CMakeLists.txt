@@ -55,6 +55,12 @@ include_directories ( ${ZLCORE_INCLUDES} )
 
 add_library ( zlcore STATIC ${SRC_ZLCORE} )
 
+if ( BUILD_LINUX )
+  find_package ( OpenGL REQUIRED )
+endif ( BUILD_LINUX  )
+
+target_link_libraries( zlcore ${OPENGL_LIBRARIES})
+
 if (BUILD_WINDOWS)
   target_link_libraries ( zlcore iphlpapi) #GetAdaptersAddresses
 endif (BUILD_WINDOWS)
