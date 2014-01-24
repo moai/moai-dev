@@ -20,6 +20,7 @@ if (MOAI_LUAJIT)
 #		set ( LUAJIT_DISABLE_JIT CACHE bool "Disable JIT." OFF )
 #	endif (BUILD_IOS )
 	set ( GCC_FORCE_32_BIT TRUE)
+  set ( LUA_BUILD_STATIC TRUE)
 	add_subdirectory("${MOAI_ROOT}/3rdparty/luajit-2.0.2" "lua-static")
 else()
 	add_subdirectory ( lua )
@@ -41,11 +42,15 @@ add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
 
+
+
+
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set ( GCC_FORCE_32_BIT   TRUE)
   set(DIRECTX OFF CACHE BOOL "Use some expat option")
   add_subdirectory("${MOAI_ROOT}/3rdparty/sdl2-2.0.0" "${CMAKE_CURRENT_BINARY_DIRECTORY}/sdl2")
+  add_subdirectory ( freeglut )
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 
