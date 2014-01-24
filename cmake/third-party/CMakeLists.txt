@@ -12,7 +12,23 @@ add_subdirectory ( expat )
 add_subdirectory ( freetype )
 add_subdirectory ( jansson )
 add_subdirectory ( jpg )
-add_subdirectory ( lua )
+
+
+#Lua or LuaJit?
+if (MOAI_LUAJIT)
+#	if ( BUILD_IOS )#
+#		set ( LUAJIT_DISABLE_JIT CACHE bool "Disable JIT." OFF )
+#	endif (BUILD_IOS )
+	set ( GCC_FORCE_32_BIT TRUE)
+	add_subdirectory("${MOAI_ROOT}/3rdparty/luajit-2.0.2" "lua-static")
+else()
+	add_subdirectory ( lua )
+endif (MOAI_LUAJIT)
+
+
+
+
+
 add_subdirectory ( luaext )
 add_subdirectory ( mongoose )
 add_subdirectory ( ogg )

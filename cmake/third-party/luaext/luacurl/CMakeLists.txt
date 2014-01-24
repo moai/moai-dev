@@ -5,4 +5,4 @@
  )
  
  add_library (luacurl STATIC ${LUAEXT_SOURCES})
- target_link_libraries ( luacurl curl lua )
+ target_link_libraries ( luacurl curl liblua-static )

@@ -26,7 +26,7 @@ project ( luasocket )
     ${LUASOCKET_PLAT}
   )
         
-  target_link_libraries ( luasocket lua )
+  target_link_libraries ( luasocket liblua-static )
    if ( BUILD_WINDOWS )
      target_link_libraries( luasocket Ws2_32 )
    endif (BUILD_WINDOWS)

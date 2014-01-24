@@ -56,6 +56,6 @@ else (BUILD_ANDROID)
 endif (BUILD_ANDROID)
 
 
-add_library( lua STATIC ${LUA_SOURCES} )
-target_include_directories( lua PUBLIC ${LUA_INCLUDES} )
+add_library( liblua-static STATIC ${LUA_SOURCES} )
+target_include_directories( liblua-static PUBLIC ${LUA_INCLUDES} )
 

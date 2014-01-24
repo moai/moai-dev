@@ -6,4 +6,4 @@ set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
 
 
 add_library (luacrypto STATIC ${LUAEXT_SOURCES})
-target_link_libraries ( luacrypto crypto lua )
+target_link_libraries ( luacrypto crypto liblua-static )

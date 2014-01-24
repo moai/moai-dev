@@ -125,6 +125,8 @@ option ( MOAI_SFMT           FALSE )
 option ( MOAI_VORBIS         FALSE )
 option ( MOAI_UNTZ           FALSE )
 option ( MOAI_SDL            FALSE )
+option ( MOAI_LUAJIT         FALSE )
+
 
 
 

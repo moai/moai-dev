@@ -2,14 +2,14 @@ cmake_minimum_required ( VERSION 2.8.11 )
 project ( host-modules)
 
 set ( HOST_MODULES_INCLUDES 
-    "${MOAI_ROOT}/src/"
-    "${MOAI_ROOT}/src/config-default/"
+    "${MOAI_ROOT}/src"
+    "${MOAI_ROOT}/src/config-default"
     )
 
 # Use all cpp files in directory as source code
 set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/aku_modules.cpp" )
 
-include_directories ( ${MOAI_MODULES_INCLUDES} )
+include_directories ( ${HOST_MODULES_INCLUDES} )
 
 add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
 
