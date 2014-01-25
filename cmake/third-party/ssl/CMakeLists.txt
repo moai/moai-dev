@@ -13,8 +13,14 @@ project ( ssl )
  endif ( BUILD_LINUX)
 
  if ( BUILD_WINDOWS )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 -DMK1MF_BUILD"  )
-  set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 "  )
+  if (MSVC)
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWIN32 -DWIN32_LEAN_AND_MEAN -D_LIB -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE")
+    set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-win32" )
+  else()
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMK1MF_BUILD")
+    set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw" )
+  endif (MSVC)
  endif ( BUILD_WINDOWS )
 
 

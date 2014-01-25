@@ -9,8 +9,8 @@ endif ( BUILD_LINUX )
 
 if ( BUILD_WINDOWS )
    find_package( OpenGL REQUIRED )
-   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static -Os -DFREEGLUT_STATIC" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os -DFREEGLUT_STATIC" )
+   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static -Os -DFREEGLUT_STATIC -DFREEGLUT_LIB_PRAGMAS=0" )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -Os -DFREEGLUT_STATIC -DFREEGLUT_LIB_PRAGMAS=0" )
 endif ( BUILD_WINDOWS )
 
 if ( BUILD_OSX )
@@ -52,7 +52,7 @@ target_link_libraries ( moai
 
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
-    freeglut-static
+    freeglutstatic
     winmm
   )
 endif (BUILD_WINDOWS)
@@ -61,7 +61,7 @@ if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
   rt
-  freeglut-static
+  freeglutstatic
   Xi
 )
 endif ( BUILD_LINUX )

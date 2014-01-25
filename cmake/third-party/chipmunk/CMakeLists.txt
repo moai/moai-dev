@@ -8,7 +8,7 @@ project ( chipmunk )
     set ( CHIPMUNK_INCLUDES "${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/chipmunk/;${MOAI_ROOT}/3rdparty/chipmunk-5.3.4/include/")
 
     if (BUILD_WINDOWS)
-        set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS -DWIN32 -D_DEBUG -D_LIB -DCP_USE_DOUBLES=0" )
+        set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS -DWIN32 -D_DEBUG -D_LIB " )
     endif(BUILD_WINDOWS)
 
     set ( CHIPMUNK_SOURCES 
@@ -44,5 +44,5 @@ project ( chipmunk )
 
    add_library (chipmunk STATIC ${CHIPMUNK_SOURCES})
    set_target_properties ( chipmunk PROPERTIES LINKER_LANGUAGE CXX )
-   SET_SOURCE_FILES_PROPERTIES ( ${CHIPMUNK_SOURCES} PROPERTIES LINKER_LANGUAGE CXX )
+   SET_SOURCE_FILES_PROPERTIES ( ${CHIPMUNK_SOURCES} PROPERTIES LANGUAGE CXX )
    target_include_directories (chipmunk PUBLIC ${CHIPMUNK_INCLUDES})

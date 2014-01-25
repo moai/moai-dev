@@ -273,7 +273,7 @@ target_link_libraries ( liblua-static ${LIBS} )
 SET_TARGET_PROPERTIES(liblua-static PROPERTIES
   COMPILE_DEFINITIONS "liblua_STATIC"
   OUTPUT_NAME "lua-static")
-
+target_include_directories ( liblua-static PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src )
 add_executable ( lua src/luajit.c)
 target_link_libraries ( lua liblua-shared )
 

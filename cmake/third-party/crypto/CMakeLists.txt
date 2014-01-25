@@ -31,7 +31,12 @@ project ( crypto )
 
     if ( BUILD_WINDOWS )
   	  	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE -DMK1MF_BUILD" )
-        set ( PLATFORM_INCLUDE "include-mingw")
+        if (MSVC)
+            set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWIN32 -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN -D_LIB -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE -DMK1MF_PLATFORM_VC_WIN32")
+            set (PLATFORM_INCLUDE "include-win32")
+        else ()
+            set ( PLATFORM_INCLUDE "include-mingw")
+        endif(MSVC)
     endif ( BUILD_WINDOWS )
 
     if ( BUILD_ANDROID )
@@ -44,7 +49,7 @@ project ( crypto )
     endif ( BUILD_IOS)
 
 
-    if (BUILD_WINDOWS)
+    if (BUILD_WINDOWS AND NOT MSVC)
         set( CRYPTO_INCLUDES
                 "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
                  ${CRYPTO_INCLUDES}
@@ -54,7 +59,7 @@ project ( crypto )
                 ${CRYPTO_INCLUDES}
                 "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
        )
-    endif (BUILD_WINDOWS)
+    endif (BUILD_WINDOWS AND NOT MSVC)
 
 
   set ( CRYPTO_SOURCES 
