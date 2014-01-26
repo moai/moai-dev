@@ -320,10 +320,10 @@ lua_executable_dir(const char *argv0)
 {
   if (! s_executable_dir)
     {
-      if (argv0 == 0)
-        fprintf(stderr,
-                "Warning: The main executable should call lua_executable_dir()\n"
-                "         at least once with a non zero argument\n");
+//  if (argv0 == 0)
+//        fprintf(stderr,
+//                "Warning: The main executable should call lua_executable_dir()\n"
+ //               "         at least once with a non zero argument\n");
 #if defined(__GLIBC__) && defined(__USE_GNU)
       if (argv0 == 0)
         argv0 = program_invocation_name;

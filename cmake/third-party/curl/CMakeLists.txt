@@ -133,7 +133,7 @@ project ( curl )
 
    )
 
-  set (CURL_INCLUDES ${CURL_INCLUDES} )
+
  
   add_library(curl STATIC ${CURL_SOURCES})
   target_include_directories (curl PUBLIC ${CURL_INCLUDES})

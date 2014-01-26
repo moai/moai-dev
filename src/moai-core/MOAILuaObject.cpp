@@ -308,8 +308,7 @@ MOAILuaObject::MOAILuaObject ():
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		
+	if (!this->mCollected && MOAILuaRuntime::IsValid ()) {
 		if ( this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			this->mUserdata.PushRef ( state );
