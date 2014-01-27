@@ -91,13 +91,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* msg = state.GetValue < cc8* >( 1, "" );
-
-	// TODO: Fix this on Android
-	#ifndef MOAI_OS_ANDROID
-		ZLLog::PrintFile ( ZLLog::CONSOLE, msg );
-	#else
-		ZLLog::Print(msg);
-	#endif
+	ZLLog::Print ( msg );
 
 	return 0;
 }
