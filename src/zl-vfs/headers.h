@@ -97,6 +97,7 @@ extern int					zl_getc					( ZLFILE* fp );
 extern int					zl_getwc				( ZLFILE* fp );
 extern int					zl_pclose				( ZLFILE* fp );
 extern ZLFILE*				zl_popen				( const char *command, const char *mode );
+extern int					zl_printf				( const char* format, ... );
 extern int					zl_putc					( int character, ZLFILE* fp );
 extern int					zl_remove				( const char* path );
 extern int					zl_rename				( const char* oldname, const char* newname );
@@ -108,6 +109,7 @@ extern char*				zl_tmpnam				( char* str );
 extern int					zl_ungetc				( int character, ZLFILE* fp );
 extern int					zl_vfprintf				( ZLFILE* fp, const char* format, va_list arg );
 extern int					zl_vfscanf				( ZLFILE* fp, const char* format, va_list arg );
+extern int					zl_vprintf				( const char* format, va_list arg );
 
 #ifdef MOAI_COMPILER_MSVC
 	extern errno_t	 		zl_fopen_s 				( ZLFILE** fp, const char* filename, const char* mode );

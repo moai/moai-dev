@@ -784,8 +784,10 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
 			// TODO: Fix this on Android
-			#ifndef MOAI_OS_ANDROID
-				ZLLog::PrintFile ( file, "-- %s\n", msg.c_str ());
+			#ifdef MOAI_OS_ANDROID
+				ZLLog::Print ( "-- %s\n", msg.c_str ());
+			#else
+				ZLLog::Print ( file, "-- %s\n", msg.c_str ());
 			#endif
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
@@ -798,9 +800,10 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
-	// TODO: Fix this on Android
-	#ifndef MOAI_OS_ANDROID
-		ZLLog::PrintFile ( file, stackTrace.str ());
+	#ifdef MOAI_OS_ANDROID
+		ZLLog::Print ( stackTrace.str ());
+	#else
+		ZLLog::Print ( file, stackTrace.str ());
 	#endif
 }
 

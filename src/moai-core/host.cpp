@@ -192,7 +192,11 @@ void AKUInitMemPool ( size_t bytes ) {
 //----------------------------------------------------------------//
 int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 
-	return zl_mount_virtual ( virtualPath, archive );
+	int result = zl_mount_virtual ( virtualPath, archive );
+	if ( result ) {
+		printf ( "Error mounting %s at path %s\n", archive, virtualPath );
+	}
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -227,7 +231,12 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
 
-	if ( !ZLFileSys::CheckFileExists ( filename )) return;
+	ZLLog::Print ( "Attempting to load and run file %s\n", filename );
+
+	if ( !ZLFileSys::CheckFileExists ( filename )) {
+		ZLLog::Print ( "Could not find file %s \n", filename );
+		return;
+	}
 
 	int status;
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -236,7 +245,9 @@ void AKURunScript ( const char* filename ) {
 
 	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;
 	
-	state.DebugCall ( 0, 0 );
+	status = state.DebugCall ( 0, 0 );
+	
+	state.PrintErrors ( ZLLog::CONSOLE, status );
 }
 
 //----------------------------------------------------------------//

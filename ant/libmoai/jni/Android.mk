@@ -133,8 +133,8 @@
 #----------------------------------------------------------------#
 
 	LOCAL_STATIC_LIBRARIES += libmoaicore
-	LOCAL_STATIC_LIBRARIES += libzlcore
-
+	
+	
 	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
 
@@ -147,6 +147,8 @@
 		LOCAL_STATIC_LIBRARIES += libvorbis
 		LOCAL_STATIC_LIBRARIES += libogg
 	endif
+
+	LOCAL_STATIC_LIBRARIES += libzlcore
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
 	LOCAL_STATIC_LIBRARIES += libcares

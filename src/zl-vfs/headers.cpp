@@ -32,6 +32,10 @@
 	#include "NaClFile.h"
 #endif
 
+#ifdef ANDROID
+	#include <android/log.h>
+#endif
+
 #include <zl-vfs/ZLVfsFile.h>
 #include <zl-vfs/ZLVfsFileSystem.h>
 
@@ -654,6 +658,19 @@ ZLFILE* zl_popen ( const char *command, const char *mode ) {
 }
 
 //----------------------------------------------------------------//
+int zl_printf ( const char * format, ... ) {
+
+	int result;
+
+	va_list args;
+	va_start ( args, format );
+	result = zl_vprintf ( format, args );
+	va_end ( args );
+
+	return result;
+}
+
+//----------------------------------------------------------------//
 int zl_putc ( int character, ZLFILE* fp ) {
 
 	return zl_fputc ( character, fp );
@@ -734,4 +751,18 @@ int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 		return file->VarPrintf ( format, arg );
 	}
 	return -1;
+}
+
+//----------------------------------------------------------------//
+int zl_vprintf ( const char * format, va_list arg ) {
+
+	int result;
+	
+	#ifdef ANDROID
+		result = __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
+	#else
+		result = vprintf ( format, arg );
+	#endif
+
+	return result;
 }

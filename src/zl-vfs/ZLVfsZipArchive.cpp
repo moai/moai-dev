@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai_config.h>
+#include <zl-vfs/headers.h>
 #include <zl-vfs/zl_util.h>
 #include <zl-vfs/ZLVfsZipArchive.h>
 
@@ -304,6 +305,8 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 	if ( header.mStartDisk != 0 ) goto error; // unsupported
 	if ( header.mTotalDiskEntries != header.mTotalEntries ) goto error; // unsupported
 	
+	zl_printf ( "ZIP ARCHIVE HEADER OK\n" );
+	
 	// seek to top of central directory
 	fseek ( file, header.mCDAddr, SEEK_SET );
 	
@@ -327,6 +330,8 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 		// skip the extra field, etc.
 		result = fseek ( file, entryHeader.mCommentLength + entryHeader.mExtraFieldLength, SEEK_CUR );
 		if ( result ) goto error;
+		
+		zl_printf ( "ENTRY NAME: %s\n", nameBuffer );
 		
 		this->AddEntry ( &entryHeader, nameBuffer );
 	}
