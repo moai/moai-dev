@@ -123,7 +123,6 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 	// TODO: make use of offset and scale
 
 	if ( !this->mVertexBuffer ) return;
-	if ( !this->mVertexBuffer->IsValid ()) return;
 
 	if ( this->mVertexBuffer->Bind ()) {
 		

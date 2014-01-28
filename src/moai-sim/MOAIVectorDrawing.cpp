@@ -821,7 +821,7 @@ void MOAIVectorDrawing::Tessalate () {
 	this->mIdxBuffer.GetStream ().WriteStream ( this->mIdxStream );
 	
 	this->mVtxBuffer.SetDefaultFormat ( MOAIVertexFormatMgr::XYZC );
-	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength ());
+	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength (), 0 );
 	this->mVtxBuffer.GetStream ().WriteStream ( this->mVtxStream );
 	this->mVtxBuffer.Bless ();
 	
