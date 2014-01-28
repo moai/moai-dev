@@ -9441,6 +9441,7 @@
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
 				CDE9851A18975ABD001827F9 /* text */,
+				CD67857D189830DB007C7D2B /* texture */,
 				CDE9851718975A85001827F9 /* vector */,
 				89BE6F1A173AD0CA00DFE837 /* headers.h */,
 				89BE6F1B173AD0CA00DFE837 /* host.cpp */,
@@ -9518,8 +9519,6 @@
 				89BE6F96173AD0CA00DFE837 /* MOAILocationSensor.h */,
 				89BE6F99173AD0CA00DFE837 /* MOAIMotionSensor.cpp */,
 				89BE6F9A173AD0CA00DFE837 /* MOAIMotionSensor.h */,
-				89BE6F9B173AD0CA00DFE837 /* MOAIMultiTexture.cpp */,
-				89BE6F9C173AD0CA00DFE837 /* MOAIMultiTexture.h */,
 				89BE6F9D173AD0CA00DFE837 /* MOAINode.cpp */,
 				89BE6F9E173AD0CA00DFE837 /* MOAINode.h */,
 				89BE6F9F173AD0CA00DFE837 /* MOAINodeMgr.cpp */,
@@ -9603,10 +9602,6 @@
 				89BE6FF9173AD0CA00DFE837 /* MOAISurfaceDeck2D.h */,
 				89BE6FFA173AD0CA00DFE837 /* MOAISurfaceSampler2D.cpp */,
 				89BE6FFB173AD0CA00DFE837 /* MOAISurfaceSampler2D.h */,
-				89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */,
-				89BE7007173AD0CA00DFE837 /* MOAITexture.h */,
-				89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */,
-				89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */,
 				89BE700C173AD0CB00DFE837 /* MOAITileFlags.cpp */,
 				89BE700D173AD0CB00DFE837 /* MOAITileFlags.h */,
 				89BE700E173AD0CB00DFE837 /* MOAITimer.cpp */,
@@ -10249,6 +10244,19 @@
 				CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */,
 			);
 			name = "moai-ios-urban-airship";
+			sourceTree = "<group>";
+		};
+		CD67857D189830DB007C7D2B /* texture */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F9B173AD0CA00DFE837 /* MOAIMultiTexture.cpp */,
+				89BE6F9C173AD0CA00DFE837 /* MOAIMultiTexture.h */,
+				89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */,
+				89BE7007173AD0CA00DFE837 /* MOAITexture.h */,
+				89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */,
+				89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */,
+			);
+			name = texture;
 			sourceTree = "<group>";
 		};
 		CD69AB2817FA6CBE0053E028 /* libtess */ = {

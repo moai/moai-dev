@@ -156,6 +156,7 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
+		AKUModulesContextInitialize ();
 		AKUModulesIosContextInitialize ();
         AKUModulesRunLuaAPIWrapper ();
 		
@@ -215,7 +216,9 @@ namespace MoaiInputDeviceSensorID {
 		
 		[ self openContext ];
 		AKUSetContext ( mAku );
+		AKUModulesUpdate ();
 		AKUModulesIosUpdate ();
+		
 		[ self drawView ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run
