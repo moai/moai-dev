@@ -170,27 +170,4 @@ public:
 	virtual cc8*	TypeName		() const;
 };
 
-//================================================================//
-// RTTI
-//================================================================//
-// Convenience template class for automatically extending the RTTI hierarchy.
-// To use, inherit it and pass in the current class (the class that you are defining) along
-// with its super class.  A 'shim' class will be created in the hierarchy (between the class
-// and its superclass) which will call RTTIBase::ExtendRTTI() automatically in its constructor.
-// Note that the shim class itself will be excluded from the RTTI hierarchy.
-template < typename TYPE, typename SUPER >
-class RTTI :
-	public virtual SUPER {
-public:
-	
-	//----------------------------------------------------------------//
-	RTTI () {
-		this->template SimpleRTTI < SUPER >(( TYPE* )this );
-	}
-	
-	//----------------------------------------------------------------//
-	~RTTI () {
-	}
-};
-
 #endif
