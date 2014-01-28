@@ -477,6 +477,12 @@ void MOAITextureBase::OnInvalidate () {
 }
 
 //----------------------------------------------------------------//
+void MOAITextureBase::OnUnbind () {
+
+	zglBindTexture ( 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIGfxResource::RegisterLuaClass ( state );

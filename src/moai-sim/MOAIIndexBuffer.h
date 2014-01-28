@@ -39,6 +39,7 @@ private:
 	void		OnDestroy				();
 	void		OnInvalidate			();
 	void		OnLoad					();
+	void		OnUnbind				();
 	
 public:
 	
@@ -48,7 +49,6 @@ public:
 	GET ( ZLStream&, Stream, mStream )
 	
 	//----------------------------------------------------------------//
-	bool		LoadGfxState			();
 				MOAIIndexBuffer			();
 				~MOAIIndexBuffer		();
 	void		RegisterLuaClass		( MOAILuaState& state );

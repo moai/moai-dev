@@ -86,7 +86,7 @@ private:
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			Tessalate				();
+	void			Tesselate				();
 	void			WriteVertex				( float x, float y, float z, u32 color );
 	
 public:
