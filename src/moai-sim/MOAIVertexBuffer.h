@@ -14,8 +14,8 @@ class MOAIVertexFormat;
 class MOAIVbo {
 public:
 
-	u32		mVAO;
-	u32		mVBO;
+	u32		mVAO; // vertex array
+	u32		mVBO; // vertex buffer
 };
 
 //================================================================//
@@ -70,6 +70,7 @@ private:
 	void			OnDestroy				();
 	void			OnInvalidate			();
 	void			OnLoad					();
+	void			OnUnbind				();
 
 public:
 	
@@ -90,7 +91,6 @@ public:
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	void						Reserve					( u32 size, u32 gpuBuffers );
-	void						Unbind					();
 };
 
 #endif

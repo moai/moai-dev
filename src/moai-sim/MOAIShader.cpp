@@ -793,6 +793,12 @@ void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShader::OnUnbind () {
+
+	zglUseProgram ( 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIShader::PrintShaderLog ( u32 shader ) {
 
 	s32 logLength;

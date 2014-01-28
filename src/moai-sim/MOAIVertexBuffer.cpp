@@ -289,6 +289,8 @@ void MOAIVertexBuffer::OnBind () {
 
 	if ( this->mUseVBOs ) {
 		
+		MOAIGfxDevice::Get ().SetVertexFormat ();
+		
 		if ( this->mIsDirty ) {
 			this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 		}
@@ -296,14 +298,16 @@ void MOAIVertexBuffer::OnBind () {
 		MOAIVbo& vbo = this->mVBOs [ this->mCurrentVBO ];
 		
 		if ( this->mIsDirty ) {
-			this->mIsDirty = false;
 			
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, vbo.mVBO );
 			void* buffer = zglMapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
 			memcpy ( buffer, this->mBuffer, this->mStream.GetLength ());
-			zglUnmapBuffer ( vbo.mVBO );
+			zglUnmapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
+			zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, 0 );
+			
+			this->mIsDirty = false;
 		}
-
+		
 		zglBindVertexArray ( vbo.mVAO );
 	}
 	else {
@@ -327,6 +331,7 @@ void MOAIVertexBuffer::OnCreate () {
 
 	if ( this->mUseVBOs ) {
 
+		const MOAIVertexFormat* format = this->GetFormat ();
 		u32 count = 0;
 
 		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
@@ -341,9 +346,13 @@ void MOAIVertexBuffer::OnCreate () {
 				
 					zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, vbo.mVBO );
 					zglBufferData ( ZGL_BUFFER_TARGET_ARRAY, this->mStream.GetLength (), 0, this->mHint );
-					
+					format->Bind ( 0 );
 					count++;
 				}
+				
+				zglBindVertexArray ( 0 );
+				zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, 0 );
+				format->Unbind ();
 			}
 		}
 		
@@ -382,6 +391,17 @@ void MOAIVertexBuffer::OnInvalidate () {
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::OnLoad () {
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::OnUnbind () {
+
+	if ( this->mUseVBOs ) {
+		zglBindVertexArray ( 0 );
+	}
+	else if ( this->GetFormat ()) {
+		MOAIGfxDevice::Get ().SetVertexFormat ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -433,12 +453,4 @@ void MOAIVertexBuffer::Reserve ( u32 size, u32 gpuBuffers ) {
 	}
 	
 	this->Load ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::Unbind () {
-
-	if ( this->GetFormat ()) {
-		MOAIGfxDevice::Get ().SetVertexFormat ();
-	}
 }

@@ -500,10 +500,12 @@ u32 MOAIVectorDrawing::CountVertices () {
 //----------------------------------------------------------------//
 void MOAIVectorDrawing::Draw () {
 
-	if ( this->mVtxBuffer.Bind ()) {
-		if ( this->mIdxBuffer.LoadGfxState ()) {
-			zglDrawElements ( ZGL_PRIM_TRIANGLES, this->mIdxBuffer.GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
-		}
+	MOAIGfxDevice::Get ().Flush ();
+
+	if ( this->mVtxBuffer.Bind () && this->mIdxBuffer.Bind ()) {
+		zglDrawElements ( ZGL_PRIM_TRIANGLES, this->mIdxBuffer.GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
+		this->mIdxBuffer.Unbind ();
+		this->mVtxBuffer.Unbind ();
 	}
 }
 
@@ -541,7 +543,7 @@ void MOAIVectorDrawing::Finish () {
 		
 		if ( this->mShapeStack.GetTop () == shapesTop ) {
 			this->mVertexStack.Clear ();
-			this->Tessalate ();
+			this->Tesselate ();
 		}
 	}
 }
@@ -799,7 +801,7 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::Tessalate () {
+void MOAIVectorDrawing::Tesselate () {
 
 	mDepthOffset = 0.0f;
 
@@ -821,7 +823,7 @@ void MOAIVectorDrawing::Tessalate () {
 	this->mIdxBuffer.GetStream ().WriteStream ( this->mIdxStream );
 	
 	this->mVtxBuffer.SetDefaultFormat ( MOAIVertexFormatMgr::XYZC );
-	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength (), 0 );
+	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength (), 1 );
 	this->mVtxBuffer.GetStream ().WriteStream ( this->mVtxStream );
 	this->mVtxBuffer.Bless ();
 	

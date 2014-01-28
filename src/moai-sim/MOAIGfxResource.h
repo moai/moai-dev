@@ -63,6 +63,7 @@ protected:
 	virtual void	OnDestroy					() = 0; // destroy GPU-side resource - MAIN THREAD
 	virtual void	OnInvalidate				() = 0; // clear any handles or references to GPU-side resource - MAIN THREAD
 	virtual void	OnLoad						() = 0; // load or initialize any CPU-side resources required to create device resource - MAIN THREAD
+	virtual void	OnUnbind					() = 0; // unbind GPU-side resource - GRAPHICS THREAD
 
 public:
 
@@ -82,6 +83,7 @@ public:
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	bool			SoftRelease					( u32 age );
+	void			Unbind						();
 };
 
 #endif
