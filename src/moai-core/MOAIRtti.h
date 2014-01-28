@@ -193,21 +193,4 @@ public:
 	}
 };
 
-//----------------------------------------------------------------//
-template < typename TYPE >
-TYPE* MOAICast ( RTTIBase* object ) {
-
-	if ( object ) {
-		return object->AsType < TYPE >();
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-template < typename TYPE >
-TYPE* MOAICast ( RTTIBase& object ) {
-
-	return object.AsType < TYPE >();
-}
-
 #endif
