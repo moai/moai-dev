@@ -13,10 +13,18 @@
 */
 class MOAIGfxState :
 	public virtual MOAILuaObject {
+private:
+
+	friend class MOAIGfxDevice;
+
+	//----------------------------------------------------------------//
+	// this is for binding via the gfx device's cache; we need this since
+	// Bind () is supposed to be ignorant of
+	virtual bool		LoadGfxState			() { return false; }
+
 public:
 
 	//----------------------------------------------------------------//
-	virtual bool		LoadGfxState			() { return false; }
 						MOAIGfxState			();
 	virtual				~MOAIGfxState			();
 };

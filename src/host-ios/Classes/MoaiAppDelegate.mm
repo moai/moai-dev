@@ -44,6 +44,8 @@
 		
 		[ application setStatusBarHidden:true ];
 		
+		AKUAppInitialize ();
+		AKUModulesAppInitialize ();
 		AKUModulesIosAppInitialize ();
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
@@ -73,18 +75,30 @@
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
 		
-        // check to see if the app was lanuched from a remote notification
-        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+         // check for launch with local notification
+        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey ];
+        
+        // if we have a local notification bundle, send that to the app...
         if ( pushBundle != NULL ) {
-            
             AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+        } else {
+            // ...else check for a remote bundle
+            pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+            if ( pushBundle != NULL ) {
+                AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+            }
         }
 		
 		// return
 		return true;
 	}
 
-		
+	//----------------------------------------------------------------//
+    -( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
+    
+        AKUIosNotifyLocalNotificationReceived ( notification );
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
 		
@@ -104,14 +118,6 @@
 		AKUIosDidBecomeActive ();
 		[ mMoaiView pause:NO ];
 	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationDidEnterBackground:( UIApplication* )application {
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationWillEnterForeground:( UIApplication* )application {
-	}
 
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
@@ -125,8 +131,9 @@
 	-( void ) applicationWillTerminate :( UIApplication* )application {
         
 		AKUIosWillTerminate ();
-		
 		AKUModulesIosAppFinalize ();
+		AKUModulesAppFinalize ();
+		AKUAppFinalize ();
 	}
 
 	//----------------------------------------------------------------//

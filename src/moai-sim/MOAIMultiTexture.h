@@ -29,13 +29,13 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Clear					();
+	bool			LoadGfxState			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMultiTexture )
 	
 	//----------------------------------------------------------------//
-	bool			LoadGfxState			();
 					MOAIMultiTexture		();
 					~MOAIMultiTexture		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
