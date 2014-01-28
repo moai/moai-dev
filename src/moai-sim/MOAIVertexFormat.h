@@ -69,7 +69,7 @@ private:
 	static int		_declareUV						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			Bind							( void* buffer ) const;
+	void			Bind							( void* buffer ) const;
 	void			BindFixed						( void* buffer ) const;
 	void			BindProgrammable				( void* buffer ) const;
 	static u32		GetComponentSize				( u32 size, u32 type );

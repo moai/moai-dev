@@ -101,7 +101,7 @@
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
 	
 		// restart moai view
-		AKUIosDidStartSession ( true );
+		AKUIosDidBecomeActive ();
 		[ mMoaiView pause:NO ];
 	}
 	
@@ -112,19 +112,19 @@
 	//----------------------------------------------------------------//
 	-( void ) applicationWillEnterForeground:( UIApplication* )application {
 	}
-	
+
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
 	
 		// pause moai view
-		AKUIosWillEndSession ();
+		AKUIosWillResignActive ();
 		[ mMoaiView pause:YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
         
-		AKUIosWillEndSession ();
+		AKUIosWillTerminate ();
 		
 		AKUModulesIosAppFinalize ();
 	}
@@ -136,7 +136,7 @@
 		// For iOS 4.2+ support
 		-( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
 
-			AKUAppOpenFromURL ( url );
+			AKUIosOpenUrl ( url, [ sourceApplication UTF8String ]);
 			return YES;
 		}
 	
@@ -145,7 +145,7 @@
 		//----------------------------------------------------------------//
 		-( BOOL )application :( UIApplication* )application handleOpenURL :( NSURL* )url {
 
-			AKUIosOpenedFromURL ( url );
+			AKUIosOpenUrl ( url, 0 );
 			return YES;
 		}
 

@@ -55,7 +55,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	bool			Affirm						();
-	bool			Bind						();
 	bool			HasLoadScript				();
 	virtual bool	IsRenewable					() = 0; // return 'true' if resource has sufficient information to create GPU-side resource - MAIN THREAD
 	virtual void	OnBind						() = 0; // select GPU-side resource on device for use - GRAPHICS THREAD
@@ -72,6 +71,7 @@ public:
 	GET ( u32, State, mState );
 
 	//----------------------------------------------------------------//
+	bool			Bind						();
 	void			Clear						();
 	void			Destroy						();
 	void			Invalidate					();
