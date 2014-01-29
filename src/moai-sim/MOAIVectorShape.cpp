@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
@@ -159,7 +159,7 @@ void MOAIVectorShape::StrokeBoundaries ( TESStesselator* tess, TESStesselator* o
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
+void MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 	
 	u32 fillExtraID = this->mStyle.GetFillExtraID ();
 	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();

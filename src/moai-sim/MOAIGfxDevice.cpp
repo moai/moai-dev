@@ -1245,7 +1245,7 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 
-	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetPreset ( preset ));
+	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
 }
 
 //----------------------------------------------------------------//

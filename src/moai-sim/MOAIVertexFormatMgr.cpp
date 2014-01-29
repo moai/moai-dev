@@ -7,21 +7,41 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIVertexFormatMgr::_getFormat ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u32 formatID = state.GetValue < u32 >( 1, 0xffffffff );
+	
+	if ( formatID < TOTAL_FORMATS ) {
+	
+		MOAIVertexFormat& format = MOAIVertexFormatMgr::Get ().GetFormat ( formatID );
+		format.PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//================================================================//
 // MOAIVertexFormatMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexFormat& MOAIVertexFormatMgr::GetPreset ( u32 presetID ) {
+MOAIVertexFormat& MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 	
-	assert ( presetID < TOTAL_PRESETS );
-	MOAIVertexFormat* format = this->mFormats [ presetID ];
+	assert ( formatID < TOTAL_FORMATS );
+	MOAIVertexFormat* format = this->mFormats [ formatID ];
 	
 	if ( !format ) {
 
 		format = new MOAIVertexFormat ();
 		this->LuaRetain ( format );
 		
-		switch ( presetID ) {
+		switch ( formatID ) {
 			
 			case XYZC:
 				format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_VERTEX, false );
@@ -40,16 +60,16 @@ MOAIVertexFormat& MOAIVertexFormatMgr::GetPreset ( u32 presetID ) {
 				break;
 		}
 		
-		this->mFormats [ presetID ] = format;
+		this->mFormats [ formatID ] = format;
 	}
 	
 	return *format;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVertexFormatMgr::GetVertexSize ( u32 presetID ) {
+u32 MOAIVertexFormatMgr::GetVertexSize ( u32 formatID ) {
 
-	const MOAIVertexFormat& format = this->GetPreset ( presetID );
+	const MOAIVertexFormat& format = this->GetFormat ( formatID );
 	return format.GetVertexSize ();
 }
 
@@ -58,7 +78,7 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	for ( u32 i = 0; i < TOTAL_PRESETS; ++i ) {
+	for ( u32 i = 0; i < TOTAL_FORMATS; ++i ) {
 		this->mFormats [ i ] = 0;
 	}
 }
@@ -66,7 +86,7 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 //----------------------------------------------------------------//
 MOAIVertexFormatMgr::~MOAIVertexFormatMgr () {
 
-	for ( u32 i = 0; i < TOTAL_PRESETS; ++i ) {
+	for ( u32 i = 0; i < TOTAL_FORMATS; ++i ) {
 		if ( this->mFormats [ i ]) {
 			this->LuaRelease ( this->mFormats [ i ]);
 		}
@@ -75,7 +95,17 @@ MOAIVertexFormatMgr::~MOAIVertexFormatMgr () {
 
 //----------------------------------------------------------------//
 void MOAIVertexFormatMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	state.SetField ( -1, "XYZC",			( u32 )XYZC );
+	state.SetField ( -1, "XYZWC",			( u32 )XYZWC );
+	state.SetField ( -1, "XYZWUVC",			( u32 )XYZWUVC );
+	
+	luaL_Reg regTable [] = {
+		{ "getFormat",				_getFormat },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

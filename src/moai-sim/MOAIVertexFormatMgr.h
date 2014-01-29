@@ -17,12 +17,15 @@ public:
 		XYZC,
 		XYZWC,
 		XYZWUVC,
-		TOTAL_PRESETS,
+		TOTAL_FORMATS,
 	};
 
 private:
 	
-	MOAIVertexFormat* mFormats [ TOTAL_PRESETS ];
+	MOAIVertexFormat* mFormats [ TOTAL_FORMATS ];
+	
+	//----------------------------------------------------------------//
+	static int			_getFormat			( lua_State* L );
 	
 public:
 	
@@ -47,8 +50,8 @@ public:
 	DECL_LUA_SINGLETON ( MOAIVertexFormatMgr )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexFormat&		GetPreset					( u32 presetID );
-	u32						GetVertexSize				( u32 presetID );
+	MOAIVertexFormat&		GetFormat					( u32 formatID );
+	u32						GetVertexSize				( u32 formatID );
 							MOAIVertexFormatMgr			();
 							~MOAIVertexFormatMgr		();
 	void					RegisterLuaClass			( MOAILuaState& state );
