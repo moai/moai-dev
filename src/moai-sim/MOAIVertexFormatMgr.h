@@ -10,7 +10,7 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public MOAIGlobalClass < MOAIVertexFormatMgr > {
+	public MOAIGlobalClass < MOAIVertexFormatMgr, MOAILuaObject > {
 public:
 
 	enum {
@@ -22,7 +22,7 @@ public:
 
 private:
 	
-	MOAIVertexFormat mFormats [ TOTAL_PRESETS ];
+	MOAIVertexFormat* mFormats [ TOTAL_PRESETS ];
 	
 public:
 	
@@ -44,11 +44,15 @@ public:
 		XYZWUVC_SIZE,
 	};
 	
+	DECL_LUA_SINGLETON ( MOAIVertexFormatMgr )
+	
 	//----------------------------------------------------------------//
-	const MOAIVertexFormat&		GetPreset					( u32 presetID );
-	u32							GetVertexSize				( u32 presetID );
-								MOAIVertexFormatMgr			();
-								~MOAIVertexFormatMgr		();
+	MOAIVertexFormat&		GetPreset					( u32 presetID );
+	u32						GetVertexSize				( u32 presetID );
+							MOAIVertexFormatMgr			();
+							~MOAIVertexFormatMgr		();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

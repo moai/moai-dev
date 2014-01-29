@@ -161,6 +161,9 @@ void MOAIVectorShape::StrokeBoundaries ( TESStesselator* tess, TESStesselator* o
 //----------------------------------------------------------------//
 void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 	
+	u32 fillExtraID = this->mStyle.GetFillExtraID ();
+	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();
+	
 	if ( this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID ) {
 	
 		if ( this->mStyle.GetExtrude () > 0.0f ) {
@@ -170,7 +173,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 			this->AddFillContours ( skirt );
 			tessTesselate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
 			
-			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetFillColor ());
+			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetFillColor (), fillExtraID );
 			
 			tessDeleteTess ( skirt );
 		}
@@ -181,7 +184,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 		tessTesselate ( triangles, ( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
 		drawing.WriteTriangleIndices ( triangles, drawing.CountVertices ());
-		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mFillColor.PackRGBA ());
+		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
 		
 		tessDeleteTess ( triangles );
 	}
@@ -195,7 +198,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 			this->AddStrokeContours ( skirt );
 			tessTesselate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
 			
-			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetStrokeColor ());
+			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetStrokeColor (), strokeExtraID );
 			
 			tessDeleteTess ( skirt );
 		}
@@ -206,7 +209,7 @@ void MOAIVectorShape::Tessalate ( MOAIVectorDrawing& drawing ) {
 		tessTesselate ( triangles, TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
 		drawing.WriteTriangleIndices ( triangles, drawing.CountVertices ());
-		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mStrokeColor.PackRGBA ());
+		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
 		
 		tessDeleteTess ( triangles );
 	}

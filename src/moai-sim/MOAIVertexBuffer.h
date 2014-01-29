@@ -13,17 +13,14 @@ class MOAIVertexFormat;
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
-	public MOAILuaObject {
+	public MOAIStream {
 private:
 
-	static const u32 NULL_FORMAT = 0xffffffff;
-
-	u32										mDefaultFormat;
 	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
 	u32										mVertexCount;
 
 	ZLLeanArray < u8 >	mBuffer;
-	ZLByteStream		mStream;
+	ZLByteStream		mByteStream;
 	ZLBox				mBounds;
 	
 	//----------------------------------------------------------------//
@@ -43,23 +40,22 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
-	GET_SET ( u32, DefaultFormat, mDefaultFormat )
-	
 	GET ( const ZLBox&, Bounds, mBounds )
-	GET ( ZLStream&, Stream, mStream )
+	GET ( ZLStream&, Stream, mByteStream )
 	GET ( u32, VertexCount, mVertexCount )
+	GET ( MOAIVertexFormat*, Format, mFormat )
 	
 	//----------------------------------------------------------------//
 	bool						Bind					();
 	void						Bless					();
 	void						Clear					();
-	const MOAIVertexFormat*		GetFormat				();
 	bool						IsValid					();
 								MOAIVertexBuffer		();
 								~MOAIVertexBuffer		();
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	void						Reserve					( u32 size );
+	void						SetFormat				( MOAIVertexFormat* format );
 	void						Unbind					();
 };
 

@@ -73,6 +73,9 @@ public:
 	ZLAffine2D			mDrawingToWorld;
 	ZLAffine2D			mWorldToDrawing;
 	
+	u32					mFillExtraID;
+	u32					mStrokeExtraID;
+	
 	GET_SET_CONST ( u32, FillStyle, mFillStyle )
 	GET_SET_CONST ( ZLColorVec&, FillColor, mFillColor )
 	
@@ -103,6 +106,9 @@ public:
 	
 	GET_SET_CONST ( ZLAffine2D&, DrawingToWorld, mDrawingToWorld )
 	GET_SET_CONST ( ZLAffine2D&, WorldToDrawing, mWorldToDrawing )
+	
+	GET_SET_CONST ( u32, FillExtraID, mFillExtraID )
+	GET_SET_CONST ( u32, StrokeExtraID, mStrokeExtraID )
 	
 	//----------------------------------------------------------------//
 	void		Default						();

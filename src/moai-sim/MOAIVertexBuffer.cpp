@@ -88,7 +88,7 @@ int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 int MOAIVertexBuffer::_reset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mStream.SetBuffer ( self->mBuffer, self->mBuffer.Size ());
+	self->mByteStream.SetBuffer ( self->mBuffer, self->mBuffer.Size ());
 	
 	return 0;
 }
@@ -129,84 +129,8 @@ int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
 	float a = state.GetValue < float >( 5, 1.0f );
 	
 	u32 color = ZLColor::PackRGBA ( r, g, b, a );
-	self->mStream.Write < u32 >( color );
+	self->mByteStream.Write < u32 >( color );
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	writeFloat
-	@text	Write a 32-bit float to the vertex buffer.
-	
-	@in		MOAIVertexBuffer self
-	@opt	number f				Default value is 0.
-	@out	nil
-*/
-int MOAIVertexBuffer::_writeFloat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
-	
-	u32 top = state.GetTop ();
-	for ( u32 i = 2; i <= top; ++i ) {
-		float param = state.GetValue < float >( i, 0.0f );
-		self->mStream.Write < float >( param );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	writeInt8
-	@text	Write an 8-bit integer to the vertex buffer.
-	
-	@in		MOAIVertexBuffer self
-	@opt	number i				Default value is 0.
-	@out	nil
-*/
-int MOAIVertexBuffer::_writeInt8 ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
-	
-	u32 top = state.GetTop ();
-	for ( u32 i = 2; i <= top; ++i ) {
-		int param = state.GetValue < int >( i, 0 );
-		self->mStream.Write < s8 >(( s8 )param );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	writeInt16
-	@text	Write an 16-bit integer to the vertex buffer.
-	
-	@in		MOAIVertexBuffer self
-	@opt	number i				Default value is 0.
-	@out	nil
-*/
-int MOAIVertexBuffer::_writeInt16 ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
-	
-	u32 top = state.GetTop ();
-	for ( u32 i = 2; i <= top; ++i ) {
-		int param = state.GetValue < int >( i, 0 );
-		self->mStream.Write < s16 >(( s16 )param );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	writeInt32
-	@text	Write an 32-bit integer to the vertex buffer.
-	
-	@in		MOAIVertexBuffer self
-	@opt	number i				Default value is 0.
-	@out	nil
-*/
-int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
-	
-	u32 top = state.GetTop ();
-	for ( u32 i = 2; i <= top; ++i ) {
-		int param = state.GetValue < int >( i, 0 );
-		self->mStream.Write < s32 >(( s32 )param );
-	}
 	return 0;
 }
 
@@ -222,8 +146,8 @@ void MOAIVertexBuffer::Bless () {
 	
 	const MOAIVertexFormat* format = this->GetFormat ();
 	if ( format ) {
-		format->ComputeBounds ( this->mBuffer, this->mStream.GetLength (), this->mBounds );
-		this->mVertexCount = ( u32 )( this->mStream.GetLength () / format->GetVertexSize ());
+		format->ComputeBounds ( this->mBuffer, this->mByteStream.GetLength (), this->mBounds );
+		this->mVertexCount = ( u32 )( this->mByteStream.GetLength () / format->GetVertexSize ());
 	}
 }
 
@@ -246,27 +170,19 @@ void MOAIVertexBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-const MOAIVertexFormat* MOAIVertexBuffer::GetFormat () {
-
-	if ( this->mFormat ) return this->mFormat;
-	if ( this->mDefaultFormat != NULL_FORMAT ) return &MOAIVertexFormatMgr::Get ().GetPreset ( this->mDefaultFormat );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 bool MOAIVertexBuffer::IsValid () {
 
 	const MOAIVertexFormat* format = this->GetFormat ();
-	return ( format && this->mStream.GetLength ());
+	return ( format && this->mByteStream.GetLength ());
 }
 
 //----------------------------------------------------------------//
 MOAIVertexBuffer::MOAIVertexBuffer () :
-	mDefaultFormat ( NULL_FORMAT ),
 	mVertexCount ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIVertexBuffer )
+	RTTI_SINGLE ( MOAIStream )
 	
+	this->SetZLStream ( &this->mByteStream );
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -278,11 +194,14 @@ MOAIVertexBuffer::~MOAIVertexBuffer () {
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	MOAIStream::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIStream::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "bless",					_bless },
@@ -292,10 +211,6 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reset",					_reset },
 		{ "setFormat",				_setFormat },
 		{ "writeColor32",			_writeColor32 },
-		{ "writeFloat",				_writeFloat },
-		{ "writeInt8",				_writeInt8 },
-		{ "writeInt16",				_writeInt16 },
-		{ "writeInt32",				_writeInt32 },
 		{ NULL, NULL }
 	};
 	
@@ -306,7 +221,13 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIVertexBuffer::Reserve ( u32 size ) {
 
 	this->mBuffer.Init ( size );
-	this->mStream.SetBuffer ( this->mBuffer, size );
+	this->mByteStream.SetBuffer ( this->mBuffer, size );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SetFormat ( MOAIVertexFormat* format ) {
+
+	this->mFormat.Set ( *this, format );
 }
 
 //----------------------------------------------------------------//

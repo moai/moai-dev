@@ -310,7 +310,17 @@ MOAILuaObject::~MOAILuaObject () {
 		
 		if ( this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			
+			// clear out the gc
 			this->mUserdata.PushRef ( state );
+			if ( lua_getmetatable ( state, -1 )) {
+			
+				lua_pushnil ( state );
+				lua_setfield ( state, -2, "__gc" );
+				state.Pop ( 1 );
+			}
+			
+			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
 		}
@@ -358,7 +368,7 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 	// is, then refcount can remain 0 and the object will be
 	// collected by the Lua GC.
 
-	if (( this->mCollected ) && ( refCount == 0 )) {
+	if ( this->mCollected && ( refCount == 0 )) {
 		// no Lua binding and no references, so
 		// go ahead and kill this turkey
 		delete this;

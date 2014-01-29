@@ -244,6 +244,17 @@ int MOAIVectorDrawing::_pushVertex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_reserveVertexExtras ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+
+	u32 total		= state.GetValue < u32 >( 2, 0 );
+	size_t size		= state.GetValue < u32 >( 3, 0 );
+	
+	self->ReserveVertexExtras ( total, size );
+	return 0;	
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setCapStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
@@ -288,6 +299,14 @@ int MOAIVectorDrawing::_setFillStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
 	self->mStyle.mFillStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::FILL_NONE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setFillExtra ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mFillExtraID = state.GetValue < u32 >( 2, 1 ) - 1;
 	return 0;
 }
 
@@ -399,6 +418,14 @@ int MOAIVectorDrawing::_setStrokeDepthBias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorDrawing::_setStrokeExtra ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	self->mStyle.mStrokeExtraID =  state.GetValue < u32 >( 2, 1 ) - 1;
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorDrawing::_setStrokeStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 	
@@ -419,6 +446,29 @@ int MOAIVectorDrawing::_setVerbose ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
 
 	self->mVerbose = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setVertexExtra ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	u32 idx = state.GetValue < u32 >( 2, 1 )- 1;
+	
+	size_t len;
+	void* extra = ( void* )lua_tolstring ( state, 3, &len );
+	
+	self->SetVertexExtra ( idx, extra, len );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorDrawing::_setVertexFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorDrawing, "U" )
+	
+	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, true );
+	self->mVtxBuffer.SetFormat ( format );
 	return 0;
 }
 
@@ -481,6 +531,11 @@ void MOAIVectorDrawing::Clear () {
 	
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
+	
+	for ( u32 i = 0; i < this->mVtxExtras.Size (); ++i ) {
+		free ( this->mVtxExtras [ i ]);
+	}
+	this->mVtxExtraSize = 0;
 }
 
 //----------------------------------------------------------------//
@@ -557,6 +612,10 @@ MOAIVectorDrawing::MOAIVectorDrawing () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
+	
+	// TODO: make this into a template for composing Lua-bound classes and for safe use on the stack
+	this->mVtxBuffer.Retain (); // prefent the vertex buffer from being deleted by gc or ref count
+	this->mVtxBuffer.SetFormat ( &MOAIVertexFormatMgr::Get ().GetPreset ( MOAIVertexFormatMgr::XYZC ));
 }
 
 //----------------------------------------------------------------//
@@ -767,12 +826,14 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushTransform",			_pushTransform },
 		{ "pushTranslate",			_pushTranslate },
 		{ "pushVertex",				_pushVertex },
+		{ "reserveVertexExtras",	_reserveVertexExtras },
 		{ "setCapStyle",			_setCapStyle },
 		{ "setCircleResolution",	_setCircleResolution },
 		{ "setDepthBias",			_setDepthBias },
 		{ "setExtrude",				_setExtrude },
 		{ "setFillColor",			_setFillColor },
 		{ "setFillStyle",			_setFillStyle },
+		{ "setFillExtra",			_setFillExtra },
 		{ "setJoinStyle",			_setJoinStyle },
 		{ "setLightColor",			_setLightColor },
 		{ "setLightCurve",			_setLightCurve },
@@ -786,9 +847,12 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setShadowCurve",			_setShadowCurve },
 		{ "setStrokeColor",			_setStrokeColor },
 		{ "setStrokeDepthBias",		_setStrokeDepthBias },
+		{ "setStrokeExtra",			_setStrokeExtra },
 		{ "setStrokeStyle",			_setStrokeStyle },
 		{ "setStrokeWidth",			_setStrokeWidth },
 		{ "setVerbose",				_setVerbose },
+		{ "setVertexExtra",			_setVertexExtra },
+		{ "setVertexFormat",		_setVertexFormat },
 		{ "setWindingRule",			_setWindingRule },
 		{ "worldToDrawing",			_worldToDrawing },
 		{ "worldToDrawingVec",		_worldToDrawingVec },
@@ -796,6 +860,26 @@ void MOAIVectorDrawing::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::ReserveVertexExtras ( u32 total, size_t size ) {
+
+	this->mVtxExtraSize = size;
+	this->mVtxExtras.Init ( total );
+	
+	for ( u32 i = 0; i < this->mVtxExtras.Size (); ++i ) {
+		this->mVtxExtras [ i ] = calloc ( 1, this->mVtxExtraSize );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorDrawing::SetVertexExtra ( u32 idx, void* extra, size_t size ) {
+
+	size = size <= this->mVtxExtraSize ? size : this->mVtxExtraSize;
+	if ( idx < this->mVtxExtras.Size ()) {
+		memcpy ( this->mVtxExtras [ idx ], extra, size );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -820,7 +904,7 @@ void MOAIVectorDrawing::Tessalate () {
 	this->mIdxBuffer.ReserveIndices ( this->mIdxStream.GetLength () >> 2 );
 	this->mIdxBuffer.GetStream ().WriteStream ( this->mIdxStream );
 	
-	this->mVtxBuffer.SetDefaultFormat ( MOAIVertexFormatMgr::XYZC );
+	this->mVtxBuffer.SetFormat ( &MOAIVertexFormatMgr::Get ().GetPreset ( MOAIVertexFormatMgr::XYZC ));
 	this->mVtxBuffer.Reserve ( this->mVtxStream.GetLength ());
 	this->mVtxBuffer.GetStream ().WriteStream ( this->mVtxStream );
 	this->mVtxBuffer.Bless ();
@@ -846,7 +930,7 @@ void MOAIVectorDrawing::WriteContourIndices ( TESStesselator* tess, u32 base ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::WriteSkirt ( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor ) {
+void MOAIVectorDrawing::WriteSkirt ( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
 
 	u32 base = this->CountVertices ();
 	float z = style.GetExtrude ();
@@ -902,10 +986,10 @@ void MOAIVectorDrawing::WriteSkirt ( TESStesselator* tess, const MOAIVectorStyle
 				color32 = color.PackRGBA ();
 			}
 			
-			this->WriteVertex ( v0.mX, v0.mY, 0.0f, color32 );
-			this->WriteVertex ( v1.mX, v1.mY, 0.0f, color32 );
-			this->WriteVertex ( v0.mX, v0.mY, z, color32 );
-			this->WriteVertex ( v1.mX, v1.mY, z, color32 );
+			this->WriteVertex ( v0.mX, v0.mY, 0.0f, color32, vertexExtraID );
+			this->WriteVertex ( v1.mX, v1.mY, 0.0f, color32, vertexExtraID );
+			this->WriteVertex ( v0.mX, v0.mY, z, color32, vertexExtraID );
+			this->WriteVertex ( v1.mX, v1.mY, z, color32, vertexExtraID );
 			
 			this->mIdxStream.Write < u32 >( base + 0 );
 			this->mIdxStream.Write < u32 >( base + 1 );
@@ -948,16 +1032,21 @@ void MOAIVectorDrawing::WriteTriangleIndices ( TESStesselator* tess, u32 base ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::WriteVertex ( float x, float y, float z, u32 color ) {
+void MOAIVectorDrawing::WriteVertex ( float x, float y, float z, u32 color, u32 vertexExtraID ) {
 
 	this->mVtxStream.Write < float >( x );
 	this->mVtxStream.Write < float >( y );
 	this->mVtxStream.Write < float >( z );
 	this->mVtxStream.Write < u32 >( color );
+	
+	if ( this->mVtxExtraSize ) {
+		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
+		this->mVtxStream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color ) {
+void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color, u32 vertexExtraID ) {
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
@@ -975,7 +1064,7 @@ void MOAIVectorDrawing::WriteVertices ( TESStesselator* tess, float z, u32 color
 		if ( this->mVerbose ) {
 			MOAIPrint ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}
-		this->WriteVertex ( vert.mX, vert.mY, z, color );
+		this->WriteVertex ( vert.mX, vert.mY, z, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {

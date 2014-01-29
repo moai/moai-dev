@@ -42,6 +42,9 @@ private:
 
 	ZLLeanStack < ZLAffine2D, 16 > mMatrixStack;
 
+	size_t					mVtxExtraSize;
+	ZLLeanArray < void* >	mVtxExtras;
+
 	//----------------------------------------------------------------//
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
@@ -58,12 +61,14 @@ private:
 	static int		_pushTransform			( lua_State* L );
 	static int		_pushTranslate			( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
+	static int		_reserveVertexExtras	( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
 	static int		_setDepthBias			( lua_State* L );
 	static int		_setExtrude				( lua_State* L );
 	static int		_setFillColor			( lua_State* L );
 	static int		_setFillStyle			( lua_State* L );
+	static int		_setFillExtra			( lua_State* L );
 	static int		_setJoinStyle			( lua_State* L );
 	static int		_setLightColor			( lua_State* L );
 	static int		_setLightCurve			( lua_State* L );
@@ -77,9 +82,12 @@ private:
 	static int		_setShadowCurve			( lua_State* L );
 	static int		_setStrokeColor			( lua_State* L );
 	static int		_setStrokeDepthBias		( lua_State* L );
+	static int		_setStrokeExtra			( lua_State* L );
 	static int		_setStrokeStyle			( lua_State* L );
 	static int		_setStrokeWidth			( lua_State* L );
 	static int		_setVerbose				( lua_State* L );
+	static int		_setVertexExtra			( lua_State* L );
+	static int		_setVertexFormat		( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
 	static int		_worldToDrawingVec		( lua_State* L );
@@ -87,7 +95,7 @@ private:
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
 	void			Tessalate				();
-	void			WriteVertex				( float x, float y, float z, u32 color );
+	void			WriteVertex				( float x, float y, float z, u32 color, u32 vertexExtraID );
 	
 public:
 	
@@ -123,10 +131,12 @@ public:
 	void			PushVertex				( float x, float y );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			ReserveVertexExtras		( u32 total, size_t size );
+	void			SetVertexExtra			( u32 idx, void* extra, size_t size );
 	void			WriteContourIndices		( TESStesselator* tess, u32 base );
-	void			WriteSkirt				( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor );
+	void			WriteSkirt				( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void			WriteTriangleIndices	( TESStesselator* tess, u32 base );
-	void			WriteVertices			( TESStesselator* tess, float z, u32 color );
+	void			WriteVertices			( TESStesselator* tess, float z, u32 color, u32 vertexExtraID );
 };
 
 #endif

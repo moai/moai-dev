@@ -19,17 +19,6 @@
 FILE* ZLLog::CONSOLE = 0;
 
 //----------------------------------------------------------------//
-void ZLLog::Print ( cc8* format, ... ) {
-
-	va_list args;
-	va_start ( args, format );	
-	
-	ZLLog::PrintV ( ZLLog::CONSOLE, format, args );
-	
-	va_end ( args );
-}
-
-//----------------------------------------------------------------//
 void ZLLog::Print ( FILE* file, cc8* format, ... ) {
 
 	va_list args;
