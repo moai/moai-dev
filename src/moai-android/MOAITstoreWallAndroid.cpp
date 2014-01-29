@@ -46,13 +46,13 @@ int MOAITstoreWallAndroid::_showOfferWall ( lua_State* L ) {
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreWall" );
     if ( tstore == NULL ) {
 	
-		ZLLog::Print ( "MOAITstoreWallAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreWall" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITstoreWallAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTstoreWall" );
     } else {
 
     	jmethodID showOfferWall = env->GetStaticMethodID ( tstore, "showOfferWall", "()V" );
     	if ( showOfferWall == NULL ) {
 
-			ZLLog::Print ( "MOAITstoreWallAndroid: Unable to find static java method %s", "showOfferWall" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITstoreWallAndroid: Unable to find static java method %s", "showOfferWall" );
     	} else {
 
 			env->CallStaticVoidMethod ( tstore, showOfferWall );				

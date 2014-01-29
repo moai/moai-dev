@@ -300,7 +300,7 @@ void MOAIHttpTaskCurl::PerformSync () {
 void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
 
 	if ( error ) {
-		ZLLog::Print ( "%s\n", curl_easy_strerror ( error ));
+		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", curl_easy_strerror ( error ));
 	}
 }
 

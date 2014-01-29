@@ -11,11 +11,11 @@
 class ZLLog {
 public:
 
-	static FILE* CONSOLE;
+	static void* CONSOLE;
 
 	//----------------------------------------------------------------//
-	static void	Print		( FILE* file, cc8* format, ... );
-	static void	PrintV		( FILE* file, cc8* format, va_list args );
+	static void	LogF		( void* file, cc8* format, ... );
+	static void	LogV		( void* file, cc8* format, va_list args );
 };
 
 #endif

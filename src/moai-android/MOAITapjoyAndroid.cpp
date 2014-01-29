@@ -32,13 +32,13 @@ int MOAITapjoyAndroid::_getUserId ( lua_State *L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		ZLLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID getUserId = env->GetStaticMethodID ( tapjoy, "getUserId", "()Ljava/lang/String;" );
     	if ( getUserId == NULL ) {
 
-			ZLLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "getUserId" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "getUserId" );
     	} else {
 
 			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( tapjoy, getUserId );	
@@ -74,13 +74,13 @@ int MOAITapjoyAndroid::_initVideoAds ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		ZLLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID initVideoAds = env->GetStaticMethodID ( tapjoy, "initVideoAds", "()V" );
     	if ( initVideoAds == NULL ) {
 
-			ZLLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "initVideoAds" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "initVideoAds" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, initVideoAds );
@@ -91,7 +91,7 @@ int MOAITapjoyAndroid::_initVideoAds ( lua_State* L ) {
 				jmethodID setVideoAdCacheCount = env->GetStaticMethodID ( tapjoy, "setVideoAdCacheCount", "(I)V" );
 	    		if ( setVideoAdCacheCount == NULL ) {
 
-					ZLLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "setVideoAdCacheCount" );
+					ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "setVideoAdCacheCount" );
 	    		} else {
 
 					env->CallStaticVoidMethod ( tapjoy, setVideoAdCacheCount, count );
@@ -126,13 +126,13 @@ int MOAITapjoyAndroid::_init ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		ZLLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( tapjoy, "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			ZLLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "init" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, init, jidentifier, jsecret );				
@@ -172,13 +172,13 @@ int MOAITapjoyAndroid::_showOffers ( lua_State* L ) {
 	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
     if ( tapjoy == NULL ) {
 	
-		ZLLog::Print ( "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
     } else {
 
     	jmethodID showOffers = env->GetStaticMethodID ( tapjoy, "showOffers", "()V" );
     	if ( showOffers == NULL ) {
 
-			ZLLog::Print ( "MOAITapjoyAndroid: Unable to find static java method %s", "showOffers" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "showOffers" );
     	} else {
 
 			env->CallStaticVoidMethod ( tapjoy, showOffers );				
