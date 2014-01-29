@@ -6,7 +6,7 @@ project ( luasocket )
     set ( LUASOCKET_PLAT ${MOAI_ROOT}/3rdparty/luasocket-2.0.2/src/usocket.c )
   endif ( BUILD_WINDOWS )
 
- include_directories ( ${MOAI_ROOT}/3rdparty/luasocket-2.0.2/src )
+ include_directories ( ${MOAI_ROOT}/3rdparty/luasocket-2.0.2/src ${LUA_HEADERS})
   
   add_library ( luasocket STATIC
       ${MOAI_ROOT}/3rdparty/luasocket-2.0.2-embed/fullluasocket.c
@@ -27,6 +27,9 @@ project ( luasocket )
   )
         
   target_link_libraries ( luasocket liblua-static )
+
+  target_include_directories ( luasocket PUBLIC ${LUA_HEADERS})
+  
    if ( BUILD_WINDOWS )
      target_link_libraries( luasocket Ws2_32 )
    endif (BUILD_WINDOWS)

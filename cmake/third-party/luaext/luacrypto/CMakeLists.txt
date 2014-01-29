@@ -7,3 +7,4 @@ set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
 
 add_library (luacrypto STATIC ${LUAEXT_SOURCES})
 target_link_libraries ( luacrypto crypto liblua-static )
+target_include_directories ( luacrypto PUBLIC ${LUA_HEADERS})
