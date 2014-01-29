@@ -27,11 +27,11 @@ private:
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 	bool									mPolyClosed;
 
-	ZLMemStream			mIdxStream;
-	ZLMemStream			mVtxStream;
+	ZLMemStream								mIdxStream;
+	ZLMemStream								mVtxStream;
 
-	MOAIIndexBuffer		mIdxBuffer;
-	MOAIVertexBuffer	mVtxBuffer;
+	MOAILuaLocal < MOAIIndexBuffer >		mIdxBuffer;
+	MOAILuaLocal < MOAIVertexBuffer >		mVtxBuffer;
 	
 	float				mDepthBias;
 	float				mDepthOffset;
