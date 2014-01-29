@@ -1015,6 +1015,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\moai-core\MOAILuaLocal.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\moai-core\MOAILuaObject.cpp"
 			>
 		</File>

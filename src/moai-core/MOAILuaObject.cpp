@@ -39,7 +39,6 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
-		MOAILuaRuntime::Get ().DeregisterObject ( *self );
 	}
 	
 	if ( self->GetRefCount () == 0 ) {
@@ -313,16 +312,17 @@ MOAILuaObject::~MOAILuaObject () {
 			
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
-			//if ( lua_getmetatable ( state, -1 )) {
-			//
-			//	lua_pushnil ( state );
-			//	lua_setfield ( state, -2, "__gc" );
-			//	state.Pop ( 1 );
-			//}
+			if ( lua_getmetatable ( state, -1 )) {
+				lua_pushnil ( state );
+				lua_setfield ( state, -2, "__gc" );
+				state.Pop ( 1 );
+			}
 			
 			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
+			
+			MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		}
 	}
 }
