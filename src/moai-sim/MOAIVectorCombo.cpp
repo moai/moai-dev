@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <tesselator.h>
 

@@ -1,25 +1,30 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIVECTORDRAWING_H
-#define	MOAIVECTORDRAWING_H
+#ifndef	MOAIVECTORTESSELATOR_H
+#define	MOAIVECTORTESSELATOR_H
 
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorStyle.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 
+class MOAIIndexBuffer;
 class MOAIVectorShape;
+class MOAIVertexBuffer;
+
 struct TESStesselator;
 
 //================================================================//
-// MOAIVectorDrawing
+// MOAIVectorTesselator
 //================================================================//
-/**	@name	MOAIVectorImage
-	@text	Display object made of vector shapes.
+/**	@name	MOAIVectorTessalator
+	@text	Convert vector primitives into triangles.
 */
-class MOAIVectorDrawing :
+class MOAIVectorTesselator :
 	public MOAILuaObject {
 private:
+
+	enum {
+		VERTEX_SIZE = 16,
+	};
 
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
@@ -27,11 +32,8 @@ private:
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 	bool									mPolyClosed;
 
-	ZLMemStream								mIdxStream;
-	ZLMemStream								mVtxStream;
-
-	MOAILuaLocal < MOAIIndexBuffer >		mIdxBuffer;
-	MOAILuaLocal < MOAIVertexBuffer >		mVtxBuffer;
+	ZLMemStream			mIdxStream;
+	ZLMemStream			mVtxStream;
 	
 	float				mDepthBias;
 	float				mDepthOffset;
@@ -50,6 +52,7 @@ private:
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
+	static int		_getTriangles			( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
@@ -87,56 +90,53 @@ private:
 	static int		_setStrokeWidth			( lua_State* L );
 	static int		_setVerbose				( lua_State* L );
 	static int		_setVertexExtra			( lua_State* L );
-	static int		_setVertexFormat		( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
 	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			Tessalate				();
+	void			Tesselate				();
 	void			WriteVertex				( float x, float y, float z, u32 color, u32 vertexExtraID );
 	
 public:
 	
-	DECL_LUA_FACTORY ( MOAIVectorDrawing )
+	DECL_LUA_FACTORY ( MOAIVectorTesselator )
 	
 	GET_SET ( MOAIVectorStyle&, Style, mStyle )
 	GET_SET ( bool, Verbose, mVerbose )
 	GET_SET ( bool, PolyClosed, mPolyClosed )
 	GET_SET ( float, DepthBias, mDepthBias )
 	
-	GET ( const ZLBox&, Bounds, mVtxBuffer.GetBounds ())
-	
 	//----------------------------------------------------------------//
-	void			Clear					();
-	void			ClearTransforms			();
-	u32				CountVertices			();
-	void			Draw					();
-	void			Finish					();
-					MOAIVectorDrawing		();
-					~MOAIVectorDrawing		();
-	void			PopTransform			();
-	void			PushBezierVertices		( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
-	void			PushCombo				();
-	void			PushEllipse				( float x, float y, float xRad, float yRad );
-	void			PushPoly				( ZLVec2D* vertices, u32 total, bool closed );
-	void			PushRect				( float xMin, float yMin, float xMax, float yMax );
-	void			PushRotate				( float x, float y, float r );
-	void			PushScale				( float x, float y );
-	void			PushSkew				( float yx, float xy );
-	void			PushTransform			( const ZLAffine2D& transform );
-	void			PushTransform			( float a, float b, float c, float d, float tx, float ty );
-	void			PushTranslate			( float x, float y);
-	void			PushVertex				( float x, float y );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReserveVertexExtras		( u32 total, size_t size );
-	void			SetVertexExtra			( u32 idx, void* extra, size_t size );
-	void			WriteContourIndices		( TESStesselator* tess, u32 base );
-	void			WriteSkirt				( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
-	void			WriteTriangleIndices	( TESStesselator* tess, u32 base );
-	void			WriteVertices			( TESStesselator* tess, float z, u32 color, u32 vertexExtraID );
+	void			Clear						();
+	void			ClearTransforms				();
+	u32				CountVertices				();
+	void			Finish						();
+	void			GetTriangles				( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
+					MOAIVectorTesselator		();
+					~MOAIVectorTesselator		();
+	void			PopTransform				();
+	void			PushBezierVertices			( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
+	void			PushCombo					();
+	void			PushEllipse					( float x, float y, float xRad, float yRad );
+	void			PushPoly					( ZLVec2D* vertices, u32 total, bool closed );
+	void			PushRect					( float xMin, float yMin, float xMax, float yMax );
+	void			PushRotate					( float x, float y, float r );
+	void			PushScale					( float x, float y );
+	void			PushSkew					( float yx, float xy );
+	void			PushTransform				( const ZLAffine2D& transform );
+	void			PushTransform				( float a, float b, float c, float d, float tx, float ty );
+	void			PushTranslate				( float x, float y);
+	void			PushVertex					( float x, float y );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			ReserveVertexExtras			( u32 total, size_t size );
+	void			SetVertexExtra				( u32 idx, void* extra, size_t size );
+	void			WriteContourIndices			( TESStesselator* tess, u32 base );
+	void			WriteSkirt					( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
+	void			WriteTriangleIndices		( TESStesselator* tess, u32 base );
+	void			WriteVertices				( TESStesselator* tess, float z, u32 color, u32 vertexExtraID );
 };
 
 #endif
