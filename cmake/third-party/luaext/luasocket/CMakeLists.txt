@@ -26,9 +26,10 @@ project ( luasocket )
     ${LUASOCKET_PLAT}
   )
         
-  target_link_libraries ( luasocket liblua-static )
+  target_link_libraries ( luasocket ${LUA_LIB} )
 
   target_include_directories ( luasocket PUBLIC ${LUA_HEADERS})
+  add_dependencies ( luasocket lualib-static)
   
    if ( BUILD_WINDOWS )
      target_link_libraries( luasocket Ws2_32 )

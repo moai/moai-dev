@@ -14,6 +14,7 @@ add_subdirectory ( jansson )
 add_subdirectory ( jpg )
 
 set (LUA_HEADERS "")
+set (LUA_LIB "")
 #Lua or LuaJit?
 if (MOAI_LUAJIT)
 #	if ( BUILD_IOS )#
@@ -25,7 +26,7 @@ else()
 	add_subdirectory ( lua )
 endif (MOAI_LUAJIT)
 set (LUA_HEADERS ${LUA_HEADERS} PARENT_SCOPE)
-
+set (LUA_LIB ${LUA_LIB} PARENT_SCOPE)
 
 
 

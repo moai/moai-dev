@@ -27,6 +27,7 @@ add_library ( moai-core STATIC ${MOAI_CORE_SRC} )
 #get_target_property ( LUA_HEADERS liblua-static INCLUDE_DIRECTORIES )
 target_include_directories ( moai-core PUBLIC ${MOAI_CORE_INCLUDES} ${LUA_HEADERS} )
 
-target_link_libraries ( moai-core zlcore liblua-static )
+target_link_libraries ( moai-core zlcore ${LUA_LIB})
+add_dependencies ( moai-core liblua-static)
 
 

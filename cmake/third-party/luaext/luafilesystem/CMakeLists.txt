@@ -5,5 +5,6 @@
   )
 
  add_library (luafilesystem STATIC ${LUAEXT_SOURCES})
- target_link_libraries ( luafilesystem liblua-static )
+ target_link_libraries ( luafilesystem ${LUA_LIB} )
+ add_dependencies ( luafilesystem lualib-static)
  target_include_directories ( luafilesystem PUBLIC ${LUA_HEADERS})

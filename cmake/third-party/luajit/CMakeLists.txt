@@ -84,12 +84,13 @@ cmake_minimum_required(VERSION 2.8)
         DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit #${PROJECT_BINARY_DIR}/CMakeCache.txt
     ) 
     
-    add_custom_target(libluajit
+    add_custom_target(liblua-static
         DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
     )
 
-    add_library(liblua-static STATIC IMPORTED)
-    set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
-    add_dependencies(liblua-static libluajit)
+    #add_library(liblua-static STATIC IMPORTED)
+    #set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
+    #add_dependencies(liblua-static libluajit)
 
     set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
+    set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )

@@ -5,5 +5,6 @@
  )
  
  add_library (luacurl STATIC ${LUAEXT_SOURCES})
- target_link_libraries ( luacurl curl liblua-static )
+ target_link_libraries ( luacurl curl ${LUA_LIB} )
+ add_dependencies ( luacurl lualib-static)
  target_include_directories ( luacurl PUBLIC ${LUA_HEADERS})

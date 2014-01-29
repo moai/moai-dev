@@ -7,6 +7,7 @@
     )
 
  add_library (luasql STATIC ${LUAEXT_SOURCES})
- target_link_libraries ( luasql sqlite3 liblua-static )
+ target_link_libraries ( luasql sqlite3 ${LUA_LIB} )
+ add_dependencies ( luasql lualib-static)
 
  target_include_directories ( luasql PUBLIC ${LUA_HEADERS})
