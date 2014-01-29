@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 2.8)
 # To explicitly request use of LuaJIT at a given
 
 
-    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/luajit-2.0.2")
+    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.1")
     set (LUAJIT_INCLUDE "${CURRENT_BINARY_DIRECTORY}/luajit/src")
 
     set (luajit_buildoptions BUILDMODE=static)
@@ -39,6 +39,8 @@ cmake_minimum_required(VERSION 2.8)
         set(MAKE_COMMAND "make")
     endif()
 
+    set(GCC_FORCE_32BIT True)
+
     if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
         # Regular mode - use CMake compiler for building host utils.
         set (luajit_host_cc ${CMAKE_C_COMPILER})
@@ -48,32 +50,43 @@ cmake_minimum_required(VERSION 2.8)
         # we have to use system CC here.
         set (luajit_host_cc "cc")
     endif()
+    set(CFLAGS "")
+    if (GCC_FORCE_32BIT)
+        set (luajit_target_cc "${luajit_target_cc}")
+        set (CFLAGS "-m32")
+        set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -m32")
+    endif(GCC_FORCE_32BIT)
     if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64" AND
-            ${CMAKE_SIZEOF_VOID_P} EQUAL 4)
+            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 AND NOT GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
         set (luajit_host_cc "${luajit_host_cc} -m32")
+      
     endif()
     set(luajit_ldflags "${CMAKE_SHARED_LINKER_FLAGS}")
+    separate_arguments(CFLAGS)
     separate_arguments(luajit_copt)
     separate_arguments(luajit_ldflags)
     separate_arguments(luajit_host_cc)
     separate_arguments(luajit_target_cc)
     set (luajit_buildoptions ${luajit_buildoptions}
-        CFLAGS=""
-        CXXFLAGS=""
-        HOST_CC="${luajit_host_cc}"
-        TARGET_CC="${luajit_target_cc}"
-        CCOPT="${luajit_copt}")
-    set (luajit_buildoptions ${luajit_buildoptions} Q='' LDFLAGS="${luajit_ldflags}")
+        CFLAGS="${CFLAGS}"
+   #     CXXFLAGS=""
+   #     HOST_CC="${luajit_host_cc}"
+   #     TARGET_CC="${luajit_target_cc}"
+   #     CCOPT="${luajit_copt}"
+   )
+    set (luajit_buildoptions ${luajit_buildoptions}  LDFLAGS="${luajit_ldflags}") #Q=''
     
     add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/luajit
         COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_BINARY_DIR}/luajit"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory  ${LUAJIT_ROOT} "${PROJECT_BINARY_DIR}/luajit"
     )
+    message("options: ${luajit_buildoptions}")
+    message("make $(MAKE) ${luajit_buildoptions} VERBOSE=1")
     add_custom_command(OUTPUT ${PROJECT_BINARY_DIR}/luajit/src/libluajit.a
-        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/luajit
-        COMMAND ${CMAKE_COMMAND} -E copy_directory  ${LUAJIT_ROOT}/* .
-        COMMAND ${MAKE_COMMAND}  clean  ${luajit_buildoptions}
-        COMMAND ${MAKE_COMMAND} -C src ${luajit_buildoptions}
+        WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/luajit/src
+        COMMAND $(MAKE) clean ${luajit_buildoptions}
+        COMMAND $(MAKE) ${luajit_buildoptions} 
         DEPENDS ${PROJECT_BINARY_DIR}/CMakeCache.txt ${PROJECT_BINARY_DIR}/luajit
     )
     
