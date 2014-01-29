@@ -16,24 +16,24 @@
 // ZLLog
 //================================================================//
 
-FILE* ZLLog::CONSOLE = 0;
+void* ZLLog::CONSOLE = 0;
 
 //----------------------------------------------------------------//
-void ZLLog::Print ( FILE* file, cc8* format, ... ) {
+void ZLLog::LogF ( void* file, cc8* format, ... ) {
 
 	va_list args;
 	va_start ( args, format );	
 	
-	ZLLog::PrintV ( file, format, args );
+	ZLLog::LogV ( file, format, args );
 	
 	va_end ( args );
 }
 
 //----------------------------------------------------------------//
-void ZLLog::PrintV ( FILE* file, cc8* format, va_list args ) {
+void ZLLog::LogV ( void* file, cc8* format, va_list args ) {
 	
 	if ( file ) {
-		vfprintf ( file, format, args );
+		vfprintf (( FILE* )file, format, args );
 	}
 	else {
 		#ifdef ANDROID

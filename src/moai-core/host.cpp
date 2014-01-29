@@ -231,10 +231,10 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
 
-	ZLLog::Print ( "Attempting to load and run file %s\n", filename );
+	ZLLog::LogF ( ZLLog::CONSOLE, "Attempting to load and run file %s\n", filename );
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) {
-		ZLLog::Print ( "Could not find file %s \n", filename );
+		ZLLog::LogF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
 		return;
 	}
 
