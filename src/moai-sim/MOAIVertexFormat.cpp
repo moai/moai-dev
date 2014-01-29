@@ -28,7 +28,7 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	bool normalized		= state.GetValue < bool >( 5, false );
 
-	self->DeclareAttribute ( index, type, size, 0, normalized );
+	self->DeclareAttribute ( index, type, size, NULL_INDEX, normalized );
 	
 	return 0;
 }
@@ -180,7 +180,7 @@ void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
 
 		void* addr = ( void* )(( size_t )buffer + attr.mOffset );
-		zglVertexAttribPointer (	attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
+		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
 		zglEnableVertexAttribArray ( attr.mIndex );
 	}
 }

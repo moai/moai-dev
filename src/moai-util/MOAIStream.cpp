@@ -174,7 +174,7 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 /**	@name	readFormat
 	@text	Reads a series of values from the stream given a format string.
 			Valid tokens for the format string are: u8 u16 u32 f d s8 s16 s32.
-			Tokens may be optionally separated by spaces of commas.
+			Tokens may be optionally separated by spaces or commas.
 	
 	@in		MOAIStream self
 	@in		string format

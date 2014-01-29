@@ -25,8 +25,8 @@ public:
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
-	public virtual MOAILuaObject,
-	public MOAIGfxResource {
+	public MOAIGfxResource,
+	public MOAIStream {
 private:
 
 	static const u32 NULL_FORMAT = 0xffffffff;
@@ -56,10 +56,6 @@ private:
 	static int		_reset					( lua_State* L );
 	static int		_setFormat				( lua_State* L );
 	static int		_writeColor32			( lua_State* L );
-	static int		_writeFloat				( lua_State* L );
-	static int		_writeInt8				( lua_State* L );
-	static int		_writeInt16				( lua_State* L );
-	static int		_writeInt32				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool			IsRenewable				();
@@ -76,8 +72,6 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
-	GET_SET ( u32, DefaultFormat, mDefaultFormat )
-	
 	GET ( const ZLBox&, Bounds, mBounds )
 	GET ( ZLStream&, Stream, mStream )
 	GET ( u32, VertexCount, mVertexCount )
@@ -90,7 +84,8 @@ public:
 								~MOAIVertexBuffer		();
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
-	void						Reserve					( u32 size, u32 gpuBuffers );
+	void						Reserve					( u32 size );
+	void						ReserveVBOs				( u32 gpuBuffers );
 };
 
 #endif

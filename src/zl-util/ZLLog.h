@@ -14,7 +14,6 @@ public:
 	static FILE* CONSOLE;
 
 	//----------------------------------------------------------------//
-	static void	Print		( cc8* format, ... );
 	static void	Print		( FILE* file, cc8* format, ... );
 	static void	PrintV		( FILE* file, cc8* format, va_list args );
 };
