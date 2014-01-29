@@ -605,7 +605,8 @@ void MOAIVectorDrawing::Finish () {
 MOAIVectorDrawing::MOAIVectorDrawing () :
 	mDepthBias ( 0.0f ),
 	mDepthOffset ( 0.0f ),
-	mVerbose ( false ) {
+	mVerbose ( false ),
+	mVtxExtraSize ( 0 ) {
 	
 	this->mStyle.Default ();
 	
@@ -614,8 +615,8 @@ MOAIVectorDrawing::MOAIVectorDrawing () :
 	RTTI_END
 	
 	// TODO: make this into a template for composing Lua-bound classes and for safe use on the stack
-	this->mVtxBuffer.Retain (); // prefent the vertex buffer from being deleted by gc or ref count
-	this->mVtxBuffer.SetFormat ( &MOAIVertexFormatMgr::Get ().GetPreset ( MOAIVertexFormatMgr::XYZC ));
+	//this->mVtxBuffer.Retain (); // prefent the vertex buffer from being deleted by gc or ref count
+	//this->mVtxBuffer.SetFormat ( &MOAIVertexFormatMgr::Get ().GetPreset ( MOAIVertexFormatMgr::XYZC ));
 }
 
 //----------------------------------------------------------------//
