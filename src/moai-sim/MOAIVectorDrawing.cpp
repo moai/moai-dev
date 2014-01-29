@@ -615,7 +615,7 @@ MOAIVectorDrawing::MOAIVectorDrawing () :
 	RTTI_END
 	
 	// TODO: make this into a template for composing Lua-bound classes and for safe use on the stack
-	//this->mVtxBuffer.Retain (); // prefent the vertex buffer from being deleted by gc or ref count
+	this->mVtxBuffer.Retain (); // prefent the vertex buffer from being deleted by gc or ref count
 	//this->mVtxBuffer.SetFormat ( &MOAIVertexFormatMgr::Get ().GetPreset ( MOAIVertexFormatMgr::XYZC ));
 }
 

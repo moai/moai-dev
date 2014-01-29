@@ -313,12 +313,12 @@ MOAILuaObject::~MOAILuaObject () {
 			
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
-			if ( lua_getmetatable ( state, -1 )) {
-			
-				lua_pushnil ( state );
-				lua_setfield ( state, -2, "__gc" );
-				state.Pop ( 1 );
-			}
+			//if ( lua_getmetatable ( state, -1 )) {
+			//
+			//	lua_pushnil ( state );
+			//	lua_setfield ( state, -2, "__gc" );
+			//	state.Pop ( 1 );
+			//}
 			
 			// and the ref table
 			lua_pushnil ( state );
