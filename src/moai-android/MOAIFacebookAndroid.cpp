@@ -32,13 +32,13 @@ int MOAIFacebookAndroid::_extendToken ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID extendToken = env->GetStaticMethodID ( facebook, "extendToken", "()V" );
    		if ( extendToken == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "extendToken" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "extendToken" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, extendToken );
@@ -66,13 +66,13 @@ int	MOAIFacebookAndroid::_getExpirationDate	( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID getExpirationDate = env->GetStaticMethodID ( facebook, "getExpirationDate", "()J" );
    		if ( getExpirationDate == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "getExpirationDate" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "getExpirationDate" );
 		} else {
 	
 			jlong jexpires = env->CallStaticLongMethod ( facebook, getExpirationDate );			
@@ -102,13 +102,13 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID getToken = env->GetStaticMethodID ( facebook, "getToken", "()Ljava/lang/String;" );
    		if ( getToken == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "getToken" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "getToken" );
 		} else {
 	
 			jstring jtoken = ( jstring )env->CallStaticObjectMethod ( facebook, getToken );
@@ -152,14 +152,14 @@ int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 
     	jmethodID graphRequest = env->GetStaticMethodID ( facebook, "graphRequest",
                 "(Ljava/lang/String;Landroid/os/Bundle;)V" );
    		if ( graphRequest == NULL ) {
 
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "graphRequest" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "graphRequest" );
 		} else {
 
 			env->CallStaticVoidMethod ( facebook, graphRequest, jpath, bundle );
@@ -189,13 +189,13 @@ int MOAIFacebookAndroid::_init ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID init = env->GetStaticMethodID ( facebook, "init", "(Ljava/lang/String;)V" );
    		if ( init == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "init" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "init" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, init, jidentifier );		
@@ -232,13 +232,13 @@ int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 
     	jmethodID login = env->GetStaticMethodID ( facebook, "login", "([Ljava/lang/String;)V" );
     	if ( login == NULL ) {
 
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "login" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "login" );
     	} else {
 
 			env->CallStaticVoidMethod ( facebook, login, jpermissions );				
@@ -263,13 +263,13 @@ int MOAIFacebookAndroid::_logout ( lua_State *L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID logout = env->GetStaticMethodID ( facebook, "logout", "()V" );
    		if ( logout == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "logout" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "logout" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, logout );
@@ -314,13 +314,13 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( postToFeed == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "postToFeed" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "postToFeed" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, postToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage );	
@@ -350,13 +350,13 @@ int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID sendRequest = env->GetStaticMethodID ( facebook, "sendRequest", "(Ljava/lang/String;)V" );
    		if ( sendRequest == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "sendRequest" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "sendRequest" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, sendRequest, jmessage );		
@@ -381,13 +381,13 @@ int MOAIFacebookAndroid::_sessionValid ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 
     	jmethodID isSessionValid = env->GetStaticMethodID ( facebook, "isSessionValid", "()Z" );
     	if ( isSessionValid == NULL ) {
 
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "isSessionValid" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "isSessionValid" );
     	} else {
 
 			jboolean jvalid = ( jboolean )env->CallStaticBooleanMethod ( facebook, isSessionValid );	
@@ -436,13 +436,13 @@ int MOAIFacebookAndroid::_setExpirationDate ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID setExpirationDate = env->GetStaticMethodID ( facebook, "setExpirationDate", "(J)V" );
    		if ( setExpirationDate == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "setExpirationDate" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "setExpirationDate" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, setExpirationDate, expires );		
@@ -472,13 +472,13 @@ int MOAIFacebookAndroid::_setToken ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		ZLLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID setToken = env->GetStaticMethodID ( facebook, "setToken", "(Ljava/lang/String;)V" );
    		if ( setToken == NULL ) {
 	
-			ZLLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "setToken" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIFacebookAndroid: Unable to find static java method %s", "setToken" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, setToken, jtoken );		
