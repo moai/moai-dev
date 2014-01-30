@@ -61,15 +61,26 @@ cmake_minimum_required(VERSION 2.8)
     endif()
     
 
-
-    if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64" AND
+    message( "Size of void P =  ${CMAKE_SIZEOF_VOID_P} and ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+    if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" AND
             ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
+
         set (luajit_host_cc "${luajit_host_cc} -m32")
         set (luajit_host_ldflags "${luajit_host_ldflags} -m32")
       
     endif()
     
+    if (BUILD_ANDROID) 
+
+        set (luajit_buildoptions ${luajit_buildoptions}
+             TARGET_SYS=Linux)
+        message( "compiler ${CMAKE_C_COMPILER}")
+        set(CROSS "")
+        string( REGEX REPLACE "(.*-)gcc(\\.exe)*" "\\1"  CROSS ${CMAKE_C_COMPILER})
+        set (luajit_buildoptions ${luajit_buildoptions} CROSS=${CROSS})
+        set (luajit_target_ldflags  "--sysroot=${ANDROID_SYSROOT}")
+    endif()
 
     separate_arguments(CFLAGS)
     separate_arguments(luajit_copt)
@@ -82,7 +93,8 @@ cmake_minimum_required(VERSION 2.8)
         CFLAGS="${CFLAGS}"
         CXXFLAGS=""
         HOST_CC="${luajit_host_cc}"
-        TARGET_CC="${luajit_target_cc}"
+        STATIC_CC="${luajit_target_cc}"
+        DYNAMIC_CC="${luajit_target_cc}"
         CCOPT="${luajit_copt}"
         TARGET_LDFLAGS="${luajit_target_ldflags}"
         HOST_LDFLAGS="${luajit_host_ldflags}"
