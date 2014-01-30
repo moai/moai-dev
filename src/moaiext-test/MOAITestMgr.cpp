@@ -62,6 +62,20 @@ int MOAITestMgr::_failure ( lua_State* L ) {
 	MOAITestMgr::Get ().Failure ( type, detail );
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name finish
+	@text Close the file stream.
+ 
+	@in	nil
+	@out nil
+ */
+
+int MOAITestMgr::_finish ( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get().Finish();
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -237,6 +251,12 @@ void MOAITestMgr::Comment ( cc8* comment ) {
 	if ( this->mResultsFile && comment && comment [ 0 ]) {
 		this->PrintResult ( "    - %s\n", comment );
 	}
+	
+	if ( this->mXmlWriter ) {
+		mXmlWriter->AddElement( "comment" );
+		mXmlWriter->AddText( comment );
+		mXmlWriter->CloseElement();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -248,11 +268,25 @@ void MOAITestMgr::EndTest ( bool result ) {
 		cc8* msg = result ? "SUCCESS" : "FAIL";
 		
 		this->PrintResult ( "END %s: %s (%s)\n\n", op, this->mTestName.c_str (), msg );
-		this->mTestName.clear ();
+		if (! this->mXmlWriter ){
+			this->mTestName.clear ();
+		}
 	}
 
 	if ( this->mXmlWriter ) {
+		if ( this->mTestName.size () ) {
+			cc8* op2 = this->mStaging ? "StagingEnd" : "TestEnd";
+			cc8* msg2 = result ? "SUCCESS" : "FAIL";
+			mXmlWriter->AddElement(op2);
+			mXmlWriter->AddAttribute("suite-name", this->mTestName.c_str());
+			mXmlWriter->AddAttribute("result", msg2);
+			mXmlWriter->CloseElement();
+			
+			this->mTestName.clear ();
+		}
+		
 		mXmlWriter->CloseElement ();
+		
 	}
 }
 
@@ -376,6 +410,7 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "comment",				_comment },
 		{ "endTest",				_endTest },
 		{ "failure",				_failure },
+		{ "finish",					_finish },
 		{ "getTestList",			_getTestList },
 		{ "runScript",				_runScript },
 		{ "runTest",				_runTest },

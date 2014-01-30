@@ -44,6 +44,7 @@ private:
 	static int		_comment			( lua_State* L );
 	static int		_endTest			( lua_State* L );
 	static int		_failure			( lua_State* L );
+	static int		_finish				( lua_State* L );
 	static int		_getTestList		( lua_State* L );
 	static int		_runScript			( lua_State* L );
 	static int		_runTest			( lua_State* L );
