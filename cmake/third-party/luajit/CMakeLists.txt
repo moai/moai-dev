@@ -33,8 +33,9 @@ cmake_minimum_required(VERSION 2.8)
     # Use external unwind on all platforms.
     #set (luajit_target_cc "${luajit_target_cc} -DLUAJIT_UNWIND_EXTERNAL=1")
 
-
-    set(GCC_FORCE_32BIT True)
+    if (BUILD_WINDOWS)
+        set(GCC_FORCE_32BIT True)
+    endif(BUILD_WINDOWS)
 
     if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
         # Regular mode - use CMake compiler for building host utils.
@@ -51,7 +52,7 @@ cmake_minimum_required(VERSION 2.8)
         set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -m32")
     endif(GCC_FORCE_32BIT)
     if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64" AND
-            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 AND NOT GCC_FORCE_32BIT)
+            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
         set (luajit_host_cc "${luajit_host_cc} -m32")
       
