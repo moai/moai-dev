@@ -37,40 +37,57 @@ cmake_minimum_required(VERSION 2.8)
         set(GCC_FORCE_32BIT True)
     endif(BUILD_WINDOWS)
 
+    set(luajit_host_ldflags "")
+    set(luajit_target_ldflags "${CMAKE_SHARED_LINKER_FLAGS}")
+
+
+    set(CFLAGS "")
+    
+    if (GCC_FORCE_32BIT)
+        set (CFLAGS "-m32")
+        set (luajit_target_ldflags "${luajit_target_ldflags} -m32")
+    endif(GCC_FORCE_32BIT)
+
+
     if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
         # Regular mode - use CMake compiler for building host utils.
         set (luajit_host_cc ${CMAKE_C_COMPILER})
+        set (luajit_host_ldflags ${luajit_target_ldflags} )
     else()
         # Crosscompile mode - use a host CC compiler for building host utils.
         # Since CMake does not support cross compilation properly
         # we have to use system CC here.
         set (luajit_host_cc "gcc")
     endif()
-    set(CFLAGS "")
-    if (GCC_FORCE_32BIT)
-        set (CFLAGS "-m32")
-        set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -m32")
-    endif(GCC_FORCE_32BIT)
+    
+
+
     if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64" AND
             ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
         set (luajit_host_cc "${luajit_host_cc} -m32")
+        set (luajit_host_ldflags "${luajit_host_ldflags} -m32")
       
     endif()
-    set(luajit_ldflags "${CMAKE_SHARED_LINKER_FLAGS}")
+    
+
     separate_arguments(CFLAGS)
     separate_arguments(luajit_copt)
     separate_arguments(luajit_ldflags)
     separate_arguments(luajit_host_cc)
     separate_arguments(luajit_target_cc)
+    separate_arguments(luajit_host_ldflags)
+    separate_arguments(luajit_target_ldflags)
     set (luajit_buildoptions ${luajit_buildoptions}
         CFLAGS="${CFLAGS}"
         CXXFLAGS=""
         HOST_CC="${luajit_host_cc}"
         TARGET_CC="${luajit_target_cc}"
         CCOPT="${luajit_copt}"
+        TARGET_LDFLAGS="${luajit_target_ldflags}"
+        HOST_LDFLAGS="${luajit_host_ldflags}"
    )
-    set (luajit_buildoptions ${luajit_buildoptions}  LDFLAGS="${luajit_ldflags}") #Q=''
+    #set (luajit_buildoptions ${luajit_buildoptions} ) #Q=''
     
     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/luajit"
