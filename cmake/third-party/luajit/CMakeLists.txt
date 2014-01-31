@@ -21,7 +21,7 @@ cmake_minimum_required(VERSION 2.8)
 
     set (luajit_buildoptions BUILDMODE=static)
     set (luajit_copt "")
-    if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
         set (luajit_buildoptions ${luajit_buildoptions} CCDEBUG=${CC_DEBUG_OPT})
         set (luajit_copt ${luajit_copt} -O1)
         set (luajit_buildoptions ${luajit_buildoptions} XCFLAGS="-DLUA_USE_APICHECK -DLUA_USE_ASSERT")
@@ -105,22 +105,37 @@ cmake_minimum_required(VERSION 2.8)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/luajit"
         COMMAND ${CMAKE_COMMAND} -E copy_directory  ${LUAJIT_ROOT} "${CMAKE_CURRENT_BINARY_DIR}/luajit"
     )
-    message("options: ${luajit_buildoptions}")
-    message("make $(MAKE) ${luajit_buildoptions} VERBOSE=1")
-    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-        COMMAND $(MAKE) clean ${luajit_buildoptions}
-        COMMAND $(MAKE) ${luajit_buildoptions} 
-        DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit #${PROJECT_BINARY_DIR}/CMakeCache.txt
-    ) 
+
+    if (MSVC)
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
+            COMMAND "msvcbuild.bat" static 
+            DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
+        ) 
+
+        add_custom_target(liblua-static
+            DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+        )
+        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib PARENT_SCOPE )
+    else(MSVC)
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
+            COMMAND $(MAKE) clean ${luajit_buildoptions}
+            COMMAND $(MAKE) ${luajit_buildoptions} 
+            DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
+        ) 
+
+        add_custom_target(liblua-static
+            DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+        )
+        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
+    endif(MSVC)
     
-    add_custom_target(liblua-static
-        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
-    )
+   
 
     #add_library(liblua-static STATIC IMPORTED)
     #set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
     #add_dependencies(liblua-static libluajit)
 
     set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
-    set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
+    
