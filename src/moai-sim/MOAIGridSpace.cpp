@@ -42,7 +42,7 @@ MOAICellCoord::~MOAICellCoord () {
 	@text	Returns the coordinate of a cell given an address.
 
 	@in		MOAIGridSpace self
-	@in		number Node
+	@in		number cellAddr
 	@out	number xTile
 	@out	number yTile
 */
