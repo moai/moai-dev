@@ -65,8 +65,13 @@ if ( BUILD_WINDOWS)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
      message("Windows Visual Studio Build Detected")
   else ()
-     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -Werror-implicit-function-declaration -DHAVE_MEMMOVE" )
-     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 " )
+     #work around bug with mingw in release mode failing at link time due to different sized duplicate segments! Optimise for size instead
+     set(CMAKE_CXX_FLAGS_RELEASE "-Os")
+     set(CMAKE_C_FLAGS_RELEASE "-Os")
+        
+     
+     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -static -Werror-implicit-function-declaration -DHAVE_MEMMOVE" )
+     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -static" )
   endif(MSVC)
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 " )
   SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500"  )
@@ -190,8 +195,8 @@ SETUP_MODULE(MOAI_LUAJIT MOAI_WITH_LUAJIT)
 #Flags for optional modules
 
 FOREACH(DISABLED ${DISABLED_EXT} )
-   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDISABLE_${DISABLED}" CACHE INTERNAL "doc string" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDISABLE_${DISABLED}" CACHE INTERNAL "doc string" )
+   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DDISABLE_${DISABLED}"  )
+   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDISABLE_${DISABLED}"  )
    set ( DISABLE_${DISABLED} TRUE )
 ENDFOREACH()
 
@@ -212,10 +217,6 @@ set ( DEBUG OFF )
 #
 set ( TESTING OFF )
 
-if ( DEBUG )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O4")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O4")
-endif ( DEBUG )
 
 #missing cmake modules
 
