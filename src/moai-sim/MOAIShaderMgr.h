@@ -12,11 +12,11 @@ class MOAIShader;
 /**	@name	MOAIShaderMgr
 	@text	Shader presets.
 	
-	const DECK2D_SHADER
-	const DECK2D_TEX_ONLY_SHADER
-	const FONT_SHADER
-	const LINE_SHADER
-	const MESH_SHADER
+	@const DECK2D_SHADER
+	@const DECK2D_TEX_ONLY_SHADER
+	@const FONT_SHADER
+	@const LINE_SHADER
+	@const MESH_SHADER
 */
 class MOAIShaderMgr :
 	public MOAIGlobalClass < MOAIShaderMgr, MOAILuaObject > {

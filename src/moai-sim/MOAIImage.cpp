@@ -41,7 +41,12 @@ int MOAIImage::_bleedRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@TODO
+/**	@name	compare
+	@text	Compares the image to another image.
+	
+	@in		MOAIImage self
+	@in		MOAIImage other
+	@out	boolean areEqual	A value indicating whether the images are equal.
 */
 
 int MOAIImage::_compare ( lua_State* L ) {
@@ -183,7 +188,7 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 
 	@in		number x
 	@in		number y
-	@in		number r
+	@in		number radius
 	@opt	number r			Default value is 0.
 	@opt	number g			Default value is 0.
 	@opt	number b			Default value is 0.
@@ -323,9 +328,9 @@ int MOAIImage::_getSize ( lua_State* L ) {
 	@in		MOAIImage self
 	@in		number width
 	@in		number height
-	@opt	colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
-							MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
-							Default valus is MOAIImage.COLOR_FMT_RGBA_8888.
+	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
+								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
+								Default value is MOAIImage.COLOR_FMT_RGBA_8888.
 	@out	nil
 */
 int MOAIImage::_init ( lua_State* L ) {
@@ -366,9 +371,9 @@ int MOAIImage::_load ( lua_State* L ) {
 	@text	Loads an image from a buffer.
 
 	@in		MOAIImage self
-	@in		MOAIDataBuffer		Buffer containing the image
-	@opt	number transform	One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
-								One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
+	@in		MOAIDataBuffer buffer		Buffer containing the image
+	@opt	number transform			One of MOAIImage.POW_TWO, One of MOAIImage.QUANTIZE,
+										One of MOAIImage.TRUECOLOR, One of MOAIImage.PREMULTIPLY_ALPHA
 	@out	nil
 */
 int MOAIImage::_loadFromBuffer ( lua_State* L ) {
@@ -450,7 +455,7 @@ int MOAIImage::_resize ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	resizeCanvas
 	@text	Copies the image to a canvas with a new size. If the canvas
-			is larger than the original image, the exta pixels will be
+			is larger than the original image, the extra pixels will be
 			initialized with 0. Pass in a new frame or just a new width
 			and height. Negative values are permitted for the frame.
 
@@ -571,7 +576,7 @@ int MOAIImage::_writePNG ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	grayScale
+/**	@name	convertToGrayScale
 	@text	Convert image to grayscale.
 
 	@in		MOAIImage self

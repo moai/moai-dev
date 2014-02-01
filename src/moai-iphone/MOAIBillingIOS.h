@@ -16,7 +16,7 @@
 //================================================================//
 /**	@name	MOAIBillingIOS
 	@text	Wrapper for in-app purchase integration on iOS devices 
-			using Apple StoreKit. Exposed to lua via MOAIBilling on 
+			using Apple StoreKit. Exposed to Lua via MOAIBilling on 
 			all mobile platforms, but API differs on iOS and Android.
 	
 	@const	PAYMENT_QUEUE_TRANSACTION		Event invoked when a transaction changes state.

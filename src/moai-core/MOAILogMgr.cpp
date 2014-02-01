@@ -160,7 +160,7 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setTypeCheckLuaParams
-	@text	Set or clear type checking of parameters passed to lua bound Moai API functions.
+	@text	Set or clear type checking of parameters passed to Lua bound Moai API functions.
 	
 	@opt	boolean check		Default value is false.
 	@out	nil

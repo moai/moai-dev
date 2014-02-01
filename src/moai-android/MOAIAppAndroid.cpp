@@ -19,7 +19,7 @@ extern JavaVM* jvm;
 /**	@name	getUTCTime
 	@text	Gets the UTC time.
 
-	@out 	num		UTC Time
+	@out 	number time		UTC Time
 */
 int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 
@@ -53,7 +53,7 @@ int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 /**	@name	getStatusBarHeight
 	@text	Gets the Height of an Android 3.x status bar
 
-	@out 	num		height
+	@out 	number height
 */
 int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
 

@@ -14,7 +14,7 @@
 /**	@name	MOAICrittercismAndroid
 	@text	Wrapper for Crittercism integration on Android devices.
 			Crittercism provides real-time, actionable crash reports 
-			for mobile apps. Exposed to lua via MOAICrittercism on
+			for mobile apps. Exposed to Lua via MOAICrittercism on
 			all mobile platforms.
 */
 class MOAICrittercismAndroid :

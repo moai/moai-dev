@@ -11,7 +11,7 @@
 // MOAIAnimCurve
 //================================================================//
 /**	@name	MOAIAnimCurve
-	@text	Implementation of anim curve for floating point values.
+	@text	Implementation of animation curve for floating point values.
 */
 class MOAIAnimCurve :
 	public virtual MOAIAnimCurveBase {

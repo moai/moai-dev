@@ -39,7 +39,7 @@ int MOAIBox2DDistanceJoint::_getDampingRatio ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
-	@out	number frequency in Hz.
+	@out	number frequency				In Hz.
 */
 int MOAIBox2DDistanceJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
@@ -60,7 +60,7 @@ int MOAIBox2DDistanceJoint::_getFrequency ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
-	@out	number length in units, converted from meters.
+	@out	number length					In units, converted from meters.
 */
 int MOAIBox2DDistanceJoint::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )

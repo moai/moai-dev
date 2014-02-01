@@ -156,9 +156,9 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 /**	@name	playVideo
 	@text	Play an AdColony video ad.
 	
-	@in 	string	zone			The zone from which to play a video ad.
-	@opt	bool	prompt			Determines whether the user is asked whether they want to play a video ad or not. Default is true.
-	@opt	bool	confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes. Default is true.
+	@in 	string zone				The zone from which to play a video ad.
+	@opt	boolean prompt			Determines whether the user is asked whether they want to play a video ad or not. Default is true.
+	@opt	boolean confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes. Default is true.
 	@out 	nil
 */
 int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
@@ -212,8 +212,8 @@ int MOAIAdColonyAndroid::_setListener ( lua_State* L ) {
 /**	@name	videoReadyForZone
 	@text	Check the readiness of a video ad for a given zone.
 	
-	@in 	string	zone			The zone from which to check for a video ad.
-	@out 	bool					True, if a video ad is ready to play.
+	@in 	string zone				The zone from which to check for a video ad.
+	@out 	boolean isReady			True, if a video ad is ready to play.
 */
 int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 	

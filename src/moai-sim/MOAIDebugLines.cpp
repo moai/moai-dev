@@ -59,7 +59,7 @@ int MOAIDebugLines::_setStyle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	showStyle
-	@text	Enables of disables drawing of a given debug line style.
+	@text	Enables or disables drawing of a given debug line style.
 	
 	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
 	@opt	boolean show		Default value is 'true'

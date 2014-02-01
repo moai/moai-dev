@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 /**	@name	close
 	@text	Flush any remaining buffered data and detach the target stream.
-			(This only detatches the target from the formatter; it does
+			(This only detaches the target from the formatter; it does
 			not also close the target stream). Return the hash as a hex
 			string.
 	

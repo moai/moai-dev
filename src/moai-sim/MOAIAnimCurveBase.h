@@ -41,7 +41,7 @@ public:
 //================================================================//
 /**	@name	MOAIAnimCurveBase
 	@text	Piecewise animation function with one input (time) and one output (value). This
-			is the base class for typed anim curves (float, quaternion, etc.).
+			is the base class for typed animation curves (float, quaternion, etc.).
 	
 	@attr	ATTR_TIME
 	@attr	ATTR_VALUE

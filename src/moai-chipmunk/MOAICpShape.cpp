@@ -46,10 +46,10 @@ int MOAICpShape::_areaForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	areaForCircle
+/**	@name	areaForPolygon
 	@text	Returns the area for a polygon.
 	
-	@in		table vertices Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@in		table vertices		Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
 	@out	number area
 */ 
 int MOAICpShape::_areaForPolygon ( lua_State* L ) {

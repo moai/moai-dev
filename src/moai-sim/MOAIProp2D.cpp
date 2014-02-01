@@ -7,10 +7,10 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	getRect
+/**	@name	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
-			be overidden by the prop's frame if it's been set (using
+			be overridden by the prop's frame if it's been set (using
 			setFrame ())
 	
 	@in		MOAIProp2D self

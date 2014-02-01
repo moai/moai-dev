@@ -14,11 +14,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getResponseCode
- @text	Returns the response code returned by the server after a httpPost or httpGet call.
- 
- @in		MOAIHttpTask self
- @out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
+/**	@name	getProgress
+	@text	Returns the progress of the download.
+	
+	@in		MOAIHttpTaskBase self
+	@out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
  */
 int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -32,7 +32,7 @@ int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 /**	@name	getResponseCode
 	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
-	@in		MOAIHttpTask self
+	@in		MOAIHttpTaskBase self
 	@out	number code			The numeric response code returned by the server.
  */
 int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
@@ -49,7 +49,7 @@ int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
 			Header names are case-insensitive and if multiple responses are given, they will be
 			concatenated with a comma separating the values.
 			
-	@in		MOAIHttpTask self
+	@in		MOAIHttpTaskBase self
 	@in		string header			The name of the header to return (case-insensitive).
 	@out	string response			The response given by the server or nil if none was specified.
 */
@@ -197,7 +197,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 	@text	Returns whether or not the task is busy.
  
 	@in		MOAIHttpTaskBase self
-	@out	bool busy
+	@out	boolean busy
 */
 int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -235,7 +235,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	performAsync
-	@text	Perform the http task asynchronously.
+	@text	Perform the HTTP task asynchronously.
 
 	@in		MOAIHttpTaskBase self
 	@out	nil
@@ -250,7 +250,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	performSync
-	@text	Perform the http task synchronously ( blocking).
+	@text	Perform the HTTP task synchronously ( blocking).
 
 	@in		MOAIHttpTaskBase self
 	@out	nil
@@ -357,10 +357,10 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setFailOnError
- @text	Sets whether or not curl calls will fail if the http status code is above 400
+ @text	Sets whether or not curl calls will fail if the HTTP status code is above 400
  
  @in	MOAIHttpTaskBase self
- @in	bool enable
+ @in	boolean enable
  @out	nil
  */
 int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
@@ -375,10 +375,10 @@ int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setFollowRedirects
- @text	Sets whether or not curl should follow http header redirects.
+ @text	Sets whether or not curl should follow HTTP header redirects.
  
  @in	MOAIHttpTaskBase self
- @in	bool follow
+ @in	boolean follow
  @out	nil
  */
 int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {
@@ -472,7 +472,7 @@ int  MOAIHttpTaskBase::_setUserAgent ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setVerb
-	@text	Sets the http verb.
+	@text	Sets the HTTP verb.
 
 	@in		MOAIHttpTaskBase self
 	@in		number verb		One of MOAIHttpTaskBase.HTTP_GET, MOAIHttpTaskBase.HTTP_HEAD,

@@ -93,7 +93,8 @@ int MOAIFileSystem::_copy ( lua_State* L ) {
 	@text	Deletes a directory and all of its contents.
 
 	@in		string path
-	@in		boolean (Optional) recursive If true, the directory and all contents beneath it will be purged. Otherwise, the directory will only be removed if empty.
+	@opt	boolean recursive		If true, the directory and all contents beneath it will be purged.
+									Otherwise, the directory will only be removed if empty.
 	@out	boolean success
 */
 int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {

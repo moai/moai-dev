@@ -22,7 +22,7 @@
 	@text	Requests the font's default size
 	
 	@in		MOAIFont self
-	@out	float default size
+	@out	number defaultSize
 */
 int MOAIFont::_getDefaultSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
@@ -35,7 +35,7 @@ int MOAIFont::_getDefaultSize ( lua_State* L ) {
 	@text	Returns the filename of the font.
 	
 	@in		MOAIFont self
-	@out	name
+	@out	string name
 */
 int MOAIFont::_getFilename ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
@@ -48,7 +48,7 @@ int MOAIFont::_getFilename ( lua_State* L ) {
 	@text	Returns the current flags.
 	
 	@in		MOAIFont self
-	@out	flags
+	@out	number flags
 */
 int MOAIFont::_getFlags ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
@@ -59,7 +59,7 @@ int MOAIFont::_getFlags ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	getImage
 	@text	Requests a 'glyph map image' from the glyph cache currently
-			attached to the font. The glyph map image stiches together the
+			attached to the font. The glyph map image stitches together the
 			texture pages used by the glyph cache to produce a single image
 			that represents a snapshot of all of the texture memory being
 			used by the font.
@@ -207,7 +207,7 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCache
-	@text	Attaches or cloears the glyph cache associated with the font.
+	@text	Attaches or clears the glyph cache associated with the font.
 			The cache is an object derived from MOAIGlyphCacheBase and may be
 			a dynamic cache that can allocate space for new glyphs on an
 			as-needed basis or a static cache that only supports direct
@@ -298,7 +298,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setReader
-	@text	Attaches or clears the MOAIFontReader associated withthe font.
+	@text	Attaches or clears the MOAIFontReader associated with the font.
 			MOAIFontReader is responsible for loading and rendering glyphs from
 			a font file on demand. If you are using a static font and do not
 			need a reader, set this field to nil.

@@ -60,9 +60,9 @@ int MOAIStream::_getLength ( lua_State* L ) {
 	@text	Reads bytes from the stream.
 	
 	@in		MOAIStream self
-	@out	number size			Number of bytes to read. Default value is the length of the stream.
-	@out	string bytes		Data read from the stream.
-	@out	number size			Size of data successfully read.
+	@out	number byteCount		Number of bytes to read. Default value is the length of the stream.
+	@out	string bytes			Data read from the stream.
+	@out	number actualByteCount	Size of data successfully read.
 */
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
@@ -174,11 +174,11 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 /**	@name	readFormat
 	@text	Reads a series of values from the stream given a format string.
 			Valid tokens for the format string are: u8 u16 u32 f d s8 s16 s32.
-			Tokens may be optionally separeted by spaces of commas.
+			Tokens may be optionally separated by spaces of commas.
 	
 	@in		MOAIStream self
 	@in		string format
-	@out	...					Values read from the stream or 'nil'.
+	@out	...	values			Values read from the stream or 'nil'.
 	@out	number size			Number of bytes successfully read.
 */
 int MOAIStream::_readFormat ( lua_State* L ) {
@@ -328,7 +328,7 @@ int MOAIStream::_writeDouble ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write32
+/**	@name	writeFloat
 	@text	Writes a 32-bit floating point value to the stream.
 	
 	@in		MOAIStream self
@@ -347,7 +347,7 @@ int MOAIStream::_writeFloat ( lua_State* L ) {
 	
 	@in		MOAIStream self
 	@in		string format
-	@in		...					Values to be written to the stream.
+	@in		... values			Values to be written to the stream.
 	@out	number size			Number of bytes successfully written.
 */
 int MOAIStream::_writeFormat ( lua_State* L ) {

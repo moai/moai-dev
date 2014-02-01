@@ -230,7 +230,7 @@ int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setDamper
-	@text	Set's the fitter's damper coefficient. This is a scalar
+	@text	Sets the fitter's damper coefficient. This is a scalar
 			applied to the difference between the camera transform's
 			location and the fitter's target location every frame.
 			The smaller the coefficient, the tighter the fit will be.
@@ -356,7 +356,7 @@ int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
 	@overload	Snap a passed in transform to the target.
 	
 		@in		MOAICameraFitter2D self
-		@in		MOAITransform
+		@in		MOAITransform transform
 		@out	nil
 */
 int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {

@@ -483,6 +483,7 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 	@text	Resets all forces on the body.
 
 	@in		MOAICpBody self
+	@out	nil
 */
 int MOAICpBody::_resetForces ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpBody, "U" )

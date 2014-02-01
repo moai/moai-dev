@@ -11,7 +11,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	reset
-	@text	Resets the distance travelled. Use this to avoid large emissions
+	@text	Resets the distance traveled. Use this to avoid large emissions
 			when 'warping' the emitter to a new location.
 	
 	@in		MOAIParticleDistanceEmitter self
@@ -30,7 +30,7 @@ int MOAIParticleDistanceEmitter::_reset ( lua_State* L ) {
 	
 	@in		MOAIParticleDistanceEmitter self
 	@in		number min	Minimum distance.
-	@opt	number max	Maximumg distance. Default value is min.
+	@opt	number max	Maximum distance. Default value is min.
 	@out	nil
 */
 int MOAIParticleDistanceEmitter::_setDistance ( lua_State* L ) {

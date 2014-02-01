@@ -30,8 +30,8 @@ int MOAILayoutFrame::_layout ( lua_State* L ) {
 	@text	Sets the fitting mode for each axis.
 
 	@in		MOAILayoutFrame self
-	@in		enum xFit				The fitting mode for the X axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
-	@in		enum yFit				The fitting mode for the Y axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
+	@in		number xFit				The fitting mode for the X axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
+	@in		number yFit				The fitting mode for the Y axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
 	@out	nil
 */
 int	MOAILayoutFrame::_setFit ( lua_State* L ) {
@@ -48,8 +48,8 @@ int	MOAILayoutFrame::_setFit ( lua_State* L ) {
 	@text	Sets the size hint used for fitting.
 
 	@in		MOAILayoutFrame self
-	@in		enum xSize				The size hinting for the X axis.
-	@in		enum ySize				The size hinting for the Y axis.
+	@in		number xSizeHinting			The size hinting for the X axis.
+	@in		number ySizeHinting			The size hinting for the Y axis.
 	@out	nil
 */
 int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
@@ -66,8 +66,8 @@ int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
 	@text	Sets the layout mode for each axis.  Each argument can be one of LAYOUT_ALIGN_{MIN,CENTER,MAX} combined with LAYOUT_JUSTIFY_{MIN,CENTER,MAX}.  In this case, MIN, CENTER and MAX refer to the border along each axis; for the X axis MIN would be left and MAX would be right.
 
 	@in		MOAILayoutFrame self
-	@in		enum xLayout			The alignment and justification mode for the X axis.
-	@in		enum yLayout			The alignment and justification mode for the Y axis.
+	@in		number xLayout			The alignment and justification mode for the X axis.
+	@in		number yLayout			The alignment and justification mode for the Y axis.
 	@out	nil
 */
 int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
