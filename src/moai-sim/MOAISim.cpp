@@ -100,6 +100,42 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	showCursor
+	@text	Shows system cursor.
+
+	@out	nil
+*/
+int MOAISim::_showCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	hideCursor
+	@text	Hides system cursor.
+
+	@out	nil
+*/
+int MOAISim::_hideCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name forceGarbageCollection
 	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
@@ -673,6 +709,8 @@ MOAISim::MOAISim () :
 	mSimDuration ( 1.0 / 60.0 ),
 	mEnterFullscreenModeFunc ( 0 ),
 	mExitFullscreenModeFunc ( 0 ),
+	mShowCursorFunc ( 0 ),
+	mHideCursorFunc ( 0 ),
 	mOpenWindowFunc ( 0 ),
 	mSetSimStepFunc ( 0 ) {
 	
