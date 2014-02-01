@@ -595,7 +595,12 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	}
 
 	// open the main state
-	this->mState = lua_newstate ( _trackingAlloc, NULL );
+	#if (MOAI_WITH_LUAJIT && (defined(__x86_64 ) || defined(__amd64)) )
+		this->mState = luaL_newstate();  //luajit doesn't support custom allocs on 64bit
+	#else
+		this->mState = lua_newstate ( _trackingAlloc, NULL );
+	#endif
+	
 	lua_atpanic ( this->mState, &_panic );
 
 	// set up the ref tables
