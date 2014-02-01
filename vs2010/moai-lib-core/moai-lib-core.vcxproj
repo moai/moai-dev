@@ -649,9 +649,11 @@
     <ClInclude Include="..\..\src\moai-core\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILua.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAILuaClass.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaObject-impl.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaObject.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaRef.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAILuaRefTable.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaRuntime.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaSharedPtr.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaState-impl.h" />
@@ -674,8 +676,10 @@
     <ClCompile Include="..\..\src\moai-core\MOAIGlobals.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILogMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAILuaClass.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaObject.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaRef.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAILuaRefTable.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaRuntime.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILuaState.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIObject.cpp" />

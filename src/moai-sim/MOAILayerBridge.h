@@ -19,9 +19,9 @@ class MOAILayerBridge :
 	public MOAITransform {
 private:
 
-	MOAIWeakPtr < MOAITransformBase > mSourceTransform;
-	MOAIWeakPtr < MOAILayer > mSourceLayer;
-	MOAIWeakPtr < MOAILayer > mDestLayer;
+	MOAILuaSharedPtr < MOAITransformBase > mSourceTransform;
+	MOAILuaSharedPtr < MOAILayer > mSourceLayer;
+	MOAILuaSharedPtr < MOAILayer > mDestLayer;
 
 	//----------------------------------------------------------------//
 	static int			_init					( lua_State* L );

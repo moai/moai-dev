@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIREF_H
-#define	MOAIREF_H
+#ifndef	MOAISHAREDPTR_H
+#define	MOAISHAREDPTR_H
 
 #include <moai-core/MOAICanary.h>
 

@@ -411,7 +411,7 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

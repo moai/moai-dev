@@ -52,6 +52,10 @@ MOAILayerBridge::MOAILayerBridge () {
 
 //----------------------------------------------------------------//
 MOAILayerBridge::~MOAILayerBridge () {
+
+	this->mSourceTransform.Set ( *this, 0 );
+	this->mSourceLayer.Set ( *this, 0 );
+	this->mDestLayer.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

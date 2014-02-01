@@ -200,8 +200,11 @@ bool ZLFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
 //----------------------------------------------------------------//
 bool ZLFileSys::Rename ( cc8* oldPath, cc8* newPath ) {
 
-	int result = zl_rename ( oldPath, newPath );
-	return ( result == 0 );
+	if ( ZLFileSys::CheckFileExists ( oldPath )) {
+		int result = zl_rename ( oldPath, newPath );
+		return ( result == 0 );
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

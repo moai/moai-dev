@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Locale;
 
+
 //================================================================//
 // Moai
 //================================================================//
@@ -120,7 +121,10 @@ public class Moai {
 
 	public static final Object		sAkuLock = new Object ();
 
+ 	protected static native void    AKUAppInitialize				();
+ 	protected static native void    AKUModulesRunLuaAPIWrapper      ();
 	protected static native boolean	AKUAppBackButtonPressed			();
+	protected static native void    AKUModulesContextInitialize     ();
 	protected static native void	AKUAppDialogDismissed			( int dialogResult );
 	protected static native void	AKUAppDidStartSession			( boolean resumed );
 	protected static native void	AKUAppWillEndSession 			();
@@ -130,16 +134,8 @@ public class Moai {
 	protected static native void	AKUEnqueueLocationEvent			( int deviceId, int sensorId, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 	protected static native void	AKUEnqueueCompassEvent			( int deviceId, int sensorId, float heading );
 	protected static native void	AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount );
-	protected static native void	AKUExtLoadLuacrypto				();
-	protected static native void	AKUExtLoadLuacurl				();
-	protected static native void	AKUExtLoadLuasocket				();
-	protected static native void	AKUExtLoadLuasql				();
 	protected static native void	AKUFinalize 					();
-	protected static native void	AKUFMODExInit		 			();
 	protected static native void	AKUInit 						();
-	protected static native void	AKUInitializeUtil 				();
-	protected static native void	AKUInitializeSim 				();
-	protected static native void	AKUInitializeHttpClient 		();
 	protected static native void	AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void	AKUPause 						( boolean paused );
 	protected static native void	AKURender	 					();
@@ -160,8 +156,7 @@ public class Moai {
 	protected static native void	AKUSetScreenDpi					( int dpi );
 	protected static native void	AKUSetViewSize					( int width, int height );
 	protected static native void	AKUSetWorkingDirectory 			( String path );
-	protected static native void	AKUUntzInit			 			();
-	protected static native void	AKUUpdate				 		();
+	protected static native void	AKUModulesUpdate				 		();
 	protected static native void	AKUSetDeviceLocale				( String langCode, String countryCode );
 
 	//----------------------------------------------------------------//
@@ -189,6 +184,8 @@ public class Moai {
 		synchronized ( sAkuLock ) {
 			contextId = AKUCreateContext ();
 			AKUSetContext ( contextId );
+			AKUModulesContextInitialize ();
+			AKUModulesRunLuaAPIWrapper ();
 		}
 		return contextId;
 	}
@@ -257,9 +254,6 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void init () {
 		synchronized ( sAkuLock ) {
-			AKUInitializeUtil ();
-			AKUInitializeSim ();
-			AKUInitializeHttpClient ();
 
 			AKUSetInputConfigurationName ( "Android" );
 
@@ -272,20 +266,10 @@ public class Moai {
 			AKUSetInputDeviceLocation ( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
 			AKUSetInputDeviceTouch ( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-			AKUExtLoadLuasql ();
-			AKUExtLoadLuacurl ();
-			AKUExtLoadLuacrypto ();
-			AKUExtLoadLuasocket ();
-
 			AKUInit ();
+			
 
-			// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
-			// safe to call unconditionally.
-			AKUFMODExInit ();
-
-			// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
-			// safe to call unconditionally.
-			AKUUntzInit ();
+		
 
 			String appId = sActivity.getPackageName ();
 			String appName;
@@ -310,6 +294,7 @@ public class Moai {
 
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 			AKUSetDeviceLocale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
+
 		}
 	}
 
@@ -330,6 +315,7 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 		sActivity = activity;
+		AKUAppInitialize();
 		MoaiMoviePlayer.onCreate ( activity );
 		MoaiBrowser.onCreate ( activity );
 		for ( Class < ? > theClass : sAvailableClasses ) {
@@ -456,7 +442,7 @@ public class Moai {
 	public static void update () {
 		synchronized ( sAkuLock ) {
 			MoaiKeyboard.update ();
-			AKUUpdate ();
+			AKUModulesUpdate ();
 		}
 	}
 

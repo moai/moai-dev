@@ -12,22 +12,22 @@
 class MOAIDeserializer :
 	public MOAISerializerBase {
 private:
-
+	
 	//----------------------------------------------------------------//
 	static int		_initObject					( lua_State* L );
 	static int		_registerObjectID			( lua_State* L );
-
+	
 public:
-
+	
 	enum {
 		SUCCESS,
 		INVALID_FILE,
 		LOAD_ERROR,
 		LUA_ERROR,
 	};
-
+	
 	DECL_LUA_FACTORY ( MOAIDeserializer )
-
+	
 	//----------------------------------------------------------------//
 	u32					IsLuaFile				( cc8* filename );
 	MOAILuaObject*		MemberIDToObject		( uintptr memberID );
@@ -40,7 +40,7 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE* MemberIDToObject ( uintptr memberID ) {
-	
+		
 		MOAILuaObject* object = this->MemberIDToObject ( memberID );
 		if ( object ) {
 			return object->AsType < TYPE >();
@@ -48,5 +48,6 @@ public:
 		return 0;
 	}
 };
+
 
 #endif

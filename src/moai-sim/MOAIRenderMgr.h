@@ -33,7 +33,7 @@ private:
 	double			mRenderDuration;
 	double			mRenderTime;
 	
-	MOAILuaRef		mBufferTable;
+	MOAILuaStrongRef	mBufferTable;
 	
 	//----------------------------------------------------------------//
 	static int		_getBufferTable				( lua_State* L );

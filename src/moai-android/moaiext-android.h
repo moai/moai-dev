@@ -9,6 +9,7 @@
 #include <moai-android/MOAIChartBoostAndroid.h>
 #include <moai-android/MOAICrittercismAndroid.h>
 #include <moai-android/MOAIFacebookAndroid.h>
+#include <moai-android/MOAIGooglePlayServicesAndroid.h>
 #include <moai-android/MOAIKeyboardAndroid.h>
 #include <moai-android/MOAIMoviePlayerAndroid.h>
 #include <moai-android/MOAINotificationsAndroid.h>

@@ -17,6 +17,7 @@ if ( MOAI_TINYXML )
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlerror.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlparser.cpp
 
+
   CACHE INTERNAL "doc string" )
 
 else ( MOAI_TINYXML )

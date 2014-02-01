@@ -34,7 +34,7 @@ public:
 		TOTAL,
 	};
 	
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 	
 			MOAIMoviePlayerAndroid		();
 			~MOAIMoviePlayerAndroid		();

@@ -48,12 +48,10 @@ public:
 	static cc8*		GetLuaTypeName			( int type );
 	void*			GetPtrUserData			( int idx );
 	STLString		GetStackTrace			( int level );
-	MOAILuaRef		GetStrongRef			( int idx );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
 	void*			GetUserData				( int idx, cc8* name, void* value );
 	STLString		GetValue				( int idx, cc8* value );
-	MOAILuaRef		GetWeakRef				( int idx );
 	bool			HasField				( int idx, cc8* name );
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );

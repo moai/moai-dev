@@ -118,7 +118,7 @@ int MOAIParticleState::_setMass ( lua_State* L ) {
 int MOAIParticleState::_setNext ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 	
-	self->mNext = state.GetLuaObject < MOAIParticleState >( 2, true );
+	self->mNext.Set ( *self, state.GetLuaObject < MOAIParticleState >( 2, true ));
 	
 	return 0;
 }
@@ -263,6 +263,7 @@ MOAIParticleState::~MOAIParticleState () {
 	this->mInit.Set ( *this, 0 );
 	this->mRender.Set ( *this, 0 );
 	this->mPlugin.Set ( *this, 0 );
+	this->mNext.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

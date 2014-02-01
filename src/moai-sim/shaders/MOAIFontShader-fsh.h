@@ -7,7 +7,10 @@
 #define SHADER(str) #str
 
 static cc8* _fontShaderFSH = SHADER (
-
+	#ifdef GL_ES
+	precision mediump int;
+	precision mediump float;
+   #endif
 	varying LOWP vec4 colorVarying;
 	varying MEDP vec2 uvVarying;
 	

@@ -79,9 +79,6 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpFloat restAngle	= state.GetValue < cpFloat >( 3, 0 );
 	cpFloat stiffness	= state.GetValue < cpFloat >( 4, 0 );
@@ -90,7 +87,10 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpDampedRotarySpringNew ( a->mBody, b->mBody, restAngle, stiffness, damping );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -118,9 +118,6 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpVect anchr1;
 	anchr1.x	= state.GetValue < cpFloat >( 3, 0 );
@@ -137,7 +134,10 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpDampedSpringNew ( a->mBody, b->mBody, anchr1, anchr2, restLength, stiffness, damping );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -160,9 +160,6 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpFloat phase	= state.GetValue < cpFloat >( 3, 0 );
 	cpFloat ratio	= state.GetValue < cpFloat >( 4, 0 );
@@ -171,6 +168,9 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	constraint->mConstraint = cpGearJointNew ( a->mBody, b->mBody, phase, ratio );
 	constraint->mConstraint->data = constraint;
 		
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -197,9 +197,6 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpVect groove_a;
 	groove_a.x	= state.GetValue < cpFloat >( 3, 0 );
@@ -216,7 +213,10 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpGrooveJointNew ( a->mBody, b->mBody, groove_a, groove_b, anchr2 );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -242,9 +242,6 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	
 	if ( !( a && b )) return 0;
 	
-	a->Retain ();
-	b->Retain ();
-		
 	cpVect anchr1;
 	anchr1.x	= state.GetValue < cpFloat >( 3, 0 );
 	anchr1.y	= state.GetValue < cpFloat >( 4, 0 );
@@ -256,7 +253,10 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpPinJointNew ( a->mBody, b->mBody, anchr1, anchr2 );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -282,14 +282,14 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 	
 	if ( !( a && b )) return 0;
 	
-	a->Retain ();
-	b->Retain ();
-	
 	cpVect pivot;
 	pivot.x		= state.GetValue < cpFloat >( 3, 0 );
 	pivot.y		= state.GetValue < cpFloat >( 4, 0 );
 	
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
 	
 	if ( state.CheckParams ( 5, "NN" )) {
 		
@@ -328,9 +328,6 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	
 	if ( !( a && b )) return 0;
 	
-	a->Retain ();
-	b->Retain ();
-	
 	cpFloat phase	= state.GetValue < cpFloat >( 3, 0 );
 	cpFloat ratchet	= state.GetValue < cpFloat >( 4, 0 );
 	
@@ -338,6 +335,9 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	constraint->mConstraint = cpRatchetJointNew ( a->mBody, b->mBody, phase, ratchet );
 	constraint->mConstraint->data = constraint;
 		
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -361,16 +361,16 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 	
 	if ( !( a && b )) return 0;
 	
-	a->Retain ();
-	b->Retain ();
-	
 	cpFloat min	= state.GetValue < cpFloat >( 3, 0 );
 	cpFloat max	= state.GetValue < cpFloat >( 4, 0 );
 	
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpRotaryLimitJointNew ( a->mBody, b->mBody, min, max );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -392,16 +392,16 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpFloat rate = state.GetValue < cpFloat >( 3, 0 );
 	
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpSimpleMotorNew ( a->mBody, b->mBody, rate );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -428,9 +428,6 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2, true );
 	
 	if ( !( a && b )) return 0;
-	
-	a->Retain ();
-	b->Retain ();
 		
 	cpVect anchr1;
 	anchr1.x	= state.GetValue < cpFloat >( 3, 0 );
@@ -446,7 +443,10 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	MOAICpConstraint* constraint = new MOAICpConstraint ();
 	constraint->mConstraint = cpSlideJointNew ( a->mBody, b->mBody, anchr1, anchr2, min, max );
 	constraint->mConstraint->data = constraint;
-		
+	
+	constraint->LuaRetain ( a );
+	constraint->LuaRetain ( b );
+	
 	constraint->PushLuaUserdata ( state );
 	return 1;
 }
@@ -535,8 +535,8 @@ MOAICpConstraint::MOAICpConstraint () :
 MOAICpConstraint::~MOAICpConstraint () {
 
 	if ( this->mConstraint ) {
-		(( MOAICpBody* )this->mConstraint->a->data )->Release ();
-		(( MOAICpBody* )this->mConstraint->b->data )->Release ();
+		this->LuaRelease (( MOAICpBody* )this->mConstraint->a->data );
+		this->LuaRelease (( MOAICpBody* )this->mConstraint->b->data );
 		cpConstraintFree ( this->mConstraint );
 	}
 }

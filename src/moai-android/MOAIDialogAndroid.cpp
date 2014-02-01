@@ -47,7 +47,7 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 		// handles multiple invocations - are they queued? On iOS, UIAlertView is LIFO and
 		// new invocations supersede previous ones, but once dismissed, the system continues
 		// down the alert stack.
-		MOAIDialogAndroid::Get ().mDialogCallback.SetStrongRef ( state, 7 );
+		MOAIDialogAndroid::Get ().mDialogCallback.SetRef ( state, 7 );
 	}	
 	
 	JNI_GET_ENV ( jvm, env );

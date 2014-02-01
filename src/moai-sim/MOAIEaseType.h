@@ -23,7 +23,7 @@
 	@const	SOFT_SMOOTH		Quadratic smooth.
 */
 class MOAIEaseType :
-	public MOAILuaObject {
+	public MOAIGlobalClass < MOAIEaseType, MOAILuaObject > {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )

@@ -35,7 +35,7 @@
     #include <sys/types.h>
 #endif
 
-#if defined( NACL )
+#if defined( NACL ) || defined (__EMSCRIPTEN__)
 		typedef unsigned long u_int32_t;
 #endif
 

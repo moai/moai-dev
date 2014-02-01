@@ -41,7 +41,7 @@ class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	MOAILuaLocal	mListenerTable;
+	MOAILuaMemberRef	mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_getListener				( lua_State* L );
@@ -71,7 +71,7 @@ class MOAIGlobalEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	MOAILuaRef		mListenerTable;
+	MOAILuaStrongRef	mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_getListener				( lua_State* L );

@@ -1015,7 +1015,15 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moai-core\MOAILuaObject-impl.h"
+			RelativePath="..\..\src\moai-core\MOAILuaClass-impl.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaClass.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaClass.h"
 			>
 		</File>
 		<File
@@ -1032,6 +1040,14 @@
 		</File>
 		<File
 			RelativePath="..\..\src\moai-core\MOAILuaRef.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaRefTable.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moai-core\MOAILuaRefTable.h"
 			>
 		</File>
 		<File
