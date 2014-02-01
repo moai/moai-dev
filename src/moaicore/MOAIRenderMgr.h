@@ -33,12 +33,14 @@ private:
 	u32				mRenderCounter;	// increments every render
 	
 	MOAILuaRef		mBufferTable;
-	
+	MOAILuaRef		mPreRenderCallback;
+
 	//----------------------------------------------------------------//
 	static int		_getBufferTable				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_setBufferTable				( lua_State* L );
-	
+	static int		_setPreRenderCallback		( lua_State* L );
+
 	//----------------------------------------------------------------//
 	#ifdef DOXYGEN
 		static int		_clearRenderStack			( lua_State* L );

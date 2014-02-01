@@ -23,12 +23,6 @@
 	@const	SOFT_EASE_IN		Quadratic ease in.
 	@const	SOFT_EASE_OUT		Quadratic ease out.
 	@const	SOFT_SMOOTH			Quadratic smooth.
-	@const	BACK_EASE_IN		Overshooting cubic ease in
- 	@const	BACK_EASE_OUT		Overshooting cubic ease out
- 	@const	BACK_EASE_SMOOTH	Overshooting cubic smooth
-	@const	SINE_EASE_IN		Sinusoidal ease in
-	@const	SINE_EASE_OUT		Sinusoidal ease out
-	@const	SINE_SMOOTH			Sinusoidal smooth
 */
 class MOAIEaseType :
 	public MOAILuaObject {
