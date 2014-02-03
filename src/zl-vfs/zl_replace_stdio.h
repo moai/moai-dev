@@ -86,6 +86,9 @@
 #undef _fseeki64
 #define _fseeki64 zl_fseeki64
 
+#undef fseeko64
+#define fseeko64 zl_fseeko64
+
 #undef fsetpos
 #define fsetpos zl_fsetpos
 

@@ -578,6 +578,15 @@ int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	return -1;
 }
 
+
+#ifdef __MINGW32__
+	int zl_fseeko64 ( ZLFILE* fp, __int64 offset, int origin ) {
+
+		// TODO:
+		return zl_fseek ( fp, ( long )offset, origin );
+	}
+#endif
+
 //----------------------------------------------------------------//
 #ifdef MOAI_COMPILER_MSVC
 	int zl_fseeki64 ( ZLFILE* fp, __int64 offset, int origin ) {

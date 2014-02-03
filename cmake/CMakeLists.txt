@@ -101,6 +101,14 @@ if ( BUILD_IOS )
 
 endif ( BUILD_IOS )
 
+
+# Virtual File System Force include
+# this should force all of moai to have this include and then we remove it from flags in zl-vfs
+# easier than adding it to each project!
+set (VFS_INCLUDE "-I${MOAI_ROOT}/src -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${VFS_INCLUDE}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VFS_INCLUDE}")
+
 #
 # Options
 #
