@@ -68,7 +68,7 @@ if ( BUILD_WINDOWS)
      #work around bug with mingw in release mode failing at link time due to different sized duplicate segments! Optimise for size instead
      set(CMAKE_CXX_FLAGS_RELEASE "-Os -DNDEBUG")
      set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
-        
+     set ( GCC_FORCE_32_BIT TRUE) #lets have 32bit for windows (for luajits sake)
      
      set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -static -Werror-implicit-function-declaration -DHAVE_MEMMOVE" )
      set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -static" )
@@ -262,8 +262,8 @@ if ( BUILD_HOST )
       add_subdirectory ( host-glut )
     endif (SDL_HOST)
 endif ( BUILD_HOST )
-  add_subdirectory ( moai-test )
-  add_subdirectory ( host-test )
+#  add_subdirectory ( moai-test )
+#  add_subdirectory ( host-test )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )

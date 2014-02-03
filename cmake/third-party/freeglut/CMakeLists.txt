@@ -21,3 +21,7 @@ target_include_directories (freeglutstatic PUBLIC ${FREEGLUT_INCLUDES})
 find_package( OpenGL REQUIRED )
 
 target_link_libraries( freeglutstatic ${OPENGL_LIBRARIES})
+
+if (BUILD_LINUX)
+  target_link_libraries( freeglutstatic Xxf86vm )
+endif (BUILD_LINUX)
