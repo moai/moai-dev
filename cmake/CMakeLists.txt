@@ -66,8 +66,8 @@ if ( BUILD_WINDOWS)
      message("Windows Visual Studio Build Detected")
   else ()
      #work around bug with mingw in release mode failing at link time due to different sized duplicate segments! Optimise for size instead
-     set(CMAKE_CXX_FLAGS_RELEASE "-Os")
-     set(CMAKE_C_FLAGS_RELEASE "-Os")
+     set(CMAKE_CXX_FLAGS_RELEASE "-Os -DNDEBUG")
+     set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
         
      
      set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -static -Werror-implicit-function-declaration -DHAVE_MEMMOVE" )
