@@ -121,7 +121,7 @@ cmake_minimum_required(VERSION 2.8)
         add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
             COMMAND $(MAKE) clean ${luajit_buildoptions}
-            COMMAND $(MAKE) ${luajit_buildoptions} 
+            COMMAND $(MAKE) ${luajit_buildoptions} libluajit.a
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 
