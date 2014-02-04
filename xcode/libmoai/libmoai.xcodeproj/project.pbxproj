@@ -7827,7 +7827,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7863,7 +7862,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -7901,7 +7899,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -7917,7 +7914,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -8395,7 +8391,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8412,7 +8407,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8490,7 +8484,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -8526,7 +8519,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
