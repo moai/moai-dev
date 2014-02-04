@@ -52,20 +52,25 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 6 )
 prop:moveLoc ( -512, 0, 6 )
 
+program = MOAIShaderProgram.new ()
+
+program:setVertexAttribute ( 1, 'position' )
+program:setVertexAttribute ( 2, 'uv' )
+program:setVertexAttribute ( 3, 'color' )
+
+program:reserveUniforms ( 2 )
+program:declareUniform ( 1, 'xWarp', MOAIShaderProgram.UNIFORM_FLOAT )
+program:declareUniform ( 2, 'yWarp', MOAIShaderProgram.UNIFORM_FLOAT )
+
+program:load ( vsh, fsh )
+
 shader = MOAIShader.new ()
-shader:reserveUniforms ( 2 )
-shader:declareUniform ( 1, 'xWarp', MOAIShader.UNIFORM_FLOAT )
-shader:declareUniform ( 2, 'yWarp', MOAIShader.UNIFORM_FLOAT )
+shader:setProgram ( program )
 
 shader:setAttr ( 1, 2 )
 shader:setAttr ( 2, 0 )
 
 shader:moveAttr ( 1, -2, 6 )
 shader:moveAttr ( 2, 2, 6 )
-
-shader:setVertexAttribute ( 1, 'position' )
-shader:setVertexAttribute ( 2, 'uv' )
-shader:setVertexAttribute ( 3, 'color' )
-shader:load ( vsh, fsh )
 
 tileDeck:setShader ( shader )

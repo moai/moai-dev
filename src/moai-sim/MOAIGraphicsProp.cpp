@@ -339,16 +339,16 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_SHADER:
-				this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE ));
+				this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
 				return true;
 			case ATTR_BLEND_MODE:
-				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
+				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
 				return true;
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT )));
 				return true;
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ );
+				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -510,7 +510,7 @@ void MOAIGraphicsProp::LoadGfxState () {
 	gfxState.SetShader ( this->mShader );
 	gfxState.SetTexture ( this->mTexture );
 
-	gfxDevice.SetGfxState ( gfxState.GetShader ());
+	gfxDevice.SetShader ( gfxState.GetShader ());
 	gfxDevice.SetGfxState ( gfxState.GetTexture ());
 
 	gfxDevice.SetPenColor ( this->mColor );

@@ -5,6 +5,7 @@
 #define	MOAISHADERMGR_H
 
 class MOAIShader;
+class MOAIShaderProgram;
 
 //================================================================//
 // MOAIShaderMgr
@@ -34,22 +35,25 @@ public:
 
 private:
 	
-	MOAIShader* mShaders [ TOTAL_SHADERS ];
+	MOAIShaderProgram*	mPrograms [ TOTAL_SHADERS ];
+	MOAIShader*			mShaders [ TOTAL_SHADERS ];
 	
 	//----------------------------------------------------------------//
-	static int			_getShader			( lua_State* L );
+	static int				_getProgram				( lua_State* L );
+	static int				_getShader				( lua_State* L );
 	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIShaderMgr )
 	
 	//----------------------------------------------------------------//
-	void				BindShader			( u32 shaderID );
-	MOAIShader&			GetShader			( u32 shaderID );
-						MOAIShaderMgr		();
-						~MOAIShaderMgr		();
-	void				RegisterLuaClass	( MOAILuaState& state );
-	void				RegisterLuaFuncs	( MOAILuaState& state );
+	void					BindShader				( u32 shaderID );
+	MOAIShaderProgram&		GetProgram				( u32 shaderID );
+	MOAIShader&				GetShader				( u32 shaderID );
+							MOAIShaderMgr			();
+							~MOAIShaderMgr			();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

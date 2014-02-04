@@ -38,15 +38,19 @@ color = MOAIColor.new ()
 color:setColor ( 0, 0, 0, 0 )
 color:moveColor ( 1, 0, 0, 0, 1.5 )
 
+program = MOAIShaderProgram.new ()
+
+program:setVertexAttribute ( 1, 'position' )
+program:setVertexAttribute ( 2, 'uv' )
+program:setVertexAttribute ( 3, 'color' )
+
+program:reserveUniforms ( 1 )
+program:declareUniform ( 1, 'maskColor', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
+
+program:load ( vsh, fsh )
+
 shader = MOAIShader.new ()
-shader:reserveUniforms ( 1 )
-shader:declareUniform ( 1, 'maskColor', MOAIShader.UNIFORM_COLOR )
-
+shader:setProgram ( program )
 shader:setAttrLink ( 1, color, MOAIColor.COLOR_TRAIT )
-
-shader:setVertexAttribute ( 1, 'position' )
-shader:setVertexAttribute ( 2, 'uv' )
-shader:setVertexAttribute ( 3, 'color' )
-shader:load ( vsh, fsh )
 
 gfxQuad:setShader ( shader )

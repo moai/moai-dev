@@ -97,6 +97,8 @@
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIShaderProgram.h>
+#include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStretchPatch2D.h>

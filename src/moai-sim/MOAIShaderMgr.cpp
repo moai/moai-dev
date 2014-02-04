@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 #include <moai-sim/shaders/MOAIDeck2DShader-fsh.h>
@@ -25,24 +26,31 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getShader
-	@text	Return one of the built-in shaders.
+/**	@name	getProgram
+	@text	Return one of the built-in shader programs.
 
 	@in		number shaderID		One of MOAIShaderMgr.DECK2D_SHADER, MOAIShaderMgr.FONT_SHADER,
 								MOAIShaderMgr.LINE_SHADER, MOAIShaderMgr.MESH_SHADER
 	@out	nil
 */
-int MOAIShaderMgr::_getShader ( lua_State* L ) {
+int MOAIShaderMgr::_getProgram ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	u32 shaderID = state.GetValue < u32 >( 1, 0xffffffff );
 	
 	if ( shaderID < TOTAL_SHADERS ) {
 	
-		MOAIShader& shader = MOAIShaderMgr::Get ().GetShader ( shaderID );
-		shader.PushLuaUserdata ( state );
+		MOAIShaderProgram& program = MOAIShaderMgr::Get ().GetProgram ( shaderID );
+		program.PushLuaUserdata ( state );
 		return 1;
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIShaderMgr::_getShader ( lua_State* L ) {
+	UNUSED ( L );
 	return 0;
 }
 
@@ -63,6 +71,90 @@ void MOAIShaderMgr::BindShader ( u32 shaderID ) {
 }
 
 //----------------------------------------------------------------//
+MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
+
+	assert ( shaderID < TOTAL_SHADERS );
+	MOAIShaderProgram* program = this->mPrograms [ shaderID ];
+	
+	if ( !program ) {
+
+		program = new MOAIShaderProgram ();
+		this->LuaRetain ( program );
+		
+		switch ( shaderID ) {
+			
+			case DECK2D_SHADER:
+				
+				program->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				break;
+			
+			case DECK2D_TEX_ONLY_SHADER:
+				
+				program->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				break;
+			
+			case FONT_SHADER:
+				
+				program->SetSource ( _fontShaderVSH, _fontShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				break;
+			
+			case LINE_SHADER:
+				
+				program->SetSource ( _lineShaderVSH, _lineShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
+				break;
+			
+			case LINE_SHADER_3D:
+				
+				program->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
+				program->SetVertexAttribute ( 0, "position" );
+				program->SetVertexAttribute ( 1, "color" );
+				
+				program->ReserveUniforms ( 2 );
+				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
+				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+				
+				program->ReserveGlobals ( 2 );
+				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
+				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+				
+				break;
+
+			case MESH_SHADER:
+
+				program->SetSource ( _meshShaderVSH, _meshShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+
+				program->ReserveUniforms ( 2 );
+				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
+				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+				
+				program->ReserveGlobals ( 2 );
+				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
+				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+				
+				break;
+		}
+		
+		this->mPrograms [ shaderID ] = program;
+	}
+	
+	return *program;
+}
+
+//----------------------------------------------------------------//
 MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 
 	assert ( shaderID < TOTAL_SHADERS );
@@ -73,64 +165,8 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 		shader = new MOAIShader ();
 		this->LuaRetain ( shader );
 		
-		switch ( shaderID ) {
-			
-			case DECK2D_SHADER:
-				
-				shader->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case DECK2D_TEX_ONLY_SHADER:
-				
-				shader->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case FONT_SHADER:
-				
-				shader->SetSource ( _fontShaderVSH, _fontShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case LINE_SHADER:
-				
-				shader->SetSource ( _lineShaderVSH, _lineShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
-				break;
-			
-			case LINE_SHADER_3D:
-				
-				shader->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
-				shader->SetVertexAttribute ( 0, "position" );
-				shader->SetVertexAttribute ( 1, "color" );
-				
-				shader->ReserveUniforms ( 2 );
-				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
-				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_PEN_COLOR );
-				
-				break;
-
-			case MESH_SHADER:
-
-				shader->SetSource ( _meshShaderVSH, _meshShaderFSH );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-
-				shader->ReserveUniforms ( 2 );
-				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
-				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_PEN_COLOR );
-
-				break;
-		}
+		MOAIShaderProgram& program = this->GetProgram ( shaderID );
+		shader->SetProgram ( &program );
 		
 		this->mShaders [ shaderID ] = shader;
 	}
@@ -144,6 +180,10 @@ MOAIShaderMgr::MOAIShaderMgr () {
 	RTTI_SINGLE ( MOAILuaObject )
 
 	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+		this->mPrograms [ i ] = 0;
+	}
+	
+	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
 		this->mShaders [ i ] = 0;
 	}
 }
@@ -151,6 +191,12 @@ MOAIShaderMgr::MOAIShaderMgr () {
 //----------------------------------------------------------------//
 MOAIShaderMgr::~MOAIShaderMgr () {
 
+	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+		if ( this->mPrograms [ i ]) {
+			this->LuaRelease ( this->mPrograms [ i ]);
+		}
+	}
+	
 	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
 		if ( this->mShaders [ i ]) {
 			this->LuaRelease ( this->mShaders [ i ]);
@@ -169,6 +215,7 @@ void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
 	
 	luaL_Reg regTable [] = {
+		{ "getProgram",				_getProgram },
 		{ "getShader",				_getShader },
 		{ NULL, NULL }
 	};

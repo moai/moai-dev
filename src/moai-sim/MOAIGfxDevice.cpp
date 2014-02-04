@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAIVertexFormat.h>
@@ -557,7 +558,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimSize ( 0 ),
 	mPrimTop ( 0 ),
 	mPrimType ( 0xffffffff ),
-	mShader ( 0 ),
+	mShaderProgram ( 0 ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
@@ -748,7 +749,7 @@ void MOAIGfxDevice::ResetState () {
 	this->SetVertexFormat ();
 
 	// clear the shader
-	this->mShader = 0;
+	this->mShaderProgram = 0;
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
@@ -1067,21 +1068,33 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
-	if (( this->mShader != shader ) && this->mIsProgrammable ) {
-	
-		this->Flush ();
-		this->mShader = shader;
-		
-		if ( shader ) {
-			shader->Bind ();
-		}
+	if ( shader ) {
+		this->SetShaderProgram ( shader->GetProgram ());
+		shader->BindUniforms ();
 	}
+	else {
+		this->SetShaderProgram ( 0 );
+	}	
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 
 	MOAIShaderMgr::Get ().BindShader ( preset );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
+
+	if (( this->mShaderProgram != program ) && this->mIsProgrammable ) {
+	
+		this->Flush ();
+		this->mShaderProgram = program;
+		
+		if ( program ) {
+			program->Bind ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1289,8 +1302,8 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) 
 	
 	// update any transforms in the shader that rely on the pipeline
 	// the shader caches the state of each uniform; only reloads when changed
-	if ( this->mShader ) {
-		this->mShader->UpdatePipelineTransforms (
+	if ( this->mShaderProgram ) {
+		this->mShaderProgram->UpdateGlobalTransforms (
 			this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
 			this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
 			this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
@@ -1400,8 +1413,8 @@ void MOAIGfxDevice::UpdateFinalColor () {
 
 	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
 	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
+	if ( this->mShaderProgram ) {
+		this->mShaderProgram->UpdateGlobalPenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
 	}
 }
 
