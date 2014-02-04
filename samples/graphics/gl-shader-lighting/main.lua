@@ -144,18 +144,26 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	local fsh = file:read ( '*all' )
 	file:close ()
 
+	local program = MOAIShaderProgram.new ()
+
+	program:setVertexAttribute( 1, 'position' )
+	program:setVertexAttribute( 2, 'normal' )
+	program:setVertexAttribute( 3, 'uv' )
+	program:setVertexAttribute( 4, 'color' )
+	
+	program:reserveUniforms ( 2 )
+	program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
+	program:declareUniform ( 2, 'normalTransform', MOAIShaderProgram.UNIFORM_MATRIX_F3 )
+	
+	program:reserveGlobals ( 2 )
+	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
+	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ_NORM )
+	
+	program:load ( vsh, fsh )
+
 	local shader = MOAIShader.new ()
-
-	shader:reserveUniforms ( 2 )
-	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
-	shader:declareUniform ( 2, 'normalTransform', MOAIShader.UNIFORM_NORMAL )
-
-	shader:setVertexAttribute( 1, 'position' )
-	shader:setVertexAttribute( 2, 'normal' )
-	shader:setVertexAttribute( 3, 'uv' )
-	shader:setVertexAttribute( 4, 'color' )
-	shader:load ( vsh, fsh )
-
+	shader:setProgram ( program )
+	
 	local mesh = MOAIMesh.new ()
 	mesh:setShader ( shader )
 	mesh:setTexture ( texture )

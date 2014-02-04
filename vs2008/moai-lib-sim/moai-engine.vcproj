@@ -1202,6 +1202,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderProgram.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderProgram.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderUniform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderUniform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIVertexBuffer.cpp"
 				>
 			</File>

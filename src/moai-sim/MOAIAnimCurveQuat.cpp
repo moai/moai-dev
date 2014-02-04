@@ -77,7 +77,7 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//

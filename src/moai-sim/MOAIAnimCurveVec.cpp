@@ -72,7 +72,7 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//

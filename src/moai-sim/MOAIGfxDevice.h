@@ -16,6 +16,7 @@ class MOAIGfxResource;
 class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
+class MOAIShaderProgram;
 class MOAITexture;
 class MOAITextureBase;
 class MOAIVertexFormat;
@@ -127,9 +128,9 @@ private:
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	ZLLeanList < MOAIGfxResource* > mResources;
 
-	ZLRect			mScissorRect;
-	MOAIShader*		mShader;
-	u32				mSize;
+	ZLRect					mScissorRect;
+	MOAIShaderProgram*		mShaderProgram;
+	u32						mSize;
 	
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
@@ -291,6 +292,7 @@ public:
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
+	void					SetShaderProgram		( MOAIShaderProgram* program = 0 );
 	bool					SetTexture				();
 	bool					SetTexture				( MOAITextureBase* texture );
 	bool					SetTexture				( MOAIMultiTexture* multi );

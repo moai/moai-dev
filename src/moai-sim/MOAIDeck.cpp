@@ -33,7 +33,7 @@ void MOAIDeckGfxState::Reset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckGfxState::SetShader ( MOAIGfxState* shader ) {
+void MOAIDeckGfxState::SetShader ( MOAIShader* shader ) {
 
 	if ( shader ) {
 		this->mShader = shader;

@@ -18,18 +18,18 @@ class MOAISurfaceSampler2D;
 class MOAIDeckGfxState {
 private:
 
-	MOAIGfxState*	mShader;
+	MOAIShader*		mShader;
 	MOAIGfxState*	mTexture;
 
 public:
 
-	GET ( MOAIGfxState*, Shader, mShader )
+	GET ( MOAIShader*, Shader, mShader )
 	GET ( MOAIGfxState*, Texture, mTexture )
 
 	//----------------------------------------------------------------//
 				MOAIDeckGfxState	();
 	void		Reset				();
-	void		SetShader			( MOAIGfxState* shader );
+	void		SetShader			( MOAIShader* shader );
 	void		SetTexture			( MOAIGfxState* texture );
 };
 
@@ -49,8 +49,8 @@ protected:
 
 	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
 
-	// TODO: refactor; not all decks need thse (or will be limited to these)
-	MOAILuaSharedPtr < MOAIGfxState > mShader;
+	// TODO: refactor; not all decks need these (or will be limited to these)
+	MOAILuaSharedPtr < MOAIShader > mShader;
 	MOAILuaSharedPtr < MOAIGfxState > mTexture;
 	
 	u32 mContentMask;

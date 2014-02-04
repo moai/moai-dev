@@ -65,7 +65,7 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
 }
 
 //----------------------------------------------------------------//
