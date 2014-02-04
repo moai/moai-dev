@@ -23,26 +23,35 @@ vtxFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
 vtxFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE, 4 )
 vtxFormat:declareAttribute ( 3, MOAIVertexFormat.GL_FLOAT, 1 )
 
+program = MOAIShaderProgram.new ()
+
+program:setVertexAttribute ( 1, 'position' )
+program:setVertexAttribute ( 2, 'color' )
+program:setVertexAttribute ( 3, 'blend' )
+
+program:reserveUniforms ( 4 )
+program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
+program:declareUniform ( 2, 'ucolor', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
+program:declareUniform ( 3, 'color0', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
+program:declareUniform ( 4, 'color1', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
+
+program:reserveGlobals ( 2 )
+program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
+program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_PEN_COLOR )
+
+program:load ( load ( 'shader.vsh' ), load ( 'shader.fsh' ))
+
 shader = MOAIShader.new ()
-
-shader:setVertexAttribute ( 1, 'position' )
-shader:setVertexAttribute ( 2, 'color' )
-shader:setVertexAttribute ( 3, 'blend' )
-
-shader:reserveUniforms ( 4 )
-shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
-shader:declareUniform ( 2, 'ucolor', MOAIShader.UNIFORM_PEN_COLOR )
-shader:declareUniform ( 3, 'color0', MOAIShader.UNIFORM_COLOR )
-shader:declareUniform ( 4, 'color1', MOAIShader.UNIFORM_COLOR )
-
-shader:load ( load ( 'shader.vsh' ), load ( 'shader.fsh' ))
+shader:setProgram ( program )
 
 color0 = MOAIColor.new ()
 color0:setColor ( 1, 0, 0, 0 )
+color0:moveColor ( 1, 0, 0, 1, 2 )
 shader:setAttrLink ( 3, color0, MOAIColor.COLOR_TRAIT )
 
 color1 = MOAIColor.new ()
 color1:setColor ( 0, 1, 0, 0 )
+color1:moveColor ( 0, 1, 0, 1, 2 )
 shader:setAttrLink ( 4, color1, MOAIColor.COLOR_TRAIT )
 
 MOAISim.openWindow ( "test", 640, 480 )
@@ -66,14 +75,14 @@ tess:setVertexExtra ( 2, writeFormat ( 'f', 1.0 )) -- stroke color
 
 tess:setCircleResolution ( 32 )
 
-tess:setFillStyle ( MOAIVectorDrawing.FILL_SOLID )
+tess:setFillStyle ( MOAIVectorTesselator.FILL_SOLID )
 tess:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 
-tess:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
+tess:setStrokeStyle ( MOAIVectorTesselator.STROKE_EXTERIOR )
 tess:setStrokeColor ( 0.45, 0.5, 1, 1  )
 tess:setStrokeWidth ( 10 )
-tess:setJoinStyle ( MOAIVectorDrawing.JOIN_MITER )
-tess:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
+tess:setJoinStyle ( MOAIVectorTesselator.JOIN_MITER )
+tess:setCapStyle ( MOAIVectorTesselator.CAP_POINTY )
 tess:setMiterLimit ( 10 )
 
 tess:setFillExtra ( 1 )
@@ -108,3 +117,5 @@ mesh:setShader ( shader )
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 layer:insertProp ( prop )
+
+prop:moveRot ( 0, 0, -180, 1.5 )
