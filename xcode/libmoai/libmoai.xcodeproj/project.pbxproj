@@ -474,8 +474,6 @@
 		0324E79B13564BC8000ADC60 /* USZip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FC13564BC8000ADC60 /* USZip.h */; };
 		0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FD13564BC8000ADC60 /* USZipFile.cpp */; };
 		0324E79D13564BC8000ADC60 /* USZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FE13564BC8000ADC60 /* USZipFile.h */; };
-		0324E83213564BC8000ADC60 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
-		0324E83313564BC8000ADC60 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F413564BC7000ADC60 /* AKU.h */; };
 		0324E83613564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F713564BC7000ADC60 /* pch.cpp */; };
 		0324E83713564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F813564BC7000ADC60 /* pch.h */; };
 		0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4FA13564BC7000ADC60 /* MOAIAction.cpp */; };
@@ -1109,6 +1107,9 @@
 		66E62C4316AE312A009B9C29 /* MOAIMutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 66E62C3716AE312A009B9C29 /* MOAIMutex.h */; };
 		B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
+		B464B3AF187E057A002E4E0C /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
+		B464B3B1187E07CC002E4E0C /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E4F413564BC7000ADC60 /* AKU.h */; };
+		B464B3B2187E07D0002E4E0C /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
 		CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
@@ -5532,7 +5533,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0324E83313564BC8000ADC60 /* AKU.h in Headers */,
 				0324E83713564BC8000ADC60 /* pch.h in Headers */,
 				0324E83913564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E83B13564BC8000ADC60 /* MOAIAnim.h in Headers */,
@@ -5850,6 +5850,7 @@
 				DD80D66916D8021D00C172D2 /* MOAIMath.h in Headers */,
 				DD80D69116D8025000C172D2 /* MOAIFrameBufferTexture.h in Headers */,
 				EB665DEE1756B13B009A8F29 /* MOAIAnimCurveCustom.h in Headers */,
+				B464B3B1187E07CC002E4E0C /* AKU.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6892,7 +6893,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0324E83213564BC8000ADC60 /* AKU.cpp in Sources */,
 				0324E83613564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */,
 				0324E83A13564BC8000ADC60 /* MOAIAnim.cpp in Sources */,
@@ -7166,6 +7166,8 @@
 				DD80D6A616D8029700C172D2 /* SFMT.c in Sources */,
 				EB665DEC1756B13B009A8F29 /* MOAIAnimCurveCustom.cpp in Sources */,
 				EB6FB01317725BF700F164E5 /* MOAIFreeTypeFont.cpp in Sources */,
+				B464B3AF187E057A002E4E0C /* moaicore-pch.cpp in Sources */,
+				B464B3B2187E07D0002E4E0C /* AKU.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8143,7 +8145,6 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -8349,7 +8350,6 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx10.8;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;

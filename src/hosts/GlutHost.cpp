@@ -399,8 +399,6 @@ void GlutRefreshContext () {
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuacurl ();
 		AKUExtLoadLuafilesystem ();
 		AKUExtLoadLuasocket ();
 		AKUExtLoadLuasql ();
@@ -439,5 +437,5 @@ void GlutRefreshContext () {
 		AKUDebugHarnessInit ();
 	#endif
 
-	AKURunBytecode ( moai_lua, moai_lua_SIZE );
+	AKURunString( moai_lua_code );
 }
