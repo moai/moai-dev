@@ -74,6 +74,7 @@ protected:
 	void			OnClear					();
 	void			OnDestroy				();
 	void			OnInvalidate			();
+	void			OnUnbind				();
 	void			ReleaseLoader			();
 	void			UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
 

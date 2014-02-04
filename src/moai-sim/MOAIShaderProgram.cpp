@@ -317,11 +317,6 @@ void MOAIShaderProgram::OnBind () {
 
 	// use shader program.
 	zglUseProgram ( this->mProgram );
-
-	// reload the uniform values
-	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-	//	this->mUniforms [ i ].Bind ();
-	//}
 }
 
 //----------------------------------------------------------------//
@@ -418,6 +413,12 @@ void MOAIShaderProgram::OnInvalidate () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnLoad () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::OnUnbind () {
+
+	zglUseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//

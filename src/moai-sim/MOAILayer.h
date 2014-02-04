@@ -107,7 +107,7 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID );
+	void			Draw					( int subPrimID, float lod  );
 	float			GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	ZLMatrix4x4		GetWndToWorldMtx		() const;
 	ZLMatrix4x4		GetWorldToWndMtx		() const;

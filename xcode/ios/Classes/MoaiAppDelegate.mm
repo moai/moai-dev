@@ -44,6 +44,8 @@
 		
 		[ application setStatusBarHidden:true ];
 		
+		AKUAppInitialize ();
+		AKUModulesAppInitialize ();
 		AKUModulesIosAppInitialize ();
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
@@ -73,18 +75,30 @@
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
 		
-        // check to see if the app was lanuched from a remote notification
-        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+         // check for launch with local notification
+        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey ];
+        
+        // if we have a local notification bundle, send that to the app...
         if ( pushBundle != NULL ) {
-            
             AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+        } else {
+            // ...else check for a remote bundle
+            pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+            if ( pushBundle != NULL ) {
+                AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+            }
         }
 		
 		// return
 		return true;
 	}
 
-		
+	//----------------------------------------------------------------//
+    -( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
+    
+        AKUIosNotifyLocalNotificationReceived ( notification );
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
 		
@@ -101,32 +115,25 @@
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
 	
 		// restart moai view
-		AKUIosDidStartSession ( true );
+		AKUIosDidBecomeActive ();
 		[ mMoaiView pause:NO ];
 	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationDidEnterBackground:( UIApplication* )application {
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationWillEnterForeground:( UIApplication* )application {
-	}
-	
+
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
 	
 		// pause moai view
-		AKUIosWillEndSession ();
+		AKUIosWillResignActive ();
 		[ mMoaiView pause:YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
         
-		AKUIosWillEndSession ();
-		
+		AKUIosWillTerminate ();
 		AKUModulesIosAppFinalize ();
+		AKUModulesAppFinalize ();
+		AKUAppFinalize ();
 	}
 
 	//----------------------------------------------------------------//
@@ -136,7 +143,7 @@
 		// For iOS 4.2+ support
 		-( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
 
-			AKUAppOpenFromURL ( url );
+			AKUIosOpenUrl ( url, [ sourceApplication UTF8String ]);
 			return YES;
 		}
 	
@@ -145,7 +152,7 @@
 		//----------------------------------------------------------------//
 		-( BOOL )application :( UIApplication* )application handleOpenURL :( NSURL* )url {
 
-			AKUIosOpenedFromURL ( url );
+			AKUIosOpenUrl ( url, 0 );
 			return YES;
 		}
 

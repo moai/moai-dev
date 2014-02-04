@@ -30,6 +30,7 @@ enum {
 	ZGL_BLEND_MODE_REVERSE_SUBTRACT,
 	ZGL_BLEND_MODE_SUBTRACT,
 
+	ZGL_BUFFER_TARGET_ARRAY,
 	ZGL_BUFFER_TARGET_ELEMENT_ARRAY,
 
 	ZGL_BUFFER_USAGE_DYNAMIC_COPY,
@@ -318,5 +319,13 @@ extern void		zglRenderbufferStorage			( u32 internalFormat, u32 width, u32 heigh
 extern void		zglBindBuffer					( u32 target, u32 buffer );
 extern void		zglBufferData					( u32 target, u32 size, const void* data, u32 usage );
 extern u32		zglCreateBuffer					();
+extern void*	zglMapBuffer					( u32 target );
+extern void		zglUnmapBuffer					( u32 target );
+
+//----------------------------------------------------------------//
+extern void		zglBindVertexArray				( u32 vertexArrayID );
+extern u32		zglCreateVertexArray			();
+extern void		zglDeleteVertexArray			( u32 vertexArrayID );
+
 
 #endif

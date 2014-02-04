@@ -76,12 +76,6 @@ bool MOAIIndexBuffer::IsValid () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIIndexBuffer::LoadGfxState () {
-
-	return this->Bind ();
-}
-
-//----------------------------------------------------------------//
 MOAIIndexBuffer::MOAIIndexBuffer () :
 	mBuffer ( 0 ),
 	mIndexCount ( 0 ),
@@ -145,6 +139,12 @@ void MOAIIndexBuffer::OnInvalidate () {
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::OnLoad () {
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnUnbind () {
+
+	zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, 0 );
 }
 
 //----------------------------------------------------------------//

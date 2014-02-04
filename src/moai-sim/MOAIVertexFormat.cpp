@@ -118,18 +118,14 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::Bind ( void* buffer ) const {
+void MOAIVertexFormat::Bind ( void* buffer ) const {
 
-	if ( buffer ) {
-		if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
-			this->BindProgrammable ( buffer );
-		}
-		else {
-			this->BindFixed ( buffer );
-		}
-		return true;
+	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
+		this->BindProgrammable ( buffer );
 	}
-	return false;
+	else {
+		this->BindFixed ( buffer );
+	}
 }
 
 //----------------------------------------------------------------//

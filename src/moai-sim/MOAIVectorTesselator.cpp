@@ -558,16 +558,6 @@ u32 MOAIVectorTesselator::CountVertices () {
 }
 
 //----------------------------------------------------------------//
-//void MOAIVectorTesselator::Draw () {
-//
-//	if ( this->mVtxBuffer.Bind ()) {
-//		if ( this->mIdxBuffer.LoadGfxState ()) {
-//			zglDrawElements ( ZGL_PRIM_TRIANGLES, this->mIdxBuffer.GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
-//		}
-//	}
-//}
-
-//----------------------------------------------------------------//
 void MOAIVectorTesselator::Finish () {
 
 	u32 vertsTop = this->mVertexStack.GetTop ();

@@ -516,8 +516,9 @@ void MOAILayer::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::Draw ( int subPrimID ) {
+void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	UNUSED ( subPrimID );
+	UNUSED ( lod );
     
    	if ( !this->IsVisible () ) return;
 	if ( !this->mViewport ) return;
@@ -836,7 +837,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
 	
-	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID, 0.0f );
 }
 
 //----------------------------------------------------------------//
