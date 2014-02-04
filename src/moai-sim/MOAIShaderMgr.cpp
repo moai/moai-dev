@@ -50,7 +50,16 @@ int MOAIShaderMgr::_getProgram ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIShaderMgr::_getShader ( lua_State* L ) {
-	UNUSED ( L );
+	MOAILuaState state ( L );
+
+	u32 shaderID = state.GetValue < u32 >( 1, 0xffffffff );
+	
+	if ( shaderID < TOTAL_SHADERS ) {
+	
+		MOAIShader& shader = MOAIShaderMgr::Get ().GetShader ( shaderID );
+		shader.PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 

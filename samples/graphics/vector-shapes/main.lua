@@ -19,14 +19,14 @@ tess = MOAIVectorTesselator.new ()
 
 tess:setCircleResolution ( 32 )
 
-tess:setFillStyle ( MOAIVectorDrawing.FILL_SOLID )
+tess:setFillStyle ( MOAIVectorTesselator.FILL_SOLID )
 tess:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 
-tess:setStrokeStyle ( MOAIVectorDrawing.STROKE_EXTERIOR )
+tess:setStrokeStyle ( MOAIVectorTesselator.STROKE_EXTERIOR )
 tess:setStrokeColor ( 0.45, 0.5, 1, 1  )
 tess:setStrokeWidth ( 10 )
-tess:setJoinStyle ( MOAIVectorDrawing.JOIN_ROUND )
-tess:setCapStyle ( MOAIVectorDrawing.CAP_POINTY )
+tess:setJoinStyle ( MOAIVectorTesselator.JOIN_ROUND )
+tess:setCapStyle ( MOAIVectorTesselator.CAP_POINTY )
 tess:setMiterLimit ( 10 )
 
 tess:pushPoly ()

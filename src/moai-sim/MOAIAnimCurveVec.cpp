@@ -99,7 +99,7 @@ void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& spa
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLVec3D >( v1 );
+	attrOp.SetValue < ZLVec3D >( v1, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//
@@ -135,14 +135,14 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ));
+	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLVec3D >( zero );
+	attrOp.SetValue < ZLVec3D >( zero, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//

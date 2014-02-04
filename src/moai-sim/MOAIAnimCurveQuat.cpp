@@ -104,7 +104,7 @@ void MOAIAnimCurveQuat::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& sp
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLQuaternion >( v1 );
+	attrOp.SetValue < ZLQuaternion >( v1, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
@@ -138,7 +138,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ));
+	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
@@ -146,7 +146,7 @@ void MOAIAnimCurveQuat::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	ZLQuaternion quat;
 	quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLQuaternion >( quat );
+	attrOp.SetValue < ZLQuaternion >( quat, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
