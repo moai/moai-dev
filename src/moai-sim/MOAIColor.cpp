@@ -10,6 +10,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIColor::_getColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIColor, "U" )
+	
+	state.Push ( self->mR );
+	state.Push ( self->mG );
+	state.Push ( self->mB );
+	state.Push ( self->mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@name	moveColor
 	@text	Animate the color by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
@@ -246,6 +259,7 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "getColor",				_getColor },
 		{ "moveColor",				_moveColor },
 		{ "seekColor",				_seekColor },
 		{ "setColor",				_setColor },
