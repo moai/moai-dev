@@ -8,6 +8,7 @@
 #include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAITextureData.h>
 #include <moai-sim/MOAIMultiTexture.h>
 
 //================================================================//
@@ -91,6 +92,26 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 //================================================================//
 // MOAITextureBase
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAITextureBase::CreateTextureFromData ( MOAITextureData& data ) {
+
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
+
+	switch ( data.GetFormat ()) {
+		case MOAITextureData::FORMAT_PKM:
+			this->CreateTextureFromPKM ( data );
+			break;
+		case MOAITextureData::FORMAT_PVR:
+			this->CreateTextureFromPVR ( data );
+			break;
+	}
+
+	if ( this->mGLTexID ) {
+		MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+		this->mIsDirty = true;
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
@@ -226,18 +247,46 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
+void MOAITextureBase::CreateTextureFromPKM ( MOAITextureData& data ) {
 	UNUSED ( data );
-	UNUSED ( size );
+	
+	#ifdef MOAI_OS_ANDROID
+
+		MOAIGfxDevice::Get ().ClearErrors ();
+
+		MOAIPkmHeader* header = data.GetPkmHeader ();
+		if ( header->GetType () != MOAIPkmHeader::ETC1_RGB_NO_MIPMAPS ) return;
+		
+		this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ETC1_RGB8_OES;
+
+		this->mGLTexID = zglCreateTexture ();
+		if ( !this->mGLTexID ) return;
+
+		zglBindTexture ( this->mGLTexID );
+		
+		u8* imageData = data.GetData ();
+		this->mTextureSize = header->GetDataSize();
+
+		zglCompressedTexImage2D ( 0, this->mGLInternalFormat, header->GetWidth (), header->GetHeight (), this->mTextureSize, imageData );
+		
+		if ( zglGetError () != ZGL_ERROR_NONE ) {
+			this->Clear ();
+			return;
+		}
+
+	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAITextureBase::CreateTextureFromPVR ( MOAITextureData& data ) {
+	UNUSED ( data );
 
 	#ifdef MOAI_OS_IPHONE
 
-		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 		MOAIGfxDevice::Get ().ClearErrors ();
 
-		MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
-		if ( !header ) return;
-		
+		MOAIPvrHeader* header = data.GetPvrHeader ();
+
 		bool compressed = false;
 		bool hasAlpha = header->mAlphaBitMask ? true : false;
 		
@@ -292,15 +341,15 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 			case MOAIPvrHeader::OGL_PVRTC2:
 				compressed = true;
 				this->mGLInternalFormat = hasAlpha ?
-					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG :
-					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+					ZGL_PIXEL_FORMAT_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG :
+					ZGL_PIXEL_FORMAT_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC4:
 				compressed = true;
 				this->mGLInternalFormat = hasAlpha ?
-					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG :
-					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+					ZGL_PIXEL_FORMAT_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG :
+					ZGL_PIXEL_FORMAT_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_BGRA_8888:
@@ -326,7 +375,7 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 		
 		int width = header->mWidth;
 		int height = header->mHeight;
-		char* imageData = (char*)(header->GetFileData ( data, size));
+		u8* imageData = data.GetData ();
 		if ( header->mMipMapCount == 0 ) {
 			
 			u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
@@ -367,11 +416,6 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 				height >>= 1;
 			}	
 		}			
-
-		if ( this->mGLTexID ) {
-			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-			this->mIsDirty = true;
-		}
 
 	#endif
 }

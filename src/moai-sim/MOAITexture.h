@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAITextureData.h>
 
 class MOAIDataBuffer;
 
@@ -27,8 +28,7 @@ private:
 	MOAIImage			mImage;
 	
 	// for loading compressed data
-	void*				mData;
-	size_t				mDataSize;
+	MOAITextureData		mData;
 
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );
