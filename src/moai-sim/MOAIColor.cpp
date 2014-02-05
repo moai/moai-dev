@@ -26,9 +26,10 @@ int MOAIColor::_getColor ( lua_State* L ) {
 	state.Push ( self->mG );
 	state.Push ( self->mB );
 	state.Push ( self->mA );
-
+	
 	return 4;
 }
+
 //----------------------------------------------------------------//
 /**	@name	moveColor
 	@text	Animate the color by applying a delta. Creates and returns
