@@ -7853,7 +7853,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -7890,7 +7889,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-3rdparty";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -7899,14 +7897,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -7914,7 +7910,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -7922,7 +7917,6 @@
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -8151,7 +8145,6 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -8357,7 +8350,6 @@
 					"\"zlcore/zl_replace.h\"",
 				);
 				PROVISIONING_PROFILE = "";
-				SDKROOT = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -8397,7 +8389,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 				WARNING_CFLAGS = "-w";
 			};
@@ -8413,7 +8404,6 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zlcore";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -8510,7 +8500,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -8545,7 +8534,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
