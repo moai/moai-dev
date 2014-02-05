@@ -396,7 +396,6 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 	loc.mW = 1.0f;
 
 	if ( self->mCamera && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
-		loc.mZ = worldToWnd.m [ ZLMatrix4x4::C3_R2 ] / worldToWnd.m [ ZLMatrix4x4::C3_R3 ];
 		wndToWorld.Project ( loc );
 	}
 	else {
