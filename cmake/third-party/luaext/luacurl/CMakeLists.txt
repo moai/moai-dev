@@ -1,6 +1,6 @@
  project( luacurl )
  
- set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+ set ( LUAEXT_SOURCES
       ${MOAI_ROOT}/3rdparty/luacurl-1.2.1/luacurl.c
  )
  
