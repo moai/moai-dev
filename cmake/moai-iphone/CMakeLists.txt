@@ -8,7 +8,6 @@ set (LINK_LIBS "")
 set ( MOAI_IPHONE_INCLUDES 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/moai-iphone/"
-  "${MOAI_ROOT}/src/moai-util/"
   "${MOAI_ROOT}/src/config-default/"
   "${MOAI_ROOT}/3rdparty/crittercismiOS-4.0.6/CrittercismSDK"
   "${MOAI_ROOT}/3rdparty/facebookiOS-3.0.6.b/src"
@@ -147,5 +146,5 @@ add_library ( moai-iphone STATIC ${MOAI_IPHONE_SRC}  )
 
 target_link_libraries ( moai-iphone 
 	${LINK_LIBS}
-  third-party
+  moai-sim moai-util moai-core 
 )

@@ -9,6 +9,7 @@ endif ( BUILD_ANDROID )
 set ( MOAI_CORE_INCLUDES 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
+  "${MOAI_ROOT}/src/moai-core"
   )
 
 include_directories ( 
