@@ -1,6 +1,6 @@
   project( luasql )
 
- set ( LUAEXT_SOURCES ${LUAEXT_SOURCES}
+ set ( LUAEXT_SOURCES 
       ${MOAI_ROOT}/3rdparty/luasql-2.2.0/src/ls_sqlite3.c
       ${MOAI_ROOT}/3rdparty/luasql-2.2.0/src/luasql.c
       
