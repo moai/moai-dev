@@ -3,8 +3,7 @@
 
 #include <iostream>
 
-#include "pch.h"
-
+#include <moai-http-client/pch.h>
 #include <algorithm>
 #include <moai-iphone/MOAIUrlMgrNSURL.h>
 #include <moai-iphone/MOAIHttpTaskNSURL.h>

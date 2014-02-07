@@ -20,4 +20,5 @@ set ( MOAI_AUDIOSAMPLER_SRC
 
 
 add_library ( moai-audiosampler STATIC ${MOAI_AUDIOSAMPLER_SRC}  )
+target_link_libraries ( moai-audiosampler moai-core moai-util moai-sim zlcore )
 
