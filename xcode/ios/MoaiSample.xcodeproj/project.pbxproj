@@ -1665,8 +1665,8 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/vavius/moai/moai-new/3rdparty/facebookiOS-3.0.6.b",
-					"/Users/vavius/moai/moai-new/3rdparty/crittercismiOS-4.0.6/CrittercismSDK",
+					"../../3rdparty/facebookiOS-3.0.6.b",
+					"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK",
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -1685,8 +1685,8 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/vavius/moai/moai-new/3rdparty/facebookiOS-3.0.6.b",
-					"/Users/vavius/moai/moai-new/3rdparty/crittercismiOS-4.0.6/CrittercismSDK",
+					"../../3rdparty/facebookiOS-3.0.6.b",
+					"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK",
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -1711,6 +1711,7 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0d/crypto\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -1733,20 +1734,20 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/vungle-1.3.3/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(MOAI_SDK_SRC)3rdparty/facebookiOS-3.0.6.b\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/vungle-1.3.3/lib/vunglepub/bin\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"../../3rdparty/vungle-1.3.3/lib/vunglepub/bin\"",
+					"\"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1783,6 +1784,7 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0d/crypto\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -1805,20 +1807,20 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
-					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
 					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
-					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/vungle-1.3.3/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(MOAI_SDK_SRC)3rdparty/facebookiOS-3.0.6.b\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/vungle-1.3.3/lib/vunglepub/bin\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b\"",
+					"\"../../3rdparty/vungle-1.3.3/lib/vunglepub/bin\"",
+					"\"../../3rdparty/crittercismiOS-4.0.6/CrittercismSDK\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
