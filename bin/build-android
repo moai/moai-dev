@@ -2,6 +2,7 @@
 
 source ~/.bash_profile
 
+cd `dirname $0`/..
 cd ant/libmoai
 ./clean.sh
 if [[ $? -ne 0 ]]; then

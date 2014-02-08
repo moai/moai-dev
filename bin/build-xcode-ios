@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd `dirname $0`/..
 cd xcode/ios/
 ./clean.sh
 ./build.sh -j moai -c Release

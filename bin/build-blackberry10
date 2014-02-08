@@ -18,6 +18,7 @@
 
 : ${QNX_HOST?"QNX_HOST is not defined. Please run 'source /path/to/bbndk-env.sh'"}
 
+cd `dirname $0`/..
 cd cmake
 rm -rf build
 mkdir build

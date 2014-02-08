@@ -2,12 +2,43 @@
 
 Thanks for checking out the Moai source code. Here's the scoop.
 
-## Setup
+## Download
 Please clones the source in the following way.
 
     git clone git@github.com:moai/moai-dev.git
     git submodule init
     git submodule update
+
+## Setup
+Tools needed to build the MOAI SDK.
+
+* [Android SDK](http://developer.android.com/sdk/index.html)
+* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html)
+* [Ant 1.9](http://ant.apache.org/)
+* [CMake 2.8.5](http://www.cmake.org/)
+* [XCode 5](https://itunes.apple.com/app/xcode/id497799835?mt=12)
+* [Visual Studio 2010](http://www.visualstudio.com/)
+* [Cygwin](http://www.cygwin.com/)
+
+## Build
+
+### Windows
+Please run the "./bin/build-cmake-win.bat".
+
+### OSX
+Please run the "./bin/build-cmake-osx".
+
+	cd moai-dev
+	./bin/build-cmake-osx
+
+### iOS
+Please run the "./bin/build-cmake-ios".
+
+	cd moai-dev
+	./bin/build-cmake-ios
+
+### Android
+Please run the "./bin/build-android".
 
 ## Sample code:
 Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows). One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
@@ -20,11 +51,6 @@ Answers to frequently asked questions are available in the [Moai FAQ](http://get
 
 ## Wiki:
 You can find detailed documentation, instructions and other helpful information in the [Moai Wiki](http://getmoai.com/wiki/).
-
-## Moai Cloud:
-You already have a Moai Cloud account which allows you to upload Lua scripts to be hosted and run as web services via the [Moai Cloud Dashboard](http://dashboard.moaicloud.com/).
-
-If you have support questions, post them to the [Moai Cloud Developer Support Forum](http://getmoai.com/forums/moai-cloud-developer-support.html) or check out the [Moai Wiki ](http://getmoai.com/wiki/).
 
 ## License:
 This SDK uses the CPAL license (http://www.opensource.org/licenses/cpal_1.0). Refer to the [Made With Moai page](http://getmoai.com/marketing/made-with-moai.html) for attribution screens to include with games made with Moai.
