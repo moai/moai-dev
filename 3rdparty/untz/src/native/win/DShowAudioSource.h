@@ -14,7 +14,12 @@
 #include <Threading/Threading.h>
 #include <tchar.h>
 #include <dshow.h>
+//qedit breaks mingw builds, use mingw's qedit.
+#ifdef __MINGW32__
 #include <qedit.h>
+#else
+#include "qedit/qedit.h"
+#endif
 
 class SampleGrabberCallback;
 
@@ -37,6 +42,10 @@ public:
 	bool operator==(T* p) { return mP == p; }
 };
 
+#ifdef __MINGW32__
+EXTERN_C const CLSID CLSID_SampleGrabber;
+EXTERN_C const CLSID CLSID_NullRenderer;
+#endif
 
 // supported formats: aiff, wav, mp3,
 

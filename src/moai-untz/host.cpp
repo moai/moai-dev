@@ -12,8 +12,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUInitializeUntz () {
-	
+void AKUUntzAppFinalize () {
+}
+
+//----------------------------------------------------------------//
+void AKUUntzAppInitialize () {
+}
+
+//----------------------------------------------------------------//
+void AKUUntzContextInitialize () {
+
 	MOAIUntzSystem::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIUntzSampleBuffer )
@@ -21,14 +29,3 @@ void AKUInitializeUntz () {
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )
 }
 
-//----------------------------------------------------------------//
-void AKUUntzResume () {
-	
-	MOAIUntzSystem::Get ().Resume ();
-}
-
-//----------------------------------------------------------------//
-void AKUUntzSuspend () {
-
-	MOAIUntzSystem::Get ().Suspend ();
-}

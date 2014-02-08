@@ -36,7 +36,7 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPointerSensor, "U" )
 	
-	self->mOnMove.SetStrongRef ( state, 2 );
+	self->mOnMove.SetRef ( state, 2 );
 	
 	return 0;
 }

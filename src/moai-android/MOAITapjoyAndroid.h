@@ -13,7 +13,7 @@
 //================================================================//
 /**	@name	MOAITapjoyAndroid
 	@text	Wrapper for Tapjoy integration on Android devices.
-			Tapjoy provides a turnkey advertising platform that 
+			Tapjoy provides a turnkey advertising platform that
 			delivers cost-effective, high-value new users and helps 
 			apps make money. Exposed to Lua via MOAITapjoy on 
 			all mobile platforms.
@@ -37,12 +37,13 @@ private:
 	static int	_initVideoAds	( lua_State* L );
 	static int	_init			( lua_State* L );
 	static int	_setListener	( lua_State* L );
+	static int	_setUserId		( lua_State* L );
 	static int	_showOffers		( lua_State* L );
-	
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAITapjoyAndroid );
-	
+
 	enum {
 		TAPJOY_VIDEO_AD_BEGIN,
 		TAPJOY_VIDEO_AD_CLOSE,
@@ -57,8 +58,8 @@ public:
         TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS,
         TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO,
 	};
-	
-	MOAILuaRef		mListeners [ TOTAL ];
+
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAITapjoyAndroid	();
 			~MOAITapjoyAndroid	();

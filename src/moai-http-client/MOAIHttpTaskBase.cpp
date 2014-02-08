@@ -315,7 +315,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "UF" )
 
-	self->SetLocal ( state, 2, self->mOnFinish );
+	self->mOnFinish.SetRef ( *self, state, 2 );
 	return 0;
 }
 
@@ -513,10 +513,11 @@ void MOAIHttpTaskBase::Finish () {
 	if ( this->mOnFinish ) {
 		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnFinish );
-		this->PushLuaUserdata ( state );
-		state.Push ( this->GetResponseCode ());
-		state.DebugCall ( 2, 0 );
+		if ( this->mOnFinish.PushRef ( state )) {
+			this->PushLuaUserdata ( state );
+			state.Push ( this->GetResponseCode ());
+			state.DebugCall ( 2, 0 );
+		}
 	}
 }
 
@@ -553,15 +554,13 @@ void MOAIHttpTaskBase::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 void MOAIHttpTaskBase::LatchRelease () {
 
 	this->mLatch.Clear ();
-	this->Release ();
 }
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::LatchRetain () {
 
 	assert ( !this->mLatch );
-	this->Retain ();
-	this->GetStrongRef ( this->mLatch );
+	this->GetRef ( this->mLatch );
 }
 
 //----------------------------------------------------------------//

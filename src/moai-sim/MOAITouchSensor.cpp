@@ -141,7 +141,7 @@ int MOAITouchSensor::_setAcceptCancel ( lua_State* L ) {
 int MOAITouchSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
-	self->mCallback.SetStrongRef ( state, 2 );
+	self->mCallback.SetRef ( state, 2 );
 	
 	return 0;
 }

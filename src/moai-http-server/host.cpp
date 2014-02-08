@@ -9,21 +9,16 @@
 // aku-util
 //================================================================//
 
-static bool sIsInitialized = false;
-
 //----------------------------------------------------------------//
-void AKUFinalizeHttpServer () {
-	
-	if ( !sIsInitialized ) return;
-	sIsInitialized = false;
+void AKUHttpServerAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUInitializeHttpServer () {
+void AKUHttpServerAppInitialize () {
+}
 
-	if ( !sIsInitialized ) {
-		sIsInitialized = true;
-	}
+//----------------------------------------------------------------//
+void AKUHttpServerContextInitialize () {
 
 	REGISTER_LUA_CLASS ( MOAIHttpServer ) 
 }

@@ -28,13 +28,13 @@ print ( prop.test1 )
 print ( prop.test2 )
 print ( '' )
 
-memberTable = getmetatable ( prop )
-printTable ( "memberTable", memberTable )
-
-refTable = getmetatable ( memberTable )
+refTable = getmetatable ( prop )
 printTable ( "refTable", refTable )
 
-interfaceTable = getmetatable ( refTable )
+memberTable = getmetatable ( refTable )
+printTable ( "memberTable", memberTable )
+
+interfaceTable = getmetatable ( memberTable )
 printTable ( "interfaceTable", interfaceTable )
 
 prop = MOAIProp.new ()
@@ -47,11 +47,11 @@ print ( prop.anotherTest1 )
 print ( prop.anotherTest2 )
 print ( '' )
 
-memberTable = getmetatable ( prop )
-printTable ( "memberTable", memberTable )
-
-refTable = getmetatable ( memberTable )
+refTable = getmetatable ( prop )
 printTable ( "refTable", refTable )
 
-interfaceTable = getmetatable ( refTable )
+memberTable = getmetatable ( refTable )
+printTable ( "memberTable", memberTable )
+
+interfaceTable = getmetatable ( memberTable )
 printTable ( "interfaceTable", interfaceTable )

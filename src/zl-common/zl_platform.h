@@ -45,7 +45,7 @@
 
 #ifdef _MSC_VER
 	#define MOAI_COMPILER_MSVC
-
+	
 #else
 	#define MOAI_COMPILER_GCC
 
@@ -69,7 +69,14 @@
 		#define STRSAFE_NO_DEPRECATE
 	#endif
 
-	#include <crtdbg.h>
+	#ifdef MOAI_COMPILER_GCC
+		#include <malloc.h>
+	#endif
+	
+	#ifdef MOAI_COMPILER_MSVC
+		#include <crtdbg.h>
+    #endif
+	
 	#include <direct.h>
 
 	#ifndef PATH_MAX

@@ -29,7 +29,7 @@ public:
 			TOTAL,
 		};
 		
-		MOAILuaRef mListeners[TOTAL];
+		MOAILuaStrongRef mListeners[TOTAL];
 		
 		NSString* _token;
 		NSString* _secretKey;

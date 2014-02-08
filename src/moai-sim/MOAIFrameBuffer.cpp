@@ -214,7 +214,7 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 		self->mFrameImage = image;
 	}
 
-	self->SetLocal ( state, 3, self->mOnFrameFinish );
+	self->mOnFrameFinish.SetRef ( *self, state, 3 );
 	self->mGrabNextFrame = true;
 
 	return 0;
@@ -233,7 +233,7 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 */
 int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
-	self->mRenderTable.SetStrongRef ( state, 2 );
+	self->mRenderTable.SetRef ( state, 2 );
 	return 0;
 }
 
@@ -351,8 +351,9 @@ void MOAIFrameBuffer::Render () {
 
 		if ( this->mOnFrameFinish ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-			this->PushLocal ( state, this->mOnFrameFinish );
-			state.DebugCall ( 0, 0 );
+			if ( this->mOnFrameFinish.PushRef ( state )) {
+				state.DebugCall ( 0, 0 );
+			}
 		}
 	}
 	

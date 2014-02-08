@@ -10,45 +10,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlobalClassFinalizer::OnGlobalsFinalize () {
+void MOAIGlobalClassBase::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalClassFinalizer::OnGlobalsRestore () {
+void MOAIGlobalClassBase::OnGlobalsRestore () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalClassFinalizer::OnGlobalsRetire () {
+void MOAIGlobalClassBase::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlobalClassFinalizer::MOAIGlobalClassFinalizer () {
-
-	MOAIGlobals* globals = MOAIGlobalsMgr::Get ();
-	assert ( globals );
-	
-	this->mNext = globals->mFinalizers;
-	globals->mFinalizers = this;
+MOAIGlobalClassBase::MOAIGlobalClassBase () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlobalClassFinalizer::~MOAIGlobalClassFinalizer () {
-
-	MOAIGlobals* globals = MOAIGlobalsMgr::Get ();
-	assert ( globals );
-	
-	MOAIGlobalClassFinalizer* cursor = globals->mFinalizers;
-	globals->mFinalizers = 0;
-	
-	while ( cursor ) {
-		MOAIGlobalClassFinalizer* finalizer = cursor;
-		cursor = cursor->mNext;
-		
-		if ( finalizer != this ) {
-			finalizer->mNext = globals->mFinalizers;
-			globals->mFinalizers = finalizer;
-		}
-	}
+MOAIGlobalClassBase::~MOAIGlobalClassBase () {
 }
 
 //================================================================//
@@ -58,49 +36,49 @@ MOAIGlobalClassFinalizer::~MOAIGlobalClassFinalizer () {
 //----------------------------------------------------------------//
 void MOAIGlobals::Restore () {
 
-	MOAIGlobalClassFinalizer* finalizer = this->mFinalizers;
-	for ( ; finalizer; finalizer = finalizer->mNext ) {
-		finalizer->OnGlobalsRestore ();
+	u32 total = this->mGlobals.Size ();
+	for ( u32 i = 1; i <= total; ++i ) {
+		MOAIGlobalPair& pair = this->mGlobals [ i ];
+		MOAIGlobalClassBase* global = pair.mGlobal;
+		if ( global ) {
+			global->OnGlobalsRestore ();
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGlobals::Retire () {
 
-	MOAIGlobalClassFinalizer* finalizer = this->mFinalizers;
-	for ( ; finalizer; finalizer = finalizer->mNext ) {
-		finalizer->OnGlobalsRetire ();
+	u32 total = this->mGlobals.Size ();
+	for ( u32 i = 1; i <= total; ++i ) {
+		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
+		MOAIGlobalClassBase* global = pair.mGlobal;
+		if ( global ) {
+			global->OnGlobalsRetire ();
+		}
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIGlobals::MOAIGlobals () :
-	mFinalizers ( 0 ) {
+MOAIGlobals::MOAIGlobals () {
 }
 
 //----------------------------------------------------------------//
 MOAIGlobals::~MOAIGlobals () {
 
-	MOAIGlobalClassFinalizer* finalizer = this->mFinalizers;
-	for ( ; finalizer; finalizer = finalizer->mNext ) {
-		finalizer->OnGlobalsFinalize ();
-	}
-	this->mFinalizers = 0;
-	
 	u32 total = this->mGlobals.Size ();
 	for ( u32 i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIObject* object = pair.mObject;
-		
-		pair.mObject = 0;
-		pair.mPtr = 0;
-		
-		if ( object ) {
-			object->Release ();
+		MOAIGlobalClassBase* global = pair.mGlobal;
+
+		pair.mIsValid = false;
+
+		if ( global ) {
+			global->OnGlobalsFinalize ();
+			delete global;
 		}
 	}
 }
-
 
 //================================================================//
 // MOAIGlobalsMgr

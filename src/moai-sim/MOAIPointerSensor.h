@@ -19,7 +19,7 @@ private:
 	int mX;
 	int mY;
 
-	MOAILuaRef	mOnMove;
+	MOAILuaStrongRef	mOnMove;
 
 	//----------------------------------------------------------------//
 	static int		_getLoc					( lua_State* L );

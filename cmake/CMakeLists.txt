@@ -12,34 +12,41 @@ project ( moai )
 get_filename_component(MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
 
 #
+# Is this makefile also meant to generate the sample hosts, or just used for the libs
+#
+option ( BUILD_HOST "Build the bundled sample host for platform" TRUE ) 
+
+
+#
 # Multi-platform flags
 #
 option ( BUILD_LINUX       FALSE )
 option ( BUILD_BLACKBERRY  FALSE )
 option ( BUILD_SERVER      FALSE )
 option ( BUILD_OSX         FALSE )
+option ( BUILD_HTML        FALSE )
+option ( BUILD_ANDROID     FALSE )
+option ( BUILD_WINDOWS     FALSE )
 
 # We should be adding these soon
-#set ( BUILD_ANDROID     FALSE CACHE STRING "Build Moai SDK for Android"           FORCE )
 #set ( BUILD_NACL        FALSE CACHE STRING "Build Moai SDK for Native Client"     FORCE )
 
 # We won't be adding these to CMake for now:
-#set ( BUILD_WIN32       FALSE CACHE STRING "Build Moai SDK for Windows"           FORCE )
-#set ( BUILD_IOS         FALSE CACHE STRING "Build Moai SDK for iOS"               FORCE )
 #set ( BUILD_FLASCC      FALSE CACHE STRING "Build Moai SDK for FlasCC"            FORCE )
 
 #
 # Platform Definitions
 #
 if ( BUILD_OSX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__" CACHE INTERNAL "doc string")
+  find_package ( OpenGL REQUIRED )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -D__APPLE__ -D__MACH__ -DMACOSX -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__ -D__MACH__ -DMACOSX" CACHE INTERNAL "doc string")
 endif ( BUILD_OSX )
 
 if ( BUILD_BLACKBERRY )
   # set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -V4.6.3,gcc_ntoarmv7le -w1 -D__QNX__")
   # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__ -V4.6.3,gcc_ntoarmv7le_cpp")
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__QNX__ -Wc,-std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__QNX__" CACHE INTERNAL "doc string")
 
   set ( CMAKE_RANLIB $ENV{QNX_HOST}/usr/bin/ntoarmv7-ranlib )
@@ -47,10 +54,40 @@ if ( BUILD_BLACKBERRY )
   set ( BLACKBERRY_INCLUDES "$ENV{QNX_TARGET}/usr/include;$ENV{QNX_TARGET}/usr/include/freetype2" )
 endif ( BUILD_BLACKBERRY )
 
+if ( BUILD_HTML )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"  CACHE INTERNAL "doc string" )
+endif (BUILD_HTML )
+
+if ( BUILD_WINDOWS)
+  find_package ( OpenGL REQUIRED )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -std=gnu99 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500 -DHAVE_MEMMOVE -Werror-implicit-function-declaration" CACHE INTERNAL "doc string")
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -DWINVER=0x0501 -D_WIN32_WINNT=0x0501 -D_WIN32_IE=0x0500" CACHE INTERNAL "doc string" )
+endif (BUILD_WINDOWS)
+
 if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DFT2_BUILD_LIBRARY" CACHE INTERNAL "doc string")
+  find_package ( OpenGL REQUIRED )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " CACHE INTERNAL "doc string")
 endif ( BUILD_LINUX )
+
+if ( BUILD_ANDROID )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+endif ( BUILD_ANDROID )
+
+if ( BUILD_IOS )
+    set ( CMAKE_OSX_SYSROOT iphoneos )
+    set ( CMAKE_OSX_ARCHITECTURES "armv7;i386" )
+    set ( CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator" )
+    set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
+
+
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " CACHE INTERNAL "doc string")
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " CACHE INTERNAL "doc string")
+
+
+endif ( BUILD_IOS )
 
 #
 # Options
@@ -103,6 +140,10 @@ if ( DEBUG )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O4")
 endif ( DEBUG )
 
+#missing cmake modules
+
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_HTTP_SERVER=0" CACHE INTERNAL "doc string" )
 
 #
 # Libraries
@@ -121,23 +162,60 @@ add_subdirectory ( moai-chipmunk )
 
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
+add_subdirectory ( moai-luaext )
+ 
 
 #
 # Hosts
 #
+if ( BUILD_HTML ) 
+  if ( BUILD_HOST )
+    add_subdirectory ( host-html )
+  endif ( BUILD_HOST )
+endif ( BUILD_HTML )
+
 if ( BUILD_LINUX )
-  add_subdirectory ( host-glut )
+  if ( BUILD_HOST )
+     add_subdirectory ( host-glut )
+  endif ( BUILD_HOST )
   add_subdirectory ( moai-test )
   add_subdirectory ( host-test )
 endif ( BUILD_LINUX )
 
 if ( BUILD_OSX )
-  add_subdirectory ( host-glut )
-  add_subdirectory ( moai-test )
-  add_subdirectory ( host-test )
+  if ( BUILD_HOST )
+    add_subdirectory ( host-glut )
+  endif (BUILD_HOST )
+  # add_subdirectory ( moai-test )
+  # add_subdirectory ( host-test )
 endif ( BUILD_OSX )
+
+if ( BUILD_WINDOWS )
+  if ( BUILD_HOST )
+    if ( SDL_HOST )
+      add_subdirectory ( host-sdl )
+    else ( SDL_HOST ) 
+      add_subdirectory ( host-glut )
+    endif (SDL_HOST)
+  endif ( BUILD_HOST )
+endif ( BUILD_WINDOWS )
 
 if ( BUILD_SERVER )
   add_subdirectory ( moaiext-server )
   add_subdirectory ( http-host )
 endif ( BUILD_SERVER )
+
+if ( BUILD_ANDROID )
+  add_subdirectory ( moai-android )
+  if ( BUILD_HOST )
+    add_subdirectory ( host-android )
+  endif ( BUILD_HOST )
+endif ( BUILD_ANDROID )
+
+if ( BUILD_IOS )
+  add_subdirectory ( moai-iphone )
+  add_subdirectory ( moai-audiosampler )
+  if ( BUILD_HOST )
+     add_subdirectory ( host-ios )
+  endif (BUILD_HOST )
+endif ( BUILD_IOS )
