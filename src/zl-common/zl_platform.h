@@ -119,12 +119,15 @@
 #include <time.h>
 
 #ifdef __cplusplus
+	#include <algorithm>
 	#include <cstdio>
 	#include <cstdlib>
+	#include <map>
+	#include <set>
 	#include <string>
  	#include <iostream>
 	#include <sstream>
-	#include <algorithm>
+	#include <vector>
 #endif
 
 //----------------------------------------------------------------//

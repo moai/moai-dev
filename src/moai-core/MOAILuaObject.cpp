@@ -306,8 +306,12 @@ MOAILuaObject::MOAILuaObject ():
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	if (!this->mCollected && MOAILuaRuntime::IsValid ()) {
-		if ( this->mUserdata ) {
+	if ( MOAILuaRuntime::IsValid ()) {
+		
+		MOAILuaRuntime::Get ().DeregisterObject ( *this );
+		
+		// TODO: change from both patrick's fork and the community branch; double check
+		if (( !this->mCollected ) && this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
 			// clear out the gc
@@ -321,8 +325,6 @@ MOAILuaObject::~MOAILuaObject () {
 			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
-			
-			MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		}
 	}
 }

@@ -228,6 +228,7 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 	
 	if ( idx >= this->mMainBuffer->Size ()) {
 		this->mMainBuffer->Grow ( idx + 1, BLOCK_SIZE );
+		this->mResults = this->mMainBuffer->Data ();
 	}
 	
 	MOAIPartitionResult& result = this->mResults [ idx ] ;

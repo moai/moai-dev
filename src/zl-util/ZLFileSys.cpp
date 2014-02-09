@@ -20,18 +20,9 @@ bool ZLFileSys::AffirmPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLFileSys::CheckFileExists ( cc8* path, bool allowRemap  ) {
+bool ZLFileSys::CheckFileExists ( cc8* path ) {
 	//printf ( "CheckFileExists %s\n", path );
 	zl_stat fileStat;
-	
-	std::string remappedFilename;
-	if ( allowRemap ) {
-
-		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
-			path = remappedFilename.c_str ();
-		}
-		//printf ( "remapped path %s\n", path );
-	}
 	
 	if ( ZLFileSys::GetFileStat ( path, fileStat )) {
 		return ( fileStat.mExists != 0 && fileStat.mIsDir == 0 );
@@ -158,14 +149,7 @@ STLString ZLFileSys::GetAbsoluteDirPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-STLString ZLFileSys::GetAbsoluteFilePath ( cc8* path, bool allowRemap ) {
-	
-	string remappedFilename;
-	if ( allowRemap ) {
-		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
-			path = remappedFilename.c_str ();
-		}
-	}
+STLString ZLFileSys::GetAbsoluteFilePath ( cc8* path ) {
 
 	return ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( path );
 }
@@ -198,6 +182,18 @@ bool ZLFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
 }
 
 //----------------------------------------------------------------//
+STLString ZLFileSys::PathFromRef ( const char* path ) {
+
+	return ZLVfsFileSystem::Get ().PathFromRef ( path );
+}
+
+//----------------------------------------------------------------//
+STLString ZLFileSys::PathToRef ( const char* path ) {
+
+	return ZLVfsFileSystem::Get ().PathToRef ( path );
+}
+
+//----------------------------------------------------------------//
 bool ZLFileSys::Rename ( cc8* oldPath, cc8* newPath ) {
 
 	if ( ZLFileSys::CheckFileExists ( oldPath )) {
@@ -212,6 +208,12 @@ bool ZLFileSys::SetCurrentPath ( cc8* path ) {
 
 	int result = zl_chdir ( path );
 	return ( result == 0 );
+}
+
+//----------------------------------------------------------------//
+void ZLFileSys::SetPathRef ( const char* referenceName, const char* path ) {
+
+	ZLVfsFileSystem::Get ().SetPathRef ( referenceName, path );
 }
 
 //----------------------------------------------------------------//
