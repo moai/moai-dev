@@ -68,7 +68,8 @@ cmake_minimum_required(VERSION 2.8)
         # Crosscompile mode - use a host CC compiler for building host utils.
         # Since CMake does not support cross compilation properly
         # we have to use system CC here.
-        set (luajit_host_cc "gcc")
+        
+          set (luajit_host_cc "gcc")
     endif()
     
 
@@ -80,6 +81,19 @@ cmake_minimum_required(VERSION 2.8)
         set (luajit_host_cc "${luajit_host_cc} -m32")
         set (luajit_host_ldflags "${luajit_host_ldflags} -m32")
       
+    endif()
+
+    if (BUILD_IOS)
+        set (luajit_buildoptions ${luajit_buildoptions}
+             TARGET_SYS=iOS)
+        #our sysroot
+        EXEC_PROGRAM( xcrun ARGS --show-sdk-path
+                      OUTPUT_VARIABLE HOST_SDK_ROOT)
+
+        set ( luajit_host_cc ${HOST_SDK_ROOT}/../../)
+        message("Host SDK ROOT ${HOST_SDK_ROOT}")
+        set (luajit_host_cc "gcc  -arch i386  -I${HOST_SDK_ROOT}/usr/include ")
+        set (luajit_host_ldflags "${luajit_host_ldflags}")
     endif()
     
     if (BUILD_ANDROID) 
@@ -130,11 +144,11 @@ cmake_minimum_required(VERSION 2.8)
             DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
         )
         set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib PARENT_SCOPE )
-    else(MSVC)
-        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+    elseif(BUILD_IOS)
+
+     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-            COMMAND $(MAKE) clean ${luajit_buildoptions}
-            COMMAND $(MAKE) ${luajit_buildoptions} libluajit.a
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src'
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 
@@ -142,7 +156,20 @@ cmake_minimum_required(VERSION 2.8)
             DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
         )
         set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
-    endif(MSVC)
+
+    else()
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
+            COMMAND $(MAKE) VERBOSE=1 clean ${luajit_buildoptions}
+            COMMAND $(MAKE) VERBOSE=1 ${luajit_buildoptions} libluajit.a
+            DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
+        ) 
+
+        add_custom_target(liblua-static
+            DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+        )
+        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
+    endif()
     
    
 
