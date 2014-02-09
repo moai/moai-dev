@@ -155,15 +155,6 @@ int ZLVfsFile::IsEOF () {
 int ZLVfsFile::Open ( const char* filename, const char* mode ) {
 	
 	ZLVfsVirtualPath* mount;
-	
-	// Apply the path remapping
-	string remappedFilename;
-	if ( mode [ 0 ] == 'r' ) {
-		
-		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
-			filename = remappedFilename.c_str ();
-		}
-	}
 
 	string abspath = ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( filename );
 	filename = abspath.c_str ();
@@ -262,20 +253,14 @@ size_t ZLVfsFile::Read ( void* buffer, size_t size, size_t count ) {
 //----------------------------------------------------------------//
 int ZLVfsFile::Reopen ( const char* filename, const char* mode ) {
 
+	string abspath = ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( filename );
+	filename = abspath.c_str ();
+
 	if ( this->mIsZip ) {
 		this->Close ();
 		return this->Open ( filename, mode );
 	}
 	else {
-
-		// Apply the path remapping
-		string remappedFilename;
-		if ( mode [ 0 ] == 'r' ) {
-
-			if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
-				filename = remappedFilename.c_str ();
-			}
-		}
 
 		FILE* stdFile = freopen ( filename, mode, this->mPtr.mFile );
 		
