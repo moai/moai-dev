@@ -29,9 +29,7 @@ set ( INCLUDES_MOAIHOSTGLUT
 
 
 include_directories ( ${INCLUDES_MOAIHOSTGLUT} )
-# link_directories (
-#   "third-party"
-# )
+
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-glut" )
 # set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
@@ -107,6 +105,9 @@ set( FWORKS
                   )
 
 ADD_FRAMEWORKS(moai "${FWORKS}")
+if (MOAI_LUAJIT)
+   set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pagezero_size 10000 -image_base 100000000 ")
+endif (MOAI_LUAJIT)
 
 endif ( BUILD_OSX )
 

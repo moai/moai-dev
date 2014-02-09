@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+#OSX
 cd cmake
 mkdir projects
 cd projects
@@ -28,6 +30,9 @@ cmake \
 -DMOAI_SFMT=TRUE \
 -DMOAI_VORBIS=TRUE \
 -DMOAI_UNTZ=TRUE \
--DMOAI_LUAJIT=FALSE \
+-DMOAI_LUAJIT=TRUE \
 ../../
+
+
+#IOS
 

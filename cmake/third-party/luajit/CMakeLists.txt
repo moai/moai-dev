@@ -29,7 +29,14 @@ cmake_minimum_required(VERSION 2.8)
         set (luajit_copt ${luajit_copt} -O2)
     endif()
     #set (luajit_copt ${luajit_copt} -I${PROJECT_SOURCE_DIR}/libobjc)
-    set (luajit_target_cc "${CMAKE_C_COMPILER} ${CMAKE_C_FLAGS}")
+
+
+    #remove our forced include from target_cc commands
+    string(REPLACE "${VFS_INCLUDE}" " " VFS_C_FLAGS ${CMAKE_C_FLAGS} )
+
+    set (luajit_target_cc "${CMAKE_C_COMPILER} ${VFS_C_FLAGS}")
+    set (luajit_conly_flags "${VFS_INCLUDE}")
+
     # Use external unwind on all platforms.
     #set (luajit_target_cc "${luajit_target_cc} -DLUAJIT_UNWIND_EXTERNAL=1")
 
@@ -39,6 +46,10 @@ cmake_minimum_required(VERSION 2.8)
 
     set(luajit_host_ldflags "")
     set(luajit_target_ldflags "${CMAKE_SHARED_LINKER_FLAGS}")
+
+    
+
+
 
 
     set(CFLAGS "")
@@ -89,6 +100,7 @@ cmake_minimum_required(VERSION 2.8)
     separate_arguments(luajit_target_cc)
     separate_arguments(luajit_host_ldflags)
     separate_arguments(luajit_target_ldflags)
+    separate_arguments(luajit_conly_flags)
     set (luajit_buildoptions ${luajit_buildoptions}
         CFLAGS="${CFLAGS}"
         CXXFLAGS=""
@@ -96,6 +108,7 @@ cmake_minimum_required(VERSION 2.8)
         STATIC_CC="${luajit_target_cc}"
         DYNAMIC_CC="${luajit_target_cc}"
         CCOPT="${luajit_copt}"
+        TARGET_CONLY_FLAGS="${luajit_conly_flags}"
         TARGET_LDFLAGS="${luajit_target_ldflags}"
         HOST_LDFLAGS="${luajit_host_ldflags}"
    )
