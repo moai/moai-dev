@@ -307,6 +307,8 @@ MOAILuaObject::~MOAILuaObject () {
 
 	if ( MOAILuaRuntime::IsValid ()) {
 		
+		MOAILuaRuntime::Get ().DeregisterObject ( *this );
+		
 		if ( this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
@@ -321,8 +323,6 @@ MOAILuaObject::~MOAILuaObject () {
 			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
-			
-			MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		}
 	}
 }

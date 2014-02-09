@@ -113,9 +113,12 @@
 #ifdef __cplusplus
 	#include <cstdio>
 	#include <cstdlib>
+	#include <map>
+	#include <set>
 	#include <string>
  	#include <iostream>
 	#include <sstream>
+	#include <vector>
 #endif
 
 //----------------------------------------------------------------//
