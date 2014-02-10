@@ -565,7 +565,7 @@ string ZLVfsFileSystem::PathToRef ( const char* path ) {
 			string refPath = refIt->second;
 			size_t refPathLen = refPath.size ();
 		
-			if (( refPathLen <= abspath.size ()) && ( refPath.compare ( 0, string.npos, abspath, 0, refPathLen ) == 0 )) {
+			if (( refPathLen <= abspath.size ()) && ( refPath.compare ( 0, string::npos, abspath, 0, refPathLen ) == 0 )) {
 				return refIt->first + abspath.substr ( refPathLen );
 			}
 		}
