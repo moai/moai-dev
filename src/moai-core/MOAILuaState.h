@@ -86,6 +86,7 @@ public:
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
+	void			Push					( const void* value );
 	void			Push					( void* data, size_t size );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
