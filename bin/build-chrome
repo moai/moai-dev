@@ -1,6 +1,7 @@
 #!/bin/bash
 export NACL_SDK_ROOT=/Chrome/nacl-sdk
 export FMOD_CHROME_SDK_ROOT=/FMOD/Chrome
+cd `dirname $0`/..
 cd scons
 ./clean.sh
 ./build.sh

@@ -86,9 +86,8 @@ if ( BUILD_LINUX )
 target_link_libraries ( moai 
   pthread 
   rt
-  freeglut-static
-  Xi
   ${OPENGL_LIBRARIES}
+  ${GLUT_LIBRARIES}
 )
 endif ( BUILD_LINUX )
 

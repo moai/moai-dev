@@ -3,6 +3,7 @@
 # distribute - a command line tool for building Moai SDK releases
 
 DATE=`date +"%Y-%m-%d"`
+cd `dirname $0`/..
 source ./bin/parse_moai_version
 
 #
