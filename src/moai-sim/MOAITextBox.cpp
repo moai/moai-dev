@@ -446,6 +446,22 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setSnapToViewportScale
+	@text	If set to true text positions will snap to integers according to the viewport scale. Default value is true.
+
+	@in		MOAITextBox self
+	@in		bool snap				Whether text positions should snap to viewport scale
+	@out	nil
+*/
+int MOAITextBox::_setSnapToViewportScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "UB" )
+	
+	self->mSnapToViewportScale = state.GetValue < bool >( 2, self->mSnapToViewportScale );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSpeed
 	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
 
@@ -1102,6 +1118,7 @@ MOAITextBox::MOAITextBox () :
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
 	mGlyphScale ( 1.0f ),
+	mSnapToViewportScale ( true ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
@@ -1308,6 +1325,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },
 		{ "setReveal",				_setReveal },
+		{ "setSnapToViewportScale",	_setSnapToViewportScale },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStyle",				_setStyle },

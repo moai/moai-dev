@@ -89,7 +89,10 @@ void MOAITextDesigner::Align () {
 		case MOAITextBox::RIGHT_JUSTIFY:
 			yOff = this->mTextBox->mFrame.mYMax - layoutHeight;
 	}
-	
+
+	if (this->mTextBox->mSnapToViewportScale)
+		yOff = ZLFloat::Floor ( yOff + 0.5f );
+ 
 	u32 totalLines = this->mTextBox->mLines.GetTop ();
 	for ( u32 i = 0; i < totalLines; ++i ) {
 		MOAITextLine& line = this->mTextBox->mLines [ i ];
@@ -108,6 +111,9 @@ void MOAITextDesigner::Align () {
 			case MOAITextBox::RIGHT_JUSTIFY:
 				xOff = this->mTextBox->mFrame.mXMax - lineWidth;
 		}
+		
+		if (this->mTextBox->mSnapToViewportScale)
+			xOff = ZLFloat::Floor ( xOff + 0.5f );
 		
 		line.mRect.Offset ( xOff, yOff );
 		
