@@ -641,6 +641,16 @@ u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
+void* MOAILuaState::GetValue < void* >( int idx, void* value ) {
+
+	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
+		return ( void* )lua_touserdata ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
 uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
