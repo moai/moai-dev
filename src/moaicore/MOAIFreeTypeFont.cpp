@@ -997,7 +997,8 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
 	mFreeTypeFace( NULL ),
     mBitmapData( NULL ),
 	mBitmapWidth(0.0f),
-	mBitmapHeight(0.0f){
+	mBitmapHeight(0.0f),
+	mGlyphArray( NULL ){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAILuaObject )

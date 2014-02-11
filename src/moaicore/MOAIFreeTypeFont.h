@@ -62,6 +62,8 @@ protected:
 	u32 mBitmapHeight;
 	
 	std::vector<MOAIFreeTypeTextLine> mLineVector;
+	
+	FT_Glyph* mGlyphArray;
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );
