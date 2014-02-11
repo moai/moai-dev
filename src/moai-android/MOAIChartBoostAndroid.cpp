@@ -143,6 +143,41 @@ int MOAIChartBoostAndroid::_showInterstitial ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	hasCachedInterstitial
+	@text	Determine whether or not a cached interstitial is available.
+
+	@out 	boolean	hasCached
+*/
+int MOAIChartBoostAndroid::_hasCachedInterstitial ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass chartboost = env->FindClass ( "com/ziplinegames/moai/MoaiChartBoost" );
+	if ( chartboost == NULL ) {
+
+		ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiChartBoost" );
+	} else {
+
+		jmethodID hasCachedInterstitial = env->GetStaticMethodID ( chartboost, "hasCachedInterstitial", "()Z" );
+		if ( hasCachedInterstitial == NULL ) {
+
+			ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find static java method %s", "hasCachedInterstitial" );
+		} else {
+
+			jboolean hasCached = ( jboolean )env->CallStaticBooleanMethod ( chartboost, hasCachedInterstitial );	
+
+			lua_pushboolean ( state, hasCached );
+
+			return 1;		
+		}
+	}
+
+	return 0;
+}
+
 //================================================================//
 // MOAIChartBoostAndroid
 //================================================================//
@@ -165,10 +200,11 @@ void MOAIChartBoostAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERSTITIAL_DISMISSED", 		( u32 )INTERSTITIAL_DISMISSED );
 
 	luaL_Reg regTable [] = {
-		{ "init",				_init },
-		{ "loadInterstitial",	_loadInterstitial },
-		{ "setListener",		_setListener },
-		{ "showInterstitial",	_showInterstitial },
+		{ "init",					_init },
+		{ "loadInterstitial",		_loadInterstitial },
+		{ "setListener",			_setListener },
+		{ "showInterstitial",		_showInterstitial },
+		{ "hasCachedInterstitial",	_hasCachedInterstitial },
 		{ NULL, NULL }
 	};
 
