@@ -14,18 +14,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIScopedLuaState::PinTop () {
-
-	this->PinTop ( this->GetTop ());
-}
-
-//----------------------------------------------------------------//
-void MOAIScopedLuaState::PinTop ( int top ) {
-
-	this->mRestoreTop = this->AbsIndex ( top );
-}
-
-//----------------------------------------------------------------//
 void MOAIScopedLuaState::Take ( const MOAIScopedLuaState& assign ) {
 
 	this->mState = assign.mState;
