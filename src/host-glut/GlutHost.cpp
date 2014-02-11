@@ -227,8 +227,6 @@ static void _onTimer ( int millisec ) {
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 
 
-	AKUUpdate ();
-
 	AKUModulesUpdate ();
 
 	glutPostRedisplay ();
