@@ -881,6 +881,12 @@ void MOAILuaState::Push ( MOAILuaRef& ref ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push ( const void* value ) {
+
+	this->Push (( uintptr )value );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::Push ( void* data, size_t size ) {
 
 	lua_pushlstring ( this->mState, ( cc8* )data, size );
