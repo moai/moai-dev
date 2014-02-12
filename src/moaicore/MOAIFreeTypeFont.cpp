@@ -39,7 +39,7 @@ static inline void deleteGlyphArray(FT_Glyph *const glyphs, const size_t element
 
 static inline size_t glyphsInText(cc8 *const text)
 {
-	return strlen(text);
+	return u8_strlen(text);
 }
 
 //================================================================//
@@ -1052,6 +1052,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	size_t textLength = 0;
 	size_t lastTokenLength = 0;
 	
+	size_t glyphArrayIndex = 0;
+	
 	u32* textBuffer = NULL;
 	if (generateLines) {
 		textBuffer = (u32 *) calloc(strlen(text), sizeof(u32));
@@ -1087,6 +1089,12 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		}
 		
 		error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
+		
+		CHECK_ERROR(error);
+		
+		// store the glyph in mGlyphArray
+		error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
+		++glyphArrayIndex;
 		
 		CHECK_ERROR(error);
 		
@@ -1483,6 +1491,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	FT_Int imageWidth = (FT_Int)width;
 	FT_Int imageHeight = (FT_Int)height;
 	
+	// initialize mGlyphArray
+	size_t glyphArraySize = glyphsInText(text);
+	this->mGlyphArray = new FT_Glyph [ glyphArraySize ];
+	
 	// create the image data buffer
 	this->InitBitmapData(imageWidth, imageHeight);
 	
@@ -1500,6 +1512,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	// create a texture from the image
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
+	
+	// clean up the glyph array
+	deleteGlyphArray(this->mGlyphArray, glyphArraySize);
 	
 	return texture;
 }
