@@ -437,5 +437,5 @@ void GlutRefreshContext () {
 		AKUDebugHarnessInit ();
 	#endif
 
-	AKURunString( moai_lua_code );
+	AKURunString ( moai_lua_code );
 }
