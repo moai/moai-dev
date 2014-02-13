@@ -93,7 +93,7 @@ int MOAIHeyzapAndroid::_setListener ( lua_State* L ) {
 
     if ( idx < TOTAL ) {
         
-        MOAIChartBoostAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+        MOAIHeyzapAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
     }
     
     return 0;
@@ -192,6 +192,12 @@ MOAIHeyzapAndroid::~MoaiHeyzapAndroid () {
 //----------------------------------------------------------------//
 void MOAIHeyzapAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
+    state.SetField ( -1, "INTERSTITIAL_AVAILABLE",      ( u32 )INTERSTITIAL_AVAILABLE );
+    state.SetField ( -1, "INTERSTITIAL_FETCH_FAILED",   ( u32 )INTERSTITIAL_FETCH_FAILED );
+    state.SetField ( -1, "INTERSTITIAL_SHOW",           ( u32 )INTERSTITIAL_SHOW );
+    state.SetField ( -1, "INTERSTITIAL_SHOW_FAILED",    ( u32 )INTERSTITIAL_SHOW_FAILED );
+    state.SetField ( -1, "INTERSTITIAL_CLICKED",        ( u32 )INTERSTITIAL_CLICKED );
+    state.SetField ( -1, "INTERSTITIAL_HIDE",           ( u32 )INTERSTITIAL_HIDE );
     state.SetField ( -1, "INTERSTITIAL_LOAD_FAILED",    ( u32 )INTERSTITIAL_LOAD_FAILED );
     state.SetField ( -1, "INTERSTITIAL_DISMISSED",      ( u32 )INTERSTITIAL_DISMISSED );
 
@@ -221,9 +227,74 @@ void MOAIHeyzapAndroid::NotifyInterstitialDismissed () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHeyzapAndroid::NotifyInterstitialLoadFailed () {   
+void MOAIHeyzapAndroid::NotifyInterstitialFetchFailed () {   
     
-    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_LOAD_FAILED ];
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_FETCH_FAILED ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialAvailable () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_AVAILABLE ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialShow () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_SHOW ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialHide () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_HIDE ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialShowFailed () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_SHOW_FAILED ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialClicked () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_CLICKED ];
     
     if ( callback ) {
         
@@ -244,9 +315,39 @@ extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitia
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialLoadFailed ( JNIEnv* env, jclass obj ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialFetchFailed ( JNIEnv* env, jclass obj ) {
 
-    MOAIHeyzapAndroid::Get ().NotifyInterstitialLoadFailed ();
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialFetchFailed ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAvailable ( JNIEnv* env, jclass obj ) {
+
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialAvailable ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShow ( JNIEnv* env, jclass obj ) {
+
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialShow ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialHide ( JNIEnv* env, jclass obj ) {
+
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialHide ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShowFailed ( JNIEnv* env, jclass obj ) {
+
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialShowFailed ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialClicked ( JNIEnv* env, jclass obj ) {
+
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialClicked ();
 }
 
 #endif
