@@ -253,65 +253,45 @@ add_subdirectory ( moai-luaext )
  #all the modules...together...having a party.
 add_subdirectory ( host-modules )
 
+
+if (CUSTOM_HOST)
 #
-# Hosts
+# Build an out of source host
 #
+   add_subdirectory( "${CUSTOM_HOST}" "${CMAKE_CURRENT_BINARY_DIR}/host-custom" )
+
+else (CUSTOM_HOST)
+
+#
+#  Built In Hosts
+#
+
+if ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS )
+    if ( SDL_HOST )
+      add_subdirectory ( host-sdl )
+    else ( SDL_HOST ) 
+      add_subdirectory ( host-glut )
+    endif (SDL_HOST)
+endif ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
+
 if ( BUILD_HTML ) 
-  if ( BUILD_HOST )
     add_subdirectory ( host-html )
-  endif ( BUILD_HOST )
 endif ( BUILD_HTML )
 
-if ( BUILD_LINUX )
-if ( BUILD_HOST )  
-    if ( SDL_HOST )
-      add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
-    endif (SDL_HOST)
-endif ( BUILD_HOST )
-#  add_subdirectory ( moai-test )
-#  add_subdirectory ( host-test )
-endif ( BUILD_LINUX )
+if ( BUILD_ANDROID )
+  add_subdirectory ( moai-android )
+    add_subdirectory ( host-android )
+endif ( BUILD_ANDROID )
 
-if ( BUILD_OSX )
-if ( BUILD_HOST )  
-    if ( SDL_HOST )
-      add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
-    endif (SDL_HOST)
-endif( BUILD_HOST )
-  # add_subdirectory ( moai-test )
-  # add_subdirectory ( host-test )
-endif ( BUILD_OSX )
-
-if ( BUILD_WINDOWS )
-  if ( BUILD_HOST )
-    if ( SDL_HOST )
-      add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
-    endif (SDL_HOST)
-  endif ( BUILD_HOST )
-endif ( BUILD_WINDOWS )
+if ( BUILD_IOS )
+  add_subdirectory ( moai-iphone )
+  add_subdirectory ( moai-audiosampler )
+     add_subdirectory ( host-ios )
+endif ( BUILD_IOS )
 
 if ( BUILD_SERVER )
   add_subdirectory ( moaiext-server )
   add_subdirectory ( http-host )
 endif ( BUILD_SERVER )
 
-if ( BUILD_ANDROID )
-  add_subdirectory ( moai-android )
-  if ( BUILD_HOST )
-    add_subdirectory ( host-android )
-  endif ( BUILD_HOST )
-endif ( BUILD_ANDROID )
-
-if ( BUILD_IOS )
-  add_subdirectory ( moai-iphone )
-  add_subdirectory ( moai-audiosampler )
-  if ( BUILD_HOST )
-     add_subdirectory ( host-ios )
-  endif (BUILD_HOST )
-endif ( BUILD_IOS )
+endif (CUSTOM_HOST)
