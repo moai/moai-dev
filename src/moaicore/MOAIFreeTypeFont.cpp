@@ -387,7 +387,7 @@ void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startInde
 	text[bufferLength] = '\0';
 	tempLine.text = text;
 	
-	tempLine.lineWidth = this->WidthOfString(text, bufferLength);
+	tempLine.lineWidth = this->WidthOfString(text, bufferLength, startIndex);
 	tempLine.startIndex = startIndex;
 	
 	this->mLineVector.push_back(tempLine);
@@ -998,7 +998,9 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
     mBitmapData( NULL ),
 	mBitmapWidth(0.0f),
 	mBitmapHeight(0.0f),
-	mGlyphArray( NULL ){
+	mGlyphArray( NULL ),
+	mAdvanceArray( NULL ),
+	mDebugCallCount( 0 ){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAILuaObject )
@@ -1053,6 +1055,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	size_t lastTokenLength = 0;
 	
 	size_t glyphArrayIndex = 0;
+	int rewindCount = 0;
 	
 	u32* textBuffer = NULL;
 	if (generateLines) {
@@ -1092,11 +1095,21 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		
 		CHECK_ERROR(error);
 		
-		// store the glyph in mGlyphArray
-		error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
-		++glyphArrayIndex;
 		
-		CHECK_ERROR(error);
+		if (rewindCount > 0){
+			--rewindCount;
+		}
+		else{
+			// store the glyph in mGlyphArray
+			error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
+			CHECK_ERROR(error);
+			
+			// store the advance in mAdvanceArray
+			this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
+			
+			++glyphArrayIndex;
+		}
+		
 		
 		glyphIndex = FT_Get_Char_Index(face, unicode);
 		
@@ -1150,7 +1163,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						}
 						
 					}
-					
+					// set the rewind count for skipping glyphs already loaded.
+					rewindCount =  (n - tokenIndex) - 1;
 					// set n back to the last index
 					n = tokenIndex;
 					// get the character after token index and update n
@@ -1224,7 +1238,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	const float lineSpacing = params.lineSpacing;
 	
 	// initialize library and face
-	FT_Face face = this->AffirmFreeTypeFace();
+	this->AffirmFreeTypeFace();
 	
 	this->SetCharacterSize(maxFontSize);
 	
@@ -1480,7 +1494,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 											 int hAlignment, int vAlignment, int wordbreak,
 											 bool autoFit, bool returnGlyphBounds, float lineSpacing, MOAILuaState& state){
 	UNUSED(autoFit);
-	
+	++mDebugCallCount;
 	
 	// initialize library and face
 	this->AffirmFreeTypeFace();
@@ -1494,6 +1508,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	// initialize mGlyphArray
 	size_t glyphArraySize = glyphsInText(text);
 	this->mGlyphArray = new FT_Glyph [ glyphArraySize ];
+	
+	// initialize mAdvanceArray
+	this->mAdvanceArray = new FT_Vector [ glyphArraySize ];
 	
 	// create the image data buffer
 	this->InitBitmapData(imageWidth, imageHeight);
@@ -1515,6 +1532,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	
 	// clean up the glyph array
 	deleteGlyphArray(this->mGlyphArray, glyphArraySize);
+	
+	// clean up the advance array
+	delete [] this->mAdvanceArray;
 	
 	return texture;
 }
@@ -1646,16 +1666,16 @@ void MOAIFreeTypeFont::SetCharacterSize(float fontSize){
 
 
 // this method assumes that the font size has been set by FT_Set_Size
-int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
+int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength, u32 startIndex){
 	int totalWidth = 0;
 	FT_Face face = this->mFreeTypeFace;
 	
-	FT_Error error;
+	//FT_Error error;
 	
-	FT_GlyphSlot  slot = face->glyph;
+	//FT_GlyphSlot  slot = face->glyph;
 	FT_UInt previousGlyphIndex = 0;
 	
-	FT_Glyph* glyphs = new FT_Glyph [bufferLength];
+	//FT_Glyph* glyphs = new FT_Glyph [bufferLength];
 	FT_Pos* xPositions = new FT_Pos [bufferLength];
 	
 	FT_Pos penX = 0;
@@ -1663,6 +1683,7 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	bool useKerning = FT_HAS_KERNING(face);
 	
 	for (size_t n = 0; n < bufferLength; n ++){
+		u32 index = n + startIndex;
 		FT_UInt glyphIndex;
 		
 		u32 unicode = buffer[n];
@@ -1675,14 +1696,16 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 		}
 		
 		xPositions[n] = (FT_Pos)penX;
-		
+		/*
 		error = FT_Load_Glyph(face, glyphIndex, FT_LOAD_DEFAULT);
 		CHECK_ERROR(error);
 		
 		error = FT_Get_Glyph(face->glyph, &glyphs[n]);
 		CHECK_ERROR(error);
+		*/
 		
-		penX += (slot->advance.x >> 6);
+		//penX += (slot->advance.x >> 6);
+		penX += (this->mAdvanceArray[index].x >> 6);
 		
 		previousGlyphIndex = glyphIndex;
 	}
@@ -1696,7 +1719,10 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	boundingBox.yMax = 0;
 	
 	for (size_t n = 0; n < bufferLength; n++) {
-		FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
+		u32 index = n + startIndex;
+		
+		//FT_Glyph_Get_CBox( glyphs[n], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
+		FT_Glyph_Get_CBox( this->mGlyphArray[index], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
 		
 		glyphBoundingBox.xMin += xPositions[n];
 		glyphBoundingBox.xMax += xPositions[n];
@@ -1722,7 +1748,7 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength){
 	
 	totalWidth = (int)(boundingBox.xMax - boundingBox.xMin);
 	
-	deleteGlyphArray(glyphs, bufferLength);
+	//deleteGlyphArray(glyphs, bufferLength);
 	delete [] xPositions;
 	
 	return	totalWidth;
