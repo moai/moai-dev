@@ -18,8 +18,8 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/** @name   start
-    @text   Initialize Heyzap.
+/** @name   init
+    @text   initialize heyzap
     
     @out    nil
 */
@@ -32,13 +32,13 @@ int MOAIHeyzapAndroid::_start ( lua_State* L ) {
     jclass heyzap = env->FindClass ( "com/ziplinegames/moai/MoaiHeyzap" );
     if ( heyzap == NULL ) {
 
-        ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
+        ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
     } else {
 
         jmethodID start = env->GetStaticMethodID ( heyzap, "start", "()V" );
         if ( start == NULL ) {
 
-            ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find static java method %s", "start" );
+            ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find static java method %s", "start" );
         } else {
 
             env->CallStaticVoidMethod ( heyzap, start );                
@@ -52,7 +52,7 @@ int MOAIHeyzapAndroid::_start ( lua_State* L ) {
 /** @name   loadInterstitial
     @text   Request that an interstitial ad be cached for later display.
     
-    @opt    string  tag      Optional tag.
+    @opt    string  tag     Optional tag.
     @out    nil
 */
 int MOAIHeyzapAndroid::_loadInterstitial ( lua_State* L ) {
@@ -68,16 +68,16 @@ int MOAIHeyzapAndroid::_loadInterstitial ( lua_State* L ) {
     jclass heyzap = env->FindClass ( "com/ziplinegames/moai/MoaiHeyzap" );
     if ( heyzap == NULL ) {
 
-        ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
+        ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
     } else {
 
         jmethodID loadInterstitial = env->GetStaticMethodID ( heyzap, "loadInterstitial", "(Ljava/lang/String;)V" );
         if ( loadInterstitial == NULL ) {
 
-            ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find static java method %s", "loadInterstitial" );
+            ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find static java method %s", "loadInterstitial" );
         } else {
 
-            env->CallStaticVoidMethod ( heyzap, loadInterstitial, jtag );          
+            env->CallStaticVoidMethod ( heyzap, loadInterstitial, jtag );           
         }
     }
             
@@ -103,7 +103,7 @@ int MOAIHeyzapAndroid::_setListener ( lua_State* L ) {
 /** @name   showInterstitial
     @text   Request an interstitial ad display if a cached ad is available.
     
-    @opt    string  tag      Optional tag.
+    @opt    string  tag     Optional tag
     @out    nil
 */
 int MOAIHeyzapAndroid::_showInterstitial ( lua_State* L ) {
@@ -114,21 +114,21 @@ int MOAIHeyzapAndroid::_showInterstitial ( lua_State* L ) {
 
     JNI_GET_ENV ( jvm, env );
     
-    JNI_GET_JSTRING ( location, jtag );
+    JNI_GET_JSTRING ( tag, jtag );
 
     jclass heyzap = env->FindClass ( "com/ziplinegames/moai/MoaiHeyzap" );
     if ( heyzap == NULL ) {
 
-        ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
+        ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
     } else {
 
         jmethodID showInterstitial = env->GetStaticMethodID ( heyzap, "showInterstitial", "(Ljava/lang/String;)V" );
         if ( showInterstitial == NULL ) {
 
-            ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find static java method %s", "showInterstitial" );
+            ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find static java method %s", "showInterstitial" );
         } else {
 
-            env->CallStaticVoidMethod ( heyzap, showInterstitial, jtag );              
+            env->CallStaticVoidMethod ( heyzap, showInterstitial, jtag );               
         }
     }
 
@@ -137,7 +137,7 @@ int MOAIHeyzapAndroid::_showInterstitial ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /** @name   interstitialIsAvailable
-    @text   Checks to see if an interstitial is available.
+    @text   Determine whether an interstitial is available.
 
     @out    boolean isAvailable
 */
@@ -149,18 +149,18 @@ int MOAIHeyzapAndroid::_interstitialIsAvailable ( lua_State* L ) {
 
     JNI_GET_ENV ( jvm, env );
     
-    JNI_GET_JSTRING ( location, jtag );
+    JNI_GET_JSTRING ( tag, jtag );
     
     jclass heyzap = env->FindClass ( "com/ziplinegames/moai/MoaiHeyzap" );
     if ( heyzap == NULL ) {
 
-        ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
+        ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiHeyzap" );
     } else {
 
-        jmethodID interstitialIsAvailable = env->GetStaticMethodID ( heyzap, "interstitialIsAvailable", "()Z" );
+        jmethodID interstitialIsAvailable = env->GetStaticMethodID ( heyzap, "interstitialIsAvailable", "(Ljava/lang/String;)V" );
         if ( interstitialIsAvailable == NULL ) {
 
-            ZLLog::Print ( "MoaiHeyzapAndroid: Unable to find static java method %s", "interstitialIsAvailable" );
+            ZLLog::Print ( "MOAIHeyzapAndroid: Unable to find static java method %s", "interstitialIsAvailable" );
         } else {
 
             jboolean isAvailable = ( jboolean )env->CallStaticBooleanMethod ( heyzap, interstitialIsAvailable, jtag );    
@@ -175,17 +175,17 @@ int MOAIHeyzapAndroid::_interstitialIsAvailable ( lua_State* L ) {
 }
 
 //================================================================//
-// MoaiHeyzapAndroid
+// MOAIHeyzapAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHeyzapAndroid::MoaiHeyzapAndroid () {
+MOAIHeyzapAndroid::MOAIHeyzapAndroid () {
 
     RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIHeyzapAndroid::~MoaiHeyzapAndroid () {
+MOAIHeyzapAndroid::~MOAIHeyzapAndroid () {
 
 }
 
@@ -198,15 +198,14 @@ void MOAIHeyzapAndroid::RegisterLuaClass ( MOAILuaState& state ) {
     state.SetField ( -1, "INTERSTITIAL_SHOW_FAILED",    ( u32 )INTERSTITIAL_SHOW_FAILED );
     state.SetField ( -1, "INTERSTITIAL_CLICKED",        ( u32 )INTERSTITIAL_CLICKED );
     state.SetField ( -1, "INTERSTITIAL_HIDE",           ( u32 )INTERSTITIAL_HIDE );
-    state.SetField ( -1, "INTERSTITIAL_LOAD_FAILED",    ( u32 )INTERSTITIAL_LOAD_FAILED );
     state.SetField ( -1, "INTERSTITIAL_DISMISSED",      ( u32 )INTERSTITIAL_DISMISSED );
 
     luaL_Reg regTable [] = {
-        { "start",                   _start },
-        { "loadInterstitial",        _loadInterstitial },
-        { "setListener",             _setListener },
-        { "showInterstitial",        _showInterstitial },
-        { "interstitialIsAvailable", _interstitialIsAvailable },
+        { "start",                      _start },
+        { "loadInterstitial",           _loadInterstitial },
+        { "setListener",                _setListener },
+        { "showInterstitial",           _showInterstitial },
+        { "interstitialIsAvailable",    _interstitialIsAvailable },
         { NULL, NULL }
     };
 
@@ -221,13 +220,13 @@ void MOAIHeyzapAndroid::NotifyInterstitialDismissed () {
     if ( callback ) {
         
         MOAIScopedLuaState state = callback.GetSelf ();
-        
+
         state.DebugCall ( 0, 0 );
     }
 }
 
 //----------------------------------------------------------------//
-void MOAIHeyzapAndroid::NotifyInterstitialFetchFailed () {   
+void MOAIHeyzapAndroid::NotifyInterstitialFetchFailed () {  
     
     MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_FETCH_FAILED ];
     

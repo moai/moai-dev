@@ -15,13 +15,13 @@ class MOAIHeyzapAndroid :
     public MOAIGlobalClass < MOAIHeyzapAndroid, MOAILuaObject > {
 private:
         //----------------------------------------------------------------//
-        static int  _init                    ( lua_State* L );
-        static int  _loadInterstitial        ( lua_State* L );
-        static int  _setListener             ( lua_State* L );
-        static int  _showInterstitial        ( lua_State* L );
-        static int  _interstitialIsAvailable ( lua_State* L );
+        static int  _start                      ( lua_State* L );
+        static int  _loadInterstitial           ( lua_State* L );
+        static int  _setListener                ( lua_State* L );
+        static int  _showInterstitial           ( lua_State* L );
+        static int  _interstitialIsAvailable    ( lua_State* L );
 
-public:
+    public:
 
         DECL_LUA_SINGLETON ( MOAIHeyzapAndroid );
 
@@ -38,8 +38,8 @@ public:
 
         MOAILuaRef      mListeners [ TOTAL ];
 
-                        MOAIHeyzapAndroid                ();
-                        ~MOAIHeyzapAndroid               ();
+                        MOAIHeyzapAndroid           ();
+                        ~MOAIHeyzapAndroid          ();
         void            NotifyInterstitialDismissed      ();
         void            NotifyInterstitialFetchFailed    ();
         void            NotifyInterstitialAvailable      ();
@@ -47,7 +47,6 @@ public:
         void            NotifyInterstitialHide           ();
         void            NotifyInterstitialShowFailed     ();
         void            NotifyInterstitialClicked        ();
-
         void            RegisterLuaClass                ( MOAILuaState& state );
 };
 
