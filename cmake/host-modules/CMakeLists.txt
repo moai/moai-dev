@@ -38,3 +38,8 @@ endif ( MOAI_HTTP_CLIENT )
 if ( MOAI_LUAEXT )
   target_link_libraries ( host-modules moai-luaext )
 endif ( MOAI_LUAEXT )
+
+#plugins
+if ( MOAI_PLUGINS )
+	target_link_libraries ( host-modules moai-plugins )
+endif ( MOAI_PLUGINS )

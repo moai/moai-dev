@@ -1,38 +1,27 @@
 
 #include <moai-plugins/host.h>
 
-#ifdef MOAI_WITH_PLUGINS
-	#include <host_plugins.h>
-#endif
-
-
 //================================================================//
-// aku-plugins
+// moai-plugins
 //================================================================//
+
+@PLUGIN_HEADERS@
 
 //----------------------------------------------------------------//
 void AKUPluginsAppFinalize () {
-  #ifdef MOAI_WITH_PLUGINS
-  	HostPluginsAppFinalize();
-  #endif
+  	@PLUGIN_FINALIZE@
 }
 
 //----------------------------------------------------------------//
 void AKUPluginsAppInitialize () {
-  #ifdef MOAI_WITH_PLUGINS
-	 HostPluginsAppInitialize();
-  #endif
+  @PLUGIN_APPINITIALIZE@
 }
 
 //----------------------------------------------------------------//
 void AKUPluginsContextInitialize () {
-  #ifdef MOAI_WITH_PLUGINS
-  	 HostPluginsContextInitialize();
-  #endif
+  	@PLUGIN_CONTEXTINITIALIZE@
 }
 
 void AKUPluginsUpdate () {
-  #ifdef MOAI_WITH_PLUGINS
-  	 HostPluginsUpdate();
-  #endif
+  	@PLUGIN_UPDATE@
 }

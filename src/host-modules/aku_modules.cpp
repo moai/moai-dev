@@ -59,6 +59,10 @@ void AKUModulesAppFinalize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppFinalize ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsAppFinalize ();
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -111,6 +115,10 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppInitialize ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsAppInitialize ();
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -162,6 +170,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_UTIL
 		AKUUtilContextInitialize ();
+	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsContextInitialize ();
 	#endif
 }
 
@@ -261,5 +273,9 @@ void AKUModulesUpdate () {
 
 	#if AKU_WITH_SIM
 		AKUUpdate ();
+	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsUpdate ();
 	#endif
 }
