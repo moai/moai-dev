@@ -1071,7 +1071,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		if (unicode == '\n'){
 			numberOfLines++;
 			penX = penXReset;
-			lineIndex = tokenIndex = n;
+			lineIndex = tokenIndex = n - 1;
 			textLength = lastTokenLength = 0;
 			if (generateLines) {
 				this->BuildLine(textBuffer, textLength, startIndex);
@@ -1139,7 +1139,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 				numberOfLines++;
 				textLength = 0;
 				penX = penXReset;
-				lineIndex = tokenIndex = n;
+				lineIndex = tokenIndex = n - 1;
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
@@ -1178,7 +1178,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					//advance to next line
 					numberOfLines++;
 					penX = penXReset;
-					lineIndex = tokenIndex = n;
+					lineIndex = tokenIndex = n - 1;
 					
 					// reset text length and last token length
 					textLength = lastTokenLength = 0;
@@ -1192,7 +1192,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						// advance to next line
 						numberOfLines++;
 						penX = penXReset;
-						lineIndex = tokenIndex = n;
+						lineIndex = tokenIndex = n - 1;
 					}
 					else{
 						// we don't words broken up when calculating optimal size
