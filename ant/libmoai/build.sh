@@ -20,6 +20,7 @@
 	use_untz="true"
 	use_luajit="true"
 	adcolony_flags=
+	heyzap_flags=
 	billing_flags=
 	chartboost_flags=
 	crittercism_flags=
@@ -38,6 +39,7 @@
 			--use-untz)  use_untz="$2"; shift;;
 			--use-luajit)  use_luajit="$2"; shift;;
 			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
+			--disable-heyzap)  heyzap_flags="-DDISABLE_HEYZAP";;
 			--disable-billing)  billing_flags="-DDISABLE_BILLING";;
 			--disable-chartboost)  chartboost_flags="-DDISABLE_CHARTBOOST";;
 			--disable-crittercism)  crittercism_flags="-DDISABLE_CRITTERCISM";;
@@ -109,6 +111,7 @@
 		existing_push_flags=$( sed -n '11p' libs/package.txt )
 		existing_tapjoy_flags=$( sed -n '12p' libs/package.txt )
 		existing_twitter_flags=$( sed -n '13p' libs/package.txt )
+		existing_heyzap_flags=$( sed -n '14p' libs/package.txt )
 
 		if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
 			should_clean=true
@@ -135,6 +138,10 @@
 		fi
 
 		if [ x"$existing_adcolony_flags" != x"$adcolony_flags" ]; then
+			should_clean=true
+		fi
+
+		if [ x"$existing_heyzap_flags" != x"$heyzap_flags" ]; then
 			should_clean=true
 		fi
 
@@ -191,6 +198,10 @@
 		echo "AdColony will be disabled"
 	fi 
 
+	if [ x"$heyzap_flags" != x ]; then
+		echo "Heyzap will be disabled"
+	fi 
+
 	if [ x"$billing_flags" != x ]; then
 		echo "Billing will be disabled"
 	fi 
@@ -235,6 +246,7 @@
 	pushd jni > /dev/null
 		cp -f OptionalComponents.mk OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_ADCOLONY@%"$adcolony_flags"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_HEYZAP@%"$heyzap_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_BILLING@%"$billing_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_CHARTBOOST@%"$chartboost_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_CRITTERCISM@%"$crittercism_flags"%g OptionalComponentsDefined.mk
@@ -289,3 +301,4 @@
 	echo "$push_flags" >> libs/package.txt
 	echo "$tapjoy_flags" >> libs/package.txt
 	echo "$twitter_flags" >> libs/package.txt
+	echo "$heyzap_flags" >> libs/package.txt

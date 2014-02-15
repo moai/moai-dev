@@ -478,6 +478,7 @@ MOAIMoviePlayer = MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
 
 -- Optional 3rd party extensions
 MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
+MOAIHeyzap = MOAIHeyzapAndroid or MOAIHeyzapIOS
 MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
 MOAIChartBoost = MOAIChartBoostAndroid or MOAIChartBoostIOS
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS

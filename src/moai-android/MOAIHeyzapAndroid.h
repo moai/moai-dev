@@ -19,7 +19,7 @@ private:
         static int  _loadInterstitial           ( lua_State* L );
         static int  _setListener                ( lua_State* L );
         static int  _showInterstitial           ( lua_State* L );
-        static int  _interstitialIsAvailable    ( lua_State* L );
+        static int  _isInterstitialAvailable    ( lua_State* L );
 
     public:
 

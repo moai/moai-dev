@@ -327,6 +327,11 @@
 		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
 
+#ifndef DISABLE_HEYZAP
+		MOAIHeyzapAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIHeyzapAndroid );
+#endif
+
 #ifndef DISABLE_BILLING
 		MOAIBillingAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
