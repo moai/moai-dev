@@ -5,11 +5,13 @@ MOAIHeyzapAndroid.start ()
 
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 320, 480 )
+width = 640
+height = 960
+MOAISim.openWindow ( "test", width, height )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( width, height )
+viewport:setScale ( width, height )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -21,9 +23,9 @@ font = MOAIFont.new ()
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 18, 163 )
 
 textbox = MOAITextBox.new ()
-textbox:setRect ( 0, 0, 320, 480 )
+textbox:setRect ( -50, -50, 500, 200 )
 textbox:setYFlip ( true )
-textbox:setString ( "Tap screen to fetch an ad..." )
+textbox:setString ( "Tap screen to fetch and display an ad." )
 textbox:setTextSize ( 18, 163 )
 textbox:setFont ( font )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
@@ -36,9 +38,8 @@ function clickCallback ( down )
             MOAIHeyzapAndroid.showInterstitial ()
             textbox:setString( "Tap screen to fetch an ad..." )
         else
-            print ( "There is no interstitial. Loading." )
+            print ( "There is no interstitial. Loading interstitial..." )
             MOAIHeyzapAndroid.loadInterstitial ()
-            textbox:setString( "Fetching a new ad..." )
         end
     end
 end
@@ -55,17 +56,14 @@ MOAIInputMgr.device.touch:setCallback (
 
 function onAdAvailable()
     print ( "Successfully loaded an ad! Tap to display! " )
-    textbox:setString ( "Successfully loaded an ad! Tap to display! " )
 end
 
 function onFetchFail()
     print ( "Failed to load an ad! :( " )
-    textbox:setString ( "Failed to load an ad! :( " )
 end
 
 function onAdClose()
     print ( "Failed to load an ad! :( " )
-    textbox:setString( "Tap screen to fetch an ad..." )
 end
 
 --------------------------------------------------------
