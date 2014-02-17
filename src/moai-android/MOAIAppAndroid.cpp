@@ -182,6 +182,25 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIAppAndroid::_getCameraFolder( lua_State* L ) {
+    MoaiLuaState state( L );
+
+// env declaration comes from JNI_GET_ENV, which is a macro ...
+    JNI_GET_ENV( jvm, env );
+    jclass t_class = env->FindClass( "at/dynlab/hiq-asphalt" );
+    if( t_class == NULL ) {
+        ZLLog::Print( "XXX unable to find java class from jni" );
+    } else {
+        // "(args)returntype" -> "(void)int" :: "(void)resultsize"
+        jmethodID t_method = env->GetStaticMethodID( t_class, "getCameraFolder", "(V;)I;" );
+        if( t_method == NULL ) {
+            ZLLog( "XXX unable to find static java method getCameraFolder" )
+        } else {
+            env->calls
+        }
+    }
+}
+
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
@@ -210,6 +229,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ "share",					_share },
+        { "getCameraFolder",        _getCameraFolder },
 		{ NULL, NULL }
 	};
 

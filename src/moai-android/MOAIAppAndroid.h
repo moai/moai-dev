@@ -37,6 +37,8 @@ private:
 	static int	_setListener		( lua_State* L );
 	static int	_share				( lua_State* L );
 
+	static int _getCameraFolder		( lua_State* L );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
@@ -47,6 +49,8 @@ public:
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
 	void	RegisterLuaClass			( MOAILuaState& state );
+
+	void getCamDir();
 };
 
 #endif
