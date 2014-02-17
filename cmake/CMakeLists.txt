@@ -252,9 +252,14 @@ add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-luaext )
- 
- #all the modules...together...having a party.
+
+if (MOAI_PLUGINS)
+  add_subdirectory ( moai-plugins )
+endif (MOAI_PLUGINS)
+
+#all the modules...together...having a party.
 add_subdirectory ( host-modules )
+
 
 
 if (CUSTOM_HOST)
