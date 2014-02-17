@@ -1,0 +1,9 @@
+<!-- Heyzap -->
+<activity android:name="com.heyzap.sdk.ads.HeyzapInterstitialActivity" android:configChanges="keyboardHidden|orientation" />
+<activity android:name="com.heyzap.sdk.ads.HeyzapVideoActivity" android:configChanges="keyboardHidden|orientation" />
+<receiver android:name="com.heyzap.sdk.ads.PackageAddedReceiver">
+    <intent-filter>
+        <data android:scheme="package"/>
+        <action android:name="android.intent.action.PACKAGE_ADDED"/>
+    </intent-filter>
+</receiver>

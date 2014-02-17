@@ -11,7 +11,7 @@
 # slashes as directory separators, e.g. C:/android-sdk)
 #----------------------------------------------------------------#
 
-	android_sdk_root=""
+	android_sdk_root="/usr/local/Cellar/android-sdk/22.3/"
 
 #----------------------------------------------------------------#
 # space-delimited list of source lua directories to add to the 
@@ -19,7 +19,7 @@
 # the assets directory of the bundle
 #----------------------------------------------------------------#
 
-	src_dirs=( "../../samples/anim/anim-basic" )
+	src_dirs=( "../../samples/android/app-heyzap" )
 	dest_dirs=(	"lua" )
 
 #----------------------------------------------------------------#

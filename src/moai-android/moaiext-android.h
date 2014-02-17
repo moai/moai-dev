@@ -5,6 +5,7 @@
 #include <moai-android/MOAIBrowserAndroid.h>
 #include <moai-android/MOAIDialogAndroid.h>
 #include <moai-android/MOAIAdColonyAndroid.h>
+#include <moai-android/MOAIHeyzapAndroid.h>
 #include <moai-android/MOAIBillingAndroid.h>
 #include <moai-android/MOAIChartBoostAndroid.h>
 #include <moai-android/MOAICrittercismAndroid.h>

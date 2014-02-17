@@ -26,7 +26,7 @@
 # information)
 # available: facebook, tapjoy, twitter, chartboost, crittercism,
 # google-push, google-billing, miscellaneous (required by
-# google-billing)
+# google-billing), heyzap
 #----------------------------------------------------------------#
 
 	requires=( @REQUIRED_LIBS@ )
