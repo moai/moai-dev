@@ -32,7 +32,8 @@ private:
             INTERSTITIAL_SHOW_FAILED,
             INTERSTITIAL_CLICKED,
             INTERSTITIAL_HIDE,
-            INTERSTITIAL_DISMISSED,
+            INTERSTITIAL_AUDIO_STARTED,
+            INTERSTITIAL_AUDIO_FINISHED,
             TOTAL
         };
 
@@ -40,13 +41,14 @@ private:
 
                         MOAIHeyzapAndroid           ();
                         ~MOAIHeyzapAndroid          ();
-        void            NotifyInterstitialDismissed      ();
         void            NotifyInterstitialFetchFailed    ();
         void            NotifyInterstitialAvailable      ();
         void            NotifyInterstitialShow           ();
         void            NotifyInterstitialHide           ();
         void            NotifyInterstitialShowFailed     ();
         void            NotifyInterstitialClicked        ();
+        void            NotifyInterstitialAudioStarted   ();
+        void            NotifyInterstitialAudioFinished  ();
         void            RegisterLuaClass                ( MOAILuaState& state );
 };
 

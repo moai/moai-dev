@@ -93,6 +93,7 @@ int MOAIHeyzapAndroid::_setListener ( lua_State* L ) {
 
     if ( idx < TOTAL ) {
         
+        ZLLog::Print ( "_setListener" );
         MOAIHeyzapAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
     }
     
@@ -198,7 +199,8 @@ void MOAIHeyzapAndroid::RegisterLuaClass ( MOAILuaState& state ) {
     state.SetField ( -1, "INTERSTITIAL_SHOW_FAILED",    ( u32 )INTERSTITIAL_SHOW_FAILED );
     state.SetField ( -1, "INTERSTITIAL_CLICKED",        ( u32 )INTERSTITIAL_CLICKED );
     state.SetField ( -1, "INTERSTITIAL_HIDE",           ( u32 )INTERSTITIAL_HIDE );
-    state.SetField ( -1, "INTERSTITIAL_DISMISSED",      ( u32 )INTERSTITIAL_DISMISSED );
+    state.SetField ( -1, "INTERSTITIAL_AUDIO_STARTED",  ( u32 )INTERSTITIAL_AUDIO_STARTED );
+    state.SetField ( -1, "INTERSTITIAL_AUDIO_FINISHED", ( u32 )INTERSTITIAL_AUDIO_FINISHED );
 
     luaL_Reg regTable [] = {
         { "start",                      _start },
@@ -210,19 +212,6 @@ void MOAIHeyzapAndroid::RegisterLuaClass ( MOAILuaState& state ) {
     };
 
     luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIHeyzapAndroid::NotifyInterstitialDismissed () {    
-    
-    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_DISMISSED ];
-    
-    if ( callback ) {
-        
-        MOAIScopedLuaState state = callback.GetSelf ();
-
-        state.DebugCall ( 0, 0 );
-    }
 }
 
 //----------------------------------------------------------------//
@@ -303,50 +292,90 @@ void MOAIHeyzapAndroid::NotifyInterstitialClicked () {
     }
 }
 
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialAudioStarted () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_AUDIO_STARTED ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
+//----------------------------------------------------------------//
+void MOAIHeyzapAndroid::NotifyInterstitialAudioFinished () {   
+    
+    MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_AUDIO_FINISHED ];
+    
+    if ( callback ) {
+        
+        MOAIScopedLuaState state = callback.GetSelf ();
+        
+        state.DebugCall ( 0, 0 );
+    }
+}
+
 //================================================================//
 // Heyzap JNI methods
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialDismissed ( JNIEnv* env, jclass obj ) {
-
-    MOAIHeyzapAndroid::Get ().NotifyInterstitialDismissed ();
-}
-
-//----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialFetchFailed ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialFetchFailed" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialFetchFailed ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAvailable ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAvailable" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialAvailable ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShow ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShow" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialShow ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialHide ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialHide" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialHide ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShowFailed ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialShowFailed" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialShowFailed ();
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialClicked ( JNIEnv* env, jclass obj ) {
 
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialClicked" );
     MOAIHeyzapAndroid::Get ().NotifyInterstitialClicked ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAudioStarted ( JNIEnv* env, jclass obj ) {
+
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAudioStarted" );
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialAudioStarted ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAudioFinished ( JNIEnv* env, jclass obj ) {
+
+    ZLLog::Print ( "Java_com_ziplinegames_moai_MoaiHeyzap_AKUNotifyHeyzapInterstitialAudioFinished" );
+    MOAIHeyzapAndroid::Get ().NotifyInterstitialAudioFinished ();
 }
 
 #endif

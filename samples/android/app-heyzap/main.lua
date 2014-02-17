@@ -23,9 +23,9 @@ font = MOAIFont.new ()
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 18, 163 )
 
 textbox = MOAITextBox.new ()
-textbox:setRect ( -50, -50, 500, 200 )
+textbox:setRect ( -300, -300, 300, 300 )
 textbox:setYFlip ( true )
-textbox:setString ( "Tap screen to fetch and display an ad." )
+textbox:setString ( "Tap screen to fetch an ad..." )
 textbox:setTextSize ( 18, 163 )
 textbox:setFont ( font )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
@@ -40,6 +40,7 @@ function clickCallback ( down )
         else
             print ( "There is no interstitial. Loading interstitial..." )
             MOAIHeyzapAndroid.loadInterstitial ()
+            textbox:setString( "Loading interstitial..." )
         end
     end
 end
@@ -55,15 +56,17 @@ MOAIInputMgr.device.touch:setCallback (
 )
 
 function onAdAvailable()
-    print ( "Successfully loaded an ad! Tap to display! " )
+    print ( "Successfully loaded an ad! Tap to display!" )
+    textbox:setString( "Ad loaded! Tap to display!" )
 end
 
 function onFetchFail()
-    print ( "Failed to load an ad! :( " )
+    print ( "Failed to load an ad! :(" )
+    textbox:setString( "Failed to load an ad! :(" )
 end
 
 function onAdClose()
-    print ( "Failed to load an ad! :( " )
+    print ( "Closing Ad..." )
 end
 
 --------------------------------------------------------
@@ -72,4 +75,3 @@ MOAIHeyzapAndroid.setListener ( MOAIHeyzapAndroid.INTERSTITIAL_AVAILABLE, onAdAv
 MOAIHeyzapAndroid.setListener ( MOAIHeyzapAndroid.INTERSTITIAL_FETCH_FAILED, onFetchFail )
 MOAIHeyzapAndroid.setListener ( MOAIHeyzapAndroid.INTERSTITIAL_CLICKED, onAdClose )
 MOAIHeyzapAndroid.setListener ( MOAIHeyzapAndroid.INTERSTITIAL_HIDE, onAdClose )
-MOAIHeyzapAndroid.setListener ( MOAIHeyzapAndroid.INTERSTITIAL_DISMISSED, onAdClose )
