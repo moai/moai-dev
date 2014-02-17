@@ -6,6 +6,8 @@
 # http://getmoai.com
 #================================================================#
 
+	proc_count=`cat /proc/cpuinfo | grep processor | wc -l`
+	
 	set -e
 	
 	# check for command line switches
@@ -262,7 +264,7 @@
 	
 	# build libmoai
 	pushd jni > /dev/null
-		ndk-build $verbose
+		ndk-build -j $proc_count $verbose
 	popd > /dev/null
 
 	# remove temp files

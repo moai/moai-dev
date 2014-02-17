@@ -6,6 +6,8 @@
 # http://getmoai.com
 #================================================================#
 
+	proc_count=`cat /proc/cpuinfo | grep processor | wc -l`
+
 	set -e
 
 	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod \

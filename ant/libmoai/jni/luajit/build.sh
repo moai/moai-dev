@@ -5,6 +5,8 @@
 # http://getmoai.com
 #================================================================#
 
+proc_count=`cat /proc/cpuinfo | grep processor | wc -l`
+
 MOAI_ROOT="$( cd ../../../../ && pwd )"
 host_os=`uname -s | tr "[:upper:]" "[:lower:]"`
 host_arch=`uname -m`
@@ -47,7 +49,7 @@ buildLuaJIT()
     mkdir -p $DESTDIR 2>/dev/null
     rm "$DESTDIR"/*.a 2>/dev/null
     make clean
-    make HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $ndkarch" TARGET_CFLAGS="$CFLAGS" libluajit.a
+    make -j $proc_count HOST_CC="gcc -m32" CROSS=$NDKP TARGET_SYS=Linux TARGET_FLAGS="$NDKF $ndkarch"  TARGET_CFLAGS="$CFLAGS" libluajit.a
 
     if [ -f $SRCDIR/src/libluajit.a ]; then
         mv $SRCDIR/src/libluajit.a $DESTDIR/libluajit.a

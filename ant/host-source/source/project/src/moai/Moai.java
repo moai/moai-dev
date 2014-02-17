@@ -609,10 +609,16 @@ public class Moai {
 			});
 		}
 
+
 		sActivity.runOnUiThread( new Runnable () {
 			public void run () {
 				builder.create ().show ();
 			}
 		});
+	}
+	private static String mPictureLocation = new String();
+	public static String takePicture() {
+		mPictureLocation = "this is #neuland";
+		return mPictureLocation;
 	}
 }

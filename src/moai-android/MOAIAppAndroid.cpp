@@ -11,6 +11,9 @@
 
 extern JavaVM* jvm;
 
+// #define HIQ_T_CAMERA_PACKAGE_CLASS "the/package/name/classname"
+static char* HIQ_T_CAMERA_PACKAGE_CLASS = "com/ziplinegames/moai/Moai";
+
 //================================================================//
 // lua
 //================================================================//
@@ -183,22 +186,55 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 }
 
 int MOAIAppAndroid::_getCameraFolder( lua_State* L ) {
-    MoaiLuaState state( L );
+    MOAILuaState state( L );
 
 // env declaration comes from JNI_GET_ENV, which is a macro ...
     JNI_GET_ENV( jvm, env );
     jclass t_class = env->FindClass( "at/dynlab/hiq-asphalt" );
     if( t_class == NULL ) {
-        ZLLog::Print( "XXX unable to find java class from jni" );
+        ZLLog::Print( "XXX unable to find java class %s", "at/dynlab.hiq-asphalt" );
     } else {
         // "(args)returntype" -> "(void)int" :: "(void)resultsize"
         jmethodID t_method = env->GetStaticMethodID( t_class, "getCameraFolder", "(V;)I;" );
         if( t_method == NULL ) {
-            ZLLog( "XXX unable to find static java method getCameraFolder" )
+            ZLLog::Print( "XXX unable to find static java method %s", "getCameraFolder" );
         } else {
-            env->calls
+            // env->calls
         }
     }
+}
+
+int MOAIAppAndroid::_takePicture( lua_State* L ) {
+    MOAILuaState state( L);
+
+    JNI_GET_ENV( jvm, env );
+
+    jclass t_class;
+    jmethodID t_mid;
+    jstring t_string;
+
+    t_class = env->FindClass( HIQ_T_CAMERA_PACKAGE_CLASS );
+
+    if( t_class == NULL ) {
+        ZLLog::Print( "XXX unable to find java class %s", HIQ_T_CAMERA_PACKAGE_CLASS );
+    } else {
+        t_mid = env->GetStaticMethodID( t_class, "takePicture", "()Ljava/lang/String;" );
+        if( t_mid == NULL ) {
+            ZLLog::Print( "XXX unable to find static java method %s", "takePicture");
+        } else {
+            jstring t_res = (jstring)env->CallStaticObjectMethod( t_class, t_mid );
+
+            JNI_GET_CSTRING( t_res, c_str );
+            ZLLog::Print( "we got the string: %s", c_str );
+            // TODO push result string to lua
+            // TODO what happens if returned string is 0?
+
+            JNI_RELEASE_CSTRING( t_res, c_str );
+
+        }
+    }
+
+    return 0;
 }
 
 //================================================================//
@@ -230,6 +266,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",			_setListener },
 		{ "share",					_share },
         { "getCameraFolder",        _getCameraFolder },
+        { "takePicture",            _takePicture },
 		{ NULL, NULL }
 	};
 

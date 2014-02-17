@@ -39,6 +39,8 @@ private:
 
 	static int _getCameraFolder		( lua_State* L );
 
+	static int _takePicture			( lua_State* L );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )

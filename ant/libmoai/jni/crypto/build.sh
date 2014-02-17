@@ -36,7 +36,8 @@
 		
 		# build libcrypto
 		pushd jni > /dev/null
-			ndk-build
+			proc_count=`cat /proc/cpuinfo | grep processor | wc -l`
+			ndk-build -j $proc_count
 		popd > /dev/null
 	fi
 
