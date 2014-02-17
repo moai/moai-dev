@@ -8,12 +8,12 @@
 
 	set -e
   if [ x"$ANDROID_NDK" == x ]; then
-  echo "ANDROID_NDK not defined. Please set to the location of your emscripten install (path)"
+  echo "ANDROID_NDK not defined. Please set to the location of your android NDK install (path)"
 exit 1
 fi
 	# check for command line switches
 	usage="usage: $0  \
-        [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
+        [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
         [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
         [--disable-twitter] [--windows] [--release]"
 	
@@ -41,8 +41,9 @@ fi
 			--disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
 			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
 			--disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
+			--use-luajit)  use_luajit="$2"; shift;;
 			--release) buildtype_flags="Release";;
-			--windows) windows_flags='-G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows/bin/make.exe"';; 
+			--windows) windows_flags='-G "MSYS Makefiles" -DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows/bin/make.exe"';; 
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -56,20 +57,26 @@ fi
 		echo $usage
 		exit 1		
 	fi
+	if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
+		echo $usage
+		exit 1		
+	fi
+
 
 	should_clean=false
 
 	# if libmoai already exists, find out which package it was build for
 	if [ -f libs/package.txt ]; then
 		existing_use_untz=$( sed -n '1p' libs/package.txt )
-		existing_adcolony_flags=$( sed -n '2p' libs/package.txt )
-		existing_billing_flags=$( sed -n '3p' libs/package.txt )
-		existing_chartboost_flags=$( sed -n '4p' libs/package.txt )
-		existing_crittercism_flags=$( sed -n '5p' libs/package.txt )
-		existing_facebook_flags=$( sed -n '6p' libs/package.txt )
-		existing_push_flags=$( sed -n '7p' libs/package.txt )
-		existing_tapjoy_flags=$( sed -n '8p' libs/package.txt )
-		existing_twitter_flags=$( sed -n '9p' libs/package.txt )
+		existing_use_luajit=$( sed -n '2p' libs/package.txt )
+		existing_adcolony_flags=$( sed -n '3p' libs/package.txt )
+		existing_billing_flags=$( sed -n '4p' libs/package.txt )
+		existing_chartboost_flags=$( sed -n '5p' libs/package.txt )
+		existing_crittercism_flags=$( sed -n '6p' libs/package.txt )
+		existing_facebook_flags=$( sed -n '7p' libs/package.txt )
+		existing_push_flags=$( sed -n '8p' libs/package.txt )
+		existing_tapjoy_flags=$( sed -n '9p' libs/package.txt )
+		existing_twitter_flags=$( sed -n '10p' libs/package.txt )
 
 	
 
@@ -129,6 +136,13 @@ fi
 		untz_param='-DMOAI_UNTZ=1'
 	fi 
 
+	if [ x"$use_luajit" != xtrue ]; then
+		echo "LUAJIT will be disabled"
+		luajit_param='-DMOAI_LUAJIT=0'
+	else
+		luajit_param='-DMOAI_LUAJIT=1'
+	fi 
+
 	if [ x"$adcolony_flags" != x ]; then
 		echo "AdColony will be disabled"
 		disabled_ext="$disabled_extADCOLONY;"
@@ -180,7 +194,7 @@ fi
      -DMOAI_CHIPMUNK=1 -DMOAI_CURL=1 -DMOAI_CRYPTO=1 -DMOAI_EXPAT=1 -DMOAI_FREETYPE=1 \
      -DMOAI_HTTP_CLIENT=1 -DMOAI_JSON=1 -DMOAI_JPG=1 -DMOAI_LUAEXT=1 \
      -DMOAI_MONGOOSE=1 -DMOAI_OGG=1 -DMOAI_OPENSSL=1 -DMOAI_SQLITE3=1 \
-     -DMOAI_TINYXML=1 -DMOAI_PNG=1 -DMOAI_SFMT=1 -DMOAI_VORBIS=1 $untz_param \
+     -DMOAI_TINYXML=1 -DMOAI_PNG=1 -DMOAI_SFMT=1 -DMOAI_VORBIS=1 $untz_param $luajit_param \
      -DBUILD_ANDROID=true \
      -DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-android/android.toolchain.cmake" \
      -DLIBRARY_OUTPUT_PATH_ROOT="${build_dir}" \
@@ -190,16 +204,12 @@ fi
 
 
       #build them
-	  cmake --build . --target all
+	  cmake --build . --target moai -- -j4
 
     cd ${build_dir}
 
 	# create text file that shows the settings libmoai.so was built with (this time)
 	rm -f libs/package.txt
-	echo "$arm_mode" >> libs/package.txt
-	echo "$arm_arch" >> libs/package.txt
-	echo "$app_platform" >> libs/package.txt
-	echo "$use_fmod" >> libs/package.txt
 	echo "$use_untz" >> libs/package.txt
 	echo "$use_luajit" >> libs/package.txt
 	echo "$adcolony_flags" >> libs/package.txt
