@@ -1049,6 +1049,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	int lineIndex = 0; // the index of the beginning of the current line
 	int tokenIndex = 0; // the index of the beginning of the current token
 	
+	int tokenN = 0; // the last value of n at the beginning of the token.
+	
 	u32 startIndex = 0; // the value for the final parameter of BuildLine()
 	
 	size_t textLength = 0;
@@ -1065,13 +1067,14 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 	int n = 0;
 	while ( (unicode = u8_nextchar(text, &n) ) ) {
 		
-		startIndex = (u32) lineIndex;
+		startIndex = (u32) lineIndex; //( (int)glyphArrayIndex - rewindCount); //lineIndex;
 		
 		// handle new line
 		if (unicode == '\n'){
 			numberOfLines++;
 			penX = penXReset;
-			lineIndex = tokenIndex = n - 1;
+			lineIndex = tokenIndex = glyphArrayIndex; //n - 1;
+			tokenN = n;
 			textLength = lastTokenLength = 0;
 			if (generateLines) {
 				this->BuildLine(textBuffer, textLength, startIndex);
@@ -1084,7 +1087,8 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		}
 		// handle word breaking characters
 		else if ( MOAIFreeTypeFont::IsWordBreak(unicode, wordBreakMode) ){
-			tokenIndex = n;
+			tokenIndex = glyphArrayIndex; //n;
+			tokenN = n;
 			lastTokenLength = textLength;
 			lastTokenCh = lastCh;
 			lastTokenX = penX;
@@ -1139,7 +1143,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 				numberOfLines++;
 				textLength = 0;
 				penX = penXReset;
-				lineIndex = tokenIndex = n - 1;
+				lineIndex = tokenIndex = glyphArrayIndex; //n - 1;
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
@@ -1164,9 +1168,9 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						
 					}
 					// set the rewind count for skipping glyphs already loaded.
-					rewindCount =  (n - tokenIndex) - 1;
+					rewindCount =  (glyphArrayIndex - tokenIndex) - 2; //(n - tokenIndex) - 1;
 					// set n back to the last index
-					n = tokenIndex;
+					n = tokenN;
 					// get the character after token index and update n
 					unicode = u8_nextchar(text, &n);
 					
@@ -1178,7 +1182,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					//advance to next line
 					numberOfLines++;
 					penX = penXReset;
-					lineIndex = tokenIndex = n - 1;
+					lineIndex = tokenIndex = glyphArrayIndex - (rewindCount + 1); //n - 1;
 					
 					// reset text length and last token length
 					textLength = lastTokenLength = 0;
@@ -1192,7 +1196,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						// advance to next line
 						numberOfLines++;
 						penX = penXReset;
-						lineIndex = tokenIndex = n - 1;
+						lineIndex = tokenIndex = glyphArrayIndex; //n - 1;
 					}
 					else{
 						// we don't words broken up when calculating optimal size
