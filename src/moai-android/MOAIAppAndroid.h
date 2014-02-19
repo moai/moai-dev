@@ -25,6 +25,8 @@ private:
 		SESSION_START,
 		SESSION_END,
 		BACK_BUTTON_PRESSED,
+		PICTURE_TAKEN,
+		TRALALA,
 		TOTAL,
 	};
 
@@ -36,10 +38,8 @@ private:
 	static int	_sendMail			( lua_State* L );
 	static int	_setListener		( lua_State* L );
 	static int	_share				( lua_State* L );
-
-	static int _getCameraFolder		( lua_State* L );
-
-	static int _takePicture			( lua_State* L );
+	static int  _takePicture		( lua_State* L );
+	static int  _tralala			( lua_State* L );
 
 public:
 
@@ -50,6 +50,7 @@ public:
 	bool	NotifyBackButtonPressed		();
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
+	void	NotifyPictureTaken			( int code, cc8* path );
 	void	RegisterLuaClass			( MOAILuaState& state );
 
 	void getCamDir();

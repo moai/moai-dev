@@ -7,6 +7,7 @@
 #================================================================#
 
 	proc_count=`cat /proc/cpuinfo | grep processor | wc -l`
+	proc_count=16
 	
 	set -e
 	

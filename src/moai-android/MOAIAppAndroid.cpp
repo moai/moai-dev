@@ -11,9 +11,6 @@
 
 extern JavaVM* jvm;
 
-// #define HIQ_T_CAMERA_PACKAGE_CLASS "the/package/name/classname"
-static char* HIQ_T_CAMERA_PACKAGE_CLASS = "com/ziplinegames/moai/Moai";
-
 //================================================================//
 // lua
 //================================================================//
@@ -185,54 +182,49 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	return 0;
 }
 
-int MOAIAppAndroid::_getCameraFolder( lua_State* L ) {
-    MOAILuaState state( L );
-
-// env declaration comes from JNI_GET_ENV, which is a macro ...
-    JNI_GET_ENV( jvm, env );
-    jclass t_class = env->FindClass( "at/dynlab/hiq-asphalt" );
-    if( t_class == NULL ) {
-        ZLLog::Print( "XXX unable to find java class %s", "at/dynlab.hiq-asphalt" );
-    } else {
-        // "(args)returntype" -> "(void)int" :: "(void)resultsize"
-        jmethodID t_method = env->GetStaticMethodID( t_class, "getCameraFolder", "(V;)I;" );
-        if( t_method == NULL ) {
-            ZLLog::Print( "XXX unable to find static java method %s", "getCameraFolder" );
-        } else {
-            // env->calls
-        }
-    }
-}
-
 int MOAIAppAndroid::_takePicture( lua_State* L ) {
+	ZLLog::Print("_takePicture");
     MOAILuaState state( L);
 
     JNI_GET_ENV( jvm, env );
 
-    jclass t_class;
-    jmethodID t_mid;
-    jstring t_string;
+    jclass      t_class;
+    jmethodID   t_mid;
+    // jstring t_string;
 
-    t_class = env->FindClass( HIQ_T_CAMERA_PACKAGE_CLASS );
+    t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );
 
     if( t_class == NULL ) {
-        ZLLog::Print( "XXX unable to find java class %s", HIQ_T_CAMERA_PACKAGE_CLASS );
+        ZLLog::Print( "XXX unable to find java class %s", "com/ziplinegames/moai/MoaiCamera" );
     } else {
-        t_mid = env->GetStaticMethodID( t_class, "takePicture", "()Ljava/lang/String;" );
+        t_mid = env->GetStaticMethodID( t_class, "takePicture", "()V" );
         if( t_mid == NULL ) {
             ZLLog::Print( "XXX unable to find static java method %s", "takePicture");
         } else {
-            jstring t_res = (jstring)env->CallStaticObjectMethod( t_class, t_mid );
-
-            JNI_GET_CSTRING( t_res, c_str );
-            ZLLog::Print( "we got the string: %s", c_str );
-            // TODO push result string to lua
-            // TODO what happens if returned string is 0?
-
-            JNI_RELEASE_CSTRING( t_res, c_str );
-
+        	ZLLog::Print( "before java call" );
+        	env->CallStaticVoidMethod( t_class, t_mid );
         }
     }
+
+    return 0;
+}
+
+int MOAIAppAndroid::_tralala( lua_State* L ) {
+
+	ZLLog::Print( "we have log output" );
+
+//    MOAILuaRef& callback 		= this->mListeners[ PICTURE_TAKEN ];
+//    MOAIScopedLuaState state 	= callback.GetSelf();
+//
+//    int code = 666;
+//    const char* str = "XXX";
+//
+//    if( callback ) {
+//    	state.Push( code );
+//    	state.Push( str );
+//
+//    	state.DebugCall( 2, 0 );
+//    }
 
     return 0;
 }
@@ -258,6 +250,8 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
+	state.SetField ( -1, "PICTURE_TAKEN",			( u32 )PICTURE_TAKEN );
+	state.SetField ( -1, "TRALALA",					( u32 )TRALALA );
 
 	luaL_Reg regTable [] = {
 		{ "getUTCTime",				_getUTCTime },
@@ -265,8 +259,8 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendMail",				_sendMail },
 		{ "setListener",			_setListener },
 		{ "share",					_share },
-        { "getCameraFolder",        _getCameraFolder },
         { "takePicture",            _takePicture },
+        { "tralala",            	_tralala },
 		{ NULL, NULL }
 	};
 
@@ -319,6 +313,20 @@ void MOAIAppAndroid::NotifyWillEndSession () {
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIAppAndroid::NotifyPictureTaken( int code, cc8* path ) {
+	ZLLog::Print( "preparing values to be pushed back into lua vm" );
+    MOAILuaRef& callback 		= this->mListeners[ PICTURE_TAKEN ];
+    MOAIScopedLuaState state 	= callback.GetSelf();
+    
+    if( callback ) {
+    	state.Push( code );
+    	state.Push( path );
+
+    	state.DebugCall( 2, 0 );
+    }
+}
+
 //================================================================//
 // Miscellaneous JNI Functions
 //================================================================//
@@ -340,3 +348,14 @@ extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* e
 
 	MOAIAppAndroid::Get ().NotifyWillEndSession ();
 }
+
+
+extern "C" void Java_com_ziplinegames_moai_Moai_AKUNotifyPictureTaken( JNIEnv* env, jclass obj, jint code, jstring jpath ) {
+	ZLLog::Print( "notifyictureTaknen called from java" );
+    JNI_GET_CSTRING( jpath, path );
+    
+    MOAIAppAndroid::Get().NotifyPictureTaken( code, path );
+
+    JNI_RELEASE_CSTRING( jpath, path );
+}
+
