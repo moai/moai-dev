@@ -15,7 +15,7 @@ Tools needed to build the MOAI SDK.
 * [Android SDK](http://developer.android.com/sdk/index.html)
 * [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html)
 * [Ant 1.9](http://ant.apache.org/)
-* [CMake 2.8.5](http://www.cmake.org/)
+* [CMake 2.8.10](http://www.cmake.org/)
 * [Visual Studio 2010](http://www.visualstudio.com/) (Windows Only)
 * [Cygwin](http://www.cygwin.com/) (Windows Only)
 * [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac Only)
@@ -25,8 +25,11 @@ Tools needed to build the MOAI SDK.
 ### Windows Host
 Please run the "./bin/build-cmake-win.bat".
 
+	# Build
+	cd moai-dev
+	.¥bin¥build-cmake-win.bat
+	
 ### OSX Host
-Please run the "./bin/build-cmake-osx".
 
 	# Build
 	cd moai-dev
@@ -45,13 +48,23 @@ Please run the "./bin/build-cmake-osx".
 	release/linux/x64/bin//moai main.lua
 
 ### iOS Host
-Please run the "./bin/build-cmake-ios.sh".
 
 	cd moai-dev
 	./bin/build-cmake-ios.sh <lua_dir>
 
 ### Android Host
-TODO:Please describe someone.
+
+	# Build
+	cd moai-dev
+	./bin/build-android
+	
+	# Edit Setting
+	cd release/android/host
+	vi settings-global.sh
+	vi settings-local.sh
+	
+	# Run
+	./run-host.sh
 
 ### HTML Host
 TODO:Please describe someone.
