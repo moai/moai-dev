@@ -1215,7 +1215,7 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 	const float lineSpacing = params.lineSpacing;
 	
 	// initialize library and face
-	FT_Face face __attribute__((unused)) = this->AffirmFreeTypeFace();
+	__unused FT_Face face = this->AffirmFreeTypeFace();
 	
 	this->SetCharacterSize(maxFontSize);
 	
