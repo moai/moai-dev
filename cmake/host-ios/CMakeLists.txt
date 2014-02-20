@@ -11,7 +11,7 @@ set ( INCLUDES_MOAIIOS
   "${MOAI_ROOT}/src/host-glut"
 )
 
-set ( IOS_HOST "${MOAI_ROOT}/xcode/ios")
+set ( IOS_HOST "${MOAI_ROOT}/src/host-ios")
 
 include_directories (
     ${INCLUDES_MOAIIOS}
