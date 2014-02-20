@@ -7,11 +7,9 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_ANDROID_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-
- CACHE INTERNAL "doc string" )
+ )
 
 include_directories ( 
   ${MOAI_ANDROID_INCLUDES} 
@@ -25,3 +23,4 @@ file ( GLOB MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_ANDROID_INCLUDES} )
 
 add_library ( moai-android STATIC ${MOAI_ANDROID_SRC} )
+target_link_libraries( moai-android moai-sim moai-util moai-core )

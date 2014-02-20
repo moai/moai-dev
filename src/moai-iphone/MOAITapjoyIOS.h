@@ -6,8 +6,9 @@
 
 #ifndef DISABLE_TAPJOY
 
-#import <Foundation/Foundation.h>
+#import <Foundation/Foundation.h> 
 #import <moai-core/headers.h>
+
 #import <Tapjoy/Tapjoy.h>
 
 @class MOAITapjoyIOSVideoAdDelegate;
@@ -33,11 +34,11 @@
 	@const	TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			Error code for playback error. Unused.
 */
 class MOAITapjoyIOS :
-public MOAIGlobalClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
+	public MOAIGlobalClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
 private:
-	
+
 	MOAITapjoyIOSVideoAdDelegate* mVideoAdDelegate;
-	
+
 	//----------------------------------------------------------------//
 	static int	_getUserId		( lua_State* L );
 	static int	_initVideoAds	( lua_State* L );
@@ -46,7 +47,7 @@ private:
 	static int	_showOffers		( lua_State* L );
 	
 public:
-	
+
 	DECL_LUA_SINGLETON ( MOAITapjoyIOS );
 	
 	enum {
@@ -56,7 +57,7 @@ public:
 		TAPJOY_VIDEO_AD_READY,
 		TOTAL
 	};
-	
+
 	enum {
         TAPJOY_VIDEO_STATUS_NO_ERROR,
         TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE,

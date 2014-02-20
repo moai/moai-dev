@@ -7,11 +7,10 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_SIM_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
 
- CACHE INTERNAL "doc string" )
+  )
 
 include_directories ( 
   ${MOAI_SIM_INCLUDES} 
@@ -25,6 +24,36 @@ file ( GLOB MOAI_SIM_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
+
+target_link_libraries ( moai-sim moai-core moai-util contrib)
+
+#always point to freetype includes so the generated project is easy to turn freetype back on!
+get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
+target_include_directories ( moai-sim PUBLIC ${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES} )
+
+if (MOAI_FREETYPE)
+	target_link_libraries( moai-sim freetype)
+endif (MOAI_FREETYPE)
+
+if (MOAI_CURL)
+ 	target_link_libraries( moai-sim curl)
+endif (MOAI_CURL)
+
+if (MOAI_PNG)
+	target_link_libraries( moai-sim png)
+endif(MOAI_PNG)
+
+if (MOAI_JPG)
+	target_link_libraries (moai-sim jpg)
+endif (MOAI_JPG)
+
+if (MOAI_BOX2D)
+ target_link_libraries ( moai-sim moai-box2d)
+endif (MOAI_BOX2D)
+
+if (MOAI_CHIPMUNK)
+	target_link_libraries ( moai-sim moai-chipmunk)
+endif (MOAI_CHIPMUNK)
 
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential

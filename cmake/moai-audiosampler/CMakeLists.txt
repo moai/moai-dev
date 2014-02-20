@@ -2,10 +2,9 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-audiosampler )
 
 set ( MOAI_AUDIOSAMPLER_INCLUDES
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
- CACHE INTERNAL "doc string" )
+  )
 
 include_directories (
   ${MOAI_AUDIOSAMPLER_INCLUDES}
@@ -21,4 +20,5 @@ set ( MOAI_AUDIOSAMPLER_SRC
 
 
 add_library ( moai-audiosampler STATIC ${MOAI_AUDIOSAMPLER_SRC}  )
+target_link_libraries ( moai-audiosampler moai-core moai-util moai-sim zlcore )
 

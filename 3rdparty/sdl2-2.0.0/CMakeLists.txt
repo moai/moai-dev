@@ -1171,6 +1171,7 @@ if(SDL_STATIC)
   # libraries - do we need to consider this?
   set(_INSTALL_LIBS "SDL2-static" ${_INSTALL_LIBS})
   target_link_libraries(SDL2-static ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
+  target_include_directories(SDL2-static PUBLIC ${SDL2_BINARY_DIR}/include ${SDL2_SOURCE_DIR}/include)
 endif(SDL_STATIC)
 
 ##### Installation targets #####

@@ -4,7 +4,7 @@ project(lua)
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" )
 
-set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/" CACHE INTERNAL "doc string" )
+set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/"  )
 
 
 set ( LUA_SOURCES
@@ -39,18 +39,25 @@ set ( LUA_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}lzio.c
   ${CMAKE_CURRENT_SOURCE_DIR}print.c
 
-CACHE INTERNAL "doc string" )
+)
+ 
+
 
 if (BUILD_ANDROID)
   set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
-        CACHE INTERNAL "doc string"
         )
 else (BUILD_ANDROID) 
 	set ( LUA_SOURCES 
   	    ${LUA_SOURCES} 
   	    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
-        CACHE INTERNAL "doc string"
         )
 endif (BUILD_ANDROID)
+
+
+add_library( liblua-static STATIC ${LUA_SOURCES} )
+target_include_directories( liblua-static PUBLIC ${LUA_INCLUDES} )
+set (LUA_HEADERS ${LUA_INCLUDES} PARENT_SCOPE)
+set (LUA_LIB liblua-static PARENT_SCOPE)
+

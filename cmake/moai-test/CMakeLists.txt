@@ -6,7 +6,7 @@ set ( MOAI_TEST_INCLUDES
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
 
- CACHE INTERNAL "doc string" )
+ )
 
 include_directories ( 
   ${MOAI_CORE_INCLUDES} 

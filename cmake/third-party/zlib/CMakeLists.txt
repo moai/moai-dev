@@ -4,7 +4,7 @@ project ( zlib )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/zlib-1.2.3/" )
 
-set ( ZLIB_INCLUDES "${MOAI_ROOT}/3rdparty/zlib-1.2.3/" CACHE INTERNAL "doc string" )
+set ( ZLIB_INCLUDES "${MOAI_ROOT}/3rdparty/zlib-1.2.3/" )
 
 set ( ZLIB_SOURCES
 
@@ -21,4 +21,7 @@ set ( ZLIB_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/uncompr.c
   ${CMAKE_CURRENT_SOURCE_DIR}/zutil.c
 
-CACHE INTERNAL "doc string" )
+ )
+
+add_library(zlib STATIC ${ZLIB_SOURCES})
+target_include_directories(zlib PUBLIC ${ZLIB_INCLUDES})

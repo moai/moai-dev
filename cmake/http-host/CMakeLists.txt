@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.5)
 project(http-host)
 
-set ( HTTPHOST_INCLUDES "${MOAI_ROOT}/src/;${MOAI_ROOT}/src/hosts/" CACHE INTERNAL "doc string" )
+set ( HTTPHOST_INCLUDES "${MOAI_ROOT}/src/;${MOAI_ROOT}/src/hosts/"  )
 
 include_directories ( 
   ${HTTPHOST_INCLUDES} 

@@ -37,13 +37,12 @@ private:
 	static int	_initVideoAds	( lua_State* L );
 	static int	_init			( lua_State* L );
 	static int	_setListener	( lua_State* L );
-	static int	_setUserId		( lua_State* L );
 	static int	_showOffers		( lua_State* L );
-
+	
 public:
 
 	DECL_LUA_SINGLETON ( MOAITapjoyAndroid );
-
+	
 	enum {
 		TAPJOY_VIDEO_AD_BEGIN,
 		TAPJOY_VIDEO_AD_CLOSE,
@@ -58,7 +57,7 @@ public:
         TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS,
         TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO,
 	};
-
+	
 	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAITapjoyAndroid	();

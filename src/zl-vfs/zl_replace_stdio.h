@@ -86,11 +86,20 @@
 #undef _fseeki64
 #define _fseeki64 zl_fseeki64
 
+#undef fseeko64
+#define fseeko64 zl_fseeko64
+
+#undef fseeko
+#define fseeko zl_fseeko
+
 #undef fsetpos
 #define fsetpos zl_fsetpos
 
 #undef ftell
 #define ftell zl_ftell
+
+#undef ftello
+#define ftello zl_ftello
 
 #undef fwrite
 #define fwrite zl_fwrite

@@ -6,11 +6,14 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/contrib/" )
 
 set ( CONTRIB_INCLUDES
   "${MOAI_ROOT}/3rdparty/"
-CACHE INTERNAL "doc string" )
+)
 
 set ( CONTRIB_SOURCES
-
     ${CMAKE_CURRENT_SOURCE_DIR}/utf8.c
     ${CMAKE_CURRENT_SOURCE_DIR}/whirlpool.c
+)
 
-CACHE INTERNAL "doc string" )
+include_directories(${CONTRIB_INCLUDES})
+add_library( contrib STATIC ${CONTRIB_SOURCES})
+target_include_directories (contrib PUBLIC ${CONTRIB_INCLUDES})
+
