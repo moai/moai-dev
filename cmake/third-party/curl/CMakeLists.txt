@@ -38,6 +38,12 @@ project ( curl )
         )
     endif (BUILD_OSX)
 
+  if (BUILD_HTML)
+        set ( CURL_INCLUDES
+          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/"
+        )
+    endif (BUILD_HTML)
+
 
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
@@ -50,6 +56,8 @@ project ( curl )
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
        )
   endif (BUILD_IOS)
+
+
 
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
