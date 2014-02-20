@@ -1538,6 +1538,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	// clean up the advance array
 	delete [] this->mAdvanceArray;
 	
+	// set member variable arrays to NULL
+	this->mGlyphArray = NULL;
+	this->mAdvanceArray = NULL;
+	
 	return texture;
 }
 
