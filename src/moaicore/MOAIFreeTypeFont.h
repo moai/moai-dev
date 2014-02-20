@@ -65,10 +65,6 @@ protected:
 	
 	FT_Glyph* mGlyphArray;
 	FT_Vector* mAdvanceArray;
-	
-	// A member variable used for determining which call to a method generated an error.
-	// TODO: remove it in final product
-	u32 mDebugCallCount; 
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );

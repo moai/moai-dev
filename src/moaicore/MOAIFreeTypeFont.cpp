@@ -999,8 +999,7 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
 	mBitmapWidth(0.0f),
 	mBitmapHeight(0.0f),
 	mGlyphArray( NULL ),
-	mAdvanceArray( NULL ),
-	mDebugCallCount( 0 ){
+	mAdvanceArray( NULL ){
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAILuaObject )
@@ -1498,7 +1497,6 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 											 int hAlignment, int vAlignment, int wordbreak,
 											 bool autoFit, bool returnGlyphBounds, float lineSpacing, MOAILuaState& state){
 	UNUSED(autoFit);
-	++mDebugCallCount;
 	
 	// initialize library and face
 	this->AffirmFreeTypeFace();
