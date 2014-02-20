@@ -149,8 +149,6 @@ private:
 	//----------------------------------------------------------------//
 	double			MeasureFrameRate			();
 	void			OnGlobalsFinalize			();
-	void			OnGlobalsRestore			();
-	void			OnGlobalsRetire				();
 	double			StepSim						( double step, u32 multiplier );
 
 public:

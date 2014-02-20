@@ -66,8 +66,6 @@ private:
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
 	void					OnGlobalsFinalize		();
-	void					OnGlobalsRestore		();
-	void					OnGlobalsRetire			();
 	void					RegisterObject			( MOAILuaObject& object );
 
 public:
