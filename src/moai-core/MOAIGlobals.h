@@ -70,7 +70,6 @@ class MOAIGlobals {
 private:
 
 	friend class MOAIGlobalsMgr;
-	friend class MOAIGlobalClassFinalizer;
 
 	enum {
 		CHUNK_SIZE = 32,
