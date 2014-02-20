@@ -13,7 +13,7 @@ STRIP="xcrun -sdk iphoneos strip"
 
 # Usage
 if [ "$1" = "help" ]; then
-    echo "Usage:\n $0 [product_name] [src_dir] [output_directory]"
+    echo "Usage:\n $0 [product_name] [src_dir] [output_directory] [vfs_flags]"
     exit 0
 fi
 
@@ -33,6 +33,12 @@ if [ "x$3" != "x" ]; then
     DESTDIR="$3"
 else
     DESTDIR=$MOAI_ROOT/xcode/libmoai/luaJIT/ios
+fi
+
+if [ "x$4" != "x" ]; then
+    CFLAGS="$4"
+else
+    CFLAGS=-I$MOAI_ROOT/src -include $MOAI_ROOT/src/zl-vfs/zl_replace.h
 fi
 
 if [ -f "$DESTDIR"/$PRODUCT_NAME ]; then
@@ -55,7 +61,7 @@ rm "$DESTDIR"/*.a 2>/dev/null
 cd $SRCDIR
 
 CC_ARGS="IPHONEOS_DEPLOYMENT_TARGET='' xcrun -sdk macosx clang -m32 -arch i386"
-CFLAGS=""
+
 LUAJIT_LIB=libluajit.a
 
 crossCompile()
@@ -76,8 +82,8 @@ compile()
 {   
     
     #  make HOST_CC="$CC_ARGS" clean
-    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386" clean
-    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386" 
+    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CFLAGS="$CFLAGS" clean
+    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CFLAGS="$CFLAGS"
     if [ $? -eq 0 ]; then
         mv "$SRCDIR"/src/$LUAJIT_LIB "$DESTDIR"/libluajit-i386.a
     else
