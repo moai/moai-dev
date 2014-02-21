@@ -11,6 +11,10 @@
 
 extern JavaVM* jvm;
 
+bool 			MOAIAppAndroid::_pictureTakenFlag;
+pthread_mutex_t MOAIAppAndroid::_pictureTakenMutex;
+int MOAIAppAndroid::_code = -666;
+
 //================================================================//
 // lua
 //================================================================//
@@ -185,12 +189,19 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 int MOAIAppAndroid::_takePicture( lua_State* L ) {
 	ZLLog::Print("_takePicture");
     MOAILuaState state( L);
+//        MOAILuaRef& callback 		= this->mListeners[ PICTURE_TAKEN ];
+//        MOAIScopedLuaState state 	= callback.GetSelf();
+
 
     JNI_GET_ENV( jvm, env );
 
     jclass      t_class;
     jmethodID   t_mid;
     // jstring t_string;
+
+    if( _pictureTakenFlag != false ) {
+    	ZLLog::Print( "WARNING: MOAIAppAndroid::_pictureTakenFlag is TRUE before calling into java!" );
+    }
 
     t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );
 
@@ -201,33 +212,65 @@ int MOAIAppAndroid::_takePicture( lua_State* L ) {
         if( t_mid == NULL ) {
             ZLLog::Print( "XXX unable to find static java method %s", "takePicture");
         } else {
+        	bool done = false;
+
+
+//        	MutexLocker lock( _pictureTakenMutex );
         	ZLLog::Print( "before java call" );
+//        	AKUPause( true );
         	env->CallStaticVoidMethod( t_class, t_mid );
+        	ZLLog::Print( "after java call" );
+
+        	ZLLog::Print( "______code: %i", _code );
+
+//        	return 0;
+//
+//        	int foo = 0;
+//        	do {
+//        		lock.lock();
+//        			if( _pictureTakenFlag == true ) {
+//        				done = true;
+//        			}
+//        		lock.unlock();
+//        		ZLLog::Print( "zZzzzZZZzzzZZZzz" );
+//        		sleep(1);
+////        		usleep( 100 * 1000 ); // 100 ms microseconds
+//        	} while( !done && foo++ < 20 );
+//
+//        	ZLLog::Print( "... done" );
+//
+//        	jmethodID t_getResultCode_mid = env->GetStaticMethodID( t_class, "getResultCode", "()I" );
+//        	if( t_getResultCode_mid == NULL ) {
+//        		ZLLog::Print( "unable to find static java method %s", "getResultCode" );
+//        		return 0;
+//        	}
+//
+//        	jmethodID t_getResultPath = env->GetStaticMethodID( t_class, "getResultPath", "()Ljava/lang/String" );
+//        	if( t_getResultPath == NULL ) {
+//        		ZLLog::Print( "unable to find static java method %s","getResultPath" );
+//        		return 0;
+//        	}
+//
+//        	int j_code = env->CallStaticIntMethod( t_class, t_getResultCode_mid );
+//        	jstring j_path = (jstring)env->CallStaticObjectMethod( t_class, t_getResultPath );
+//        	JNI_GET_CSTRING( j_path, c_path );
+//
+//        	state.Push( j_code );
+//        	state.Push( c_path );
+//
+//        	state.DebugCall( 2, 0 );
+//
+//        	JNI_RELEASE_CSTRING( j_path, c_path );
+//
+//        	lock.lock();
+//        	_pictureTakenFlag = false;
+
         }
     }
 
     return 0;
 }
 
-int MOAIAppAndroid::_tralala( lua_State* L ) {
-
-	ZLLog::Print( "we have log output" );
-
-//    MOAILuaRef& callback 		= this->mListeners[ PICTURE_TAKEN ];
-//    MOAIScopedLuaState state 	= callback.GetSelf();
-//
-//    int code = 666;
-//    const char* str = "XXX";
-//
-//    if( callback ) {
-//    	state.Push( code );
-//    	state.Push( str );
-//
-//    	state.DebugCall( 2, 0 );
-//    }
-
-    return 0;
-}
 
 //================================================================//
 // MOAIAppAndroid
@@ -236,12 +279,15 @@ int MOAIAppAndroid::_tralala( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIAppAndroid::MOAIAppAndroid () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAILuaObject );
+
+	pthread_mutex_init( &_pictureTakenMutex, 0 );
+	_pictureTakenFlag = false;
 }
 
 //----------------------------------------------------------------//
 MOAIAppAndroid::~MOAIAppAndroid () {
-
+	pthread_mutex_destroy( &_pictureTakenMutex );
 }
 
 //----------------------------------------------------------------//
@@ -251,7 +297,6 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 	state.SetField ( -1, "PICTURE_TAKEN",			( u32 )PICTURE_TAKEN );
-	state.SetField ( -1, "TRALALA",					( u32 )TRALALA );
 
 	luaL_Reg regTable [] = {
 		{ "getUTCTime",				_getUTCTime },
@@ -260,7 +305,6 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",			_setListener },
 		{ "share",					_share },
         { "takePicture",            _takePicture },
-        { "tralala",            	_tralala },
 		{ NULL, NULL }
 	};
 
@@ -315,16 +359,29 @@ void MOAIAppAndroid::NotifyWillEndSession () {
 
 //----------------------------------------------------------------//
 void MOAIAppAndroid::NotifyPictureTaken( int code, cc8* path ) {
-	ZLLog::Print( "preparing values to be pushed back into lua vm" );
+	ZLLog::Print( "MOAIAppAndroid::NotifyPictureTaken" );
     MOAILuaRef& callback 		= this->mListeners[ PICTURE_TAKEN ];
     MOAIScopedLuaState state 	= callback.GetSelf();
     
-    if( callback ) {
-    	state.Push( code );
-    	state.Push( path );
+    _code = code;
 
-    	state.DebugCall( 2, 0 );
-    }
+//    if( callback ) {
+//    	state.Push( code );
+//    	state.Push( path );
+//
+//    	state.DebugCall( 2, 0 );
+//    }
+
+}
+
+void MOAIAppAndroid::NotifyPictureTaken() {
+	ZLLog::Print( "notifying ..." );
+
+	MutexLocker lock( _pictureTakenMutex );
+	if( _pictureTakenFlag == true ) {
+		ZLLog::Print( "WARNING: MOAIAppAndroid::NotifyPictureTaken(): _pictureTakenFlag is already true ..." );
+	}
+	_pictureTakenFlag = true;
 }
 
 //================================================================//
@@ -350,12 +407,24 @@ extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* e
 }
 
 
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUNotifyPictureTaken( JNIEnv* env, jclass obj, jint code, jstring jpath ) {
-	ZLLog::Print( "notifyictureTaknen called from java" );
+extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken__OLD( JNIEnv* env, jclass obj, jint code, jstring jpath ) {
+	ZLLog::Print( "AKUNotifyPictureTaken called from java" );
     JNI_GET_CSTRING( jpath, path );
     
     MOAIAppAndroid::Get().NotifyPictureTaken( code, path );
 
     JNI_RELEASE_CSTRING( jpath, path );
+}
+
+extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken( JNIEnv* env, jclass obj ) {
+	ZLLog::Print( "AKUNotifyPictureTaken called from java" );
+
+	MOAIAppAndroid::Get().NotifyPictureTaken();
+
+//    JNI_GET_CSTRING( jpath, path );
+//
+//    MOAIAppAndroid::Get().NotifyPictureTaken( code, path );
+//
+//    JNI_RELEASE_CSTRING( jpath, path );
 }
 

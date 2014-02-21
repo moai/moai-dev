@@ -6,25 +6,24 @@
 
 package com.ziplinegames.moai;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.UUID;
+
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings.Secure;
 import android.util.DisplayMetrics;
-
-import java.lang.reflect.Method;
-import java.lang.Runtime;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.Locale;
 
 //================================================================//
 // Moai
@@ -112,6 +111,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiTwitter",
+		"com.ziplinegames.moai.MoaiCamera",
 	};
 
 	private static Activity 				sActivity = null;
@@ -322,6 +322,7 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+		MoaiLog.d( "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onActivityResult", new Class < ? > [] { java.lang.Integer.TYPE, java.lang.Integer.TYPE, Intent.class }, new Object [] { new Integer ( requestCode ), new Integer ( resultCode ), data });
 		}
@@ -374,6 +375,7 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void pause ( boolean paused ) {
+		MoaiLog.d( "Moai.java::pause( " + paused + " )" );
 		synchronized ( sAkuLock ) {
 			AKUPause ( paused );
 		}
@@ -615,10 +617,5 @@ public class Moai {
 				builder.create ().show ();
 			}
 		});
-	}
-	private static String mPictureLocation = new String();
-	public static String takePicture() {
-		mPictureLocation = "this is #neuland";
-		return mPictureLocation;
-	}
+	}	
 }
