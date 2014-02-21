@@ -28,7 +28,7 @@ private:
 		SESSION_START,
 		SESSION_END,
 		BACK_BUTTON_PRESSED,
-		PICTURE_TAKEN,
+		EVENT_PICTURE_TAKEN,
 		TOTAL,
 	};
 
@@ -43,41 +43,10 @@ private:
 
 
 	// ## CAMERA SUPPORT
-	class MutexLocker {
-	public:
-		MutexLocker( pthread_mutex_t& mutex ) : _mutex(mutex) {
-			lock();
-		}
-		~MutexLocker() {
-			pthread_mutex_unlock( &_mutex );
-		}
-		void lock() {
-			if( !_locked ) {
-				pthread_mutex_lock( &_mutex );
-				_locked = true;
-			}
-		}
-		void unlock() {
-			if( !_locked ) {
-				pthread_mutex_unlock( &_mutex );
-				_locked = false;
-			}
-		}
-		bool isLocked() { return _locked; }
-	protected:
-	private:
-		pthread_mutex_t& _mutex;
-		bool _locked;
-		MutexLocker();
-		MutexLocker( const MutexLocker& src);
-		MutexLocker& operator=( const MutexLocker& src);
-	};
+	static int _takePicture		( lua_State* L );
+	static int _getPictureCode	( lua_State* L );
+	static int _getPicturePath	( lua_State* L );
 
-	static bool 			_pictureTakenFlag;
-	static pthread_mutex_t 	_pictureTakenMutex;
-	static int _code;
-
-	static int  _takePicture		( lua_State* L );
 	// ## /CAMERA SUPPORT
 
 public:
@@ -89,11 +58,14 @@ public:
 	bool	NotifyBackButtonPressed		();
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
-	void	NotifyPictureTaken			( int code, cc8* path );
+
+//	void	NotifyPictureTaken			( int code, cc8* path );
 	void	NotifyPictureTaken			();
+	void	PushPictureData( MOAILuaState& state );
+
 	void	RegisterLuaClass			( MOAILuaState& state );
 
-	void getCamDir();
+
 };
 
 #endif

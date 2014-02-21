@@ -22,10 +22,9 @@ public class MoaiCamera  {
 	// codes:
 	// -1: RESULT_OK
 	//  0: RESULT_CANCELED
-	private static int sResultCode = 0;
+	private static int sResultCode = 666;
 	private static String sResultPath = "";
 
-	public static AtomicBoolean spFlag = new AtomicBoolean( false );
 	
 	public static void onCreate( Activity activity ) {
 		MoaiLog.d(" MoaiCamera.java::onCreate ");
@@ -35,6 +34,7 @@ public class MoaiCamera  {
 	public static void onActivityResult( int requestCode, int resultCode, Intent data ) {
 		synchronized( Moai.sAkuLock ) {
 			MoaiLog.d( "MoaiCamera.java::onActivityResult - running on thread " + Thread.currentThread().getId() );
+			
 		    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 		    	sResultCode = resultCode;
 		        if (resultCode == Activity.RESULT_OK) {
@@ -54,9 +54,8 @@ public class MoaiCamera  {
 		    // tell jni that we are finished
 		    MoaiLog.d( "MoaiCamera.java:before notifying ..." );
 //		    AKUNotify
-		    AKUNotifyPictureTaken( resultCode, sResultPath );
+		    AKUNotifyPictureTaken();
 		    
-		    spFlag.getAndSet(true);
 		}
     }
 	
@@ -67,7 +66,6 @@ public class MoaiCamera  {
 	public static void takePicture() {
 //		synchronized( Moai.sAkuLock ) {
 		MoaiLog.d( "MoaiCamera.java::takePicture() - running on thread " + Thread.currentThread().getId() );
-		spFlag.getAndSet(false);
 //		http://stackoverflow.com/questions/12564112/android-camera-onactivityresult-intent-is-null-if-it-had-extras
 		sActivity.runOnUiThread( new Runnable() {
 			@Override
@@ -84,27 +82,17 @@ public class MoaiCamera  {
 //	    // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 //	   sActivity.startActivityForResult( intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE );
 //		}
-		int foo = 0;
-		while( spFlag.get() == false ) {
-			try{
-				Thread.sleep( 1000);
-				MoaiLog.d( "... waiting ... zzZZzzzZZZzzzZZZzz" );
-				if( foo > 20 ) {
-					spFlag.getAndSet(true);
-				}
-				foo++;
-			}
-			catch( Exception e ) {
-				MoaiLog.d( "caught exception while waiting: " + e.getMessage() );
-			}
-		}
 	}
 	
-	public static int getResultCode() {
+	public static int XXXfoo(){
 		return sResultCode;
 	}
 	
-	public static String getResultPath() {
+	public static int XXXgetResultCode() {
+		return sResultCode;
+	}
+	
+	public static String XXXgetResultPath() {
 		return sResultPath;
 	}
 	
