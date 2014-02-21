@@ -113,7 +113,6 @@ void onTimer ( ) {
 	double fSimStep = AKUGetSimStep ();
 	int timerInterval = ( int )( fSimStep * 1000.0 );
 	
-	AKUUpdate ();
 	AKUModulesUpdate ();
 	
 	
