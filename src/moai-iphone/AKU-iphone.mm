@@ -112,9 +112,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_PLAYHAVEN
 		//REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )
 	#endif
-		
+	#if MOAI_WITH_HTTP_CLIENT	
 	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
 	MOAIUrlMgrNSURL::Affirm ();
+	#endif
 		
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
