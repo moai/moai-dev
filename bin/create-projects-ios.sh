@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd `dirname $0`/..
 
 APP_NAME='Moai App'
 APP_ID='com.getmoai.moaiapp'

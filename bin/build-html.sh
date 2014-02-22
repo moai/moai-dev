@@ -4,7 +4,7 @@
 # Build script for Html5 Host
 # Usage: Run from Moai SDK's root directory:
 #
-# ./bin/build-html
+# ./bin/build-html.sh
 #
 # You can change the CMake options using -DOPTION=VALUE
 # Check moai-dev/cmake/CMakeLists.txt for all the available options.

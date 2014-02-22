@@ -30,3 +30,6 @@ tmp
 test/xml-results
 .idea
 cmake/projects/
+
+bin/api-reference-parser/vendor
+docs/api-reference

@@ -35,7 +35,7 @@ fi
 rm -rf docs/api-reference
 cd `dirname $0`/..
 cd bin/api-reference-parser
-bundle
+bundle install --path vendor/bundle
 ruby parse.rb ../../src/ ../../docs/api-reference/
 if [[ $? -ne 0 ]]; then
     exit 1
