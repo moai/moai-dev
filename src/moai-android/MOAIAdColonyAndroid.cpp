@@ -155,7 +155,7 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	playVideo
 	@text	Play an AdColony video ad.
-	
+ 
 	@in 	string zone				The zone from which to play a video ad.
 	@opt	boolean prompt			Determines whether the user is asked whether they want to play a video ad or not. Default is true.
 	@opt	boolean confirm			Determines whether the user is presented with a confirmation dialog after video ad playback completes. Default is true.

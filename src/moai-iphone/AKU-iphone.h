@@ -14,6 +14,8 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+#import <AKU-chartboost.h>
+
 //#define DISABLE_TAPJOY
 
 enum ConnectionType {

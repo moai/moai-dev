@@ -270,6 +270,18 @@ void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
+
+	MOAISim::Get ().SetShowCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
+
+	MOAISim::Get ().SetHideCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
 void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func ) {
 
 	MOAISim::Get ().SetOpenWindowFunc ( func );

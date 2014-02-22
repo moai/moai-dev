@@ -17,6 +17,8 @@ enum {
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
+typedef void ( *AKUShowCursorFunc )				();
+typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
 
@@ -41,6 +43,8 @@ AKU_API void			AKUUpdate						();
 // callback management
 AKU_API void			AKUSetFunc_EnterFullscreenMode	( AKUEnterFullscreenModeFunc func );
 AKU_API void			AKUSetFunc_ExitFullscreenMode	( AKUExitFullscreenModeFunc func );
+AKU_API void			AKUSetFunc_ShowCursor			( AKUShowCursorFunc func );
+AKU_API void			AKUSetFunc_HideCursor			( AKUHideCursorFunc func );
 AKU_API void			AKUSetFunc_OpenWindow			( AKUOpenWindowFunc func );
 AKU_API void			AKUSetFunc_SetSimStep			( AKUSetSimStepFunc func );
 

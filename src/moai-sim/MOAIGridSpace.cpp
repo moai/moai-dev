@@ -42,9 +42,9 @@ MOAICellCoord::~MOAICellCoord () {
 	@text	Returns the coordinate of a cell given an address.
 
 	@in		MOAIGridSpace self
-	@in		number xTile
-	@in		number yTile
-	@out	number cellAddr
+	@in		number cellAddr
+	@out	number xTile
+	@out	number yTile
 */
 int MOAIGridSpace::_cellAddrToCoord	( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UN" )

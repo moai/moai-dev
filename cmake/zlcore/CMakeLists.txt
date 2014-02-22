@@ -41,6 +41,12 @@ endif (BUILD_LINUX OR BUILD_WINDOWS OR BUILD_OSX)
 
 target_link_libraries ( zlcore zlvfs zlib )
 
+if ( BUILD_LINUX )
+  find_package ( OpenGL REQUIRED )
+endif ( BUILD_LINUX  )
+
+target_link_libraries( zlcore ${OPENGL_LIBRARIES})
+
 if (BUILD_WINDOWS)
   target_link_libraries ( zlcore iphlpapi) #GetAdaptersAddresses
 endif (BUILD_WINDOWS)

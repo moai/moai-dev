@@ -474,6 +474,10 @@ MOAIGfxDevice.extend (
 -- Cross Platform
 --============================================================--
 
+if MOAISim.forceGC then
+    MOAISim.forceGarbageCollection = MOAISim.forceGC
+end
+
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
 MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS

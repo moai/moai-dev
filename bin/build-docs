@@ -33,6 +33,7 @@ if [ -z $MOAI ]; then
 fi
 
 rm -rf docs/api-reference
+cd `dirname $0`/..
 cd bin/api-reference-parser
 bundle
 ruby parse.rb ../../src/ ../../docs/api-reference/

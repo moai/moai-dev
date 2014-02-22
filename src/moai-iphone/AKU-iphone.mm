@@ -112,6 +112,11 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_PLAYHAVEN
 		//REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )
 	#endif
+	
+	#ifndef DISABLE_CHARTBOOST
+		AKUChartBoostInit ();
+	#endif
+	
 	#if MOAI_WITH_HTTP_CLIENT	
 	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
 	MOAIUrlMgrNSURL::Affirm ();

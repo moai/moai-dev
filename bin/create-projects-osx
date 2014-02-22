@@ -2,6 +2,7 @@
 
 
 #OSX
+cd `dirname $0`/..
 cd cmake
 mkdir projects
 cd projects

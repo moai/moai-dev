@@ -227,8 +227,6 @@ static void _onTimer ( int millisec ) {
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 
 
-	AKUUpdate ();
-
 	AKUModulesUpdate ();
 
 	glutPostRedisplay ();
@@ -261,6 +259,16 @@ void _AKUExitFullscreenModeFunc () {
 		glutPositionWindow ( sWinX, sWinY );
 		glutReshapeWindow ( sWinWidth, sWinHeight );
 	}
+}
+
+//----------------------------------------------------------------//
+void _AKUShowCursor () {
+	glutSetCursor( GLUT_CURSOR_INHERIT ) ;
+}
+
+//----------------------------------------------------------------//
+void _AKUHideCursor () {
+	glutSetCursor( GLUT_CURSOR_NONE ) ;
 }
 
 //----------------------------------------------------------------//
@@ -395,6 +403,8 @@ void GlutRefreshContext (int argc, char** argv) {
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
+	AKUSetFunc_ShowCursor ( _AKUShowCursor );
+	AKUSetFunc_HideCursor ( _AKUHideCursor );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
    

@@ -175,7 +175,6 @@ void MainLoop () {
 			}
 		}
 		
-		AKUUpdate ();
 		AKUModulesUpdate ();
 		
 		AKURender ();

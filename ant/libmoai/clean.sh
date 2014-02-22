@@ -6,10 +6,11 @@
 # http://getmoai.com
 #================================================================#
 
-	set -e
+set -e
+cd `dirname $0`/
 
-	echo "Cleaning..."
+echo "Cleaning..."
 
-	rm -f jni/src/packaged-moai.cpp
-	rm -rf `find . -type d -name libs`
-	rm -rf `find . -type d -name obj`
+rm -f jni/src/packaged-moai.cpp
+rm -rf `find . -type d -name libs`
+rm -rf `find . -type d -name obj`

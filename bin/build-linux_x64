@@ -10,6 +10,7 @@
 # Check moai-dev/cmake/CMakeLists.txt for all the available options.
 #
 
+cd `dirname $0`/..
 cd cmake
 rm -rf build
 mkdir build
