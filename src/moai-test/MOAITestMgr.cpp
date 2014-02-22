@@ -90,7 +90,7 @@ int MOAITestMgr::_setFilter ( lua_State* L ) {
 int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	MOAITestMgr::Get ().mStagingFunc.SetStrongRef ( state, 1 );
+	MOAITestMgr::Get ().mStagingFunc.SetRef ( state, 1 );
 	return 0;
 }
 
@@ -99,7 +99,7 @@ int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
 int MOAITestMgr::_setTestFunc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	MOAITestMgr::Get ().mTestFunc.SetStrongRef ( state, 1 );
+	MOAITestMgr::Get ().mTestFunc.SetRef ( state, 1 );
 	return 0;
 }
 
@@ -392,7 +392,6 @@ void MOAITestMgr::SetFilter ( cc8* filter, cc8* next, ... ) {
 		va_list args;
 		va_start ( args, next );
 		
-		bool more = true;
 		while ( next ) {
 			next = va_arg ( args, cc8* );
 			this->ExtendFilter ( next );

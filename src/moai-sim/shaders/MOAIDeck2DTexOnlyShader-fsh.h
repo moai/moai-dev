@@ -6,8 +6,8 @@
 
 #define SHADER(str) #str
 
-static cc8* _deck2DTexOnlyShaderFSH = SHADER (
-
+static cc8* _deck2DTexOnlyShaderFSH =  SHADER (
+    
 	varying MEDP vec2 uvVarying;
 	
 	uniform sampler2D sampler;

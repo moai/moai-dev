@@ -721,7 +721,7 @@ int MOAICpBody::_worldToLocal ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAICpBody::AttachShape ( MOAICpShape& shape ) {
 
-	shape.Retain ();
+	this->LuaRetain ( &shape );
 	shape.mShape->body = this->mBody;
 	this->mShapes.PushBack ( shape.mLinkInBody );
 }
@@ -736,7 +736,7 @@ void MOAICpBody::ClearShapes () {
 		shapeIt = shapeIt->Next ();
 		
 		shape->Remove ();
-		shape->Release ();
+		this->LuaRelease ( shape );
 	}
 	this->mShapes.Clear ();
 }

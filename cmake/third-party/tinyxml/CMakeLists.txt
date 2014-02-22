@@ -1,27 +1,21 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( tinyxml )
 
-if ( MOAI_TINYXML )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/tinyxml/" )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/tinyxml/" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTIXML_USE_STL"  )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_TINYXML=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_TINYXML=1" CACHE INTERNAL "doc string" )
+  set ( TINYXML_INCLUDES "${MOAI_ROOT}/3rdparty/tinyxml/" )
 
-  set ( TINYXML_INCLUDES "../../3rdparty/tinyxml/" CACHE INTERNAL "doc string" )
-
-  set ( TINYXML_SOURCES 
+  set ( TINYXML_SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/tinystr.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxml.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlerror.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tinyxmlparser.cpp
 
-  CACHE INTERNAL "doc string" )
 
-else ( MOAI_TINYXML )
+   )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_TINYXML=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_TINYXML=0" CACHE INTERNAL "doc string" )
-
-endif ( MOAI_TINYXML )
+ add_library (tinyxml STATIC ${TINYXML_SOURCES} )
+ target_include_directories ( tinyxml PUBLIC ${TINYXML_INCLUDES})

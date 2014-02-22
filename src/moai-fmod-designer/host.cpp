@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <moai-sim/host.h>
+
 #include <moai-fmod-designer/host.h>
 #include <moai-fmod-designer/MOAIFmodEventMgr.h>
 #include <moai-fmod-designer/MOAIFmodEventInstance.h>
@@ -16,9 +18,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUFmodDesignerInit () {
+void AKUFmodDesignerAppFinalize () {
 
-    MOAIFmodEventMgr::Affirm ();
+	FMODDesigner::tEventManager.Shutdown ();
+}
+
+//----------------------------------------------------------------//
+void AKUFmodDesignerAppInitialize () {
+}
+
+//----------------------------------------------------------------//
+void AKUFmodDesignerContextInitialize () {
+
+	MOAIFmodEventMgr::Affirm ();
 
     REGISTER_LUA_CLASS ( MOAIFmodEventMgr )    
     REGISTER_LUA_CLASS ( MOAIFmodEventInstance )
@@ -26,24 +38,7 @@ void AKUFmodDesignerInit () {
 }
 
 //----------------------------------------------------------------//
-void AKUFmodDesignerMuteSystem ( bool mute ) {
-    FMODDesigner::tEventManager.MuteAllEvents( mute );
-}
+void AKUFmodDesignerUpdate () {
 
-//----------------------------------------------------------------//
-void AKUFmodDesignerRelease () {    
-    FMODDesigner::tEventManager.Shutdown();
-}
-
-//----------------------------------------------------------------//
-void AKUFmodDesignerRestoreSession () {
-#ifdef MOAI_OS_IPHONE
-    FMOD_IPhone_RestoreAudioSession ();
-#endif
-}
-
-//----------------------------------------------------------------//
-void AKUFmodDesignerUpdate ( float fDeltaTime ) {
-
-    FMODDesigner::tEventManager.Update( fDeltaTime );
+    FMODDesigner::tEventManager.Update (( float )AKUGetSimStep ());
 }

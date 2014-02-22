@@ -205,7 +205,7 @@ int MOAIGameCenterIOS::_setGetScoresCallback ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	MOAIGameCenterIOS::Get ().mGetScoresCallback.SetStrongRef ( state, 1 );
+	MOAIGameCenterIOS::Get ().mGetScoresCallback.SetRef ( state, 1 );
 		
 	return 0;
 }

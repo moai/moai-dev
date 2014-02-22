@@ -35,6 +35,7 @@ public:
 	//----------------------------------------------------------------//
 	void				EnqueueButtonEvent			( u8 deviceID, u8 sensorID, bool down );
 	void				EnqueueCompassEvent			( u8 deviceID, u8 sensorID, float heading );
+	void				EnqueueJoystickEvent			( u8 deviceID, u8 sensorID, float x, float y );
 	void				EnqueueKeyboardEvent		( u8 deviceID, u8 sensorID, u32 keyID, bool down );
 	void				EnqueueLevelEvent			( u8 deviceID, u8 sensorID, float x, float y, float z );
 	void				EnqueueLocationEvent		( u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
@@ -51,6 +52,7 @@ public:
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name );
 	void				SetDeviceActive				( u8 deviceID, bool active );
+	void				SetDeviceExtendedName		( u8 deviceID, cc8* nameExtended );
 	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
 	void				Update						();
 };

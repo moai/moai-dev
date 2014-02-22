@@ -40,7 +40,7 @@ public:
 	
 	UIInterfaceOrientation  	mInitialOrientation;
 	UIInterfaceOrientation  	mLastOrientation;
-	MOAILuaRef					mListeners [ TOTAL ];
+	MOAILuaStrongRef			mListeners [ TOTAL ];
 	MPMoviePlayerController * 	mMoviePlayer;
 
 			MOAIMoviePlayerIOS	();

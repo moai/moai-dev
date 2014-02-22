@@ -201,8 +201,8 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 		MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
 		MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
 	
-		bodyA->Release ();
-		bodyB->Release ();
+		this->LuaRelease ( bodyA );
+		this->LuaRelease ( bodyB );
 	}
 	
 	this->Destroy ();

@@ -25,7 +25,7 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 	u32 height				= state.GetValue < u32 >( 3, 0 );
 	
 	// TODO: fix me
-	#ifdef MOAI_OS_ANDROID
+	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
 		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
 	#else
 		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );

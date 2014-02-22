@@ -10,7 +10,8 @@
 
 //----------------------------------------------------------------//
 void AKUAdColonyInit () {
-	
+	#ifndef DISABLE_ADCOLONY
 	MOAIAdColonyIOS::Affirm();
 	REGISTER_LUA_CLASS ( MOAIAdColonyIOS )
+	#endif
 }

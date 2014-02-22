@@ -122,7 +122,7 @@ int MOAIMoviePlayerAndroid::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAIMoviePlayerAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIMoviePlayerAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

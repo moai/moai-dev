@@ -289,7 +289,7 @@ int MOAIBillingAndroid::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAIBillingAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIBillingAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

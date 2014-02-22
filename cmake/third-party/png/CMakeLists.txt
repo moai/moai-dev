@@ -1,14 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( png )
 
-if ( MOAI_PNG )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBPNG=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBPNG=1" CACHE INTERNAL "doc string" )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/lpng140/" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/lpng140/" )
 
-  set ( PNG_INCLUDES "../../3rdparty/lpng140/" CACHE INTERNAL "doc string" )
+  set ( PNG_INCLUDES "${MOAI_ROOT}/3rdparty/lpng140/" )
 
   set ( PNG_SOURCES 
 
@@ -28,11 +25,9 @@ if ( MOAI_PNG )
     ${CMAKE_CURRENT_SOURCE_DIR}/pngwtran.c
     ${CMAKE_CURRENT_SOURCE_DIR}/pngwutil.c
 
-  CACHE INTERNAL "doc string" )
+ )
 
-else ( MOAI_PNG )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBPNG=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBPNG=0" CACHE INTERNAL "doc string" )
-
-endif ( MOAI_PNG )
+include_directories (${PNG_INCLUDES})
+add_library(png STATIC ${PNG_SOURCES})
+target_link_libraries ( png zlib )
+target_include_directories(png PUBLIC ${PNG_INCLUDES})

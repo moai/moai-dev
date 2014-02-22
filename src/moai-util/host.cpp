@@ -20,36 +20,6 @@
 	#include <openssl/ssl.h>
 #endif
 
-//================================================================//
-// aku-util
-//================================================================//
-
-static bool sIsInitialized = false;
-
-//----------------------------------------------------------------//
-void AKUFinalizeUtil () {
-	
-	if ( !sIsInitialized ) return;
-	
-	#if MOAI_WITH_OPENSSL
-	
-		#ifndef OPENSSL_NO_ENGINE
-			ENGINE_cleanup ();
-		#endif
-		
-		CONF_modules_unload ( 1 );
-		
-		#ifndef OPENSSL_NO_ERR
-			ERR_free_strings ();
-		#endif
-		
-		EVP_cleanup ();
-		CRYPTO_cleanup_all_ex_data ();
-	#endif
-	
-	sIsInitialized = false;
-}
-
 #ifdef MOAI_OS_WINDOWS
 	static HANDLE* ssl_mutexes;
 
@@ -71,29 +41,52 @@ void AKUFinalizeUtil () {
 	}
 #endif // MOAI_OS_WINDOWS
 
+//================================================================//
+// aku-util
+//================================================================//
+
 //----------------------------------------------------------------//
-void AKUInitializeUtil () {
+void AKUUtilAppFinalize () {
 
-	if ( !sIsInitialized ) {
-		
-		#if MOAI_WITH_OPENSSL
-			SSL_library_init ();
-			SSL_load_error_strings ();
-			
-			#ifdef MOAI_OS_WINDOWS
-				// Initialize locking callbacks, needed for thread safety.
-				// http://www.openssl.org/support/faq.html#PROG1
-				ssl_mutexes = ( HANDLE* ) malloc ( sizeof ( HANDLE ) * CRYPTO_num_locks());
-			
-				CRYPTO_set_locking_callback ( &_locking_function );
-				CRYPTO_set_id_callback ( &_ssl_id_callback );
-			#endif
-		#endif
+	#if MOAI_WITH_OPENSSL
 	
-		sIsInitialized = true;
-	}
+		#ifndef OPENSSL_NO_ENGINE
+			ENGINE_cleanup ();
+		#endif
+		
+		CONF_modules_unload ( 1 );
+		
+		#ifndef OPENSSL_NO_ERR
+			ERR_free_strings ();
+		#endif
+		
+		EVP_cleanup ();
+		CRYPTO_cleanup_all_ex_data ();
+	#endif
+}
 
-    MOAIMainThreadTaskSubscriber::Affirm ();
+//----------------------------------------------------------------//
+void AKUUtilAppInitialize () {
+
+	#if MOAI_WITH_OPENSSL
+		SSL_library_init ();
+		SSL_load_error_strings ();
+		
+		#ifdef MOAI_OS_WINDOWS
+			// Initialize locking callbacks, needed for thread safety.
+			// http://www.openssl.org/support/faq.html#PROG1
+			ssl_mutexes = ( HANDLE* ) malloc ( sizeof ( HANDLE ) * CRYPTO_num_locks());
+		
+			CRYPTO_set_locking_callback ( &_locking_function );
+			CRYPTO_set_id_callback ( &_ssl_id_callback );
+		#endif
+	#endif
+}
+
+//----------------------------------------------------------------//
+void AKUUtilContextInitialize () {
+
+	MOAIMainThreadTaskSubscriber::Affirm ();
 	
 	MOAIMath::Affirm ();
 	

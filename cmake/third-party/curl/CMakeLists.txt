@@ -2,21 +2,67 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( curl )
 
-if ( MOAI_CURL )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
+  
+  if ( BUILD_ANDROID OR BUILD_IOS )
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_ARES" )
+    set ( USE_ARES true )
+  endif (BUILD_ANDROID OR BUILD_IOS)
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/curl-7.19.7/lib" )
+  if ( MOAI_OPENSSL )
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DUSE_SSLEAY -DUSE_OPENSSL ")
+  endif ( MOAI_OPENSSL )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1" CACHE INTERNAL "doc string")
+
+  
+  if (BUILD_LINUX)
+      set ( CURL_INCLUDES 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
+        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
+	     	"${CMAKE_CURRENT_SOURCE_DIR}"
+       )
+  endif (BUILD_LINUX)
 
 
-  set ( CURL_INCLUDES 
-    "../../../3rdparty/curl-7.19.7/include/" 
-    "${CMAKE_BINARY_DIR}/../third-party/curl/"
-  CACHE INTERNAL "doc string" )
+  if (BUILD_WINDOWS)
+      set ( CURL_INCLUDES 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
+        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
+      )
+  endif (BUILD_WINDOWS)
+  
+  if (BUILD_OSX)
+        set ( CURL_INCLUDES
+          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
+        )
+    endif (BUILD_OSX)
 
+  if (BUILD_HTML)
+        set ( CURL_INCLUDES
+          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/"
+        )
+    endif (BUILD_HTML)
+
+
+  if (BUILD_ANDROID)
+    set ( CURL_INCLUDES 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
+       )
+  endif (BUILD_ANDROID)
+
+  if (BUILD_IOS)
+    set ( CURL_INCLUDES 
+        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
+       )
+  endif (BUILD_IOS)
+
+
+
+
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
   set ( CURL_SOURCES 
-    
+   
     #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
     ${CMAKE_CURRENT_SOURCE_DIR}/base64.c
     ${CMAKE_CURRENT_SOURCE_DIR}/connect.c
@@ -93,22 +139,21 @@ if ( MOAI_CURL )
     ${CMAKE_CURRENT_SOURCE_DIR}/url.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version.c
 
-  CACHE INTERNAL "doc string" )
-
-  include_directories (
-    ${CURL_INCLUDES}
-    )
+   )
 
 
-  add_library( curl STATIC 
-    ${CURL_SOURCES}
-  )
+ 
+  add_library(curl STATIC ${CURL_SOURCES})
+  target_include_directories (curl PUBLIC ${CURL_INCLUDES})
 
-  target_link_libraries( curl ssl crypto )
+  if (USE_ARES)  
+    target_link_libraries( curl cares )
+  endif (USE_ARES)
 
-else ( MOAI_CURL )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
-
-endif ( MOAI_CURL )
+  if (MOAI_OPENSSL)
+     target_link_libraries( curl ssl )
+  endif (MOAI_OPENSSL)
+ 
+  if (BUILD_WINDOWS)
+    target_link_libraries( curl ws2_32 )
+  endif (BUILD_WINDOWS)

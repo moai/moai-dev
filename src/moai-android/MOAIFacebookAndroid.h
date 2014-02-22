@@ -63,7 +63,7 @@ public:
         DIALOG_RESULT_ERROR,
 	};
 
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 
 			MOAIFacebookAndroid		();
 			~MOAIFacebookAndroid	();

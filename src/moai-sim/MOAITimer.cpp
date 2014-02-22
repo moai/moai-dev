@@ -11,6 +11,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getSpeed
+	@text	Return the playback speed.
+
+	@in		MOAITimer self
+	@out	number speed
+*/
+int MOAITimer::_getSpeed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
+
+	state.Push ( self->mSpeed );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTime
 	@text	Return the current time.
 
@@ -523,6 +538,7 @@ void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getSpeed",			_getSpeed },
 		{ "getTime",			_getTime },
 		{ "getTimesExecuted",	_getTimesExecuted },
 		{ "setCurve",			_setCurve },

@@ -40,11 +40,51 @@ public:
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
 typedef STLMap < AKUContextID, AKUContext* > ContextMap;
 
-static bool				sIsInitialized = false;
 static ContextMap*		sContextMap = 0;
 static AKUContextID		sContextIDCounter = 0;
 static AKUContextID		sContextID = 0;
 static AKUContext*		sContext = 0;
+
+//----------------------------------------------------------------//
+void AKUAppFinalize () {
+
+	if ( sContextMap ) {
+
+		ContextMapIt contextMapIt = sContextMap->begin ();
+		for ( ; contextMapIt != sContextMap->end (); ++contextMapIt ) {
+			AKUContext* context = contextMapIt->second;
+			delete context;
+		}
+		delete sContextMap;
+		sContextMap = 0;
+	}
+	
+	zl_cleanup ();
+}
+
+//----------------------------------------------------------------//
+void AKUAppInitialize () {
+		
+	// TODO: this should be part of the unit tests
+	// make sure our fixed size typedefs are what we think
+	// they are on the current platform/compiler
+	assert ( sizeof ( cc8 )	== 1 );
+
+	assert ( sizeof ( u8 )	== 1 );
+	assert ( sizeof ( u16 )	== 2 );
+	assert ( sizeof ( u32 )	== 4 );
+	assert ( sizeof ( u64 )	== 8 );
+	
+	assert ( sizeof ( s8 )	== 1 );
+	assert ( sizeof ( s16 )	== 2 );
+	assert ( sizeof ( s32 )	== 4 );
+	assert ( sizeof ( s64 )	== 8 );
+	
+	srand (( u32 )time ( 0 ));
+	zl_init ();
+	
+	sContextMap = new ContextMap;
+}
 
 //----------------------------------------------------------------//
 void AKUClearMemPool () {
@@ -59,32 +99,6 @@ void AKUClearMemPool () {
 
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
-	
-	if ( !sIsInitialized ) {
-		
-		// TODO: this should be part of the unit tests
-		// make sure our fixed size typedefs are what we think
-		// they are on the current platform/compiler
-		assert ( sizeof ( cc8 )	== 1 );
-
-		assert ( sizeof ( u8 )	== 1 );
-		assert ( sizeof ( u16 )	== 2 );
-		assert ( sizeof ( u32 )	== 4 );
-		assert ( sizeof ( u64 )	== 8 );
-		
-		assert ( sizeof ( s8 )	== 1 );
-		assert ( sizeof ( s16 )	== 2 );
-		assert ( sizeof ( s32 )	== 4 );
-		assert ( sizeof ( s64 )	== 8 );
-		
-		srand (( u32 )time ( 0 ));
-		zl_init ();
-		
-		
-		sContextMap = new ContextMap;
-		//atexit ( _cleanup );
-		sIsInitialized = true;
-	}
 
 	sContext = new AKUContext;
 	
@@ -98,10 +112,11 @@ AKUContextID AKUCreateContext () {
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
-	luaRuntime.LoadLibs ( "moai" );
+	luaRuntime.LoadLibs ();
 	
 	MOAILogMessages::RegisterDefaultLogMessages ();
 	
+	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAISerializer )
@@ -119,27 +134,6 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 	delete sContext;
 	
 	AKUSetContext ( 0 );
-}
-
-//----------------------------------------------------------------//
-void AKUFinalize () {
-
-	if ( !sIsInitialized ) return;
-
-	if ( sContextMap ) {
-
-		ContextMapIt contextMapIt = sContextMap->begin ();
-		for ( ; contextMapIt != sContextMap->end (); ++contextMapIt ) {
-			AKUContext* context = contextMapIt->second;
-			delete context;
-		}
-		
-		delete sContextMap;
-		sContextMap = 0;
-	}
-	
-	zl_cleanup ();
-	sIsInitialized = false;
 }
 
 //----------------------------------------------------------------//

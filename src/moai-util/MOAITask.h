@@ -22,8 +22,8 @@ private:
 	u32						mPriority;
 	MOAITaskQueue*			mQueue;
 	MOAITaskSubscriber*		mSubscriber;
-	MOAILuaLocal			mOnFinish;
-	MOAILuaRef				mLatch;
+	MOAILuaMemberRef			mOnFinish;
+	MOAILuaStrongRef		mLatch;
 
 	ZLLeanLink < MOAITask* >	mLink;
 

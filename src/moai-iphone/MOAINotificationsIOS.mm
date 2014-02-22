@@ -101,7 +101,7 @@ int MOAINotificationsIOS::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAINotificationsIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAINotificationsIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;

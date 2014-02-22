@@ -99,9 +99,9 @@ int MOAIParser::_loadString ( lua_State* L ) {
 int MOAIParser::_setCallbacks ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "U" )
 	
-	self->SetLocal ( state, 2, self->mOnStartNonterminal );
-	self->SetLocal ( state, 3, self->mOnEndNonterminal );
-	self->SetLocal ( state, 4, self->mOnTerminal );
+	self->mOnStartNonterminal.SetRef ( *self, state, 2 );
+	self->mOnEndNonterminal.SetRef ( *self, state, 3 );
+	self->mOnTerminal.SetRef ( *self, state, 4 );
 	
 	return 0;
 }
@@ -143,40 +143,41 @@ MOAIParser::~MOAIParser () {
 //----------------------------------------------------------------//
 void MOAIParser::OnEndNonterminal ( ZLSyntaxNode* node ) {
 
-	if ( !this->mOnEndNonterminal ) return;
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLocal ( state, this->mOnEndNonterminal );
-	
-	state.Push ( node->GetID () );
-	state.DebugCall ( 1, 0 );
+	if ( this->mOnEndNonterminal ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOnEndNonterminal.PushRef ( state )) {
+			state.Push ( node->GetID ());
+			state.DebugCall ( 1, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIParser::OnStartNonterminal ( ZLSyntaxNode* node ) {
 
-	if ( !this->mOnStartNonterminal ) return;
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLocal ( state, this->mOnStartNonterminal );
-	
-	state.Push ( node->GetID ());
-	state.Push ( node->GetLine ());
-	state.Push ( node->GetName ());
-	
-	state.DebugCall ( 3, 0 );
+	if ( this->mOnStartNonterminal ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOnStartNonterminal.PushRef ( state )) {
+			state.Push ( node->GetID ());
+			state.Push ( node->GetLine ());
+			state.Push ( node->GetName ());
+			state.DebugCall ( 3, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIParser::OnTerminal ( ZLSyntaxNode* node ) {
 
-	if ( !this->mOnTerminal ) return;
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLocal ( state, this->mOnTerminal );
-	
-	state.Push ( node->GetID ());
-	state.Push ( node->GetLine ());
-	state.Push ( node->GetText ());
-	
-	state.DebugCall ( 3, 0 );
+	if ( this->mOnTerminal ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOnTerminal.PushRef ( state )) {
+			state.Push ( node->GetID ());
+			state.Push ( node->GetLine ());
+			state.Push ( node->GetText ());
+			state.DebugCall ( 3, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//

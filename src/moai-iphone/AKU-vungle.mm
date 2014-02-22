@@ -11,6 +11,8 @@
 //----------------------------------------------------------------//
 void AKUVungleInit () {
 	
+	#ifndef DISABLE_VUNGLE
 	MOAIVungleIOS::Affirm();
 	REGISTER_LUA_CLASS ( MOAIVungleIOS );
+	#endif
 }

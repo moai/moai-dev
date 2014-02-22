@@ -30,7 +30,7 @@ public:
 		TOTAL
 	};
 
-	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaStrongRef		mListeners [ TOTAL ];
 	
 			MOAITstoreWallAndroid	();
 			~MOAITstoreWallAndroid	();

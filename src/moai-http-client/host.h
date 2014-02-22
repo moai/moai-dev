@@ -9,7 +9,8 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFinalizeHttpClient		();
-AKU_API void	AKUInitializeHttpClient		();
+AKU_API void	AKUHttpClientAppFinalize			();
+AKU_API void	AKUHttpClientAppInitialize			();
+AKU_API void	AKUHttpClientContextInitialize		();
 
 #endif

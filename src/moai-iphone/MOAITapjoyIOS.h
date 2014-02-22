@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h> 
 #import <moai-core/headers.h>
 
-#import <Components/TJCVideoAds/TJCVideoAdProtocol.h>
+#import <Tapjoy/Tapjoy.h>
 
 @class MOAITapjoyIOSVideoAdDelegate;
 

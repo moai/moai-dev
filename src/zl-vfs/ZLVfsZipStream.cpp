@@ -41,7 +41,14 @@ void ZLVfsZipStream::AffirmBlock () {
 	}
 	else {
 		fseek ( this->mFile, this->mBaseAddr + block->mBase, SEEK_SET );
-		block->mSize = fread ( block->mCache, 1, ZIP_STREAM_BLOCK_SIZE, this->mFile );
+		// Should hopefully never happen, except maybe the edge case?
+		if (block->mBase >= mEntry->mUncompressedSize) {
+			block->mSize = 0;
+			return;
+		}
+		const size_t available = mEntry->mUncompressedSize - block->mBase;
+		const size_t request = min<size_t>(available, ZIP_STREAM_BLOCK_SIZE);
+		block->mSize = fread ( block->mCache, 1, request, this->mFile );
 	}
 }
 

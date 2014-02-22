@@ -69,7 +69,7 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 	if ( !shader ) {
 
 		shader = new MOAIShader ();
-		shader->Retain ();
+		this->LuaRetain ( shader );
 		
 		switch ( shaderID ) {
 			
@@ -139,7 +139,7 @@ MOAIShaderMgr::~MOAIShaderMgr () {
 
 	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
 		if ( this->mShaders [ i ]) {
-			this->mShaders [ i ]->Release ();
+			this->LuaRelease ( this->mShaders [ i ]);
 		}
 	}
 }

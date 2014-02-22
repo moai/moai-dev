@@ -4,14 +4,14 @@
 #include "pch.h"
 
 #include <moai-core/MOAISerializer.h>
+#include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
-
 #include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAIDeserializer.h>
+#include <moai-core/MOAILuaClass-impl.h>
 
 //================================================================//
 // MOAIDeserializer
@@ -111,8 +111,6 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 	
 	// call the chunk
 	if ( state.DebugCall ( 1, 0 )) return LUA_ERROR;
-	
-	lua_gc ( state, LUA_GCCOLLECT, 0 );
 	
 	// done!
 	return SUCCESS;

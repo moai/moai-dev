@@ -56,6 +56,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getExtendedName",	_getExtendedName },
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
@@ -84,6 +85,22 @@ void MOAIInputDevice::Reset () {
 			sensor->Reset ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+int MOAIInputDevice::_getExtendedName( lua_State* L )
+{
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+
+		lua_pushstring(state, self->mNameExtended.c_str());
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
+{
+	this->mNameExtended = nameExtended;
 }
 
 //----------------------------------------------------------------//

@@ -7,12 +7,12 @@
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
-#include <moai-core/MOAILuaRuntime.h>
+#include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaSharedPtr.h>
-
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaObject-impl.h>
+#include <moai-core/MOAILuaState.h>
+#include <moai-core/MOAIScopedLuaState.h>
+#include <moai-core/MOAILuaRuntime.h>
 
 //================================================================//
 // MOAISerializerObjectEntry
@@ -20,9 +20,9 @@
 class MOAISerializerObjectEntry {
 public:
 
-	MOAILuaObject*	mObject;
-	MOAILuaRef		mLuaRef;
-	STLString		mClassName;
+	MOAILuaObject*		mObject;
+	MOAILuaStrongRef	mLuaRef;
+	STLString			mClassName;
 };
 
 //================================================================//
@@ -37,8 +37,8 @@ protected:
 	STLMap < uintptr, MOAISerializerObjectEntry > mObjectMap;
 
 	// maps IDs onto tables
-	typedef STLMap < uintptr, MOAILuaRef >::iterator TableMapIt;
-	STLMap < uintptr, MOAILuaRef > mTableMap;
+	typedef STLMap < uintptr, MOAILuaStrongRef >::iterator TableMapIt;
+	STLMap < uintptr, MOAILuaStrongRef > mTableMap;
 
 	//----------------------------------------------------------------//
 	virtual cc8*	GetFileMagic			();

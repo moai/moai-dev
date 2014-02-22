@@ -24,7 +24,7 @@ private:
 
 	u32	mState;
 
-	MOAILuaRef	mOnButton;
+	MOAILuaStrongRef	mOnButton;
 
 	//----------------------------------------------------------------//
 	static int		_down				( lua_State* L );

@@ -2,76 +2,143 @@
 
 Thanks for checking out the Moai source code. Here's the scoop.
 
-## Setup
+## Introduction
+
+Moai SDK is an open source game framework for quickly developing great mobile games.
+
+You can work in Lua or C++, and Moai SDK runs on multiple platforms including iOS, Android, Chrome, Windows, Mac and Linux.
+
+## Download
 Please clones the source in the following way.
 
     git clone git@github.com:moai/moai-dev.git
     git submodule init
     git submodule update
 
-## Sample code:
-Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows). One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
+## Setup
+Tools needed to build the MOAI SDK.
 
-## API Documentation:
-You can view the [API Documentation](http://getmoai.com/docs/).
+* [Android SDK](http://developer.android.com/sdk/index.html)
+* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only)
+* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Ant 1.9](http://ant.apache.org/)
+* [CMake 2.8.11](http://www.cmake.org/)
+* [Ruby](http://www.ruby-lang.org/)
+* [Visual Studio 2010](http://www.visualstudio.com/) (Windows only)
+* [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac only)
+* [MinGW64 TCC](http://tdm-gcc.tdragon.net/) (Windows only, needed for android luajit support or can build mingw version of moai)
+ 
+The following tools are required to build the API documentation.
 
-## FAQ:
-Answers to frequently asked questions are available in the [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html).
+* [Bundler](http://gembundler.com/)
+* [Doxygen](http://www.doxygen.org/)
+* [Graphviz](http://www.graphviz.org/)
 
-## Wiki:
-You can find detailed documentation, instructions and other helpful information in the [Moai Wiki](http://getmoai.com/wiki/).
+Please set the following environment variables.
 
-## Moai Cloud:
-You already have a Moai Cloud account which allows you to upload Lua scripts to be hosted and run as web services via the [Moai Cloud Dashboard](http://dashboard.moaicloud.com/).
+## Build Hosts
+Please build according to the following procedure.
 
-If you have support questions, post them to the [Moai Cloud Developer Support Forum](http://getmoai.com/forums/moai-cloud-developer-support.html) or check out the [Moai Wiki ](http://getmoai.com/wiki/).
+### Windows Host
 
-## License:
-This SDK uses the CPAL license (http://www.opensource.org/licenses/cpal_1.0). Refer to the [Made With Moai page](http://getmoai.com/marketing/made-with-moai.html) for attribution screens to include with games made with Moai.
+	cd moai-dev
+	.¥bin¥build-win.bat
+	
+### OSX Host
 
-Happy game-making with Moai. Check out the [Moai Wiki](http://getmoai.com/wiki/), ping us through the [forums](http://getmoai.com/forums/) or email us at support@getmoai.com if you need help. The Moai team is here to help.
+	# Build
+	cd moai-dev
+	./bin/build-osx.sh
+	
+	# Run
+	release/osx/x64/bin/moai main.lua
 
-## Project structure: 
+### iOS Host
 
-* 3rdparty - All of the 3rd party libraries we use.
-* ant - Android source and reference projects.
-* distribute - The files and set up used to create the SDK installers and other distributable packages.
-* docs - Moai documentation, release notes and attribution images.
-* samples - Lua samples and development test/experiment scripts.
-* scons - Google Chrome source.
-* src - Moai source code and headers.
-* test - Lua unit and stress tests for Moai.
-* vs2008 - Visual Studio 2008 source and reference projects.
-* vs2010 - Visual Studio 2010 source and reference projects.
-* xcode - Mac OSX and iOS source and reference projects. 
+	cd moai-dev
+	./bin/build-ios.sh <lua_dir>
 
-## Developing on Windows:
+### Linux Host
 
-Start with the vs2008 or 2010 reference solutions. Make sure a 32-bit architecture is selected (64-bit is not yet officially supported). The 'moai' project builds moai.exe, a command line Moai host based on GLUT.
+	# Build
+	cd moai-dev
+	./bin/build-linux_x64.sh
+	
+	# Run
+	release/linux/x64/bin/moai main.lua
 
-Lua samples are located in the samples folder. To run, build moai.exe and set the MOAI_BIN and MOAI_CONFIG environment variables:
+### Android Host
 
-* MOAI_BIN = <path to Moai>/vs20XX/bin/Win32/<Debug|Release>/
-* MOAI_CONFIG = <path to Moai>/config/
+	# Build
+	export ANDROID_NDK=<path_to_android_ndk>
+	cd moai-dev
+	./bin/build-android.sh
+	
+	# Edit Setting
+	cd release/android/host
+	vi settings-global.sh
+	vi settings-local.sh
+	
+	# Run
+	./run-host.sh
 
-If these two environment variables are set up correctly, you can run each sample simply by double clicking the run.bat file found in each sample folder.
+### HTML Host
+    
+    #build
+    export EMSCRIPTEN_HOME=<path_to_emscripten_1.7.1>
+    cd moai-dev
+    ./bin/build-html.sh
 
-## Developing on Mac:
+    #run
+    <http-serve> cmake/build/host-template/www
 
-Open xcode/osx/MoaiSample.xcodeproj. Make sure a 32-bit architecture is selected (64-bit is not yet officially supported). The 'moai' project builds moai, a command line Moai host based on GLUT.
+    #see src\host-html\readme.md for more info
 
-To try out the samples, configure Xcode's debug working directory and command line parameters. In Xcode 3, right click the executable and choose 'Get Info.' In Xcode 4, select 'Edit Scheme' from the Schemes drop down. You will find the settings on the 'Info' and 'Arguments' tab the scheme editor.
+## Create IDE Projects
+ 
+### vs2012
+    ./bin/create-projects-win.bat
+    start cmake/projects/vs2012/moai.sln
 
-Set the working directory to the directory of the sample you want to try, relative to the Xcode project (for example '../../samples/anim/anim-basic'). Set the command line parameters to '../../config/config.lua main.lua' (config.lua sets up some richer error messages so it's a good idea to always pass it to Moai, main.lua runs the sample).
+### iOS
+    ./bin/create-projects-ios.sh
+    open cmake/projects/moai-ios/moai.xcproj
 
-## Developing for iOS:
+### OSX
+    ./bin/create-projects-osx.sh
+	open cmake/projects/moai-osx/moai.xcproj
 
-Open xcode/ios/MoaiSample.xcodeproj. This sample project includes the Lua and image found in samples/anim/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate.mm, MoaiView.mm and OpenGLView.mm to see how it is used.
+## Sample code
+Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows).
 
-As Moai is written in C++, we've generally preferred Objective-C++ for our work. To make dealing with Apple's reference counting easier, we use a smart pointer called RefPtr <>.
+One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
 
-## Developing for Android:
+## License
 
-Run ant/make-host.sh. This will create a new Android host template in the folder ant/untitled-host. Edit the local and global settings files in ant/untitled-host to setup the environment and choose a sample to run - by default it is setup to run ../../samples/anim/anim-basic. 
+This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). Refer to the  for attribution screens to include with games made with Moai.
 
-Use the ant/untitled-host/run-host.sh script in the generated directory to create the Android host once it has been configured. This will create the ant/untitled-host/build directory which contains a full Android project that can be imported into Eclipse and then launches the application onto the default Android emulator or device.
+## Links
+
+### Moai Pages
+
+* [Moai New Web Site](http://moaiwebsite.github.io/)
+* [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html)
+* [Moai SDK Framework Reference](http://getmoai.com/docs/)
+* [Moai forums](http://getmoai.com/forums/)
+* [Moai Wiki(getmoai)](http://getmoai.com/wiki/)
+* [Moai Wiki(github)](https://github.com/moai/moai-dev/wiki)
+* [Moai API Documentation](http://getmoai.com/docs/).
+
+### Tutorials
+* [GameFromScratch MOAI Tutorials](http://www.gamefromscratch.com/page/Moai-tutorial-series-The-adventures-of-an-intrepid-programmer-in-the-lands-of-Moai.aspx)
+* [moaisnippets](http://www.moaisnippets.info/)
+
+### Libraries
+* [Rapanui](https://github.com/ymobe/rapanui)
+* [Hanappe](https://github.com/makotok/Hanappe)
+* [MOAI GUI](https://github.com/derickd/moaigui)
+* [Shilke2D](https://github.com/Shrike78/Shilke2D)
+* [Spine MOAI](https://github.com/tangerinagames/spine-moai)
+
+### Tools
+* [moaicli](http://halfnelson.github.io/moaicli/)

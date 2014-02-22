@@ -1,14 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( vorbis )
 
-if ( MOAI_VORBIS )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/libvorbis-1.3.2/lib" )
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/libvorbis-1.3.2/lib" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_VORBIS=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_VORBIS=1" CACHE INTERNAL "doc string" )
 
-  set ( VORBIS_INCLUDES "../../3rdparty/libvorbis-1.3.2/lib/;../../3rdparty/libvorbis-1.3.2/include/" CACHE INTERNAL "doc string" )
+  set ( VORBIS_INCLUDES "${MOAI_ROOT}/3rdparty/libvorbis-1.3.2/lib/;${MOAI_ROOT}/3rdparty/libvorbis-1.3.2/include/"  )
 
   set ( VORBIS_SOURCES 
 
@@ -38,11 +35,10 @@ if ( MOAI_VORBIS )
     ${CMAKE_CURRENT_SOURCE_DIR}/vorbisfile.c
     ${CMAKE_CURRENT_SOURCE_DIR}/window.c
 
-  CACHE INTERNAL "doc string" )
+   )
 
-else ( MOAI_VORBIS )
+include_directories (${VORBIS_INCLUDES})
+add_library(vorbis STATIC ${VORBIS_SOURCES})
+target_include_directories(vorbis PUBLIC ${VORBIS_INCLUDES})
+target_link_libraries( vorbis ogg )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_VORBIS=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_VORBIS=0" CACHE INTERNAL "doc string" )
-
-endif ( MOAI_VORBIS )

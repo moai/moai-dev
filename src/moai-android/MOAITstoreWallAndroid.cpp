@@ -25,7 +25,7 @@ int MOAITstoreWallAndroid::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAITstoreWallAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAITstoreWallAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	
 	return 0;
