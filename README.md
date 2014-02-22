@@ -24,8 +24,8 @@ Tools needed to build the MOAI SDK.
 * [Ant 1.9](http://ant.apache.org/)
 * [CMake 2.8.11](http://www.cmake.org/)
 * [Ruby](http://www.ruby-lang.org/)
-* [Visual Studio 2010](http://www.visualstudio.com/) (Windows Only)
-* [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac Only)
+* [Visual Studio 2010](http://www.visualstudio.com/) (Windows only)
+* [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac only)
 * [MinGW64 TCC](http://tdm-gcc.tdragon.net/) (Windows only, needed for android luajit support or can build mingw version of moai)
  
 The following tools are required to build the API documentation.
@@ -36,7 +36,7 @@ The following tools are required to build the API documentation.
 
 Please set the following environment variables.
 
-## Build
+## Build Hosts
 Please build according to the following procedure.
 
 ### Windows Host
@@ -70,6 +70,7 @@ Please build according to the following procedure.
 ### Android Host
 
 	# Build
+	export ANDROID_NDK=<path_to_android_ndk>
 	cd moai-dev
 	./bin/build-android.sh
 	
@@ -86,7 +87,7 @@ Please build according to the following procedure.
     #build
     export EMSCRIPTEN_HOME=<path_to_emscripten_1.7.1>
     cd moai-dev
-    ./bin/build-html
+    ./bin/build-html.sh
 
     #run
     <http-serve> cmake/build/host-template/www
@@ -95,23 +96,22 @@ Please build according to the following procedure.
 
 ## Create IDE Projects
  
-###vs2012
+### vs2012
     ./bin/create-projects-win.bat
     start cmake/projects/vs2012/moai.sln
 
-###IOS
-    ./bin/create-projects-ios
+### iOS
+    ./bin/create-projects-ios.sh
     open cmake/projects/moai-ios/moai.xcproj
 
-###OSX
-    ./bin/create-projects-osx
- 	open cmake/projects/moai-osx/moai.xcproj
+### OSX
+    ./bin/create-projects-osx.sh
+	open cmake/projects/moai-osx/moai.xcproj
 
 ## Sample code
 Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows).
 
 One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
-
 
 ## License
 
