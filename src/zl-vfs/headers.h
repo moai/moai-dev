@@ -113,7 +113,7 @@ extern int					zl_vfscanf				( ZLFILE* fp, const char* format, va_list arg );
 	extern int 				zl_fseeko64 			( ZLFILE* fp, __int64 offset, int origin ); 
 #endif
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__)
 	extern int 				zl_fseeko               ( ZLFILE* fp, off_t offset, int origin );
     extern off_t            zl_ftello               ( ZLFILE* fp);	
 #endif

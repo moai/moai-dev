@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 
-    set ( UNTZ_INCLUDES "${MOAI_ROOT}/3rdparty/untz/include/;${MOAI_ROOT}/3rdparty/untz/src/;${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" PARENT_SCOPE )
+    set ( UNTZ_INCLUDES "${MOAI_ROOT}/3rdparty/untz/include/;${MOAI_ROOT}/3rdparty/untz/src/;${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" )
 	include_directories (
 		${UNTZ_INCLUDES}	
 	)

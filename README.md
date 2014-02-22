@@ -25,9 +25,9 @@ Tools needed to build the MOAI SDK.
 * [CMake 2.8.11](http://www.cmake.org/)
 * [Ruby](http://www.ruby-lang.org/)
 * [Visual Studio 2010](http://www.visualstudio.com/) (Windows Only)
-* [Cygwin](http://www.cygwin.com/) (Windows Only)
-* [XCode 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac OSX Only)
-
+* [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac Only)
+* [MinGW64 TCC](http://tdm-gcc.tdragon.net/) (Windows only, needed for android luajit support or can build mingw version of moai)
+ 
 The following tools are required to build the API documentation.
 
 * [Bundler](http://gembundler.com/)
@@ -43,8 +43,6 @@ Please build according to the following procedure.
 
 	cd moai-dev
 	.¥bin¥build-win.bat
-	
-	
 	
 ### OSX Host
 
@@ -84,7 +82,30 @@ Please build according to the following procedure.
 	./run-host.sh
 
 ### HTML Host
-TODO:Please describe someone.
+    
+    #build
+    export EMSCRIPTEN_HOME=<path_to_emscripten_1.7.1>
+    cd moai-dev
+    ./bin/build-html
+
+    #run
+    <http-serve> cmake/build/host-template/www
+
+    #see src\host-html\readme.md for more info
+
+## Create IDE Projects
+ 
+###vs2012
+    ./bin/create-projects-win.bat
+    start cmake/projects/vs2012/moai.sln
+
+###IOS
+    ./bin/create-projects-ios
+    open cmake/projects/moai-ios/moai.xcproj
+
+###OSX
+    ./bin/create-projects-osx
+ 	open cmake/projects/moai-osx/moai.xcproj
 
 ## Sample code
 Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows).
@@ -121,5 +142,3 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 
 ### Tools
 * [moaicli](http://halfnelson.github.io/moaicli/)
-
-

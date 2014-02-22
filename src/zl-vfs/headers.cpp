@@ -578,7 +578,7 @@ int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	return -1;
 }
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__)
 	int zl_fseeko ( ZLFILE* fp, off_t offset, int origin ) {
 		// TODO:
 		return zl_fseek ( fp, ( long )offset, origin );
@@ -623,7 +623,7 @@ long zl_ftell ( ZLFILE* fp ) {
 	return -1L;
 }
 
-#ifdef __APPLE__
+#if defined (__APPLE__) || defined (EMSCRIPTEN) || defined(__unix__)
 off_t zl_ftello ( ZLFILE* fp ) {
 	return (off_t) zl_ftell(fp);
 }

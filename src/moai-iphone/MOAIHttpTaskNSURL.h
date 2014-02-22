@@ -9,12 +9,12 @@
 #include <moai-http-client/MOAIHttpTaskBase.h>
 #import <Foundation/Foundation.h> 
 
-#define  CURL_STATICLIB
-#define  CURL_DISABLE_LDAP
+//#define  CURL_STATICLIB
+//#define  CURL_DISABLE_LDAP
 
-extern "C" {
-#include <curl/curl.h>
-}
+//extern "C" {
+//#include <curl/curl.h>
+//}
 
 @class MOAIHttpTaskNSURLDelegate;
 

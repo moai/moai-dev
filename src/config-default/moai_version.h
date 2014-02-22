@@ -3,7 +3,7 @@
 
 	#define MOAI_SDK_VERSION_MAJOR_MINOR 1.5		// decimal
 	#define MOAI_SDK_VERSION_REVISION 1			// signed int
-	#define MOAI_SDK_VERSION_AUTHOR "Moai"		// string
+	#define MOAI_SDK_VERSION_AUTHOR "MoaiEdition"		// string
 	
 	// SDK developers:
 	// Copy this file to src/config and change MOAI_SDK_VERSION_AUTHOR to

@@ -134,9 +134,9 @@ cmake_minimum_required(VERSION 2.8)
     )
 
     if (MSVC)
-        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+	    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-            COMMAND "msvcbuild.bat" static 
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" static ${VFS_INCLUDE}
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 
@@ -148,7 +148,7 @@ cmake_minimum_required(VERSION 2.8)
 
      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src'
+            COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src' '${VFS_INCLUDE}'
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 

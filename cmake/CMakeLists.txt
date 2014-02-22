@@ -79,7 +79,7 @@ endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE -DMOAI_OS_LINUX " )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " )
 endif ( BUILD_LINUX )
 
@@ -105,7 +105,11 @@ endif ( BUILD_IOS )
 # Virtual File System Force include
 # this should force all of moai to have this include and then we remove it from flags in zl-vfs
 # easier than adding it to each project!
-set (VFS_INCLUDE "-I${MOAI_ROOT}/src -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h")
+if (NOT MSVC)
+	set (VFS_INCLUDE "-I${MOAI_ROOT}/src -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h")
+else (NOT MSVC)
+	set (VFS_INCLUDE "-I${MOAI_ROOT}/src /FI${MOAI_ROOT}/src/zl-vfs/zl_replace.h")
+endif (NOT MSVC)
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${VFS_INCLUDE}")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VFS_INCLUDE}")
 

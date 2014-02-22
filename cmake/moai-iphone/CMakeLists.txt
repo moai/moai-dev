@@ -133,7 +133,11 @@ set_property(TARGET libFacebook PROPERTY
                 IMPORTED_LOCATION ${MOAI_ROOT}/3rdparty/facebookiOS-3.0.6.b/libfacebook_ios_sdk.a)
  
 if (NOT DISABLE_FACEBOOK)
- set (LINK_LIBS ${LINK_LIBS} libFacebook)
+  if (NOT MOAI_SQLITE3)
+     message(FATAL_ERROR "Facebook plugin requires MOAI_SQLITE3")
+  endif (NOT MOAI_SQLITE3)
+
+ set (LINK_LIBS ${LINK_LIBS} libFacebook sqlite3)
 endif (NOT DISABLE_FACEBOOK)
 
 

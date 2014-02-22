@@ -13,6 +13,8 @@ class MOAITransformBase;
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n"
 #define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n"
 
+#define		WEBGL_PREPROC "precision mediump int;\n precision mediump float;\n"
+
 //================================================================//
 // MOAIShaderUniform
 //================================================================//
