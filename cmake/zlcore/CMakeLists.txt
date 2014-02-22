@@ -1,59 +1,45 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( zlcore )
 
+add_subdirectory ( zlvfs )
+
 # Define source directory
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/" )
-
- if ( BUILD_LINUX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN  -DOPENSSL_SYSNAME_LINUX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE  "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include" "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" )
- endif ( BUILD_LINUX)
-
- if ( BUILD_WINDOWS )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_WIN32 -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-   set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw" )
-  
- endif ( BUILD_WINDOWS )
-
-
- if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_ANDROID -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android" )
- endif ( BUILD_ANDROID )
-
-
- if ( BUILD_IOS )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone" )
- endif ( BUILD_IOS )
-
- if ( BUILD_OSX )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_SYSNAME_MACOSX -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE " CACHE INTERNAL "doc string" )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include" )
- endif ( BUILD_OSX )
-
 
 # Define needed include files
 set ( ZLCORE_INCLUDES
  "${MOAI_ROOT}/src/config-default/" 
   "${MOAI_ROOT}/src/"
-  ${PLATFORM_INCLUDE}
   "${MOAI_ROOT}/3rdparty/"
   "${MOAI_ROOT}/3rdparty/ooid-0.99/"
-  ${EXPAT_INCLUDES}
-  ${TLSF_INCLUDES}
-  ${GLEW_INCLUDES}
-  ${ZLIB_INCLUDES}
-  
-  
-CACHE INTERNAL "doc string" )
+ )
 
 # Use all cpp files in directory as source code
-file ( GLOB SRC_ZLCORE "${CMAKE_CURRENT_SOURCE_DIR}/zl-*/*.cpp" )
+file ( GLOB SRC_ZLUTIL "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.cpp" )
+file ( GLOB SRC_ZLGFX "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.cpp" )
 
 include_directories ( ${ZLCORE_INCLUDES} )
 
-add_library ( zlcore STATIC ${SRC_ZLCORE} )
+add_library ( zlcore STATIC ${SRC_ZLUTIL} ${SRC_ZLGFX} )
+
+target_include_directories ( zlcore PUBLIC "${MOAI_ROOT}/src/" "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib")
+
+if ( MOAI_EXPAT )
+  target_link_libraries( zlcore expat)
+endif ( MOAI_EXPAT )
+
+if ( MOAI_CRYPTO )
+  target_link_libraries( zlcore crypto)
+endif ( MOAI_CRYPTO )
+
+
+# compulsory li
+
+if (BUILD_LINUX OR BUILD_WINDOWS OR BUILD_OSX)
+  target_link_libraries ( zlcore glew )
+endif (BUILD_LINUX OR BUILD_WINDOWS OR BUILD_OSX)
+
+target_link_libraries ( zlcore zlvfs zlib )
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )

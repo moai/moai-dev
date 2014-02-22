@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8.5)
 project(host-html)
 
 
-    
+ 
 
 
 
@@ -16,8 +16,7 @@ set ( INCLUDES_MOAIHOSTHTML
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
   "${MOAI_ROOT}/src/host-html/"
-  ${OPENGL_INCLUDE_DIRS}
-  CACHE INTERNAL "doc string" )
+   )
 
 
 include_directories ( ${INCLUDES_MOAIHOSTHTML} )
@@ -26,12 +25,12 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-html" )
 
 add_library ( moaishared SHARED
   ${CMAKE_CURRENT_SOURCE_DIR}/HtmlHost.cpp
-  "${MOAI_ROOT}/src/host-modules/aku_modules.cpp"
+  ${MOAI_ROOT}/src/host-modules/aku_modules.cpp
 )
 
 get_target_property( MOAIHTMLOUTPUT moaishared LOCATION)
 
-set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_AKUInitializeUntz','_RestoreFile']" )
+set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_onKeyUp','_onMouseButton','_onMouseDrag','_onMouseMove','_onPaint','_onReshape','_onTimer','_AKURunScript','_AKURunString','_OpenWindowFunc','_AKUSetWorkingDirectory','_AKUGetSimStep','_AKUEnqueueKeyboardShiftEvent','_AKUEnqueueKeyboardControlEvent','_AKUEnqueueKeyboardAltEvent','_RestoreFile','_AKUInitializeUntz']" )
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
@@ -43,26 +42,11 @@ add_custom_target( moaijs
 add_dependencies(moaijs moaishared )
 
 target_link_libraries ( moaishared
+  host-modules
   moai-sim
   moai-util
   moai-core
   zlcore
-)
-
-if (MOAI_UNTZ)
-  target_link_libraries ( moaishared moai-untz )
-endif (MOAI_UNTZ)
-
-if ( MOAI_BOX2D )
-  target_link_libraries ( moaishared moai-box2d )
-endif ( MOAI_BOX2D )
-
-if ( MOAI_CHIPMUNK )
-  target_link_libraries ( moaishared moai-chipmunk )
-endif ( MOAI_CHIPMUNK )
-
-target_link_libraries ( moaishared
-  third-party 
 )
 
 #build host template

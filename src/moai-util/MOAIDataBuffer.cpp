@@ -646,6 +646,11 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
+ZLLeanArray<u8> *MOAIDataBuffer::getBuffer() {
+	return &mBytes;
+}
+
+//----------------------------------------------------------------//
 void MOAIDataBuffer::Unlock () {
 
 	this->mMutex.Unlock ();

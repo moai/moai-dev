@@ -5,6 +5,7 @@
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
+#include <moai-core/MOAILuaState-impl.h>
 
 #define FINALIZE_FUNC_NAME "finalize"
 
@@ -308,8 +309,7 @@ MOAILuaObject::MOAILuaObject ():
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		
+	if (!this->mCollected && MOAILuaRuntime::IsValid ()) {
 		if ( this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			this->mUserdata.PushRef ( state );

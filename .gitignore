@@ -29,3 +29,7 @@ tmp
 # Produced by test runner
 test/xml-results
 .idea
+cmake/projects/
+
+bin/api-reference-parser/vendor
+docs/api-reference

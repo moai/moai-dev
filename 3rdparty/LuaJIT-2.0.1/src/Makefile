@@ -199,6 +199,7 @@ TARGET_LFSFLAGS= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 TARGET_XCFLAGS= $(TARGET_LFSFLAGS) -U_FORTIFY_SOURCE
 TARGET_XLDFLAGS=
 TARGET_XLIBS= -lm
+TARGET_CONLY_FLAGS=
 TARGET_TCFLAGS= $(CCOPTIONS) $(TARGET_XCFLAGS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
 TARGET_ACFLAGS= $(CCOPTIONS) $(TARGET_XCFLAGS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
 TARGET_ALDFLAGS= $(LDOPTIONS) $(TARGET_XLDFLAGS) $(TARGET_FLAGS) $(TARGET_LDFLAGS)
@@ -558,7 +559,7 @@ E= @echo
 # Make targets.
 ##############################################################################
 
-default all:	$(TARGET_T)
+default all: $(TARGET_T)
 
 amalg:
 	@grep "^[+|]" ljamalg.c
@@ -635,8 +636,8 @@ lj_folddef.h: $(BUILDVM_T) lj_opt_fold.c
 
 %.o: %.c
 	$(E) "CC        $@"
-	$(Q)$(TARGET_DYNCC) $(TARGET_ACFLAGS) -c -o $(@:.o=_dyn.o) $<
-	$(Q)$(TARGET_CC) $(TARGET_ACFLAGS) -c -o $@ $<
+	$(Q)$(TARGET_DYNCC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $(@:.o=_dyn.o) $<
+	$(Q)$(TARGET_CC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $@ $<
 
 %.o: %.s
 	$(E) "ASM       $@"
@@ -645,7 +646,7 @@ lj_folddef.h: $(BUILDVM_T) lj_opt_fold.c
 
 $(LUAJIT_O):
 	$(E) "CC        $@"
-	$(Q)$(TARGET_STCC) $(TARGET_ACFLAGS) -c -o $@ $<
+	$(Q)$(TARGET_STCC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $@ $<
 
 $(HOST_O): %.o: %.c
 	$(E) "HOSTCC    $@"

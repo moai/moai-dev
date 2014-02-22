@@ -2,26 +2,26 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( curl )
 
-if ( MOAI_CURL )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" )
+  
+  if ( BUILD_ANDROID OR BUILD_IOS )
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_ARES" )
+    set ( USE_ARES true )
+  endif (BUILD_ANDROID OR BUILD_IOS)
+
+  if ( MOAI_OPENSSL )
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DUSE_SSLEAY -DUSE_OPENSSL ")
+  endif ( MOAI_OPENSSL )
+
 
   
-
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=1 -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP" CACHE INTERNAL "doc string")
-
-  
-  if (BUILD_ANDROID)
-    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_SSL -DUSE_SSLEAY -DUSE_OPENSSL  -DUSE_ARES -DCARES_STATICLIB" CACHE INTERNAL "doc string" )
-  endif (BUILD_ANDROID)
-
-  set ( CARES_SRC "" )
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-		"${CMAKE_CURRENT_SOURCE_DIR}"
-      CACHE INTERNAL "doc string" )
+	     	"${CMAKE_CURRENT_SOURCE_DIR}"
+       )
   endif (BUILD_LINUX)
 
 
@@ -29,87 +29,40 @@ if ( MOAI_CURL )
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
         "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-      CACHE INTERNAL "doc string" )
+      )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
         set ( CURL_INCLUDES
           "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-osx/"
-        CACHE INTERNAL "doc string" )
+        )
     endif (BUILD_OSX)
+
+  if (BUILD_HTML)
+        set ( CURL_INCLUDES
+          "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/"
+        )
+    endif (BUILD_HTML)
 
 
   if (BUILD_ANDROID)
     set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-android/" 
-        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
-        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-android/"
-      CACHE INTERNAL "doc string" )
+       )
   endif (BUILD_ANDROID)
 
-if (BUILD_IOS)
+  if (BUILD_IOS)
     set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
-        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/"
-        "${MOAI_ROOT}/3rdparty/c-ares-1.7.5/include-apple/" 
-      CACHE INTERNAL "doc string" )
+       )
   endif (BUILD_IOS)
 
-  if (BUILD_ANDROID OR BUILD_IOS)  
-    set (CARES_SRC 
-         ${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__close_sockets.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__get_hostent.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__read_line.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares__timeval.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_cancel.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_data.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_destroy.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_expand_name.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_expand_string.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_fds.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_free_hostent.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_free_string.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getenv.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_gethostbyaddr.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_gethostbyname.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getnameinfo.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getopt.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_getsock.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_init.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_library_init.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_llist.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_mkquery.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_nowarn.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_options.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_a_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_aaaa_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_mx_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_ns_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_ptr_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_srv_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_parse_txt_reply.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_platform.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_process.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_query.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_search.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_send.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strcasecmp.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strdup.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_strerror.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_timeout.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_version.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_writev.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/bitncmp.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/inet_net_pton.c
-	${MOAI_ROOT}/3rdparty/c-ares-1.7.5/ares_inet_ntop.c
-    
-    )
-    
-  endif (BUILD_ANDROID OR BUILD_IOS)
 
-       set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
+
+
+  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/curl-7.19.7/lib" )
   set ( CURL_SOURCES 
-    ${CARES_SRC}
+   
     #${CMAKE_CURRENT_SOURCE_DIR}/amigaos.c
     ${CMAKE_CURRENT_SOURCE_DIR}/base64.c
     ${CMAKE_CURRENT_SOURCE_DIR}/connect.c
@@ -186,11 +139,21 @@ if (BUILD_IOS)
     ${CMAKE_CURRENT_SOURCE_DIR}/url.c
     ${CMAKE_CURRENT_SOURCE_DIR}/version.c
 
-  CACHE INTERNAL "doc string" )
+   )
 
-else ( MOAI_CURL )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_LIBCURL=0" CACHE INTERNAL "doc string")
+ 
+  add_library(curl STATIC ${CURL_SOURCES})
+  target_include_directories (curl PUBLIC ${CURL_INCLUDES})
 
-endif ( MOAI_CURL )
+  if (USE_ARES)  
+    target_link_libraries( curl cares )
+  endif (USE_ARES)
+
+  if (MOAI_OPENSSL)
+     target_link_libraries( curl ssl )
+  endif (MOAI_OPENSSL)
+ 
+  if (BUILD_WINDOWS)
+    target_link_libraries( curl ws2_32 )
+  endif (BUILD_WINDOWS)

@@ -7,11 +7,10 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_CORE_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-
- CACHE INTERNAL "doc string" )
+  "${MOAI_ROOT}/src/moai-core"
+  )
 
 include_directories ( 
   ${MOAI_CORE_INCLUDES} 
@@ -25,4 +24,11 @@ file ( GLOB MOAI_CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_CORE_INCLUDES} )
 
 add_library ( moai-core STATIC ${MOAI_CORE_SRC} )
-target_link_libraries ( moai-core zlcore )
+
+#get_target_property ( LUA_HEADERS liblua-static INCLUDE_DIRECTORIES )
+target_include_directories ( moai-core PUBLIC ${MOAI_CORE_INCLUDES} ${LUA_HEADERS} )
+
+target_link_libraries ( moai-core zlcore ${LUA_LIB})
+add_dependencies ( moai-core liblua-static)
+
+

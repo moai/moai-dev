@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-core/MOAILogMgr.h>
 #include <moai-core/MOAILogMessages.h>
+#include <moai-core/MOAILuaState-impl.h>
 
 //================================================================//
 // lua

@@ -109,6 +109,16 @@ extern int					zl_ungetc				( int character, ZLFILE* fp );
 extern int					zl_vfprintf				( ZLFILE* fp, const char* format, va_list arg );
 extern int					zl_vfscanf				( ZLFILE* fp, const char* format, va_list arg );
 
+#ifdef __MINGW32__
+	extern int 				zl_fseeko64 			( ZLFILE* fp, __int64 offset, int origin ); 
+#endif
+
+#if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__)
+	extern int 				zl_fseeko               ( ZLFILE* fp, off_t offset, int origin );
+    extern off_t            zl_ftello               ( ZLFILE* fp);	
+#endif
+
+
 #ifdef MOAI_COMPILER_MSVC
 	extern errno_t	 		zl_fopen_s 				( ZLFILE** fp, const char* filename, const char* mode );
 	extern int				zl_fseeki64				( ZLFILE* fp, __int64 offset, int origin );

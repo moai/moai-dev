@@ -7,11 +7,9 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_UTIL_INCLUDES 
-  ${THIRD_PARTY_INCLUDES}
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-
- CACHE INTERNAL "doc string" )
+  )
 
 include_directories ( 
   ${MOAI_UTIL_INCLUDES} 
@@ -25,3 +23,17 @@ file ( GLOB MOAI_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
 include_directories ( ${MOAI_UTIL_INCLUDES} )
 
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
+
+target_link_libraries ( moai-util moai-core zlcore  )
+
+if (MOAI_SFMT)
+	target_link_libraries (moai-util sfmt )
+endif (MOAI_SFMT)
+
+if ( MOAI_JSON )
+	target_link_libraries( moai-util jansson )
+endif (MOAI_JSON ) 
+
+if ( MOAI_TINYXML )
+   target_link_libraries( moai-util tinyxml )
+endif ( MOAI_TINYXML )

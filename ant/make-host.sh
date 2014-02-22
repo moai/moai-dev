@@ -65,29 +65,29 @@ fi
 
 if [ x"$arm_mode" != xarm ] && [ x"$arm_mode" != xthumb ]; then
     echo $usage
-    exit 1		
+    exit 1
 fi
 
 if [ x"$arm_arch" != xarmeabi ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
     echo $usage
-    exit 1		
+    exit 1
 fi
 
 # TODO: Validate app_platform
 
 if [ x"$use_fmod" != xtrue ] && [ x"$use_fmod" != xfalse ]; then
     echo $usage
-    exit 1		
+    exit 1
 fi
 
 if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
     echo $usage
-    exit 1		
+    exit 1
 fi
 
 if [ x"$use_luajit" != xtrue ] && [ x"$use_luajit" != xfalse ]; then
     echo $usage
-    exit 1		
+    exit 1
 fi
 
 
@@ -106,8 +106,7 @@ fi
 
 if [ x"$skip_build" != xtrue ]; then
     pushd libmoai > /dev/null
-        #TODO: --use-luajit --use-fmod
-        bash build.sh --use-untz $use_untz \
+        bash build.sh --use-untz $use_untz --use-luajit $use_luajit  \
             $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags \
             $facebook_flags $push_flags $tapjoy_flags $twitter_flags 
     popd > /dev/null

@@ -1,23 +1,21 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
-if ( MOAI_UNTZ )
+
   
 
   set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1 " CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1 -D__WINDOWS_DS__" CACHE INTERNAL "doc string" )
+
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__WINDOWS_DS__" )
 
   set ( UNTZ_INCLUDES 
-    ${SDL_INCLUDES}
     "${MOAI_ROOT}/3rdparty/untz/include/"
     "${MOAI_ROOT}/3rdparty/untz/src/"
     "${MOAI_ROOT}/3rdparty/untz/src/native/win/"
     "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/" 
     "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/"
-
-  CACHE INTERNAL "doc string" )
+  )
 
   
 
@@ -36,18 +34,28 @@ if ( MOAI_UNTZ )
     "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/asiodrivers.cpp" 
     "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/asiolist.cpp" 
     "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/iasiothiscallresolver.cpp"
-  CACHE INTERNAL "doc string" )
+   )
+
    if (MOAI_VORBIS)   
      set ( UNTZ_SOURCES 
        ${UNTZ_SOURCES}
        ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
-       CACHE INTERNAL "doc string" )
+      )
    endif (MOAI_VORBIS)
-  
 
-else ( MOAI_UNTZ )
+add_library (untz STATIC ${UNTZ_SOURCES})
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string" )
+if (MOAI_VORBIS)
+  target_link_libraries (untz vorbis)
+endif (MOAI_VORBIS)
 
-endif ( MOAI_UNTZ )
+target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
+
+ target_link_libraries ( untz 
+    winmm
+    uuid
+    dxguid
+    strmiids
+    dsound
+    oleaut32
+  )

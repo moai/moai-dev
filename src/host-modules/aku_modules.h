@@ -54,6 +54,9 @@
 	#include <moai-util/host.h>
 #endif
 
+#if AKU_WITH_PLUGINS
+	#include <moai-plugins/host.h>
+#endif
 //----------------------------------------------------------------//
 void		AKUModulesAppFinalize					();
 void		AKUModulesAppInitialize					();
