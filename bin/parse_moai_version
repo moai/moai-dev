@@ -1,4 +1,0 @@
-export MOAI_SDK_VERSION_MAJOR_MINOR=`cat src/config-default/moai_version.h | grep MOAI_SDK_VERSION_MAJOR_MINOR | cut -d " " -f 3 | cut -s -f 1`
-export MOAI_SDK_VERSION_REVISION=`cat src/config-default/moai_version.h | grep MOAI_SDK_VERSION_REVISION | cut -d " " -f 3 | cut -s -f 1`
-export MOAI_SDK_VERSION_AUTHOR=`cat src/config-default/moai_version.h | grep MOAI_SDK_VERSION_AUTHOR | grep define | cut -d '"' -f2`
-export MOAI_SDK_VERSION_FULL="$MOAI_SDK_VERSION_MAJOR_MINOR revision $MOAI_SDK_VERSION_REVISION ($MOAI_SDK_VERSION_AUTHOR)"
