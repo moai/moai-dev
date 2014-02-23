@@ -52,10 +52,11 @@
 #endif
 
 #ifdef MOAI_OS_WINDOWS
-
-	#pragma warning ( disable : 4290 )
-	#pragma warning ( disable : 4995 )
-	#pragma warning ( disable : 4996 )
+	#ifdef MOAI_COMPILER_MSVC
+		#pragma warning ( disable : 4290 )
+		#pragma warning ( disable : 4995 )
+		#pragma warning ( disable : 4996 )
+	#endif
 
 	#ifndef _CRTDBG_MAP_ALLOC
 		#define _CRTDBG_MAP_ALLOC
