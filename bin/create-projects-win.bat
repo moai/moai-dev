@@ -6,7 +6,7 @@ cd "%~dp0%..\cmake"
 
 :: Delete and re-create the target directory
 set targetDir=projects\vs2013
-rmdir /s %targetDir%
+if exist %targetDir% rmdir /s /q %targetDir%
 md %targetDir%
 
 :: Move to target directory, then call cmake from there
