@@ -27,7 +27,7 @@ if not exist "%MOAI_CONFIG%" (
 )
 
 :: run moai
-"%MOAI_BIN%\moai-server" "%MOAI_CONFIG%\config.lua" "main.lua"
+"%MOAI_BIN%\moai" "%MOAI_CONFIG%\config.lua" "main.lua"
 
 :end
 pause
