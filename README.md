@@ -36,9 +36,17 @@ The following tools are required to build the API documentation.
 
 Please set the following environment variables.
 
-	# For OSX, Linux
-	# .bash_profile
-	export
+	# Mac OSX
+	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/x64/bin
+	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
+
+	# Linux
+	export MOAI_BIN=<install_path>/moai-dev/release/linux/host-sdl/x64/bin
+	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
+
+	# Windows
+	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
+	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
 
 ## Build Hosts
 Please build according to the following procedure.
@@ -52,11 +60,11 @@ Please build according to the following procedure.
 
 	# Build
 	cd moai-dev
-	./bin/build-osx.sh
+	./bin/build-osx-sdl.sh
 	
 	# Run
 	cd <sample_directory>
-	release/osx/x64/bin/moai main.lua
+	$MOAI_BIN/moai main.lua
 
 ### iOS Host
 
@@ -67,10 +75,10 @@ Please build according to the following procedure.
 
 	# Build
 	cd moai-dev
-	./bin/build-linux_x64.sh
+	./bin/build-linux-sdl.sh
 	
 	# Run
-	release/linux/x64/bin/moai main.lua
+	$MOAI_BIN/moai main.lua
 
 ### Android Host
 
