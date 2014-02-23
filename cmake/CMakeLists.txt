@@ -79,8 +79,8 @@ endif (BUILD_WINDOWS)
 
 if ( BUILD_LINUX )
   find_package ( OpenGL REQUIRED )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__ -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__ -DPOSIX " )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DPOSIX -std=gnu99 -DNDEBUG -DHAVE_MEMMOVE" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPOSIX " )
 endif ( BUILD_LINUX )
 
 if ( BUILD_ANDROID )
@@ -89,18 +89,19 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
-    set ( CMAKE_OSX_SYSROOT iphoneos )
-    set ( CMAKE_OSX_ARCHITECTURES "armv7;i386" )
-    set ( CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator" )
-    set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
-
+  set ( CMAKE_OSX_SYSROOT iphoneos )
+  set ( CMAKE_OSX_ARCHITECTURES "armv7;i386" )
+  set ( CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator" )
+  set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " )
-
-
 endif ( BUILD_IOS )
 
+if ( SDL_HOST )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__" )
+endif ( SDL_HOST )
 
 # Virtual File System Force include
 # this should force all of moai to have this include and then we remove it from flags in zl-vfs

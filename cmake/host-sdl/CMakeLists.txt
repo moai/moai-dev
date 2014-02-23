@@ -11,7 +11,7 @@ endif ( BUILD_OSX )
 set ( INCLUDES_MOAIHOSTSDL 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
-  "${MOAI_ROOT}/src/host-glut/"
+  "${MOAI_ROOT}/src/host-sdl/"
   "${MOAI_ROOT}/3rdparty/sdl2-2.0.0/include"
    ${OPENGL_INCLUDE_DIRS}
 )
@@ -88,4 +88,9 @@ if ( BUILD_OSX )
                     )
 
   ADD_FRAMEWORKS(moai "${FWORKS}")
+  
+  if (MOAI_LUAJIT)
+     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pagezero_size 10000 -image_base 100000000 ")
+  endif (MOAI_LUAJIT)
+  
 endif ( BUILD_OSX )
