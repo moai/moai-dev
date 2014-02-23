@@ -36,6 +36,10 @@ The following tools are required to build the API documentation.
 
 Please set the following environment variables.
 
+	# For OSX, Linux
+	# .bash_profile
+	export
+
 ## Build Hosts
 Please build according to the following procedure.
 
@@ -51,6 +55,7 @@ Please build according to the following procedure.
 	./bin/build-osx.sh
 	
 	# Run
+	cd <sample_directory>
 	release/osx/x64/bin/moai main.lua
 
 ### iOS Host
