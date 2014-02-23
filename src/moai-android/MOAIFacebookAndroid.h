@@ -7,6 +7,7 @@
 #ifndef DISABLE_FACEBOOK
 
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 //================================================================//
 // MOAIFacebookAndroid
@@ -25,8 +26,22 @@
 	@const	REQUEST_RESPONSE_FAILED		Event code for failed graph request responses.
 */
 class MOAIFacebookAndroid :
-	public MOAIGlobalClass < MOAIFacebookAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIFacebookAndroid, MOAILuaObject >,
+	public JniUtils {
 private:
+
+	jmethodID	mJava_ExtendToken;
+	jmethodID	mJava_GetExpirationDate;
+	jmethodID	mJava_GetToken;
+	jmethodID	mJava_GraphRequest;
+	jmethodID	mJava_Init;
+	jmethodID	mJava_IsSessionValid;
+	jmethodID	mJava_Login;
+	jmethodID	mJava_Logout;
+	jmethodID	mJava_PostToFeed;
+	jmethodID	mJava_SendRequest;
+	jmethodID	mJava_SetExpirationDate;
+	jmethodID	mJava_SetToken;
 
 	//----------------------------------------------------------------//
 	static int	_extendToken	( lua_State* L );
@@ -67,8 +82,8 @@ public:
 
 			MOAIFacebookAndroid		();
 			~MOAIFacebookAndroid	();
-	void 	NotifyLoginComplete		( int code );
 	void 	NotifyDialogComplete	( int code );
+	void 	NotifyLoginComplete		( int code );
 	void 	NotifyRequestComplete	( cc8* result );
 	void 	NotifyRequestFailed	    ();
 	void	RegisterLuaClass		( MOAILuaState& state );
