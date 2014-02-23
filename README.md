@@ -42,7 +42,7 @@ Please build according to the following procedure.
 ### Windows Host
 
 	cd moai-dev
-	.¥bin¥build-win.bat
+	.\bin\build-win.bat
 	
 ### OSX Host
 
@@ -96,9 +96,9 @@ Please build according to the following procedure.
 
 ## Create IDE Projects
  
-### vs2012
-    ./bin/create-projects-win.bat
-    start cmake/projects/vs2012/moai.sln
+### Visual Studio
+Execute `create-projects-win.bat` in `moai-dev\bin`.
+By default, this creates a Visual Studio 2012 solution in `moai-dev\cmake\projects\vs2012`. To generate project files for a different version of Visual Studio, specify your desired version (`vs2008`, `vs2010`, `vs2012`, or `vs2013`) as a command-line argument.
 
 ### iOS
     ./bin/create-projects-ios.sh
@@ -109,7 +109,7 @@ Please build according to the following procedure.
 	open cmake/projects/moai-osx/moai.xcproj
 
 ## Sample code
-Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), vs2008 or vs2010 (Windows).
+Go to the samples folder, which contains dozens of samples that can be run using one the hosts located in ant (Android), xcode (OSX and iOS), or Visual Studio (Windows).
 
 One of our priorities is to build richer samples for Moai developers, so if you'd like to see a particular code sample, let us know by posting in the [Moai forums](http://getmoai.com/forums/).
 
@@ -142,3 +142,4 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 
 ### Tools
 * [moaicli](http://halfnelson.github.io/moaicli/)
+* [MoaiUtils](https://github.com/DanielSWolf/MoaiUtils/blob/master/README.md)
