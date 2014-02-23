@@ -158,6 +158,42 @@ int MOAITapjoyAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setUserId
+ 	@text	Sets the tapjoy user ID.
+ 
+ 	@in		string userId
+ */
+int MOAITapjoyAndroid::_setUserId ( lua_State *L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* identifier = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+	JNI_GET_JSTRING ( identifier, jidentifier );
+
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if ( tapjoy == NULL ) {
+	
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
+
+    	jmethodID setUserId = env->GetStaticMethodID ( tapjoy, "setUserId", "(Ljava/lang/String;)V" );
+    	if ( setUserId == NULL ) {
+
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITapjoyAndroid: Unable to find static java method %s", "setUserId" );
+    	} else {
+
+			env->CallStaticVoidMethod ( tapjoy, setUserId, jidentifier );	
+			
+			return 0;
+		}
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	showOffers
 	@text	Displays the Tapjoy marketplace.
 				
@@ -220,6 +256,7 @@ void MOAITapjoyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "initVideoAds",	_initVideoAds },
 		{ "init",			_init },
 		{ "setListener",	_setListener },
+		{ "setUserId",		_setUserId },
 		{ "showOffers",		_showOffers },
 		{ NULL, NULL }
 	};

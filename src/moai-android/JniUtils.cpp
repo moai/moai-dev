@@ -1,23 +1,24 @@
+#include <moai-core/pch.h>
+#include <moai-sim/pch.h>
 #include <moai-android/JniUtils.h>
 
-#include "moai-core/pch.h"
-#include "moai-sim/pch.h"
+#include <jni.h>
 
 extern JavaVM* jvm;
 
-/**
- * Create a jobjectArray from the Lua stack
- * @param lua_state The lua Stack
- * @param index The index to convert
- */
-jobjectArray JniUtils::arrayFromLua ( lua_State* L, int index ) {
+//================================================================//
+// JniUtils
+//================================================================//
+
+//----------------------------------------------------------------//
+jobjectArray JniUtils::ArrayFromLua ( lua_State* L, int index ) {
     MOAILuaState state ( L );
-	JNI_GET_ENV ( jvm, env );
 
     int numEntries = 0;
     for ( int key = 1; ; ++key ) {
         state.GetField ( 1, key );
-        cc8* value = JniUtils::parseLuaTable ( state, -1 );
+        cc8* value = state.GetValue < cc8* >( -1, 0 );
+		
         lua_pop ( state, 1 );
 
         if ( !value ) {
@@ -26,16 +27,16 @@ jobjectArray JniUtils::arrayFromLua ( lua_State* L, int index ) {
         }
     }
 
-    jobjectArray array = env->NewObjectArray ( numEntries, env->FindClass( "java/lang/String" ), 0 );
+    jobjectArray array = this->mEnv->NewObjectArray ( numEntries, this->mEnv->FindClass( "java/lang/String" ), 0 );
     for ( int key = 1; ; ++key ) {
 
         state.GetField ( 1, key );
-        cc8* value = JniUtils::parseLuaTable ( state, -1 );
+        cc8* value = state.GetValue < cc8* >( -1, 0 );
         lua_pop ( state, 1 );
 
         if ( value ) {
-            JNI_GET_JSTRING ( value, jvalue );
-            env->SetObjectArrayElement ( array, key - 1, jvalue );
+            jstring jvalue = this->GetJString ( value );
+            this->mEnv->SetObjectArrayElement ( array, key - 1, jvalue );
         }
         else {
             break;
@@ -44,18 +45,13 @@ jobjectArray JniUtils::arrayFromLua ( lua_State* L, int index ) {
     return array;
 }
 
-/**
- * Create Android Bundle from the Lua stack
- * @param L The Lua stack
- * @param The index to convert
- */
-jobject JniUtils::bundleFromLua ( lua_State* L, int index ) {
+//----------------------------------------------------------------//
+jobject JniUtils::BundleFromLua ( lua_State* L, int index ) {
     MOAILuaState state ( L );
-	JNI_GET_ENV ( jvm, env );
 
-    STLString className = "android.os.Bundle";
-    jobject bundle = JniUtils::createObjectOfClass( className );
-    jmethodID put = JniUtils::getMethod( className, "putString", "(Ljava/lang/String;Ljava/lang/String;)V" );
+	jclass clazz = this->mEnv->FindClass ( "android.os.Bundle" );
+    jobject bundle = this->mEnv->NewObject ( clazz, this->mEnv->GetMethodID ( clazz, "<init>", "()V" ));
+    jmethodID put = this->mEnv->GetMethodID ( clazz, "putString", "(Ljava/lang/String;Ljava/lang/String;)V" );
 
     // table is in the stack at index 'index'
     lua_pushnil ( state );  // first key
@@ -66,50 +62,147 @@ jobject JniUtils::bundleFromLua ( lua_State* L, int index ) {
         if( key != NULL ) {
             cc8* value = lua_tostring( state, -1 );
             if ( value != NULL ) {
-                JNI_GET_JSTRING ( key, jkey );
-                JNI_GET_JSTRING ( value, jvalue );
+				
+				jstring jkey = this->GetJString ( key );
+				jstring jvalue = this->GetJString ( value );
 
-                env->CallObjectMethod( bundle, put, jkey, jvalue );
+                this->mEnv->CallObjectMethod( bundle, put, jkey, jvalue );
             }
         }
-
         // removes 'value'; keeps 'key' for next iteration
         lua_pop ( state, 1 );
     }
-
     return bundle;
 }
 
-/**
- * Create an object of the provided class type.  The class must have a default constructor.
- * @param className The name of the class to create an instance of
- */
-jobject JniUtils::createObjectOfClass ( STLString className ) {
-	JNI_GET_ENV ( jvm, env );
-    jclass Class = env->FindClass(className);
-    jmethodID constructor = env->GetMethodID(Class, "<init>", "()V");
-    return env->NewObject(Class, constructor);
+//----------------------------------------------------------------//
+bool JniUtils::CallStaticBooleanMethod ( jmethodID method, ... ) {
+
+	va_list args;
+	va_start ( args, method );
+	bool result = ( bool )this->mEnv->CallStaticBooleanMethodV ( this->mClass, method, args );
+	va_end ( args );
+	
+	return result;
 }
 
-/**
- * Get the method of the provided signature for the provided class.
- * @param className The name of the class that has the method
- * @param methodName The name of the method
- * @param methodSignature The JNI mehtod signature of the method.
- */
-jmethodID JniUtils::getMethod ( STLString className, STLString methodName, STLString methodSignature ) {
-	JNI_GET_ENV ( jvm, env );
-    jclass Class = env->FindClass(className);
-    return env->GetMethodID(Class, methodName, methodSignature);
+//----------------------------------------------------------------//
+long JniUtils::CallStaticLongMethod ( jmethodID method, ... ) {
+
+	va_list args;
+	va_start ( args, method );
+	long result = ( long )this->mEnv->CallStaticLongMethod ( this->mClass, method, args );
+	va_end ( args );
+	
+	return result;
 }
 
-cc8* JniUtils::parseLuaTable ( lua_State* L, int idx ) {
-	switch ( lua_type ( L, idx )) {
-		case LUA_TSTRING: {
-			cc8* str = lua_tostring ( L, idx );
-			return str;
-		}
+//----------------------------------------------------------------//
+jobject JniUtils::CallStaticObjectMethod ( jmethodID method, ... ) {
+	
+	va_list args;
+	va_start ( args, method );
+	jobject result = this->mEnv->CallStaticObjectMethodV ( this->mClass, method, args );
+	va_end ( args );
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+void JniUtils::CallStaticVoidMethod ( jmethodID method, ... ) {
+	
+	va_list args;
+	va_start ( args, method );
+	this->mEnv->CallStaticVoidMethodV ( this->mClass, method, args );
+	va_end ( args );
+}
+
+//----------------------------------------------------------------//
+jobject JniUtils::CreateObjectOfClass () {
+
+     if ( !this->mClass ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot create object" );
+		assert ( false );
+		return NULL;
+    }
+    jmethodID constructor = this->mEnv->GetMethodID ( this->mClass, "<init>", "()V" );
+    return this->mEnv->NewObject ( this->mClass, constructor );
+}
+
+//----------------------------------------------------------------//
+cc8* JniUtils::GetCString ( jstring jstr ) {
+	
+	return ( jstr != NULL ) ? this->mEnv->GetStringUTFChars ( jstr, NULL ) : NULL;
+}
+
+//----------------------------------------------------------------//
+jstring JniUtils::GetJString ( cc8* cstr ) {
+	
+	return ( cstr != NULL ) ? this->mEnv->NewStringUTF (( const char* )cstr ) : NULL;
+}
+
+//----------------------------------------------------------------//
+jmethodID JniUtils::GetMethod ( cc8* methodName, cc8* methodSignature ) {
+	
+    if ( !this->mClass ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java method %d", methodName );
+		assert ( false );
+		return NULL;
+    }
+	
+    jmethodID method = this->mEnv->GetMethodID ( this->mClass, methodName, methodSignature );
+	
+	if ( method == NULL ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java method %s", methodName );
+		assert ( false );
 	}
+	return method;
+}
 
-	return NULL;
+//----------------------------------------------------------------//
+jmethodID JniUtils::GetStaticMethod ( cc8* methodName, cc8* methodSignature ) {
+	
+    if ( !this->mClass ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find static java method %d", methodName );
+		assert ( false );
+		return NULL;
+    }
+	
+    jmethodID method = this->mEnv->GetStaticMethodID ( this->mClass, methodName, methodSignature );
+	
+	if ( method == NULL ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find static java method %s", methodName );
+		assert ( false );
+	}
+	return method;
+}
+
+//----------------------------------------------------------------//
+JniUtils::JniUtils () :
+	mEnv ( 0 ),
+	mClass ( 0 ) {
+	
+	jvm->GetEnv (( void** )&this->mEnv, JNI_VERSION_1_4 );
+}
+
+//----------------------------------------------------------------//
+JniUtils::~JniUtils () {
+}
+
+//----------------------------------------------------------------//
+void JniUtils::ReleaseCString ( jstring jstr, cc8* cstr ) {
+	
+	if ( jstr && cstr ) {
+		this->mEnv->ReleaseStringUTFChars ( jstr, cstr );
+	}
+}
+
+//----------------------------------------------------------------//
+void JniUtils::SetClass ( cc8* className ) {
+	
+	this->mClass = this->mEnv->FindClass ( className );
+    if ( this->mClass ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java class %s", className );
+		assert ( false );
+    }
 }

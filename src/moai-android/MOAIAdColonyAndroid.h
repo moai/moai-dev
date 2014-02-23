@@ -7,18 +7,27 @@
 #ifndef DISABLE_ADCOLONY
 
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 //================================================================//
 // MOAIAdColonyAndroid
 //================================================================//
 class MOAIAdColonyAndroid :
-	public MOAIGlobalClass < MOAIAdColonyAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIAdColonyAndroid, MOAILuaObject >,
+	public JniUtils {
 private:
+
+	JNIEnv*		mEnv;
+	jclass		mClass;
+
+	jmethodID	mJava_GetDeviceID;
+	jmethodID	mJava_Init;
+	jmethodID	mJava_IsVideoReady;
+	jmethodID	mJava_PlayVideo;
 
 	//----------------------------------------------------------------//
 	static int	_getDeviceID		( lua_State* L );
 	static int	_init				( lua_State* L );
-	static cc8*	_luaParseTable 		( lua_State* L, int idx );
 	static int	_playVideo			( lua_State* L );
 	static int	_setListener		( lua_State* L );
 	static int	_videoReadyForZone	( lua_State* L );
