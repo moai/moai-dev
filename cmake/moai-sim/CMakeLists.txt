@@ -25,7 +25,7 @@ include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
 
-target_link_libraries ( moai-sim moai-core moai-util contrib)
+target_link_libraries ( moai-sim moai-core moai-util contrib zlcore)
 
 #always point to freetype includes so the generated project is easy to turn freetype back on!
 get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
