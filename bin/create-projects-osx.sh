@@ -13,6 +13,7 @@ cd moai-osx
 cmake \
 -G "Xcode" \
 -DBUILD_OSX=TRUE \
+-DSDL_HOST=TRUE \
 -DMOAI_BOX2D=TRUE \
 -DMOAI_CHIPMUNK=TRUE \
 -DMOAI_CURL=TRUE \
@@ -33,7 +34,4 @@ cmake \
 -DMOAI_UNTZ=TRUE \
 -DMOAI_LUAJIT=TRUE \
 ../../
-
-
-#IOS
 

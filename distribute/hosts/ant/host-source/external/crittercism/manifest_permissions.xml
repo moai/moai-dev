@@ -1,5 +1,0 @@
-<!-- Crittercism -->
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!-- <uses-permission android:name="android.permission.GET_TASKS" /> Optional permission to allow Crittercism to access information about other running processes. -->
-<!-- <uses-permission android:name="android.permission.READ_LOGS"/> Optional permission to allow Crittercism to collect log data. -->
