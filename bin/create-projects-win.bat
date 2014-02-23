@@ -1,3 +1,6 @@
+:: Remember the original working directory
+pushd .
+
 cd cmake
 md projects
 cd projects
@@ -29,3 +32,5 @@ cmake ^
 -DMOAI_LUAJIT=TRUE ^
 ..\..\
 
+:: Restore original working directory
+popd
