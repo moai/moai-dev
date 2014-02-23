@@ -1,13 +1,16 @@
 :: Remember the original working directory
 pushd .
 
-cd cmake
-md projects
-cd projects
-rmdir /s vs2012
-md vs2012
-cd vs2012
+:: Move to cmake directory
+cd "%~dp0%..\cmake"
 
+:: Delete and re-create the target directory
+set targetDir=projects\vs2013
+rmdir /s %targetDir%
+md %targetDir%
+
+:: Move to target directory, then call cmake from there
+cd %targetDir%
 cmake ^
 -G "Visual Studio 11" ^
 -DBUILD_WINDOWS=TRUE ^
