@@ -22,7 +22,7 @@ for i, testname in ipairs ( testList ) do
 		if os.getenv ( "HOME" ) then
 			os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
 		else
-			os.execute ( string.format ( '%%MOAI_STAGING_VSNINE%%\\moai-test.exe -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
+			os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -s -f "%s" -r "%s" -t "%s"', filter, results, testname ))
 		end
 
 		MOAIFileSystem.setWorkingDirectory ( rootDir )
@@ -52,7 +52,7 @@ if MOAIFileSystem.checkPathExists ( sourceDir ) == true then
 			if os.getenv ( "HOME" ) then
 				os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -s -f "%s" -r "%s" main.lua', filter, results ))
 			else
-				os.execute ( string.format ( '%%MOAI_STAGING_VSNINE%%\\moai-test.exe -s -f "%s" -r "%s" main.lua', filter, results ))
+				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -s -f "%s" -r "%s" main.lua', filter, results ))
 			end
 			
 			gatherResults ( results, allResults )

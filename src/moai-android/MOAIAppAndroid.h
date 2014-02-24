@@ -4,7 +4,10 @@
 #ifndef	MOAIAPPANDROID_H
 #define	MOAIAPPANDROID_H
 
+#include <moai-sim/host.h>
 #include <moai-core/headers.h>
+
+#include <pthread.h>
 
 //================================================================//
 // MOAIAppAndroid
@@ -25,6 +28,7 @@ private:
 		SESSION_START,
 		SESSION_END,
 		BACK_BUTTON_PRESSED,
+		EVENT_PICTURE_TAKEN,
 		TOTAL,
 	};
 
@@ -38,6 +42,14 @@ private:
 	static int	_setListener		( lua_State* L );
 	static int	_share				( lua_State* L );
 
+
+	// ## CAMERA SUPPORT
+	static int _takePicture		( lua_State* L );
+	static int _getPictureCode	( lua_State* L );
+	static int _getPicturePath	( lua_State* L );
+
+	// ## /CAMERA SUPPORT
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
@@ -47,7 +59,16 @@ public:
 	bool	NotifyBackButtonPressed		();
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
+
+//	void	NotifyPictureTaken			( int code, cc8* path );
+	void	NotifyPictureTaken			();
+	void	PushPictureData( MOAILuaState& state );
+	void	PushPictureCode( MOAILuaState& state );
+	void	PushPicturePath( MOAILuaState& state );
+
 	void	RegisterLuaClass			( MOAILuaState& state );
+
+
 };
 
 #endif
