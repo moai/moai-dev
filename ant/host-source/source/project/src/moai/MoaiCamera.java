@@ -2,7 +2,10 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.provider.MediaStore;
 
 public class MoaiCamera  {
@@ -12,7 +15,6 @@ public class MoaiCamera  {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
 
-	protected static native void AKUNotifyPictureTaken( int statusCode, String path );
 	protected static native void AKUNotifyPictureTaken(  );
 	
 	// codes:
@@ -28,13 +30,10 @@ public class MoaiCamera  {
 	
 	public static void onActivityResult( int requestCode, int resultCode, Intent data ) {
 		synchronized( Moai.sAkuLock ) {
-			MoaiLog.d( "MoaiCamera.java::onActivityResult - running on thread " + Thread.currentThread().getId() );
-			
 		    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 		    	sResultCode = resultCode;
 		        if (resultCode == Activity.RESULT_OK) {
-		        	sResultPath = data.getData().getPath();
-		        	// http://stackoverflow.com/questions/9027695/android-application-how-to-use-the-camera-and-grab-the-image-bytes
+		        	sResultPath = getRealPathFromURI( (Context)sActivity, data.getData() );
 		        } else if (resultCode == Activity.RESULT_CANCELED) {
 		            // User cancelled the image capture
 		        	sResultPath = "";
@@ -48,23 +47,39 @@ public class MoaiCamera  {
 		    }
 		    // tell jni that we are finished
 		    AKUNotifyPictureTaken();
-		    
 		}
     }
+	
+	// note: does not work with KitKat according to http://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore
+	public static String getRealPathFromURI(Context context, Uri contentUri) {
+		Cursor cursor = null;
+		try {
+			String[] proj = { MediaStore.Images.Media.DATA };
+			cursor = context.getContentResolver().query(contentUri, proj, null,
+					null, null);
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			return cursor.getString(column_index);
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+	}
 	
 	//================================================================//
 	// JNI callback methods
 	//================================================================//
 	
 	public static void takePicture() {
-		MoaiLog.d( "MoaiCamera.java::takePicture() - running on thread " + Thread.currentThread().getId() );
-//		http://stackoverflow.com/questions/12564112/android-camera-onactivityresult-intent-is-null-if-it-had-extras
 		sActivity.runOnUiThread( new Runnable() {
 			@Override
 			public void run() {
 				synchronized( Moai.sAkuLock ) {
 				    Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
 //dont pass filename to intent,otherwise the dataintent in onACtivityResult is always NULL
+//http://stackoverflow.com/questions/12564112/android-camera-onactivityresult-intent-is-null-if-it-had-extras
 //					fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
 //					intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 				    sActivity.startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);

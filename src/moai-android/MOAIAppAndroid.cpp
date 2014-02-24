@@ -183,7 +183,6 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 }
 
 int MOAIAppAndroid::_takePicture( lua_State* L ) {
-	ZLLog::Print("_takePicture");
     MOAILuaState state( L);
 
     JNI_GET_ENV( jvm, env );
