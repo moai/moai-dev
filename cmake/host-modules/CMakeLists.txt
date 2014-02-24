@@ -43,3 +43,8 @@ endif ( MOAI_LUAEXT )
 if ( MOAI_PLUGINS )
 	target_link_libraries ( host-modules moai-plugins )
 endif ( MOAI_PLUGINS )
+
+#tests
+if ( MOAI_TEST )
+	target_link_libraries ( host-modules moai-test )
+endif (MOAI_TEST)

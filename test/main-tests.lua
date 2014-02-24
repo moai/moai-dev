@@ -38,8 +38,8 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 				if os.getenv ( "HOME" ) then
 					os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 				else
-					os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
-					print ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ) )
+					os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+					print ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ) )
 				end
 			end
 			
@@ -76,7 +76,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 			if os.getenv ( "HOME" ) then
 				os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" main.lua', results, xmlFileName ))
 			else
-				os.execute ( string.format ( '%%MOAI_TEST_VSNINE%%\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
+				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
 			end
 		end
 		

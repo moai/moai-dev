@@ -208,6 +208,8 @@ SETUP_MODULE(MOAI_MONGOOSE MOAI_WITH_MONGOOSE)
 SETUP_MODULE(MOAI_LUAJIT MOAI_WITH_LUAJIT)
 SETUP_MODULE(MOAI_PLUGINS AKU_WITH_PLUGINS)
 
+SETUP_MODULE(MOAI_TEST AKU_WITH_TEST)
+
 #Flags for optional modules
 
 FOREACH(DISABLED ${DISABLED_EXT} )
@@ -257,6 +259,8 @@ add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-luaext )
+
+add_subdirectory ( moai-test)
 
 if (MOAI_PLUGINS)
   add_subdirectory ( moai-plugins )
