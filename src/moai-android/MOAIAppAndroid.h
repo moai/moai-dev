@@ -62,6 +62,8 @@ public:
 //	void	NotifyPictureTaken			( int code, cc8* path );
 	void	NotifyPictureTaken			();
 	void	PushPictureData( MOAILuaState& state );
+	void	PushPictureCode( MOAILuaState& state );
+	void	PushPicturePath( MOAILuaState& state );
 
 	void	RegisterLuaClass			( MOAILuaState& state );
 
