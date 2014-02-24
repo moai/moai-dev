@@ -104,7 +104,7 @@ int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
 /**	@name	reserve
 	@text	Allocates terrain vectors.
 
-	Pin		MOAIPathTerrainDeck self
+	@in		MOAIPathTerrainDeck self
 	@in		number deckSize
 	@in		number terrainVecSize
 	@out	nil

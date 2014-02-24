@@ -129,10 +129,17 @@ int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	load
-	@text	Loads a sound from disk.
+	@text	Loads a sound from disk or from a buffer.
 	
+	@overload
 	@in		MOAIUntzSound self
 	@in		string filename
+	@opt	boolean loadIntoMemory			Default value is true
+	@out	nil
+	
+	@overload
+	@in		MOAIUntzSound self
+	@in		MOAIUntzSampleBuffer data
 	@out	nil
 */
 int MOAIUntzSound::_load ( lua_State* L ) {
@@ -323,7 +330,7 @@ int MOAIUntzSound::_setLoopPoints ( lua_State* L ) {
 	@text	Sets the position of the sound cursor.
 	
 	@in		MOAIUntzSound self
-	@opt	boolean position		Default value is 0.
+	@opt	number position		Default value is 0.
 	@out	nil
 */
 int MOAIUntzSound::_setPosition ( lua_State* L ) {
@@ -341,7 +348,7 @@ int MOAIUntzSound::_setPosition ( lua_State* L ) {
 	@text	Sets the volume of the sound.
 	
 	@in		MOAIUntzSound self
-	@opt	boolean volume			Default value is 0.
+	@opt	number volume			Default value is 0.
 	@out	nil
 */
 int MOAIUntzSound::_setVolume ( lua_State* L ) {

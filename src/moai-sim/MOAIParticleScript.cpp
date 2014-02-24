@@ -348,9 +348,8 @@ int MOAIParticleScript::_norm ( lua_State* L ) {
 /**	@name	packConst
 	@text	Pack a const value into a particle script param.
 	
-	@in		MOAIParticleScript self
 	@in		number const		Const value to pack.
-	@out	nil
+	@out	The packed value.
 */
 int MOAIParticleScript::_packConst ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -367,9 +366,8 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 /**	@name	packReg
 	@text	Pack a register index into a particle script param.
 	
-	@in		MOAIParticleScript self
 	@in		number regIdx		Register index to pack.
-	@out	nil
+	@out	The packed value.
 */
 int MOAIParticleScript::_packReg ( lua_State* L ) {
 	MOAILuaState state ( L );

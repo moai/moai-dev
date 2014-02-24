@@ -279,7 +279,7 @@ int MOAIApp::_setListener ( lua_State* L ) {
 	@text	Search the platform's internal directory structure for a special directory
 			as defined by the platform.
  
-	@in		string domain		One of MOAIApp.DOMAIN_DOCUMENTS, MOAIApp.DOMAIN_APP_SUPPORT
+	@in		number domain		One of MOAIApp.DOMAIN_DOCUMENTS, MOAIApp.DOMAIN_APP_SUPPORT
 	@out	string directory	The directory associated with the given domain.
 */
 int MOAIApp::_getDirectoryInDomain ( lua_State* L ) {

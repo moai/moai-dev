@@ -93,7 +93,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@in		number anchorB_Y	in units, in world coordinates, converted to meters
 	@opt	number frequencyHz			in Hz. Default value determined by Box2D
 	@opt	number dampingRatio			Default value determined by Box2D
-	@opt	number collideConnected		Default value is false
+	@opt	boolean collideConnected		Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
@@ -448,7 +448,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
  @opt		number anchorAY		in units, in world coordinates, converted to meters
  @opt		number anchorBX		in units, in world coordinates, converted to meters
  @opt		number anchorBY		in units, in world coordinates, converted to meters
- @opt		number collideConnected		Default value is false		
+ @opt		boolean collideConnected		Default value is false		
  @out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
@@ -700,7 +700,7 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 	@text	enable/disable debug drawing.
  
 	@in		MOAIBox2DWorld self
-	@in		number bEnable
+	@in		boolean enable
 	@out	nil
 */
 int MOAIBox2DWorld::_setDebugDrawEnabled ( lua_State* L ) {

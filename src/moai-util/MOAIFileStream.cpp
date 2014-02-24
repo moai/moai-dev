@@ -27,6 +27,7 @@ int MOAIFileStream::_close ( lua_State* L ) {
 	@text	Open or create a file stream given a valid path.
 	
 	@in		MOAIFileStream self
+	@in		string fileName
 	@opt	number mode			One of MOAIFileStream.APPEND, MOAIFileStream.READ, MOAIFileStream.READ_WRITE, MOAIFileStream.READ_WRITE_AFFIRM,
 								MOAIFileStream.READ_WRITE_NEW, MOAIFileStream.WRITE. Default value is MOAIFileStream.READ.
 	@out	boolean success
