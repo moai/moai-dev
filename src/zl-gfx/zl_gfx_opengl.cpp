@@ -460,6 +460,12 @@ void zglInitialize () {
 		sIsProgrammable = ( majorVersion >= 2 );
 		sIsFramebufferSupported = true;
 	#endif
+
+		#ifdef EMSCRIPTEN 
+			isOpenGLES = true;
+			sIsProgrammable = true;
+			sIsFramebufferSupported = true;
+		#endif
 	
 	#if defined ( __GLEW_H__ )
 	
