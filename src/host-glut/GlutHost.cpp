@@ -294,21 +294,23 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		sHasWindow = true;
 	}
 
-	glutIgnoreKeyRepeat ( 1 );
+	#ifndef AKU_WITH_TEST
+		glutIgnoreKeyRepeat ( 1 );
 
-	glutKeyboardFunc ( _onKeyDown );
-	glutKeyboardUpFunc ( _onKeyUp );
-	glutSpecialFunc ( _onSpecialFunc );
+		glutKeyboardFunc ( _onKeyDown );
+		glutKeyboardUpFunc ( _onKeyUp );
+		glutSpecialFunc ( _onSpecialFunc );
 
-	glutMouseFunc ( _onMouseButton );
-	glutMotionFunc ( _onMouseDrag );
+		glutMouseFunc ( _onMouseButton );
+		glutMotionFunc ( _onMouseDrag );
 
-	#ifdef FREEGLUT_STATIC 
-	glutMultiButtonFunc ( _onMultiButton );
-	glutMultiMotionFunc ( _onMultiMotion );
-	#endif
-	
-	glutPassiveMotionFunc ( _onMouseMove );
+		#ifdef FREEGLUT_STATIC 
+		glutMultiButtonFunc ( _onMultiButton );
+		glutMultiMotionFunc ( _onMultiMotion );
+		#endif
+		
+		glutPassiveMotionFunc ( _onMouseMove );
+    #endif
 
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
