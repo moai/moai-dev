@@ -1103,12 +1103,17 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			--rewindCount;
 		}
 		else{
-			// store the glyph in mGlyphArray
-			error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
-			CHECK_ERROR(error);
+			if (this->mGlyphArray) {
+				// store the glyph in mGlyphArray
+				error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
+				CHECK_ERROR(error);
+			}
 			
-			// store the advance in mAdvanceArray
-			this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
+			if (this->mAdvanceArray) {
+				// store the advance in mAdvanceArray
+				this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
+			}
+			
 			
 			++glyphArrayIndex;
 		}
