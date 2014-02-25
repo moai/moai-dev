@@ -30,7 +30,7 @@ int WaveFile::open(const char *path)
 	
 	char s[5];
 	FOURCC2STR(formatCode(), s);
-	printf("type = %s\n", s);
+	//printf("type = %s\n", s);
 
 	if(formatCode() != STR2FOURCC("WAVE"))
 	{
