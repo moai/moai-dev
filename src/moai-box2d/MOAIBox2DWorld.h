@@ -13,6 +13,7 @@ class MOAIBox2DDebugDraw;
 class MOAIBox2DFixture;
 class MOAIBox2DJoint;
 class MOAIBox2DWorld;
+class MOAIBox2DRayCastCallback;
 
 //================================================================//
 // MOAIBox2DPrim
