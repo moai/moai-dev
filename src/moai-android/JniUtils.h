@@ -24,6 +24,7 @@ protected:
 
 	JNIEnv*		mEnv;
 	jclass		mClass;
+	jobject		mActivity;
 
 public:
 
@@ -34,15 +35,21 @@ public:
 	long				CallStaticLongMethod		( jmethodID method, ... );
 	jobject				CallStaticObjectMethod		( jmethodID method, ... );
 	void				CallStaticVoidMethod		( jmethodID method, ... );
+	void				ClearException				();
 	jobject				CreateObjectOfClass			();
+	jclass				GetClass					( cc8* className );
+	jclass				GetClassViaLoader			( cc8* className );
 	cc8*				GetCString					( jstring jstr );
 	jstring				GetJString					( cc8* cstr );
 	jmethodID			GetMethod					( cc8* methodName, cc8* methodSignature );
+	jmethodID			GetMethod					( jclass clazz, cc8* methodName, cc8* methodSignature );
 	jmethodID			GetStaticMethod				( cc8* methodName, cc8* methodSignature );
+	jmethodID			GetStaticMethod				( jclass clazz, cc8* methodName, cc8* methodSignature );
 						JniUtils					();
 						~JniUtils					();
 	void				ReleaseCString				( jstring jstr, cc8* cstr );
-	void				SetClass					( cc8* className );
+	bool				SetClass					( cc8* className );
+	bool				SetClassViaLoader			( cc8* className );
 };
 
 #endif

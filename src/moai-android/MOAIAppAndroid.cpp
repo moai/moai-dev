@@ -16,6 +16,22 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAppAndroid::_getPictureCode( lua_State* L ) {
+	MOAILuaState state( L );
+	MOAIAppAndroid::Get().PushPictureCode( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAppAndroid::_getPicturePath( lua_State* L ) {
+	MOAILuaState state( L );
+	MOAIAppAndroid::Get().PushPicturePath( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getUTCTime
 	@text	Gets the UTC time.
 
@@ -125,21 +141,6 @@ int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAppAndroid::_setListener ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-
-	if ( idx < TOTAL ) {
-
-		MOAIAppAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	share
 	@text	Open a generic Android dialog to allow the user to share
 			via email, SMS, Facebook, Twitter, etc.
@@ -182,6 +183,8 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIAppAndroid::_takePicture( lua_State* L ) {
     MOAILuaState state( L);
 
@@ -200,56 +203,9 @@ int MOAIAppAndroid::_takePicture( lua_State* L ) {
     return 0;
 }
 
-int MOAIAppAndroid::_getPictureCode( lua_State* L ) {
-	MOAILuaState state( L );
-	MOAIAppAndroid::Get().PushPictureCode( state );
-	return 1;
-}
-int MOAIAppAndroid::_getPicturePath( lua_State* L ) {
-	MOAILuaState state( L );
-	MOAIAppAndroid::Get().PushPicturePath( state );
-	return 1;
-}
-
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
-
-//----------------------------------------------------------------//
-MOAIAppAndroid::MOAIAppAndroid () {
-
-	RTTI_SINGLE ( MOAILuaObject );
-
-}
-
-//----------------------------------------------------------------//
-MOAIAppAndroid::~MOAIAppAndroid () {
-
-}
-
-//----------------------------------------------------------------//
-void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
-
-	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
-	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
-	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
-	state.SetField ( -1, "EVENT_PICTURE_TAKEN",		( u32 )EVENT_PICTURE_TAKEN );
-
-	luaL_Reg regTable [] = {
-		{ "getUTCTime",				_getUTCTime },
-		{ "getStatusBarHeight",		_getStatusBarHeight },
-		{ "sendMail",				_sendMail },
-		{ "setListener",			_setListener },
-		{ "share",					_share },
-        { "takePicture",            _takePicture },
-        { "getPictureCode",			_getPictureCode },
-        { "getPicturePath",			_getPicturePath },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
 
 //----------------------------------------------------------------//
 void MOAIAppAndroid::AppOpenedFromURL ( jstring url ) {
@@ -269,49 +225,45 @@ void MOAIAppAndroid::AppOpenedFromURL ( jstring url ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAppAndroid::NotifyBackButtonPressed () {
+MOAIAppAndroid::MOAIAppAndroid () {
 
-	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
+	RTTI_SINGLE ( MOAILuaObject );
 
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		state.DebugCall ( 0, 1 );
-
-		return lua_toboolean ( state, -1 );
-	} else {
-
-		return false;
-	}
 }
 
 //----------------------------------------------------------------//
-void MOAIAppAndroid::NotifyDidStartSession ( bool resumed ) {
+MOAIAppAndroid::~MOAIAppAndroid () {
 
-	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
-
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		lua_pushboolean ( state, resumed );
-
-		state.DebugCall ( 1, 0 );
-	}
 }
 
 //----------------------------------------------------------------//
-void MOAIAppAndroid::NotifyWillEndSession () {
+void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
+	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
+	state.SetField ( -1, "ACTIVITY_ON_CREATE",		( u32 )ACTIVITY_ON_CREATE );
+	state.SetField ( -1, "ACTIVITY_ON_DESTROY",		( u32 )ACTIVITY_ON_DESTROY );
+	state.SetField ( -1, "ACTIVITY_ON_START",		( u32 )ACTIVITY_ON_START );
+	state.SetField ( -1, "ACTIVITY_ON_STOP",		( u32 )ACTIVITY_ON_STOP );
+	state.SetField ( -1, "ACTIVITY_ON_PAUSE",		( u32 )ACTIVITY_ON_PAUSE );
+	state.SetField ( -1, "ACTIVITY_ON_RESUME",		( u32 )ACTIVITY_ON_RESUME );
+	state.SetField ( -1, "ACTIVITY_ON_RESTART",		( u32 )ACTIVITY_ON_RESTART );
+	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
+	state.SetField ( -1, "EVENT_PICTURE_TAKEN",		( u32 )EVENT_PICTURE_TAKEN );
 
-	if ( callback ) {
+	luaL_Reg regTable [] = {
+        { "getPictureCode",			_getPictureCode },
+        { "getPicturePath",			_getPicturePath },
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIAppAndroid > },
+		{ "getUTCTime",				_getUTCTime },
+		{ "getStatusBarHeight",		_getStatusBarHeight },
+		{ "sendMail",				_sendMail },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIAppAndroid > },
+		{ "share",					_share },
+        { "takePicture",            _takePicture },
+		{ NULL, NULL }
+	};
 
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		state.DebugCall ( 0, 0 );
-	}
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -338,6 +290,19 @@ void MOAIAppAndroid::NotifyPictureTaken() {
 			JNI_RELEASE_CSTRING( j_path, c_path );
 
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAppAndroid::PushPictureCode( MOAILuaState& state ) {
+	JNI_GET_ENV( jvm, env );
+
+	jclass t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );
+	jmethodID t_getResultCode_mid = env->GetStaticMethodID( t_class, "getResultCode", "()I" );
+
+	if( t_class != NULL && t_getResultCode_mid != NULL ) {
+		int j_code = env->CallStaticIntMethod( t_class, t_getResultCode_mid );
+		state.Push( j_code );
 	}
 }
 
@@ -378,44 +343,23 @@ void MOAIAppAndroid::PushPicturePath( MOAILuaState& state ) {
 	}
 }
 
+//================================================================//
+// MOAIAppAndroid JNI Functions
+//================================================================//
+
 //----------------------------------------------------------------//
-void MOAIAppAndroid::PushPictureCode( MOAILuaState& state ) {
-	JNI_GET_ENV( jvm, env );
+extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	jclass t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );
-	jmethodID t_getResultCode_mid = env->GetStaticMethodID( t_class, "getResultCode", "()I" );
-
-	if( t_class != NULL && t_getResultCode_mid != NULL ) {
-		int j_code = env->CallStaticIntMethod( t_class, t_getResultCode_mid );
-		state.Push( j_code );
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( MOAIAppAndroid::Get ().PushListener ( eventID, state )) {
+		state.DebugCall ( 0, 1 );
+		return state.GetValue < bool >( -1, false );
 	}
-}
-
-
-//================================================================//
-// Miscellaneous JNI Functions
-//================================================================//
-
-//----------------------------------------------------------------//
-extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppBackButtonPressed ( JNIEnv* env, jclass obj ) {
-
-	return MOAIAppAndroid::Get ().NotifyBackButtonPressed ();
+	return false;
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDidStartSession ( JNIEnv* env, jclass obj, jboolean resumed ) {
-
-	MOAIAppAndroid::Get ().NotifyDidStartSession ( resumed );
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
-
-	MOAIAppAndroid::Get ().NotifyWillEndSession ();
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken( JNIEnv* env, jclass obj ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken ( JNIEnv* env, jclass obj ) {
 	MOAIAppAndroid::Get ().NotifyPictureTaken ();
 }
 

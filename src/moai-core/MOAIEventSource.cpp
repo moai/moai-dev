@@ -36,16 +36,6 @@ bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
-
-	if ( this->PushListener ( eventID, state )) {
-		this->PushLuaUserdata ( state );
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 
 	MOAILuaState state ( L );
@@ -117,6 +107,15 @@ void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListenerAndSelf ( eventID, state )) {
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 	RTTI_BEGIN
@@ -126,6 +125,16 @@ MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 //----------------------------------------------------------------//
 MOAIInstanceEventSource::~MOAIInstanceEventSource () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIInstanceEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
+
+	if ( this->PushListener ( eventID, state )) {
+		this->PushLuaUserdata ( state );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -160,6 +169,15 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 		lua_newtable ( state );
 		this->mListenerTable.SetRef ( state, -1 );
 		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( eventID, state )) {
+		state.DebugCall ( 1, 0 );
 	}
 }
 

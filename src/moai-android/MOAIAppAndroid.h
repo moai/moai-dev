@@ -21,56 +21,43 @@
 	@const	BACK_BUTTON_PRESSED		Event code indicating that the physical device back button was pressed.
 */
 class MOAIAppAndroid :
-	public MOAIGlobalClass < MOAIAppAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIAppAndroid, MOAIGlobalEventSource > {
 private:
 
 	enum {
-		APP_OPENED_FROM_URL,
-		SESSION_START,
-		SESSION_END,
+		ACTIVITY_ON_CREATE,
+		ACTIVITY_ON_DESTROY,
+		ACTIVITY_ON_START,
+		ACTIVITY_ON_STOP,
+		ACTIVITY_ON_PAUSE,
+		ACTIVITY_ON_RESUME,
+		ACTIVITY_ON_RESTART,
 		BACK_BUTTON_PRESSED,
 		EVENT_PICTURE_TAKEN,
-		TOTAL,
 	};
 
-	MOAILuaStrongRef	mListeners [ TOTAL ];
-
 	//----------------------------------------------------------------//
-	static int	_exitGame			( lua_State* L );
-	static int	_getUTCTime			( lua_State* L );
-	static int 	_getStatusBarHeight ( lua_State* L );
-	static int	_sendMail			( lua_State* L );
-	static int	_setListener		( lua_State* L );
-	static int	_share				( lua_State* L );
-
-
-	// ## CAMERA SUPPORT
-	static int _takePicture		( lua_State* L );
-	static int _getPictureCode	( lua_State* L );
-	static int _getPicturePath	( lua_State* L );
-
-	// ## /CAMERA SUPPORT
+	static int	_getPictureCode			( lua_State* L );
+	static int	_getPicturePath			( lua_State* L );
+	static int	_getUTCTime				( lua_State* L );
+	static int 	_getStatusBarHeight 	( lua_State* L );
+	static int	_sendMail				( lua_State* L );
+	static int	_share					( lua_State* L );
+	static int	_takePicture			( lua_State* L );
 
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
 
+	//----------------------------------------------------------------//
+	void	AppOpenedFromURL			( jstring url );
 			MOAIAppAndroid				();
 			~MOAIAppAndroid				();
-	bool	NotifyBackButtonPressed		();
-	void	AppOpenedFromURL		( jstring url );
-	void	NotifyDidStartSession		( bool resumed );
-	void	NotifyWillEndSession		();
-
-//	void	NotifyPictureTaken			( int code, cc8* path );
 	void	NotifyPictureTaken			();
-	void	PushPictureData( MOAILuaState& state );
-	void	PushPictureCode( MOAILuaState& state );
-	void	PushPicturePath( MOAILuaState& state );
-
+	void	PushPictureCode				( MOAILuaState& state );
+	void	PushPictureData				( MOAILuaState& state );
+	void	PushPicturePath				( MOAILuaState& state );
 	void	RegisterLuaClass			( MOAILuaState& state );
-
-
 };
 
 #endif

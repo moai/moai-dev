@@ -118,6 +118,14 @@ void JniUtils::CallStaticVoidMethod ( jmethodID method, ... ) {
 }
 
 //----------------------------------------------------------------//
+void JniUtils::ClearException () {
+	
+	if ( this->mEnv->ExceptionCheck () == JNI_TRUE ) {
+		this->mEnv->ExceptionClear ();
+	}
+}
+
+//----------------------------------------------------------------//
 jobject JniUtils::CreateObjectOfClass () {
 
      if ( !this->mClass ) {
@@ -127,6 +135,38 @@ jobject JniUtils::CreateObjectOfClass () {
     }
     jmethodID constructor = this->mEnv->GetMethodID ( this->mClass, "<init>", "()V" );
     return this->mEnv->NewObject ( this->mClass, constructor );
+}
+
+//----------------------------------------------------------------//
+jclass JniUtils::GetClass ( cc8* className ) {
+	
+	jclass clazz = this->mEnv->FindClass ( className );
+	if ( clazz == NULL ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java class %s", className );
+		this->ClearException ();
+	}
+	return clazz;
+}
+
+//----------------------------------------------------------------//
+jclass JniUtils::GetClassViaLoader ( cc8* className ) {
+
+	jstring jclassName = this->GetJString ( className );
+	
+	jclass contextClass = this->GetClass ( "android/content/Context" );
+	jmethodID getClassLoader = this->GetMethod ( contextClass, "getClassLoader", "()Ljava/lang/ClassLoader;" );
+	
+	jclass classLoaderClass = this->GetClass ( "java/lang/ClassLoader" );
+	jmethodID loadClass = this->GetMethod ( classLoaderClass, "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;" );
+	
+	jobject classLoader = this->mEnv->CallObjectMethod ( this->mActivity, getClassLoader );
+	jclass clazz = ( jclass )( this->mEnv->CallObjectMethod ( classLoader, loadClass, jclassName ));
+	
+    if ( clazz == NULL ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java class %d", className );
+		this->ClearException ();
+    }
+	return clazz;
 }
 
 //----------------------------------------------------------------//
@@ -143,36 +183,48 @@ jstring JniUtils::GetJString ( cc8* cstr ) {
 
 //----------------------------------------------------------------//
 jmethodID JniUtils::GetMethod ( cc8* methodName, cc8* methodSignature ) {
+
+	this->GetMethod ( this->mClass, methodName, methodSignature );
+}
+
+//----------------------------------------------------------------//
+jmethodID JniUtils::GetMethod ( jclass clazz, cc8* methodName, cc8* methodSignature ) {
 	
-    if ( !this->mClass ) {
+    if ( !clazz ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java method %d", methodName );
-		assert ( false );
+		this->ClearException ();
 		return NULL;
     }
 	
-    jmethodID method = this->mEnv->GetMethodID ( this->mClass, methodName, methodSignature );
+    jmethodID method = this->mEnv->GetMethodID ( clazz, methodName, methodSignature );
 	
 	if ( method == NULL ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java method %s", methodName );
-		assert ( false );
+		this->ClearException ();
 	}
 	return method;
 }
 
 //----------------------------------------------------------------//
 jmethodID JniUtils::GetStaticMethod ( cc8* methodName, cc8* methodSignature ) {
+
+	this->GetStaticMethod ( this->mClass, methodName, methodSignature );
+}
+
+//----------------------------------------------------------------//
+jmethodID JniUtils::GetStaticMethod ( jclass clazz, cc8* methodName, cc8* methodSignature ) {
 	
-    if ( !this->mClass ) {
+    if ( !clazz ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find static java method %d", methodName );
-		assert ( false );
+		this->ClearException ();
 		return NULL;
     }
 	
-    jmethodID method = this->mEnv->GetStaticMethodID ( this->mClass, methodName, methodSignature );
+    jmethodID method = this->mEnv->GetStaticMethodID ( clazz, methodName, methodSignature );
 	
 	if ( method == NULL ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find static java method %s", methodName );
-		assert ( false );
+		this->ClearException ();
 	}
 	return method;
 }
@@ -183,6 +235,12 @@ JniUtils::JniUtils () :
 	mClass ( 0 ) {
 	
 	jvm->GetEnv (( void** )&this->mEnv, JNI_VERSION_1_4 );
+	
+	jclass clazz = this->GetClass ( "com.ziplinegames.moai.Moai" );
+    jmethodID getActivity = this->mEnv->GetStaticMethodID ( clazz, "getActivity", "()Landroid/app/Activity;" );
+	this->mActivity = this->mEnv->CallStaticObjectMethod ( clazz, getActivity );
+
+	assert ( this->mActivity );
 }
 
 //----------------------------------------------------------------//
@@ -198,11 +256,19 @@ void JniUtils::ReleaseCString ( jstring jstr, cc8* cstr ) {
 }
 
 //----------------------------------------------------------------//
-void JniUtils::SetClass ( cc8* className ) {
+bool JniUtils::SetClass ( cc8* className ) {
 	
-	this->mClass = this->mEnv->FindClass ( className );
-    if ( this->mClass ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java class %s", className );
-		assert ( false );
-    }
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: set class %s", className );
+	
+	this->mClass = this->GetClass ( className );
+	return this->mClass != NULL;
+}
+
+//----------------------------------------------------------------//
+bool JniUtils::SetClassViaLoader ( cc8* className ) {
+	
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: set class via loader %s", className );
+	
+	this->mClass = this->GetClassViaLoader ( className );
+	return this->mClass != NULL;
 }

@@ -278,6 +278,11 @@
 		REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
 #endif
 
+#ifndef DISABLE_FLURRY
+		MOAIFlurryAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFlurryAndroid );
+#endif
+
 #ifndef DISABLE_NOTIFICATIONS
 		MOAINotificationsAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
