@@ -1013,6 +1013,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
 		{ "setTimeToSleep",				_setTimeToSleep },
 		{ "setUnitsToMeters",			_setUnitsToMeters },
+	  	{ "getRayCast",                                 _getRayCast },
 		{ NULL, NULL }
 	};
 	
@@ -1072,4 +1073,55 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroy = true;
 	}
 	this->Destroy ();
+}
+
+//----------------------------------------------------------------//
+/**     @name   getRayCast
+        @text   return RayCast 1st point hit
+       
+        @in             MOAIBox2DWorld self
+        @in             number p1x
+        @in             number p1y
+        @in             number p2x
+        @in             number p2y
+        @out    bool	true if hit, false otherwise
+		@out	  MOAIBox2DFixture fixture that was hit, or nil
+        @out    number hitpoint.x
+        @out    number hitpoint.y
+*/
+int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	float p1x=state.GetValue < float >( 2, 0 );
+	float p1y=state.GetValue < float >( 3, 0 );
+	float p2x=state.GetValue < float >( 4, 0 );
+	float p2y=state.GetValue < float >( 5, 0 );
+ 
+	b2Vec2 p1(p1x,p1y);
+	b2Vec2 p2(p2x,p2y);
+   
+	MOAIBox2DRayCastCallback callback;
+	self->mWorld->RayCast(&callback, p1, p2);
+ 
+	if (NULL != callback.m_fixture) {
+		b2Vec2 hitpoint = callback.m_point;
+
+		lua_pushboolean ( state, true );
+		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
+
+		// Raycast hit a fixture
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) callback.m_fixture->GetUserData ();
+		if ( moaiFixture ) {
+			moaiFixture->PushLuaUserdata ( state );
+			return 4;
+		} else {
+			return 3;
+		}
+
+	} else {
+
+		// Raycast did not hit a fixture
+		lua_pushboolean( state, false );
+		return 1;
+	}
 }
