@@ -125,21 +125,6 @@ int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAppAndroid::_setListener ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-
-	if ( idx < TOTAL ) {
-
-		MOAIAppAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	share
 	@text	Open a generic Android dialog to allow the user to share
 			via email, SMS, Facebook, Twitter, etc.
@@ -200,15 +185,21 @@ MOAIAppAndroid::~MOAIAppAndroid () {
 //----------------------------------------------------------------//
 void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
+	state.SetField ( -1, "ACTIVITY_ON_CREATE",		( u32 )ACTIVITY_ON_CREATE );
+	state.SetField ( -1, "ACTIVITY_ON_DESTROY",		( u32 )ACTIVITY_ON_DESTROY );
+	state.SetField ( -1, "ACTIVITY_ON_START",		( u32 )ACTIVITY_ON_START );
+	state.SetField ( -1, "ACTIVITY_ON_STOP",		( u32 )ACTIVITY_ON_STOP );
+	state.SetField ( -1, "ACTIVITY_ON_PAUSE",		( u32 )ACTIVITY_ON_PAUSE );
+	state.SetField ( -1, "ACTIVITY_ON_RESUME",		( u32 )ACTIVITY_ON_RESUME );
+	state.SetField ( -1, "ACTIVITY_ON_RESTART",		( u32 )ACTIVITY_ON_RESTART );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 
 	luaL_Reg regTable [] = {
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIAppAndroid > },
 		{ "getUTCTime",				_getUTCTime },
 		{ "getStatusBarHeight",		_getStatusBarHeight },
 		{ "sendMail",				_sendMail },
-		{ "setListener",			_setListener },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIAppAndroid > },
 		{ "share",					_share },
 		{ NULL, NULL }
 	};
@@ -216,70 +207,17 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// MOAIAppAndroid JNI Functions
+//================================================================//
+
 //----------------------------------------------------------------//
-bool MOAIAppAndroid::NotifyBackButtonPressed () {
+extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
-
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( MOAIAppAndroid::Get ().PushListener ( eventID, state )) {
 		state.DebugCall ( 0, 1 );
-
-		return lua_toboolean ( state, -1 );
-	} else {
-
-		return false;
+		return state.GetValue < bool >( -1, false );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppAndroid::NotifyDidStartSession ( bool resumed ) {
-
-	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
-
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		lua_pushboolean ( state, resumed );
-
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppAndroid::NotifyWillEndSession () {
-
-	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
-
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//================================================================//
-// Miscellaneous JNI Functions
-//================================================================//
-
-//----------------------------------------------------------------//
-extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppBackButtonPressed ( JNIEnv* env, jclass obj ) {
-
-	return MOAIAppAndroid::Get ().NotifyBackButtonPressed ();
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDidStartSession ( JNIEnv* env, jclass obj, jboolean resumed ) {
-
-	MOAIAppAndroid::Get ().NotifyDidStartSession ( resumed );
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
-
-	MOAIAppAndroid::Get ().NotifyWillEndSession ();
+	return false;
 }

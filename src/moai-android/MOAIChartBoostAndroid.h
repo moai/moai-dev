@@ -7,18 +7,21 @@
 #ifndef DISABLE_CHARTBOOST
 
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 //================================================================//
 // MOAIChartBoostAndroid
 //================================================================//
 class MOAIChartBoostAndroid :
-	public MOAIGlobalClass < MOAIChartBoostAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIChartBoostAndroid, MOAIGlobalEventSource >,
+	public JniUtils {
 private:
+	
 		//----------------------------------------------------------------//
-		static int	_init 				( lua_State* L );
-		static int	_loadInterstitial 	( lua_State* L );
-		static int	_setListener		( lua_State* L );
-		static int	_showInterstitial 	( lua_State* L );
+		static int	_cacheInterstitial		( lua_State* L );
+		static int	_hasCachedInterstitial	( lua_State* L );
+		static int	_onCreate 				( lua_State* L );
+		static int	_showInterstitial 		( lua_State* L );
 
 	public:
 
@@ -27,11 +30,9 @@ private:
 		enum {
 			INTERSTITIAL_LOAD_FAILED,
 			INTERSTITIAL_DISMISSED,
-			TOTAL
 		};
 
-		MOAILuaStrongRef		mListeners [ TOTAL ];
-
+		//----------------------------------------------------------------//
 						MOAIChartBoostAndroid			();
 						~MOAIChartBoostAndroid			();
 		void 			NotifyInterstitialDismissed		();

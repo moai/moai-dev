@@ -18,35 +18,34 @@
 	@const	BACK_BUTTON_PRESSED		Event code indicating that the physical device back button was pressed.
 */
 class MOAIAppAndroid :
-	public MOAIGlobalClass < MOAIAppAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIAppAndroid, MOAIGlobalEventSource > {
 private:
 
 	enum {
-		SESSION_START,
-		SESSION_END,
+		ACTIVITY_ON_CREATE,
+		ACTIVITY_ON_DESTROY,
+		ACTIVITY_ON_START,
+		ACTIVITY_ON_STOP,
+		ACTIVITY_ON_PAUSE,
+		ACTIVITY_ON_RESUME,
+		ACTIVITY_ON_RESTART,
 		BACK_BUTTON_PRESSED,
-		TOTAL,
 	};
-
-	MOAILuaStrongRef	mListeners [ TOTAL ];
 
 	//----------------------------------------------------------------//
 	static int	_exitGame			( lua_State* L );
 	static int	_getUTCTime			( lua_State* L );
 	static int 	_getStatusBarHeight ( lua_State* L );
 	static int	_sendMail			( lua_State* L );
-	static int	_setListener		( lua_State* L );
 	static int	_share				( lua_State* L );
 
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
 
+	//----------------------------------------------------------------//
 			MOAIAppAndroid				();
 			~MOAIAppAndroid				();
-	bool	NotifyBackButtonPressed		();
-	void	NotifyDidStartSession		( bool resumed );
-	void	NotifyWillEndSession		();
 	void	RegisterLuaClass			( MOAILuaState& state );
 };
 

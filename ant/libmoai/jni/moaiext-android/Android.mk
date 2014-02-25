@@ -15,22 +15,6 @@
 	LOCAL_CFLAGS		+= -include $(MY_MOAI_ROOT)/src/zl-vfs/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIAppAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIBrowserAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIDialogAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIAdColonyAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIBillingAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIChartBoostAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAICrittercismAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIFacebookAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIKeyboardAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIMoviePlayerAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAINotificationsAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITapjoyAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITwitterAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITstoreWallAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAITstoreGamecenterAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/MOAIGooglePlayServicesAndroid.cpp
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/moai-android/JniUtils.cpp
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/moai-android/*.cpp)
 
 	include $(BUILD_STATIC_LIBRARY)
