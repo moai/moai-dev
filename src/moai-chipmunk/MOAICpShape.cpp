@@ -285,7 +285,7 @@ int MOAICpShape::_isSensor ( lua_State* L ) {
 	@text	Return the moment of inertia for the circle.
 
 	@in		number m
-	@opt	number r1
+	@in		number r1
 	@in		number r2
 	@in		number ox
 	@in		number oy

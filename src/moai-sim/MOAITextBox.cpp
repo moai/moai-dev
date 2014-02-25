@@ -225,6 +225,7 @@ int MOAITextBox::_more ( lua_State* L ) {
 	@text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
 
 	@in		MOAITextBox self
+	@opt	boolean reveal		Default is true
 	@out	nil
 */
 int MOAITextBox::_nextPage ( lua_State* L ) {
@@ -450,7 +451,7 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 	@text	If set to true text positions will snap to integers according to the viewport scale. Default value is true.
 
 	@in		MOAITextBox self
-	@in		bool snap				Whether text positions should snap to viewport scale
+	@in		boolean snap				Whether text positions should snap to viewport scale
 	@out	nil
 */
 int MOAITextBox::_setSnapToViewportScale ( lua_State* L ) {
@@ -563,7 +564,7 @@ int MOAITextBox::_setWordBreak ( lua_State* L ) {
 			Y moves up the screen).
 
 	@in		MOAITextBox self
-	@in		number yFlip				Whether the vertical rendering direction should be inverted.
+	@in		boolean yFlip				Whether the vertical rendering direction should be inverted.
 	@out	nil
 */
 int MOAITextBox::_setYFlip ( lua_State* L ) {

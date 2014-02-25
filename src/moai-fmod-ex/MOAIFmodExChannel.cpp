@@ -80,7 +80,7 @@ int MOAIFmodExChannel::_moveVolume ( lua_State* L ) {
 
 	@in		MOAIFmodExChannel self
 	@in		MOAIFmodExSound sound		The sound to play.
-	@in		boolean loop			Whether the sound should be looped.
+	@in		number loopCount			Number of loops.
 	@out	nil
 */
 int MOAIFmodExChannel::_play ( lua_State* L ) {
