@@ -1074,13 +1074,36 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			penX = penXReset;
 			lineIndex = tokenIndex = glyphArrayIndex;
 			tokenN = n;
-			textLength = lastTokenLength = 0;
+			
 			if (generateLines) {
 				this->BuildLine(textBuffer, textLength, startIndex);
 				
 				error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 				CHECK_ERROR(error);
+				
+				if (rewindCount > 0){
+					--rewindCount;
+				}
+				else{
+					if (this->mGlyphArray) {
+						// store the glyph in mGlyphArray
+						error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
+						CHECK_ERROR(error);
+					}
+					
+					if (this->mAdvanceArray) {
+						// store the advance in mAdvanceArray
+						this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
+					}
+					
+					
+					++glyphArrayIndex;
+				}
+				
+				
 			}
+			
+			textLength = lastTokenLength = 0;
 			
 			continue;
 		}
@@ -1147,7 +1170,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 				numberOfLines++;
 				textLength = 0;
 				penX = penXReset;
-				lineIndex = tokenIndex = glyphArrayIndex;
+				lineIndex = tokenIndex = glyphArrayIndex -1;
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
@@ -1200,7 +1223,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						// advance to next line
 						numberOfLines++;
 						penX = penXReset;
-						lineIndex = tokenIndex = glyphArrayIndex;
+						lineIndex = tokenIndex = glyphArrayIndex - 1;
 					}
 					else{
 						// we don't words broken up when calculating optimal size
