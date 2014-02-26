@@ -14,7 +14,7 @@
 	@text	Attach the anchor to a transform.
 	
 	@in		MOAICameraAnchor2D self
-	@opt	MOAITransformBase parent
+	@opt	MOAINode parent
 	@out	nil
 */
 int MOAICameraAnchor2D::_setParent ( lua_State* L ) {

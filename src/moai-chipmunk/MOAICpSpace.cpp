@@ -299,6 +299,7 @@ int MOAICpSpace::_insertProp ( lua_State* L ) {
 	@text	Updates the shape in the spatial hash.
 
 	@in		MOAICpSpace self
+	@in		MOAICpShape shape
 	@out	nil
 */
 int MOAICpSpace::_rehashShape ( lua_State* L ) {

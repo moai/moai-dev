@@ -55,6 +55,7 @@ int MOAIStreamReader::_openBase64 ( lua_State* L ) {
 	
 	@in		MOAIStreamReader self
 	@in		MOAIStream target
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	boolean success
 */
 int MOAIStreamReader::_openDeflate ( lua_State* L ) {

@@ -56,6 +56,8 @@ int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
 	
 	@in		MOAIStreamWriter self
 	@in		MOAIStream target
+	@opt	number level			The level used in the DEFLATE algorithm.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	boolean success
 */
 int MOAIStreamWriter::_openDeflate ( lua_State* L ) {

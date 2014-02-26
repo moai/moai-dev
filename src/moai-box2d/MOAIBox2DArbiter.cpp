@@ -69,7 +69,8 @@ int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 	@text	Enabled or disable the contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse
+	@in		boolean enabled
+	@out	nil
 */
 int MOAIBox2DArbiter::_setContactEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )

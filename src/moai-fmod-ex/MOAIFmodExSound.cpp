@@ -63,9 +63,14 @@ int MOAIFmodExSound::_load ( lua_State* L ) {
 /**	@name	loadBGM
 	@text	Loads the specified BGM sound from file, or from a MOAIDataBuffer.
 
+	@overload
 	@in		MOAIFmodExSound self
-	@opt	string filename			The path to the sound to load from file.
-	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+	@in		string filename			The path to the sound to load from file.
+	@out	nil
+	
+	@overload
+	@in		MOAIFmodExSound self
+	@in		MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.
 	@out	nil
 */
 int	MOAIFmodExSound::_loadBGM ( lua_State* L ) {
@@ -92,9 +97,14 @@ int	MOAIFmodExSound::_loadBGM ( lua_State* L ) {
 /**	@name	loadSFX
 	@text	Loads the specified SFX sound from file, or from a MOAIDataBuffer.
 
+	@overload
 	@in		MOAIFmodExSound self
-	@opt	string filename			The path to the sound to load from file.
-	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+	@in	string filename			The path to the sound to load from file.
+	@out	nil
+
+	@overload
+	@in		MOAIFmodExSound self
+	@in		MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.
 	@out	nil
 */
 int	MOAIFmodExSound::_loadSFX ( lua_State* L ) {
