@@ -430,7 +430,7 @@ int MOAIHttpTaskBase::_setStream ( lua_State* L ) {
  @text	Sets the timeout for the task.
  
  @in		MOAIHttpTaskBase self
- @in		string url
+ @in		number timeout
  @out	nil
  */
 int  MOAIHttpTaskBase::_setTimeout ( lua_State* L ) {

@@ -76,10 +76,16 @@ int MOAIDataBuffer::_clear ( lua_State* L ) {
 /**	@name	deflate
 	@text	Compresses the string or the current data stored in this object using the DEFLATE algorithm.
 
-	@opt	MOAIDataBuffer self
-	@opt	string data				The string data to deflate.  You must either provide either a MOAIDataBuffer (via a :deflate type call) or string data (via a .deflate type call), but not both.
-	@in		number level			The level used in the DEFLATE algorithm.  Pass nil to use the default value.
-	@in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@overload
+	@in		string data				The string data to deflate.
+	@opt	number level			The level used in the DEFLATE algorithm.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
+	@out	string output			If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
+
+	@overload
+	@in		MOAIDataBuffer self
+	@opt	number level			The level used in the DEFLATE algorithm.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_deflate ( lua_State* L ) {
@@ -198,9 +204,14 @@ int MOAIDataBuffer::_hexEncode ( lua_State* L ) {
 /**	@name	inflate
 	@text	Decompresses the string or the current data stored in this object using the DEFLATE algorithm.
 
-	@opt	MOAIDataBuffer self
-	@opt	string data				The string data to inflate.  You must either provide either a MOAIDataBuffer (via a :inflate type call) or string data (via a .inflate type call), but not both.
-	@in		number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@overload
+	@in		string data				The string data to inflate.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
+	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
+
+	@overload
+	@in		MOAIDataBuffer self
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_inflate ( lua_State* L ) {

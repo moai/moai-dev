@@ -55,7 +55,7 @@ static inline SInt16 limit_float_conv_SInt16(float inValue)
 }
 
 void *audio_loop (void *ptr) {
-	fprintf(stdout, "Audio Thread running\n:");
+	//fprintf(stdout, "Audio Thread running\n:");
 
 	alutInit(0, NULL);
 	alGetError();

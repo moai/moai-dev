@@ -24,11 +24,11 @@ extern JavaVM* jvm;
   
 //----------------------------------------------------------------//
 // The listeners need to be called on the event
-extern "C" bool Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyKeyEvent();
 }
 
-extern "C" bool Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyTextDone();
 }
 
@@ -40,15 +40,21 @@ int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
 
 	if ( moai ) {
-		jmethodID hideSoftKeyboard = env->GetStaticMethodID ( moai, "hideKeyboard", "()Z" );
+        jmethodID hideSoftKeyboard = env->GetStaticMethodID ( moai, "hideKeyboard", "()V" );
 		if ( hideSoftKeyboard ) {
-			bool result = ( bool )env->CallStaticBooleanMethod ( moai, hideSoftKeyboard ); 
-			lua_pushboolean ( state, result );
+            env->CallStaticVoidMethod ( moai, hideSoftKeyboard );
+            // !hiq-max - max@dynlab.at !: pushing "false", because old code returned the value from call to nonexisting
+            // function "bool hideKeyboard()", signature is "void hideKeyboard()"
+            // void was casted to bool and returned to the lua vm
+            // this worked up until now, wrong function lookup and call caused segfault
+            lua_pushboolean ( state, false );
 			return 1;
 		}
 	}
 
 	MOAIKeyboardAndroid::Get ().Finish ();
+
+	return 0;
 }
 
 // Listeners use getText to retrieve the input
@@ -89,22 +95,40 @@ int MOAIKeyboardAndroid::_setText ( lua_State* L ) {
 			return 1;
 		}
 	}
-
+	return 0;
 }
 
 int MOAIKeyboardAndroid::_showKeyboard ( lua_State* L ) {
-  	MOAILuaState state ( L );
+    return _showTextKeyboard( L );
+}
 
-	JNI_GET_ENV ( jvm, env );
+int MOAIKeyboardAndroid::_showTextKeyboard( lua_State* L ) {
+    return _showKeyboardHelper( "showTextKeyboard" );
+}
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
-	if ( moai ) {
-		jmethodID showKeyboard = env->GetStaticMethodID(moai, "showKeyboard", "()V");
-		if ( showKeyboard ) {
-			env->CallStaticVoidMethod ( moai, showKeyboard );
-		}
-	}
-	return 0;
+int MOAIKeyboardAndroid::_showNumberKeyboard( lua_State* L ) {
+    return _showKeyboardHelper( "showNumberKeyboard" );
+}
+
+int MOAIKeyboardAndroid::_showDateTimeKeyboard( lua_State* L ) {
+    return _showKeyboardHelper( "showDateTimeKeyboard" );
+}
+
+int MOAIKeyboardAndroid::_showPhoneKeyboard( lua_State* L ) {
+    return _showKeyboardHelper( "showPhoneKeyboard" );
+}
+
+int MOAIKeyboardAndroid::_showKeyboardHelper( const char* j_func ) {
+    JNI_GET_ENV ( jvm, env );
+
+    jclass t_class = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+    if ( t_class ) {
+        jmethodID t_func = env->GetStaticMethodID(t_class, j_func, "()V");
+        if ( t_func ) {
+            env->CallStaticVoidMethod ( t_class, t_func );
+        }
+    }
+    return 0;
 }
 
 //================================================================//
@@ -193,8 +217,14 @@ void MOAIKeyboardAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getText",        _getText },
 		{ "setListener",    _setListener  },
-		{ "showKeyboard",   _showKeyboard },
-		{ "hideKeyboard",   _hideKeyboard },
+
+		{ "showKeyboard",           _showKeyboard },
+        { "showTextKeyboard",       _showTextKeyboard },
+        { "showNumberKeyboard",     _showNumberKeyboard },
+        { "showDateTimeKeyboard",   _showDateTimeKeyboard },
+        { "showPhoneKeyboard",      _showPhoneKeyboard },
+
+        { "hideKeyboard",   _hideKeyboard },
 		{ "setText",      _setText },
 		{ NULL, NULL }
 	};

@@ -11,6 +11,7 @@
 
 #import <moai-sim/headers.h>
 
+
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
@@ -114,7 +115,9 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#endif
 	
 	#ifndef DISABLE_CHARTBOOST
-		AKUChartBoostInit ();
+	   MOAIChartBoostIOS::Affirm();
+	   REGISTER_LUA_CLASS ( MOAIChartBoostIOS );
+	
 	#endif
 	
 	#if MOAI_WITH_HTTP_CLIENT	

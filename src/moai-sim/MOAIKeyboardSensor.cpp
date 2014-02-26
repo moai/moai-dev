@@ -20,10 +20,16 @@ public:
 
 //----------------------------------------------------------------//
 /**	@name	keyDown
-	@text	Checks to see if the button was pressed during the last iteration.
+	@text	Checks to see if one or more buttons were pressed during the last iteration.
 
+	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string key				Keycode value(s) to be checked against the input table.
+	@in		string keyCodes			Keycode value(s) to be checked against the input table.
+	@out	boolean... wasPressed
+
+	@overload
+	@in		MOAIKeyboardSensor self
+	@in		number keyCode			Keycode value to be checked against the input table.
 	@out	boolean wasPressed
 */
 int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
@@ -54,8 +60,14 @@ int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 /**	@name	keyIsDown
 	@text	Checks to see if the button is currently down.
 
+	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string key				Keycode value(s) to be checked against the input table.
+	@in		string keyCodes			Keycode value(s) to be checked against the input table.
+	@out	boolean... isDown
+
+	@overload
+	@in		MOAIKeyboardSensor self
+	@in		number keyCode			Keycode value to be checked against the input table.
 	@out	boolean isDown
 */
 int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
@@ -86,9 +98,15 @@ int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 /**	@name	keyIsUp
 	@text	Checks to see if the specified key is currently up.
 
+	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string key				Keycode value(s) to be checked against the input table.
-	@out	boolean wasReleased
+	@in		string keyCodes			Keycode value(s) to be checked against the input table.
+	@out	boolean... isUp
+
+	@overload
+	@in		MOAIKeyboardSensor self
+	@in		number keyCode			Keycode value to be checked against the input table.
+	@out	boolean isUp
 */
 int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
@@ -118,8 +136,14 @@ int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 /**	@name	keyUp
 	@text	Checks to see if the specified key was released during the last iteration.
 
+	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string key				Keycode value(s) to be checked against the input table.
+	@in		string keyCodes			Keycode value(s) to be checked against the input table.
+	@out	boolean... wasReleased
+
+	@overload
+	@in		MOAIKeyboardSensor self
+	@in		number keyCode			Keycode value to be checked against the input table.
 	@out	boolean wasReleased
 */
 int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
