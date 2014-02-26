@@ -62,6 +62,9 @@ protected:
 	u32 mBitmapHeight;
 	
 	std::vector<MOAIFreeTypeTextLine> mLineVector;
+	
+	FT_Glyph* mGlyphArray;
+	FT_Vector* mAdvanceArray;
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );
@@ -96,7 +99,7 @@ protected:
 												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
-	int					WidthOfString			(u32* buffer, size_t bufferLength);
+	int					WidthOfString			(u32* buffer, size_t bufferLength, u32 startIndex = 0);
 	
 	
 	
