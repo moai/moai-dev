@@ -177,7 +177,7 @@ void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
 /**	@name	loadPage
 	@text	Rips a set of glyphs from a bitmap and associates them with a size.
 
-	@in		MOAIFont self
+	@in		MOAIBitmapFontReader self
 	@in		string filename			Filename of the image containing the bitmap font.
 	@in		string charCodes		A string which defines the characters found in the bitmap
 	@in		number points			The point size to be associated with the glyphs ripped from the bitmap.

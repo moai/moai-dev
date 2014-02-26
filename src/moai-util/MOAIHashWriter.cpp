@@ -15,7 +15,7 @@
 			not also close the target stream). Return the hash as a hex
 			string.
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@out	string hash
 */
 int MOAIHashWriter::_close ( lua_State* L ) {
@@ -95,7 +95,7 @@ int MOAIHashWriter::_getHashHex ( lua_State* L ) {
 	@text	Open a Adler32 hash stream for writing. (i.e. compute Adler32
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -108,7 +108,7 @@ int MOAIHashWriter::_openAdler32 ( lua_State* L ) {
 	@text	Open a CRC32 hash stream for writing. (i.e. compute CRC32
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -123,7 +123,7 @@ int MOAIHashWriter::_openCRC32 ( lua_State* L ) {
 	@text	Open a CRC32b hash stream for writing. (i.e. compute CRC32b
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -138,7 +138,7 @@ int MOAIHashWriter::_openCRC32b ( lua_State* L ) {
 	@text	Open a Whirlpool hash stream for writing. (i.e. compute Whirlpool
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -176,7 +176,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a MD5 hash stream for writing. (i.e. compute MD5
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/
@@ -189,7 +189,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a SHA1 hash stream for writing. (i.e. compute SHA1
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/
@@ -202,7 +202,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a SHA224 hash stream for writing. (i.e. compute SHA256
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/
@@ -215,7 +215,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a SHA256 hash stream for writing. (i.e. compute SHA256
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/
@@ -228,7 +228,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a SHA384 hash stream for writing. (i.e. compute SHA256
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/
@@ -241,7 +241,7 @@ int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 		@text	Open a SHA512 hash stream for writing. (i.e. compute SHA256
 				hash of data while writing)
 		
-		@in		MOAIStreamWriter self
+		@in		MOAIHashWriter self
 		@opt	MOAIStream target
 		@out	boolean success
 	*/

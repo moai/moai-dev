@@ -48,7 +48,7 @@ int MOAIScissorRect::_setRect ( lua_State* L ) {
 /**	@name	setScissorRect
 	@text	Set or clear the parent scissor rect.
 	
-	@in		MOAIProp self
+	@in		MOAIScissorRect self
 	@opt	MOAIScissorRect parent		Default value is nil.
 	@out	nil
 */

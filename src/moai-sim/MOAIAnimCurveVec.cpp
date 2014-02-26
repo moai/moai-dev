@@ -14,7 +14,7 @@
 			time along the curve. This does not change the curve's built in TIME
 			attribute (it simply performs the requisite computation on demand).
 	
-	@in		MOAIAnimCurveQuat self
+	@in		MOAIAnimCurveVec self
 	@in		number time
 	@out	number x
 	@out	number y
@@ -37,7 +37,7 @@ int MOAIAnimCurveVec::_getValueAtTime ( lua_State* L ) {
 			Also set the transition type between the specified key frame
 			and the next key frame.
 	
-	@in		MOAIAnimCurve self
+	@in		MOAIAnimCurveVec self
 	@in		number index			Index of the keyframe.
 	@in		number time				Location of the key frame along the curve.
 	@in		number x				X component at time.
