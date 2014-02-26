@@ -221,6 +221,7 @@ int MOAIJsonParser::_decode ( lua_State* L ) {
 	@text	Encode a hierarchy of Lua tables into a JSON string.
 	
 	@in		table input
+	@opt	number flags
 	@out	string result
 */
 int MOAIJsonParser::_encode ( lua_State* L ) {

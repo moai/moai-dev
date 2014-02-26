@@ -16,6 +16,9 @@
 	@in		MOAIFrameBufferTexture self
 	@in		number width
 	@in		number height
+	@opt	number colorFormat
+	@opt	number depthFormat
+	@opt	number stencilFormat
 	@out	nil
 */
 int MOAIFrameBufferTexture::_init ( lua_State* L ) {

@@ -73,6 +73,7 @@ void MOAILuaRefTable::PushRef ( MOAILuaState& state, int refID ) {
 
 	assert ( this->mTableID != LUA_NOREF );
 	
+	// push table[refID]
 	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
 	lua_rawgeti ( state, -1, refID );
 	lua_replace ( state, -2 );
@@ -86,11 +87,11 @@ int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 	idx = state.AbsIndex ( idx );
 	int refID = this->ReserveRefID ();
 
+	// table[refID] = idx
 	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
 	lua_pushnumber ( state, refID );
 	lua_pushvalue ( state, idx );
 	lua_settable ( state, -3 );
-	
 	lua_pop ( state, 1 );
 	
 	return refID;
@@ -132,11 +133,11 @@ void MOAILuaRefTable::Unref ( int refID ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
+	// table[refID] = NULL
 	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
 	lua_pushnumber ( state, refID );
 	lua_pushnil ( state );
 	lua_settable ( state, -3 );
-	
 	lua_pop ( state, 1 );
 	
 	this->ReleaseRefID ( refID );

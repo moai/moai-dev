@@ -38,6 +38,7 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	@text	Declare a vertex color.
 	
 	@in		MOAIVertexFormat self
+	@in		number index
 	@in		number type			Data type of component elements. See OpenGL ES documentation.
 	@out	nil
 */
@@ -57,6 +58,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	@text	Declare a vertex coordinate.
 	
 	@in		MOAIVertexFormat self
+	@in		number index
 	@in		number type			Data type of coordinate elements. See OpenGL ES documentation.
 	@in		number size			Number of coordinate elements. See OpenGL ES documentation.
 	@out	nil
@@ -78,6 +80,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	@text	Declare a vertex normal.
 	
 	@in		MOAIVertexFormat self
+	@in		number index
 	@in		number type			Data type of normal elements. See OpenGL ES documentation.
 	@out	nil
 */
@@ -97,6 +100,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	@text	Declare a vertex texture coordinate.
 	
 	@in		MOAIVertexFormat self
+	@in		number index
 	@in		number type			Data type of texture coordinate elements. See OpenGL ES documentation.
 	@in		number size			Number of texture coordinate elements. See OpenGL ES documentation.
 	@out	nil

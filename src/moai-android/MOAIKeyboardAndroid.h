@@ -27,11 +27,19 @@ class MOAIKeyboardAndroid :
 private:
 
 	//----------------------------------------------------------------//
-	static int    _getText        ( lua_State* L );
-	static int    _showKeyboard   ( lua_State* L );
-	static int    _hideKeyboard   ( lua_State* L );
-	static int    _setListener    ( lua_State* L );
-	static int    _setText        ( lua_State* L );
+	static int _getText              ( lua_State* L );
+
+	static int _showKeyboard         ( lua_State* L );
+	static int _showTextKeyboard     ( lua_State* L );
+	static int _showNumberKeyboard   ( lua_State* L );
+	static int _showDateTimeKeyboard ( lua_State* L );
+	static int _showPhoneKeyboard    ( lua_State* L );
+
+	static int _hideKeyboard         ( lua_State* L );
+	static int _setListener          ( lua_State* L );
+	static int _setText              ( lua_State* L );
+
+	static int _showKeyboardHelper   ( const char* j_func );
 
 	//----------------------------------------------------------------//
 	void      ShowKeyboard      ( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
