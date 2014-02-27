@@ -31,6 +31,8 @@ target_link_libraries ( moai-sim moai-core moai-util contrib zlcore)
 get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
 target_include_directories ( moai-sim PUBLIC ${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES} )
 
+set_target_properties(moai-sim PROPERTIES FOLDER Core)
+
 if (MOAI_FREETYPE)
 	target_link_libraries( moai-sim freetype)
 endif (MOAI_FREETYPE)

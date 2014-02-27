@@ -33,7 +33,8 @@ target_link_libraries ( moai-http-client moai-core moai-util  )
 if ( MOAI_CURL )
  target_link_libraries ( moai-http-client curl )
 endif (MOAI_CURL)
-  
+
+set_target_properties(moai-http-client PROPERTIES FOLDER Modules)  
 
 
   

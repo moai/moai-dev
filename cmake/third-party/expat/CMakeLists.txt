@@ -29,3 +29,4 @@ project ( expat )
 
    add_library (expat STATIC ${EXPAT_SOURCES})
    target_include_directories (expat PUBLIC ${EXPAT_INCLUDES})
+   set_target_properties( expat PROPERTIES FOLDER Third-Party )

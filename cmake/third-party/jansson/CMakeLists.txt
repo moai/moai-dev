@@ -28,3 +28,4 @@ project ( jansson )
   
   add_library(jansson STATIC ${JANSSON_SOURCES})
   target_include_directories(jansson PUBLIC ${JANSSON_INCLUDES})
+  set_target_properties( jansson PROPERTIES FOLDER Third-Party )

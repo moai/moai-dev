@@ -85,3 +85,4 @@ set (MOAI_PLUGINS_SRC "${CMAKE_CURRENT_BINARY_DIR}/host.cpp" )
 
 add_library ( moai-plugins STATIC ${MOAI_PLUGINS_SRC} )
 target_link_libraries ( moai-plugins ${LINK_LIBS})
+set_target_properties(moai-plugins PROPERTIES FOLDER Modules)  

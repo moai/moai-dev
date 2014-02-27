@@ -15,7 +15,7 @@ include(CheckTypeSize)
 include(CheckStructHasMember)
 include(CMakeDependentOption)
 include(FindPkgConfig)
-set(SDL2_SOURCE_DIR "${MOAI_ROOT}/3rdparty/sdl2-2.0.0"
+set(SDL2_SOURCE_DIR "${MOAI_ROOT}/3rdparty/sdl2-2.0.0")
 set(CMAKE_MODULE_PATH "${SDL2_SOURCE_DIR}/cmake")
 include(${SDL2_SOURCE_DIR}/cmake/macros.cmake)
 include(${SDL2_SOURCE_DIR}/cmake/sdlchecks.cmake)

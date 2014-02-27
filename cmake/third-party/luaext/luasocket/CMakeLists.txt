@@ -30,7 +30,8 @@ project ( luasocket )
 
   target_include_directories ( luasocket PUBLIC ${LUA_HEADERS})
   add_dependencies ( luasocket lualib-static)
-  
+  set_target_properties( luasocket PROPERTIES FOLDER Third-Party )
+
    if ( BUILD_WINDOWS )
      target_link_libraries( luasocket Ws2_32 )
    endif (BUILD_WINDOWS)

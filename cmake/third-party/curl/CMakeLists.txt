@@ -146,6 +146,8 @@ project ( curl )
   add_library(curl STATIC ${CURL_SOURCES})
   target_include_directories (curl PUBLIC ${CURL_INCLUDES})
 
+  set_target_properties( curl PROPERTIES FOLDER Third-Party )
+
   if (USE_ARES)  
     target_link_libraries( curl cares )
   endif (USE_ARES)

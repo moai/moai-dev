@@ -59,4 +59,4 @@ project ( box2d )
     add_library( box2d STATIC ${BOX2D_SOURCES})
 
     target_include_directories ( box2d PUBLIC ${BOX2D_INCLUDES})
-
+set_target_properties( box2d PROPERTIES FOLDER Third-Party )

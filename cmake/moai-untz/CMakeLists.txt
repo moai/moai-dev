@@ -28,4 +28,4 @@ project ( moai-untz )
       ${CMAKE_CURRENT_SOURCE_DIR}/MOAIUntzSystem.cpp
   )
    target_link_libraries (moai-untz moai-sim moai-core moai-util untz)
-   
+   set_target_properties(moai-untz PROPERTIES FOLDER Modules)  
