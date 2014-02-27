@@ -172,5 +172,14 @@ xcodebuild -target moai -sdk ${SDK} -arch ${ARCH}
 
 echo "Build Directory : ${build_dir}"
 
-cd ${build_dir}
+# Copy libs
+cd `dirname $0`/..
+if [ -d "release/ios" ]; then
+    rm -fr release/ios
+fi
 
+mkdir release/ios/app
+mkdir release/ios/lib
+
+find cmake/build -name "*.app" | xargs -J % cp -fp % release/ios/app
+find cmake/build -name "*.a" | xargs -J % cp -fp % release/ios/lib
