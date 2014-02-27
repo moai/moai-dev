@@ -74,16 +74,12 @@ function pointerCallback ( x, y )
 	end
 end
 
-function toTable ( ... )
-	return arg
-end
-
 function clickCallback ( down )
 	
 	if down then
 		
 		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
-		pickList = toTable ( partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ ))
+        pickList = {partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ )}
 		print ( pickList )
 		for k,v in pairs( pickList ) do print(k,v) end
 		

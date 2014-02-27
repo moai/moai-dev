@@ -17,6 +17,7 @@ viewport:setSize ( width, height )
 viewport:setScale (width / (width/320), height / (height/480))
 
 layer = MOAILayer2D.new ()
+layer:setPartition( MOAIPartition.new() )
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
@@ -91,7 +92,7 @@ end
 
 function clickCallback ( down )
 	if down then
-		pick = layer:getPartition():propForPoint ( worldX, worldY )
+		pick = layer:getPartition():propForPoint ( worldX, worldY)
 		if pick then
 			mouseBody = world:addBody( MOAIBox2DBody.DYNAMIC )
 			mouseBody:setTransform(worldX, worldY)
