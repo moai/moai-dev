@@ -2,6 +2,13 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( third-party )
 
+if (MSVC)
+#this is someone elses code, lets not get spammed by their warnings
+ set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
+
+endif (MSVC)
+
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
@@ -49,8 +56,10 @@ add_subdirectory ( zlib )
 
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
-  set(DIRECTX OFF CACHE BOOL "Use some expat option")
-  add_subdirectory("${MOAI_ROOT}/3rdparty/sdl2-2.0.0" "${CMAKE_CURRENT_BINARY_DIR}/sdl2")
+  set(DIRECTX OFF CACHE BOOL "SDL DirectX")
+  set (SDL_SHARED OFF)
+  
+  add_subdirectory(sdl2)
   if (BUILD_LINUX OR BUILD_WINDOWS)
   add_subdirectory ( freeglut )
   endif (BUILD_LINUX OR BUILD_WINDOWS)

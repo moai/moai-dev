@@ -25,6 +25,7 @@ include_directories ( ${MOAI_UTIL_INCLUDES} )
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
 target_link_libraries ( moai-util moai-core zlcore  )
+set_target_properties( moai-util PROPERTIES FOLDER Core)
 
 if (MOAI_SFMT)
 	target_link_libraries (moai-util sfmt )

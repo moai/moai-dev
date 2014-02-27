@@ -12,7 +12,7 @@ set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/aku_modules.cpp" )
 include_directories ( ${HOST_MODULES_INCLUDES} )
 
 add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
-
+set_target_properties( host-modules PROPERTIES FOLDER Modules )
   
 #BOX2D
 if ( MOAI_BOX2D )

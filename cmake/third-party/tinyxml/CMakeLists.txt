@@ -19,3 +19,4 @@ project ( tinyxml )
 
  add_library (tinyxml STATIC ${TINYXML_SOURCES} )
  target_include_directories ( tinyxml PUBLIC ${TINYXML_INCLUDES})
+ set_target_properties( tinyxml PROPERTIES FOLDER Third-Party )

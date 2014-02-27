@@ -18,3 +18,4 @@ project ( sfmt )
 
   add_library(sfmt STATIC ${SFMT_SOURCES})
   target_include_directories (sfmt PUBLIC ${SFMT_INCLUDES})
+  set_target_properties( sfmt PROPERTIES FOLDER Third-Party )
