@@ -13,7 +13,7 @@ APP_ID='com.getmoai.moaiapp'
 APP_VERSION='1.0'
 
 # check for command line switches
-usage="usage: $0  \
+usage="usage: $0 <LUA_SRC_PATH> \
     [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
     [--disable-twitter] [--simulator] [--release]"
