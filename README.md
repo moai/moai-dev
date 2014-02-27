@@ -20,13 +20,14 @@ Tools needed to build the MOAI SDK.
 
 * [Android SDK](http://developer.android.com/sdk/index.html)
 * [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only)
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Java SE 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Ant 1.9](http://ant.apache.org/)
 * [CMake 2.8.11](http://www.cmake.org/)
-* [Ruby](http://www.ruby-lang.org/)
+* [Ruby 1.9](http://www.ruby-lang.org/)
 * [Visual Studio 2010](http://www.visualstudio.com/) (Windows only)
 * [XCode 4 or 5](https://itunes.apple.com/app/xcode/id497799835?mt=12) (Mac only)
 * [MinGW64 TCC](http://tdm-gcc.tdragon.net/) (Windows only, needed for android luajit support or can build mingw version of moai)
+* [Emscripten](https://github.com/kripken/emscripten)
  
 The following tools are required to build the API documentation.
 
@@ -37,7 +38,7 @@ The following tools are required to build the API documentation.
 Please set the following environment variables.
 
 	# Mac OSX
-	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/x64/bin
+	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
 	# Linux

@@ -221,7 +221,7 @@ mainThread:run (
 
 		local textbox = MOAITextBox.new ()
 		textbox:setFont ( font )
-		textbox:setTextSize ( font:getScale ())
+		textbox:setTextSize ( 12)
 		textbox:setRect ( -160, -80, 160, 80 )
 		textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
 		textbox:setYFlip ( true )

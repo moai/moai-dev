@@ -5,6 +5,7 @@
 --==============================================================
 
 require "elements"
+require "platforms/platform-windows"
 require "modules/cloud-manager"	
 require "modules/state-manager"	
 require "modules/input-manager"	

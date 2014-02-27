@@ -13,7 +13,7 @@ APP_ID='com.getmoai.moaiapp'
 APP_VERSION='1.0'
 
 # check for command line switches
-usage="usage: $0  \
+usage="usage: $0 <LUA_SRC_PATH> \
     [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
     [--disable-twitter] [--simulator] [--release]"
@@ -172,5 +172,14 @@ xcodebuild -target moai -sdk ${SDK} -arch ${ARCH}
 
 echo "Build Directory : ${build_dir}"
 
-cd ${build_dir}
+# Copy libs
+cd `dirname $0`/..
+if [ -d "release/ios" ]; then
+    rm -fr release/ios
+fi
 
+mkdir release/ios/app
+mkdir release/ios/lib
+
+find cmake/build -name "*.app" | xargs -J % cp -fp % release/ios/app
+find cmake/build -name "*.a" | xargs -J % cp -fp % release/ios/lib

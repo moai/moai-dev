@@ -23,10 +23,6 @@ if [[ $? -ne 0 ]]; then
 fi
 
 cd untitled-host
-find . -name ".?*" -type d -prune -o -name "settings-local.sh" -type f -prune -o -type f -print0 | cpio -pmd0 --quiet ../../distribute/moai-sdk/hosts/ant
-if [[ $? -ne 0 ]]; then
-    exit 1
-fi
 
 cd ../..
 rm -rf release/android
