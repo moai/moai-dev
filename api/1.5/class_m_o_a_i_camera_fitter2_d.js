@@ -1,0 +1,22 @@
+var class_m_o_a_i_camera_fitter2_d =
+[
+    [ "clearAnchors", "class_m_o_a_i_camera_fitter2_d.html#a8a2083cebe5cfbf5667c6a52012a6eb4", null ],
+    [ "clearFitMode", "class_m_o_a_i_camera_fitter2_d.html#a412dd965924d227fef7dfbfd8aebd62d", null ],
+    [ "getFitDistance", "class_m_o_a_i_camera_fitter2_d.html#ac71b45ebc51126d076122038fbd8c7d8", null ],
+    [ "getFitLoc", "class_m_o_a_i_camera_fitter2_d.html#a00acfefd41da39f97938cd0d86c9de8b", null ],
+    [ "getFitMode", "class_m_o_a_i_camera_fitter2_d.html#aa1b9818c6f984dc03f0095e40fe0afa0", null ],
+    [ "getFitScale", "class_m_o_a_i_camera_fitter2_d.html#ad5c1d56f9ae09ac2c3a9bd51d824efca", null ],
+    [ "getTargetLoc", "class_m_o_a_i_camera_fitter2_d.html#a698952db28dd172017f9a464fa68f034", null ],
+    [ "getTargetScale", "class_m_o_a_i_camera_fitter2_d.html#ad23a34007ddb3cdb2a866ec4b87bc851", null ],
+    [ "insertAnchor", "class_m_o_a_i_camera_fitter2_d.html#aeb1ef0cbf2dc89cc0c3fac23ca5015ff", null ],
+    [ "removeAnchor", "class_m_o_a_i_camera_fitter2_d.html#a2c2a19c1e177e74222b2867a10b07c00", null ],
+    [ "setBounds", "class_m_o_a_i_camera_fitter2_d.html#a5bdb123e0a7a63f5dfcdad0881fdb07c", null ],
+    [ "setCamera", "class_m_o_a_i_camera_fitter2_d.html#a53ea335e9687568639dff712b236f8a0", null ],
+    [ "setDamper", "class_m_o_a_i_camera_fitter2_d.html#a9550007c01fc7267135ab336912c82e3", null ],
+    [ "setFitLoc", "class_m_o_a_i_camera_fitter2_d.html#a24e8950e5531018e82d3738750a45c88", null ],
+    [ "setFitMode", "class_m_o_a_i_camera_fitter2_d.html#a806fe892798479faee26aab71a9fc287", null ],
+    [ "setFitScale", "class_m_o_a_i_camera_fitter2_d.html#a5c8392d18e7111e53e58a4e065b604d1", null ],
+    [ "setMin", "class_m_o_a_i_camera_fitter2_d.html#ab2dd0bd050d1581cc406b7ad65a2eead", null ],
+    [ "setViewport", "class_m_o_a_i_camera_fitter2_d.html#ae498f037a175858909a4b5cdb0a9d7de", null ],
+    [ "snapToTarget", "class_m_o_a_i_camera_fitter2_d.html#a63865c985312a59b7f4a42f0f26e0bc8", null ],
+];
