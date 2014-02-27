@@ -22,7 +22,7 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-curve = MOAIAnimCurveVec3D.new ()
+curve = MOAIAnimCurveVec.new ()
 curve:reserveKeys ( 2 )
 curve:setKey ( 1, 0, 0, 0, 0 )
 curve:setKey ( 2, 1, 100, 100, 0 )

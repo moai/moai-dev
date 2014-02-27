@@ -17,6 +17,7 @@ mkdir build
 cd build
 cmake \
 -DBUILD_OSX=TRUE \
+-DSDL_HOST=FALSE \
 -DMOAI_BOX2D=TRUE \
 -DMOAI_CHIPMUNK=TRUE \
 -DMOAI_CURL=TRUE \
@@ -47,16 +48,8 @@ fi
 #
 # Copy libs to lib
 #
-rm -rf ../../release/osx/host-glut/x64/
-mkdir -p ../../release/osx/host-glut/x64/lib/
-mkdir -p ../../release/osx/host-glut/x64/bin/
-for i in * ; do
-  if [ -d "$i" ]; then
-    if [ -f $i/lib$i.a ]; then
-      echo "Copying $i/lib$i.a to release/osx/host-glut/x64/lib"
-      cp $i/lib$i.a ../../release/osx/host-glut/x64/lib/
-    fi
-  fi
-done
-pwd
-cp host-glut/moai ../../release/osx/host-glut/x64/bin/
+rm -rf ../../release/osx/host-glut
+mkdir -p ../../release/osx/host-glut/bin
+mkdir -p ../../release/osx/host-glut/lib
+find . -name "*.a" -print | xargs -J % cp -fp % ../../release/osx/host-glut/lib
+cp host-glut/moai ../../release/osx/host-glut/bin

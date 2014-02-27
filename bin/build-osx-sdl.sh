@@ -48,16 +48,8 @@ fi
 #
 # Copy libs to lib
 #
-rm -rf ../../release/osx/host-sdl/x64
-mkdir -p ../../release/osx/host-sdl/x64/bin
-mkdir -p ../../release/osx/host-sdl/x64/lib
-for i in * ; do
-  if [ -d "$i" ]; then
-    if [ -f $i/lib$i.a ]; then
-      echo "Copying $i/lib$i.a to release/osx/host-sdl/x64/lib"
-      cp $i/lib$i.a ../../release/osx/host-sdl/x64/lib/
-    fi
-  fi
-done
-pwd
-cp host-sdl/moai ../../release/osx/host-sdl/x64/bin/
+rm -rf ../../release/osx/host-sdl
+mkdir -p ../../release/osx/host-sdl/bin
+mkdir -p ../../release/osx/host-sdl/lib
+find . -name "*.a" -print | xargs -J % cp -fp % ../../release/osx/host-sdl/lib
+cp host-sdl/moai ../../release/osx/host-sdl/bin
