@@ -11,6 +11,7 @@
 	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/moaicore/*.cpp) 
+	LOCAL_CPPFLAGS      := -fexceptions
+	LOCAL_SRC_FILES 	+= $(wildcard $(MY_MOAI_ROOT)/src/moaicore/*.cpp)
 
 	include $(BUILD_STATIC_LIBRARY)
