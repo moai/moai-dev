@@ -2138,6 +2138,10 @@
 		EB92A50916B6671000FC326E /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */; };
 		EBC495FA184D21840059FBDE /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		EBC495FB184D21880059FBDE /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
+		F00D616E18C00F1E00625DA9 /* sha1_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9691846ACCF0031F295 /* sha1_one.c */; };
+		F00D617018C00F9200625DA9 /* sha1dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96B1846ACCF0031F295 /* sha1dgst.c */; };
+		F00D617118C00FCE00625DA9 /* md5_dgst.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98B1846B1A30031F295 /* md5_dgst.c */; };
+		F00D617218C00FFE00625DA9 /* mem_clr.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9811846AD8D0031F295 /* mem_clr.c */; };
 		F0314F4A18340FC600E719A7 /* MOAIFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53913564BC7000ADC60 /* MOAIFont.cpp */; };
 		F055A94B1846ABF40031F295 /* sha.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9491846ABF40031F295 /* sha.h */; };
 		F055A9651846ACA90031F295 /* sha_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9641846ACA90031F295 /* sha_locl.h */; };
@@ -2159,6 +2163,12 @@
 		F055A9911846B1A30031F295 /* md5_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98C1846B1A30031F295 /* md5_one.c */; };
 		F055A9921846B1A30031F295 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98D1846B1A30031F295 /* md5.c */; };
 		F055A9961846B2880031F295 /* m_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9951846B2880031F295 /* m_md5.c */; };
+		F0FC66BE18C00E4E00F56E2A /* sha.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9491846ABF40031F295 /* sha.h */; };
+		F0FC66BF18C00E6000F56E2A /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96D1846ACCF0031F295 /* sha256.c */; };
+		F0FC66C018C00E6000F56E2A /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96F1846ACCF0031F295 /* sha512.c */; };
+		F0FC66C118C00EA700F56E2A /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = F055A9881846B1810031F295 /* md5.h */; };
+		F0FC66C218C00EB000F56E2A /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A98D1846B1A30031F295 /* md5.c */; };
+		F0FC66C318C00EB500F56E2A /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A96A1846ACCF0031F295 /* sha1.c */; };
 		F153C20417FDE0AC00E9DC6A /* MOAIMath.h in Headers */ = {isa = PBXBuildFile; fileRef = DD80D64916D8021D00C172D2 /* MOAIMath.h */; };
 		F153C20517FDE0AC00E9DC6A /* MOAIFrameBufferTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = DD80D67116D8025000C172D2 /* MOAIFrameBufferTexture.h */; };
 		F153C20617FDE0AC00E9DC6A /* MOAIMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD80D64816D8021D00C172D2 /* MOAIMath.cpp */; };
@@ -5370,6 +5380,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0FC66C118C00EA700F56E2A /* md5.h in Headers */,
+				F0FC66BE18C00E4E00F56E2A /* sha.h in Headers */,
 				03240BF313564CB0000ADC60 /* cpConstraint.h in Headers */,
 				03240BF513564CB0000ADC60 /* cpDampedRotarySpring.h in Headers */,
 				03240BF713564CB0000ADC60 /* cpDampedSpring.h in Headers */,
@@ -6647,6 +6659,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F00D617218C00FFE00625DA9 /* mem_clr.c in Sources */,
+				F00D617118C00FCE00625DA9 /* md5_dgst.c in Sources */,
+				F00D617018C00F9200625DA9 /* sha1dgst.c in Sources */,
+				F00D616E18C00F1E00625DA9 /* sha1_one.c in Sources */,
+				F0FC66C318C00EB500F56E2A /* sha1.c in Sources */,
+				F0FC66C218C00EB000F56E2A /* md5.c in Sources */,
+				F0FC66BF18C00E6000F56E2A /* sha256.c in Sources */,
+				F0FC66C018C00E6000F56E2A /* sha512.c in Sources */,
 				03240BF213564CB0000ADC60 /* cpConstraint.c in Sources */,
 				03240BF413564CB0000ADC60 /* cpDampedRotarySpring.c in Sources */,
 				03240BF613564CB0000ADC60 /* cpDampedSpring.c in Sources */,
