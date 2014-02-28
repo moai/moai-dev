@@ -78,7 +78,7 @@ int MOAIPathTerrainDeck::_setMask ( lua_State* L ) {
 
 	@in		MOAIPathTerrainDeck self
 	@in		number idx
-	@in		...
+	@in		float... values
 	@out	nil
 */
 int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {

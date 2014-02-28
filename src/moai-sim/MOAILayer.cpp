@@ -122,7 +122,7 @@ int MOAILayer::_getSortMode ( lua_State* L ) {
 /**	@name	getSortScale
 	@text	Return the scalar applied to axis sorts.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@out	number x
 	@out	number y
 	@out	number priority
