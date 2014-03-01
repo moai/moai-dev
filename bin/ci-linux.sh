@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 echo "Building Moai-SDK for linux - CI"
 
+echo "Telling the OSX build to get busy"
+git checkout travis-osx
+git merge master
+git push origin
+git checkout master
+
 echo "Fetching Latest CMake"
 sudo apt-add-repository ppa:kubuntu-ppa/backports -y
 sudo apt-get update
