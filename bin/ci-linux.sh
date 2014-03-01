@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 echo "Building Moai-SDK for linux - CI"
 
+echo "Telling the OSX build to get busy"
+git config --global user.email "moaiforge-ci@example.com"
+git config --global user.name "moaiforge-ci"
+git fetch origin travis-osx:travis-osx
+git checkout travis-osx
+git merge master
+git push https://${GH_TOKEN}@github.com/moaiforge/moai-sdk.git travis-osx:travis-osx > /dev/null
+git checkout master
+
 echo "Fetching Latest CMake"
 sudo apt-add-repository ppa:kubuntu-ppa/backports -y
 sudo apt-get update

@@ -1,11 +1,9 @@
 language: objective-c
 install: true
 script: ./bin/ci-osx.sh
-
 notifications:
   email:
-    - dpershouse@gmail.com
-
+  - dpershouse@gmail.com
 branches:
   only:
     - travis-osx
