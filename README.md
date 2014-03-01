@@ -2,6 +2,7 @@
 
 Thanks for checking out the Moai source code. Here's the scoop.
 
+[![Build Status](https://travis-ci.org/moaiforge/moai-sdk.png)](https://travis-ci.org/moaiforge/moai-sdk)
 ## Introduction
 
 Moai SDK is an open source game framework for quickly developing great mobile games.
