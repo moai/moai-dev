@@ -2,11 +2,10 @@
 echo "Building Moai-SDK for linux - CI"
 
 echo "Telling the OSX build to get busy"
-git remote add authorigin https://${GH_TOKEN}@github.com/moaiforge/moai-sdk.git > /dev/null
-git fetch origin travis-osx
+git fetch origin travis-osx:travis-osx
 git checkout travis-osx
 git merge master
-git push authorigin travis-osx
+git push https://${GH_TOKEN}@github.com/moaiforge/moai-sdk.git travis-osx:travis-osx > /dev/null
 git checkout master
 
 echo "Fetching Latest CMake"
