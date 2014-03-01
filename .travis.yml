@@ -1,6 +1,6 @@
-language: c
+language: objective-c
 install: true
-script: ./bin/ci-linux.sh
+script: ./bin/ci-osx.sh
 
 notifications:
   email:
@@ -8,4 +8,4 @@ notifications:
 
 branches:
   only:
-    - master
+    - travis-osx
