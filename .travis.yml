@@ -1,7 +1,11 @@
 language: c
-
+install: true
 script: ./bin/ci-linux.sh
 
 notifications:
   email:
     - dpershouse@gmail.com
+
+branches:
+  only:
+    - master
