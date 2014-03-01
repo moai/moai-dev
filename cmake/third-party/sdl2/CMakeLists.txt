@@ -880,7 +880,7 @@ elseif(APPLE)
 
   # Requires the darwin file implementation
   if(SDL_FILE)
-    file(GLOB EXTRA_SOURCES ${PROJECT_SOURCE_DIR}/src/file/cocoa/*.m)
+    file(GLOB EXTRA_SOURCES ${SDL2_SOURCE_DIR}/src/file/cocoa/*.m)
     set(SOURCE_FILES ${EXTRA_SOURCES} ${SOURCE_FILES})
     set_source_files_properties(${EXTRA_SOURCES} PROPERTIES LANGUAGE C)
     set(HAVE_SDL_FILE TRUE)

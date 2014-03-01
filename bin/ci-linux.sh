@@ -6,7 +6,7 @@ git config --global user.email "moaiforge-ci@example.com"
 git config --global user.name "moaiforge-ci"
 git fetch origin travis-osx:travis-osx
 git checkout travis-osx
-git merge master
+git merge -m 'merge with master for CI on osx '  master
 git push https://${GH_TOKEN}@github.com/moaiforge/moai-sdk.git travis-osx:travis-osx > /dev/null
 git checkout master
 
