@@ -2,8 +2,8 @@
 echo "Building Moai-SDK for linux - CI"
 
 echo "Telling the OSX build to get busy"
-  git config --global user.email "moaiforge-ci@example.com"
-  gis config --global user.name "moaiforge-ci"
+git config --global user.email "moaiforge-ci@example.com"
+git config --global user.name "moaiforge-ci"
 git fetch origin travis-osx:travis-osx
 git checkout travis-osx
 git merge master
