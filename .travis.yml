@@ -1,0 +1,7 @@
+language: c
+
+script: ./bin/ci-linux.sh
+
+notifications:
+  email:
+    - dpershouse@gmail.com
