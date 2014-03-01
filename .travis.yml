@@ -1,11 +1,12 @@
 language: c
 install: true
 script: ./bin/ci-linux.sh
-
 notifications:
   email:
-    - dpershouse@gmail.com
-
+  - dpershouse@gmail.com
 branches:
   only:
-    - master
+  - master
+env:
+  global:
+    secure: Sicm6LQIyVvtDaXDCHdBWoMGrsfmhiDyOy7IZ9mevDVTa/7ULVZd/YZ0rwKGHR+WPmmtV0/GQTIZBlsed0ymlBiZEB43iCwgsKmhmB0qAu39e01G0XSf+xtWhkbM0hLuXtq7sv1B51hBT5pIoAJcZQd3CBLFWFvWZlNeLzwk5Cw=
