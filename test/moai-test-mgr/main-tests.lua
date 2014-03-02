@@ -36,7 +36,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 				xmlFileName = xmlDir .. "/" .. testname .. ".xml"
 				
 				if os.getenv ( "HOME" ) then
-					os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
+					os.execute ( string.format ( '../../../release/osx/host-test/moai -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 				else
 					os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ))
 					print ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" -t "%s"', results, xmlFileName, testname ) )
@@ -50,7 +50,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 end
 
 -- run the Lua tests
-stagingDir = MOAIFileSystem.getAbsoluteDirectoryPath ( 'staging-lua' )
+stagingDir = MOAIFileSystem.getAbsoluteDirectoryPath ( 'source' )
 if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 
 	testingDir = MOAIFileSystem.getAbsoluteDirectoryPath ( 'testing-lua' )
@@ -74,7 +74,7 @@ if MOAIFileSystem.checkPathExists ( stagingDir ) == true then
 			xmlFileName = xmlDir .. "/" .. dirname .. ".xml"
 		
 			if os.getenv ( "HOME" ) then
-				os.execute ( string.format ( '../../../cmake/build/host-test/moai-test-runner -r "%s" -x "%s" main.lua', results, xmlFileName ))
+                os.execute ( string.format ( '../../../release/osx/host-test/moai -r "%s" -x "%s" main.lua', results, xmlFileName ))
 			else
 				os.execute ( string.format ( '%%MOAI_BIN%%\\moai-test.exe -r "%s" -x "%s" main.lua', results, xmlFileName ))
 			end
