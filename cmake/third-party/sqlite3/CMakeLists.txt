@@ -14,3 +14,4 @@ project ( sqlite3 )
   add_library ( sqlite3 STATIC ${SQLITE3_SOURCES} )
 
   target_include_directories ( sqlite3 PUBLIC ${SQLITE3_INCLUDES} )
+  set_target_properties( sqlite3 PROPERTIES FOLDER Third-Party )

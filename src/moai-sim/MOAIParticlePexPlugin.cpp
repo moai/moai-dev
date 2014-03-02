@@ -88,7 +88,7 @@ int MOAIParticlePexPlugin::_getRect( lua_State* L ){
 /**	@name	getTextureName
 	@text	Return the texture name associated with plugin.
 	
-	@in		MOAIParticlePlugin self
+	@in		MOAIParticlePexPlugin self
 	@out	string textureName
 */
 int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){

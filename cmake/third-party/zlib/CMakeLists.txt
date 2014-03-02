@@ -25,3 +25,4 @@ set ( ZLIB_SOURCES
 
 add_library(zlib STATIC ${ZLIB_SOURCES})
 target_include_directories(zlib PUBLIC ${ZLIB_INCLUDES})
+set_target_properties( zlib PROPERTIES FOLDER Third-Party )

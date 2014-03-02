@@ -303,6 +303,7 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 	@overload
 		
 		@in		MOAITextBox self
+		@out	nil
 */
 int MOAITextBox::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )

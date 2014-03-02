@@ -325,11 +325,11 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 	ZLDfaState* dfaState = &this->mCGT->mDFAStateTable [ stateID ];
 	
 	ZLDfaState* acceptState = 0;
-	u32 acceptLength = 0;
+	size_t acceptLength = 0;
 	
 	bool done = false;
 	
-	u32 startCursor = scanner->GetCursor ();
+	size_t startCursor = scanner->GetCursor ();
 	static const u32 bufferSize = 1024;
 	char buffer [ bufferSize ];
 	
@@ -376,8 +376,8 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 				}
 			}
 			
-			scanner->Seek ( startCursor, SEEK_SET );
-			token->mLine = scanner->GetLine ();
+			scanner->Seek ( (long) startCursor, SEEK_SET );
+			token->mLine = (u32) scanner->GetLine ();
 			
 			if ( acceptLength < ( bufferSize - 1 )) {
 
@@ -388,7 +388,7 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			else {
 				
 				ZLLeanArray < char > bigBuffer;
-				bigBuffer.Init ( acceptLength + 1 );
+				bigBuffer.Init ( (u32) acceptLength + 1 );
 				scanner->ReadBytes ( bigBuffer, acceptLength );
 				bigBuffer [ acceptLength ] = 0;
 				token->mData = bigBuffer;

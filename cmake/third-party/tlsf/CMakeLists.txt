@@ -15,3 +15,4 @@ set ( TLSF_SOURCES
 
 add_library ( tlsf STATIC ${TLSF_SOURCES})
 target_include_directories ( tlsf PUBLIC ${TLSF_INCLUDES})
+set_target_properties( tlsf PROPERTIES FOLDER Third-Party )

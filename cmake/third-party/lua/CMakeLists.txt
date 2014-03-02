@@ -60,4 +60,5 @@ add_library( liblua-static STATIC ${LUA_SOURCES} )
 target_include_directories( liblua-static PUBLIC ${LUA_INCLUDES} )
 set (LUA_HEADERS ${LUA_INCLUDES} PARENT_SCOPE)
 set (LUA_LIB liblua-static PARENT_SCOPE)
+set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
 

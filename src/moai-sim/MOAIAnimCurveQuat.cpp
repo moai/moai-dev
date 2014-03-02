@@ -42,7 +42,7 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 			(as Euler angles). Also set the transition type between
 			the specified key frame and the next key frame.
 	
-	@in		MOAIAnimCurve self
+	@in		MOAIAnimCurveQuat self
 	@in		number index			Index of the keyframe.
 	@in		number time				Location of the key frame along the curve.
 	@in		number xRot				X rotation at time.

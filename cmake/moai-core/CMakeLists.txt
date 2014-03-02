@@ -31,4 +31,4 @@ target_include_directories ( moai-core PUBLIC ${MOAI_CORE_INCLUDES} ${LUA_HEADER
 target_link_libraries ( moai-core zlcore ${LUA_LIB})
 add_dependencies ( moai-core liblua-static)
 
-
+set_target_properties(moai-core PROPERTIES FOLDER Core)

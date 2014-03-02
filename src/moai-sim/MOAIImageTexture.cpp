@@ -16,7 +16,7 @@
 			texture. Invalidated regions will be reloaded from the image
 			the next time the texture is bound.
 
-	@in		MOAIImage self
+	@in		MOAIImageTexture self
 	@in		number xMin
 	@in		number yMin
 	@in		number xMax
@@ -122,10 +122,6 @@ void MOAIImageTexture::OnCreate () {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnInvalidate () {
 }
 
 

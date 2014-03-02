@@ -178,7 +178,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 /**	@name	moveVolume
 	@text	Animation helper for volume attribute,
 	
-	@in		MOAITransform self
+	@in		MOAIUntzSound self
 	@in		number vDelta		Delta to be added to v.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
@@ -250,7 +250,7 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 /**	@name	seekVolume
 	@text	Animation helper for volume attribute,
 	
-	@in		MOAITransform self
+	@in		MOAIUntzSound self
 	@in		number vGoal		Desired resulting value for v.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
