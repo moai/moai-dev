@@ -28,6 +28,7 @@ end
 -- test: const
 function TestMOAIProp:test_const()
     
+    print("-----Constants-----")
     for key, value in pairs(MOAIProp) do
         print("key=" .. key, "value=" .. tostring(value))
     end
@@ -281,4 +282,172 @@ function TestMOAIProp:test_setColor()
     assertEquals(b, 3/256)
     assertEquals(a, 4/256)
 end
+
+---
+-- test: setDeck
+function TestMOAIProp:test_setDeck()
+    self.prop:setDeck(self.deck)
+end
+
+---
+-- test: setDepthMask
+function TestMOAIProp:test_setDepthMask()
+    self.prop:setDepthMask(false)
+    self.prop:setDepthMask(true)
+end
+
+---
+-- test: setDepthTest
+function TestMOAIProp:test_setDepthTest()
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_DISABLE)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_NEVER)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_LESS)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_EQUAL)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_LESS_EQUAL)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_GREATER)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_NOTEQUAL)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_GREATER_EQUAL)
+    self.prop:setDepthTest(MOAIProp.DEPTH_TEST_ALWAYS) 
+end
+
+---
+-- test: setExpandForSort
+function TestMOAIProp:test_setExpandForSort()
+    self.prop:setExpandForSort(false)
+    self.prop:setExpandForSort(true)
+end
+
+---
+-- test: setGrid
+function TestMOAIProp:test_setGrid()
+    local grid = MOAIGrid.new()
+    self.prop:setGrid(grid)
+    self.prop:setGrid(nil)
+end
+
+---
+-- test: setGridScale
+function TestMOAIProp:test_setGridScale()
+    local grid = MOAIGrid.new()
+    self.prop:setGridScale(2, 2)
+    self.prop:setGridScale(0.5, 0.5)
+    self.prop:setGridScale(1, 1)
+end
+
+---
+-- test: setIndex
+function TestMOAIProp:test_setIndex()
+    local index = self.prop:getIndex()
+    assertEquals(index, 1)
+
+    self.prop:setIndex(10)
+    index = self.prop:getIndex()
+    assertEquals(index, 10) 
+end
+
+---
+-- test: setParent
+function TestMOAIProp:test_setParent()
+    local parent = MOAIProp.new()
+    parent:setVisible(false)
+    parent:setDeck(self.deck)
+    parent:setLoc(10, 20, 30)
+
+    self.prop:setParent(parent)
+    local wx, wy, wz = self.prop:getWorldLoc()
+    assertEquals(wx, 0)
+    assertEquals(wy, 0)
+    assertEquals(wz, 0)
+    assertEquals(self.prop:isVisible(), true)
+    
+    self.prop:forceUpdate()
+    wx, wy, wz = self.prop:getWorldLoc()
+    assertEquals(wx, 10)
+    assertEquals(wy, 20)
+    assertEquals(wz, 30)
+    assertEquals(self.prop:isVisible(), false)
+    
+    self.prop:setLoc(10, 20, 30)
+    parent:setVisible(true)
+    self.prop:forceUpdate()
+    wx, wy, wz = self.prop:getWorldLoc()
+    assertEquals(wx, 20)
+    assertEquals(wy, 40)
+    assertEquals(wz, 60)
+    assertEquals(self.prop:isVisible(), true)
+    
+end
+
+---
+-- test: setPriority
+function TestMOAIProp:test_setPriority()
+    local priority = self.prop:getPriority()
+    assertEquals(priority, 0)
+
+    self.prop:setPriority(10)
+    priority = self.prop:getPriority()
+    assertEquals(priority, 10) 
+    
+    self.prop:setPriority()
+    priority = self.prop:getPriority()
+    assertEquals(priority, 1) -- TODO:Bug? expected is 0 
+end
+
+---
+-- test: setRemapper
+function TestMOAIProp:test_setRemapper()
+    local remapper = MOAIDeckRemapper.new()
+    self.prop:setRemapper(remapper)
+    self.prop:setRemapper(nil)
+end
+
+---
+-- test: setScissorRect
+function TestMOAIProp:test_setScissorRect()
+    local scissorRect = MOAIScissorRect.new()
+    self.prop:setScissorRect(scissorRect)
+    self.prop:setScissorRect(nil)
+end
+
+---
+-- test: setShader
+function TestMOAIProp:test_setShader()
+    local shader = MOAIShaderMgr.getShader(MOAIShaderMgr.DECK2D_TEX_ONLY_SHADER)
+    self.prop:setShader(shader)
+end
+
+---
+-- test: setTexture
+function TestMOAIProp:test_setTexture()
+    local texture = MOAITexture.new()
+    texture:load("assets/cathead.png")
+
+    self.prop:setTexture(texture)
+    self.prop:setTexture("assets/cathead.png")
+end
+
+---
+-- test: setUVTransform
+function TestMOAIProp:test_setUVTransform()
+    local transform = MOAITransform.new()
+
+    self.prop:setUVTransform(transform)
+    self.prop:setUVTransform(nil)
+end
+
+---
+-- test: setVisible
+function TestMOAIProp:test_setVisible()
+    local visible = self.prop:isVisible()
+    assertEquals(visible, true)
+    
+    self.prop:setVisible(false)
+    visible = self.prop:isVisible()
+    assertEquals(visible, false)
+    
+    self.prop:setVisible(true)
+    visible = self.prop:isVisible()
+    assertEquals(visible, true)
+end
+
 

@@ -783,9 +783,6 @@ LuaUnit_MT = { __index = LuaUnit }
         self:startSuite()
 
         args={...};
-        if #args == 0 then
-            args = argv
-        end
 
         if #args == 0 then
             -- create the list if classes to run now ! If not, you can
