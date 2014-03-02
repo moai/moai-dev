@@ -124,10 +124,6 @@ void MOAIImageTexture::OnCreate () {
 void MOAIImageTexture::OnLoad () {
 }
 
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnInvalidate () {
-}
-
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
