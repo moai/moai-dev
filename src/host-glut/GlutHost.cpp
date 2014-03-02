@@ -294,7 +294,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		sHasWindow = true;
 	}
 
-	#ifndef AKU_WITH_TEST
+	#if !AKU_WITH_TEST
 		glutIgnoreKeyRepeat ( 1 );
 
 		glutKeyboardFunc ( _onKeyDown );

@@ -29,7 +29,7 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 		ZLIntRect rect;
 		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
 		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
-		this->mImageTexture->Invalidate ();
+		this->mImageTexture->InvalidateAll ();
 	}
 }
 
