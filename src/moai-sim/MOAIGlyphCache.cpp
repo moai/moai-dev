@@ -104,7 +104,7 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 		MOAIGlyphCachePage* page = this->mPages [ i ];
 		MOAISpan < MOAIGlyph* >* span = page->Alloc ( font, glyph );
 		if ( span ) {
-			this->mPages [ i ]->mImageTexture->Invalidate ();
+			this->mPages [ i ]->mImageTexture->InvalidateAll ();
 			glyph.SetPageID ( i );
 			return;
 		}
