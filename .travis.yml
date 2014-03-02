@@ -1,0 +1,9 @@
+language: c
+install: true
+script: ./bin/ci-linux.sh
+branches:
+  only:
+  - master
+env:
+  global:
+    secure: eIdZl81aKELEv7b+rxyIt6aMBoetaf+Onl/nW92kPmz/yrrmQomAgdRgzijs7tzlAu5T0rp8jF119eNLOxbnDH0fPNQHNJVIMCxecxPj7Huzp6ikDjt78jKWRCwnDbyN4vSSK7QTVljPpsMEERWqXm+Y1I/rgJLCoGiYI1i5tSQ=
