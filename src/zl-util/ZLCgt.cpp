@@ -51,7 +51,7 @@ void ZLCgt::Load ( cc8* filename ) {
 
 	this->mHeader = this->ReadUnicodeAsASCII ( stream );
 	
-	u32 length = stream.GetLength ();
+	size_t length = stream.GetLength ();
 	while ( stream.GetCursor () < length ) {
 		
 		char recordType = stream.Read < u8 >( 0 );

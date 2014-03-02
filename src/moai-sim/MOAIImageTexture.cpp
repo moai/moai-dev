@@ -16,7 +16,7 @@
 			texture. Invalidated regions will be reloaded from the image
 			the next time the texture is bound.
 
-	@in		MOAIImage self
+	@in		MOAIImageTexture self
 	@in		number xMin
 	@in		number yMin
 	@in		number xMax
@@ -31,7 +31,7 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 		self->Invalidate ( rect );
 	}
 	else {
-		self->Invalidate ();
+		self->InvalidateAll ( );
 	}
 	return 0;
 }
@@ -41,12 +41,10 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::Invalidate () {
+void MOAIImageTexture::InvalidateAll () {
 
 	this->mStatus = INVALID;
-	
-	this->MOAIGfxResource::Invalidate ();
-	this->MOAIGfxResource::Load ();
+ 	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
@@ -122,10 +120,6 @@ void MOAIImageTexture::OnCreate () {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnInvalidate () {
 }
 
 

@@ -43,3 +43,4 @@ project ( untz )
   endif (MOAI_VORBIS)
 
 target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
+set_target_properties( untz PROPERTIES FOLDER Third-Party )

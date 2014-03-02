@@ -39,7 +39,6 @@ private:
 	void			OnClear					();
 	void			OnCreate				();
 	void			OnLoad					();
-	void			OnInvalidate     		();
 
 public:
 	
@@ -48,7 +47,7 @@ public:
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
-	void			Invalidate				();
+	void			InvalidateAll				();
 	void			Invalidate				( ZLIntRect rect );
 					MOAIImageTexture		();
 					~MOAIImageTexture		();

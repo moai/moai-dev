@@ -16,4 +16,4 @@ set ( CONTRIB_SOURCES
 include_directories(${CONTRIB_INCLUDES})
 add_library( contrib STATIC ${CONTRIB_SOURCES})
 target_include_directories (contrib PUBLIC ${CONTRIB_INCLUDES})
-
+set_target_properties( contrib PROPERTIES FOLDER Third-Party )

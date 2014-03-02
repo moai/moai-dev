@@ -16,3 +16,4 @@ project ( mongoose )
 
 add_library(mongoose STATIC ${MONGOOSE_SOURCES})
 target_include_directories(mongoose PUBLIC ${MONGOOSE_INCLUDES})
+set_target_properties( mongoose PROPERTIES FOLDER Third-Party )

@@ -24,3 +24,4 @@ if (NOT MOAI_TINYXML)
 endif (NOT MOAI_TINYXML)
 
 target_link_libraries ( moai-test moai-sim moai-util moai-core zlcore tinyxml)
+set_target_properties(moai-test PROPERTIES FOLDER Modules)  

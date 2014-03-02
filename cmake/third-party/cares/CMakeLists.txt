@@ -69,3 +69,4 @@ if (BUILD_IOS)
 
 add_library( cares STATIC ${CARES_SRC})
 target_include_directories ( cares PUBLIC ${CARES_INCLUDES} )
+set_target_properties( cares PROPERTIES FOLDER Third-Party )

@@ -2,6 +2,8 @@
 
 Thanks for checking out the Moai source code. Here's the scoop.
 
+Linux CI: [![Build Status](https://travis-ci.org/moaiforge/moai-sdk.png?branch=master)](https://travis-ci.org/moaiforge/moai-sdk)
+OSX CI: [![Build Status](https://travis-ci.org/moaiforge/moai-sdk.png?branch=travis-osx)](https://travis-ci.org/moaiforge/moai-sdk)
 ## Introduction
 
 Moai SDK is an open source game framework for quickly developing great mobile games.

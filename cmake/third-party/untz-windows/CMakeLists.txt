@@ -59,3 +59,4 @@ target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
     dsound
     oleaut32
   )
+set_target_properties( untz PROPERTIES FOLDER Third-Party )

@@ -60,7 +60,7 @@ u8 ZLLexStream::ReadByte () {
 //----------------------------------------------------------------//
 int ZLLexStream::SetCursor ( long offset ) {
 
-	offset = offset - this->GetCursor ();
+	offset = offset - (long) this->GetCursor ();
 	
 	if ( offset > 0 ) {
 		for ( long i = 0; i < offset; ++i ) {
