@@ -547,7 +547,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
 			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
 			u32 color = this->GetColor ( wrap.mX, wrap.mY );
-			u32 alpha = this->GetAlpha ( wrap.mX, wrap.mY );
+			float alpha = this->GetAlpha ( wrap.mX, wrap.mY );
 			float scale = this->GetScale ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
