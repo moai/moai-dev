@@ -111,7 +111,7 @@ void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( eventID, state )) {
-		state.DebugCall ( 1, 0 );
+		state.DebugCall ( 0, 0 );
 	}
 }
 
@@ -177,7 +177,7 @@ void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( eventID, state )) {
-		state.DebugCall ( 1, 0 );
+		state.DebugCall ( 0, 0 );
 	}
 }
 

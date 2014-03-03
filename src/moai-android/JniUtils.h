@@ -22,14 +22,12 @@
 class JniUtils {
 protected:
 
-	JNIEnv*		mEnv;
 	jclass		mClass;
-	jobject		mActivity;
+	//jobject		mActivity;
 
 public:
 
 	//----------------------------------------------------------------//
-	jobjectArray		ArrayFromLua				( lua_State* L, int index );
 	jobject				BundleFromLua				( lua_State* L, int index );
 	bool				CallStaticBooleanMethod 	( jmethodID method, ... );
 	long				CallStaticLongMethod		( jmethodID method, ... );
@@ -37,6 +35,7 @@ public:
 	void				CallStaticVoidMethod		( jmethodID method, ... );
 	void				ClearException				();
 	jobject				CreateObjectOfClass			();
+	JNIEnv*				Env							();
 	jclass				GetClass					( cc8* className );
 	jclass				GetClassViaLoader			( cc8* className );
 	cc8*				GetCString					( jstring jstr );
@@ -50,6 +49,7 @@ public:
 	void				ReleaseCString				( jstring jstr, cc8* cstr );
 	bool				SetClass					( cc8* className );
 	bool				SetClassViaLoader			( cc8* className );
+	jobjectArray		StringArrayFromLua			( lua_State* L, int index );
 };
 
 #endif

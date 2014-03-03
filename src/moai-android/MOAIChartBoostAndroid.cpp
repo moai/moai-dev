@@ -36,15 +36,14 @@ int MOAIChartBoostAndroid::_hasCachedInterstitial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIChartBoostAndroid::_onCreate ( lua_State* L ) {
+int MOAIChartBoostAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
 	
-	jstring appID			= self->GetJString ( state.GetValue < cc8* >( 1, "" ));
-	jstring appSignature	= self->GetJString ( state.GetValue < cc8* >( 2, "" ));
+	jstring jappID			= self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+	jstring jappSignature	= self->GetJString ( state.GetValue < cc8* >( 2, 0 ));
 	
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
-	state.Push ( self->CallStaticBooleanMethod ( init, appID, appSignature ));
-	
+	self->CallStaticVoidMethod ( init, jappID, jappSignature );
 	return 0;
 }
 
@@ -120,7 +119,7 @@ void MOAIChartBoostAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "cacheInterstitial",			_cacheInterstitial },
 		{ "hasCachedInterstitial",		_hasCachedInterstitial },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIChartBoostAndroid > },
-		{ "onCreate",					_onCreate },
+		{ "init",						_init },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIChartBoostAndroid > },
 		{ "showInterstitial",			_showInterstitial },
 		{ NULL, NULL }
@@ -136,6 +135,7 @@ void MOAIChartBoostAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiChartBoost_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
+	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiChartBoost_AKUInvokeListener\n" );
 	MOAIChartBoostAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 

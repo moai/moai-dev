@@ -335,7 +335,7 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 		result = fseek ( file, entryHeader.mCommentLength + entryHeader.mExtraFieldLength, SEEK_CUR );
 		if ( result ) goto error;
 		
-		zl_printf ( "ENTRY NAME: %s\n", nameBuffer );
+		//zl_printf ( "ENTRY NAME: %s\n", nameBuffer );
 		
 		this->AddEntry ( &entryHeader, nameBuffer );
 	}
