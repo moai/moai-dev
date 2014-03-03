@@ -112,11 +112,11 @@ int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	jobjectArray jpermissions = NULL;
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
-        jpermissions = self->ArrayFromLua ( L, 1);
+        jpermissions = self->StringArrayFromLua ( L, 1 );
 	}
 	
 	if ( jpermissions == NULL ) {
-		jpermissions = self->mEnv->NewObjectArray ( 0, self->mEnv->FindClass( "java/lang/String" ), 0 );
+		jpermissions = self->Env ()->NewObjectArray ( 0, self->Env ()->FindClass( "java/lang/String" ), 0 );
 	}
 
 	self->CallStaticVoidMethod ( self->mJava_Login, jpermissions );				
@@ -247,7 +247,7 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 	this->mJava_ExtendToken			= this->GetStaticMethod ( "extendToken", "()V" );
 	this->mJava_GetExpirationDate	= this->GetStaticMethod ( "getExpirationDate", "()J" );
 	this->mJava_GetToken			= this->GetStaticMethod ( "getToken", "()Ljava/lang/String;" );
-	this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
+	//this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
 	this->mJava_Init				= this->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
 	this->mJava_IsSessionValid		= this->GetStaticMethod ( "isSessionValid", "()Z" );
 	this->mJava_Login				= this->GetStaticMethod ( "login", "([Ljava/lang/String;)V" );
