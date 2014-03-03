@@ -37,4 +37,4 @@ if (MOAI_SQLITE3)
   target_link_libraries ( moai-luaext  luasql )
 endif (MOAI_SQLITE3)
   
-  
+set_target_properties(moai-luaext PROPERTIES FOLDER Modules)  

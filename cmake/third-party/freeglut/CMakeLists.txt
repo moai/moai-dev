@@ -22,6 +22,8 @@ find_package( OpenGL REQUIRED )
 
 target_link_libraries( freeglutstatic ${OPENGL_LIBRARIES})
 
+set_target_properties( freeglutstatic PROPERTIES FOLDER Third-Party )
+
 if (BUILD_LINUX)
   target_link_libraries( freeglutstatic Xxf86vm )
 endif (BUILD_LINUX)

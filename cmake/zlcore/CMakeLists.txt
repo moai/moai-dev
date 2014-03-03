@@ -24,6 +24,8 @@ add_library ( zlcore STATIC ${SRC_ZLUTIL} ${SRC_ZLGFX} )
 
 target_include_directories ( zlcore PUBLIC "${MOAI_ROOT}/src/" "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib")
 
+set_target_properties(zlcore PROPERTIES FOLDER Core)
+
 if ( MOAI_EXPAT )
   target_link_libraries( zlcore expat)
 endif ( MOAI_EXPAT )

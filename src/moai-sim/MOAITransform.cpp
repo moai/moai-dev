@@ -46,7 +46,7 @@ int MOAITransform::_addLoc ( lua_State* L ) {
 int MOAITransform::_addPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D piv = self->GetLoc ();
+	ZLVec3D piv = self->GetPiv ();
 	
 	piv.mX += state.GetValue < float >( 2, 0.0f );
 	piv.mY += state.GetValue < float >( 3, 0.0f );

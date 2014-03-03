@@ -131,7 +131,7 @@ class MoaiAPIParser
     data.match ( /MOAI_SDK_VERSION_REVISION\s(\S*)\s*/ )
     self.version_revision = $1
 
-    data.match ( /MOAI_SDK_VERSION_AUTHOR\s\"(\S*)\"\s*/ )
+    data.match ( /MOAI_SDK_VERSION_AUTHOR\s\"(.*)\"\s*/ )
     self.version_author = $1    
 
   end

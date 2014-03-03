@@ -41,4 +41,5 @@ include_directories (${VORBIS_INCLUDES})
 add_library(vorbis STATIC ${VORBIS_SOURCES})
 target_include_directories(vorbis PUBLIC ${VORBIS_INCLUDES})
 target_link_libraries( vorbis ogg )
+set_target_properties( vorbis PROPERTIES FOLDER Third-Party )
 
