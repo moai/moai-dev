@@ -539,7 +539,6 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 	float tileHeight = this->GetTileHeight();
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	ZLColorVec penColor = gfxDevice.GetPenColor();
-	ZLColorVec tileColor;
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
