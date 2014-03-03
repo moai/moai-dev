@@ -14,7 +14,7 @@ namespace MOAIKeyCodes {
 		SHIFT	= 256,
 		CONTROL,
 		ALT,
-		TOTAL,
+		TOTAL   = 512,
 	};
 };
 

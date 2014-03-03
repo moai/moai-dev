@@ -142,10 +142,13 @@ void MainLoop () {
 					break;
 				
 				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-				
-					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, sdlEvent.key.keysym.sym, sdlEvent.key.type == SDL_KEYDOWN );
-					break;
+				case SDL_KEYUP:	{
+					int key = sdlEvent.key.keysym.sym;
+					if (key & 0x40000000) key = (key & 0x3FFFFFFF) + 256;
+			
+					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, key, sdlEvent.key.type == SDL_KEYDOWN );
+
+				} 	break;
 					
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
