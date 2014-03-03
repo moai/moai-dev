@@ -45,34 +45,6 @@ void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, flo
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( const ZLColorVec &color ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.WriteQuad ( this->mVtx, this->mUV, color );
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, const ZLColorVec &color ) {
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff, color ); 
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, const ZLColorVec &color ) {
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff, xScale, yScale, color ); 
-}
-
-//----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale, const ZLColorVec &color ) {
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.WriteQuad ( this->mVtx, this->mUV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale, color ); 
-}
-
-//----------------------------------------------------------------//
 ZLRect MOAIQuadBrush::GetUVBounds () {
 
 	ZLRect rect;

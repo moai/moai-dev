@@ -53,7 +53,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
-	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	MOAIGfxState*	GetShaderDefault		();
 					MOAIMesh				();
