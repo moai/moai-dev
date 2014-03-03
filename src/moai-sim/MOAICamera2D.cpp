@@ -14,9 +14,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	number far
 */
 int MOAICamera2D::_getFarPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	lua_pushnumber ( state, self->mFarPlane );
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -27,9 +24,6 @@ int MOAICamera2D::_getFarPlane ( lua_State* L ) {
 	@out	number near
 */
 int MOAICamera2D::_getNearPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	lua_pushnumber ( state, self->mNearPlane );
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -41,9 +35,6 @@ int MOAICamera2D::_getNearPlane ( lua_State* L ) {
 	@out	nil
 */
 int MOAICamera2D::_setFarPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	self->mFarPlane = state.GetValue < float >( 2, DEFAULT_FAR_PLANE );
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -55,9 +46,6 @@ int MOAICamera2D::_setFarPlane ( lua_State* L ) {
 	@out	nil
 */
 int MOAICamera2D::_setNearPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	self->mNearPlane = state.GetValue < float >( 2, DEFAULT_NEAR_PLANE );
-	return 0;
 }
 
 #endif
