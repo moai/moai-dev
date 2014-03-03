@@ -58,6 +58,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGridDeck2D )
 	
 	//----------------------------------------------------------------//
+	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	void			GetGfxState				( MOAIDeckGfxState& gfxState );
 					MOAIGridDeck2D			();

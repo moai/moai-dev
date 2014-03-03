@@ -838,39 +838,15 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 	}
 	
 	MOAIGrid& grid = *this->mGrid;
-	
-	float tileWidth = grid.GetTileWidth ();
-	float tileHeight = grid.GetTileHeight ();
+	MOAICellCoord c0, c1;
+
 	
 	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
-
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
 		this->GetGridBoundsInView ( c0, c1 );
-		
-		for ( int y = c0.mY; y <= c1.mY; ++y ) {
-			for ( int x = c0.mX; x <= c1.mX; ++x ) {
-				
-				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				
-				MOAICellCoord coord ( x, y );
-				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-			}
-		}
+	} else {
+		c0 = c1 = grid.GetCellCoord ( subPrimID );
 	}
-	else {
-		
-		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
-		
-		u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-		
-		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-	}
+	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
 }
 
 //----------------------------------------------------------------//

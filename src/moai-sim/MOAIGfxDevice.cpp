@@ -1688,3 +1688,4 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
+
