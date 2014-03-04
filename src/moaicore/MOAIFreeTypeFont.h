@@ -99,6 +99,7 @@ protected:
 												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
+	void				StoreGlyphAndAdvanceAtIndex		(size_t index);
 	int					WidthOfString			(u32* buffer, size_t bufferLength, u32 startIndex = 0);
 	
 	

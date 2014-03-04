@@ -1085,18 +1085,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					--rewindCount;
 				}
 				else{
-					if (this->mGlyphArray) {
-						// store the glyph in mGlyphArray
-						error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
-						CHECK_ERROR(error);
-					}
-					
-					if (this->mAdvanceArray) {
-						// store the advance in mAdvanceArray
-						this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
-					}
-					
-					
+					this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
 					++glyphArrayIndex;
 				}
 				
@@ -1126,18 +1115,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			--rewindCount;
 		}
 		else{
-			if (this->mGlyphArray) {
-				// store the glyph in mGlyphArray
-				error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
-				CHECK_ERROR(error);
-			}
-			
-			if (this->mAdvanceArray) {
-				// store the advance in mAdvanceArray
-				this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
-			}
-			
-			
+			this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
 			++glyphArrayIndex;
 		}
 		
@@ -1210,6 +1188,14 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					numberOfLines++;
 					penX = penXReset;
 					lineIndex = tokenIndex = glyphArrayIndex - (rewindCount + 1);
+					
+					if (rewindCount < 0) {
+						// put character in glyph array if rewindCount is negative
+						this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
+						
+						++glyphArrayIndex;
+						
+					}
 					
 					// reset text length and last token length
 					textLength = lastTokenLength = 0;
@@ -1698,6 +1684,18 @@ void MOAIFreeTypeFont::SetCharacterSize(float fontSize){
 	CHECK_ERROR(error);
 }
 
+
+void MOAIFreeTypeFont::StoreGlyphAndAdvanceAtIndex(size_t index){
+	FT_Error error;
+	if (this->mGlyphArray) {
+		error = FT_Get_Glyph(this->mFreeTypeFace->glyph, &this->mGlyphArray[index]);
+		CHECK_ERROR(error);
+	}
+	
+	if (this->mAdvanceArray) {
+		this->mAdvanceArray[index] = this->mFreeTypeFace->glyph->advance;
+	}
+}
 
 // this method assumes that the font size has been set by FT_Set_Size
 int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength, u32 startIndex){
