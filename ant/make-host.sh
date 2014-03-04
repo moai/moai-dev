@@ -13,7 +13,7 @@ cd `dirname $0`/
 usage="usage: $0 [-p <package>] [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod \
     true | false] [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter]"
+    [--disable-twitter] [--windows]"
 skip_build="false"
 package_name="com.getmoai.samples"
 arm_mode="arm"
@@ -30,6 +30,7 @@ facebook_flags=
 push_flags=
 tapjoy_flags=
 twitter_flags=
+windows_flags=
 
 while [ $# -gt 0 ];	do
     case "$1" in
@@ -49,6 +50,7 @@ while [ $# -gt 0 ];	do
         --disable-push)  push_flags="--disable-push";;
         --disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
         --disable-twitter)  twitter_flags="--disable-twitter";;
+        --windows) windows_flags="--windows";;
         -*)
             echo >&2 \
                 $usage
@@ -108,7 +110,7 @@ if [ x"$skip_build" != xtrue ]; then
     pushd libmoai > /dev/null
         bash build.sh --use-untz $use_untz --use-luajit $use_luajit  \
             $adcolony_flags $billing_flags $chartboost_flags $crittercism_flags \
-            $facebook_flags $push_flags $tapjoy_flags $twitter_flags 
+            $facebook_flags $push_flags $tapjoy_flags $twitter_flags $windows_flags 
     popd > /dev/null
 fi
 

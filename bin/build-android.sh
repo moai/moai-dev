@@ -9,7 +9,7 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-./build.sh
+./build.sh $1
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
@@ -17,7 +17,7 @@ fi
 
 ## Create default host
 cd ..
-./make-host.sh -p com.getmoai.samples -s
+./make-host.sh -p com.getmoai.samples -s $1
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
