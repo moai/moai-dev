@@ -289,6 +289,10 @@ bool MOAIAppAndroid::NotifyBackButtonPressed () {
 	}
 }
 
+extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
+	MOAIAppAndroid::Get ().AppOpenedFromURL ( url );
+}
+
 //----------------------------------------------------------------//
 void MOAIAppAndroid::NotifyDidStartSession ( bool resumed ) {
 
@@ -416,4 +420,3 @@ extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* e
 extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken( JNIEnv* env, jclass obj ) {
 	MOAIAppAndroid::Get().NotifyPictureTaken();
 }
-

@@ -148,6 +148,10 @@ public class MoaiActivity extends Activity {
 		
 		MoaiLog.i ( "MoaiActivity onNewIntent: application started from NEW INTENT" );
 		
+		Uri data = intent.getData();
+		if (data != null) {
+			Moai.AppOpenedFromURL ( data.toString() );
+		}
 		setIntent ( intent );
 	}
 
