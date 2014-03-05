@@ -28,11 +28,6 @@ end
 -- test: const
 function TestMOAIProp:test_const()
     
-    print("-----Constants-----")
-    for key, value in pairs(MOAIProp) do
-        print("key=" .. key, "value=" .. tostring(value))
-    end
-
     assertTrue(MOAIProp.ATTR_INDEX ~= nil)
     assertTrue(MOAIProp.ATTR_PARTITION ~= nil)
     assertTrue(MOAIProp.ATTR_SHADER ~= nil)
