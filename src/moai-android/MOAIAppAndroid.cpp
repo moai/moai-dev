@@ -230,7 +230,8 @@ MOAIAppAndroid::~MOAIAppAndroid () {
 //----------------------------------------------------------------//
 void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
+	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
+       state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 	state.SetField ( -1, "EVENT_PICTURE_TAKEN",		( u32 )EVENT_PICTURE_TAKEN );
@@ -251,6 +252,26 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIAppAndroid::AppOpenedFromURL ( jstring url ) {
+  MOAILuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
+
+       if ( callback ) {
+
+               MOAILuaStateHandle state = callback.GetSelf ();
+
+               JNI_GET_ENV ( jvm, env );
+
+               JNI_GET_CSTRING ( url, returnurl );
+
+               lua_pushstring ( state, returnurl );
+
+               state.DebugCall ( 1, 0 );
+
+               JNI_RELEASE_CSTRING ( url, returnurl );
+
+       }
+}
+
 bool MOAIAppAndroid::NotifyBackButtonPressed () {
 
 	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
@@ -266,6 +287,10 @@ bool MOAIAppAndroid::NotifyBackButtonPressed () {
 
 		return false;
 	}
+}
+
+extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
+	MOAIAppAndroid::Get ().AppOpenedFromURL ( url );
 }
 
 //----------------------------------------------------------------//
@@ -395,4 +420,3 @@ extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* e
 extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken( JNIEnv* env, jclass obj ) {
 	MOAIAppAndroid::Get().NotifyPictureTaken();
 }
-

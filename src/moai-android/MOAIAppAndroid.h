@@ -25,6 +25,7 @@ class MOAIAppAndroid :
 private:
 
 	enum {
+		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END,
 		BACK_BUTTON_PRESSED,
@@ -57,6 +58,7 @@ public:
 			MOAIAppAndroid				();
 			~MOAIAppAndroid				();
 	bool	NotifyBackButtonPressed		();
+	void	AppOpenedFromURL		( jstring url );
 	void	NotifyDidStartSession		( bool resumed );
 	void	NotifyWillEndSession		();
 
