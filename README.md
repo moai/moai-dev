@@ -35,7 +35,6 @@ The following tools are required to build the API documentation.
 
 * [Bundler](http://gembundler.com/)
 * [Doxygen](http://www.doxygen.org/)
-* [Graphviz](http://www.graphviz.org/)
 
 Please set the following environment variables.
 
