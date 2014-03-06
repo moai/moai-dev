@@ -62,6 +62,9 @@ protected:
 	u32 mBitmapHeight;
 	
 	std::vector<MOAIFreeTypeTextLine> mLineVector;
+	
+	FT_Glyph* mGlyphArray;
+	FT_Vector* mAdvanceArray;
 		
 	//----------------------------------------------------------------//
 	static int			_dimensionsOfLine		( lua_State* L );
@@ -78,26 +81,28 @@ protected:
 	void				BuildLine				(u32* buffer, size_t buf_len, int pen_x,
 												 u32 lastChar, u32 startIndex);
 	void				BuildLine				(u32* buffer, size_t bufferLength, u32 startIndex);
+	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
+												 int alignment, FT_Int imageWidth);
+	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, size_t maxGlyphs, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
 	USRect				DimensionsWithMaxWidth	(cc8* text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
 												 float lineSpacing, MOAILuaState& state);
-	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
-												 int alignment, FT_Int imageWidth);
-	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
 	void				DrawBitmap				(FT_Bitmap* bitmap, FT_Int x, FT_Int y, FT_Int imageWidth,
 												 FT_Int imageHeight);
-	
 	void				GenerateLines			( FT_Int imageWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
 	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
+	static void			PushRectAndBaselineToLuaTable	(USRect rect, int *baseline, u32 index, MOAILuaState &state);
 	void				RenderLines				( FT_Int imageWidth, FT_Int imageHeight, int hAlign,
 												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
-	int					WidthOfString			(u32* buffer, size_t bufferLength);
-		
+	int					WidthOfString			(u32* buffer, size_t bufferLength, u32 startIndex = 0);
+	
+	
+	
 public:
 		
 	DECL_LUA_FACTORY ( MOAIFreeTypeFont )
@@ -107,7 +112,7 @@ public:
 	GET ( FT_Face, FreeTypeFace, mFreeTypeFace);
 	
 	//----------------------------------------------------------------//
-		
+	FT_Face				AffirmFreeTypeFace		();
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, bool returnGlyphBounds,
 												 MOAILuaState& state);
 	float				EstimatedMaxFontSize	(float height, float inputSize);

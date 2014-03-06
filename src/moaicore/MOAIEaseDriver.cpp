@@ -39,9 +39,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 		@in		number attrID			Index of the attribute to be driven.
 		@opt	number value			Value for attribute at the end of the ease. Default is 0.
 		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
-										MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
-										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.LINEAR.
 		@out	nil
 	
 	@overload	Target is a node.
@@ -53,9 +51,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 		@in		MOAINode source			Node that you are linking to target.
 		@in		number sourceAttrID		Index of the attribute being linked.
 		@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH,
-										MOAIEaseType.BACK_EASE_IN, MOAIEaseType.BACK_EASE_OUT, MOAIEaseType.BACK_SMOOTH, MOAIEaseType.SINE_EASE_IN,
-										MOAIEaseType.SINE_EASE_OUT, or MOAIEaseType.SINE_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+										MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.LINEAR.
 		@out	nil
 
 	
@@ -74,16 +70,23 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	if ( source ) {
 	
 		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttrOp::NULL_ATTR );
-		u32 mode			= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
+		u32 mode			= state.GetValue < u32 >( 7, USInterpolate::kLinear );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
 	}
 	else {
 	
 		float v1			= state.GetValue < float >( 5, 0.0f );
-		u32 mode			= state.GetValue < u32 >( 6, USInterpolate::kSmooth );
 		
-		self->SetLink ( idx, dest, destAttrID, v1, mode );
+		MOAIEase *ease = state.GetLuaObject< MOAIEase >(6, true);
+		if ( ease ) {
+			self->SetLink( idx, dest, destAttrID, v1, ease );
+		}
+		else{
+			u32 mode			= state.GetValue < u32 >( 6, USInterpolate::kLinear );
+		
+			self->SetLink ( idx, dest, destAttrID, v1, mode );
+		}
 	}
 	return 0;
 }
@@ -130,23 +133,40 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 					t0 = c0 >= 1.0f ? 1.0f : t0;
 					t1 = c1 >= 1.0f ? 1.0f : t1;
 					
-					float v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
-					
-					link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
-					
-					float v1 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
-					
-					delta = v1 - v0;
+					if (link.mEase) {
+						float v0 = link.mV0 + (link.mEase->DistortedTime(t0) * (link.mV1 - link.mV0 ) ) ;
+						
+						link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+						
+						float v1 = link.mV0 + (link.mEase->DistortedTime(t1) * (link.mV1 - link.mV0 ) );
+						
+						delta = v1 - v0;
+					}
+					else{
+						float v0 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
+						
+						link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+						
+						float v1 = USInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
+						
+						delta = v1 - v0;
+					}
 				}
 			}
 			else {
 				
+				float v0 = 0.0f;
+				float v1 = 0.0f;
 				float magnitude = ( link.mV1 - link.mV0 );
 				if ( magnitude == 0.0f ) continue;
-				
-				float v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
-				float v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
-				
+				if (link.mEase) {
+					v0 = link.mV0 + ( magnitude * c0 ) + ( magnitude * link.mEase->DistortedTime( t0 ) );
+					v1 = link.mV0 + ( magnitude * c1 ) + ( magnitude * link.mEase->DistortedTime( t1 ) );
+				}
+				else{
+					v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
+					v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
+				}
 				delta = v1 - v0;
 			}
 			
@@ -267,6 +287,25 @@ void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIEaseDriver::SetLink(u32 idx, MOAINode *dest, u32 destAttrID, float v1, MOAIEase *ease){
+	if ( idx < this->mLinks.Size ()) {
+		MOAIEaseDriverLink& link = this->mLinks [ idx ];
+		
+		link.mSource		= 0;
+		link.mSourceAttrID	= MOAIAttrOp::NULL_ATTR;
+		
+		link.mDest			= dest;
+		link.mDestAttrID	= destAttrID;
+		
+		link.mV0			= 0.0f;
+		link.mV1			= v1;
+		link.mMode			= 0;
+		
+		link.mEase			= ease;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode  ) {
 
 	if ( idx < this->mLinks.Size ()) {
@@ -282,6 +321,8 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		link.mV0			= 0.0f;
 		link.mV1			= v1;
 		link.mMode			= mode;
+		
+		link.mEase			= 0;
 	}
 }
 
@@ -301,5 +342,7 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode
 		link.mV0			= dest->GetAttributeValue ( destAttrID, 0.0f );
 		link.mV1			= source->GetAttributeValue ( sourceAttrID, 0.0f );
 		link.mMode			= mode;
+		
+		link.mEase			= 0;
 	}
 }
