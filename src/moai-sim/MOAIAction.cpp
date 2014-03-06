@@ -18,7 +18,7 @@
 	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAction, "UU" )
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
