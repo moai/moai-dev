@@ -81,7 +81,7 @@ protected:
 	void				BuildLine				(u32* buffer, size_t buf_len, int pen_x,
 												 u32 lastChar, u32 startIndex);
 	void				BuildLine				(u32* buffer, size_t bufferLength, u32 startIndex);
-	int					ComputeLineStart		(FT_UInt unicode, int lineIndex,
+	int					ComputeLineStart		(FT_UInt unicode, size_t lineIndex,
 												 int alignment, FT_Int imageWidth);
 	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
 	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
