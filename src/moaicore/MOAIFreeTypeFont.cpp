@@ -39,7 +39,7 @@ static inline void deleteGlyphArray(FT_Glyph *const glyphs, const size_t element
 
 static inline size_t glyphsInText(cc8 *const text)
 {
-	return u8_strlen(text);
+	return (size_t) u8_strlen(text);
 }
 
 //================================================================//
@@ -393,7 +393,7 @@ void MOAIFreeTypeFont::BuildLine(u32 *buffer, size_t bufferLength, u32 startInde
 	this->mLineVector.push_back(tempLine);
 }
 
-int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, int lineIndex, int alignment,
+int MOAIFreeTypeFont::ComputeLineStart(FT_UInt unicode, size_t lineIndex, int alignment,
 									   FT_Int imageWidth){
 	int error = FT_Load_Char(this->mFreeTypeFace, unicode, FT_LOAD_DEFAULT);
 	if (error) {
@@ -711,7 +711,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	size_t vectorSize = this->mLineVector.size();
 	u32 tableIndex;
 	if (returnGlyphBounds){
-		lua_createtable(state, (u32)vectorSize, 0);
+		lua_createtable(state, (int)vectorSize, 0);
 		
 		FT_Int textHeight = lineHeight * numLines + lineHeight*(lineSpacing-1.0) * (numLines-1);
 		FT_Int imageHeight = textHeight;
@@ -748,7 +748,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			size_t text_len = (size_t)MOAIFreeTypeFont::WideCharStringLength(text_ptr);
 			// create the line sub-table with enough spaces for the glyphs in the line,
 			// the baseline entry and the string of rendered characters.
-			lua_createtable(state, (u32)text_len + 1, 0);
+			lua_createtable(state, (int)text_len + 1, 0);
 			
 			for (u32 i2 = 0; i2 < text_len;  ++i2) {
 				u32 lineIndex = 1 + i2;
@@ -767,8 +767,8 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 					pen_x += (delta.x >> 6);
 				}
 				
-				int yOffset = pen_y - (u32)(face->glyph->metrics.horiBearingY >> 6);
-				int xOffset = pen_x + (u32)(face->glyph->metrics.horiBearingX >> 6);
+				int yOffset = pen_y - (int)(face->glyph->metrics.horiBearingY >> 6);
+				int xOffset = pen_x + (int)(face->glyph->metrics.horiBearingX >> 6);
 				
 				USRect glyphRect;
 				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
@@ -790,13 +790,13 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 			u32 utfLen = MOAIFreeTypeFont::LengthOfUTF8Sequence(text_ptr) + 1;
 			char *utfString = (char*)malloc(sizeof(char) * utfLen);
 			
-			u8_toutf8(utfString, utfLen, text_ptr, (u32)text_len);
+			u8_toutf8(utfString, (int)utfLen, text_ptr, (int)text_len);
 			
 			state.Push(utfString);
 			lua_setfield(state, -2, "renderedCharacters");
 			
 			// set index for current line sub-table
-			lua_rawseti(state, -2, tableIndex);
+			lua_rawseti(state, -2, (int)tableIndex);
 			
 			pen_y += lineHeight * lineSpacing;
 		} 
@@ -1072,21 +1072,33 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		if (unicode == '\n'){
 			numberOfLines++;
 			penX = penXReset;
-			lineIndex = tokenIndex = glyphArrayIndex;
+			lineIndex = tokenIndex = (int)glyphArrayIndex;
 			tokenN = n;
-			textLength = lastTokenLength = 0;
+			
 			if (generateLines) {
 				this->BuildLine(textBuffer, textLength, startIndex);
 				
 				error = FT_Load_Char(face, unicode, FT_LOAD_DEFAULT);
 				CHECK_ERROR(error);
+				
+				if (rewindCount > 0){
+					--rewindCount;
+				}
+				else{
+					this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
+					++glyphArrayIndex;
+				}
+				
+				
 			}
+			
+			textLength = lastTokenLength = 0;
 			
 			continue;
 		}
 		// handle word breaking characters
 		else if ( MOAIFreeTypeFont::IsWordBreak(unicode, wordBreakMode) ){
-			tokenIndex = glyphArrayIndex;
+			tokenIndex = (int)glyphArrayIndex;
 			tokenN = n;
 			lastTokenLength = textLength;
 			lastTokenCh = lastCh;
@@ -1103,18 +1115,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 			--rewindCount;
 		}
 		else{
-			if (this->mGlyphArray) {
-				// store the glyph in mGlyphArray
-				error = FT_Get_Glyph(face->glyph, &this->mGlyphArray[glyphArrayIndex]);
-				CHECK_ERROR(error);
-			}
-			
-			if (this->mAdvanceArray) {
-				// store the advance in mAdvanceArray
-				this->mAdvanceArray[glyphArrayIndex] = face->glyph->advance;
-			}
-			
-			
+			this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
 			++glyphArrayIndex;
 		}
 		
@@ -1147,7 +1148,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 				numberOfLines++;
 				textLength = 0;
 				penX = penXReset;
-				lineIndex = tokenIndex = glyphArrayIndex;
+				lineIndex = tokenIndex = (int)glyphArrayIndex -1;
 			}
 			else{ // WORD_BREAK_NONE and other modes
 				if (tokenIndex != lineIndex) {
@@ -1172,7 +1173,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						
 					}
 					// set the rewind count for skipping glyphs already loaded.
-					rewindCount =  (glyphArrayIndex - tokenIndex) - 2; 
+					rewindCount =  ((int)glyphArrayIndex - (int)tokenIndex) - 2;
 					// set n back to the last index
 					n = tokenN;
 					// get the character after token index and update n
@@ -1186,7 +1187,15 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 					//advance to next line
 					numberOfLines++;
 					penX = penXReset;
-					lineIndex = tokenIndex = glyphArrayIndex - (rewindCount + 1);
+					lineIndex = tokenIndex = (int)glyphArrayIndex - (rewindCount + 1);
+					
+					if (rewindCount < 0) {
+						// put character in glyph array if rewindCount is negative
+						this->StoreGlyphAndAdvanceAtIndex(glyphArrayIndex);
+						
+						++glyphArrayIndex;
+						
+					}
 					
 					// reset text length and last token length
 					textLength = lastTokenLength = 0;
@@ -1200,7 +1209,7 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 						// advance to next line
 						numberOfLines++;
 						penX = penXReset;
-						lineIndex = tokenIndex = glyphArrayIndex;
+						lineIndex = tokenIndex = (int)glyphArrayIndex - 1;
 					}
 					else{
 						// we don't words broken up when calculating optimal size
@@ -1394,7 +1403,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 	FT_UInt previousGlyphIndex = 0;
 	bool useKerning = FT_HAS_KERNING(face);
 	
-	size_t vectorSize = (int) this->mLineVector.size();
+	size_t vectorSize = this->mLineVector.size();
 	
 	// set up Lua table for return
 	u32 tableIndex;
@@ -1558,7 +1567,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
-	const size_t maxGlyphs = glyphsInText(text);
+	const size_t maxGlyphs = strlen(text);
 	
 	FT_Int maxDescender;
 	FT_Int maxAscender;
@@ -1675,6 +1684,18 @@ void MOAIFreeTypeFont::SetCharacterSize(float fontSize){
 	CHECK_ERROR(error);
 }
 
+
+void MOAIFreeTypeFont::StoreGlyphAndAdvanceAtIndex(size_t index){
+	FT_Error error;
+	if (this->mGlyphArray) {
+		error = FT_Get_Glyph(this->mFreeTypeFace->glyph, &this->mGlyphArray[index]);
+		CHECK_ERROR(error);
+	}
+	
+	if (this->mAdvanceArray) {
+		this->mAdvanceArray[index] = this->mFreeTypeFace->glyph->advance;
+	}
+}
 
 // this method assumes that the font size has been set by FT_Set_Size
 int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength, u32 startIndex){
