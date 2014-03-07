@@ -20,7 +20,7 @@ private:
 		//----------------------------------------------------------------//
 		static int	_cacheInterstitial		( lua_State* L );
 		static int	_hasCachedInterstitial	( lua_State* L );
-		static int	_onCreate 				( lua_State* L );
+		static int	_init	 				( lua_State* L );
 		static int	_showInterstitial 		( lua_State* L );
 
 	public:

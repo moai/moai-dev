@@ -16,24 +16,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDeviceID
-	@text	Request a unique ID for the device.
-
-	@out 	string	id			The device ID.
-*/
-int MOAIAdColonyAndroid::_getDeviceID ( lua_State *L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
-
-	jstring jidentifier = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetDeviceID );
-
-	cc8* identifier = self->GetCString ( jidentifier );
-	lua_pushstring ( state, identifier );
-	self->ReleaseCString ( jidentifier, identifier );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	init
 	@text	Initialize AdColony.
 
@@ -44,48 +26,13 @@ int MOAIAdColonyAndroid::_getDeviceID ( lua_State *L ) {
 int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
 
-	jstring jidentifier = self->GetJString ( lua_tostring ( state, 1 ));
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAdColonyAndroid::_init\n" );
 
-	jobjectArray jzones = NULL;
+	jstring jidentifier		= self->GetJString ( lua_tostring ( state, 1 ));
+	jstring joptions		= self->GetJString ( lua_tostring ( state, 2 ));
+	jobjectArray jzones		= self->StringArrayFromLua ( state, 3 );
 
-	if ( state.IsType ( 2, LUA_TTABLE )) {
-
-		int numEntries = 0;
-		for ( int key = 1; ; ++key ) {
-
-			state.GetField ( 2, key );
-			cc8* value = state.GetValue < cc8* >( -1, "" );
-			lua_pop ( state, 1 );
-
-			if ( !value ) {
-
-				numEntries = key - 1;
-				break;
-			}
-		}
-
-		jzones = self->mEnv->NewObjectArray ( numEntries, self->mEnv->FindClass( "java/lang/String" ), 0 );
-		for ( int key = 1; ; ++key ) {
-
-			state.GetField ( 2, key );
-			cc8* value = state.GetValue < cc8* >( -1, "" );
-			lua_pop ( state, 1 );
-
-			if ( value ) {
-				jstring jvalue = self->GetJString ( value );
-				self->mEnv->SetObjectArrayElement ( jzones, key - 1, jvalue );
-			}
-			else {
-				break;
-			}
-		}
-	}
-
-	if ( jzones == NULL ) {
-		jzones = self->mEnv->NewObjectArray ( 0, self->mEnv->FindClass( "java/lang/String" ), 0 );
-	}
-
-	self->CallStaticVoidMethod ( self->mJava_Init, jidentifier, jzones );
+	self->CallStaticVoidMethod ( self->mJava_Init, jidentifier, joptions, jzones );
 
 	return 0;
 }
@@ -113,18 +60,6 @@ int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAdColonyAndroid::_setListener ( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
-
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-
-	if ( idx < TOTAL ) {
-		self->mListeners [ idx ].SetStrongRef ( state, 2 );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	videoReadyForZone
 	@text	Check the readiness of a video ad for a given zone.
 
@@ -142,16 +77,6 @@ int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 //================================================================//
 // MOAIAdColonyAndroid
 //================================================================//
-//----------------------------------------------------------------//
-void MOAIAdColonyAndroid::NotifyVideoComplete ( int success ) {
-
-	MOAILuaRef& callback = ( success == 1 ) ? this->mListeners [ VIDEO_ENDED_IN_ZONE ] : this->mListeners [ VIDEO_FAILED_IN_ZONE ];
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
 
 //----------------------------------------------------------------//
 MOAIAdColonyAndroid::MOAIAdColonyAndroid () {
@@ -160,8 +85,7 @@ MOAIAdColonyAndroid::MOAIAdColonyAndroid () {
 	
 	this->SetClass ( "com/ziplinegames/moai/MoaiAdColony" );
 	
-	this->mJava_GetDeviceID		= this->GetStaticMethod ( "getDeviceID", "()Ljava/lang/String;" );
-	this->mJava_Init			= this->GetStaticMethod ( "init", "(Ljava/lang/String;[Ljava/lang/String;)V" );
+	this->mJava_Init			= this->GetStaticMethod ( "init", "(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)V" );
 	this->mJava_IsVideoReady	= this->GetStaticMethod ( "isVideoReady", "(Ljava/lang/String;)Z" );
 	this->mJava_PlayVideo		= this->GetStaticMethod ( "playVideo", "(Ljava/lang/String;ZZ)V" );
 }
@@ -173,17 +97,15 @@ MOAIAdColonyAndroid::~MOAIAdColonyAndroid () {
 //----------------------------------------------------------------//
 void MOAIAdColonyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "VIDEO_BEGAN_IN_ZONE", 	( u32 )VIDEO_BEGAN_IN_ZONE );
-	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", 	( u32 )VIDEO_ENDED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_FAILED_IN_ZONE", 	( u32 )VIDEO_FAILED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_PAUSED_IN_ZONE", 	( u32 )VIDEO_PAUSED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_RESUMED_IN_ZONE",	( u32 )VIDEO_RESUMED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_STARTED", 		( u32 )VIDEO_STARTED );
+	state.SetField ( -1, "VIDEO_SHOWN", 		( u32 )VIDEO_SHOWN );
+	state.SetField ( -1, "VIDEO_FAILED", 		( u32 )VIDEO_FAILED );
 
 	luaL_Reg regTable [] = {
-		{ "getDeviceID",		_getDeviceID },
+		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIAdColonyAndroid > },
 		{ "init",				_init },
 		{ "playVideo",			_playVideo },
-		{ "setListener",		_setListener },
+		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIAdColonyAndroid > },
 		{ "videoReadyForZone",	_videoReadyForZone },
 		{ NULL, NULL }
 	};
@@ -196,9 +118,10 @@ void MOAIAdColonyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoComplete ( JNIEnv* env, jclass obj, jint success ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	MOAIAdColonyAndroid::Get ().NotifyVideoComplete ( success );
+	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MOAIAdColonyAndroid_AKUInvokeListener\n" );
+	MOAIAdColonyAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 
 #endif

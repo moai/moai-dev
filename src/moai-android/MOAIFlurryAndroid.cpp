@@ -36,8 +36,8 @@ int MOAIFlurryAndroid::_endEvent ( lua_State *L ) {
 int MOAIFlurryAndroid::_endSession ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 
-	jmethodID startSession = self->GetStaticMethod ( "onEndSession", "(Landroid/content/Context;)V" );
-	self->CallStaticVoidMethod ( startSession, self->mActivity );
+	//jmethodID startSession = self->GetStaticMethod ( "onEndSession", "(Landroid/content/Context;)V" );
+	//self->CallStaticVoidMethod ( startSession, self->mActivity );
 	return 0;
 }
 
@@ -62,9 +62,9 @@ int MOAIFlurryAndroid::_setUserID ( lua_State *L ) {
 int MOAIFlurryAndroid::_startSession ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 
-	jstring japiKey = self->GetJString ( lua_tostring ( state, 1 ));
-	jmethodID startSession = self->GetStaticMethod ( "onStartSession", "(Landroid/content/Context;Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( startSession, self->mActivity, japiKey );
+	//jstring japiKey = self->GetJString ( lua_tostring ( state, 1 ));
+	//jmethodID startSession = self->GetStaticMethod ( "onStartSession", "(Landroid/content/Context;Ljava/lang/String;)V" );
+	//self->CallStaticVoidMethod ( startSession, self->mActivity, japiKey );
 	return 0;
 }
 
@@ -77,7 +77,7 @@ MOAIFlurryAndroid::MOAIFlurryAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	this->SetClassViaLoader ( "com.flurry.android.FlurryAgent" );
+	//this->SetClassViaLoader ( "com.flurry.android.FlurryAgent" );
 }
 
 //----------------------------------------------------------------//

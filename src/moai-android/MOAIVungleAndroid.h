@@ -1,47 +1,43 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIADCOLONYANDROID_H
-#define MOAIADCOLONYANDROID_H
+#ifndef MOAIVUNGLEANDROID_H
+#define MOAIVUNGLEANDROID_H
 
-#ifndef DISABLE_ADCOLONY
+#ifndef DISABLE_VUNGLE
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
 
 //================================================================//
-// MOAIAdColonyAndroid
+// MOAIVungleAndroid
 //================================================================//
-class MOAIAdColonyAndroid :
-	public MOAIGlobalClass < MOAIAdColonyAndroid, MOAIGlobalEventSource >,
+class MOAIVungleAndroid :
+	public MOAIGlobalClass < MOAIVungleAndroid, MOAIGlobalEventSource >,
 	public JniUtils {
 private:
 
-	jmethodID	mJava_Init;
-	jmethodID	mJava_IsVideoReady;
-	jmethodID	mJava_PlayVideo;
-
 	//----------------------------------------------------------------//
+	static int	_displayAdvert		( lua_State* L );
 	static int	_init				( lua_State* L );
-	static int	_playVideo			( lua_State* L );
-	static int	_videoReadyForZone	( lua_State* L );
+	static int	_isVideoAvailable	( lua_State* L );
 
 public:
 
-	DECL_LUA_SINGLETON ( MOAIAdColonyAndroid );
+	DECL_LUA_SINGLETON ( MOAIVungleAndroid );
 
 	enum {
-		VIDEO_STARTED,
-		VIDEO_SHOWN,
-		VIDEO_FAILED,
+		AD_START,
+		AD_END,
+		AD_VIEWED,
 	};
 
 	//----------------------------------------------------------------//
-			MOAIAdColonyAndroid		();
-			~MOAIAdColonyAndroid	();
+			MOAIVungleAndroid		();
+			~MOAIVungleAndroid		();
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
-#endif  //DISABLE_ADCOLONY
+#endif  //DISABLE_VUNGLE
 
 #endif  //MOAIADCOLONY_H
