@@ -1712,7 +1712,7 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength, u32 startI
 	bool useKerning = FT_HAS_KERNING(face);
 	
 	for (size_t n = 0; n < bufferLength; n ++){
-		u32 index = n + startIndex;
+		u32 index = (u32)n + startIndex;
 		FT_UInt glyphIndex;
 		
 		u32 unicode = buffer[n];
@@ -1740,7 +1740,7 @@ int MOAIFreeTypeFont::WidthOfString(u32* buffer, size_t bufferLength, u32 startI
 	boundingBox.yMax = 0;
 	
 	for (size_t n = 0; n < bufferLength; n++) {
-		u32 index = n + startIndex;
+		u32 index = (u32)n + startIndex;
 		
 		FT_Glyph_Get_CBox( this->mGlyphArray[index], FT_GLYPH_BBOX_PIXELS, &glyphBoundingBox);
 		
