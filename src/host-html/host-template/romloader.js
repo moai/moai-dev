@@ -60,7 +60,7 @@ RomCache.prototype.checkCachedPackage = function( packageName, uuid) {
 
       /* Check if there's a cached package, and if so whether it's the latest available */
 RomCache.prototype.dbCheckCachedPackage = function(db, packageName, uuid) {
-        var p = D.defer();
+        var d = D.defer();
         var transaction = db.transaction([this.METADATA_STORE_NAME], this.IDB_RO);
         var metadata = transaction.objectStore(this.METADATA_STORE_NAME);
 
@@ -68,15 +68,15 @@ RomCache.prototype.dbCheckCachedPackage = function(db, packageName, uuid) {
         getRequest.onsuccess = function(event) {
           var result = event.target.result;
           if (!result) {
-            return p.resolve(false);
+            return d.resolve(false);
           } else {
-            return p.resolve(uuid=== result.uuid);
+            return d.resolve(uuid=== result.uuid);
           }
         };
         getRequest.onerror = function(error) {
-          p.reject(error);
+          d.reject(error);
         };
-        return p;
+        return d;
 };
 
 RomCache.prototype.fetchCachedPackage = function(packageName) {
@@ -105,7 +105,7 @@ RomCache.prototype.dbFetchCachedPackage = function(db, packageName) {
 RomCache.prototype.cacheRemotePackage = function(packageName, packageData, packageMeta) {
    var that = this;
    return this.getDb.then(function(db) {
-      return that.dCachedRemotePackage(db, packageName, packageData, packageMeta);
+      return that.dbCacheRemotePackage(db, packageName, packageData, packageMeta);
    });
 };
 
@@ -115,27 +115,20 @@ RomCache.prototype.dbCacheRemotePackage = function(db, packageName, packageData,
         var packages = transaction.objectStore(this.PACKAGE_STORE_NAME);
         var metadata = transaction.objectStore(this.METADATA_STORE_NAME);
 
-//UP TO HERE!!!
-
         var putPackageRequest = packages.put(packageData, packageName);
         putPackageRequest.onsuccess = function(event) {
           var putMetadataRequest = metadata.put(packageMeta, packageName);
           putMetadataRequest.onsuccess = function(event) {
-            callback(packageData);
+            d.resolve(packageData);
           };
           putMetadataRequest.onerror = function(error) {
-            errback(error);
+            d.reject(error);
           };
         };
         putPackageRequest.onerror = function(error) {
-          errback(error);
+          d.reject(error);
         };
-      };
-
-
-
-
-/* rom loader */
+};
 
 /**
  	Load Json
@@ -144,6 +137,9 @@ RomCache.prototype.dbCacheRemotePackage = function(db, packageName, packageData,
  	then install Files
  */
 
+/**
+  Grabs filesystem metadata json from the given url
+*/
 function LoadFileSystemJson(fsJsonUrl) {
   	var promise = D.defer();
  	var xhr = new XMLHttpRequest();
@@ -160,7 +156,10 @@ function LoadFileSystemJson(fsJsonUrl) {
     return promise;
 }
 
-function LoadFileSystemData(romPackageUrl, progress) {
+/**
+  Grabs the filesystem data blob from the given url
+*/
+function LoadRemoteFileSystemData(romPackageUrl, progress) {
 	var promise = D.defer();
 	var xhr = new XMLHttpRequest();
     xhr.open('GET', romPackageUrl, true);
@@ -177,6 +176,26 @@ function LoadFileSystemData(romPackageUrl, progress) {
     };
     xhr.send(null);
     return promise;
+}
+
+/**
+  Loads the filesystem data either via cache or via remoteUrl
+  also caches it if it wasn't previously cached
+*/
+function LoadFileSystemData(packageName, uuid, romUrl, progress) {
+   var romCache = new RomCache();
+   return romCache.checkCachedPackage(packageName, uuid)
+      .then(function(packageExists) {
+        if (packageExists) {
+          return romCache.fetchCachedPackage(packageName)
+        } else {
+          return LoadRemoteFileSystemData(romUrl, progress)
+                  .then(function(packageRaw) {
+                      //add it to the cache for next time
+                      return romCache.cacheRemotePackage(packageName, packageRaw, { uuid: uuid })
+                  })
+        }
+    });
 }
 
 
@@ -219,23 +238,29 @@ function installFiles(emscripten, romPackage, fsInfo, fileProgress) {
   return D.all(fileLoads);
 }
 
+//takes an emscripten instance and rom url, and returns a promise for the rom installed in that emscriptens
+//filesystem
 function LoadRom(emscripten, romUrl, romProgress, fileProgress ) {
-   var romJsonUrl = romUrl + ".json";
+  var romJsonUrl = romUrl + ".json";
 
-
-   var LoadFileSystem = LoadFileSystemData(romUrl, romProgress)
-          .then(function(romPackageRaw) { 
-            return installFileSystemData(emscripten,romPackageRaw) 
-          });
-
-   var InstalledFileSystem = D.all(
-        LoadFileSystem,
-        LoadFileSystemJson(romJsonUrl)
-      ).spread(function (romPackage, fsInfo) {
-        return installFiles(emscripten, romPackage, fsInfo, fileProgress)
-      });
-
-
+  var fileSystemInfo;
+  var packageName = romUrl;
+  
+  var InstalledFileSystem = LoadFileSystemJson(romJsonUrl) //load json metadata
+  .then(function(fsInfo) {
+    //load the rom blob from cache or fetch
+    fileSystemInfo = fsInfo;
+    return LoadFileSystemData(packageName, fsInfo.package_uuid, romUrl, romProgress);
+  })
+  .then(function(romPackageRaw) { 
+    //install into emscripten heap
+    return installFileSystemData(emscripten, romPackageRaw); 
+  })
+  .then(function(installedRomPackage) {
+    //create filesystem entries pointing to blob segements
+    return installFiles(emscripten, installedRomPackage, fileSystemInfo, fileProgress);
+  })
+    //return our promise for a fully created file system
    return InstalledFileSystem;
 }
 
