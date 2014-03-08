@@ -294,13 +294,13 @@ moaijs.run = function() {
       Module['monitorRunDependencies'] = function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-          if (!left) {
+//          if (!left) {
 
-		    Module.addOnPreMain(function(){moaijs.runhost()})	
-            Module.run();
-		    console.log('MoaiJS Running. Waiting For Host');
+//		    Module.addOnPreMain(function(){moaijs.runhost()})	
+//            Module.run();
+//		    console.log('MoaiJS Running. Waiting For Host');
 			
-          }
+//          }
         }
 
 
@@ -310,3 +310,32 @@ moaijs.run = function() {
 
 moaijs.run();
 
+function logger(prefix) {
+	return function(e) {                            
+		console.log(e);
+		console.log( prefix+':'+e.count+'/'+e.total );
+	}
+}
+
+function WithFileSystem(emscripten) {
+	var d = D.defer();
+	
+	if (emscripten['calledRun']) {
+    d.resolve(emscripten)
+  } else {
+    if (!emscripten['preRun']) emscripten['preRun'] = [];
+    emscripten["preRun"].push(function() { d.resolve(emscripten) }); // FS is not initialized yet, wait for it
+  }
+  return d.promise;
+}
+
+var emscripten = CreateMoaiRuntime(Module);
+WithFileSystem(emscripten)
+.then(function(emscripten) {
+	return LoadRom(emscripten, 'moaiapp.rom', logger('data'), logger('file'));
+	})
+.then(function() {
+		Module.addOnPreMain(function(){moaijs.runhost()});
+   	Module.run();	
+})
+.rethrow();
