@@ -1,13 +1,27 @@
 mergeInto(LibraryManager.library, {
+  
+  SetOpenWindowFunc: function(openwindowfunc) {
+    Module.OpenWindowCallback = openwindowfunc;
+  },
+
+  SetSaveFunc: function(savefunc) {
+    Module.SaveCallback = safefunc;
+  },
+
   OpenWindowFunc: function(title,width,height) {
-    moaijs.OpenWindowFunc(Module.Pointer_stringify(title),width,height);
+    var canvas;
+    if (Module.OpenWindowCallback) {
+      canvas = Module.OpenWindowCallback(Module.Pointer_stringify(title),width,height);
+    }
+    Module.canvas = canvas;
+    Browser.createContext(canvas,true,true);
   },
 
   //replace fclose to notify us on file change to help with save game handling
   fclose: function(stream) {
     var fileinfo = FS.streams[stream];
-    if(fileinfo && fileinfo.isWrite) {
-    	moaijs.SaveFile(FS.absolutePath(fileinfo.path), fileinfo.object.contents);
+    if(fileinfo && fileinfo.isWrite && Module.SaveCallback) {
+    	Module.SaveCallback(FS.absolutePath(fileinfo.path), fileinfo.object.contents);
     };
     _fsync(stream);
     return _close(stream);

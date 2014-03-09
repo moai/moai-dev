@@ -139,9 +139,9 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 	canvas.width = width;
 	canvas.height = height;
 	moaijs.canvasScale = canvas.width/$(canvas).width();
-	Module.canvas = canvas;
+	//Module.canvas = canvas;
 	canvas.focus();
-	Browser.createContext(canvas,true,true);
+	//Browser.createContext(canvas,true,true);
 	//hook mouse
 	canvas.addEventListener("mousedown",moaijs.mousedown,false);
 	canvas.addEventListener("mouseup",moaijs.mouseup,false);
@@ -182,10 +182,15 @@ moaijs.OpenWindowFunc = function(title,width,height) {
 		moaijs.canvasScale = canvas.width/$(canvas).width();
 	  }
 
+	return canvas;
 };
 
 moaijs.runhost = function() {
-	console.log("runhost called");
+
+    Module.SetOpenWindowFunc(moaijs.OpenWindowFunc);
+    Module.SetSaveFunc(moaijs.SaveFile);
+
+console.log("runhost called");
 	wrapNativeFuncs();
 console.log("restoring save state");
 	moaijs.restoreDocumentDirectory();
@@ -294,13 +299,6 @@ moaijs.run = function() {
       Module['monitorRunDependencies'] = function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-    //      if (!left) {
-
-//		    Module.addOnPreMain(function(){moaijs.runhost()})	
- //           Module.run();
-//		    console.log('MoaiJS Running. Waiting For Host');
-			
- //         }
         }
 
 
