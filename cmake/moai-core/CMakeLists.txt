@@ -3,14 +3,14 @@ project ( moai-core )
 
 if ( BUILD_ANDROID )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
 endif ( BUILD_ANDROID )
 
 set ( MOAI_CORE_INCLUDES 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
   "${MOAI_ROOT}/src/moai-core"
-  )
+)
 
 include_directories ( 
   ${MOAI_CORE_INCLUDES} 
@@ -19,7 +19,7 @@ include_directories (
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-core/" )
 
 # Use all cpp files in directory as source code
-file ( GLOB MOAI_CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_CORE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 include_directories ( ${MOAI_CORE_INCLUDES} )
 

@@ -149,7 +149,7 @@ cmake_minimum_required(VERSION 2.8)
      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src' '${VFS_INCLUDE}'
-            DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
+            DEPENDS  ${CMAKE_CURRENT_BINARY_DIR/luajit 
         ) 
 
         add_custom_target(liblua-static
@@ -173,9 +173,9 @@ cmake_minimum_required(VERSION 2.8)
     
    set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
 
-    #add_library(liblua-static STATIC IMPORTED)
-    #set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
-    #add_dependencies(liblua-static libluajit)
+   # add_library(liblua-static STATIC IMPORTED)
+   # set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
+   # add_dependencies(liblua-static libluajit)
 
-    set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
+   set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
     

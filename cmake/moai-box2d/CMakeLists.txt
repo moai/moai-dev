@@ -11,7 +11,7 @@ project ( moai-box2d )
     )
 
   # Use all cpp files in directory as source code
-  file ( GLOB MOAI_BOX2D_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+  file ( GLOB MOAI_BOX2D_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
   include_directories ( ${MOAI_BOX2D_INCLUDES} )
 
@@ -19,7 +19,6 @@ project ( moai-box2d )
 
   get_target_property (BOX2D_INCLUDES box2d INCLUDE_DIRECTORIES)
   target_include_directories (moai-box2d PUBLIC ${MOAI_BOX2D_INCLUDES} ${BOX2D_INCLUDES})
-
 
   target_link_libraries ( moai-box2d moai-sim moai-core moai-util box2d zlcore )
   set_target_properties(moai-box2d PROPERTIES FOLDER Modules)  

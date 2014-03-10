@@ -20,10 +20,10 @@ include_directories ( ${INCLUDES_MOAIHOSTSDL} )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-sdl" )
 
-add_executable ( moai
-  ${CMAKE_CURRENT_SOURCE_DIR}/SDLHost.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/SDLHostMain.cpp
-)
+# Use all cpp files in directory as source code
+file ( GLOB HOST_SDL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
+
+add_executable ( moai ${HOST_SDL_SRC} )
 
 target_link_libraries ( moai 
   host-modules
@@ -75,17 +75,17 @@ if ( BUILD_OSX )
   endmacro(ADD_FRAMEWORKS)
 
   set( FWORKS
-                    AudioToolbox
-                    AudioUnit
-                    CoreAudio
-                    CoreGraphics
-                    CoreLocation
-                    Foundation
-                    GameKit
-                    QuartzCore
-                    StoreKit
-                    SystemConfiguration
-                    )
+    AudioToolbox
+    AudioUnit
+    CoreAudio
+    CoreGraphics
+    CoreLocation
+    Foundation
+    GameKit
+    QuartzCore
+    StoreKit
+    SystemConfiguration
+  )
 
   ADD_FRAMEWORKS(moai "${FWORKS}")
   
