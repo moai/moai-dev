@@ -55,23 +55,23 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 
 	switch ( params.mHeuristic ) {
 		
-		case MANHATTAN_DISTANCE:
-		
-			return ( hMove * params.mHCost ) + ( vMove * params.mVCost );
-		
-		case DIAGONAL_DISTANCE:
-			
-			if ( hMove < vMove ) {
-				return ( hMove * params.mDCost ) + (( vMove - hMove ) * params.mVCost );
-			}
-			return ( vMove * params.mDCost ) + (( hMove - vMove ) * params.mHCost );
-		
 		case EUCLIDEAN_DISTANCE: {
 			
 			ZLVec2D v0 = this->mGrid->GetCellPoint ( c0, MOAIGridSpace::TILE_CENTER );
 			ZLVec2D v1 = this->mGrid->GetCellPoint ( c1, MOAIGridSpace::TILE_CENTER );
 			
 			return v0.Dist ( v1 );
+		}
+		case MANHATTAN_DISTANCE: {
+		
+			return ABS ( hMove * params.mHCost ) + ABS ( vMove * params.mVCost );
+		}
+		case DIAGONAL_DISTANCE: {
+			
+			if ( hMove < vMove ) {
+				return ABS ( hMove * params.mDCost ) + ABS (( vMove - hMove ) * params.mVCost );
+			}
+			return ABS ( vMove * params.mDCost ) + ABS (( hMove - vMove ) * params.mHCost );
 		}
 	};
 	return 0.0f;
