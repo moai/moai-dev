@@ -4,7 +4,52 @@
 */
 
 //wrap our funcs into a global because we can
-moaijs = {}
+function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError ) {
+	this.canvas = canvas;
+	this.onTitleChange = onTitleChange;
+	this.onStatusChange = onStatusChange;
+	this.onError = onError;
+	this.emscripten = null;
+	this.total_memory = total_memory;
+	this.loadedFileSystem = null;
+
+    console.log("MoaiJS Init");
+}
+
+MoaiJS.prototype.initEmscripten = function() {
+    var Opts = { //our required emscripten settings
+    		canvas: this.canvas,
+    		setStatus: this.onStatusChange,
+    		printErr: this.onError,
+    		noExitRuntime: true,
+    		totalDependencies: 0,
+    		TOTAL_MEMORY: this.total_memory
+    	};
+	console.log("MoaiJS Emscripten Init");
+	this.emscripten = window.CreateMoaiRuntime(Opts);
+}
+
+MoaiJS.prototype.loadFileSystem = function(romUrl) {
+   var that = this;
+   function makeProgress(prefix) {
+		return function(done,total) {
+	   		that.onStatusChange(prefix+": "+done+"/"+total);
+		}
+  };
+  this.initEmscripten(); 
+  console.log("MoaiJS Load Filesystem");
+  this.loadedFileSystem = window.LoadRom(this.emscripten,romUrl, makeProgress('Loading Data'), makeProgress('Installing File'));
+}
+
+MoaiJS.prototype.Run = function(mainLua) {
+	var that = this;
+	this.loadedFileSystem.then(function(){
+	   console.log("MoaiJS Filesystem Loaded");	
+  	   that.addOnPreMain(function(){ that.runhost(mainLua); });
+  	   that.run();   
+  	}).rethrow();
+}
+
 function wrapNativeFuncs() {
 	moaijs.RefreshContext = Module.cwrap('RefreshContext','number',null);
 
@@ -281,33 +326,9 @@ moaijs.SaveFile = function(path,data) {
 
 
 
-moaijs.run = function() {
-	console.log("moai host run");
-	Module = (typeof Module === "undefined")?{}:Module;
-      Module['canvas'] = document.getElementById('MoaiCanvas');
-      Module['setStatus'] = function(status) {
-      	 console.log(status);
-      	 document.getElementById('MoaiStatus').innerHTML = status;
-      };
-      Module['printErr'] = function(text) {
-            text = Array.prototype.slice.call(arguments).join(' ');
-            console.log('Error:'+text);
-          }
-      Module['noExitRuntime'] = true;
-      Module['totalDependencies'] = 0;
-
-      Module['monitorRunDependencies'] = function(left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
-          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-        }
-
-
-}
-
   
 
-moaijs.run();
-var emscripten = CreateMoaiRuntime(Module);
+
 function makeProgress(prefix) {
 	return function(done,total) {
 	   console.log(prefix+": "+done+"/"+total);
