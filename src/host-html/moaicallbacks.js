@@ -1,12 +1,4 @@
-mergeInto(LibraryManager.library, {
-  
-  SetOpenWindowFunc: function(openwindowfunc) {
-    Module.OpenWindowCallback = openwindowfunc;
-  },
-
-  SetSaveFunc: function(savefunc) {
-    Module.SaveCallback = safefunc;
-  },
+var LibraryMOAI = {
 
   OpenWindowFunc: function(title,width,height) {
     var canvas;
@@ -45,4 +37,6 @@ mergeInto(LibraryManager.library, {
   	  FS.createDataFile(dir,name,data,true,true);
     }
   }
-});
+}
+
+mergeInto(LibraryManager.library, LibraryMOAI);
