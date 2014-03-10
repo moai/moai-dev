@@ -107,6 +107,66 @@ int MOAICamera::_getNearPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_moveFieldOfView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+	
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		
+		action->ParseForMove ( state, 2, self, 1, mode,
+			MOAICameraAttr::Pack ( ATTR_FOV ), 0.0f
+		);
+		
+		action->SetSpan ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mFieldOfView += state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_seekFieldOfView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+
+		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		
+		action->ParseForSeek ( state, 2, self, 1, mode,
+			MOAICameraAttr::Pack ( ATTR_FOV ), self->mFieldOfView, 0.0f
+		);
+		
+		action->SetSpan ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mFieldOfView = state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFarPlane
 	@text	Sets the camera's far plane distance.
 
@@ -173,6 +233,20 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 // MOAICamera
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+
+	if ( MOAICameraAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FOV:
+				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				return true;
+		}
+	}
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+}
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
@@ -302,6 +376,8 @@ MOAICamera::~MOAICamera () {
 void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	
+	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ));
+	
 	state.SetField ( -1, "CAMERA_TYPE_3D",		( u32 )CAMERA_TYPE_3D );
 	state.SetField ( -1, "CAMERA_TYPE_ORTHO",	( u32 )CAMERA_TYPE_ORTHO );
 	state.SetField ( -1, "CAMERA_TYPE_WINDOW",	( u32 )CAMERA_TYPE_WINDOW );
@@ -317,6 +393,8 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getFloorMove",		_getFloorMove },
 		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
+		{ "moveFieldOfView",	_moveFieldOfView },
+		{ "seekFieldOfView",	_seekFieldOfView },
 		{ "setFarPlane",		_setFarPlane },
 		{ "setFieldOfView",		_setFieldOfView },
 		{ "setNearPlane",		_setNearPlane },
