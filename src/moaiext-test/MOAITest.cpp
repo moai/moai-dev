@@ -18,4 +18,5 @@ MOAITest::~MOAITest () {
 
 //----------------------------------------------------------------//
 void MOAITest::Staging ( MOAITestMgr& testMgr ) {
+	UNUSED (testMgr);
 }
