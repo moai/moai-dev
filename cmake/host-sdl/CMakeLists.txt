@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 2.8.5)
 
 project(host-sdl)
 
-
 if ( BUILD_OSX )
   find_library ( APPLICATION_SERVICES_LIBRARY ApplicationServices )
   find_library ( CORE_SERVICES_LIBRARY CoreServices )
+  find_package ( OpenGL REQUIRED )
 endif ( BUILD_OSX )
 
 set ( INCLUDES_MOAIHOSTSDL 
@@ -53,6 +53,7 @@ if ( BUILD_OSX )
   target_link_libraries ( moai 
     ${APPLICATION_SERVICES_LIBRARY}
     ${CORE_SERVICES_LIBRARY}
+    ${OPENGL_LIBRARIES}
   )
 
   macro(ADD_FRAMEWORK fwname appname)
