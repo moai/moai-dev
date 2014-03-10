@@ -35,7 +35,7 @@
 	#include <ParticlePresets.h>
 #endif
 
-#ifdef GLUTHOST_USE_TEST
+#ifdef GLUTHOST_USE_MOAI_TEST
 	#include <aku/AKU-test.h>
 #endif
 
@@ -420,7 +420,7 @@ void GlutRefreshContext () {
 		ParticlePresets ();
 	#endif
 	
-	#ifdef GLUTHOST_USE_TEST
+	#ifdef GLUTHOST_USE_MOAI_TEST
 		AKUTestInit();
 	#endif
 
