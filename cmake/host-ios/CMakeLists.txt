@@ -17,7 +17,7 @@ include_directories (
     ${INCLUDES_MOAIIOS}
 )
 
-file ( GLOB MOAIIOS_SOURCES
+file ( GLOB_RECURSE MOAIIOS_SOURCES
   "${IOS_HOST}/*.cpp"
   "${IOS_HOST}/*.mm"
   "${IOS_HOST}/*.h"
