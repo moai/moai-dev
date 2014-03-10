@@ -268,6 +268,7 @@ void MOAIAppAndroid::AppOpenedFromURL ( jstring url ) {
 	}
 }
 
+//----------------------------------------------------------------//
 bool MOAIAppAndroid::NotifyBackButtonPressed () {
 
 	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
@@ -283,10 +284,6 @@ bool MOAIAppAndroid::NotifyBackButtonPressed () {
 
 		return false;
 	}
-}
-
-extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
-	MOAIAppAndroid::Get ().AppOpenedFromURL ( url );
 }
 
 //----------------------------------------------------------------//
@@ -317,6 +314,7 @@ void MOAIAppAndroid::NotifyWillEndSession () {
 	}
 }
 
+//----------------------------------------------------------------//
 void MOAIAppAndroid::NotifyPictureTaken() {
 	JNI_GET_ENV( jvm, env );
 
@@ -343,6 +341,7 @@ void MOAIAppAndroid::NotifyPictureTaken() {
 	}
 }
 
+//----------------------------------------------------------------//
 void MOAIAppAndroid::PushPictureData( MOAILuaState& state ) {
 	ZLLog::Print( "MOAIAppAndroid::PushPictureData" );
 	JNI_GET_ENV( jvm, env );
@@ -364,6 +363,7 @@ void MOAIAppAndroid::PushPictureData( MOAILuaState& state ) {
 	}
 }
 
+//----------------------------------------------------------------//
 void MOAIAppAndroid::PushPicturePath( MOAILuaState& state ) {
 	JNI_GET_ENV( jvm, env );
 
@@ -378,6 +378,7 @@ void MOAIAppAndroid::PushPicturePath( MOAILuaState& state ) {
 	}
 }
 
+//----------------------------------------------------------------//
 void MOAIAppAndroid::PushPictureCode( MOAILuaState& state ) {
 	JNI_GET_ENV( jvm, env );
 
@@ -413,6 +414,12 @@ extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* e
 	MOAIAppAndroid::Get ().NotifyWillEndSession ();
 }
 
+//----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken( JNIEnv* env, jclass obj ) {
-	MOAIAppAndroid::Get().NotifyPictureTaken();
+	MOAIAppAndroid::Get ().NotifyPictureTaken ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
+	MOAIAppAndroid::Get ().AppOpenedFromURL ( url );
 }
