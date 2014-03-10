@@ -204,7 +204,7 @@ public class Moai {
 		}
 	}
 
-	public static void AppOpenedFromURL ( String Url ) {
+	public static void AppOpenedFromURL ( String url ) {
 		synchronized ( sAkuLock ) {
 			AKUAppOpenedFromURL ( url );
 		}
