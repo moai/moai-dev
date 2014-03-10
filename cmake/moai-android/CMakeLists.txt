@@ -20,7 +20,5 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-android/" )
 # Use all cpp files in directory as source code
 file ( GLOB MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
-include_directories ( ${MOAI_ANDROID_INCLUDES} )
-
 add_library ( moai-android STATIC ${MOAI_ANDROID_SRC} )
 target_link_libraries( moai-android moai-sim moai-util moai-core )

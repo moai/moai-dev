@@ -17,5 +17,5 @@ file ( GLOB MOAI_AUDIOSAMPLER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_C
 
 add_library ( moai-audiosampler STATIC ${MOAI_AUDIOSAMPLER_SRC}  )
 target_link_libraries ( moai-audiosampler moai-core moai-util moai-sim zlcore )
-  set_target_properties ( moai-audiosampler PROPERTIES FOLDER Modules )  
+set_target_properties ( moai-audiosampler PROPERTIES FOLDER Modules )  
 
