@@ -30,6 +30,8 @@ private:
 	static int		_getFloorMove			( lua_State* L );
 	static int		_getFocalLength			( lua_State* L );
 	static int		_getNearPlane			( lua_State* L );
+	static int		_moveFieldOfView		( lua_State* L );
+	static int		_seekFieldOfView		( lua_State* L );
 	static int		_setFarPlane			( lua_State* L );
 	static int		_setFieldOfView			( lua_State* L );
 	static int		_setNearPlane			( lua_State* L );
@@ -45,6 +47,12 @@ public:
 	};
 	
 	DECL_LUA_FACTORY ( MOAICamera )
+	DECL_ATTR_HELPER ( MOAICamera )
+
+	enum {
+		ATTR_FOV,		
+		TOTAL_ATTR,
+	};
 	
 	GET_SET ( float, NearPlane, mNearPlane )
 	GET_SET ( float, FarPlane, mFarPlane )
@@ -52,6 +60,7 @@ public:
 	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	ZLMatrix4x4		GetBillboardMtx			() const;
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
