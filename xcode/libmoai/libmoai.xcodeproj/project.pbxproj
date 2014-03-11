@@ -158,9 +158,6 @@
 		03240D1213564CB0000ADC60 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6913564CB0000ADC60 /* pngwrite.c */; };
 		03240D1313564CB0000ADC60 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6A13564CB0000ADC60 /* pngwtran.c */; };
 		03240D1413564CB0000ADC60 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6B13564CB0000ADC60 /* pngwutil.c */; };
-		03240D4A13564CB0000ADC60 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
-		03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
@@ -278,9 +275,6 @@
 		03240EB813564CB0000ADC60 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6913564CB0000ADC60 /* pngwrite.c */; };
 		03240EB913564CB0000ADC60 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6A13564CB0000ADC60 /* pngwtran.c */; };
 		03240EBA13564CB0000ADC60 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6B13564CB0000ADC60 /* pngwutil.c */; };
-		03240EF013564CB0000ADC60 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
-		03240EF113564CB0000ADC60 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
@@ -909,6 +903,12 @@
 		4D851DAA1873E760009DF1C4 /* MOAIEaseElasticIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D851DA71873E760009DF1C4 /* MOAIEaseElasticIn.cpp */; };
 		4D851DAB1873E760009DF1C4 /* MOAIEaseElasticIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851DA81873E760009DF1C4 /* MOAIEaseElasticIn.h */; };
 		4D851DAC1873E760009DF1C4 /* MOAIEaseElasticIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D851DA81873E760009DF1C4 /* MOAIEaseElasticIn.h */; };
+		579E367318CF8EEF00A3CE47 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 579E367018CF8EEF00A3CE47 /* sqlite3.c */; };
+		579E367418CF8EEF00A3CE47 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 579E367018CF8EEF00A3CE47 /* sqlite3.c */; };
+		579E367518CF8EEF00A3CE47 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 579E367118CF8EEF00A3CE47 /* sqlite3.h */; };
+		579E367618CF8EEF00A3CE47 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 579E367118CF8EEF00A3CE47 /* sqlite3.h */; };
+		579E367718CF8EEF00A3CE47 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 579E367218CF8EEF00A3CE47 /* sqlite3ext.h */; };
+		579E367818CF8EEF00A3CE47 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 579E367218CF8EEF00A3CE47 /* sqlite3ext.h */; };
 		663703C916127FFD002D0D27 /* USHexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 663703C816127FFD002D0D27 /* USHexWriter.h */; };
 		663703CA16127FFD002D0D27 /* USHexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 663703C816127FFD002D0D27 /* USHexWriter.h */; };
 		663703E016128038002D0D27 /* USHashWriterAdler32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 663703CB16128038002D0D27 /* USHashWriterAdler32.cpp */; };
@@ -2322,9 +2322,6 @@
 		03240B6913564CB0000ADC60 /* pngwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwrite.c; path = ../../3rdparty/lpng140/pngwrite.c; sourceTree = SOURCE_ROOT; };
 		03240B6A13564CB0000ADC60 /* pngwtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwtran.c; path = ../../3rdparty/lpng140/pngwtran.c; sourceTree = SOURCE_ROOT; };
 		03240B6B13564CB0000ADC60 /* pngwutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwutil.c; path = ../../3rdparty/lpng140/pngwutil.c; sourceTree = SOURCE_ROOT; };
-		03240BA313564CB0000ADC60 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = "../../3rdparty/sqlite-3.6.16/sqlite3.c"; sourceTree = SOURCE_ROOT; };
-		03240BA413564CB0000ADC60 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = "../../3rdparty/sqlite-3.6.16/sqlite3.h"; sourceTree = SOURCE_ROOT; };
-		03240BA513564CB0000ADC60 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3ext.h; path = "../../3rdparty/sqlite-3.6.16/sqlite3ext.h"; sourceTree = SOURCE_ROOT; };
 		03240BA713564CB0000ADC60 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = ../../3rdparty/tinyxml/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
 		03240BA813564CB0000ADC60 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = ../../3rdparty/tinyxml/tinyxml.h; sourceTree = SOURCE_ROOT; };
 		03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../../3rdparty/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
@@ -2668,6 +2665,9 @@
 		5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "libmoai-osx-release.xcconfig"; path = "../configs/libmoai-osx-release.xcconfig"; sourceTree = "<group>"; };
 		5751E6D2185660B800775234 /* base-ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "base-ios.xcconfig"; path = "../configs/base-ios.xcconfig"; sourceTree = "<group>"; };
 		5751E6D3185660B800775234 /* base-mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "base-mac.xcconfig"; path = "../configs/base-mac.xcconfig"; sourceTree = "<group>"; };
+		579E367018CF8EEF00A3CE47 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../3rdparty/sqlite3/sqlite3.c; sourceTree = "<group>"; };
+		579E367118CF8EEF00A3CE47 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../3rdparty/sqlite3/sqlite3.h; sourceTree = "<group>"; };
+		579E367218CF8EEF00A3CE47 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3ext.h; path = ../../3rdparty/sqlite3/sqlite3ext.h; sourceTree = "<group>"; };
 		663703C816127FFD002D0D27 /* USHexWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHexWriter.h; sourceTree = "<group>"; };
 		663703CB16128038002D0D27 /* USHashWriterAdler32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHashWriterAdler32.cpp; sourceTree = "<group>"; };
 		663703CC16128038002D0D27 /* USHashWriterAdler32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHashWriterAdler32.h; sourceTree = "<group>"; };
@@ -3810,9 +3810,9 @@
 		03240BA213564CB0000ADC60 /* sqlite */ = {
 			isa = PBXGroup;
 			children = (
-				03240BA313564CB0000ADC60 /* sqlite3.c */,
-				03240BA413564CB0000ADC60 /* sqlite3.h */,
-				03240BA513564CB0000ADC60 /* sqlite3ext.h */,
+				579E367018CF8EEF00A3CE47 /* sqlite3.c */,
+				579E367118CF8EEF00A3CE47 /* sqlite3.h */,
+				579E367218CF8EEF00A3CE47 /* sqlite3ext.h */,
 			);
 			name = sqlite;
 			sourceTree = "<group>";
@@ -5404,6 +5404,7 @@
 				03240C1413564CB0000ADC60 /* cpBB.h in Headers */,
 				03240C1613564CB0000ADC60 /* cpBody.h in Headers */,
 				03240C1813564CB0000ADC60 /* cpCollision.h in Headers */,
+				579E367818CF8EEF00A3CE47 /* sqlite3ext.h in Headers */,
 				03240C1A13564CB0000ADC60 /* cpHashSet.h in Headers */,
 				03240C1C13564CB0000ADC60 /* cpPolyShape.h in Headers */,
 				03240C1E13564CB0000ADC60 /* cpShape.h in Headers */,
@@ -5435,8 +5436,6 @@
 				03240D0313564CB0000ADC60 /* png.h in Headers */,
 				03240D0413564CB0000ADC60 /* pngconf.h in Headers */,
 				03240D0913564CB0000ADC60 /* pngpriv.h in Headers */,
-				03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */,
-				03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD218F8C13A7FD6E008337E7 /* luasql.h in Headers */,
 				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
@@ -5489,6 +5488,7 @@
 				CDEBDD761468C19D00C86DF9 /* b2CircleShape.h in Headers */,
 				CDEBDD7A1468C19D00C86DF9 /* b2EdgeShape.h in Headers */,
 				CDEBDD7E1468C19D00C86DF9 /* b2PolygonShape.h in Headers */,
+				579E367618CF8EEF00A3CE47 /* sqlite3.h in Headers */,
 				CDEBDD801468C19D00C86DF9 /* b2Shape.h in Headers */,
 				CDEBDD911468C1AF00C86DF9 /* b2BlockAllocator.h in Headers */,
 				CDEBDD951468C1AF00C86DF9 /* b2Draw.h in Headers */,
@@ -5914,6 +5914,7 @@
 				03240E7513564CB0000ADC60 /* xmlrole.h in Headers */,
 				03240E7713564CB0000ADC60 /* xmltok.h in Headers */,
 				03240E7913564CB0000ADC60 /* xmltok_impl.h in Headers */,
+				579E367718CF8EEF00A3CE47 /* sqlite3ext.h in Headers */,
 				03240E7B13564CB0000ADC60 /* ft2build.h in Headers */,
 				03240E7C13564CB0000ADC60 /* ftconfig.h in Headers */,
 				03240E7D13564CB0000ADC60 /* ftheader.h in Headers */,
@@ -5923,8 +5924,6 @@
 				03240EA913564CB0000ADC60 /* png.h in Headers */,
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
-				03240EF113564CB0000ADC60 /* sqlite3.h in Headers */,
-				03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD80F63F135BBCFF006B0683 /* MOAIISO8601DateFormatter.h in Headers */,
 				CD218F8913A7FD6E008337E7 /* luasql.h in Headers */,
@@ -5948,6 +5947,7 @@
 				CD490092141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD490095141AB6EC00913D80 /* lparser.h in Headers */,
 				CD490097141AB6EC00913D80 /* lstate.h in Headers */,
+				579E367518CF8EEF00A3CE47 /* sqlite3.h in Headers */,
 				CD490099141AB6EC00913D80 /* lstring.h in Headers */,
 				CD49009C141AB6EC00913D80 /* ltable.h in Headers */,
 				CD49009F141AB6EC00913D80 /* ltm.h in Headers */,
@@ -6753,7 +6753,6 @@
 				03240D1213564CB0000ADC60 /* pngwrite.c in Sources */,
 				03240D1313564CB0000ADC60 /* pngwtran.c in Sources */,
 				03240D1413564CB0000ADC60 /* pngwutil.c in Sources */,
-				03240D4A13564CB0000ADC60 /* sqlite3.c in Sources */,
 				03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
@@ -6882,6 +6881,7 @@
 				CDEBDE201468C1EC00C86DF9 /* b2FrictionJoint.cpp in Sources */,
 				CDEBDE241468C1EC00C86DF9 /* b2GearJoint.cpp in Sources */,
 				CDEBDE281468C1EC00C86DF9 /* b2Joint.cpp in Sources */,
+				579E367418CF8EEF00A3CE47 /* sqlite3.c in Sources */,
 				CDEBDE2C1468C1EC00C86DF9 /* b2MouseJoint.cpp in Sources */,
 				CDEBDE301468C1EC00C86DF9 /* b2PrismaticJoint.cpp in Sources */,
 				CDEBDE341468C1EC00C86DF9 /* b2PulleyJoint.cpp in Sources */,
@@ -7255,7 +7255,6 @@
 				03240EB813564CB0000ADC60 /* pngwrite.c in Sources */,
 				03240EB913564CB0000ADC60 /* pngwtran.c in Sources */,
 				03240EBA13564CB0000ADC60 /* pngwutil.c in Sources */,
-				03240EF013564CB0000ADC60 /* sqlite3.c in Sources */,
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
@@ -7378,6 +7377,7 @@
 				CDEBDDF11468C1D900C86DF9 /* b2ContactSolver.cpp in Sources */,
 				CDEBDDF51468C1D900C86DF9 /* b2EdgeAndCircleContact.cpp in Sources */,
 				CDEBDDF91468C1D900C86DF9 /* b2EdgeAndPolygonContact.cpp in Sources */,
+				579E367318CF8EEF00A3CE47 /* sqlite3.c in Sources */,
 				CDEBDDFD1468C1D900C86DF9 /* b2PolygonAndCircleContact.cpp in Sources */,
 				CDEBDE011468C1D900C86DF9 /* b2PolygonContact.cpp in Sources */,
 				CDEBDE1B1468C1EC00C86DF9 /* b2DistanceJoint.cpp in Sources */,
@@ -7959,6 +7959,7 @@
 					SQLITE_ENABLE_COLUMN_METADATA,
 					SQLITE_ENABLE_FTS3,
 					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
@@ -8016,6 +8017,7 @@
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
@@ -8084,6 +8086,7 @@
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
@@ -8187,6 +8190,7 @@
 					DEBUG,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					SQLITE_ENABLE_FTS3,
 					SQLITE_ENABLE_FTS3_PARENTHESIS,
 					TIXML_USE_STL,
@@ -8229,6 +8233,7 @@
 					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
@@ -8285,6 +8290,7 @@
 					SQLITE_ENABLE_COLUMN_METADATA,
 					SQLITE_ENABLE_FTS3,
 					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					"SQLITE_DEFAULT_FOREIGN_KEYS=1",
 					TIXML_USE_STL,
 					HAVE_MEMMOVE,
 					XML_STATIC,
