@@ -26,7 +26,7 @@
 #include <aku/AKU-fmod-ex.h>
 #endif
 
-#ifdef USE_TEST
+#ifdef USE_MOAI_TEST
 #include <aku/AKU-test.h>
 #endif
 
@@ -183,7 +183,7 @@ namespace MoaiInputDeviceSensorID {
 			AKUFmodExInit ();
 		#endif
         
-        #ifdef USE_TEST
+        #ifdef USE_MOAI_TEST
             AKUTestInit ();
         #endif
         
