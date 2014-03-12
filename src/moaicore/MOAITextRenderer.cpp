@@ -346,7 +346,7 @@ int MOAITextRenderer::_setWordBreak ( lua_State *L ){
 
 bool MOAITextRenderer::TextFitsWithFontSize(cc8 *text, float fontSize){
 	this->mFont->SetCharacterSize(fontSize);
-	int maxLines = this->mForceSingleLine ? 1 : (this->mHeight / this->mFont->GetLineHeight());
+	int maxLines = this->mForceSingleLine ? 1 : (this->mHeight / ((float)this->mFont->GetLineHeight() * this->mLineSpacing));
 	int numLines = this->mFont->NumberOfLinesToDisplayText(text, this->mWidth, this->mWordBreak, false);
 	return numLines > 0 && numLines <= maxLines;
 }
