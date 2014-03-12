@@ -113,6 +113,7 @@ void MOAIClearableView::ClearSurface () {
 	}
 
 	if ( this->mClearFlags ) {
+		MOAIGfxDevice::Get().SetDepthMask(true);
 		zglClear ( this->mClearFlags );
 	}
 }
