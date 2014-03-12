@@ -3,6 +3,9 @@
 * Author: David Pershouse
 */
 
+//stop leakage
+var MoaiJS = (function() {
+
 //wrap our funcs into a global because we can
 function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError ) {
 	this.canvas = canvas;
@@ -17,6 +20,7 @@ function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError ) {
 }
 
 MoaiJS.prototype.initEmscripten = function() {
+	if (this.emscripten) return;
     var Opts = { //our required emscripten settings
     		canvas: this.canvas,
     		setStatus: this.onStatusChange,
@@ -61,12 +65,20 @@ MoaiJS.prototype.loadFileSystem = function(romUrl) {
   this.loadedFileSystem = window.LoadRom(this.emscripten,romUrl, makeProgress('Loading Data'), makeProgress('Installing File'));
 }
 
-MoaiJS.prototype.Run = function(mainLua) {
+MoaiJS.prototype.run = function(mainLua, romUrl) {
 	var that = this;
+	if (!this.loadedFileSystem) {
+		if (!romUrl) {
+			console.log("No file system specified or loaded");
+			return;
+		}
+		this.loadFileSystem(romUrl);
+	}
+
 	this.loadedFileSystem.then(function(){
 	   console.log("MoaiJS Filesystem Loaded");	
-  	   that.addOnPreMain(function(){ that.runhost(mainLua); });
-  	   that.run();   
+  	   that.emscripten.addOnPreMain(function(){ that.runhost(mainLua); });
+  	   that.emscripten.run();   
   	}).rethrow();
 }
 
@@ -195,8 +207,7 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 
 
 	//now start rendering and updationg
-	var step = this.AKUGetSimStep() || ((1000/60)/1000)
-	var moaiInverval = window.setInterval( this.updateloop.bind(this), step*1000);
+	this.startUpdates();
 	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
 
 	window.addEventListener("resize", resizeThrottler, false);
@@ -220,6 +231,29 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 
 	return canvas;
 };
+
+MoaiJS.prototype.startUpdates = function() {
+	var step = this.AKUGetSimStep() || ((1000/60)/1000)
+	if (this.moaiInterval) {
+		window.clearInterval(this.moaiInterval);
+	}
+	this.moaiInverval = window.setInterval( this.updateloop.bind(this), step*1000);
+}
+
+MoaiJS.prototype.stopUpdates = function() {
+	if (this.moaiInterval) {
+		window.clearInterval(this.moaiInterval);
+	}
+	this.moaiInverval = null;
+}
+
+MoaiJS.prototype.pause = function() {
+	this.stopUpdates();
+}
+
+MoaiJS.prototype.unpause = function() {
+	this.startUpdates();
+}
 
 MoaiJS.prototype.runhost = function(mainLua) {
 	console.log("runhost called");
@@ -281,14 +315,14 @@ function dataUriToArr(sDataUri) {
 }
 
 
-moaijs.restoreDocumentDirectory = function() {
+MoaiJS.prototype.restoreDocumentDirectory = function() {
    var docsjson  =  window.localStorage.getItem('moai-docs');
    if (!docsjson) return;
    var docs = JSON.parse(docsjson);
    for (var path in docs ) {
    	  //restore each file
    	  var data =  dataUriToArr(docs[path]);
-   	  Module._RestoreFile(path,data);
+   	  this.emscripten._RestoreFile(path,data);
  	}
 }
 
@@ -312,20 +346,79 @@ MoaiJS.prototype.SaveFile = function(path,data) {
 	reader.readAsDataURL(dataBlob);
 };
 
+return MoaiJS
+})(); //end module
 
-//TODO replace below with new MoaiJS calls
- /*
+//assume Jquery
+
+function MoaiPlayer(element) {
+	var el = $(element)
+	var template = '<div class="moai-window"> \
+                         <div class="moai-header"> \
+                            <strong class="moai-title">MOAI</strong><span class="moai-status">Loading..</span> \
+                             <div style="clear:both"></div> \
+                         </div> \
+                            <div class="moai-canvas-wrapper"><canvas class="moai-canvas" width="960" height="640" tabindex='1'></canvas></div> \
+                        <div class="moai-footer"> \
+                            <div class="moai-attrib"> \
+                            Made with Moai \
+                            www.getmoai.com \
+                            Copyright (c) 2010-2012 Zipline Games, Inc. All Rights Reserved. \
+                            </div> \
+                        </div> \
+                    </div>';
+
+    el.innerHTML = template;
 
 
-function makeProgress(prefix) {
-	return function(done,total) {
-	   console.log(prefix+": "+done+"/"+total);
+	var titleEl = el.find("moai-title").first();
+	var statusEl = el.find("moai-status").first();
+	var canvasEl = el.find("moai-canvas").first();
+	
+	//get settings
+	this.url = el.attr('data-url') || 'moaiapp.rom';
+	this.script = el.attr('data-script') || 'main.lua';
+	var ram = parseInt(el.attr('data-ram') || "48" ,10);
+	var title = el.attr('data-title') || 'Moai Player';
+
+
+
+	function onTitleChange(title) {
+		titleEl.innerHTML = title;
 	}
+
+	function onStatusChange(status) {
+		statusEl.innerHTML = status;
+	}
+
+	function onError(err) {
+		console.log("ERROR: ",err);
+	}
+
+	onTitleChange(title);
+	this.moai = new MoaiJS(canvasEl[0],ram*1024*1024,onTitleChange,onStatusChange,onError);
 }
 
-LoadRom(emscripten,'moaiapp.rom', makeProgress('rom'), makeProgress('file'))
-  .then(function(installedFileSystem){
-  	   emscripten.addOnPreMain(function(){moaijs.runhost();});
-  	   emscripten.run();   
-  })
-*/
+MoaiPlayer.prototype.run = function() {
+	this.moai.run(this.script, this.url);	
+}
+
+MoaiPlayer.prototype.stop = function() {
+	//TODO unhook events and free up moai host ram
+	this.moai = null;
+}
+
+MoaiPlayer.prototype.pause = function() {
+	
+}
+
+MoaiPlayer.prototype.unpause = function() {
+	
+}
+
+
+
+//TODO replace below with new MoaiJS calls
+var player = new MoaiPlayer($("testplayer"));
+player.run();
+
