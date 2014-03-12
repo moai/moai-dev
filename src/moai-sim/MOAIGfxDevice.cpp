@@ -749,7 +749,7 @@ void MOAIGfxDevice::ResetState () {
 	this->mDepthFunc = 0;
 	
 	// enable depth write
-	zglDepthMask ( this->mDepthMask );
+	zglDepthMask ( true );
 	this->mDepthMask = true;
 	
 	// clear the vertex format
