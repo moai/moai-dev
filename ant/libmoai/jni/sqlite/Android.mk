@@ -13,6 +13,6 @@
 	LOCAL_CFLAGS		+= -include $(MY_MOAI_ROOT)/src/zlcore/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16/sqlite3.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/sqlite3/sqlite3.c
 
 	include $(BUILD_STATIC_LIBRARY)
