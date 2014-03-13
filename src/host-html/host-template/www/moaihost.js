@@ -7,11 +7,12 @@
 var MoaiJS = (function() {
 
 //wrap our funcs into a global because we can
-function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError ) {
+function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError, onResolutionChange ) {
 	this.canvas = canvas;
 	this.onTitleChange = onTitleChange;
 	this.onStatusChange = onStatusChange;
 	this.onError = onError;
+	this.onResolutionChange = onResolutionChange;
 	this.emscripten = null;
 	this.total_memory = total_memory;
 	this.loadedFileSystem = null;
@@ -183,7 +184,12 @@ MoaiJS.prototype.keypress = function(e) {
 
 MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	var canvas = this.canvas;
-	if (this.onTitleChange) { this.onTitleChange(title); }
+	if (this.onTitleChange) { 
+		this.onTitleChange(title); 
+	}
+	if (this.onResolutionChange) {
+		this.onResolutionChange(width,height)
+	}
 	canvas.width = width;
 	canvas.height = height;
 	this.canvasScale = canvas.width/$(canvas).width();
@@ -384,11 +390,16 @@ function MoaiPlayer(element) {
 
 
 	function onTitleChange(title) {
-		titleEl.innerHTML = title;
+		titleEl.html(title);
 	}
 
 	function onStatusChange(status) {
-		statusEl.innerHTML = status;
+		statusEl.html(status);
+	}
+
+	function onResolutionChange(width, height) {
+		console.log("width",width,"height",height,"portrait",(height > width));
+		el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (height > width));
 	}
 
 	function onError(err) {
@@ -396,7 +407,7 @@ function MoaiPlayer(element) {
 	}
 
 	onTitleChange(title);
-	this.moai = new MoaiJS(canvasEl[0],ram*1024*1024,onTitleChange,onStatusChange,onError);
+	this.moai = new MoaiJS(canvasEl[0],ram*1024*1024,onTitleChange,onStatusChange,onError, onResolutionChange);
 }
 
 MoaiPlayer.prototype.run = function() {
