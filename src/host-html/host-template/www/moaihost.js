@@ -190,6 +190,7 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	if (this.onResolutionChange) {
 		this.onResolutionChange(width,height)
 	}
+	this.canvas.style.display = "block";
 	canvas.width = width;
 	canvas.height = height;
 	this.canvasScale = canvas.width/$(canvas).width();
@@ -361,7 +362,7 @@ function MoaiPlayer(element) {
 	var el = $(element)
 	var template = '<div class="moai-window"> \
                          <div class="moai-header"> \
-                            <strong class="moai-title">MOAI</strong><span class="moai-status">Loading..</span> \
+                            <span class="moai-title">MOAI</span><span class="moai-status">Loading..</span> \
                              <div style="clear:both"></div> \
                          </div> \
                             <div class="moai-canvas-wrapper"><canvas class="moai-canvas" width="960" height="640" tabindex="1"></canvas></div> \
@@ -380,7 +381,7 @@ function MoaiPlayer(element) {
 	var titleEl = el.find(".moai-title").first();
 	var statusEl = el.find(".moai-status").first();
 	var canvasEl = el.find(".moai-canvas").first();
-	
+	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
 	//get settings
 	this.url = el.attr('data-url') || 'moaiapp.rom';
 	this.script = el.attr('data-script') || 'main.lua';
@@ -429,7 +430,4 @@ MoaiPlayer.prototype.unpause = function() {
 
 
 
-//TODO replace below with new MoaiJS calls
-var player = new MoaiPlayer($("#testplayer"));
-player.run();
 

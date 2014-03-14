@@ -17,34 +17,33 @@
 <body >
 
 <style>
+    html {
+        height: 100%;
+    }
     body {
 
         color: rgb(51, 51, 51);
         font-size: 14px;
+        height:100%;
+        margin:0;
+        padding:0;
 
     }
 
     #testplayer, #testplayer2 {
-        max-width: 480px;
-        max-height: 320px;
+        width: 100%;
+        height: 100%;
         margin:auto;
     }
 
     #testplayer.portrait {
-        max-width: 320px;
-        max-height: 480px;
+        width: 320px;
+        height: 480px;
     }
 
 </style>
 
-
-    <div id="testplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="28"></div>
-
-
-
-<div id="testplayer2" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="28"></div>
-
-
+<div id="testplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="28"></div>
 
 <!-- we need these -->
 <script type="text/javascript" src="howler.js"></script>
@@ -54,13 +53,10 @@
 <script type="text/javascript" src="romloader.js"></script>
 <script type="text/javascript" src="moaihost.js"></script>
 
-
 <script>
     //TODO replace below with new MoaiJS calls
     var player = new MoaiPlayer($("#testplayer"));
-    player.run();
-       var player2 = new MoaiPlayer($("#testplayer2"));
-    player2.run();
+  //  player.run();
 
 </script>
 
