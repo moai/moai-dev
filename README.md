@@ -135,7 +135,8 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 ## Forks
 
 * [patrickmeehan/moai-dev](https://github.com/patrickmeehan/moai-dev)
-* [moaiforge/moai-sdk](https://github.com/moaiforge/moai-sdk)
+* [moaiforge/moai-sdk](https://github.com/moaiforge/moai-sdk) 
+* [moai-community/moai-dev](https://github.com/moai-community/moai-dev)
 
 ## Links
 
