@@ -182,9 +182,11 @@ void MOAIKeyboardAndroid::NotifyTextDone ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
-	MOAIScopedLuaState state = callback.GetSelf ();
+	if (callback) {
+		MOAIScopedLuaState state = callback.GetSelf ();
 
-	state.DebugCall ( 0, 0 );
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
