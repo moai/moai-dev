@@ -154,15 +154,16 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_INPUT ];
-	MOAIScopedLuaState state = callback.GetSelf ();  
-
 	if ( callback ) {
+		
 		jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
 		if ( moai ) {
 			jmethodID getString = env->GetStaticMethodID ( moai, "getString", "()Ljava/lang/String;" );
 			if ( getString ) {
 				jstring jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
 				JNI_GET_CSTRING ( jkeystring, ckeystring );
+				
+				MOAIScopedLuaState state = callback.GetSelf ();  
 
 				// push the start, length and string
 				state.Push ( 0 );
@@ -182,9 +183,11 @@ void MOAIKeyboardAndroid::NotifyTextDone ( ) {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
-	MOAIScopedLuaState state = callback.GetSelf ();
+	if (callback) {
+		MOAIScopedLuaState state = callback.GetSelf ();
 
-	state.DebugCall ( 0, 0 );
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
