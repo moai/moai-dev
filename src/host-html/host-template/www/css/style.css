@@ -31,10 +31,14 @@
     background-color: black;
     margin: auto;
     display: none;
+    max-width: none;
+    max-height: 100%;
 }
 
 .moai-canvas-wrapper.portrait canvas {
     width: auto;
+    max-width: 100%;
+    max-height: none;
     height: 100%;
     margin: auto;
 }
