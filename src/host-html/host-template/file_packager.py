@@ -1,51 +1,33 @@
 '''
-A tool that generates FS API calls to generate a filesystem, and packages the files
-to work with that.
-
-This is called by emcc. You can also call it yourself.
+A tool that generates a binary blob of packaged files and a json bag with info on each file's location in the blob
 
 You can split your files into "asset bundles", and create each bundle separately
-with this tool. Then just include the generated js for each and they will load
+with this tool. Then just process the json for each and they will load
 the data and prepare it accordingly. This allows you to share assets and reduce
 data downloads.
 
 Usage:
 
-  file_packager.py TARGET [--preload A [B..]] [--embed C [D..]] [--compress COMPRESSION_DATA] [--crunch[=X]] [--js-output=OUTPUT.js] [--no-force]
-
-  --crunch=X Will compress dxt files to crn with quality level X. The crunch commandline tool must be present
-             and CRUNCH should be defined in ~/.emscripten that points to it. JS crunch decompressing code will
-             be added to convert the crn to dds in the browser.
-             crunch-worker.js will be generated in the current directory. You should include that file when
-             packaging your site.
-             DDS files will not be crunched if the .crn is more recent than the .dds. This prevents a lot of
-             unneeded computation.
-
+  file_packager.py TARGET [--preload A [B..]] [--js-output=OUTPUT.js]
+ 
   --js-output=FILE Writes output in FILE, if not specified, standard output is used.
 
-  --no-force Don't create output if no valid input file is specified.
-
-  --use-preload-cache Stores package in IndexedDB so that subsequent loads don't need to do XHR. Checks package version.
-
-  --as-json
 Notes:
 
   * The file packager generates unix-style file paths. So if you are on windows and a file is accessed at
     subdir\file, in JS it will be subdir/file. For simplicity we treat the web platform as a *NIX.
 
-TODO:        You can also provide .crn files yourself, pre-crunched. With this option, they will be decompressed
-             to dds files in the browser, exactly the same as if this tool compressed them.
 '''
 
 import os, sys, shutil, random, uuid, ctypes
 import posixpath
-import shared
+#import shared
 import json
-from shared import Compression, execute, suffix, unsuffixed
+#from shared import Compression, execute, suffix, unsuffixed
 from subprocess import Popen, PIPE, STDOUT
 
 if len(sys.argv) == 1:
-  print '''Usage: file_packager.py TARGET [--preload A...] [--embed B...] [--compress COMPRESSION_DATA] [--crunch[=X]] [--js-output=OUTPUT.js] [--no-force] [--use-preload-cache]
+  print '''Usage: file_packager.py TARGET [--preload A...] [--js-output=OUTPUT.js]
 See the source for more details.'''
   sys.exit(0)
 
@@ -73,7 +55,7 @@ plugins = []
 jsoutput = None
 force = True
 use_preload_cache = False
-as_json = False
+as_json = True
 
 for arg in sys.argv[1:]:
   if arg == '--preload':
@@ -87,11 +69,6 @@ for arg in sys.argv[1:]:
     in_compress = 0
   elif arg == '--as-json':
     as_json = True
-  elif arg == '--compress':
-    Compression.on = True
-    in_compress = 1
-    in_preload = False
-    in_embed = False
   elif arg == '--no-force':
     force = False
   elif arg == '--use-preload-cache':
@@ -324,8 +301,8 @@ if has_preloaded:
     data.write(curr)
   data.close()
   # TODO: sha256sum on data_target
-  if Compression.on:
-    Compression.compress(data_target)
+  #if Compression.on:
+  #  Compression.compress(data_target)
 
   # Data requests - for getting a block of data out of the big archive - have a similar API to XHRs
   code += '''
@@ -425,16 +402,16 @@ if has_preloaded:
       use_data += '          DataRequest.prototype.requests["%s"].onload();\n' % (file_['dstpath'])
   use_data += "          Module['removeRunDependency']('datafile_%s');\n" % data_target
 
-  if Compression.on:
-    use_data = '''
-      Module["decompress"](byteArray, function(decompressed) {
-        byteArray = new Uint8Array(decompressed);
-        %s
-      });
-    ''' % use_data
+  #if Compression.on:
+  #  use_data = '''
+  #    Module["decompress"](byteArray, function(decompressed) {
+  #      byteArray = new Uint8Array(decompressed);
+  #      %s
+  #    });
+  #  ''' % use_data
 
   package_uuid = uuid.uuid4();
-  remote_package_name = os.path.basename(Compression.compressed_name(data_target) if Compression.on else data_target)
+  remote_package_name = os.path.basename(data_target)
   code += r'''
     if (!Module.expectedDataFileDownloads) {
       Module.expectedDataFileDownloads = 0;
@@ -647,7 +624,7 @@ if has_preloaded:
           fetched = data;
         }
       }, handleError);
-    ''' % os.path.basename(Compression.compressed_name(data_target) if Compression.on else data_target)
+    ''' % os.path.basename(data_target)
 
     code += r'''
       Module.preloadResults[PACKAGE_NAME] = {fromCache: false};
