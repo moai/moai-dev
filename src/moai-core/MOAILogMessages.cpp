@@ -79,28 +79,28 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 	
 		MOAILogMgr& log = MOAILogMgr::Get ();
 		
-		log.RegisterLogMessage ( MOAI_BadCast_DS,						MOAILogMgr::LOG_ERROR,		"Bad cast at position %d: unexpected '%s'" );
-		log.RegisterLogMessage ( MOAI_FileNotFound_S,					MOAILogMgr::LOG_ERROR,		"File not found: %s" );
-		log.RegisterLogMessage ( MOAI_FileOpenError_S,			MOAILogMgr::LOG_ERROR,	"Couldn't open file: '%s'" );
-		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,				MOAILogMgr::LOG_WARNING,	"WARNING: Function '%s' has been deprecated." );
-		log.RegisterLogMessage ( MOAI_IndexNoReserved,					MOAILogMgr::LOG_ERROR,		"Nothing reserved" );
-		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]" );
-		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface." );
-		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch: check function call" );
-		log.RegisterLogMessage ( MOAI_ParamTypeMismatch_DSS,			MOAILogMgr::LOG_ERROR,		"Param type mismatch at position %d: expected a '%s' but got a '%s'" );
-		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms" );
-		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)" );
-		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance" );
-		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance" );
-		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance" );
-		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,				MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update" );
-		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s" );
-		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			MOAILogMgr::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device" );
-		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			MOAILogMgr::LOG_ERROR,		"No such attribute" );
-		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_ERROR,		"%s" );
-		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			MOAILogMgr::LOG_STATUS,		"TEXTURE: '%s' %10lu = %6.2fMB < %s" );
-		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				MOAILogMgr::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device" );
-		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			MOAILogMgr::LOG_WARNING,	"TEXTURE: '%s' is not a power of two (w:%d, h:%d)" );
+		log.RegisterLogMessage ( MOAI_BadCast_DS,						MOAILogMgr::LOG_ERROR,		"Bad cast at position %d: unexpected '%s'\n" );
+		log.RegisterLogMessage ( MOAI_FileNotFound_S,					MOAILogMgr::LOG_ERROR,		"File not found: %s\n" );
+		log.RegisterLogMessage ( MOAI_FileOpenError_S,					MOAILogMgr::LOG_ERROR,		"Couldn't open file: '%s'\n" );
+		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,				MOAILogMgr::LOG_WARNING,	"WARNING: Function '%s' has been deprecated.\n" );
+		log.RegisterLogMessage ( MOAI_IndexNoReserved,					MOAILogMgr::LOG_ERROR,		"Nothing reserved\n" );
+		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]\n" );
+		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface.\n" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch: check function call\n" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch_DSS,			MOAILogMgr::LOG_ERROR,		"Param type mismatch at position %d: expected a '%s' but got a '%s'\n" );
+		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms\n" );
+		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)\n" );
+		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,				MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update\n" );
+		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s\n" );
+		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			MOAILogMgr::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device\n" );
+		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			MOAILogMgr::LOG_ERROR,		"No such attribute\n" );
+		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_ERROR,		"%s\n" );
+		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			MOAILogMgr::LOG_STATUS,		"TEXTURE: '%s' %10lu = %6.2fMB < %s\n" );
+		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				MOAILogMgr::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device\n" );
+		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			MOAILogMgr::LOG_WARNING,	"TEXTURE: '%s' is not a power of two (w:%d, h:%d)\n" );
 	
 	#endif
 }
