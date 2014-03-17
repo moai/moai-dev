@@ -26,6 +26,7 @@
 #endif
 
 struct lua_State;
+typedef struct lua_State lua_State;
 typedef int AKUContextID;
 
 enum {
