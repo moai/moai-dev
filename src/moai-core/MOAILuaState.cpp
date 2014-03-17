@@ -468,6 +468,7 @@ STLString MOAILuaState::GetStackDump () {
 		}
 	}
 
+	out.write("\n");
 	return out;
 }
 
