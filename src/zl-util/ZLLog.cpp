@@ -17,6 +17,7 @@
 //================================================================//
 
 void* ZLLog::CONSOLE = 0;
+ZLLog::LogFunc ZLLog::sLogFunc = 0;
 
 //----------------------------------------------------------------//
 void ZLLog::LogF ( void* file, cc8* format, ... ) {
@@ -32,14 +33,27 @@ void ZLLog::LogF ( void* file, cc8* format, ... ) {
 //----------------------------------------------------------------//
 void ZLLog::LogV ( void* file, cc8* format, va_list args ) {
 	
-	if ( file ) {
-		vfprintf (( FILE* )file, format, args );
+	if ( sLogFunc ) {
+	
+		sLogFunc ( file, format, args );
 	}
 	else {
-		#ifdef ANDROID
-			__android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, args );
-		#else
-			vprintf ( format, args );
-		#endif
+	
+		if ( file ) {
+			vfprintf (( FILE* )file, format, args );
+		}
+		else {
+			#ifdef ANDROID
+				__android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, args );
+			#else
+				vprintf ( format, args );
+			#endif
+		}
 	}
+}
+
+//----------------------------------------------------------------//
+void ZLLog::SetLogFunc	( LogFunc logFunc ) {
+
+	sLogFunc = logFunc;
 }

@@ -183,7 +183,7 @@ void MOAILogMgr::CloseFile () {
 
 	if ( this->mOwnsFileHandle ) {
 		fclose ( this->mFile );
-		this->mFile = stdout;
+		this->mFile = 0;
 		this->mOwnsFileHandle = false;
 	}
 }
@@ -216,9 +216,9 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				}
 
 				this->PrintVar ( message.mFormatString, args );
-				this->Print ( "\n" );
-
+				
 				if ( L ) {
+					this->Print ( "\n" );
 					MOAILuaState state ( L );
 					state.PrintStackTrace ( this->mFile, 0 );
 					this->Print ( "\n" );
@@ -231,7 +231,7 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 //----------------------------------------------------------------//
 MOAILogMgr::MOAILogMgr () :
 	mLevel ( LOG_STATUS ),
-	mFile ( stdout ),
+	mFile ( 0 ),
 	mOwnsFileHandle ( false ),
 	mTypeCheckLuaParams ( true ) {
 
@@ -269,7 +269,7 @@ void MOAILogMgr::Print ( cc8* message, ... ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::PrintVar ( cc8* message, va_list args ) {
 
-	vfprintf ( this->mFile, message, args );
+	ZLLog::LogV ( this->mFile, message, args );
 }
 
 //----------------------------------------------------------------//
