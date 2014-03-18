@@ -703,6 +703,13 @@ float MOAILayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
+MOAIPartition* MOAILayer::GetPartition () {
+
+	this->AffirmPartition ();
+	return this->mPartition;
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetProjectionMtx () const {
 	
 	return this->mCamera ? this->mCamera->GetProjMtx ( *this->mViewport ) : this->mViewport->GetProjMtx ();
