@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIPartition.h>
@@ -337,6 +338,28 @@ int MOAIProp::_setIndex ( lua_State* L ) {
 	self->mIndex = state.GetValue < u32 >( 2, 1 );
 	self->ScheduleUpdate ();
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setLayer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	MOAILayer* layer = state.GetLuaObject < MOAILayer >( 2, true );
+	self->SetPartition ( layer ? layer->GetPartition () : 0 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setPartition ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2, true );
+	self->SetPartition ( partition );
+	
 	return 0;
 }
 
@@ -681,6 +704,8 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
+		{ "setLayer",			_setLayer },
+		{ "setPartition",		_setPartition },
 		{ "setPriority",		_setPriority },
 		{ "setRemapper",		_setRemapper },
 		{ NULL, NULL }

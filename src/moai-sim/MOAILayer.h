@@ -107,18 +107,19 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, float lod  );
-	float			GetFitting				( ZLRect& worldRect, float hPad, float vPad );
-	ZLMatrix4x4		GetWndToWorldMtx		() const;
-	ZLMatrix4x4		GetWorldToWndMtx		() const;
-					MOAILayer				();
-					~MOAILayer				();
-	u32				OnGetModelBounds		( ZLBox& bounds );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Render					();
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				Draw					( int subPrimID, float lod  );
+	float				GetFitting				( ZLRect& worldRect, float hPad, float vPad );
+	MOAIPartition*		GetPartition			();
+	ZLMatrix4x4			GetWndToWorldMtx		() const;
+	ZLMatrix4x4			GetWorldToWndMtx		() const;
+						MOAILayer				();
+						~MOAILayer				();
+	u32					OnGetModelBounds		( ZLBox& bounds );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Render					();
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif
