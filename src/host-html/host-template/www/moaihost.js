@@ -545,7 +545,7 @@ MoaiJS.prototype.runhost = function(mainLua) {
 	console.log("refreshing context");
 	this.RefreshContext();
 	console.log("setting working directory");
-	this.AKUSetWorkingDirectory('/src');
+	this.AKUSetWorkingDirectory('/');
 	console.log("setting up canvas");
 	this.AKURunString('MOAIEnvironment.horizontalResolution = '+this.canvas.width);
 	this.AKURunString('MOAIEnvironment.verticalResolution = '+this.canvas.height);
