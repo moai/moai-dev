@@ -4,46 +4,30 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>MoaiJS</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link href="css/style.css" rel="stylesheet">
-
-    <link rel="shortcut icon" href="img/icons/favicon.png">
-
 </head>
-
-
-<body >
-
+<body>
 <style>
     html {
         height: 100%;
     }
     body {
-
         color: rgb(51, 51, 51);
         font-size: 14px;
         height:100%;
         margin:0;
         padding:0;
-
     }
 
-    #testplayer, #testplayer2 {
+    #moaiplayer {
         width: 100%;
         height: 100%;
         margin:auto;
     }
-
-    #testplayer.portrait {
-        width: 320px;
-        height: 480px;
-    }
-
 </style>
 
-<div id="testplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="28"></div>
+<div id="moaiplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="64"></div>
 
 <!-- we need these -->
 <script type="text/javascript" src="howler.js"></script>
@@ -54,8 +38,8 @@
 <script type="text/javascript" src="moaihost.js"></script>
 
 <script>
-    //TODO replace below with new MoaiJS calls
-    var player = new MoaiPlayer($("#testplayer"));
+
+    var player = new MoaiPlayer($("#moaiplayer"));
     player.run();
 
 </script>
