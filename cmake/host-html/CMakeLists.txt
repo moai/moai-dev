@@ -1,16 +1,8 @@
 cmake_minimum_required(VERSION 2.8.5)
 
-
 project(host-html)
 
-
- 
-
-
-
-
 #build shared lib (libmoaishared.so) and moaijs.js
-
 
 set ( INCLUDES_MOAIHOSTHTML 
   "${MOAI_ROOT}/src/"
