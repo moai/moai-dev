@@ -261,8 +261,9 @@ add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-luaext )
-
-add_subdirectory ( moai-test)
+if (MOAI_TEST)
+   add_subdirectory ( moai-test)
+endif (MOAI_TEST)
 
 if (MOAI_PLUGINS)
   add_subdirectory ( moai-plugins )

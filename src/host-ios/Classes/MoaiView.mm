@@ -264,12 +264,12 @@ namespace MoaiInputDeviceSensorID {
 	-( void ) pause :( BOOL )paused {
 	
 		if ( paused ) {
-			AKUPause ( YES );
+			AKUModulesPause ();
 			[ self stopAnimation ];
 		}
 		else {
 			[ self startAnimation ];
-			AKUPause ( NO );
+			AKUModulesResume ();
 		}
 	}
 	

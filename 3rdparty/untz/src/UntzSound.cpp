@@ -13,7 +13,9 @@
 // Audio sources
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
-#include "OggAudioSource.h"
+#if MOAI_WITH_VORBIS
+   #include "OggAudioSource.h"
+#endif
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
 #else
@@ -32,9 +34,10 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
 	Sound* prevSound = UNTZ::System::get()->getData()->getInMemorySound(path);
 	Sound* newSound = new Sound();
-
+	
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
+#if MOAI_WITH_VORBIS
 		OggAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			// Use the existing AudioSource
@@ -62,6 +65,10 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			delete newSound;
 			return 0;
 		}
+#else
+			delete newSound;
+			return 0;
+#endif
 	}
 	else
 	{
@@ -157,10 +164,12 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	AudioSource* source = 0;
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
+#if MOAI_WITH_VORBIS
 		OggAudioSource* as = new OggAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
+#endif
 	}
 	else
 	{

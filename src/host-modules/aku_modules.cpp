@@ -279,3 +279,24 @@ void AKUModulesUpdate () {
 		AKUPluginsUpdate ();
 	#endif
 }
+
+void AKUModulesPause () {
+	#if AKU_WITH_UNTZ
+		AKUUntzPause ();
+	#endif
+	
+	#if AKU_WITH_SIM
+		AKUPause ( true );
+	#endif
+
+}
+
+void AKUModulesResume () {
+	#if AKU_WITH_UNTZ
+		AKUUntzResume ();
+	#endif
+
+	#if AKU_WITH_SIM
+		AKUPause ( false );
+	#endif
+}
