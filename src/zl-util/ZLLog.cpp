@@ -16,8 +16,9 @@
 // ZLLog
 //================================================================//
 
-void* ZLLog::CONSOLE = 0;
-ZLLog::LogFunc ZLLog::sLogFunc = 0;
+void*			ZLLog::CONSOLE				= 0;
+ZLLog::LogFunc	ZLLog::sLogFunc				= 0;
+void*			ZLLog::sLogFuncUserdata		= 0;
 
 //----------------------------------------------------------------//
 void ZLLog::LogF ( void* file, cc8* format, ... ) {
@@ -35,7 +36,7 @@ void ZLLog::LogV ( void* file, cc8* format, va_list args ) {
 	
 	if ( sLogFunc ) {
 	
-		sLogFunc ( file, format, args );
+		sLogFunc ( file, format, args, sLogFuncUserdata );
 	}
 	else {
 	
@@ -53,7 +54,8 @@ void ZLLog::LogV ( void* file, cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
-void ZLLog::SetLogFunc	( LogFunc logFunc ) {
+void ZLLog::SetLogFunc	( LogFunc logFunc, void* userdata ) {
 
 	sLogFunc = logFunc;
+	sLogFuncUserdata = userdata;
 }

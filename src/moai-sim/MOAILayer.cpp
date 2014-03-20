@@ -611,26 +611,11 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 			this->mSortScale [ 3 ]
 		);
 		
-		totalResults = buffer.Sort ( this->mSortMode );
-		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
 		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );;
-		
-//		if (( this->mLODMode == LOD_FROM_CAMERA_LOCAL_Z ) && ( this->mCamera )) {
-//			MOAICamera* camera = this->mCamera;
-//			ZLVec3D loc = camera->GetLoc ();
-//			lod = loc.mZ * this->mLODFactor;
-//		}
-//		
-//		if (( this->mLODMode == LOD_FROM_CAMERA_WORLD_Z ) && ( this->mCamera )) {
-//			MOAICamera* camera = this->mCamera;
-//			const ZLAffine3D& mtx = camera->GetLocalToWorldMtx ();
-//			ZLVec3D worldLoc = mtx.GetTranslation ();
-//			lod = worldLoc.mZ * this->mLODFactor;
-//		}
 		
 		this->DrawProps ( buffer, lod );
 		
