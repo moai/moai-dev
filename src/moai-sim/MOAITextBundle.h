@@ -42,10 +42,10 @@ private:
 			unsigned long c1 = (v >> 8) & 0xff;
 			unsigned long c2 = (v >> 16) & 0xff;
 			unsigned long c3 = (v >> 24) & 0xff;
-			return (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
+			return ( int )((c0 << 24) | (c1 << 16) | (c2 << 8) | c3 );
 		}
 		else {
-			return *ptr;
+			return ( int )*ptr;
 		}
 	}
 		
