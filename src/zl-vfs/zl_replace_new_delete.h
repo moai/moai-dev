@@ -18,47 +18,47 @@
 
 	#include <new>
 
-	//----------------------------------------------------------------//
-	void* operator new ( size_t size ) throw ( std::bad_alloc ) {
-		void* mem = malloc ( size );
-		#if 0
-			if ( mem ) return mem;
-			throw std::bad_alloc();
-		#else
-			return mem;
-		#endif
-	}
-
-	//----------------------------------------------------------------//
-	void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
-		return malloc ( size );
-	}
-
-	//----------------------------------------------------------------//
-	void* operator new []( size_t size ) throw ( std::bad_alloc ) {
-		void* mem = malloc ( size );
-		#if 0
-			if ( mem ) return mem;
-			throw std::bad_alloc();
-		#else
-			return mem;
-		#endif
-	}
-
-	//----------------------------------------------------------------//
-	void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
-		return malloc ( size );
-	}
-
-	//----------------------------------------------------------------//
-	void operator delete ( void* ptr ) throw() {
-		free ( ptr );
-	}
-
-	//----------------------------------------------------------------//
-	void operator delete []( void* ptr ) throw() {
-		free ( ptr );
-	}
+//	//----------------------------------------------------------------//
+//	void* operator new ( size_t size ) throw ( std::bad_alloc ) {
+//		void* mem = malloc ( size );
+//		#if 0
+//			if ( mem ) return mem;
+//			throw std::bad_alloc();
+//		#else
+//			return mem;
+//		#endif
+//	}
+//
+//	//----------------------------------------------------------------//
+//	void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
+//		return malloc ( size );
+//	}
+//
+//	//----------------------------------------------------------------//
+//	void* operator new []( size_t size ) throw ( std::bad_alloc ) {
+//		void* mem = malloc ( size );
+//		#if 0
+//			if ( mem ) return mem;
+//			throw std::bad_alloc();
+//		#else
+//			return mem;
+//		#endif
+//	}
+//
+//	//----------------------------------------------------------------//
+//	void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
+//		return malloc ( size );
+//	}
+//
+//	//----------------------------------------------------------------//
+//	void operator delete ( void* ptr ) throw() {
+//		free ( ptr );
+//	}
+//
+//	//----------------------------------------------------------------//
+//	void operator delete []( void* ptr ) throw() {
+//		free ( ptr );
+//	}
 
 #endif
 #endif
