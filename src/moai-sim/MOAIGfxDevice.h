@@ -136,7 +136,7 @@ private:
 	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
 	u32				mMaxTextureSize;
-	u32				mTop;
+	size_t			mTop;
 	
 	u32				mUVMtxInput;
 	u32				mUVMtxOutput;
