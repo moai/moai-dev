@@ -29,3 +29,10 @@ void AKUUntzContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )
 }
 
+void AKUUntzPause() {
+	MOAIUntzSystem::Get ().Suspend ();
+}
+
+void AKUUntzResume() {
+	MOAIUntzSystem::Get ().Resume ();
+}

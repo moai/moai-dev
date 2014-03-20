@@ -347,7 +347,11 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 
-		AKUPause ( paused );
+		if (paused) {
+			AKUModulesPause ();
+		} else {
+			AKUModulesResume ();
+		}
 	}
 
 	//----------------------------------------------------------------//
