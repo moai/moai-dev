@@ -126,6 +126,7 @@ public class Moai {
 	protected static native void    AKUModulesContextInitialize     ();
 	protected static native void	AKUAppDialogDismissed			( int dialogResult );
 	protected static native void	AKUAppDidStartSession			( boolean resumed );
+	protected static native void	AKUAppOpenedFromURL			( String url );
 	protected static native void	AKUAppWillEndSession 			();
 	protected static native int		AKUCreateContext 				();
 	protected static native void	AKUDetectGfxContext 			();
@@ -200,6 +201,12 @@ public class Moai {
 	public static void dialogDismissed ( int dialogResult ) {
 		synchronized ( sAkuLock ) {
 			AKUAppDialogDismissed ( dialogResult );
+		}
+	}
+
+	public static void AppOpenedFromURL ( String url ) {
+		synchronized ( sAkuLock ) {
+			AKUAppOpenedFromURL ( url );
 		}
 	}
 

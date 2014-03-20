@@ -11,7 +11,7 @@ set -e
 cd `dirname $0`/
 
 if [ x"$ANDROID_NDK" == x ]; then
-    echo "ANDROID_NDK not defined. Please set to the location of your emscripten install (path)"
+    echo "ANDROID_NDK not defined. Please set to the location of your Android NDK install (path)"
     exit 1
 fi
 # check for command line switches
