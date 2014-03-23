@@ -611,6 +611,8 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 			this->mSortScale [ 3 ]
 		);
 		
+		buffer.Sort ( this->mSortMode );
+		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
