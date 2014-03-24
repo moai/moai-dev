@@ -17,34 +17,6 @@ extern JavaVM* jvm;
 // lua
 //================================================================//
 
-
-//----------------------------------------------------------------//
-/**	@name	extendToken
-	@text	Extend the token if needed
-				
-	@out	nil
-*/
-int MOAIFacebookAndroid::_extendToken ( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
-		
-	self->CallStaticVoidMethod ( self->mJava_ExtendToken );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getExpirationDate
-	@text	Retrieve the Facebook login token expiration date.
- 
-	@in		nil
-	@out	string	token expiration date
- */
-int	MOAIFacebookAndroid::_getExpirationDate	( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
-	
-	lua_pushnumber ( state, self->CallStaticLongMethod ( self->mJava_GetExpirationDate ));					
-	return 1;
-}
-
 //----------------------------------------------------------------//
 /**	@name	getToken
 	@text	Retrieve the Facebook login token.
@@ -72,14 +44,14 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 
-	jstring jpath = self->GetJString ( lua_tostring ( state, 1 ));
+	//jstring jpath = self->GetJString ( lua_tostring ( state, 1 ));
 
-    jobject bundle;
-    if ( state.IsType ( 2, LUA_TTABLE ) ) {
-        bundle = self->BundleFromLua( L, 2 );
-    }
+    //jobject bundle;
+    //if ( state.IsType ( 2, LUA_TTABLE ) ) {
+    //    bundle = self->BundleFromLua( L, 2 );
+    //}
 
-	self->CallStaticVoidMethod ( self->mJava_GraphRequest, jpath, bundle );
+	//self->CallStaticVoidMethod ( self->mJava_GraphRequest, jpath, bundle );
 
 	return 0;
 }
@@ -164,6 +136,15 @@ int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFacebookAndroid::_restoreSession ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
+
+	lua_pushboolean ( state, self->CallStaticBooleanMethod ( self->mJava_RestoreSession ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	sendRequest
 	@text	Send an app request to the logged in users' friends.
 				
@@ -203,36 +184,6 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@name	setExpirationDate
-	@text	Set the Facebook login token expiration date.
- 
-	@in		string	expirationDate			The login token expiration date. See Facebook documentation.
-	@out 	nil
- */
-int MOAIFacebookAndroid::_setExpirationDate ( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
-	
-	jlong expires = lua_tonumber ( state, 1 );
-	self->CallStaticVoidMethod ( self->mJava_SetExpirationDate, expires );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setToken
-	@text	Set the Facebook login token.
-			
-	@in		string	token			The login token. See Facebook documentation.
-	@out 	nil
-*/
-int MOAIFacebookAndroid::_setToken ( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
-	
-	jstring jtoken = self->GetJString ( lua_tostring ( state, 1 ));
-	self->CallStaticVoidMethod ( self->mJava_SetToken, jtoken );		
-	return 0;
-}
-
 //================================================================//
 // MOAIFacebookAndroid
 //================================================================//
@@ -244,8 +195,6 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 		
 	this->SetClass ( "com/ziplinegames/moai/MoaiFacebook" );
 	
-	this->mJava_ExtendToken			= this->GetStaticMethod ( "extendToken", "()V" );
-	this->mJava_GetExpirationDate	= this->GetStaticMethod ( "getExpirationDate", "()J" );
 	this->mJava_GetToken			= this->GetStaticMethod ( "getToken", "()Ljava/lang/String;" );
 	//this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
 	this->mJava_Init				= this->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
@@ -253,9 +202,8 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 	this->mJava_Login				= this->GetStaticMethod ( "login", "([Ljava/lang/String;)V" );
 	this->mJava_Logout				= this->GetStaticMethod ( "logout", "()V" );
 	this->mJava_PostToFeed			= this->GetStaticMethod ( "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+	this->mJava_RestoreSession		= this->GetStaticMethod ( "restoreSession", "()Z" );
 	this->mJava_SendRequest			= this->GetStaticMethod ( "sendRequest", "(Ljava/lang/String;)V" );
-	this->mJava_SetExpirationDate	= this->GetStaticMethod ( "setExpirationDate", "(J)V" );
-	this->mJava_SetToken			= this->GetStaticMethod ( "setToken", "(Ljava/lang/String;)V" );
 }
 
 //----------------------------------------------------------------//
@@ -274,19 +222,16 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",	( u32 ) SESSION_DID_NOT_LOGIN );
 
 	luaL_Reg regTable [] = {
-		{ "getExpirationDate", _getExpirationDate },
-		{ "getToken",		_getToken },
-		{ "graphRequest",	_graphRequest },
-		{ "init",			_init },
-		{ "login",			_login },
-		{ "logout",			_logout },
-		{ "postToFeed",		_postToFeed },
-		{ "sendRequest",	_sendRequest },
-		{ "sessionValid",	_sessionValid },
-		{ "setListener",	_setListener },
-		{ "setToken",		_setToken },
-		{ "extendToken",	_extendToken },
-		{ "setExpirationDate", _setExpirationDate },
+		{ "getToken",				_getToken },
+		{ "graphRequest",			_graphRequest },
+		{ "init",					_init },
+		{ "login",					_login },
+		{ "logout",					_logout },
+		{ "postToFeed",				_postToFeed },
+		{ "restoreSession",			_restoreSession },
+		{ "sendRequest",			_sendRequest },
+		{ "sessionValid",			_sessionValid },
+		{ "setListener",			_setListener },
 		{ NULL, NULL }
 	};
 
@@ -315,14 +260,11 @@ void MOAIFacebookAndroid::NotifyLoginComplete ( int code ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_DID_NOT_LOGIN ];
 	if ( code == DIALOG_RESULT_SUCCESS ) {
-		
 		callback = this->mListeners [ SESSION_DID_LOGIN ];
 	}
 
 	if ( callback ) {
-	
 		MOAIScopedLuaState state = callback.GetSelf ();
-	
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -333,7 +275,6 @@ void MOAIFacebookAndroid::NotifyRequestComplete ( cc8* response ) {
 
     if ( callback ) {
 		MOAIScopedLuaState state = callback.GetSelf ();
-
         lua_pushstring ( state, response );
 		state.DebugCall ( 1, 0 );
 	}
@@ -368,9 +309,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookDialogC
 extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookRequestComplete ( JNIEnv* env, jclass obj, jstring jresponse ) {
 
     JNI_GET_CSTRING ( jresponse, response );
-
 	MOAIFacebookAndroid::Get ().NotifyRequestComplete ( response );
-
 	JNI_RELEASE_CSTRING ( jresponse, response );
 }
 
