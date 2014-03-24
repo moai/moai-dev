@@ -30,6 +30,7 @@ public:
 	static bool				Rename					( cc8* oldPath, cc8* newPath );
 	static bool				SetCurrentPath			( cc8* path );
 	static void				SetPathRef				( const char* referenceName, const char* path );
+	static bool				StripPKZipTimestamps	( const char* infilename, const char* outfilename );
 	static STLString		TruncateFilename		( const char* filename );
 };
 

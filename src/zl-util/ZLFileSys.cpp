@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-vfs/ZLVfsZipArchive.h>
 #include <zl-vfs/ZLVfsFileSystem.h>
 #include <zl-util/ZLDirectoryItr.h>
 #include <zl-util/ZLFileStream.h>
@@ -220,4 +221,10 @@ void ZLFileSys::SetPathRef ( const char* referenceName, const char* path ) {
 STLString ZLFileSys::TruncateFilename ( const char* filename ) {
 
 	return ZLVfsFileSystem::Get ().TruncateFilename ( filename );
+}
+
+//----------------------------------------------------------------//
+bool ZLFileSys::StripPKZipTimestamps ( const char* infilename, const char* outfilename ) {
+
+	return ZLVfsZipArchive::StripTimestamps ( infilename, outfilename ) == 0;
 }
