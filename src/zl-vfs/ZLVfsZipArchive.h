@@ -10,17 +10,18 @@
 class ZLVfsZipArchiveHeader {
 public:
 
-	unsigned long	mSignature;			// 4 End of central directory signature = 0x06054b50
-	unsigned short	mDiskNumber;		// 2 Number of this disk
-	unsigned short	mStartDisk;			// 2 Disk where central directory starts
-	unsigned short	mTotalDiskEntries;	// 2 Total number of entries on disk
-	unsigned short	mTotalEntries;		// 2 Total number of central in archive
-	unsigned long	mCDSize;			// 4 Size of central directory in bytes
-	unsigned long	mCDAddr;			// 4 Offset of start of central directory, relative to start of archive
-	unsigned short	mCommentLength;		// 2 ZIP file comment length
+	unsigned long	mSignature;				// 4 End of central directory signature = 0x06054b50
+	unsigned short	mDiskNumber;			// 2 Number of this disk
+	unsigned short	mStartDisk;				// 2 Disk where central directory starts
+	unsigned short	mTotalDiskEntries;		// 2 Total number of entries on disk
+	unsigned short	mTotalEntries;			// 2 Total number of central in archive
+	unsigned long	mCDSize;				// 4 Size of central directory in bytes
+	unsigned long	mCDAddr;				// 4 Offset of start of central directory, relative to start of archive
+	unsigned short	mCommentLength;			// 2 ZIP file comment length
 	
 	//----------------------------------------------------------------//
-	int		FindAndRead		( FILE* file );
+	int				FindAndRead				( FILE* file, size_t* offset );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -48,7 +49,9 @@ public:
 	unsigned long	mFileHeaderAddr;		// 4 Relative offset of file header
 	
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file );
+	int				Read					( FILE* file );
+	static int		StripTimestampsAndSkip	( FILE* file, size_t* fileHeaderAdd );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -70,7 +73,9 @@ public:
 	unsigned short	mExtraFieldLength;		// 2	Extra field length
 
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file );
+	int				Read					( FILE* file );
+	static int		StripTimestampsAndSkip	( FILE* file );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -134,6 +139,7 @@ public:
 	ZLVfsZipFileDir*		FindDir				( char const* path );
 	ZLVfsZipFileEntry*		FindEntry			( char const* filename );
 	int						Open				( const char* filename );
+	static int				StripTimestamps		( const char* infilename, const char* outfilename );
 							ZLVfsZipArchive		();
 							~ZLVfsZipArchive	();
 };

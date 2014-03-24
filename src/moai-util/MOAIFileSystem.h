@@ -33,6 +33,7 @@ private:
 	static int		_rename						( lua_State* L );
 	static int		_setPathRef					( lua_State* L );
 	static int		_setWorkingDirectory		( lua_State* L );
+	static int		_stripPKZipTimestamps		( lua_State* L );
 
 public:
 	

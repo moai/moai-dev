@@ -366,6 +366,19 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* infilename = state.GetValue < cc8* >( 1, "" );
+	cc8* outfilename = state.GetValue < cc8* >( 2, "" );
+	bool result = ZLFileSys::StripPKZipTimestamps ( infilename, outfilename );
+	
+	lua_pushboolean ( state, result );
+	return 1;
+}
+
 //================================================================//
 // MOAIFileSystem
 //================================================================//
@@ -392,6 +405,7 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "rename",						_rename },
 		{ "setPathRef",					_setPathRef },
 		{ "setWorkingDirectory",		_setWorkingDirectory },
+		{ "stripPKZipTimestamps",		_stripPKZipTimestamps },
 		{ NULL, NULL }
 	};
 
