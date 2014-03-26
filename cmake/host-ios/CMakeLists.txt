@@ -17,53 +17,48 @@ include_directories (
     ${INCLUDES_MOAIIOS}
 )
 
-
-set ( MOAIIOS_SOURCES
-     ${IOS_HOST}/main.mm
-     ${IOS_HOST}/Classes/OpenGLView.mm
-     ${IOS_HOST}/Classes/MoaiView.mm
-     ${IOS_HOST}/Classes/MoaiVC.mm
-     ${IOS_HOST}/Classes/MoaiAppDelegate.mm
-     ${IOS_HOST}/Classes/LocationObserver.mm
-     ${MOAI_ROOT}/src/host-glut/ParticlePresets.cpp
-     ${MOAI_ROOT}/src/host-modules/aku_modules.cpp
+file ( GLOB_RECURSE MOAIIOS_SOURCES
+  "${IOS_HOST}/*.cpp"
+  "${IOS_HOST}/*.mm"
+  "${IOS_HOST}/*.h"
+  "${MOAI_ROOT}/src/host-modules/*.cpp"
+  "${MOAI_ROOT}/src/host-modules/*.h"
+  "${MOAI_ROOT}/src/host-glut/ParticlePresets.cpp"
+  "${MOAI_ROOT}/src/host-glut/ParticlePresets.h"
 )
 
 set ( MOAIIOS_RESOURCES
-     ${IOS_HOST}/Icon-72.png
-     ${IOS_HOST}/Icon-Small-50.png
-     ${IOS_HOST}/Icon-Small.png
-     ${IOS_HOST}/Icon-Small@2x.png
-     ${IOS_HOST}/Icon.png
-     ${IOS_HOST}/Icon@2x.png
+  ${IOS_HOST}/Icon-72.png
+  ${IOS_HOST}/Icon-Small-50.png
+  ${IOS_HOST}/Icon-Small.png
+  ${IOS_HOST}/Icon-Small@2x.png
+  ${IOS_HOST}/Icon.png
+  ${IOS_HOST}/Icon@2x.png
 )
 
-  SET_SOURCE_FILES_PROPERTIES(
-    ${MOAIIOS_RESOURCES}
-    PROPERTIES
-    MACOSX_PACKAGE_LOCATION Resources
-    )
+SET_SOURCE_FILES_PROPERTIES (
+  ${MOAIIOS_RESOURCES}
+  PROPERTIES
+  MACOSX_PACKAGE_LOCATION Resources
+)
 
-  SET_SOURCE_FILES_PROPERTIES(
-    ${PROJECT_RESOURCES}
-    PROPERTIES
-    MACOSX_PACKAGE_LOCATION moai.app/lua
-  )
+SET_SOURCE_FILES_PROPERTIES (
+  ${PROJECT_RESOURCES}
+  PROPERTIES
+  MACOSX_PACKAGE_LOCATION moai.app/lua
+)
 
-     
 add_executable ( moai MACOSX_BUNDLE ${MOAIIOS_SOURCES} ${MOAIIOS_RESOURCES} ${PROJECT_RESOURCES})
 
 target_link_libraries ( moai
-   host-modules
-   moai-sim
-   moai-util
-   moai-iphone
-   moai-audiosampler
-   moai-core
-   zlcore
+  host-modules
+  moai-sim
+  moai-util
+  moai-iphone
+  moai-audiosampler
+  moai-core
+  zlcore
 )
-
-
 
 macro(ADD_FRAMEWORKS appname fwnames)
   FOREACH(FW ${fwnames})
@@ -72,34 +67,30 @@ macro(ADD_FRAMEWORKS appname fwnames)
 endmacro(ADD_FRAMEWORKS)
 
 set( FWORKS
-                  AdSupport
-                  AudioToolbox
-                  CoreAudio
-                  CoreGraphics
-                  CoreLocation
-                  CoreTelephony
-                  CoreMotion
-                  CFNetwork
-                  Foundation
-                  GameKit
-                  EventKit
-                  MediaPlayer
-		          MobileCoreServices
-                  MessageUI
-                  OpenGLES
-                  QuartzCore
-                  StoreKit
-                  Social
-                  SystemConfiguration
-                  Twitter
-                  UIKit)
+  AdSupport
+  AudioToolbox
+  CoreAudio
+  CoreGraphics
+  CoreLocation
+  CoreTelephony
+  CoreMotion
+  CFNetwork
+  Foundation
+  GameKit
+  EventKit
+  MediaPlayer
+  MobileCoreServices
+  MessageUI
+  OpenGLES
+  QuartzCore
+  StoreKit
+  Social
+  SystemConfiguration
+  Twitter
+  UIKit
+)
 
 ADD_FRAMEWORKS(moai "${FWORKS}")
-
-
-
-
-
 
 set_target_properties(moai PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${SIGN_IDENTITY}")
 set_target_properties(moai PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_LIST_DIR}/moai-Info.plist)

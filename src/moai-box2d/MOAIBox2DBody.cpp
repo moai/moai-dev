@@ -438,6 +438,28 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getGravityScale
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number gravityScale
+*/
+int MOAIBox2DBody::_getGravityScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	float scale = self->mBody->GetGravityScale ();
+
+	lua_pushnumber ( state, scale );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getLinearVelocity
 	@text	See Box2D documentation.
 	
@@ -789,6 +811,28 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setGravityScale
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	number gravityScale.
+	@out	nil
+*/
+int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" );
+
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+
+	float scale = state.GetValue < float >( 2, 0.0f );
+	self->mBody->SetGravityScale ( scale );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLinearDamping
 	@text	See Box2D documentation.
 	
@@ -1021,6 +1065,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getAngle",				_getAngle },
 		{ "getAngularVelocity",		_getAngularVelocity },
 		{ "getInertia",				_getInertia },
+		{ "getGravityScale",		_getGravityScale },
 		{ "getLinearVelocity",		_getLinearVelocity },
 		{ "getLocalCenter",			_getLocalCenter },
 		{ "getMass",				_getMass },
@@ -1037,6 +1082,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAwake",				_setAwake },
 		{ "setBullet",				_setBullet },
 		{ "setFixedRotation",		_setFixedRotation },
+		{ "setGravityScale",		_setGravityScale },
 		{ "setLinearDamping",		_setLinearDamping },
 		{ "setLinearVelocity",		_setLinearVelocity },
 		{ "setMassData",			_setMassData },

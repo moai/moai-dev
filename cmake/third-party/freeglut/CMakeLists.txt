@@ -12,11 +12,11 @@ set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DFREEGLUT_STATIC -DFREEGLUT_LIB_PRAGM
 
 include_directories ( ${FREEGLUT_INCLUDES} )
 
-file ( GLOB FREEGLUT_SRC "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.c" )
+file ( GLOB FREEGLUT_SOURCES "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.c" )
+file ( GLOB FREEGLUT_HEADERS "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.h" )
 
-add_library ( freeglutstatic STATIC ${FREEGLUT_SRC} )
+add_library ( freeglutstatic STATIC ${FREEGLUT_SOURCES} ${FREEGLUT_HEADERS} )
 target_include_directories (freeglutstatic PUBLIC ${FREEGLUT_INCLUDES})
-
 
 find_package( OpenGL REQUIRED )
 

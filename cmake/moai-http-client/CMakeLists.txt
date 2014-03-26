@@ -16,7 +16,7 @@ include_directories (
 
 
 # Use all cpp files in directory as source code
-file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 if (BUILD_IOS OR BUILD_OSX)
   set (MOAI_HTTP_CLIENT_SRC 

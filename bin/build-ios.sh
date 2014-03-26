@@ -57,8 +57,14 @@ done
 LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$1")
 
 if [ ! -f "${LUASRC}/main.lua" ]; then
-  echo "Could not find main.lua in specified lua source directory [${LUASRC}]"
-  exit 1
+    echo -n "Please enter the directory path of the Lua source. > "
+    read LUASRC
+    LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$LUASRC")
+
+    if [ ! -f "${LUASRC}/main.lua" ]; then
+        echo "Could not find main.lua in specified lua source directory [${LUASRC}]"
+        exit 1
+    fi
 fi
 
 if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then

@@ -30,12 +30,11 @@ include_directories ( ${INCLUDES_MOAIHOSTTEST} )
 # )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-test" )
-# set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
-add_executable ( moai-test-runner
-  ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostTest.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/GlutHostTestMain.cpp
-)
+# Use all cpp files in directory as source code
+file ( GLOB HOST_TEST_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
+
+add_executable ( moai-test-runner ${HOST_TEST_SRC} )
 
 target_link_libraries ( moai-test-runner
   moai-sim

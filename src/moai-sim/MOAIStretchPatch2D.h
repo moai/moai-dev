@@ -66,6 +66,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
+	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
