@@ -2,6 +2,8 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__")
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__")
 
 set ( UNTZ_INCLUDES 
   ${SDL_INCLUDES}
@@ -31,4 +33,5 @@ if (MOAI_VORBIS)
 endif (MOAI_VORBIS)
 
 target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES} )
+
 set_target_properties( untz PROPERTIES FOLDER Third-Party )

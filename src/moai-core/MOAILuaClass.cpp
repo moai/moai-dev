@@ -293,7 +293,7 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 	data.RegisterLuaClass ( state );
 	
 	// init the extend method
-	lua_pushvalue ( state, -1 ); // copy of userdata //used to be 1
+	state.PushPtrUserData ( &data ); // copy of userdata
 	lua_pushvalue ( state, -2 ); // copy of class table
 	lua_pushcclosure ( state, _extendSingleton, 2 );
 	lua_setfield ( state, -2, "extend" );
