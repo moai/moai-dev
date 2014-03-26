@@ -15,13 +15,13 @@ set ( UNTZ_INCLUDES
 
 file ( GLOB UNTZ_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/*.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/native/win/*.cpp"
   "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/*.cpp"
   "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/*.cpp"
 )
 file ( GLOB UNTZ_HEADERS
   "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
-  "${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/*.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/native/win/*.h"
   "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/*.h"
   "${MOAI_ROOT}/3rdparty/rtaudio-4.0.8/include/*.h"
 )
