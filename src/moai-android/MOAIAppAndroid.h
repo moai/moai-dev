@@ -36,6 +36,7 @@ private:
 	static int	_exitGame			( lua_State* L );
 	static int	_getUTCTime			( lua_State* L );
 	static int 	_getStatusBarHeight ( lua_State* L );
+	static int	_openURL			( lua_State* L );
 	static int	_sendMail			( lua_State* L );
 	static int	_share				( lua_State* L );
 

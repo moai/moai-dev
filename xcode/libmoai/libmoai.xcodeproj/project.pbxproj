@@ -137,9 +137,6 @@
 		03240D1213564CB0000ADC60 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6913564CB0000ADC60 /* pngwrite.c */; };
 		03240D1313564CB0000ADC60 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6A13564CB0000ADC60 /* pngwtran.c */; };
 		03240D1413564CB0000ADC60 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6B13564CB0000ADC60 /* pngwutil.c */; };
-		03240D4A13564CB0000ADC60 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
-		03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
@@ -189,9 +186,6 @@
 		03240EB813564CB0000ADC60 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6913564CB0000ADC60 /* pngwrite.c */; };
 		03240EB913564CB0000ADC60 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6A13564CB0000ADC60 /* pngwtran.c */; };
 		03240EBA13564CB0000ADC60 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6B13564CB0000ADC60 /* pngwutil.c */; };
-		03240EF013564CB0000ADC60 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
-		03240EF113564CB0000ADC60 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
@@ -1144,6 +1138,8 @@
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
+		CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD218FA013A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
 		CD218FA113A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
 		CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
@@ -2225,10 +2221,6 @@
 		CD795EC917F08BB6006AEB47 /* SDL_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9417F08BB6006AEB47 /* SDL_types.h */; };
 		CD795ECA17F08BB6006AEB47 /* SDL_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9517F08BB6006AEB47 /* SDL_version.h */; };
 		CD795ECB17F08BB6006AEB47 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
-		CD795F0017F0901A006AEB47 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
-		CD795F0117F0901A006AEB47 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
-		CD795F0217F0901A006AEB47 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
-		CD795F0317F0901A006AEB47 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD8078A21831C3B500E658D9 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
@@ -2260,8 +2252,6 @@
 		CD8079091831C3B500E658D9 /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5A13564CB0000ADC60 /* png.h */; };
 		CD80790A1831C3B500E658D9 /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5B13564CB0000ADC60 /* pngconf.h */; };
 		CD80790B1831C3B500E658D9 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
-		CD80790C1831C3B500E658D9 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		CD80790D1831C3B500E658D9 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD80790F1831C3B500E658D9 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
 		CD8079101831C3B500E658D9 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
@@ -2307,8 +2297,6 @@
 		CD8079381831C3B500E658D9 /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
 		CD8079391831C3B500E658D9 /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529781447907100143A72 /* jpeglib.h */; };
 		CD80793A1831C3B500E658D9 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
-		CD80793B1831C3B500E658D9 /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
-		CD80793C1831C3B500E658D9 /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		CD80793D1831C3B500E658D9 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3017FA6CF90053E028 /* mesh.h */; };
 		CD80793E1831C3B500E658D9 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
 		CD80793F1831C3B500E658D9 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
@@ -2469,7 +2457,6 @@
 		CD8079DA1831C3B500E658D9 /* SDL_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9417F08BB6006AEB47 /* SDL_types.h */; };
 		CD8079DB1831C3B500E658D9 /* SDL_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9517F08BB6006AEB47 /* SDL_version.h */; };
 		CD8079DC1831C3B500E658D9 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
-		CD8079DD1831C3B500E658D9 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CD807B4D1831C3C600E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD807B4E1831C3C600E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD807B4F1831C3C600E658D9 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
@@ -2567,8 +2554,6 @@
 		CD807BB61831C3C600E658D9 /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5A13564CB0000ADC60 /* png.h */; };
 		CD807BB71831C3C600E658D9 /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5B13564CB0000ADC60 /* pngconf.h */; };
 		CD807BB81831C3C600E658D9 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
-		CD807BB91831C3C600E658D9 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
-		CD807BBA1831C3C600E658D9 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		CD807BBB1831C3C600E658D9 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD807BBC1831C3C600E658D9 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
 		CD807BBD1831C3C600E658D9 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
@@ -2614,8 +2599,6 @@
 		CD807BE51831C3C600E658D9 /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
 		CD807BE61831C3C600E658D9 /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529781447907100143A72 /* jpeglib.h */; };
 		CD807BE71831C3C600E658D9 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
-		CD807BE81831C3C600E658D9 /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
-		CD807BE91831C3C600E658D9 /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		CD807BEA1831C3C600E658D9 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3017FA6CF90053E028 /* mesh.h */; };
 		CD807BEB1831C3C600E658D9 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
 		CD807BEC1831C3C600E658D9 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
@@ -2776,7 +2759,6 @@
 		CD807C871831C3C600E658D9 /* SDL_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9417F08BB6006AEB47 /* SDL_types.h */; };
 		CD807C881831C3C600E658D9 /* SDL_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9517F08BB6006AEB47 /* SDL_version.h */; };
 		CD807C891831C3C600E658D9 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
-		CD807C8A1831C3C600E658D9 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CD807C8D1831C3C600E658D9 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
 		CD807C8E1831C3C600E658D9 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
 		CD807C8F1831C3C600E658D9 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
@@ -5099,6 +5081,16 @@
 		CDD492AB17FA7D1900525B77 /* RCriticalSection.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A613A172B900C9386C /* RCriticalSection.h */; };
 		CDD492AC17FA7D1900525B77 /* RThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A713A172B900C9386C /* RThread.h */; };
 		CDD492AD17FA7D1900525B77 /* Untz-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07C53013A1954600C9386C /* Untz-Prefix.pch */; };
+		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
+		CDECEE2118E0C87C00546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
+		CDECEE2418E0C88700546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
+		CDECEE2518E0C88700546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
+		CDECEE2818E0CD5F00546426 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
+		CDECEE2918E0CD5F00546426 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
+		CDECEE2A18E0CD5F00546426 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
+		CDECEE2D18E0CD6E00546426 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
+		CDECEE2E18E0CD6E00546426 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
+		CDECEE2F18E0CD6E00546426 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		CDEFD566181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */; };
 		CDEFD567181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */; };
 		CDEFD568181ECB3E0058D772 /* MOAITextDesignParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFD55B181ECB3E0058D772 /* MOAITextDesignParser.h */; };
@@ -12337,8 +12329,6 @@
 				03240D0313564CB0000ADC60 /* png.h in Headers */,
 				03240D0413564CB0000ADC60 /* pngconf.h in Headers */,
 				03240D0913564CB0000ADC60 /* pngpriv.h in Headers */,
-				03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */,
-				03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD69AB4E17FA6CF90053E028 /* sweep.h in Headers */,
 				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
@@ -12546,7 +12536,6 @@
 				CD795EC917F08BB6006AEB47 /* SDL_types.h in Headers */,
 				CD795ECA17F08BB6006AEB47 /* SDL_version.h in Headers */,
 				CD795ECB17F08BB6006AEB47 /* SDL_video.h in Headers */,
-				CD795F0317F0901A006AEB47 /* mongoose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12644,8 +12633,6 @@
 				03240EA913564CB0000ADC60 /* png.h in Headers */,
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
-				03240EF113564CB0000ADC60 /* sqlite3.h in Headers */,
-				03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
 				CD69AB3D17FA6CF90053E028 /* dict.h in Headers */,
@@ -12719,7 +12706,6 @@
 				CD9F761F1808CC5A0001EF0C /* MOAIOpenUDID.h in Headers */,
 				CDD48B7517FA794E00525B77 /* SFMT-params19937.h in Headers */,
 				663704191612813E002D0D27 /* whirlpool.h in Headers */,
-				CD795F0217F0901A006AEB47 /* mongoose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13434,6 +13420,7 @@
 			files = (
 				89BE76A8173C168400DFE837 /* headers.h in Headers */,
 				89BE76AC173C168400DFE837 /* host.h in Headers */,
+				CDECEE2118E0C87C00546426 /* mongoose.h in Headers */,
 				89BE76B0173C168400DFE837 /* MOAIHttpServer.h in Headers */,
 				89BE76B4173C168400DFE837 /* pch.h in Headers */,
 			);
@@ -13445,6 +13432,7 @@
 			files = (
 				89BE76A9173C168400DFE837 /* headers.h in Headers */,
 				89BE76AD173C168400DFE837 /* host.h in Headers */,
+				CDECEE2518E0C88700546426 /* mongoose.h in Headers */,
 				89BE76B1173C168400DFE837 /* MOAIHttpServer.h in Headers */,
 				89BE76B5173C168400DFE837 /* pch.h in Headers */,
 			);
@@ -13999,8 +13987,6 @@
 				CD8080F31831C69E00E658D9 /* md4.h in Headers */,
 				CD80790A1831C3B500E658D9 /* pngconf.h in Headers */,
 				CD80790B1831C3B500E658D9 /* pngpriv.h in Headers */,
-				CD80790C1831C3B500E658D9 /* sqlite3.h in Headers */,
-				CD80790D1831C3B500E658D9 /* sqlite3ext.h in Headers */,
 				CD8080C01831C68C00E658D9 /* bio.h in Headers */,
 				CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */,
 				CD80790F1831C3B500E658D9 /* sweep.h in Headers */,
@@ -14055,8 +14041,6 @@
 				CD8079381831C3B500E658D9 /* SFMT.h in Headers */,
 				CD8079391831C3B500E658D9 /* jpeglib.h in Headers */,
 				CD80793A1831C3B500E658D9 /* jversion.h in Headers */,
-				CD80793B1831C3B500E658D9 /* tlsf.h in Headers */,
-				CD80793C1831C3B500E658D9 /* tlsfbits.h in Headers */,
 				CD80793D1831C3B500E658D9 /* mesh.h in Headers */,
 				CD80793E1831C3B500E658D9 /* SFMT-params2281.h in Headers */,
 				CD80793F1831C3B500E658D9 /* tess.h in Headers */,
@@ -14258,7 +14242,6 @@
 				CD8079DA1831C3B500E658D9 /* SDL_types.h in Headers */,
 				CD8079DB1831C3B500E658D9 /* SDL_version.h in Headers */,
 				CD8079DC1831C3B500E658D9 /* SDL_video.h in Headers */,
-				CD8079DD1831C3B500E658D9 /* mongoose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14363,8 +14346,6 @@
 				CD807BB61831C3C600E658D9 /* png.h in Headers */,
 				CD807BB71831C3C600E658D9 /* pngconf.h in Headers */,
 				CD807BB81831C3C600E658D9 /* pngpriv.h in Headers */,
-				CD807BB91831C3C600E658D9 /* sqlite3.h in Headers */,
-				CD807BBA1831C3C600E658D9 /* sqlite3ext.h in Headers */,
 				CD807BBB1831C3C600E658D9 /* tinyxml.h in Headers */,
 				CD807BBC1831C3C600E658D9 /* sweep.h in Headers */,
 				CD807BBD1831C3C600E658D9 /* hashtable.h in Headers */,
@@ -14413,8 +14394,6 @@
 				CD807BE51831C3C600E658D9 /* SFMT.h in Headers */,
 				CD807BE61831C3C600E658D9 /* jpeglib.h in Headers */,
 				CD807BE71831C3C600E658D9 /* jversion.h in Headers */,
-				CD807BE81831C3C600E658D9 /* tlsf.h in Headers */,
-				CD807BE91831C3C600E658D9 /* tlsfbits.h in Headers */,
 				CD807BEA1831C3C600E658D9 /* mesh.h in Headers */,
 				CD807BEB1831C3C600E658D9 /* SFMT-params2281.h in Headers */,
 				CD807BEC1831C3C600E658D9 /* tess.h in Headers */,
@@ -14581,7 +14560,6 @@
 				CD807C871831C3C600E658D9 /* SDL_types.h in Headers */,
 				CD807C881831C3C600E658D9 /* SDL_version.h in Headers */,
 				CD807C891831C3C600E658D9 /* SDL_video.h in Headers */,
-				CD807C8A1831C3C600E658D9 /* mongoose.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14684,6 +14662,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDECEE2918E0CD5F00546426 /* sqlite3.h in Headers */,
 				CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */,
 				CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */,
 				CDD491F817FA7CA400525B77 /* luasql.h in Headers */,
@@ -14697,6 +14676,7 @@
 				CDD06DC01398838D00AB0420 /* options.h in Headers */,
 				CDD06DC21398838D00AB0420 /* select.h in Headers */,
 				CDD491F317FA7C8C00525B77 /* fullluasocket.h in Headers */,
+				CDECEE2A18E0CD5F00546426 /* sqlite3ext.h in Headers */,
 				CDD06DC31398838D00AB0420 /* socket.h in Headers */,
 				CDD06DC51398838D00AB0420 /* tcp.h in Headers */,
 				CDD06DC71398838D00AB0420 /* timeout.h in Headers */,
@@ -14712,6 +14692,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDECEE2E18E0CD6E00546426 /* sqlite3.h in Headers */,
 				CDD06D8D1398832300AB0420 /* lcrypto.h in Headers */,
 				CDD06DD11398838D00AB0420 /* auxiliar.h in Headers */,
 				CDD491FB17FA7CA600525B77 /* luasql.h in Headers */,
@@ -14725,6 +14706,7 @@
 				CDD06DE01398838D00AB0420 /* options.h in Headers */,
 				CDD06DE21398838D00AB0420 /* select.h in Headers */,
 				CDD491EF17FA7C8700525B77 /* fullluasocket.h in Headers */,
+				CDECEE2F18E0CD6E00546426 /* sqlite3ext.h in Headers */,
 				CDD06DE31398838D00AB0420 /* socket.h in Headers */,
 				CDD06DE51398838D00AB0420 /* tcp.h in Headers */,
 				CDD06DE71398838D00AB0420 /* timeout.h in Headers */,
@@ -16020,7 +16002,6 @@
 				03240D1213564CB0000ADC60 /* pngwrite.c in Sources */,
 				03240D1313564CB0000ADC60 /* pngwtran.c in Sources */,
 				03240D1413564CB0000ADC60 /* pngwutil.c in Sources */,
-				03240D4A13564CB0000ADC60 /* sqlite3.c in Sources */,
 				03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
@@ -16240,7 +16221,6 @@
 				CD795E5A17F0867B006AEB47 /* SDL_diskaudio.c in Sources */,
 				CD795E5E17F08689006AEB47 /* SDL_atomic.c in Sources */,
 				CD795E5F17F08689006AEB47 /* SDL_spinlock.c in Sources */,
-				CD795F0117F0901A006AEB47 /* mongoose.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16332,7 +16312,6 @@
 				03240EB813564CB0000ADC60 /* pngwrite.c in Sources */,
 				03240EB913564CB0000ADC60 /* pngwtran.c in Sources */,
 				03240EBA13564CB0000ADC60 /* pngwutil.c in Sources */,
-				03240EF013564CB0000ADC60 /* sqlite3.c in Sources */,
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
@@ -16477,7 +16456,6 @@
 				CD04AF0014725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0914725714009C20E5 /* zutil.c in Sources */,
 				66E345461614CA710021FC4B /* whirlpool.c in Sources */,
-				CD795F0017F0901A006AEB47 /* mongoose.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16729,6 +16707,7 @@
 				CD4C4028180A63C200C02381 /* MOAIAnimCurveVec.cpp in Sources */,
 				CD4C4049180A63C200C02381 /* MOAIDeckRemapper.cpp in Sources */,
 				CD4C4082180A63C200C02381 /* MOAIInputDevice.cpp in Sources */,
+				CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */,
 				CDEFD567181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */,
 				CD4C4080180A63C200C02381 /* MOAIIndexBuffer.cpp in Sources */,
 				CD4C4117180A63C200C02381 /* MOAIVectorCombo.cpp in Sources */,
@@ -16825,6 +16804,7 @@
 				CD4C402F180A63C200C02381 /* MOAIBlocker.cpp in Sources */,
 				CD4C4035180A63C200C02381 /* MOAICamera.cpp in Sources */,
 				CD4C40B9180A63C200C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
+				CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */,
 				CD4C4068180A63C200C02381 /* MOAIGlyph.cpp in Sources */,
 				CD4C40EC180A63C200C02381 /* MOAIShaderMgr.cpp in Sources */,
 				CD4C40FB180A63C200C02381 /* MOAITextBundle.cpp in Sources */,
@@ -17144,6 +17124,7 @@
 			files = (
 				89BE76AA173C168400DFE837 /* host.cpp in Sources */,
 				89BE76AE173C168400DFE837 /* MOAIHttpServer.cpp in Sources */,
+				CDECEE2018E0C87C00546426 /* mongoose.c in Sources */,
 				89BE76B2173C168400DFE837 /* pch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -17154,6 +17135,7 @@
 			files = (
 				89BE76AB173C168400DFE837 /* host.cpp in Sources */,
 				89BE76AF173C168400DFE837 /* MOAIHttpServer.cpp in Sources */,
+				CDECEE2418E0C88700546426 /* mongoose.c in Sources */,
 				89BE76B3173C168400DFE837 /* pch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -18292,6 +18274,7 @@
 				CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */,
 				CDD491F417FA7C8C00525B77 /* luasocketscripts.c in Sources */,
 				CDD491F217FA7C8C00525B77 /* fullluasocket.c in Sources */,
+				CDECEE2818E0CD5F00546426 /* sqlite3.c in Sources */,
 				CDD06DB21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DB41398838D00AB0420 /* except.c in Sources */,
 				CDD491ED17FA7C7E00525B77 /* luacurl.c in Sources */,
@@ -18321,6 +18304,7 @@
 				CDD06DD01398838D00AB0420 /* auxiliar.c in Sources */,
 				CDD491F017FA7C8700525B77 /* luasocketscripts.c in Sources */,
 				CDD491EE17FA7C8700525B77 /* fullluasocket.c in Sources */,
+				CDECEE2D18E0CD6E00546426 /* sqlite3.c in Sources */,
 				CDD06DD21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DD41398838D00AB0420 /* except.c in Sources */,
 				CDD491EC17FA7C7900525B77 /* luacurl.c in Sources */,
@@ -19213,7 +19197,6 @@
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19247,7 +19230,6 @@
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -19282,6 +19264,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -19292,7 +19275,6 @@
 					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -19408,7 +19390,6 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -19445,7 +19426,6 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -19477,7 +19457,6 @@
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19509,7 +19488,6 @@
 		89BE6F03173AD06700DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19541,7 +19519,6 @@
 		89BE6F04173AD06700DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19573,7 +19550,6 @@
 		89BE6F05173AD06700DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19618,11 +19594,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -19655,11 +19629,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -19692,11 +19664,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -19729,11 +19699,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -19901,7 +19869,6 @@
 		89BE749D173AD2B600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19933,7 +19900,6 @@
 		89BE749E173AD2B600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19965,7 +19931,6 @@
 		89BE749F173AD2B600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19997,7 +19962,6 @@
 		89BE74A0173AD2B600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20029,7 +19993,6 @@
 		89BE7543173C116400DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20061,7 +20024,6 @@
 		89BE7544173C116400DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20093,7 +20055,6 @@
 		89BE7545173C116400DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20125,7 +20086,6 @@
 		89BE7546173C116400DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20318,11 +20278,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20355,11 +20313,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20392,11 +20348,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20429,11 +20383,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20453,7 +20405,6 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20485,7 +20436,6 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20517,7 +20467,6 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20549,7 +20498,6 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20581,7 +20529,6 @@
 		89BE7643173C138100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20613,7 +20560,6 @@
 		89BE7644173C138100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20645,7 +20591,6 @@
 		89BE7645173C138100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20677,7 +20622,6 @@
 		89BE7646173C138100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20722,11 +20666,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20759,11 +20701,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20796,11 +20736,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20833,11 +20771,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -20857,7 +20793,6 @@
 		89BE7682173C15F100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20889,7 +20824,6 @@
 		89BE7683173C15F100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20921,7 +20855,6 @@
 		89BE7684173C15F100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20953,7 +20886,6 @@
 		89BE7685173C15F100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20998,11 +20930,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -21035,11 +20965,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -21072,11 +21000,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -21109,11 +21035,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -21190,6 +21114,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -21200,7 +21125,6 @@
 					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -21315,7 +21239,6 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -21326,7 +21249,6 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -21367,7 +21289,6 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21399,7 +21320,6 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21503,7 +21423,6 @@
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21535,7 +21454,6 @@
 		CD4C3A7E180A623200C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21567,7 +21485,6 @@
 		CD4C3A7F180A623200C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21599,7 +21516,6 @@
 		CD4C3A80180A623200C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21631,7 +21547,6 @@
 		CD4C413B180A667300C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -21669,7 +21584,6 @@
 		CD4C413C180A667300C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21702,7 +21616,6 @@
 		CD4C413D180A667300C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21735,7 +21648,6 @@
 		CD4C413E180A667300C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21768,7 +21680,6 @@
 		CD4C4170180A9AEA00C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -21806,7 +21717,6 @@
 		CD4C4171180A9AEA00C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21839,7 +21749,6 @@
 		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21872,7 +21781,6 @@
 		CD4C4173180A9AEA00C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21905,7 +21813,6 @@
 		CD5089F5155E3A1B0002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21941,7 +21848,6 @@
 		CD5089F6155E3A1B0002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21977,7 +21883,6 @@
 		CD5089F7155E3A1B0002FC3B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22013,7 +21918,6 @@
 		CD5089F8155E3A1B0002FC3B /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22049,7 +21953,6 @@
 		CD5232B81808ADF400B81720 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22087,7 +21990,6 @@
 		CD5232B91808ADF400B81720 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22120,7 +22022,6 @@
 		CD5232BA1808ADF400B81720 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22153,7 +22054,6 @@
 		CD5232BB1808ADF400B81720 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22250,7 +22150,6 @@
 		CD70C11818441DD0005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22288,7 +22187,6 @@
 		CD70C11918441DD0005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22321,7 +22219,6 @@
 		CD70C11A18441DD0005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22354,7 +22251,6 @@
 		CD70C11B18441DD0005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22387,7 +22283,6 @@
 		CD70C1791844891A005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22425,7 +22320,6 @@
 		CD70C17A1844891A005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22458,7 +22352,6 @@
 		CD70C17B1844891A005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22491,7 +22384,6 @@
 		CD70C17C1844891A005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22524,7 +22416,6 @@
 		CD70C1CD18448D9E005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
@@ -22563,7 +22454,6 @@
 		CD70C1CE18448D9E005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -22597,7 +22487,6 @@
 		CD70C1CF18448D9E005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -22631,7 +22520,6 @@
 		CD70C1D018448D9E005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -22665,7 +22553,6 @@
 		CD70C20A18449935005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22703,7 +22590,6 @@
 		CD70C20B18449935005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22736,7 +22622,6 @@
 		CD70C20C18449935005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22769,7 +22654,6 @@
 		CD70C20D18449935005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23366,7 +23250,6 @@
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23404,7 +23287,6 @@
 		CDA4B7AB1808AC61000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23437,7 +23319,6 @@
 		CDA4B7AC1808AC61000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23470,7 +23351,6 @@
 		CDA4B7AD1808AC61000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23503,7 +23383,6 @@
 		CDA4B8201808AC6E000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23541,7 +23420,6 @@
 		CDA4B8211808AC6E000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23574,7 +23452,6 @@
 		CDA4B8221808AC6E000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23607,7 +23484,6 @@
 		CDA4B8231808AC6E000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23640,7 +23516,6 @@
 		CDA4B8961808AC82000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23678,7 +23553,6 @@
 		CDA4B8971808AC82000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23711,7 +23585,6 @@
 		CDA4B8981808AC82000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23744,7 +23617,6 @@
 		CDA4B8991808AC82000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23777,7 +23649,6 @@
 		CDA4B90C1808AC8F000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23815,7 +23686,6 @@
 		CDA4B90D1808AC8F000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23848,7 +23718,6 @@
 		CDA4B90E1808AC8F000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23881,7 +23750,6 @@
 		CDA4B90F1808AC8F000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23914,7 +23782,6 @@
 		CDA4B9821808AC9D000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23952,7 +23819,6 @@
 		CDA4B9831808AC9D000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23985,7 +23851,6 @@
 		CDA4B9841808AC9D000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24018,7 +23883,6 @@
 		CDA4B9851808AC9D000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24051,7 +23915,6 @@
 		CDA4B9F81808ACA6000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -24089,7 +23952,6 @@
 		CDA4B9F91808ACA6000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24122,7 +23984,6 @@
 		CDA4B9FA1808ACA6000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24155,7 +24016,6 @@
 		CDA4B9FB1808ACA6000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24188,7 +24048,6 @@
 		CDC1237F17FA804C00FB64BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -24199,7 +24058,6 @@
 		CDC1238017FA804C00FB64BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -24210,7 +24068,6 @@
 		CDC1238117FA804C00FB64BB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -24221,7 +24078,6 @@
 		CDC1238217FA804C00FB64BB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -24232,7 +24088,6 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24264,7 +24119,6 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24368,7 +24222,6 @@
 		CDD47B8F17FA789B00525B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24402,7 +24255,6 @@
 		CDD47B9017FA789B00525B77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24436,7 +24288,6 @@
 		CDD47B9117FA789B00525B77 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24470,7 +24321,6 @@
 		CDD47B9217FA789B00525B77 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24504,7 +24354,6 @@
 		CDD480CD17FA78AE00525B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24538,7 +24387,6 @@
 		CDD480CE17FA78AE00525B77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24572,7 +24420,6 @@
 		CDD480CF17FA78AE00525B77 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24606,7 +24453,6 @@
 		CDD480D017FA78AE00525B77 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24640,7 +24486,6 @@
 		CDDD308E1574AE0000C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24676,7 +24521,6 @@
 		CDDD308F1574AE0000C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24712,7 +24556,6 @@
 		CDDD30901574AE0000C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24748,7 +24591,6 @@
 		CDDD30911574AE0000C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24797,11 +24639,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -24837,11 +24677,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -24877,11 +24715,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -24917,11 +24753,9 @@
 				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
 				GCC_WARN_MISSING_PARENTHESES = NO;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
 				GCC_WARN_SIGN_COMPARE = NO;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
@@ -25104,7 +24938,6 @@
 		CDF288B817ED41CF00FD4F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25116,7 +24949,6 @@
 		CDF288B917ED41CF00FD4F59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25128,7 +24960,6 @@
 		CDF288BA17ED41CF00FD4F59 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25140,7 +24971,6 @@
 		CDF288BB17ED41CF00FD4F59 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25153,6 +24983,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -25163,7 +24994,6 @@
 					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -25279,7 +25109,6 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25311,7 +25140,6 @@
 		E90D02C114D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25345,7 +25173,6 @@
 		E90D02C214D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25377,7 +25204,6 @@
 		E90D02C414D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25409,7 +25235,6 @@
 		E90D02C514D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";
@@ -25567,6 +25392,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -25577,7 +25403,6 @@
 					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
 					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -25693,7 +25518,6 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25725,7 +25549,6 @@
 		E9C405C7150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25759,7 +25582,6 @@
 		E9C405CA150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25791,7 +25613,6 @@
 		E9C405CC150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25823,7 +25644,6 @@
 		E9C405CD150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv7 armv7s";

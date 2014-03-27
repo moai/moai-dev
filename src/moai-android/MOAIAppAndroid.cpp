@@ -84,6 +84,40 @@ int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAppAndroid::_openURL ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	cc8* url = lua_tostring ( state, 1 );
+	
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: _openURL %s", url );
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( url, jurl );
+	
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+	    if ( moai == NULL ) {
+	
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+	    } else {
+	
+	    	jmethodID openURL = env->GetStaticMethodID ( moai, "openURL", "(Ljava/lang/String;)V" );
+	    	if ( openURL == NULL ) {
+	
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find static java method %s", "openURL" );
+	    	} else {
+	
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: calling java openURL" );
+			env->CallStaticVoidMethod ( moai, openURL, jurl );
+		}
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	sendMail
     @text Send a mail with the passed in default values
 
@@ -198,7 +232,8 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIAppAndroid > },
 		{ "getUTCTime",				_getUTCTime },
 		{ "getStatusBarHeight",		_getStatusBarHeight },
-		{ "sendMail",				_sendMail },
+		{ "sendMail",				_sendMail },		
+		{ "openURL",				_openURL },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIAppAndroid > },
 		{ "share",					_share },
 		{ NULL, NULL }
