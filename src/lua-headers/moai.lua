@@ -541,9 +541,6 @@ MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS
 MOAITwitter = MOAITwitterAndroid or MOAITwitterIOS
 
 -- Compatibility
-if MOAIAppAndroid then
-    MOAIAppAndroid.openURL = MOAIBrowserAndroid.openURL
-end
 
 if MOAITwitterIOS then
     MOAITwitter.sendTweet = function(text, url) MOAITwitterIOS.composeTweet(text, url) end
