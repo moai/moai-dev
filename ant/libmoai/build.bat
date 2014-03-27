@@ -4,5 +4,5 @@
 :: http://getmoai.com
 ::================================================================::
 
-	bash ./build.sh %*
+	bash ./build.sh %* --windows
 	@pause
