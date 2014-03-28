@@ -273,11 +273,22 @@ endif (MOAI_PLUGINS)
 add_subdirectory ( host-modules )
 
 
+#platform specific libs
+if ( BUILD_IOS )
+  add_subdirectory ( moai-iphone )
+  add_subdirectory ( moai-audiosampler )
+endif ( BUILD_IOS )
+
+if ( BUILD_ANDROID )
+    add_subdirectory ( moai-android )
+endif (BUILD_ANDROID)
 
 if (CUSTOM_HOST)
 #
 # Build an out of source host
 #
+
+
    add_subdirectory( "${CUSTOM_HOST}" "${CMAKE_CURRENT_BINARY_DIR}/host-custom" )
 
 else (CUSTOM_HOST)
@@ -299,14 +310,11 @@ if ( BUILD_HTML )
 endif ( BUILD_HTML )
 
 if ( BUILD_ANDROID )
-  add_subdirectory ( moai-android )
     add_subdirectory ( host-android )
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
-  add_subdirectory ( moai-iphone )
-  add_subdirectory ( moai-audiosampler )
-     add_subdirectory ( host-ios )
+      add_subdirectory ( host-ios )
 endif ( BUILD_IOS )
 
 if ( BUILD_SERVER )
