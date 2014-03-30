@@ -93,6 +93,18 @@ function TestMOAIProp:test_getBounds()
 end
 
 ---
+-- test: getDeck
+function TestMOAIProp:test_getDims()
+    local deck = self.prop:getDeck()
+    assertEquals(deck, self.deck)
+
+    self.prop:setDeck(nil)
+    
+    deck = self.prop:getDeck()
+    assertTrue(deck == nil)
+end
+
+---
 -- test: getDims
 function TestMOAIProp:test_getDims()
     local width, height, depth = self.prop:getDims()
@@ -139,6 +151,20 @@ function TestMOAIProp:test_getPriority()
     self.prop:setPriority(10)
     priority = self.prop:getPriority()
     assertEquals(priority, 10) 
+end
+
+---
+-- test: getPriority
+function TestMOAIProp:test_getTexture()
+    local texture = self.prop:getTexture()
+    assertEquals(texture, nil)
+
+    local newTexture = MOAITexture.new()
+    newTexture:load("assets/cathead.png")
+    self.prop:setTexture(newTexture)
+
+    texture = self.prop:getTexture()
+    assertEquals(texture, newTexture)
 end
 
 ---

@@ -94,6 +94,23 @@ int MOAIProp::_getWorldBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeck
+	@text	Get the deck.
+               
+	@in		MOAIProp self
+	@out	MOAIDeck deck
+*/
+int MOAIProp::_getDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( self->mDeck ) {
+		self->mDeck->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
@@ -167,6 +184,22 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getTexture
+	@text	Returns the texture.
+	
+	@in		MOAIProp self
+	@out	MOAITexture texture
+*/
+int MOAIProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
 //----------------------------------------------------------------//
 /**	@name	isVisible
 	@text	Returns true if the given prop is visible.
@@ -1159,15 +1192,17 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getDeck",			_getDeck },
 		{ "getDims",			_getDims },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
+		{ "getTexture",			_getTexture },
 		{ "getWorldBounds",		_getWorldBounds },
 		{ "isVisible",			_isVisible },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
-		{ "setBlendEquation",		_setBlendEquation },
+		{ "setBlendEquation",	_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
 		{ "setCullMode",		_setCullMode },

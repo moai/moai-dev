@@ -143,6 +143,40 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	propList
+	@text	Returns all props.
+	
+	@in		MOAIPartition self
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@out	... props				The props pushed onto the stack.
+*/
+int MOAIPartition::_propList ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "U" )
+
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	u32 total = self->GatherProps ( buffer, 0 );
+	if ( total ) {
+	
+		u32 sortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_NONE );
+		float xScale = state.GetValue < float >( 3, 0.0f );
+		float yScale = state.GetValue < float >( 4, 0.0f );
+		float zScale = state.GetValue < float >( 5, 0.0f );
+		float priorityScale = state.GetValue < float >( 6, 1.0f );
+		
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
+		return total;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	propListForPoint
 	@text	Returns all props under a given world space point.
 	
@@ -563,6 +597,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
 		{ "propForRay",					_propForRay },
+		{ "propList",					_propList },
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRay",				_propListForRay },
 		{ "propListForRect",			_propListForRect },
