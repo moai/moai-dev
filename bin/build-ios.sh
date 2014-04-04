@@ -13,10 +13,12 @@ APP_ID='com.getmoai.moaiapp'
 APP_VERSION='1.0'
 
 # check for command line switches
-usage="usage: $0 <LUA_SRC_PATH> \
+usage="usage: $0 \
     [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
-    [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--simulator] [--release]"
+    [--disable-chartboost] [--disable-crittercism] [--disable-facebook] \
+    [--disable-mobileapptracker] [--disable-push] [--disable-tapjoy] \
+    [--disable-twitter] [--simulator] [--release] \
+    <LUA_SRC_PATH>"
 
 use_untz="true"
 
@@ -40,6 +42,7 @@ while [ $# -gt 1 ];	do
         --disable-chartboost)  chartboost_flags="-DDISABLE_CHARTBOOST";;
         --disable-crittercism)  crittercism_flags="-DDISABLE_CRITTERCISM";;
         --disable-facebook)  facebook_flags="-DDISABLE_FACEBOOK";;
+        --disable-mobileapptracker)  mobileapptracker_flags="-DDISABLE_MOBILEAPPTRACKER";;
         --disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
         --disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
         --disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
@@ -104,42 +107,47 @@ fi
 
 if [ x"$adcolony_flags" != x ]; then
     echo "AdColony will be disabled"
-    disabled_ext="$disabled_extADCOLONY;"
+    disabled_ext="${disabled_ext}ADCOLONY;"
 fi 
 
 if [ x"$billing_flags" != x ]; then
     echo "Billing will be disabled"
-    disabled_ext="$disabled_extBILLING;"
+    disabled_ext="${disabled_ext}BILLING;"
 fi 
 
 if [ x"$chartboost_flags" != x ]; then
     echo "ChartBoost will be disabled"
-    disabled_ext="$disabled_extCHARTBOOST;"
+    disabled_ext="${disabled_ext}CHARTBOOST;"
 fi 
 
 if [ x"$crittercism_flags" != x ]; then
     echo "Crittercism will be disabled"
-    disabled_ext="$disabled_extCRITTERCISM;"
+    disabled_ext="${disabled_ext}CRITTERCISM;"
 fi 
 
 if [ x"$facebook_flags" != x ]; then
     echo "Facebook will be disabled"
-    disabled_ext="$disabled_extFACEBOOK;"
+    disabled_ext="${disabled_ext}FACEBOOK;"
+fi 
+
+if [ x"$mobileapptracker_flags" != x ]; then
+    echo "Mobile App Tracker will be disabled"
+    disabled_ext="${disabled_ext}MOBILEAPPTRACKER;"
 fi 
 
 if [ x"$push_flags" != x ]; then
     echo "Push Notifications will be disabled"
-    disabled_ext="$disabled_extNOTIFICATIONS;"
+    disabled_ext="${disabled_ext}NOTIFICATIONS;"
 fi 
 
 if [ x"$tapjoy_flags" != x ]; then
     echo "Tapjoy will be disabled"
-    disabled_ext="$disabled_extTAPJOY;"
+    disabled_ext="${disabled_ext}TAPJOY;"
 fi 
 
 if [ x"$twitter_flags" != x ]; then
     echo "Twitter will be disabled"
-    disabled_ext="$disabled_extTWITTER;"
+    disabled_ext="${disabled_ext}TWITTER;"
 fi 
 
 build_dir=${PWD}
@@ -184,8 +192,8 @@ if [ -d "release/ios" ]; then
     rm -fr release/ios
 fi
 
-mkdir release/ios/app
-mkdir release/ios/lib
+mkdir -p release/ios/app
+mkdir -p release/ios/lib
 
 find cmake/build -name "*.app" | xargs -J % cp -fp % release/ios/app
 find cmake/build -name "*.a" | xargs -J % cp -fp % release/ios/lib
