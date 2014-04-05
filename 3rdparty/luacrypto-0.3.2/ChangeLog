@@ -1,0 +1,14 @@
+0.3.2 [25/Apr/2013]
+    Updated for Lua 5.2
+0.3.1 [6/Mar/2012]
+    Added a compile-time option to initialize OpenSSL outside of LuaCrypto
+0.3.0 [1/Mar/2012]
+    Added encryption, decryption, signing, verifying, sealing and opening functionality.
+0.2.0 [24/Aug/2006]
+    Added random support.
+    Removed Lua stub files and collapsed modules.
+    Changed all supporting materials (documentation, build, etc.) to Kepler standards.
+0.1.1 [22/Jan/2006]
+    Added Lua 5.0/Compat-5.1 support.
+0.1.0 [13/Jan/2006]
+    Initial release. 
