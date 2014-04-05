@@ -31,8 +31,17 @@
 		#define _snprintf snprintf
 #endif
 
-#ifdef NACL
+#if defined ( __FLASCC__ )
+    #include <sys/types.h>
+#endif
+
+#if defined( NACL ) || defined (__EMSCRIPTEN__)
 		typedef unsigned long u_int32_t;
+#endif
+
+#ifdef __QNX__
+  #include <sys/types.h>
+  typedef uint u_int32_t;
 #endif
 
 /* is c the start of a utf8 sequence? */

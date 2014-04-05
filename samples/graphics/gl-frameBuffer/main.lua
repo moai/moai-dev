@@ -19,21 +19,21 @@ function initFrameBuffer ()
 	viewport:setSize ( 256, 256 )
 	viewport:setScale ( 256, 256 )
 
-	local frameBuffer = MOAIFrameBuffer.new ()
-	frameBuffer:init ( 256, 256 )
-	frameBuffer:setClearColor ( 1, 0, 0, 1 )
-
 	local layer = MOAILayer2D.new ()
 	layer:setViewport ( viewport )
-	layer:setFrameBuffer ( frameBuffer )
-	MOAISim.pushRenderPass ( layer )
-
+	
 	local prop = MOAIProp2D.new ()
 	prop:setDeck ( gfxQuad )
 	layer:insertProp ( prop )
 
 	prop:moveRot ( 360, 1.5 )
 
+	local frameBuffer = MOAIFrameBufferTexture.new ()
+	frameBuffer:setRenderTable ({ layer })
+	frameBuffer:init ( 256, 256 )
+	frameBuffer:setClearColor ( 1, 0, 0, 1 )
+	MOAIRenderMgr.setBufferTable ({ frameBuffer })
+	
 	return frameBuffer
 	
 end
@@ -56,4 +56,4 @@ MOAISim.pushRenderPass ( layer )
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
-
+prop:moveRot ( -180, 1.5 )

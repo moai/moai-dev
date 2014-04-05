@@ -16,9 +16,20 @@ DerivedData/
 *.perspectivev3
 
 # Artifacts when building with CMake
+flascc/build
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
 *.o
 *.a
 src/moai/moai
+release
+tmp
+
+# Produced by test runner
+test/xml-results
+.idea
+cmake/projects/
+
+bin/api-reference-parser/vendor
+docs/api-reference

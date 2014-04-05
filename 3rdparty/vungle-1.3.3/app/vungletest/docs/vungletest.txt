@@ -1,0 +1,67 @@
+vungle test controls
+--------------------
+
+* Restart Vungle
+
+shut down vungle and restart.
+
+* Remove Cache
+
+shut down vungle, remove all cached files, and restart.
+
+* Show Cache Files
+
+print a directory-style listing of all cache files to the terminal.
+
+* Show Device Settings
+
+print a whole bunch of hardware info to the terminal.
+
+* Clear Terminal
+
+remove all text from the terminal window.
+
+
+vungle test debug settings
+--------------------------
+
+* Always Show Close
+
+based on data received from the ad server, the native close button might not be displayed on the preroll, postroll, or movie, or it might not be displayed until seconds later. setting this to true means that the native close button will always be displayed on all three ad elements, no matter what.
+
+* Force Old Player
+
+internally, the vungle pub sdk has two video players:
+
+  VGMovieControllerA: uses MPMoviePlayerController
+  VGMovieControllerB: uses AVPlayer
+
+the B movie controller is more advanced. it is used on ios versions 4.3 and later, and allows for a mute button, among other advanced features. the older player is used for older ios devices. if this setting is true, then the old video player is used for all devices, no matter what.
+
+* Memory Report
+
+if set to true, the program's memory usage is printed to the terminal every 30 seconds or so.
+
+* Muted
+
+if set to true, then the video ad's volume is muted by default. this only works if you're using the B movie player.
+
+* Purge Test
+
+if set to true, the sdk very aggressively prunes "old" files, every 30 seconds or so. this is to test that older files actually get removed as they should. you should not normally leave this turned on for very long.
+
+* Remove Cache
+
+if set to true, then all cache files will be removed whenever the vungle sdk is started or restarted.
+
+* Resume Test
+
+the sdk is set up so that if a file download is interrupted due to the device going to sleep or some other interruption, it can be resumed later. if this setting is true, then all file downloads will be interrupted halfway through, and resumed later. this is to torture-test resumed downloads, to make sure they really work.
+
+* Show JSON
+
+if set to true, then all json sent to or received from the server is displayed on the terminal, along with other transaction details.
+
+* Skip Mark Viewed
+
+if set to true, then ads are not marked viewed after they are displayed. the purpose of this setting is so that you can display the same ad over and over again, very quickly, without having to talk to the server each time.

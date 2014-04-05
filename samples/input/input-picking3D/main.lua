@@ -10,8 +10,9 @@ dofile ( "cube.lua" )
 
 MOAISim.openWindow ( "test", SCREEN_WIDTH, SCREEN_HEIGHT )
 
-MOAIGfxDevice.setClearDepth ( true )
-MOAIGfxDevice.setClearColor ( 0, 0, 0, 1 )
+frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+frameBuffer:setClearDepth ( true )
+frameBuffer:setClearColor ( 0, 0, 0, 1 )
 
 layer = MOAILayer.new ()
 MOAISim.pushRenderPass ( layer )
@@ -73,16 +74,12 @@ function pointerCallback ( x, y )
 	end
 end
 
-function toTable ( ... )
-	return arg
-end
-
 function clickCallback ( down )
 	
 	if down then
 		
 		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
-		pickList = toTable ( partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ ))
+        pickList = {partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ )}
 		print ( pickList )
 		for k,v in pairs( pickList ) do print(k,v) end
 		

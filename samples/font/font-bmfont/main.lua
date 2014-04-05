@@ -19,17 +19,10 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-text = 'The quick brownfox jumps over the lazy dog.'
+text = 'The quick brown fox jumps over the lazy dog.'
 
 font = MOAIFont.new ()
-print ( "test lua" )
 font:loadFromBMFont ( 'CopperPlateGothic.fnt' )
-font:load ( 'Dwarves.TTF' )
-print ( "test lua2" )
---font:preloadGlyphs ( charcodes, 24 )
---font:preloadGlyphs ( charcodes, 32 )
-font:preloadGlyphs ( charcodes, 64 )
-print ( "test lua3" )
 
 function newStyle ( font, size )
 	local style = MOAITextStyle.new ()
@@ -39,20 +32,11 @@ function newStyle ( font, size )
 end
 
 textbox = MOAITextBox.new ()
-
---textbox:setStyle ( newStyle ( font, 8 ))
 textbox:setStyle ( newStyle ( font, 64 ))
---textbox:setStyle ( 'foo', newStyle ( font, 32 ))
---textbox:setStyle ( 'bar', newStyle ( font, 42 ))
---textbox:setStyle ( newStyle ( font, 16 ))
 
 textbox:setString ( text )
 textbox:spool ()
 textbox:setRect ( -128, -128, 128, 128 )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
 textbox:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.DECK2D_SHADER ))
---textbox:setYFlip ( true )
---textbox:setScl ( 0.5, 0.5 )
 layer:insertProp ( textbox )
-print ( "test lua4" )
---textbox:moveLoc ( -512, 0, 0, 3 )

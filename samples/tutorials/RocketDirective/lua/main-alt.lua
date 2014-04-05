@@ -186,7 +186,7 @@ function makeExplosion ()
 	----------------
 	function explosion:setRadius ( radius )
 		
-		self:setFrame ( -radius, -radius, radius, radius )
+		self:setScl ( radius / 32 )
 		self.radius = radius
 	end
 	

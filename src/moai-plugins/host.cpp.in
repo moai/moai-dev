@@ -1,0 +1,27 @@
+
+#include <moai-plugins/host.h>
+
+//================================================================//
+// moai-plugins
+//================================================================//
+
+@PLUGIN_HEADERS@
+
+//----------------------------------------------------------------//
+void AKUPluginsAppFinalize () {
+  	@PLUGIN_FINALIZE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsAppInitialize () {
+  @PLUGIN_APPINITIALIZE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsContextInitialize () {
+  	@PLUGIN_CONTEXTINITIALIZE@
+}
+
+void AKUPluginsUpdate () {
+  	@PLUGIN_UPDATE@
+}

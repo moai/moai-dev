@@ -11,6 +11,10 @@
 
 #include <vector>
 
+#if defined(__QNX__) | defined(__linux__) | defined(__MINGW32__)
+#include <string.h>
+#endif
+
 class RAudioBuffer
 {
 public:

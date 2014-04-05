@@ -1,0 +1,21 @@
+/*
+ * BlackBerryHost.h
+ *
+ *  Created on: Jun 2, 2013
+ *      Author: nictuku
+ */
+
+#ifndef BLACKBERRYHOST_H_
+#define BLACKBERRYHOST_H_
+
+class BlackBerryHost {
+public:
+	BlackBerryHost();
+	virtual ~BlackBerryHost();
+
+private:
+	static screen_context_t screen_cxt;
+
+};
+
+#endif /* BLACKBERRYHOST_H_ */

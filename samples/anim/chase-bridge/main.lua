@@ -30,7 +30,7 @@ worldLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( worldLayer )
 
 -- set up the world camera
-camera = MOAITransform.new ()
+camera = MOAICamera2D.new ()
 camera:moveLoc ( 0, -192, 3 )
 camera:moveScl ( 1, 1, 3 )
 worldLayer:setCamera ( camera )

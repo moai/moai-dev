@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>MoaiJS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<style>
+    html {
+        height: 100%;
+    }
+    body {
+        color: rgb(51, 51, 51);
+        font-size: 14px;
+        height:100%;
+        margin:0;
+        padding:0;
+    }
+
+    #moaiplayer {
+        width: 100%;
+        height: 100%;
+        margin:auto;
+    }
+</style>
+
+<div id="moaiplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="64"></div>
+
+<!-- we need these -->
+<script type="text/javascript" src="howler.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<!-- the app -->
+<script type="text/javascript" src="moaijs.js"></script>   
+<script type="text/javascript" src="moaihost.js"></script>
+
+<script>
+
+    var player = new MoaiPlayer($("#moaiplayer"));
+    player.run();
+
+</script>
+
+</body>
+</html>

@@ -84,6 +84,7 @@ char *Curl_if2ip(int af, const char *interface, char *buf, int buf_size)
           curl_strequal(iface->ifa_name, interface)) {
         void *addr;
         char scope[12]="";
+        char ipstr[64];
 #ifdef ENABLE_IPV6
         if (af == AF_INET6) {
           unsigned int scopeid = 0;
@@ -98,8 +99,9 @@ char *Curl_if2ip(int af, const char *interface, char *buf, int buf_size)
         else
 #endif
           addr = &((struct sockaddr_in *)iface->ifa_addr)->sin_addr;
-        ip = (char *) Curl_inet_ntop(af, addr, buf, buf_size);
-        strlcat(buf, scope, buf_size);
+        ip = (char *) Curl_inet_ntop(af, addr, ipstr, sizeof(ipstr));
+        snprintf(buf, buf_size, "%s%s", ip, scope);
+        ip = buf;
         break;
       }
     }

@@ -2,8 +2,9 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <aku/AKU.h>
-#include <moaicore/moaicore.h>
+#include <moai-core/host.h>
+#include <moai-core/headers.h>
+#include <moai-sim/host.h>
 #include <work/work-moai-vfs.h>
 
 #ifdef _WIN32

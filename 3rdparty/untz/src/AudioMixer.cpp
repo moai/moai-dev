@@ -10,6 +10,10 @@
 #include "SystemData.h"
 #include "SoundData.h"
 
+#ifdef __QNX__
+#include <string.h>
+#endif
+
 using namespace UNTZ;
 
 

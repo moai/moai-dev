@@ -40,4 +40,10 @@ public class MoaiCrittercism {
 
 		Crittercism.leaveBreadcrumb ( breadcrumb );
 	}
+		
+	//----------------------------------------------------------------//
+	public static void setUser ( String ident ) {
+
+		Crittercism.setUsername ( ident );
+	}
 }
