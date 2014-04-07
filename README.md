@@ -38,15 +38,18 @@ The following tools are required to build the API documentation.
 
 Please set the following environment variables.
 
-	# Mac OSX
+### Mac OSX
+
 	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Linux
+### Linux
+
 	export MOAI_BIN=<install_path>/moai-dev/release/linux/host-sdl/x64/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Windows
+### Windows
+
 	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
 	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
 
@@ -142,13 +145,14 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 
 ### Moai Pages
 
-* [Moai New Web Site](http://moaiwebsite.github.io/)
+* [Moai Web Site](http://moaiwebsite.github.io/)
 * [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html)
 * [Moai SDK Framework Reference](http://getmoai.com/docs/)
 * [Moai forums](http://getmoai.com/forums/)
 * [Moai Wiki(getmoai)](http://getmoai.com/wiki/)
 * [Moai Wiki(github)](https://github.com/moai/moai-dev/wiki)
 * [Moai API Documentation](http://moaiforge.github.io/moai-sdk/api/latest/).
+* [MoaiFiddle](http://moaifiddle.com/) An online Moai editor and player.
 
 ### Tutorials
 * [GameFromScratch MOAI Tutorials](http://www.gamefromscratch.com/page/Moai-tutorial-series-The-adventures-of-an-intrepid-programmer-in-the-lands-of-Moai.aspx)
