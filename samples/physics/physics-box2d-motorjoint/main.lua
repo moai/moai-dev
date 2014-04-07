@@ -1,5 +1,5 @@
 -- Sample of MOAIBox2DMotorJoint, based on the Box2D 2.3.0 Testbed/MotorJoint.h sample.
--- Click the mouse to move the prop/body, watch the motorJoint return the body to rest.
+-- Click the mouse to move the prop/body, watch the Box2D motorJoint return the body to rest.
 -- Author: www.fivevolthigh.com
 
 local width = MOAIEnvironment.horizontalResolution or 640
@@ -16,9 +16,8 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 -- set up the world and start its simulation
-BOX2D_UNITS_TO_METERS = 0.05
 world = MOAIBox2DWorld.new ()
-world:setUnitsToMeters(BOX2D_UNITS_TO_METERS)
+world:setUnitsToMeters(0.05)
 layer:setBox2DWorld ( world )
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
