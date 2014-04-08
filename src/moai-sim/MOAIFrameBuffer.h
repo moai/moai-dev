@@ -95,6 +95,7 @@ public:
 	GET			( u32, RenderCounter, mRenderCounter )
 	
 	//----------------------------------------------------------------//
+	void				DetectGLFrameBufferID		();
 	ZLRect				GetBufferRect				() const;
 	void				GrabImage					( MOAIImage* image );
 						MOAIFrameBuffer				();

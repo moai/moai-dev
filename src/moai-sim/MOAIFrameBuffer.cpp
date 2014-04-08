@@ -239,6 +239,11 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFrameBuffer::DetectGLFrameBufferID () {
+	this->mGLFrameBufferID = zglGetCurrentFramebuffer ();
+}
+
+//----------------------------------------------------------------//
 ZLRect MOAIFrameBuffer::GetBufferRect () const {
 
 	ZLRect rect;

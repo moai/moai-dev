@@ -1051,6 +1051,14 @@ void zglFramebufferTexture2D ( u32 target, u32 attachment, u32 texture, s32 leve
 }
 
 //----------------------------------------------------------------//
+u32 zglGetCurrentFramebuffer () {
+
+	int buffer;
+	glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
+	return ( u32 )buffer;
+}
+
+//----------------------------------------------------------------//
 void zglRenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
 	glRenderbufferStorage ( GL_RENDERBUFFER, _remapEnum ( internalFormat ), ( GLsizei )width, ( GLsizei )height );
 }
