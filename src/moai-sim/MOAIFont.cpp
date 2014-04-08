@@ -251,6 +251,17 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	
+	self->mMinFilter = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
+	self->mMagFilter = state.GetValue < int >( 3, self->mMinFilter );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFlags
 	@text	Set flags to control font loading behavior. Right now the
 			only supported flag is FONT_AUTOLOAD_KERNING which may be used
@@ -513,7 +524,9 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 //----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
 	mFlags ( DEFAULT_FLAGS ),
-	mDefaultSize ( 0.0f ) {
+	mDefaultSize ( 0.0f ),
+	mMinFilter ( ZGL_SAMPLE_LINEAR ),
+	mMagFilter ( ZGL_SAMPLE_LINEAR ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -674,6 +687,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setCache",					_setCache },
 		{ "setDefaultSize",				_setDefaultSize },
+		{ "setFilter",					_setFilter },
 		{ "setFlags",					_setFlags },
 		{ "setImage",					_setImage },
 		{ "setReader",					_setReader },

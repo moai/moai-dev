@@ -131,7 +131,7 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 		textureHeight = textureHeight > width ? width : textureHeight;
 		
 		texture->Init ( image, 0, y, width, textureHeight, font.GetFilename ());
-		texture->SetFilter ( ZGL_SAMPLE_LINEAR, ZGL_SAMPLE_LINEAR );
+		texture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		
 		y += textureHeight;
 		
