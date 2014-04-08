@@ -179,6 +179,42 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetXAxis () const {
+	
+		ZLMetaVec3D < TYPE > axis;
+	
+		axis.mX = m [ C0_R0 ];
+		axis.mY = m [ C0_R1 ];
+		axis.mZ = m [ C0_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetYAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C1_R0 ];
+		axis.mY = m [ C1_R1 ];
+		axis.mZ = m [ C1_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetZAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C2_R0 ];
+		axis.mY = m [ C2_R1 ];
+		axis.mZ = m [ C2_R2 ];
+		
+		return axis;
+	}
+
+	//----------------------------------------------------------------//
 	void Ident () {
 
 		m[C0_R0]	= 1;

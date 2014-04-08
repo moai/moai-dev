@@ -151,6 +151,8 @@ protected:
 	
 	STLString			mText;
 	
+	bool				mAutoFlip;
+	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
 	static int			_getAlignment			( lua_State* L );
@@ -165,6 +167,7 @@ protected:
 	static int			_revealAll				( lua_State* L );
 	static int			_reserveCurves			( lua_State* L );
 	static int			_setAlignment			( lua_State* L );
+	static int			_setAutoFlip			( lua_State* L );
 	static int			_setCurve				( lua_State* L );
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setHighlight			( lua_State* L );
@@ -187,6 +190,7 @@ protected:
 	#endif
 	
 	//----------------------------------------------------------------//
+	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				OnUpdate				( float step );

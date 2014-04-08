@@ -465,6 +465,77 @@ void MOAIGraphicsProp::DrawGrid ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
+
+	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+
+	MOAIViewport* viewport = renderMgr.GetViewport ();
+	MOAICamera* camera = renderMgr.GetCamera ();
+	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
+
+	ZLMatrix4x4 worldDrawingMtx;
+
+	switch ( billboard ) {
+	
+		case BILLBOARD_NORMAL: {
+			
+			ZLAffine3D billboardMtx;
+			billboardMtx.Init ( camera->GetBillboardMtx ());
+			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
+			
+			break;
+		}
+		
+		case BILLBOARD_ORTHO: {
+		
+			ZLMatrix4x4 view = camera->GetViewMtx ();
+			ZLMatrix4x4 proj = camera->GetProjMtx ( *viewport );
+			
+			ZLMatrix4x4 invViewProj = view;
+			invViewProj.Append ( proj );
+			invViewProj.Inverse ();
+			
+			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			
+			// world space location for prop
+			ZLVec3D worldLoc;
+			worldLoc.mX = worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ];
+			worldLoc.mY = worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ];
+			worldLoc.mZ = worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ];
+			
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+			
+			view.Transform ( worldLoc );
+			proj.Project ( worldLoc );
+			
+			viewport->GetProjMtxInv ().Transform ( worldLoc );
+			
+			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
+			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
+			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+			
+			proj = viewport->GetProjMtx ();
+			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+			
+			worldDrawingMtx.Append ( view );
+			worldDrawingMtx.Append ( proj );
+			worldDrawingMtx.Append ( invViewProj );
+			
+			break;
+		}
+		
+		case BILLBOARD_NONE:
+		default:
+		
+			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+	}
+	
+	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
 MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
 
 	return this;
@@ -524,70 +595,8 @@ void MOAIGraphicsProp::LoadGfxState () {
 void MOAIGraphicsProp::LoadTransforms () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-
-	MOAIViewport* viewport = renderMgr.GetViewport ();
-	MOAICamera* camera = renderMgr.GetCamera ();
-	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
-
-	switch ( billboard ) {
 	
-		case BILLBOARD_NORMAL: {
-			
-			ZLAffine3D billboardMtx;
-			billboardMtx.Init ( camera->GetBillboardMtx ());
-			billboardMtx = this->GetBillboardMtx ( billboardMtx );
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-
-			break;
-		}
-		
-		case BILLBOARD_ORTHO: {
-		
-			ZLMatrix4x4 view = camera->GetViewMtx ();
-			ZLMatrix4x4 proj = camera->GetProjMtx ( *viewport );
-			
-			ZLMatrix4x4 invViewProj = view;
-			invViewProj.Append ( proj );
-			invViewProj.Inverse ();
-			
-			ZLMatrix4x4 billboardMtx;
-			billboardMtx.Init ( this->GetLocalToWorldMtx ());
-			
-			// world space location for prop
-			ZLVec3D worldLoc;
-			worldLoc.mX = billboardMtx.m [ ZLMatrix4x4::C3_R0 ];
-			worldLoc.mY = billboardMtx.m [ ZLMatrix4x4::C3_R1 ];
-			worldLoc.mZ = billboardMtx.m [ ZLMatrix4x4::C3_R2 ];
-			
-			billboardMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
-			billboardMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
-			billboardMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			view.Transform ( worldLoc );
-			proj.Project ( worldLoc );
-			
-			viewport->GetProjMtxInv ().Transform ( worldLoc );
-			
-			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
-			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
-			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			proj = viewport->GetProjMtx ();
-			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
-			
-			billboardMtx.Append ( view );
-			billboardMtx.Append ( proj );
-			billboardMtx.Append ( invViewProj );
-			
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, billboardMtx );
-			break;
-		}
-		
-		case BILLBOARD_NONE:
-		default:
-			gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
-	}
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
 
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();

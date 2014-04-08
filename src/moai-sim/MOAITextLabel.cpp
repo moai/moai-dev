@@ -4,12 +4,14 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
+#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLabel.h>
@@ -277,6 +279,16 @@ int MOAITextLabel::_setAlignment ( lua_State* L ) {
 	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextDesigner::LEFT_JUSTIFY ));
 	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::TOP_JUSTIFY ));
 	self->ScheduleLayout ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	self->mAutoFlip = state.GetValue < bool >( 2, false );
 
 	return 0;
 }
@@ -659,6 +671,9 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		}
 		
 		this->LoadGfxState ();
+		
+		ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
 
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
@@ -666,7 +681,6 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
 		}
 
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
@@ -687,7 +701,9 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	
 	draw.Bind ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
+	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
@@ -715,6 +731,56 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
+
+	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::GetWorldDrawingMtx ();
+	
+	// TODO: this is a hack for Point Inside. it only really works for
+	// single-line labels that are center-aligned. but it's a useful
+	// concept; should be fleshed out into something more general purpose.
+	// may need to change the way we think about some types of alignment
+	// for this to be useful across the board.
+	
+	// TODO: right now alignment is applied in model space after text
+	// layout. probably better to treat alignment as a pivot and
+	// prepend it to the transform. this way auto-flip can be
+	// generalized to all props. would also be nice to think about
+	// auto-flip as part of the 'billboarding' pipeline as opposed
+	// to an ad-hoc post-transform.
+	
+	if ( this->mAutoFlip ) {
+	
+		// TODO: all this should move up the chain to graphics prop
+		
+		MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+		
+		MOAICamera* camera = renderMgr.GetCamera ();
+		if ( camera ) {
+		
+			// TODO: this is a bunch of getting and re-calculating drawing matrices
+			// would be better to cache these in a drawing intent that gets passed
+			// down from the renderer
+		
+			MOAIViewport* viewport = renderMgr.GetViewport ();
+			assert ( viewport );
+			
+			ZLMatrix4x4 viewProj = camera->GetWorldToWndMtx ( *viewport );
+		
+			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();\
+			viewProj.TransformVec ( upVec );
+			
+			if ( upVec.mY < 0.0f ) {
+				ZLMatrix4x4 scale;
+				scale.Scale ( -1.0f, -1.0f, 1.0f );
+				worldDrawingMtx.Append ( scale );
+			}
+		}
+	}
+	
+	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
 bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {
@@ -732,7 +798,8 @@ MOAITextLabel::MOAITextLabel () :
 	mReveal ( REVEAL_ALL ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
-	mMore ( false ) {
+	mMore ( false ),
+	mAutoFlip ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGraphicsProp )
@@ -883,6 +950,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveCurves",			_reserveCurves },
 		{ "revealAll",				_revealAll },
 		{ "setAlignment",			_setAlignment },
+		{ "setAutoFlip",			_setAutoFlip },
 		{ "setCurve",				_setCurve },
 		{ "setGlyphScale",			_setGlyphScale },
 		{ "setLineSpacing",			_setLineSpacing },

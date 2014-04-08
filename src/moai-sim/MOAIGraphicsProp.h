@@ -122,9 +122,10 @@ protected:
 	float									mLODMax;
 
 	//----------------------------------------------------------------//
-	MOAIGraphicsProp*	GetGraphicsProp			();
-	void				LoadGfxState			();
-	void				LoadTransforms			();
+	virtual ZLMatrix4x4		GetWorldDrawingMtx		(); // factors in billboard flags
+	MOAIGraphicsProp*		GetGraphicsProp			();
+	void					LoadGfxState			();
+	void					LoadTransforms			();
 
 public:
 
