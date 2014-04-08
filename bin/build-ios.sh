@@ -6,20 +6,49 @@
 # http://getmoai.com
 #================================================================#
 
+# Set this to a name which will be valid for "codesign -s", or the build
+# will fail.
+SIGN_IDENTITY='iPhone Developer'
+
+codesign_msg=$(codesign -s "$SIGN_IDENTITY" 2>&1)
+case $codesign_msg in
+*": no identity found"*)
+    echo >&2 "Code-signing identity ($SIGN_IDENTITY) is invalid."
+    exit 1
+    ;;
+esac
+
 set -e
+
+# Give more useful feedback rather than aborting silently.
+report_error() {
+    status=$?
+    case $status in
+    0)    ;;
+    *)    echo >&2 "Aborting due to exit status $status from: $BASH_COMMAND";;
+    esac
+    exit $status
+}
+
+trap 'report_error' 0
 
 APP_NAME='Moai App'
 APP_ID='com.getmoai.moaiapp'
 APP_VERSION='1.0'
 
-# check for command line switches
-usage="usage: $0 \
-    [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
-    [--disable-chartboost] [--disable-crittercism] [--disable-facebook] \
-    [--disable-mobileapptracker] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--simulator] [--release] \
-    <LUA_SRC_PATH>"
+usage() {
+    cat >&2 <<EOF
+usage: $0
+    [--use-untz true | false] [--disable-adcolony] [--disable-billing]
+    [--disable-chartboost] [--disable-crittercism] [--disable-facebook]
+    [--disable-mobileapptracker] [--disable-push] [--disable-tapjoy]
+    [--disable-twitter] [--simulator] [--release]
+    <lua-src-path>
+EOF
+    exit 1
+}
 
+# check for command line switches
 use_untz="true"
 
 adcolony_flags=
@@ -34,7 +63,7 @@ buildtype_flags="Debug"
 windows_flags=
 simulator="false"
 
-while [ $# -gt 1 ];	do
+while [ $# -gt 0 ];	do
     case "$1" in
         --use-untz)  use_untz="$2"; shift;;
         --disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
@@ -48,14 +77,15 @@ while [ $# -gt 1 ];	do
         --disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
         --release) buildtype_flags="Release";;
         --simulator) simulator="true";;
-        -*)
-            echo >&2 \
-                $usage
-            exit 1;;
+        -*) usage;;
         *)  break;;	# terminate while loop
     esac
     shift
 done
+
+if [ $# != 1 ]; then
+    usage
+fi
 
 LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$1")
 
@@ -71,8 +101,7 @@ if [ ! -f "${LUASRC}/main.lua" ]; then
 fi
 
 if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
-    echo $usage
-    exit 1		
+    usage
 fi
 
 #get some required variables
@@ -90,8 +119,6 @@ PLATFORM=OS
 SDK=iphoneos
 ARCH=armv7
 fi
-
-SIGN_IDENTITY='iPhone Developer'
 
 # echo message about what we are doing
 echo "Building moai.app via CMAKE"
@@ -195,5 +222,5 @@ fi
 mkdir -p release/ios/app
 mkdir -p release/ios/lib
 
-find cmake/build -name "*.app" | xargs -J % cp -fp % release/ios/app
+find cmake/build -name "*.app" | xargs -J % cp -fRp % release/ios/app
 find cmake/build -name "*.a" | xargs -J % cp -fp % release/ios/lib
