@@ -21223,7 +21223,6 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
