@@ -515,6 +515,20 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 }
 
 //----------------------------------------------------------------//
+/** @name	initializeProperties
+	@text	Initialize the particle plugin properties set in the load method.
+ 
+	@in		MOAIParticlePexPlugin self
+	@out	nil
+*/
+
+int MOAIParticlePexPlugin::_initializeProperties( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAIParticlePexPlugin, "U" )
+	self->InitializeProperties();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	load
 	@text	Create a particle plugin from an XML file
 	
@@ -545,6 +559,111 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 //================================================================//
 // MOAIParticlePlugin
 //================================================================//
+
+void MOAIParticlePexPlugin::InitializeProperties(){
+	// this does not initialize the mParticlePath.
+	
+	
+	this->mSize = 0;
+	
+	// angle
+	if (this->mAngleVariance != 0){
+		this->mAngleRegister = this->mSize++;
+	}
+	
+	// finish color
+	for (int i = 0; i < 4; i++) {
+		if (this->mFinishColorVariance[i] != 0) {
+			this->mFinishColorRegister[i] = this->mSize++;
+		}
+	}
+	
+	// finish particle size
+	if (this->mFinishSizeVariance != 0) {
+		this->mFinishSizeRegister = this->mSize++;
+	}
+	
+	// maxRadius
+	if (this->mMaxRadiusVariance != 0) {
+		this->mMaxRadiusRegister = this->mSize++;
+	}
+	
+	// particleLifespan
+	if (this->mLifespanVariance != 0) {
+		this->mLifespanRegister = this->mSize++;
+	}
+	
+	// radialAcceleration
+	if (this->mRadialAccelVariance != 0){
+		this->mRadialAccelRegister = this->mSize++;
+	}
+	
+	// rotationEnd
+	if (this->mRotEndVariance != 0){
+		this->mRotEndRegister = this->mSize++;
+	}
+	
+	// rotationStart
+	if (this->mRotStartVariance != 0){
+		this->mRotStartRegister = this->mSize++;
+	}
+	
+	// speed
+	if (this->mSpeedVariance != 0) {
+		this->mSpeedRegister = this->mSize++;
+	}
+	
+	// startColor
+	for (int i = 0; i < 4; i++) {
+		if (this->mStartColorVariance[i] != 0) {
+			this->mStartColorRegister[i] = this->mSize++;
+		}
+	}
+	
+	
+	// startParticleSize
+	if (this->mStartSizeVariance != 0) {
+		this->mStartSizeRegister = this->mSize++;
+	}
+	
+	
+	// tangentialAcceleration
+	if (this->mTanAccelVariance != 0){
+		this->mTanAccelRegister = this->mSize++;
+	}
+	
+	
+	// start position
+	this->mStartXRegister = this->mSize++;
+	this->mStartYRegister = this->mSize++;
+	
+	if(this->mEmitterType == EMITTER_GRAVITY)
+	{
+		// gravity vector
+		this->mDirectionXRegister = this->mSize++;
+		this->mDirectionYRegister = this->mSize++;
+	}
+	else
+	{
+		// rotation rate and radius
+		this->mRotPerSecondRegister = this->mSize++;
+		this->mRadialRegister = this->mSize++;
+	}
+	
+	// set up emitter
+	this->mEmissionRate =  1.0f / (this->mNumParticles / this->mLifespan );
+	this->mEmissionCount = 1;
+	if( this->mEmissionRate <  0.05 )
+	{
+		this->mEmissionCount = (u32)ceil( 0.05 / this->mEmissionRate );
+		this->mEmissionRate *= this->mEmissionCount;
+	}
+	
+	this->mLifespanTerm[0] = this->mLifespan - this->mLifespanVariance < 0 ? 0 : this->mLifespan - this->mLifespanVariance;
+	this->mLifespanTerm[1] = this->mLifespan + this->mLifespanVariance;
+	
+	
+}
 
 
 void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node )
@@ -1298,6 +1417,7 @@ void MOAIParticlePexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTangentalAccelerationVariance",	_getTangentalAccelerationVariance },
 		{ "setTangentalAccelerationVariance",	_setTangentalAccelerationVariance },
 		{ "getTextureName",						_getTextureName },
+		{ "initializeProperties",				_initializeProperties },
 		{ NULL, NULL }
 	};
 

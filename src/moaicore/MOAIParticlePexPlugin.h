@@ -186,8 +186,10 @@ private:
 	static int		_setTangentalAccelerationVariance	( lua_State* L );
 
 	static int		_getTextureName						( lua_State* L );
+	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
 
+	void			InitializeProperties		();
 	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	
 	void			_initGravityScript			( float* particle, float* registers );
