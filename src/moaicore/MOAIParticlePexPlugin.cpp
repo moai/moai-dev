@@ -352,6 +352,18 @@ int MOAIParticlePexPlugin::_setRotationStart ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIParticlePexPlugin::_getRotationStartVariance( lua_State *L ){
+	MOAI_LUA_SETUP( MOAIParticlePexPlugin, "U" )
+	lua_pushnumber( state, self->mRotStartVariance );
+	return 1;
+}
+
+int MOAIParticlePexPlugin::_setRotationStartVariance( lua_State *L ){
+	MOAI_LUA_SETUP( MOAIParticlePexPlugin, "UN" )
+	self->mRotStartVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
 int MOAIParticlePexPlugin::_getSourcePosition ( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIParticlePexPlugin, "U" )
 	lua_pushnumber ( state, self->mSourcePos[0] );
@@ -1263,6 +1275,8 @@ void MOAIParticlePexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setRotationEndVariance",				_setRotationEndVariance },
 		{ "getRotationStart",					_getRotationStart },
 		{ "setRotationStart",					_setRotationStart },
+		{ "getRotationStartVariance",			_getRotationStartVariance },
+		{ "setRotationStartVariance",			_setRotationStartVariance },
 		{ "getSourcePosition",					_getSourcePosition },
 		{ "setSourcePosition",					_setSourcePosition },
 		{ "getSourcePositionVariance",			_getSourcePositionVariance },
