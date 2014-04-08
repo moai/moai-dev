@@ -44,6 +44,7 @@ public:
 	jmethodID			GetMethod					( jclass clazz, cc8* methodName, cc8* methodSignature );
 	jmethodID			GetStaticMethod				( cc8* methodName, cc8* methodSignature );
 	jmethodID			GetStaticMethod				( jclass clazz, cc8* methodName, cc8* methodSignature );
+	jobject				HashMapFromLua				( lua_State* L, int index );
 						JniUtils					();
 						~JniUtils					();
 	void				ReleaseCString				( jstring jstr, cc8* cstr );

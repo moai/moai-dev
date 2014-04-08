@@ -206,6 +206,36 @@ jmethodID JniUtils::GetStaticMethod ( jclass clazz, cc8* methodName, cc8* method
 }
 
 //----------------------------------------------------------------//
+jobject JniUtils::HashMapFromLua ( lua_State* L, int index ) {
+    MOAILuaState state ( L );
+
+	jclass clazz = this->Env ()->FindClass ( "java/util/HashMap" );
+    jobject hashMap = this->Env ()->NewObject ( clazz, this->Env ()->GetMethodID ( clazz, "<init>", "()V" ));
+    jmethodID put = this->Env ()->GetMethodID ( clazz, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;" );
+
+    // table is in the stack at index 'index'
+    lua_pushnil ( state );  // first key
+    while ( lua_next ( state, index ) != 0 ) {
+        // use the 'key' (at index -2) and 'value' (at index -1)
+        cc8* key = lua_tostring( state, -2 );
+
+        if( key != NULL ) {
+            cc8* value = lua_tostring( state, -1 );
+            if ( value != NULL ) {
+				
+				jstring jkey = this->GetJString ( key );
+				jstring jvalue = this->GetJString ( value );
+
+                this->Env ()->CallObjectMethod( hashMap, put, jkey, jvalue );
+            }
+        }
+        // removes 'value'; keeps 'key' for next iteration
+        lua_pop ( state, 1 );
+    }
+    return hashMap;
+}
+
+//----------------------------------------------------------------//
 JniUtils::JniUtils () :
 	mClass ( 0 ) {
 	

@@ -271,6 +271,8 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mDeleterStack.Reset ();
 	this->ResetResources ();
+	
+	this->mDefaultBuffer->DetectGLFrameBufferID ();
 }
 
 //----------------------------------------------------------------//

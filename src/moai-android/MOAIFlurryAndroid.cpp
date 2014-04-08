@@ -17,9 +17,13 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIFlurryAndroid::_beginEvent ( lua_State *L ) {
+int MOAIFlurryAndroid::_enableLogging ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
-
+		
+	bool enable = state.GetValue < bool >( 1, false );
+	jmethodID enableLogging = self->GetStaticMethod ( "enableLogging", "(Z)V" );
+	self->CallStaticVoidMethod ( enableLogging, enable );
+	
 	return 0;
 }
 
@@ -28,16 +32,22 @@ int MOAIFlurryAndroid::_beginEvent ( lua_State *L ) {
 int MOAIFlurryAndroid::_endEvent ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 
+	jstring eventId = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	jmethodID logEvent = self->GetStaticMethod ( "endEvent", "(Ljava/lang/String;)V" );
+	self->CallStaticVoidMethod ( logEvent, eventId );
+	
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIFlurryAndroid::_endSession ( lua_State *L ) {
+int MOAIFlurryAndroid::_init ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
-
-	//jmethodID startSession = self->GetStaticMethod ( "onEndSession", "(Landroid/content/Context;)V" );
-	//self->CallStaticVoidMethod ( startSession, self->mActivity );
+		
+	jstring apiKey = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
+	self->CallStaticVoidMethod ( init, apiKey );
+	
 	return 0;
 }
 
@@ -45,6 +55,19 @@ int MOAIFlurryAndroid::_endSession ( lua_State *L ) {
 // TODO: doxygen
 int MOAIFlurryAndroid::_logEvent ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
+
+	jstring eventId = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	jobject hashMap = 0;
+
+	if ( state.IsType ( 2, LUA_TTABLE )) {
+		hashMap = self->HashMapFromLua ( L, 2 );
+	}
+	
+	bool timed = state.GetValue < bool >( 3, false );
+
+	jmethodID logEvent = self->GetStaticMethod ( "logEvent", "(Ljava/lang/String;Ljava/util/Map;Z)V" );
+	
+	self->CallStaticVoidMethod ( logEvent, eventId, hashMap, timed );
 
 	return 0;
 }
@@ -57,17 +80,6 @@ int MOAIFlurryAndroid::_setUserID ( lua_State *L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIFlurryAndroid::_startSession ( lua_State *L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
-
-	//jstring japiKey = self->GetJString ( lua_tostring ( state, 1 ));
-	//jmethodID startSession = self->GetStaticMethod ( "onStartSession", "(Landroid/content/Context;Ljava/lang/String;)V" );
-	//self->CallStaticVoidMethod ( startSession, self->mActivity, japiKey );
-	return 0;
-}
-
 //================================================================//
 // MOAIFlurryAndroid
 //================================================================//
@@ -77,7 +89,7 @@ MOAIFlurryAndroid::MOAIFlurryAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	//this->SetClassViaLoader ( "com.flurry.android.FlurryAgent" );
+	this->SetClass ( "com/ziplinegames/moai/MoaiFlurry" );
 }
 
 //----------------------------------------------------------------//
@@ -88,12 +100,11 @@ MOAIFlurryAndroid::~MOAIFlurryAndroid () {
 void MOAIFlurryAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "beginEvent",			_beginEvent },
+		{ "enableLogging",		_enableLogging },
 		{ "endEvent",			_endEvent },
-		{ "endSession",			_endSession },
+		{ "init",				_init },
 		{ "logEvent",			_logEvent },
 		{ "setUserID",			_setUserID },
-		{ "startSession",		_startSession },
 		{ NULL, NULL }
 	};
 

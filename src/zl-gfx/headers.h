@@ -313,6 +313,7 @@ extern u32		zglCreateFramebuffer			();
 extern u32		zglCreateRenderbuffer			();
 extern void		zglFramebufferRenderbuffer		( u32 target, u32 attachment, u32 renderbuffer );
 extern void		zglFramebufferTexture2D			( u32 target, u32 attachment, u32 texture, s32 level );
+extern u32		zglGetCurrentFramebuffer		();
 extern void		zglRenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 
 //----------------------------------------------------------------//
