@@ -627,7 +627,7 @@ static int lcurl_easy_setopt(lua_State* L)
 					else
 					{
 						/* When the option code is any of CURLOPT_xxxDATA and the argument is table, 
-						/* userdata or function set the curl option value to the lua object reference */
+						 * userdata or function set the curl option value to the lua object reference */
 						v.nval=ref;
 					}
 				}break;
