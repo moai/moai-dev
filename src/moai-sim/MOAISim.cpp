@@ -735,10 +735,10 @@ MOAISim::MOAISim () :
 	mSimDuration ( 1.0 / 60.0 ),
 	mEnterFullscreenModeFunc ( 0 ),
 	mExitFullscreenModeFunc ( 0 ),
-	mShowCursorFunc ( 0 ),
-	mHideCursorFunc ( 0 ),
 	mOpenWindowFunc ( 0 ),
 	mSetSimStepFunc ( 0 ),
+	mShowCursorFunc ( 0 ),
+	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
 	mGCStep ( 0 ),
 	mForceGC ( true ) {
