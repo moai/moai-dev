@@ -190,6 +190,7 @@ protected:
 	#endif
 	
 	//----------------------------------------------------------------//
+	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );

@@ -653,6 +653,18 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
+void MOAITextLabel::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	this->MOAITransform::BuildLocalToWorldMtx ( localToWorldMtx );
+
+	float yScale = this->mDesigner.GetYFlip () ? -1.0f : 1.0f;
+
+	ZLAffine3D mtx;
+	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
+	localToWorldMtx.Prepend ( mtx );
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	
@@ -714,13 +726,15 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 			ZLRect frame = this->mDesigner.GetFrame ();
 		
 			if ( this->mDesigner.GetLimitWidth ()) {
-				bounds.mXMin = frame.mXMin;
-				bounds.mXMax = frame.mXMax;
+				float xOffset = this->mLayout.mXOffset;
+				bounds.mXMin = frame.mXMin - xOffset;
+				bounds.mXMax = frame.mXMax - xOffset;
 			}
 			
 			if ( this->mDesigner.GetLimitHeight ()) {
-				bounds.mYMin = frame.mYMin;
-				bounds.mYMax = frame.mYMax;
+				float yOffset = this->mLayout.mYOffset;
+				bounds.mYMin = frame.mYMin - yOffset;
+				bounds.mYMax = frame.mYMax - yOffset;
 			}
 		
 			draw.DrawRectOutline ( bounds );
@@ -735,22 +749,7 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 
 	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::GetWorldDrawingMtx ();
 	
-	// TODO: this is a hack for Point Inside. it only really works for
-	// single-line labels that are center-aligned. but it's a useful
-	// concept; should be fleshed out into something more general purpose.
-	// may need to change the way we think about some types of alignment
-	// for this to be useful across the board.
-	
-	// TODO: right now alignment is applied in model space after text
-	// layout. probably better to treat alignment as a pivot and
-	// prepend it to the transform. this way auto-flip can be
-	// generalized to all props. would also be nice to think about
-	// auto-flip as part of the 'billboarding' pipeline as opposed
-	// to an ad-hoc post-transform.
-	
 	if ( this->mAutoFlip ) {
-	
-		// TODO: all this should move up the chain to graphics prop
 		
 		MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 		
@@ -766,13 +765,13 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 			
 			ZLMatrix4x4 viewProj = camera->GetWorldToWndMtx ( *viewport );
 		
-			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();\
+			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 			viewProj.TransformVec ( upVec );
 			
 			if ( upVec.mY < 0.0f ) {
 				ZLMatrix4x4 scale;
 				scale.Scale ( -1.0f, -1.0f, 1.0f );
-				worldDrawingMtx.Append ( scale );
+				worldDrawingMtx.Prepend ( scale );
 			}
 		}
 	}
@@ -869,16 +868,6 @@ void MOAITextLabel::OnUpdate ( float step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
-
-	if ( this->mDesigner.GetYFlip ()) {
-		ZLAffine3D mtx;
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
-		localToWorldMtx.Prepend ( mtx );
-	}
 }
 
 //----------------------------------------------------------------//
