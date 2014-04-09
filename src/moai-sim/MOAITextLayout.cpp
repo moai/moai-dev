@@ -227,6 +227,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
+			
 			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 		}
 	}
@@ -249,6 +250,15 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT )) {
+		
+		u32 totalLines = this->mLines.GetTop ();
+		for ( u32 i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			draw.DrawRectOutline ( line.mRect );
+		}
+	}
+	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
 		
 		u32 totalLines = this->mLines.GetTop ();
@@ -256,15 +266,6 @@ void MOAITextLayout::DrawDebug () {
 			MOAITextLine& line = this->mLines [ i ];
 			float y = line.mRect.mYMin + line.mAscent;
 			draw.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
-		}
-	}
-	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT )) {
-		
-		u32 totalLines = this->mLines.GetTop ();
-		for ( u32 i = 0; i < totalLines; ++i ) {
-			MOAITextLine& line = this->mLines [ i ];
-			draw.DrawRectOutline ( line.mRect );
 		}
 	}
 }
@@ -356,6 +357,7 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 //----------------------------------------------------------------//
 MOAITextLayout::MOAITextLayout () :
+	mXOffset ( 0.0f ),
 	mYOffset ( 0.0f ),
 	mHighlights ( 0 ) {
 }

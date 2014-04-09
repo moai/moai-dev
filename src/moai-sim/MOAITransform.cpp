@@ -1009,22 +1009,15 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms () {
-	
-	if ( this->mRot.mZ >= 360.0f ) {
-		this->mRot.mZ = ( float )fmod ( this->mRot.mZ, 360.0f );
-	}
-	else if ( this->mRot.mZ < 0.0f ) {
-		this->mRot.mZ = 360.0f + ( float )fmod ( this->mRot.mZ, 360.0f );
-	}
+void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
-	this->mLocalToWorldMtx.ScRoTr (
+	localToWorldMtx.ScRoTr (
 		this->mScale.mX,
 		this->mScale.mY,
 		this->mScale.mZ,
-		this->mRot.mX * ( float )D2R,
-		this->mRot.mY * ( float )D2R,
-		this->mRot.mZ * ( float )D2R,
+		ClampEuler ( this->mRot.mX ) * ( float )D2R,
+		ClampEuler ( this->mRot.mY ) * ( float )D2R,
+		ClampEuler ( this->mRot.mZ ) * ( float )D2R,
 		this->mLoc.mX,
 		this->mLoc.mY,
 		this->mLoc.mZ
@@ -1032,11 +1025,11 @@ void MOAITransform::BuildTransforms () {
 	
 	ZLAffine3D shear;
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
-	this->mLocalToWorldMtx.Prepend ( shear );
+	localToWorldMtx.Prepend ( shear );
 	
 	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ), 0 );
 	if ( inherit ) {
-		this->mLocalToWorldMtx.Append ( *inherit );
+		localToWorldMtx.Append ( *inherit );
 	}
 	else {
 	
@@ -1046,9 +1039,9 @@ void MOAITransform::BuildTransforms () {
 			ZLVec3D loc = this->mLoc;
 			inherit->Transform ( loc );
 			
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
+			localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
+			localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
+			localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
 		}
 	}
 	
@@ -1056,11 +1049,20 @@ void MOAITransform::BuildTransforms () {
 		
 		ZLAffine3D pivot;
 		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-		this->mLocalToWorldMtx.Prepend ( pivot );
+		localToWorldMtx.Prepend ( pivot );
 	}
-	
-	this->PostBuildTransforms ( this->mLocalToWorldMtx );
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+}
+
+//----------------------------------------------------------------//
+float MOAITransform::ClampEuler ( float r ) {
+
+	if ( r >= 360.0f ) {
+		r = ( float )fmod ( r, 360.0f );
+	}
+	else if ( r < 0.0f ) {
+		r = 360.0f + ( float )fmod ( r, 360.0f );
+	}
+	return r;
 }
 
 //----------------------------------------------------------------//
@@ -1139,12 +1141,8 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ();
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
+	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
+	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//

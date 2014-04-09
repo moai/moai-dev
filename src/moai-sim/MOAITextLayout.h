@@ -79,6 +79,7 @@ class MOAITextLayout {
 private:
 	
 	friend class MOAITextDesignParser;
+	friend class MOAITextLabel;
 	
 	// this is the text page layout. these are the actual sprites and lines
 	// that will be rendered for the current page.
@@ -86,7 +87,12 @@ private:
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
 	ZLRect								mBounds;
 	
-	float								mYOffset; // offset for Y flip
+	// calculated during alignment
+	// - the text is laid out in model space with the origin at the *center* of the text frame
+	// - centering the text makes it easy to flip the textbox by prepending a rotation or scale
+	// - before the main transform, apply the offset to get the correct text position 
+	float								mXOffset;
+	float								mYOffset;
 	
 	// list of highlight spans
 	MOAITextHighlight*					mHighlights;
@@ -99,8 +105,6 @@ private:
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	
 public:
-
-	GET ( float, YOffset, mYOffset )
 
 	//----------------------------------------------------------------//
 	void				AddHighlight			( u32 base, u32 top, u32 color );
