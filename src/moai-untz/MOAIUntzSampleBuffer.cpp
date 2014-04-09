@@ -81,7 +81,6 @@ int MOAIUntzSampleBuffer::_setData( lua_State* L ) {
 	u32 startDataIndex = state.GetValue<u32>(3,1);
 	int itr = state.PushTableItr(2);
 	int idx = 0;
-	u32 total = 0;
 	int maxindex = self->mInfo.mChannels * self->mInfo.mTotalFrames;
 
 	idx = startDataIndex - 1;
