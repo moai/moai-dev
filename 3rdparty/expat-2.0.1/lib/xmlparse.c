@@ -1494,6 +1494,8 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal)
         break;
       case XML_INITIALIZED:
       case XML_PARSING:
+      /* clang warns if you don't handle the XML_FINISHED value somehow */
+      default:
         result = XML_STATUS_OK;
         if (isFinal) {
           ps_parsing = XML_FINISHED;
