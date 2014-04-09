@@ -19,7 +19,7 @@
 	#include <new>
 
 	//----------------------------------------------------------------//
-	inline void* operator new ( size_t size ) throw ( std::bad_alloc ) {
+	void* operator new ( size_t size ) throw ( std::bad_alloc ) {
 		void* mem = malloc ( size );
 		#if 0
 			if ( mem ) return mem;
@@ -30,12 +30,12 @@
 	}
 
 	//----------------------------------------------------------------//
-	inline void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
+	void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
 		return malloc ( size );
 	}
 
 	//----------------------------------------------------------------//
-	inline void* operator new []( size_t size ) throw ( std::bad_alloc ) {
+	void* operator new []( size_t size ) throw ( std::bad_alloc ) {
 		void* mem = malloc ( size );
 		#if 0
 			if ( mem ) return mem;
@@ -46,17 +46,17 @@
 	}
 
 	//----------------------------------------------------------------//
-	inline void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
+	void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
 		return malloc ( size );
 	}
 
 	//----------------------------------------------------------------//
-	inline void operator delete ( void* ptr ) throw() {
+	void operator delete ( void* ptr ) throw() {
 		free ( ptr );
 	}
 
 	//----------------------------------------------------------------//
-	inline void operator delete []( void* ptr ) throw() {
+	void operator delete []( void* ptr ) throw() {
 		free ( ptr );
 	}
 
