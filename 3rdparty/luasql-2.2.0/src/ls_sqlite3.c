@@ -114,7 +114,7 @@ static void push_column(lua_State *L, sqlite3_stmt *vm, int column) {
     lua_pushnumber(L, sqlite3_column_double(vm, column));
     break;
   case SQLITE_TEXT:
-    lua_pushlstring(L, sqlite3_column_text(vm, column),
+    lua_pushlstring(L, (const char *) sqlite3_column_text(vm, column),
 		    sqlite3_column_bytes(vm, column));
     break;
   case SQLITE_BLOB:
@@ -547,13 +547,16 @@ static int env_close (lua_State *L)
 /*
 ** Sets the timeout for a lock in the connection.
 */
+/* Nothing calls this. */
+#if 0
 static int opts_settimeout  (lua_State *L)
 {
 	conn_data *conn = getconnection(L);
 	int milisseconds = luaL_checknumber(L, 2);
-	lua_pushnumber(L, sqlite3_busy_timeout(conn, milisseconds));
+	lua_pushnumber(L, sqlite3_busy_timeout(conn->sql_conn, milisseconds));
 	return 1;
 }
+#endif
 
 /*
 ** Create metatables for each class of object.
