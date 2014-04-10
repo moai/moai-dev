@@ -62,6 +62,8 @@ private:
 	s32	  mMaxRadiusRegister;
 	
 	float mMinRadius;
+	float mMinRadiusVariance;
+	s32   mMinRadiusRegister;
 	
 	float mRadialAcceleration;
 	float mRadialAccelVariance;

@@ -1309,6 +1309,7 @@ MOAIParticlePexPlugin::MOAIParticlePexPlugin () :
 	mStartSizeRegister(-1),
 	mFinishSizeRegister(-1),
 	mMaxRadiusRegister(-1),
+	mMinRadiusRegister(-1),
 	mRadialAccelRegister(-1),
 	mTanAccelRegister(-1),
 	mRotStartRegister(-1),
