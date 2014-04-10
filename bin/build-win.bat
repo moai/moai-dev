@@ -1,4 +1,4 @@
-cd ..\cmake
+cd cmake
 rmdir /s build
 md build
 cd build
