@@ -29,15 +29,6 @@ MOAISensor* MOAIInputDevice::GetSensor ( u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::HandleEvent ( u8 sensorID, ZLStream& eventStream ) {
-
-	MOAISensor* sensor = this->GetSensor ( sensorID );
-	if ( sensor ) {
-		sensor->HandleEvent ( eventStream );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIInputDevice::MOAIInputDevice () :
 	mIsActive ( true ) {
 	
@@ -76,7 +67,7 @@ void MOAIInputDevice::ReserveSensors ( u8 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::Reset () {
+void MOAIInputDevice::ResetSensors () {
 
 	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];

@@ -53,13 +53,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 	bool			KeyDown					( u32 keyID );
 	bool			KeyIsDown				( u32 keyID );
 	bool			KeyIsUp					( u32 keyID );
 	bool			KeyUp					( u32 keyID );
 					MOAIKeyboardSensor		();
 					~MOAIKeyboardSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();

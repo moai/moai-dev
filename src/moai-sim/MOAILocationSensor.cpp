@@ -54,7 +54,23 @@ int MOAILocationSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILocationSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAILocationSensor::MOAILocationSensor () :
+	mLongitude ( 0.0 ),
+	mLatitude ( 0.0 ),
+	mAltitude ( 0.0 ),
+	mHAccuracy ( 0.0f ),
+	mVAccuracy ( 0.0f ),
+	mSpeed ( 0.0f ) {
+
+	RTTI_SINGLE ( MOAISensor )
+}
+
+//----------------------------------------------------------------//
+MOAILocationSensor::~MOAILocationSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAILocationSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	this->mLongitude	= eventStream.Read < double >( 0.0 );
 	this->mLatitude		= eventStream.Read < double >( 0.0 );
@@ -76,22 +92,6 @@ void MOAILocationSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAILocationSensor::MOAILocationSensor () :
-	mLongitude ( 0.0 ),
-	mLatitude ( 0.0 ),
-	mAltitude ( 0.0 ),
-	mHAccuracy ( 0.0f ),
-	mVAccuracy ( 0.0f ),
-	mSpeed ( 0.0f ) {
-
-	RTTI_SINGLE ( MOAISensor )
-}
-
-//----------------------------------------------------------------//
-MOAILocationSensor::~MOAILocationSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAILocationSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -99,6 +99,8 @@ void MOAILocationSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAILocationSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getLocation",		_getLocation },
