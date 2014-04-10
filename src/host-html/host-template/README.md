@@ -5,19 +5,15 @@ and libraries included. It also includes a simple nodejs server app to serve you
 
 ### Creating The ROM
 Before you can do much, your assets and source files will need to be packaged into a single rom file. To do this 
-you will need one of the emscripten tools.
-Checkout or symlink Emscripten to this folder so that you can build your rom file 
-```
-git clone https://github.com/kripken/emscripten`
-```
+you will need python 2.7+ installd
 
-Now to create the rom, place your source and assets (in the folder layout they expect) into the src folder.
-> The html5 host automatically will run `main.lua` from the `src/` folder when it loads
+Now to create the rom, place your source and assets (in the folder layout they expect) into the src folder. 
+> The html5 host automatically will run `main.lua` from the `src/` folder when it loads and will treat the src/ folder as root of the virtual filesystem
 
-Then run the `buildrom.sh` file.
-> Requires python to be on the path and emscripten in ./emscripten
+Then run the `buildrom.sh` or buildrom.bat (for windows) file.
+> Requires python to be on the path
 
-This will package up your src folder into a file called `moaiapp.rom` and create a loader called `moaiapp.rom.js`.
+This will package up your src folder into a file called `moaiapp.rom` and create a metadata file called `moaiapp.rom.json`.
 These files will be placed into the www folder which is what you will need to deploy or serve to test your app.
 
 Your host should now be ready to run!
@@ -30,38 +26,38 @@ To run your app you need to serve the contents of the www directory from a webse
 There is a simple nodejs express server `app.js` in this folder which can be run with a copy of nodejs by
 ```
   > npm install
-  > nodejs app.js
+  > node app.js
 ```
 
-You can then see the host by visiting `http://localhost:3000/moai.html`
+You can then see the host by visiting `http://localhost:3000/index.html` this is an example of the host in an iframe, The fullscreen
+version of the host (which is used in the iframe) is located at /moai.html
 
 To refresh your code while developing you do not need to restart the nodejs server. Just rerun `buildrom.sh` and
 refresh your browser.
 
 You can poke your running app from the developer console in the browser by calling 
 ```
-  moaijs.AKURunString('print("hello from moai"')
+  player.moai.AKURunString('print("hello from moai"')
   or
-  moaijs.AKURunScript('otherluafilehere.lua')
+  player.moai.AKURunScript('otherluafilehere.lua')
 ```
 
 you can refresh the lua context with 
 ```
-  moaijs.RefreshContext()
+  player.moai.RefreshContext()
 ```
 
 ## Modify template
 
-To change the size of the canvas, look for the canvas element `MoaiCanvas` and set the width and height you require. 
+To change the size of the player look for the iframe and change its width and height properties
 
-The width and height of the canvas are passed into moai as verticalResolution and horizontalResolution
+The width and height of the player canvas are passed into moai as verticalResolution and horizontalResolution
 like on mobile devices. 
 
-`MoaiSim.OpenWindow()` (from lua code) will cause the canvas to resize to the requested size. The element with the Id 
-`MoaiTitle` will be updated with the title of the window from OpenWindow.
+`MoaiSim.OpenWindow()` (from lua code) will cause the canvas to resize to the requested size. The element with the class 
+`moai-title` will be updated with the title of the window from OpenWindow.
 
-The element with the id `MoaiStatus` is updated with the loading progress of the host. 
+The element with the class `moai-status` is updated with the loading progress of the host. 
 
-The only things the host needs are the 3 elements (they can be any type but canvas must be canvas) 
-`MoaiCanvas` `MoaiTitle` `MoaiStatus`  and script tags (in order)  `moaihost.js`, `moaiapp.rom.js`, `moaijs.js`.
+
 
