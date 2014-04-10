@@ -600,6 +600,11 @@ void MOAIParticlePexPlugin::InitializeProperties(){
 		this->mMaxRadiusRegister = this->mSize++;
 	}
 	
+	// minRadius
+	if (this->mMinRadiusVariance != 0) {
+		this->mMinRadiusRegister = this->mSize++;
+	}
+	
 	// particleLifespan
 	if (this->mLifespanVariance != 0) {
 		this->mLifespanRegister = this->mSize++;
@@ -753,6 +758,13 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 			}
 			else if(text == "minRadius")
 				plugin.mMinRadius = (float)atof(attribute->Value());
+			// TODO: affirm that the property name really is "minRadiusVariance" in a modern exported PEX file.
+			else if(text == "minRadiusVariance")
+			{
+				plugin.mMinRadiusVariance = (float)atof(attribute->Value());
+				if (plugin.mMinRadiusVariance != 0)
+						plugin.mMinRadiusRegister = plugin.mSize++;
+			}
 			else if(text == "particleLifeSpan")
 				plugin.mLifespan = (float)atof(attribute->Value());
 			else if(text == "particleLifespanVariance")
@@ -1038,6 +1050,10 @@ void MOAIParticlePexPlugin::_initRadialScript( float* particle, float* registers
 		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * mMaxRadius;
 		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * mMaxRadius;
 	}
+	
+	if( mMinRadiusRegister > -1 ){
+		registers[mMinRadiusRegister] = USFloat::Rand (mMinRadius - mMinRadiusVariance, mMinRadius + mMinRadiusVariance);
+	}
 
 	registers[mRadialRegister] = angleStartDeg;	
 }
@@ -1289,7 +1305,12 @@ void MOAIParticlePexPlugin::_renderRadialScript( float* particle, float* registe
 		sVal = registers[mMaxRadiusRegister];
 	else
 		sVal = mMaxRadius;
-	float magVal = USInterpolate::Interpolate ( USInterpolate::kLinear, sVal, mMinRadius, t1 );
+	
+	if(mMinRadiusRegister > -1)
+		eVal = registers[mMinRadiusRegister];
+	else
+		eVal = mMinRadius;
+	float magVal = USInterpolate::Interpolate ( USInterpolate::kLinear, sVal, eVal, t1 );
 	
 	particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister] - Cos(registers[mRadialRegister] * (float)D2R) * magVal;
     particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister] - Sin(registers[mRadialRegister] * (float)D2R) * magVal;
