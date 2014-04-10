@@ -10,21 +10,18 @@ string(REPLACE "${VFS_INCLUDE}" " " VFS_CXX_FLAGS ${CMAKE_CXX_FLAGS} )
 set( CMAKE_C_FLAGS ${VFS_C_FLAGS})
 set (CMAKE_CXX_FLAGS ${VFS_CXX_FLAGS})
 
-
-
-
 # Define needed include files
 set ( ZLVFS_INCLUDES
   "${MOAI_ROOT}/src/config-default/" 
   "${MOAI_ROOT}/src/"
- )
+)
 
 # Use all cpp files in directory as source code
-file ( GLOB SRC_ZLVFS "${CMAKE_CURRENT_SOURCE_DIR}/zl-vfs/*.cpp" )
+file ( GLOB ZLVFS_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-vfs/*.cpp" )
 
 include_directories ( ${ZLVFS_INCLUDES} )
 
-add_library ( zlvfs STATIC ${SRC_ZLVFS} )
+add_library ( zlvfs STATIC ${ZLVFS_SOURCES} )
 
 target_link_libraries ( zlvfs zlib tlsf )
 set_target_properties( zlvfs PROPERTIES FOLDER Core )

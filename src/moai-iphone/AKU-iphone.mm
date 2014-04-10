@@ -84,8 +84,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIBillingIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIGameCenterIOS )
-	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAIMobileAppTrackerIOS )
+	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )		
 	REGISTER_LUA_CLASS ( MOAIMoviePlayerIOS )
 	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
@@ -96,6 +95,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
+	#endif
+
+	#ifndef DISABLE_MOBILEAPPTRACKER
+		REGISTER_LUA_CLASS ( MOAIMobileAppTrackerIOS )
 	#endif
 
 	#ifndef DISABLE_NOTIFICATIONS
@@ -121,8 +124,8 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#endif
 	
 	#if MOAI_WITH_HTTP_CLIENT	
-	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
-	MOAIUrlMgrNSURL::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
+		MOAIUrlMgrNSURL::Affirm ();
 	#endif
 		
 	// Device properties

@@ -393,3 +393,21 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
 	return stream->WriteBytes ( this->mTiles, size );
 }
+
+//----------------------------------------------------------------//
+void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+	float tileWidth = this->GetTileWidth ();
+	float tileHeight = this->GetTileHeight ();
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
+			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
+			
+			MOAICellCoord coord ( x, y );
+			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+		}
+	}
+}

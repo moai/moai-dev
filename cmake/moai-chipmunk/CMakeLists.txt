@@ -7,10 +7,10 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-chipmunk/" )
 set ( MOAI_CHIPMUNK_INCLUDES 
   "${MOAI_ROOT}/src/"
   "${MOAI_ROOT}/src/config-default/"
- )
+)
 
 # Use all cpp files in directory as source code
-file ( GLOB MOAI_CHIPMUNK_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_CHIPMUNK_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 include_directories ( ${MOAI_CHIPMUNK_INCLUDES} )
 

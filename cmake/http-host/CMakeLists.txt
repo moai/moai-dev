@@ -12,11 +12,12 @@ include_directories (
   ${GLEW_INCLUDES}
    )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/hosts" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-server/" )
 
-add_executable ( http-host 
-  ${CMAKE_CURRENT_SOURCE_DIR}/ServerHost.cpp
-)
+# Use all cpp files in directory as source code
+file ( GLOB HOST_HTTP_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
+
+add_executable ( http-host ${HOST_HTTP_SRC} )
 
 target_link_libraries ( http-host moai-core moaiext-server zlcore uslscore third-party rt dl pthread )
 

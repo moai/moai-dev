@@ -4,6 +4,8 @@
 #ifndef	MOAIMOBILEAPPTRACKERIOS_H
 #define	MOAIMOBILEAPPTRACKERIOS_H
 
+#ifndef DISABLE_MOBILEAPPTRACKER
+
 #import <moai-core/headers.h>
 
 //================================================================//
@@ -28,4 +30,6 @@ public:
 	void	RegisterLuaClass	( MOAILuaState& state );
 };
 
-#endif
+#endif // DISABLE_MOBILEAPPTRACKER
+
+#endif // MOAIMOBILEAPPTRACKERIOS_H
