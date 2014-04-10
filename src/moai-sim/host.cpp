@@ -378,6 +378,12 @@ void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputTimestamp ( double timestamp ) {
+
+	MOAIInputMgr::Get ().SetTimestamp ( timestamp );
+}
+
+//----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );

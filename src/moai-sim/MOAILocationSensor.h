@@ -36,9 +36,9 @@ public:
 	DECL_LUA_FACTORY ( MOAILocationSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAILocationSensor		();
 					~MOAILocationSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( ZLStream& eventStream, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );

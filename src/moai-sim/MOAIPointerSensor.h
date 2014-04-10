@@ -30,9 +30,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIPointerSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAIPointerSensor		();
 					~MOAIPointerSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( ZLStream& eventStream, int x, int y );
