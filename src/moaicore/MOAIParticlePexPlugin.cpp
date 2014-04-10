@@ -235,6 +235,18 @@ int MOAIParticlePexPlugin::_setMinRadius ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIParticlePexPlugin::_getMinRadiusVariance ( lua_State *L ){
+	MOAI_LUA_SETUP ( MOAIParticlePexPlugin, "U" )
+	lua_pushnumber ( state, self->mMinRadiusVariance );
+	return 1;
+}
+
+int MOAIParticlePexPlugin::_setMinRadiusVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticlePexPlugin, "UN" )
+	self->mMinRadiusVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
 int MOAIParticlePexPlugin::_getParticleLifespan ( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIParticlePexPlugin, "U" )
 	lua_pushnumber ( state, self->mLifespan );
@@ -1376,6 +1388,8 @@ void MOAIParticlePexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setMaxRadiusVariance",				_setMaxRadiusVariance },
 		{ "getMinRadius",						_getMinRadius },
 		{ "setMinRadius",						_setMinRadius },
+		{ "getMinRadiusVariance",				_getMinRadiusVariance },
+		{ "setMinRadiusVariance",				_setMinRadiusVariance },
 		{ "getParticleLifespan",				_getParticleLifespan },
 		{ "setParticleLifespan",				_setParticleLifespan },
 		{ "getParticleLifespanVariance",		_getParticleLifespanVariance },

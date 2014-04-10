@@ -145,6 +145,8 @@ private:
 	static int		_setMaxRadiusVariance				( lua_State* L );
 	static int		_getMinRadius						( lua_State* L );
 	static int		_setMinRadius						( lua_State* L );
+	static int		_getMinRadiusVariance				( lua_State* L );
+	static int		_setMinRadiusVariance				( lua_State* L );
 	static int		_getParticleLifespan				( lua_State* L );
 	static int		_setParticleLifespan				( lua_State* L );
 	static int		_getParticleLifespanVariance		( lua_State* L );
