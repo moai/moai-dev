@@ -347,6 +347,12 @@ void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputTimebase ( double timebase ) {
+
+	MOAIInputMgr::Get ().SetTimebase ( timebase );
+}
+
+//----------------------------------------------------------------//
 void AKUSetInputTimestamp ( double timestamp ) {
 
 	MOAIInputMgr::Get ().SetTimestamp ( timestamp );

@@ -10,23 +10,25 @@
 //================================================================//
 // ZLLeanPool
 //================================================================//
-template < typename TYPE, size_t CHUNKSIZE = 64, size_t MAXCHUNKS = 1024 >
+template < typename TYPE, size_t CHUNKSIZE = 64, size_t MAXCHUNKS = 0 >
 class ZLLeanPool {
 private:
 
+	size_t								mMaxChunks;
 	ZLLeanStack < TYPE*, 1 >			mChunks;
 	ZLLeanStack < TYPE*, CHUNKSIZE >	mFree;
 
 	//----------------------------------------------------------------//
 	void More () {
 	
-		if ( this->mChunks.Size () < MAXCHUNKS ) {
+		if (( this->mMaxChunks == 0 ) || ( this->mChunks.Size () < this->mMaxChunks )) {
 	
 			TYPE* chunk = ( TYPE* )malloc ( CHUNKSIZE * sizeof ( TYPE ));
 			this->mChunks.Push ( chunk );
 			
 			for ( size_t i = 0; i < CHUNKSIZE; ++i ) {
-				this->mFree.Push ( &chunk [ i ]);
+				TYPE* elem = &chunk [ i ];
+				this->mFree.Push ( elem );
 			}
 		}
 	}
@@ -75,6 +77,10 @@ public:
 			type->TYPE::~TYPE ();
 			this->mFree.Push ( type );
 		}
+	}
+	//----------------------------------------------------------------//
+	ZLLeanPool () :
+		mMaxChunks ( MAXCHUNKS ) {
 	}
 	
 	//----------------------------------------------------------------//

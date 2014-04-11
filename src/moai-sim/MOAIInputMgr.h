@@ -17,9 +17,6 @@ protected:
 
 	ZLLeanArray < MOAIInputDevice* > mDevices;
 
-	//----------------------------------------------------------------//
-	static int			_resetSensors				( lua_State* L );
-
 public:
 
 	DECL_LUA_FACTORY ( MOAIInputContext )
@@ -30,7 +27,6 @@ public:
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
 						MOAIInputContext			();
 						~MOAIInputContext			();
-	void				ParseEvent					( ZLStream& stream, bool reset );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveDevices				( u8 total );
@@ -51,25 +47,13 @@ class MOAIInputMgr :
 	public MOAIGlobalClass < MOAIInputMgr, MOAIInputContext > {
 private:
 
-	double			mTimestamp;		// timestamp for next event
-	bool			mAutoUpdate;	// should automaticaly send events to default context on update
+	static const size_t CHUNK_SIZE = 256;
 
-	// streams are double buffered; one for input from host, one for processing by runtime
-	ZLMemStream		mStreamA;
-	ZLMemStream		mStreamB;
-
-	// queue for incoming events from host
-	ZLMemStream*	mEvents;
+	double	mTimebase;		// used to position timestamps against sim timeline
+	double	mTimestamp;		// timestamp for next event
 
 	// queue for cached events to be processed by runtime
-	ZLMemStream*	mCachedEvents;
-	size_t			mCachedEventsTop;
-
-	//----------------------------------------------------------------//
-	static int			_enableAutoUpdate			( lua_State* L );
-	static int			_more						( lua_State* L );
-	static int			_parseEvent					( lua_State* L );
-	static int			_rewind						( lua_State* L );
+	ZLMemStream			mEventQueue;
 
 	//----------------------------------------------------------------//
 	void				WriteEventHeader			( u8 deviceID, u8 sensorID );
@@ -77,6 +61,9 @@ private:
 public:
 
 	DECL_LUA_SINGLETON ( MOAIInputMgr )
+
+	SET ( double, Timebase, mTimebase )
+	SET ( double, Timestamp, mTimestamp )
 
 	//----------------------------------------------------------------//
 	void				EnqueueButtonEvent			( u8 deviceID, u8 sensorID, bool down );
@@ -90,13 +77,9 @@ public:
 	void				EnqueueWheelEvent			( u8 deviceID, u8 sensorID, float value );
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
-	bool				More						();
-	bool				ParseEvent					( MOAIInputContext& context, bool reset );
 	void				RegisterLuaClass			( MOAILuaState& state );
-	void				Rewind						();
 	void				SetConfigurationName		( cc8* name );
-	void				SetTimestamp				( double timestamp ); // set the timestamp for the next event
-	void				Update						();
+	void				Update						( double simTime );
 };
 
 #endif

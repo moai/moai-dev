@@ -5,7 +5,28 @@
 #define ZLMEMSTREAM_H
 
 #include <zl-util/STLString.h>
+#include <zl-util/ZLLeanPool.h>
 #include <zl-util/ZLStream.h>
+
+//================================================================//
+// ZLMemStream
+//================================================================//
+class ZLMemStreamChunk  {
+private:
+
+	friend class ZLMemStream;
+	
+	void*	mMem;
+
+	//----------------------------------------------------------------//
+	void		Affirm					( size_t size );
+
+public:
+
+	//----------------------------------------------------------------//
+				ZLMemStreamChunk		();
+				~ZLMemStreamChunk		();
+};
 
 //================================================================//
 // ZLMemStream
@@ -14,15 +35,22 @@ class ZLMemStream :
 	public ZLStream {
 private:
 
+	// guest buffer is an optimization; handle case where we want to use some locally
+	// allocated memory to read data of unknown size. if a write operation overflows the
+	// guest buffer then its contents are copied into the main buffer and the guest buffer
+	// is forgotten. usage would be to allocate a buffer on the stack, set it as the guest
+	// buffer then write whatever is needed.
 	void*		mGuestBuffer;
 	size_t		mGuestBufferSize;
 
 	size_t		mChunkSize;
 	size_t		mTotalChunks;
-	void**		mChunks;
 
-	size_t		mCursor;
-	size_t		mLength;
+	ZLLeanArray < void* > mChunks;
+
+	size_t		mBase;			// offset into base chunk (in the event of DiscardFront); never larged than chunk size
+	size_t		mCursor;		// current position in stream
+	size_t		mLength;		// current length of stream
 
 	//----------------------------------------------------------------//
 	void			ClearChunks			();
@@ -34,6 +62,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear				();
+	void			DiscardBack			( size_t size );
+	void			DiscardFront		( size_t size );
 	u32				GetCaps				();
 	size_t			GetCursor			();
 	size_t			GetLength			();
