@@ -19,4 +19,4 @@ add_library ( sqlite3 STATIC ${SQLITE3_SOURCES} ${SQLITE3_HEADERS} )
 
 target_include_directories ( sqlite3 PUBLIC ${SQLITE3_INCLUDES} )
 set_target_properties( sqlite3 PROPERTIES FOLDER Third-Party )
- install(TARGETS sqlite3 ARCHIVE DESTINATION lib)
+ install(TARGETS sqlite3 EXPORT libmoai ARCHIVE DESTINATION lib)

@@ -61,7 +61,7 @@ if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential
 endif (BUILD_WINDOWS)
 
-install(TARGETS moai-sim ARCHIVE DESTINATION lib)
+install(TARGETS moai-sim EXPORT libmoai ARCHIVE DESTINATION lib)
 
 install(FILES 
               ${CMAKE_CURRENT_SOURCE_DIR}/host.h 

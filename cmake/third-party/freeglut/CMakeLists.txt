@@ -31,7 +31,7 @@ if (BUILD_LINUX)
   target_link_libraries( freeglut_static Xxf86vm )
 endif (BUILD_LINUX)
 
-install(TARGETS freeglut_static ARCHIVE DESTINATION lib)
+install(TARGETS freeglut_static EXPORT libmoai ARCHIVE DESTINATION lib)
 
 install(DIRECTORY ${MOAI_ROOT}/3rdparty/freeglut-2.8.1/include/
         DESTINATION include/freeglut)

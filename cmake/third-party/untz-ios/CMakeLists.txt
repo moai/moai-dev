@@ -30,4 +30,4 @@ endif (MOAI_VORBIS)
 
 target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES} )
 set_target_properties( untz PROPERTIES FOLDER Third-Party )
-install(TARGETS untz ARCHIVE DESTINATION lib)
+install(TARGETS untz EXPORT libmoai ARCHIVE DESTINATION lib)

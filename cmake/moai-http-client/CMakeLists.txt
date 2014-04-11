@@ -35,7 +35,7 @@ if ( MOAI_CURL )
 endif (MOAI_CURL)
 
 set_target_properties(moai-http-client PROPERTIES FOLDER Modules)  
-install(TARGETS moai-http-client ARCHIVE DESTINATION lib)
+install(TARGETS moai-http-client EXPORT libmoai ARCHIVE DESTINATION lib)
 
   
 

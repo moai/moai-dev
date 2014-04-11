@@ -38,7 +38,7 @@ if ( MOAI_TINYXML )
    target_link_libraries( moai-util tinyxml )
 endif ( MOAI_TINYXML )
 
-install(TARGETS moai-util ARCHIVE DESTINATION lib)
+install(TARGETS moai-util EXPORT libmoai ARCHIVE DESTINATION lib)
 
 install(FILES 
               ${CMAKE_CURRENT_SOURCE_DIR}/host.h 

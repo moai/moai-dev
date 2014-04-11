@@ -613,4 +613,4 @@ set_target_properties( crypto PROPERTIES FOLDER Third-Party )
      target_link_libraries( crypto ws2_32 )
    endif (BUILD_WINDOWS)
 
-   install(TARGETS crypto ARCHIVE DESTINATION lib)
+   install(TARGETS crypto EXPORT libmoai ARCHIVE DESTINATION lib)
