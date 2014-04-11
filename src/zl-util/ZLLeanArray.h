@@ -42,6 +42,11 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	size_t BufferSize () {
+		return this->mSize * sizeof ( TYPE );
+	}
+
+	//----------------------------------------------------------------//
 	virtual void Clear () {
 
 		if ( this->mSize && this->mData ) {
@@ -171,6 +176,48 @@ public:
 			for ( size_t i = oldSize; i < size; ++i ) {
 				this->mData [ i ] = value;
 			}
+		}
+	}
+
+	//----------------------------------------------------------------//
+	void RotateLeft ( size_t spaces ) {
+	
+		spaces = spaces % this->mSize;
+		if ( spaces ) {
+			
+			size_t size = this->mSize * sizeof ( TYPE );
+			size_t leftSize = spaces * sizeof ( TYPE );
+			size_t rightSize = size - leftSize;
+			
+			void* lower = ( void* )(( uintptr )this->mData + leftSize );
+			void* upper = ( void* )(( uintptr )this->mData + rightSize );
+			
+			void* temp = alloca ( leftSize );
+		
+			memcpy ( temp, this->mData, leftSize );
+			memmove ( this->mData, lower, rightSize );
+			memcpy ( upper, temp, leftSize );
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	void RotateRight ( size_t spaces ) {
+	
+		spaces = spaces % this->mSize;
+		if ( spaces ) {
+			
+			size_t size = this->mSize * sizeof ( TYPE );
+			size_t leftSize = spaces * sizeof ( TYPE );
+			size_t rightSize = size - leftSize;
+			
+			void* lower = ( void* )(( uintptr )this->mData + leftSize );
+			void* upper = ( void* )(( uintptr )this->mData + rightSize );
+			
+			void* temp = alloca ( rightSize );
+		
+			memcpy ( temp, upper, rightSize );
+			memmove ( lower, this->mData, leftSize );
+			memcpy ( this->mData, temp, rightSize );
 		}
 	}
 

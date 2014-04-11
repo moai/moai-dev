@@ -846,7 +846,7 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
-		MOAIInputMgr::Get ().Update ();
+		MOAIInputMgr::Get ().Update ( this->mSimTime );
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
 		this->mSimTime += step;

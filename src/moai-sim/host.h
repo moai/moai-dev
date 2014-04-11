@@ -64,6 +64,7 @@ AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char con
 AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputTimebase				( double timebase ); // optional: sets timebase event timestamps
 AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets timestamp for next input event
 
 // input events api
