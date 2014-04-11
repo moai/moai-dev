@@ -159,3 +159,5 @@ project ( curl )
   if (BUILD_WINDOWS)
     target_link_libraries( curl ws2_32 )
   endif (BUILD_WINDOWS)
+
+  install(TARGETS curl ARCHIVE DESTINATION lib)

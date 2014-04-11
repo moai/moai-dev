@@ -51,3 +51,13 @@ endif ( MOAI_PLUGINS )
 if ( MOAI_TEST )
 	target_link_libraries ( host-modules moai-test )
 endif (MOAI_TEST)
+
+configure_file(moai_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/moai_config.h")
+
+install(TARGETS host-modules EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES 
+              ${CMAKE_CURRENT_BINARY_DIR}/moai_config.h
+              ${MOAI_ROOT}/src/host-modules/aku_modules.h 
+              ${MOAI_ROOT}/src/host-modules/aku_modules_config.h
+        DESTINATION include/host-modules)
+

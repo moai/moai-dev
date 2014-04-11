@@ -38,3 +38,4 @@ if (MOAI_SQLITE3)
 endif (MOAI_SQLITE3)
   
 set_target_properties(moai-luaext PROPERTIES FOLDER Modules)  
+install(TARGETS moai-luaext ARCHIVE DESTINATION lib)

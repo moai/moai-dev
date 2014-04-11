@@ -25,3 +25,4 @@ add_library ( zlvfs STATIC ${ZLVFS_SOURCES} )
 
 target_link_libraries ( zlvfs zlib tlsf )
 set_target_properties( zlvfs PROPERTIES FOLDER Core )
+install(TARGETS zlvfs ARCHIVE DESTINATION lib)

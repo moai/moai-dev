@@ -161,9 +161,11 @@ option ( MOAI_HTTP_CLIENT    FALSE )
 
 macro(SETUP_MODULE module_name flag_name)
   if (${module_name})
+    set ( ${flag_name} 1)
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=1" )
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=1" )
   else ()
+    set ( ${flag_name} 0)
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=0" )
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=0" )
   endif(${module_name})
@@ -323,3 +325,5 @@ if ( BUILD_SERVER )
 endif ( BUILD_SERVER )
 
 endif (CUSTOM_HOST)
+
+install(EXPORT libmoai DESTINATION cmake)

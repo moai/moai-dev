@@ -91,3 +91,4 @@ target_link_libraries ( moai-iphone
   moai-sim moai-util moai-core 
 )
 set_target_properties( moai-iphone PROPERTIES FOLDER Modules )
+install(TARGETS moai-iphone ARCHIVE DESTINATION lib)

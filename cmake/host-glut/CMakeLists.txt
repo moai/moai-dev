@@ -47,7 +47,7 @@ target_link_libraries ( moai
 
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
-    freeglutstatic
+    freeglut_static
     winmm
   )
 endif (BUILD_WINDOWS)
@@ -56,7 +56,7 @@ if ( BUILD_LINUX )
   target_link_libraries ( moai 
     pthread 
     rt
-    freeglutstatic
+    freeglut_static
     Xi
   )
 endif ( BUILD_LINUX )

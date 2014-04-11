@@ -53,3 +53,6 @@ target_link_libraries( zlcore ${OPENGL_LIBRARIES})
 if (BUILD_WINDOWS)
   target_link_libraries ( zlcore iphlpapi) #GetAdaptersAddresses
 endif (BUILD_WINDOWS)
+
+
+install(TARGETS zlcore EXPORT libmoai ARCHIVE DESTINATION lib)

@@ -47,3 +47,4 @@ target_link_libraries ( untz
   oleaut32
 )
 set_target_properties( untz PROPERTIES FOLDER Third-Party )
+install(TARGETS untz ARCHIVE DESTINATION lib)

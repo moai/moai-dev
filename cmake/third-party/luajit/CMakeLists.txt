@@ -178,4 +178,4 @@ cmake_minimum_required(VERSION 2.8)
    # add_dependencies(liblua-static libluajit)
 
    set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
-    
+   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a DESTINATION lib ) 

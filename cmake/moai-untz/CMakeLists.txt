@@ -24,3 +24,4 @@ add_library ( moai-untz STATIC ${MOAI_UNTZ_SRC} )
 
 target_link_libraries (moai-untz moai-sim moai-core moai-util untz)
 set_target_properties(moai-untz PROPERTIES FOLDER Modules)  
+install(TARGETS moai-untz ARCHIVE DESTINATION lib)

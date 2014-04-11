@@ -12,3 +12,4 @@
 set_target_properties( luasql PROPERTIES FOLDER Third-Party )
 
  target_include_directories ( luasql PUBLIC ${LUA_HEADERS})
+ install(TARGETS luasql ARCHIVE DESTINATION lib)

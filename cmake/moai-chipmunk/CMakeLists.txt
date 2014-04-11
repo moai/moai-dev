@@ -21,3 +21,4 @@ target_include_directories( moai-chipmunk PUBLIC ${MOAI_CHIPMUNK_INCLUDES} ${CHI
 
 target_link_libraries ( moai-chipmunk moai-sim chipmunk moai-util moai-core zlcore )
 set_target_properties(moai-chipmunk PROPERTIES FOLDER Modules)  
+install(TARGETS moai-chipmunk EXPORT libmoai ARCHIVE DESTINATION lib)

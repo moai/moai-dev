@@ -9,3 +9,4 @@
  add_dependencies ( luafilesystem lualib-static)
  target_include_directories ( luafilesystem PUBLIC ${LUA_HEADERS})
  set_target_properties( luafilesystem PROPERTIES FOLDER Third-Party )
+ install(TARGETS luafilesystem ARCHIVE DESTINATION lib)

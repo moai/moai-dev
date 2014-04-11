@@ -9,3 +9,4 @@
  add_dependencies ( luacurl lualib-static)
  target_include_directories ( luacurl PUBLIC ${LUA_HEADERS})
  set_target_properties( luacurl PROPERTIES FOLDER Third-Party )
+ install(TARGETS luacurl ARCHIVE DESTINATION lib)

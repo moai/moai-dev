@@ -22,3 +22,4 @@ project ( moai-box2d )
 
   target_link_libraries ( moai-box2d moai-sim moai-core moai-util box2d zlcore )
   set_target_properties(moai-box2d PROPERTIES FOLDER Modules)  
+  install(TARGETS moai-box2d EXPORT libmoai ARCHIVE DESTINATION lib)

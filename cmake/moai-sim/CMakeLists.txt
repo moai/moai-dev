@@ -60,3 +60,10 @@ endif (MOAI_CHIPMUNK)
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential
 endif (BUILD_WINDOWS)
+
+install(TARGETS moai-sim ARCHIVE DESTINATION lib)
+
+install(FILES 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host.h 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host_particles.h
+        DESTINATION include/moai-sim)

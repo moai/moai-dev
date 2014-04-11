@@ -32,3 +32,9 @@ target_link_libraries ( moai-core zlcore ${LUA_LIB})
 add_dependencies ( moai-core liblua-static)
 
 set_target_properties(moai-core PROPERTIES FOLDER Core)
+
+install(TARGETS moai-core EXPORT libmoai ARCHIVE DESTINATION lib)
+
+install(FILES 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host.h 
+        DESTINATION include/moai-core)
