@@ -306,8 +306,6 @@ void MOAIInputMgr::Update ( double timestep ) {
 			first = false;
 		}
 	
-		printf ( "%f event: %d %d %f\n", timestep, deviceID, sensorID, timestamp );
-	
 		if ( timestep < ( timestamp - timebase )) break;
 		
 		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
