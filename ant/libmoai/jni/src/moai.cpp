@@ -457,6 +457,16 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetCacheDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+		
+		JNI_GET_CSTRING ( jpath, path );
+		
+		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_cacheDirectory,	path );
+		
+		JNI_RELEASE_CSTRING ( jpath, path );
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
