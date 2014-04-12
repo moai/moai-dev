@@ -389,10 +389,10 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
-		MOAISim::Get ().PauseMOAI ();
+		MOAISim::Get ().Pause ();
 	}
 	else {
-		MOAISim::Get ().ResumeMOAI ();
+		MOAISim::Get ().Resume ();
 	}
 	return 0;
 }
@@ -705,10 +705,13 @@ void MOAISim::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PauseMOAI () {
+void MOAISim::Pause () {
 
-	this->SendPauseEvent();
-	this->mLoopState = PAUSED;
+	if ( this->mLoopState != PAUSED ) {
+		this->SendPauseEvent();
+		this->mLoopState = PAUSED;
+		this->mPauseTime = ZLDeviceTime::GetTimeInSeconds ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -783,9 +786,13 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::ResumeMOAI() {
+void MOAISim::Resume () {
 
 	if ( this->mLoopState == PAUSED ) {
+	
+		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
+		MOAIInputMgr::Get ().FlushEvents ( skip );
+	
 		this->SendResumeEvent();
 		this->mLoopState = START;
 	}
@@ -846,7 +853,7 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
-		MOAIInputMgr::Get ().Update ( this->mSimTime );
+		MOAIInputMgr::Get ().Update ( step );
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
 		this->mSimTime += step;

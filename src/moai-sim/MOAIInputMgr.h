@@ -76,12 +76,13 @@ public:
 	void				EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
 	void				EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
 	void				EnqueueWheelEvent			( u8 deviceID, u8 sensorID, float value );
+	void				FlushEvents					( double skip );
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetConfigurationName		( cc8* name );
 	void				SetDeviceExtendedName		( u8 deviceID, cc8* nameExtended );
-	void				Update						( double simTime );
+	void				Update						( double timestep );
 };
 
 #endif

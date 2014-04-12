@@ -71,6 +71,7 @@ private:
 	double			mSimTime;		// elapsed simulation running time (in seconds)
 	double			mRealTime;		// time updated from system clock
 	double			mFrameTime;		// time last frame time was measured (in seconds)
+	double			mPauseTime;		// time the sim was paused
 	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
@@ -146,6 +147,8 @@ private:
 	void			OnGlobalsFinalize			();
 	void			OnGlobalsRestore			();
 	void			OnGlobalsRetire				();
+	void			SendPauseEvent				();
+	void			SendResumeEvent				();
 	double			StepSim						( double step, u32 multiplier );
 
 public:
@@ -189,13 +192,11 @@ public:
 	//----------------------------------------------------------------//
 					MOAISim						();
 					~MOAISim					();
-	void			PauseMOAI					();
+	void			Pause						();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			ResumeMOAI					();
+	void			Resume						();
 	void			SendFinalizeEvent			();
-	void			SendPauseEvent				();
-	void			SendResumeEvent				();
 	void			SetStep						( double step );
 	void			Update						();
 };

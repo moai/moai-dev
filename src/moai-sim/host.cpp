@@ -232,10 +232,10 @@ double AKUGetSimStep () {
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
-		MOAISim::Get().PauseMOAI ();
+		MOAISim::Get().Pause ();
 	}
 	else {
-		MOAISim::Get().ResumeMOAI ();
+		MOAISim::Get().Resume ();
 	}
 }
 
