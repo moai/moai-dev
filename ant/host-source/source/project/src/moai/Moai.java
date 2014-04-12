@@ -108,6 +108,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiFacebook",
 		"com.ziplinegames.moai.MoaiKeyboard",
 		"com.ziplinegames.moai.MoaiGoogleBilling",
+		"com.ziplinegames.moai.MoaiGooglePlayServices",
 		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiTwitter",

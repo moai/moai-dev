@@ -312,6 +312,11 @@
 		REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
 #endif
 		
+#ifndef DISABLE_PLAYSERVICES
+		MOAIGooglePlayServicesAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIGooglePlayServicesAndroid );
+#endif
+
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
 	

@@ -81,13 +81,13 @@ public class MoaiActivity extends Activity {
 
 		mAccelerometerData = new float[3];
 		
+		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 		
 		Moai.createContext ();
 		Moai.init ();
 		
-		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		//getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
