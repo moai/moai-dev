@@ -25,8 +25,8 @@
 # (this list is created by make-host.sh using command-line 
 # information)
 # available: facebook, tapjoy, twitter, chartboost, crittercism,
-# google-push, google-billing, miscellaneous (required by
-# google-billing)
+# google-push, google-billing, google-play-services, miscellaneous
+# (required by google-billing)
 #----------------------------------------------------------------#
 
 	requires=( @REQUIRED_LIBS@ )

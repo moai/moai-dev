@@ -13,7 +13,7 @@ cd `dirname $0`/
 usage="usage: $0 [-p <package>] [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod \
     true | false] [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--windows]"
+    [--disable-twitter] [--disable-playservices] [--windows]"
 skip_build="false"
 package_name="com.getmoai.samples"
 arm_mode="arm"
@@ -31,6 +31,7 @@ push_flags=
 tapjoy_flags=
 twitter_flags=
 windows_flags=
+playservices_flags=
 
 while [ $# -gt 0 ];	do
     case "$1" in
@@ -50,6 +51,7 @@ while [ $# -gt 0 ];	do
         --disable-push)  push_flags="--disable-push";;
         --disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
         --disable-twitter)  twitter_flags="--disable-twitter";;
+        --disable-playservices)  playservices_flags="-DDISABLE_PLAYSERVICES";;
         --windows) windows_flags="--windows";;
         -*)
             echo >&2 \
@@ -165,6 +167,10 @@ fi
 
 if [ x"$twitter_flags" == x ]; then
     required_libs="$required_libs \"twitter\""
+fi
+
+if [ x"$playservices_flags" == x ]; then
+    required_libs="$required_libs \"google-play-services\""
 fi
 
 cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
