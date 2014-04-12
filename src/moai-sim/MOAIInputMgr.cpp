@@ -228,6 +228,13 @@ void MOAIInputMgr::EnqueueWheelEvent ( u8 deviceID, u8 sensorID, float value ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::FlushEvents ( double skip ) {
+
+	this->mTimebase += skip;
+	this->mEventQueue.DiscardAll ();
+}
+
+//----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () :
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ) {
@@ -256,7 +263,7 @@ void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::Update ( double simTime ) {
+void MOAIInputMgr::Update ( double timestep ) {
 
 	// reset the input sensors
 	this->ResetSensors ();
@@ -266,6 +273,9 @@ void MOAIInputMgr::Update ( double simTime ) {
 	// rewind the event queue
 	this->mEventQueue.Seek ( 0, SEEK_SET );
 
+	bool first = true;
+	double timebase = 0;
+
 	// parse events until we run out or hit an event after the current sim time
 	while ( this->mEventQueue.GetCursor () < this->mEventQueue.GetLength ()) {
 		
@@ -273,7 +283,14 @@ void MOAIInputMgr::Update ( double simTime ) {
 		u8 sensorID			= this->mEventQueue.Read < u8 >( 0 );
 		double timestamp	= this->mEventQueue.Read < double >( 0 );
 	
-		if ( simTime < timestamp ) break;
+		if ( first ) {
+			timebase = timestamp;
+			first = false;
+		}
+	
+		printf ( "%f event: %d %d %f\n", timestep, deviceID, sensorID, timestamp );
+	
+		if ( timestep < ( timestamp - timebase )) break;
 		
 		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
 		assert ( sensor );
@@ -285,6 +302,9 @@ void MOAIInputMgr::Update ( double simTime ) {
 	
 	// discard processed events
 	this->mEventQueue.DiscardFront ( cursor );
+	
+	// back to the end of the queue
+	this->mEventQueue.Seek ( this->mEventQueue.GetLength (), SEEK_SET );
 }
 
 //----------------------------------------------------------------//

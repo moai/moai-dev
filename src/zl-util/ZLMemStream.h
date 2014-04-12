@@ -11,26 +11,6 @@
 //================================================================//
 // ZLMemStream
 //================================================================//
-class ZLMemStreamChunk  {
-private:
-
-	friend class ZLMemStream;
-	
-	void*	mMem;
-
-	//----------------------------------------------------------------//
-	void		Affirm					( size_t size );
-
-public:
-
-	//----------------------------------------------------------------//
-				ZLMemStreamChunk		();
-				~ZLMemStreamChunk		();
-};
-
-//================================================================//
-// ZLMemStream
-//================================================================//
 class ZLMemStream :
 	public ZLStream {
 private:
@@ -62,6 +42,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear				();
+	void			DiscardAll			();
 	void			DiscardBack			( size_t size );
 	void			DiscardFront		( size_t size );
 	u32				GetCaps				();
