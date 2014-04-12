@@ -146,6 +146,7 @@ public class Moai {
 	protected static native void	AKUSetContext 					( int contextId );
 	protected static native void	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
 	protected static native void	AKUSetDocumentDirectory 		( String path );
+	protected static native void 	AKUSetCacheDirectory 			( String path );
 	protected static native void	AKUSetInputConfigurationName	( String name );
 	protected static native void	AKUSetInputDevice		 		( int deviceId, String name );
 	protected static native void	AKUSetInputDeviceCompass 		( int deviceId, int sensorId, String name );
@@ -410,6 +411,14 @@ public class Moai {
 		}
 	}
 
+	//----------------------------------------------------------------//
+	public static void setCacheDirectory ( String path ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUSetCacheDirectory ( path );
+		}
+	}	
+	
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
 		synchronized ( sAkuLock ) {

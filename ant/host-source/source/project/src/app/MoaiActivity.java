@@ -110,7 +110,15 @@ public class MoaiActivity extends Activity {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
-				
+		
+		if (  getCacheDir () != null ) {
+		 
+		 	Moai.setCacheDirectory ( getCacheDir ().getAbsolutePath ());
+		} else {
+
+			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the cache directory" );
+		}
+		
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
