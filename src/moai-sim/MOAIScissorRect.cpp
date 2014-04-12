@@ -23,7 +23,7 @@ int MOAIScissorRect::_getRect ( lua_State* L ) {
 	
 	state.Push ( self->mRect );
 	
-	return 0;
+	return 4;
 }
 
 //----------------------------------------------------------------//
