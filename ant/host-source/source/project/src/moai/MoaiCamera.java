@@ -41,12 +41,12 @@ public class MoaiCamera  {
 		            // Image capture failed, advise user
 		        	sResultPath = "";
 		        }
+		        // tell jni that we are finished
+		        AKUNotifyPictureTaken();
 		    } else {
 		    	sResultCode = 666;
 	        	sResultPath = "";
 		    }
-		    // tell jni that we are finished
-		    AKUNotifyPictureTaken();
 		}
     }
 	
