@@ -60,4 +60,5 @@ install(FILES
               ${MOAI_ROOT}/src/host-modules/aku_modules.h 
               ${MOAI_ROOT}/src/host-modules/aku_modules_config.h
         DESTINATION include/host-modules)
-
+#for EXPORT
+target_include_directories(host-modules INTERFACE $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/host-modules> )

@@ -18,8 +18,19 @@ project ( moai-box2d )
   add_library ( moai-box2d STATIC ${MOAI_BOX2D_SRC} )
 
   get_target_property (BOX2D_INCLUDES box2d INCLUDE_DIRECTORIES)
-  target_include_directories (moai-box2d PUBLIC ${MOAI_BOX2D_INCLUDES} ${BOX2D_INCLUDES})
 
-  target_link_libraries ( moai-box2d LINK_PRIVATE moai-sim moai-core moai-util box2d zlcore )
+  set(BUILD_INCLUDES ${MOAI_BOX2D_INCLUDES} ${BOX2D_INCLUDES})
+ 
+
+  target_include_directories (moai-box2d PUBLIC 
+        "$<BUILD_INTERFACE:${BUILD_INCLUDES}>"
+        "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-box2d>"
+       
+  )
+
+  target_link_libraries ( moai-box2d moai-sim moai-core moai-util box2d zlcore )
   set_target_properties(moai-box2d PROPERTIES FOLDER Modules)  
+
   install(TARGETS moai-box2d EXPORT libmoai ARCHIVE DESTINATION lib)
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/host.h DESTINATION include/moai-box2d)
+  
