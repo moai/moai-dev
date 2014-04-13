@@ -98,7 +98,7 @@ set ( SSL_SOURCES
 )
   
 add_library (ssl STATIC ${SSL_SOURCES})
-target_include_directories (ssl PUBLIC ${SSL_INCLUDES})
+target_include_directories (ssl PUBLIC "$<BUILD_INTERFACE:${SSL_INCLUDES}>")
 set_target_properties( ssl PROPERTIES FOLDER Third-Party )
 target_link_libraries( ssl crypto )
  install(TARGETS ssl EXPORT libmoai ARCHIVE DESTINATION lib)

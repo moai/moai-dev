@@ -14,6 +14,6 @@ set ( OGG_SOURCES
 
 include_directories(${OGG_INCLUDES})
 add_library(ogg STATIC ${OGG_SOURCES})
-target_include_directories(ogg PUBLIC ${OGG_INCLUDES})
+target_include_directories(ogg PUBLIC "$<BUILD_INTERFACE:${OGG_INCLUDES}>")
 set_target_properties( ogg PROPERTIES FOLDER Third-Party )
  install(TARGETS ogg EXPORT libmoai ARCHIVE DESTINATION lib)

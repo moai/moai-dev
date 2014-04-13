@@ -34,7 +34,7 @@ target_include_directories (moai-core PUBLIC
     "$<BUILD_INTERFACE:${BUILD_INCLUDES}>"
     "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-core>"
 )
-
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 target_link_libraries ( moai-core zlcore ${LUA_LIB})
 add_dependencies ( moai-core liblua-static)
 

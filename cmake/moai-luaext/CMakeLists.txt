@@ -10,7 +10,6 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 include_directories ( 
-  ${MOAICORE_INCLUDES} 
   ${MOAI_LUAEXT_INCLUDES}
 )
 
@@ -38,8 +37,8 @@ if (MOAI_SQLITE3)
 endif (MOAI_SQLITE3)
   
 
-target_include_directories (moai-luaext PUBLIC 
-    "$<BUILD_INTERFACE:${MOAICORE_INCLUDES} ${MOAI_LUAEXT_INCLUDES}>"
+target_include_directories (moai-luaext PUBLIC
+    "$<BUILD_INTERFACE:${MOAI_LUAEXT_INCLUDES}>"
     "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-luaext>"
 )
 

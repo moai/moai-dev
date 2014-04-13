@@ -143,7 +143,7 @@ project ( curl )
 
  
   add_library(curl STATIC ${CURL_SOURCES})
-  target_include_directories (curl PUBLIC ${CURL_INCLUDES} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+  target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
   target_link_libraries( curl zlib )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 

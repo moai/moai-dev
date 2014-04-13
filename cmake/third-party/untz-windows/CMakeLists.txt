@@ -36,7 +36,7 @@ if (MOAI_VORBIS)
   target_link_libraries (untz vorbis)
 endif (MOAI_VORBIS)
 
-target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
+target_include_directories ( untz PUBLIC "$<BUILD_INTERFACE:${UNTZ_INCLUDES}>")
 
 target_link_libraries ( untz 
   winmm

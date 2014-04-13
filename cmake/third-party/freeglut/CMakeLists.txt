@@ -19,7 +19,10 @@ file ( GLOB FREEGLUT_SOURCES "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.c" )
 file ( GLOB FREEGLUT_HEADERS "${MOAI_ROOT}/3rdparty/freeglut-2.8.1/src/*.h" )
 
 add_library ( freeglut_static STATIC ${FREEGLUT_SOURCES} ${FREEGLUT_HEADERS} )
-target_include_directories (freeglut_static PUBLIC ${FREEGLUT_INCLUDES})
+target_include_directories (freeglut_static PUBLIC 
+   "$<BUILD_INTERFACE:${FREEGLUT_INCLUDES}>"
+   "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/freeglut>"
+)
 
 find_package( OpenGL REQUIRED )
 

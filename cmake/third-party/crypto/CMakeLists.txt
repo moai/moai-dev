@@ -606,7 +606,7 @@ project ( crypto )
    )
 
    add_library( crypto STATIC ${CRYPTO_SOURCES} )  
-   target_include_directories ( crypto PUBLIC ${CRYPTO_INCLUDES} )
+   target_include_directories ( crypto PUBLIC "$<BUILD_INTERFACE:${CRYPTO_INCLUDES}>" )
 set_target_properties( crypto PROPERTIES FOLDER Third-Party )
 
    if (BUILD_WINDOWS)

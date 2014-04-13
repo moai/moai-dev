@@ -14,6 +14,6 @@ set ( SFMT_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/SFMT.h )
 include_directories(${SFMT_INCLUDES})
 
 add_library ( sfmt STATIC ${SFMT_SOURCES} ${SFMT_HEADERS} )
-target_include_directories ( sfmt PUBLIC ${SFMT_INCLUDES} )
+target_include_directories ( sfmt PUBLIC "$<BUILD_INTERFACE:${SFMT_INCLUDES}>" )
 set_target_properties ( sfmt PROPERTIES FOLDER Third-Party )
  install(TARGETS sfmt EXPORT libmoai ARCHIVE DESTINATION lib)
