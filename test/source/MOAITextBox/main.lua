@@ -22,40 +22,42 @@ end
 
 function takeScreenshot ( fName, time )
 	continue = false
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
 	if time then
 		timer:setSpan ( time )
 		timer:start ()
 		timer:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+				frameBuffer:grabNextFrame ( img, afterGrab )
 			end )
 	elseif action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+				frameBuffer:grabNextFrame ( img, afterGrab )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+		frameBuffer:grabNextFrame ( img, afterGrab )
 	end
 	fileName = fName
 end
 
 function takeScreenshotTest ( time )
 	continue = false
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
 	if time then
 		timer:setSpan ( time )
 		timer:start ()
 		timer:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+				frameBuffer:grabNextFrame ( img, afterGrabTest )
 			end )
 	elseif action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+				frameBuffer:grabNextFrame ( img, afterGrabTest )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+		frameBuffer:grabNextFrame ( img, afterGrabTest )
 	end
 end
 
@@ -361,7 +363,7 @@ function getImages ()
 	xmin, ymin, xmax, ymax = textbox4:getStringBounds ( 10, 50 )
 	
 	gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "box.png" )
+	gfxQuad:setTexture ( "numbers.png" )
 	gfxQuad:setRect ( xmin, ymin, xmax, ymax )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
@@ -930,7 +932,7 @@ function getImagesTest ()
 	xmin, ymin, xmax, ymax = textbox4:getStringBounds ( 10, 50 )
 	
 	gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( "box.png" )
+	gfxQuad:setTexture ( "numbers.png" )
 	gfxQuad:setRect ( xmin, ymin, xmax, ymax )
 	gfxQuad:setUVRect ( 0, 0, 1, 1 )
 

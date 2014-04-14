@@ -31,27 +31,29 @@ function afterGrabTest ()
 end
 
 function takeScreenshot ( fName )
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
 	continue = false
 	if action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+				frameBuffer:grabNextFrame ( img, afterGrab )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( img, afterGrab )
+		frameBuffer:grabNextFrame ( img, afterGrab )
 	end
 	fileName = fName
 end
 
 function takeScreenshotTest ()
+    frameBuffer = MOAIGfxDevice.getFrameBuffer()
 	continue = false
 	if action:isBusy () then
 		action:setListener ( MOAIAction.EVENT_STOP,
 			function ()
-				MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+				frameBuffer:grabNextFrame ( img, afterGrabTest )
 			end )
 	else
-		MOAIRenderMgr.grabNextFrame ( img, afterGrabTest )
+		frameBuffer:grabNextFrame ( img, afterGrabTest )
 	end
 end
 

@@ -35,6 +35,10 @@
 	#include <ParticlePresets.h>
 #endif
 
+#ifdef GLUTHOST_USE_MOAI_TEST
+	#include <aku/AKU-test.h>
+#endif
+
 #ifdef _WIN32
 	#include <glut.h>
 	#include <FolderWatcher-win.h>
@@ -414,6 +418,10 @@ void GlutRefreshContext () {
 	
 	#ifdef GLUTHOST_USE_PARTICLE_PRESETS
 		ParticlePresets ();
+	#endif
+	
+	#ifdef GLUTHOST_USE_MOAI_TEST
+		AKUTestInit();
 	#endif
 
 	AKUSetInputConfigurationName ( "AKUGlut" );

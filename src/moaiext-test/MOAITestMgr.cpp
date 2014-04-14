@@ -62,6 +62,20 @@ int MOAITestMgr::_failure ( lua_State* L ) {
 	MOAITestMgr::Get ().Failure ( type, detail );
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name finish
+	@text Close the file stream.
+ 
+	@in	nil
+	@out nil
+ */
+
+int MOAITestMgr::_finish ( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get().Finish();
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -71,6 +85,34 @@ int MOAITestMgr::_getTestList ( lua_State* L ) {
 	MOAITestMgr::Get ().PushTestList ( state );
 	return 1;
 }
+//----------------------------------------------------------------//
+/** @name runScript
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_runScript ( lua_State *L ){
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().RunScript ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name runTest
+ @text
+ 
+ @in		string testname
+ @out	nil
+ */
+int MOAITestMgr::_runTest ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().RunTest ( state.GetValue < cc8* >( 1, "" ));
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -78,6 +120,34 @@ int MOAITestMgr::_setFilter ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	MOAITestMgr::Get ().SetFilter ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name setResultsFile
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_setResultsFile ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().SetResultsFile( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	setStaging
+ @text	Set the staging flag.
+ 
+ @in		boolean staging
+ @out	nil
+ */
+int MOAITestMgr::_setStaging ( lua_State* L ) {
+	MOAILuaState state ( L );
+	bool staging = state.GetValue < bool >( 1, true );
+	MOAITestMgr::Get ().SetStaging( staging );
 	return 0;
 }
 
@@ -100,12 +170,37 @@ int MOAITestMgr::_setTestFunc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name setXmlResultsFile
+ @text
+ 
+ @in		string filename
+ @out	nil
+ */
+int MOAITestMgr::_setXmlResultsFile ( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	MOAITestMgr::Get ().SetXmlResultsFile ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAITestMgr::_staging ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	state.Push ( true );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITestMgr::_success ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* detail = state.GetValue < cc8* >( 1, "" );
+	
+	MOAITestMgr::Get ().Success(detail);
+	return 0;
 }
 
 //================================================================//
@@ -156,6 +251,12 @@ void MOAITestMgr::Comment ( cc8* comment ) {
 	if ( this->mResultsFile && comment && comment [ 0 ]) {
 		this->PrintResult ( "    - %s\n", comment );
 	}
+	
+	if ( this->mXmlWriter ) {
+		mXmlWriter->AddElement( "comment" );
+		mXmlWriter->AddText( comment );
+		mXmlWriter->CloseElement();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -167,11 +268,25 @@ void MOAITestMgr::EndTest ( bool result ) {
 		cc8* msg = result ? "SUCCESS" : "FAIL";
 		
 		this->PrintResult ( "END %s: %s (%s)\n\n", op, this->mTestName.c_str (), msg );
-		this->mTestName.clear ();
+		if (! this->mXmlWriter ){
+			this->mTestName.clear ();
+		}
 	}
 
 	if ( this->mXmlWriter ) {
+		if ( this->mTestName.size () ) {
+			cc8* op2 = this->mStaging ? "StagingEnd" : "TestEnd";
+			cc8* msg2 = result ? "SUCCESS" : "FAIL";
+			mXmlWriter->AddElement(op2);
+			mXmlWriter->AddAttribute("suite-name", this->mTestName.c_str());
+			mXmlWriter->AddAttribute("result", msg2);
+			mXmlWriter->CloseElement();
+			
+			this->mTestName.clear ();
+		}
+		
 		mXmlWriter->CloseElement ();
+		
 	}
 }
 
@@ -295,11 +410,18 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "comment",				_comment },
 		{ "endTest",				_endTest },
 		{ "failure",				_failure },
+		{ "finish",					_finish },
 		{ "getTestList",			_getTestList },
+		{ "runScript",				_runScript },
+		{ "runTest",				_runTest },
 		{ "setFilter",				_setFilter },
+		{ "setResultsFile",			_setResultsFile },
+		{ "setStaging",				_setStaging },
 		{ "setStagingFunc",			_setStagingFunc },
 		{ "setTestFunc",			_setTestFunc },
+		{ "setXmlResultsFile",		_setXmlResultsFile },
 		{ "staging",				_staging },
+		{ "success",				_success },
 		{ NULL, NULL }
 	};
 
@@ -382,7 +504,6 @@ void MOAITestMgr::SetFilter ( cc8* filter, cc8* next, ... ) {
 		va_list args;
 		va_start ( args, next );
 		
-		bool more = true;
 		while ( next ) {
 			next = va_arg ( args, cc8* );
 			this->ExtendFilter ( next );
@@ -412,9 +533,9 @@ void MOAITestMgr::SetXmlResultsFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::SetStaging () {
+void MOAITestMgr::SetStaging ( bool staging ) {
 
-	this->mStaging = true;
+	this->mStaging = staging;
 }
 
 //----------------------------------------------------------------//
