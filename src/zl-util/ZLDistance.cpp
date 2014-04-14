@@ -40,7 +40,7 @@ float ZLDist::PointToPointSqrd ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
-float ZLDist::SnapToPlane ( ZLVec3D& p, const USPlane3D& plane ) {
+float ZLDist::SnapToPlane ( ZLVec3D& p, const ZLPlane3D& plane ) {
 
 	float dist = ZLDist::VecToPlane ( p, plane );
 
@@ -63,7 +63,7 @@ float ZLDist::SnapToPlane2D ( ZLVec2D& p, const ZLPlane2D& plane ) {
 }
 
 //----------------------------------------------------------------//
-float ZLDist::VecToPlane ( const ZLVec3D& v, const USPlane3D& p ) {
+float ZLDist::VecToPlane ( const ZLVec3D& v, const ZLPlane3D& p ) {
 
 	float d = v.Dot ( p.mNorm ) + p.mDist;
 	return (( d < FP_NEAR ) && ( d > -FP_NEAR )) ? 0.0f : d;

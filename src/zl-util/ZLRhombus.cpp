@@ -39,7 +39,7 @@ void ZLRhombus::GetCenter ( ZLVec3D& center ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLRhombus::GetPlane ( USPlane3D& plane ) const {
+void ZLRhombus::GetPlane ( ZLPlane3D& plane ) const {
 
 	ZLVec3D norm;
 	norm.Cross ( this->mXAxis, this->mYAxis );

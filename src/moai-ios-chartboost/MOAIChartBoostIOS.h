@@ -16,17 +16,16 @@
 // MOAIChartBoostIOS
 //================================================================//
 class MOAIChartBoostIOS :
-	public MOAIGlobalClass < MOAIChartBoostIOS, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIChartBoostIOS, MOAIGlobalEventSource > {
 private:
 
 	MoaiChartBoostDelegate*	mDelegate;
 
 	//----------------------------------------------------------------//
-	static int	_hasCachedInterstitial	( lua_State* L );
-	static int	_init					( lua_State* L );
-	static int	_loadInterstitial		( lua_State* L );
-	static int	_setListener			( lua_State* L );
-	static int	_showInterstitial		( lua_State* L );
+	static int		_cacheInterstitial				( lua_State* L );
+	static int		_hasCachedInterstitial			( lua_State* L );
+	static int		_init							( lua_State* L );
+	static int		_showInterstitial				( lua_State* L );
 	
 public:
 
@@ -38,8 +37,7 @@ public:
 		TOTAL
 	};
 	
-	MOAILuaStrongRef	mListeners [ TOTAL ];
-	
+	//----------------------------------------------------------------//
 					MOAIChartBoostIOS				();
 					~MOAIChartBoostIOS				();
 	void 			NotifyInterstitialDismissed		();

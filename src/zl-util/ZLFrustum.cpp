@@ -313,7 +313,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-//void ZLFrustum::Init ( ZLVec3D& loc, ZLRhombus rhombus, USPlane3D& near, USPlane3D& far ) {
+//void ZLFrustum::Init ( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far ) {
 //
 //	this->mLoc = loc;
 //
@@ -322,7 +322,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 //	this->mPlanes [ FAR_PLANE ] = far;
 //
 //	// Get the plane containing the rhombus
-//	USPlane3D rhomPlane;
+//	ZLPlane3D rhomPlane;
 //	rhombus.GetPlane ( rhomPlane );
 //	
 //	// Bless the rhombus
@@ -420,12 +420,12 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 //----------------------------------------------------------------//
 //void ZLFrustum::UpdateAABB () {
 //
-//	USPlane3D& left = this->mPlanes [ LEFT_PLANE ];
-//	USPlane3D& right = this->mPlanes [ RIGHT_PLANE ];
-//	USPlane3D& top = this->mPlanes [ TOP_PLANE ];
-//	USPlane3D& bottom = this->mPlanes [ BOTTOM_PLANE ];
-//	USPlane3D& near = this->mPlanes [ NEAR_PLANE ];
-//	USPlane3D& far = this->mPlanes [ FAR_PLANE ];
+//	ZLPlane3D& left = this->mPlanes [ LEFT_PLANE ];
+//	ZLPlane3D& right = this->mPlanes [ RIGHT_PLANE ];
+//	ZLPlane3D& top = this->mPlanes [ TOP_PLANE ];
+//	ZLPlane3D& bottom = this->mPlanes [ BOTTOM_PLANE ];
+//	ZLPlane3D& near = this->mPlanes [ NEAR_PLANE ];
+//	ZLPlane3D& far = this->mPlanes [ FAR_PLANE ];
 //
 //	ZLVec3D leftBottom;
 //	ZLVec3D rightBottom;

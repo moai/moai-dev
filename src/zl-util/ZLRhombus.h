@@ -9,7 +9,7 @@
 #include <zl-util/ZLVec3D.h>
 
 class ZLBox;
-class USPlane3D;
+class ZLPlane3D;
 
 //================================================================//
 // ZLRhombus
@@ -24,7 +24,7 @@ class ZLRhombus {
 	//----------------------------------------------------------------//
 	void	GetAABB		( ZLBox& box ) const;
 	void	GetCenter	( ZLVec3D& center ) const;
-	void	GetPlane	( USPlane3D& plane ) const;
+	void	GetPlane	( ZLPlane3D& plane ) const;
 	void	InitXY		( const ZLRect& rect, float zOff );
 	void	InitXZ		( const ZLRect& rect, float yOff );
 	void	InitZY		( const ZLRect& rect, float xOff );

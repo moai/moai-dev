@@ -11,6 +11,26 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	cacheInterstitial
+	@text	Request that an interstitial ad be cached for later display.
+	
+	@opt	string	locationId		Optional location ID.
+	@out 	nil
+*/
+int MOAIChartBoostIOS::_cacheInterstitial ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	cc8* location = lua_tostring ( state, 1 );
+
+	if ( location != nil ) {
+		[[ Chartboost sharedChartboost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
+	}
+	else {
+		[[ Chartboost sharedChartboost ] cacheInterstitial ];
+	}
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	hasCachedInterstitial
  @text	returns whether a cached ad is available
@@ -51,46 +71,6 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadInterstitial
-	@text	Request that an interstitial ad be cached for later display.
-	
-	@opt	string	locationId		Optional location ID.
-	@out 	nil
-*/
-int MOAIChartBoostIOS::_loadInterstitial ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-
-	// At the moment, to keep parity with Android, don't allow locations.
-	// cc8* location = lua_tostring ( state, 1 );
-	// 
-	// if ( location != nil ) {
-	// 	
-	// 	[[ ChartBoost sharedChartboost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
-	// } else {
-	// 	
-		[[ Chartboost sharedChartboost ] cacheInterstitial ];
-	// }
-			
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIChartBoostIOS::_setListener ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-	
-	if ( idx < TOTAL ) {
-		
-		MOAIChartBoostIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
-	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	showInterstitial
 	@text	Request an interstitial ad display if a cached ad is available.
 	
@@ -101,33 +81,24 @@ int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	// At the moment, to keep parity with Android, don't allow locations.
-	// cc8* location = lua_tostring ( state, 1 );
-	// 
-	// if ( location != nil ) {
-	// 	
-	// 	if ([[ ChartBoost sharedChartBoost ] hasCachedInterstitial:[ NSString stringWithUTF8String:location ]]) {
-	// 		
-	// 		[[ ChartBoost sharedChartBoost ] showInterstitial:[ NSString stringWithUTF8String:location ]];
-	// 		
-	// 		lua_pushboolean ( state, true );
-	// 		
-	// 		return 1;
-	// 	}
-	// } else {
-		
+	cc8* location = lua_tostring ( state, 1 );
+	
+	if ( location != nil ) {
+		if ([[ Chartboost sharedChartboost ] hasCachedInterstitial:[ NSString stringWithUTF8String:location ]]) {
+				[[ Chartboost sharedChartboost ] showInterstitial:[ NSString stringWithUTF8String:location ]];
+				lua_pushboolean ( state, true );
+				return 1;
+		}
+	}
+	else {
 		if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
-			
 			[[ Chartboost sharedChartboost ] showInterstitial ];
-
 			lua_pushboolean ( state, true );
-			
 			return 1;
 		}
-	// }
-			
+	}
+	
 	lua_pushboolean ( state, false );
-
 	return 1;
 }
 
@@ -156,10 +127,11 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERSTITIAL_DISMISSED", 		( u32 )INTERSTITIAL_DISMISSED );
 
 	luaL_Reg regTable [] = {
+		{ "cacheInterstitial",		_cacheInterstitial },
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIChartBoostIOS > },
 		{ "hasCachedInterstitial",	_hasCachedInterstitial },
 		{ "init",					_init },
-		{ "loadInterstitial",		_loadInterstitial },
-		{ "setListener",			_setListener },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIChartBoostIOS > },
 		{ "showInterstitial",		_showInterstitial },
 		{ NULL, NULL }
 	};
@@ -167,31 +139,6 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-void MOAIChartBoostIOS::NotifyInterstitialDismissed () {	
-	
-	MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_DISMISSED ];
-	
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-		
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIChartBoostIOS::NotifyInterstitialLoadFailed () {	
-	
-	MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_LOAD_FAILED ];
-	
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-		
-		state.DebugCall ( 0, 0 );
-	}
-}
 //================================================================//
 // MoaiChartBoostDelegate
 //================================================================//
@@ -202,26 +149,29 @@ void MOAIChartBoostIOS::NotifyInterstitialLoadFailed () {
 	#pragma mark Protocol MoaiChartBoostDelegate
 	//================================================================//
 
+	//----------------------------------------------------------------//
 	- ( BOOL ) shouldRequestInterstitial {
-		
 		return YES;
 	}
 
+	//----------------------------------------------------------------//
 	- ( void ) didFailToLoadInterstitial {
-		
-		MOAIChartBoostIOS::Get ().NotifyInterstitialLoadFailed ();
+		MOAIChartBoostIOS::Get ().InvokeListener ( MOAIChartBoostIOS::INTERSTITIAL_LOAD_FAILED );
 	}
 
+	//----------------------------------------------------------------//
 	- ( BOOL ) shouldDisplayInterstitial:( UIView * )interstitialView {
 		UNUSED ( interstitialView );
 		return YES;
 	}
 
+	//----------------------------------------------------------------//
 	- ( void ) didDismissInterstitial:( UIView * )interstitialView {
 		UNUSED ( interstitialView );
-		MOAIChartBoostIOS::Get ().NotifyInterstitialDismissed ();
+		MOAIChartBoostIOS::Get ().InvokeListener ( MOAIChartBoostIOS::INTERSTITIAL_DISMISSED );
 	}
 
+	//----------------------------------------------------------------//
 	- ( BOOL ) shouldDisplayMoreApps:( UIView * )moreAppsView {
 		UNUSED ( moreAppsView );
 		return NO;
