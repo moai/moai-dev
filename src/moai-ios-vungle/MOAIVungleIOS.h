@@ -15,36 +15,29 @@
 // MOAIVungleIOS
 //================================================================//
 class MOAIVungleIOS :
-	public MOAIGlobalClass < MOAIVungleIOS, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIVungleIOS, MOAIGlobalEventSource > {
 private:
 
 	MoaiVungleDelegate*	mDelegate;
-		
+	
 	//----------------------------------------------------------------//
-	static int  _adIsAvailable		( lua_State* L );
-	static int	_allowAutoRotate	( lua_State* L );
-	static int	_cacheSizeGet		( lua_State* L );
-	static int	_cacheSizeSet		( lua_State* L );
-	static int	_playModalAd		( lua_State* L );
-	static int	_playIncentivizedAd	( lua_State* L );
-	static int	_init 				( lua_State* L );
-	static int	_setListener		( lua_State* L );
+	static int		_allowAutoRotate			( lua_State* L );
+	static int		_cacheSizeGet				( lua_State* L );
+	static int		_cacheSizeSet				( lua_State* L );
+	static int		_displayAdvert				( lua_State* L );
+	static int		_init						( lua_State* L );
+	static int		_isVideoAvailable			( lua_State* L );
 	
 public:
 		
 	enum {
 		MOVIE_PLAYED,
-		STATUS_UPDATE,
-		VIEW_DID_DISAPPEAR,
-		VIEW_WILL_APPEAR,
-		TOTAL
+		TOTAL,
 	};
-		
-	MOAILuaStrongRef	mListeners [ TOTAL ];
 
 	DECL_LUA_SINGLETON ( MOAIVungleIOS );
 
-	
+	//----------------------------------------------------------------//
 					MOAIVungleIOS				();
 					~MOAIVungleIOS				();
 	void			NotifyMoviePlayed			( bool playedFull );

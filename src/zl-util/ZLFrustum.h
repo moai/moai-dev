@@ -43,7 +43,7 @@ public:
 
 	ZLBox		mAABB;
 	ZLVec3D		mPoints [ TOTAL_POINTS ];
-	USPlane3D	mPlanes [ TOTAL_PLANES ];
+	ZLPlane3D	mPlanes [ TOTAL_PLANES ];
 	bool		mUsePlanes;
 
 	//----------------------------------------------------------------//
@@ -53,7 +53,7 @@ public:
 	bool	Cull			( const ZLRhombus& rhombus ) const;
 	bool	GetXYSectRect	( const ZLAffine3D& mtx, ZLRect& rect ) const;
 	void	Init			( const ZLMatrix4x4& mtx );
-	//void	Init			( ZLVec3D& loc, ZLRhombus rhombus, USPlane3D& near, USPlane3D& far );
+	//void	Init			( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far );
 	//void	Init			( ZLVec3D& loc, ZLVec3D& viewAxis, ZLVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
 			ZLFrustum		();
 };

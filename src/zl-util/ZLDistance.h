@@ -16,10 +16,10 @@ namespace ZLDist {
 	float	PointToPoint		( const ZLVec2D& p1, const ZLVec2D& p2 );
 	float	PointToPointSqrd	( const ZLVec2D& p1, const ZLVec2D& p2 );
 	
-	float	SnapToPlane			( ZLVec3D& p, const USPlane3D& plane );
+	float	SnapToPlane			( ZLVec3D& p, const ZLPlane3D& plane );
 	float	SnapToPlane2D		( ZLVec2D& p, const ZLPlane2D& plane );
 	
-	float	VecToPlane			( const ZLVec3D& v, const USPlane3D& p );
+	float	VecToPlane			( const ZLVec3D& v, const ZLPlane3D& p );
 	float	VecToVec			( const ZLVec3D& v1, const ZLVec3D& v2 );
 	float	VecToVecSqrd		( const ZLVec3D& v1, const ZLVec3D& v2 );
 	

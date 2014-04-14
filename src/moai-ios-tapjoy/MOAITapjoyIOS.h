@@ -62,6 +62,7 @@ public:
         TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO,
 	};
 	
+	//----------------------------------------------------------------//
 			MOAITapjoyIOS		();
 			~MOAITapjoyIOS		();
 	void	RegisterLuaClass	( MOAILuaState& state );
