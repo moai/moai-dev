@@ -758,7 +758,6 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 			}
 			else if(text == "minRadius")
 				plugin.mMinRadius = (float)atof(attribute->Value());
-			// TODO: affirm that the property name really is "minRadiusVariance" in a modern exported PEX file.
 			else if(text == "minRadiusVariance")
 			{
 				plugin.mMinRadiusVariance = (float)atof(attribute->Value());
