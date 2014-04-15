@@ -572,6 +572,45 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 // MOAIParticlePlugin
 //================================================================//
 
+void MOAIParticlePexPlugin::InitializeBasicRegisters( MOAIParticlePexPlugin &plugin ){
+	// start position
+	plugin.mStartXRegister = plugin.mSize++;
+	plugin.mStartYRegister = plugin.mSize++;
+	
+	if(plugin.mEmitterType == EMITTER_GRAVITY)
+	{
+		// gravity vectors
+		plugin.mDirectionXRegister = plugin.mSize++;
+		plugin.mDirectionYRegister = plugin.mSize++;
+	}
+	else
+	{
+		// rotation rate and radius
+		plugin.mRotPerSecondRegister = plugin.mSize++;
+		plugin.mRadialRegister = plugin.mSize++;
+	}
+}
+
+void MOAIParticlePexPlugin::InitializeEmitter(MOAIParticlePexPlugin& plugin){
+	
+	plugin.mEmissionRate =  1.0f / (plugin.mNumParticles / plugin.mLifespan );
+	plugin.mEmissionCount = 1;
+	if( plugin.mEmissionRate <  0.05 )
+	{
+		plugin.mEmissionCount = (u32)ceil( 0.05 / plugin.mEmissionRate );
+		plugin.mEmissionRate *= plugin.mEmissionCount;
+	}
+	
+	float minLifespan = plugin.mLifespan - plugin.mLifespanVariance;
+	if ( minLifespan < 0.0f ) minLifespan = 0.0f;
+	
+	plugin.mLifespanTerm[0] = minLifespan;
+	
+	float maxLifespan = plugin.mLifespan + plugin.mLifespanVariance;
+	
+	plugin.mLifespanTerm[1] = maxLifespan;
+}
+
 void MOAIParticlePexPlugin::InitializeProperties(){
 	// this does not initialize the mParticlePath.
 	
@@ -649,36 +688,10 @@ void MOAIParticlePexPlugin::InitializeProperties(){
 		this->mTanAccelRegister = this->mSize++;
 	}
 	
-	
-	// start position
-	this->mStartXRegister = this->mSize++;
-	this->mStartYRegister = this->mSize++;
-	
-	if(this->mEmitterType == EMITTER_GRAVITY)
-	{
-		// gravity vector
-		this->mDirectionXRegister = this->mSize++;
-		this->mDirectionYRegister = this->mSize++;
-	}
-	else
-	{
-		// rotation rate and radius
-		this->mRotPerSecondRegister = this->mSize++;
-		this->mRadialRegister = this->mSize++;
-	}
-	
+	MOAIParticlePexPlugin::InitializeBasicRegisters( *this );
+		
 	// set up emitter
-	this->mEmissionRate =  1.0f / (this->mNumParticles / this->mLifespan );
-	this->mEmissionCount = 1;
-	if( this->mEmissionRate <  0.05 )
-	{
-		this->mEmissionCount = (u32)ceil( 0.05 / this->mEmissionRate );
-		this->mEmissionRate *= this->mEmissionCount;
-	}
-	
-	this->mLifespanTerm[0] = this->mLifespan - this->mLifespanVariance < 0 ? 0 : this->mLifespan - this->mLifespanVariance;
-	this->mLifespanTerm[1] = this->mLifespan + this->mLifespanVariance;
-	
+	MOAIParticlePexPlugin::InitializeEmitter( *this );
 	
 }
 
@@ -851,31 +864,10 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 			
 		}
 		
-		plugin.mStartXRegister = plugin.mSize++;
-		plugin.mStartYRegister = plugin.mSize++;
-
-		if(plugin.mEmitterType == EMITTER_GRAVITY)
-		{		
-			plugin.mDirectionXRegister = plugin.mSize++;
-			plugin.mDirectionYRegister = plugin.mSize++;
-		}
-		else
-		{
-			plugin.mRotPerSecondRegister = plugin.mSize++;
-			plugin.mRadialRegister = plugin.mSize++;
-		}
-
+		MOAIParticlePexPlugin::InitializeBasicRegisters( plugin );
+		
 		// Set up emitter.
-		plugin.mEmissionRate =  1.0f / (plugin.mNumParticles / plugin.mLifespan );
-		plugin.mEmissionCount = 1;
-		if( plugin.mEmissionRate <  0.05 )
-		{
-			plugin.mEmissionCount = (u32)ceil( 0.05 / plugin.mEmissionRate );
-			plugin.mEmissionRate *= plugin.mEmissionCount;
-		}
-
-		plugin.mLifespanTerm[0] = plugin.mLifespan - plugin.mLifespanVariance < 0 ? 0 : plugin.mLifespan - plugin.mLifespanVariance;
-		plugin.mLifespanTerm[1] = plugin.mLifespan + plugin.mLifespanVariance;
+		MOAIParticlePexPlugin::InitializeEmitter( plugin );
 		
 	}
 }

@@ -193,6 +193,8 @@ private:
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
 
+	static void     InitializeBasicRegisters    ( MOAIParticlePexPlugin& plugin );
+	static void		InitializeEmitter			( MOAIParticlePexPlugin& plugin );
 	void			InitializeProperties		();
 	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	
