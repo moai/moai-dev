@@ -6,6 +6,11 @@
 
 #include <moaicore/MOAIObject.h>
 
+template < typename TYPE >
+class USLeanArray;
+template < typename TYPE >
+class STLSet;
+
 //================================================================//
 // MOAIGlobalIDBase
 //================================================================//

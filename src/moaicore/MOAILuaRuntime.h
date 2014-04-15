@@ -10,6 +10,14 @@
 #include <moaicore/MOAILuaStateHandle.h>
 
 class MOAILuaObject;
+class STLString;
+
+template < typename KEY, typename TYPE >
+class STLMap;
+template < typename TYPE >
+class STLSet;
+template < typename TYPE >
+class STLArray;
 
 //================================================================//
 // MOAILuaRuntime

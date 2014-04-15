@@ -8,6 +8,9 @@ class MOAILuaRuntime;
 class MOAILuaState;
 class MOAILuaStateHandle;
 
+template < typename TYPE >
+class USLeanArray;
+
 //================================================================//
 // MOAILuaRefTable
 //================================================================//

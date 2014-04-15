@@ -8,6 +8,18 @@ class USCipher;
 class MOAILuaRef;
 class MOAILuaObject;
 class USStreamFormatter;
+class USStreamReader;
+class USStreamWriter;
+class STLString;
+class USBox;
+class USColorVec;
+
+template < typename TYPE >
+class USMetaRect;
+template < typename TYPE >
+class USMetaVec2D;
+template < typename TYPE >
+class USMetaVec3D;
 
 //================================================================//
 // MOAILuaState
