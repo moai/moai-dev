@@ -749,7 +749,7 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 				}
 			else if(text == "finishParticleSize")
 				plugin.mFinishSize = (float)atof(attribute->Value());
-			else if(text == "FinishParticleSizeVariance")
+			else if(text == "finishParticleSizeVariance")
 			{
 				plugin.mFinishSizeVariance = (float)atof(attribute->Value());
 				if(plugin.mFinishSizeVariance != 0)
