@@ -451,9 +451,9 @@ static void drawBB ( cpShape *shape, void *unused ) {
 
 //----------------------------------------------------------------//
 // copied from cpSpaceHash.c
-static inline cpHashValue hash_func ( cpHashValue x, cpHashValue y, cpHashValue n ) {
-	return ( x*1640531513ul ^ y*2654435789ul ) % n;
-}
+//static inline cpHashValue hash_func ( cpHashValue x, cpHashValue y, cpHashValue n ) {
+//	return ( x*1640531513ul ^ y*2654435789ul ) % n;
+//}
 
 //----------------------------------------------------------------//
 // TODO
