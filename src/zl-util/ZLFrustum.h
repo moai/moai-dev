@@ -52,7 +52,7 @@ public:
 	bool	Cull			( const ZLPrism& prism ) const;
 	bool	Cull			( const ZLRhombus& rhombus ) const;
 	bool	GetXYSectRect	( const ZLAffine3D& mtx, ZLRect& rect ) const;
-	void	Init			( const ZLMatrix4x4& mtx );
+	void	Init			( const ZLMatrix4x4& invViewProjMtx );
 	//void	Init			( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far );
 	//void	Init			( ZLVec3D& loc, ZLVec3D& viewAxis, ZLVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
 			ZLFrustum		();

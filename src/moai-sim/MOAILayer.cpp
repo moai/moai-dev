@@ -96,6 +96,54 @@ int	MOAILayer::_getPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAILayer::_getPropViewList ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	
+	if ( self->mPartition ) {
+		
+		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
+		ZLMatrix4x4 invViewProjMtx = viewMtx;
+		invViewProjMtx.Append ( self->GetProjectionMtx ());
+		invViewProjMtx.Inverse ();
+	
+		ZLFrustum viewVolume;
+		viewVolume.Init ( invViewProjMtx );
+		
+		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+		
+		u32 totalResults = 0;
+		
+		if ( self->mPartitionCull2D ) {
+			totalResults = self->mPartition->GatherProps ( buffer, 0, viewVolume.mAABB, MOAIProp::CAN_DRAW );
+		}
+		else {
+			totalResults = self->mPartition->GatherProps ( buffer, 0, viewVolume, MOAIProp::CAN_DRAW );
+		}
+		
+		if ( !totalResults ) return;
+		
+		if ( self->mSortInViewSpace ) {
+			buffer.Transform ( viewMtx, false );
+		}
+		
+		buffer.GenerateKeys (
+			self->mSortMode,
+			self->mSortScale [ 0 ],
+			self->mSortScale [ 1 ],
+			self->mSortScale [ 2 ],
+			self->mSortScale [ 3 ]
+		);
+		
+		buffer.Sort ( self->mSortMode );
+	
+		buffer.PushProps ( L );
+		return totalResults;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSortMode
 	@text	Get the sort mode for rendering.
 	
@@ -813,8 +861,6 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "LOD_CONSTANT",				( u32 )MOAILayer::LOD_CONSTANT );
 	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",		( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
-	//state.SetField ( -1, "LOD_FROM_CAMERA_LOCAL_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_LOCAL_Z );
-	//state.SetField ( -1, "LOD_FROM_CAMERA_WORLD_Z",		( u32 )MOAILayer::LOD_FROM_CAMERA_WORLD_Z );
 }
 
 //----------------------------------------------------------------//
@@ -827,6 +873,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",					_clear },
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
+		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
 		{ "insertProp",				_insertProp },
