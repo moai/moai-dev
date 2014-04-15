@@ -249,7 +249,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	direction.mY = state.GetValue < float >( 6, 0.0f );
 	direction.mZ = state.GetValue < float >( 7, 0.0f );
 	
-	direction.Norm();
+	direction.Norm ();
 	
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 	

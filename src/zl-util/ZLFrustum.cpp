@@ -242,7 +242,7 @@ bool ZLFrustum::GetXYSectRect ( const ZLAffine3D& mtx, ZLRect& rect ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
+void ZLFrustum::Init ( const ZLMatrix4x4& invViewProjMtx ) {
 
 	// set up the homogenous coordinates of the canonical view volume
 	ZLVec3D nlt ( -1.0f, 1.0f, -1.0f );
@@ -256,15 +256,15 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 	ZLVec3D flb ( -1.0f, -1.0f, 1.0f );
 
 	// compute the corners of the frustum
-	mtx.Project ( nlt );
-	mtx.Project ( nrt );
-	mtx.Project ( nrb );
-	mtx.Project ( nlb );
+	invViewProjMtx.Project ( nlt );
+	invViewProjMtx.Project ( nrt );
+	invViewProjMtx.Project ( nrb );
+	invViewProjMtx.Project ( nlb );
 	
-	mtx.Project ( flt );
-	mtx.Project ( frt );
-	mtx.Project ( frb );
-	mtx.Project ( flb );
+	invViewProjMtx.Project ( flt );
+	invViewProjMtx.Project ( frt );
+	invViewProjMtx.Project ( frb );
+	invViewProjMtx.Project ( flb );
 
 	this->mPoints [ NEAR_LT_POINT ].Init ( nlt.mX, nlt.mY, nlt.mZ );
 	this->mPoints [ NEAR_RT_POINT ].Init ( nrt.mX, nrt.mY, nrt.mZ );
@@ -298,7 +298,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 	this->mPlanes [ FAR_PLANE ].Init ( flt, frt, frb );
 	
 	ZLVec3D center;
-	mtx.GetTranslation ( center );
+	invViewProjMtx.GetTranslation ( center );
 	
 	for ( u32 i = 0; i < TOTAL_PLANES; ++i ) {
 		if ( ZLDist::VecToPlane ( center, this->mPlanes [ i ]) > 0.0f ) {
