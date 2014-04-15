@@ -520,14 +520,14 @@ MoaiJS.prototype.startUpdates = function() {
 	if (this.moaiInterval) {
 		window.clearInterval(this.moaiInterval);
 	}
-	this.moaiInverval = window.setInterval( this.updateloop.bind(this), step*1000);
+	this.moaiInterval = window.setInterval( this.updateloop.bind(this), step*1000);
 }
 
 MoaiJS.prototype.stopUpdates = function() {
 	if (this.moaiInterval) {
 		window.clearInterval(this.moaiInterval);
 	}
-	this.moaiInverval = null;
+	this.moaiInterval = null;
 }
 
 MoaiJS.prototype.pause = function() {
