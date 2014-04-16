@@ -51,12 +51,16 @@ private:
 
 	double	mTimebase;		// used to position timestamps against sim timeline
 	double	mTimestamp;		// timestamp for next event
+	bool	mDefer;
 
 	// queue for cached events to be processed by runtime
 	ZLMemStream			mEventQueue;
 
 	//----------------------------------------------------------------//
 	void				WriteEventHeader			( u8 deviceID, u8 sensorID );
+
+	//----------------------------------------------------------------//
+	static int			_deferEvents				( lua_State* L );
 
 public:
 

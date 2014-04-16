@@ -142,6 +142,18 @@ void MOAIInputContext::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type
 }
 
 //================================================================//
+// MOAIInputMgr lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIInputMgr::_deferEvents ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAIInputMgr::Get ().mDefer = state.GetValue < bool >( -1, false );
+	return 0;
+}
+
+//================================================================//
 // MOAIInputMgr
 //================================================================//
 
@@ -250,7 +262,13 @@ MOAIInputMgr::~MOAIInputMgr () {
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "deferEvents",				_deferEvents },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -270,39 +288,42 @@ void MOAIInputMgr::Update ( double timestep ) {
 
 	size_t cursor = 0;
 
-	// rewind the event queue
-	this->mEventQueue.Seek ( 0, SEEK_SET );
-
-	bool first = true;
-	double timebase = 0;
-
-	// parse events until we run out or hit an event after the current sim time
-	while ( this->mEventQueue.GetCursor () < this->mEventQueue.GetLength ()) {
+	if ( !this->mDefer ) {
 		
-		u8 deviceID			= this->mEventQueue.Read < u8 >( 0 );
-		u8 sensorID			= this->mEventQueue.Read < u8 >( 0 );
-		double timestamp	= this->mEventQueue.Read < double >( 0 );
-	
-		if ( first ) {
-			timebase = timestamp;
-			first = false;
+		// rewind the event queue
+		this->mEventQueue.Seek ( 0, SEEK_SET );
+		
+		bool first = true;
+		double timebase = 0;
+		
+		// parse events until we run out or hit an event after the current sim time
+		while ( this->mEventQueue.GetCursor () < this->mEventQueue.GetLength ()) {
+			
+			u8 deviceID			= this->mEventQueue.Read < u8 >( 0 );
+			u8 sensorID			= this->mEventQueue.Read < u8 >( 0 );
+			double timestamp	= this->mEventQueue.Read < double >( 0 );
+			
+			if ( first ) {
+				timebase = timestamp;
+				first = false;
+			}
+			
+			if ( timestep < ( timestamp - timebase )) break;
+			
+			MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
+			assert ( sensor );
+			sensor->mTimestamp = timestamp;
+			sensor->ParseEvent ( this->mEventQueue );
+			
+			cursor = this->mEventQueue.GetCursor ();
 		}
-	
-		if ( timestep < ( timestamp - timebase )) break;
 		
-		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
-		assert ( sensor );
-		sensor->mTimestamp = timestamp;
-		sensor->ParseEvent ( this->mEventQueue );
+		// discard processed events
+		this->mEventQueue.DiscardFront ( cursor );
 		
-		cursor = this->mEventQueue.GetCursor ();
+		// back to the end of the queue
+		this->mEventQueue.Seek ( this->mEventQueue.GetLength (), SEEK_SET );
 	}
-	
-	// discard processed events
-	this->mEventQueue.DiscardFront ( cursor );
-	
-	// back to the end of the queue
-	this->mEventQueue.Seek ( this->mEventQueue.GetLength (), SEEK_SET );
 }
 
 //----------------------------------------------------------------//
