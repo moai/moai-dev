@@ -234,3 +234,4 @@ echo "$facebook_flags" >> libs/package.txt
 echo "$push_flags" >> libs/package.txt
 echo "$tapjoy_flags" >> libs/package.txt
 echo "$twitter_flags" >> libs/package.txt
+echo "$playservices_flags" >> libs/package.txt

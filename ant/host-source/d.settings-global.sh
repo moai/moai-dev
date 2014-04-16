@@ -13,6 +13,9 @@
 	project_name="untitled"
 	app_name="untitled"
 
+	# If you are using google play services, change this value.
+	app_id="000"
+
 #----------------------------------------------------------------#
 # version numbers
 #----------------------------------------------------------------#
