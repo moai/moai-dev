@@ -142,13 +142,14 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 
 ### Moai Pages
 
-* [Moai New Web Site](http://moaiwebsite.github.io/)
+* [Moai Web Site](http://www.getmoai.com/)
 * [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html)
 * [Moai SDK Framework Reference](http://getmoai.com/docs/)
 * [Moai forums](http://getmoai.com/forums/)
 * [Moai Wiki(getmoai)](http://getmoai.com/wiki/)
 * [Moai Wiki(github)](https://github.com/moai/moai-dev/wiki)
 * [Moai API Documentation](http://moaiforge.github.io/moai-sdk/api/latest/).
+* [Moai Site Redesign Proposal](http://moaiwebsite.github.io/)
 
 ### Tutorials
 * [GameFromScratch MOAI Tutorials](http://www.gamefromscratch.com/page/Moai-tutorial-series-The-adventures-of-an-intrepid-programmer-in-the-lands-of-Moai.aspx)
