@@ -21,3 +21,6 @@ add_library ( playhaven-ios STATIC
 
 set_target_properties( playhaven-ios PROPERTIES FOLDER Third-Party )
 
+install(TARGETS playhaven-ios EXPORT libmoai ARCHIVE DESTINATION lib)
+
+

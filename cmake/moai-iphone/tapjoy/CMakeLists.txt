@@ -44,3 +44,5 @@ add_library ( tapjoy-ios STATIC
 
 set_source_files_properties( ${TAPJOY_COMP}/TJCExtensions/OpenUDID.m PROPERTIES COMPILE_FLAGS -fobjc-arc )
 set_target_properties( tapjoy-ios PROPERTIES FOLDER Third-Party )
+
+install(TARGETS tapjoy-ios EXPORT libmoai ARCHIVE DESTINATION lib)
