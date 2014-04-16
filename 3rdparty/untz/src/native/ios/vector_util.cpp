@@ -10,6 +10,8 @@
 #include "TargetConditionals.h"
 
 #include "math.h"
+/* suppress attempt to use inline assembly */
+#undef TARGET_IPHONE_SIMULATOR
 #define TARGET_IPHONE_SIMULATOR 1
 void vector_fmul_vfp(float *dst, const float *src, int len)
 {

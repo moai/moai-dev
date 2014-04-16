@@ -29,23 +29,23 @@ bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
 */
 bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory) 
 { 
+        int channels = getNumChannels();
+	double srate = getSampleRate();
 	if(loadIntoMemory)
 	{
 		RPRINT("loading sound into memory...\n");
-        int channels = getNumChannels();
-        double length = getLength();
-		double srate = getSampleRate();
-		UInt32 totalFrames = getSampleRate() * getLength();
-		mBuffer.resize(getNumChannels(), totalFrames);//getSampleRate() * getLength());
+		double length = getLength();
+		UInt32 totalFrames = srate * length;
+		mBuffer.resize(channels, totalFrames);//srate * length);
 		float *pWritePos = mBuffer.getData();
-		UInt32 numFrames = (UInt32)(getSampleRate());
+		UInt32 numFrames = (UInt32)(srate);
 		UInt32 framesRead = 0;
 		UInt32 remainingFrames = totalFrames;
 		UInt32 tf = 0;
 		do
 		{
 			framesRead = decodeData(pWritePos, remainingFrames >= numFrames ? numFrames : remainingFrames);
-			pWritePos += framesRead * getNumChannels();
+			pWritePos += framesRead * channels;
 			tf += framesRead;
 			remainingFrames -= framesRead;
 		}
@@ -57,7 +57,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 	else
 	{
         RScopedLock l(&mLock);
-		mBuffer = RAudioBuffer(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER);
+		mBuffer = RAudioBuffer(channels, srate * SECONDS_TO_BUFFER);
 		BufferedAudioSourceThread::getInstance()->addSource(this);
 	}
 
@@ -102,7 +102,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 	mLock.unlock();
 
 	Int64 loopEndFrame = convertSecondsToSamples(state.mLoopEnd);
-	Int64 totalFrames = convertSecondsToSamples(getLength());
+	// Int64 totalFrames = convertSecondsToSamples(getLength());
 	bool needToLoop = state.mLooping && ((state.mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
 	
 	if(framesAvailable > 0 && !needToLoop)

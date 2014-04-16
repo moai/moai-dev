@@ -81,8 +81,8 @@ void MOAIBlendMode::SetBlendEquation ( int equation ) {
 
 //----------------------------------------------------------------//
 MOAIBlendMode::MOAIBlendMode () :
-	mSourceFactor ( ZGL_BLEND_FACTOR_ONE ),
 	mEquation ( ZGL_BLEND_MODE_ADD ),
+	mSourceFactor ( ZGL_BLEND_FACTOR_ONE ),
 	mDestFactor ( ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA ) {
 }
 

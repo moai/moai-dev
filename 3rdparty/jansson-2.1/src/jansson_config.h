@@ -24,8 +24,12 @@
 #ifdef __cplusplus
 #define JSON_INLINE inline
 #else
+#ifdef __APPLE__
+#define JSON_INLINE inline
+#else
 #define JSON_INLINE
-#endif
+#endif /* __APPLE__ */
+#endif /* __cplusplus */
 
 /* If your compiler supports the `long long` type,
    JSON_INTEGER_IS_LONG_LONG is defined to 1, otherwise to 0. */

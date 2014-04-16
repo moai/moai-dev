@@ -24,14 +24,14 @@ namespace UNTZ
 	{
 		friend class Sound;
 	public:
-		SoundData() : mPlayState(kPlayStateStopped), mVolume(1.0f) 
+		SoundData() : mVolume(1.0f), mPlayState(kPlayStateStopped)
 		{
 			mState.mCurrentFrame = 0;
 			mState.mLooping = false;
 			mState.mLoopStart = 0.0;
 			mState.mLoopEnd = 0.0;
 
-			mPlayState == kPlayStateStopped;
+			mPlayState = kPlayStateStopped;
 		};
 
 		PlayState getState() const { return mPlayState; }
