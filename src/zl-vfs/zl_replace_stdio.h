@@ -56,6 +56,9 @@
 #undef fileno
 #define fileno zl_fileno
 
+#undef _fileno
+#define _fileno zl_fileno
+
 #undef fopen
 #define fopen zl_fopen
 

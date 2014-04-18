@@ -493,7 +493,6 @@ endmacro(CheckX11)
 #
 macro(CheckCOCOA)
   if(VIDEO_COCOA)
-    check_objc_source_compiles("
       if(APPLE) # Apple always has Cocoa.
         set(HAVE_VIDEO_COCOA TRUE)
       endif(APPLE)
