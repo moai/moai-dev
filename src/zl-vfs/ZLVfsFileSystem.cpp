@@ -359,13 +359,17 @@ std::string ZLVfsFileSystem::GetWorkingPath () {
 void ZLVfsFileSystem::Init () {
 
 	this->mMutex = zl_mutex_create ();;
-
-	char buffer [ FILENAME_MAX ];
-
-	char* result = getcwd ( buffer, FILENAME_MAX );
-	assert ( result );
 	
-	this->mWorkingPath = this->NormalizeDirPath ( buffer );
+	#ifdef ANDROID
+		this->mWorkingPath = this->NormalizeDirPath ( "/" );
+	#else
+		char buffer [ FILENAME_MAX ];
+	
+		char* result = getcwd ( buffer, FILENAME_MAX );
+		assert ( result );
+		
+		this->mWorkingPath = this->NormalizeDirPath ( buffer );
+	#endif
 }
 
 //----------------------------------------------------------------//
