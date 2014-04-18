@@ -32,3 +32,4 @@ if (MOAI_VORBIS)
 endif (MOAI_VORBIS)
 
 target_include_directories ( untz PUBLIC "$<BUILD_INTERFACE:${UNTZ_INCLUDES}>" )
+ install(TARGETS untz EXPORT libmoai ARCHIVE DESTINATION lib)

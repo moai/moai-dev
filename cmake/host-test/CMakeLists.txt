@@ -35,7 +35,7 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-test" )
 file ( GLOB HOST_TEST_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_executable ( moai-test-runner ${HOST_TEST_SRC} )
-
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 target_link_libraries ( moai-test-runner
   moai-sim
   moai-test

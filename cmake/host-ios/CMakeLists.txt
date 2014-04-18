@@ -49,7 +49,7 @@ SET_SOURCE_FILES_PROPERTIES (
 )
 
 add_executable ( moai MACOSX_BUNDLE ${MOAIIOS_SOURCES} ${MOAIIOS_RESOURCES} ${PROJECT_RESOURCES})
-
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 target_link_libraries ( moai
   host-modules
   moai-sim

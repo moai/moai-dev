@@ -34,7 +34,7 @@ add_custom_target( moaijs
                   )
 
 add_dependencies(moaijs moaishared )
-
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 target_link_libraries ( moaishared
   host-modules
   moai-sim
