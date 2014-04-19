@@ -1173,12 +1173,16 @@ if(SDL_STATIC)
   # libraries - do we need to consider this?
   set(_INSTALL_LIBS "SDL2-static" ${_INSTALL_LIBS})
   target_link_libraries(SDL2-static ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
-  target_include_directories(SDL2-static PUBLIC ${SDL2_BINARY_DIR}/include ${SDL2_SOURCE_DIR}/include)
+  set (SDL_PUBLIC_INCLUDES  ${SDL2_BINARY_DIR}/include ${SDL2_SOURCE_DIR}/include)
+  target_include_directories(SDL2-static PUBLIC 
+    "$<BUILD_INTERFACE:${SDL_PUBLIC_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/SDL2>"
+  )
   set_target_properties( SDL2-static PROPERTIES FOLDER Third-Party )
 endif(SDL_STATIC)
 
 ##### Installation targets #####
-install(TARGETS ${_INSTALL_LIBS}
+install(TARGETS ${_INSTALL_LIBS} EXPORT libmoai
   LIBRARY DESTINATION "lib${LIB_SUFFIX}"
   ARCHIVE DESTINATION "lib${LIB_SUFFIX}")
 

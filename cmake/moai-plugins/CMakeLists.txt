@@ -85,4 +85,12 @@ set (MOAI_PLUGINS_SRC "${CMAKE_CURRENT_BINARY_DIR}/host.cpp" )
 
 add_library ( moai-plugins STATIC ${MOAI_PLUGINS_SRC} )
 target_link_libraries ( moai-plugins ${LINK_LIBS})
+target_include_directories (moai-plugins PUBLIC 
+    "$<BUILD_INTERFACE:${MOAI_PLUGINS_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-plugins>"
+)
+
+
 set_target_properties(moai-plugins PROPERTIES FOLDER Modules)  
+install(TARGETS moai-plugins EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/host.h DESTINATION include/moai-plugins)

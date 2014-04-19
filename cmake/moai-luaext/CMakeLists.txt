@@ -10,12 +10,11 @@ if ( BUILD_ANDROID )
 endif ( BUILD_ANDROID )
 
 include_directories ( 
-  ${MOAICORE_INCLUDES} 
   ${MOAI_LUAEXT_INCLUDES}
 )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-luaext/" )
-file ( GLOB MOAI_LUAEXT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_LUAEXT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_library ( moai-luaext STATIC ${MOAI_LUAEXT_SOURCE} )
 
@@ -37,4 +36,12 @@ if (MOAI_SQLITE3)
   target_link_libraries ( moai-luaext  luasql )
 endif (MOAI_SQLITE3)
   
+
+target_include_directories (moai-luaext PUBLIC
+    "$<BUILD_INTERFACE:${MOAI_LUAEXT_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-luaext>"
+)
+
 set_target_properties(moai-luaext PROPERTIES FOLDER Modules)  
+install(TARGETS moai-luaext EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/host.h DESTINATION include/moai-luaext)

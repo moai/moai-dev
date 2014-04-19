@@ -8,7 +8,6 @@ set ( LUA_INCLUDES "${MOAI_ROOT}/3rdparty/lua-5.1.3/src/"  )
 
 
 set ( LUA_SOURCES
-
   ${CMAKE_CURRENT_SOURCE_DIR}lapi.c
   ${CMAKE_CURRENT_SOURCE_DIR}lauxlib.c
   ${CMAKE_CURRENT_SOURCE_DIR}lbaselib.c
@@ -38,27 +37,24 @@ set ( LUA_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}lvm.c
   ${CMAKE_CURRENT_SOURCE_DIR}lzio.c
   ${CMAKE_CURRENT_SOURCE_DIR}print.c
-
 )
  
-
-
 if (BUILD_ANDROID)
   set ( LUA_SOURCES 
-  	    ${LUA_SOURCES} 
-  	    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
-        )
+    ${LUA_SOURCES} 
+    ${CMAKE_CURRENT_SOURCE_DIR}/android/llex.c 
+  )
 else (BUILD_ANDROID) 
 	set ( LUA_SOURCES 
-  	    ${LUA_SOURCES} 
-  	    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
-        )
+    ${LUA_SOURCES} 
+    ${CMAKE_CURRENT_SOURCE_DIR}/llex.c 
+  )
 endif (BUILD_ANDROID)
 
-
 add_library( liblua-static STATIC ${LUA_SOURCES} )
-target_include_directories( liblua-static PUBLIC ${LUA_INCLUDES} )
+target_include_directories( liblua-static PUBLIC "$<BUILD_INTERFACE:${LUA_INCLUDES}>" )
 set (LUA_HEADERS ${LUA_INCLUDES} PARENT_SCOPE)
 set (LUA_LIB liblua-static PARENT_SCOPE)
 set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
+install(TARGETS liblua-static EXPORT libmoai ARCHIVE DESTINATION lib)
 

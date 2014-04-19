@@ -19,7 +19,7 @@ include_directories (
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-sim/" )
 
 # Use all cpp files in directory as source code
-file ( GLOB MOAI_SIM_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" )
+file ( GLOB MOAI_SIM_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 include_directories ( ${MOAI_SIM_INCLUDES} )
 
@@ -29,7 +29,12 @@ target_link_libraries ( moai-sim moai-core moai-util contrib zlcore)
 
 #always point to freetype includes so the generated project is easy to turn freetype back on!
 get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )
-target_include_directories ( moai-sim PUBLIC ${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES} )
+
+target_include_directories (moai-sim PUBLIC 
+    "$<BUILD_INTERFACE:${MOAI_SIM_INCLUDES} ${FREETYPE_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-sim>"
+)
+
 
 set_target_properties(moai-sim PROPERTIES FOLDER Core)
 
@@ -60,3 +65,10 @@ endif (MOAI_CHIPMUNK)
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential
 endif (BUILD_WINDOWS)
+
+install(TARGETS moai-sim EXPORT libmoai ARCHIVE DESTINATION lib)
+
+install(FILES 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host.h 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host_particles.h
+        DESTINATION include/moai-sim)

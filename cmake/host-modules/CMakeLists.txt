@@ -2,12 +2,15 @@ cmake_minimum_required ( VERSION 2.8.11 )
 project ( host-modules)
 
 set ( HOST_MODULES_INCLUDES 
-    "${MOAI_ROOT}/src"
-    "${MOAI_ROOT}/src/config-default"
-    )
+  "${MOAI_ROOT}/src"
+  "${MOAI_ROOT}/src/config-default"
+)
 
 # Use all cpp files in directory as source code
-set (HOST_MODULES_SRC "${MOAI_ROOT}/src/host-modules/aku_modules.cpp" )
+file ( GLOB HOST_MODULES_SRC
+  "${MOAI_ROOT}/src/host-modules/*.cpp"
+  "${MOAI_ROOT}/src/host-modules/*.h"
+)
 
 include_directories ( ${HOST_MODULES_INCLUDES} )
 
@@ -48,3 +51,14 @@ endif ( MOAI_PLUGINS )
 if ( MOAI_TEST )
 	target_link_libraries ( host-modules moai-test )
 endif (MOAI_TEST)
+
+configure_file(moai_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/moai_config.h")
+
+install(TARGETS host-modules EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES 
+              ${CMAKE_CURRENT_BINARY_DIR}/moai_config.h
+              ${MOAI_ROOT}/src/host-modules/aku_modules.h 
+              ${MOAI_ROOT}/src/host-modules/aku_modules_config.h
+        DESTINATION include/host-modules)
+#for EXPORT
+target_include_directories(host-modules INTERFACE "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>" )

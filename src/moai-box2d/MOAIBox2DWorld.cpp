@@ -1079,15 +1079,15 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 /**     @name   getRayCast
         @text   return RayCast 1st point hit
        
-        @in             MOAIBox2DWorld self
-        @in             number p1x
-        @in             number p1y
-        @in             number p2x
-        @in             number p2y
-        @out    bool	true if hit, false otherwise
-		@out	  MOAIBox2DFixture fixture that was hit, or nil
-        @out    number hitpoint.x
-        @out    number hitpoint.y
+        @in		MOAIBox2DWorld self
+        @in		number p1x
+        @in		number p1y
+        @in		number p2x
+        @in		number p2y
+        @out	boolean hit					true if hit, false otherwise
+		@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
+        @out	number hitpointX
+        @out	number hitpointY
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )

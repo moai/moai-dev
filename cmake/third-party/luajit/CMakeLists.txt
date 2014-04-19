@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 2.8)
 # To explicitly request use of LuaJIT at a given
 
 
-    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.1")
+    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.3")
     set (LUAJIT_INCLUDE "${LUAJIT_ROOT}/src")
 
     set (luajit_buildoptions BUILDMODE=static)
@@ -133,8 +133,10 @@ cmake_minimum_required(VERSION 2.8)
         COMMAND ${CMAKE_COMMAND} -E copy_directory  ${LUAJIT_ROOT} "${CMAKE_CURRENT_BINARY_DIR}/luajit"
     )
 
+    set ( LUA_LIB_DIR "${CMAKE_CURRENT_BINARY_DIR}/luajit/src" PARENT_SCOPE)
+
     if (MSVC)
-	    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+	      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
             COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" static ${VFS_INCLUDE}
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
@@ -143,10 +145,10 @@ cmake_minimum_required(VERSION 2.8)
         add_custom_target(liblua-static
             DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
         )
-        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib PARENT_SCOPE )
+        set( LUA_LIB "lua51.lib" PARENT_SCOPE )
     elseif(BUILD_IOS)
 
-     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src' '${VFS_INCLUDE}'
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
@@ -155,7 +157,7 @@ cmake_minimum_required(VERSION 2.8)
         add_custom_target(liblua-static
             DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
         )
-        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
+        set( LUA_LIB "libluajit.a" PARENT_SCOPE )
 
     else()
         add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
@@ -168,14 +170,22 @@ cmake_minimum_required(VERSION 2.8)
         add_custom_target(liblua-static
             DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
         )
-        set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a PARENT_SCOPE )
+        set( LUA_LIB "libluajit.a" PARENT_SCOPE )
     endif()
     
-   set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
+   
+    #in cmake 3.0 we can do this but it isn't out yet.
+    #add_library(liblua-static INTERFACE)
+   #target_link_libraries(liblua-static INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/luajit/src/${LUA_LIB}")
+   #add_dependencies(liblua-static liblua)
 
-    #add_library(liblua-static STATIC IMPORTED)
-    #set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
-    #add_dependencies(liblua-static libluajit)
+   
 
-    set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
-    
+    set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
+
+   set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
+   if (MSVC)
+      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib DESTINATION lib ) 
+   else(MSVC)
+      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a DESTINATION lib ) 
+   endif (MSVC)

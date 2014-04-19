@@ -180,6 +180,12 @@ void AKUModulesContextInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesParseArgs ( int argc, char** argv ) {
 
+	#ifndef NDEBUG
+		//just setting a traceback handler causes moai to dump stack trace on error
+	    //the traceback handler doesnt have to do anything.
+		AKURunString ( "MOAISim.setTraceback(function() end)" );
+	#endif
+
 	#if AKU_WITH_TEST
 
 		int total = argc - 1;

@@ -68,5 +68,6 @@ if (BUILD_IOS)
     )
 
 add_library( cares STATIC ${CARES_SRC})
-target_include_directories ( cares PUBLIC ${CARES_INCLUDES} )
+target_include_directories ( cares PUBLIC "$<BUILD_INTERFACE:${CARES_INCLUDES}>" )
 set_target_properties( cares PROPERTIES FOLDER Third-Party )
+install(TARGETS cares EXPORT libmoai ARCHIVE DESTINATION lib)

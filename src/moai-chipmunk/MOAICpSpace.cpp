@@ -277,14 +277,14 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertProp
-	@text	Inserts a new prop into the world (can be used as a body, joint, etc.)
+/**	@name	insertPrim
+	@text	Inserts a new prim into the world (can be used as a body, joint, etc.)
 
 	@in		MOAICpSpace self
-	@in		MOAICpPrim prop
+	@in		MOAICpPrim prim
 	@out	nil
 */
-int MOAICpSpace::_insertProp ( lua_State* L ) {
+int MOAICpSpace::_insertPrim ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2, true );
@@ -327,14 +327,14 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removeProp
-	@text	Removes a prop (body, joint, etc.) from the space.
+/**	@name	removePrim
+	@text	Removes a prim (body, joint, etc.) from the space.
 
 	@in		MOAICpSpace self
-	@in		MOAICpPrim prop
+	@in		MOAICpPrim prim
 	@out	nil
 */
-int MOAICpSpace::_removeProp ( lua_State* L ) {
+int MOAICpSpace::_removePrim ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2, true );
@@ -916,10 +916,10 @@ void MOAICpSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getIterations",					_getIterations },
 		{ "getSleepTimeThreshold",			_getSleepTimeThreshold },
 		{ "getStaticBody",					_getStaticBody },
-		{ "insertPrim",						_insertProp },
+		{ "insertPrim",						_insertPrim },
 		{ "rehashShape",					_rehashShape },
 		{ "rehashStatic",					_rehashStatic },
-		{ "removePrim",						_removeProp },
+		{ "removePrim",						_removePrim },
 		{ "resizeActiveHash",				_resizeActiveHash },
 		{ "resizeStaticHash",				_resizeStaticHash },
 		{ "setCollisionHandler",			_setCollisionHandler },

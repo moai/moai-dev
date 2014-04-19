@@ -3,10 +3,9 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( third-party )
 
 if (MSVC)
-#this is someone elses code, lets not get spammed by their warnings
- set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
-
+  #this is someone elses code, lets not get spammed by their warnings
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
 endif (MSVC)
 
 add_subdirectory ( box2d )
@@ -25,6 +24,7 @@ add_subdirectory ( jpg )
 
 set (LUA_HEADERS "")
 set (LUA_LIB "")
+set (LUA_LIB_DIR "")
 #Lua or LuaJit?
 if (MOAI_LUAJIT)
 #	if ( BUILD_IOS )#
@@ -36,8 +36,7 @@ else()
 endif (MOAI_LUAJIT)
 set (LUA_HEADERS ${LUA_HEADERS} PARENT_SCOPE)
 set (LUA_LIB ${LUA_LIB} PARENT_SCOPE)
-
-
+set (LUA_LIB_DIR ${LUA_LIB_DIR} PARENT_SCOPE)
 
 add_subdirectory ( luaext )
 add_subdirectory ( mongoose )
@@ -50,9 +49,6 @@ add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
 add_subdirectory ( zlib )
-
-
-
 
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
@@ -76,10 +72,8 @@ elseif (BUILD_WINDOWS)
 elseif (BUILD_HTML)
   add_subdirectory (untz-html)
 else ()
- add_subdirectory ( untz )
+  add_subdirectory ( untz )
 endif ()
-
-
 
 
 #if ( BUILD_ANDROID )

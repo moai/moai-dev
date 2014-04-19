@@ -14,13 +14,12 @@ project ( curl )
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DUSE_SSLEAY -DUSE_OPENSSL ")
   endif ( MOAI_OPENSSL )
 
-
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/curl/curl_config.h" "${CMAKE_CURRENT_BINARY_DIR}/curl/curl_config.h" COPYONLY )
   
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-	     	"${CMAKE_CURRENT_SOURCE_DIR}"
+    
        )
   endif (BUILD_LINUX)
 
@@ -28,7 +27,7 @@ project ( curl )
   if (BUILD_WINDOWS)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
+     
       )
   endif (BUILD_WINDOWS)
   
@@ -144,7 +143,7 @@ project ( curl )
 
  
   add_library(curl STATIC ${CURL_SOURCES})
-  target_include_directories (curl PUBLIC ${CURL_INCLUDES})
+  target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
   target_link_libraries( curl zlib )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 
@@ -159,3 +158,5 @@ project ( curl )
   if (BUILD_WINDOWS)
     target_link_libraries( curl ws2_32 )
   endif (BUILD_WINDOWS)
+
+  install(TARGETS curl EXPORT libmoai ARCHIVE DESTINATION lib)

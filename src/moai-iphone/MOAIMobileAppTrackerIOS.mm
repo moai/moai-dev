@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef DISABLE_MOBILEAPPTRACKER
+
 #include "pch.h"
 #import <moai-iphone/MOAIMobileAppTrackerIOS.h>
 #import <moai-iphone/NSString+MOAILib.h>
@@ -75,3 +77,4 @@ void MOAIMobileAppTrackerIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+#endif // DISABLE_MOBILEAPPTRACKER

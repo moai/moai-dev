@@ -10,15 +10,17 @@ include_directories (
   ${MOAI_AUDIOSAMPLER_INCLUDES}
 )
 
-
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-audiosampler/" )
 
 # Use all cpp files in directory as source code
-set ( MOAI_AUDIOSAMPLER_SRC
-	${MOAI_ROOT}/src/moai-audiosampler/AKU-audiosampler.cpp
-	${MOAI_ROOT}/src/moai-audiosampler/MOAIAudioSampler.cpp
-)
-
+file ( GLOB MOAI_AUDIOSAMPLER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_library ( moai-audiosampler STATIC ${MOAI_AUDIOSAMPLER_SRC}  )
 target_link_libraries ( moai-audiosampler moai-core moai-util moai-sim zlcore )
-
+set_target_properties ( moai-audiosampler PROPERTIES FOLDER Modules )  
+target_include_directories ( moai-audiosampler PUBLIC
+   "$<BUILD_INTERFACE:${MOAI_AUDIOSAMPLER_INCLUDES}>"
+        "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>"
+)
+install(TARGETS moai-audiosampler EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/AKU-audiosampler.h DESTINATION include/moai-audiosampler)

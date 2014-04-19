@@ -17,7 +17,7 @@ include_directories (
     ${INCLUDES_MOAIANDROID}
 )
 
-
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 add_library ( moai SHARED
     ${MOAI_ROOT}/ant/libmoai/jni/src/moai.cpp
 )
