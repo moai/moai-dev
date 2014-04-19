@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 2.8)
 # To explicitly request use of LuaJIT at a given
 
 
-    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.1")
+    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.3")
     set (LUAJIT_INCLUDE "${LUAJIT_ROOT}/src")
 
     set (luajit_buildoptions BUILDMODE=static)
