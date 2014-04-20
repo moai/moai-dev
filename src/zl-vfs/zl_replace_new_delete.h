@@ -16,49 +16,49 @@
 
 #ifdef __cplusplus
 
-	#include <new>
+	// #include <new>
 
-	//----------------------------------------------------------------//
-	inline void* operator new ( size_t size ) throw ( std::bad_alloc ) {
-		void* mem = malloc ( size );
-		#if 0
-			if ( mem ) return mem;
-			throw std::bad_alloc();
-		#else
-			return mem;
-		#endif
-	}
+	// //----------------------------------------------------------------//
+	// inline void* operator new ( size_t size ) throw ( std::bad_alloc ) {
+	// 	void* mem = malloc ( size );
+	// 	#if 0
+	// 		if ( mem ) return mem;
+	// 		throw std::bad_alloc();
+	// 	#else
+	// 		return mem;
+	// 	#endif
+	// }
 
-	//----------------------------------------------------------------//
-	inline void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
-		return malloc ( size );
-	}
+	// //----------------------------------------------------------------//
+	// inline void* operator new ( std::size_t size, const std::nothrow_t& ) throw () {
+	// 	return malloc ( size );
+	// }
 
-	//----------------------------------------------------------------//
-	inline void* operator new []( size_t size ) throw ( std::bad_alloc ) {
-		void* mem = malloc ( size );
-		#if 0
-			if ( mem ) return mem;
-			throw std::bad_alloc();
-		#else
-			return mem;
-		#endif
-	}
+	// //----------------------------------------------------------------//
+	// inline void* operator new []( size_t size ) throw ( std::bad_alloc ) {
+	// 	void* mem = malloc ( size );
+	// 	#if 0
+	// 		if ( mem ) return mem;
+	// 		throw std::bad_alloc();
+	// 	#else
+	// 		return mem;
+	// 	#endif
+	// }
 
-	//----------------------------------------------------------------//
-	inline void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
-		return malloc ( size );
-	}
+	// //----------------------------------------------------------------//
+	// inline void* operator new []( std::size_t size, const std::nothrow_t& ) throw () {
+	// 	return malloc ( size );
+	// }
 
-	//----------------------------------------------------------------//
-	inline void operator delete ( void* ptr ) throw() {
-		free ( ptr );
-	}
+	// //----------------------------------------------------------------//
+	// inline void operator delete ( void* ptr ) throw() {
+	// 	free ( ptr );
+	// }
 
-	//----------------------------------------------------------------//
-	inline void operator delete []( void* ptr ) throw() {
-		free ( ptr );
-	}
+	// //----------------------------------------------------------------//
+	// inline void operator delete []( void* ptr ) throw() {
+	// 	free ( ptr );
+	// }
 
 #endif
 #endif
