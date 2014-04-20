@@ -68,8 +68,6 @@ buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
 @set LJCOMPILE=%LJCOMPILE% /Zi
 @set LJLINK=%LJLINK% /debug
 :NODEBUG
-@echo Adding extra flags to target cl %2
-@set LJCOMPILE=%LJCOMPILE% %~2
 @if "%1"=="amalg" goto :AMALGDLL
 @if "%1"=="static" goto :STATIC
 %LJCOMPILE% /MD /DLUA_BUILD_AS_DLL lj_*.c lib_*.c
@@ -89,16 +87,15 @@ buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
 %LJLINK% /DLL /out:%LJDLLNAME% ljamalg.obj lj_vm.obj
 @if errorlevel 1 goto :BAD
 :MTDLL
-@rem --not wanted for moai
-@rem if exist %LJDLLNAME%.manifest^
-@rem  %LJMT% -manifest %LJDLLNAME%.manifest -outputresource:%LJDLLNAME%;2
+if exist %LJDLLNAME%.manifest^
+  %LJMT% -manifest %LJDLLNAME%.manifest -outputresource:%LJDLLNAME%;2
 
-@rem %LJCOMPILE% luajit.c
-@rem @if errorlevel 1 goto :BAD
-@rem %LJLINK% /out:luajit.exe luajit.obj %LJLIBNAME%
-@rem @if errorlevel 1 goto :BAD
-@rem if exist luajit.exe.manifest^
-@rem %LJMT% -manifest luajit.exe.manifest -outputresource:luajit.exe
+%LJCOMPILE% luajit.c
+@if errorlevel 1 goto :BAD
+%LJLINK% /out:luajit.exe luajit.obj %LJLIBNAME%
+@if errorlevel 1 goto :BAD
+if exist luajit.exe.manifest^
+  %LJMT% -manifest luajit.exe.manifest -outputresource:luajit.exe
 
 @del *.obj *.manifest minilua.exe buildvm.exe
 @echo.
