@@ -308,6 +308,7 @@ void MOAIGfxDevice::DrawPrims () {
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 			if ( count > 0 ) {
+				this->UpdateShaderGlobals ();
 				zglDrawArrays ( this->mPrimType, 0, count );
 				this->mDrawCount++;
 			}
@@ -561,6 +562,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimTop ( 0 ),
 	mPrimType ( 0xffffffff ),
 	mShaderProgram ( 0 ),
+	mShaderDirty ( false ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
@@ -1097,6 +1099,7 @@ void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
 			program->Bind ();
 		}
 	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1302,15 +1305,7 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) 
 		}
 	}
 	
-	// update any transforms in the shader that rely on the pipeline
-	// the shader caches the state of each uniform; only reloads when changed
-	if ( this->mShaderProgram ) {
-		this->mShaderProgram->UpdateGlobalTransforms (
-			this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
-			this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
-			this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
-		);
-	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1339,7 +1334,9 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 	
 	zglViewport ( x, y, w, h );
+	
 	this->mViewRect = rect;
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1415,9 +1412,7 @@ void MOAIGfxDevice::UpdateFinalColor () {
 
 	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
 	
-	if ( this->mShaderProgram ) {
-		this->mShaderProgram->UpdateGlobalPenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
-	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1507,6 +1502,15 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 				break;
 		}
 	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateShaderGlobals () {
+
+	if ( this->mShaderProgram && this->mShaderDirty ) {
+		this->mShaderProgram->UpdateGlobals ();
+	}
+	this->mShaderDirty = false;
 }
 
 //----------------------------------------------------------------//

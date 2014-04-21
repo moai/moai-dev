@@ -463,6 +463,8 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "GLOBAL_NONE",							( u32 )GLOBAL_NONE );
 	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )GLOBAL_PEN_COLOR );
 	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )GLOBAL_VIEW_PROJ );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )GLOBAL_VIEW_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )GLOBAL_VIEW_HEIGHT );
 	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )GLOBAL_WORLD );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )GLOBAL_WORLD_VIEW );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )GLOBAL_WORLD_VIEW_PROJ );
@@ -528,24 +530,13 @@ void MOAIShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::UpdateGlobalPenColor ( float r, float g, float b, float a ) {
+void MOAIShaderProgram::UpdateGlobals () {
 
-	for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
-	
-		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
-	
-		if ( global.mGlobalID == GLOBAL_PEN_COLOR ) {
-			ZLColorVec color ( r, g, b, a );
-			if ( uniform.SetValue ( color, true )) {
-				uniform.Bind ();
-			}
-		}
-	}
-}
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-//----------------------------------------------------------------//
-void MOAIShaderProgram::UpdateGlobalTransforms ( const ZLMatrix4x4& world, const ZLMatrix4x4& view, const ZLMatrix4x4& proj ) {
+	const ZLMatrix4x4& world	= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_WORLD_TRANSFORM ];
+	const ZLMatrix4x4& view		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_VIEW_TRANSFORM ];
+	const ZLMatrix4x4& proj		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_PROJ_TRANSFORM ];
 
 	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
 	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
@@ -557,12 +548,29 @@ void MOAIShaderProgram::UpdateGlobalTransforms ( const ZLMatrix4x4& world, const
 	
 		switch ( global.mGlobalID ) {
 		
+			case GLOBAL_PEN_COLOR: {
+				if ( uniform.SetValue ( gfxDevice.mFinalColor, true )) {
+					uniform.Bind ();
+				}
+			}
 			case GLOBAL_VIEW_PROJ: {
 			
 				ZLMatrix4x4 mtx = view;
 				mtx.Append ( proj );
 				
 				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_VIEW_WIDTH: {
+				if ( uniform.SetValue ( gfxDevice.mViewRect.Width ())) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_VIEW_HEIGHT: {
+				if ( uniform.SetValue ( gfxDevice.mViewRect.Height ())) {
 					uniform.Bind ();
 				}
 				break;

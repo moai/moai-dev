@@ -121,7 +121,7 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 			totalResults = self->mPartition->GatherProps ( buffer, 0, viewVolume, MOAIProp::CAN_DRAW );
 		}
 		
-		if ( !totalResults ) return;
+		if ( !totalResults ) return 0;
 		
 		if ( self->mSortInViewSpace ) {
 			buffer.Transform ( viewMtx, false );
