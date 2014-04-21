@@ -136,6 +136,8 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
 		
+		gfxDevice.UpdateShaderGlobals ();
+		
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->Bind ()) {

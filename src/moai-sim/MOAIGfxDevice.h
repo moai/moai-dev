@@ -130,6 +130,7 @@ private:
 
 	ZLRect					mScissorRect;
 	MOAIShaderProgram*		mShaderProgram;
+	bool					mShaderDirty;
 	u32						mSize;
 	
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
@@ -187,6 +188,7 @@ private:
 public:
 	
 	friend class MOAIGfxResource;
+	friend class MOAIShaderProgram;
 	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
@@ -315,6 +317,7 @@ public:
 	
 	void					SoftReleaseResources	( u32 age );
 	
+	void					UpdateShaderGlobals		();
 	void					UpdateViewVolume		();
 	
 	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv );

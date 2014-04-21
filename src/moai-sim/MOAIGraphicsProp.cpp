@@ -368,7 +368,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
-	this->LoadTransforms (); // do this *after* setting the shader; TODO: fix this so order doesn't matter
+	this->LoadTransforms ();
 	
 	if ( this->mGrid ) {
 		this->DrawGrid ( subPrimID );

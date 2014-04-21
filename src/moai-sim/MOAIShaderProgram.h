@@ -37,6 +37,8 @@ private:
 	@const	UNIFORM_SAMPLER
 	@const	UNIFORM_TRANSFORM
 	@const	UNIFORM_VIEW_PROJ
+	@const	UNIFORM_VIEW_WIDTH
+	@const	UNIFORM_VIEW_HEIGHT
 	@const	UNIFORM_WORLD
 	@const	UNIFORM_WORLD_VIEW
 	@const	UNIFORM_WORLD_VIEW_PROJ
@@ -95,6 +97,8 @@ public:
 		GLOBAL_NONE,
 		GLOBAL_PEN_COLOR,
 		GLOBAL_VIEW_PROJ,
+		GLOBAL_VIEW_WIDTH,
+		GLOBAL_VIEW_HEIGHT,
 		GLOBAL_WORLD,
 		GLOBAL_WORLD_VIEW,
 		GLOBAL_WORLD_VIEW_PROJ,
@@ -120,8 +124,7 @@ public:
 	void			SetGlobal					( u32 idx, u32 uniformID, u32 globalID );
 	void			SetSource					( cc8* vshSource, cc8* fshSource );
 	void			SetVertexAttribute			( u32 idx, cc8* attribute );
-	void			UpdateGlobalPenColor		( float r, float g, float b, float a ); // used by MOAIGfxDevice
-	void			UpdateGlobalTransforms		( const ZLMatrix4x4& world, const ZLMatrix4x4& view, const ZLMatrix4x4& proj ); // used by MOAIGfxDevice
+	void			UpdateGlobals				();
 };
 
 #endif
