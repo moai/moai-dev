@@ -1261,6 +1261,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\moai-sim\shaders\MOAIDeck2DSnappingShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moai-sim\shaders\MOAIDeck2DSnappingShader-vsh.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\moai-sim\shaders\MOAIDeck2DTexOnlyShader-fsh.h"
 					>
 				</File>

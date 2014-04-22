@@ -553,6 +553,7 @@ void MOAIShaderProgram::UpdateGlobals () {
 				if ( uniform.SetValue ( gfxDevice.mFinalColor, true )) {
 					uniform.Bind ();
 				}
+				break;
 			}
 			case GLOBAL_VIEW_PROJ: {
 			
@@ -576,8 +577,19 @@ void MOAIShaderProgram::UpdateGlobals () {
 				}
 				break;
 			}
+			case GLOBAL_VIEW_HALF_WIDTH: {
+				if ( uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_VIEW_HALF_HEIGHT: {
+				if ( uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f )) {
+					uniform.Bind ();
+				}
+				break;
+			}
 			case GLOBAL_WORLD: {
-			
 				if ( uniform.SetValue ( world, true )) {
 					uniform.Bind ();
 				}
