@@ -115,9 +115,9 @@ void MOAIFreeTypeFontReader::OpenFont ( MOAIFont& font ) {
 
 	cc8* filename = font.GetFilename ();
 
-	FT_Init_FreeType( &this->mLibrary );
+	FT_Init_FreeType ( &this->mLibrary );
 
-	if ( FT_New_Face( this->mLibrary, filename, 0, &this->mFace )) {
+	if ( FT_New_Face ( this->mLibrary, filename, 0, &this->mFace )) {
 		FT_Done_FreeType ( this->mLibrary );
 		fprintf ( stderr, "Error loading font: %s\n", filename );
 		return;

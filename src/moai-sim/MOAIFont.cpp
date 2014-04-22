@@ -313,7 +313,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setReader
-	@text	Attaches or clears the MOAIFontReader associated withthe font.
+	@text	Attaches or clears the MOAIFontReader associated with the font.
 			MOAIFontReader is responsible for loading and rendering glyphs from
 			a font file on demand. If you are using a static font and do not
 			need a reader, set this field to nil.
