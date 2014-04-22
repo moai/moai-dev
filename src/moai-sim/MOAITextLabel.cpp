@@ -138,6 +138,16 @@ int MOAITextLabel::_getStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO:
+int MOAITextLabel::_getText ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	state.Push ( self->mText );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTextBounds
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
@@ -910,6 +920,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
 		{ "getStyle",				_getStyle },
+		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
