@@ -16,6 +16,8 @@
 #include <moai-sim/shaders/MOAIDeck2DTexOnlyShader-vsh.h>
 #include <moai-sim/shaders/MOAIFontShader-fsh.h>
 #include <moai-sim/shaders/MOAIFontShader-vsh.h>
+#include <moai-sim/shaders/MOAIFontSnappingShader-fsh.h>
+#include <moai-sim/shaders/MOAIFontSnappingShader-vsh.h>
 #include <moai-sim/shaders/MOAILineShader-fsh.h>
 #include <moai-sim/shaders/MOAILineShader-vsh.h>
 #include <moai-sim/shaders/MOAILineShader3D-fsh.h>
@@ -135,6 +137,23 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				break;
 			
+			case FONT_SNAPPING_SHADER:
+				
+				program->SetSource ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				
+				program->ReserveUniforms ( 2 );
+				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				
+				program->ReserveGlobals ( 2 );
+				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
+				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+				
+				break;
+			
 			case LINE_SHADER:
 				
 				program->SetSource ( _lineShaderVSH, _lineShaderFSH );
@@ -239,6 +258,7 @@ void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )DECK2D_SNAPPING_SHADER );
 	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )DECK2D_TEX_ONLY_SHADER );
 	state.SetField ( -1, "FONT_SHADER",				( u32 )FONT_SHADER );
+	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )FONT_SNAPPING_SHADER );
 	state.SetField ( -1, "LINE_SHADER",				( u32 )LINE_SHADER );
 	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )LINE_SHADER_3D );
 	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
