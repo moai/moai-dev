@@ -354,8 +354,8 @@ MoaiJS.prototype.run = function(mainLua, romUrl) {
 
 	this.loadedFileSystem.then(function(){
 	   console.log("MoaiJS Filesystem Loaded");	
-  	   that.emscripten.addOnPreMain(function(){ that.runhost(mainLua); });
   	   that.emscripten.run();   
+  	   that.runhost(mainLua);
   	}).rethrow();
 }
 
