@@ -7995,6 +7995,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
+					"USE_CHIPMUNK=0",
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
@@ -8010,6 +8011,7 @@
 					"${inherited}",
 					MACOSX,
 					MOAI_NO_DEFAULT_LOG_MESSAGES,
+					"USE_CHIPMUNK=0",
 				);
 				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
