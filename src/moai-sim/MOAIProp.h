@@ -59,23 +59,25 @@ private:
 	ZLBox				mWorldBounds;
 	
 	//----------------------------------------------------------------//
-	static int			_getBounds			( lua_State* L );
-	static int			_getDims			( lua_State* L );
-	static int			_getGrid			( lua_State* L );
-	static int			_getIndex			( lua_State* L );
-	static int			_getPriority		( lua_State* L );
-	static int			_getWorldBounds		( lua_State* L );
-	static int			_inside				( lua_State* L );
-	static int			_setBounds			( lua_State* L );
-	static int			_setDeck			( lua_State* L );
-	static int			_setExpandForSort	( lua_State* L );
-	static int			_setGrid			( lua_State* L );
-	static int			_setGridScale		( lua_State* L );
-	static int			_setIndex			( lua_State* L );
-	static int			_setLayer			( lua_State* L );
-	static int			_setPartition		( lua_State* L );
-	static int			_setPriority		( lua_State* L );
-	static int			_setRemapper		( lua_State* L );
+	static int			_getBounds					( lua_State* L );
+	static int			_getDeck					( lua_State* L );
+	static int			_getDims					( lua_State* L );
+	static int			_getGrid					( lua_State* L );
+	static int			_getIndex					( lua_State* L );
+	static int			_getPriority				( lua_State* L );
+	static int			_getWorldBounds				( lua_State* L );
+	static int			_getWorldBoundsCenter		( lua_State* L );
+	static int			_inside						( lua_State* L );
+	static int			_setBounds					( lua_State* L );
+	static int			_setDeck					( lua_State* L );
+	static int			_setExpandForSort			( lua_State* L );
+	static int			_setGrid					( lua_State* L );
+	static int			_setGridScale				( lua_State* L );
+	static int			_setIndex					( lua_State* L );
+	static int			_setLayer					( lua_State* L );
+	static int			_setPartition				( lua_State* L );
+	static int			_setPriority				( lua_State* L );
+	static int			_setRemapper				( lua_State* L );
 
 protected:
 
