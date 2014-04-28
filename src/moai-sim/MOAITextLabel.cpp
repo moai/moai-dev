@@ -657,6 +657,7 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	
 	if ( !this->IsVisible ( lod )) return;
+	if ( this->IsClear ()) return;
 	
 	if ( this->mReveal ) {
 		
@@ -692,6 +693,9 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
+
+	if ( !this->IsVisible ( lod )) return;
+	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -765,6 +769,13 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 	}
 	
 	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+bool MOAITextLabel::IsClear () const {
+
+	ZLColorVec color = this->mColor;
+	return (( color.mR == 0.0f ) && ( color.mG == 0.0f ) && ( color.mB == 0.0f ) && ( color.mA == 0.0f ));
 }
 
 //----------------------------------------------------------------//
