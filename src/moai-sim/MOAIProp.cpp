@@ -62,40 +62,6 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldBounds
-	@text	Return the prop's world bounds or 'nil' if prop bounds is
-			global or missing.
-	
-	@in		MOAIProp self
-	@out	number xMin
-	@out	number yMin
-	@out	number zMin
-	@out	number xMax
-	@out	number yMax
-	@out	number zMax
-*/
-int MOAIProp::_getWorldBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->ForceUpdate ();
-	
-	if ( self->mPartition->IsGlobal ( *self )) return 0;
-	if ( self->mPartition->IsEmpty ( *self )) return 0;
-	
-	ZLBox bounds = self->mWorldBounds;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
-	return 6;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
@@ -167,6 +133,63 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 		return 1;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getWorldBounds
+	@text	Return the prop's world bounds or 'nil' if prop bounds is
+			global or missing.
+	
+	@in		MOAIProp self
+	@out	number xMin
+	@out	number yMin
+	@out	number zMin
+	@out	number xMax
+	@out	number yMax
+	@out	number zMax
+*/
+int MOAIProp::_getWorldBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	self->ForceUpdate ();
+	
+	if ( self->mPartition->IsGlobal ( *self )) return 0;
+	if ( self->mPartition->IsEmpty ( *self )) return 0;
+	
+	ZLBox bounds = self->mWorldBounds;
+
+	state.Push ( bounds.mMin.mX );
+	state.Push ( bounds.mMin.mY );
+	state.Push ( bounds.mMin.mZ );
+	
+	state.Push ( bounds.mMax.mX );
+	state.Push ( bounds.mMax.mY );
+	state.Push ( bounds.mMax.mZ );
+
+	return 6;
+}
+
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_getWorldBoundsCenter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	self->ForceUpdate ();
+	
+	if ( self->mPartition->IsGlobal ( *self )) return 0;
+	if ( self->mPartition->IsEmpty ( *self )) return 0;
+	
+	ZLBox bounds = self->mWorldBounds;
+	
+	ZLVec3D center;
+	bounds.GetCenter ( center );
+
+	state.Push ( center.mX );
+	state.Push ( center.mY );
+	state.Push ( center.mZ );
+
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -691,23 +714,24 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "getBounds",			_getBounds },
-		{ "getDims",			_getDims },
-		{ "getGrid",			_getGrid },
-		{ "getIndex",			_getIndex },
-		{ "getPriority",		_getPriority },
-		{ "getWorldBounds",		_getWorldBounds },
-		{ "inside",				_inside },
-		{ "setBounds",			_setBounds },
-		{ "setDeck",			_setDeck },
-		{ "setExpandForSort",	_setExpandForSort },
-		{ "setGrid",			_setGrid },
-		{ "setGridScale",		_setGridScale },
-		{ "setIndex",			_setIndex },
-		{ "setLayer",			_setLayer },
-		{ "setPartition",		_setPartition },
-		{ "setPriority",		_setPriority },
-		{ "setRemapper",		_setRemapper },
+		{ "getBounds",				_getBounds },
+		{ "getDims",				_getDims },
+		{ "getGrid",				_getGrid },
+		{ "getIndex",				_getIndex },
+		{ "getPriority",			_getPriority },
+		{ "getWorldBounds",			_getWorldBounds },
+		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
+		{ "inside",					_inside },
+		{ "setBounds",				_setBounds },
+		{ "setDeck",				_setDeck },
+		{ "setExpandForSort",		_setExpandForSort },
+		{ "setGrid",				_setGrid },
+		{ "setGridScale",			_setGridScale },
+		{ "setIndex",				_setIndex },
+		{ "setLayer",				_setLayer },
+		{ "setPartition",			_setPartition },
+		{ "setPriority",			_setPriority },
+		{ "setRemapper",			_setRemapper },
 		{ NULL, NULL }
 	};
 	

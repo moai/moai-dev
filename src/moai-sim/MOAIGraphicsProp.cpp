@@ -534,6 +534,40 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			break;
 		}
 		
+		case BILLBOARD_COMPASS: {
+		
+			const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx ();
+			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
+			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
+			
+			cameraY.mZ = 0.0f;
+			cameraY.Norm ();
+			
+			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
+			ZLVec2D worldY ( 0.0f, 1.0f );
+			
+			float radians = mapY.Radians ( worldY );
+			
+			if ( cameraY.mX < 0.0f ) {
+				radians = -radians;
+			}
+		
+			ZLMatrix4x4 billboardMtx;
+			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+			
+			ZLMatrix4x4 mtx;
+			mtx.RotateZ ( -radians );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
+			billboardMtx.Append ( mtx );
+			
+			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx.Prepend ( billboardMtx );
+		
+			break;
+		}
+		
 		case BILLBOARD_NONE:
 		default:
 		
@@ -713,6 +747,7 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
 	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
 	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
+	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
 }
 
 //----------------------------------------------------------------//
