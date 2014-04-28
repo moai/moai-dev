@@ -249,7 +249,8 @@ void MOAIInputMgr::FlushEvents ( double skip ) {
 //----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () :
 	mTimebase ( 0 ),
-	mTimestamp ( 0 ) {
+	mTimestamp ( 0 ),
+	mDefer ( false ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 	
