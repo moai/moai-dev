@@ -22,6 +22,9 @@
 		if ( type == PARAM_TYPE_SPRITE_REG ) {					\
 			reg = &spriteRegisters [ regIdx ];					\
 		}														\
+		else if ( type == PARAM_TYPE_LIVE_REG ) {					\
+			reg = &this->mLiveRegisters [ regIdx ];					\
+		}														\
 		else {													\
 			reg = &particleRegisters [ regIdx ];				\
 		}														\
@@ -43,6 +46,9 @@
 		if ( type & PARAM_TYPE_REG_MASK ) {						\
 			if ( type == PARAM_TYPE_SPRITE_REG ) {				\
 				var = spriteRegisters [ regIdx ];				\
+			}													\
+			else if ( type == PARAM_TYPE_LIVE_REG ) {				\
+				var = this->mLiveRegisters [ regIdx ];				\
 			}													\
 			else {												\
 				var = particleRegisters [ regIdx ];				\
@@ -363,6 +369,22 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	packLiveReg
+	@text	Pack a live register index into a particle script param.
+	
+	@in		number regIdx		Register index to pack.
+	@out	number packed		The packed value.
+*/
+int MOAIParticleScript::_packLiveReg ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u8 val = (state.GetValue < u8 >( 1, 0 ) - 1) % LIVE_REG_COUNT;
+	state.Push ( Pack64 ( val, PARAM_TYPE_LIVE_REG ));
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	packReg
 	@text	Pack a register index into a particle script param.
 	
@@ -419,6 +441,34 @@ int MOAIParticleScript::_randVec ( lua_State* L ) {
 */
 int MOAIParticleScript::_set ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( SET, "RV" )
+}
+
+//----------------------------------------------------------------//
+/**	@name	setReg
+	@text	Load a value into a live register. Live registers can be updated
+	by additional calls to setReg, which does not alter the compiled particle
+	script. Live registers are a distinct register set from the normal register
+	set; use load() to load live register data into registers in an initialize
+	or render script.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result.
+	@in		number v0			Value to load.
+	@out	nil
+*/
+int MOAIParticleScript::_setReg ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )
+	/* assumption:
+	 * the packing system will always put the bits we care about in the
+	 * low-order parts of a packed value
+	 */
+	int reg			= state.GetValue < u64 >( 2, 0 ) & 0xFF;
+	float value		= state.GetValue < float >( 3, 0.0f );
+	if ( reg < 0 || reg >= LIVE_REG_COUNT ) {
+		return 0;
+	}
+	self->mLiveRegisters[reg] = value;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -558,10 +608,16 @@ u8* MOAIParticleScript::Compile () {
 //----------------------------------------------------------------//
 MOAIParticleScript::MOAIParticleScript () :
 	mCompiled ( false ) {
+
+	int i;
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
+
+	for (i = 0; i < LIVE_REG_COUNT; ++i) {
+		this->mLiveRegisters[i] = 0.0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -640,6 +696,7 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "packConst",			_packConst },
+		{ "packLiveReg",		_packLiveReg },
 		{ "packReg",			_packReg },
 		{ NULL, NULL }
 	};
@@ -663,6 +720,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "rand",				_rand },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
+		{ "setReg",				_setReg },
 		{ "sin",				_sin },
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
