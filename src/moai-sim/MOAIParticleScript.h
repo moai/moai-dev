@@ -65,6 +65,7 @@ private:
 		END = 0,
 		ADD,
 		ANGLE_VEC,
+		COLOR,
 		COS,
 		CYCLE,
 		DIV,
@@ -114,6 +115,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
 	static int		_angleVec			( lua_State* L );
+	static int		_color				( lua_State* L );
 	static int		_cos				( lua_State* L );
 	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );
@@ -140,7 +142,7 @@ private:
 	static u64		Pack64					( u32 low, u32 hi );
 	Instruction&	PushInstruction			( u32 op, cc8* format );
 	void			PushSprite				( MOAIParticleSystem& system, float* registers );
-	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters );
+	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters, const MOAIParticleSystem& );
 
 public:
 	
