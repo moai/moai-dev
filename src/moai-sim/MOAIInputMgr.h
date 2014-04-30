@@ -8,46 +8,18 @@ class MOAIInputDevice;
 class MOAISensor;
 
 //================================================================//
-// MOAIInputContext
-//================================================================//
-// TODO: doxygen
-class MOAIInputContext :
-	public virtual MOAILuaObject {
-protected:
-
-	ZLLeanArray < MOAIInputDevice* > mDevices;
-
-public:
-
-	DECL_LUA_FACTORY ( MOAIInputContext )
-
-	//----------------------------------------------------------------//
-	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
-	MOAIInputDevice*	GetDevice					( u8 deviceID );
-	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
-						MOAIInputContext			();
-						~MOAIInputContext			();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				ReserveDevices				( u8 total );
-	void				ReserveSensors				( u8 deviceID, u8 total );
-	void				ResetSensors				();
-	void				SetDevice					( u8 deviceID, cc8* name );
-	void				SetDeviceActive				( u8 deviceID, bool active );
-	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
-};
-
-//================================================================//
 // MOAIInputMgr
 //================================================================//
 /**	@name	MOAIInputMgr
 	@text	Input device class.
 */
 class MOAIInputMgr :
-	public MOAIGlobalClass < MOAIInputMgr, MOAIInputContext > {
+	public MOAIGlobalClass < MOAIInputMgr, MOAILuaObject > {
 private:
 
 	static const size_t CHUNK_SIZE = 256;
+
+	ZLLeanArray < MOAIInputDevice* > mDevices;
 
 	double	mTimebase;		// used to position timestamps against sim timeline
 	double	mTimestamp;		// timestamp for next event
@@ -70,6 +42,7 @@ public:
 	SET ( double, Timestamp, mTimestamp )
 
 	//----------------------------------------------------------------//
+	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
 	void				EnqueueButtonEvent			( u8 deviceID, u8 sensorID, bool down );
 	void				EnqueueCompassEvent			( u8 deviceID, u8 sensorID, float heading );
 	void				EnqueueJoystickEvent			( u8 deviceID, u8 sensorID, float x, float y );
@@ -81,11 +54,19 @@ public:
 	void				EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
 	void				EnqueueWheelEvent			( u8 deviceID, u8 sensorID, float value );
 	void				FlushEvents					( double skip );
+	MOAIInputDevice*	GetDevice					( u8 deviceID );
+	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );
+	void				ReserveDevices				( u8 total );
+	void				ReserveSensors				( u8 deviceID, u8 total );
+	void				ResetSensors				();
 	void				SetConfigurationName		( cc8* name );
+	void				SetDevice					( u8 deviceID, cc8* name );
+	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetDeviceExtendedName		( u8 deviceID, cc8* nameExtended );
+	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
 	void				Update						( double timestep );
 };
 

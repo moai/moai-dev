@@ -19,129 +19,6 @@
 #define LUAVAR_CONFIGURATION	"configuration"
 
 //================================================================//
-// MOAIInputContext
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIInputContext::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
-
-	MOAIInputDevice* device = this->GetDevice ( deviceID );
-	if ( device && device->mIsActive ) {
-		MOAISensor* sensor = device->GetSensor ( sensorID );
-		return ( sensor && ( sensor->mType == type ));
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-MOAIInputDevice* MOAIInputContext::GetDevice ( u8 deviceID ) {
-
-	if ( deviceID < this->mDevices.Size ()) {
-		return this->mDevices [ deviceID ];
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAISensor* MOAIInputContext::GetSensor ( u8 deviceID, u8 sensorID ) {
-
-	MOAIInputDevice* device = this->GetDevice ( deviceID );
-	if ( device ) {
-		return device->GetSensor ( sensorID );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIInputContext::MOAIInputContext () {
-	
-	RTTI_SINGLE ( MOAILuaObject )
-}
-
-//----------------------------------------------------------------//
-MOAIInputContext::~MOAIInputContext () {
-
-	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
-		this->LuaRelease ( this->mDevices [ i ]);
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::ReserveDevices ( u8 total ) {
-
-	this->mDevices.Init ( total );
-	this->mDevices.Fill ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::ReserveSensors ( u8 deviceID, u8 total ) {
-
-	MOAIInputDevice* device = this->GetDevice ( deviceID );
-	if ( device ) {
-		device->ReserveSensors ( total );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::ResetSensors () {
-
-	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
-		MOAIInputDevice* device = this->mDevices [ i ];
-		if ( device ) {
-			device->ResetSensors ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::SetDevice ( u8 deviceID, cc8* name ) {
-
-	if ( !( deviceID < this->mDevices.Size ())) return;
-
-	MOAIInputDevice* device = new MOAIInputDevice ();
-	device->SetName ( name );
-	
-	this->LuaRelease ( this->mDevices [ deviceID ]);
-	
-	this->mDevices [ deviceID ] = device;
-	this->LuaRetain ( device );
-	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLuaClassTable ( state );
-	
-	device->PushLuaUserdata ( state );
-	lua_setfield ( state, -2, name );
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::SetDeviceActive ( u8 deviceID, bool active ) {
-
-	MOAIInputDevice* device = this->GetDevice ( deviceID );
-	if ( device ) {
-		device->SetActive ( active );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIInputContext::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {
-
-	MOAIInputDevice* device = this->GetDevice ( deviceID );
-	if ( device ) {
-		device->SetSensor ( sensorID, name, type );
-	}
-}
-
-//================================================================//
 // MOAIInputMgr lua
 //================================================================//
 
@@ -156,6 +33,17 @@ int MOAIInputMgr::_deferEvents ( lua_State* L ) {
 //================================================================//
 // MOAIInputMgr
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIInputMgr::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device && device->mIsActive ) {
+		MOAISensor* sensor = device->GetSensor ( sensorID );
+		return ( sensor && ( sensor->mType == type ));
+	}
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
@@ -256,6 +144,25 @@ void MOAIInputMgr::FlushEvents ( double skip ) {
 }
 
 //----------------------------------------------------------------//
+MOAIInputDevice* MOAIInputMgr::GetDevice ( u8 deviceID ) {
+
+	if ( deviceID < this->mDevices.Size ()) {
+		return this->mDevices [ deviceID ];
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device ) {
+		return device->GetSensor ( sensorID );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () :
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ),
@@ -268,6 +175,10 @@ MOAIInputMgr::MOAIInputMgr () :
 
 //----------------------------------------------------------------//
 MOAIInputMgr::~MOAIInputMgr () {
+
+	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+		this->LuaRelease ( this->mDevices [ i ]);
+	}
 }
 
 //----------------------------------------------------------------//
@@ -282,6 +193,33 @@ void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::ReserveDevices ( u8 total ) {
+
+	this->mDevices.Init ( total );
+	this->mDevices.Fill ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::ReserveSensors ( u8 deviceID, u8 total ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device ) {
+		device->ReserveSensors ( total );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::ResetSensors () {
+
+	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+		MOAIInputDevice* device = this->mDevices [ i ];
+		if ( device ) {
+			device->ResetSensors ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -291,11 +229,49 @@ void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
+
+	if ( !( deviceID < this->mDevices.Size ())) return;
+
+	MOAIInputDevice* device = new MOAIInputDevice ();
+	device->SetName ( name );
+	
+	this->LuaRelease ( this->mDevices [ deviceID ]);
+	
+	this->mDevices [ deviceID ] = device;
+	this->LuaRetain ( device );
+	
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->PushLuaClassTable ( state );
+	
+	device->PushLuaUserdata ( state );
+	lua_setfield ( state, -2, name );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device ) {
+		device->SetActive ( active );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIInputMgr::SetDeviceExtendedName ( u8 deviceID, cc8* nameExtended ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
 		device->SetExtendedName(nameExtended);
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {
+
+	MOAIInputDevice* device = this->GetDevice ( deviceID );
+	if ( device ) {
+		device->SetSensor ( sensorID, name, type );
 	}
 }
 
