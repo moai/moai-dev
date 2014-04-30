@@ -135,7 +135,7 @@ size_t ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 	size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 	size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-	void* src = ( void* )(( uintptr )this->mChunks [ chunk0 ] + offset0 );
+	void* src = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
 	void* dest = buffer;
 
 	if ( chunk0 == chunk1 ) {
@@ -145,11 +145,11 @@ size_t ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 	else {
 		
 		memcpy ( dest, src, this->mChunkSize - offset0 );
-		dest = ( void* )(( uintptr )dest + this->mChunkSize - offset0 );
+		dest = ( void* )(( size_t )dest + this->mChunkSize - offset0 );
 		
 		for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
 			memcpy ( dest, this->mChunks [ i ], this->mChunkSize );
-			dest = ( void* )(( uintptr )dest + this->mChunkSize );
+			dest = ( void* )(( size_t )dest + this->mChunkSize );
 		}
 		memcpy ( dest, this->mChunks [ chunk1 ], offset1 );
 	}
@@ -171,7 +171,7 @@ void ZLMemStream::Reserve ( size_t length ) {
 		
 		if ( length <= this->mGuestBufferSize ) {
 			// guest buffer can accomodate new length but only if there's no offset, so shift the contents of the guest buffer and bail	
-			memmove ( this->mGuestBuffer, ( void* )(( uintptr )this->mGuestBuffer + this->mBase ), this->mLength );
+			memmove ( this->mGuestBuffer, ( void* )(( size_t )this->mGuestBuffer + this->mBase ), this->mLength );
 			this->mBase = 0;
 			return;
 		}
@@ -262,7 +262,7 @@ size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 	size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 	size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-	void* dest = ( void* )(( uintptr )this->mChunks [ chunk0 ] + offset0 );
+	void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
 	const void* src = buffer;
 
 	if ( chunk0 == chunk1 ) {
@@ -272,11 +272,11 @@ size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 	else {
 		
 		memcpy ( dest, src, this->mChunkSize - offset0 );
-		src = ( void* )(( uintptr )src + this->mChunkSize - offset0 );
+		src = ( void* )(( size_t )src + this->mChunkSize - offset0 );
 		
 		for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
 			memcpy ( this->mChunks [ i ], src, this->mChunkSize );
-			src = ( void* )(( uintptr )src + this->mChunkSize );
+			src = ( void* )(( size_t )src + this->mChunkSize );
 		}
 		memcpy ( this->mChunks [ chunk1 ], src, offset1 );
 	}

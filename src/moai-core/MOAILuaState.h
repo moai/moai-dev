@@ -82,7 +82,8 @@ public:
 	void			Push					( u16 value );
 	void			Push					( u32 value );
 	void			Push					( u64 value );
-	void			Push					( uintptr value );
+	void			Push					( size_t value );
+	//void			Push					( uintptr value );
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
@@ -150,12 +151,12 @@ template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
 template <> s8			MOAILuaState::GetValue < s8 >			( int idx, s8 value );
 template <> s16			MOAILuaState::GetValue < s16 >			( int idx, s16 value );
 template <> s32			MOAILuaState::GetValue < s32 >			( int idx, s32 value );
-template <> s64			MOAILuaState::GetValue < s64 >			( int idx, s64 value );
+//template <> s64			MOAILuaState::GetValue < s64 >			( int idx, s64 value );
 template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
 template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
 template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
-template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
+//template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
 template <> void*		MOAILuaState::GetValue < void* >		( int idx, void* value );
-template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
+//template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
 
 #endif

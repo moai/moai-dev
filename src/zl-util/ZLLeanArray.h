@@ -189,8 +189,8 @@ public:
 			size_t leftSize = spaces * sizeof ( TYPE );
 			size_t rightSize = size - leftSize;
 			
-			void* lower = ( void* )(( uintptr )this->mData + leftSize );
-			void* upper = ( void* )(( uintptr )this->mData + rightSize );
+			void* lower = ( void* )(( size_t )this->mData + leftSize );
+			void* upper = ( void* )(( size_t )this->mData + rightSize );
 			
 			void* temp = alloca ( leftSize );
 		
@@ -210,8 +210,8 @@ public:
 			size_t leftSize = spaces * sizeof ( TYPE );
 			size_t rightSize = size - leftSize;
 			
-			void* lower = ( void* )(( uintptr )this->mData + leftSize );
-			void* upper = ( void* )(( uintptr )this->mData + rightSize );
+			void* lower = ( void* )(( size_t )this->mData + leftSize );
+			void* upper = ( void* )(( size_t )this->mData + rightSize );
 			
 			void* temp = alloca ( rightSize );
 		

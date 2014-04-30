@@ -110,7 +110,8 @@ int MOAILuaRefTable::ReserveRefID () {
 
 	if ( !this->mRefIDStackTop ) {
 
-		u32 currentSize = this->mRefIDStack.Size ();
+		// TODO: 64-bit
+		u32 currentSize = ( u32 )this->mRefIDStack.Size ();
 
 		assert ( currentSize <= ( MAX_REF_ID - REFID_CHUNK_SIZE ));
 
