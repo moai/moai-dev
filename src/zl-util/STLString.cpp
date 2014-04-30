@@ -17,7 +17,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void STLString::base_64_decode ( void* buffer, u32 len ) {
+void STLString::base_64_decode ( void* buffer, size_t len ) {
 
 	ZLByteStream byteStream;
 	ZLBase64Reader base64;
@@ -31,7 +31,7 @@ void STLString::base_64_decode ( void* buffer, u32 len ) {
 }
 
 //----------------------------------------------------------------//
-void STLString::base_64_encode ( const void* buffer, u32 len ) {
+void STLString::base_64_encode ( const void* buffer, size_t len ) {
 	
 	( *this ) = "";
 	if ( !len ) return;
@@ -48,25 +48,25 @@ void STLString::base_64_encode ( const void* buffer, u32 len ) {
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip ( u32 first, u32 last ) {
+STLString STLString::clip ( size_t first, size_t last ) {
 
 	return this->substr ( first, last - first );
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip_to_back ( u32 first ) {
+STLString STLString::clip_to_back ( size_t first ) {
 
 	return this->substr ( first );
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip_to_front ( u32 last ) {
+STLString STLString::clip_to_front ( size_t last ) {
 
 	return this->substr ( 0, last );
 }
 
 //----------------------------------------------------------------//
-void STLString::hex_encode ( const void* buffer, u32 len ) {
+void STLString::hex_encode ( const void* buffer, size_t len ) {
 
 	if ( !len ) {
 		( *this ) = "";

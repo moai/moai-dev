@@ -660,14 +660,14 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 	u32 copySize = ( u32 )(( xMax - xMin ) * pixelSize );
 	
 	if ( yMin > 0 ) {
-		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( size_t )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( size_t )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 	
 	if ( yMax < height ) {
-		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( size_t )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( size_t )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 }
@@ -758,7 +758,7 @@ void MOAIImage::ClearRect ( ZLIntRect rect ) {
 		
 		for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
 			for ( int x = rect.mXMin; x < rect.mXMax; ++x ) {
-				void* addr = ( void* )(( uintptr )this->mBitmap + ( rowSize * y ) + offset );
+				void* addr = ( void* )(( size_t )this->mBitmap + ( rowSize * y ) + offset );
 				memset ( addr, 0, size );
 			}
 		}
@@ -928,8 +928,8 @@ void MOAIImage::CopyBits ( const MOAIImage& image, int srcX, int srcY, int destX
 		
 		for ( int y = 0; y < height; ++y ) {
 		
-			const void* srcRow = ( const void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y + srcY )) + ( srcX * size ));
-			void* destRow = ( void* )(( uintptr )this->mBitmap + ( destRowSize * ( y + destY )) + ( destX * size ));
+			const void* srcRow = ( const void* )(( size_t )image.mBitmap + ( srcRowSize * ( y + srcY )) + ( srcX * size ));
+			void* destRow = ( void* )(( size_t )this->mBitmap + ( destRowSize * ( y + destY )) + ( destX * size ));
 			
 			memcpy ( destRow, srcRow, width );
 		}
@@ -1358,7 +1358,7 @@ u32 MOAIImage::GetColor ( u32 i ) const {
 	u32 total = this->GetPaletteCount ();
 	if ( i < total ) {
 		
-		u8* stream = ( u8* )(( uintptr )this->mPalette + (( u32 )( colorDepth >> 3 ) * i ));
+		u8* stream = ( u8* )(( size_t )this->mPalette + (( u32 )( colorDepth >> 3 ) * i ));
 		return ZLColor::ReadRGBA ( stream, this->mColorFormat );
 	}
 	return 0;
@@ -1420,7 +1420,7 @@ u32 MOAIImage::GetPaletteColor ( u32 idx ) const {
 		u32 colorDepth = ZLColor::GetDepth ( this->mColorFormat );
 		
 		u32 size = ( colorDepth >> 3 );
-		u8* stream = ( u8* )(( uintptr )this->mPalette + ( idx * size ));
+		u8* stream = ( u8* )(( size_t )this->mPalette + ( idx * size ));
 		u32 color = USPixel::ReadPixel ( stream, size );
 		
 		rgba = ZLColor::ConvertToRGBA ( color, this->mColorFormat );
@@ -1446,13 +1446,13 @@ u32 MOAIImage::GetPixel ( u32 x, u32 y ) const {
 	u32 pixel;
 	
 	if ( pixelSize == 0.5f ) {
-		u8* stream = ( u8* )(( uintptr )row + ( x >> 0x01 ));
+		u8* stream = ( u8* )(( size_t )row + ( x >> 0x01 ));
 		pixel = ( u32 )( *stream );
 		pixel = (( pixel >> (( x & 0x01 ) ? 0x04 : 0x00 )) & 0x0F );
 	}
 	else {
 		u32 size = ( u32 )pixelSize;
-		u8* stream = ( u8* )(( uintptr )row + ( x * size ));
+		u8* stream = ( u8* )(( size_t )row + ( x * size ));
 		pixel = USPixel::ReadPixel ( stream, size );
 	}
 	
@@ -1470,13 +1470,13 @@ ZLIntRect MOAIImage::GetRect () {
 //----------------------------------------------------------------//
 void* MOAIImage::GetRowAddr ( u32 y ) {
 
-	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
+	return ( void* )(( size_t )this->mBitmap + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//
 const void* MOAIImage::GetRowAddr ( u32 y ) const {
 
-	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
+	return ( void* )(( size_t )this->mBitmap + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//
@@ -1864,15 +1864,15 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, ZLIntRect rect ) {
 			
 				if ( leftSize ) {
 					memset ( row, 0, leftSize );
-					row = ( void* )(( uintptr )row + leftSize );
+					row = ( void* )(( size_t )row + leftSize );
 				}
 				
 				if ( spanSize ) {
 				
-					void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+					void* srcRow = ( void* )(( size_t )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
 					
 					memcpy ( row, srcRow, spanSize );
-					row = ( void* )(( uintptr )row + spanSize );
+					row = ( void* )(( size_t )row + spanSize );
 				}
 				
 				if ( rightSize ) {
@@ -1921,7 +1921,7 @@ void MOAIImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 		u32 colorDepth = ZLColor::GetDepth ( this->mColorFormat );
 		
 		u32 size = ( colorDepth >> 3 );
-		u8* stream = ( u8* )(( uintptr )this->mPalette + ( idx * size ));
+		u8* stream = ( u8* )(( size_t )this->mPalette + ( idx * size ));
 		USPixel::WritePixel ( stream, color, size );
 	}
 }
@@ -1938,12 +1938,12 @@ void MOAIImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 	u32 pixelMask = USPixel::GetMask ( this->mPixelFormat, this->mColorFormat );
 	
 	if ( pixelDepth == 4 ) {
-		u8* address = ( u8* )(( uintptr )row + ( x >> 0x01 ));
+		u8* address = ( u8* )(( size_t )row + ( x >> 0x01 ));
 		( *address ) = ( *address ) | ( u8 )(( pixel & pixelMask ) << (( x & 0x01 ) ? 0x04 : 0x00 ));
 	}
 	else {
 		u32 size = ( pixelDepth >> 3 );
-		u8* stream = ( u8* )(( uintptr )row + ( x * size ));
+		u8* stream = ( u8* )(( size_t )row + ( x * size ));
 		USPixel::WritePixel ( stream, pixel, size );
 	}
 }

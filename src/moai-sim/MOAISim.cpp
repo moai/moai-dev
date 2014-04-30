@@ -11,14 +11,6 @@
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 
-#if MOAI_WITH_LIBCURL
-	#include <moai-http-client/MOAIUrlMgrCurl.h>
-#endif
-
-#if MOAI_OS_NACL
-	#include <moai-http-client/MOAIUrlMgrNaCl.h>
-#endif
-
 #if defined(_WIN32)
 	#include <windows.h>
 	#include <Psapi.h>

@@ -202,13 +202,13 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 				
 				for ( int i = 0; i < passes; ++i ) {
 					for ( u32 y = 0; y < height; ++y ) {
-						void* srcRow = ( void* )(( uintptr )srcBuff + ( srcRowSize * y ));
+						void* srcRow = ( void* )(( size_t )srcBuff + ( srcRowSize * y ));
 						png_read_row ( png, ( png_bytep )srcRow, 0 );
 					}
 				}
 				
 				for ( u32 y = 0; y < height; ++y ) {
-					void* srcRow = ( void* )(( uintptr )srcBuff + ( srcRowSize * y ));
+					void* srcRow = ( void* )(( size_t )srcBuff + ( srcRowSize * y ));
 					void* destRow = this->GetRowAddr ( y );
 					ZLColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
 					
