@@ -19125,6 +19125,7 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -19160,7 +19161,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19168,6 +19168,7 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -19205,7 +19206,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19213,6 +19213,7 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19220,13 +19221,13 @@
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Debug;
 		};
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19234,7 +19235,6 @@
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Release;
 		};
@@ -19616,6 +19616,7 @@
 		89BE6F14173AD07100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19643,7 +19644,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19651,6 +19651,7 @@
 		89BE6F15173AD07100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19678,7 +19679,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19686,6 +19686,7 @@
 		89BE6F16173AD07100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19713,7 +19714,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19721,6 +19721,7 @@
 		89BE6F17173AD07100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19748,7 +19749,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -19756,6 +19756,7 @@
 		89BE7377173AD29200DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19785,7 +19786,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19793,6 +19793,7 @@
 		89BE7378173AD29200DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19822,7 +19823,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19830,6 +19830,7 @@
 		89BE7379173AD29200DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19859,7 +19860,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -19867,6 +19867,7 @@
 		89BE737A173AD29200DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19896,7 +19897,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20144,6 +20144,7 @@
 		89BE7572173C119600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20173,7 +20174,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20181,6 +20181,7 @@
 		89BE7573173C119600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20210,7 +20211,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20218,6 +20218,7 @@
 		89BE7574173C119600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20247,7 +20248,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20255,6 +20255,7 @@
 		89BE7575173C119600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20284,7 +20285,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20292,6 +20292,7 @@
 		89BE75D6173C121800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20319,7 +20320,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20327,6 +20327,7 @@
 		89BE75D7173C121800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20354,7 +20355,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20362,6 +20362,7 @@
 		89BE75D8173C121800DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20389,7 +20390,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20397,6 +20397,7 @@
 		89BE75D9173C121800DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20424,7 +20425,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20672,6 +20672,7 @@
 		89BE765C173C13EB00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20699,7 +20700,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20707,6 +20707,7 @@
 		89BE765D173C13EB00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20734,7 +20735,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20742,6 +20742,7 @@
 		89BE765E173C13EB00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20769,7 +20770,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20777,6 +20777,7 @@
 		89BE765F173C13EB00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20804,7 +20805,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20932,6 +20932,7 @@
 		89BE769B173C160E00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20959,7 +20960,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20967,6 +20967,7 @@
 		89BE769C173C160E00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20994,7 +20995,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21002,6 +21002,7 @@
 		89BE769D173C160E00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21029,7 +21030,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21037,6 +21037,7 @@
 		89BE769E173C160E00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21064,7 +21065,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21072,6 +21072,7 @@
 		89E9D87B174BD4F100033CDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21079,13 +21080,13 @@
 				);
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Debug;
 		};
 		89E9D87C174BD4F100033CDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21093,13 +21094,13 @@
 				);
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Release;
 		};
 		89E9D87D174BD4F100033CDD /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21107,13 +21108,13 @@
 				);
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = AdHoc;
 		};
 		89E9D87E174BD4F100033CDD /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21121,7 +21122,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-test";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Distribution;
 		};
@@ -21270,6 +21270,7 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21277,7 +21278,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21285,6 +21285,7 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21292,7 +21293,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21360,6 +21360,7 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21388,7 +21389,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21396,6 +21396,7 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21424,7 +21425,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22075,6 +22075,7 @@
 		CD6D752117EE415D00964415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22083,7 +22084,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22091,6 +22091,7 @@
 		CD6D752217EE415D00964415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22099,7 +22100,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22107,6 +22107,7 @@
 		CD6D752317EE415D00964415 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22115,7 +22116,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22123,6 +22123,7 @@
 		CD6D752417EE415D00964415 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22131,7 +22132,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22659,6 +22659,7 @@
 		CD807B461831C3B500E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -22694,7 +22695,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22702,6 +22702,7 @@
 		CD807B471831C3B500E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -22739,7 +22740,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22747,6 +22747,7 @@
 		CD807B481831C3B500E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -22784,7 +22785,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22792,6 +22792,7 @@
 		CD807B491831C3B500E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -22829,7 +22830,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22837,6 +22837,7 @@
 		CD807DF31831C3C600E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -22872,7 +22873,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22880,6 +22880,7 @@
 		CD807DF41831C3C600E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -22917,7 +22918,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22925,6 +22925,7 @@
 		CD807DF51831C3C600E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -22962,7 +22963,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22970,6 +22970,7 @@
 		CD807DF61831C3C600E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23007,7 +23008,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23015,6 +23015,7 @@
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23022,7 +23023,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23030,6 +23030,7 @@
 		CD807E951831C42100E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23037,7 +23038,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23045,6 +23045,7 @@
 		CD807E961831C42100E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23052,7 +23053,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23060,6 +23060,7 @@
 		CD807E971831C42100E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23067,7 +23068,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23075,6 +23075,7 @@
 		CD95D4A11831D4E20080C34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23104,7 +23105,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23112,6 +23112,7 @@
 		CD95D4A21831D4E20080C34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23141,7 +23142,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23149,6 +23149,7 @@
 		CD95D4A31831D4E20080C34E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23178,7 +23179,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23186,6 +23186,7 @@
 		CD95D4A41831D4E20080C34E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23215,7 +23216,6 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24093,6 +24093,7 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24121,7 +24122,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24129,6 +24129,7 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24157,7 +24158,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24557,6 +24557,7 @@
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24587,7 +24588,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24595,6 +24595,7 @@
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24625,7 +24626,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24633,6 +24633,7 @@
 		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24663,7 +24664,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24671,6 +24671,7 @@
 		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24701,7 +24702,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24709,6 +24709,7 @@
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24741,7 +24742,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24749,6 +24749,7 @@
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24781,7 +24782,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24789,6 +24789,7 @@
 		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24821,7 +24822,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24829,6 +24829,7 @@
 		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24861,7 +24862,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25166,6 +25166,7 @@
 		E90D02C614D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25173,13 +25174,13 @@
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Distribution;
 		};
 		E90D02C714D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -25217,7 +25218,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25225,6 +25225,7 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25253,7 +25254,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25261,6 +25261,7 @@
 		E90D02C914D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25289,7 +25290,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25297,6 +25297,7 @@
 		E90D02CA14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25304,7 +25305,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25569,6 +25569,7 @@
 		E9C405CE150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25576,13 +25577,13 @@
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = AdHoc;
 		};
 		E9C405CF150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -25620,7 +25621,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25628,6 +25628,7 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25656,7 +25657,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25664,6 +25664,7 @@
 		E9C405D1150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25692,7 +25693,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25700,6 +25700,7 @@
 		E9C405D2150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25707,7 +25708,6 @@
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
