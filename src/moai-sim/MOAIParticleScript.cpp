@@ -541,7 +541,7 @@ u8* MOAIParticleScript::Compile () {
 	
 	u8* cursor = this->mBytecode;
 	
-	u8* top = ( u8* )(( uintptr )cursor + size );
+	u8* top = ( u8* )(( size_t )cursor + size );
 	UNUSED ( top );
 	
 	FOREACH ( InstructionIt, instructionIt, this->mInstructions ) {

@@ -29,7 +29,7 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeserializer, "UU" );
 
-	uintptr memberID = state.GetValue < uintptr >( 3, 0 );
+	ObjID memberID = state.GetValue < ObjID >( 3, 0 );
 	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, false );
 	if ( object ) {
 		MOAISerializerObjectEntry& entry = self->mObjectMap [ memberID ];
@@ -60,7 +60,7 @@ u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject* MOAIDeserializer::MemberIDToObject ( uintptr objectID ) {
+MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 
 	if ( this->mObjectMap.contains ( objectID )) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

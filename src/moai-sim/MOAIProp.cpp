@@ -743,8 +743,8 @@ void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	
 	MOAITransform::SerializeIn ( state, serializer );
 	
-	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < uintptr >( -1, "mDeck", 0 )));
-	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < uintptr >( -1, "mGrid", 0 )));
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//

@@ -590,14 +590,14 @@ s32 MOAILuaState::GetValue < s32 >( int idx, s32 value ) {
 }
 
 //----------------------------------------------------------------//
-//template <>
-//s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
-//
-//	if ( this->IsType ( idx, LUA_TNUMBER )) {
-//		return ( s64 )lua_tonumber ( this->mState, idx );
-//	}
-//	return value;
-//}
+template <>
+s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( s64 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
 
 //----------------------------------------------------------------//
 template <>
@@ -630,14 +630,14 @@ u32 MOAILuaState::GetValue < u32 >( int idx, u32 value ) {
 }
 
 //----------------------------------------------------------------//
-//template <>
-//u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
-//
-//	if ( this->IsType ( idx, LUA_TNUMBER )) {
-//		return ( u64 )lua_tonumber ( this->mState, idx );
-//	}
-//	return value;
-//}
+template <>
+u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( u64 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
 
 //----------------------------------------------------------------//
 template <>
@@ -648,16 +648,6 @@ void* MOAILuaState::GetValue < void* >( int idx, void* value ) {
 	}
 	return value;
 }
-
-//----------------------------------------------------------------//
-//template <>
-//uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
-//
-//	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
-//		return ( uintptr )lua_touserdata ( this->mState, idx );
-//	}
-//	return value;
-//}
 
 //----------------------------------------------------------------//
 bool MOAILuaState::HasField ( int idx, cc8* name ) {
@@ -869,12 +859,6 @@ void MOAILuaState::Push ( size_t value ) {
 	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );
 }
-
-//----------------------------------------------------------------//
-//void MOAILuaState::Push ( uintptr value ) {
-//
-//	lua_pushlightuserdata ( this->mState, ( void* )value );
-//}
 
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( lua_CFunction value ) {
