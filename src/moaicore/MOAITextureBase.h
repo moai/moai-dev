@@ -72,10 +72,12 @@ protected:
 	void			CreateTextureFromImage	( MOAIImage& image );
 	void			CreateTextureFromPVR	( void* data, size_t size );
 	bool			IsRenewable				();
-	void			OnBind					();
-	void			OnClear					();
-	void			OnDestroy				();
-	void			OnInvalidate			();
+
+	virtual void	OnBind					();
+	virtual void	OnClear					();
+	virtual void	OnDestroy				();
+	virtual void	OnInvalidate			();
+
 	void			ReleaseLoader			();
 	void			UpdateTextureFromImage	( MOAIImage& image, USIntRect rect );
 
@@ -92,7 +94,7 @@ public:
 	bool			IsValid					();
 	bool			LoadGfxState			();
 					MOAITextureBase			();
-					~MOAITextureBase		();
+	virtual			~MOAITextureBase		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFilter				( int filter );
