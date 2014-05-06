@@ -57,7 +57,7 @@ public:
 	//void					Init					( const void* data, u32 size, u32 transform, cc8* debugname );
 	
 							MOAITexture				();
-							~MOAITexture			();
+	virtual					~MOAITexture			();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
