@@ -1130,8 +1130,13 @@ int MOAIFreeTypeFont::NumberOfLinesToDisplayText(cc8 *text, FT_Int imageWidth,
 		}
 		
 		// test for first character of line to adjust penX
+		
 		if (textLength == 0) {
 			penX += -((face->glyph->metrics.horiBearingX) >> 6);
+			// make sure value of penX does not go below zero
+			if (penX < 0){
+				penX = 0;
+			}
 		}
 		
 		// determine if penX is outside the bounds of the box
