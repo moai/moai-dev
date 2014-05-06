@@ -206,6 +206,14 @@ MOAIPartitionResult* MOAIPartitionResultBuffer::PopResult () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::Project ( const ZLMatrix4x4& mtx ) {
+
+	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+		mtx.Project ( this->mResults [ i ].mLoc );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -241,6 +249,10 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 	
 	result.mLoc = loc;
 	result.mBounds = bounds;
+	
+	ZLVec3D piv = prop.GetPiv ();
+	result.mLoc.Add ( piv );
+	result.mBounds.Offset ( piv );
 }
 
 //----------------------------------------------------------------//
