@@ -266,7 +266,7 @@ int MOAIStream::_write ( lua_State* L ) {
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
 	// TODO: 64bit
-	size_t writeLen = state.GetValue < u32 >( 3, len );
+	size_t writeLen = state.GetValue < u32 >( 3, ( u32 )len );
 	if ( len < writeLen ) {
 		writeLen = len;
 	}

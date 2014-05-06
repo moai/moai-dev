@@ -86,6 +86,7 @@ public:
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
+	void					Project							( const ZLMatrix4x4& mtx );
 	void					PushProps						( lua_State* L );
 	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds );
 	void					Reset							();
