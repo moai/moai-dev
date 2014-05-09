@@ -51,8 +51,8 @@ void MOAICollisionProp::ClearOverlapLink ( MOAICollisionProp& other ) {
 		cursor = cursor->mNext;
 		
 		if ( overlapLink->mOther != &other ) {
-			cursor->mNext = this->mOverlapLinks;
-			this->mOverlapLinks = cursor;
+			overlapLink->mNext = this->mOverlapLinks;
+			this->mOverlapLinks = overlapLink;
 		}
 	}
 }
@@ -82,12 +82,24 @@ MOAICollisionProp::~MOAICollisionProp () {
 }
 
 //----------------------------------------------------------------//
+bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const {
+
+	// TODO: actually pay attention to OVERLAP_GRANULARITY_FINE and OVERLAP_CALCULATE_BOUNDS
+	info.mHasBounds = false;
+	
+	// yeah, refining not so much...
+	return true;
+}
+
+//----------------------------------------------------------------//
 void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
+	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_LIFECYCLE",		( u32 )OVERLAP_EVENTS_LIFECYCLE );
+	state.SetField ( -1, "OVERLAP_GRANULARITY_FINE",		( u32 )OVERLAP_GRANULARITY_FINE );
+	state.SetField ( -1, "OVERLAP_CALCULATE_BOUNDS",		( u32 )OVERLAP_CALCULATE_BOUNDS );
 }
 
 //----------------------------------------------------------------//

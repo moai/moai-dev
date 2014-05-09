@@ -47,7 +47,7 @@ int	MOAIVungleIOS::_allowAutoRotate	( lua_State* L ) {
 int	MOAIVungleIOS::_cacheSizeGet ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int cacheSize = [ VGVunglePub cacheSizeGet ];
+	int cacheSize = ( int )[ VGVunglePub cacheSizeGet ];
 	
 	lua_pushnumber ( state, cacheSize );
 	

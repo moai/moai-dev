@@ -41,6 +41,7 @@ public:
 	void		Init			( const ZLBox& box );
 	void		Init			( const ZLPrism& prism );
 	void		Init			( const ZLVec3D& vec );
+	void		Init			( const ZLRect& rect, u32 plane, float back, float front );
 	void		Init			( float left, float top, float right, float bottom, float back, float front );
 	bool		IsPoint			();
 	bool		IsSame			( const ZLBox& box ) const;

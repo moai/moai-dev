@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
 
+class MOAICollisionShape;
 class MOAICollisionProp;
 class MOAIPropOverlap;
 
@@ -36,11 +37,24 @@ private:
 	friend class MOAICollisionProp;
 	friend class MOAICollisionWorld;
 
-	ZLBox					mBounds;
 	MOAIPropOverlapLink		mLeft;
 	MOAIPropOverlapLink		mRight;
 	
 	ZLLeanLink < MOAIPropOverlap* >	mOverlapListLink;
+};
+
+//================================================================//
+// MOAIOverlapInfo
+//================================================================//
+class MOAIOverlapInfo {
+private:
+
+	friend class MOAICollisionProp;
+	friend class MOAICollisionWorld;
+
+	ZLVec3D		mCenter;
+	ZLBox		mBounds;
+	bool		mHasBounds;
 };
 
 //================================================================//
@@ -71,15 +85,18 @@ public:
 	DECL_LUA_FACTORY ( MOAICollisionProp )
 
 	enum {
-		OVERLAP_EVENTS_CONTINUOUS		= 0x01,		// will *not* create overlap links and will receive continuous status events
+		OVERLAP_EVENTS_ON_UPDATE		= 0x01,		// will send overlap update events
 		OVERLAP_EVENTS_LIFECYCLE		= 0x02,		// will create overlap links and receive begin/end events
+		OVERLAP_GRANULARITY_FINE		= 0x04,		// will use higher resolution primitives if available
+		OVERLAP_CALCULATE_BOUNDS		= 0x08,		// will calculate bounds instead of just a point between both props
 	};
 
-	static const u32 DEFAULT_OVERLAP_FLAGS			= 0;
+	static const u32 DEFAULT_OVERLAP_FLAGS	= 0;
 
 	//----------------------------------------------------------------//
 						MOAICollisionProp		();
 	virtual				~MOAICollisionProp		();
+	bool				RefineOverlap			( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const;
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

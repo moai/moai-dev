@@ -17,7 +17,16 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 onOverlap = function ( event, prop1, prop2 )
-	print ( event, prop1, prop2 )
+	
+	local eventName
+	
+	eventName = ( event == MOAICollisionWorld.OVERLAP_BEGIN ) and 'BEGIN' or eventName
+	eventName = ( event == MOAICollisionWorld.OVERLAP_END ) and 'END' or eventName
+	eventName = ( event == MOAICollisionWorld.OVERLAP_UPDATE ) and 'UPDATE' or eventName
+	
+	print ( eventName, prop1, prop2 )
+	
+	if event == MOAICollisionWorld.OVERLAP_END then print () end
 end
 
 world = MOAICollisionWorld.new ()
@@ -38,7 +47,7 @@ makePropWithColl = function ( x, y )
 	prop:setLoc ( x, y )
 
 	local coll = MOAICollisionProp.new ()
-	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_CONTINUOUS )
+	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
 	coll:setBounds ( -64, -64, 0, 64, 64, 0 )
 	coll:setAttrLink ( MOAICollisionProp.INHERIT_TRANSFORM, prop, MOAIProp.TRANSFORM_TRAIT )
 	world:insertProp ( coll )
