@@ -1035,21 +1035,15 @@
 		89BE760F173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FC173C12CE00DFE837 /* MOAIHttpTaskBase.cpp */; };
 		89BE7610173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FD173C12CE00DFE837 /* MOAIHttpTaskBase.h */; };
 		89BE7611173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FD173C12CE00DFE837 /* MOAIHttpTaskBase.h */; };
-		89BE7612173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FE173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp */; };
 		89BE7613173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FE173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp */; };
-		89BE7614173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FF173C12CE00DFE837 /* MOAIHttpTaskCurl.h */; };
 		89BE7615173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FF173C12CE00DFE837 /* MOAIHttpTaskCurl.h */; };
 		89BE7616173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7600173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp */; };
 		89BE7617173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7600173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp */; };
 		89BE7618173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7601173C12CE00DFE837 /* MOAIHttpTaskNaCl.h */; };
 		89BE7619173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7601173C12CE00DFE837 /* MOAIHttpTaskNaCl.h */; };
-		89BE761A173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7602173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp */; };
 		89BE761B173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7602173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp */; };
-		89BE761C173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7603173C12CE00DFE837 /* MOAIUrlMgrCurl.h */; };
 		89BE761D173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7603173C12CE00DFE837 /* MOAIUrlMgrCurl.h */; };
-		89BE761E173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7604173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp */; };
 		89BE761F173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7604173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp */; };
-		89BE7620173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7605173C12CE00DFE837 /* MOAIUrlMgrNaCl.h */; };
 		89BE7621173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7605173C12CE00DFE837 /* MOAIUrlMgrNaCl.h */; };
 		89BE7622173C12CE00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7606173C12CE00DFE837 /* pch.cpp */; };
 		89BE7623173C12CE00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7606173C12CE00DFE837 /* pch.cpp */; };
@@ -1192,6 +1186,210 @@
 		CD23666F180A547F006A7236 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75B71808AE8E0001EF0C /* host.mm */; };
 		CD236670180A547F006A7236 /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F75B81808AE8E0001EF0C /* MOAIVungleIOS.h */; };
 		CD236671180A547F006A7236 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75B91808AE8E0001EF0C /* MOAIVungleIOS.mm */; };
+		CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
+		CD27BD04191D5352000A7770 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
+		CD27BD05191D5352000A7770 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
+		CD27BD06191D5352000A7770 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
+		CD27BD07191D5352000A7770 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
+		CD27BD08191D5352000A7770 /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
+		CD27BD09191D5352000A7770 /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
+		CD27BD0A191D5352000A7770 /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
+		CD27BD0B191D5352000A7770 /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
+		CD27BD0C191D5352000A7770 /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
+		CD27BD0D191D5352000A7770 /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
+		CD27BD0E191D5352000A7770 /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
+		CD27BD0F191D5352000A7770 /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
+		CD27BD10191D5352000A7770 /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
+		CD27BD11191D5352000A7770 /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
+		CD27BD12191D5352000A7770 /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
+		CD27BD13191D5352000A7770 /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
+		CD27BD14191D5352000A7770 /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
+		CD27BD15191D5352000A7770 /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
+		CD27BD16191D5352000A7770 /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
+		CD27BD17191D5352000A7770 /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
+		CD27BD18191D5352000A7770 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
+		CD27BD19191D5352000A7770 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
+		CD27BD1A191D5352000A7770 /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
+		CD27BD1B191D5352000A7770 /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
+		CD27BD1C191D5352000A7770 /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
+		CD27BD1D191D5352000A7770 /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
+		CD27BD1E191D5352000A7770 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
+		CD27BD1F191D5352000A7770 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
+		CD27BD20191D5352000A7770 /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
+		CD27BD21191D5352000A7770 /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
+		CD27BD22191D5352000A7770 /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
+		CD27BD23191D5352000A7770 /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
+		CD27BD24191D5352000A7770 /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
+		CD27BD25191D5352000A7770 /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
+		CD27BD26191D5352000A7770 /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
+		CD27BD27191D5352000A7770 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
+		CD27BD28191D5352000A7770 /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
+		CD27BD29191D5352000A7770 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
+		CD27BD2A191D5352000A7770 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
+		CD27BD2B191D5352000A7770 /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
+		CD27BD2C191D5352000A7770 /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
+		CD27BD2D191D5352000A7770 /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
+		CD27BD2E191D5352000A7770 /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
+		CD27BD2F191D5352000A7770 /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
+		CD27BD30191D5352000A7770 /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
+		CD27BD31191D5352000A7770 /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
+		CD27BD32191D5352000A7770 /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
+		CD27BD33191D5352000A7770 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
+		CD27BD34191D5352000A7770 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
+		CD27BD35191D5352000A7770 /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
+		CD27BD36191D5352000A7770 /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
+		CD27BD37191D5352000A7770 /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
+		CD27BD38191D5352000A7770 /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
+		CD27BD39191D5352000A7770 /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
+		CD27BD3A191D5352000A7770 /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
+		CD27BD3B191D5352000A7770 /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
+		CD27BD3C191D5352000A7770 /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
+		CD27BD3D191D5352000A7770 /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
+		CD27BD3E191D5352000A7770 /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
+		CD27BD3F191D5352000A7770 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
+		CD27BD40191D5352000A7770 /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
+		CD27BD41191D5352000A7770 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
+		CD27BD42191D5352000A7770 /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
+		CD27BD43191D5352000A7770 /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
+		CD27BD44191D5352000A7770 /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
+		CD27BD45191D5352000A7770 /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
+		CD27BD46191D5352000A7770 /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
+		CD27BD47191D5352000A7770 /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
+		CD27BD48191D5352000A7770 /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
+		CD27BD49191D5352000A7770 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
+		CD27BD4A191D5352000A7770 /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
+		CD27BD4B191D5352000A7770 /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
+		CD27BD4C191D5352000A7770 /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
+		CD27BD4D191D5352000A7770 /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
+		CD27BD4E191D5352000A7770 /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
+		CD27BD4F191D5352000A7770 /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
+		CD27BD50191D5352000A7770 /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
+		CD27BD51191D5352000A7770 /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
+		CD27BD52191D5352000A7770 /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
+		CD27BD53191D5352000A7770 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
+		CD27BD54191D5352000A7770 /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
+		CD27BD55191D5352000A7770 /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
+		CD27BD56191D5352000A7770 /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
+		CD27BD57191D5352000A7770 /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
+		CD27BD58191D5352000A7770 /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
+		CD27BD59191D5352000A7770 /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
+		CD27BD5A191D5352000A7770 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
+		CD27BD5B191D5352000A7770 /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
+		CD27BD5C191D5352000A7770 /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
+		CD27BD5D191D5352000A7770 /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
+		CD27BD5E191D5352000A7770 /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
+		CD27BD5F191D5352000A7770 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
+		CD27BD60191D5352000A7770 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
+		CD27BD61191D5352000A7770 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
+		CD27BD62191D5352000A7770 /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
+		CD27BD63191D5352000A7770 /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
+		CD27BD64191D5352000A7770 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
+		CD27BD65191D5352000A7770 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
+		CD27BD66191D5352000A7770 /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
+		CD27BD67191D5352000A7770 /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
+		CD27BD68191D5352000A7770 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
+		CD27BD69191D5352000A7770 /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
+		CD27BD6A191D5352000A7770 /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
+		CD27BD6B191D5352000A7770 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
+		CD27BD6C191D5352000A7770 /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
+		CD27BD6D191D5352000A7770 /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
+		CD27BD6E191D5352000A7770 /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
+		CD27BD6F191D5352000A7770 /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
+		CD27BD70191D5352000A7770 /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
+		CD27BD71191D5352000A7770 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
+		CD27BD72191D5352000A7770 /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
+		CD27BD73191D5352000A7770 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
+		CD27BD74191D5352000A7770 /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
+		CD27BD75191D5352000A7770 /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
+		CD27BD76191D5352000A7770 /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
+		CD27BD77191D5352000A7770 /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
+		CD27BD78191D5352000A7770 /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
+		CD27BD79191D5352000A7770 /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
+		CD27BD7A191D5352000A7770 /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
+		CD27BD7B191D5352000A7770 /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
+		CD27BD7C191D5352000A7770 /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
+		CD27BD7D191D5352000A7770 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
+		CD27BD7E191D5352000A7770 /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
+		CD27BD7F191D5352000A7770 /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
+		CD27BD80191D5352000A7770 /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
+		CD27BD81191D5352000A7770 /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
+		CD27BD82191D5352000A7770 /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
+		CD27BD83191D5352000A7770 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
+		CD27BD84191D5352000A7770 /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
+		CD27BD85191D5352000A7770 /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
+		CD27BD86191D5352000A7770 /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
+		CD27BD87191D5352000A7770 /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
+		CD27BD88191D5352000A7770 /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
+		CD27BD89191D5352000A7770 /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
+		CD27BD8A191D5352000A7770 /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
+		CD27BD8B191D5352000A7770 /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
+		CD27BD8C191D5352000A7770 /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
+		CD27BD8D191D5352000A7770 /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
+		CD27BD8E191D5352000A7770 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
+		CD27BD8F191D535A000A7770 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
+		CD27BD90191D535A000A7770 /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
+		CD27BD91191D535A000A7770 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
+		CD27BD92191D535A000A7770 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
+		CD27BD93191D535A000A7770 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
+		CD27BD94191D535A000A7770 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
+		CD27BD95191D535A000A7770 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
+		CD27BD96191D535A000A7770 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8213564CAF000ADC60 /* multi.h */; };
+		CD27BD97191D535A000A7770 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8313564CAF000ADC60 /* stdcheaders.h */; };
+		CD27BD98191D535A000A7770 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8413564CAF000ADC60 /* typecheck-gcc.h */; };
+		CD27BD99191D535A000A7770 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8513564CAF000ADC60 /* types.h */; };
+		CD27BD9A191D5382000A7770 /* bio_ssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99B137805910093EE68 /* bio_ssl.c */; };
+		CD27BD9B191D5382000A7770 /* d1_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99C137805910093EE68 /* d1_both.c */; };
+		CD27BD9C191D5382000A7770 /* d1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99D137805910093EE68 /* d1_clnt.c */; };
+		CD27BD9D191D5382000A7770 /* d1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99E137805910093EE68 /* d1_enc.c */; };
+		CD27BD9E191D5382000A7770 /* d1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99F137805910093EE68 /* d1_lib.c */; };
+		CD27BD9F191D5382000A7770 /* d1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A0137805910093EE68 /* d1_meth.c */; };
+		CD27BDA0191D5382000A7770 /* d1_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A1137805910093EE68 /* d1_pkt.c */; };
+		CD27BDA1191D5382000A7770 /* d1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A2137805910093EE68 /* d1_srvr.c */; };
+		CD27BDA2191D5382000A7770 /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A3137805910093EE68 /* dtls1.h */; };
+		CD27BDA3191D5382000A7770 /* kssl_lcl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A4137805910093EE68 /* kssl_lcl.h */; };
+		CD27BDA4191D5382000A7770 /* kssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A5137805910093EE68 /* kssl.c */; };
+		CD27BDA5191D5382000A7770 /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A6137805910093EE68 /* kssl.h */; };
+		CD27BDA6191D5382000A7770 /* s2_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A7137805910093EE68 /* s2_clnt.c */; };
+		CD27BDA7191D5382000A7770 /* s2_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A8137805910093EE68 /* s2_enc.c */; };
+		CD27BDA8191D5382000A7770 /* s2_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A9137805910093EE68 /* s2_lib.c */; };
+		CD27BDA9191D5382000A7770 /* s2_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AA137805910093EE68 /* s2_meth.c */; };
+		CD27BDAA191D5382000A7770 /* s2_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AB137805910093EE68 /* s2_pkt.c */; };
+		CD27BDAB191D5382000A7770 /* s2_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AC137805910093EE68 /* s2_srvr.c */; };
+		CD27BDAC191D5382000A7770 /* s3_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AD137805910093EE68 /* s3_both.c */; };
+		CD27BDAD191D5382000A7770 /* s3_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AE137805910093EE68 /* s3_clnt.c */; };
+		CD27BDAE191D5382000A7770 /* s3_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AF137805910093EE68 /* s3_enc.c */; };
+		CD27BDAF191D5382000A7770 /* s3_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B0137805910093EE68 /* s3_lib.c */; };
+		CD27BDB0191D5382000A7770 /* s3_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B1137805910093EE68 /* s3_meth.c */; };
+		CD27BDB1191D5382000A7770 /* s3_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B2137805910093EE68 /* s3_pkt.c */; };
+		CD27BDB2191D5382000A7770 /* s3_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B3137805910093EE68 /* s3_srvr.c */; };
+		CD27BDB3191D5382000A7770 /* s23_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B4137805910093EE68 /* s23_clnt.c */; };
+		CD27BDB4191D5382000A7770 /* s23_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B5137805910093EE68 /* s23_lib.c */; };
+		CD27BDB5191D5382000A7770 /* s23_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B6137805910093EE68 /* s23_meth.c */; };
+		CD27BDB6191D5382000A7770 /* s23_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B7137805910093EE68 /* s23_pkt.c */; };
+		CD27BDB7191D5382000A7770 /* s23_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B8137805910093EE68 /* s23_srvr.c */; };
+		CD27BDB8191D5382000A7770 /* ssl_algs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B9137805910093EE68 /* ssl_algs.c */; };
+		CD27BDB9191D5382000A7770 /* ssl_asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BA137805910093EE68 /* ssl_asn1.c */; };
+		CD27BDBA191D5382000A7770 /* ssl_cert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BB137805910093EE68 /* ssl_cert.c */; };
+		CD27BDBB191D5382000A7770 /* ssl_ciph.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BC137805910093EE68 /* ssl_ciph.c */; };
+		CD27BDBC191D5382000A7770 /* ssl_err.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BD137805910093EE68 /* ssl_err.c */; };
+		CD27BDBD191D5382000A7770 /* ssl_err2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BE137805910093EE68 /* ssl_err2.c */; };
+		CD27BDBE191D5382000A7770 /* ssl_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BF137805910093EE68 /* ssl_lib.c */; };
+		CD27BDBF191D5382000A7770 /* ssl_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C0137805910093EE68 /* ssl_locl.h */; };
+		CD27BDC0191D5382000A7770 /* ssl_rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C1137805910093EE68 /* ssl_rsa.c */; };
+		CD27BDC1191D5382000A7770 /* ssl_sess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C2137805910093EE68 /* ssl_sess.c */; };
+		CD27BDC2191D5382000A7770 /* ssl_stat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C3137805910093EE68 /* ssl_stat.c */; };
+		CD27BDC3191D5382000A7770 /* ssl_txt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C5137805910093EE68 /* ssl_txt.c */; };
+		CD27BDC4191D5382000A7770 /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C6137805910093EE68 /* ssl.h */; };
+		CD27BDC5191D5382000A7770 /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C7137805910093EE68 /* ssl2.h */; };
+		CD27BDC6191D5382000A7770 /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C8137805910093EE68 /* ssl3.h */; };
+		CD27BDC7191D5382000A7770 /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C9137805910093EE68 /* ssl23.h */; };
+		CD27BDC8191D5382000A7770 /* t1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CB137805910093EE68 /* t1_clnt.c */; };
+		CD27BDC9191D5382000A7770 /* t1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CC137805910093EE68 /* t1_enc.c */; };
+		CD27BDCA191D5382000A7770 /* t1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CD137805910093EE68 /* t1_lib.c */; };
+		CD27BDCB191D5382000A7770 /* t1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CE137805910093EE68 /* t1_meth.c */; };
+		CD27BDCC191D5382000A7770 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
+		CD27BDCD191D5382000A7770 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
+		CD27BDCE191D5382000A7770 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -3749,210 +3947,6 @@
 		CDD06DEB1398838D00AB0420 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAA1398838D00AB0420 /* unix.h */; };
 		CDD06DEC1398838D00AB0420 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DAC1398838D00AB0420 /* usocket.c */; };
 		CDD06DED1398838D00AB0420 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAD1398838D00AB0420 /* usocket.h */; };
-		CDD4765E17FA789B00525B77 /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
-		CDD4766517FA789B00525B77 /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
-		CDD4766A17FA789B00525B77 /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
-		CDD4766C17FA789B00525B77 /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
-		CDD4768117FA789B00525B77 /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
-		CDD4768517FA789B00525B77 /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
-		CDD4769917FA789B00525B77 /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
-		CDD4769B17FA789B00525B77 /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
-		CDD476A417FA789B00525B77 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
-		CDD476A717FA789B00525B77 /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
-		CDD476B317FA789B00525B77 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
-		CDD476B617FA789B00525B77 /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
-		CDD476B917FA789B00525B77 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
-		CDD476BC17FA789B00525B77 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
-		CDD476C417FA789B00525B77 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
-		CDD476C817FA789B00525B77 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
-		CDD476D417FA789B00525B77 /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
-		CDD476D617FA789B00525B77 /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
-		CDD476D717FA789B00525B77 /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
-		CDD476DB17FA789B00525B77 /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
-		CDD476DE17FA789B00525B77 /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
-		CDD476E617FA789B00525B77 /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
-		CDD476E717FA789B00525B77 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
-		CDD476F617FA789B00525B77 /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
-		CDD476FD17FA789B00525B77 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8513564CAF000ADC60 /* types.h */; };
-		CDD4770117FA789B00525B77 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
-		CDD4770417FA789B00525B77 /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
-		CDD4770A17FA789B00525B77 /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
-		CDD4770B17FA789B00525B77 /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
-		CDD4771017FA789B00525B77 /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
-		CDD4771117FA789B00525B77 /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A3137805910093EE68 /* dtls1.h */; };
-		CDD4771217FA789B00525B77 /* kssl_lcl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A4137805910093EE68 /* kssl_lcl.h */; };
-		CDD4771317FA789B00525B77 /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A6137805910093EE68 /* kssl.h */; };
-		CDD4771417FA789B00525B77 /* ssl_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C0137805910093EE68 /* ssl_locl.h */; };
-		CDD4771517FA789B00525B77 /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
-		CDD4771617FA789B00525B77 /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C6137805910093EE68 /* ssl.h */; };
-		CDD4771717FA789B00525B77 /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C7137805910093EE68 /* ssl2.h */; };
-		CDD4771817FA789B00525B77 /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C8137805910093EE68 /* ssl3.h */; };
-		CDD4771917FA789B00525B77 /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C9137805910093EE68 /* ssl23.h */; };
-		CDD4771A17FA789B00525B77 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
-		CDD4772017FA789B00525B77 /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
-		CDD4772317FA789B00525B77 /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
-		CDD4773417FA789B00525B77 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8213564CAF000ADC60 /* multi.h */; };
-		CDD4773617FA789B00525B77 /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
-		CDD4774217FA789B00525B77 /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
-		CDD4774417FA789B00525B77 /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
-		CDD4774617FA789B00525B77 /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
-		CDD4774A17FA789B00525B77 /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
-		CDD4774C17FA789B00525B77 /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
-		CDD4775217FA789B00525B77 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
-		CDD4775717FA789B00525B77 /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
-		CDD4775817FA789B00525B77 /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
-		CDD4775E17FA789B00525B77 /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
-		CDD4775F17FA789B00525B77 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
-		CDD4776917FA789B00525B77 /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
-		CDD4776B17FA789B00525B77 /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
-		CDD4776C17FA789B00525B77 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
-		CDD4777217FA789B00525B77 /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
-		CDD4777317FA789B00525B77 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
-		CDD4777B17FA789B00525B77 /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
-		CDD4778D17FA789B00525B77 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
-		CDD4778F17FA789B00525B77 /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
-		CDD4779017FA789B00525B77 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
-		CDD4779117FA789B00525B77 /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
-		CDD4779C17FA789B00525B77 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8413564CAF000ADC60 /* typecheck-gcc.h */; };
-		CDD4779D17FA789B00525B77 /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
-		CDD477A917FA789B00525B77 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
-		CDD477AD17FA789B00525B77 /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
-		CDD477AE17FA789B00525B77 /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
-		CDD477B717FA789B00525B77 /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
-		CDD477C117FA789B00525B77 /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
-		CDD477C717FA789B00525B77 /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
-		CDD477CA17FA789B00525B77 /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
-		CDD477CB17FA789B00525B77 /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
-		CDD477CD17FA789B00525B77 /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
-		CDD477CE17FA789B00525B77 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
-		CDD477D517FA789B00525B77 /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
-		CDD477D917FA789B00525B77 /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
-		CDD477DC17FA789B00525B77 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8313564CAF000ADC60 /* stdcheaders.h */; };
-		CDD477DE17FA789B00525B77 /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
-		CDD477E117FA789B00525B77 /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
-		CDD477E517FA789B00525B77 /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
-		CDD477E717FA789B00525B77 /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
-		CDD477E817FA789B00525B77 /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
-		CDD477F117FA789B00525B77 /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
-		CDD477F417FA789B00525B77 /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
-		CDD477FA17FA789B00525B77 /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
-		CDD477FB17FA789B00525B77 /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
-		CDD4780617FA789B00525B77 /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
-		CDD4781417FA789B00525B77 /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
-		CDD4782517FA789B00525B77 /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
-		CDD4783717FA789B00525B77 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
-		CDD4784B17FA789B00525B77 /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
-		CDD4784D17FA789B00525B77 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
-		CDD4787217FA789B00525B77 /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
-		CDD4788D17FA789B00525B77 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
-		CDD4789717FA789B00525B77 /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
-		CDD478B517FA789B00525B77 /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
-		CDD478C617FA789B00525B77 /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
-		CDD478CB17FA789B00525B77 /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
-		CDD478D417FA789B00525B77 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
-		CDD478E017FA789B00525B77 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
-		CDD478E117FA789B00525B77 /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
-		CDD478F217FA789B00525B77 /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
-		CDD4790317FA789B00525B77 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
-		CDD4790B17FA789B00525B77 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
-		CDD4790E17FA789B00525B77 /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
-		CDD4792217FA789B00525B77 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
-		CDD4792817FA789B00525B77 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
-		CDD4792B17FA789B00525B77 /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
-		CDD4794317FA789B00525B77 /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
-		CDD4794817FA789B00525B77 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
-		CDD4794A17FA789B00525B77 /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
-		CDD4795C17FA789B00525B77 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
-		CDD4796F17FA789B00525B77 /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
-		CDD4797817FA789B00525B77 /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
-		CDD4797917FA789B00525B77 /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
-		CDD4798117FA789B00525B77 /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
-		CDD4799817FA789B00525B77 /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
-		CDD479AC17FA789B00525B77 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
-		CDD479B117FA789B00525B77 /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
-		CDD479C417FA789B00525B77 /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
-		CDD479F017FA789B00525B77 /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
-		CDD479FD17FA789B00525B77 /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
-		CDD47A0B17FA789B00525B77 /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
-		CDD47A1617FA789B00525B77 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
-		CDD47A3117FA789B00525B77 /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
-		CDD47A3D17FA789B00525B77 /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
-		CDD47A4117FA789B00525B77 /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
-		CDD47A5717FA789B00525B77 /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
-		CDD47A7C17FA789B00525B77 /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
-		CDD47A8017FA789B00525B77 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
-		CDD47A8D17FA789B00525B77 /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
-		CDD47A9417FA789B00525B77 /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
-		CDD47AA017FA789B00525B77 /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
-		CDD47AB017FA789B00525B77 /* bio_ssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99B137805910093EE68 /* bio_ssl.c */; };
-		CDD47AB117FA789B00525B77 /* d1_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99C137805910093EE68 /* d1_both.c */; };
-		CDD47AB217FA789B00525B77 /* d1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99D137805910093EE68 /* d1_clnt.c */; };
-		CDD47AB317FA789B00525B77 /* d1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99E137805910093EE68 /* d1_enc.c */; };
-		CDD47AB417FA789B00525B77 /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
-		CDD47AB517FA789B00525B77 /* d1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99F137805910093EE68 /* d1_lib.c */; };
-		CDD47AB617FA789B00525B77 /* d1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A0137805910093EE68 /* d1_meth.c */; };
-		CDD47AB717FA789B00525B77 /* d1_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A1137805910093EE68 /* d1_pkt.c */; };
-		CDD47AB817FA789B00525B77 /* d1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A2137805910093EE68 /* d1_srvr.c */; };
-		CDD47AB917FA789B00525B77 /* kssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A5137805910093EE68 /* kssl.c */; };
-		CDD47ABA17FA789B00525B77 /* s2_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A7137805910093EE68 /* s2_clnt.c */; };
-		CDD47ABB17FA789B00525B77 /* s2_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A8137805910093EE68 /* s2_enc.c */; };
-		CDD47ABC17FA789B00525B77 /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
-		CDD47ABD17FA789B00525B77 /* s2_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A9137805910093EE68 /* s2_lib.c */; };
-		CDD47ABE17FA789B00525B77 /* s2_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AA137805910093EE68 /* s2_meth.c */; };
-		CDD47ABF17FA789B00525B77 /* s2_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AB137805910093EE68 /* s2_pkt.c */; };
-		CDD47AC017FA789B00525B77 /* s2_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AC137805910093EE68 /* s2_srvr.c */; };
-		CDD47AC117FA789B00525B77 /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
-		CDD47AC217FA789B00525B77 /* s3_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AD137805910093EE68 /* s3_both.c */; };
-		CDD47AC317FA789B00525B77 /* s3_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AE137805910093EE68 /* s3_clnt.c */; };
-		CDD47AC417FA789B00525B77 /* s3_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AF137805910093EE68 /* s3_enc.c */; };
-		CDD47AC517FA789B00525B77 /* s3_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B0137805910093EE68 /* s3_lib.c */; };
-		CDD47AC617FA789B00525B77 /* s3_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B1137805910093EE68 /* s3_meth.c */; };
-		CDD47AC717FA789B00525B77 /* s3_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B2137805910093EE68 /* s3_pkt.c */; };
-		CDD47AC817FA789B00525B77 /* s3_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B3137805910093EE68 /* s3_srvr.c */; };
-		CDD47AC917FA789B00525B77 /* s23_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B4137805910093EE68 /* s23_clnt.c */; };
-		CDD47ACA17FA789B00525B77 /* s23_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B5137805910093EE68 /* s23_lib.c */; };
-		CDD47ACB17FA789B00525B77 /* s23_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B6137805910093EE68 /* s23_meth.c */; };
-		CDD47ACC17FA789B00525B77 /* s23_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B7137805910093EE68 /* s23_pkt.c */; };
-		CDD47ACD17FA789B00525B77 /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
-		CDD47ACE17FA789B00525B77 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
-		CDD47ACF17FA789B00525B77 /* s23_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B8137805910093EE68 /* s23_srvr.c */; };
-		CDD47AD017FA789B00525B77 /* ssl_algs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B9137805910093EE68 /* ssl_algs.c */; };
-		CDD47AD117FA789B00525B77 /* ssl_asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BA137805910093EE68 /* ssl_asn1.c */; };
-		CDD47AD217FA789B00525B77 /* ssl_cert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BB137805910093EE68 /* ssl_cert.c */; };
-		CDD47AD317FA789B00525B77 /* ssl_ciph.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BC137805910093EE68 /* ssl_ciph.c */; };
-		CDD47AD417FA789B00525B77 /* ssl_err.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BD137805910093EE68 /* ssl_err.c */; };
-		CDD47AD517FA789B00525B77 /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
-		CDD47AD617FA789B00525B77 /* ssl_err2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BE137805910093EE68 /* ssl_err2.c */; };
-		CDD47AD717FA789B00525B77 /* ssl_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BF137805910093EE68 /* ssl_lib.c */; };
-		CDD47AD817FA789B00525B77 /* ssl_rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C1137805910093EE68 /* ssl_rsa.c */; };
-		CDD47AD917FA789B00525B77 /* ssl_sess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C2137805910093EE68 /* ssl_sess.c */; };
-		CDD47ADA17FA789B00525B77 /* ssl_stat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C3137805910093EE68 /* ssl_stat.c */; };
-		CDD47ADB17FA789B00525B77 /* ssl_txt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C5137805910093EE68 /* ssl_txt.c */; };
-		CDD47ADC17FA789B00525B77 /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
-		CDD47ADD17FA789B00525B77 /* t1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CB137805910093EE68 /* t1_clnt.c */; };
-		CDD47ADE17FA789B00525B77 /* t1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CC137805910093EE68 /* t1_enc.c */; };
-		CDD47ADF17FA789B00525B77 /* t1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CD137805910093EE68 /* t1_lib.c */; };
-		CDD47AE017FA789B00525B77 /* t1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CE137805910093EE68 /* t1_meth.c */; };
-		CDD47AE117FA789B00525B77 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
-		CDD47AE217FA789B00525B77 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
-		CDD47AE317FA789B00525B77 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
-		CDD47AE817FA789B00525B77 /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
-		CDD47B0F17FA789B00525B77 /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
-		CDD47B1F17FA789B00525B77 /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
-		CDD47B2117FA789B00525B77 /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
-		CDD47B2717FA789B00525B77 /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
-		CDD47B2917FA789B00525B77 /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
-		CDD47B3317FA789B00525B77 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
-		CDD47B3717FA789B00525B77 /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
-		CDD47B4317FA789B00525B77 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
-		CDD47B5017FA789B00525B77 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
-		CDD47B5217FA789B00525B77 /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
-		CDD47B5617FA789B00525B77 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
-		CDD47B6D17FA789B00525B77 /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
-		CDD47B6E17FA789B00525B77 /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
-		CDD47B6F17FA789B00525B77 /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
-		CDD47B7C17FA789B00525B77 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
-		CDD47B7D17FA789B00525B77 /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
 		CDD47BD617FA78AE00525B77 /* aes_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4811377D9C10093EE68 /* aes_locl.h */; };
 		CDD47BDA17FA78AE00525B77 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4851377D9C10093EE68 /* aes.h */; };
 		CDD47BDB17FA78AE00525B77 /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4921377D9D40093EE68 /* camellia.h */; };
@@ -9453,12 +9447,19 @@
 			isa = PBXGroup;
 			children = (
 				CDE9851B18975ADA001827F9 /* action */,
+				CD8DD76419195F5A0088EA60 /* collision */,
 				CDE9851818975AA7001827F9 /* deck */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
+				CD8DD76819195FFB0088EA60 /* grid */,
 				CD7F150318F5B13100BF74AE /* input */,
+				CD8DD76519195F830088EA60 /* particles */,
+				CD8DD76619195FBB0088EA60 /* partition */,
+				CD8DD76A191960A20088EA60 /* pathfinding */,
+				CD8DD76719195FDD0088EA60 /* profiler */,
 				CDE9851A18975ABD001827F9 /* text */,
 				CD67857D189830DB007C7D2B /* texture */,
+				CD8DD769191960830088EA60 /* transform */,
 				CDE9851718975A85001827F9 /* vector */,
 				89BE6F1A173AD0CA00DFE837 /* headers.h */,
 				89BE6F1B173AD0CA00DFE837 /* host.cpp */,
@@ -9466,8 +9467,6 @@
 				89BE6F1D173AD0CA00DFE837 /* host_particles.cpp */,
 				89BE6F1E173AD0CA00DFE837 /* host_particles.h */,
 				89BE6F2D173AD0CA00DFE837 /* MOAIAttrOp.h */,
-				89BE6F34173AD0CA00DFE837 /* MOAIBoundsDeck.cpp */,
-				89BE6F35173AD0CA00DFE837 /* MOAIBoundsDeck.h */,
 				89BE6F38173AD0CA00DFE837 /* MOAICamera.cpp */,
 				89BE6F39173AD0CA00DFE837 /* MOAICamera.h */,
 				89BE6F3A173AD0CA00DFE837 /* MOAICamera2D.cpp */,
@@ -9476,135 +9475,30 @@
 				89BE6F3D173AD0CA00DFE837 /* MOAICameraAnchor2D.h */,
 				89BE6F3E173AD0CA00DFE837 /* MOAICameraFitter2D.cpp */,
 				89BE6F3F173AD0CA00DFE837 /* MOAICameraFitter2D.h */,
-				CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */,
-				CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */,
-				CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */,
-				CD73A5FB188F0AD200DFACDB /* MOAICollisionWorld.h */,
-				89BE6F40173AD0CA00DFE837 /* MOAICollisionShape.cpp */,
-				89BE6F41173AD0CA00DFE837 /* MOAICollisionShape.h */,
 				89BE6F46173AD0CA00DFE837 /* MOAICoroutine.cpp */,
 				89BE6F47173AD0CA00DFE837 /* MOAICoroutine.h */,
-				89BE6F48173AD0CA00DFE837 /* MOAIDebugLines.cpp */,
-				89BE6F49173AD0CA00DFE837 /* MOAIDebugLines.h */,
-				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
-				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
 				89BE6F50173AD0CA00DFE837 /* MOAIEaseDriver.cpp */,
 				89BE6F51173AD0CA00DFE837 /* MOAIEaseDriver.h */,
 				89BE6F52173AD0CA00DFE837 /* MOAIEaseType.cpp */,
 				89BE6F53173AD0CA00DFE837 /* MOAIEaseType.h */,
 				89BE6F54173AD0CA00DFE837 /* MOAIEnvironment.cpp */,
 				89BE6F55173AD0CA00DFE837 /* MOAIEnvironment.h */,
-				CD73A604188F0AEC00DFACDB /* MOAIGraphicsProp.cpp */,
-				CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */,
-				CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */,
-				CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */,
-				89BE6F75173AD0CA00DFE837 /* MOAIGrid.cpp */,
-				89BE6F76173AD0CA00DFE837 /* MOAIGrid.h */,
-				89BE6F77173AD0CA00DFE837 /* MOAIGridDeck2D.cpp */,
-				89BE6F78173AD0CA00DFE837 /* MOAIGridDeck2D.h */,
-				89BE6F79173AD0CA00DFE837 /* MOAIGridPathGraph.cpp */,
-				89BE6F7A173AD0CA00DFE837 /* MOAIGridPathGraph.h */,
-				89BE6F7B173AD0CA00DFE837 /* MOAIGridSpace.cpp */,
-				89BE6F7C173AD0CA00DFE837 /* MOAIGridSpace.h */,
-				89BE6F7D173AD0CA00DFE837 /* MOAIImage-jpg.cpp */,
-				89BE6F7E173AD0CA00DFE837 /* MOAIImage-png.cpp */,
-				89BE6F7F173AD0CA00DFE837 /* MOAIImage.cpp */,
-				89BE6F80173AD0CA00DFE837 /* MOAIImage.h */,
-				89BE6F81173AD0CA00DFE837 /* MOAIImageTexture.cpp */,
-				89BE6F82173AD0CA00DFE837 /* MOAIImageTexture.h */,
-				89BE6F8D173AD0CA00DFE837 /* MOAILayer.cpp */,
-				89BE6F8E173AD0CA00DFE837 /* MOAILayer.h */,
-				89BE6F8F173AD0CA00DFE837 /* MOAILayer2D.cpp */,
-				89BE6F90173AD0CA00DFE837 /* MOAILayer2D.h */,
 				89BE6F93173AD0CA00DFE837 /* MOAILayoutFrame.cpp */,
 				89BE6F94173AD0CA00DFE837 /* MOAILayoutFrame.h */,
 				89BE6F9D173AD0CA00DFE837 /* MOAINode.cpp */,
 				89BE6F9E173AD0CA00DFE837 /* MOAINode.h */,
 				89BE6F9F173AD0CA00DFE837 /* MOAINodeMgr.cpp */,
 				89BE6FA0173AD0CA00DFE837 /* MOAINodeMgr.h */,
-				89BE6FA1173AD0CA00DFE837 /* MOAIParticle.h */,
-				89BE6FA2173AD0CA00DFE837 /* MOAIParticleCallbackPlugin.cpp */,
-				89BE6FA3173AD0CA00DFE837 /* MOAIParticleCallbackPlugin.h */,
-				89BE6FA4173AD0CA00DFE837 /* MOAIParticleDistanceEmitter.cpp */,
-				89BE6FA5173AD0CA00DFE837 /* MOAIParticleDistanceEmitter.h */,
-				89BE6FA6173AD0CA00DFE837 /* MOAIParticleEmitter.cpp */,
-				89BE6FA7173AD0CA00DFE837 /* MOAIParticleEmitter.h */,
-				89BE6FA8173AD0CA00DFE837 /* MOAIParticleForce.cpp */,
-				89BE6FA9173AD0CA00DFE837 /* MOAIParticleForce.h */,
-				89BE6FAA173AD0CA00DFE837 /* MOAIParticlePexPlugin.cpp */,
-				89BE6FAB173AD0CA00DFE837 /* MOAIParticlePexPlugin.h */,
-				89BE6FAC173AD0CA00DFE837 /* MOAIParticlePlugin.cpp */,
-				89BE6FAD173AD0CA00DFE837 /* MOAIParticlePlugin.h */,
-				89BE6FAE173AD0CA00DFE837 /* MOAIParticleScript.cpp */,
-				89BE6FAF173AD0CA00DFE837 /* MOAIParticleScript.h */,
-				89BE6FB0173AD0CA00DFE837 /* MOAIParticleState.cpp */,
-				89BE6FB1173AD0CA00DFE837 /* MOAIParticleState.h */,
-				89BE6FB2173AD0CA00DFE837 /* MOAIParticleSystem.cpp */,
-				89BE6FB3173AD0CA00DFE837 /* MOAIParticleSystem.h */,
-				89BE6FB4173AD0CA00DFE837 /* MOAIParticleTimedEmitter.cpp */,
-				89BE6FB5173AD0CA00DFE837 /* MOAIParticleTimedEmitter.h */,
-				89BE6FB6173AD0CA00DFE837 /* MOAIPartition.cpp */,
-				89BE6FB7173AD0CA00DFE837 /* MOAIPartition.h */,
-				89BE6FB8173AD0CA00DFE837 /* MOAIPartitionCell.cpp */,
-				89BE6FB9173AD0CA00DFE837 /* MOAIPartitionCell.h */,
-				89BE6FBA173AD0CA00DFE837 /* MOAIPartitionLevel.cpp */,
-				89BE6FBB173AD0CA00DFE837 /* MOAIPartitionLevel.h */,
-				89BE6FBC173AD0CA00DFE837 /* MOAIPartitionResultBuffer.cpp */,
-				89BE6FBD173AD0CA00DFE837 /* MOAIPartitionResultBuffer.h */,
-				89BE6FBE173AD0CA00DFE837 /* MOAIPartitionResultMgr.cpp */,
-				89BE6FBF173AD0CA00DFE837 /* MOAIPartitionResultMgr.h */,
-				89BE6FC0173AD0CA00DFE837 /* MOAIPathFinder.cpp */,
-				89BE6FC1173AD0CA00DFE837 /* MOAIPathFinder.h */,
-				89BE6FC2173AD0CA00DFE837 /* MOAIPathGraph.cpp */,
-				89BE6FC3173AD0CA00DFE837 /* MOAIPathGraph.h */,
-				89BE6FC4173AD0CA00DFE837 /* MOAIPathTerrainDeck.cpp */,
-				89BE6FC5173AD0CA00DFE837 /* MOAIPathTerrainDeck.h */,
-				CD69AB0417FA6C7E0053E028 /* MOAIPinTransform.cpp */,
-				CD69AB0517FA6C7E0053E028 /* MOAIPinTransform.h */,
-				89BE6FC8173AD0CA00DFE837 /* MOAIProfiler.cpp */,
-				89BE6FC9173AD0CA00DFE837 /* MOAIProfiler.h */,
-				89BE6FCA173AD0CA00DFE837 /* MOAIProfilerAutoScope.cpp */,
-				89BE6FCB173AD0CA00DFE837 /* MOAIProfilerAutoScope.h */,
-				89BE6FCC173AD0CA00DFE837 /* MOAIProfilerContext.cpp */,
-				89BE6FCD173AD0CA00DFE837 /* MOAIProfilerContext.h */,
-				89BE6FCE173AD0CA00DFE837 /* MOAIProfilerEntry.cpp */,
-				89BE6FCF173AD0CA00DFE837 /* MOAIProfilerEntry.h */,
-				89BE6FD0173AD0CA00DFE837 /* MOAIProfilerEntryBase.cpp */,
-				89BE6FD1173AD0CA00DFE837 /* MOAIProfilerEntryBase.h */,
-				89BE6FD2173AD0CA00DFE837 /* MOAIProfilerReport.cpp */,
-				89BE6FD3173AD0CA00DFE837 /* MOAIProfilerReport.h */,
-				89BE6FD4173AD0CA00DFE837 /* MOAIProfilerReportBase.cpp */,
-				89BE6FD5173AD0CA00DFE837 /* MOAIProfilerReportBase.h */,
-				89BE6FD6173AD0CA00DFE837 /* MOAIProfilerReportBox.cpp */,
-				89BE6FD7173AD0CA00DFE837 /* MOAIProfilerReportBox.h */,
-				89BE6FD8173AD0CA00DFE837 /* MOAIProfilerScope.cpp */,
-				89BE6FD9173AD0CA00DFE837 /* MOAIProfilerScope.h */,
 				89BE6FDA173AD0CA00DFE837 /* MOAIProp.cpp */,
 				89BE6FDB173AD0CA00DFE837 /* MOAIProp.h */,
 				89BE6FDE173AD0CA00DFE837 /* MOAIPvrHeader.h */,
-				89BE6FDF173AD0CA00DFE837 /* MOAIQuadBrush.cpp */,
-				89BE6FE0173AD0CA00DFE837 /* MOAIQuadBrush.h */,
 				89BE6FE9173AD0CA00DFE837 /* MOAIScriptNode.cpp */,
 				89BE6FEA173AD0CA00DFE837 /* MOAIScriptNode.h */,
 				89BE6FF1173AD0CA00DFE837 /* MOAISim.cpp */,
 				89BE6FF2173AD0CA00DFE837 /* MOAISim.h */,
 				89BE6FF3173AD0CA00DFE837 /* MOAISpanList.h */,
-				89BE6FF8173AD0CA00DFE837 /* MOAISurfaceDeck2D.cpp */,
-				89BE6FF9173AD0CA00DFE837 /* MOAISurfaceDeck2D.h */,
-				89BE6FFA173AD0CA00DFE837 /* MOAISurfaceSampler2D.cpp */,
-				89BE6FFB173AD0CA00DFE837 /* MOAISurfaceSampler2D.h */,
-				89BE700C173AD0CB00DFE837 /* MOAITileFlags.cpp */,
-				89BE700D173AD0CB00DFE837 /* MOAITileFlags.h */,
 				89BE700E173AD0CB00DFE837 /* MOAITimer.cpp */,
 				89BE700F173AD0CB00DFE837 /* MOAITimer.h */,
-				89BE7012173AD0CB00DFE837 /* MOAITransform.cpp */,
-				89BE7013173AD0CB00DFE837 /* MOAITransform.h */,
-				89BE7014173AD0CB00DFE837 /* MOAITransform2D.cpp */,
-				89BE7015173AD0CB00DFE837 /* MOAITransform2D.h */,
-				89BE7016173AD0CB00DFE837 /* MOAITransformBase.cpp */,
-				89BE7017173AD0CB00DFE837 /* MOAITransformBase.h */,
-				C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */,
-				C555156317D6216B00AA324C /* MOAIVecPathGraph.h */,
 				89BE7022173AD0CB00DFE837 /* pch.cpp */,
 				89BE7023173AD0CB00DFE837 /* pch.h */,
 				89BE7024173AD0CB00DFE837 /* shaders */,
@@ -10040,6 +9934,10 @@
 				89BE6F31173AD0CA00DFE837 /* MOAIBlendMode.h */,
 				89BE6F42173AD0CA00DFE837 /* MOAIColor.cpp */,
 				89BE6F43173AD0CA00DFE837 /* MOAIColor.h */,
+				89BE6F48173AD0CA00DFE837 /* MOAIDebugLines.cpp */,
+				89BE6F49173AD0CA00DFE837 /* MOAIDebugLines.h */,
+				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
+				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
 				89BE6F5B173AD0CA00DFE837 /* MOAIFrameBuffer.cpp */,
 				89BE6F5C173AD0CA00DFE837 /* MOAIFrameBuffer.h */,
 				89BE6F5D173AD0CA00DFE837 /* MOAIFrameBufferTexture.cpp */,
@@ -10048,8 +9946,22 @@
 				89BE6F62173AD0CA00DFE837 /* MOAIGfxDevice.h */,
 				89BE6F69173AD0CA00DFE837 /* MOAIGfxResource.cpp */,
 				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
+				CD73A604188F0AEC00DFACDB /* MOAIGraphicsProp.cpp */,
+				CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */,
+				CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */,
+				CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */,
+				89BE6F7D173AD0CA00DFE837 /* MOAIImage-jpg.cpp */,
+				89BE6F7E173AD0CA00DFE837 /* MOAIImage-png.cpp */,
+				89BE6F7F173AD0CA00DFE837 /* MOAIImage.cpp */,
+				89BE6F80173AD0CA00DFE837 /* MOAIImage.h */,
 				89BE6F83173AD0CA00DFE837 /* MOAIIndexBuffer.cpp */,
 				89BE6F84173AD0CA00DFE837 /* MOAIIndexBuffer.h */,
+				89BE6F8D173AD0CA00DFE837 /* MOAILayer.cpp */,
+				89BE6F8E173AD0CA00DFE837 /* MOAILayer.h */,
+				89BE6F8F173AD0CA00DFE837 /* MOAILayer2D.cpp */,
+				89BE6F90173AD0CA00DFE837 /* MOAILayer2D.h */,
+				89BE6FDF173AD0CA00DFE837 /* MOAIQuadBrush.cpp */,
+				89BE6FE0173AD0CA00DFE837 /* MOAIQuadBrush.h */,
 				89BE6FE1173AD0CA00DFE837 /* MOAIRenderable.cpp */,
 				89BE6FE2173AD0CA00DFE837 /* MOAIRenderable.h */,
 				89BE6FE3173AD0CA00DFE837 /* MOAIRenderMgr.cpp */,
@@ -10248,6 +10160,8 @@
 		CD67857D189830DB007C7D2B /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				89BE6F81173AD0CA00DFE837 /* MOAIImageTexture.cpp */,
+				89BE6F82173AD0CA00DFE837 /* MOAIImageTexture.h */,
 				89BE6F9B173AD0CA00DFE837 /* MOAIMultiTexture.cpp */,
 				89BE6F9C173AD0CA00DFE837 /* MOAIMultiTexture.h */,
 				89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */,
@@ -12022,6 +11936,140 @@
 			name = input;
 			sourceTree = "<group>";
 		};
+		CD8DD76419195F5A0088EA60 /* collision */ = {
+			isa = PBXGroup;
+			children = (
+				CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */,
+				CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */,
+				CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */,
+				CD73A5FB188F0AD200DFACDB /* MOAICollisionWorld.h */,
+				89BE6F40173AD0CA00DFE837 /* MOAICollisionShape.cpp */,
+				89BE6F41173AD0CA00DFE837 /* MOAICollisionShape.h */,
+				89BE6FF8173AD0CA00DFE837 /* MOAISurfaceDeck2D.cpp */,
+				89BE6FF9173AD0CA00DFE837 /* MOAISurfaceDeck2D.h */,
+				89BE6FFA173AD0CA00DFE837 /* MOAISurfaceSampler2D.cpp */,
+				89BE6FFB173AD0CA00DFE837 /* MOAISurfaceSampler2D.h */,
+			);
+			name = collision;
+			sourceTree = "<group>";
+		};
+		CD8DD76519195F830088EA60 /* particles */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6FA1173AD0CA00DFE837 /* MOAIParticle.h */,
+				89BE6FA2173AD0CA00DFE837 /* MOAIParticleCallbackPlugin.cpp */,
+				89BE6FA3173AD0CA00DFE837 /* MOAIParticleCallbackPlugin.h */,
+				89BE6FA4173AD0CA00DFE837 /* MOAIParticleDistanceEmitter.cpp */,
+				89BE6FA5173AD0CA00DFE837 /* MOAIParticleDistanceEmitter.h */,
+				89BE6FA6173AD0CA00DFE837 /* MOAIParticleEmitter.cpp */,
+				89BE6FA7173AD0CA00DFE837 /* MOAIParticleEmitter.h */,
+				89BE6FA8173AD0CA00DFE837 /* MOAIParticleForce.cpp */,
+				89BE6FA9173AD0CA00DFE837 /* MOAIParticleForce.h */,
+				89BE6FAA173AD0CA00DFE837 /* MOAIParticlePexPlugin.cpp */,
+				89BE6FAB173AD0CA00DFE837 /* MOAIParticlePexPlugin.h */,
+				89BE6FAC173AD0CA00DFE837 /* MOAIParticlePlugin.cpp */,
+				89BE6FAD173AD0CA00DFE837 /* MOAIParticlePlugin.h */,
+				89BE6FAE173AD0CA00DFE837 /* MOAIParticleScript.cpp */,
+				89BE6FAF173AD0CA00DFE837 /* MOAIParticleScript.h */,
+				89BE6FB0173AD0CA00DFE837 /* MOAIParticleState.cpp */,
+				89BE6FB1173AD0CA00DFE837 /* MOAIParticleState.h */,
+				89BE6FB2173AD0CA00DFE837 /* MOAIParticleSystem.cpp */,
+				89BE6FB3173AD0CA00DFE837 /* MOAIParticleSystem.h */,
+				89BE6FB4173AD0CA00DFE837 /* MOAIParticleTimedEmitter.cpp */,
+				89BE6FB5173AD0CA00DFE837 /* MOAIParticleTimedEmitter.h */,
+			);
+			name = particles;
+			sourceTree = "<group>";
+		};
+		CD8DD76619195FBB0088EA60 /* partition */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6FB6173AD0CA00DFE837 /* MOAIPartition.cpp */,
+				89BE6FB7173AD0CA00DFE837 /* MOAIPartition.h */,
+				89BE6FB8173AD0CA00DFE837 /* MOAIPartitionCell.cpp */,
+				89BE6FB9173AD0CA00DFE837 /* MOAIPartitionCell.h */,
+				89BE6FBA173AD0CA00DFE837 /* MOAIPartitionLevel.cpp */,
+				89BE6FBB173AD0CA00DFE837 /* MOAIPartitionLevel.h */,
+				89BE6FBC173AD0CA00DFE837 /* MOAIPartitionResultBuffer.cpp */,
+				89BE6FBD173AD0CA00DFE837 /* MOAIPartitionResultBuffer.h */,
+				89BE6FBE173AD0CA00DFE837 /* MOAIPartitionResultMgr.cpp */,
+				89BE6FBF173AD0CA00DFE837 /* MOAIPartitionResultMgr.h */,
+			);
+			name = partition;
+			sourceTree = "<group>";
+		};
+		CD8DD76719195FDD0088EA60 /* profiler */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6FC8173AD0CA00DFE837 /* MOAIProfiler.cpp */,
+				89BE6FC9173AD0CA00DFE837 /* MOAIProfiler.h */,
+				89BE6FCA173AD0CA00DFE837 /* MOAIProfilerAutoScope.cpp */,
+				89BE6FCB173AD0CA00DFE837 /* MOAIProfilerAutoScope.h */,
+				89BE6FCC173AD0CA00DFE837 /* MOAIProfilerContext.cpp */,
+				89BE6FCD173AD0CA00DFE837 /* MOAIProfilerContext.h */,
+				89BE6FCE173AD0CA00DFE837 /* MOAIProfilerEntry.cpp */,
+				89BE6FCF173AD0CA00DFE837 /* MOAIProfilerEntry.h */,
+				89BE6FD0173AD0CA00DFE837 /* MOAIProfilerEntryBase.cpp */,
+				89BE6FD1173AD0CA00DFE837 /* MOAIProfilerEntryBase.h */,
+				89BE6FD2173AD0CA00DFE837 /* MOAIProfilerReport.cpp */,
+				89BE6FD3173AD0CA00DFE837 /* MOAIProfilerReport.h */,
+				89BE6FD4173AD0CA00DFE837 /* MOAIProfilerReportBase.cpp */,
+				89BE6FD5173AD0CA00DFE837 /* MOAIProfilerReportBase.h */,
+				89BE6FD6173AD0CA00DFE837 /* MOAIProfilerReportBox.cpp */,
+				89BE6FD7173AD0CA00DFE837 /* MOAIProfilerReportBox.h */,
+				89BE6FD8173AD0CA00DFE837 /* MOAIProfilerScope.cpp */,
+				89BE6FD9173AD0CA00DFE837 /* MOAIProfilerScope.h */,
+			);
+			name = profiler;
+			sourceTree = "<group>";
+		};
+		CD8DD76819195FFB0088EA60 /* grid */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F75173AD0CA00DFE837 /* MOAIGrid.cpp */,
+				89BE6F76173AD0CA00DFE837 /* MOAIGrid.h */,
+				89BE6F77173AD0CA00DFE837 /* MOAIGridDeck2D.cpp */,
+				89BE6F78173AD0CA00DFE837 /* MOAIGridDeck2D.h */,
+				89BE6F79173AD0CA00DFE837 /* MOAIGridPathGraph.cpp */,
+				89BE6F7A173AD0CA00DFE837 /* MOAIGridPathGraph.h */,
+				89BE6F7B173AD0CA00DFE837 /* MOAIGridSpace.cpp */,
+				89BE6F7C173AD0CA00DFE837 /* MOAIGridSpace.h */,
+				89BE700C173AD0CB00DFE837 /* MOAITileFlags.cpp */,
+				89BE700D173AD0CB00DFE837 /* MOAITileFlags.h */,
+			);
+			name = grid;
+			sourceTree = "<group>";
+		};
+		CD8DD769191960830088EA60 /* transform */ = {
+			isa = PBXGroup;
+			children = (
+				CD69AB0417FA6C7E0053E028 /* MOAIPinTransform.cpp */,
+				CD69AB0517FA6C7E0053E028 /* MOAIPinTransform.h */,
+				89BE7012173AD0CB00DFE837 /* MOAITransform.cpp */,
+				89BE7013173AD0CB00DFE837 /* MOAITransform.h */,
+				89BE7014173AD0CB00DFE837 /* MOAITransform2D.cpp */,
+				89BE7015173AD0CB00DFE837 /* MOAITransform2D.h */,
+				89BE7016173AD0CB00DFE837 /* MOAITransformBase.cpp */,
+				89BE7017173AD0CB00DFE837 /* MOAITransformBase.h */,
+			);
+			name = transform;
+			sourceTree = "<group>";
+		};
+		CD8DD76A191960A20088EA60 /* pathfinding */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6FC0173AD0CA00DFE837 /* MOAIPathFinder.cpp */,
+				89BE6FC1173AD0CA00DFE837 /* MOAIPathFinder.h */,
+				89BE6FC2173AD0CA00DFE837 /* MOAIPathGraph.cpp */,
+				89BE6FC3173AD0CA00DFE837 /* MOAIPathGraph.h */,
+				89BE6FC4173AD0CA00DFE837 /* MOAIPathTerrainDeck.cpp */,
+				89BE6FC5173AD0CA00DFE837 /* MOAIPathTerrainDeck.h */,
+				C555156217D6216B00AA324C /* MOAIVecPathGraph.cpp */,
+				C555156317D6216B00AA324C /* MOAIVecPathGraph.h */,
+			);
+			name = pathfinding;
+			sourceTree = "<group>";
+		};
 		CD9F75A31808AE270001EF0C /* moai-ios-crittercism */ = {
 			isa = PBXGroup;
 			children = (
@@ -12206,6 +12254,8 @@
 		CDE9851818975AA7001827F9 /* deck */ = {
 			isa = PBXGroup;
 			children = (
+				89BE6F34173AD0CA00DFE837 /* MOAIBoundsDeck.cpp */,
+				89BE6F35173AD0CA00DFE837 /* MOAIBoundsDeck.h */,
 				89BE6F4A173AD0CA00DFE837 /* MOAIDeck.cpp */,
 				89BE6F4B173AD0CA00DFE837 /* MOAIDeck.h */,
 				89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */,
@@ -13432,10 +13482,7 @@
 				89BE760C173C12CE00DFE837 /* host.h in Headers */,
 				CDEFD5C3181EDDC90058D772 /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE7610173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */,
-				89BE7614173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */,
 				89BE7618173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */,
-				89BE761C173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */,
-				89BE7620173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */,
 				89BE7624173C12CE00DFE837 /* pch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14766,92 +14813,92 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD4765E17FA789B00525B77 /* timeval.h in Headers */,
-				CDD4766517FA789B00525B77 /* sslgen.h in Headers */,
-				CDD4766A17FA789B00525B77 /* http_ntlm.h in Headers */,
-				CDD4766C17FA789B00525B77 /* speedcheck.h in Headers */,
-				CDD4768117FA789B00525B77 /* tftp.h in Headers */,
-				CDD4768517FA789B00525B77 /* ssh.h in Headers */,
-				CDD4769917FA789B00525B77 /* url.h in Headers */,
-				CDD4769B17FA789B00525B77 /* cookie.h in Headers */,
-				CDD476A417FA789B00525B77 /* setup_once.h in Headers */,
-				CDD476A717FA789B00525B77 /* curl_addrinfo.h in Headers */,
-				CDD476B317FA789B00525B77 /* easy.h in Headers */,
-				CDD476B617FA789B00525B77 /* escape.h in Headers */,
-				CDD476B917FA789B00525B77 /* curlver.h in Headers */,
-				CDD476BC17FA789B00525B77 /* curl.h in Headers */,
-				CDD476C417FA789B00525B77 /* curlrules.h in Headers */,
-				CDD476C817FA789B00525B77 /* progress.h in Headers */,
-				CDD476D417FA789B00525B77 /* strtok.h in Headers */,
-				CDD476D617FA789B00525B77 /* curl_md5.h in Headers */,
-				CDD476D717FA789B00525B77 /* curl_ldap.h in Headers */,
-				CDD476DB17FA789B00525B77 /* ftp.h in Headers */,
-				CDD476DE17FA789B00525B77 /* telnet.h in Headers */,
-				CDD476E617FA789B00525B77 /* if2ip.h in Headers */,
-				CDD476E717FA789B00525B77 /* mprintf.h in Headers */,
-				CDD476F617FA789B00525B77 /* sendf.h in Headers */,
-				CDD476FD17FA789B00525B77 /* types.h in Headers */,
-				CDD4770117FA789B00525B77 /* setup.h in Headers */,
-				CDD4770417FA789B00525B77 /* ssluse.h in Headers */,
-				CDD4770A17FA789B00525B77 /* curl_base64.h in Headers */,
-				CDD4770B17FA789B00525B77 /* gtls.h in Headers */,
-				CDD4771017FA789B00525B77 /* strequal.h in Headers */,
-				CDD4771117FA789B00525B77 /* dtls1.h in Headers */,
-				CDD4771217FA789B00525B77 /* kssl_lcl.h in Headers */,
-				CDD4771317FA789B00525B77 /* kssl.h in Headers */,
-				CDD4771417FA789B00525B77 /* ssl_locl.h in Headers */,
-				CDD4771517FA789B00525B77 /* inet_pton.h in Headers */,
-				CDD4771617FA789B00525B77 /* ssl.h in Headers */,
-				CDD4771717FA789B00525B77 /* ssl2.h in Headers */,
-				CDD4771817FA789B00525B77 /* ssl3.h in Headers */,
-				CDD4771917FA789B00525B77 /* ssl23.h in Headers */,
-				CDD4771A17FA789B00525B77 /* tls1.h in Headers */,
-				CDD4772017FA789B00525B77 /* content_encoding.h in Headers */,
-				CDD4772317FA789B00525B77 /* curlx.h in Headers */,
-				CDD4773417FA789B00525B77 /* multi.h in Headers */,
-				CDD4773617FA789B00525B77 /* socks.h in Headers */,
-				CDD4774217FA789B00525B77 /* transfer.h in Headers */,
-				CDD4774417FA789B00525B77 /* urldata.h in Headers */,
-				CDD4774617FA789B00525B77 /* strtoofft.h in Headers */,
-				CDD4774A17FA789B00525B77 /* curl_memory.h in Headers */,
-				CDD4774C17FA789B00525B77 /* hostip.h in Headers */,
-				CDD4775217FA789B00525B77 /* connect.h in Headers */,
-				CDD4775717FA789B00525B77 /* llist.h in Headers */,
-				CDD4775817FA789B00525B77 /* getinfo.h in Headers */,
-				CDD4775E17FA789B00525B77 /* curl_config.h in Headers */,
-				CDD4775F17FA789B00525B77 /* http.h in Headers */,
-				CDD4776917FA789B00525B77 /* easyif.h in Headers */,
-				CDD4776B17FA789B00525B77 /* netrc.h in Headers */,
-				CDD4776C17FA789B00525B77 /* hash.h in Headers */,
-				CDD4777217FA789B00525B77 /* rawstr.h in Headers */,
-				CDD4777317FA789B00525B77 /* dict.h in Headers */,
-				CDD4777B17FA789B00525B77 /* curl_rand.h in Headers */,
-				CDD4778D17FA789B00525B77 /* select.h in Headers */,
-				CDD4778F17FA789B00525B77 /* sockaddr.h in Headers */,
-				CDD4779017FA789B00525B77 /* curlbuild.h in Headers */,
-				CDD4779117FA789B00525B77 /* curl_memrchr.h in Headers */,
-				CDD4779C17FA789B00525B77 /* typecheck-gcc.h in Headers */,
-				CDD4779D17FA789B00525B77 /* http_negotiate.h in Headers */,
-				CDD477A917FA789B00525B77 /* file.h in Headers */,
-				CDD477AD17FA789B00525B77 /* multiif.h in Headers */,
-				CDD477AE17FA789B00525B77 /* http_digest.h in Headers */,
-				CDD477B717FA789B00525B77 /* formdata.h in Headers */,
-				CDD477C117FA789B00525B77 /* share.h in Headers */,
-				CDD477C717FA789B00525B77 /* krb4.h in Headers */,
-				CDD477CA17FA789B00525B77 /* slist.h in Headers */,
-				CDD477CB17FA789B00525B77 /* strdup.h in Headers */,
-				CDD477CD17FA789B00525B77 /* curl_sspi.h in Headers */,
-				CDD477CE17FA789B00525B77 /* arpa_telnet.h in Headers */,
-				CDD477D517FA789B00525B77 /* parsedate.h in Headers */,
-				CDD477D917FA789B00525B77 /* qssl.h in Headers */,
-				CDD477DC17FA789B00525B77 /* stdcheaders.h in Headers */,
-				CDD477DE17FA789B00525B77 /* nssg.h in Headers */,
-				CDD477E117FA789B00525B77 /* strerror.h in Headers */,
-				CDD477E517FA789B00525B77 /* memdebug.h in Headers */,
-				CDD477E717FA789B00525B77 /* splay.h in Headers */,
-				CDD477E817FA789B00525B77 /* nonblock.h in Headers */,
-				CDD477F117FA789B00525B77 /* inet_ntop.h in Headers */,
-				CDD477F417FA789B00525B77 /* http_chunks.h in Headers */,
+				CD27BD48191D5352000A7770 /* llist.h in Headers */,
+				CD27BD63191D5352000A7770 /* sendf.h in Headers */,
+				CD27BD38191D5352000A7770 /* http_digest.h in Headers */,
+				CD27BD0E191D5352000A7770 /* curl_ldap.h in Headers */,
+				CD27BD0C191D5352000A7770 /* curl_addrinfo.h in Headers */,
+				CD27BD8A191D5352000A7770 /* transfer.h in Headers */,
+				CD27BD6A191D5352000A7770 /* sockaddr.h in Headers */,
+				CD27BDC4191D5382000A7770 /* ssl.h in Headers */,
+				CD27BD0D191D5352000A7770 /* curl_base64.h in Headers */,
+				CD27BD2E191D5352000A7770 /* hostip.h in Headers */,
+				CD27BD86191D5352000A7770 /* tftp.h in Headers */,
+				CD27BD0F191D5352000A7770 /* curl_md5.h in Headers */,
+				CD27BD61191D5352000A7770 /* select.h in Headers */,
+				CD27BD67191D5352000A7770 /* share.h in Headers */,
+				CD27BD5C191D5352000A7770 /* qssl.h in Headers */,
+				CD27BD97191D535A000A7770 /* stdcheaders.h in Headers */,
+				CD27BD6C191D5352000A7770 /* socks.h in Headers */,
+				CD27BDC6191D5382000A7770 /* ssl3.h in Headers */,
+				CD27BD0A191D5352000A7770 /* cookie.h in Headers */,
+				CD27BD69191D5352000A7770 /* slist.h in Headers */,
+				CD27BD12191D5352000A7770 /* curl_memrchr.h in Headers */,
+				CD27BD96191D535A000A7770 /* multi.h in Headers */,
+				CD27BDC7191D5382000A7770 /* ssl23.h in Headers */,
+				CD27BD74191D5352000A7770 /* ssh.h in Headers */,
+				CD27BD50191D5352000A7770 /* netrc.h in Headers */,
+				CD27BD78191D5352000A7770 /* ssluse.h in Headers */,
+				CD27BD28191D5352000A7770 /* gtls.h in Headers */,
+				CD27BD3E191D5352000A7770 /* if2ip.h in Headers */,
+				CD27BDA5191D5382000A7770 /* kssl.h in Headers */,
+				CD27BD93191D535A000A7770 /* curlver.h in Headers */,
+				CD27BD1B191D5352000A7770 /* easyif.h in Headers */,
+				CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */,
+				CD27BD08191D5352000A7770 /* content_encoding.h in Headers */,
+				CD27BD92191D535A000A7770 /* curlrules.h in Headers */,
+				CD27BD99191D535A000A7770 /* types.h in Headers */,
+				CD27BD10191D5352000A7770 /* curl_memory.h in Headers */,
+				CD27BD88191D5352000A7770 /* timeval.h in Headers */,
+				CD27BD42191D5352000A7770 /* inet_pton.h in Headers */,
+				CD27BD44191D5352000A7770 /* krb4.h in Headers */,
+				CD27BD34191D5352000A7770 /* http.h in Headers */,
+				CD27BD8F191D535A000A7770 /* curl.h in Headers */,
+				CD27BD21191D5352000A7770 /* formdata.h in Headers */,
+				CD27BD7E191D5352000A7770 /* strerror.h in Headers */,
+				CD27BDA2191D5382000A7770 /* dtls1.h in Headers */,
+				CD27BD65191D5352000A7770 /* setup_once.h in Headers */,
+				CD27BD80191D5352000A7770 /* strtok.h in Headers */,
+				CD27BD3C191D5352000A7770 /* http_ntlm.h in Headers */,
+				CD27BD3A191D5352000A7770 /* http_negotiate.h in Headers */,
+				CD27BDA3191D5382000A7770 /* kssl_lcl.h in Headers */,
+				CD27BD90191D535A000A7770 /* curl_config.h in Headers */,
+				CD27BD7A191D5352000A7770 /* strdup.h in Headers */,
+				CD27BD17191D5352000A7770 /* curlx.h in Headers */,
+				CD27BD1F191D5352000A7770 /* file.h in Headers */,
+				CD27BD64191D5352000A7770 /* setup.h in Headers */,
+				CD27BD8C191D5352000A7770 /* url.h in Headers */,
+				CD27BD2A191D5352000A7770 /* hash.h in Headers */,
+				CD27BD4B191D5352000A7770 /* memdebug.h in Headers */,
+				CD27BD82191D5352000A7770 /* strtoofft.h in Headers */,
+				CD27BD52191D5352000A7770 /* nonblock.h in Headers */,
+				CD27BD16191D5352000A7770 /* curl_sspi.h in Headers */,
+				CD27BD14191D5352000A7770 /* curl_rand.h in Headers */,
+				CD27BD58191D5352000A7770 /* parsedate.h in Headers */,
+				CD27BD91191D535A000A7770 /* curlbuild.h in Headers */,
+				CD27BD94191D535A000A7770 /* easy.h in Headers */,
+				CD27BD19191D5352000A7770 /* dict.h in Headers */,
+				CD27BD23191D5352000A7770 /* ftp.h in Headers */,
+				CD27BD76191D5352000A7770 /* sslgen.h in Headers */,
+				CD27BDC5191D5382000A7770 /* ssl2.h in Headers */,
+				CD27BD84191D5352000A7770 /* telnet.h in Headers */,
+				CD27BD40191D5352000A7770 /* inet_ntop.h in Headers */,
+				CD27BD8D191D5352000A7770 /* urldata.h in Headers */,
+				CD27BD06191D5352000A7770 /* connect.h in Headers */,
+				CD27BDBF191D5382000A7770 /* ssl_locl.h in Headers */,
+				CD27BD5E191D5352000A7770 /* rawstr.h in Headers */,
+				CD27BD7C191D5352000A7770 /* strequal.h in Headers */,
+				CD27BD1D191D5352000A7770 /* escape.h in Headers */,
+				CD27BDCE191D5382000A7770 /* tls1.h in Headers */,
+				CD27BD95191D535A000A7770 /* mprintf.h in Headers */,
+				CD27BD36191D5352000A7770 /* http_chunks.h in Headers */,
+				CD27BD54191D5352000A7770 /* nssg.h in Headers */,
+				CD27BD5A191D5352000A7770 /* progress.h in Headers */,
+				CD27BD98191D535A000A7770 /* typecheck-gcc.h in Headers */,
+				CD27BD4E191D5352000A7770 /* multiif.h in Headers */,
+				CD27BD70191D5352000A7770 /* speedcheck.h in Headers */,
+				CD27BD72191D5352000A7770 /* splay.h in Headers */,
+				CD27BD26191D5352000A7770 /* getinfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17135,10 +17182,7 @@
 			files = (
 				89BE760E173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */,
 				CDEFD5C4181EDDC90058D772 /* MOAIHttpTaskNSURL.mm in Sources */,
-				89BE7612173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */,
 				89BE7616173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */,
-				89BE761A173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */,
-				89BE761E173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */,
 			);
@@ -18374,124 +18418,124 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD477FA17FA789B00525B77 /* tftp.c in Sources */,
-				CDD477FB17FA789B00525B77 /* share.c in Sources */,
-				CDD4780617FA789B00525B77 /* getinfo.c in Sources */,
-				CDD4781417FA789B00525B77 /* ssluse.c in Sources */,
-				CDD4782517FA789B00525B77 /* curl_memrchr.c in Sources */,
-				CDD4783717FA789B00525B77 /* slist.c in Sources */,
-				CDD4784B17FA789B00525B77 /* memdebug.c in Sources */,
-				CDD4784D17FA789B00525B77 /* splay.c in Sources */,
-				CDD4787217FA789B00525B77 /* ldap.c in Sources */,
-				CDD4788D17FA789B00525B77 /* strerror.c in Sources */,
-				CDD4789717FA789B00525B77 /* hostip4.c in Sources */,
-				CDD478B517FA789B00525B77 /* mprintf.c in Sources */,
-				CDD478C617FA789B00525B77 /* parsedate.c in Sources */,
-				CDD478CB17FA789B00525B77 /* progress.c in Sources */,
-				CDD478D417FA789B00525B77 /* hash.c in Sources */,
-				CDD478E017FA789B00525B77 /* http.c in Sources */,
-				CDD478E117FA789B00525B77 /* sendf.c in Sources */,
-				CDD478F217FA789B00525B77 /* rawstr.c in Sources */,
-				CDD4790317FA789B00525B77 /* ssh.c in Sources */,
-				CDD4790B17FA789B00525B77 /* content_encoding.c in Sources */,
-				CDD4790E17FA789B00525B77 /* sslgen.c in Sources */,
-				CDD4792217FA789B00525B77 /* inet_ntop.c in Sources */,
-				CDD4792817FA789B00525B77 /* socks.c in Sources */,
-				CDD4792B17FA789B00525B77 /* getenv.c in Sources */,
-				CDD4794317FA789B00525B77 /* strdup.c in Sources */,
-				CDD4794817FA789B00525B77 /* dict.c in Sources */,
-				CDD4794A17FA789B00525B77 /* llist.c in Sources */,
-				CDD4795C17FA789B00525B77 /* connect.c in Sources */,
-				CDD4796F17FA789B00525B77 /* socks_sspi.c in Sources */,
-				CDD4797817FA789B00525B77 /* easy.c in Sources */,
-				CDD4797917FA789B00525B77 /* http_chunks.c in Sources */,
-				CDD4798117FA789B00525B77 /* curl_addrinfo.c in Sources */,
-				CDD4799817FA789B00525B77 /* ftp.c in Sources */,
-				CDD479AC17FA789B00525B77 /* telnet.c in Sources */,
-				CDD479B117FA789B00525B77 /* strtoofft.c in Sources */,
-				CDD479C417FA789B00525B77 /* hostasyn.c in Sources */,
-				CDD479F017FA789B00525B77 /* multi.c in Sources */,
-				CDD479FD17FA789B00525B77 /* qssl.c in Sources */,
-				CDD47A0B17FA789B00525B77 /* curl_sspi.c in Sources */,
-				CDD47A1617FA789B00525B77 /* base64.c in Sources */,
-				CDD47A3117FA789B00525B77 /* http_negotiate.c in Sources */,
-				CDD47A3D17FA789B00525B77 /* timeval.c in Sources */,
-				CDD47A4117FA789B00525B77 /* nonblock.c in Sources */,
-				CDD47A5717FA789B00525B77 /* http_digest.c in Sources */,
-				CDD47A7C17FA789B00525B77 /* hostthre.c in Sources */,
-				CDD47A8017FA789B00525B77 /* security.c in Sources */,
-				CDD47A8D17FA789B00525B77 /* hostip.c in Sources */,
-				CDD47A9417FA789B00525B77 /* nwlib.c in Sources */,
-				CDD47AA017FA789B00525B77 /* escape.c in Sources */,
-				CDD47AB017FA789B00525B77 /* bio_ssl.c in Sources */,
-				CDD47AB117FA789B00525B77 /* d1_both.c in Sources */,
-				CDD47AB217FA789B00525B77 /* d1_clnt.c in Sources */,
-				CDD47AB317FA789B00525B77 /* d1_enc.c in Sources */,
-				CDD47AB417FA789B00525B77 /* curl_rand.c in Sources */,
-				CDD47AB517FA789B00525B77 /* d1_lib.c in Sources */,
-				CDD47AB617FA789B00525B77 /* d1_meth.c in Sources */,
-				CDD47AB717FA789B00525B77 /* d1_pkt.c in Sources */,
-				CDD47AB817FA789B00525B77 /* d1_srvr.c in Sources */,
-				CDD47AB917FA789B00525B77 /* kssl.c in Sources */,
-				CDD47ABA17FA789B00525B77 /* s2_clnt.c in Sources */,
-				CDD47ABB17FA789B00525B77 /* s2_enc.c in Sources */,
-				CDD47ABC17FA789B00525B77 /* nwos.c in Sources */,
-				CDD47ABD17FA789B00525B77 /* s2_lib.c in Sources */,
-				CDD47ABE17FA789B00525B77 /* s2_meth.c in Sources */,
-				CDD47ABF17FA789B00525B77 /* s2_pkt.c in Sources */,
-				CDD47AC017FA789B00525B77 /* s2_srvr.c in Sources */,
-				CDD47AC117FA789B00525B77 /* http_ntlm.c in Sources */,
-				CDD47AC217FA789B00525B77 /* s3_both.c in Sources */,
-				CDD47AC317FA789B00525B77 /* s3_clnt.c in Sources */,
-				CDD47AC417FA789B00525B77 /* s3_enc.c in Sources */,
-				CDD47AC517FA789B00525B77 /* s3_lib.c in Sources */,
-				CDD47AC617FA789B00525B77 /* s3_meth.c in Sources */,
-				CDD47AC717FA789B00525B77 /* s3_pkt.c in Sources */,
-				CDD47AC817FA789B00525B77 /* s3_srvr.c in Sources */,
-				CDD47AC917FA789B00525B77 /* s23_clnt.c in Sources */,
-				CDD47ACA17FA789B00525B77 /* s23_lib.c in Sources */,
-				CDD47ACB17FA789B00525B77 /* s23_meth.c in Sources */,
-				CDD47ACC17FA789B00525B77 /* s23_pkt.c in Sources */,
-				CDD47ACD17FA789B00525B77 /* netrc.c in Sources */,
-				CDD47ACE17FA789B00525B77 /* file.c in Sources */,
-				CDD47ACF17FA789B00525B77 /* s23_srvr.c in Sources */,
-				CDD47AD017FA789B00525B77 /* ssl_algs.c in Sources */,
-				CDD47AD117FA789B00525B77 /* ssl_asn1.c in Sources */,
-				CDD47AD217FA789B00525B77 /* ssl_cert.c in Sources */,
-				CDD47AD317FA789B00525B77 /* ssl_ciph.c in Sources */,
-				CDD47AD417FA789B00525B77 /* ssl_err.c in Sources */,
-				CDD47AD517FA789B00525B77 /* transfer.c in Sources */,
-				CDD47AD617FA789B00525B77 /* ssl_err2.c in Sources */,
-				CDD47AD717FA789B00525B77 /* ssl_lib.c in Sources */,
-				CDD47AD817FA789B00525B77 /* ssl_rsa.c in Sources */,
-				CDD47AD917FA789B00525B77 /* ssl_sess.c in Sources */,
-				CDD47ADA17FA789B00525B77 /* ssl_stat.c in Sources */,
-				CDD47ADB17FA789B00525B77 /* ssl_txt.c in Sources */,
-				CDD47ADC17FA789B00525B77 /* hostsyn.c in Sources */,
-				CDD47ADD17FA789B00525B77 /* t1_clnt.c in Sources */,
-				CDD47ADE17FA789B00525B77 /* t1_enc.c in Sources */,
-				CDD47ADF17FA789B00525B77 /* t1_lib.c in Sources */,
-				CDD47AE017FA789B00525B77 /* t1_meth.c in Sources */,
-				CDD47AE117FA789B00525B77 /* t1_reneg.c in Sources */,
-				CDD47AE217FA789B00525B77 /* t1_srvr.c in Sources */,
-				CDD47AE317FA789B00525B77 /* version.c in Sources */,
-				CDD47AE817FA789B00525B77 /* if2ip.c in Sources */,
-				CDD47B0F17FA789B00525B77 /* krb4.c in Sources */,
-				CDD47B1F17FA789B00525B77 /* formdata.c in Sources */,
-				CDD47B2117FA789B00525B77 /* strequal.c in Sources */,
-				CDD47B2717FA789B00525B77 /* hostares.c in Sources */,
-				CDD47B2917FA789B00525B77 /* krb5.c in Sources */,
-				CDD47B3317FA789B00525B77 /* md5.c in Sources */,
-				CDD47B3717FA789B00525B77 /* speedcheck.c in Sources */,
-				CDD47B4317FA789B00525B77 /* gtls.c in Sources */,
-				CDD47B5017FA789B00525B77 /* inet_pton.c in Sources */,
-				CDD47B5217FA789B00525B77 /* url.c in Sources */,
-				CDD47B5617FA789B00525B77 /* select.c in Sources */,
-				CDD47B6D17FA789B00525B77 /* strtok.c in Sources */,
-				CDD47B6E17FA789B00525B77 /* hostip6.c in Sources */,
-				CDD47B6F17FA789B00525B77 /* cookie.c in Sources */,
-				CDD47B7C17FA789B00525B77 /* nss.c in Sources */,
-				CDD47B7D17FA789B00525B77 /* socks_gssapi.c in Sources */,
+				CD27BD5F191D5352000A7770 /* security.c in Sources */,
+				CD27BD3B191D5352000A7770 /* http_ntlm.c in Sources */,
+				CD27BDC8191D5382000A7770 /* t1_clnt.c in Sources */,
+				CD27BD6F191D5352000A7770 /* speedcheck.c in Sources */,
+				CD27BD9B191D5382000A7770 /* d1_both.c in Sources */,
+				CD27BD87191D5352000A7770 /* timeval.c in Sources */,
+				CD27BD4D191D5352000A7770 /* multi.c in Sources */,
+				CD27BD66191D5352000A7770 /* share.c in Sources */,
+				CD27BD3D191D5352000A7770 /* if2ip.c in Sources */,
+				CD27BD4C191D5352000A7770 /* mprintf.c in Sources */,
+				CD27BDA4191D5382000A7770 /* kssl.c in Sources */,
+				CD27BD2B191D5352000A7770 /* hostares.c in Sources */,
+				CD27BDB8191D5382000A7770 /* ssl_algs.c in Sources */,
+				CD27BDC9191D5382000A7770 /* t1_enc.c in Sources */,
+				CD27BD2F191D5352000A7770 /* hostip4.c in Sources */,
+				CD27BDB2191D5382000A7770 /* s3_srvr.c in Sources */,
+				CD27BDC2191D5382000A7770 /* ssl_stat.c in Sources */,
+				CD27BD15191D5352000A7770 /* curl_sspi.c in Sources */,
+				CD27BDB0191D5382000A7770 /* s3_meth.c in Sources */,
+				CD27BD9E191D5382000A7770 /* d1_lib.c in Sources */,
+				CD27BD73191D5352000A7770 /* ssh.c in Sources */,
+				CD27BD4A191D5352000A7770 /* memdebug.c in Sources */,
+				CD27BD45191D5352000A7770 /* krb5.c in Sources */,
+				CD27BD39191D5352000A7770 /* http_negotiate.c in Sources */,
+				CD27BDCB191D5382000A7770 /* t1_meth.c in Sources */,
+				CD27BD7D191D5352000A7770 /* strerror.c in Sources */,
+				CD27BD89191D5352000A7770 /* transfer.c in Sources */,
+				CD27BDB4191D5382000A7770 /* s23_lib.c in Sources */,
+				CD27BDAA191D5382000A7770 /* s2_pkt.c in Sources */,
+				CD27BD6E191D5352000A7770 /* socks_sspi.c in Sources */,
+				CD27BD5B191D5352000A7770 /* qssl.c in Sources */,
+				CD27BD0B191D5352000A7770 /* curl_addrinfo.c in Sources */,
+				CD27BD9A191D5382000A7770 /* bio_ssl.c in Sources */,
+				CD27BD30191D5352000A7770 /* hostip6.c in Sources */,
+				CD27BDBB191D5382000A7770 /* ssl_ciph.c in Sources */,
+				CD27BDCD191D5382000A7770 /* t1_srvr.c in Sources */,
+				CD27BDB5191D5382000A7770 /* s23_meth.c in Sources */,
+				CD27BD1C191D5352000A7770 /* escape.c in Sources */,
+				CD27BD07191D5352000A7770 /* content_encoding.c in Sources */,
+				CD27BDA9191D5382000A7770 /* s2_meth.c in Sources */,
+				CD27BD43191D5352000A7770 /* krb4.c in Sources */,
+				CD27BDA1191D5382000A7770 /* d1_srvr.c in Sources */,
+				CD27BD18191D5352000A7770 /* dict.c in Sources */,
+				CD27BD68191D5352000A7770 /* slist.c in Sources */,
+				CD27BD9C191D5382000A7770 /* d1_clnt.c in Sources */,
+				CD27BD75191D5352000A7770 /* sslgen.c in Sources */,
+				CD27BDC0191D5382000A7770 /* ssl_rsa.c in Sources */,
+				CD27BD8B191D5352000A7770 /* url.c in Sources */,
+				CD27BD59191D5352000A7770 /* progress.c in Sources */,
+				CD27BD11191D5352000A7770 /* curl_memrchr.c in Sources */,
+				CD27BD7F191D5352000A7770 /* strtok.c in Sources */,
+				CD27BD3F191D5352000A7770 /* inet_ntop.c in Sources */,
+				CD27BDCC191D5382000A7770 /* t1_reneg.c in Sources */,
+				CD27BDBE191D5382000A7770 /* ssl_lib.c in Sources */,
+				CD27BD60191D5352000A7770 /* select.c in Sources */,
+				CD27BD41191D5352000A7770 /* inet_pton.c in Sources */,
+				CD27BDAF191D5382000A7770 /* s3_lib.c in Sources */,
+				CD27BDAC191D5382000A7770 /* s3_both.c in Sources */,
+				CD27BD8E191D5352000A7770 /* version.c in Sources */,
+				CD27BD25191D5352000A7770 /* getinfo.c in Sources */,
+				CD27BD35191D5352000A7770 /* http_chunks.c in Sources */,
+				CD27BD55191D5352000A7770 /* nwlib.c in Sources */,
+				CD27BDA8191D5382000A7770 /* s2_lib.c in Sources */,
+				CD27BD57191D5352000A7770 /* parsedate.c in Sources */,
+				CD27BD31191D5352000A7770 /* hostsyn.c in Sources */,
+				CD27BDA0191D5382000A7770 /* d1_pkt.c in Sources */,
+				CD27BDBC191D5382000A7770 /* ssl_err.c in Sources */,
+				CD27BD53191D5352000A7770 /* nss.c in Sources */,
+				CD27BD2C191D5352000A7770 /* hostasyn.c in Sources */,
+				CD27BD29191D5352000A7770 /* hash.c in Sources */,
+				CD27BD81191D5352000A7770 /* strtoofft.c in Sources */,
+				CD27BDB3191D5382000A7770 /* s23_clnt.c in Sources */,
+				CD27BDA6191D5382000A7770 /* s2_clnt.c in Sources */,
+				CD27BD77191D5352000A7770 /* ssluse.c in Sources */,
+				CD27BD33191D5352000A7770 /* http.c in Sources */,
+				CD27BD2D191D5352000A7770 /* hostip.c in Sources */,
+				CD27BDC1191D5382000A7770 /* ssl_sess.c in Sources */,
+				CD27BD1A191D5352000A7770 /* easy.c in Sources */,
+				CD27BD49191D5352000A7770 /* md5.c in Sources */,
+				CD27BD46191D5352000A7770 /* ldap.c in Sources */,
+				CD27BDB6191D5382000A7770 /* s23_pkt.c in Sources */,
+				CD27BD7B191D5352000A7770 /* strequal.c in Sources */,
+				CD27BD13191D5352000A7770 /* curl_rand.c in Sources */,
+				CD27BD9D191D5382000A7770 /* d1_enc.c in Sources */,
+				CD27BD4F191D5352000A7770 /* netrc.c in Sources */,
+				CD27BDBA191D5382000A7770 /* ssl_cert.c in Sources */,
+				CD27BD22191D5352000A7770 /* ftp.c in Sources */,
+				CD27BDCA191D5382000A7770 /* t1_lib.c in Sources */,
+				CD27BD24191D5352000A7770 /* getenv.c in Sources */,
+				CD27BD9F191D5382000A7770 /* d1_meth.c in Sources */,
+				CD27BD5D191D5352000A7770 /* rawstr.c in Sources */,
+				CD27BD6B191D5352000A7770 /* socks.c in Sources */,
+				CD27BD51191D5352000A7770 /* nonblock.c in Sources */,
+				CD27BDAE191D5382000A7770 /* s3_enc.c in Sources */,
+				CD27BD32191D5352000A7770 /* hostthre.c in Sources */,
+				CD27BD85191D5352000A7770 /* tftp.c in Sources */,
+				CD27BD62191D5352000A7770 /* sendf.c in Sources */,
+				CD27BD83191D5352000A7770 /* telnet.c in Sources */,
+				CD27BDBD191D5382000A7770 /* ssl_err2.c in Sources */,
+				CD27BDA7191D5382000A7770 /* s2_enc.c in Sources */,
+				CD27BDAB191D5382000A7770 /* s2_srvr.c in Sources */,
+				CD27BDB9191D5382000A7770 /* ssl_asn1.c in Sources */,
+				CD27BD37191D5352000A7770 /* http_digest.c in Sources */,
+				CD27BD05191D5352000A7770 /* connect.c in Sources */,
+				CD27BD04191D5352000A7770 /* base64.c in Sources */,
+				CD27BD09191D5352000A7770 /* cookie.c in Sources */,
+				CD27BDB1191D5382000A7770 /* s3_pkt.c in Sources */,
+				CD27BD1E191D5352000A7770 /* file.c in Sources */,
+				CD27BDAD191D5382000A7770 /* s3_clnt.c in Sources */,
+				CD27BD20191D5352000A7770 /* formdata.c in Sources */,
+				CD27BD6D191D5352000A7770 /* socks_gssapi.c in Sources */,
+				CD27BDB7191D5382000A7770 /* s23_srvr.c in Sources */,
+				CD27BD79191D5352000A7770 /* strdup.c in Sources */,
+				CD27BDC3191D5382000A7770 /* ssl_txt.c in Sources */,
+				CD27BD27191D5352000A7770 /* gtls.c in Sources */,
+				CD27BD71191D5352000A7770 /* splay.c in Sources */,
+				CD27BD56191D5352000A7770 /* nwos.c in Sources */,
+				CD27BD47191D5352000A7770 /* llist.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20432,6 +20476,12 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20462,6 +20512,12 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20492,6 +20548,12 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20522,6 +20584,12 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;

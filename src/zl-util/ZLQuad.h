@@ -16,8 +16,8 @@ class ZLQuad {
 private:
 
 	//----------------------------------------------------------------//
-	u32		Intersect			( const ZLQuad& quad, ZLVec2D* buffer, u32 max ) const;
-	bool	IsSeparatingAxis	( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVec2D& e2, const ZLVec2D& e3 ) const;
+	u32			Intersect			( const ZLQuad& quad, ZLVec2D* buffer, u32 max ) const;
+	bool		IsSeparatingAxis	( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVec2D& e2, const ZLVec2D& e3 ) const;
 
 public:
 

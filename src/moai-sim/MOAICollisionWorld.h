@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIPartition.h>
 
 class MOAICollisionProp;
+class MOAIOverlapInfo;
 
 //================================================================//
 // MOAICollisionWorld
@@ -41,9 +42,8 @@ private:
 	//----------------------------------------------------------------//
 	void				ClearOverlaps			( MOAICollisionProp& prop );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBox& overlap );
-	bool				GetOverlap				( MOAICollisionProp& prop0, MOAICollisionProp& prop1, ZLBox& bounds );
-	void				HandleOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBox& bounds );
+	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
+	void				HandleOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, MOAIOverlapInfo& overlapInfo );
 	bool				IsDone					();
 	void				MakeActive				( MOAICollisionProp& prop );
 	void				MakeInactive			( MOAICollisionProp& prop );

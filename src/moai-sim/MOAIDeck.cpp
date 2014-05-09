@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIBoundsDeck.h>
+#include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxDevice.h>
@@ -198,6 +199,12 @@ ZLBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 		bounds.Bless ();
 	}
 	return bounds;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
+
+	shape.Set ();
 }
 
 //----------------------------------------------------------------//

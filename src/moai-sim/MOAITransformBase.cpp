@@ -161,25 +161,25 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () {
+const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () const {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetLocTrait () {
+const ZLAffine3D* MOAITransformBase::GetLocTrait () const {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetTransformTrait () {
+const ZLAffine3D* MOAITransformBase::GetTransformTrait () const {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetWorldToLocalMtx () {
+const ZLAffine3D& MOAITransformBase::GetWorldToLocalMtx () const {
 
 	return this->mWorldToLocalMtx;
 }

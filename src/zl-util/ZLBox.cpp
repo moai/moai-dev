@@ -290,6 +290,41 @@ void ZLBox::Init ( const ZLVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
+void ZLBox::Init ( const ZLRect& rect, u32 plane, float back, float front ) {
+
+	switch ( plane ) {
+		
+		default:
+		case PLANE_XY:
+			this->mMin.mX = rect.mXMin;
+			this->mMax.mX = rect.mXMax;
+			this->mMin.mY = rect.mYMin;
+			this->mMax.mY = rect.mYMax;
+			this->mMin.mZ = back;
+			this->mMax.mZ = front;
+			break;
+		
+		case PLANE_XZ:
+			this->mMin.mX = rect.mXMin;
+			this->mMax.mX = rect.mXMax;
+			this->mMin.mZ = rect.mYMin;
+			this->mMax.mZ = rect.mYMax;
+			this->mMin.mY = back;
+			this->mMax.mY = front;
+			break;
+		
+		case PLANE_YZ:
+			this->mMin.mZ = rect.mXMin;
+			this->mMax.mZ = rect.mXMax;
+			this->mMin.mY = rect.mYMin;
+			this->mMax.mY = rect.mYMax;
+			this->mMin.mX = back;
+			this->mMax.mX = front;
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLBox::Init ( float left, float top, float right, float bottom, float back, float front ) {
 
 	this->mMin.mX = left;

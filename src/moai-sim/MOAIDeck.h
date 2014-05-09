@@ -7,6 +7,7 @@
 class MOAIBoundsDeck;
 class MOAIDeckRemapper;
 class MOAICellCoord;
+class MOAICollisionShape;
 class MOAIGfxState;
 class MOAIGrid;
 class MOAIShader;
@@ -83,6 +84,7 @@ public:
 	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	ZLBox					GetBounds				();
 	ZLBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	virtual void			GetCollisionShape		( MOAICollisionShape& shape );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
 							MOAIDeck				();
 							~MOAIDeck				();
