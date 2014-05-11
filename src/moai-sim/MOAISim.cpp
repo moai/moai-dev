@@ -844,6 +844,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
+		{ "hideCursor",					_hideCursor },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "reportHistogram",			_reportHistogram },
@@ -862,6 +863,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
 		{ "setTraceback",				_setTraceback },
+		{ "showCursor",					_showCursor },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};
