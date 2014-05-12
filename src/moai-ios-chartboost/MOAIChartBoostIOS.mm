@@ -14,20 +14,12 @@
 /**	@name	cacheInterstitial
 	@text	Request that an interstitial ad be cached for later display.
 	
-	@opt	string	locationId		Optional location ID.
 	@out 	nil
 */
 int MOAIChartBoostIOS::_cacheInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	cc8* location = lua_tostring ( state, 1 );
-
-	if ( location != nil ) {
-		[[ Chartboost sharedChartboost ] cacheInterstitial:[ NSString stringWithUTF8String:location ]];
-	}
-	else {
-		[[ Chartboost sharedChartboost ] cacheInterstitial ];
-	}
+	[[ Chartboost sharedChartboost ] cacheInterstitial ];
 	return 0;
 }
 
@@ -74,30 +66,17 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 /**	@name	showInterstitial
 	@text	Request an interstitial ad display if a cached ad is available.
 	
-	@opt	string	locationId		Optional location ID.
 	@out 	bool					True, if an ad is cached and will be displayed.
 */
 int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-
-	cc8* location = lua_tostring ( state, 1 );
 	
-	if ( location != nil ) {
-		if ([[ Chartboost sharedChartboost ] hasCachedInterstitial:[ NSString stringWithUTF8String:location ]]) {
-				[[ Chartboost sharedChartboost ] showInterstitial:[ NSString stringWithUTF8String:location ]];
-				lua_pushboolean ( state, true );
-				return 1;
-		}
+	if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
+		[[ Chartboost sharedChartboost ] showInterstitial ];
+		lua_pushboolean ( state, true );
+		return 1;
 	}
-	else {
-		if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
-			[[ Chartboost sharedChartboost ] showInterstitial ];
-			lua_pushboolean ( state, true );
-			return 1;
-		}
-	}
-	
 	lua_pushboolean ( state, false );
 	return 1;
 }
@@ -160,14 +139,14 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	}
 
 	//----------------------------------------------------------------//
-	- ( BOOL ) shouldDisplayInterstitial:( UIView * )interstitialView {
-		UNUSED ( interstitialView );
+	- ( BOOL ) shouldDisplayInterstitial:( CBLocation )location {
+		UNUSED ( location );
 		return YES;
 	}
 
 	//----------------------------------------------------------------//
-	- ( void ) didDismissInterstitial:( UIView * )interstitialView {
-		UNUSED ( interstitialView );
+	- ( void ) didDismissInterstitial:( CBLocation )location {
+		UNUSED ( location );
 		MOAIChartBoostIOS::Get ().InvokeListener ( MOAIChartBoostIOS::INTERSTITIAL_DISMISSED );
 	}
 
@@ -176,5 +155,10 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		UNUSED ( moreAppsView );
 		return NO;
 	}
-	
+
+	//----------------------------------------------------------------//
+	-( BOOL ) shouldRequestInterstitialsInFirstSession {
+		return NO;
+	}
+
 @end

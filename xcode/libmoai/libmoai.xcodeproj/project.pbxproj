@@ -1390,6 +1390,10 @@
 		CD27BDCC191D5382000A7770 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
 		CD27BDCD191D5382000A7770 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
 		CD27BDCE191D5382000A7770 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
+		CD27BE15191DA1C5000A7770 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE11191DA1C5000A7770 /* host.h */; };
+		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
+		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
+		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -5601,7 +5605,6 @@
 		8942AFFD1731BB90009E233E /* SFMT-sse2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFMT-sse2.h"; path = "../../3rdparty/sfmt-1.4/SFMT-sse2.h"; sourceTree = "<group>"; };
 		8942AFFE1731BB90009E233E /* SFMT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SFMT.c; path = "../../3rdparty/sfmt-1.4/SFMT.c"; sourceTree = "<group>"; };
 		8942AFFF1731BB90009E233E /* SFMT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFMT.h; path = "../../3rdparty/sfmt-1.4/SFMT.h"; sourceTree = "<group>"; };
-		895850821731C5FE00C9F577 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-1911/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		89BE6888173974FC00DFE837 /* zl_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_platform.h; sourceTree = "<group>"; };
 		89BE6889173974FC00DFE837 /* zl_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_types.h; sourceTree = "<group>"; };
 		89BE688B173974FC00DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
@@ -6450,6 +6453,11 @@
 		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
 		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
 		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
+		CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD27BE11191DA1C5000A7770 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-adcolony/host.h"; sourceTree = "<group>"; };
+		CD27BE12191DA1C5000A7770 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-adcolony/host.mm"; sourceTree = "<group>"; };
+		CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColonyIOS.h; path = "moai-ios-adcolony/MOAIAdColonyIOS.h"; sourceTree = "<group>"; };
+		CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moai-ios-adcolony/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAppIOS.h; path = "moai-ios/MOAIAppIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppIOS.mm; path = "moai-ios/MOAIAppIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBrowserIOS.h; path = "moai-ios/MOAIBrowserIOS.h"; sourceTree = "<group>"; };
@@ -7950,6 +7958,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD27BE07191D9F44000A7770 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD4C3A7B180A623200C02381 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8160,7 +8175,6 @@
 			isa = PBXGroup;
 			children = (
 				B0FC2A0616F4004900796249 /* sfmt */,
-				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				03240A3D13564CAF000ADC60 /* chipmunk */,
 				03240A7613564CAF000ADC60 /* contrib */,
@@ -8760,6 +8774,7 @@
 				89BE75F8173C12CE00DFE837 /* moai-http-client */,
 				89BE76A0173C168400DFE837 /* moai-http-server */,
 				CD2B7C2E17FA564B00EBA2DB /* moai-ios */,
+				CD27BDFF191D9E04000A7770 /* moai-ios-adcolony */,
 				CDA4B7331808AB19000129F9 /* moai-ios-billing */,
 				CDA4B7351808AB2F000129F9 /* moai-ios-chartboost */,
 				CD9F75A31808AE270001EF0C /* moai-ios-crittercism */,
@@ -8840,16 +8855,9 @@
 				CD70C17D1844891A005CEBC0 /* libmoai-ios-mixpanel.a */,
 				CD70C1D118448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel.a */,
 				CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */,
+				CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0725E2EB14F45AC700551DB5 /* adcolony */ = {
-			isa = PBXGroup;
-			children = (
-				895850821731C5FE00C9F577 /* AdColonyPublic.h */,
-			);
-			name = adcolony;
 			sourceTree = "<group>";
 		};
 		07658749145CD04800723A7D /* tlsf */ = {
@@ -10026,6 +10034,17 @@
 				CD218F9F13A7FDBA008337E7 /* value.c */,
 			);
 			name = jansson;
+			sourceTree = "<group>";
+		};
+		CD27BDFF191D9E04000A7770 /* moai-ios-adcolony */ = {
+			isa = PBXGroup;
+			children = (
+				CD27BE11191DA1C5000A7770 /* host.h */,
+				CD27BE12191DA1C5000A7770 /* host.mm */,
+				CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */,
+				CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */,
+			);
+			name = "moai-ios-adcolony";
 			sourceTree = "<group>";
 		};
 		CD2B7C2E17FA564B00EBA2DB /* moai-ios */ = {
@@ -13888,6 +13907,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD27BE01191D9F44000A7770 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */,
+				CD27BE15191DA1C5000A7770 /* host.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD4C3A6A180A623200C02381 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15446,6 +15474,23 @@
 			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD27BE08191D9F44000A7770 /* Build configuration list for PBXNativeTarget "libmoai-ios-adcolony" */;
+			buildPhases = (
+				CD27BE01191D9F44000A7770 /* Headers */,
+				CD27BE04191D9F44000A7770 /* Sources */,
+				CD27BE07191D9F44000A7770 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-adcolony";
+			productName = OpenUSLS;
+			productReference = CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD4C3A69180A623200C02381 /* libmoai-ios-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD4C3A7C180A623200C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-crypto" */;
@@ -15977,6 +16022,7 @@
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
 				CDD4765617FA789B00525B77 /* libmoai-ios-3rdparty-curl */,
 				CD70C1B218448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel */,
+				CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */,
 				CDA4B7391808AC61000129F9 /* libmoai-ios-billing */,
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
 				CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */,
@@ -17469,6 +17515,15 @@
 				CDD492A217FA7D1900525B77 /* WaveFileAudioSource.cpp in Sources */,
 				89BE6B7117399FEB00DFE837 /* MOAIUntzSound.cpp in Sources */,
 				89BE6B7517399FEB00DFE837 /* MOAIUntzSystem.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD27BE04191D9F44000A7770 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */,
+				CD27BE16191DA1C5000A7770 /* host.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19355,10 +19410,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
+					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -19444,10 +19501,9 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
+					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
+					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -19455,8 +19511,9 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
+					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
@@ -21202,10 +21259,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
+					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -21290,10 +21349,9 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
+					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
+					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -21301,8 +21359,9 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
+					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
@@ -21496,6 +21555,135 @@
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
+		};
+		CD27BE09191D9F44000A7770 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-adcolony";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CD27BE0A191D9F44000A7770 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-adcolony";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		CD27BE0B191D9F44000A7770 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-adcolony";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		CD27BE0C191D9F44000A7770 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-adcolony";
+				SDKROOT = iphoneos;
+			};
+			name = Distribution;
 		};
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -24983,10 +25171,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
+					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -25072,10 +25262,9 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
+					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
+					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -25083,8 +25272,9 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
+					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
@@ -25386,10 +25576,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios\"",
-					"\"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6\"",
+					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -25475,10 +25667,9 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
+					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
+					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -25486,8 +25677,9 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-4.3.0/Flurry\"",
+					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
@@ -26021,6 +26213,17 @@
 				CD07C4E413A1918600C9386C /* Release */,
 				E9C405D1150D999200C7AB04 /* AdHoc */,
 				E90D02C914D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD27BE08191D9F44000A7770 /* Build configuration list for PBXNativeTarget "libmoai-ios-adcolony" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD27BE09191D9F44000A7770 /* Debug */,
+				CD27BE0A191D9F44000A7770 /* Release */,
+				CD27BE0B191D9F44000A7770 /* AdHoc */,
+				CD27BE0C191D9F44000A7770 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

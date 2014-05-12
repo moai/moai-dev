@@ -4,43 +4,11 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef DISABLE_ADCOLONY
-
-#import <moai-iphone/MOAIAdColonyIOS.h>
+#import <moai-ios-adcolony/MOAIAdColonyIOS.h>
 
 //================================================================//
 // lua
 //================================================================//
-
-//----------------------------------------------------------------//
-cc8* MOAIAdColonyIOS::_luaParseTable ( lua_State* L, int idx ) {
-
-	switch ( lua_type ( L, idx )) {
-
-		case LUA_TSTRING: {
-
-			cc8* str = lua_tostring ( L, idx );
-			return str;
-		}
-	}
-
-	return NULL;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getDeviceID
-	@text	Request a unique ID for the device.
-	
-	@out 	string	id			The device ID. Always returns nil.
-*/
-int MOAIAdColonyIOS::_getDeviceID ( lua_State *L ) {
-
-	MOAILuaState state ( L );
-
-	lua_pushnil ( state );
-	
-	return 1;
-}
 
 //----------------------------------------------------------------//
 /**	@name	init
@@ -48,41 +16,33 @@ int MOAIAdColonyIOS::_getDeviceID ( lua_State *L ) {
 	
 	@in		string	appId			Available in AdColony dashboard settings.
 	@in 	table	zones			A list of zones to configure. Available in AdColony dashboard settings.
+	@in		bool	verbose			Enable AdColony verbose logging. Default value is false.
 	@out 	nil
 */
 int MOAIAdColonyIOS::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
     
-	cc8* appID = state.GetValue < cc8* >( 1, "" );
+	cc8* appID		= state.GetValue < cc8* >( 1, "" );
+	bool verbose	= state.GetValue < bool >( 3, false );
 
-	[ MOAIAdColonyIOS::Get ().mAppId release ];
-	MOAIAdColonyIOS::Get ().mAppId = [[ NSString alloc ] initWithUTF8String:appID ];
-
-	NSMutableDictionary * zones = [[ NSMutableDictionary alloc ] init ];
+	NSMutableArray* zones = [[[ NSMutableArray alloc ] init ] autorelease ];
 	if ( state.IsType ( 2, LUA_TTABLE )) {
-	
 		for ( int key = 1; ; ++key ) {
-	
 			state.GetField ( 2, key );
-			cc8* value = _luaParseTable ( state, -1 );
+			cc8* value = state.GetValue < cc8* >( -1, 0 );
 			lua_pop ( state, 1 );
-	
+			
 			if ( value ) {
-				
-				[ zones setObject:[ NSString stringWithUTF8String:value ] forKey:[ NSNumber numberWithInt:key ]];
+				[ zones addObject:[ NSString stringWithUTF8String:value ]];
 			}
 			else {
-				
 				break;
 			}	
 		}
 	}
-
-	[ MOAIAdColonyIOS::Get ().mZones release ];
-	MOAIAdColonyIOS::Get ().mZones = zones;
     
-	[ AdColony initAdColonyWithDelegate:MOAIAdColonyIOS::Get ().mAdColonyDelegate ];
+	[ AdColony configureWithAppID:[ NSString stringWithUTF8String:appID ] zoneIDs:zones delegate:MOAIAdColonyIOS::Get ().mAdColonyDelegate logging:verbose ];
     
 	return 0;
 }
@@ -105,7 +65,7 @@ int MOAIAdColonyIOS::_playVideo ( lua_State* L ) {
 	bool prompt = state.GetValue < bool >( 2, true );
 	bool confirmation = state.GetValue < bool >( 3, true );
 	
-	[ AdColony playVideoAdForZone:[ NSString stringWithUTF8String:zone ] withDelegate:MOAIAdColonyIOS::Get ().mTakeoverDelegate withV4VCPrePopup:prompt andV4VCPostPopup:confirmation ];
+	[ AdColony playVideoAdForZone:[ NSString stringWithUTF8String:zone ] withDelegate:MOAIAdColonyIOS::Get ().mAdColonyDelegate withV4VCPrePopup:prompt andV4VCPostPopup:confirmation ];
 
 	return 0;
 }
@@ -124,14 +84,9 @@ int MOAIAdColonyIOS::_videoReadyForZone ( lua_State *L ) {
 	cc8* zone = lua_tostring ( state, 1 );
 	
 	int result = [ AdColony zoneStatusForZone:[ NSString stringWithUTF8String:zone ]];
-	if ( result == ADCOLONY_ZONE_STATUS_ACTIVE ) {
-		
-		lua_pushboolean ( L, true );
-	}
-	else {
-		
-		lua_pushboolean ( L, false );
-	}
+	bool ready = result == ADCOLONY_ZONE_STATUS_ACTIVE ? true : false;
+	
+	lua_pushboolean ( L, ready );
 	
 	return 1;
 }
@@ -141,46 +96,27 @@ int MOAIAdColonyIOS::_videoReadyForZone ( lua_State *L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAdColonyIOS::NotifyTakeoverEventOccurred ( int event, cc8* zone ) {
-	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
-	if ( this->PushListener ( event, state )) {
-		
-		state.Push ( zone );
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIAdColonyIOS::MOAIAdColonyIOS () : mAppId ( 0 ), mZones ( 0 ) {
+MOAIAdColonyIOS::MOAIAdColonyIOS () {
     
 	RTTI_SINGLE ( MOAILuaObject )	
 	
-	mAdColonyDelegate = [ MOAIAdColonyIOSDelegate alloc ];
-	mTakeoverDelegate = [ MOAIAdColonyIOSTakeoverDelegate alloc ];
+	this->mAdColonyDelegate = [[ MOAIAdColonyIOSDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
 MOAIAdColonyIOS::~MOAIAdColonyIOS () {
     
-	[ mAppId release ];
-	[ mZones release ];
-	[ mAdColonyDelegate release ];
-	[ mTakeoverDelegate release ];
+	[ this->mAdColonyDelegate release ];
 }
 
 //----------------------------------------------------------------//
 void MOAIAdColonyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "VIDEO_BEGAN_IN_ZONE", 	( u32 )VIDEO_BEGAN_IN_ZONE );
-	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", 	( u32 )VIDEO_ENDED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_FAILED_IN_ZONE", 	( u32 )VIDEO_FAILED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_PAUSED_IN_ZONE", 	( u32 )VIDEO_PAUSED_IN_ZONE );
-	state.SetField ( -1, "VIDEO_RESUMED_IN_ZONE",	( u32 )VIDEO_RESUMED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_STARTED",		( u32 )VIDEO_STARTED );
+	state.SetField ( -1, "VIDEO_SHOWN",			( u32 )VIDEO_SHOWN );
+	state.SetField ( -1, "VIDEO_FAILED",		( u32 )VIDEO_FAILED );
     
 	luaL_Reg regTable [] = {
-		{ "getDeviceID",		_getDeviceID },
 		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIAdColonyIOS > },
 		{ "init",				_init },
 		{ "playVideo",			_playVideo },
@@ -199,56 +135,20 @@ void MOAIAdColonyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	//================================================================//
 	#pragma mark -
-	#pragma mark Protocol MOAIAdColonyIOSDelegate
+	#pragma mark Protocol AdColonyAdDelegate
 	//================================================================//
 
-	- ( NSString* ) adColonyApplicationID { 
-        
-		return MOAIAdColonyIOS::Get ().mAppId;
-    }
-    
-    - ( NSDictionary* ) adColonyAdZoneNumberAssociation { 
-		
-		return MOAIAdColonyIOS::Get ().mZones;
-    }
-
-@end
-
-//================================================================//
-// MOAIAdColonyIOSTakeoverDelegate
-//================================================================//
-@implementation MOAIAdColonyIOSTakeoverDelegate
-
-	//================================================================//
-	#pragma mark -
-	#pragma mark Protocol MOAIAdColonyIOSTakeoverDelegate
-	//================================================================//
-
-	- (void) adColonyTakeoverBeganForZone:( NSString * )zone {
-
-		MOAIAdColonyIOS::Get ().NotifyTakeoverEventOccurred ( MOAIAdColonyIOS::Get ().VIDEO_BEGAN_IN_ZONE, [ zone UTF8String ]);
+	//----------------------------------------------------------------//
+	- ( void ) onAdColonyAdStartedInZone:( NSString* )zoneID {
+		UNUSED ( zoneID );
+		MOAIAdColonyIOS::Get ().InvokeListener (( u32 )MOAIAdColonyIOS::VIDEO_STARTED );
 	}
 
-	- (void) adColonyTakeoverEndedForZone:( NSString * )zone withVC:(BOOL)withVirtualCurrencyAward {
-		
-		MOAIAdColonyIOS::Get ().NotifyTakeoverEventOccurred ( MOAIAdColonyIOS::Get ().VIDEO_ENDED_IN_ZONE, [ zone UTF8String ]);
-	}
-
-	- (void) adColonyVideoAdNotServedForZone:( NSString * )zone {
-		
-		MOAIAdColonyIOS::Get ().NotifyTakeoverEventOccurred ( MOAIAdColonyIOS::Get ().VIDEO_FAILED_IN_ZONE, [ zone UTF8String ]);
-	}
-
-	- (void) adColonyVideoAdPausedInZone:( NSString * )zone {
-		
-		MOAIAdColonyIOS::Get ().NotifyTakeoverEventOccurred ( MOAIAdColonyIOS::Get ().VIDEO_PAUSED_IN_ZONE, [ zone UTF8String ]);
-	}
-
-	- (void)adColonyVideoAdResumedInZone:( NSString * )zone {
-		
-		MOAIAdColonyIOS::Get ().NotifyTakeoverEventOccurred ( MOAIAdColonyIOS::Get ().VIDEO_RESUMED_IN_ZONE, [ zone UTF8String ]);
+	//----------------------------------------------------------------//
+	- ( void ) onAdColonyAdAttemptFinished:( BOOL )shown inZone:( NSString* )zoneID {
+		UNUSED ( zoneID );
+		u32 eventID = shown ? MOAIAdColonyIOS::VIDEO_SHOWN : MOAIAdColonyIOS::VIDEO_FAILED;
+		MOAIAdColonyIOS::Get ().InvokeListener (( u32 )eventID );
 	}
 
 @end
-
-#endif

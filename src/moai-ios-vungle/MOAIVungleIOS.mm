@@ -10,9 +10,9 @@
 #import <moai-ios-vungle/MOAIVungleIOS.h>
 
 //================================================================//
-// MoaiChartBoostDelegate
+// MOAIVungleDelegate
 //================================================================//
-@interface MoaiVungleDelegate : NSObject < VGVunglePubDelegate > {
+@interface MOAIVungleDelegate : NSObject < VGVunglePubDelegate > {
 @private
 }
 @end
@@ -32,9 +32,7 @@ int	MOAIVungleIOS::_allowAutoRotate	( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	bool autorotate = lua_toboolean( state, 1 );
-	
 	[ VGVunglePub allowAutoRotate:autorotate ];
-	
 	return 0;
 }
 
@@ -48,9 +46,7 @@ int	MOAIVungleIOS::_cacheSizeGet ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	int cacheSize = ( int )[ VGVunglePub cacheSizeGet ];
-	
 	lua_pushnumber ( state, cacheSize );
-	
 	return 1;
 	
 }
@@ -66,9 +62,7 @@ int	MOAIVungleIOS::_cacheSizeSet ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	int cacheSize = lua_tonumber( state, 1 );
-	
 	[ VGVunglePub cacheSizeSet:cacheSize ];
-	
 	return 0;
 }
 
@@ -80,10 +74,10 @@ int	MOAIVungleIOS::_displayAdvert ( lua_State* L ) {
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];
 	
-	bool incentivised	= lua_toboolean( state, 1 );
+	bool incentivised	= state.GetValue < bool >( 1, true );
 	
 	if ( incentivised ) {
-		bool showClose		= lua_toboolean( state, 2 );
+		bool showClose = state.GetValue < bool >( 2, false );
 		[ VGVunglePub playIncentivizedAd:rootVC animated:TRUE showClose:showClose userTag:nil ];
 	}
 	else {
@@ -107,14 +101,8 @@ int MOAIVungleIOS::_init ( lua_State* L ) {
 	
 	if ( identifier ) {
 		
-		bool landscape = lua_toboolean( state, 2 );
-
-		VGUserData*  data  = [VGUserData defaultUserData];
-		
-		// set up config data
-		// AJV TODO add age/gender
-		//data.age             = 36;
-	   // data.gender          = VGGenderFemale;
+		bool landscape = state.GetValue < bool >( 2, true );
+		VGUserData*  data  = [ VGUserData defaultUserData ];
 		
 		if ( landscape ) {
 			data.adOrientation = VGAdOrientationLandscape;
@@ -127,10 +115,8 @@ int MOAIVungleIOS::_init ( lua_State* L ) {
 		
 		// start vungle publisher library
 		[ VGVunglePub setDelegate: ( VGVungleDelegate ) MOAIVungleIOS::Get ().mDelegate ];
-		
 		[ VGVunglePub startWithPubAppID:[ NSString stringWithUTF8String:identifier ] userData:data ];
 	}
-	
 	return 0;
 }
 
@@ -153,11 +139,12 @@ int MOAIVungleIOS::_isVideoAvailable ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVungleIOS::MOAIVungleIOS () {
+MOAIVungleIOS::MOAIVungleIOS () :
+	mWatchedAd ( false ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	mDelegate = [[ MoaiVungleDelegate alloc ] init ];
+	mDelegate = [[ MOAIVungleDelegate alloc ] init ];
 }
 
 //----------------------------------------------------------------//
@@ -166,19 +153,20 @@ MOAIVungleIOS::~MOAIVungleIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVungleIOS::NotifyMoviePlayed ( bool playedFull ) {	
+void MOAIVungleIOS::NotifyMoviePlayed () {
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( MOVIE_PLAYED, state )) {
-		state.Push ( playedFull );
+	if ( this->PushListener ( AD_VIEWED, state )) {
+		state.Push ( this->mWatchedAd );
 		state.DebugCall ( 1, 0 );
 	}
+	this->mWatchedAd = false;
 }
 
 //----------------------------------------------------------------//
 void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "MOVIE_PLAYED",		( u32 )MOVIE_PLAYED );
+	state.SetField ( -1, "AD_VIEWED", ( u32 )AD_VIEWED );
 
 	luaL_Reg regTable [] = {
 		{ "allowAutoRotate",	_allowAutoRotate },
@@ -195,31 +183,26 @@ void MOAIVungleIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//================================================================//
-// MoaiVungleDelegate
-//================================================================//
-@implementation MoaiVungleDelegate
+//----------------------------------------------------------------//
+void MOAIVungleIOS::WatchedAd ( bool playedFull ) {
+	this->mWatchedAd = playedFull;
+}
 
-	//================================================================//
-	#pragma mark -
-	#pragma mark Protocol MoaiVungleDelegate
-	//====================================================0============//
+//================================================================//
+// MOAIVungleDelegate
+//================================================================//
+@implementation MOAIVungleDelegate
 
+	//----------------------------------------------------------------//
 	- ( void ) vungleMoviePlayed:( VGPlayData * ) playData {
 		bool playedFull = [ playData playedFull ];
-		MOAIVungleIOS::Get ().NotifyMoviePlayed ( playedFull );
+		MOAIVungleIOS::Get ().WatchedAd ( playedFull );
 	}
 
-	- ( void ) vungleStatusUpdate:( VGStatusData * ) statusData {
-		UNUSED ( statusData );
-	}
-
+	//----------------------------------------------------------------//
 	- ( void ) vungleViewDidDisappear:( UIViewController * ) viewController {
 		UNUSED ( viewController );
-	}
-
-	- ( void ) vungleViewWillAppear:( UIViewController* ) viewController {
-		UNUSED ( viewController );
+		MOAIVungleIOS::Get ().NotifyMoviePlayed ();
 	}
 
 @end
