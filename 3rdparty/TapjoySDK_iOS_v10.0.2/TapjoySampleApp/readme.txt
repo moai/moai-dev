@@ -1,0 +1,3 @@
+TapjoySampleApp is a runtime developer console that is useful for easily testing Events and other ad types without making code changes in your app.  It is also useful for internal QA teams for testing functionality outside of your main app.  If you're looking for a simple sample project that exhibits best-in-class virtual currency, ads, and events implementation take a look at TapjoyEasyApp rather than TapjoySampleApp.
+
+For more information and product documentation, please go to http://tech.tapjoy.com 

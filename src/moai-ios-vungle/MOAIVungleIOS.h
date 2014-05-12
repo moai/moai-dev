@@ -9,7 +9,7 @@
 
 #include <moai-core/headers.h>
 
-@class MoaiVungleDelegate;
+@class MOAIVungleDelegate;
 
 //================================================================//
 // MOAIVungleIOS
@@ -18,7 +18,8 @@ class MOAIVungleIOS :
 	public MOAIGlobalClass < MOAIVungleIOS, MOAIGlobalEventSource > {
 private:
 
-	MoaiVungleDelegate*	mDelegate;
+	MOAIVungleDelegate*		mDelegate;
+	bool					mWatchedAd;
 	
 	//----------------------------------------------------------------//
 	static int		_allowAutoRotate			( lua_State* L );
@@ -31,8 +32,7 @@ private:
 public:
 		
 	enum {
-		MOVIE_PLAYED,
-		TOTAL,
+		AD_VIEWED,
 	};
 
 	DECL_LUA_SINGLETON ( MOAIVungleIOS );
@@ -40,8 +40,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAIVungleIOS				();
 					~MOAIVungleIOS				();
-	void			NotifyMoviePlayed			( bool playedFull );
+	void			NotifyMoviePlayed			();
 	void			RegisterLuaClass			( MOAILuaState& state );
+	void			WatchedAd					( bool playedFull );
 };
 
 #endif  //MOAIVUNGLEIOS_H
