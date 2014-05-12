@@ -4,6 +4,8 @@
 #include "pch.h"
 #include <moai-sim/MOAIGridSpace.h>
 
+double sqrt3 = 1.73205080756887729352;
+
 //================================================================//
 // MOAICellCoord
 //================================================================//
@@ -173,8 +175,52 @@ int MOAIGridSpace::_getTileSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	initAxialHexGrid
+	@text	Initialize a grid with hex tiles, using an axial coordinate system. The axial grid assumes that the flat sides of hexes are on the sides, and the points are up/down.
+
+	@in		MOAIGridSpace self
+	@in		number width
+	@in		number height
+	@opt	number tileWidth		Default value is 1.
+	@opt	number tileHeight		Default value is 1.
+	@opt	number xGutter			Default value is 0.
+	@opt	number yGutter			Default value is 0.
+	@out	nil
+*/
+int MOAIGridSpace::_initAxialHexGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+
+	u32 width			= state.GetValue < u32 >( 2, 0 );
+	u32 height			= state.GetValue < u32 >( 3, 0 );
+	
+	float tileWidth		= state.GetValue < float >( 4, 1.0f );
+	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+
+	float xGutter		= state.GetValue < float >( 6, 0.0f );
+	float yGutter		= state.GetValue < float >( 7, 0.0f );
+
+	self->mShape = AXIAL_HEX_SHAPE;
+
+	self->mWidth = width;
+	self->mHeight = height;
+	
+	self->mCellWidth = tileWidth;
+	self->mCellHeight = tileHeight;
+	
+	self->mXOff = xGutter * 0.5f;
+	self->mYOff = yGutter * 0.5f;
+	
+	self->mTileWidth = tileWidth - xGutter;
+	self->mTileHeight = tileHeight - yGutter;
+	
+	self->OnResize ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	initDiamondGrid
-	@text	Initialize a grid with hexagonal tiles.
+	@text	Initialize a grid with diamond tiles.
 
 	@in		MOAIGridSpace self
 	@in		number width
@@ -426,7 +472,7 @@ int MOAIGridSpace::_setRepeat ( lua_State* L ) {
 
 	@in		MOAIGridSpace self
 	@opt	number shape		One of MOAIGridSpace.RECT_SHAPE, MOAIGridSpace.DIAMOND_SHAPE,
-								MOAIGridSpace.OBLIQUE_SHAPE, MOAIGridSpace.HEX_SHAPE.
+								MOAIGridSpace.OBLIQUE_SHAPE, MOAIGridSpace.HEX_SHAPE, MOAIGridSpace.AXIAL_HEX_SHAPE.
 								Default value is MOAIGridSpace.RECT_SHAPE.
 	@out	nil
 */
@@ -586,6 +632,10 @@ ZLRect MOAIGridSpace::GetBounds () const {
 		rect.mYMin -= this->mCellHeight * 0.5f;
 		rect.mYMax += this->mCellHeight * 0.5f;
 	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		rect.mXMin -= this->mCellWidth * 0.5f * (this->mHeight - 1);
+		rect.mYMax -= this->mCellHeight * 0.25f * (this->mHeight - 1);
+	}
 	
 	return rect;
 }
@@ -603,6 +653,11 @@ ZLRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
 		rect0.mYMin -= this->mCellHeight * 0.5f;
 		rect0.mYMax += this->mCellHeight * 0.5f;
 	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		float rectHeight = rect0.mYMax - rect0.mYMin;
+		rect0.mXMin -= this->mCellWidth * 0.5f * rectHeight;
+		rect0.mYMax -= this->mCellHeight * 0.25f * rectHeight;
+	}
 	
 	return rect0;
 }
@@ -613,17 +668,27 @@ void MOAIGridSpace::GetBoundsInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCo
 	rect.Bless ();
 	maxSize.Bless ();
 
-	c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
-	c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		float rectHeight;
+		c0 = this->GetAxialHexCellCoord ( rect.mXMin, rect.mYMin );
+		c1 = this->GetAxialHexCellCoord ( rect.mXMax, rect.mYMax );
+		rectHeight = c1.mY - c0.mY;
+		/* you need an extra column per two rows */
+		c1.mX = c1.mX + (rectHeight / 2);
+	} else {
+		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
+		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
 
-	c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
-	c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
+		c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
+		c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
+	}
 	
 	if ( this->mShape & STAGGER_FLAG ) {
 		c0.mX--;
 		c0.mY--;
 		c1.mY++;
 	}
+
 	
 	if ( this->mShape == OBLIQUE_SHAPE ) {
 		c0.mX--;
@@ -684,6 +749,9 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
 	
 	switch ( this->mShape ) {
 		
+		case AXIAL_HEX_SHAPE:
+			return this->GetAxialHexCellCoord ( x, y );
+
 		case DIAMOND_SHAPE:
 			return this->GetHexCellCoord ( x, y, 0.0f, 4.0f );
 		
@@ -719,6 +787,16 @@ USVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		return this->GetRectPoint (
+			( cellCoord.mX * this->mCellWidth ) + xOff,
+			( cellCoord.mY * this->mCellHeight * 3 / 4 ) - ( this->mCellHeight * 0.5f ),
+			this->mCellWidth,
+			this->mCellHeight * 2.0f,
+			position
+		);
+	}
 	
 	return this->GetRectPoint (
 		( cellCoord.mX * this->mCellWidth ) + xOff,
@@ -733,17 +811,22 @@ USVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) co
 ZLRect MOAIGridSpace::GetCellRect ( MOAICellCoord cellCoord ) const {
 			
 	float xOff = 0.0f;
+	float yOff = 0.0f;
 
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
+	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		yOff = (cellCoord.mY - 1) * this->mCellHeight * 0.25f;
 	}
 	
 	ZLRect rect;
 	
 	rect.mXMin = ( cellCoord.mX * this->mCellWidth ) + xOff;
-	rect.mYMin = cellCoord.mY * this->mCellHeight;
+	rect.mYMin = cellCoord.mY * this->mCellHeight + yOff;
 	
-	rect.mXMax = ( rect.mXMin + this->mCellWidth ) + xOff;
+	rect.mXMax = rect.mXMin + this->mCellWidth;
 	rect.mYMax = rect.mYMin + this->mCellHeight;
 	
 	return rect;
@@ -808,6 +891,36 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 	
 	MOAICellCoord cellCoord ( xTile, yTile );
 	return cellCoord;
+}
+
+MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
+	float t1, t2, q, r;
+
+	/* normalize to units of hex dimensions */
+	x = (x / this->mCellWidth) - 0.5;
+	y = (y / this->mCellHeight);
+
+	/*
+	 * from a comment thread on Amit Patel's hexagon page:
+
+	 	x = (x - halfHexWidth) / hexWidth;
+
+	 	double t1 = z / hexRadius, t2 = Math.Floor(x + t1);
+	 	double r = Math.Floor((Math.Floor(t1 - x) + t2) / 3);
+	 	double q = Math.Floor((Math.Floor(2 * x + 1) + t2) / 3) - r;
+
+	 	return new Coord((int) q, (int) r); 
+	 * note that "hexRadius" is pretty close to "mHeight / 2" for
+	 * our purposes. The example assumed that z increases as you go
+	 * down the screen, but it also assumed that the hex grid was
+	 * counting the same way.
+	 */
+	t1 = (y * 2);
+	t2 = floorf(x + t1);
+	r = floorf((floorf(t1 - x) + t2) / 3);
+	q = floorf((floorf(2 * x + 1) + t2) / 3);
+
+	return MOAICellCoord(q, r);
 }
 
 //----------------------------------------------------------------//
@@ -894,7 +1007,16 @@ USVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
-			
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		return this->GetRectPoint (
+			( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
+			( cellCoord.mY * this->mCellHeight * 3 / 4 ) + this->mYOff,
+			this->mTileWidth,
+			this->mTileHeight,
+			position
+		);
+	}
 	return this->GetRectPoint (
 		( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
 		( cellCoord.mY * this->mCellHeight ) + this->mYOff,
@@ -1043,6 +1165,7 @@ void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TILE_CENTER", ( u32 )MOAIGridSpace::TILE_CENTER );
 	
 	state.SetField ( -1, "RECT_SHAPE", RECT_SHAPE );
+	state.SetField ( -1, "AXIAL_HEX_SHAPE", AXIAL_HEX_SHAPE );
 	state.SetField ( -1, "DIAMOND_SHAPE", DIAMOND_SHAPE );
 	state.SetField ( -1, "OBLIQUE_SHAPE", OBLIQUE_SHAPE );
 	state.SetField ( -1, "HEX_SHAPE", HEX_SHAPE );
@@ -1060,6 +1183,7 @@ void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTileLoc",			_getTileLoc },
 		{ "getTileSize",		_getTileSize },
 		{ "initDiamondGrid",	_initDiamondGrid },
+		{ "initAxialHexGrid",		_initAxialHexGrid },
 		{ "initHexGrid",		_initHexGrid },
 		{ "initObliqueGrid",	_initObliqueGrid },
 		{ "initRectGrid",		_initRectGrid },
