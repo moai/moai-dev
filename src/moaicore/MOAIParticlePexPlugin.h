@@ -62,6 +62,8 @@ private:
 	s32	  mMaxRadiusRegister;
 	
 	float mMinRadius;
+	float mMinRadiusVariance;
+	s32   mMinRadiusRegister;
 	
 	float mRadialAcceleration;
 	float mRadialAccelVariance;
@@ -143,6 +145,8 @@ private:
 	static int		_setMaxRadiusVariance				( lua_State* L );
 	static int		_getMinRadius						( lua_State* L );
 	static int		_setMinRadius						( lua_State* L );
+	static int		_getMinRadiusVariance				( lua_State* L );
+	static int		_setMinRadiusVariance				( lua_State* L );
 	static int		_getParticleLifespan				( lua_State* L );
 	static int		_setParticleLifespan				( lua_State* L );
 	static int		_getParticleLifespanVariance		( lua_State* L );
@@ -162,6 +166,8 @@ private:
 	static int		_setRotationEndVariance				( lua_State* L );
 	static int		_getRotationStart					( lua_State* L );
 	static int		_setRotationStart					( lua_State* L );
+	static int		_getRotationStartVariance			( lua_State* L );
+	static int		_setRotationStartVariance			( lua_State* L );
 	static int		_getSourcePosition					( lua_State* L );
 	static int		_setSourcePosition					( lua_State* L );
 	static int		_getSourcePositionVariance			( lua_State* L );
@@ -184,8 +190,12 @@ private:
 	static int		_setTangentalAccelerationVariance	( lua_State* L );
 
 	static int		_getTextureName						( lua_State* L );
+	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
 
+	static void     InitializeBasicRegisters    ( MOAIParticlePexPlugin& plugin );
+	static void		InitializeEmitter			( MOAIParticlePexPlugin& plugin );
+	void			InitializeProperties		();
 	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	
 	void			_initGravityScript			( float* particle, float* registers );
