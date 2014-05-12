@@ -16,4 +16,8 @@
 	#include <moai-http-client/MOAIUrlMgrNaCl.h>
 #endif
 
+#if MOAI_WITH_NSURL
+	#include <moai-http-client/MOAIHttpTaskNSURL.h>
+#endif
+
 #endif
