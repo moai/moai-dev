@@ -12,14 +12,14 @@
 	
 	@const	EASE_IN					Quartic ease in - Fast start then slow when approaching value; ease into position.
 	@const	EASE_OUT				Quartic ease out - Slow start then fast when approaching value; ease out of position.
+	@const	EXTRA_SHARP_EASE_IN		t ^ 12
+	@const	EXTRA_SHARP_EASE_OUT	t ^ 12
+	@const	EXTRA_SHARP_SMOOTH		t ^ 12
 	@const	FLAT					Stepped change - Maintain original value until end of ease.
 	@const	LINEAR					Linear interpolation.
 	@const	SHARP_EASE_IN			t ^ 8
 	@const	SHARP_EASE_OUT			t ^ 8
 	@const	SHARP_SMOOTH			t ^ 8
-	@const	EXTRA_SHARP_EASE_IN		t ^ 12
-	@const	EXTRA_SHARP_EASE_OUT	t ^ 12
-	@const	EXTRA_SHARP_SMOOTH		t ^ 12
 	@const	SMOOTH					Quartic ease out then ease in.
 	@const	SOFT_EASE_IN			t ^ 2
 	@const	SOFT_EASE_OUT			t ^ 2
