@@ -6,7 +6,7 @@
 #include "pch.h"
 
 #include <algorithm>
-#include <moai-ios/MOAIHttpTaskNSURL.h>
+#include <moai-http-client/MOAIHttpTaskNSURL.h>
 
 #define MAX_HEADER_LENGTH 1024
 

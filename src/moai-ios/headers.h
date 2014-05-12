@@ -16,7 +16,6 @@
 #import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAIBrowserIOS.h>
 #import <moai-ios/MOAIDialogIOS.h>
-#import <moai-ios/MOAIHttpTaskNSURL.h>
 #import <moai-ios/MOAIKeyboardIOS.h>
 #import <moai-ios/MOAINotificationsIOS.h>
 #import <moai-ios/MOAIReachability.h>

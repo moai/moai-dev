@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef libmoai_MOAIHttpTaskNsUrl_h
-#define libmoai_MOAIHttpTaskNsUrl_h
+#ifndef MOAIHTTPTASKNSURL_H
+#define MOAIHTTPTASKNSURL_H
 
 #import <moai-core/headers.h>
 #include <moai-http-client/MOAIHttpTaskBase.h>
@@ -86,12 +86,11 @@ public:
 // MOAITapjoyIOSDelegate
 //================================================================//
 @interface MOAIHttpTaskNSURLDelegate : NSObject {
-
-	MOAIHttpTaskNSURL*	mTask;
-
 @private
+	MOAIHttpTaskNSURL*	mTask;
 }
 
+	//----------------------------------------------------------------//
 	-( id )	initWithTask	:( MOAIHttpTaskNSURL* )task;
 @end
 
