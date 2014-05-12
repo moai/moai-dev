@@ -47,25 +47,30 @@ static float _pow_soft ( float t ) {
 float ZLInterpolate::Curve ( u32 mode, float t ) {
 
 	switch ( mode ) {
-		
+
+		//................................................................
 		case kEaseIn:
 		
 			t = t - 1.0f;
 			return 1.0f - _pow ( t );
 		
+		//................................................................
 		case kEaseOut:
 		
 			return _pow ( t );
 		
+		//................................................................
 		case kExtraSharpEaseIn:
 		
 			t = t - 1.0f;
 			return 1.0f - _pow_extra_sharp ( t );
-			
+		
+		//................................................................
 		case kExtraSharpEaseOut:
 		
 			return _pow_extra_sharp ( t );
 		
+		//................................................................
 		case kExtraSharpSmooth:
 		
 			if ( t < 0.5f ) {
@@ -75,23 +80,33 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - _pow_extra_sharp ( t )) * 0.5f;
 		
+		//................................................................
+		case kExtraSharpSmoothEaseOut:
+		
+			return Curve ( kExtraSharpSmooth, _pow ( t ));
+		
+		//................................................................
 		case kFlat:
 		
 			return ( t < 1.0f ) ? 0.0f : 1.0f;
 		
+		//................................................................
 		case kLinear:
 		
 			return t;
 		
+		//................................................................
 		case kSharpEaseIn:
 		
 			t = t - 1.0f;
 			return 1.0f - _pow_sharp ( t );
-			
+		
+		//................................................................
 		case kSharpEaseOut:
 		
 			return _pow_sharp ( t );
 		
+		//................................................................
 		case kSharpSmooth:
 		
 			if ( t < 0.5f ) {
@@ -101,6 +116,12 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - _pow_sharp ( t )) * 0.5f;
 		
+		//................................................................
+		case kSharpSmoothEaseOut:
+		
+			return Curve ( kSharpSmooth, _pow ( t ));
+		
+		//................................................................
 		case kSmooth:
 		
 			if ( t < 0.5f ) {
@@ -110,15 +131,23 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - _pow ( t )) * 0.5f;
 		
+		//................................................................
+		case kSmoothEaseOut:
+		
+			return Curve ( kSmooth, _pow ( t ));
+		
+		//................................................................
 		case kSoftEaseIn:
 		
 			t = t - 1.0f;
 			return 1.0f - _pow_soft ( t );
-			
+		
+		//................................................................
 		case kSoftEaseOut:
 		
 			return _pow_soft ( t );
 		
+		//................................................................
 		case kSoftSmooth:
 		
 			if ( t < 0.5f ) {
@@ -127,6 +156,11 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			}
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - _pow_soft ( t )) * 0.5f;
+		
+		//................................................................
+		case kSoftSmoothEaseOut:
+		
+			return Curve ( kSoftSmooth, _pow ( t ));
 
 	}
 	return 0.0f;
