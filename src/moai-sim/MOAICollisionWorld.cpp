@@ -16,6 +16,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAICollisionWorld::_processOverlaps ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
+
+	self->ProcessOverlaps ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAICollisionWorld::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )

@@ -102,6 +102,16 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( self->mPartition ) {
 		
+		float sortScale [ 4 ];
+		
+		u32 sortMode			= state.GetValue < u32 >( 2, self->mSortMode );
+		bool sortInViewSpace	= state.GetValue < bool >( 3, self->mSortInViewSpace );
+		
+		sortScale [ 0 ]			= state.GetValue < bool >( 4, self->mSortScale [ 0 ]);
+		sortScale [ 1 ]			= state.GetValue < bool >( 5, self->mSortScale [ 1 ]);
+		sortScale [ 2 ]			= state.GetValue < bool >( 6, self->mSortScale [ 2 ]);
+		sortScale [ 3 ]			= state.GetValue < bool >( 7, self->mSortScale [ 3 ]);
+		
 		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
 		ZLMatrix4x4 invViewProjMtx = viewMtx;
 		invViewProjMtx.Append ( self->GetProjectionMtx ());
@@ -123,16 +133,16 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		
 		if ( !totalResults ) return 0;
 		
-		if ( self->mSortInViewSpace ) {
+		if ( sortInViewSpace ) {
 			buffer.Transform ( viewMtx, false );
 		}
 		
 		buffer.GenerateKeys (
-			self->mSortMode,
-			self->mSortScale [ 0 ],
-			self->mSortScale [ 1 ],
-			self->mSortScale [ 2 ],
-			self->mSortScale [ 3 ]
+			sortMode,
+			sortScale [ 0 ],
+			sortScale [ 1 ],
+			sortScale [ 2 ],
+			sortScale [ 3 ]
 		);
 		
 		buffer.Sort ( self->mSortMode );
@@ -844,23 +854,25 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIClearableView::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_LOD",					MOAILayerAttr::Pack ( ATTR_LOD ));
+	state.SetField ( -1, "ATTR_LOD",						MOAILayerAttr::Pack ( ATTR_LOD ));
 	
-	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
-	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
-	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
-	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_ASCENDING );
-	state.SetField ( -1, "SORT_X_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_X_DESCENDING );
-	state.SetField ( -1, "SORT_Y_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
-	state.SetField ( -1, "SORT_Y_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
-	state.SetField ( -1, "SORT_Z_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Z_ASCENDING );
-	state.SetField ( -1, "SORT_Z_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_Z_DESCENDING );
-	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
-	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
-
-	state.SetField ( -1, "LOD_CONSTANT",				( u32 )MOAILayer::LOD_CONSTANT );
-	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",		( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
+	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_ISO",						( u32 )MOAIPartitionResultBuffer::SORT_ISO );
+	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
+	state.SetField ( -1, "SORT_X_ASCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_X_ASCENDING );
+	state.SetField ( -1, "SORT_X_DESCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_X_DESCENDING );
+	state.SetField ( -1, "SORT_Y_ASCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
+	state.SetField ( -1, "SORT_Y_DESCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
+	state.SetField ( -1, "SORT_Z_ASCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_Z_ASCENDING );
+	state.SetField ( -1, "SORT_Z_DESCENDING",				( u32 )MOAIPartitionResultBuffer::SORT_Z_DESCENDING );
+	state.SetField ( -1, "SORT_VECTOR_ASCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
+	state.SetField ( -1, "SORT_VECTOR_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
+	state.SetField ( -1, "SORT_DIST_SQUARED_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_DIST_SQUARED_ASCENDING );
+	state.SetField ( -1, "SORT_DIST_SQUARED_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_DIST_SQUARED_DESCENDING );
+	
+	state.SetField ( -1, "LOD_CONSTANT",					( u32 )MOAILayer::LOD_CONSTANT );
+	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",			( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
 }
 
 //----------------------------------------------------------------//
