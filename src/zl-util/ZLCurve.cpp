@@ -335,7 +335,6 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 	ZLCubicBezier2D left;
 	ZLCubicBezier2D right;
 	
-	
 	if ( inflections == ONE_CUSP ) {
 	
 		this->Split ( inflection0, left, right );
@@ -398,6 +397,8 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 			}
 		}
 	}
+
+	writer.WriteVertex ( this->mP3 );
 
 //	switch ( inflections ) {
 //		

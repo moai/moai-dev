@@ -37,6 +37,7 @@ private:
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
+	static int			_processOverlaps		( lua_State* L );
 	static int			_setCallback			( lua_State* L );
 
 	//----------------------------------------------------------------//

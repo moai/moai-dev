@@ -137,11 +137,25 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 
 	switch ( mode & SORT_MODE_MASK ) {
 		
+		case SORT_DIST_SQUARED_ASCENDING:
+			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+				MOAIPartitionResult& result = this->mResults [ i ];
+				
+				float dist =
+					(( result.mLoc.mX * result.mLoc.mX ) - ( xScale * xScale )) +
+					(( result.mLoc.mY * result.mLoc.mY ) - ( yScale * yScale )) +
+					(( result.mLoc.mZ * result.mLoc.mZ ) - ( zScale * zScale ));
+				
+				result.mKey = ZLFloat::FloatToIntKey ( dist * floatSign );
+			}
+			break;
+		
 		case SORT_KEY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				this->mResults [ i ].mKey = this->mResults [ i ].mKey * intSign;
 			}
 			break;
+		
 		case SORT_PRIORITY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				s32 p = this->mResults [ i ].mPriority * intSign;
