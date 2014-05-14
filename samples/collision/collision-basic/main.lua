@@ -32,6 +32,8 @@ end
 world = MOAICollisionWorld.new ()
 world:start ()
 world:setCallback ( onOverlap )
+
+layer:setPartition ( world )
 layer:setOverlayTable ({ world })
 
 gfxQuad = MOAIGfxQuad2D.new ()
@@ -45,12 +47,11 @@ makePropWithColl = function ( x, y )
 	prop:setDeck ( gfxQuad )
 	layer:insertProp ( prop )
 	prop:setLoc ( x, y )
+	world:insertProp ( prop )
 
-	local coll = MOAICollisionProp.new ()
-	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setBounds ( -64, -64, 0, 64, 64, 0 )
-	coll:setAttrLink ( MOAICollisionProp.INHERIT_TRANSFORM, prop, MOAIProp.TRANSFORM_TRAIT )
-	world:insertProp ( coll )
+	local coll = MOAICollisionFacet.new ()
+	coll:setOverlapFlags ( MOAICollisionFacet.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionFacet.OVERLAP_EVENTS_LIFECYCLE )
+	prop:setFacet ( MOAIProp.COLLISION_FACET, coll )
 	
 	return prop
 end

@@ -11,7 +11,7 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAICellCoord;
-class MOAICollisionProp;
+class MOAICollisionFacet;
 class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGfxState;
@@ -28,6 +28,31 @@ class MOAIShader;
 class MOAISurfaceSampler2D;
 class MOAITextureBase;
 
+class MOAIProp;
+
+//================================================================//
+// MOAIFacet
+//================================================================//
+class MOAIFacet :
+	public virtual MOAILuaObject {
+protected:
+
+	friend class MOAIProp;
+	
+	MOAIProp* mProp;
+
+	//----------------------------------------------------------------//
+	virtual void	OnAttach		( MOAIProp& prop );
+	virtual void	OnDetach		( MOAIProp& prop );
+
+public:
+
+	//----------------------------------------------------------------//
+	MOAIProp&		GetProp			();
+					MOAIFacet		();
+					~MOAIFacet		();
+};
+
 //================================================================//
 // MOAIProp
 //================================================================//
@@ -39,6 +64,15 @@ class MOAITextureBase;
 */
 class MOAIProp :
 	public MOAITransform {
+public:
+
+	static const u32 UNKNOWN_FACET = 0xffffffff;
+
+	enum {
+		COLLISION_FACET,
+		TOTAL_FACETS,
+	};
+
 private:
 
 	friend class MOAIPartition;
@@ -54,14 +88,15 @@ private:
 	ZLLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
 
-	u32					mMask;
-	s32					mPriority;
-	ZLBox				mWorldBounds;
+	u32							mMask;
+	s32							mPriority;
+	ZLBox						mWorldBounds;
 	
 	//----------------------------------------------------------------//
 	static int			_getBounds					( lua_State* L );
 	static int			_getDeck					( lua_State* L );
 	static int			_getDims					( lua_State* L );
+	static int			_getFacet					( lua_State* L );
 	static int			_getGrid					( lua_State* L );
 	static int			_getIndex					( lua_State* L );
 	static int			_getPriority				( lua_State* L );
@@ -71,6 +106,7 @@ private:
 	static int			_setBounds					( lua_State* L );
 	static int			_setDeck					( lua_State* L );
 	static int			_setExpandForSort			( lua_State* L );
+	static int			_setFacet					( lua_State* L );
 	static int			_setGrid					( lua_State* L );
 	static int			_setGridScale				( lua_State* L );
 	static int			_setIndex					( lua_State* L );
@@ -92,8 +128,11 @@ protected:
 
 	ZLBox									mBoundsOverride;
 
+	MOAIFacet*								mFacets [ TOTAL_FACETS ];
+
 	//----------------------------------------------------------------//
 	virtual u32			OnGetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
+	MOAIFacet*			ReplaceFacet			( MOAIFacet* oldFacet, MOAIFacet* newFacet );
 	u32					ResolveModelBounds		( ZLBox& bounds );
 	void				UpdateWorldBounds		( u32 status );
 	void				UpdateWorldBounds		( const ZLBox& bounds, u32 status ); // update bounds in world space
@@ -146,7 +185,8 @@ public:
 	virtual void					Draw					( int subPrimID, float lod );
 	virtual void					DrawDebug				( int subPrimID, float lod );
 	void							GatherSurfaces			( MOAISurfaceSampler2D& sampler );
-	virtual MOAICollisionProp*		GetCollisionProp		();
+	MOAICollisionFacet*				GetCollisionFacet		();
+	MOAIFacet*						GetFacet				( u32 facetID );
 	virtual MOAIGraphicsProp*		GetGraphicsProp			();
 	void							GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
 	u32								GetModelBounds			( ZLBox& bounds );
@@ -160,6 +200,7 @@ public:
 	void							RegisterLuaFuncs		( MOAILuaState& state );
 	void							SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void							SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void							SetFacet				( u32 facetID, MOAIFacet* facet );
 	void							SetPartition			( MOAIPartition* partition );
 };
 
