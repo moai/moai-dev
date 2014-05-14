@@ -4,10 +4,13 @@
 #ifndef	MOAICOLLISIONWORLD_H
 #define	MOAICOLLISIONWORLD_H
 
+#include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIRenderable.h>
 
-class MOAICollisionProp;
+class MOAICollisionFacet;
 class MOAIOverlapInfo;
+class MOAIProp;
 
 //================================================================//
 // MOAICollisionWorld
@@ -26,8 +29,8 @@ private:
 	bool	mUpdated;
 	u32		mOverlapPass;
 
-	typedef ZLLeanList < MOAICollisionProp* >::Iterator ActiveListIt;
-	ZLLeanList < MOAICollisionProp* > mActiveList;
+	typedef ZLLeanList < MOAICollisionFacet* >::Iterator ActiveListIt;
+	ZLLeanList < MOAICollisionFacet* > mActiveList;
 	
 	typedef ZLLeanList < MOAIPropOverlap* >::Iterator OverlapListIt;
 	ZLLeanList < MOAIPropOverlap* > mOverlapList;
@@ -41,13 +44,13 @@ private:
 	static int			_setCallback			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				ClearOverlaps			( MOAICollisionProp& prop );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
-	void				HandleOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, MOAIOverlapInfo& overlapInfo );
+	void				ClearOverlaps			( MOAICollisionFacet& facet );
+	void				DoCallback				( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1 );
+	void				DoCallback				( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, const MOAIOverlapInfo& overlapInfo );
+	void				HandleOverlap			( MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, MOAIOverlapInfo& overlapInfo );
 	bool				IsDone					();
-	void				MakeActive				( MOAICollisionProp& prop );
-	void				MakeInactive			( MOAICollisionProp& prop );
+	void				MakeActive				( MOAICollisionFacet& facet0 );
+	void				MakeInactive			( MOAICollisionFacet& facet0 );
 	void				OnPropInserted			( MOAIProp& prop );	
 	void				OnPropRemoved			( MOAIProp& prop );	
 	void				OnPropUpdated			( MOAIProp& prop );

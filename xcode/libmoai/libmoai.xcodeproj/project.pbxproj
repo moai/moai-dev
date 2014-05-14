@@ -2152,10 +2152,10 @@
 		CD70C2141844999E005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C2101844999E005CEBC0 /* host.mm */; };
 		CD70C2151844999E005CEBC0 /* MOAIKontagentIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C2111844999E005CEBC0 /* MOAIKontagentIOS.h */; };
 		CD70C2161844999E005CEBC0 /* MOAIKontagentIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C2121844999E005CEBC0 /* MOAIKontagentIOS.mm */; };
-		CD73A5FC188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */; };
-		CD73A5FD188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */; };
-		CD73A5FE188F0AD200DFACDB /* MOAICollisionProp.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */; };
-		CD73A5FF188F0AD200DFACDB /* MOAICollisionProp.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */; };
+		CD73A5FC188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5F8188F0AD200DFACDB /* MOAICollisionFacet.cpp */; };
+		CD73A5FD188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5F8188F0AD200DFACDB /* MOAICollisionFacet.cpp */; };
+		CD73A5FE188F0AD200DFACDB /* MOAICollisionFacet.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A5F9188F0AD200DFACDB /* MOAICollisionFacet.h */; };
+		CD73A5FF188F0AD200DFACDB /* MOAICollisionFacet.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A5F9188F0AD200DFACDB /* MOAICollisionFacet.h */; };
 		CD73A600188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */; };
 		CD73A601188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */; };
 		CD73A602188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A5FB188F0AD200DFACDB /* MOAICollisionWorld.h */; };
@@ -6627,8 +6627,8 @@
 		CD70C2101844999E005CEBC0 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-kontagent/host.mm"; sourceTree = "<group>"; };
 		CD70C2111844999E005CEBC0 /* MOAIKontagentIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIKontagentIOS.h; path = "moai-ios-kontagent/MOAIKontagentIOS.h"; sourceTree = "<group>"; };
 		CD70C2121844999E005CEBC0 /* MOAIKontagentIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIKontagentIOS.mm; path = "moai-ios-kontagent/MOAIKontagentIOS.mm"; sourceTree = "<group>"; };
-		CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionProp.cpp; sourceTree = "<group>"; };
-		CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICollisionProp.h; sourceTree = "<group>"; };
+		CD73A5F8188F0AD200DFACDB /* MOAICollisionFacet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionFacet.cpp; sourceTree = "<group>"; };
+		CD73A5F9188F0AD200DFACDB /* MOAICollisionFacet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICollisionFacet.h; sourceTree = "<group>"; };
 		CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionWorld.cpp; sourceTree = "<group>"; };
 		CD73A5FB188F0AD200DFACDB /* MOAICollisionWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICollisionWorld.h; sourceTree = "<group>"; };
 		CD73A604188F0AEC00DFACDB /* MOAIGraphicsProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGraphicsProp.cpp; sourceTree = "<group>"; };
@@ -11958,8 +11958,8 @@
 		CD8DD76419195F5A0088EA60 /* collision */ = {
 			isa = PBXGroup;
 			children = (
-				CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */,
-				CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */,
+				CD73A5F8188F0AD200DFACDB /* MOAICollisionFacet.cpp */,
+				CD73A5F9188F0AD200DFACDB /* MOAICollisionFacet.h */,
 				CD73A5FA188F0AD200DFACDB /* MOAICollisionWorld.cpp */,
 				CD73A5FB188F0AD200DFACDB /* MOAICollisionWorld.h */,
 				89BE6F40173AD0CA00DFE837 /* MOAICollisionShape.cpp */,
@@ -12957,7 +12957,7 @@
 				CD9F765D1808CE9D0001EF0C /* NSDictionary+MOAILib.h in Headers */,
 				CD4C3EF9180A63BB00C02381 /* MOAIViewport.h in Headers */,
 				CD4C3E55180A63BB00C02381 /* MOAIJoystickSensor.h in Headers */,
-				CD73A5FE188F0AD200DFACDB /* MOAICollisionProp.h in Headers */,
+				CD73A5FE188F0AD200DFACDB /* MOAICollisionFacet.h in Headers */,
 				CD9F76651808CE9D0001EF0C /* NSString+MOAILib.h in Headers */,
 				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */,
@@ -13167,7 +13167,7 @@
 				CD4C409B180A63C200C02381 /* MOAINodeMgr.h in Headers */,
 				CD4C4127180A63C200C02381 /* MOAIVertexFormat.h in Headers */,
 				CD4C40EB180A63C200C02381 /* MOAIShader.h in Headers */,
-				CD73A5FF188F0AD200DFACDB /* MOAICollisionProp.h in Headers */,
+				CD73A5FF188F0AD200DFACDB /* MOAICollisionFacet.h in Headers */,
 				CD4C4067180A63C200C02381 /* MOAIGfxResource.h in Headers */,
 				CD4C40DF180A63C200C02381 /* MOAIRenderable.h in Headers */,
 				CDEFD571181ECB3E0058D772 /* MOAITextLayout.h in Headers */,
@@ -16730,7 +16730,7 @@
 				CD9F76581808CE9D0001EF0C /* NSArray+MOAILib.mm in Sources */,
 				CD4C3E4A180A63BB00C02381 /* MOAIImage.cpp in Sources */,
 				CD4C3E66180A63BB00C02381 /* MOAINode.cpp in Sources */,
-				CD73A5FC188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */,
+				CD73A5FC188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */,
 				CD4C3DF4180A63BB00C02381 /* MOAIAnimCurveQuat.cpp in Sources */,
 				CD4C3EB0180A63BB00C02381 /* MOAIScissorRect.cpp in Sources */,
 				CD4C3EF2180A63BB00C02381 /* MOAIVertexBuffer.cpp in Sources */,
@@ -16926,7 +16926,7 @@
 				CD4C4056180A63C200C02381 /* MOAIFontReader.cpp in Sources */,
 				CD4C40D3180A63C200C02381 /* MOAIProfilerReportBox.cpp in Sources */,
 				CD4C408C180A63C200C02381 /* MOAILayer2D.cpp in Sources */,
-				CD73A5FD188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */,
+				CD73A5FD188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */,
 				CD4C40DE180A63C200C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C412A180A63C200C02381 /* MOAIViewport.cpp in Sources */,
 				CD4C406C180A63C200C02381 /* MOAIGlyphCacheBase.cpp in Sources */,
