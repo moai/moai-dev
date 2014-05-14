@@ -513,7 +513,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, -1); // TODO: Find way to include character data
 				
 				FT_Done_Glyph(image);
 			}
@@ -773,7 +773,7 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 				USRect glyphRect;
 				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(rect, NULL, lineIndex, state);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(rect, NULL, lineIndex, state, text_ptr[i2]);
 				
 				// step to next glyph
 				pen_x += (face->glyph->metrics.horiAdvance >> 6);
@@ -1489,7 +1489,7 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 				USRect glyphRect;
 				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, NULL, lineIndex, state);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, NULL, lineIndex, state, text_ptr[i2]);
 				
 			}
 			
@@ -1668,7 +1668,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state);
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, -1); // TODO: Find way to include character data
 				
 			}
 			
