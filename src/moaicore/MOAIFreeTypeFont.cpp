@@ -486,6 +486,11 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		
 		FT_Done_Glyph(firstImage);
 		
+        
+        // create wide character string version of text.
+		u32 *wideString = (u32 *)calloc(maxGlyphs + 1, sizeof(u32));
+		u8_toucs(wideString, maxGlyphs, (char *)text, -1);
+		
 		
 		// iterate through the glyphs to do retrieve data
 		for (size_t n = 0; n < numGlyphs; n++){
@@ -513,7 +518,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, -1); // TODO: Find way to include character data
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, wideString[n]);
 				
 				FT_Done_Glyph(image);
 			}
@@ -522,6 +527,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		delete [] positions;
 		deleteGlyphArray(glyphs, numGlyphs);
 		
+		free(wideString);
 		return rect;
 	}
 	else{
@@ -1614,7 +1620,11 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	u32 tableIndex;
 	u32 tableSize = numGlyphs;
+	u32 *wideString;
 	if (returnGlyphBounds) {
+		wideString = (u32*)calloc(numGlyphs + 1, sizeof(u32));
+		
+		u8_toucs(wideString, numGlyphs + 1, (char *)text, -1);
 		// create main table with enough elements for the number of glyphs
 		lua_createtable(state, tableSize, 0);
 	}
@@ -1668,7 +1678,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, -1); // TODO: Find way to include character data
+				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, wideString[n]);
 				
 			}
 			
@@ -1680,6 +1690,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	delete [] positions;
 	deleteGlyphArray(glyphs, numGlyphs);
+	
+	if (returnGlyphBounds) {
+		free(wideString);
+	}
 	
 	
 	// turn the data buffer to an image
