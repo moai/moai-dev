@@ -49,36 +49,36 @@ private:
 	
 	
 	//----------------------------------------------------------------//
-	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
+	static u32			_writeData				( char* data, u32 n, u32 l, void* s );
 	
 	//----------------------------------------------------------------//
-	void			Clear					();
-	NSURLRequest*	Prepare					();
+	void				Clear					();
+	NSURLRequest*		Prepare					();
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHttpTaskNSURL )
 	
 	//----------------------------------------------------------------//
-	void			DidFinishLoading		();
-	void			DidReceiveData			( const void* data, int size );
-	void			DidReceiveResponse		( int responseCode, NSDictionary* headers, int expectedLength );
-	void			FinishRequest			();
-					MOAIHttpTaskNSURL		();
-					~MOAIHttpTaskNSURL		();
-	void			PerformAsync			();
-	void			PerformSync				();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Reset					();
-	void			SetBody					( const void* buffer, u32 size );
-	void			SetFailOnError			( bool enable );
-	void			SetCookieSrc			( const char *file );
-	void			SetCookieDst			( const char *file );
-	void			SetUrl					( cc8* url );
-	void			SetUserAgent			( cc8* useragent );
-	void			SetVerb					( int verb );
-	void			SetVerbose				( bool verbose );
+	void				DidFinishLoading		();
+	void				DidReceiveData			( const void* data, int size );
+	void				DidReceiveResponse		( int responseCode, NSDictionary* headers, int expectedLength );
+	void				FinishRequest			();
+						MOAIHttpTaskNSURL		();
+						~MOAIHttpTaskNSURL		();
+	void				PerformAsync			();
+	void				PerformSync				();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Reset					();
+	void				SetBody					( const void* buffer, u32 size );
+	void				SetFailOnError			( bool enable );
+	void				SetCookieSrc			( const char *file );
+	void				SetCookieDst			( const char *file );
+	void				SetUrl					( cc8* url );
+	void				SetUserAgent			( cc8* useragent );
+	void				SetVerb					( int verb );
+	void				SetVerbose				( bool verbose );
 };
 
 

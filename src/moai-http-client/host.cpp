@@ -13,6 +13,10 @@
 	#include <ares.h>
 #endif
 
+#if MOAI_WITH_NSURL
+	extern void RegisterMOAIHttpTaskNSURL ();
+#endif
+
 //================================================================//
 // aku-util
 //================================================================//
@@ -51,8 +55,12 @@ void AKUHttpClientContextInitialize () {
 	#endif
 
 	#if MOAI_OS_NACL
-		MOAIHttpTaskNaCl::Affirm ();
+		MOAIUrlMgrNaCl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
+	#endif
+	
+	#if MOAI_WITH_NSURL
+		RegisterMOAIHttpTaskNSURL ();
 	#endif
 }
 
