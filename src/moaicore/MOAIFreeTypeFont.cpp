@@ -1331,9 +1331,23 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline, u32 index,  MOAILuaState &state){
+void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline, u32 index,  MOAILuaState &state, u32 wideChar){
+	
+	// a mutable C-string long enough to hold four characters and the null character at the end
+	char utf8String[5];
+	
+	// set all five C-string characters to the null character.
+	memset(utf8String, 0, 5 * sizeof(char));
+	
+	// convert the wide character parameter to a utf-8 string and get the encoding length
+	int charLength = u8_wc_toutf8(utf8String, wideChar);
+	
 	
 	int elements = ( baseline != NULL ) ? 5 : 4;
+	
+	if (charLength > 0) {
+		elements += 1;
+	}
 	
 	// create a table with the appropiate number of elements
 	lua_createtable(state, elements, 0);
@@ -1358,6 +1372,12 @@ void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline,
 	if (baseline) {
 		state.Push( *baseline );
 		lua_setfield(state, -2, "baselineY");
+	}
+	
+	// push character
+	if (charLength > 0) {
+		state.Push(utf8String);
+		lua_setfield(state, -2, "character");
 	}
 	
 	// set index
