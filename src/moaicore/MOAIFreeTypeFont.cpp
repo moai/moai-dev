@@ -488,7 +488,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		
         
         // create wide character string version of text.
-		u32 *wideString = new u32[maxGlyphs + 1]; //(u32 *)calloc(maxGlyphs + 1, sizeof(u32));
+		u32 *wideString = new u32[maxGlyphs + 1];
 		u8_toucs(wideString, maxGlyphs, (char *)text, -1);
 		
 		
@@ -1346,7 +1346,7 @@ void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline,
 	char utf8String[STRING_SIZE];
 	
 	// set all five C-string characters to the null character.
-	memset(utf8String, 0, STRING_SIZE * sizeof(char));
+	memset(utf8String, 0, sizeof(utf8String));
 	
 	// convert the wide character parameter to a utf-8 string and get the encoding length
 	int charLength = u8_wc_toutf8(utf8String, wideChar);
@@ -1624,10 +1624,11 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	u32 tableIndex;
 	u32 tableSize = numGlyphs;
 	u32 *wideString = NULL;
+	
 	if (returnGlyphBounds) {
-		wideString = new u32[numGlyphs + 1]; //(u32*)calloc(numGlyphs + 1, sizeof(u32));
-		
+		wideString = new u32[numGlyphs + 1];
 		u8_toucs(wideString, numGlyphs + 1, (char *)text, -1);
+		
 		// create main table with enough elements for the number of glyphs
 		lua_createtable(state, tableSize, 0);
 	}
