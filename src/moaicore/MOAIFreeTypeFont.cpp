@@ -488,7 +488,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		
         
         // create wide character string version of text.
-		u32 *wideString = (u32 *)calloc(maxGlyphs + 1, sizeof(u32));
+		u32 *wideString = new u32[maxGlyphs + 1]; //(u32 *)calloc(maxGlyphs + 1, sizeof(u32));
 		u8_toucs(wideString, maxGlyphs, (char *)text, -1);
 		
 		
@@ -527,7 +527,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		delete [] positions;
 		deleteGlyphArray(glyphs, numGlyphs);
 		
-		free(wideString);
+		delete [] wideString; //free(wideString);
 		return rect;
 	}
 	else{
@@ -1340,10 +1340,13 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline, u32 index,  MOAILuaState &state, u32 wideChar){
 	
 	// a mutable C-string long enough to hold four characters and the null character at the end
-	char utf8String[5];
+	static const size_t NUMBER_OF_CHARACTERS_IN_UTF8_CHARACTER = 4,
+						STRING_SIZE = NUMBER_OF_CHARACTERS_IN_UTF8_CHARACTER + 1;
+	
+	char utf8String[STRING_SIZE];
 	
 	// set all five C-string characters to the null character.
-	memset(utf8String, 0, 5 * sizeof(char));
+	memset(utf8String, 0, STRING_SIZE * sizeof(char));
 	
 	// convert the wide character parameter to a utf-8 string and get the encoding length
 	int charLength = u8_wc_toutf8(utf8String, wideChar);
@@ -1620,9 +1623,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	u32 tableIndex;
 	u32 tableSize = numGlyphs;
-	u32 *wideString;
+	u32 *wideString = NULL;
 	if (returnGlyphBounds) {
-		wideString = (u32*)calloc(numGlyphs + 1, sizeof(u32));
+		wideString = new u32[numGlyphs + 1]; //(u32*)calloc(numGlyphs + 1, sizeof(u32));
 		
 		u8_toucs(wideString, numGlyphs + 1, (char *)text, -1);
 		// create main table with enough elements for the number of glyphs
@@ -1691,10 +1694,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	delete [] positions;
 	deleteGlyphArray(glyphs, numGlyphs);
 	
-	if (returnGlyphBounds) {
-		free(wideString);
-	}
 	
+	delete [] wideString; 
+	wideString = NULL;
 	
 	// turn the data buffer to an image
 	MOAIImage bitmapImg;
