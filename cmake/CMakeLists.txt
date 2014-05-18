@@ -109,7 +109,8 @@ if ( BUILD_IOS )
   set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " )
+  #default in ios7 is libc++ but some of our ad support libs are libstdc++ so force the lot to build as libstdc++
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++" )
 endif ( BUILD_IOS )
 
 if ( SDL_HOST )
