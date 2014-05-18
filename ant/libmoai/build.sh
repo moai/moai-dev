@@ -18,7 +18,7 @@ fi
 usage="usage: $0  \
     [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--windows] [--release]"
+    [--disable-twitter] [--disable-playservices] [--windows] [--release]"
 
 use_untz="true"
 use_luajit="false"
@@ -33,6 +33,7 @@ tapjoy_flags=
 twitter_flags=
 buildtype_flags="Debug"
 windows_flags=
+playservices_flags=
 
 while [ $# -gt 0 ];	do
     case "$1" in
@@ -46,6 +47,7 @@ while [ $# -gt 0 ];	do
         --disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
         --disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
         --disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
+        --disable-playservices)  playservices_flags="-DDISABLE_PLAYSERVICES";;
         --release) buildtype_flags="Release";;
         --windows) windows_flags=-G"MinGW Makefiles";; 
         -*)
@@ -232,3 +234,4 @@ echo "$facebook_flags" >> libs/package.txt
 echo "$push_flags" >> libs/package.txt
 echo "$tapjoy_flags" >> libs/package.txt
 echo "$twitter_flags" >> libs/package.txt
+echo "$playservices_flags" >> libs/package.txt

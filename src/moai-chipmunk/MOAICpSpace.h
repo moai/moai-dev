@@ -70,10 +70,10 @@ private:
 	static int	_getIterations					( lua_State* L );
 	static int	_getSleepTimeThreshold			( lua_State* L );
 	static int	_getStaticBody					( lua_State* L );
-	static int	_insertProp						( lua_State* L );
+	static int	_insertPrim						( lua_State* L );
 	static int	_rehashShape					( lua_State* L );
 	static int	_rehashStatic					( lua_State* L );
-	static int	_removeProp						( lua_State* L );
+	static int	_removePrim						( lua_State* L );
 	static int	_resizeActiveHash				( lua_State* L );
 	static int	_resizeStaticHash				( lua_State* L );
 	static int	_setCollisionHandler			( lua_State* L );

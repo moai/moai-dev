@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIRenderMgr.h>
 
 #if MOAI_WITH_LIBCURL
 	#include <moai-http-client/MOAIUrlMgrCurl.h>
@@ -200,8 +201,7 @@ int MOAISim::_getDeviceTime ( lua_State* L ) {
 */
 int MOAISim::_getElapsedFrames ( lua_State* L ) {
 	
-	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( L, device.mSimTime / device.mStep );
+	lua_pushnumber ( L, MOAIRenderMgr::Get ().GetRenderCounter() );
 	return 1;
 }
 
@@ -844,6 +844,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
+		{ "hideCursor",					_hideCursor },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "reportHistogram",			_reportHistogram },
@@ -862,6 +863,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
 		{ "setTraceback",				_setTraceback },
+		{ "showCursor",					_showCursor },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};

@@ -7,4 +7,4 @@ require "tests.TestMOAIPartition"
 require "tests.TestMOAIProp"
 require "tests.TestMOAITextBox"
 require "tests.TestMOAITransform"
-
+require "tests.TestMOAIScissorRect"

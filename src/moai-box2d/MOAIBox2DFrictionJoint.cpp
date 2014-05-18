@@ -135,10 +135,10 @@ void MOAIBox2DFrictionJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "_getMaxForce",			_getMaxForce },
-		{ "_getMaxTorque",			_getMaxTorque },
-		{ "_setMaxForce",			_setMaxForce },
-		{ "_setMaxTorque",			_setMaxTorque },
+		{ "getMaxForce",			_getMaxForce },
+		{ "getMaxTorque",			_getMaxTorque },
+		{ "setMaxForce",			_setMaxForce },
+		{ "setMaxTorque",			_setMaxTorque },
 		{ NULL, NULL }
 	};
 	

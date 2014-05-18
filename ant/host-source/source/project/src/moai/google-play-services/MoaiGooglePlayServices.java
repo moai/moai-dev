@@ -41,6 +41,8 @@ public class MoaiGooglePlayServices {
 	private static int							sServicesStatus;
 	private static String						sToken = null;
 
+	protected static native void	AKUNotifyConnectionComplete ();
+
 	public static final int 					ALERT_DIALOG_REQUEST_CODE = 7007;
 	public static final int 					ACCOUNT_PICKER_REQUEST_CODE = 7117;
 	public static final int 					AUTH_REQUEST_CODE = 7227;
@@ -104,6 +106,12 @@ public class MoaiGooglePlayServices {
 
 		MoaiLog.i ( "MoaiGooglePlayServices onStop" );
 		sGameClient.disconnect ();
+	}
+
+	public static void connectionComplete() {
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyConnectionComplete ( );
+		}
 	}
 
 	//================================================================//

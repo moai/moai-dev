@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 2.8)
 # To explicitly request use of LuaJIT at a given
 
 
-    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.1")
+    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.3")
     set (LUAJIT_INCLUDE "${LUAJIT_ROOT}/src")
 
     set (luajit_buildoptions BUILDMODE=static)
@@ -60,7 +60,7 @@ cmake_minimum_required(VERSION 2.8)
     endif(GCC_FORCE_32BIT)
 
 
-    if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "${CMAKE_HOST_SYSTEM_PROCESSOR}")
         # Regular mode - use CMake compiler for building host utils.
         set (luajit_host_cc ${CMAKE_C_COMPILER})
         set (luajit_host_ldflags ${luajit_target_ldflags} )
@@ -74,7 +74,7 @@ cmake_minimum_required(VERSION 2.8)
     
 
     message( "Size of void P =  ${CMAKE_SIZEOF_VOID_P} and ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-    if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" AND
+    if ("${CMAKE_HOST_SYSTEM_PROCESSOR}" MATCHES "64" AND
             ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
 

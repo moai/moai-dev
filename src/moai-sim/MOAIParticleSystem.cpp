@@ -436,7 +436,7 @@ MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 
 	if ( this->mSpriteTop ) {
-		u32 idx = this->mSpriteTop - 1;
+		u32 idx = (this->mSpriteTop - 1) % this->mSprites.Size();
 		return &this->mSprites [ idx ];
 	}
 	return 0;
