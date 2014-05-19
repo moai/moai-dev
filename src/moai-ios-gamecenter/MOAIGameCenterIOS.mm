@@ -25,10 +25,10 @@ int MOAIGameCenterIOS::_authenticatePlayer ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	// TODO: investigate copy constructor support for MOAILuaStrongRef
-	MOAILuaStrongRef& onAuthenticate = *( new MOAILuaStrongRef ()); // wow this is hideous
-	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		onAuthenticate.SetRef ( state, 1 );
-	}
+	//MOAILuaStrongRef& onAuthenticate = *( new MOAILuaStrongRef ()); // wow this is hideous
+	//if ( state.IsType ( 1, LUA_TFUNCTION )) {
+	//	onAuthenticate.SetRef ( state, 1 );
+	//}
 	
 	// Check for presence of GKLocalPlayer class.
     BOOL localPlayerClassAvailable = ( NSClassFromString ( @"GKLocalPlayer" )) != nil;
@@ -56,13 +56,13 @@ int MOAIGameCenterIOS::_authenticatePlayer ( lua_State* L ) {
 			}
 			
 			// TODO: investigate copy constructor support for MOAILuaState
-			MOAILuaState localState ( L );
-			if ( onAuthenticate ) {
-				onAuthenticate.PushRef ( localState );
-				localState.Push ( success );
-				localState.DebugCall ( 1, 0 );
-			}
-			delete ( &onAuthenticate ); // really? :/
+			//MOAILuaState localState ( L );
+			//if ( onAuthenticate ) {
+			//	onAuthenticate.PushRef ( localState );
+			//	localState.Push ( success );
+			//	localState.DebugCall ( 1, 0 );
+			//}
+			//delete ( &onAuthenticate ); // really? :/
 		 }];
 	}	
 	
