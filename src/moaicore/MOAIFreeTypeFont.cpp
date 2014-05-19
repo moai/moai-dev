@@ -527,7 +527,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		delete [] positions;
 		deleteGlyphArray(glyphs, numGlyphs);
 		
-		delete [] wideString; //free(wideString);
+		delete [] wideString;
 		return rect;
 	}
 	else{
