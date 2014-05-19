@@ -68,6 +68,7 @@ private:
 	void				Align						();
 	void				BuildLayout					();
 	u32					NextChar					();
+	float				Snap						( float f );
 
 public:
 

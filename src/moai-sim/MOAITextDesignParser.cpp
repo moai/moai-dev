@@ -106,8 +106,8 @@ void MOAITextDesignParser::Align () {
 	float yMin = limitHeight ? this->mDesigner->mFrame.mYMin : 0.0f;
 	float yMax = yMin + height;
 	
-	float localXOffset = -ZLFloat::Round ( xMin + ( width * 0.5f ));
-	float localYOffset = -ZLFloat::Round ( yMin + ( height * 0.5f ));
+	float localXOffset = -this->Snap ( xMin + ( width * 0.5f ));
+	float localYOffset = -this->Snap ( yMin + ( height * 0.5f ));
 	
 	float penY = yMin;
 	
@@ -161,8 +161,8 @@ void MOAITextDesignParser::Align () {
 				break;
 		}
 
-		lineX = ZLFloat::Round ( lineX + this->mOffset.mX ) + localXOffset;
-		lineY = ZLFloat::Round ( lineY + this->mOffset.mY ) + localYOffset;
+		lineX = this->Snap ( lineX + this->mOffset.mX ) + localXOffset;
+		lineY = this->Snap ( lineY + this->mOffset.mY ) + localYOffset;
 		
 		float xOff = ( lineX - lineRect.mXMin );
 		float yOff = ( lineY + line.mAscent );
@@ -479,4 +479,10 @@ u32 MOAITextDesignParser::NextChar () {
 		return c;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+float MOAITextDesignParser::Snap ( float f ) {
+
+	return f; // TODO: this should snap to some boundary defined by the label; alternative is to use pixel snapping shader
 }
