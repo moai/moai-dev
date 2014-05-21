@@ -784,13 +784,6 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLabel::IsClear () const {
-
-	ZLColorVec color = this->mColor;
-	return (( color.mR == 0.0f ) && ( color.mG == 0.0f ) && ( color.mB == 0.0f ) && ( color.mA == 0.0f ));
-}
-
-//----------------------------------------------------------------//
 bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {

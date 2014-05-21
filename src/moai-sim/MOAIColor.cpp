@@ -214,6 +214,12 @@ ZLColorVec MOAIColor::GetColorTrait () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIColor::IsClear () {
+
+	return this->mColor.IsClear ();
+}
+
+//----------------------------------------------------------------//
 MOAIColor::MOAIColor () {
 	
 	RTTI_BEGIN

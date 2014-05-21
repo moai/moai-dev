@@ -80,6 +80,7 @@ public:
 	void			FromHSV				( float h, float s, float v );
 	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;
+	bool			IsClear				();
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;

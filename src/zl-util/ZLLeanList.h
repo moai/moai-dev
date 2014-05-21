@@ -35,20 +35,25 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline void Remove () {
-		if ( this->mList ) {
-			this->mList->Remove ( *this );
-		}
+	inline ZLLeanList < TYPE >* List () {
+		return this->mList;
 	}
 
 	//----------------------------------------------------------------//
 	inline ZLLeanLink < TYPE >* Next () {
-		return ( this->mNext ) ? this->mNext : 0;
+		return this->mNext;
 	}
 	
 	//----------------------------------------------------------------//
 	inline ZLLeanLink < TYPE >* Prev () {
-		return ( this->mPrev ) ? this->mPrev : 0;
+		return this->mPrev;
+	}
+	
+	//----------------------------------------------------------------//
+	inline void Remove () {
+		if ( this->mList ) {
+			this->mList->Remove ( *this );
+		}
 	}
 	
 	//----------------------------------------------------------------//

@@ -192,7 +192,6 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
-	bool				IsClear					() const;
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				OnUpdate				( float step );

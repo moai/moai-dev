@@ -713,6 +713,12 @@ float ZLColorVec::GetLuma () const {
 }
 
 //----------------------------------------------------------------//
+bool ZLColorVec::IsClear () {
+
+	return (( this->mR == 0.0f ) && ( this->mG == 0.0f ) && ( this->mB == 0.0f ) && ( this->mA == 0.0f ));
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
 
 	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );

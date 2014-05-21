@@ -57,15 +57,6 @@ public:
 	//----------------------------------------------------------------//
 	void Clear () {
 		
-		size_t totalChunks = this->mChunks.Size ();
-		for ( size_t i = 0; i < totalChunks; ++i ) {
-			
-			TYPE* chunk = this->mChunks [ i ];
-			for ( size_t j = 0; j < CHUNKSIZE; ++j ) {
-				TYPE* type = &chunk [ i ];
-				type->TYPE::~TYPE ();
-			}
-		}
 		this->mChunks.Clear ();
 		this->mFree.Clear ();
 	}
@@ -78,6 +69,7 @@ public:
 			this->mFree.Push ( type );
 		}
 	}
+	
 	//----------------------------------------------------------------//
 	ZLLeanPool () :
 		mMaxChunks ( MAXCHUNKS ) {

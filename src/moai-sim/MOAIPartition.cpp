@@ -536,7 +536,7 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	prop.mPartition = this;
 	prop.ScheduleUpdate ();
 	
-	prop.mPartition->OnPropInserted ( prop );
+	this->OnPropInserted ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -637,8 +637,9 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 		prop.mCell->RemoveProp ( prop );
 	}
 
-	prop.mPartition->OnPropRemoved ( prop );
 	prop.mPartition = 0;
+	this->OnPropRemoved ( prop );
+
 	this->LuaRelease ( &prop );
 }
 
