@@ -49,6 +49,7 @@ public:
 	bool		Overlap			( const ZLBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const ZLBox& box, u32 plane ) const;
 	void		Pad				( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
+	void		Pad				( float xPad, float yPad, float zPad );
 	void		Scale			( float scale );
 	void		Scale			( const ZLVec3D& scale );
 	void		Transform		( const ZLAffine3D& mtx ); // Gets AABB of transformed box
