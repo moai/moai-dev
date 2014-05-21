@@ -69,12 +69,12 @@ private:
 	
 	friend class MOAICollisionWorld;
 	
-	u32									mGroupMask;		// collisions get filtered by bitwise AND
+	u32									mGroupMask;			// collisions get filtered by bitwise AND
 	u32									mOverlapFlags;
-	u32									mOverlapPass;	// used to identify if prop has been processed in current cycle
-	MOAIPropOverlapLink*				mOverlapLinks;	// singly-linked list of links to overlaps with this prop (if caching)
+	u32									mOverlapPass;		// used to identify if prop has been processed in current cycle
+	MOAIPropOverlapLink*				mOverlapLinks;		// singly-linked list of links to overlaps with this prop (if caching)
 	
-	ZLLeanLink < MOAICollisionFacet* >	mActiveListLink; // link in collision world's list of props with overlaps or in need of update
+	ZLLeanLink < MOAICollisionFacet* >	mActiveListLink;	// link in collision world's list of props with overlaps or in need of update
 	
 	bool								mInDrawList;
 	MOAICollisionFacet*					mNextInDrawList;

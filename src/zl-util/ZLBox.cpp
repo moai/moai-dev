@@ -404,13 +404,19 @@ bool ZLBox::Overlap ( const ZLBox& box, u32 plane ) const {
 //----------------------------------------------------------------//
 void ZLBox::Pad ( float pad ) {
 
-	this->mMin.mX -= pad;
-	this->mMin.mY -= pad;
-	this->mMin.mZ -= pad;
+	this->Pad ( pad, pad, pad );
+}
 
-	this->mMax.mX += pad;
-	this->mMax.mY += pad;
-	this->mMax.mZ += pad;	
+//----------------------------------------------------------------//
+void ZLBox::Pad ( float xPad, float yPad, float zPad ) {
+
+	this->mMin.mX -= xPad;
+	this->mMin.mY -= yPad;
+	this->mMin.mZ -= zPad;
+
+	this->mMax.mX += xPad;
+	this->mMax.mY += yPad;
+	this->mMax.mZ += zPad;
 }
 
 //----------------------------------------------------------------//

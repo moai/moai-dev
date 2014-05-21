@@ -299,6 +299,21 @@ int MOAIProp::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setBoundsPad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	self->mBoundsPad.mX	= state.GetValue < float >( 2, 0.0f );
+	self->mBoundsPad.mY	= state.GetValue < float >( 3, 0.0f );
+	self->mBoundsPad.mZ	= state.GetValue < float >( 4, 0.0f );
+
+	bool pad = (( self->mBoundsPad.mX != 0.0f ) || ( self->mBoundsPad.mY != 0.0f ) || ( self->mBoundsPad.mZ != 0.0f ));
+	self->mFlags = pad ? ( self->mFlags | FLAGS_PAD_BOUNDS ) : ( self->mFlags & ~FLAGS_PAD_BOUNDS );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
@@ -661,12 +676,21 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
 
+	u32 status = BOUNDS_EMPTY;
+
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
 		bounds = this->mBoundsOverride;
-		return BOUNDS_OK;
+		status = BOUNDS_OK;
+	}
+	else {
+		status = this->OnGetModelBounds ( bounds );
 	}
 	
-	return this->OnGetModelBounds ( bounds );
+	if (( status == BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
+		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
+	}
+	
+	return status;
 }
 
 //----------------------------------------------------------------//
@@ -703,7 +727,8 @@ MOAIProp::MOAIProp () :
 	mPriority ( UNKNOWN_PRIORITY ),
 	mFlags ( 0 ),
 	mIndex( 1 ),
-	mGridScale ( 1.0f, 1.0f ) {
+	mGridScale ( 1.0f, 1.0f ),
+	mBoundsPad ( 0.0f, 0.0f, 0.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -791,6 +816,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
 		{ "inside",					_inside },
 		{ "setBounds",				_setBounds },
+		{ "setBoundsPad",			_setBoundsPad },
 		{ "setDeck",				_setDeck },
 		{ "setExpandForSort",		_setExpandForSort },
 		{ "setFacet",				_setFacet },

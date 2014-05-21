@@ -103,6 +103,7 @@ private:
 	static int			_getWorldBoundsCenter		( lua_State* L );
 	static int			_inside						( lua_State* L );
 	static int			_setBounds					( lua_State* L );
+	static int			_setBoundsPad				( lua_State* L );
 	static int			_setDeck					( lua_State* L );
 	static int			_setExpandForSort			( lua_State* L );
 	static int			_setFacet					( lua_State* L );
@@ -126,6 +127,7 @@ protected:
 	ZLVec2D									mGridScale;
 
 	ZLBox									mBoundsOverride;
+	ZLVec3D									mBoundsPad;
 
 	MOAIFacet*								mFacets [ TOTAL_FACETS ];
 
@@ -164,7 +166,8 @@ public:
 
 	enum {
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
-		FLAGS_EXPAND_FOR_SORT		= 0x02,
+		FLAGS_PAD_BOUNDS			= 0x02,
+		FLAGS_EXPAND_FOR_SORT		= 0x04,
 	};
 
 	GET_SET ( u32, Index, mIndex )
