@@ -602,8 +602,9 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
     
-   	if ( !this->IsVisible () ) return;
+   	if ( !this->IsVisible ()) return;
 	if ( !this->mViewport ) return;
+	if ( this->IsClear ()) return;
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();

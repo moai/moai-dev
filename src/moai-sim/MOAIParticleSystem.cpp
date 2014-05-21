@@ -355,6 +355,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 
 	if ( !this->IsVisible ( lod ) ) return;
 	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	

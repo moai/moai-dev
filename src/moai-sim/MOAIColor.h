@@ -58,6 +58,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	ZLColorVec		GetColorTrait		();
+	bool			IsClear				();
 					MOAIColor			();
 					~MOAIColor			();
 	void			OnDepNodeUpdate		();
