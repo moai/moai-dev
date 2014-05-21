@@ -164,7 +164,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		AKUModulesContextInitialize ();
 		AKUAudioSamplerInit ();
-        AKUModulesRunLuaAPIWrapper ();
+        
 		
 		AKUSetInputConfigurationName ( "iPhone" );
 
@@ -202,6 +202,7 @@ namespace MoaiInputDeviceSensorID {
 		
 		// init aku
 		AKUIphoneInit ( application );
+		AKUModulesRunLuaAPIWrapper (); //requires iphoneinit.
 		
 		// add in the particle presets
 		ParticlePresets ();
