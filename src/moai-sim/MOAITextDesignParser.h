@@ -46,9 +46,10 @@ private:
 	ZLRect				mTokenRect;
 	
 	float				mLayoutWidth;
-	float				mLayoutHeight;
+	float				mLayoutHeightMin;
+	float				mLayoutHeightMax;
 	
-	ZLVec2D				mPen;
+	float				mPenX;
 	ZLVec2D				mOffset;
 	MOAIGlyph*			mPrevGlyph;
 	bool				mMore;
@@ -67,6 +68,7 @@ private:
 	void				AcceptToken					();
 	void				Align						();
 	void				BuildLayout					();
+	float				GetLayoutHeight				();
 	u32					NextChar					();
 	float				Snap						( float f );
 

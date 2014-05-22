@@ -18,17 +18,24 @@
 //----------------------------------------------------------------//
 void MOAITextDesignParser::AcceptLine () {
 
+	u32 totalLines = this->mLayout->mLines.GetTop ();
+
 	this->mLayout->PushLine ( this->mLineSpriteID, this->mLineSize, this->mLineRect, this->mLineHeight, this->mLineAscent );
-	
-	// end line
-	//this->mPen.mY += this->mLineRect.Height () + this->mDesigner->mLineSpacing;
-	//this->mPen.mY = ZLFloat::Floor ( this->mPen.mY + 0.5f );
-	//this->mLineRect.Init ( 0.0f, this->mPen.mY, 0.0f, this->mPen.mY );
 	
 	float lineWidth = this->mLineRect.Width ();
 	
 	this->mLayoutWidth = lineWidth > this->mLayoutWidth ? lineWidth : this->mLayoutWidth;
-	this->mLayoutHeight += this->mLineHeight + this->mDesigner->mLineSpacing;
+	
+	if ( totalLines == 0 ) {
+		this->mLayoutHeightMin = 0.0f;
+		this->mLayoutHeightMax = this->mLineHeight;
+	}
+	else {
+		float min = this->mLayoutHeightMax + this->mDesigner->mLineSpacing;
+		float max = min + this->mLineHeight;
+		this->mLayoutHeightMin = min < this->mLayoutHeightMin ? min : this->mLayoutHeightMin;
+		this->mLayoutHeightMax = max > this->mLayoutHeightMax ? max : this->mLayoutHeightMax;
+	}
 	
 	// next line
 	this->mLineSize = 0;
@@ -47,11 +54,11 @@ void MOAITextDesignParser::AcceptLine () {
 			sprite.mPen.mX -= this->mTokenRect.mXMin;
 		}
 		
-		this->mPen.mX -= this->mTokenRect.mXMin;
+		this->mPenX -= this->mTokenRect.mXMin;
 		this->mTokenRect.Init ( 0.0f, 0.0f, this->mTokenRect.Width (), this->mTokenRect.Height ());
 	}
 	else {
-		this->mPen.mX = 0.0f;
+		this->mPenX = 0.0f;
 	}
 }
 
@@ -96,9 +103,9 @@ void MOAITextDesignParser::Align () {
 	bool limitHeight = this->mDesigner->mLimitHeight;
 
 	float width = limitWidth ? this->mDesigner->mFrame.Width () : this->mLayoutWidth;
-	float height = limitHeight ? this->mDesigner->mFrame.Height () : this->mLayoutHeight;
+	float height = limitHeight ? this->mDesigner->mFrame.Height () : this->GetLayoutHeight ();
 
-	float layoutHeight = this->mLayoutHeight;
+	float layoutHeight = this->GetLayoutHeight ();
 
 	float xMin = limitWidth ? this->mDesigner->mFrame.mXMin : 0.0f;
 	float xMax = xMin + width;
@@ -290,7 +297,7 @@ void MOAITextDesignParser::BuildLayout () {
 			// apply kerning
 			if ( this->mPrevGlyph ) {
 				MOAIKernVec kernVec = this->mPrevGlyph->GetKerning ( glyph->mCode );
-				this->mPen.mX += kernVec.mX * xScale;
+				this->mPenX += kernVec.mX * xScale;
 			}
 			
 			this->mPrevGlyph = glyph;
@@ -300,7 +307,7 @@ void MOAITextDesignParser::BuildLayout () {
 			}
 			else {
 				
-				ZLRect glyphRect = glyph->GetRect ( this->mPen.mX, 0.0f, xScale, yScale );
+				ZLRect glyphRect = glyph->GetRect ( this->mPenX, 0.0f, xScale, yScale );
 				
 				// handle new token
 				if ( this->mTokenSize == 0 ) {
@@ -326,7 +333,7 @@ void MOAITextDesignParser::BuildLayout () {
 				// discard the extra glyphs. later on this will be the place to implement fancy/custom token splitting.
 				if ( !discard ) {
 					// push the sprite
-					this->mLayout->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPen.mX, 0.0f, xScale, yScale );
+					this->mLayout->PushSprite ( this->mPrevIdx, *glyph, *this->mStyle, this->mPenX, 0.0f, xScale, yScale );
 					this->mTokenRect = tokenRect;
 					this->mTokenSize++;
 				}
@@ -341,11 +348,11 @@ void MOAITextDesignParser::BuildLayout () {
 			}
 			
 			// advance the pen
-			this->mPen.mX += glyph->mAdvanceX * xScale;
+			this->mPenX += glyph->mAdvanceX * xScale;
 		}
 		
 		// if we overrun this->mHeight, then back up to the start of the current line
-		if ( limitHeight && (( this->mLayoutHeight + this->mTokenHeight ) > frameHeight )) {
+		if ( limitHeight && (( this->GetLayoutHeight () + this->mTokenHeight ) > frameHeight )) {
 			
 			this->mLayout->mSprites.SetTop ( this->mLineSpriteID );
 			
@@ -401,9 +408,10 @@ void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleMa
 	this->mTokenRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
 	this->mLayoutWidth = 0.0f;
-	this->mLayoutHeight = 0.0f;
+	this->mLayoutHeightMin = 0.0f;
+	this->mLayoutHeightMax = 0.0f;
 	
-	this->mPen.Init ( 0.0f, 0.0f );
+	this->mPenX = 0.0f;
 	this->mOffset = offset;
 	this->mPrevGlyph = 0;
 	
@@ -412,6 +420,12 @@ void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleMa
 	this->mBaseLine = layout.mLines.GetTop ();
 	
 	this->BuildLayout ();
+}
+
+//----------------------------------------------------------------//
+float MOAITextDesignParser::GetLayoutHeight () {
+
+	return this->mLayoutHeightMax - this->mLayoutHeightMin;
 }
 
 //----------------------------------------------------------------//

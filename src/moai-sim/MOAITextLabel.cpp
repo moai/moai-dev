@@ -379,7 +379,7 @@ int MOAITextLabel::_setHighlight ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
-			the default spacing. Value must be positive.
+			the default spacing.
 
 	@in		MOAITextLabel self
 	@in		number lineSpacing		Default value is 0.
@@ -388,7 +388,6 @@ int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
 	float lineSpacing = state.GetValue < float >( 2, 0.0f );
-	lineSpacing = lineSpacing < 0.0f ? 0.0f : lineSpacing;
 	
 	self->mDesigner.SetLineSpacing ( lineSpacing );
 	self->ScheduleLayout ();
