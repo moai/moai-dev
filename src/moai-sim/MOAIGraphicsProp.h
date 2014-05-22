@@ -154,8 +154,8 @@ public:
 	};
 
 	enum {
-		FLAGS_LOCAL_VISIBLE			= 0x04,
-		FLAGS_VISIBLE				= 0x08, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
+		FLAGS_LOCAL_VISIBLE			= 0x08,
+		FLAGS_VISIBLE				= 0x10, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
 	enum {
