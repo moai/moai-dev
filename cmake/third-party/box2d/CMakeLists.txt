@@ -2,8 +2,8 @@ cmake_minimum_required ( VERSION 2.8.11 )
 project ( box2d )
 
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/box2d-2.2.1/" )
-set ( BOX2D_INCLUDES "${MOAI_ROOT}/3rdparty/box2d-2.2.1/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/box2d-2.3.0/" )
+set ( BOX2D_INCLUDES "${MOAI_ROOT}/3rdparty/box2d-2.3.0/" )
 
 file ( GLOB_RECURSE BOX2D_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.cpp" )
 file ( GLOB_RECURSE BOX2D_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Box2D/*.h" )

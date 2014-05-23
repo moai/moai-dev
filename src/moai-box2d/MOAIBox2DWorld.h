@@ -85,6 +85,7 @@ private:
 	static int		_addDistanceJoint			( lua_State* L );
 	static int		_addFrictionJoint			( lua_State* L );
 	static int		_addGearJoint				( lua_State* L );
+	static int 		_addMotorJoint				( lua_State* L );
 	static int		_addMouseJoint				( lua_State* L );
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );

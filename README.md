@@ -38,15 +38,18 @@ The following tools are required to build the API documentation.
 
 Please set the following environment variables.
 
-	# Mac OSX
+### Mac OSX
+
 	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Linux
+### Linux
+
 	export MOAI_BIN=<install_path>/moai-dev/release/linux/host-sdl/x64/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Windows
+### Windows
+
 	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
 	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
 
@@ -148,6 +151,7 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 * [Moai Wiki(getmoai)](http://getmoai.com/wiki/)
 * [Moai Wiki(github)](https://github.com/moai/moai-dev/wiki)
 * [Moai API Documentation](http://moaiforge.github.io/moai-sdk/api/latest/).
+* [MoaiFiddle](http://moaifiddle.com/) An online Moai editor and player.
 * [Moai Site Redesign Proposal](http://moaiwebsite.github.io/)
 
 ### Tutorials

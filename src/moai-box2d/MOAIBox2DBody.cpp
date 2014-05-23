@@ -248,6 +248,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	
 	@in		MOAIBox2DBody self
 	@in		number angularImpulse	in kg * units / s, converted to kg * m / s
+	@opt	boolean wake wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
@@ -258,8 +259,10 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 		return 0;
 	}
 	
-	float impulse = state.GetValue < float >( 2, 0.0f ) * self->GetUnitsToMeters();
-	self->mBody->ApplyAngularImpulse ( impulse );
+	float impulse = state.GetValue < float >( 2, 0.0f ) * self->GetUnitsToMeters();	
+	bool wake = state.GetValue < bool >( 3, true );
+	
+	self->mBody->ApplyAngularImpulse ( impulse, wake );
 	
 	return 0;
 }
@@ -273,6 +276,7 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	@in		number forceY	in kg * units / s^2, converted to N [kg * m / s^2]
 	@opt	number pointX	in units, world coordinates, converted to meters
 	@opt	number pointY	in units, world coordinates, converted to meters
+	@opt	boolean wake wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyForce ( lua_State* L ) {
@@ -290,9 +294,11 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	
 	b2Vec2 point;
 	point.x = state.GetValue < float >( 4, 0.0f ) * unitsToMeters;
-	point.y = state.GetValue < float >( 5, 0.0f ) * unitsToMeters;
+	point.y = state.GetValue < float >( 5, 0.0f ) * unitsToMeters;	
 	
-	self->mBody->ApplyForce ( force, point );
+	bool wake = state.GetValue < bool >( 6, true );
+	
+	self->mBody->ApplyForce ( force, point, wake );
 	
 	return 0;
 }
@@ -306,6 +312,7 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	@in		number impulseY	in kg * units / s, converted to kg * m / s
 	@opt	number pointX	in units, world coordinates, converted to meters
 	@opt	number pointY	in units, world coordinates, converted to meters
+	@opt	boolean wake wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
@@ -324,8 +331,9 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	b2Vec2 point;
 	point.x = state.GetValue < float >( 4, 0.0f ) * unitsToMeters;
 	point.y = state.GetValue < float >( 5, 0.0f ) * unitsToMeters;
+	bool wake = state.GetValue < bool >( 6, true );
 	
-	self->mBody->ApplyLinearImpulse ( impulse, point );
+	self->mBody->ApplyLinearImpulse ( impulse, point, wake );
 	
 	return 0;
 }
@@ -336,6 +344,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	
 	@in		MOAIBox2DBody self
 	@opt	number torque	in (kg * units / s^2) * units, converted to N-m. Default value is 0.
+	@opt	boolean wake wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
@@ -348,7 +357,9 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters();
 	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
 	float torque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters * unitsToMeters;
-	self->mBody->ApplyTorque ( torque );
+	bool wake = state.GetValue < bool >( 3, true );
+
+	self->mBody->ApplyTorque ( torque, wake );
 	
 	return 0;
 }

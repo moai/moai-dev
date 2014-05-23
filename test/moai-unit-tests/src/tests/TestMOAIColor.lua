@@ -16,6 +16,24 @@ function TestMOAIColor:tearDown()
 end
 
 ---
+-- test: getColor
+function TestMOAIColor:test_getColor()
+    local r, g, b, a = self.color:getColor()
+    
+    assertEquals(r, 1)
+    assertEquals(g, 1)
+    assertEquals(b, 1)
+    assertEquals(a, 1)
+    
+    self.color:setColor(1/256, 2/256, 3/256, 4/256)
+    r, g, b, a = self.color:getColor()
+    assertEquals(r, 1/256)
+    assertEquals(g, 2/256)
+    assertEquals(b, 3/256)
+    assertEquals(a, 4/256)
+end
+
+---
 -- test: setColor
 function TestMOAIColor:test_setColor()
     local r = self.color:getAttr(MOAIColor.ATTR_R_COL)
