@@ -14,7 +14,15 @@
 @if not defined INCLUDE goto :FAIL
 
 @setlocal
-@set LJCOMPILE=cl /nologo /c /MD /O2 /W3 /D_CRT_SECURE_NO_DEPRECATE
+@set LJCOMPILE=cl /nologo /c /O2 /W3 /D_CRT_SECURE_NO_DEPRECATE
+@if "%1" neq "debug" goto :LINKMD
+@set LJCOMPILE=%LJCOMPILE% /MDd
+@echo using Debug CRT /MDd
+goto :LINKMDD
+:LINKMD
+@set LJCOMPILE=%LJCOMPILE% /MD
+:LINKMDD
+
 @set LJLINK=link /nologo
 @set LJMT=mt /nologo
 @set LJLIB=lib /nologo /nodefaultlib
