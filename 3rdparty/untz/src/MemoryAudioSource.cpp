@@ -15,7 +15,6 @@ using namespace UNTZ;
 MemoryAudioSource::MemoryAudioSource(UNTZ::SoundInfo& info, float* interleavedData, bool ownsData)
 {
 	mInfo = info;
-	UInt32 frames = info.mLength * info.mSampleRate;
 	mBuffer = RAudioBuffer(info.mChannels, info.mTotalFrames, interleavedData, ownsData);
 	mLoadedInMemory = true;
 	mEOF = true;
