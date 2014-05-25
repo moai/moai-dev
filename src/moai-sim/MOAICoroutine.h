@@ -21,8 +21,6 @@ private:
 	u32					mNarg;
 	STLString			mFuncName;
 	
-	bool			mIsUpdating;
-	bool			mIsActive;
 	bool			mIsFirstRun;
 	
 	//----------------------------------------------------------------//

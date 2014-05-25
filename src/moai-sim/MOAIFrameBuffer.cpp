@@ -289,8 +289,8 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mLandscape ( false ),
 	mGLFrameBufferID ( 0 ),
 	mGrabNextFrame ( false ),
-	mLastDrawCount( 0 ),
-	mRenderCounter ( 0 ) {
+	mRenderCounter ( 0 ),
+	mLastDrawCount( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIClearableView )
