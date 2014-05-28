@@ -229,7 +229,7 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 }
 
 //----------------------------------------------------------------//
-void AKURunScript ( const char* filename ) {
+void AKURunScript ( const char* filename, char* args ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "Attempting to load and run file %s\n", filename );
 
@@ -245,7 +245,17 @@ void AKURunScript ( const char* filename ) {
 
 	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;
 	
-	status = state.DebugCall ( 0, 0 );
+	size_t numArgs = 0; //The number of args
+	if ( args ) {
+		char* token = strtok ( args, " " );
+		while ( token != NULL ) {
+			state.Push( token );
+			token = strtok ( NULL, " " );
+			++numArgs;
+		}
+	}
+	
+	status = state.DebugCall ( numArgs, 0 );
 	
 	state.PrintErrors ( ZLLog::CONSOLE, status );
 }
