@@ -67,12 +67,19 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 		else {
 
 			AKUSetArgv ( argv );
-
 			for ( int i = 1; i < argc; ++i ) {
 				char* arg = argv [ i ];
 				if (( strcmp ( arg, "-s" ) == 0 ) && ( ++i < argc )) {
 					char* script = argv [ i ];
 					AKURunString ( script );
+				}
+				else if (( strcmp ( arg, "-a" ) == 0 )) {
+					if ( ++i >= argc )
+						return;
+					char* fileName = argv [ i ];
+					arg = argv [ ++ i ];
+					
+					AKURunScript( fileName, arg );
 				}
 				else {
 					AKURunScript ( arg );
