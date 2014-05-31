@@ -1,5 +1,5 @@
 <ul class="nav nav-list">
-    <li class=nav-><a href="{{ site.url }}/docs" style="padding-left: 0">Home</a></li>
+    <li class=nav-><a href="{{ site.baseurl }}/docs" style="padding-left: 0">Home</a></li>
   
     {% for section in site.data.sections %}
         {% assign attr = section[0] %}
@@ -7,7 +7,7 @@
         <li class=nav-header>{{ label }}</li>
         {% for page in site.categories[attr] %}
          
-            <li data-order="{{ page.order }}"><a href="{{ site.url }}{{ page.url }}">{{ page.title }}</a></li>
+            <li data-order="{{ page.order }}"><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></li>
         {% endfor %}
     {% endfor %}
 <!-- List additional links. It is recommended to add a divider
