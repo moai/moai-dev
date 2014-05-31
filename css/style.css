@@ -1,0 +1,87 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-top: 50px;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+.moai-nav .navbar-text{
+  color: #fff;
+}
+
+.moai-nav .nav li a{
+  color: #fff;
+}
+
+.moai-nav .nav li a:hover{
+  color: #d0cece;
+}
+
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+}
+
+.carousel .item {
+  background-color: #333;
+}
+
+.carousel-inner > .item > img {
+  margin: auto;
+}
+
+.carousel-caption{
+  text-align: left;
+}
+.carousel-indicators{
+  text-align: right;
+}
+
+
+/* GETTING STARTED
+-------------------------------------------------- */
+
+.getting-started{
+  background-color: #e5e5e0;
+  padding-bottom: 30px;
+} 
+
+/* LEARN MOAI
+-------------------------------------------------- */
+
+.learn-moai{
+  background-color: #b3b3ae;
+  padding-bottom: 30px;
+}
+
+/* SUB FOOTER MOAI
+-------------------------------------------------- */
+
+.subfooter{
+  background-color: #000;
+  padding-bottom: 30px;
+  padding-top: 10px;
+}
+
+/* FOOTER
+-------------------------------------------------- */
+
+footer{
+    background-image: -webkit-linear-gradient(top,#3c3c3c 0,#222 100%);
+  background-image: linear-gradient(to bottom,#3c3c3c 0,#222 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c',endColorstr='#ff222222',GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+footer > .container > p{
+  color: #b3b2ad;
+}
