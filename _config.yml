@@ -9,4 +9,4 @@ sections: [
     ['reference', 'Reference'],
     ['tutorial', 'Tutorials']
 ]
-
+baseurl: /moai-sdk
