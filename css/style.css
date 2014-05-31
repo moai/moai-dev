@@ -85,3 +85,7 @@ footer{
 footer > .container > p{
   color: #b3b2ad;
 }
+
+.improve-docs {
+  float:right;
+}
