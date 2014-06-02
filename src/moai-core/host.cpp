@@ -189,7 +189,7 @@ void AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int
 
 	_setupArgs ( state, exeName, scriptName, asParams );
 	
-	size_t numParams = 0; //The number of args
+	int numParams = 0; //The number of args
 	if ( args ) {
 		char* token = strtok ( args, " " );
 		while ( token != NULL ) {
