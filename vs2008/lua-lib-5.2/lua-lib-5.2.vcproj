@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libtess"
-	ProjectGUID="{467B8E24-6EA0-4696-9623-8D711DFD95C5}"
-	RootNamespace="libtess"
+	Name="lua-lib-5.2"
+	ProjectGUID="{7F4F2D90-99B8-45A2-A089-CBC3DF5F34B9}"
+	RootNamespace="lua-lib-5.2"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -45,17 +45,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -112,13 +112,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -182,15 +184,15 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -251,11 +253,13 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -315,17 +319,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -382,13 +386,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -452,15 +458,15 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -521,11 +527,13 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -585,17 +593,17 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -652,13 +660,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -722,15 +732,15 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -791,11 +801,13 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="3"
+				XMLDocumentationFileName="$(IntDir)\"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
@@ -834,63 +846,231 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lapi.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lapi.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lauxlib.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lauxlib.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lbaselib.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lbitlib.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lcode.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lcode.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lcorolib.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lctype.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lctype.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldblib.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.c"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldebug.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldebug.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Include\tesselator.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldo.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldo.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ldump.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lfunc.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lfunc.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lgc.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lgc.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\linit.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\liolib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\llex.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\llex.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\llimits.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lmathlib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lmem.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lmem.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\loadlib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lobject.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lobject.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lopcodes.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lopcodes.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\loslib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lparser.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lparser.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lstate.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lstate.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lstring.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lstring.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lstrlib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ltable.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ltable.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ltablib.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ltm.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\ltm.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lua.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lua.hpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\luaconf.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lualib.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lundump.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lundump.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lvm.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lvm.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lzio.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lzio.h"
 			>
 		</File>
 	</Files>

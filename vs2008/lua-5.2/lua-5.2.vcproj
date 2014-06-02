@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libtess"
-	ProjectGUID="{467B8E24-6EA0-4696-9623-8D711DFD95C5}"
-	RootNamespace="libtess"
+	Name="lua-5.2"
+	ProjectGUID="{1058A5FD-6F00-4D33-BBDC-274077672B1B}"
+	RootNamespace="lua-5.2"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -23,7 +23,7 @@
 			Name="Debug-Lua-5.1|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -45,17 +45,16 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -67,10 +66,21 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -82,15 +92,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.1|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -112,12 +125,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -133,10 +146,22 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -148,15 +173,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.1|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -181,16 +209,14 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -202,10 +228,23 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -217,15 +256,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.1|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -251,10 +293,10 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -270,10 +312,24 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -285,15 +341,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.2|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -315,17 +374,16 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -337,10 +395,21 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -352,15 +421,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-Lua-5.2|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -382,12 +454,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;LUA_COMPAT_MODULE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -403,10 +475,22 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -418,15 +502,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.2|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -451,16 +538,14 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -472,10 +557,23 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -487,15 +585,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-Lua-5.2|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -521,10 +622,10 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;LUA_COMPAT_MODULE"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -540,10 +641,24 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -555,15 +670,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-LuaJIT|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -585,17 +703,16 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -607,10 +724,21 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -622,15 +750,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug-LuaJIT|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -652,12 +783,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -673,10 +804,22 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -688,15 +831,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-LuaJIT|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="0"
 			>
@@ -721,16 +867,14 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
-				WarningLevel="0"
-				DebugInformationFormat="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
 				CompileAs="1"
 				ForcedIncludeFiles="&quot;zl-vfs/zl_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -742,10 +886,23 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -757,15 +914,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release-LuaJIT|x64"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -791,10 +951,10 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\libtess2\Include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.2.2\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
@@ -810,10 +970,24 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				LinkLibraryDependencies="false"
+				AdditionalDependencies="lua-lib-5.2.lib zl-lib-vfs.lib zlib.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -825,8 +999,11 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -834,63 +1011,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\bucketalloc.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\dict.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\geom.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\mesh.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\priorityq.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\sweep.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Source\tess.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\3rdparty\libtess2\Include\tesselator.h"
+			RelativePath="..\..\3rdparty\lua-5.2.2\src\lua.c"
 			>
 		</File>
 	</Files>
