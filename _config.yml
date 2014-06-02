@@ -2,11 +2,4 @@ name: Moai SDK
 markdown: redcarpet
 pygments: true
 future: true
-# documentation categories (in order) to appear in the navigation
-sections: [
-    ['starting', 'Getting Started'],
-    ['sdk', 'The Moai SDK'],
-    ['reference', 'Reference'],
-    ['tutorial', 'Tutorials']
-]
 baseurl: /moai-sdk
