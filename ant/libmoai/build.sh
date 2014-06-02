@@ -21,7 +21,7 @@ usage="usage: $0  \
     [--disable-twitter] [--disable-playservices] [--windows] [--release]"
 
 use_untz="true"
-use_luajit="false"
+use_luajit="true"
 
 adcolony_flags=
 billing_flags=

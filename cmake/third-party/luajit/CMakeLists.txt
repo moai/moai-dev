@@ -74,8 +74,9 @@ cmake_minimum_required(VERSION 2.8)
     
 
     message( "Size of void P =  ${CMAKE_SIZEOF_VOID_P} and ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-    if ("${CMAKE_HOST_SYSTEM_PROCESSOR}" MATCHES "64" AND
-            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
+    if ((${CMAKE_SIZEOF_VOID_P} EQUAL 4 AND (  ${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" OR CMAKE_HOST_UNIX))
+        OR GCC_FORCE_32BIT)
+        
         # The host compiler must have same pointer size as the target compiler.
 
         set (luajit_host_cc "${luajit_host_cc} -m32")
@@ -134,9 +135,10 @@ cmake_minimum_required(VERSION 2.8)
     )
 
     if (MSVC)
-	      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+       
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" static ${VFS_INCLUDE}
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" $<$<CONFIG:Debug>:debug> static ${VFS_INCLUDE}
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 
