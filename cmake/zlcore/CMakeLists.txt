@@ -15,12 +15,14 @@ set ( ZLCORE_INCLUDES
  )
 
 # Use all cpp files in directory as source code
-file ( GLOB SRC_ZLUTIL "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.cpp" )
-file ( GLOB SRC_ZLGFX "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.cpp" )
+file ( GLOB ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.cpp" )
+file ( GLOB ZLUTIL_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.h" )
+file ( GLOB ZLGFX_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.cpp" )
+file ( GLOB ZLGFX_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.h" )
 
 include_directories ( ${ZLCORE_INCLUDES} )
 
-add_library ( zlcore STATIC ${SRC_ZLUTIL} ${SRC_ZLGFX} )
+add_library ( zlcore STATIC ${ZLUTIL_SOURCES} ${ZLUTIL_HEADERS} ${ZLGFX_SOURCES} ${ZLGFX_HEADERS} )
 
 target_include_directories ( zlcore PUBLIC "${MOAI_ROOT}/src/" "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib")
 
@@ -33,7 +35,6 @@ endif ( MOAI_EXPAT )
 if ( MOAI_CRYPTO )
   target_link_libraries( zlcore crypto)
 endif ( MOAI_CRYPTO )
-
 
 # compulsory li
 

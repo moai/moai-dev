@@ -1,3 +1,3 @@
-python emscripten/tools/file_packager.py moaiapp.rom --preload src/ --pre-run --js-output=moaiapp.rom.js
+python file_packager.py moaiapp.rom --preload src@/ --js-output=moaiapp.rom.js --as-json
 mv -f moaiapp.rom www/moaiapp.rom
-mv -f moaiapp.rom.js www/moaiapp.rom.js
+mv -f moaiapp.rom.json www/moaiapp.rom.json

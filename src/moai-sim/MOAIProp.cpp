@@ -94,6 +94,23 @@ int MOAIProp::_getWorldBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeck
+	@text	Get the deck.
+               
+	@in		MOAIProp self
+	@out	MOAIDeck deck
+*/
+int MOAIProp::_getDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( self->mDeck ) {
+		self->mDeck->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
@@ -167,6 +184,22 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getTexture
+	@text	Returns the texture.
+	
+	@in		MOAIProp self
+	@out	MOAITexture texture
+*/
+int MOAIProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
 //----------------------------------------------------------------//
 /**	@name	isVisible
 	@text	Returns true if the given prop is visible.
@@ -838,39 +871,15 @@ void MOAIProp::DrawGrid ( int subPrimID ) {
 	}
 	
 	MOAIGrid& grid = *this->mGrid;
-	
-	float tileWidth = grid.GetTileWidth ();
-	float tileHeight = grid.GetTileHeight ();
+	MOAICellCoord c0, c1;
+
 	
 	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
-
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
 		this->GetGridBoundsInView ( c0, c1 );
-		
-		for ( int y = c0.mY; y <= c1.mY; ++y ) {
-			for ( int x = c0.mX; x <= c1.mX; ++x ) {
-				
-				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				
-				MOAICellCoord coord ( x, y );
-				USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-			}
-		}
+	} else {
+		c0 = c1 = grid.GetCellCoord ( subPrimID );
 	}
-	else {
-		
-		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
-		
-		u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-		
-		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-	}
+	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
 }
 
 //----------------------------------------------------------------//
@@ -1020,6 +1029,8 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 	
 	bounds.Bless ();
 	bounds.Inflate ( pad );
+    if ( pad != 0 ) bounds.Bless ();
+    
 	return bounds.Contains ( vec );
 }
 
@@ -1141,10 +1152,6 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BLEND_MULTIPLY",		( u32 )MOAIBlendMode::BLEND_MULTIPLY );
 	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
 
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
-	state.SetField ( -1, "BLEND_NORMAL",		( u32 )MOAIBlendMode::BLEND_NORMAL );
-	
 	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
 	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
 	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )ZGL_BLEND_MODE_REVERSE_SUBTRACT );
@@ -1185,15 +1192,17 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",			_getBounds },
+		{ "getDeck",			_getDeck },
 		{ "getDims",			_getDims },
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
+		{ "getTexture",			_getTexture },
 		{ "getWorldBounds",		_getWorldBounds },
 		{ "isVisible",			_isVisible },
 		{ "inside",				_inside },
 		{ "setBillboard",		_setBillboard },
-		{ "setBlendEquation",		_setBlendEquation },
+		{ "setBlendEquation",	_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setBounds",			_setBounds },
 		{ "setCullMode",		_setCullMode },

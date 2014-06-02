@@ -14,7 +14,7 @@ MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/320), height / (height/480))
+viewport:setScale (width / (width/640), height / (height/480))
 
 layer = MOAILayer2D.new ()
 layer:setPartition( MOAIPartition.new() )

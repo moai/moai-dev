@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 2.8)
 # To explicitly request use of LuaJIT at a given
 
 
-    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.1")
+    set (LUAJIT_ROOT "${MOAI_ROOT}/3rdparty/LuaJIT-2.0.3")
     set (LUAJIT_INCLUDE "${LUAJIT_ROOT}/src")
 
     set (luajit_buildoptions BUILDMODE=static)
@@ -60,7 +60,7 @@ cmake_minimum_required(VERSION 2.8)
     endif(GCC_FORCE_32BIT)
 
 
-    if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL ${CMAKE_HOST_SYSTEM_PROCESSOR})
+    if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "${CMAKE_HOST_SYSTEM_PROCESSOR}")
         # Regular mode - use CMake compiler for building host utils.
         set (luajit_host_cc ${CMAKE_C_COMPILER})
         set (luajit_host_ldflags ${luajit_target_ldflags} )
@@ -74,8 +74,9 @@ cmake_minimum_required(VERSION 2.8)
     
 
     message( "Size of void P =  ${CMAKE_SIZEOF_VOID_P} and ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-    if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" AND
-            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
+    if ((${CMAKE_SIZEOF_VOID_P} EQUAL 4 AND (  ${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" OR CMAKE_HOST_UNIX))
+        OR GCC_FORCE_32BIT)
+        
         # The host compiler must have same pointer size as the target compiler.
 
         set (luajit_host_cc "${luajit_host_cc} -m32")
@@ -134,9 +135,10 @@ cmake_minimum_required(VERSION 2.8)
     )
 
     if (MSVC)
-	    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
+       
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
-            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" static ${VFS_INCLUDE}
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/msvcbuild-moai.bat" $<$<CONFIG:Debug>:debug> static ${VFS_INCLUDE}
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
         ) 
 
@@ -146,7 +148,7 @@ cmake_minimum_required(VERSION 2.8)
         set( LUA_LIB ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/lua51.lib PARENT_SCOPE )
     elseif(BUILD_IOS)
 
-     add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
+        add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/luajit/src
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/luajit_ios.sh libluajit.a '${CMAKE_CURRENT_BINARY_DIR}/luajit' '${CMAKE_CURRENT_BINARY_DIR}/luajit/src' '${VFS_INCLUDE}'
             DEPENDS  ${CMAKE_CURRENT_BINARY_DIR}/luajit 
@@ -173,9 +175,9 @@ cmake_minimum_required(VERSION 2.8)
     
    set_target_properties( liblua-static PROPERTIES FOLDER Third-Party )
 
-    #add_library(liblua-static STATIC IMPORTED)
-    #set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
-    #add_dependencies(liblua-static libluajit)
+   # add_library(liblua-static STATIC IMPORTED)
+   # set_property(TARGET liblua-static PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/luajit/src/libluajit.a)
+   # add_dependencies(liblua-static libluajit)
 
-    set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
+   set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
     

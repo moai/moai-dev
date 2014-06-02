@@ -81,13 +81,13 @@ public class MoaiActivity extends Activity {
 
 		mAccelerometerData = new float[3];
 		
+		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 		
 		Moai.createContext ();
 		Moai.init ();
 		
-		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		//getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
@@ -110,7 +110,15 @@ public class MoaiActivity extends Activity {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
-				
+		
+		if (  getCacheDir () != null ) {
+		 
+		 	Moai.setCacheDirectory ( getCacheDir ().getAbsolutePath ());
+		} else {
+
+			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the cache directory" );
+		}
+		
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
@@ -148,6 +156,10 @@ public class MoaiActivity extends Activity {
 		
 		MoaiLog.i ( "MoaiActivity onNewIntent: application started from NEW INTENT" );
 		
+		Uri data = intent.getData();
+		if (data != null) {
+			Moai.AppOpenedFromURL ( data.toString() );
+		}
 		setIntent ( intent );
 	}
 

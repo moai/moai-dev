@@ -6,18 +6,49 @@
 # http://getmoai.com
 #================================================================#
 
+# Set this to a name which will be valid for "codesign -s", or the build
+# will fail.
+SIGN_IDENTITY='iPhone Developer'
+
+codesign_msg=$(codesign -s "$SIGN_IDENTITY" 2>&1)
+case $codesign_msg in
+*": no identity found"*)
+    echo >&2 "Code-signing identity ($SIGN_IDENTITY) is invalid."
+    exit 1
+    ;;
+esac
+
 set -e
+
+# Give more useful feedback rather than aborting silently.
+report_error() {
+    status=$?
+    case $status in
+    0)    ;;
+    *)    echo >&2 "Aborting due to exit status $status from: $BASH_COMMAND";;
+    esac
+    exit $status
+}
+
+trap 'report_error' 0
 
 APP_NAME='Moai App'
 APP_ID='com.getmoai.moaiapp'
 APP_VERSION='1.0'
 
-# check for command line switches
-usage="usage: $0 <LUA_SRC_PATH> \
-    [--use-untz true | false] [--disable-adcolony] [--disable-billing] \
-    [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--simulator] [--release]"
+usage() {
+    cat >&2 <<EOF
+usage: $0
+    [--use-untz true | false] [--disable-adcolony] [--disable-billing]
+    [--disable-chartboost] [--disable-crittercism] [--disable-facebook]
+    [--disable-mobileapptracker] [--disable-push] [--disable-tapjoy]
+    [--disable-twitter] [--simulator] [--release]
+    <lua-src-path>
+EOF
+    exit 1
+}
 
+# check for command line switches
 use_untz="true"
 
 adcolony_flags=
@@ -32,7 +63,7 @@ buildtype_flags="Debug"
 windows_flags=
 simulator="false"
 
-while [ $# -gt 1 ];	do
+while [ $# -gt 0 ];	do
     case "$1" in
         --use-untz)  use_untz="$2"; shift;;
         --disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
@@ -40,30 +71,37 @@ while [ $# -gt 1 ];	do
         --disable-chartboost)  chartboost_flags="-DDISABLE_CHARTBOOST";;
         --disable-crittercism)  crittercism_flags="-DDISABLE_CRITTERCISM";;
         --disable-facebook)  facebook_flags="-DDISABLE_FACEBOOK";;
+        --disable-mobileapptracker)  mobileapptracker_flags="-DDISABLE_MOBILEAPPTRACKER";;
         --disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
         --disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
         --disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
         --release) buildtype_flags="Release";;
         --simulator) simulator="true";;
-        -*)
-            echo >&2 \
-                $usage
-            exit 1;;
+        -*) usage;;
         *)  break;;	# terminate while loop
     esac
     shift
 done
 
+if [ $# != 1 ]; then
+    usage
+fi
+
 LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$1")
 
 if [ ! -f "${LUASRC}/main.lua" ]; then
-  echo "Could not find main.lua in specified lua source directory [${LUASRC}]"
-  exit 1
+    echo -n "Please enter the directory path of the Lua source. > "
+    read LUASRC
+    LUASRC=$(ruby -e 'puts File.expand_path(ARGV.first)' "$LUASRC")
+
+    if [ ! -f "${LUASRC}/main.lua" ]; then
+        echo "Could not find main.lua in specified lua source directory [${LUASRC}]"
+        exit 1
+    fi
 fi
 
 if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
-    echo $usage
-    exit 1		
+    usage
 fi
 
 #get some required variables
@@ -82,8 +120,6 @@ SDK=iphoneos
 ARCH=armv7
 fi
 
-SIGN_IDENTITY='iPhone Developer'
-
 # echo message about what we are doing
 echo "Building moai.app via CMAKE"
 
@@ -98,42 +134,47 @@ fi
 
 if [ x"$adcolony_flags" != x ]; then
     echo "AdColony will be disabled"
-    disabled_ext="$disabled_extADCOLONY;"
+    disabled_ext="${disabled_ext}ADCOLONY;"
 fi 
 
 if [ x"$billing_flags" != x ]; then
     echo "Billing will be disabled"
-    disabled_ext="$disabled_extBILLING;"
+    disabled_ext="${disabled_ext}BILLING;"
 fi 
 
 if [ x"$chartboost_flags" != x ]; then
     echo "ChartBoost will be disabled"
-    disabled_ext="$disabled_extCHARTBOOST;"
+    disabled_ext="${disabled_ext}CHARTBOOST;"
 fi 
 
 if [ x"$crittercism_flags" != x ]; then
     echo "Crittercism will be disabled"
-    disabled_ext="$disabled_extCRITTERCISM;"
+    disabled_ext="${disabled_ext}CRITTERCISM;"
 fi 
 
 if [ x"$facebook_flags" != x ]; then
     echo "Facebook will be disabled"
-    disabled_ext="$disabled_extFACEBOOK;"
+    disabled_ext="${disabled_ext}FACEBOOK;"
+fi 
+
+if [ x"$mobileapptracker_flags" != x ]; then
+    echo "Mobile App Tracker will be disabled"
+    disabled_ext="${disabled_ext}MOBILEAPPTRACKER;"
 fi 
 
 if [ x"$push_flags" != x ]; then
     echo "Push Notifications will be disabled"
-    disabled_ext="$disabled_extNOTIFICATIONS;"
+    disabled_ext="${disabled_ext}NOTIFICATIONS;"
 fi 
 
 if [ x"$tapjoy_flags" != x ]; then
     echo "Tapjoy will be disabled"
-    disabled_ext="$disabled_extTAPJOY;"
+    disabled_ext="${disabled_ext}TAPJOY;"
 fi 
 
 if [ x"$twitter_flags" != x ]; then
     echo "Twitter will be disabled"
-    disabled_ext="$disabled_extTWITTER;"
+    disabled_ext="${disabled_ext}TWITTER;"
 fi 
 
 build_dir=${PWD}
@@ -178,8 +219,8 @@ if [ -d "release/ios" ]; then
     rm -fr release/ios
 fi
 
-mkdir release/ios/app
-mkdir release/ios/lib
+mkdir -p release/ios/app
+mkdir -p release/ios/lib
 
-find cmake/build -name "*.app" | xargs -J % cp -fp % release/ios/app
+find cmake/build -name "*.app" | xargs -J % cp -fRp % release/ios/app
 find cmake/build -name "*.a" | xargs -J % cp -fp % release/ios/lib

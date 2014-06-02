@@ -31,8 +31,12 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 
 	fseek ( file, 0, SEEK_END );
 	filelen = ftell ( file );
-	
-	cursor = filelen - SCAN_BUFFER_SIZE;
+
+	if (SCAN_BUFFER_SIZE < filelen) {
+		cursor = filelen - SCAN_BUFFER_SIZE;
+	} else {
+		cursor = 4; /* Past first 32bit number */
+	}
 	while ( cursor ) {
 		
 		scansize = (( cursor + SCAN_BUFFER_SIZE ) > filelen ) ? filelen - cursor : SCAN_BUFFER_SIZE;

@@ -35,19 +35,21 @@ The following tools are required to build the API documentation.
 
 * [Bundler](http://gembundler.com/)
 * [Doxygen](http://www.doxygen.org/)
-* [Graphviz](http://www.graphviz.org/)
 
 Please set the following environment variables.
 
-	# Mac OSX
+### Mac OSX
+
 	export MOAI_BIN=<install_path>/moai-dev/release/osx/host-sdl/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Linux
+### Linux
+
 	export MOAI_BIN=<install_path>/moai-dev/release/linux/host-sdl/x64/bin
 	export MOAI_CONFIG=<install_path>/moai-dev/samples/config
 
-	# Windows
+### Windows
+
 	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
 	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
 
@@ -133,17 +135,24 @@ One of our priorities is to build richer samples for Moai developers, so if you'
 
 This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). Refer to the  for attribution screens to include with games made with Moai.
 
+## Forks
+
+* [patrickmeehan/moai-dev](https://github.com/patrickmeehan/moai-dev)
+* [moaiforge/moai-sdk](https://github.com/moaiforge/moai-sdk)
+
 ## Links
 
 ### Moai Pages
 
-* [Moai New Web Site](http://moaiwebsite.github.io/)
+* [Moai Web Site](http://www.getmoai.com/)
 * [Moai FAQ](http://getmoai.com/marketing/moai-faqs.html)
 * [Moai SDK Framework Reference](http://getmoai.com/docs/)
 * [Moai forums](http://getmoai.com/forums/)
 * [Moai Wiki(getmoai)](http://getmoai.com/wiki/)
 * [Moai Wiki(github)](https://github.com/moai/moai-dev/wiki)
-* [Moai API Documentation](http://getmoai.com/docs/).
+* [Moai API Documentation](http://moaiforge.github.io/moai-sdk/api/latest/).
+* [MoaiFiddle](http://moaifiddle.com/) An online Moai editor and player.
+* [Moai Site Redesign Proposal](http://moaiwebsite.github.io/)
 
 ### Tutorials
 * [GameFromScratch MOAI Tutorials](http://www.gamefromscratch.com/page/Moai-tutorial-series-The-adventures-of-an-intrepid-programmer-in-the-lands-of-Moai.aspx)

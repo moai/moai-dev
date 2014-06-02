@@ -29,7 +29,7 @@
 	#endif
 	
 	#ifndef AKU_WITH_HTTP_SERVER
-		#define AKU_WITH_HTTP_SERVER 1
+		#define AKU_WITH_HTTP_SERVER 0
 	#endif
 	
 	#ifndef AKU_WITH_LUAEXT

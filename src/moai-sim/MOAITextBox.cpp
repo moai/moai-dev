@@ -142,6 +142,23 @@ int MOAITextBox::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getString
+	@text	Return the text string.
+
+	@in		MOAITextBox self
+	@out	string text			Text string.
+*/
+int MOAITextBox::_getString ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	if ( self->mText ) {
+		lua_pushstring ( state, self->mText );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getStringBounds
 	@text	Returns the bounding rectangle of a given substring on a
 			single line in the local space of the text box.
@@ -1304,6 +1321,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
+		{ "getString",				_getString },
 		{ "getStringBounds",		_getStringBounds },
 		{ "getStyle",				_getStyle },
 		{ "more",					_more },

@@ -100,9 +100,11 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getBounds			( lua_State* L );
 	static int		_getDims			( lua_State* L );
+	static int		_getDeck			( lua_State* L );
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
+	static int		_getTexture			( lua_State* L );
 	static int		_getWorldBounds		( lua_State* L );
 	static int		_isVisible			( lua_State* L );
 	static int		_inside				( lua_State* L );

@@ -64,6 +64,7 @@ public:
 	@const	DIAMOND_SHAPE
 	@const	OBLIQUE_SHAPE
 	@const	HEX_SHAPE
+	@const	AXIAL_HEX_SHAPE
 */
 class MOAIGridSpace :
 	public virtual MOAILuaObject {
@@ -92,6 +93,7 @@ protected:
 	static int		_getSize			( lua_State* L );
 	static int		_getTileLoc			( lua_State* L );
 	static int		_getTileSize		( lua_State* L );
+	static int		_initAxialHexGrid	( lua_State* L );
 	static int		_initDiamondGrid	( lua_State* L );
 	static int		_initHexGrid		( lua_State* L );
 	static int		_initObliqueGrid	( lua_State* L );
@@ -104,6 +106,7 @@ protected:
 	static int		_wrapCoord			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	MOAICellCoord	GetAxialHexCellCoord		( float x, float y ) const;
 	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
 	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
 	USVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
@@ -138,6 +141,7 @@ public:
 	static const u32 DIAMOND_SHAPE	= 0x00000001 | STAGGER_FLAG;
 	static const u32 OBLIQUE_SHAPE	= 0x00000002;
 	static const u32 HEX_SHAPE		= 0x00000003 | STAGGER_FLAG;
+	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
 	
 	GET_SET ( float, XOff, mXOff )
 	GET_SET ( float, YOff, mYOff )

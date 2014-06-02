@@ -1,0 +1,30 @@
+--- K:/dev/mobile/moaiforge/sdks/moaiforge/3rdparty/LuaJIT-2.0.3/src/Makefile	Sat Apr 19 09:25:55 2014
++++ K:/dev/mobile/moaiforge/sdks/moaiforge/3rdparty/LuaJIT-2.0.3/src/Makefile.moai	Sat Apr 19 09:27:27 2014
+@@ -200,6 +200,7 @@
+ TARGET_XCFLAGS= $(TARGET_LFSFLAGS) -U_FORTIFY_SOURCE
+ TARGET_XLDFLAGS=
+ TARGET_XLIBS= -lm
++TARGET_CONLY_FLAGS=
+ TARGET_TCFLAGS= $(CCOPTIONS) $(TARGET_XCFLAGS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
+ TARGET_ACFLAGS= $(CCOPTIONS) $(TARGET_XCFLAGS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
+ TARGET_ALDFLAGS= $(LDOPTIONS) $(TARGET_XLDFLAGS) $(TARGET_FLAGS) $(TARGET_LDFLAGS)
+@@ -645,8 +646,8 @@
+ 
+ %.o: %.c
+ 	$(E) "CC        $@"
+-	$(Q)$(TARGET_DYNCC) $(TARGET_ACFLAGS) -c -o $(@:.o=_dyn.o) $<
+-	$(Q)$(TARGET_CC) $(TARGET_ACFLAGS) -c -o $@ $<
++	$(Q)$(TARGET_DYNCC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $(@:.o=_dyn.o) $<
++	$(Q)$(TARGET_CC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $@ $<
+ 
+ %.o: %.s
+ 	$(E) "ASM       $@"
+@@ -655,7 +656,7 @@
+ 
+ $(LUAJIT_O):
+ 	$(E) "CC        $@"
+-	$(Q)$(TARGET_STCC) $(TARGET_ACFLAGS) -c -o $@ $<
++	$(Q)$(TARGET_STCC) $(TARGET_ACFLAGS) $(TARGET_CONLY_FLAGS) -c -o $@ $<
+ 
+ $(HOST_O): %.o: %.c
+ 	$(E) "HOSTCC    $@"

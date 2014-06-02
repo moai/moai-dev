@@ -57,6 +57,18 @@ endif ( BUILD_BLACKBERRY )
 if ( BUILD_HTML )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" )
   SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"   )
+
+  if ( CMAKE_HOST_WIN32 )
+    #Workaround batchfiles (cmd.exe) not being able to handle long command lines
+
+    SET(CMAKE_C_CREATE_STATIC_LIBRARY
+      "python ${EMSCRIPTEN_ROOT_PATH}/emar cr <TARGET> <LINK_FLAGS> <OBJECTS> "
+      "<CMAKE_RANLIB> <TARGET> ")
+
+    SET(CMAKE_CXX_CREATE_STATIC_LIBRARY
+      "python ${EMSCRIPTEN_ROOT_PATH}/emar cr <TARGET> <LINK_FLAGS> <OBJECTS> "
+      "<CMAKE_RANLIB> <TARGET> ")
+  endif ( CMAKE_HOST_WIN32 )
 endif (BUILD_HTML )
 
 if ( BUILD_WINDOWS)
@@ -97,7 +109,8 @@ if ( BUILD_IOS )
   set ( XCODE_ATTRIBUTE_SDKROOT iphoneos )
 
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99  -DHAVE_MEMMOVE " )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} " )
+  #default in ios7 is libc++ but some of our ad support libs are libstdc++ so force the lot to build as libstdc++
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++" )
 endif ( BUILD_IOS )
 
 if ( SDL_HOST )
@@ -261,8 +274,9 @@ add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-luaext )
-
-add_subdirectory ( moai-test)
+if (MOAI_TEST)
+   add_subdirectory ( moai-test)
+endif (MOAI_TEST)
 
 if (MOAI_PLUGINS)
   add_subdirectory ( moai-plugins )

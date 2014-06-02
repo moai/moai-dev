@@ -41,6 +41,7 @@ private:
 	static int		_insertProp				( lua_State* L );
 	static int		_propForPoint			( lua_State* L );
 	static int		_propForRay				( lua_State* L );
+	static int		_propList				( lua_State* L );
 	static int		_propListForPoint		( lua_State* L );
 	static int		_propListForRay			( lua_State* L );
 	static int		_propListForRect		( lua_State* L );

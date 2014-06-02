@@ -31,20 +31,16 @@ set (TAPJOY_INCLUDES
   PARENT_SCOPE
 )
 
-
-
-
 include_directories ( 
   ${TAPJOY_INCLUDES} 
 )
 
 file ( GLOB_RECURSE TAPJOY_SRC "${TAPJOY_ROOT}/*.m" "${TAPJOY_ROOT}/*.c")
 
-
-
 add_library ( tapjoy-ios STATIC 
-                  ${TAPJOY_COMP}/TJCExtensions/OpenUDID.m
-                   ${TAPJOY_SRC} 
-            )
+  ${TAPJOY_COMP}/TJCExtensions/OpenUDID.m
+  ${TAPJOY_SRC} 
+)
 
-set_source_files_properties(${TAPJOY_COMP}/TJCExtensions/OpenUDID.m PROPERTIES COMPILE_FLAGS -fobjc-arc)
+set_source_files_properties( ${TAPJOY_COMP}/TJCExtensions/OpenUDID.m PROPERTIES COMPILE_FLAGS -fobjc-arc )
+set_target_properties( tapjoy-ios PROPERTIES FOLDER Third-Party )

@@ -14,14 +14,17 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
+local grid_rows = 8
+local grid_columns = 8
 grid = MOAIGrid.new ()
-grid:initHexGrid ( 4, 4, 64 )
-grid:setRepeat ( true )
+grid:initHexGrid ( grid_columns, grid_rows, 32 )
+grid:setRepeat ( false )
 
-grid:setRow ( 1, 	0x01, 0x02, 0x01, 0x02 )
-grid:setRow ( 2,	0x03, 0x04, 0x03, 0x04 )
-grid:setRow ( 3,	0x01, 0x02, 0x01, 0x02 )
-grid:setRow ( 4,	0x03, 0x04, 0x03, 0x04 )
+for c = 1, grid_columns do
+	for r = 1, grid_rows do
+		grid:setTile ( c, r, ((c + r) % 4) + 1 )
+	end
+end
 
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "hex-tiles.png" )
@@ -34,13 +37,34 @@ prop:setLoc ( -256, -256 )
 prop:forceUpdate ()
 layer:insertProp ( prop )
 
-----------------------------------------------------------------
 cursor = MOAIProp2D.new ()
 cursor:setDeck ( tileDeck )
 cursor:setScl ( grid:getTileSize ())
-cursor:addScl ( -32 )
+cursor:addScl ( -10 )
 layer:insertProp ( cursor )
 
+font = MOAIFont.new ()
+font:load ( "arial-rounded.TTF" )
+
+for c = 1, grid_columns do
+	for r = 1, grid_rows do
+		local x, y = grid:getTileLoc(c, r)
+		x, y = prop:modelToWorld(x, y)
+		textbox = MOAITextBox.new ()
+		textbox:setFont ( font )
+		textbox:setTextSize ( 20 )
+		textbox:setRect ( -20, -20, 20, 20 )
+		textbox:setLoc ( x, y )
+		textbox:setYFlip ( true )
+		textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
+		layer:insertProp ( textbox )
+
+		textbox:setString ( string.format("%d,%d", c, r) )
+	end
+end
+
+
+----------------------------------------------------------------
 local xCoord = 0
 local yCoord = 0
 

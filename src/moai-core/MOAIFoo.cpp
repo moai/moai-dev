@@ -25,6 +25,7 @@ int MOAIFoo::_classHello ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	instanceHello
 	@text	Prints the string 'MOAIFoo instance foo!' to the console.
+	@in		MOAIFoo self
 
 	@out	nil
 */

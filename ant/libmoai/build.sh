@@ -11,17 +11,17 @@ set -e
 cd `dirname $0`/
 
 if [ x"$ANDROID_NDK" == x ]; then
-    echo "ANDROID_NDK not defined. Please set to the location of your emscripten install (path)"
+    echo "ANDROID_NDK not defined. Please set to the location of your Android NDK install (path)"
     exit 1
 fi
 # check for command line switches
 usage="usage: $0  \
     [--use-untz true | false] [--use-luajit true | false] [--disable-adcolony] [--disable-billing] \
     [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy] \
-    [--disable-twitter] [--windows] [--release]"
+    [--disable-twitter] [--disable-playservices] [--windows] [--release]"
 
 use_untz="true"
-use_luajit="false"
+use_luajit="true"
 
 adcolony_flags=
 billing_flags=
@@ -33,6 +33,7 @@ tapjoy_flags=
 twitter_flags=
 buildtype_flags="Debug"
 windows_flags=
+playservices_flags=
 
 while [ $# -gt 0 ];	do
     case "$1" in
@@ -46,8 +47,9 @@ while [ $# -gt 0 ];	do
         --disable-push)  push_flags="-DDISABLE_NOTIFICATIONS";;
         --disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
         --disable-twitter)  twitter_flags="-DDISABLE_TWITTER";;
+        --disable-playservices)  playservices_flags="-DDISABLE_PLAYSERVICES";;
         --release) buildtype_flags="Release";;
-        --windows) windows_flags='-G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows/bin/make.exe"';; 
+        --windows) windows_flags=-G"MinGW Makefiles";; 
         -*)
             echo >&2 \
                 $usage
@@ -56,6 +58,10 @@ while [ $# -gt 0 ];	do
     esac
     shift
 done
+make_flags=
+if [ x"$windows_flags" != x ]; then
+  make_flags=-DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows/bin/make.exe"
+fi
 
 if [ x"$use_untz" != xtrue ] && [ x"$use_untz" != xfalse ]; then
     echo $usage
@@ -200,15 +206,19 @@ cmake -DDISABLED_EXT="$disabled_ext" -DMOAI_BOX2D=1 \
 -DMOAI_MONGOOSE=1 -DMOAI_OGG=1 -DMOAI_OPENSSL=1 -DMOAI_SQLITE3=1 \
 -DMOAI_TINYXML=1 -DMOAI_PNG=1 -DMOAI_SFMT=1 -DMOAI_VORBIS=1 $untz_param $luajit_param \
 -DBUILD_ANDROID=true \
--DCMAKE_TOOLCHAIN_FILE="${PWD}/../host-android/android.toolchain.cmake" \
--DLIBRARY_OUTPUT_PATH_ROOT="${build_dir}" \
--DANDROID_NDK="${ANDROID_NDK}"  \
+-DCMAKE_TOOLCHAIN_FILE="../host-android/android.toolchain.cmake" \
+-DLIBRARY_OUTPUT_PATH_ROOT="../../ant/libmoai" \
+-DANDROID_NDK=${ANDROID_NDK}  \
 -DCMAKE_BUILD_TYPE=$buildtype_flags \
-$windows_flags \
+"${windows_flags}" "${make_flags}" \
 ../
+#build them    
+if [ x"$windows_flags" != x ]; then
+  cmake --build . --target moai
+else
+  cmake --build . --target moai -- -j4
+fi  
 
-#build them
-cmake --build . --target moai -- -j4
 
 cd ${build_dir}
 
@@ -224,3 +234,4 @@ echo "$facebook_flags" >> libs/package.txt
 echo "$push_flags" >> libs/package.txt
 echo "$tapjoy_flags" >> libs/package.txt
 echo "$twitter_flags" >> libs/package.txt
+echo "$playservices_flags" >> libs/package.txt

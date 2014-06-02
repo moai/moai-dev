@@ -12,6 +12,7 @@
 #include <moai-box2d/MOAIBox2DFrictionJoint.h>
 #include <moai-box2d/MOAIBox2DGearJoint.h>
 #include <moai-box2d/MOAIBox2DJoint.h>
+#include <moai-box2d/MOAIBox2DMotorJoint.h>
 #include <moai-box2d/MOAIBox2DMouseJoint.h>
 #include <moai-box2d/MOAIBox2DPrismaticJoint.h>
 #include <moai-box2d/MOAIBox2DPulleyJoint.h>
@@ -223,6 +224,42 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	
 	joint->mJointA.Set ( *self, jointA );
 	joint->mJointB.Set ( *self, jointB );
+	
+	joint->PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/** @name	addMotorJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@out	MOAIBox2DJoint joint
+*/
+int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
+
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
+	
+	if ( !( bodyA && bodyB )) return 0;
+	
+	b2MotorJointDef jointDef;
+	jointDef.Initialize ( bodyA->mBody, bodyB->mBody );
+	
+	MOAIBox2DMotorJoint* joint = new MOAIBox2DMotorJoint ();
+	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
+	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
+	self->LuaRetain ( joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -992,6 +1029,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "addDistanceJoint",			_addDistanceJoint },
 		{ "addFrictionJoint",			_addFrictionJoint },
 		{ "addGearJoint",				_addGearJoint },
+		{ "addMotorJoint", 				_addMotorJoint },
 		{ "addMouseJoint",				_addMouseJoint },
 		{ "addPrismaticJoint",			_addPrismaticJoint },
 		{ "addPulleyJoint",				_addPulleyJoint },
@@ -1079,15 +1117,15 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 /**     @name   getRayCast
         @text   return RayCast 1st point hit
        
-        @in             MOAIBox2DWorld self
-        @in             number p1x
-        @in             number p1y
-        @in             number p2x
-        @in             number p2y
-        @out    bool	true if hit, false otherwise
-		@out	  MOAIBox2DFixture fixture that was hit, or nil
-        @out    number hitpoint.x
-        @out    number hitpoint.y
+        @in		MOAIBox2DWorld self
+        @in		number p1x
+        @in		number p1y
+        @in		number p2x
+        @in		number p2y
+        @out	boolean hit					true if hit, false otherwise
+		@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
+        @out	number hitpointX
+        @out	number hitpointY
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )

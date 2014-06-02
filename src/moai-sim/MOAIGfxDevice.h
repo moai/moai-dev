@@ -226,6 +226,7 @@ public:
 	u32						GetHeight				() const;
 	
 	ZLMatrix4x4				GetNormToWndMtx			() const;
+		
 	
 	void					GetUVMtxMode			( u32& input, u32& output ) const;
 	const ZLMatrix4x4&		GetUVTransform			() const;

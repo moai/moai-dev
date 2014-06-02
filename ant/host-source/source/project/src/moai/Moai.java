@@ -108,6 +108,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiFacebook",
 		"com.ziplinegames.moai.MoaiKeyboard",
 		"com.ziplinegames.moai.MoaiGoogleBilling",
+		"com.ziplinegames.moai.MoaiGooglePlayServices",
 		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiTwitter",
@@ -126,6 +127,7 @@ public class Moai {
 	protected static native void    AKUModulesContextInitialize     ();
 	protected static native void	AKUAppDialogDismissed			( int dialogResult );
 	protected static native void	AKUAppDidStartSession			( boolean resumed );
+	protected static native void	AKUAppOpenedFromURL			( String url );
 	protected static native void	AKUAppWillEndSession 			();
 	protected static native int		AKUCreateContext 				();
 	protected static native void	AKUDetectGfxContext 			();
@@ -145,6 +147,7 @@ public class Moai {
 	protected static native void	AKUSetContext 					( int contextId );
 	protected static native void	AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
 	protected static native void	AKUSetDocumentDirectory 		( String path );
+	protected static native void 	AKUSetCacheDirectory 			( String path );
 	protected static native void	AKUSetInputConfigurationName	( String name );
 	protected static native void	AKUSetInputDevice		 		( int deviceId, String name );
 	protected static native void	AKUSetInputDeviceCompass 		( int deviceId, int sensorId, String name );
@@ -200,6 +203,12 @@ public class Moai {
 	public static void dialogDismissed ( int dialogResult ) {
 		synchronized ( sAkuLock ) {
 			AKUAppDialogDismissed ( dialogResult );
+		}
+	}
+
+	public static void AppOpenedFromURL ( String url ) {
+		synchronized ( sAkuLock ) {
+			AKUAppOpenedFromURL ( url );
 		}
 	}
 
@@ -403,6 +412,14 @@ public class Moai {
 		}
 	}
 
+	//----------------------------------------------------------------//
+	public static void setCacheDirectory ( String path ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUSetCacheDirectory ( path );
+		}
+	}	
+	
 	//----------------------------------------------------------------//
 	public static void setScreenSize ( int width, int height ) {
 		synchronized ( sAkuLock ) {

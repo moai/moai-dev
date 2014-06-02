@@ -108,9 +108,11 @@ private:
 	};
 
 	UITextField*	mTextField;
+	u32				mMaxLength;
 
 	//----------------------------------------------------------------//
 	static int		_getText				( lua_State* L );
+	static int		_setMaxLength			( lua_State* L );
 	static int		_showKeyboard			( lua_State* L );
 	static int		_hideKeyboard			( lua_State* L );
 
@@ -120,6 +122,8 @@ private:
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyboardIOS )
+		
+	GET_SET ( u32, MaxLength, mMaxLength )
 	
 	enum {
 		EVENT_INPUT,

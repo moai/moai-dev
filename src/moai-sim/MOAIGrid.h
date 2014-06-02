@@ -5,6 +5,8 @@
 #define	MOAIGRID_H
 
 #include <moai-sim/MOAIGridSpace.h>
+#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIDeckRemapper.h>
 
 //================================================================//
 // MOAIGrid
@@ -32,6 +34,7 @@ private:
 	static int		_toggleTileFlags	( lua_State* L );
 
 	//----------------------------------------------------------------//
+protected:
 	void			OnResize			();
 
 public:
@@ -42,6 +45,7 @@ public:
 	u32				GetTile				( int xTile, int yTile );
 					MOAIGrid			();
 					~MOAIGrid			();
+	virtual	void	Draw				( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			Fill				( u32 value );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
