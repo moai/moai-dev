@@ -183,7 +183,7 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			loc.Scale ( xScl, yScl );
 			
 			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );

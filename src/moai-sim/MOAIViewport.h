@@ -18,8 +18,8 @@ private:
 	bool		mXScale;
 	bool		mYScale;
 	
-	USVec2D		mScale;
-	USVec2D		mOffset;
+	ZLVec2D		mScale;
+	ZLVec2D		mOffset;
 	float		mRotation;
 
 	//----------------------------------------------------------------//
@@ -37,15 +37,15 @@ public:
 	//----------------------------------------------------------------//
 	float			GetAspect				() const;
 	float			GetInvAspect			() const;
-	void			GetNormToWndMtx			( ZLMatrix4x4& normToWnd ) const;
+	ZLMatrix4x4		GetNormToWndMtx			() const;
 	ZLMatrix4x4		GetProjMtx				() const;
 	ZLMatrix4x4		GetProjMtxInv			() const;
 	ZLRect			GetRect					() const;
-	USVec2D			GetScale				() const;
-	USVec2D			GetUnits				() const;
-	void			GetWndToNormMtx			( ZLMatrix4x4& wndToNorm ) const;
-	ZLMatrix4x4		GetWndToWorldMtx		( const ZLMatrix4x4& view ) const;
-	ZLMatrix4x4		GetWorldToWndMtx		( const ZLMatrix4x4& view ) const;
+	ZLVec2D			GetScale				() const;
+	ZLVec2D			GetUnits				() const;
+	ZLMatrix4x4		GetWndToNormMtx			() const;
+	//ZLMatrix4x4		GetWndToWorldMtx		( const ZLMatrix4x4& view ) const;
+	//ZLMatrix4x4		GetWorldToWndMtx		( const ZLMatrix4x4& view ) const;
 					MOAIViewport			();
 					~MOAIViewport			();
 	void			RegisterLuaClass		( MOAILuaState& state );

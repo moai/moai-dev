@@ -5,26 +5,49 @@
 #define	ZLLEANPOOL_H
 
 #include <zl-util/ZLLeanArray.h>
+#include <zl-util/ZLLeanStack.h>
 
 //================================================================//
 // ZLLeanPool
 //================================================================//
-template < typename TYPE >
+template < typename TYPE, size_t CHUNKSIZE = 64, size_t MAXCHUNKS = 0 >
 class ZLLeanPool {
 private:
 
-	ZLLeanArray < TYPE* > mStack;
-	TYPE* mPool;
+	size_t								mMaxChunks;
+	ZLLeanStack < TYPE*, 1 >			mChunks;
+	ZLLeanStack < TYPE*, CHUNKSIZE >	mFree;
 
-	u32 mTop;
+	//----------------------------------------------------------------//
+	void More () {
+	
+		if (( this->mMaxChunks == 0 ) || ( this->mChunks.Size () < this->mMaxChunks )) {
+	
+			TYPE* chunk = ( TYPE* )malloc ( CHUNKSIZE * sizeof ( TYPE ));
+			this->mChunks.Push ( chunk );
+			
+			for ( size_t i = 0; i < CHUNKSIZE; ++i ) {
+				TYPE* elem = &chunk [ i ];
+				this->mFree.Push ( elem );
+			}
+		}
+	}
 
 public:
 
 	//----------------------------------------------------------------//
 	TYPE* Alloc () {
 		
-		if ( this->mTop ) {
-			TYPE* type = this->mStack [ --this->mTop ];
+		size_t top = this->mFree.GetTop ();
+		
+		if ( !top ) {
+			this->More ();
+		}
+		
+		top = this->mFree.GetTop ();
+		if ( top ) {
+		
+			TYPE* type = this->mFree.Pop ();
 			new ( type ) TYPE ();
 			return type;
 		}
@@ -34,12 +57,8 @@ public:
 	//----------------------------------------------------------------//
 	void Clear () {
 		
-		u32 max = this->mStack.Size ();
-		for ( u32 i = this->mTop; i < max; ++i ) {
-			TYPE* type = this->mStack [ i ];
-			type->TYPE::~TYPE ();
-		}
-		this->mTop = max;
+		this->mChunks.Clear ();
+		this->mFree.Clear ();
 	}
 
 	//----------------------------------------------------------------//
@@ -47,30 +66,19 @@ public:
 		
 		if ( type ) {
 			type->TYPE::~TYPE ();
-			this->mStack [ this->mTop++ ] = type;
+			this->mFree.Push ( type );
 		}
 	}
-
-	//----------------------------------------------------------------//
-	void Init ( u32 max ) {
 	
-		this->mTop = max;
-		
-		this->mPool = ( TYPE* )malloc ( max * sizeof ( TYPE ));
-		this->mStack.Init ( max );
-		
-		for ( u32 i = 0; i < max; ++i ) {
-			this->mStack [ i ] = &this->mPool [ i ];
-		}	
+	//----------------------------------------------------------------//
+	ZLLeanPool () :
+		mMaxChunks ( MAXCHUNKS ) {
 	}
 	
 	//----------------------------------------------------------------//
 	~ZLLeanPool () {
 		
 		this->Clear ();
-		free ( this->mPool );
-		this->mPool = 0;
-		this->mTop = 0;
 	}
 };
 

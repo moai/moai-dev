@@ -46,7 +46,17 @@ int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPointerSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAIPointerSensor::MOAIPointerSensor () {
+
+	RTTI_SINGLE ( MOAISensor )
+}
+
+//----------------------------------------------------------------//
+MOAIPointerSensor::~MOAIPointerSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAIPointerSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	int x = eventStream.Read < int >( 0 );
 	int y = eventStream.Read < int >( 0 );
@@ -63,16 +73,6 @@ void MOAIPointerSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPointerSensor::MOAIPointerSensor () {
-
-	RTTI_SINGLE ( MOAISensor )
-}
-
-//----------------------------------------------------------------//
-MOAIPointerSensor::~MOAIPointerSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAIPointerSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -80,6 +80,8 @@ void MOAIPointerSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIPointerSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getLoc",			_getLoc },

@@ -6,140 +6,55 @@
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
-#include <jni.h>
-
 #include <moai-android/moaiext-jni.h>
 #include <moai-android/MOAIChartBoostAndroid.h>
-
-extern JavaVM* jvm;
 
 //================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
-	@text	Initialize ChartBoost.
+int MOAIChartBoostAndroid::_cacheInterstitial ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
 	
-	@in		string	appId			Available in ChartBoost dashboard settings.
-	@in 	string	appSignature	Available in ChartBoost dashboard settings.
-	@out 	nil
-*/
+	jstring jlocation = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+	
+	jmethodID cacheInterstitial = self->GetStaticMethod ( "cacheInterstitial", "(Ljava/lang/String;)V" );
+	self->CallStaticVoidMethod ( cacheInterstitial, jlocation );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIChartBoostAndroid::_hasCachedInterstitial ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
+
+	jstring jlocation = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+
+	jmethodID cacheInterstitial = self->GetStaticMethod ( "hasCachedInterstitial", "(Ljava/lang/String;)Z" );
+	state.Push ( self->CallStaticBooleanMethod ( cacheInterstitial, jlocation ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIChartBoostAndroid::_init ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
 	
-	MOAILuaState state ( L );
-
-	cc8* identifier = lua_tostring ( state, 1 );
-	cc8* signature = lua_tostring ( state, 2 );
-
-	JNI_GET_ENV ( jvm, env );
+	jstring jappID			= self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+	jstring jappSignature	= self->GetJString ( state.GetValue < cc8* >( 2, 0 ));
 	
-	JNI_GET_JSTRING ( identifier, jidentifier );
-	JNI_GET_JSTRING ( signature, jsignature );
-
-	jclass chartboost = env->FindClass ( "com/ziplinegames/moai/MoaiChartBoost" );
-    if ( chartboost == NULL ) {
-
-		ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiChartBoost" );
-    } else {
-
-    	jmethodID init = env->GetStaticMethodID ( chartboost, "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
-    	if ( init == NULL ) {
-
-			ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find static java method %s", "init" );
-    	} else {
-
-			env->CallStaticVoidMethod ( chartboost, init, jidentifier, jsignature );				
-		}
-	}
-			
+	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
+	self->CallStaticVoidMethod ( init, jappID, jappSignature );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadInterstitial
-	@text	Request that an interstitial ad be cached for later display.
-	
-	@opt	string	locationId		Optional location ID.
-	@out 	nil
-*/
-int MOAIChartBoostAndroid::_loadInterstitial ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-
-	cc8* location = NULL; //lua_tostring ( state, 1 ); At the moment, the ChartBoost caching API for Android does not support locations.
-
-	JNI_GET_ENV ( jvm, env );
-	
-	JNI_GET_JSTRING ( location, jlocation );
-
-	jclass chartboost = env->FindClass ( "com/ziplinegames/moai/MoaiChartBoost" );
-    if ( chartboost == NULL ) {
-
-		ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiChartBoost" );
-    } else {
-
-    	jmethodID loadInterstitial = env->GetStaticMethodID ( chartboost, "loadInterstitial", "(Ljava/lang/String;)V" );
-    	if ( loadInterstitial == NULL ) {
-
-			ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find static java method %s", "loadInterstitial" );
-    	} else {
-
-			env->CallStaticVoidMethod ( chartboost, loadInterstitial, jlocation );			
-		}
-	}
-			
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIChartBoostAndroid::_setListener ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-
-	if ( idx < TOTAL ) {
-		
-		MOAIChartBoostAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
-	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	showInterstitial
-	@text	Request an interstitial ad display if a cached ad is available.
-	
-	@opt	string	locationId		Optional location ID.
-	@out 	nil
-*/
 int MOAIChartBoostAndroid::_showInterstitial ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
+	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
 
-	cc8* location = NULL; //lua_tostring ( state, 1 ); At the moment, the ChartBoost caching API for Android does not support locations.
+	jstring jlocation = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
 
-	JNI_GET_ENV ( jvm, env );
-	
-	JNI_GET_JSTRING ( location, jlocation );
-
-	jclass chartboost = env->FindClass ( "com/ziplinegames/moai/MoaiChartBoost" );
-    if ( chartboost == NULL ) {
-
-		ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiChartBoost" );
-    } else {
-
-    	jmethodID showInterstitial = env->GetStaticMethodID ( chartboost, "showInterstitial", "(Ljava/lang/String;)V" );
-    	if ( showInterstitial == NULL ) {
-
-			ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find static java method %s", "showInterstitial" );
-    	} else {
-
-			env->CallStaticVoidMethod ( chartboost, showInterstitial, jlocation );				
-		}
-	}
-
+	jmethodID showInterstitial = self->GetStaticMethod ( "showInterstitial", "(Ljava/lang/String;)V" );
+	self->CallStaticVoidMethod ( showInterstitial, jlocation );
 	return 0;
 }
 
@@ -185,12 +100,13 @@ int MOAIChartBoostAndroid::_hasCachedInterstitial ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIChartBoostAndroid::MOAIChartBoostAndroid () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
+	
+	this->SetClass ( "com/ziplinegames/moai/MoaiChartBoost" );
 }
 
 //----------------------------------------------------------------//
 MOAIChartBoostAndroid::~MOAIChartBoostAndroid () {
-
 }
 
 //----------------------------------------------------------------//
@@ -200,41 +116,16 @@ void MOAIChartBoostAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERSTITIAL_DISMISSED", 		( u32 )INTERSTITIAL_DISMISSED );
 
 	luaL_Reg regTable [] = {
-		{ "init",					_init },
-		{ "loadInterstitial",		_loadInterstitial },
-		{ "setListener",			_setListener },
-		{ "showInterstitial",		_showInterstitial },
-		{ "hasCachedInterstitial",	_hasCachedInterstitial },
+		{ "cacheInterstitial",			_cacheInterstitial },
+		{ "hasCachedInterstitial",		_hasCachedInterstitial },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIChartBoostAndroid > },
+		{ "init",						_init },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIChartBoostAndroid > },
+		{ "showInterstitial",			_showInterstitial },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIChartBoostAndroid::NotifyInterstitialDismissed () {	
-	
-	MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_DISMISSED ];
-	
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-		
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIChartBoostAndroid::NotifyInterstitialLoadFailed () {	
-	
-	MOAILuaRef& callback = this->mListeners [ INTERSTITIAL_LOAD_FAILED ];
-	
-	if ( callback ) {
-		
-		MOAIScopedLuaState state = callback.GetSelf ();
-		
-		state.DebugCall ( 0, 0 );
-	}
 }
 
 //================================================================//
@@ -242,15 +133,10 @@ void MOAIChartBoostAndroid::NotifyInterstitialLoadFailed () {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiChartBoost_AKUNotifyChartBoostInterstitialDismissed ( JNIEnv* env, jclass obj ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiChartBoost_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	MOAIChartBoostAndroid::Get ().NotifyInterstitialDismissed ();
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiChartBoost_AKUNotifyChartBoostInterstitialLoadFailed ( JNIEnv* env, jclass obj ) {
-
-	MOAIChartBoostAndroid::Get ().NotifyInterstitialLoadFailed ();
+	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiChartBoost_AKUInvokeListener\n" );
+	MOAIChartBoostAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 
 #endif

@@ -12,14 +12,6 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
-#if MOAI_WITH_LIBCURL
-	#include <moai-http-client/MOAIUrlMgrCurl.h>
-#endif
-
-#if MOAI_OS_NACL
-	#include <moai-http-client/MOAIUrlMgrNaCl.h>
-#endif
-
 #if defined(_WIN32)
 	#include <windows.h>
 	#include <Psapi.h>
@@ -218,20 +210,6 @@ int MOAISim::_getElapsedTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getHistogram
-	@text	Generates a histogram of active MOAIObjects and returns it
-			in a table containing object tallies indexed by object
-			class names.
-
-	@out	table histogram
-*/
-int MOAISim::_getHistogram ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().PushHistogram ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getLoopFlags
 	@text	Returns the current loop flags.
 
@@ -403,53 +381,10 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
-		MOAISim::Get ().PauseMOAI ();
+		MOAISim::Get ().Pause ();
 	}
 	else {
-		MOAISim::Get ().ResumeMOAI ();
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	reportHistogram
-	@text	Generates a histogram of active MOAIObjects.
-
-	@out	nil
-*/
-int MOAISim::_reportHistogram ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().ReportHistogram ( MOAILogMgr::Get ().GetFile ());
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	reportLeaks
-	@text	Analyze the currently allocated MOAI objects and create a textual
-			report of where they were declared, and what Lua references (if any)
-			can be found. NOTE: This is incredibly slow, so only use to debug
-			leaking memory issues.
- 
-			This will also trigger a full garbage collection before performing
-			the required report. (Equivalent of collectgarbage("collect").)
- 
-	@in		boolean clearAfter	If true, it will reset the allocation tables (without
-								freeing the underlying objects). This allows this
-								method to be called after a known operation and
-								get only those allocations created since the last call
-								to this function.
-	@out	nil
-*/
-int MOAISim::_reportLeaks ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	bool clearAfter = state.GetValue < bool >( 1, false );
-	
-	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-	luaRuntime.ReportLeaksFormatted ( MOAILogMgr::Get ().GetFile ());
-
-	if ( clearAfter ) {
-		luaRuntime.ResetLeakTracking ();
+		MOAISim::Get ().Resume ();
 	}
 	return 0;
 }
@@ -498,38 +433,6 @@ int MOAISim::_setGCActive ( lua_State* L ) {
 int MOAISim::_setGCStep ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCStep = state.GetValue < u32 >( 1, 0 );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setHistogramEnabled
-	@text	Enable tracking of every MOAILuaObject so that an object count
-			histogram may be generated.
- 
-	@opt	boolean enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setHistogramEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().EnableHistogram ( state.GetValue < bool >( 1, false ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setLeakTrackingEnabled
-	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
-			tracked back to their point of allocation (in Lua). Use together with
-			MOAISim.reportLeaks() to determine exactly where your memory usage is
-			being created. NOTE: This is very expensive in terms of both CPU and
-			the extra memory associated with the stack info book-keeping. Use only
-			when tracking down leaks.
- 
-	@opt	boolean enable		Default value is false.
-	@out	nil
-*/
-int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -741,7 +644,7 @@ MOAISim::MOAISim () :
 	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
 	mGCStep ( 0 ),
-	mForceGC ( true ) {
+	mForceGC ( false ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -794,10 +697,13 @@ void MOAISim::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PauseMOAI () {
+void MOAISim::Pause () {
 
-	this->SendPauseEvent();
-	this->mLoopState = PAUSED;
+	if ( this->mLoopState != PAUSED ) {
+		this->SendPauseEvent();
+		this->mLoopState = PAUSED;
+		this->mPauseTime = ZLDeviceTime::GetTimeInSeconds ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -837,7 +743,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
-		{ "getHistogram",				_getHistogram },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
@@ -847,14 +752,10 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "hideCursor",					_hideCursor },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
-		{ "reportHistogram",			_reportHistogram },
-		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
 		{ "setCpuBudget",				_setCpuBudget},
 		{ "setGCActive",				_setGCActive },
 		{ "setGCStep",					_setGCStep },
-		{ "setHistogramEnabled",		_setHistogramEnabled },
-		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
 		{ "setLongDelayThreshold",		_setLongDelayThreshold },
 		{ "setLoopFlags",				_setLoopFlags },
@@ -877,9 +778,13 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::ResumeMOAI() {
+void MOAISim::Resume () {
 
 	if ( this->mLoopState == PAUSED ) {
+	
+		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
+		MOAIInputMgr::Get ().FlushEvents ( skip );
+	
 		this->SendResumeEvent();
 		this->mLoopState = START;
 	}
@@ -929,12 +834,26 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 
 	double time = ZLDeviceTime::GetTimeInSeconds ();
 
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
 	for ( u32 s = 0; s < multiplier; ++s ) {
-			
-		MOAIInputMgr::Get ().Update ();
+
+		if ( this->mForceGC ) {
+			MOAILuaRuntime::Get ().ForceGarbageCollection ();
+			this->mForceGC = false;
+		}
+		
+		lua_gc ( state, LUA_GCSTOP, 0 );
+		
+		MOAIInputMgr::Get ().Update ( step );
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
 		this->mSimTime += step;
+		
+		if ( this->mGCActive ) {
+			// crank the garbage collector
+			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
+		}
 	}
 
 	return ZLDeviceTime::GetTimeInSeconds () - time;
@@ -955,27 +874,10 @@ void MOAISim::Update () {
 		lua_setglobal ( state, LUA_GC_FUNC_NAME );
 	}
 
-	if ( this->mForceGC ) {
-		
-		// force a full cycle
-		MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		this->mForceGC = false;
-	}
-
-	lua_gc ( state, LUA_GCSTOP, 0 );
-
 	// Measure performance
 	double simStartTime = ZLDeviceTime::GetTimeInSeconds ();
 
 	double interval = this->MeasureFrameRate ();
-
-	#if MOAI_WITH_HTTP_CLIENT && MOAI_WITH_LIBCURL
-		MOAIUrlMgrCurl::Get ().Process ();
-	#endif
-	
-	#if MOAI_WITH_HTTP_CLIENT && MOAI_OS_NACL
-		MOAIUrlMgrNaCl::Get ().Process ();
-	#endif
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
@@ -1104,9 +1006,4 @@ void MOAISim::Update () {
 	// Measure performance
 	double simEndTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mSimDuration = simEndTime - simStartTime;
-	
-	if ( this->mGCActive ) {
-		// crank the garbage collector
-		lua_gc ( state, LUA_GCSTEP, this->mGCStep );
-	}
 }

@@ -272,7 +272,7 @@ static void drawPolyShape ( cpBody* body, cpPolyShape* poly, cpSpace* space ) {
 			verts [ i ] = ( float )verts64 [ i ];
 		}
 	#else
-		USVec2D* verts = ( USVec2D* )poly->tVerts;
+		ZLVec2D* verts = ( ZLVec2D* )poly->tVerts;
 	#endif
 	
 	u32 color = color_for_shape (( cpShape* )poly, space );

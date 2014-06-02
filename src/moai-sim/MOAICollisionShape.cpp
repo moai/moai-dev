@@ -3,22 +3,11 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICollisionShape.h>
+#include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
 // MOAICollisionShape
 //================================================================//
-
-//----------------------------------------------------------------//
-const ZLRect& MOAICollisionShape::GetRect () const {
-
-	return *( ZLRect* )this->mRectBuffer;
-}
-
-//----------------------------------------------------------------//
-const ZLQuad& MOAICollisionShape::GetQuad () const {
-
-	return *( ZLQuad* )this->mQuadBuffer;
-}
 
 //----------------------------------------------------------------//
 MOAICollisionShape::MOAICollisionShape () :
@@ -30,21 +19,13 @@ MOAICollisionShape::~MOAICollisionShape () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const MOAICollisionShape& shape ) const {
+bool MOAICollisionShape::Overlap ( const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, const MOAICollisionShape& otherShape, ZLBox& bounds ) const {
 
 	switch ( this->mType ) {
 	
-		case RECT: {
-			switch ( shape.mType ) {
-				case RECT: MOAICollisionShape::Overlap ( this->GetRect (), shape.GetRect ());
-				case QUAD: MOAICollisionShape::Overlap ( shape.GetQuad (), this->GetRect ());
-			}
-			break;
-		}
 		case QUAD: {
-			switch ( shape.mType ) {
-				case RECT: MOAICollisionShape::Overlap ( this->GetQuad (), shape.GetRect ());
-				case QUAD: MOAICollisionShape::Overlap ( this->GetQuad (), shape.GetQuad ());
+			switch ( otherShape.mType ) {
+				case QUAD: MOAICollisionShape::Overlap ( selfTransform, this->mQuad, otherTransform, otherShape.mQuad, bounds );
 			}
 			break;
 		}
@@ -53,33 +34,43 @@ bool MOAICollisionShape::Overlap ( const MOAICollisionShape& shape ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Set ( const ZLRect& rect ) {
+void MOAICollisionShape::Set () {
 
-	memcpy ( this->mRectBuffer, &rect, sizeof ( ZLRect ));
-	this->mType = RECT;
+	this->mType = NONE;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionShape::Set ( const ZLRect& aabb ) {
+
+	this->mAABB = aabb;
+	this->mType = AABB;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionShape::Set ( const ZLBox& box ) {
+
+	this->mBox = box;
+	this->mType = BOX;
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionShape::Set ( const ZLQuad& quad ) {
 
-	memcpy ( this->mQuadBuffer, &quad, sizeof ( ZLQuad ));
+	this->mQuad = quad;
 	this->mType = QUAD;
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const ZLRect& s0, const ZLRect& s1 ) {
+bool MOAICollisionShape::Overlap ( const MOAITransformBase& t0, const ZLQuad& q0, const MOAITransformBase& t1, const ZLQuad& q1, ZLBox& bounds ) {
 
-	return s0.Overlap ( s1 );
-}
+	ZLQuad tq0 = q0;
+	tq0.Transform ( t0.GetLocalToWorldMtx ());
 
-//----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const ZLQuad& s0, const ZLRect& s1 ) {
+	ZLQuad tq1 = q1;
+	tq1.Transform ( t1.GetLocalToWorldMtx ());
 
-	return s0.Overlap ( s1 );
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const ZLQuad& s0, const ZLQuad& s1 ) {
-
-	return s0.Overlap ( s1 );
+	ZLRect rect;
+	bool result = tq0.Intersect ( tq1, rect );
+	bounds.Init ( rect, ZLBox::PLANE_XY, 0.0f, 0.0f );
+	return result;
 }

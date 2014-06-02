@@ -72,7 +72,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
 	
 	//----------------------------------------------------------------//
-	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
+	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec );
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();

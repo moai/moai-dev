@@ -574,9 +574,8 @@ void MOAICameraFitter2D::UpdateFit () {
 	this->mFitScale = 1.0f;
 
 	// grab the view transform
-	ZLMatrix4x4 ident;
-	ident.Ident ();
-	ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+	ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
+	wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
 
 	// grab the view rect in world space
 	// TODO: take viewport offset into account
@@ -609,9 +608,8 @@ void MOAICameraFitter2D::UpdateTarget () {
 	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
 	
 		// grab the view transform
-		ZLMatrix4x4 ident;
-		ident.Ident ();
-		ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
+		ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
+		wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
 
 		// grab the view rect in world space
 		// TODO: take viewport offset into account

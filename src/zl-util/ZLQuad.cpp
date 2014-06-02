@@ -5,18 +5,18 @@
 #include <zl-util/ZLQuad.h>
 
 //----------------------------------------------------------------//
-bool _intersect ( USVec2D& p0, USVec2D& p1, USVec2D& q0, USVec2D& q1, USVec2D& r );
-bool _intersect ( USVec2D& p0, USVec2D& p1, USVec2D& q0, USVec2D& q1, USVec2D& r ) {
+bool _intersect ( ZLVec2D& p0, ZLVec2D& p1, ZLVec2D& q0, ZLVec2D& q1, ZLVec2D& r );
+bool _intersect ( ZLVec2D& p0, ZLVec2D& p1, ZLVec2D& q0, ZLVec2D& q1, ZLVec2D& r ) {
 
-	USVec2D u;
+	ZLVec2D u;
 	u.mX = p1.mX - p0.mX;
 	u.mY = p1.mY - p0.mY;
 	
-	USVec2D v;
+	ZLVec2D v;
 	v.mX = q1.mX - q0.mX;
 	v.mY = q1.mY - q0.mY;
 
-	USVec2D w;
+	ZLVec2D w;
 	w.mX = p0.mX - q0.mX;
 	w.mY = p0.mY - q0.mY;
 	
@@ -45,9 +45,9 @@ bool _intersect ( USVec2D& p0, USVec2D& p1, USVec2D& q0, USVec2D& q1, USVec2D& r
 //================================================================//
 
 //----------------------------------------------------------------//
-bool ZLQuad::IsSeparatingAxis ( const USVec2D& e0, const USVec2D& e1, const USVec2D& e2, const USVec2D& e3 ) const {
+bool ZLQuad::IsSeparatingAxis ( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVec2D& e2, const ZLVec2D& e3 ) const {
 
-	USVec2D axis;
+	ZLVec2D axis;
 	axis.mX = e1.mY - e0.mY;
 	axis.mY = -( e1.mX - e0.mX );
 	
@@ -85,10 +85,10 @@ bool ZLQuad::Contains ( float x, float y ) const {
 	ZLMetaVec2D < float > vec;
 	vec.Init ( x, y );
 	
-	USVec2D v0 = this->mV [ 0 ];
-	USVec2D v1 = this->mV [ 1 ];
-	USVec2D v2 = this->mV [ 2 ];
-	USVec2D v3 = this->mV [ 3 ];
+	ZLVec2D v0 = this->mV [ 0 ];
+	ZLVec2D v1 = this->mV [ 1 ];
+	ZLVec2D v2 = this->mV [ 2 ];
+	ZLVec2D v3 = this->mV [ 3 ];
 	
 	v0.Sub ( vec );
 	v1.Sub ( vec );
@@ -122,8 +122,8 @@ ZLPlane2D ZLQuad::GetPlane ( u32 id ) {
 
 	id = id % 4;
 	
-	USVec2D v0;
-	USVec2D v1;
+	ZLVec2D v0;
+	ZLVec2D v1;
 	
 	v0 = this->mV [ id++ ];
 	v1 = this->mV [ id % 4 ];
@@ -134,7 +134,7 @@ ZLPlane2D ZLQuad::GetPlane ( u32 id ) {
 }
 
 //----------------------------------------------------------------//
-USVec2D ZLQuad::GetVert ( u32 id ) {
+ZLVec2D ZLQuad::GetVert ( u32 id ) {
 
 	return this->mV [ id % 4 ];
 }
@@ -166,13 +166,13 @@ void ZLQuad::Init ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLQuad::Intersect ( const ZLQuad& quad, USVec2D* buffer, u32 max ) const {
+u32 ZLQuad::Intersect ( const ZLQuad& quad, ZLVec2D* buffer, u32 max ) const {
 
 	u32 total = 0;
 	
 	// check containment
 	for ( u32 i = 0; i < 4; ++i ) {
-		USVec2D v = this->mV [ i ];
+		ZLVec2D v = this->mV [ i ];
 		if ( quad.Contains ( v.mX, v.mY )) {
 			buffer [ total++ ] = v;
 			if ( total == max ) return total;
@@ -181,7 +181,7 @@ u32 ZLQuad::Intersect ( const ZLQuad& quad, USVec2D* buffer, u32 max ) const {
 	
 	// check containment
 	for ( u32 i = 0; i < 4; ++i ) {
-		USVec2D v = quad.mV [ i ];
+		ZLVec2D v = quad.mV [ i ];
 		if ( this->Contains ( v.mX, v.mY )) {
 			buffer [ total++ ] = v;
 			if ( total == max ) return total;
@@ -191,15 +191,15 @@ u32 ZLQuad::Intersect ( const ZLQuad& quad, USVec2D* buffer, u32 max ) const {
 	// check intersection
 	for ( u32 i = 0; i < 4; ++i ) {
 		
-		USVec2D p0 = this->mV [ i ];
-		USVec2D p1 = this->mV [( i + 1 ) & 0x03 ];
+		ZLVec2D p0 = this->mV [ i ];
+		ZLVec2D p1 = this->mV [( i + 1 ) & 0x03 ];
 		
 		for ( u32 j = 0; j < 4; ++j ) {
 			
-			USVec2D q0 = quad.mV [ j ];
-			USVec2D q1 = quad.mV [( j + 1 ) & 0x03 ];
+			ZLVec2D q0 = quad.mV [ j ];
+			ZLVec2D q1 = quad.mV [( j + 1 ) & 0x03 ];
 			
-			USVec2D r;
+			ZLVec2D r;
 			if ( _intersect ( p0, p1, q0, q1, r )) {
 				buffer [ total++ ] = r;
 				if ( total == max ) return total;
@@ -213,7 +213,7 @@ u32 ZLQuad::Intersect ( const ZLQuad& quad, USVec2D* buffer, u32 max ) const {
 //----------------------------------------------------------------//
 bool ZLQuad::Intersect ( const ZLQuad& quad, ZLRect& result ) const {
 
-	USVec2D buffer [ 8 ];
+	ZLVec2D buffer [ 8 ];
 	
 	u32 total = this->Intersect ( quad, buffer, 8 );
 	
@@ -271,7 +271,7 @@ void ZLQuad::Scale ( float xScale, float yScale ) {
 //----------------------------------------------------------------//
 void ZLQuad::ReverseWinding () {
 
-	USVec2D v [ 4 ];
+	ZLVec2D v [ 4 ];
 	
 	v [ 0 ] = this->mV [ 3 ];
 	v [ 1 ] = this->mV [ 2 ];
@@ -383,7 +383,7 @@ void ZLQuad::Transform ( const ZLMatrix3x3& transform ) {
 //----------------------------------------------------------------//
 void ZLQuad::Translate ( float xOff, float yOff ) {
 
-	USVec2D offset ( xOff, yOff );
+	ZLVec2D offset ( xOff, yOff );
 
 	this->mV [ 0 ].Add ( offset );
 	this->mV [ 1 ].Add ( offset );

@@ -384,6 +384,14 @@ void zglUniform4fv ( u32 location, u32 count, const float* value ) {
 }
 
 //----------------------------------------------------------------//
+void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+	UNUSED ( location );
+	UNUSED ( count );
+	UNUSED ( transpose );
+	UNUSED ( value );
+}
+
+//----------------------------------------------------------------//
 void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* value ) {
 	UNUSED ( location );
 	UNUSED ( count );

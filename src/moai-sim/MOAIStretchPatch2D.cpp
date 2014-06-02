@@ -77,8 +77,8 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 	
 	@in		MOAIStretchPatch2D self
 	@in		number idx
-	@in		number weight
-	@in		boolean conStretch
+	@in		number percent
+	@in		boolean canStretch
 	@out	nil
 */
 int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
@@ -122,8 +122,8 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	
 	@in		MOAIStretchPatch2D self
 	@in		number idx
-	@in		number weight
-	@in		boolean conStretch
+	@in		number percent
+	@in		boolean canStretch
 	@out	nil
 */
 int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
@@ -210,17 +210,21 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 
 	ZLRect uvRect;
 	u32 totalUVRects = this->mUVRects.Size ();
-	idx = ( idx - 1 ) % totalUVRects;
-
+	
 	if ( totalUVRects == 0 ) {
 		uvRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
 	else {
+		idx = ( idx - 1 ) % totalUVRects;
 		uvRect = this->mUVRects [ idx ];
 	}
 
 	float nativeWidth = this->mRect.Width ();
 	float nativeHeight = this->mRect.Height ();
+	
+	// TODO: make optional
+	xStretch /= nativeWidth;
+	yStretch /= nativeHeight;
 	
 	float rectWidth = nativeWidth * xStretch;
 	float rectHeight = nativeHeight * yStretch;

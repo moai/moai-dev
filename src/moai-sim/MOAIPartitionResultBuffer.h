@@ -36,12 +36,19 @@ private:
 
 	static const u32 BLOCK_SIZE = 512;
 
-	ZLLeanArray < MOAIPartitionResult >		mMainBuffer;
-	ZLLeanArray < MOAIPartitionResult >		mSwapBuffer;
+	ZLLeanArray < MOAIPartitionResult >		mBufferA;
+	ZLLeanArray < MOAIPartitionResult >		mBufferB;
+	
 	MOAIPartitionResult*					mResults;
+	
+	ZLLeanArray < MOAIPartitionResult >*	mMainBuffer;
+	ZLLeanArray < MOAIPartitionResult >*	mSwapBuffer;
+	
 	u32										mTotalResults;
 
 	//----------------------------------------------------------------//
+	MOAIPartitionResult*	AffirmSwapBuffer				();
+	void					SetResultsBuffer				( MOAIPartitionResult* buffer );
 	u32						SortResultsIso					();
 	u32						SortResultsLinear				();
 	
@@ -55,6 +62,7 @@ public:
 		
 		SORT_ISO,
 		
+		SORT_DIST_SQUARED_ASCENDING,
 		SORT_KEY_ASCENDING,
 		SORT_PRIORITY_ASCENDING,
 		SORT_X_ASCENDING,
@@ -62,12 +70,13 @@ public:
 		SORT_Z_ASCENDING,
 		SORT_VECTOR_ASCENDING,
 		
-		SORT_KEY_DESCENDING			= SORT_KEY_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_PRIORITY_DESCENDING	= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_X_DESCENDING			= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_Y_DESCENDING			= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_Z_DESCENDING			= SORT_Z_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_VECTOR_DESCENDING		= SORT_VECTOR_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_DIST_SQUARED_DESCENDING		= SORT_DIST_SQUARED_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_KEY_DESCENDING					= SORT_KEY_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_PRIORITY_DESCENDING			= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_X_DESCENDING					= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_Y_DESCENDING					= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_Z_DESCENDING					= SORT_Z_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_VECTOR_DESCENDING				= SORT_VECTOR_ASCENDING | SORT_FLAG_DESCENDING,
 	};
 
 	GET ( u32, TotalResults, mTotalResults )
@@ -79,10 +88,12 @@ public:
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
+	void					Project							( const ZLMatrix4x4& mtx );
 	void					PushProps						( lua_State* L );
 	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds );
 	void					Reset							();
 	u32						Sort							( u32 mode );
+	void					Transform						( const ZLMatrix4x4& mtx, bool transformBounds );
 	
 	//----------------------------------------------------------------//
 	inline MOAIPartitionResult* GetResult ( u32 idx ) {

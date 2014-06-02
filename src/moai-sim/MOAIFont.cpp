@@ -150,13 +150,17 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFont::_preloadGlyphs ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "USN" )
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
 	cc8* charCodes	= state.GetValue < cc8* >( 2, "" );
 	float points	= state.GetValue < float >( 3, 0 );
 	float dpi		= state.GetValue < float >( 4, DPI );
 	
 	float size = POINTS_TO_PIXELS ( points, dpi );
+	
+	if ( self->mDefaultSize == 0.0f ) {
+		self->mDefaultSize = size;
+	}
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {
@@ -243,6 +247,17 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 			
 	self->mDefaultSize = POINTS_TO_PIXELS ( points, dpi );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	
+	self->mMinFilter = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
+	self->mMagFilter = state.GetValue < int >( 3, self->mMinFilter );
+
 	return 0;
 }
 
@@ -482,7 +497,7 @@ MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
-	if ( ZLFileSys::CheckFileExists ( filename, true )) {
+	if ( ZLFileSys::CheckFileExists ( filename )) {
 		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
 	}
 }
@@ -509,7 +524,9 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 //----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
 	mFlags ( DEFAULT_FLAGS ),
-	mDefaultSize ( 0.0f ) {
+	mDefaultSize ( 0.0f ),
+	mMinFilter ( ZGL_SAMPLE_LINEAR ),
+	mMagFilter ( ZGL_SAMPLE_LINEAR ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -670,6 +687,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setCache",					_setCache },
 		{ "setDefaultSize",				_setDefaultSize },
+		{ "setFilter",					_setFilter },
 		{ "setFlags",					_setFlags },
 		{ "setImage",					_setImage },
 		{ "setReader",					_setReader },

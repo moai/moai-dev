@@ -18,29 +18,33 @@ class ZLStream;
 // ZLXmlElement
 //================================================================//
 class ZLXmlElement {
+public:
+
+	typedef STLMap < STLString, STLString > AttributeMap;
+	typedef AttributeMap::iterator AttributeMapIt;
+	typedef AttributeMap::const_iterator AttributeMapConstIt;
+
 private:
 
 	STLString		mName;
 	STLString		mText;
-	STLString		mPath;
-	
+
 	u32				mDepth;
 	u32				mChildren;
 
-	STLMap < STLString, STLString > mAttributes;
+	AttributeMap mAttributes;
 
 public:
 
 	friend class ZLXmlReader;
 
 	GET ( u32, Depth, mDepth )
-	GET ( STLString, Name, mName )
-	GET ( STLString, Text, mText )
-	GET ( STLString, Path, mPath )
+	GET ( const STLString&, Name, mName )
+	GET ( const STLString&, Text, mText )
+	GET ( const AttributeMap&, Attributes, mAttributes )
 	
 	//----------------------------------------------------------------//
 	STLString	GetAttribute	( cc8* name );
-	STLString	GetLocalPath	( ZLXmlElement* parent );
 	bool		HasAttribute	( cc8* name );
 	bool		IsValue			();
 };
@@ -48,6 +52,9 @@ public:
 //================================================================//
 // ZLXmlReader
 //================================================================//
+// This class implements an event-loop style SAX parser. To use, set
+// the stream then loop until Parse () returns nil. Every loop check
+// the event and respond accordingly. 
 class ZLXmlReader {
 private:
 

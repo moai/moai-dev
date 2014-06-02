@@ -4,39 +4,46 @@
 #ifndef	MOAICOLLISIONSHAPE_H
 #define	MOAICOLLISIONSHAPE_H
 
+class MOAITransformBase;
+
 //================================================================//
 // MOAICollisionShape
 //================================================================//
 class MOAICollisionShape {
 private:
 
+	// the intent is to determing a fine-gained overlap
+	// geometry is given in *local* space
+	// to overlap, 'self' and 'other' transforms must be provided
+	// it's up to each overlap implementation to do the math in whatever space is appropriate
+
 	enum {
+		AABB,
+		BOX,
+		CONVEX_POLYGON,
+		POLYGON,
 		QUAD,
-		RECT,
 		NONE,
 	};
 
-	union {
-		char mRectBuffer [ sizeof ( ZLRect )];
-		char mQuadBuffer [ sizeof ( ZLQuad )];
-	};
+	ZLRect	mAABB;
+	ZLQuad	mQuad;
+	ZLBox	mBox;
 
-	u32 mType;
+	u32		mType;
 
 	//----------------------------------------------------------------//
-	const ZLRect&	GetRect					() const;
-	const ZLQuad&	GetQuad					() const;
-	static bool		Overlap					( const ZLRect& s0, const ZLRect& s1 );
-	static bool		Overlap					( const ZLQuad& s0, const ZLRect& s1 );
-	static bool		Overlap					( const ZLQuad& s0, const ZLQuad& s1 );
+	static bool		Overlap					( const MOAITransformBase& t0, const ZLQuad& q0, const MOAITransformBase& t1, const ZLQuad& q1, ZLBox& bounds );
 
 public:
 	
 	//----------------------------------------------------------------//
 					MOAICollisionShape		();
 					~MOAICollisionShape		();
-	bool			Overlap					( const MOAICollisionShape& shape ) const;
-	void			Set						( const ZLRect& rect );
+	bool			Overlap					( const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, const MOAICollisionShape& otherShape, ZLBox& bounds ) const;
+	void			Set						();
+	void			Set						( const ZLRect& aabb );
+	void			Set						( const ZLBox& box );
 	void			Set						( const ZLQuad& quad );
 };
 

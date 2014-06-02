@@ -123,11 +123,11 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 	// TODO: make use of offset and scale
 
 	if ( !this->mVertexBuffer ) return;
-	if ( !this->mVertexBuffer->IsValid ()) return;
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.Flush ();
 
 	if ( this->mVertexBuffer->Bind ()) {
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();	
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
@@ -136,15 +136,19 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
 		
+		gfxDevice.UpdateShaderGlobals ();
+		
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
-			if ( this->mIndexBuffer->LoadGfxState ()) {
-				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_SHORT, 0 );
+			if ( this->mIndexBuffer->Bind ()) {
+				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
+				this->mIndexBuffer->Unbind ();
 			}
 		}
 		else {
 			zglDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetVertexCount ());
 		}
+		this->mVertexBuffer->Unbind ();
 	}
 }
 
@@ -163,7 +167,7 @@ ZLBox MOAIMesh::GetItemBounds ( u32 idx ) {
 
 //----------------------------------------------------------------//
 MOAIMesh::MOAIMesh () :
-	mPrimType ( 0 ),
+	mPrimType ( ZGL_PRIM_TRIANGLES ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ) {
 

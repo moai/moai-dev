@@ -21,7 +21,7 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 		this->mImageTexture = new MOAIImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
-		this->mImageTexture->SetFilter ( ZGL_SAMPLE_LINEAR, ZGL_SAMPLE_LINEAR );
+		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
@@ -67,7 +67,7 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIG
 		
 		bestRowIt = this->AllocRow ( height );
 		
-		// alloc failed and no fall back available
+		// alloc failed and no fallback available
 		// only choice is to try and expand...
 		if ( !bestRowIt ) {
 			
@@ -130,15 +130,6 @@ bool MOAIGlyphCachePage::ExpandToNextPowerofTwo () {
 	this->mRows.Expand ( size );
 	
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGlyphCachePage::InitCanvas ( u32 width, u32 height, ZLColor::Format colorFmt, USPixel::Format pixelFmt ) {
-
-	this->Clear ();
-
-	this->mImageTexture = new MOAIImageTexture ();
-	this->mImageTexture->Init ( width, height, colorFmt, pixelFmt );
 }
 
 //----------------------------------------------------------------//

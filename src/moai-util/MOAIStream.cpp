@@ -35,7 +35,7 @@ int MOAIStream::_flush ( lua_State* L ) {
 int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 cursor = self->mStream->GetCursor ();
+	size_t cursor = self->mStream->GetCursor ();
 	state.Push ( cursor );
 	return 1;
 }
@@ -50,7 +50,7 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 length = self->mStream->GetLength ();
+	size_t length = self->mStream->GetLength ();
 	state.Push ( length );
 	return 1;
 }
@@ -67,10 +67,11 @@ int MOAIStream::_getLength ( lua_State* L ) {
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
-	u32 len = 0;
+	size_t len = 0;
 	
 	if ( self->mStream ) {
-		len = state.GetValue < u32 >( 2, self->mStream->GetLength ());
+		// TODO: 64-bit
+		len = state.GetValue < u32 >( 2, ( u32 )self->mStream->GetLength ());
 	}
 	
 	if ( !len ) {
@@ -174,7 +175,7 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 /**	@name	readFormat
 	@text	Reads a series of values from the stream given a format string.
 			Valid tokens for the format string are: u8 u16 u32 f d s8 s16 s32.
-			Tokens may be optionally separated by spaces of commas.
+			Tokens may be optionally separated by spaces or commas.
 	
 	@in		MOAIStream self
 	@in		string format
@@ -264,7 +265,8 @@ int MOAIStream::_write ( lua_State* L ) {
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
-	size_t writeLen = state.GetValue < size_t >( 3, len );
+	// TODO: 64bit
+	size_t writeLen = state.GetValue < u32 >( 3, ( u32 )len );
 	if ( len < writeLen ) {
 		writeLen = len;
 	}
@@ -645,8 +647,8 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 	cc8* format = state.GetValue < cc8* >( idx++, "" );
 	
 	size_t size;
-	u32 result = 0;
-	u32 bytes = 0;
+	size_t result = 0;
+	size_t bytes = 0;
 	u32 type = UNKNOWN;
 	
 	while ( format ) {

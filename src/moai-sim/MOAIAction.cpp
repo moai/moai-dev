@@ -18,7 +18,7 @@
 	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAction, "UU" )
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
@@ -164,7 +164,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( !action ) {
-		action = MOAIActionMgr::Get ().AffirmRoot ();
+		action = MOAIActionMgr::Get ().GetDefaultParent ();
 	}
 
 	self->Attach ( action );
@@ -228,6 +228,17 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	
 	if ( oldParent ) {
 		
+		// if we're detaching the action while the parent action is updating
+		// then we need to handle the edge case where the action is referenced
+		// by mChildIt
+		if ( oldParent->mChildIt == &this->mLink ) {
+			oldParent->mChildIt = oldParent->mChildIt->Next ();
+			if ( oldParent->mChildIt ) {
+				oldParent->mChildIt->Data ()->Retain ();
+			}
+			this->Release ();
+		}
+		
 		oldParent->mChildren.Remove ( this->mLink );
 		
 		this->UnblockSelf ();
@@ -244,8 +255,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if ( parent ) {
 		// TODO: there are some edge cases that may lead to the action
 		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this. the TODO is
-		// to investigate the edge cases and (possibly) provide a fix.
+		// state may need to be introduced to handle this.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
 	}
@@ -305,7 +315,9 @@ STLString MOAIAction::GetDebugInfo() const {
 MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
+	mIsDefaultParent ( 0 ),
 	mParent ( 0 ),
+	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
 	mIsPaused ( false ),
 	mAutoStop ( true ) {
@@ -367,18 +379,18 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "addChild",			_addChild },
-		{ "attach",				_attach },
-		{ "clear",				_clear },
-		{ "detach",				_detach },
-		{ "isActive",			_isActive },
-		{ "isBusy",				_isBusy },
-		{ "isDone",				_isDone },
-		{ "pause",				_pause },
-		{ "setAutoStop",		_setAutoStop },
-		{ "start",				_start },
-		{ "stop",				_stop },
-		{ "throttle",			_throttle },
+		{ "addChild",				_addChild },
+		{ "attach",					_attach },
+		{ "clear",					_clear },
+		{ "detach",					_detach },
+		{ "isActive",				_isActive },
+		{ "isBusy",					_isBusy },
+		{ "isDone",					_isDone },
+		{ "pause",					_pause },
+		{ "setAutoStop",			_setAutoStop },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ "throttle",				_throttle },
 		{ NULL, NULL }
 	};
 	
@@ -388,17 +400,19 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
-	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
+	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+
+	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
 
 	if ( this->mIsPaused || this->IsBlocked ()){
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
+		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further updates
 			step = 0.0f;
 			checkPass = false;
 			this->mPass = 0;
 			this->mNew = false;
 		}
 		return;
-	} 
+	}
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
 	double t0 = 0.0;
@@ -414,7 +428,10 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	}
 	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
-		MOAIActionMgr::Get ().SetCurrentAction ( this );
+		
+		actionMgr.SetCurrentAction ( this );
+		actionMgr.SetDefaultParent ( 0 );
+		
 		this->OnUpdate ( step );
 	}
 
@@ -429,16 +446,39 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mPass = 0;
 	this->mNew = false;
 	
-	ChildIt childIt = this->mChildren.Head ();
-	while ( childIt ) {
+	// the trick below is to alway retain the current child plus the
+	// *next* child in the list. each child is processed once and 
+	// released after processing, so all the children should be 
+	// retain/release'd exactly once.
+	
+	// we retain the head child in the list (if any)
+	// here because the first child retained inside the loop (below)
+	// is the *second* child in the list
+	this->mChildIt = this->mChildren.Head ();
+	if ( this->mChildIt ) {
+		this->mChildIt->Data ()->Retain ();
+	}
+	
+	MOAIAction* child = 0;
+	while ( this->mChildIt ) {
 		
-		MOAIAction* child = childIt->Data ();
-		childIt = childIt->Next ();
+		child = this->mChildIt->Data ();
+		
+		// retain the *next* child in the list (if any)
+		this->mChildIt = this->mChildIt->Next ();
+		if ( this->mChildIt ) {
+			this->mChildIt->Data ()->Retain ();
+		}
 		
 		if ( child->mParent ) {
 			child->Update ( step, pass, checkPass );
 		}
+		
+		// release the *current* child
+		child->Release ();
 	}
+	
+	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Attach ();
@@ -448,8 +488,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 //----------------------------------------------------------------//
 void MOAIAction::Start () {
 
-	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
-	this->Attach ( root );
+	MOAIAction* defaultParent = MOAIActionMgr::Get ().GetDefaultParent ();
+	this->Attach ( defaultParent );
 	this->mIsPaused = false;
 }
 

@@ -7,7 +7,6 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIBrowserAndroid.h>
 
 extern JavaVM* jvm;
@@ -24,29 +23,11 @@ extern JavaVM* jvm;
 	@out 	boolean
 */
 int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
 
-	MOAILuaState state ( L );
-
-	cc8* url = lua_tostring ( state, 1 );
-
-	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( url, jurl );
-
-	jclass moaiBrowser = env->FindClass ( "com/ziplinegames/moai/MoaiBrowser" );
-    if ( moaiBrowser == NULL ) {
-		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiBrowser" );
-    } else {
-    	jmethodID canOpenURL = env->GetStaticMethodID ( moaiBrowser, "canOpenURL", "(Ljava/lang/String;)Z" );
-    	if ( canOpenURL == NULL ) {
-			ZLLog::Print ( "MOAIBrowserAndroid: Unable to find static java method %s", "canOpenURL" );
-    	} else {
-			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( moaiBrowser, canOpenURL, jurl );
-			lua_pushboolean( state, jsuccess );
-			return 1;
-		}
-	}
-
-	return 0;
+	jstring jurl = self->GetJString ( lua_tostring ( state, 1 ));
+	lua_pushboolean( state, self->CallStaticBooleanMethod ( self->mJava_CanOpenURL, jurl ));
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -57,31 +38,12 @@ int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
 	@out 	nil
 */
 int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
 
-	MOAILuaState state ( L );
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURL");
 
-	cc8* url = lua_tostring ( state, 1 );
-
-	JNI_GET_ENV ( jvm, env );
-
-	JNI_GET_JSTRING ( url, jurl );
-
-	jclass moaiBrowser = env->FindClass ( "com/ziplinegames/moai/MoaiBrowser" );
-    if ( moaiBrowser == NULL ) {
-
-		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiBrowser" );
-    } else {
-
-    	jmethodID openURL = env->GetStaticMethodID ( moaiBrowser, "openURL", "(Ljava/lang/String;)V" );
-    	if ( openURL == NULL ) {
-
-			ZLLog::Print ( "MOAIBrowserAndroid: Unable to find static java method %s", "openURL" );
-    	} else {
-
-			env->CallStaticVoidMethod ( moaiBrowser, openURL, jurl );
-		}
-	}
-
+	jstring jurl = self->GetJString ( lua_tostring ( state, 1 ));
+	self->CallStaticVoidMethod ( self->mJava_OpenURL, jurl );
 	return 0;
 }
 
@@ -95,32 +57,19 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
+	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
+	
 	cc8* url = lua_tostring ( state, 1 );
 
     jobject params;
     if ( state.IsType ( 2, LUA_TTABLE ) ) {
-        params = JniUtils::bundleFromLua( L, 2 );
+        params = self->BundleFromLua( L, 2 );
     }
 
 	if ( url == NULL || params == NULL ) return 0;
 
-    JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( url, jurl );
-
-	jclass moaiBrowser = env->FindClass ( "com/ziplinegames/moai/MoaiBrowser" );
-    if ( moaiBrowser == NULL ) {
-		ZLLog::Print ( "MOAIBrowserAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiBrowser" );
-    } else {
-    	jmethodID openURL = env->GetStaticMethodID ( moaiBrowser, "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
-    	if ( openURL == NULL ) {
-			ZLLog::Print ( "MOAIBrowserAndroid: Unable to find static java method %s", "openURLWithParams" );
-    	} else {
-			env->CallStaticVoidMethod ( moaiBrowser, openURL, jurl, params );
-		}
-	}
+	jstring jurl = self->GetJString ( url );
+	self->CallStaticVoidMethod ( self->mJava_OpenURLWithParams, jurl, params );
 
 	return 0;
 }
@@ -131,7 +80,14 @@ int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIBrowserAndroid::MOAIBrowserAndroid () {
+
 	RTTI_SINGLE ( MOAILuaObject )
+	
+	//if ( this->SetClass ( "com/ziplinegames/moai/MoaiBrowser" )) {
+	//	this->mJava_CanOpenURL			= this->GetStaticMethod ( "canOpenURL", "(Ljava/lang/String;)Z" );
+	//	this->mJava_OpenURL				= this->GetStaticMethod ( "openURL", "(Ljava/lang/String;)V" );
+	//	this->mJava_OpenURLWithParams	= this->GetStaticMethod ( "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
+	//}
 }
 
 //----------------------------------------------------------------//

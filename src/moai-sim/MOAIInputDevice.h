@@ -28,6 +28,7 @@ private:
 
 public:
 
+	friend class MOAIInputContext;
 	friend class MOAIInputMgr;
 
 	DECL_LUA_FACTORY ( MOAIInputDevice )
@@ -36,13 +37,12 @@ public:
 	GET_SET ( bool, Active, mIsActive );
 
 	//----------------------------------------------------------------//
-	void			HandleEvent			( u8 sensorID, ZLStream& eventStream );
 					MOAIInputDevice		();
 					~MOAIInputDevice	();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveSensors		( u8 total );
-	void			Reset				();
+	void			ResetSensors		();
 	void			SetExtendedName		( cc8* nameExtended );
 	void			SetSensor			( u8 sensorID, cc8* name, u32 type );
 };

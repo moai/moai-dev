@@ -52,6 +52,9 @@ private:
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
+	virtual void	OnPropInserted			( MOAIProp& prop );	
+	virtual void	OnPropRemoved			( MOAIProp& prop );	
+	virtual void	OnPropUpdated			( MOAIProp& prop );
 	void			PrepareRebuild			();
 	void			Rebuild					();
 	void			UpdateProp				( MOAIProp& prop, u32 status );

@@ -40,12 +40,6 @@
 #include <zl-util/ZLHashWriter.h>
 #include <zl-util/ZLHashWriterAdler32.h>
 #include <zl-util/ZLHashWriterCRC32.h>
-#include <zl-util/ZLHashWriterMD5.h>
-#include <zl-util/ZLHashWriterSHA1.h>
-#include <zl-util/ZLHashWriterSHA224.h>
-#include <zl-util/ZLHashWriterSHA256.h>
-#include <zl-util/ZLHashWriterSHA384.h>
-#include <zl-util/ZLHashWriterSHA512.h>
 #include <zl-util/ZLHashWriterWhirlpool.h>
 #include <zl-util/ZLHexDump.h>
 #include <zl-util/ZLHexReader.h>

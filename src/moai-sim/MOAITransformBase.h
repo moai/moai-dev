@@ -58,10 +58,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const ZLAffine3D&		GetLocalToWorldMtx			();
-	const ZLAffine3D*		GetLocTrait					();
-	const ZLAffine3D*		GetTransformTrait			();
-	const ZLAffine3D&		GetWorldToLocalMtx			();
+	const ZLAffine3D&		GetLocalToWorldMtx			() const;
+	const ZLAffine3D*		GetLocTrait					() const;
+	const ZLAffine3D*		GetTransformTrait			() const;
+	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransformBase			();
 							~MOAITransformBase			();
 	void					RegisterLuaClass			( MOAILuaState& state );

@@ -9,6 +9,10 @@
 
 class MOAILuaState;
 
+#define DECL_LUA_ABSTRACT(type) \
+MOAILuaClass* GetLuaClass () { return 0; } \
+cc8* TypeName () const { return #type; }
+
 #define DECL_LUA_FACTORY(type) \
 MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); } \
 static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); } \

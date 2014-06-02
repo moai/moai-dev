@@ -14,15 +14,21 @@ class MOAISensor :
 	public MOAILuaObject {
 protected:
 
-	u32	mType;
-	STLString mName;
+	u32			mType;
+	STLString	mName;
+	double		mTimestamp;
+
+	//----------------------------------------------------------------//
+	static int	_getTimestamp			( lua_State* L );
 
 public:
 
-	friend class MOAIInputMgr;
+	friend class MOAIInputContext;
 	friend class MOAIInputDevice;
+	friend class MOAIInputMgr;
 
 	enum {
+		UNKNOWN,
 		BUTTON,
 		COMPASS,
 		JOYSTICK,
@@ -35,10 +41,11 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	virtual void	HandleEvent			( ZLStream& eventStream ) = 0;
+	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;
 					MOAISensor			();
 					~MOAISensor			();
 	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	virtual void	Reset				() {}
 };
 

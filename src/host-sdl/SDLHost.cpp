@@ -7,6 +7,7 @@
 
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
+#include <host-modules/aku_modules_custom.h>
 #include <host-sdl/SDLHost.h>
 
 #include <SDL.h>
@@ -78,6 +79,7 @@ static void	PrintMoaiVersion	();
 //----------------------------------------------------------------//
 void Finalize () {
 
+	AKUModulesCustomAppFinalize ();
 	AKUModulesAppFinalize ();
 	AKUAppFinalize ();
 	
@@ -96,9 +98,11 @@ void Init ( int argc, char** argv ) {
 
 	AKUAppInitialize ();
 	AKUModulesAppInitialize ();
+	AKUModulesCustomAppInitialize ();
 
 	AKUCreateContext ();
 	AKUModulesContextInitialize ();
+	AKUModulesCustomContextInitialize ();
 	AKUModulesRunLuaAPIWrapper ();
 
 	AKUSetInputConfigurationName ( "SDL" );
@@ -117,7 +121,9 @@ void Init ( int argc, char** argv ) {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
+	AKUModulesCustomRunBefore ();
 	AKUModulesParseArgs ( argc, argv );
+	AKUModulesCustomRunAfter ();
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
@@ -145,11 +151,10 @@ void MainLoop () {
 				case SDL_KEYUP:	{
 					int key = sdlEvent.key.keysym.sym;
 					if (key & 0x40000000) key = (key & 0x3FFFFFFF) + 256;
-			
 					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, key, sdlEvent.key.type == SDL_KEYDOWN );
-
-				} 	break;
-					
+					break;
+				}
+				
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 	

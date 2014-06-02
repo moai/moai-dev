@@ -40,6 +40,43 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_getFloorMove ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float x = state.GetValue < float >( 2, 0.0f );
+	float y = state.GetValue < float >( 3, 0.0f );
+
+	const ZLAffine3D& mtx = self->GetLocalToWorldMtx ();
+	
+	ZLVec3D v;
+	ZLVec3D h;
+	
+	v = mtx.GetZAxis ();
+	v.Scale ( -1.0f );
+	v.mZ = 0.0f;
+	
+	if ( v.NormSafe () == 0.0f ) {
+		v = mtx.GetYAxis ();
+	}
+	
+	ZLVec2D r ( v.mX, v.mY );
+	r.Rotate90Clockwise ();
+	h.Init ( r.mX, r.mY, 0.0f );
+	
+	h.Scale ( x );
+	v.Scale ( y );
+
+	ZLVec3D m = h;
+	m.Add ( v );
+
+	lua_pushnumber ( state, m.mX );
+	lua_pushnumber ( state, m.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFocalLength
 	@text	Returns the camera's focal length given the width of
 			the view plane.
@@ -52,9 +89,7 @@ int MOAICamera::_getFocalLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "UN" )
 
 	float width = state.GetValue < float >( 2, 0.0f );
-	float c = Cot ( self->mFieldOfView * 0.5f * ( float )D2R );
-	lua_pushnumber ( state, width * c * 0.5f );
-
+	lua_pushnumber ( state, self->GetFocalLength ( width ));
 	return 1;
 }
 
@@ -69,6 +104,66 @@ int MOAICamera::_getNearPlane ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	lua_pushnumber ( state, self->mNearPlane );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_moveFieldOfView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+	
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		
+		action->ParseForMove ( state, 2, self, 1, mode,
+			MOAICameraAttr::Pack ( ATTR_FOV ), 0.0f
+		);
+		
+		action->SetSpan ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mFieldOfView += state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_seekFieldOfView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+
+		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		
+		action->ParseForSeek ( state, 2, self, 1, mode,
+			MOAICameraAttr::Pack ( ATTR_FOV ), self->mFieldOfView, 0.0f
+		);
+		
+		action->SetSpan ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mFieldOfView = state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -123,13 +218,35 @@ int MOAICamera::_setNearPlane ( lua_State* L ) {
 */
 int MOAICamera::_setOrtho ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
-	self->mOrtho = state.GetValue < bool >( 2, true );
+	self->mType = state.GetValue < bool >( 2, true ) ? CAMERA_TYPE_ORTHO : CAMERA_TYPE_3D;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_setType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+	self->mType = state.GetValue < u32 >( 2, CAMERA_TYPE_WINDOW );
 	return 0;
 }
 
 //================================================================//
 // MOAICamera
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+
+	if ( MOAICameraAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FOV:
+				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				return true;
+		}
+	}
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+}
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
@@ -143,6 +260,16 @@ ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 }
 
 //----------------------------------------------------------------//
+float MOAICamera::GetFocalLength ( float width ) const {
+
+	if ( this->mType == CAMERA_TYPE_3D ) {
+		float c = Cot ( this->mFieldOfView * 0.5f * ( float )D2R );
+		return width * c * 0.5f;
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	ZLMatrix4x4 proj;
@@ -153,24 +280,40 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	// project
 	
-	USVec2D viewScale = viewport.GetScale ();
+	ZLVec2D viewScale = viewport.GetScale ();
 	
-	if ( this->mOrtho ) {
-		
-		float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
-		float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
-		
-		mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
-	}
-	else {
-		
-		float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
-		float ys = xs * viewport.GetAspect ();
-		
-		xs *= viewScale.mX;
-		ys *= viewScale.mY;
-		
-		mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
+	switch ( this->mType ) {
+	
+		case CAMERA_TYPE_ORTHO: {
+			
+			float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
+			float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
+			
+			mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
+			break;
+		}
+		case CAMERA_TYPE_3D: {
+			
+			float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
+			float ys = xs * viewport.GetAspect ();
+			
+			xs *= viewScale.mX;
+			ys *= viewScale.mY;
+			
+			mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
+			break;
+		}
+		case CAMERA_TYPE_WINDOW:
+		default: {
+			
+			ZLRect rect = viewport.GetRect ();
+			
+			ZLVec2D viewScale = viewport.GetScale ();
+			float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
+			float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
+			
+			mtx.Scale ( xScale, yScale, -1.0f );
+		}
 	}
 	
 	proj.Append ( mtx );
@@ -199,11 +342,28 @@ ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetWndToWorldMtx ( const MOAIViewport& viewport ) const {
+
+	ZLMatrix4x4 wndToWorld = this->GetWorldToWndMtx ( viewport );
+	wndToWorld.Inverse ();
+	return wndToWorld;
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetWorldToWndMtx ( const MOAIViewport& viewport ) const {
+	
+	ZLMatrix4x4 worldToWnd = this->GetViewMtx ();
+	worldToWnd.Append ( this->GetProjMtx ( viewport ));
+	worldToWnd.Append ( viewport.GetNormToWndMtx ());
+	return worldToWnd;
+}
+
+//----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ),
-	mOrtho ( false ) {
+	mType ( CAMERA_TYPE_3D ) {
 
 	RTTI_SINGLE ( MOAITransform )
 }
@@ -215,6 +375,12 @@ MOAICamera::~MOAICamera () {
 //----------------------------------------------------------------//
 void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ));
+	
+	state.SetField ( -1, "CAMERA_TYPE_3D",		( u32 )CAMERA_TYPE_3D );
+	state.SetField ( -1, "CAMERA_TYPE_ORTHO",	( u32 )CAMERA_TYPE_ORTHO );
+	state.SetField ( -1, "CAMERA_TYPE_WINDOW",	( u32 )CAMERA_TYPE_WINDOW );
 }
 
 //----------------------------------------------------------------//
@@ -224,12 +390,16 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
 		{ "getFieldOfView",		_getFieldOfView },
+		{ "getFloorMove",		_getFloorMove },
 		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
+		{ "moveFieldOfView",	_moveFieldOfView },
+		{ "seekFieldOfView",	_seekFieldOfView },
 		{ "setFarPlane",		_setFarPlane },
 		{ "setFieldOfView",		_setFieldOfView },
 		{ "setNearPlane",		_setNearPlane },
 		{ "setOrtho",			_setOrtho },
+		{ "setType",			_setType },
 		{ NULL, NULL }
 	};
 

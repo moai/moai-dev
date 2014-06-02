@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAI_CHIPMUNK_H
-#define	MOAI_CHIPMUNK_H
+#ifndef	MOAI_CHIPMUNK_HEADERS_H
+#define	MOAI_CHIPMUNK_HEADERS_H
 
 #include <moai-chipmunk/pch.h>
 

@@ -12,21 +12,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float scale ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetTexture ( &texture );
 	
 	MOAIQuadBrush glQuad;
 	
-	x += this->mBearingX * scale;
-	y -= this->mBearingY * scale;
+	x += this->mBearingX * xScale;
+	y -= this->mBearingY * yScale;
 
 	glQuad.SetVerts (
 		x,
 		y,
-		x + ( this->mWidth * scale ),
-		y + ( this->mHeight * scale )
+		x + ( this->mWidth * xScale ),
+		y + ( this->mHeight * yScale )
 	);
 	
 	float uScale = 1.0f / texture.GetWidth ();
@@ -64,6 +64,7 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 	return kernVec;
 }
 
+//----------------------------------------------------------------//
 /**
  * Get the rect of the glyph which includes the bearing + the size of the bounding box of the glyph.
  * 
@@ -71,15 +72,18 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
  * @param y The y pen position when drawing this glyph
  * @param scale The scale at which the glyph would be drawn
  */
-ZLRect MOAIGlyph::GetRect ( float x, float y, float scale ) const {
+ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const {
+
+	x += this->mBearingX * xScale;
+	y -= this->mBearingY * yScale;
 
 	ZLRect rect;
 
 	rect.Init (
 		x,
 		y,
-		x + (this->mBearingX + this->mWidth) * scale,
-		y + (this->mBearingY + this->mHeight) * scale
+		x + ( this->mWidth * xScale ),
+		y + ( this->mHeight * yScale )
 	);
 
 	return rect;

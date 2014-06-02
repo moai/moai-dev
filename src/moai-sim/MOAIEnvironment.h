@@ -24,6 +24,7 @@
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
 #define MOAI_ENV_languageCode				"languageCode"
+#define MOAI_ENV_libraryDirectory			"libraryDirectory"
 #define MOAI_ENV_numProcessors				"numProcessors"
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
@@ -33,6 +34,9 @@
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
+
+#define MOAI_ENV_iosIFA						"iosIFA"
+#define MOAI_ENV_iosIFV						"iosIFV"
 
 #define OS_BRAND_ANDROID 		"Android"
 #define OS_BRAND_IOS 			"iOS"
@@ -74,6 +78,8 @@
 			<li>devPlatform</li>
 			<li>devProduct</li>
 			<li>documentDirectory</li>
+			<li>iosIFA</li>
+			<li>iosIFV</li>
 			<li>iosRetinaDisplay</li>
 			<li>languageCode</li>
 			<li>numProcessors</li>

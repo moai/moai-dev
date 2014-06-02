@@ -99,19 +99,20 @@ public:
 			MOAIGlobalPair pair;
 			pair.mGlobal	= 0;
 			pair.mPtr		= 0;
-			pair.mIsValid	= true;
+			pair.mIsValid	= false;
 			
 			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
 		
-		if ( !this->mGlobals [ id ].mIsValid ) {
-			return 0;
-		}
-		
 		if ( !this->mGlobals [ id ].mPtr ) {
 			TYPE* global = new TYPE;
-			this->mGlobals [ id ].mGlobal	= global;
-			this->mGlobals [ id ].mPtr		= global;
+			this->mGlobals [ id ].mGlobal		= global;
+			this->mGlobals [ id ].mPtr			= global;
+			this->mGlobals [ id ].mIsValid		= true;
+		}
+		
+		if ( !this->mGlobals [ id ].mIsValid ) {
+			return 0;
 		}
 		
 		return ( TYPE* )this->mGlobals [ id ].mPtr;

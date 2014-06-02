@@ -13,10 +13,18 @@
 */
 class MOAIGfxState :
 	public virtual MOAILuaObject {
+private:
+
+	friend class MOAIGfxDevice;
+
+	//----------------------------------------------------------------//
+	// this is for binding via the gfx device's cache; we need this since
+	// Bind () is supposed to be ignorant of
+	virtual bool		LoadGfxState			() { return false; }
+
 public:
 
 	//----------------------------------------------------------------//
-	virtual bool		LoadGfxState			() { return false; }
 						MOAIGfxState			();
 	virtual				~MOAIGfxState			();
 };
@@ -55,7 +63,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	bool			Affirm						();
-	bool			Bind						();
 	bool			HasLoadScript				();
 	virtual bool	IsRenewable					() = 0; // return 'true' if resource has sufficient information to create GPU-side resource - MAIN THREAD
 	virtual void	OnBind						() = 0; // select GPU-side resource on device for use - GRAPHICS THREAD
@@ -64,6 +71,7 @@ protected:
 	virtual void	OnDestroy					() = 0; // destroy GPU-side resource - MAIN THREAD
 	virtual void	OnInvalidate				() = 0; // clear any handles or references to GPU-side resource - MAIN THREAD
 	virtual void	OnLoad						() = 0; // load or initialize any CPU-side resources required to create device resource - MAIN THREAD
+	virtual void	OnUnbind					() = 0; // unbind GPU-side resource - GRAPHICS THREAD
 
 public:
 
@@ -72,6 +80,7 @@ public:
 	GET ( u32, State, mState );
 
 	//----------------------------------------------------------------//
+	bool			Bind						();
 	void			Clear						();
 	void			Destroy						();
 	void			Invalidate					();
@@ -82,6 +91,7 @@ public:
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	bool			SoftRelease					( u32 age );
+	void			Unbind						();
 };
 
 #endif

@@ -13,28 +13,32 @@ class ZLByteStream :
 	public ZLStream {
 private:
 
-	void*		mBuffer;
-	size_t		mCursor;
-	size_t		mLength;
-	size_t		mCapacity;
+	const void*		mReadBuffer;
+	void*			mWriteBuffer;
+	size_t			mCursor;
+	size_t			mLength;
+	size_t			mCapacity;
 
 	//----------------------------------------------------------------//
-	int			SetCursor		( long offset );
+	int				SetCursor			( long offset );
 
 public:
 
 	//----------------------------------------------------------------//
-	size_t		GetCapacity		();
-	u32			GetCaps			();
-	size_t		GetCursor		();
-	void*		GetBuffer		();
-	size_t		GetLength		();
-	size_t		ReadBytes		( void* buffer, size_t size );
-	void		SetBuffer		( void* buffer, size_t size, size_t length = 0 );
-	void		SetLength		( size_t size );
-	size_t		WriteBytes		( const void* buffer, size_t size );
-				ZLByteStream	();
-				~ZLByteStream	();
+	void			Clear				();
+	size_t			GetCapacity			();
+	u32				GetCaps				();
+	size_t			GetCursor			();
+	size_t			GetLength			();
+	const void*		GetReadBuffer		();
+	void*			GetWriteBuffer		();
+	size_t			ReadBytes			( void* buffer, size_t size );
+	void			SetBuffer			( void* buffer, size_t size, size_t length = 0 );
+	void			SetBuffer			( const void* buffer, size_t size, size_t length = 0 );
+	void			SetLength			( size_t size );
+	size_t			WriteBytes			( const void* buffer, size_t size );
+					ZLByteStream		();
+					~ZLByteStream		();
 };
 
 #endif

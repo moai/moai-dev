@@ -3,7 +3,6 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
-#include <lua-headers/moai_lua.h>
 
 //================================================================//
 // implementation
@@ -11,13 +10,17 @@
 
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
-	
+
 	#if AKU_WITH_BOX2D
 		AKUBox2DAppFinalize ();
 	#endif
 
 	#if AKU_WITH_CHIPMUNK
 		AKUChipmunkAppFinalize ();
+	#endif
+
+	#if AKU_WITH_CRYPTO
+		AKUCryptoAppFinalize ();
 	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER
@@ -63,6 +66,8 @@ void AKUModulesAppFinalize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppFinalize ();
 	#endif
+	
+	AKUModulesCustomAppFinalize ();
 }
 
 //----------------------------------------------------------------//
@@ -74,6 +79,10 @@ void AKUModulesAppInitialize () {
 
 	#if AKU_WITH_CHIPMUNK
 		AKUChipmunkAppInitialize ();
+	#endif
+
+	#if AKU_WITH_CRYPTO
+		AKUCryptoAppInitialize ();
 	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER
@@ -119,6 +128,8 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppInitialize ();
 	#endif
+	
+	AKUModulesCustomAppInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -130,6 +141,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_CHIPMUNK
 		AKUChipmunkContextInitialize ();
+	#endif
+
+	#if AKU_WITH_CRYPTO
+		AKUCryptoContextInitialize ();
 	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER
@@ -175,6 +190,8 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsContextInitialize ();
 	#endif
+	
+	AKUModulesCustomContextInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -186,31 +203,31 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 		int i = 1;
 
 		for ( ; i < total; ++i ) {
-		
+
 			char* arg = argv [ i ];
-		
+
 			if ( arg [ 0 ] != '-' ) break;
-		
+
 			// filter file
 			if ( strcmp ( arg, "-f" ) == 0 ) {
 				AKUTestSetFilterFile ( argv [ ++i ]);
 			}
-		
+
 			// filter
 			if ( strcmp ( arg, "-F" ) == 0 ) {
 				AKUTestSetFilter ( argv [ ++i ]);
 			}
-		
+
 			// results
 			if ( strcmp ( arg, "-r" ) == 0 ) {
 				AKUTestSetResultsFile ( argv [ ++i ]);
 			}
-		
+
 			// staging
 			if ( strcmp ( arg, "-s" ) == 0 ) {
 				AKUTestSetStaging ();
 			}
-		
+
 			// test
 			if ( strcmp ( arg, "-t" ) == 0 ) {
 				AKUTestRunTest ( argv [ ++i ]);
@@ -225,9 +242,9 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 		for ( ; i < argc; ++i ) {
 			AKUTestRunScript ( argv [ i ]);
 		}
-		
+
 	#else
-	
+
 		if ( argc < 2 ) {
 			AKURunScript ( "main.lua" );
 		}
@@ -246,7 +263,7 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 				}
 			}
 		}
-	
+
 	#endif
 }
 
@@ -257,16 +274,32 @@ void AKUModulesRunLuaAPIWrapper () {
 }
 
 //----------------------------------------------------------------//
+void AKUModulesPause ( bool pause ) {
+	
+	#if AKU_WITH_SIM
+		AKUPause ( pause );
+	#endif
+	
+	#if AKU_WITH_UNTZ
+		AKUUntzPause ( pause );
+	#endif
+}
+
+//----------------------------------------------------------------//
 void AKUModulesUpdate () {
+
+	#if AKU_WITH_HTTP_CLIENT
+		AKUHttpClientUpdate ();
+	#endif
 
 	#if AKU_WITH_FMOD_DESIGNER
 		AKUFmodDesignerUpdate ();
 	#endif
-	
+
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExUpdate ();
 	#endif
-	
+
 	#if AKU_WITH_HARNESS
 		AKUHarnessUpdate ()
 	#endif
@@ -278,6 +311,8 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsUpdate ();
 	#endif
+		
+	AKUModulesCustomUpdate ();
 }
 
 void AKUModulesPause () {

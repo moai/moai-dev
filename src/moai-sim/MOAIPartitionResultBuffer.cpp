@@ -68,7 +68,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline void PushBack ( IsoSortList& list ) {
-	
+		
 		if ( list.mHead ) {
 			
 			if ( this->mHead ) {
@@ -88,12 +88,23 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIPartitionResult* MOAIPartitionResultBuffer::AffirmSwapBuffer () {
+
+	this->mSwapBuffer->Grow ( this->mTotalResults, BLOCK_SIZE );
+	return *this->mSwapBuffer;
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Clear () {
 
-	this->mMainBuffer.Clear ();
-	this->mSwapBuffer.Clear ();
+	this->mBufferA.Clear ();
+	this->mBufferB.Clear ();
 	
 	this->mResults = 0;
+	
+	this->mMainBuffer = 0;
+	this->mSwapBuffer = 0;
+	
 	this->mTotalResults = 0;
 }
 
@@ -102,12 +113,12 @@ MOAIProp* MOAIPartitionResultBuffer::FindBest () {
 
 	if ( !this->mTotalResults ) return 0;
 	
-	MOAIPartitionResult* best = &this->mMainBuffer [ 0 ];
+	MOAIPartitionResult* best = &this->mResults [ 0 ];
 	
 	u32 bestKey = best->mKey;
 	
 	for ( u32 i = 1; i < this->mTotalResults; ++i ) {
-		MOAIPartitionResult* compare = &this->mMainBuffer [ i ];
+		MOAIPartitionResult* compare = &this->mResults [ i ];
 		
 		u32 compKey = compare->mKey;
 		if ( bestKey < compKey ) {
@@ -126,44 +137,58 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 
 	switch ( mode & SORT_MODE_MASK ) {
 		
-		case SORT_KEY_ASCENDING:
+		case SORT_DIST_SQUARED_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				this->mMainBuffer [ i ].mKey = this->mMainBuffer [ i ].mKey * intSign;
+				MOAIPartitionResult& result = this->mResults [ i ];
+				
+				float dist =
+					(( result.mLoc.mX * result.mLoc.mX ) - ( xScale * xScale )) +
+					(( result.mLoc.mY * result.mLoc.mY ) - ( yScale * yScale )) +
+					(( result.mLoc.mZ * result.mLoc.mZ ) - ( zScale * zScale ));
+				
+				result.mKey = ZLFloat::FloatToIntKey ( dist * floatSign );
 			}
 			break;
+		
+		case SORT_KEY_ASCENDING:
+			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+				this->mResults [ i ].mKey = this->mResults [ i ].mKey * intSign;
+			}
+			break;
+		
 		case SORT_PRIORITY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				s32 p = this->mMainBuffer [ i ].mPriority * intSign;
-				this->mMainBuffer [ i ].mKey = ( u32 )(( p ^ 0x80000000 ) | ( p & 0x7fffffff ));
+				s32 p = this->mResults [ i ].mPriority * intSign;
+				this->mResults [ i ].mKey = ( u32 )(( p ^ 0x80000000 ) | ( p & 0x7fffffff ));
 			}
 			break;
 
 		case SORT_X_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float x = this->mMainBuffer [ i ].mLoc.mX;
-				this->mMainBuffer [ i ].mKey = ZLFloat::FloatToIntKey ( x * floatSign );
+				float x = this->mResults [ i ].mLoc.mX;
+				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( x * floatSign );
 			}
 			break;
 		
 		case SORT_Y_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float y = this->mMainBuffer [ i ].mLoc.mY;
-				this->mMainBuffer [ i ].mKey = ZLFloat::FloatToIntKey ( y * floatSign );
+				float y = this->mResults [ i ].mLoc.mY;
+				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( y * floatSign );
 			}
 			break;
 		
 		case SORT_Z_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float z = this->mMainBuffer [ i ].mLoc.mZ;
-				this->mMainBuffer [ i ].mKey = ZLFloat::FloatToIntKey ( z * floatSign );
+				float z = this->mResults [ i ].mLoc.mZ;
+				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( z * floatSign );
 			}
 			break;
 		
 		case SORT_VECTOR_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				MOAIPartitionResult& result = this->mMainBuffer [ i ];
+				MOAIPartitionResult& result = this->mResults [ i ];
 				float axis = ( result.mLoc.mX * xScale ) + ( result.mLoc.mY * yScale ) + ( result.mLoc.mZ * zScale ) + (( float )result.mPriority * priority );
-				this->mMainBuffer [ i ].mKey = ZLFloat::FloatToIntKey ( axis * floatSign );
+				result.mKey = ZLFloat::FloatToIntKey ( axis * floatSign );
 			}
 			break;
 		
@@ -176,6 +201,8 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 //----------------------------------------------------------------//
 MOAIPartitionResultBuffer::MOAIPartitionResultBuffer () :
 	mResults ( 0 ),
+	mMainBuffer ( 0 ),
+	mSwapBuffer ( 0 ),
 	mTotalResults ( 0 ) {
 }
 
@@ -193,6 +220,14 @@ MOAIPartitionResult* MOAIPartitionResultBuffer::PopResult () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::Project ( const ZLMatrix4x4& mtx ) {
+
+	for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+		mtx.Project ( this->mResults [ i ].mLoc );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -201,7 +236,7 @@ void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
 	// make sure there is enough stack space to push all props
 	// the +1 is needed because pushing a prop requires an
 	// additional value to be pushed onto the stack temporarily
-	lua_checkstack( L, total + 1 );
+	lua_checkstack ( L, total + 1 );
 
 	for ( u32 i = 0; i < total; ++i ) {
 		this->mResults [ i ].mProp->PushLuaUserdata ( state );
@@ -213,11 +248,12 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 
 	u32 idx = this->mTotalResults++;
 	
-	if ( idx >= this->mMainBuffer.Size ()) {
-		this->mMainBuffer.Grow ( idx + 1, BLOCK_SIZE );
+	if ( idx >= this->mMainBuffer->Size ()) {
+		this->mMainBuffer->Grow ( idx + 1, BLOCK_SIZE );
+		this->mResults = this->mMainBuffer->Data ();
 	}
 	
-	MOAIPartitionResult& result = this->mMainBuffer [ idx ] ;
+	MOAIPartitionResult& result = this->mResults [ idx ] ;
 	
 	result.mKey = key;
 	
@@ -227,19 +263,39 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 	
 	result.mLoc = loc;
 	result.mBounds = bounds;
+	
+	ZLVec3D piv = prop.GetPiv ();
+	result.mLoc.Add ( piv );
+	result.mBounds.Offset ( piv );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::SetResultsBuffer ( MOAIPartitionResult* buffer ) {
+
+	assert (( buffer == this->mBufferA ) || ( buffer == this->mBufferB ));
+	
+	this->mResults = buffer;
+	
+	if ( buffer == this->mBufferA ) {
+		this->mMainBuffer = &this->mBufferA;
+		this->mSwapBuffer = &this->mBufferB;
+	}
+	else {
+		this->mMainBuffer = &this->mBufferB;
+		this->mSwapBuffer = &this->mBufferA;
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Reset () {
 
-	this->mResults = 0;
+	this->mBufferA.Grow ( 1, BLOCK_SIZE );
+	this->SetResultsBuffer ( this->mBufferA );
 	this->mTotalResults = 0;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::Sort ( u32 mode ) {
-
-	this->mResults = this->mMainBuffer;
 
 	if ( mode == SORT_NONE ) {
 		return this->mTotalResults;
@@ -253,6 +309,7 @@ u32 MOAIPartitionResultBuffer::Sort ( u32 mode ) {
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::SortResultsIso () {
 
+	MOAIPartitionResult* mainBuffer = this->mResults;
 	IsoSortItem* sortBuffer = ( IsoSortItem* )alloca ( this->mTotalResults * sizeof ( IsoSortItem ));
 	
 	IsoSortList frontList;
@@ -268,7 +325,7 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 		dontCareList.Clear ();
 		
 		// get the next prop to add
-		MOAIPartitionResult* result0 = &this->mMainBuffer [ i ];
+		MOAIPartitionResult* result0 = &mainBuffer [ i ];
 		const ZLBox& bounds0 = result0->mBounds;
 		
 		// check incoming prop against all others
@@ -310,35 +367,42 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 	}
 	
 	// affirm the swap buffer
-	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
-		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
-	}
+	MOAIPartitionResult* swapBuffer = this->AffirmSwapBuffer ();
 	
 	IsoSortItem* cursor = list.mHead;
 	for ( u32 i = 0; cursor; cursor = cursor->mNext, ++i ) {
-		
 		MOAIPartitionResult* result = cursor->mResult;
-		
-		this->mSwapBuffer [ i ] = *result;
-		this->mSwapBuffer [ i ].mKey = i;
+		swapBuffer [ i ] = *result;
+		swapBuffer [ i ].mKey = i;
 	}
 	
-	this->mResults = this->mSwapBuffer;
+	this->SetResultsBuffer ( swapBuffer );
 	return this->mTotalResults;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::SortResultsLinear () {
 
-	this->mResults = this->mMainBuffer;
-
-	// affirm the swap buffer
-	if ( this->mSwapBuffer.Size () < this->mMainBuffer.Size ()) {
-		this->mSwapBuffer.Init ( this->mMainBuffer.Size ());
-	}
-	
-	// sort
-	this->mResults = RadixSort32 < MOAIPartitionResult >( this->mMainBuffer, this->mSwapBuffer, this->mTotalResults );
+	MOAIPartitionResult* swapBuffer = this->AffirmSwapBuffer ();
+	MOAIPartitionResult* results = RadixSort32 < MOAIPartitionResult >( this->mResults, swapBuffer, this->mTotalResults );
+	this->SetResultsBuffer ( results );
 	
 	return this->mTotalResults;
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::Transform ( const ZLMatrix4x4& mtx, bool transformBounds ) {
+
+	if ( transformBounds ) {
+		for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+			MOAIPartitionResult& result = this->mResults [ i ];
+			mtx.Transform ( result.mLoc );
+			result.mBounds.Transform ( mtx );
+		}
+	}
+	else {
+		for ( u32 i = 0; i < this->mTotalResults; ++i ) {
+			mtx.Transform ( this->mResults [ i ].mLoc );
+		}
+	}
 }

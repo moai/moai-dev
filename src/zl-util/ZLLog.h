@@ -9,20 +9,19 @@
 // ZLLog
 //================================================================//
 class ZLLog {
-
-
-
 public:
-	static FILE* CONSOLE;
+
+	static void* CONSOLE;
+
+	typedef void ( *LogFunc )( void* file, cc8* format, va_list args, void* userdata );
+	static LogFunc sLogFunc;
+	
+	static void* sLogFuncUserdata;
 
 	//----------------------------------------------------------------//
-	static void	Print		( cc8* format, ... );
-	static void	PrintFileV	( FILE* file, cc8* format, va_list args );
-#ifdef ANDROID //maybe have this as USING_VFS. currently only android does the monkey patching.
-	static void	PrintFile	( ZLFILE* file, cc8* format, ... );
-#else
-	static void	PrintFile	( FILE* file, cc8* format, ... );
-#endif
+	static void	LogF		( void* file, cc8* format, ... );
+	static void	LogV		( void* file, cc8* format, va_list args );
+	static void SetLogFunc	( LogFunc logFunc, void* userdata );
 };
 
 #endif

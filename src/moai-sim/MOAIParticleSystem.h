@@ -6,8 +6,8 @@
 
 #include <moai-sim/host_particles.h>
 #include <moai-sim/MOAIAction.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIParticle.h>
-#include <moai-sim/MOAIProp.h>
 
 class MOAIDeck;
 class MOAIParticleScript;
@@ -20,7 +20,7 @@ class MOAIParticleState;
 	@text	Particle system.
 */
 class MOAIParticleSystem :
-	public MOAIProp,
+	public MOAIGraphicsProp,
 	public MOAIAction {
 private:
 
@@ -66,6 +66,7 @@ private:
 	void					EnqueueParticle			( MOAIParticle& particle );
 	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
+	u32						OnGetModelBounds		( ZLBox& bounds );
 	void					OnUpdate				( float step );
 
 public:
@@ -77,8 +78,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID );
-	u32				GetPropBounds			( ZLBox& bounds );
+	void			Draw					( int subPrimID, float lod );
 	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();

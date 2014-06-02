@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLFloat.h>
 #include <zl-util/ZLInterpolate.h>
 
 #define WR 0.299f
@@ -71,7 +72,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u8* )src;
-					src = ( void* )(( uintptr )src + 1 );
+					src = ( void* )(( size_t )src + 1 );
 					
 					buffer [ i ] = color << 0x18;
 				}
@@ -83,7 +84,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u32* )src;
-					src = ( void* )(( uintptr )src + 3 );
+					src = ( void* )(( size_t )src + 3 );
 					
 					buffer [ i ]= color | 0xff000000;
 				}
@@ -95,7 +96,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u16* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
@@ -111,7 +112,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u16* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
@@ -126,7 +127,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u32* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x0F ) << 0x04 ) +
 									((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
@@ -153,7 +154,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					color = bufferPtr [ i ];
 					
 					(( u8* )dest )[ 0 ] = ( color >> 0x18 ) & 0xFF;
-					dest = ( void* )(( uintptr )dest + 1 );
+					dest = ( void* )(( size_t )dest + 1 );
 				}
 				break;
 		
@@ -166,7 +167,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					(( u8* )dest )[ 0 ] = color & 0xFF;
 					(( u8* )dest )[ 1 ] = ( color >> 8 ) & 0xFF;
 					(( u8* )dest )[ 2 ] = ( color >> 16 ) & 0xFF;
-					dest = ( void* )(( uintptr )dest + 3 );
+					dest = ( void* )(( size_t )dest + 3 );
 				}
 				break;
 				
@@ -179,7 +180,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					*( u16* )dest =	((( color >> 0x03 ) & 0x1F ) << 0x0B ) +
 									((( color >> 0x0A ) & 0x3F ) << 0x05 ) +
 									((( color >> 0x13 ) & 0x1F ) << 0x00 );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 						
@@ -193,7 +194,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0B ) & 0x1F ) << 0x05 ) +
 										((( color >> 0x13 ) & 0x1F ) << 0x0A ) +
 										(((( color >> 0x1C ) & 0x0F ) ? 0x01 : 0x00 ) << 0x0F );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 
@@ -207,14 +208,14 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0C ) & 0x0F ) << 0x08 ) +
 										((( color >> 0x14 ) & 0x0F ) << 0x04 ) +
 										((( color >> 0x1C ) & 0x0F ) << 0x00 );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 
 			case RGBA_8888:
 				
 				memcpy ( dest, bufferPtr, copy * sizeof ( u32 ));
-				dest = ( void* )(( uintptr )dest + ( copy * sizeof ( u32 )));
+				dest = ( void* )(( size_t )dest + ( copy * sizeof ( u32 )));
 				break;
 			
 			default:
@@ -431,7 +432,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											(((( color >> 0x05 ) & 0x1F ) * alpha ) << 0x05 ) +
 											(((( color >> 0x0A ) & 0x1F ) * alpha ) << 0x0A ) +
 											( alpha << 0x0F ));
-				colors = ( void* )(( uintptr )colors + 2 );
+				colors = ( void* )(( size_t )colors + 2 );
 			}
 			break;
 
@@ -444,7 +445,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											((((( color >> 0x04 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x04 ) +
 											((((( color >> 0x08 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x08 ) +
 											((((( color >> 0x0c ) & 0x0F ) * alpha ) >> 0x04 ) << 0x0C ));
-				colors = ( void* )(( uintptr )colors + 2 );
+				colors = ( void* )(( size_t )colors + 2 );
 			}
 			break;
 
@@ -457,7 +458,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 									((((( color >> 0x08 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x08 ) +
 									((((( color >> 0x10 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x10 ) +
 									( alpha << 0x18 );
-				colors = ( void* )(( uintptr )colors + 4 );
+				colors = ( void* )(( size_t )colors + 4 );
 			}
 			break;
 		
@@ -638,6 +639,66 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColorVec::FromHSV ( float h, float s, float v ) {
+	
+	if( s == 0.0f ) {
+		this->mR = v;
+		this->mG = v;
+		this->mB = v;
+		return;
+	}
+	
+	h /= 60.0f;
+	
+	int i = ( int )floor ( h );
+	float f = h - ( float )i;
+	
+	float p = v * ( 1.0f - s );
+	float q = v * ( 1.0f - s * f );
+	float t = v * ( 1.0f - s * ( 1.0f - f ) );
+	
+	switch ( i ) {
+	
+		case 0:
+			this->mR = v;
+			this->mG = t;
+			this->mB = p;
+			break;
+			
+		case 1:
+			this->mR = q;
+			this->mG = v;
+			this->mB = p;
+			break;
+			
+		case 2:
+			this->mR = p;
+			this->mG = v;
+			this->mB = t;
+			break;
+			
+		case 3:
+			this->mR = p;
+			this->mG = q;
+			this->mB = v;
+			break;
+			
+		case 4:
+			this->mR = t;
+			this->mG = p;
+			this->mB = v;
+			break;
+			
+		case 5:
+		default:
+			this->mR = v;
+			this->mG = p;
+			this->mB = q;
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::FromYUV ( float y, float u, float v ) {
 
 	this->mR = y + ( v * (( 1.0f - WR ) / V_MAX ));
@@ -646,27 +707,25 @@ void ZLColorVec::FromYUV ( float y, float u, float v ) {
 }
 
 //----------------------------------------------------------------//
-float ZLColorVec::GetLuma () {
+float ZLColorVec::GetLuma () const {
 
 	return ( WR * this->mR ) + ( WG * this->mG ) + ( WB * this->mB );
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::Lerp ( const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+bool ZLColorVec::IsClear () {
 
-	this->mR = v0.mR + (( v1.mR - v0.mR ) * t );
-	this->mG = v0.mG + (( v1.mG - v0.mG ) * t );
-	this->mB = v0.mB + (( v1.mB - v0.mB ) * t );
-	this->mA = v0.mA + (( v1.mA - v0.mA ) * t );
+	return (( this->mR == 0.0f ) && ( this->mG == 0.0f ) && ( this->mB == 0.0f ) && ( this->mA == 0.0f ));
 }
 
 //----------------------------------------------------------------//
-//void ZLColorVec::LoadGfxState () const {
-//
-//#if USE_OPENGLES1
-//	glColor4f ( this->mR, this->mG, this->mB, this->mA );
-//#endif
-//}
+void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+
+	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );
+	this->mG = ZLInterpolate::Interpolate ( mode, v0.mG, v1.mG, t );
+	this->mB = ZLInterpolate::Interpolate ( mode, v0.mB, v1.mB, t );
+	this->mA = ZLInterpolate::Interpolate ( mode, v0.mA, v1.mA, t );
+}
 
 //----------------------------------------------------------------//
 void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
@@ -678,7 +737,7 @@ void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLColorVec::PackRGBA () {
+u32 ZLColorVec::PackRGBA () const {
 
 	return ZLColor::PackRGBA ( this->mR, this->mG, this->mB, this->mA );
 }
@@ -711,6 +770,47 @@ void ZLColorVec::SetBlack () {
 void ZLColorVec::SetWhite () {
 
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::ToHSV ( float& h, float& s, float& v ) {
+
+	float r = this->mR;
+	float g = this->mG;
+	float b = this->mB;
+
+	float min = ZLFloat::Min ( r, g, b );
+	float max = ZLFloat::Min ( r, g, b );
+	float delta = max - min;
+	
+	v = max;
+	
+	if ( max != 0.0f ) {
+		s = delta / max;
+	}
+	else {
+		// r = g = b = 0
+		// s = 0, v is undefined
+		s = 0.0f;
+		h = -1.0f;
+		return;
+	}
+	
+	if ( r == max ) {
+		h = ( g - b ) / delta; // between yellow & magenta
+	}
+	else if ( g == max ) {
+		h = 2.0f + ( b - r ) / delta; // between cyan & yellow
+	}
+	else {
+		h = 4.0f + ( r - g ) / delta; // between magenta & cyan
+	}
+
+	h *= 60.0f; // degrees
+	
+	if ( h < 0.0f ) {
+		h += 360.0f;
+	}
 }
 
 //----------------------------------------------------------------//

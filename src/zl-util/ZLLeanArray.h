@@ -11,11 +11,11 @@ template < typename TYPE >
 class ZLLeanArray {
 protected:
 
-	u32		mSize;
+	size_t	mSize;
 	TYPE*	mData;
 
 	//----------------------------------------------------------------//
-	virtual void Alloc ( u32 size ) {
+	virtual void Alloc ( size_t size ) {
 
 		this->mData = new TYPE [ size ];
 	}
@@ -42,6 +42,11 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	size_t BufferSize () {
+		return this->mSize * sizeof ( TYPE );
+	}
+
+	//----------------------------------------------------------------//
 	virtual void Clear () {
 
 		if ( this->mSize && this->mData ) {
@@ -62,15 +67,15 @@ public:
 	//----------------------------------------------------------------//
 	void CopyFrom ( const ZLLeanArray < TYPE >& src ) {
 
-		u32 total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
+		size_t total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
 
-		for ( u32 i = 0; i < total; ++i ) {
+		for ( size_t i = 0; i < total; ++i ) {
 			this->mData [ i ] = src [ i ];
 		}
 	}
 
 	//----------------------------------------------------------------//
-	inline TYPE& Elem ( u32 idx ) {
+	inline TYPE& Elem ( size_t idx ) {
 		return this->mData [ idx ];
 	}
 
@@ -86,13 +91,13 @@ public:
 
 	//----------------------------------------------------------------//
 	void Fill ( const TYPE& value ) {
-		for ( u32 i = 0; i < this->mSize; ++i ) {
+		for ( size_t i = 0; i < this->mSize; ++i ) {
 			this->mData [ i ] = value;
 		}
 	}
 
 	//----------------------------------------------------------------//
-	void Grow ( u32 size ) {
+	void Grow ( size_t size ) {
 	
 		if ( size > this->mSize ) {
 			this->Resize ( size );
@@ -100,17 +105,17 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Grow ( u32 size, u32 chunkSize ) {
+	void Grow ( size_t size, size_t chunkSize ) {
 		
-		u32 chunks = ( size / chunkSize ) + 1;
+		size_t chunks = ( size / chunkSize ) + 1;
 		this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
-	void Grow ( u32 size, u32 chunkSize, const TYPE& value ) {
+	void Grow ( size_t size, size_t chunkSize, const TYPE& value ) {
 		
-		u32 chunks = ( size / chunkSize ) + 1;
-		u32 newSize = chunks * chunkSize;
+		size_t chunks = ( size / chunkSize ) + 1;
+		size_t newSize = chunks * chunkSize;
 		
 		if ( newSize > this->mSize ) {
 			this->Resize ( newSize, value );
@@ -118,7 +123,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool Init ( u32 size ) {
+	bool Init ( size_t size ) {
 
 		this->Clear ();
 
@@ -138,9 +143,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Resize ( u32 size ) {
+	void Resize ( size_t size ) {
 
-		u32 oldSize = this->mSize;
+		size_t oldSize = this->mSize;
 		TYPE* oldArray = this->mData;
 
 		this->mSize = 0;
@@ -150,7 +155,7 @@ public:
 			this->Alloc ( size );
 			this->mSize = size;
 			
-			for ( u32 i = 0; (( i < size ) && ( i < oldSize )); ++i ) {
+			for ( size_t i = 0; (( i < size ) && ( i < oldSize )); ++i ) {
 				this->mData [ i ] = oldArray [ i ];
 			}
 		}
@@ -161,21 +166,63 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Resize ( u32 size, const TYPE& value ) {
+	void Resize ( size_t size, const TYPE& value ) {
 
-		u32 oldSize = this->mSize;
+		size_t oldSize = this->mSize;
 		
 		this->Resize ( size );
 		
 		if ( size >= oldSize ) {
-			for ( u32 i = oldSize; i < size; ++i ) {
+			for ( size_t i = oldSize; i < size; ++i ) {
 				this->mData [ i ] = value;
 			}
 		}
 	}
 
 	//----------------------------------------------------------------//
-	inline u32 Size () const {
+	void RotateLeft ( size_t spaces ) {
+	
+		spaces = spaces % this->mSize;
+		if ( spaces ) {
+			
+			size_t size = this->mSize * sizeof ( TYPE );
+			size_t leftSize = spaces * sizeof ( TYPE );
+			size_t rightSize = size - leftSize;
+			
+			void* lower = ( void* )(( size_t )this->mData + leftSize );
+			void* upper = ( void* )(( size_t )this->mData + rightSize );
+			
+			void* temp = alloca ( leftSize );
+		
+			memcpy ( temp, this->mData, leftSize );
+			memmove ( this->mData, lower, rightSize );
+			memcpy ( upper, temp, leftSize );
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	void RotateRight ( size_t spaces ) {
+	
+		spaces = spaces % this->mSize;
+		if ( spaces ) {
+			
+			size_t size = this->mSize * sizeof ( TYPE );
+			size_t leftSize = spaces * sizeof ( TYPE );
+			size_t rightSize = size - leftSize;
+			
+			void* lower = ( void* )(( size_t )this->mData + leftSize );
+			void* upper = ( void* )(( size_t )this->mData + rightSize );
+			
+			void* temp = alloca ( rightSize );
+		
+			memcpy ( temp, upper, rightSize );
+			memmove ( lower, this->mData, leftSize );
+			memcpy ( this->mData, temp, rightSize );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	inline size_t Size () const {
 		return this->mSize;
 	}
 

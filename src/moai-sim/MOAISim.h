@@ -71,6 +71,7 @@ private:
 	double			mSimTime;		// elapsed simulation running time (in seconds)
 	double			mRealTime;		// time updated from system clock
 	double			mFrameTime;		// time last frame time was measured (in seconds)
+	double			mPauseTime;		// time the sim was paused
 	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
@@ -112,7 +113,6 @@ private:
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
-	static int		_getHistogram				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
@@ -121,14 +121,10 @@ private:
 	static int		_getStep					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
-	static int		_reportHistogram			( lua_State* L );
-	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
 	static int		_setCpuBudget				( lua_State* L );
 	static int		_setGCActive				( lua_State* L );
 	static int		_setGCStep					( lua_State* L );
-	static int		_setHistogramEnabled		( lua_State* L );
-	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLongDelayThreshold		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
 	static int		_setLuaAllocLogEnabled		( lua_State* L );
@@ -151,6 +147,8 @@ private:
 	void			OnGlobalsFinalize			();
 	void			OnGlobalsRestore			();
 	void			OnGlobalsRetire				();
+	void			SendPauseEvent				();
+	void			SendResumeEvent				();
 	double			StepSim						( double step, u32 multiplier );
 
 public:
@@ -194,13 +192,11 @@ public:
 	//----------------------------------------------------------------//
 					MOAISim						();
 					~MOAISim					();
-	void			PauseMOAI					();
+	void			Pause						();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			ResumeMOAI					();
+	void			Resume						();
 	void			SendFinalizeEvent			();
-	void			SendPauseEvent				();
-	void			SendResumeEvent				();
 	void			SetStep						( double step );
 	void			Update						();
 };

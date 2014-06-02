@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAI_BOX2D_H
-#define	MOAI_BOX2D_H
+#ifndef	MOAI_BOX2D_HEADERS_H
+#define	MOAI_BOX2D_HEADERS_H
 
 #include <moai-box2d/pch.h>
 

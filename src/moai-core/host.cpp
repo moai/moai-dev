@@ -14,6 +14,7 @@ public:
 
 	MOAIGlobals*		mGlobals;
 	void*				mUserdata;
+	MOAILuaStrongRef	mLuaFunc;
 	
 	//----------------------------------------------------------------//
 	AKUContext () :
@@ -32,11 +33,6 @@ public:
 	}
 };
 
-
-//================================================================//
-// aku
-//================================================================//
-
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
 typedef STLMap < AKUContextID, AKUContext* > ContextMap;
 
@@ -44,6 +40,77 @@ static ContextMap*		sContextMap = 0;
 static AKUContextID		sContextIDCounter = 0;
 static AKUContextID		sContextID = 0;
 static AKUContext*		sContext = 0;
+
+//================================================================//
+// local
+//================================================================//
+
+void	_debugCallWithArgs	( MOAILuaState& state, int totalArgs, int asParams );
+int		_loadContextFunc	( MOAILuaState& state );
+void	_pushArgOrParam		( MOAILuaState& state, int index, char* arg, int asParam );
+void	_setupArgs			( MOAILuaState& state, char* exeName, char* scriptName, int asParams );
+
+//----------------------------------------------------------------//
+void _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
+
+	int status;
+	
+	if ( asParams == AKU_AS_ARGS ) {
+		state.Pop ( 1 );
+		status = state.DebugCall ( 0, 0 );
+	}
+	else {
+		status = state.DebugCall ( totalArgs, 0 );
+	}
+	
+	state.PrintErrors ( ZLLog::CONSOLE, status );
+}
+
+//----------------------------------------------------------------//
+int _loadContextFunc ( MOAILuaState& state ) {
+
+	if ( sContext && sContext->mLuaFunc ) {
+		state.Push ( sContext->mLuaFunc );
+		sContext->mLuaFunc.Clear ();
+		return 0;
+	}
+	
+	ZLLog::LogF ( ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+void _pushArgOrParam ( MOAILuaState& state, int index, char* arg, int asParam ) {
+
+	if ( asParam == AKU_AS_PARAMS ) {
+		if ( arg ) {
+			state.Push ( arg );
+		}
+		else {
+			state.Push ();
+		}
+	}
+	else {
+		state.SetFieldByIndex ( -1, index, arg );
+	}
+}
+
+//----------------------------------------------------------------//
+void _setupArgs ( MOAILuaState& state, char* exeName, char* scriptName, int asParams ) {
+
+	lua_newtable ( state );
+	state.SetFieldByIndex ( -1, -1, exeName );
+	state.SetFieldByIndex ( -1, 0, scriptName );
+	lua_setglobal ( state, "arg" );
+
+	if ( asParams == AKU_AS_ARGS ) {
+		lua_getglobal ( state, "arg" );
+	}
+}
+
+//================================================================//
+// aku
+//================================================================//
 
 //----------------------------------------------------------------//
 void AKUAppFinalize () {
@@ -84,6 +151,54 @@ void AKUAppInitialize () {
 	zl_init ();
 	
 	sContextMap = new ContextMap;
+}
+
+//----------------------------------------------------------------//
+void AKUCallFunc () {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( _loadContextFunc ( state ) != 0 ) return;
+	int status = state.DebugCall ( 0, 0 );
+	state.PrintErrors ( ZLLog::CONSOLE, status );
+}
+
+//----------------------------------------------------------------//
+// arg[-1] => argMinusOne - host binary (lua, luajit, moai-untz, ...)
+// arg[0]  => argZero - first arg counting from offset (script name as passed to host binary)
+// arg[1]  => next arg/option/script
+// arg[2]  => next arg/option/script
+	// ...
+void AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( _loadContextFunc ( state ) != 0 ) return;
+
+	_setupArgs ( state, exeName, scriptName, asParams );
+	
+	for ( int i = 0; i < argc; ++i ) {
+		_pushArgOrParam ( state, i + 1, argv [ i ], asParams );
+	}
+	_debugCallWithArgs ( state, argc, asParams );
+}
+
+//----------------------------------------------------------------//
+void AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int asParams ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( _loadContextFunc ( state ) != 0 ) return;
+
+	_setupArgs ( state, exeName, scriptName, asParams );
+	
+	int numParams = 0; //The number of args
+	if ( args ) {
+		char* token = strtok ( args, " " );
+		while ( token != NULL ) {
+			++numParams;
+			_pushArgOrParam ( state, numParams, token, asParams );
+			token = strtok ( NULL, " " );
+		}
+	}
+	_debugCallWithArgs ( state, numParams, asParams );
 }
 
 //----------------------------------------------------------------//
@@ -190,13 +305,9 @@ void AKUInitMemPool ( size_t bytes ) {
 }
 
 //----------------------------------------------------------------//
-int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
+void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compressed ) {
 
-	return zl_mount_virtual ( virtualPath, archive );
-}
-
-//----------------------------------------------------------------//
-void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
+	sContext->mLuaFunc.Clear ();
 
 	if ( !size ) return;
 
@@ -211,13 +322,18 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	if ( dataType == AKU_DATA_BYTECODE ) {
-		state.Run ( data, size, 0, 0 );
+		lua_getglobal ( state, "loadstring" );
+		state.Push ( data, size );
+		int status = state.DebugCall ( 1, 1 );
+		if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+			sContext->mLuaFunc.SetRef ( state, -1 );
+		}
 	}
 	
 	if ( dataType == AKU_DATA_STRING ) {
 		int status = luaL_loadstring ( state, ( cc8* )data );
 		if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
-			state.DebugCall ( 0, 0 );
+			sContext->mLuaFunc.SetRef ( state, -1 );
 		}
 	}
 	
@@ -225,30 +341,44 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 }
 
 //----------------------------------------------------------------//
-void AKURunScript ( const char* filename ) {
+void AKULoadFuncFromFile ( const char* filename ) {
 
-	if ( !ZLFileSys::CheckFileExists ( filename )) return;
+	sContext->mLuaFunc.Clear ();
 
-	int status;
+	if ( !ZLFileSys::CheckFileExists ( filename )) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
+		return;
+	}
+
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
-	status = luaL_loadfile ( state, filename );
-
-	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
+	int status = luaL_loadfile ( state, filename );
+	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+		sContext->mLuaFunc.SetRef ( state, -1 );
+	}
 }
 
 //----------------------------------------------------------------//
-void AKURunString ( const char* script ) {
+void AKULoadFuncFromString ( const char* script ) {
 
-	int status;
+	sContext->mLuaFunc.Clear ();
+
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;
-	
-	state.DebugCall ( 0, 0 );
+	int status = luaL_loadstring (
+	state, script );
+	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+		sContext->mLuaFunc.SetRef ( state, -1 );
+	}
+}
+
+//----------------------------------------------------------------//
+int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
+
+	int result = zl_mount_virtual ( virtualPath, archive );
+	if ( result ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "Error mounting %s at path %s\n", archive, virtualPath );
+	}
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -286,32 +416,4 @@ void AKUSetUserdata ( void* userdata ) {
 int AKUSetWorkingDirectory ( char const* path ) {
 
 	return zl_chdir ( path );
-}
-
-//----------------------------------------------------------------//
-void AKUSetArgv ( char **argv ) {
-
-	int i;
-	int argc = 0;
-
-	lua_State* L = AKUGetLuaState ();
-
-	// count argv
-	while ( argv[argc] ) argc++;
-
-	lua_createtable ( L, argc, 0 );
-	int newTable = lua_gettop ( L );
-
-	// arg[-1] => host binary (lua, luajit, moai-untz, ...)
-	// arg[0]  => first arg (script name as passed to host binary)
-	// arg[1]  => next arg/option/script
-	// arg[2]  => next arg/option/script
-	// ...
-	for ( i=0; i < argc; i++ ) {
-		lua_pushstring ( L, argv[i] );
-		lua_rawseti ( L, newTable, i - 1 );
-	}
-
-	// same as lua global 'arg'
-	lua_setglobal ( L, "arg" );
 }

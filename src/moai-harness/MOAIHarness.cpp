@@ -394,7 +394,7 @@ void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
 {
     if (MOAIHarness::mSocketID == -1)
     {
-        ZLLog::Print ( "%s\n", message );
+        ZLLog::LogF ( "%s\n", message );
         MOAIScopedLuaState state ( L );
         state.PrintStackTrace ( ZLLog::CONSOLE, level );
     }

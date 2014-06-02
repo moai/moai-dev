@@ -121,7 +121,7 @@ static void _jpgSkipInputData ( j_decompress_ptr cinfo, long num_bytes ) {
 	
 	if ( num_bytes <= ( long )src->pub.bytes_in_buffer ) {
 		src->pub.bytes_in_buffer -= num_bytes;
-		src->pub.next_input_byte = ( JOCTET* )(( uintptr )src->pub.next_input_byte + num_bytes );
+		src->pub.next_input_byte = ( JOCTET* )(( size_t )src->pub.next_input_byte + num_bytes );
 	}
 	else {
 		src->stream->Seek ( num_bytes - src->pub.bytes_in_buffer, SEEK_CUR );

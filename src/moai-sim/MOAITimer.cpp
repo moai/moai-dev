@@ -21,7 +21,6 @@ int MOAITimer::_getSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
 	state.Push ( self->mSpeed );
-
 	return 1;
 }
 
@@ -162,6 +161,15 @@ int MOAITimer::_setTime ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITimer::_toggleDirection ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
+	
+	self->ToggleDirection ();
+	return 0;
+}
+
 //================================================================//
 // MOAITimer
 //================================================================//
@@ -173,7 +181,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
+			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 			return true;
 		}
 	}
@@ -546,6 +554,7 @@ void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSpan",			_setSpan },
 		{ "setSpeed",			_setSpeed },
 		{ "setTime",			_setTime },
+		{ "toggleDirection",	_toggleDirection },
 		{ NULL, NULL }
 	};
 
@@ -613,4 +622,45 @@ void MOAITimer::SetTime ( float time ) {
 	}
 
 	this->ScheduleUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::ToggleDirection () {
+
+	switch ( this->mMode ) {
+		
+		case NORMAL:
+			this->mMode = REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case REVERSE:
+			this->mMode = NORMAL;
+			this->mDirection = 1.0f;
+			break;
+		
+		case CONTINUE:
+			this->mMode = CONTINUE_REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case CONTINUE_REVERSE:
+			this->mMode = CONTINUE;
+			this->mDirection = 1.0f;
+			break;
+		
+		case LOOP:
+			this->mMode = LOOP_REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case LOOP_REVERSE:
+			this->mMode = LOOP;
+			this->mDirection = 1.0f;
+			break;
+			
+		case PING_PONG:
+			this->mDirection = -1.0f;
+			break;
+	}
 }

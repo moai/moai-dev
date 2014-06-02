@@ -33,15 +33,14 @@ function addCube ( x, y, z, name )
 end
 
 --add out of order to test sorting
-addCube ( 0, 0, -20, "sprite1" )
-addCube ( 0, 0, 20, "sprite5" )
+addCube ( 0, 0, -64, "sprite1" )
+addCube ( 0, 0, 32, "sprite5" )
 addCube ( 0, 0, 0, "sprite3" )
-addCube ( 0, 0, -10, "sprite2" )
-addCube ( 0, 0, 10, "sprite4" )
+addCube ( 0, 0, -32, "sprite2" )
+addCube ( 0, 0, 64, "sprite4" )
 
 mouseX = 0
 mouseY = 0
-mouseZ = 0
 
 originX = 0
 originY = 0
@@ -62,15 +61,16 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-function pointerCallback ( x, y )
+function pointerCallback ( x, y ) 
 	
-	local oldX = originX
-	local oldY = originY
+	local oldX = mouseX
+	local oldY = mouseY
 	
-	originX, originY, originZ, directionX, directionY, directionZ  = layer:wndToWorld ( x, y, 0 )
+	mouseX, mouseY = layer:wndToWorld ( x, y )
+	originX, originY, originZ, directionX, directionY, directionZ = layer:wndToWorldRay ( x, y )
 	
 	if pick then
-		pick:addLoc ( (originX - oldX)*5, (originY - oldY)*5, 0 )
+		pick:addLoc (( mouseX - oldX ), ( mouseY - oldY ), 0 )
 	end
 end
 
@@ -81,7 +81,7 @@ function clickCallback ( down )
 		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
         pickList = {partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ )}
 		print ( pickList )
-		for k,v in pairs( pickList ) do print(k,v) end
+		for k,v in pairs( pickList ) do print ( k, v ) end
 		
 		pick = pickList[1]
 		

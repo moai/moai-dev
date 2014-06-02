@@ -35,20 +35,25 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline void Remove () {
-		if ( this->mList ) {
-			this->mList->Remove ( *this );
-		}
+	inline ZLLeanList < TYPE >* List () {
+		return this->mList;
 	}
 
 	//----------------------------------------------------------------//
 	inline ZLLeanLink < TYPE >* Next () {
-		return ( this->mNext ) ? this->mNext : 0;
+		return this->mNext;
 	}
 	
 	//----------------------------------------------------------------//
 	inline ZLLeanLink < TYPE >* Prev () {
-		return ( this->mPrev ) ? this->mPrev : 0;
+		return this->mPrev;
+	}
+	
+	//----------------------------------------------------------------//
+	inline void Remove () {
+		if ( this->mList ) {
+			this->mList->Remove ( *this );
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -81,7 +86,7 @@ private:
 
 	ZLLeanLink < TYPE >*	mHead;
 	ZLLeanLink < TYPE >*	mTail;
-	u32						mCount;
+	size_t					mCount;
 
 public:
 
@@ -111,7 +116,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	u32 Count () {
+	size_t Count () {
 		return this->mCount;
 	}
 
@@ -154,7 +159,7 @@ public:
 		ZLLeanLink < TYPE >* headB = b.mHead;
 		ZLLeanLink < TYPE >* tailB = b.mTail;
 		
-		u32 count = 0;
+		size_t count = 0;
 		
 		if ( headA == headB ) {
 			count = a.mCount;

@@ -13,9 +13,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void* ZLByteStream::GetBuffer () {
+void ZLByteStream::Clear () {
 
-	return this->mBuffer;
+	this->mCursor = 0;
+	this->mLength = 0;
+	this->mCapacity = 0;
+	this->mReadBuffer = 0;
+	this->mWriteBuffer = 0;
 }
 
 //----------------------------------------------------------------//
@@ -27,7 +31,9 @@ size_t ZLByteStream::GetCapacity () {
 //----------------------------------------------------------------//
 u32 ZLByteStream::GetCaps () {
 
-	return this->mBuffer ? CAN_READ | CAN_WRITE | CAN_SEEK : 0;
+	if ( this->mWriteBuffer ) return CAN_READ | CAN_WRITE | CAN_SEEK;
+	if ( this->mReadBuffer ) return CAN_READ | CAN_SEEK;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -43,6 +49,18 @@ size_t ZLByteStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
+const void* ZLByteStream::GetReadBuffer () {
+
+	return this->mReadBuffer;
+}
+
+//----------------------------------------------------------------//
+void* ZLByteStream::GetWriteBuffer () {
+
+	return this->mWriteBuffer;
+}
+
+//----------------------------------------------------------------//
 size_t ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 
 	if (( this->mCursor + size ) > this->mLength ) {
@@ -50,7 +68,7 @@ size_t ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 	}
 
 	if ( size ) {
-		memcpy ( buffer, &(( u8* )this->mBuffer )[ this->mCursor ], size );
+		memcpy ( buffer, &(( u8* )this->mReadBuffer )[ this->mCursor ], size );
 		this->mCursor += size;
 	}
 	
@@ -60,10 +78,18 @@ size_t ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 //----------------------------------------------------------------//
 void ZLByteStream::SetBuffer ( void* buffer, size_t size, size_t length ) {
 
+	this->SetBuffer (( const void* )buffer, size, length );
+	this->mWriteBuffer = buffer;
+}
+
+//----------------------------------------------------------------//
+void ZLByteStream::SetBuffer ( const void* buffer, size_t size, size_t length ) {
+
 	this->mCursor = 0;
 	this->mLength = length;
 	this->mCapacity = size;
-	this->mBuffer = buffer;
+	this->mReadBuffer = buffer;
+	this->mWriteBuffer = 0;
 }
 
 //----------------------------------------------------------------//
@@ -87,7 +113,7 @@ size_t ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 	}
 
 	if ( size ) {
-		memcpy ( &(( u8* )this->mBuffer )[ this->mCursor ], buffer, size );
+		memcpy ( &(( u8* )this->mWriteBuffer )[ this->mCursor ], buffer, size );
 		this->mCursor += size;
 		this->mLength += size;
 		return size;
@@ -98,7 +124,8 @@ size_t ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 
 //----------------------------------------------------------------//
 ZLByteStream::ZLByteStream () :
-	mBuffer ( 0 ),
+	mReadBuffer ( 0 ),
+	mWriteBuffer ( 0 ),
 	mCursor ( 0 ),
 	mLength ( 0 ),
 	mCapacity ( 0 ) {

@@ -13,7 +13,7 @@ class MOAIGlyphSet {
 private:
 
 	friend class MOAIFont;
-	friend class MOAITextDesigner;
+	friend class MOAITextDesignParser;
 	
 	float	mSize;
 	float	mHeight;
