@@ -166,28 +166,18 @@ void MOAILuaState::CopyToTop ( int idx ) {
 //----------------------------------------------------------------//
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
-	int status;
+	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 	
-	if ( MOAILuaRuntime::Get ().mTracebackRef ) {
-	
-		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
-		
-		MOAILuaRuntime::Get ().PushTraceback ( *this );
-		lua_insert ( this->mState, errIdx );
+	MOAILuaRuntime::Get ().PushTraceback ( *this );
+	lua_insert ( this->mState, errIdx );
 
-		status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
+	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
-		if ( status ) {
-			lua_settop ( this->mState, errIdx - 1 );
-		}
-		else {
-			lua_remove ( this->mState, errIdx );
-		}
+	if ( status ) {
+		lua_settop ( this->mState, errIdx - 1 );
 	}
 	else {
-	
-		lua_call ( this->mState, nArgs, nResults );
-		status = 0;
+		lua_remove ( this->mState, errIdx );
 	}
 	return status;
 }
@@ -530,7 +520,6 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 	}
 	
 	out.append ( "\n" );
-
 	return out;
 }
 
@@ -704,10 +693,10 @@ u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
+void* MOAILuaState::GetValue < void* >( int idx, void* value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
-		return ( uintptr )lua_touserdata ( this->mState, idx );
+		return ( void* )lua_touserdata ( this->mState, idx );
 	}
 	return value;
 }
@@ -846,9 +835,7 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			// TODO: Fix this on Android
-				ZLLog::PrintFile ( file, "-- %s\n", msg.c_str ());
-			
+			ZLLog::LogF ( file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -859,23 +846,19 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump () {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::Print ( stackDump );
+	ZLLog::LogF ( ZLLog::CONSOLE, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump ( FILE* file  ) {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::PrintFile ( file, stackDump );
+	ZLLog::LogF ( file, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
-
 	STLString stackTrace = this->GetStackTrace ( level );
-	// TODO: Fix this on Android
-	//#ifndef MOAI_OS_ANDROID
-		ZLLog::PrintFile ( file, stackTrace.str ());
-	//#endif
+	ZLLog::LogF ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//
@@ -929,13 +912,15 @@ void MOAILuaState::Push ( u32 value ) {
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( u64 value ) {
 
+	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( uintptr value ) {
+void MOAILuaState::Push ( size_t value ) {
 
-	lua_pushlightuserdata ( this->mState, ( void* )value );
+	// TODO: check for overflow
+	lua_pushnumber ( this->mState, ( double )value );
 }
 
 //----------------------------------------------------------------//
@@ -958,6 +943,12 @@ void MOAILuaState::Push ( MOAILuaObject* luaObject ) {
 void MOAILuaState::Push ( MOAILuaRef& ref ) {
 
 	ref.PushRef ( *this );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const void* value ) {
+
+	lua_pushlightuserdata ( this->mState, ( void* )value );
 }
 
 //----------------------------------------------------------------//

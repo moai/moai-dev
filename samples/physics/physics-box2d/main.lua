@@ -45,7 +45,7 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
-layer:setBox2DWorld ( world )
+layer:setUnderlayTable ({ world })
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = worldBody:addRect ( -(300/2), -200, 300/2, -300)

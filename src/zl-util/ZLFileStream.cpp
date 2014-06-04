@@ -118,18 +118,8 @@ bool ZLFileStream::Open ( cc8* filename, u32 mode ) {
 		
 		this->mFile = ( ZLFILE* )zl_fopen ( filename, modeStr );
 		
-		if ( this->mFile ) {
-
-			// Make sure to get the correct size
-			std::string remappedFilename;
-			if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( filename, remappedFilename ) ) {
-				exists = ZLFileSys::GetFileStat ( remappedFilename.c_str (), fileStat );
-			}
-
-			if ( exists ) {
-
-				this->mLength = fileStat.mSize;
-			}
+		if ( this->mFile && exists ) {
+			this->mLength = fileStat.mSize;
 		}
 	}
 	

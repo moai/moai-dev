@@ -46,6 +46,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
+	REGISTER_LUA_CLASS ( MOAICollisionFacet )
+	REGISTER_LUA_CLASS ( MOAICollisionWorld )
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
 	REGISTER_LUA_CLASS ( MOAICoroutine )
@@ -61,6 +63,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
+	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
@@ -74,7 +77,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
-	REGISTER_LUA_CLASS ( MOAILayerBridge )
+	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAIMesh )
@@ -92,13 +95,13 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
-	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAIShader )
 	REGISTER_LUA_CLASS ( MOAIShaderMgr )
+	REGISTER_LUA_CLASS ( MOAIShaderProgram )
 	REGISTER_LUA_CLASS ( MOAISim )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
@@ -108,8 +111,10 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
+	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
+	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
 	REGISTER_LUA_CLASS ( MOAIViewport )
 	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	
@@ -119,7 +124,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAITextBundle )
-	REGISTER_LUA_CLASS ( MOAITextBox )
+	REGISTER_LUA_CLASS ( MOAITextLabel )
 	REGISTER_LUA_CLASS ( MOAITextStyle )
 	
 	#if MOAI_WITH_TINYXML
@@ -227,10 +232,10 @@ double AKUGetSimStep () {
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
-		MOAISim::Get().PauseMOAI ();
+		MOAISim::Get().Pause ();
 	}
 	else {
-		MOAISim::Get().ResumeMOAI ();
+		MOAISim::Get().Resume ();
 	}
 }
 
@@ -244,6 +249,12 @@ void AKUReleaseGfxContext () {
 void AKURender () {
 
 	MOAIRenderMgr::Get ().Render ();
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
+
+	MOAISim::Get ().SetHideCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//
@@ -268,18 +279,6 @@ void AKUSetFunc_EnterFullscreenMode ( AKUEnterFullscreenModeFunc func ) {
 void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func ) {
 
 	MOAISim::Get ().SetExitFullscreenModeFunc ( func );
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
-
-	MOAISim::Get ().SetShowCursorFunc ( func );
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
-
-	MOAISim::Get ().SetHideCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//
@@ -373,6 +372,18 @@ void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputTimebase ( double timebase ) {
+
+	MOAIInputMgr::Get ().SetTimebase ( timebase );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputTimestamp ( double timestamp ) {
+
+	MOAIInputMgr::Get ().SetTimestamp ( timestamp );
+}
+
+//----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
@@ -410,6 +421,12 @@ void AKUSetViewSize ( int width, int height ) {
 			state.DebugCall ( 2, 0 );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
+
+	MOAISim::Get ().SetShowCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//

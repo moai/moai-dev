@@ -9,11 +9,13 @@
 #include <moai-android/MOAIChartBoostAndroid.h>
 #include <moai-android/MOAICrittercismAndroid.h>
 #include <moai-android/MOAIFacebookAndroid.h>
+#include <moai-android/MOAIFlurryAndroid.h>
 #include <moai-android/MOAIGooglePlayServicesAndroid.h>
 #include <moai-android/MOAIKeyboardAndroid.h>
 #include <moai-android/MOAIMoviePlayerAndroid.h>
 #include <moai-android/MOAINotificationsAndroid.h>
 #include <moai-android/MOAITapjoyAndroid.h>
-#include <moai-android/MOAITwitterAndroid.h>
 #include <moai-android/MOAITstoreWallAndroid.h>
 #include <moai-android/MOAITstoreGamecenterAndroid.h>
+#include <moai-android/MOAITwitterAndroid.h>
+#include <moai-android/MOAIVungleAndroid.h>

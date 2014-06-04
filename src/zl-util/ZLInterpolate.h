@@ -12,15 +12,22 @@ namespace ZLInterpolate {
 	enum {
 		kEaseIn,
 		kEaseOut,
+		kExtraSharpEaseIn,
+		kExtraSharpEaseOut,
+		kExtraSharpSmooth,
+		kExtraSharpSmoothEaseOut,
 		kFlat,
 		kLinear,
 		kSharpEaseIn,
 		kSharpEaseOut,
 		kSharpSmooth,
+		kSharpSmoothEaseOut,
 		kSmooth,
+		kSmoothEaseOut,
 		kSoftEaseIn,
 		kSoftEaseOut,
 		kSoftSmooth,
+		kSoftSmoothEaseOut,
 	};
 	
 	//----------------------------------------------------------------//

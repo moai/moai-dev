@@ -5,15 +5,18 @@
 #define	MOAIGFXDEVICE_H
 
 #include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIColor.h>
+#include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 
+class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
 class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
+class MOAIShaderProgram;
 class MOAITexture;
 class MOAITextureBase;
 class MOAIVertexFormat;
@@ -125,15 +128,16 @@ private:
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	ZLLeanList < MOAIGfxResource* > mResources;
 
-	ZLRect			mScissorRect;
-	MOAIShader*		mShader;
-	u32				mSize;
+	ZLRect					mScissorRect;
+	MOAIShaderProgram*		mShaderProgram;
+	bool					mShaderDirty;
+	u32						mSize;
 	
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
 	u32				mMaxTextureSize;
-	u32				mTop;
+	size_t			mTop;
 	
 	u32				mUVMtxInput;
 	u32				mUVMtxOutput;
@@ -145,7 +149,6 @@ private:
 	u32				mVertexMtxInput;
 	u32				mVertexMtxOutput;
 	ZLMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
-	ZLMatrix4x4		mBillboardMtx;
 
 	ZLRect			mViewRect;
 	ZLFrustum		mViewVolume;
@@ -176,7 +179,7 @@ private:
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
 	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
-	void					TransformAndWriteQuad	( USVec4D* vtx, USVec2D* uv );
+	void					TransformAndWriteQuad	( ZLVec4D* vtx, ZLVec2D* uv );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
@@ -185,6 +188,7 @@ private:
 public:
 	
 	friend class MOAIGfxResource;
+	friend class MOAIShaderProgram;
 	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
@@ -217,8 +221,6 @@ public:
 	void					DetectContext			();
 	void					EndPrim					();
 	void					Flush					();
-	
-	const ZLMatrix4x4&		GetBillboardMtx			() const;
 	
 	float					GetDeviceScale			();
 	u32						GetDrawCount			() const { return mDrawCount; }
@@ -266,9 +268,6 @@ public:
 	void					SetAmbientColor			( const ZLColorVec& colorVec );
 	void					SetAmbientColor			( float r, float g, float b, float a );
 	
-	void					SetBillboardMtx			();
-	void					SetBillboardMtx			( const ZLMatrix4x4& mtx );
-	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
@@ -295,6 +294,7 @@ public:
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
+	void					SetShaderProgram		( MOAIShaderProgram* program = 0 );
 	bool					SetTexture				();
 	bool					SetTexture				( MOAITextureBase* texture );
 	bool					SetTexture				( MOAIMultiTexture* multi );
@@ -318,22 +318,23 @@ public:
 	
 	void					SoftReleaseResources	( u32 age );
 	
+	void					UpdateShaderGlobals		();
 	void					UpdateViewVolume		();
 	
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
-	void					WriteQuad				( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	inline void Write ( const TYPE& type ) {
 		
 		size_t top = this->mTop + sizeof ( TYPE );
-		assert ( top < this->mSize );
-		
-		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-		this->mTop = top;
+		if ( top < this->mSize ) {
+			*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
+			this->mTop = top;
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -359,7 +360,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteUV ( float u, float v ) {
 	
-		USVec2D uv;
+		ZLVec2D uv;
 		uv.mX = u;
 		uv.mY = v;
 	
@@ -370,7 +371,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteUV ( USVec2D uv ) {
+	inline void WriteUV ( ZLVec2D uv ) {
 	
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
@@ -387,7 +388,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y, float z ) {
 		
-		USVec4D vtx;
+		ZLVec4D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
 		vtx.mZ = z;
@@ -400,7 +401,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteVtx ( USVec2D vtx ) {
+	inline void WriteVtx ( ZLVec2D vtx ) {
 		
 		this->WriteVtx ( vtx.mX, vtx.mY, 0.0f );
 	}

@@ -5,10 +5,13 @@
 #ifndef _WIN32
 
 #include <zl-util/ZLUnique.h>
-//#include <CoreFoundation/CoreFoundation.h>
 
-#include <kashmir/devrand.h>
-#include <kashmir/uuid.h>
+#if __APPLE__
+	#include <CoreFoundation/CoreFoundation.h>
+#else
+	#include <kashmir/devrand.h>
+	#include <kashmir/uuid.h>
+#endif
 
 //================================================================//
 // ZLUnique
@@ -17,25 +20,22 @@
 //----------------------------------------------------------------//
 STLString ZLUnique::GetGUID () {
 	
-	kashmir::system::DevRand devrandom;
-	std::stringstream buffer;
-	
-	kashmir::uuid_t uuid;
-    
-	devrandom >> uuid;
-    buffer << uuid;
-
-    return buffer.str ();
-	
-	/*
-	CFUUIDRef uuid = CFUUIDCreate( NULL );
-	CFStringRef guid = CFUUIDCreateString ( NULL, uuid );
-	CFRelease ( uuid );
-	STLString result = CFStringGetCStringPtr ( guid, kCFStringEncodingUTF8 );
-	CFRelease ( guid );
-	
-	return result;
-	*/
+	#if __APPLE__
+		CFUUIDRef uuid = CFUUIDCreate( NULL );
+		CFStringRef guid = CFUUIDCreateString ( NULL, uuid );
+		CFRelease ( uuid );
+		STLString result = CFStringGetCStringPtr ( guid, kCFStringEncodingUTF8 );
+		CFRelease ( guid );
+		
+		return result;
+	#else
+		kashmir::system::DevRand devrandom;
+		std::stringstream buffer;
+		kashmir::uuid_t uuid;
+		devrandom >> uuid;
+		buffer << uuid;
+		return buffer.str ();
+	#endif
 }
 
 #endif

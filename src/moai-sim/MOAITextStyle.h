@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTSTYLE_H
 #define	MOAITEXTSTYLE_H
 
+#include <moai-sim/MOAINode.h>
+
 class MOAIFont;
 
 //================================================================//
@@ -14,7 +16,7 @@ protected:
 
 	MOAIFont*	mFont;
 	float		mSize;
-	float		mScale;
+	ZLVec2D		mScale;
 	u32			mColor;
 
 public:
@@ -38,9 +40,12 @@ class MOAITextStyle :
 	public MOAITextStyleState {
 private:
 
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextLabel;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
+	friend class MOAITextStyleCache;
+	friend class MOAITextStyleMap;
 
 	//----------------------------------------------------------------//
 	static int		_getColor				( lua_State* L );

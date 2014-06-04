@@ -29,6 +29,11 @@ float ATan ( float t ) {
 }
 
 //----------------------------------------------------------------//
+float ATan2 ( float x, float y ) {
+	return atan2f ( x, y );
+}
+
+//----------------------------------------------------------------//
 float Cos ( float radians ) {
 
 	// use local sin wrapper to account for range bug (see comment on Sin ())

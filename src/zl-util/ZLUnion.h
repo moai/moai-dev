@@ -13,12 +13,12 @@ template < typename BASE_TYPE >
 class ZLUnion {
 private:
 
-	u32				mBufferSize;
+	size_t			mBufferSize;
 	void*			mBuffer;
 	BASE_TYPE*		mType;
 
 	//----------------------------------------------------------------//
-	void AffirmBuffer ( u32 bufferSize ) {
+	void AffirmBuffer ( size_t bufferSize ) {
 
 		if ( bufferSize > this->mBufferSize ) {
 

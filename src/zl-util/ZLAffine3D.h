@@ -170,6 +170,42 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetXAxis () const {
+	
+		ZLMetaVec3D < TYPE > axis;
+	
+		axis.mX = m [ C0_R0 ];
+		axis.mY = m [ C0_R1 ];
+		axis.mZ = m [ C0_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetYAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C1_R0 ];
+		axis.mY = m [ C1_R1 ];
+		axis.mZ = m [ C1_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetZAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C2_R0 ];
+		axis.mY = m [ C2_R1 ];
+		axis.mZ = m [ C2_R2 ];
+		
+		return axis;
+	}
+
+	//----------------------------------------------------------------//
 	void Ident () {
 
 		m [ C0_R0 ]	= 1;
@@ -372,6 +408,33 @@ public:
 		temp.m[C3_R2]	=	offset.mZ + m[C3_R2];
 		
 		this->Init ( temp );
+	}
+
+	//----------------------------------------------------------------//
+	void Rotate ( float rx, float ry, float rz ) {
+
+		TYPE cx = Cos ( rx );
+		TYPE sx = Sin ( rx );
+		TYPE cy = Cos ( ry );
+		TYPE sy = Sin ( ry );
+		TYPE cz = Cos ( rz );
+		TYPE sz = Sin ( rz );
+
+		m[C0_R0]	= cz*cy;
+		m[C0_R1]	= sz*cy;
+		m[C0_R2]	= -sy;
+
+		m[C1_R0]	= (cz*sy*sx)+(-sz*cx);
+		m[C1_R1]	= (sz*sy*sx)+(cz*cx);
+		m[C1_R2]	= cy;
+
+		m[C2_R0]	= (cz*sy*cx)+(-sz*-sx);
+		m[C2_R1]	= (sz*sy*cx)+(cz*-sx);
+		m[C2_R2]	= cy;
+
+		m[C3_R0]	= 0.0f;
+		m[C3_R1]	= 0.0f;
+		m[C3_R2]	= 0.0f;
 	}
 
 	//----------------------------------------------------------------//

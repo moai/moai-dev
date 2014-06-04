@@ -35,12 +35,10 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 			}
 			self->mFinalizer.Clear ();
 		}
-	
+		
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( self );
-		MOAILuaRuntime::Get ().DeregisterObject ( *self );
 	}
 	
 	if ( self->GetRefCount () == 0 ) {
@@ -170,8 +168,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	assert ( !this->mUserdata );
 	
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().SetObjectStackTrace ( this );
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
+		MOAILuaRuntime::Get ().RegisterObject ( state, *this );
 	}
 	
 	MOAILuaClass* type = this->GetLuaClass ();
@@ -309,10 +306,23 @@ MOAILuaObject::MOAILuaObject ():
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	if (!this->mCollected && MOAILuaRuntime::IsValid ()) {
-		if ( this->mUserdata ) {
+	if ( MOAILuaRuntime::IsValid ()) {
+		
+		MOAILuaRuntime::Get ().DeregisterObject ( *this );
+		
+		// TODO: change from both patrick's fork and the community branch; double check
+		if (( !this->mCollected ) && this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			
+			// clear out the gc
 			this->mUserdata.PushRef ( state );
+			if ( lua_getmetatable ( state, -1 )) {
+				lua_pushnil ( state );
+				lua_setfield ( state, -2, "__gc" );
+				state.Pop ( 1 );
+			}
+			
+			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
 		}
@@ -360,11 +370,17 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 	// is, then refcount can remain 0 and the object will be
 	// collected by the Lua GC.
 
-	if (( this->mCollected ) && ( refCount == 0 )) {
+	if ( this->mCollected && ( refCount == 0 )) {
 		// no Lua binding and no references, so
 		// go ahead and kill this turkey
 		delete this;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::PrintTracking () {
+
+	MOAILuaRuntime::Get ().PrintTracking ( *this );
 }
 
 //----------------------------------------------------------------//

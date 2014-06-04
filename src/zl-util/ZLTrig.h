@@ -8,6 +8,7 @@
 float	ACos	( float t );
 float	ASin	( float t );
 float	ATan	( float t );
+float	ATan2	( float x, float y );
 float	Cos		( float radians );
 float	Cot		( float radians );
 float	Log		( float x );

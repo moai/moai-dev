@@ -77,6 +77,9 @@ protected:
 
 	float mDefaultSize;
 
+	int	mMinFilter;
+	int	mMagFilter;
+
 	//----------------------------------------------------------------//
 	 static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
@@ -88,6 +91,7 @@ protected:
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );
 	static int			_setDefaultSize			( lua_State* L );
+	static int			_setFilter				( lua_State* L );
 	static int			_setFlags				( lua_State* L );
 	static int			_setImage				( lua_State* L );
 	static int			_setReader				( lua_State* L );
@@ -108,7 +112,10 @@ public:
 	GET ( cc8*, Filename, mFilename );
 	GET ( MOAIGlyphCacheBase*, Cache, mCache );
 
-	GET ( float, DefaultSize, mDefaultSize );
+	GET ( int, MinFilter, mMinFilter );
+	GET ( int, MagFilter, mMagFilter );
+
+	GET_SET ( float, DefaultSize, mDefaultSize );
 	
 	enum {
 		FONT_AUTOLOAD_KERNING		= 0x01,

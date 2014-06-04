@@ -57,7 +57,7 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 //	 1:		Box is in front of the plane
 //	 0:		Box intersects the plane
 //	-1:		Box is behind the plane
-s32 ZLSect::BoxToPlane ( const ZLBox& b, const USPlane3D& p ) {
+s32 ZLSect::BoxToPlane ( const ZLBox& b, const ZLPlane3D& p ) {
 
 	// Get the box spans
 	ZLVec3D spans = b.mMax;
@@ -95,7 +95,7 @@ s32 ZLSect::BoxToPlane ( const ZLBox& b, const USPlane3D& p ) {
 //	 1:		Prism is in front of the plane
 //	 0:		Prism intersects the plane
 //	-1:		Prism is behind the plane
-s32 ZLSect::PrismToPlane ( const ZLPrism& prism, const USPlane3D& p ) {
+s32 ZLSect::PrismToPlane ( const ZLPrism& prism, const ZLPlane3D& p ) {
 
 	// Get the span dots
 	float sdX = prism.mXAxis.Dot ( p.mNorm );
@@ -159,7 +159,7 @@ s32 ZLSect::RayToBox ( const ZLBox& b, const ZLVec3D& loc, const ZLVec3D& dir, f
 //	 1:		Rhombus is in front of the plane
 //	 0:		Rhombus intersects the plane
 //	-1:		Rhombus is behind the plane
-s32 ZLSect::RhombusToPlane ( const ZLRhombus& rhombus, const USPlane3D& p ) {
+s32 ZLSect::RhombusToPlane ( const ZLRhombus& rhombus, const ZLPlane3D& p ) {
 
 	// Get the span dots
 	float sdX = rhombus.mXAxis.Dot ( p.mNorm );
@@ -185,7 +185,7 @@ s32 ZLSect::RhombusToPlane ( const ZLRhombus& rhombus, const USPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVec2D& circleLoc, float radius ) {
+u32 ZLSect::VecToCircle ( float& t0, float& t1, ZLVec2D& loc, ZLVec2D& vec, ZLVec2D& circleLoc, float radius ) {
 
 	float a, b, c, d;
 
@@ -223,7 +223,7 @@ u32 ZLSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToPlane ( const USVec2D& loc, const USVec2D& vec, const ZLPlane2D& p, float& t ) {
+u32 ZLSect::VecToPlane ( const ZLVec2D& loc, const ZLVec2D& vec, const ZLPlane2D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -235,7 +235,7 @@ u32 ZLSect::VecToPlane ( const USVec2D& loc, const USVec2D& vec, const ZLPlane2D
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const USPlane3D& p, float& t ) {
+u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const ZLPlane3D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -246,7 +246,23 @@ u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const USPlane3D
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const USPlane3D& p, float& t, ZLVec3D& result ) {
+u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const ZLPlane3D& p, ZLVec3D& result ) {
+
+	float d;
+	d = vec.Dot ( p.mNorm );
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	float t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	
+	result = vec;
+	result.Scale ( t );
+	result.Add ( loc );
+	
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::VecToPlane ( const ZLVec3D& loc, const ZLVec3D& vec, const ZLPlane3D& p, float& t, ZLVec3D& result ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -300,7 +316,7 @@ u32 ZLSect::VecToSphere ( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToUnitCircle ( float& t0, float& t1, const USVec2D& loc, const USVec2D& vec ) {
+u32 ZLSect::VecToUnitCircle ( float& t0, float& t1, const ZLVec2D& loc, const ZLVec2D& vec ) {
 
 	float a, b, c, d;
 

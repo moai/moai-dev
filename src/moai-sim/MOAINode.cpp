@@ -284,7 +284,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	if ( self->CheckAttrExists ( attrID )) {
 	
 		MOAIAttrOp setter;
-		setter.SetValue ( value );
+		setter.SetValue ( value, MOAIAttrOp::ATTR_TYPE_FLOAT );
 	
 		self->ClearAttrLink ( attrID );
 		self->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );
@@ -553,10 +553,10 @@ MOAINode::~MOAINode () {
 		link->mDestNode->RemoveDepLink ( *link );
 		delete link;
 	}
- 
-   if ( this->mState != STATE_IDLE ) {
-     MOAINodeMgr::Get ().Remove ( *this );
-   }
+
+	if ( this->mState != STATE_IDLE ) {
+		MOAINodeMgr::Get ().Remove ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

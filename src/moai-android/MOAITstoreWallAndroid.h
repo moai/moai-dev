@@ -20,18 +20,18 @@ private:
 	//----------------------------------------------------------------//
 	static int	_setListener		( lua_State* L );
 	static int	_showOfferWall		( lua_State* L );
-	
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAITstoreWallAndroid );
-	
+
 	enum {
 		TSTORE_CURRENCY_AWARDED,
 		TOTAL
 	};
 
 	MOAILuaStrongRef		mListeners [ TOTAL ];
-	
+
 			MOAITstoreWallAndroid	();
 			~MOAITstoreWallAndroid	();
 	void	NotifyCurrencyAwarded	( int amount );

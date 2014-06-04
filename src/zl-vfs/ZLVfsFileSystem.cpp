@@ -149,15 +149,6 @@ int ZLVfsFileSystem::ChangeDir ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLVfsFileSystem::CheckFileRemapping ( const char* filename, string& remappedFilename ) {
-
-	if ( this->mFileRemapCallback ) {
-		return this->mFileRemapCallback ( filename, remappedFilename );
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void ZLVfsFileSystem::Cleanup () {
 
 	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
@@ -266,32 +257,38 @@ ZLVfsFileSystem& ZLVfsFileSystem::Get () {
 string ZLVfsFileSystem::GetAbsoluteDirPath ( const char* path ) {
 
 	if ( !path ) return ( char* )"/";
-	
-	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return NormalizeDirPath ( path );
+	string abspath = this->GetAbsolutePath ( path );
+	if ( abspath [ abspath.length () - 1 ] != '/' ) {
+		abspath.push_back ( '/' );
 	}
-
-	string buffer = this->GetWorkingPath (); // use accessor for thread safety
-	buffer.append ( path );
-	buffer = NormalizeDirPath ( buffer.c_str ());
-	
-	return buffer;
+	return abspath;
 }
 
 //----------------------------------------------------------------//
 string ZLVfsFileSystem::GetAbsoluteFilePath ( const char* path ) {
 
-	if ( !path ) return ( char* )"/";
+	if ( !path ) return ( char* )"";
+	return this->GetAbsolutePath ( path );
+}
+
+//----------------------------------------------------------------//
+std::string ZLVfsFileSystem::GetAbsolutePath ( const char* path ) {
+
+	if ( !path ) return ( char* )"";
 	
-	if (( path [ 0 ] == '\\' ) || ( path [ 0 ] == '/' ) || ( path [ 0 ] && ( path [ 1 ] == ':' ))) {
-		return NormalizeFilePath ( path );
+	string norm = this->PathFromRef ( path );
+	
+	if ( this->mFileRemapCallback ) {
+		norm = this->mFileRemapCallback ( norm.c_str ());
+	}
+	
+	if (( norm [ 0 ] == '\\' ) || ( norm [ 0 ] == '/' ) || ( norm [ 0 ] && ( norm [ 1 ] == ':' ))) {
+		return this->NormalizeFilePath ( norm.c_str ());
 	}
 	
 	string buffer = this->GetWorkingPath (); // use accessor for thread safety
-	buffer.append ( path );
-	buffer = NormalizeFilePath ( buffer.c_str ());
-	
-	return buffer;
+	buffer.append ( norm );
+	return this->NormalizeFilePath ( buffer.c_str ());
 }
 
 //----------------------------------------------------------------//
@@ -384,10 +381,12 @@ bool ZLVfsFileSystem::IsVirtualPath ( char const* path ) {
 	size_t len = 0;
 	ZLVfsVirtualPath* cursor = this->mVirtualPaths;
 	
+	string abspath = this->GetAbsoluteFilePath ( path );
+	
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		const char* test = cursor->mPath.c_str ();
-		len = ComparePaths ( test, path );
+		len = ComparePaths ( test, abspath.c_str ());
 		
 		if ( !test [ len ]) return true;
 	}
@@ -398,12 +397,14 @@ bool ZLVfsFileSystem::IsVirtualPath ( char const* path ) {
 int ZLVfsFileSystem::MakeDir ( char const* path ) {
 
 	if ( !path ) return -1;
-	if ( this->IsVirtualPath ( path )) return -1;
+	
+	string abspath = this->GetAbsoluteFilePath ( path );
+	if ( this->IsVirtualPath ( abspath.c_str ())) return -1;
 	
 	#ifdef _WIN32
-		return mkdir ( path );
+		return mkdir ( abspath.c_str ());
 	#else
-		return mkdir ( path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
+		return mkdir ( abspath.c_str (), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
 	#endif
 }
 
@@ -532,32 +533,99 @@ string ZLVfsFileSystem::NormalizeFilePath ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
+string ZLVfsFileSystem::PathFromRef ( const char* path ) {
+
+	if ( path ) {
+		if ( path [ 0 ] != '<' ) return path;
+		
+		for ( size_t i = 0; path [ i ]; ++i ) {
+		
+			if ( path [ i ] == '>' ) {
+			
+				string fullpath = path;
+				string ref = fullpath.substr ( 0, i + 1 );
+				
+				if ( this->mReferenceMap.find ( ref ) != this->mReferenceMap.end ()) {
+					return this->mReferenceMap [ ref ] + fullpath.substr ( i + 1 );
+				}
+				
+				break;
+			}
+		}
+	}
+	return "";
+}
+
+//----------------------------------------------------------------//
+string ZLVfsFileSystem::PathToRef ( const char* path ) {
+
+	if ( this->mReferenceMap.size ()) {
+	
+		string abspath = this->GetAbsolutePath ( path );
+
+		ReferenceMapIt refIt = this->mReferenceMap.begin ();
+		for ( ; refIt != this->mReferenceMap.end (); ++refIt ) {
+		
+			string refPath = refIt->second;
+			size_t refPathLen = refPath.size ();
+		
+			if (( refPathLen <= abspath.size ()) && ( refPath.compare ( 0, string::npos, abspath, 0, refPathLen ) == 0 )) {
+				return refIt->first + abspath.substr ( refPathLen );
+			}
+		}
+	}
+	return path;
+}
+
+//----------------------------------------------------------------//
 int ZLVfsFileSystem::Remove ( const char* path ) {
 
-	if ( this->IsVirtualPath ( path )) return -1;
-	return remove ( path );
+	string abspath = this->GetAbsolutePath ( path );
+
+	if ( this->IsVirtualPath ( abspath.c_str ())) return -1;
+	return remove ( abspath.c_str ());
 }
 
 //----------------------------------------------------------------//
 int ZLVfsFileSystem::RemoveDir ( const char* path ) {
 
-	if ( this->IsVirtualPath ( path )) return -1;
-	return rmdir ( path );
+	string abspath = this->GetAbsolutePath ( path );
+
+	if ( this->IsVirtualPath ( abspath.c_str ())) return -1;
+	return rmdir ( abspath.c_str ());
 }
 
 //----------------------------------------------------------------//
 int ZLVfsFileSystem::Rename ( const char* oldname, const char* newname ) {
 
-	if ( this->IsVirtualPath ( oldname )) return -1;
-	if ( this->IsVirtualPath ( newname )) return -1;
+	string oldnameAbs = this->GetAbsolutePath ( oldname );
+	string newnameAbs = this->GetAbsolutePath ( newname );
+
+	if ( this->IsVirtualPath ( oldnameAbs.c_str ())) return -1;
+	if ( this->IsVirtualPath ( newnameAbs.c_str ())) return -1;
 	
-	return rename ( oldname, newname );
+	return rename ( oldnameAbs.c_str (), newnameAbs.c_str ());
 }
 
 //----------------------------------------------------------------//
 void ZLVfsFileSystem::SetFileRemapCallback ( FileRemapCallback callbackFct ) {
 
 	this->mFileRemapCallback = callbackFct;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFileSystem::SetPathRef ( const char* referenceName, const char* path ) {
+
+	string key = "<";
+	key.append ( referenceName );
+	key.append ( ">" );
+
+	if ( path ) {
+		this->mReferenceMap [ key ] = this->GetAbsolutePath ( path );
+	}
+	else if ( this->mReferenceMap.find ( key ) != this->mReferenceMap.end ()) {
+		this->mReferenceMap.erase ( key );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -572,7 +640,6 @@ string ZLVfsFileSystem::TruncateFilename ( const char* filename ) {
 			len = i + 1;
 		}
 	}
-
 	return buffer.substr ( 0, len );
 }
 

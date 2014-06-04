@@ -5,6 +5,7 @@
 #define	AKU_MODULES_H
 
 #include <host-modules/aku_modules_config.h>
+#include <host-modules/aku_modules_util.h>
 
 #if AKU_WITH_BOX2D
 	#include <moai-box2d/host.h>
@@ -12,6 +13,10 @@
 
 #if AKU_WITH_CHIPMUNK
 	#include <moai-chipmunk/host.h>
+#endif
+
+#if AKU_WITH_CRYPTO
+	#include <moai-crypto/host.h>
 #endif
 
 #if AKU_WITH_FMOD_DESIGNER
@@ -62,6 +67,7 @@ void		AKUModulesAppFinalize					();
 void		AKUModulesAppInitialize					();
 void		AKUModulesContextInitialize				();
 void		AKUModulesParseArgs						( int argc, char** argv );
+void		AKUModulesPause							( bool pause );
 void		AKUModulesRunLuaAPIWrapper				();
 void		AKUModulesUpdate						();
 void		AKUModulesPause							();

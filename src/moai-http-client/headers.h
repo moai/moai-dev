@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAI_HTTP_CLIENT_H
-#define	MOAI_HTTP_CLIENT_H
+#ifndef	MOAI_HTTP_CLIENT_HEADERS_H
+#define	MOAI_HTTP_CLIENT_HEADERS_H
 
 #include <moai-http-client/pch.h>
 

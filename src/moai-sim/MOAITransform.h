@@ -84,8 +84,9 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			();
-	void	OnDepNodeUpdate			();
+	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
+	static float	ClampEuler				( float r );
+	void			OnDepNodeUpdate			();
 
 public:
 

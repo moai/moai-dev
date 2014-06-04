@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-core/MOAISerializerBase.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAISerializerBase
@@ -21,16 +22,16 @@ cc8* MOAISerializerBase::GetFileMagic () {
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializerBase::GetID ( MOAILuaObject* object ) {
+MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = object->GetSelf ();
-	return ( uintptr )lua_topointer ( state, -1 );
+	return ( ObjID )lua_topointer ( state, -1 );
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
+MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
 
-	return ( uintptr )lua_topointer ( state, idx );
+	return ( ObjID )lua_topointer ( state, idx );
 }
 
 //----------------------------------------------------------------//

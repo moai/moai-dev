@@ -557,7 +557,7 @@ bool MOAIDataBuffer::Load ( cc8* filename ) {
 
 	this->mMutex.Lock ();
 
-	u32 size = in.GetLength ();
+	size_t size = in.GetLength ();
 	this->mBytes.Init ( size );
 	in.ReadBytes ( this->mBytes , size );
 

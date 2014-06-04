@@ -36,8 +36,8 @@ MOAIGlobalClassBase::~MOAIGlobalClassBase () {
 //----------------------------------------------------------------//
 void MOAIGlobals::Restore () {
 
-	u32 total = this->mGlobals.Size ();
-	for ( u32 i = 1; i <= total; ++i ) {
+	size_t total = this->mGlobals.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ i ];
 		MOAIGlobalClassBase* global = pair.mGlobal;
 		if ( global ) {
@@ -49,8 +49,8 @@ void MOAIGlobals::Restore () {
 //----------------------------------------------------------------//
 void MOAIGlobals::Retire () {
 
-	u32 total = this->mGlobals.Size ();
-	for ( u32 i = 1; i <= total; ++i ) {
+	size_t total = this->mGlobals.Size ();
+	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
 		MOAIGlobalClassBase* global = pair.mGlobal;
 		if ( global ) {
@@ -66,8 +66,8 @@ MOAIGlobals::MOAIGlobals () {
 //----------------------------------------------------------------//
 MOAIGlobals::~MOAIGlobals () {
 
-	u32 total = this->mGlobals.Size ();
-	for ( u32 i = 1; i <= total; ++i ) {
+	size_t total = this->mGlobals.Size ();
+	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
 		MOAIGlobalClassBase* global = pair.mGlobal;
 

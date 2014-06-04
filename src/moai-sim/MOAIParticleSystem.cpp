@@ -351,12 +351,12 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID ) {
+void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod ) ) return;
 	if ( !this->mDeck ) return;
-	
+	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
@@ -414,16 +414,6 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetPropBounds ( ZLBox& bounds ) {
-
-	if ( this->mComputeBounds ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
-	}
-	return BOUNDS_GLOBAL;
-}
-
-//----------------------------------------------------------------//
 MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 
 	if ( id < this->mStates.Size ()) {
@@ -460,19 +450,31 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mComputeBounds ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
 	// prop's index is *added* to particle's index;
 	// should be initialized to 0 instead of 1
 	this->mIndex = 0;
+	
+	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
 MOAIParticleSystem::~MOAIParticleSystem () {
 
 	this->ClearStates ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
+
+	if ( this->mComputeBounds ) {
+		bounds = this->mParticleBounds;
+		return BOUNDS_OK;
+	}
+	return BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//
@@ -606,14 +608,14 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -683,13 +685,13 @@ void MOAIParticleSystem::ReserveStates ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIProp::SerializeIn ( state, serializer );
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIProp::SerializeOut ( state, serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }

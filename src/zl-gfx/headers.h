@@ -30,6 +30,7 @@ enum {
 	ZGL_BLEND_MODE_REVERSE_SUBTRACT,
 	ZGL_BLEND_MODE_SUBTRACT,
 
+	ZGL_BUFFER_TARGET_ARRAY,
 	ZGL_BUFFER_TARGET_ELEMENT_ARRAY,
 
 	ZGL_BUFFER_USAGE_DYNAMIC_COPY,
@@ -47,7 +48,7 @@ enum {
 	ZGL_CULL_ALL,
 	ZGL_CULL_BACK,
 	ZGL_CULL_FRONT,
-	
+
 	ZGL_DEPTH_ALWAYS,
 	ZGL_DEPTH_EQUAL,
 	ZGL_DEPTH_LESS,
@@ -56,7 +57,7 @@ enum {
 	ZGL_DEPTH_GREATER,
 	ZGL_DEPTH_NEVER,
 	ZGL_DEPTH_NOTEQUAL,
-	
+
 	ZGL_ERROR_INVALID_ENUM,
 	ZGL_ERROR_INVALID_OPERATION,
 	ZGL_ERROR_INVALID_VALUE,
@@ -64,24 +65,24 @@ enum {
 	ZGL_ERROR_OUT_OF_MEMORY,
 	ZGL_ERROR_STACK_OVERFLOW,
 	ZGL_ERROR_STACK_UNDERFLOW,
-	
+
 	ZGL_ERROR_UNKNOWN,
-	
+
 	ZGL_FRAMEBUFFER_ATTACHMENT_COLOR,
 	ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH,
 	ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL,
-	
+
 	ZGL_FRAMEBUFFER_STATUS_COMPLETE,
-	
+
 	ZGL_FRAMEBUFFER_TARGET_DRAW,
 	ZGL_FRAMEBUFFER_TARGET_READ,
 	ZGL_FRAMEBUFFER_TARGET_DRAW_READ,
-	
+
 	ZGL_MATRIX_COLOR,
 	ZGL_MATRIX_MODELVIEW,
 	ZGL_MATRIX_PROJECTION,
 	ZGL_MATRIX_TEXTURE,
-	
+
 	ZGL_PIPELINE_BLEND,
 	ZGL_PIPELINE_COLOR_ARRAY,
 	ZGL_PIPELINE_CULL,
@@ -91,7 +92,7 @@ enum {
 	ZGL_PIPELINE_TEXTURE_2D,
 	ZGL_PIPELINE_TEXTURE_COORD_ARRAY,
 	ZGL_PIPELINE_VERTEX_ARRAY,
-	
+
 	ZGL_PIXEL_FORMAT_ALPHA,
 	ZGL_PIXEL_FORMAT_LUMINANCE,
 	ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA,
@@ -107,7 +108,7 @@ enum {
 	ZGL_PIXEL_FORMAT_RGBA4,
 	ZGL_PIXEL_FORMAT_RGBA8,
 	ZGL_PIXEL_FORMAT_BGRA,
-	
+
 	ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16,
 	ZGL_PIXEL_FORMAT_STENCIL_INDEX8,
 
@@ -134,7 +135,7 @@ enum {
 	ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4_REV,
 	ZGL_PIXEL_TYPE_UNSIGNED_SHORT_1_5_5_5_REV,
 	ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1,
-	
+
 	ZGL_PRIM_LINE_LOOP,
 	ZGL_PRIM_LINE_STRIP,
 	ZGL_PRIM_LINES,
@@ -142,7 +143,7 @@ enum {
 	ZGL_PRIM_TRIANGLE_FAN,
 	ZGL_PRIM_TRIANGLE_STRIP,
 	ZGL_PRIM_TRIANGLES,
-	
+
 	ZGL_PROGRAM_INFO_ACTIVE_ATTRIBUTES,
 	ZGL_PROGRAM_INFO_ACTIVE_ATTRIBUTE_MAX_LENGTH,
 	ZGL_PROGRAM_INFO_ACTIVE_UNIFORMS,
@@ -152,31 +153,31 @@ enum {
 	ZGL_PROGRAM_INFO_LOG_LENGTH,
 	ZGL_PROGRAM_INFO_LINK_STATUS,
 	ZGL_PROGRAM_INFO_VALIDATE_STATUS,
-	
+
 	ZGL_SAMPLE_LINEAR,
 	ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR,
 	ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST,
 	ZGL_SAMPLE_NEAREST,
 	ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR,
 	ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST,
-	
+
 	ZGL_SHADER_INFO_COMPILE_STATUS,
 	ZGL_SHADER_INFO_DELETE_STATUS,
 	ZGL_SHADER_INFO_LOG_LENGTH,
 	ZGL_SHADER_INFO_SOURCE_LENGTH,
 	ZGL_SHADER_INFO_TYPE,
-	
+
 	ZGL_SHADER_TYPE_TESS_CONTROL,
 	ZGL_SHADER_TYPE_TESS_EVALUATION,
 	ZGL_SHADER_TYPE_FRAGMENT,
 	ZGL_SHADER_TYPE_GEOMETRY,
 	ZGL_SHADER_TYPE_VERTEX,
-	
+
 	ZGL_STRING_VENDOR,
 	ZGL_STRING_VERSION,
 	ZGL_STRING_RENDERER,
 	ZGL_STRING_SHADING_LANGUAGE_VERSION,
-	
+
 	ZGL_TEXTURE_BASE_LEVEL,
 	ZGL_TEXTURE_COMPARE_FUNC,
 	ZGL_TEXTURE_COMPARE_MODE,
@@ -195,7 +196,7 @@ enum {
 	ZGL_TEXTURE_WRAP_R,
 	ZGL_TEXTURE_WRAP_S,
 	ZGL_TEXTURE_WRAP_T,
-	
+
 	ZGL_TYPE_BYTE,
 	ZGL_TYPE_DOUBLE,
 	ZGL_TYPE_FLOAT,
@@ -204,7 +205,7 @@ enum {
 	ZGL_TYPE_UNSIGNED_BYTE,
 	ZGL_TYPE_UNSIGNED_INT,
 	ZGL_TYPE_UNSIGNED_SHORT,
-	
+
 	ZGL_WRAP_MODE_CLAMP,
 	ZGL_WRAP_MODE_REPEAT,
 };
@@ -291,6 +292,7 @@ extern void		zglValidateProgram				( u32 program );
 extern void		zglUniform1f					( u32 location, float v0 );
 extern void		zglUniform1i					( u32 location, s32 v0 );
 extern void		zglUniform4fv					( u32 location, u32 count, const float* value );
+extern void		zglUniformMatrix3fv				( u32 location, u32 count, bool transpose, const float* value );
 extern void		zglUniformMatrix4fv				( u32 location, u32 count, bool transpose, const float* value );
 extern void		zglUseProgram					( u32 program );
 
@@ -311,11 +313,20 @@ extern u32		zglCreateFramebuffer			();
 extern u32		zglCreateRenderbuffer			();
 extern void		zglFramebufferRenderbuffer		( u32 target, u32 attachment, u32 renderbuffer );
 extern void		zglFramebufferTexture2D			( u32 target, u32 attachment, u32 texture, s32 level );
+extern u32		zglGetCurrentFramebuffer		();
 extern void		zglRenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 
 //----------------------------------------------------------------//
 extern void		zglBindBuffer					( u32 target, u32 buffer );
 extern void		zglBufferData					( u32 target, u32 size, const void* data, u32 usage );
 extern u32		zglCreateBuffer					();
+extern void*	zglMapBuffer					( u32 target );
+extern void		zglUnmapBuffer					( u32 target );
+
+//----------------------------------------------------------------//
+extern void		zglBindVertexArray				( u32 vertexArrayID );
+extern u32		zglCreateVertexArray			();
+extern void		zglDeleteVertexArray			( u32 vertexArrayID );
+
 
 #endif

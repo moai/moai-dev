@@ -24,9 +24,9 @@ private:
 	bool					mCollected;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)
-	
+
 protected:
-	
+
 	//----------------------------------------------------------------//
 	static int				_gc					( lua_State* L );
 	static int				_getClass			( lua_State* L );
@@ -69,6 +69,7 @@ public:
 	void					LuaRetain					( MOAILuaObject* object );
 							MOAILuaObject				();
 	virtual					~MOAILuaObject				();
+	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );

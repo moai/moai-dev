@@ -44,11 +44,13 @@ private:
 	static int		_getSpeed			( lua_State* L );
 	static int		_getTime			( lua_State* L );
 	static int		_getTimesExecuted	( lua_State* L );
+	static int		_reset				( lua_State* L );
 	static int		_setCurve			( lua_State* L );
 	static int		_setMode			( lua_State* L );
 	static int		_setSpan			( lua_State* L );
 	static int		_setSpeed			( lua_State* L );
 	static int		_setTime			( lua_State* L );
+	static int		_toggleDirection	( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			GenerateKeyframeCallbacks	( float t0, float t1, bool end );
@@ -114,6 +116,7 @@ public:
 	void			SetSpan				( float span );
 	void			SetSpan				( float startTime, float endTime );
 	void			SetTime				( float time );
+	void			ToggleDirection		();
 };
 
 #endif

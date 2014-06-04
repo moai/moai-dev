@@ -44,18 +44,6 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::HandleEvent ( ZLStream& eventStream ) {
-
-	this->mHeading = eventStream.Read < float >( 0.0f );
-	
-	if ( this->mCallback ) {
-		MOAIScopedLuaState state = this->mCallback.GetSelf ();
-		lua_pushnumber ( state, this->mHeading );
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAICompassSensor::MOAICompassSensor () :
 	mHeading ( 0.0f ) {
 
@@ -67,6 +55,18 @@ MOAICompassSensor::~MOAICompassSensor () {
 }
 
 //----------------------------------------------------------------//
+void MOAICompassSensor::ParseEvent ( ZLStream& eventStream ) {
+
+	this->mHeading = eventStream.Read < float >( 0.0f );
+	
+	if ( this->mCallback ) {
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
+		lua_pushnumber ( state, this->mHeading );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAICompassSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -74,6 +74,8 @@ void MOAICompassSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAICompassSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getHeading",			_getHeading },

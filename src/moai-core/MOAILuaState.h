@@ -82,10 +82,11 @@ public:
 	void			Push					( u16 value );
 	void			Push					( u32 value );
 	void			Push					( u64 value );
-	void			Push					( uintptr value );
+	void			Push					( size_t value );
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
+	void			Push					( const void* value );
 	void			Push					( void* data, size_t size );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
@@ -136,6 +137,7 @@ public:
 	template < typename TYPE > void						ReadArray			( int size, TYPE* values, TYPE value );
 	template < typename TYPE > void						SetField			( int idx, cc8* key, TYPE value );
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );
+	template < typename TYPE > void						SetGlobal			( cc8* key, TYPE value );
 	template < typename TYPE > void						WriteArray			( int size, TYPE* values );
 };
 
@@ -144,7 +146,6 @@ template <> bool		MOAILuaState::GetValue < bool >			( int idx, bool value );
 template <> cc8*		MOAILuaState::GetValue < cc8* >			( int idx, cc8* value );
 template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
 template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
-//template <> int			MOAILuaState::GetValue < int >			( int idx, int value );
 template <> s8			MOAILuaState::GetValue < s8 >			( int idx, s8 value );
 template <> s16			MOAILuaState::GetValue < s16 >			( int idx, s16 value );
 template <> s32			MOAILuaState::GetValue < s32 >			( int idx, s32 value );
@@ -153,6 +154,6 @@ template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
 template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
 template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
 template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
-template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
+template <> void*		MOAILuaState::GetValue < void* >		( int idx, void* value );
 
 #endif

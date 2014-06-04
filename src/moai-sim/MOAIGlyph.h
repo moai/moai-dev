@@ -11,7 +11,7 @@ class MOAITextureBase;
 // MOAIKernVec
 //================================================================//
 class MOAIKernVec :
-	public USVec2D {
+	public ZLVec2D {
 public:
 
 	u32			mName;
@@ -52,18 +52,19 @@ public:
 	friend class MOAIGlyphSet;
 	friend class MOAIGlyphCacheBase;
 	friend class MOAIGlyphCachePage;
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextLabel;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
 	
 	GET_SET ( u32, Code, mCode );
 	GET_SET ( u32, PageID, mPageID );
 	GET_SET ( float, AdvanceX, mAdvanceX );
 
 	//----------------------------------------------------------------//
-	void			Draw				( MOAITextureBase& texture, float x, float y, float scale ) const;
+	void			Draw				( MOAITextureBase& texture, float x, float y, float xScale, float yScale ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
-	ZLRect			GetRect				( float x, float y, float scale = 1) const;
+	ZLRect			GetRect				( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );

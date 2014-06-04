@@ -42,9 +42,9 @@ public:
 	}
 };
 
-typedef ZLMetaVec4D < int > USIntVec4D;
-typedef ZLMetaVec4D < float > USVec4D;
-typedef ZLMetaVec4D < double > USVec4D64;
+typedef ZLMetaVec4D < int > ZLIntVec4D;
+typedef ZLMetaVec4D < float > ZLVec4D;
+typedef ZLMetaVec4D < double > ZLVec4D64;
 
 
 #endif

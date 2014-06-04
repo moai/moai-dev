@@ -150,7 +150,7 @@ public:
 
 	cc8*			mBillingProvider;
 	MOAILuaStrongRef		mListeners [ TOTAL ];
-	
+
 					MOAIBillingAndroid				();
 					~MOAIBillingAndroid				();
 	static int		MapAmazonPurchaseRequestStatus	( int code );

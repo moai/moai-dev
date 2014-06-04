@@ -122,6 +122,9 @@
 #undef _popen
 #define _popen zl_popen
 
+#undef printf
+#define putc zl_printf
+
 #undef putc
 #define putc zl_putc
 
@@ -154,6 +157,9 @@
 
 #undef vfscanf
 #define vfscanf zl_vfscanf
+
+#undef vprintf
+#define vprintf zl_vprintf
 
 #ifdef  __cplusplus
 	}

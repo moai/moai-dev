@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_DEBUGGER_H
-#define AKU_DEBUGGER_H
+#ifndef AKU_HARNESS_HOST_H
+#define AKU_HARNESS_HOST_H
 
 #include <moai-core/host.h>
 

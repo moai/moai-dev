@@ -4,7 +4,8 @@
 #ifndef	MOAIEVENTSOURCE_H
 #define	MOAIEVENTSOURCE_H
 
-#include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaState.h>
 
 //================================================================//
 // MOAIEventSource
@@ -25,10 +26,10 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	virtual void	InvokeListener			( u32 eventID ) = 0;
 					MOAIEventSource			();
 	virtual			~MOAIEventSource		();
 	bool			PushListener			( u32 eventID, MOAILuaState& state );
-	bool			PushListenerAndSelf		( u32 eventID, MOAILuaState& state );
 };
 
 //================================================================//
@@ -56,8 +57,10 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	void			InvokeListener				( u32 eventID );
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
+	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
@@ -143,6 +146,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	void			InvokeListener				( u32 eventID );
 					MOAIGlobalEventSource		();
 	virtual			~MOAIGlobalEventSource		();
 };

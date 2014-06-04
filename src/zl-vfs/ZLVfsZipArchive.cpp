@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai_config.h>
+#include <zl-vfs/headers.h>
 #include <zl-vfs/zl_util.h>
 #include <zl-vfs/ZLVfsZipArchive.h>
 
@@ -19,7 +20,7 @@ using namespace std;
 //================================================================//
 	
 //----------------------------------------------------------------//
-int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
+int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 
 	size_t filelen;
 	size_t cursor;
@@ -49,6 +50,10 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 			// maybe found it
 			if ( *( unsigned long* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
 
+				if ( offset ) {
+					( *offset ) = cursor + i;
+				}
+
 				fseek ( file, cursor + i, SEEK_SET );
 				
 				fread ( &this->mSignature, 4, 1, file );
@@ -67,6 +72,19 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 		cursor = ( cursor > SCAN_BUFFER_SIZE ) ? cursor - ( SCAN_BUFFER_SIZE - 4 ) : 0;
 	}
 	return -1;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsZipArchiveHeader::Write ( FILE* file ) {
+	
+	fwrite ( &this->mSignature, 4, 1, file );
+	fwrite ( &this->mDiskNumber, 2, 1, file );
+	fwrite ( &this->mStartDisk, 2, 1, file );
+	fwrite ( &this->mTotalDiskEntries, 2, 1, file );
+	fwrite ( &this->mTotalEntries, 2, 1, file );
+	fwrite ( &this->mCDSize, 4, 1, file );
+	fwrite ( &this->mCDAddr, 4, 1, file );
+	fwrite ( &this->mCommentLength, 2, 1, file );
 }
 
 //================================================================//
@@ -100,6 +118,70 @@ int ZLVfsZipEntryHeader::Read ( FILE* file ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int ZLVfsZipEntryHeader::StripTimestampsAndSkip ( FILE* file, size_t* fileHeaderAddr ) {
+
+	/*
+	unsigned long signature;
+	fread ( &signature, 4, 1, file );
+	if ( signature != ENTRY_HEADER_SIGNATURE ) return -1;
+	
+	fseek ( file, 8, SEEK_CUR );
+	
+	unsigned long zero = 0;
+	fwrite ( &zero, 4, 1, file );
+	
+	fseek ( file, 12, SEEK_CUR );
+
+	unsigned short nameLength;
+	unsigned short extraFieldLength;
+	unsigned short commentLength;
+
+	fread ( &nameLength, 2, 1, file );
+	fread ( &extraFieldLength, 2, 1, file );
+	fread ( &commentLength, 2, 1, file );
+	
+	fseek ( file, 8, SEEK_CUR );
+	
+	if ( fileHeaderAddr ) {
+		*fileHeaderAddr = 0;
+		fread ( fileHeaderAddr, 4, 1, file );
+	}
+	else {
+		fseek ( file, 4, SEEK_CUR );
+	}
+	
+	fseek ( file, nameLength, SEEK_CUR );
+	
+	for ( size_t i = 0; i < ( extraFieldLength + commentLength ); ++i ) {
+		fwrite ( &zero, 1, 1, file );
+	}
+	*/
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsZipEntryHeader::Write ( FILE* file ) {
+	
+	fwrite ( &this->mSignature, 4, 1, file );
+	fwrite ( &this->mByVersion, 2, 1, file );
+	fwrite ( &this->mVersionNeeded, 2, 1, file );
+	fwrite ( &this->mFlag, 2, 1, file );
+	fwrite ( &this->mCompression, 2, 1, file );
+	fwrite ( &this->mLastModTime, 2, 1, file );
+	fwrite ( &this->mLastModDate, 2, 1, file );
+	fwrite ( &this->mCrc32, 4, 1, file );
+	fwrite ( &this->mCompressedSize, 4, 1, file );
+	fwrite ( &this->mUncompressedSize, 4, 1, file );
+	fwrite ( &this->mNameLength, 2, 1, file );
+	fwrite ( &this->mExtraFieldLength, 2, 1, file );
+	fwrite ( &this->mCommentLength, 2, 1, file );
+	fwrite ( &this->mDiskNumber, 2, 1, file );
+	fwrite ( &this->mInternalAttributes, 2, 1, file );
+	fwrite ( &this->mExternalAttributes, 4, 1, file );
+	fwrite ( &this->mFileHeaderAddr, 4, 1, file );
+}
+
 //================================================================//
 // ZLVfsZipFileHeader
 //================================================================//
@@ -118,11 +200,52 @@ int ZLVfsZipFileHeader::Read ( FILE* file ) {
 	fread ( &this->mLastModDate, 2, 1, file );
 	fread ( &this->mCrc32, 4, 1, file );				// *not* to be trusted (Android)
 	fread ( &this->mCompressedSize, 4, 1, file );		// *not* to be trusted (Android)
-	fread ( &this->mUncompressedSize, 4, 1, file );	// *not* to be trusted (Android)
+	fread ( &this->mUncompressedSize, 4, 1, file );		// *not* to be trusted (Android)
 	fread ( &this->mNameLength, 2, 1, file );
 	fread ( &this->mExtraFieldLength, 2, 1, file );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int ZLVfsZipFileHeader::StripTimestampsAndSkip ( FILE* file ) {
+
+	unsigned long signature;
+	fread ( &signature, 4, 1, file );
+	if ( signature != FILE_HEADER_SIGNATURE ) return -1;
+	
+	fseek ( file, 6, SEEK_CUR );
+	
+	unsigned long zero = 0;
+	fwrite ( &zero, 4, 1, file );
+	
+	fseek ( file, 12, SEEK_CUR );
+
+	unsigned short nameLength;
+	unsigned short extraFieldLength;
+
+	fread ( &nameLength, 2, 1, file );
+	fread ( &extraFieldLength, 2, 1, file );
+	
+	fseek ( file, nameLength + extraFieldLength, SEEK_CUR );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsZipFileHeader::Write ( FILE* file ) {
+	
+	fwrite ( &this->mSignature, 4, 1, file );
+	fwrite ( &this->mVersionNeeded, 2, 1, file );
+	fwrite ( &this->mFlag, 2, 1, file );
+	fwrite ( &this->mCompression, 2, 1, file );
+	fwrite ( &this->mLastModTime, 2, 1, file );
+	fwrite ( &this->mLastModDate, 2, 1, file );
+	fwrite ( &this->mCrc32, 4, 1, file );
+	fwrite ( &this->mCompressedSize, 4, 1, file );
+	fwrite ( &this->mUncompressedSize, 4, 1, file );
+	fwrite ( &this->mNameLength, 2, 1, file );
+	fwrite ( &this->mExtraFieldLength, 2, 1, file );
 }
 
 //================================================================//
@@ -300,8 +423,8 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 
 	FILE* file = fopen ( filename, "rb" );
 	if ( !file ) goto error;
-		
-	result = header.FindAndRead ( file );
+	
+	result = header.FindAndRead ( file, 0 );
 	if ( result ) goto error;
 	
 	if ( header.mDiskNumber != 0 ) goto error; // unsupported
@@ -352,6 +475,150 @@ finish:
 	}
 	
 	return result;
+}
+
+//----------------------------------------------------------------//
+/*
+int ZLVfsZipArchive::StripTimestamps ( const char* filename ) {
+	
+	FILE* file = fopen ( filename, "rb+" );
+	if ( !file ) return -1;
+	
+	size_t headerOffset;
+	ZLVfsZipArchiveHeader header;
+	int result = header.FindAndRead ( file, &headerOffset );
+	if ( result ) return -1;
+	
+	//size_t bufferSize = ftell ( file );
+	//void* buffer = malloc ( bufferSize );
+	
+	if ( header.mDiskNumber != 0 ) return -1; // unsupported
+	if ( header.mStartDisk != 0 ) return -1; // unsupported
+	if ( header.mTotalDiskEntries != header.mTotalEntries ) return -1; // unsupported
+	
+	size_t endOfFiles = 0;
+	
+	fseek ( file, header.mCDAddr, SEEK_SET );
+	for ( int i = 0; i < header.mTotalEntries; ++i ) {	
+
+		size_t fileHeaderAddr;
+		ZLVfsZipEntryHeader::StripTimestampsAndSkip ( file, &fileHeaderAddr );
+		
+		size_t resumeAddr = ftell ( file );
+		fseek ( file, fileHeaderAddr, SEEK_SET );
+		ZLVfsZipFileHeader::StripTimestampsAndSkip ( file );
+		endOfFiles = ftell ( file );
+		fseek ( file, resumeAddr, SEEK_SET );
+	}
+	
+	char zb = 0;
+	
+	fseek ( file, endOfFiles, SEEK_SET );
+	for ( size_t i = 0; i < ( header.mCDAddr - endOfFiles ); ++i ) {
+		fwrite ( &zb, 1, 1, file );
+	}
+	
+	fclose ( file );
+	return 1;
+}
+*/
+
+//----------------------------------------------------------------//
+int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfilename ) {
+
+	FILE* infile = fopen ( infilename, "rb" );
+	if ( !infile ) return -1;
+	
+	FILE* outfile = fopen ( outfilename, "wb" );
+	if ( !outfile ) return -1;
+
+	ZLVfsZipArchiveHeader header;
+	int result = header.FindAndRead ( infile, 0 );
+	if ( result ) return -1;
+	
+	assert ( header.mDiskNumber == 0 );
+	assert ( header.mStartDisk == 0 );
+	assert ( header.mTotalDiskEntries == header.mTotalEntries );
+	
+	size_t* fileHeaderAddrTable = ( size_t* )alloca ( header.mTotalEntries * sizeof ( size_t ));
+	
+	// copy the files
+	fseek ( infile, header.mCDAddr, SEEK_SET );
+	for ( int i = 0; i < header.mTotalEntries; ++i ) {
+	
+		ZLVfsZipEntryHeader entryHeader;
+		entryHeader.Read ( infile );
+		fseek ( infile, entryHeader.mNameLength + entryHeader.mExtraFieldLength + entryHeader.mCommentLength, SEEK_CUR );
+		size_t resumeAddr = ftell ( infile );
+		fseek ( infile, entryHeader.mFileHeaderAddr, SEEK_SET );
+		
+		ZLVfsZipFileHeader fileHeader;
+		fileHeader.Read ( infile );
+		
+		size_t skip = fileHeader.mExtraFieldLength;
+		
+		fileHeader.mLastModDate = 0;
+		fileHeader.mLastModTime = 0;
+		fileHeader.mExtraFieldLength = 0;
+		fileHeader.mFlag ^= ( 1 << 3 ); // clear bit 3
+
+		fileHeaderAddrTable [ i ] = ftell ( outfile );
+		fileHeader.Write ( outfile );
+		
+		for ( size_t i = 0; i < fileHeader.mNameLength; ++i ) {
+			putc ( getc ( infile ), outfile );
+		}
+		
+		fseek ( infile, skip, SEEK_CUR );
+		
+		size_t size = fileHeader.mCompression == 0 ? fileHeader.mUncompressedSize : fileHeader.mCompressedSize;
+		
+		for ( size_t i = 0; i < size; ++i ) {
+			putc ( getc ( infile ), outfile );
+		}
+		
+		fseek ( infile, resumeAddr, SEEK_SET );
+	}
+	
+	size_t directoryStartAddr = ftell ( outfile );
+	
+	// copy the directory
+	fseek ( infile, header.mCDAddr, SEEK_SET );
+	for ( int i = 0; i < header.mTotalEntries; ++i ) {	
+
+		ZLVfsZipEntryHeader entryHeader;
+		entryHeader.Read ( infile );
+
+		entryHeader.mFileHeaderAddr = fileHeaderAddrTable [ i ];
+		entryHeader.mLastModDate = 0;
+		entryHeader.mLastModTime = 0;
+
+		size_t skip = entryHeader.mExtraFieldLength + entryHeader.mCommentLength;
+
+		entryHeader.mExtraFieldLength = 0;
+		entryHeader.mCommentLength = 0;
+
+		entryHeader.Write ( outfile );
+		
+		for ( size_t i = 0; i < entryHeader.mNameLength; ++i ) {
+			putc ( getc ( infile ), outfile );
+		}
+		
+		fseek ( infile, skip, SEEK_CUR );
+	}
+	
+	size_t directoryEndAddr = ftell ( outfile );
+	
+	// copy the header
+	header.mCDAddr = directoryStartAddr;
+	header.mCDSize = directoryEndAddr - directoryStartAddr;
+	header.mCommentLength = 0;
+	header.Write ( outfile );
+
+	fclose ( infile );
+	fclose ( outfile );
+
+	return 0;
 }
 
 //----------------------------------------------------------------//

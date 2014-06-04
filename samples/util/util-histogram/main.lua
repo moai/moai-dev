@@ -30,7 +30,7 @@ print ()
 
 print ( "FORCING GARBAGE COLLECTION" )
 objects = nil
-MOAISim.forceGarbageCollection ()
+MOAISim.forceGC ()
 print ()
 
 print ( "REPORTING HISTOGRAM" )

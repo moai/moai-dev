@@ -61,6 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
+	public MOAIRenderable,
 	public b2DestructionListener {
 private:
 
@@ -97,6 +98,7 @@ private:
 	static int		_getAutoClearForces			( lua_State* L );
 	static int		_getGravity					( lua_State* L );
 	static int		_getLinearSleepTolerance	( lua_State* L );
+	static int		_getRayCast					( lua_State* L );
 	static int		_getTimeToSleep				( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );
 	static int		_setAutoClearForces			( lua_State* L );
@@ -107,7 +109,6 @@ private:
 	static int		_setLinearSleepTolerance	( lua_State* L );
 	static int		_setTimeToSleep				( lua_State* L );
 	static int		_setUnitsToMeters			( lua_State* L );
-	static int		_getRayCast				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			Destroy					();
@@ -138,7 +139,6 @@ public:
 	static const u32 DEBUG_DRAW_DEFAULT = DEBUG_DRAW_SHAPES | DEBUG_DRAW_JOINTS | DEBUG_DRAW_CENTERS;
 	
 	//----------------------------------------------------------------//
-	void			DrawDebug				();
 	bool			IsDone					();
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
@@ -146,31 +146,7 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-};
-
-//================================================================//
-// MOAIBox2DRayCastCallback
-//================================================================//
-class MOAIBox2DRayCastCallback : public b2RayCastCallback
-{
-public:
-  MOAIBox2DRayCastCallback() {
-     m_fixture = NULL;
-     m_point.SetZero();
-     m_normal.SetZero();
-  }
- 
-  float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-     m_fixture = fixture;
-     m_point = point;
-     m_normal = normal;
-     
-     return fraction;
-  }
- 
-  b2Fixture* m_fixture;
-  b2Vec2 m_point;
-  b2Vec2 m_normal;
+	void			Render					();
 };
 
 #endif

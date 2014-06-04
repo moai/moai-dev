@@ -22,6 +22,7 @@ private:
 	
 	bool	mNew;
 	u32		mPass;
+	bool	mIsDefaultParent;
 	
 	MOAIAction* mParent;
 	
@@ -29,6 +30,8 @@ private:
 	ZLLeanList < MOAIAction* > mChildren;
 	
 	ZLLeanLink < MOAIAction* > mLink;
+	
+	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
 	float	mThrottle;
 	bool	mIsPaused;
@@ -53,6 +56,8 @@ private:
 	void				Update					( float step, u32 pass, bool checkPass );
 
 protected:
+
+	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )
 
 	//----------------------------------------------------------------//
 	virtual void		OnStart					();

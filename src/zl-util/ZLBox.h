@@ -41,12 +41,15 @@ public:
 	void		Init			( const ZLBox& box );
 	void		Init			( const ZLPrism& prism );
 	void		Init			( const ZLVec3D& vec );
+	void		Init			( const ZLRect& rect, u32 plane, float back, float front );
 	void		Init			( float left, float top, float right, float bottom, float back, float front );
 	bool		IsPoint			();
+	bool		IsSame			( const ZLBox& box ) const;
 	void		Offset			( const ZLVec3D& offset );
 	bool		Overlap			( const ZLBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const ZLBox& box, u32 plane ) const;
 	void		Pad				( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
+	void		Pad				( float xPad, float yPad, float zPad );
 	void		Scale			( float scale );
 	void		Scale			( const ZLVec3D& scale );
 	void		Transform		( const ZLAffine3D& mtx ); // Gets AABB of transformed box

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIBoundsDeck.h>
+#include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxDevice.h>
@@ -33,7 +34,7 @@ void MOAIDeckGfxState::Reset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckGfxState::SetShader ( MOAIGfxState* shader ) {
+void MOAIDeckGfxState::SetShader ( MOAIShader* shader ) {
 
 	if ( shader ) {
 		this->mShader = shader;
@@ -51,6 +52,15 @@ void MOAIDeckGfxState::SetTexture ( MOAIGfxState* texture ) {
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDeck::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+
+	self->mTexture->PushLuaUserdata ( state );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	setBoundsDeck
@@ -111,7 +121,7 @@ int MOAIDeck::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
+bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec ) {
 	
 	ZLRect bounds = this->GetBounds ( idx, remapper ).GetRect ( ZLBox::PLANE_XY );
 	return bounds.Contains ( vec );
@@ -192,6 +202,12 @@ ZLBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
+
+	shape.Set ();
+}
+
+//----------------------------------------------------------------//
 void MOAIDeck::GetGfxState ( MOAIDeckGfxState& gfxState ) {
 
 	if ( this->mShader ) {
@@ -231,6 +247,7 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getTexture",				_getTexture },
 		{ "setBoundsDeck",			_setBoundsDeck },
 		{ "setShader",				_setShader },
 		{ "setTexture",				_setTexture },

@@ -3,13 +3,8 @@
 
 #include "pch.h"
 #include <moai-core/MOAISerializer.h>
-#include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAIScopedLuaState.h>
-#include <moai-core/MOAILuaObject.h>
-#include <moai-core/MOAILuaRuntime.h>
-#include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaClass-impl.h>
+#include <moai-core/MOAILua.h>
+
 //================================================================//
 // MOAISerializer
 //================================================================//
@@ -169,22 +164,22 @@ void MOAISerializer::AddLuaReturn ( MOAILuaObject* object ) {
 //----------------------------------------------------------------//
 void MOAISerializer::AddLuaReturn ( MOAILuaState& state, int idx ) {
 
-	uintptr memberID = this->AffirmMemberID ( state, idx );
+	ObjID memberID = this->AffirmMemberID ( state, idx );
 	this->mReturnList.push_back ( memberID );
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = object->GetSelf ();
 	return this->AffirmMemberID ( state, -1 );
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 
 	idx = state.AbsIndex ( idx );
-	uintptr memberID = ( uintptr )lua_topointer ( state, idx );
+	ObjID memberID = ( ObjID )lua_topointer ( state, idx );
 
 	// bail if the table's already been added
 	if ( this->mObjectMap.contains ( memberID )) return memberID;
@@ -296,7 +291,7 @@ void MOAISerializer::SerializeToFile ( cc8* filename ) {
 void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	
 	stream.Print ( "%s\n", this->GetFileMagic ());
-	stream.Print ( "serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
 	
 	stream.Print ( "\n" );
 	
@@ -351,7 +346,7 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 	objectIt = this->mObjectMap.begin ();
 	for ( ; objectIt != this->mObjectMap.end (); ++objectIt ) {
 		
-		uintptr id = objectIt->first;
+		ObjID id = objectIt->first;
 		MOAISerializerObjectEntry& entry = objectIt->second;
 		
 		MOAILuaObject* object = entry.mObject;
@@ -373,7 +368,7 @@ void MOAISerializer::WriteObjectInits ( ZLStream& stream ) {
 	
 	while ( this->mPending.size ()) {
 		
-		uintptr id = this->mPending.front ();
+		ObjID id = this->mPending.front ();
 		this->mPending.pop_front ();
 		
 		if ( !this->mObjectMap.contains ( id )) continue;
@@ -428,7 +423,7 @@ void MOAISerializer::WriteReturnList ( ZLStream& stream ) {
 	
 	ReturnListIt returnListIt = this->mReturnList.begin ();
 	for ( ; returnListIt != this->mReturnList.end (); ++returnListIt ) {
-		uintptr id = *returnListIt;
+		ObjID id = *returnListIt;
 		
 		if ( returnListIt != this->mReturnList.begin ()) {
 			stream.Print ( ", " );
@@ -506,7 +501,7 @@ u32 MOAISerializer::WriteTable ( ZLStream& stream, MOAILuaState& state, int idx,
 			}
 			case LUA_TTABLE: {
 				
-				uintptr tableID = ( uintptr )lua_topointer ( state, -1 );
+				ObjID tableID = ( ObjID )lua_topointer ( state, -1 );
 				if ( this->mTableMap.contains ( tableID )) {
 					stream.Print ( "objects [ 0x%08X ],\n", tableID );
 				}
@@ -551,7 +546,7 @@ void MOAISerializer::WriteTableDecls ( ZLStream& stream ) {
 
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
-		uintptr tableID = tableIt->first;
+		ObjID tableID = tableIt->first;
 		stream.Print ( "\t[ 0x%08X ] = {},\n", tableID );
 	}
 	
@@ -599,7 +594,7 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TTABLE: {
-				uintptr tableID = ( uintptr )lua_topointer ( state, -1 );
+				ObjID tableID = ( ObjID )lua_topointer ( state, -1 );
 				if ( this->mTableMap.contains ( tableID )) {
 					stream.Print ( "objects [ 0x%08X ]\n", tableID );
 				}
@@ -616,7 +611,7 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 			}
 			case LUA_TUSERDATA: {
 				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1, false );
-				u32 instanceID = this->GetID ( object );
+				ObjID instanceID = this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;
 			}
@@ -645,7 +640,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
 		
-		uintptr tableID = tableIt->first;
+		ObjID tableID = tableIt->first;
 		stream.Print ( "\ttable = objects [ 0x%08X ]\n", tableID );
 		
 		MOAILuaStrongRef& tableRef = tableIt->second;

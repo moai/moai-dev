@@ -4,9 +4,7 @@
 #include "pch.h"
 
 #include <moai-core/MOAIEventSource.h>
-
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaClass-impl.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAIEventSource
@@ -33,16 +31,6 @@ bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 			return true;
 		}
 		state.Pop ( 1 );
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
-
-	if ( this->PushListener ( eventID, state )) {
-		this->PushLuaUserdata ( state );
-		return true;
 	}
 	return false;
 }
@@ -119,6 +107,15 @@ void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListenerAndSelf ( eventID, state )) {
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 	RTTI_BEGIN
@@ -128,6 +125,16 @@ MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 //----------------------------------------------------------------//
 MOAIInstanceEventSource::~MOAIInstanceEventSource () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIInstanceEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
+
+	if ( this->PushListener ( eventID, state )) {
+		this->PushLuaUserdata ( state );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -162,6 +169,15 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 		lua_newtable ( state );
 		this->mListenerTable.SetRef ( state, -1 );
 		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( eventID, state )) {
+		state.DebugCall ( 0, 0 );
 	}
 }
 

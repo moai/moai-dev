@@ -53,6 +53,38 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	u32 count = self->mTop;
+	if ( count == 0 ) return 0;
+	
+	ZLVec2D loc;
+	
+	for ( u32 i = 0; i < count; ++i ) {
+		u32 touchID = self->mActiveStack [ i ];
+		const MOAITouch& touch = self->mTouches [ touchID ];
+		
+		if ( i == 0 ) {
+			loc.mX = touch.mX;
+			loc.mY = touch.mY;
+		}
+		else {
+			loc.mX += touch.mX;
+			loc.mY += touch.mY;
+		}
+	}
+	
+	loc.Scale ( 1.0f / ( float )count );
+	
+	state.Push ( loc.mX );
+	state.Push ( loc.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTouch
 	@text	Checks to see if there are currently touches being made on the screen.
 
@@ -277,7 +309,24 @@ u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAITouchSensor::MOAITouchSensor () {
+
+	RTTI_SINGLE ( MOAISensor )
+	
+	mTapTime = DEFAULT_TAPTIME;
+	mTapMargin = DEFAULT_TAPMARGIN;
+	
+	mAcceptCancel = false;
+	
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAITouchSensor::~MOAITouchSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	u32 eventType = eventStream.Read < u32 >( 0 );
 
@@ -343,7 +392,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 			
 			this->mTouches [ idx ] = touch;
 			
-			if (( idx != UNKNOWN_TOUCH ) && ( this->mCallback )) {
+			if ( this->mCallback ) {
 				
 				MOAIScopedLuaState state = this->mCallback.GetSelf ();
 				lua_pushnumber ( state, eventType );
@@ -355,23 +404,6 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-MOAITouchSensor::MOAITouchSensor () {
-
-	RTTI_SINGLE ( MOAISensor )
-	
-	mTapTime = DEFAULT_TAPTIME;
-	mTapMargin = DEFAULT_TAPMARGIN;
-	
-	mAcceptCancel = false;
-	
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-MOAITouchSensor::~MOAITouchSensor () {
 }
 
 //----------------------------------------------------------------//
@@ -427,9 +459,12 @@ void MOAITouchSensor::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAISensor::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
 		{ "down",				_down },
 		{ "getActiveTouches",	_getActiveTouches },
+		{ "getCenterLoc",		_getCenterLoc },
 		{ "getTouch",			_getTouch },
 		{ "hasTouches",			_hasTouches },
 		{ "isDown",				_isDown },

@@ -7,8 +7,6 @@
 #include <math.h>
 #include <string.h>
 
-
-
 #include <host-modules/aku_modules.h>
 
 #include <moai-android/moaiext-android.h>
@@ -18,8 +16,6 @@
 #include <moai-core/host.h>
 #include <moai-sim/headers.h>
 
-
- 
 //================================================================//
 // Input event locking queue
 //================================================================//
@@ -233,15 +229,11 @@
 		inputQueue->Push ( ievent );
 	}
 
-
-
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
         AKUModulesAppFinalize();
         AKUAppFinalize ();
 	}
-
-
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
@@ -260,7 +252,6 @@
 
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
-
 
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColonyAndroid::Affirm ();
@@ -285,6 +276,11 @@
 #ifndef DISABLE_FACEBOOK
 		MOAIFacebookAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
+#endif
+
+#ifndef DISABLE_FLURRY
+		MOAIFlurryAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFlurryAndroid );
 #endif
 
 #ifndef DISABLE_NOTIFICATIONS
@@ -334,8 +330,6 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesRunLuaAPIWrapper ( JNIEnv* env, jclass obj ) {
         AKUModulesRunLuaAPIWrapper ();
     }
-
-  
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
@@ -559,7 +553,6 @@
 
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}
-
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {

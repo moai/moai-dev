@@ -7,64 +7,43 @@
 #ifndef DISABLE_TAPJOY
 
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 //================================================================//
 // MOAITapjoyAndroid
 //================================================================//
-/**	@name	MOAITapjoyAndroid
-	@text	Wrapper for Tapjoy integration on Android devices.
-			Tapjoy provides a turnkey advertising platform that
-			delivers cost-effective, high-value new users and helps 
-			apps make money. Exposed to Lua via MOAITapjoy on 
-			all mobile platforms.
-
-	@const	TAPJOY_VIDEO_AD_BEGIN								Event code for Tapjoy video ad playback begin. Unused.
-	@const	TAPJOY_VIDEO_AD_CLOSE								Event code for Tapjoy video ad playback completion.
-	@const	TAPJOY_VIDEO_AD_ERROR								Event code for Tapjoy video ad playback errors.
-	@const	TAPJOY_VIDEO_AD_READY								Event code for Tapjoy video ad playback availability.
-
-	@const	TAPJOY_VIDEO_STATUS_NO_ERROR						Error code for success.
-	@const	TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE		Error code for inadequate storage for video ad.
-	@const	TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS	Error code for network error.
-	@const	TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			Error code for playback error.
-*/
+// TODO: doxygen
 class MOAITapjoyAndroid :
-	public MOAIGlobalClass < MOAITapjoyAndroid, MOAILuaObject > {
+	public MOAIGlobalClass < MOAITapjoyAndroid, MOAIGlobalEventSource >,
+	public JniUtils {
 private:
 
 	//----------------------------------------------------------------//
-	static int	_getUserId		( lua_State* L );
-	static int	_initVideoAds	( lua_State* L );
-	static int	_init			( lua_State* L );
-	static int	_setListener	( lua_State* L );
-	static int	_showOffers		( lua_State* L );
-	
+	static int	_init				( lua_State* L );
+	static int	_setUserId			( lua_State* L );
+	static int	_showOffers			( lua_State* L );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAITapjoyAndroid );
-	
+
 	enum {
-		TAPJOY_VIDEO_AD_BEGIN,
-		TAPJOY_VIDEO_AD_CLOSE,
+		TAPJOY_VIDEO_AD_START,
+		TAPJOY_VIDEO_AD_COMPLETE,
 		TAPJOY_VIDEO_AD_ERROR,
-		TAPJOY_VIDEO_AD_READY,
-		TOTAL
-	};
+		TAPJOY_OFFERS_RESPONSE,
+		TAPJOY_OFFERS_RESPONSE_FAILED,
+    };
 
 	enum {
-        TAPJOY_VIDEO_STATUS_NO_ERROR,
-        TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE,
-        TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS,
-        TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO,
+        TAPJOY_VIDEO_STATUS_MEDIA_STORAGE_UNAVAILABLE		= 1,
+        TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS	= 2,
+        TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			= 3,
 	};
-	
-	MOAILuaStrongRef		mListeners [ TOTAL ];
 
+	//----------------------------------------------------------------//
 			MOAITapjoyAndroid	();
 			~MOAITapjoyAndroid	();
-	void	NotifyVideoAdReady	();
-	void	NotifyVideoAdError	( int code );
-	void	NotifyVideoAdClose	();
 	void	RegisterLuaClass	( MOAILuaState& state );
 };
 

@@ -16,6 +16,21 @@
 #include <moai-sim/MOAIWheelSensor.h>
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIInputDevice::_getExtendedName( lua_State* L )
+{
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+
+		lua_pushstring(state, self->mNameExtended.c_str());
+
+	return 1;
+}
+
+//================================================================//
 // MOAIInputDevice
 //================================================================//
 
@@ -26,15 +41,6 @@ MOAISensor* MOAIInputDevice::GetSensor ( u8 sensorID ) {
 		return this->mSensors [ sensorID ];
 	}
 	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIInputDevice::HandleEvent ( u8 sensorID, ZLStream& eventStream ) {
-
-	MOAISensor* sensor = this->GetSensor ( sensorID );
-	if ( sensor ) {
-		sensor->HandleEvent ( eventStream );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -77,7 +83,7 @@ void MOAIInputDevice::ReserveSensors ( u8 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::Reset () {
+void MOAIInputDevice::ResetSensors () {
 
 	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
@@ -85,16 +91,6 @@ void MOAIInputDevice::Reset () {
 			sensor->Reset ();
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-int MOAIInputDevice::_getExtendedName( lua_State* L )
-{
-	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
-
-		lua_pushstring(state, self->mNameExtended.c_str());
-
-	return 1;
 }
 
 //----------------------------------------------------------------//

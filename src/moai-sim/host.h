@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_SIM_H
-#define AKU_SIM_H
+#ifndef MOAI_SIM_HOST_H
+#define MOAI_SIM_HOST_H
 
 #include <moai-core/host.h>
 
@@ -17,10 +17,10 @@ enum {
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
-typedef void ( *AKUShowCursorFunc )				();
 typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
+typedef void ( *AKUShowCursorFunc )				();
 
 // setup
 AKU_API void			AKUSimAppFinalize				();
@@ -64,6 +64,8 @@ AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char con
 AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputTimebase				( double timebase ); // optional: sets timebase event timestamps
+AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets timestamp for next input event
 
 // input events api
 AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );

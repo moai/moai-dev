@@ -1,0 +1,10 @@
+bin/
+Win32/
+x64/
+Debug*/
+Release*/
+CodeAnalyst/
+*.user
+*.ncb
+*.suo
+*.cache

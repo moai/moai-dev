@@ -322,6 +322,39 @@ int MOAIGridFancy::_setPalette ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+
+	float tileWidth = this->GetTileWidth();
+	float tileHeight = this->GetTileHeight();
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	ZLColorVec penColor = gfxDevice.GetPenColor();
+
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
+			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
+			u32 color = this->GetColor ( wrap.mX, wrap.mY );
+			float alpha = this->GetAlpha ( wrap.mX, wrap.mY );
+			float scale = this->GetScale ( wrap.mX, wrap.mY );
+			
+			MOAICellCoord coord ( x, y );
+			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+			if (color) {
+				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
+			} else {
+				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
+			}
+			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f);
+		}
+	}
+	
+	gfxDevice.SetPenColor(penColor);
+}
+
+//----------------------------------------------------------------//
 void MOAIGridFancy::FillAlpha ( float value ) {
 
 	this->mAlphas.Fill ( value );
@@ -533,33 +566,3 @@ void MOAIGridFancy::SetScale ( int xTile, int yTile, float value ) {
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
-	float tileWidth = this->GetTileWidth();
-	float tileHeight = this->GetTileHeight();
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLColorVec penColor = gfxDevice.GetPenColor();
-
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
-			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
-			u32 color = this->GetColor ( wrap.mX, wrap.mY );
-			float alpha = this->GetAlpha ( wrap.mX, wrap.mY );
-			float scale = this->GetScale ( wrap.mX, wrap.mY );
-			
-			MOAICellCoord coord ( x, y );
-			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-			if (color) {
-				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
-			} else {
-				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
-			}
-			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f);
-		}
-	}
-	
-	gfxDevice.SetPenColor(penColor);
-}

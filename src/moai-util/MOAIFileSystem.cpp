@@ -45,7 +45,7 @@ int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	bool result = ZLFileSys::CheckFileExists ( filename, true );
+	bool result = ZLFileSys::CheckFileExists ( filename );
 	
 	lua_pushboolean ( state, result );
 	return 1;
@@ -298,6 +298,26 @@ int MOAIFileSystem::_mountVirtualDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_pathFromRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	state.Push ( ZLFileSys::PathFromRef ( ref ).c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_pathToRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	state.Push ( ZLFileSys::PathToRef ( ref ).c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	rename
 	@text	Renames a file or folder.
 
@@ -318,6 +338,19 @@ int MOAIFileSystem::_rename ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_setPathRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	cc8* path = state.GetValue < cc8* >( 2, 0 );
+	
+	ZLFileSys::SetPathRef ( ref, path );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setWorkingDirectory
 	@text	Sets the current working directory.
 
@@ -329,6 +362,19 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	bool result = ZLFileSys::SetCurrentPath ( path );
+	
+	lua_pushboolean ( state, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* infilename = state.GetValue < cc8* >( 1, "" );
+	cc8* outfilename = state.GetValue < cc8* >( 2, "" );
+	bool result = ZLFileSys::StripPKZipTimestamps ( infilename, outfilename );
 	
 	lua_pushboolean ( state, result );
 	return 1;
@@ -355,8 +401,12 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "listDirectories",			_listDirectories },
 		{ "listFiles",					_listFiles },
 		{ "mountVirtualDirectory",		_mountVirtualDirectory },
+		{ "pathFromRef",				_pathFromRef },
+		{ "pathToRef",					_pathToRef },
 		{ "rename",						_rename },
+		{ "setPathRef",					_setPathRef },
 		{ "setWorkingDirectory",		_setWorkingDirectory },
+		{ "stripPKZipTimestamps",		_stripPKZipTimestamps },
 		{ NULL, NULL }
 	};
 

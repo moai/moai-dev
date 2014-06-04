@@ -189,6 +189,14 @@ void MOAILuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+void MOAILuaState::SetGlobal ( cc8* key, TYPE value ) {
+
+	this->Push ( value );
+	lua_setglobal ( this->mState, key );
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 void MOAILuaState::WriteArray ( int size, TYPE* values ) {
 
 	for ( int i = 0; i < size; ++i ) {

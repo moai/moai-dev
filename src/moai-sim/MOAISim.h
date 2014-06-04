@@ -71,6 +71,7 @@ private:
 	double			mSimTime;		// elapsed simulation running time (in seconds)
 	double			mRealTime;		// time updated from system clock
 	double			mFrameTime;		// time last frame time was measured (in seconds)
+	double			mPauseTime;		// time the sim was paused
 	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
@@ -105,30 +106,24 @@ private:
 	static int		_collectgarbage				( lua_State* L ); // replacement for Lua's collectgarbage
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
-	static int		_showCursor					( lua_State* L );
-	static int		_hideCursor					( lua_State* L );
 	static int		_forceGC					( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
-	static int		_getHistogram				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
+	static int		_hideCursor					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
-	static int		_reportHistogram			( lua_State* L );
-	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
 	static int		_setCpuBudget				( lua_State* L );
 	static int		_setGCActive				( lua_State* L );
 	static int		_setGCStep					( lua_State* L );
-	static int		_setHistogramEnabled		( lua_State* L );
-	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLongDelayThreshold		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
 	static int		_setLuaAllocLogEnabled		( lua_State* L );
@@ -136,6 +131,7 @@ private:
 	static int		_setStepMultiplier			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
 	static int		_setTraceback				( lua_State* L );
+	static int		_showCursor					( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -151,6 +147,8 @@ private:
 	void			OnGlobalsFinalize			();
 	void			OnGlobalsRestore			();
 	void			OnGlobalsRetire				();
+	void			SendPauseEvent				();
+	void			SendResumeEvent				();
 	double			StepSim						( double step, u32 multiplier );
 
 public:
@@ -175,10 +173,10 @@ public:
 	
 	GET_SET ( EnterFullscreenModeFunc, EnterFullscreenModeFunc, mEnterFullscreenModeFunc );
 	GET_SET ( ExitFullscreenModeFunc, ExitFullscreenModeFunc, mExitFullscreenModeFunc );
-	GET_SET ( ShowCursorFunc, ShowCursorFunc, mShowCursorFunc );
 	GET_SET ( HideCursorFunc, HideCursorFunc, mHideCursorFunc );
 	GET_SET ( OpenWindowFunc, OpenWindowFunc, mOpenWindowFunc );
 	GET_SET ( SetSimStepFunc, SetSimStepFunc, mSetSimStepFunc );
+	GET_SET ( ShowCursorFunc, ShowCursorFunc, mShowCursorFunc );
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;
@@ -194,13 +192,11 @@ public:
 	//----------------------------------------------------------------//
 					MOAISim						();
 					~MOAISim					();
-	void			PauseMOAI					();
+	void			Pause						();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			ResumeMOAI					();
+	void			Resume						();
 	void			SendFinalizeEvent			();
-	void			SendPauseEvent				();
-	void			SendResumeEvent				();
 	void			SetStep						( double step );
 	void			Update						();
 };

@@ -40,7 +40,6 @@ public:
 	RowSpan*		AllocRow					( u32 height );
 	void			Clear						();
 	bool			ExpandToNextPowerofTwo		();
-	void			InitCanvas					( u32 width, u32 height, ZLColor::Format colorFmt, USPixel::Format pixelFmt );
 					MOAIGlyphCachePage			();
 					~MOAIGlyphCachePage			();
 };
