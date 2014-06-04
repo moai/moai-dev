@@ -106,8 +106,6 @@ private:
 	static int		_collectgarbage				( lua_State* L ); // replacement for Lua's collectgarbage
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
-	static int		_showCursor					( lua_State* L );
-	static int		_hideCursor					( lua_State* L );
 	static int		_forceGC					( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
@@ -119,6 +117,7 @@ private:
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
+	static int		_hideCursor					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
@@ -132,6 +131,7 @@ private:
 	static int		_setStepMultiplier			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
 	static int		_setTraceback				( lua_State* L );
+	static int		_showCursor					( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -173,10 +173,10 @@ public:
 	
 	GET_SET ( EnterFullscreenModeFunc, EnterFullscreenModeFunc, mEnterFullscreenModeFunc );
 	GET_SET ( ExitFullscreenModeFunc, ExitFullscreenModeFunc, mExitFullscreenModeFunc );
-	GET_SET ( ShowCursorFunc, ShowCursorFunc, mShowCursorFunc );
 	GET_SET ( HideCursorFunc, HideCursorFunc, mHideCursorFunc );
 	GET_SET ( OpenWindowFunc, OpenWindowFunc, mOpenWindowFunc );
 	GET_SET ( SetSimStepFunc, SetSimStepFunc, mSetSimStepFunc );
+	GET_SET ( ShowCursorFunc, ShowCursorFunc, mShowCursorFunc );
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;

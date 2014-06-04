@@ -149,29 +149,4 @@ public:
 	void			Render					();
 };
 
-//================================================================//
-// MOAIBox2DRayCastCallback
-//================================================================//
-class MOAIBox2DRayCastCallback : public b2RayCastCallback
-{
-public:
-  MOAIBox2DRayCastCallback() {
-     m_fixture = NULL;
-     m_point.SetZero();
-     m_normal.SetZero();
-  }
- 
-  float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction) {
-     m_fixture = fixture;
-     m_point = point;
-     m_normal = normal;
-     
-     return fraction;
-  }
- 
-  b2Fixture* m_fixture;
-  b2Vec2 m_point;
-  b2Vec2 m_normal;
-};
-
 #endif

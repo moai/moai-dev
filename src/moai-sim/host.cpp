@@ -252,6 +252,12 @@ void AKURender () {
 }
 
 //----------------------------------------------------------------//
+void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
+
+	MOAISim::Get ().SetHideCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
 void AKUReserveInputDevices ( int total ) {
 
 	MOAIInputMgr::Get ().ReserveDevices (( u8 )total );
@@ -273,18 +279,6 @@ void AKUSetFunc_EnterFullscreenMode ( AKUEnterFullscreenModeFunc func ) {
 void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func ) {
 
 	MOAISim::Get ().SetExitFullscreenModeFunc ( func );
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
-
-	MOAISim::Get ().SetShowCursorFunc ( func );
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
-
-	MOAISim::Get ().SetHideCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//
@@ -427,6 +421,12 @@ void AKUSetViewSize ( int width, int height ) {
 			state.DebugCall ( 2, 0 );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
+
+	MOAISim::Get ().SetShowCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//

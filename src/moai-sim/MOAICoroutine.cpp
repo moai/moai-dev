@@ -185,6 +185,8 @@ STLString MOAICoroutine::GetDebugInfo () const {
 MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
 	mNarg ( 0 ),
+	mIsUpdating ( false ),
+	mIsActive ( false ),
 	mIsFirstRun ( true ) {
 
 	RTTI_SINGLE ( MOAIAction )

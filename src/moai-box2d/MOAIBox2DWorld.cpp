@@ -23,6 +23,35 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
+// MOAIBox2DRayCastCallback
+//================================================================//
+class MOAIBox2DRayCastCallback :
+	public b2RayCastCallback {
+private:
+
+	b2Fixture*		m_fixture;
+	b2Vec2			m_point;
+	b2Vec2			m_normal;
+
+public:
+
+	//----------------------------------------------------------------//
+	MOAIBox2DRayCastCallback () {
+		m_fixture = NULL;
+		m_point.SetZero();
+		m_normal.SetZero();
+	}
+
+	//----------------------------------------------------------------//
+	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		m_fixture = fixture;
+		m_point = point;
+		m_normal = normal;
+		return fraction;
+	}
+};
+
+//================================================================//
 // MOAIBox2DPrim
 //================================================================//
 

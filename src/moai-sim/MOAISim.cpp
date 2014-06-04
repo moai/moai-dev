@@ -105,42 +105,6 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showCursor
-	@text	Shows system cursor.
-
-	@out	nil
-*/
-int MOAISim::_showCursor ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
-	if ( func ) {
-		func ();
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	hideCursor
-	@text	Hides system cursor.
-
-	@out	nil
-*/
-int MOAISim::_hideCursor ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
-	if ( func ) {
-		func ();
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name forceGC
 	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
@@ -339,6 +303,24 @@ int MOAISim::_getStep ( lua_State* L ) {
 	
 	lua_pushnumber ( L, MOAISim::Get ().GetStep ());
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	hideCursor
+	@text	Hides system cursor.
+
+	@out	nil
+*/
+int MOAISim::_hideCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -543,6 +525,24 @@ int MOAISim::_setTraceback ( lua_State* L ) {
 	
 	MOAILuaRuntime::Get ().GetTracebackRef ().SetRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	showCursor
+	@text	Shows system cursor.
+
+	@out	nil
+*/
+int MOAISim::_showCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
 	return 0;
 }
 

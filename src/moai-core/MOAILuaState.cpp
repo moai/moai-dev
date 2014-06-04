@@ -846,13 +846,13 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump () {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::Print ( stackDump );
+	ZLLog::LogF ( ZLLog::CONSOLE, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump ( FILE* file  ) {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::PrintFile ( file, stackDump );
+	ZLLog::LogF ( file, stackDump );
 }
 
 //----------------------------------------------------------------//

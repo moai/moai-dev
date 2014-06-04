@@ -17,10 +17,10 @@ enum {
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
-typedef void ( *AKUShowCursorFunc )				();
 typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
+typedef void ( *AKUShowCursorFunc )				();
 
 // setup
 AKU_API void			AKUSimAppFinalize				();
