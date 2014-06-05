@@ -19407,10 +19407,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -19499,7 +19499,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -21260,10 +21259,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21351,7 +21350,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -25172,10 +25170,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25264,7 +25262,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -25577,10 +25574,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25669,7 +25666,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
