@@ -405,7 +405,7 @@ void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICell
 			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
 		}

@@ -89,6 +89,7 @@ protected:
 	void			OnDestroy					();
 	void			OnInvalidate				();
 	void			OnLoad						();
+	void			OnUnbind					();
 	bool			Validate					();
 
 public:

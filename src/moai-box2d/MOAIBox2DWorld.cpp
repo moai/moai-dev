@@ -29,6 +29,8 @@ class MOAIBox2DRayCastCallback :
 	public b2RayCastCallback {
 private:
 
+	friend class MOAIBox2DWorld;
+
 	b2Fixture*		m_fixture;
 	b2Vec2			m_point;
 	b2Vec2			m_normal;
@@ -712,7 +714,7 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 	return 0;
 }
 
-/----------------------------------------------------------------//
+//----------------------------------------------------------------//
 /**     @name   getRayCast
         @text   return RayCast 1st point hit
        

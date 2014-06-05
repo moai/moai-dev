@@ -33,8 +33,8 @@
 	@in		MOAIProp self
 	@out	MOAITexture texture
 */
-int MOAIProp::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
+int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
 	if ( self->mTexture ) {
 		self->mTexture->PushLuaUserdata ( state );

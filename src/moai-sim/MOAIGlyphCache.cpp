@@ -120,7 +120,7 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	page->Alloc ( font, glyph );
 	glyph.SetPageID ( pageID );
 	
-	page->mImageTexture->Invalidate ();
+	page->mImageTexture->InvalidateAll ();
 }
 
 //----------------------------------------------------------------//

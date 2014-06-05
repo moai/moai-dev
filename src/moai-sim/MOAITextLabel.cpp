@@ -145,7 +145,7 @@ int MOAITextLabel::_getStyle ( lua_State* L ) {
 	@out	string text				Text string.
 */
 int MOAITextLabel::_getText ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	if ( self->mText ) {
 		lua_pushstring ( state, self->mText );

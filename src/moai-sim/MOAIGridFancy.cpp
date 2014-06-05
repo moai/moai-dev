@@ -340,7 +340,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			float scale = this->GetScale ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			if (color) {
 				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
