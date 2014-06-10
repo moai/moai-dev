@@ -235,22 +235,27 @@ void MOAIGfxDevice::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
-
-	ZLColorVec colorVec;
-	colorVec.SetRGBA ( color );
-	
-	zglClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
-	zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT );
+void MOAIGfxDevice::ClearErrors () {
+	#ifndef MOAI_OS_NACL
+		if ( this->mHasContext ) {
+			while ( zglGetError () != ZGL_ERROR_NONE );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearErrors () {
-#ifndef MOAI_OS_NACL
-	if ( this->mHasContext ) {
-		while ( zglGetError () != ZGL_ERROR_NONE );
+void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+
+	if ( clearFlags ) {
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
+			zglDepthMask ( true );
+			zglClear ( clearFlags );
+			zglDepthMask ( false );
+		}
+		else {
+			zglClear ( clearFlags );
+		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------//
@@ -745,9 +750,9 @@ void MOAIGfxDevice::ResetState () {
 	zglDisable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
-	// enable depth write
-	zglDepthMask ( true );
-	this->mDepthMask = true;
+	// disable depth write
+	zglDepthMask ( false );
+	this->mDepthMask = false;
 	
 	// clear the vertex format
 	this->SetVertexFormat ();

@@ -215,9 +215,9 @@ public:
 	void					BeginLayer				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	void					ClearColorBuffer		( u32 color );
 	
 	void					ClearErrors				();
+	void					ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void					DetectContext			();
 	void					EndPrim					();
 	void					Flush					();
