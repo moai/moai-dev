@@ -464,19 +464,19 @@ int MOAIParticleScript::_set ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setReg
+/**	@name	setLiveReg
 	@text	Load a value into a live register. Live registers can be updated
-	by additional calls to setReg, which does not alter the compiled particle
-	script. Live registers are a distinct register set from the normal register
-	set; use load() to load live register data into registers in an initialize
-	or render script.
+			by additional calls to setReg, which does not alter the compiled particle
+			script. Live registers are a distinct register set from the normal register
+			set; use load () to load live register data into registers in an initialize
+			or render script.
 	
 	@in		MOAIParticleScript self
-	@in		number r0			Register to store result.
-	@in		number v0			Value to load.
+	@in		number r0					Register to store result.
+	@in		number v0					Value to load.
 	@out	nil
 */
-int MOAIParticleScript::_setReg ( lua_State* L ) {
+int MOAIParticleScript::_setLiveReg ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )
 	/* assumption:
 	 * the packing system will always put the bits we care about in the
@@ -741,7 +741,8 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "rand",				_rand },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
-		{ "setReg",				_setReg },
+		{ "setLiveReg",			_setLiveReg },
+		{ "setReg",				_setLiveReg }, // TODO: mark as deprecated
 		{ "sin",				_sin },
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
