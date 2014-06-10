@@ -74,7 +74,9 @@ MOAITextDesigner::MOAITextDesigner () :
 	mYFlip ( false ),
 	mWordBreak ( MOAITextDesigner::WORD_BREAK_NONE ),
 	mGlyphScale ( 1.0f ),
-	mLineSpacing ( 0.0f ) {
+	mLineSpacing ( 0.0f ),
+	mHLineSnap ( 0.0f ),
+	mVLineSnap ( 0.0f ) {
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }

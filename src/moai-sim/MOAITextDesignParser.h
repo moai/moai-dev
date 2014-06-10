@@ -70,7 +70,7 @@ private:
 	void				BuildLayout					();
 	float				GetLayoutHeight				();
 	u32					NextChar					();
-	float				Snap						( float f );
+	float				Snap						( float f, float b );
 
 public:
 

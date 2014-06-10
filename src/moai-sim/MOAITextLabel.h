@@ -171,6 +171,7 @@ protected:
 	static int			_setCurve				( lua_State* L );
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setHighlight			( lua_State* L );
+	static int			_setLineSnap			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );

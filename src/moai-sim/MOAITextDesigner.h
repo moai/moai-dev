@@ -33,6 +33,9 @@ protected:
 	float		mGlyphScale;
 	float		mLineSpacing;
 	
+	float		mHLineSnap; // snap lines to this boundary
+	float		mVLineSnap; // snap lines to this boundary
+	
 	ZLLeanArray < MOAIAnimCurve* > mCurves;
 
 	//----------------------------------------------------------------//
@@ -69,6 +72,9 @@ public:
 	GET_SET ( u32, WordBreak, mWordBreak )
 	GET_SET ( float, GlyphScale, mGlyphScale )
 	GET_SET ( float, LineSpacing, mLineSpacing )
+
+	GET_SET ( float, HLineSnap, mHLineSnap )
+	GET_SET ( float, VLineSnap, mVLineSnap )
 
 	//----------------------------------------------------------------//
 	void		ClearCurves					();

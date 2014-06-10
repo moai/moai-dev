@@ -388,6 +388,28 @@ int MOAITextLabel::_setHighlight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLineSnap
+	@text	Sets the snapping boundary for lines of text. Only applied during layout and in the
+			text label's local space.
+
+	@in		MOAITextLabel self
+	@opt	number hLineSnap
+	@opt	number vLineSnap			Default value is hLineSnap.
+	@out	nil
+*/
+int MOAITextLabel::_setLineSnap ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	float hLineSnap = state.GetValue < float >( 2, 0.0f );
+	float vLineSnap = state.GetValue < float >( 3, hLineSnap );
+	
+	self->mDesigner.SetHLineSnap ( hLineSnap );
+	self->mDesigner.SetVLineSnap ( vLineSnap );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
 			the default spacing.
@@ -436,8 +458,8 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 	@text	Toggles width/height constraints based on the rect.
 
 	@in		MOAITextLabel self
-	@opt	bool limitWidth		Limit text to the rect's width. Default value is 'false'.
-	@opt	bool limitHeight	Limit text to the rect's height. Default value is 'false'.
+	@opt	boolean limitWidth		Limit text to the rect's width. Default value is 'false'.
+	@opt	boolean limitHeight		Limit text to the rect's height. Default value is 'false'.
 	@out	nil
 */
 int MOAITextLabel::_setRectLimits ( lua_State* L ) {
@@ -690,7 +712,7 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
 			// specialized implementation of MOAIDeck...
-			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		}
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
@@ -945,6 +967,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAutoFlip",			_setAutoFlip },
 		{ "setCurve",				_setCurve },
 		{ "setGlyphScale",			_setGlyphScale },
+		{ "setLineSnap",			_setLineSnap },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setHighlight",			_setHighlight },
 		{ "setReveal",				_setReveal },
