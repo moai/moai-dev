@@ -21,12 +21,10 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIInputDevice::_getExtendedName( lua_State* L )
-{
+int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
-
-		lua_pushstring(state, self->mNameExtended.c_str());
-
+	
+	lua_pushstring(state, self->mHardwareInfo.c_str ());
 	return 1;
 }
 
@@ -62,7 +60,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getExtendedName",	_getExtendedName },
+		{ "getHardwareInfo",		_getHardwareInfo },
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
@@ -94,9 +92,9 @@ void MOAIInputDevice::ResetSensors () {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
-{
-	this->mNameExtended = nameExtended;
+void MOAIInputDevice::SetHardwareInfo ( cc8* hardwareInfo ) {
+
+	this->mHardwareInfo = hardwareInfo;
 }
 
 //----------------------------------------------------------------//

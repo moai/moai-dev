@@ -306,9 +306,9 @@ void AKUSetInputDevice ( int deviceID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceExtendedName( int deviceID, char const* name ) {
+void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
 
-	MOAIInputMgr::Get ().SetDeviceExtendedName(( u8 )deviceID, name );
+	MOAIInputMgr::Get ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
 }
 
 //----------------------------------------------------------------//

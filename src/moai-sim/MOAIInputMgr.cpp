@@ -258,11 +258,11 @@ void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDeviceExtendedName ( u8 deviceID, cc8* nameExtended ) {
+void MOAIInputMgr::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
-		device->SetExtendedName(nameExtended);
+		device->SetHardwareInfo ( hardwareInfo );
 	}
 }
 

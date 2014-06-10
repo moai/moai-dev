@@ -31,7 +31,7 @@ private:
 	ZLIntRect	mRegion;
 
 	//----------------------------------------------------------------//
-	static int		_invalidate				( lua_State* L );
+	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool			IsRenewable				();
@@ -47,14 +47,14 @@ public:
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
-	void			InvalidateAll			();
-	void			Invalidate				( ZLIntRect rect );
 					MOAIImageTexture		();
 					~MOAIImageTexture		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			UpdateRegion			();
+	void			UpdateRegion			( ZLIntRect rect );
 };
 
 #endif
