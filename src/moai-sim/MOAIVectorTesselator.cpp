@@ -91,6 +91,24 @@ int MOAIVectorTesselator::_finish ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_getTransform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	const ZLAffine2D& drawingToWorld = self->mStyle.mDrawingToWorld;
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C0_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C0_R1 ]);
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C1_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C1_R1 ]);
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C2_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C2_R1 ]);
+	
+	return 6;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
@@ -823,6 +841,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "drawingToWorld",			_drawingToWorld },
 		{ "drawingToWorldVec",		_drawingToWorldVec },
 		{ "finish",					_finish },
+		{ "getTransform",			_getTransform },
 		{ "getTriangles",			_getTriangles },
 		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
