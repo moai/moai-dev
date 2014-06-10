@@ -150,18 +150,6 @@ int MOAISim::_getDeviceTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getElapsedFrames
-	@text	Gets the number of frames elapsed since the application was started.
-
-	@out	number frames		The number of elapsed frames.
-*/
-int MOAISim::_getElapsedFrames ( lua_State* L ) {
-	
-	lua_pushnumber ( L, MOAIRenderMgr::Get ().GetRenderCounter() );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getElapsedTime
 	@text	Gets the number of seconds elapsed since the application was started.
 
@@ -302,6 +290,18 @@ int MOAISim::_getPerformance ( lua_State* L ) {
 int MOAISim::_getStep ( lua_State* L ) {
 	
 	lua_pushnumber ( L, MOAISim::Get ().GetStep ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getStepCount
+	@text	Gets the number of times the sim was stepped since the application was started.
+
+	@out	number steps		The number of times the sim was stepped.
+*/
+int MOAISim::_getStepCount ( lua_State* L ) {
+	
+	lua_pushnumber ( L, MOAISim::Get ().mStepCount );
 	return 1;
 }
 
@@ -627,6 +627,8 @@ MOAISim::MOAISim () :
 	mSimTime ( 0.0 ),
 	mRealTime ( 0.0 ),
 	mFrameTime ( 0.0 ),
+	mPauseTime ( 0.0 ),
+	mStepCount ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
@@ -741,7 +743,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceTime",				_getDeviceTime },
-		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
 		{ "getLoopFlags",				_getLoopFlags },
@@ -749,6 +750,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
+		{ "getStepCount",				_getStepCount },
 		{ "hideCursor",					_hideCursor },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
@@ -848,7 +850,9 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		MOAIInputMgr::Get ().Update ( step );
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
+		
 		this->mSimTime += step;
+		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
 			// crank the garbage collector

@@ -130,17 +130,17 @@ public:
 		TILE_CENTER,
 	};
 	
-	static const u32 REPEAT_X		= 0x00000001;
-	static const u32 REPEAT_Y		= 0x00000002;
+	static const u32 REPEAT_X			= 0x00000001;
+	static const u32 REPEAT_Y			= 0x00000002;
 	
-	static const u32 STAGGER_FLAG	= 0x80000000;
-	static const u32 STAGGER_MASK	= 0x80000000;
-	static const u32 SHAPE_MASK		= 0x7FFFFFFF;
+	static const u32 STAGGER_FLAG		= 0x80000000;
+	static const u32 STAGGER_MASK		= 0x80000000;
+	static const u32 SHAPE_MASK			= 0x7FFFFFFF;
 	
-	static const u32 RECT_SHAPE		= 0x00000000;
-	static const u32 DIAMOND_SHAPE	= 0x00000001 | STAGGER_FLAG;
-	static const u32 OBLIQUE_SHAPE	= 0x00000002;
-	static const u32 HEX_SHAPE		= 0x00000003 | STAGGER_FLAG;
+	static const u32 RECT_SHAPE			= 0x00000000;
+	static const u32 DIAMOND_SHAPE		= 0x00000001 | STAGGER_FLAG;
+	static const u32 OBLIQUE_SHAPE		= 0x00000002;
+	static const u32 HEX_SHAPE			= 0x00000003 | STAGGER_FLAG;
 	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
 	
 	GET_SET ( float, XOff, mXOff )

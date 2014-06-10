@@ -48,6 +48,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getBufferTable				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
+	static int		_getRenderCount				( lua_State* L );
 	static int		_setBufferTable				( lua_State* L );
 	
 	//----------------------------------------------------------------//

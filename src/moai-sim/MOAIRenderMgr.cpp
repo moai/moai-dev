@@ -39,6 +39,16 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
+
+	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, device.mRenderCounter );
+
+	return 1;
+}
+
 //================================================================//
 // DOXYGEN
 //================================================================//
@@ -151,6 +161,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getBufferTable",				_getBufferTable },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
+		{ "getRenderCount",				_getRenderCount },
 		{ "setBufferTable",				_setBufferTable },
 		{ NULL, NULL }
 	};

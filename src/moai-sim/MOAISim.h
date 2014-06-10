@@ -73,6 +73,8 @@ private:
 	double			mFrameTime;		// time last frame time was measured (in seconds)
 	double			mPauseTime;		// time the sim was paused
 	
+	u32				mStepCount;
+	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
@@ -109,7 +111,6 @@ private:
 	static int		_forceGC					( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
-	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
@@ -117,6 +118,7 @@ private:
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
+	static int		_getStepCount				( lua_State* L );
 	static int		_hideCursor					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
@@ -169,6 +171,7 @@ public:
 	GET ( double, Step, mStep )
 	GET ( double, SimDuration, mSimDuration )
 	GET ( double, SimTime, mSimTime )
+	GET ( u32, StepCount, mStepCount )
 	GET ( float, FrameRate, mFrameRate )
 	
 	GET_SET ( EnterFullscreenModeFunc, EnterFullscreenModeFunc, mEnterFullscreenModeFunc );

@@ -617,6 +617,37 @@ MOAICellCoord MOAIGridSpace::ClampY ( MOAICellCoord cellCoord ) const {
 }
 
 //----------------------------------------------------------------//
+MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
+	float t1, t2, q, r;
+
+	/* normalize to units of hex dimensions */
+	x = ( x / this->mCellWidth ) - 0.5f;
+	y = ( y / this->mCellHeight );
+
+	/*
+	 * from a comment thread on Amit Patel's hexagon page:
+
+	 	x = (x - halfHexWidth) / hexWidth;
+
+	 	double t1 = z / hexRadius, t2 = Math.Floor(x + t1);
+	 	double r = Math.Floor((Math.Floor(t1 - x) + t2) / 3);
+	 	double q = Math.Floor((Math.Floor(2 * x + 1) + t2) / 3) - r;
+
+	 	return new Coord((int) q, (int) r); 
+	 * note that "hexRadius" is pretty close to "mHeight / 2" for
+	 * our purposes. The example assumed that z increases as you go
+	 * down the screen, but it also assumed that the hex grid was
+	 * counting the same way.
+	 */
+	t1 = ( y * 2 );
+	t2 = floorf ( x + t1 );
+	r = floorf (( floorf ( t1 - x ) + t2 ) / 3.0f );
+	q = floorf (( floorf ( 2.0f * x + 1.0f ) + t2) / 3.0f );
+
+	return MOAICellCoord ( q, r );
+}
+
+//----------------------------------------------------------------//
 ZLRect MOAIGridSpace::GetBounds () const {
 
 	ZLRect rect;
@@ -787,6 +818,7 @@ ZLVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
+	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
 		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
 		return this->GetRectPoint (
@@ -893,36 +925,6 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 	return cellCoord;
 }
 
-MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
-	float t1, t2, q, r;
-
-	/* normalize to units of hex dimensions */
-	x = (x / this->mCellWidth) - 0.5;
-	y = (y / this->mCellHeight);
-
-	/*
-	 * from a comment thread on Amit Patel's hexagon page:
-
-	 	x = (x - halfHexWidth) / hexWidth;
-
-	 	double t1 = z / hexRadius, t2 = Math.Floor(x + t1);
-	 	double r = Math.Floor((Math.Floor(t1 - x) + t2) / 3);
-	 	double q = Math.Floor((Math.Floor(2 * x + 1) + t2) / 3) - r;
-
-	 	return new Coord((int) q, (int) r); 
-	 * note that "hexRadius" is pretty close to "mHeight / 2" for
-	 * our purposes. The example assumed that z increases as you go
-	 * down the screen, but it also assumed that the hex grid was
-	 * counting the same way.
-	 */
-	t1 = (y * 2);
-	t2 = floorf(x + t1);
-	r = floorf((floorf(t1 - x) + t2) / 3);
-	q = floorf((floorf(2 * x + 1) + t2) / 3);
-
-	return MOAICellCoord(q, r);
-}
-
 //----------------------------------------------------------------//
 MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 
@@ -1007,6 +1009,7 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
+	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
 		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
 		return this->GetRectPoint (
@@ -1017,6 +1020,7 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 			position
 		);
 	}
+	
 	return this->GetRectPoint (
 		( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
 		( cellCoord.mY * this->mCellHeight ) + this->mYOff,
