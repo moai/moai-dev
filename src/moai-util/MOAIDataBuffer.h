@@ -61,6 +61,7 @@ public:
 	bool			Base64Encode			();
 	void			Clear					();
 	bool			Deflate					( int level, int windowBits );
+	void*			GetBuffer				(); // NOTE: unsafe; bypasses the mutex
 	bool			HexDecode				();
 	bool			HexEncode				();
 	bool			Inflate					( int windowBits );
@@ -71,9 +72,9 @@ public:
 					~MOAIDataBuffer			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	size_t			Size					();
 	bool			Save					( cc8* filename );
 	void			Unlock					();
-	ZLLeanArray<u8> *getBuffer				();
 };
 
 #endif

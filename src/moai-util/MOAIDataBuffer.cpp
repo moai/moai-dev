@@ -503,6 +503,11 @@ bool MOAIDataBuffer::Encode ( ZLStreamWriter& writer ) {
 }
 
 //----------------------------------------------------------------//
+void* MOAIDataBuffer::GetBuffer () {
+	return this->mBytes.Data ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIDataBuffer::HexDecode () {
 
 	ZLHexReader hex;
@@ -657,8 +662,8 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-ZLLeanArray<u8> *MOAIDataBuffer::getBuffer() {
-	return &mBytes;
+size_t MOAIDataBuffer::Size () {
+	return this->mBytes.Size ();
 }
 
 //----------------------------------------------------------------//
