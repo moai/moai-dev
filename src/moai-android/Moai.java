@@ -151,9 +151,12 @@ public class Moai {
 	private static ArrayList < Class < ? >>	sAvailableClasses = new ArrayList < Class < ? >> ();
 
 	public static final Object			sAkuLock = new Object ();
+	private static String				mPictureLocation = new String ();
 
 	protected static native void 		AKUAppDialogDismissed			( int dialogResult );
+	protected static native void    	AKUAppInitialize				();
 	protected static native boolean		AKUAppInvokeListener			( int eventID );
+	protected static native void		AKUAppOpenedFromURL				( String url );
 	protected static native int	 		AKUCreateContext 				();
 	protected static native void 		AKUDetectGfxContext 			();
 	protected static native void 		AKUEnqueueLevelEvent 			( int deviceId, int sensorId, float x, float y, float z );
@@ -167,14 +170,19 @@ public class Moai {
 	protected static native void 		AKUFinalize 					();
 	protected static native void 		AKUFMODExInit		 			();
 	protected static native void 		AKUInit 						();
+	protected static native void    	AKUModulesContextInitialize     ();
+	protected static native void    	AKUModulesRunLuaAPIWrapper      ();
+	protected static native void		AKUModulesUpdate				();
 	protected static native void 		AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 		AKUPause 						( boolean paused );
 	protected static native void 		AKURender	 					();
 	protected static native void 		AKUReserveInputDevices			( int total );
 	protected static native void 		AKUReserveInputDeviceSensors	( int deviceId, int total );
 	protected static native void		AKURunScript 					( String filename );
+	protected static native void 		AKUSetCacheDirectory 			( String path );
 	protected static native void		AKUSetConnectionType 			( long connectionType );
 	protected static native void 		AKUSetContext 					( int contextId );
+	protected static native void		AKUSetDeviceLocale				( String langCode, String countryCode );
 	protected static native void 		AKUSetDeviceProperties 			( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, int numProcessors, String osBrand, String osVersion, String udid );
 	protected static native void 		AKUSetDocumentDirectory 		( String path );
 	protected static native void 		AKUSetInputConfigurationName	( String name );
@@ -184,16 +192,9 @@ public class Moai {
 	protected static native void 		AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
 	protected static native void		AKUSetInputDeviceTouch 			( int deviceId, int sensorId, String name );
 	protected static native void 		AKUSetScreenSize				( int width, int height );
+	protected static native void		AKUSetScreenDpi					( int dpi );
 	protected static native void 		AKUSetViewSize					( int width, int height );
 	protected static native void 		AKUSetWorkingDirectory 			( String path );
-	protected static native void 		AKUUntzInit			 			();
-	protected static native void 		AKUUpdate				 		();
-	protected static native void 		AKUInitSlotsLib			();
-
-	public static void initSlotsLib() {
-
-		AKUInitSlotsLib ();
-	}
 
 	//----------------------------------------------------------------//
 	static {
@@ -209,12 +210,21 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
+	public static void appOpenedFromURL ( String url ) {
+		synchronized ( sAkuLock ) {
+			AKUAppOpenedFromURL ( url );
+		}
+	}
+
+	//----------------------------------------------------------------//
 	public static int createContext () {
 
 		int contextId;
 		synchronized ( sAkuLock ) {
 			contextId = AKUCreateContext ();
 			AKUSetContext ( contextId );
+			AKUModulesContextInitialize ();
+			AKUModulesRunLuaAPIWrapper ();
 		}
 
 		return contextId;
@@ -300,16 +310,7 @@ public class Moai {
 			AKUSetInputDeviceLocation		( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_LOCATION.ordinal (), "location" );
 			AKUSetInputDeviceTouch			( Moai.InputDevice.INPUT_DEVICE.ordinal (), Moai.InputSensor.SENSOR_TOUCH.ordinal (), "touch" );
 
-			// This AKU call will exist even if FMOD has been disabled in libmoai.so, so it's
-			// safe to call unconditionally.
-			AKUFMODExInit ();
-
-			// This AKU call will exist even if UNTZ has been disabled in libmoai.so, so it's
-			// safe to call unconditionally.
-			AKUUntzInit ();
-
 			String appId = sActivity.getPackageName ();
-
 			String appName;
 			try {
 
@@ -332,6 +333,7 @@ public class Moai {
 			}
 
 			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "@PLATFORM_NAME@", Build.VERSION.RELEASE, udid );
+			AKUSetDeviceLocale ( Locale.getDefault ().getLanguage (), Locale.getDefault ().getCountry ());
 		}
 	}
 
@@ -465,6 +467,14 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
+	public static void setCacheDirectory ( String path ) {
+	
+		synchronized ( sAkuLock ) {
+			AKUSetCacheDirectory ( path );
+		}
+	}
+
+	//----------------------------------------------------------------//
 	public static void setConnectionType ( long connectionType ) {
 
 		synchronized ( sAkuLock ) {
@@ -508,7 +518,8 @@ public class Moai {
 	public static void update () {
 
 		synchronized ( sAkuLock ) {
-			AKUUpdate ();
+			MoaiKeyboard.update ();
+			AKUModulesUpdate ();
 		}
 	}
 
@@ -642,7 +653,7 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void showDialog ( String title, String message, String positiveButton, String neutralButton, String negativeButton, boolean cancelable ) {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
+		final AlertDialog.Builder builder = new AlertDialog.Builder ( sActivity );
 
 		if ( title != null ) builder.setTitle ( title );
 		if ( message != null ) builder.setMessage ( message );
@@ -689,6 +700,16 @@ public class Moai {
 			});
 		}
 
-		builder.create ().show ();
+		sActivity.runOnUiThread( new Runnable () {
+			public void run () {
+				builder.create ().show ();
+			}
+		});
+	}
+	
+	//----------------------------------------------------------------//
+	public static String takePicture () {
+		mPictureLocation = "this is #neuland";
+		return mPictureLocation;
 	}
 }

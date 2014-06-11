@@ -168,7 +168,7 @@ public class MoaiActivity extends Activity {
 		
 		Uri data = intent.getData ();
 		if ( data != null ) {
-			Moai.AppOpenedFromURL ( data.toString ());
+			Moai.appOpenedFromURL ( data.toString ());
 		}
 		setIntent ( intent );
 	}
