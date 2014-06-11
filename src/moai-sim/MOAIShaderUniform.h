@@ -51,6 +51,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void		AddValue			( const MOAIAttrOp& attrOp );
+	void		GetFlags			( MOAIAttrOp& attrOp );
+	void        GetValue			( MOAIAttrOp& attrOp );
 	void		SetType				( u32 type );
 	bool		SetValue			( float value );
 	bool		SetValue			( int value );
