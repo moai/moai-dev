@@ -1,6 +1,6 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
-// All Rights Reserved. 
+// Copyright (c) 2010-2011 Zipline Games, Inc.
+// All Rights Reserved.
 // http://getmoai.com
 //----------------------------------------------------------------//
 
@@ -58,12 +58,13 @@ public class MoaiActivity extends Activity {
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
 	private float []						mAccelerometerData = null;
-	
+
+	private static MoaiActivity sActivity;
+
 	//----------------------------------------------------------------//
 	static {
 		
 		MoaiLog.i ( "Loading libmoai.so" );
-		
 		System.loadLibrary ( "moai" );
 	}
 
@@ -79,6 +80,8 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
+		sActivity = this;
+
 		mAccelerometerData = new float[3];
 		
 		requestWindowFeature ( Window.FEATURE_NO_TITLE );
@@ -90,32 +93,34 @@ public class MoaiActivity extends Activity {
 		
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 		getWindow ().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		//getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		try {
 			
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
-
-			Moai.mount ( "bundle", myApp.sourceDir );
+			
+			int apiVersion = android.os.Build.VERSION.SDK_INT;
+			if ( apiVersion >= 16 ) {
+			    // Jelly Bean or later
+			    Moai.mount ( "bundle", myApp.sourceDir );
+			} else {
+			    // pre-Jelly Bean
+			    Moai.mount ( "bundle", myApp.publicSourceDir );
+			}
+			
 			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );
 		} catch ( NameNotFoundException e ) {
-
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}
 
 		if ( getFilesDir () != null ) {
-		 
 		 	Moai.setDocumentDirectory ( getFilesDir ().getAbsolutePath ());
 		} else {
-
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
 		
 		if (  getCacheDir () != null ) {
-		 
 		 	Moai.setCacheDirectory ( getCacheDir ().getAbsolutePath ());
 		} else {
-
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the cache directory" );
 		}
 		
@@ -124,7 +129,6 @@ public class MoaiActivity extends Activity {
 
 	    mMoaiView = new MoaiView ( this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
-
 		mLocationManager = (LocationManager) getSystemService ( Context.LOCATION_SERVICE );
 
 		startConnectivityReceiver ();
@@ -136,29 +140,35 @@ public class MoaiActivity extends Activity {
 		con.addView ( mMoaiView );
 		con.addView ( MoaiKeyboard.getEditText ());
 		
-	}
+		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
+		
+		@RUN_COMMAND@
+			
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
+    }
 
 	//----------------------------------------------------------------//
 	protected void onDestroy () {
 
 		MoaiLog.i ( "MoaiActivity onDestroy: activity DESTROYED" );
-		
-		super.onDestroy ();	
+
+		super.onDestroy ();
 		Moai.onDestroy ();
-		
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_DESTROY );
+
 		stopConnectivityReceiver ();
-				
+
 		Moai.finish ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	protected void onNewIntent ( Intent intent ) {
-		
+
 		MoaiLog.i ( "MoaiActivity onNewIntent: application started from NEW INTENT" );
 		
-		Uri data = intent.getData();
-		if (data != null) {
-			Moai.AppOpenedFromURL ( data.toString() );
+		Uri data = intent.getData ();
+		if ( data != null ) {
+			Moai.AppOpenedFromURL ( data.toString ());
 		}
 		setIntent ( intent );
 	}
@@ -167,34 +177,40 @@ public class MoaiActivity extends Activity {
 	protected void onPause () {
 
 		MoaiLog.i ( "MoaiActivity onPause: activity PAUSED" );
-		
-		super.onPause ();	
+
+		super.onPause ();
 		Moai.onPause ();
-		
+
 		if ( mAccelerometerListener != null ) {
-			
 			mSensorManager.unregisterListener ( mAccelerometerListener );
 		}
-		
-		if ( mLocationListener != null ) {
 
+		if ( mLocationListener != null ) {
 			mLocationManager.removeUpdates( mLocationListener );
 		}
 
-		// If we've been paused, then we're assuming we've lost focus. 
+		// If we've been paused, then we're assuming we've lost focus.
 		// This handles the case where the user presses the lock button
-		// very quickly twice, in which case we do not receive the 
+		// very quickly twice, in which case we do not receive the
 		// expected windows focus events.
 		//mWindowFocusLost = true;
 
-		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
-		
+
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_PAUSE );
 		Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_PAUSED );
-		
-		Moai.endSession ();		
 	}
-	
+
+	//----------------------------------------------------------------//
+	protected void onRestart () {
+
+		MoaiLog.i ( "MoaiActivity onRestart: activity RESTARTED" );
+
+		super.onRestart ();
+		Moai.onRestart ();
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_RESTART );
+	}
+
 	//----------------------------------------------------------------//
 	protected void onResume () {
 
@@ -202,29 +218,29 @@ public class MoaiActivity extends Activity {
 
 		super.onResume ();
 		Moai.onResume ();
-		
+
 		if ( mAccelerometerListener != null ) {
-			
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 			mSensorManager.registerListener ( mAccelerometerListener, mMagnetometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
 
 		if ( mLocationListener != null ) {
-
 			mLocationManager.requestLocationUpdates ( LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener );
 			mLocationManager.requestLocationUpdates ( LocationManager.GPS_PROVIDER, 0, 0, mLocationListener );
 		}
 
-		// If we have not lost Window focus, then resume immediately; 
-		// otherwise, wait to regain focus before we resume. All of 
+		// If we have not lost Window focus, then resume immediately;
+		// otherwise, wait to regain focus before we resume. All of
 		// this nonsense is to prevent audio from playing while the
 		// screen is locked.
-		mWaitingToResume = mWindowFocusLost;
-		if ( !mWindowFocusLost ) {
-			
+		//mWaitingToResume = mWindowFocusLost;
+		//if ( !mWindowFocusLost ) {
+
 			MoaiLog.i ( "MoaiActivity onResume: RESUMING now" );
 			mMoaiView.pause ( false );
-		}
+			Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
+			Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_RESUME );
+		//}
 	}
 
 	//----------------------------------------------------------------//
@@ -234,8 +250,9 @@ public class MoaiActivity extends Activity {
 
 		super.onStart ();
 		Moai.onStart ();
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_START );
 	}
-	
+
 	//----------------------------------------------------------------//
 	protected void onStop () {
 
@@ -243,17 +260,27 @@ public class MoaiActivity extends Activity {
 
 		super.onStop ();
 		Moai.onStop ();
+		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_STOP );
 	}
-	
+
+    //----------------------------------------------------------------//
+	protected void runScripts ( String [] filenames ) {
+
+		for ( String file : filenames ) {
+			MoaiLog.i ( "MoaiRenderer runScripts: Running " + file + " script" );
+			Moai.runScript ( file );
+		}
+	}
+
 	//================================================================//
 	// Private methods
 	//================================================================//
 
 	//----------------------------------------------------------------//
 	private void enableAccelerometerEvents ( boolean enabled ) {
-		
+
 		if ( !enabled ) {
-			
+
 			if ( mAccelerometerListener != null ) {
 
 				mSensorManager.unregisterListener ( mAccelerometerListener );
@@ -261,17 +288,17 @@ public class MoaiActivity extends Activity {
 			}
 
 			if ( mAccelerometerSensor != null ) {
-				
+
 				mAccelerometerSensor = null;
 			}
 		} else if ( enabled ) {
-			
+
 			if ( mAccelerometerSensor == null ) {
-				
+
 				mAccelerometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
 				mMagnetometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_MAGNETIC_FIELD );
 			}
-			
+
 			if ( mAccelerometerListener == null ) {
 
 				mAccelerometerListener = new AccelerometerEventListener ();
@@ -283,16 +310,16 @@ public class MoaiActivity extends Activity {
 
 	//----------------------------------------------------------------//
 	private void enableLocationEvents ( boolean enabled ) {
-		
+
 		if ( !enabled ) {
-			
+
 			if ( mLocationListener != null ) {
 
 				mLocationManager.removeUpdates( mLocationListener );
 				mLocationListener = null;
 			}
 		} else if ( enabled ) {
-			
+
 			if ( mLocationListener == null ) {
 
 				mLocationListener = new LocationEventListener ();
@@ -302,12 +329,12 @@ public class MoaiActivity extends Activity {
 			}
 		}
 	}
-		
+
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
-		
+
 		if ( mConnectivityReceiver == null ) {
-			
+
 			mConnectivityReceiver = new ConnectivityBroadcastReceiver ();
 
 			IntentFilter filter = new IntentFilter ();
@@ -315,54 +342,51 @@ public class MoaiActivity extends Activity {
 			this.registerReceiver ( mConnectivityReceiver, filter );
 		}
 	}
-	
+
 	//----------------------------------------------------------------//
 	private void stopConnectivityReceiver () {
-		
+
 		this.unregisterReceiver ( mConnectivityReceiver );
 		mConnectivityReceiver = null;
 	}
-	
+
 	//================================================================//
 	// KeyEvent methods
 	//================================================================//
-	
+
 	//----------------------------------------------------------------//
 	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
 
 		MoaiLog.i ("MoaiActivity onKeyDown, keycode " + keyCode + " event: " + event );
-		if ( keyCode == KeyEvent.KEYCODE_BACK ) {
-	        
-			if ( Moai.backButtonPressed ()) {
-				
-				return true;
-			}
-		}
-		return super.onKeyDown ( keyCode, event );
+
+	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+			if ( Moai.onBackPressed ()) return true;
+			if ( Moai.invokeListener ( Moai.ListenerEvent.BACK_BUTTON_PRESSED )) return true;
+	    }
+		
+		MoaiLog.i ( "MoaiActivity: onKeyDown not handled; falling back on super" );
+	    return super.onKeyDown ( keyCode, event );
 	}
-	
+
 	//================================================================//
 	// WindowEvent methods
 	//================================================================//
 
 	//----------------------------------------------------------------//
 	public void onWindowFocusChanged ( boolean hasFocus ) {
-		
+
 		MoaiLog.i ( "MoaiActivity onWindowFocusChanged: activity FOCUS CHANGED" );
-		
+
 		super.onWindowFocusChanged ( hasFocus );
-				
-		// If we are waiting to resume and just got the window focus back, 
-		// it's time to resume. All of this nonsense is to prevent audio 
+
+		// If we are waiting to resume and just got the window focus back,
+		// it's time to resume. All of this nonsense is to prevent audio
 		// from playing while the screen is locked.
 		mWindowFocusLost = !hasFocus;
-	
-		if ( mWaitingToResume && hasFocus ) {
-		
-			mWaitingToResume = false;
 
+		if ( mWaitingToResume && hasFocus ) {
+			mWaitingToResume = false;
 			MoaiLog.i ( "MoaiActivity onWindowFocusChanged: RESUMING now" );
-			mMoaiView.pause ( false );
 		}
 	}
 
@@ -375,38 +399,42 @@ public class MoaiActivity extends Activity {
 		//----------------------------------------------------------------//
 		@Override
 		public void onReceive ( Context context, Intent intent ) {
-			
+
 			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
+
 			Moai.ConnectionType connectionType = Moai.ConnectionType.CONNECTION_NONE;
-			
+
 			if ( networkInfo != null ) {
-				
+
 				 switch ( networkInfo.getType () ) {
-				 
-					case ConnectivityManager.TYPE_MOBILE: {
-						connectionType = Moai.ConnectionType.CONNECTION_WWAN;
-						break;
-					}
-					case ConnectivityManager.TYPE_WIFI: {
-						connectionType = Moai.ConnectionType.CONNECTION_WIFI;
-						break;
-					}
+
+				 	case ConnectivityManager.TYPE_MOBILE: {
+
+				 		connectionType = Moai.ConnectionType.CONNECTION_WWAN;
+				 		break;
+				 	}
+
+				 	case ConnectivityManager.TYPE_WIFI: {
+
+				 		connectionType = Moai.ConnectionType.CONNECTION_WIFI;
+				 		break;
+				 	}
 				 }
 			}
-			
+
 			MoaiLog.i ( "ConnectivityBroadcastReceiver onReceive: Connection = " + connectionType );
-			
+
 			Moai.setConnectionType (( long )connectionType.ordinal ());
 		}
 	};
-	
+
 	//================================================================//
 	// AccelerometerEventListener
 	//================================================================//
 
 	private class AccelerometerEventListener implements SensorEventListener {
-		
+
 		private float [] mGravity;
 		private float [] mGeomagnetic;
 		private float mRotationMatrixA [] = new float [ 9 ];
@@ -415,12 +443,12 @@ public class MoaiActivity extends Activity {
 
 		//----------------------------------------------------------------//
 		public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
-			
+
 		}
 
 		// Thanks to NVIDIA for this useful canonical-to-screen orientation function.
-		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) { 
-				
+		public void canonicalOrientationToScreenOrientation ( int displayRotation, float[] canVec, float[] screenVec ) {
+
 			 final int axisSwap[][] = {
 				 { 1,-1, 1, 0 },   // ROTATION_0
 				 { 1, 1, 0, 1 },   // ROTATION_90
@@ -432,29 +460,29 @@ public class MoaiActivity extends Activity {
 			 screenVec[1] = (float)as[1] * canVec[ as[3] ];
 			 screenVec[2] = canVec[2];
 		}
-		
+
 		//----------------------------------------------------------------//
 		public void onSensorChanged ( SensorEvent event ) {
 
 			if ( event.sensor.getType () == Sensor.TYPE_ACCELEROMETER ) {
 
 				Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
-				canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
-                
-				float x = mAccelerometerData [ 0 ];
-				float y = mAccelerometerData [ 1 ];
-				float z = mAccelerometerData [ 2 ];
-                
+                canonicalOrientationToScreenOrientation ( display.getRotation (), event.values, mAccelerometerData );
+
+                float x = mAccelerometerData [ 0 ];
+                float y = mAccelerometerData [ 1 ];
+                float z = mAccelerometerData [ 2 ];
+
 				mGravity = mAccelerometerData;
 
 				int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
 				int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
-                
-				// normalize the vector
-				double mag = Math.sqrt ( x * x + y * y + z * z );
-				x = x / ( float ) mag;
-				y = y / ( float ) mag;
-				z = z / ( float ) mag;
+
+                // normalize the vector
+                double mag = Math.sqrt ( x * x + y * y + z * z );
+                x = x / ( float ) mag;
+                y = y / ( float ) mag;
+                z = z / ( float ) mag;
 
 				Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
 			}
@@ -473,7 +501,7 @@ public class MoaiActivity extends Activity {
 					mRotationMatrixB );
 
 				SensorManager.getOrientation ( mRotationMatrixB, orientation );
-				float heading = orientation [0] * 57.2957795f; 
+				float heading = orientation [0] * 57.2957795f;
 				if ( heading < 0 ) heading += 360;
 
 				Moai.enqueueCompassEvent ( deviceId, sensorId, heading );
@@ -486,7 +514,7 @@ public class MoaiActivity extends Activity {
 	//================================================================//
 
 	private class LocationEventListener implements LocationListener {
-		
+
 		//----------------------------------------------------------------//
 		public void onLocationChanged ( Location location ) {
 
