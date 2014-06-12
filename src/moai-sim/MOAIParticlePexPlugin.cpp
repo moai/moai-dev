@@ -199,7 +199,9 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 			    read_n_values(plugin.mFinishColorVariance, attribute, 4, plugin.mFinishColorRegister, plugin.mSize);
 			else if(text == "finishParticleSize")
 				plugin.mFinishSize = (float)atof(attribute->Value());
-			else if(text == "FinishParticleSizeVariance")
+			// this used to be spelled with a capital F, accept that for
+			// compatibility.
+			else if(text == "finishParticleSizeVariance" || text == "FinishParticleSizeVariance")
 			{
 				plugin.mFinishSizeVariance = (float)atof(attribute->Value());
 				if(plugin.mFinishSizeVariance != 0)
