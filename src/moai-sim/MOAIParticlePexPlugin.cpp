@@ -665,6 +665,7 @@ void MOAIParticlePexPlugin::_renderGravityScript		( float* particle, float* regi
 	sprite->mGfxID = 1;
 	
 }
+
 void MOAIParticlePexPlugin::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term)
 {
 	// Set colors.
@@ -752,6 +753,7 @@ void MOAIParticlePexPlugin::_renderRadialScript( float* particle, float* registe
 	sprite->mXLoc = particle[ MOAIParticle::PARTICLE_X ];
 	sprite->mYLoc = particle[ MOAIParticle::PARTICLE_Y ];
 
+	sprite->mGfxID = 1;
 }
 
 void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
