@@ -70,6 +70,7 @@ set ( SSL_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s2_pkt.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s2_srvr.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_both.c
+  ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_cbc.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_clnt.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_enc.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_lib.c
