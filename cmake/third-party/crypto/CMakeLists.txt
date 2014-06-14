@@ -2,26 +2,25 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( crypto )
 
 
-
-  set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/" )
-
+  set ( OPENSSL_ROOT "${MOAI_ROOT}/3rdparty/openssl-1.0.0m")
+  set ( CMAKE_CURRENT_SOURCE_DIR "${OPENSSL_ROOT}/crypto/" )
+  
   #set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DOPENSSL_NO_ASM" )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_ASM  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE "  )
 
   SET_SOURCE_FILES_PROPERTIES( . PROPERTIES LANGUAGE CXX )
 
   set ( CRYPTO_INCLUDES 
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
-    "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" 
+    "${OPENSSL_ROOT}/crypto/"
+    "${OPENSSL_ROOT}/include/"
+    "${OPENSSL_ROOT}/crypto/asn1/"
+    "${OPENSSL_ROOT}/crypto/evp/"
+    "${OPENSSL_ROOT}" 
    )
 
     if ( BUILD_OSX )
         set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENSSL_NO_ASM")
-        set ( PLATFORM_INCLUDE "include-linux")
-        
+        set ( PLATFORM_INCLUDE "include-osx")
     endif ( BUILD_OSX )
   
     if ( BUILD_LINUX )
@@ -49,17 +48,12 @@ project ( crypto )
     endif ( BUILD_IOS)
 
 
-    if (BUILD_WINDOWS AND NOT MSVC)
-        set( CRYPTO_INCLUDES
-                "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
-                 ${CRYPTO_INCLUDES}
-       )
-    else ()
-        set( CRYPTO_INCLUDES
-                ${CRYPTO_INCLUDES}
-                "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/${PLATFORM_INCLUDE}"
-       )
-    endif (BUILD_WINDOWS AND NOT MSVC)
+  
+    set( CRYPTO_INCLUDES
+        "${OPENSSL_ROOT}/${PLATFORM_INCLUDE}"
+        ${CRYPTO_INCLUDES}
+    )
+   
 
 
   set ( CRYPTO_SOURCES 
