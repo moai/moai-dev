@@ -1,0 +1,20 @@
+--- C:/Users/David/AppData/Local/Temp/oC1nrc_ocsp.h	Sat Jun 14 10:22:46 2014
++++ 3rdparty/openssl-1.0.0m/include/openssl/ocsp.h	Sat Jun 14 10:21:15 2014
+@@ -69,6 +69,17 @@
+ #include <openssl/x509v3.h>
+ #include <openssl/safestack.h>
+ 
++
++#if defined(OPENSSL_SYS_WINDOWS)
++#include <windows.h>
++#undef X509_NAME
++#undef X509_EXTENSIONS
++#undef X509_CERT_PAIR
++#undef PKCS7_ISSUER_AND_SERIAL
++#undef OCSP_REQUEST
++#undef OCSP_RESPONSE
++#endif
++
+ #ifdef  __cplusplus
+ extern "C" {
+ #endif
