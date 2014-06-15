@@ -24,7 +24,6 @@ local maxParticles = plugin:getMaxParticles ()
 local blendsrc, blenddst = plugin:getBlendMode ()
 local minLifespan, maxLifespan = plugin:getLifespan ()
 local duration = plugin:getDuration ()
-local xMin, yMin, xMax, yMax = plugin:getRect ()
 
 system = MOAIParticleSystem.new ()
 system._duration = duration
@@ -43,7 +42,7 @@ emitter = MOAIParticleTimedEmitter.new()
 emitter:setSystem ( system )
 emitter:setEmission ( plugin:getEmission () )
 emitter:setFrequency ( plugin:getFrequency () )
-emitter:setRect ( xMin, yMin, xMax, yMax )
+emitter:setRect ( -1, -1, 1, 1 )
 
 local deck = MOAIGfxQuad2D.new()
 deck:setTexture( plugin:getTextureName() )

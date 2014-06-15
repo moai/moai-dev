@@ -2,49 +2,50 @@ cmake_minimum_required ( VERSION 2.8.5 )
 project ( ssl )
 
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/openssl-1.0.0m/" )
 
 set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DL_ENDIAN -DOPENSSL_NO_ASM  -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_STATIC_ENGINE "  )
 
 
 if ( BUILD_LINUX )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_LINUX"  )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"  )
+  set( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-linux" )
 endif ( BUILD_LINUX)
 
 if ( BUILD_WINDOWS )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 "  )
   if (MSVC)
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWIN32 -DWIN32_LEAN_AND_MEAN -D_LIB -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_DEPRECATE")
-    set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-win32" )
+    set ( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-win32" )
   else()
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMK1MF_BUILD")
-    set ( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-mingw" )
+    set ( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-mingw" )
   endif (MSVC)
 endif ( BUILD_WINDOWS )
 
 
 if ( BUILD_ANDROID )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_ANDROID " )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-android" )
+  set( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-android" )
 endif ( BUILD_ANDROID )
 
 if ( BUILD_IOS )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_MACOSX "  )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-iphone" )
+  set( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-iphone" )
 endif ( BUILD_IOS )
 
 if ( BUILD_OSX )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_MACOSX "  )
-  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/" )
+  set( PLATFORM_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include-osx" )
 endif ( BUILD_OSX )
 
 set ( SSL_INCLUDES 
   ${PLATFORM_INCLUDE}
-  "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/"
-  "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/asn1/"
-  "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/crypto/evp/"
-  "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/"
+  "${CMAKE_CURRENT_SOURCE_DIR}/include/"
+  "${CMAKE_CURRENT_SOURCE_DIR}/crypto/"
+  "${CMAKE_CURRENT_SOURCE_DIR}/crypto/asn1/"
+  "${CMAKE_CURRENT_SOURCE_DIR}/crypto/evp/"
+  "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 set ( SSL_SOURCES 
@@ -69,6 +70,7 @@ set ( SSL_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s2_pkt.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s2_srvr.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_both.c
+  ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_cbc.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_clnt.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_enc.c
   ${CMAKE_CURRENT_SOURCE_DIR}ssl/s3_lib.c
