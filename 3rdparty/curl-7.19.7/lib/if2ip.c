@@ -51,7 +51,11 @@
 #  include <ifaddrs.h>
 #endif
 #ifdef HAVE_STROPTS_H
+#if defined _XOPEN_STREAMS && _XOPEN_STREAMS == -1
+#  include <sys/ioctl.h>
+#else
 #  include <stropts.h>
+#endif
 #endif
 #ifdef VMS
 #  include <inet.h>
