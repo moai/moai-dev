@@ -854,11 +854,11 @@ void MOAILuaState::Push ( u64 value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( size_t value ) {
-
-	// TODO: check for overflow
-	lua_pushnumber ( this->mState, ( double )value );
-}
+//void MOAILuaState::Push ( size_t value ) {
+//
+//	// TODO: check for overflow
+//	lua_pushnumber ( this->mState, ( double )value );
+//}
 
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( lua_CFunction value ) {

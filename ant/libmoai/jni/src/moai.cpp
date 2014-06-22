@@ -381,7 +381,8 @@
 
 		JNI_GET_CSTRING ( jfilename, filename );
 
-		AKURunScript ( filename );
+		AKULoadFuncFromFile ( filename );
+		AKUCallFunc ();
 
 		JNI_RELEASE_CSTRING ( jfilename, filename );
 	}
