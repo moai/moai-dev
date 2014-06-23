@@ -10,6 +10,8 @@
 #include <zl-util/ZLBase64Reader.h>
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLByteStream.h>
+#include <zl-util/ZLHexReader.h>
+#include <zl-util/ZLHexWriter.h>
 #include <zl-util/ZLMemStream.h>
 
 //================================================================//
@@ -19,32 +21,29 @@
 //----------------------------------------------------------------//
 void STLString::base_64_decode ( void* buffer, size_t len ) {
 
-	ZLByteStream byteStream;
 	ZLBase64Reader base64;
-	
-	byteStream.SetBuffer (( void* )this->str (), this->size ());
-	byteStream.SetLength ( this->size ());
-	
-	base64.Open ( byteStream );
-	base64.ReadBytes ( buffer, len );
-	base64.Close ();
+	zl_decode ( base64, buffer, len );
+}
+
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual decoded size
+size_t STLString::base_64_decode_len ( size_t len ) {
+
+	return ZLBase64Reader::GetDecodedLength ( len );
 }
 
 //----------------------------------------------------------------//
 void STLString::base_64_encode ( const void* buffer, size_t len ) {
 	
-	( *this ) = "";
-	if ( !len ) return;
-	
-	ZLMemStream memStream;
 	ZLBase64Writer base64;
-	
-	base64.Open ( memStream );
-	base64.WriteBytes ( buffer, len );
-	base64.Close ();
-	
-	memStream.Seek ( 0, SEEK_SET );
-	( *this ) = memStream.ReadString ( memStream.GetLength ());
+	zl_encode ( base64, buffer, len );
+}
+
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual encoded size
+size_t STLString::base_64_encode_len ( size_t len ) {
+
+	return ZLBase64Writer::GetEncodedLength ( len );
 }
 
 //----------------------------------------------------------------//
@@ -66,32 +65,37 @@ STLString STLString::clip_to_front ( size_t last ) {
 }
 
 //----------------------------------------------------------------//
+void STLString::hex_decode ( void* buffer, size_t len ) {
+
+	ZLHexReader hex;
+	zl_decode ( hex, buffer, len );
+}
+
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual decoded size
+size_t STLString::hex_decode_len ( size_t len ) {
+
+	return ZLHexReader::GetDecodedLength ( len );
+}
+
+//----------------------------------------------------------------//
 void STLString::hex_encode ( const void* buffer, size_t len ) {
-
-	if ( !len ) {
-		( *this ) = "";
-		return;
-	}
-
-	u8* digits = ( u8* )buffer;
 	
-	char* hexStr = ( char* )alloca (( len * 2 ) + 1 );
-	char* hexPtr = hexStr;
-	for ( size_t i = 0; i < len; ++i ) {
-		hexPtr += sprintf ( hexPtr, "%02x", digits [ i ]);
-	}
+	ZLHexWriter hex;
+	zl_encode ( hex, buffer, len );
+}
 
-	( *this ) = hexStr;
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual encoded size
+size_t STLString::hex_encode_len ( size_t len ) {
+
+	return ZLHexWriter::GetEncodedLength ( len );
 }
 
 //----------------------------------------------------------------//
 u8 STLString::hex_to_byte ( u32 c ) {
 
-	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
-	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
-	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
-
-	return 0xff;
+	return ZLHexReader::HexToByte ( c );
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +204,35 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	if ( buffer != stackBuffer ) {
 		free ( buffer );
 	}
+}
+
+//----------------------------------------------------------------//
+void STLString::zl_decode ( ZLStreamReader& reader, void* buffer, size_t len ) {
+
+	ZLByteStream byteStream;
+	
+	byteStream.SetBuffer (( void* )this->str (), this->size ());
+	byteStream.SetLength ( this->size ());
+	
+	reader.Open ( byteStream );
+	reader.ReadBytes ( buffer, len );
+	reader.Close ();
+}
+
+//----------------------------------------------------------------//
+void STLString::zl_encode ( ZLStreamWriter& writer, const void* buffer, size_t len ) {
+
+	( *this ) = "";
+	if ( !len ) return;
+	
+	ZLMemStream memStream;
+	
+	writer.Open ( memStream );
+	writer.WriteBytes ( buffer, len );
+	writer.Close ();
+	
+	memStream.Seek ( 0, SEEK_SET );
+	( *this ) = memStream.ReadString ( memStream.GetLength ());
 }
 
 //----------------------------------------------------------------//

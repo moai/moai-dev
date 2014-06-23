@@ -36,7 +36,7 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
 	size_t cursor = self->mStream->GetCursor ();
-	state.Push ( cursor );
+	state.Push (( u32 )cursor ); // TODO: overflow?
 	return 1;
 }
 
@@ -51,7 +51,7 @@ int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
 	size_t length = self->mStream->GetLength ();
-	state.Push ( length );
+	state.Push (( u32 )length ); // TODO: overflow?
 	return 1;
 }
 
@@ -102,7 +102,7 @@ int MOAIStream::_read ( lua_State* L ) {
 		free ( buffer );
 	}
 	
-	state.Push ( len );
+	state.Push (( u32 )len ); // TODO: overflow?
 	return 2;
 }
 
@@ -273,7 +273,7 @@ int MOAIStream::_write ( lua_State* L ) {
 	
 	writeLen = self->mStream->WriteBytes ( str, writeLen );
 	
-	state.Push ( writeLen );
+	state.Push (( u32 )writeLen ); // TODO: overflow?
 	return 1;
 }
 
@@ -391,7 +391,7 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 		}
 	}
 	
-	state.Push ( result );
+	state.Push (( u32 )result ); // TODO: overflow?
 	return 1;
 }
 
@@ -701,6 +701,6 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 		}
 	}
 	
-	state.Push ( bytes );
+	state.Push (( u32 )bytes ); // TODO: overflow?
 	return 1;
 }

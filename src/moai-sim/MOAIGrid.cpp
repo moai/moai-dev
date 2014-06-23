@@ -185,7 +185,7 @@ int MOAIGrid::_streamTilesIn ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesIn ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesIn ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
@@ -205,7 +205,7 @@ int MOAIGrid::_streamTilesOut ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesOut ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesOut ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
@@ -316,6 +316,8 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	state.GetField ( -1, "mData" );
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
+		
+		// TODO: all this is unsafe; don't assume sizes will be reasonable of that deflated data is guaranteed to be smaller; rewrite this with checking and recover in place
 		
 		void* tiles = this->mTiles;
 		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );

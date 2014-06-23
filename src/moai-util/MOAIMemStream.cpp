@@ -125,7 +125,7 @@ void MOAIMemStream::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ZLMemStream::DEFAULT_CHUNK_SIZE );
+	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ( u32 )ZLMemStream::DEFAULT_CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//

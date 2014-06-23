@@ -30,9 +30,25 @@ size_t ZLHexReader::GetCursor () {
 }
 
 //----------------------------------------------------------------//
+size_t ZLHexReader::GetDecodedLength ( size_t encodedLength ) {
+
+	return encodedLength >> 1;
+}
+
+//----------------------------------------------------------------//
 size_t ZLHexReader::GetLength () {
 
 	return this->mCursor;
+}
+
+//----------------------------------------------------------------//
+u8 ZLHexReader::HexToByte ( u32 c ) {
+
+	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
+	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
+	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
+
+	return 0xff;
 }
 
 //----------------------------------------------------------------//
@@ -59,8 +75,8 @@ size_t ZLHexReader::ReadBytes ( void* buffer, size_t size ) {
 			return i;
 		}
 		
-		u32 hi = STLString::hex_to_byte ( hexByte [ 0 ]);
-		u32 lo = STLString::hex_to_byte ( hexByte [ 1 ]);
+		u32 hi = ZLHexReader::HexToByte ( hexByte [ 0 ]);
+		u32 lo = ZLHexReader::HexToByte ( hexByte [ 1 ]);
 		
 		bytes [ i ] = ( u8 )(( hi << 4 ) + lo );
 	}

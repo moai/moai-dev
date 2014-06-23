@@ -118,7 +118,7 @@ private:
 				state.Push ();
 			}
 		}
-		state.Push ( bytes );
+		state.Push (( u32 )bytes ); // TODO: overflow?
 		return total + 1;
 	}
 	
@@ -142,7 +142,7 @@ private:
 				}
 			}
 		}
-		state.Push ( bytes );
+		state.Push (( u32 )bytes ); // TODO: overflow?
 		return 1;
 	}
 
