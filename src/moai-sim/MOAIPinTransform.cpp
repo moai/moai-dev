@@ -22,6 +22,7 @@
 	@out	nil
 */
 int MOAIPinTransform::_init ( lua_State* L ) {
+	
 	MOAI_LUA_SETUP ( MOAIPinTransform, "UUU" );
 	
 	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 2, true );
@@ -41,7 +42,29 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPinTransform::MOAIPinTransform () {
+bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op )
+{
+	if ( MOAIPinTransformAttr::Check ( attrID ) ) {
+		switch ( UNPACK_ATTR ( attrID ) ) {
+			case ATTR_FRONT:
+				
+				// Z component is out of NDC space
+				if ( mFront < -1.0f ) {
+					this->mFront = 0.0f;
+				}
+				
+				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				return true;
+		}
+	}
+	
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+}
+
+//----------------------------------------------------------------//
+MOAIPinTransform::MOAIPinTransform () :
+	mFront ( 1.0f )
+{
 	
 	RTTI_SINGLE ( MOAITransform )
 }
@@ -73,6 +96,8 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 //	this->mDestLayer->GetWndToWorldMtx ( mtx );
 //	mtx.Transform ( loc );
 	
+	mFront = loc.mZ;
+	
 	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
 	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
 }
@@ -80,6 +105,8 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_FRONT", MOAIPinTransformAttr::Pack ( ATTR_FRONT ) );
 }
 
 //----------------------------------------------------------------//
@@ -94,4 +121,3 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
