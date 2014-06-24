@@ -17,8 +17,7 @@ class MOAIIndexBuffer :
 	public MOAIGfxResource {
 private:
 
-	u32*	mBuffer;
-	u32		mIndexCount;
+	ZLLeanArray < u32 > mIndices;
 	
 	u32		mGLBufferID;
 	u32		mHint;
@@ -45,7 +44,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
-	GET ( u32, IndexCount, mIndexCount )
+	GET ( u32, IndexCount, mIndices.Size ())
 	GET ( ZLStream&, Stream, mStream )
 	
 	//----------------------------------------------------------------//
