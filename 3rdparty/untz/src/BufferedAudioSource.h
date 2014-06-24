@@ -30,13 +30,17 @@ public:
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
 //	virtual bool init(float* interleavedData, Int64 numSamples);
+	virtual void prime();
+	virtual void flush();
     virtual void close();
-	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
+	virtual Int64 decodeData(float* buffer, UInt32 numFrames, int &version) { return 0; }
 	virtual void setDecoderPosition(Int64 startFrame) {};
-	virtual void doneDecoding() {};
-
+    int getPositionVersion() {return mPositionVersion;}
 protected:
 	RCriticalSection mLock;
+
+    void incrementPositionVersion() {++mPositionVersion;}
+    int mPositionVersion;
 };
 
 #endif

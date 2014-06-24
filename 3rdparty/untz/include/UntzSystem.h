@@ -20,7 +20,10 @@ namespace UNTZ
 	} DeviceInfo;
 
 	typedef enum {
-		RECORDABLE = 0x100 // bitwise options
+		RECORDABLE = 0x100, // bitwise options
+		MIX_WITH_OTHERS = 0x200,
+		USE_VPIO = 0x400,
+		VOICECHAT_MODE = 0x800
 	} SystemOption;
 
 	class SystemData;
@@ -33,10 +36,13 @@ namespace UNTZ
 		static void shutdown();
         
 		RStringArray& getSupportedFormats();
-        void setSampleRate(UInt32 sampleRate);
+        
+		void setSampleRate(UInt32 sampleRate);
         UInt32 getSampleRate();
-		void setOptions(UInt32 options);
-		UInt32 getOptions();
+		
+		void setOptions(UInt32 options, bool force = false);
+		UInt32 getOptions() { return options; }
+		
 		UInt32 getDeviceCount();
 		DeviceInfo getDeviceInfo(UInt32 deviceIndex);
 		void setInputDevice(UInt32 deviceIndex);
@@ -54,6 +60,7 @@ namespace UNTZ
 		~System();
         static System* msInstance;
 		SystemData* mpData;
+		UInt32 options;
     };
 };
 

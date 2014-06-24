@@ -55,7 +55,11 @@ public:
 	void clear()
 	{
 		if(mOwnsBuffer)
+		{
 			 mBuffer.clear();
+			// release memory
+			std::vector<float>().swap(mBuffer);
+		}
 	}
 
 	UInt32 size() const

@@ -21,6 +21,8 @@
 #else
 	#if defined(__APPLE__)
 		#include "ExtAudioFileAudioSource.h"
+	#elif defined(__ANDROID__)
+		#include "BltAudioSource.h"
 	#else
 		#include "WaveFileAudioSource.h"
 	#endif
@@ -84,6 +86,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			source = (ExtAudioFileAudioSource*)prevSound->getData()->getSource().get();
 		else
 			source = new ExtAudioFileAudioSource();
+#elif defined(__ANDROID__)
+        BltAudioSource *source = 0;
+        if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+            source = (BltAudioSource*)prevSound->getData()->getSource().get();
+        else
+            source = new BltAudioSource();
 #else
         WaveFileAudioSource *source = 0;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
@@ -173,20 +181,23 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	}
 	else
 	{
-	
-	
-#if defined(__APPLE__)
+#if defined(WIN32)
+		DShowAudioSource *as = new DShowAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+#elif defined(__APPLE__)
 		ExtAudioFileAudioSource *as = new ExtAudioFileAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
-#elif defined(WIN32)
-		DShowAudioSource* as = new DShowAudioSource();
+#elif defined(__ANDROID__)
+		BltAudioSource *as = new BltAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
 #else
-      WaveFileAudioSource *as = new WaveFileAudioSource();
+        WaveFileAudioSource *as = new WaveFileAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
@@ -232,9 +243,14 @@ Sound::Sound()
 
 Sound::~Sound()
 {
-	stop();
-	
-	UNTZ::System::get()->getData()->mMixer.removeSound(this);
+	UNTZ::System *instance = UNTZ::System::get();
+	if (instance) {
+		// SR
+		// Stop only if the UNTZ::System is still valid
+		// otherwise it may crash as we exit because some sources use it to access sample rate
+		stop();
+		instance->getData()->mMixer.removeSound(this);
+	}
 
 	if(mpData)
 		delete mpData;
@@ -265,6 +281,8 @@ bool Sound::isLooping() const
 
 void Sound::setLoopPoints(double startTime, double endTime)
 {
+	RScopedLock l(&mpData->getLock());
+
 	double length = mpData->getSource()->getLength();
 
 	startTime = startTime < 0 ? 0 : startTime;
@@ -292,32 +310,44 @@ void Sound::getLoopPoints(double& startTime, double& endTime)
 
 void Sound::setPosition(double seconds)
 {
+	RScopedLock l(&mpData->getLock());
+
 	seconds = seconds < 0 ? 0.0f : seconds;
 	seconds = seconds > mpData->getSource()->getLength() ? mpData->getSource()->getLength() : seconds;
-	mpData->mState.mCurrentFrame = (Int64)(seconds * mpData->getSource()->getSampleRate());   
-	mpData->getSource()->setPosition(0);
+	mpData->mState.mCurrentFrame = (Int64)mpData->getSource()->convertSecondsToSamples(seconds);
+	mpData->getSource()->setPosition(seconds);
 }
 
 double Sound::getPosition()
 {
-	double position = (double)mpData->mState.mCurrentFrame / mpData->getSource()->getSampleRate();
-	return position;
+	RScopedLock l(&mpData->getLock());
+
+	return (double)mpData->getSource()->convertSamplesToSeconds(mpData->mState.mCurrentFrame);
 }
 
 void Sound::play()
 {
+	RScopedLock l(&mpData->getLock());
+
 	if(mpData->mPlayState == kPlayStateStopped)
 	{
 		mpData->mPlayState = kPlayStatePlaying;
+		mpData->getSource()->prime();
 	}
     else if(mpData->mPlayState == kPlayStatePlaying)
+	{
 		setPosition(0);
+	}
 	else if(mpData->mPlayState == kPlayStatePaused)
+	{
 		mpData->mPlayState = kPlayStatePlaying;        
+}
 }
 
 void Sound::pause()
 {
+	RScopedLock l(&mpData->getLock());
+
 	if(mpData->mPlayState == kPlayStatePlaying)
 		mpData->mPlayState = kPlayStatePaused;
 }
@@ -326,18 +356,22 @@ void Sound::stop()
 {	
 	if(mpData)
 	{
+		RScopedLock l(&mpData->getLock());
 		mpData->mPlayState = kPlayStateStopped;
+		mpData->getSource()->flush();
 		setPosition(0);
 	}
 }
 
 bool Sound::isPlaying()
 {
+	RScopedLock l(&mpData->getLock());
 	return mpData->mPlayState == kPlayStatePlaying;
 }
 
 bool Sound::isPaused()
 {
+	RScopedLock l(&mpData->getLock());
 	return mpData->mPlayState == kPlayStatePaused;
 }
 

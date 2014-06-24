@@ -310,6 +310,10 @@ void System::setSampleRate(UInt32 sampleRate)
 {
 }
 
+void System::setOptions(UInt32 newOptions, bool force)
+{    
+}
+
 void System::setVolume(float volume)
 {
 	return msInstance->mpData->mMixer.setVolume(volume);

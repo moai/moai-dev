@@ -90,6 +90,13 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 	for(UInt32 i = 0; i < mSounds.size(); ++i)
 	{		
 		UNTZ::Sound *s = mSounds[i];
+		
+		// We take the state lock to prevent any changes to state or source position
+		// while we query it and read data. If source is not preloaded, this prevents
+		// the BufferedAudioThread to return data because the source has rewinded when
+		// stopped
+		RScopedLock l(&s->getData()->getLock());
+		
 		if(s->getData()->getState() == kPlayStatePlaying)
 		{
 			++z;
@@ -98,6 +105,7 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 			do
 			{
 				framesRead = s->getData()->getSource()->readFrames((float*)&mBuffer[0], numOutputChannels, numFrames - totalFramesRead, s->getData()->mState);
+
 				if(framesRead > 0)
                 {
                     for(UInt32 k = 0; k < numOutputChannels; ++k)

@@ -21,5 +21,5 @@ UserAudioSource::UserAudioSource(UInt32 sampleRate, UInt32 numChannels, StreamCa
 
 Int64 UserAudioSource::readFrames(float* buffers, UInt32 numChannels, UInt32 numSamples, AudioSourceState& state)
 {
-	return mCallback(buffers, mNumChannels, numSamples, mUserdata);
+	return mCallback(buffers, numChannels, numSamples, mUserdata);
 }

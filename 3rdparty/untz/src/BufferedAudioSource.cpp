@@ -15,6 +15,7 @@ BufferedAudioSource::BufferedAudioSource()
 {
 	mLoadedInMemory = false;
     mEOF = false;
+    mPositionVersion = 0;
 }
 
 BufferedAudioSource::~BufferedAudioSource()
@@ -27,13 +28,16 @@ bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
     return true;
 }
 */
-bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory) 
-{ 
+bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
+{
 	if(loadIntoMemory)
 	{
 		RPRINT("loading sound into memory...\n");
+        int channels = getNumChannels();
+        double length = getLength();
+		double srate = getSampleRate();
 		UInt32 totalFrames = getSampleRate() * getLength();
-		mBuffer.resize(getNumChannels(), totalFrames);//getSampleRate() * getLength());
+		mBuffer.resize(getNumChannels(), totalFrames);
 		float *pWritePos = mBuffer.getData();
 		UInt32 numFrames = (UInt32)(getSampleRate());
 		UInt32 framesRead = 0;
@@ -41,32 +45,52 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 		UInt32 tf = 0;
 		do
 		{
-			framesRead = decodeData(pWritePos, remainingFrames >= numFrames ? numFrames : remainingFrames);
+            int version = 0;
+			framesRead = decodeData(pWritePos, remainingFrames >= numFrames ? numFrames : remainingFrames, version);
 			pWritePos += framesRead * getNumChannels();
 			tf += framesRead;
 			remainingFrames -= framesRead;
 		}
-		while(remainingFrames > 0);
+		while(remainingFrames > 0 && framesRead > 0);
 		mEOF = true;
-		mLoadedInMemory = loadIntoMemory; 
-		doneDecoding();
+		mLoadedInMemory = loadIntoMemory;
+		mBuffer.resize(getNumChannels(), tf);
 	}
 	else
 	{
-        RScopedLock l(&mLock);
-		mBuffer = RAudioBuffer(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER);
-		BufferedAudioSourceThread::getInstance()->addSource(this);
+		mBuffer = RAudioBuffer(getNumChannels(), 0);
 	}
 
 	return true;
 }
 
-void BufferedAudioSource::close()
+void BufferedAudioSource::prime()
 {
 	if(!isLoadedInMemory())
 	{
-		BufferedAudioSourceThread::getInstance()->removeSource(this);        
+		// if this is the first time source is added, trigger to read data immediately
+		if (BufferedAudioSourceThread::getInstance()->addSource(this)) {
+			BufferedAudioSourceThread::getInstance()->readMore();
+		}
+	}
+}
+
+void BufferedAudioSource::flush()
+{
+	if(!isLoadedInMemory())
+	{
+		BufferedAudioSourceThread::getInstance()->removeSource(this);
+
+		{
+			RScopedLock l(&mLock);
+			mBuffer.clear();
+		}
     }
+}
+
+void BufferedAudioSource::close()
+{
+	flush();
 }
 
 void BufferedAudioSource::setPosition(double seconds)
@@ -76,7 +100,7 @@ void BufferedAudioSource::setPosition(double seconds)
 
 	RScopedLock l(&mLock);
 
-	Int64 frames = (Int64)(seconds * getSampleRate()); 
+	Int64 frames = (Int64)(seconds * getSampleRate());
     if(!isLoadedInMemory())
     {
         mBuffer.clear();
@@ -87,34 +111,37 @@ void BufferedAudioSource::setPosition(double seconds)
 
 Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state)
 {
-	mLock.lock();
+	RScopedLock l(&mLock);
 
 	Int64 framesRead = numFrames;
 	int framesAvailable = mBuffer.size() / getNumChannels() - state.mCurrentFrame;
-    
+
 	// For disk-streaming sources we calculate available frames using the whole buffer
-    if(!isLoadedInMemory())
+    if(!isLoadedInMemory()) {
         framesAvailable = mBuffer.size() / getNumChannels();
-    
-	mLock.unlock();
+	}
 
 	Int64 loopEndFrame = convertSecondsToSamples(state.mLoopEnd);
+	Int64 totalFrames = convertSecondsToSamples(getLength());
 	bool needToLoop = state.mLooping && ((state.mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
-	
+
 	if(framesAvailable > 0 && !needToLoop)
 	{
-		RScopedLock l(&mLock);
 
-		if(framesAvailable < numFrames)
+		// Make sure we don't read passed the end loop frame
+		if(state.mLooping && loopEndFrame > 0 && loopEndFrame > state.mCurrentFrame)
+			framesRead = (std::min)(framesRead, loopEndFrame-state.mCurrentFrame);
+
+		if(framesAvailable < framesRead)
 			framesRead = framesAvailable;
 
 		int sourceChannels = getNumChannels();
         int frameOffset = state.mCurrentFrame;
-        
+
         // For disk-streaming sources we always start at the beginning of the buffer
         if(!isLoadedInMemory())
             frameOffset = 0;
-        
+
 		for(UInt32 j = 0; j < numChannels; ++j)
 		{
 			float *in = NULL;
@@ -131,7 +158,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		}
 
         state.mCurrentFrame += framesRead;
-		
+
         if(!isLoadedInMemory())
 		{
 			mBuffer.erase(0, framesRead);
@@ -146,15 +173,20 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
     else
     {
         framesRead = ERR_BUFFERING;
-        
+
 		if(needToLoop)
 		{
 			setPosition(state.mLoopStart);
 			state.mCurrentFrame = convertSecondsToSamples(state.mLoopStart);
+
+			// Now that we rewinded, read new data if preloaded
+			if(isLoadedInMemory())
+			{
+				return readFrames(buffer, numChannels, numFrames, state);
+			}
 		}
 
-		Int64 totalFrames = convertSecondsToSamples(getLength());
-        if(state.mCurrentFrame >= totalFrames)
+        if(mEOF)
         {
             return 0; // signal that we are done
         }
@@ -163,6 +195,6 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 			BufferedAudioSourceThread::getInstance()->readMore();
 		}
     }
-    
+
 	return framesRead;
 }

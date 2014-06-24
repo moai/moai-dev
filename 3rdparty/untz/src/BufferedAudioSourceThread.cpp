@@ -120,20 +120,37 @@ void BufferedAudioSourceThread::run()
 
 				pSource->mLock.unlock();
 				
-				if(availableFrames < framesThreshold)
+				if(availableFrames <= framesThreshold)
 				{
 					Int64 numFrames = totalFrames - availableFrames;                
 					Int64 framesToRead = numFrames;
 					Int64 frames = 0;
 					tempBuffer.resize(numFrames * pSource->getNumChannels());
 					float *pBuffer = &tempBuffer[0];
-					do
+                    
+					// keep track of last known version when starting to buffer
+					// to discard any previously buffered data in case source
+					// changed position. This avoids having to keep a lock
+					// while buffering data.
+					int lastVersion = pSource->getPositionVersion();
+					
+					while(framesToRead > 0 && !pSource->isEOF())
 					{
-						frames = pSource->decodeData(pBuffer, framesToRead);
+                        int currentVersion = 0;
+						frames = pSource->decodeData(pBuffer, framesToRead, currentVersion);
+						
+						// check if version changed since we started buffering
+						// and discard everything we've buffered before if so
+                        if (currentVersion != lastVersion) {
+                            tempBuffer.erase(tempBuffer.begin(), tempBuffer.begin() + ((numFrames - framesToRead) * pSource->getNumChannels()));
+                            tempBuffer.resize(numFrames * pSource->getNumChannels());
+                            pBuffer = &tempBuffer[0];
+                            framesToRead = numFrames;
+                        }
 						framesToRead -= frames;
 						pBuffer += frames * pSource->getNumChannels();
+                        lastVersion = currentVersion;
 					}
-					while(framesToRead > 0 && !pSource->isEOF());
 
 					// Now write the data back to the buffer
 					Int64 framesRead = numFrames - framesToRead;

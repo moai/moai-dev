@@ -13,7 +13,7 @@
 
 namespace UNTZ
 {
-	typedef UInt32 (StreamCallback)(float* buffers, UInt32 numChannels, UInt32 length, void* userdata); 
+	typedef Int64 (StreamCallback)(float* buffers, UInt32 numChannels, UInt32 length, void* userdata);
 
 	typedef struct {
 		UInt32 mBitsPerSample;
@@ -58,6 +58,7 @@ namespace UNTZ
 		bool isPaused();
 
 		SoundData* getData() const { return mpData; }
+		
 	private:
 		Sound();
 		SoundData* mpData;

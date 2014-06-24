@@ -39,7 +39,7 @@ typedef unsigned long ULong;
 
 #if defined(UNTZ_ENABLE_LOGGING)
 	#if defined(__GNUC__)
-		#define RPRINT(fmt, ...) printf(fmt)
+		#define RPRINT(fmt, ...) printf(fmt, ##__VA_ARGS__)
 	#else
 		#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)
 	#endif
