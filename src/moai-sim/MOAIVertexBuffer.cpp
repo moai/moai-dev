@@ -390,3 +390,51 @@ void MOAIVertexBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 		this->mUseVBOs = false;
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+
+//	this->MOAIGridSpace::SerializeIn ( state, serializer );
+//	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
+//
+//	state.GetField ( -1, "mData" );
+//
+//	if ( state.IsType ( -1, LUA_TSTRING )) {
+//		
+//		void* tiles = this->mTiles;
+//		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
+//		
+//		STLString base64 = lua_tostring ( state, -1 ); 
+//		base64.base_64_decode ( tiles, tilesSize );
+//		
+//		ZLLeanArray < u8 > unzip;
+//		ZLZip::Inflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), unzip );
+//		
+//		tiles = unzip.Data ();
+//		if ( unzip.Size () < tilesSize ) {
+//			tilesSize = unzip.Size ();
+//		}
+//		memcpy ( this->mTiles, tiles, tilesSize );
+//	}
+//	
+//	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+
+//	this->MOAIGridSpace::SerializeOut ( state, serializer );
+//
+//	ZLLeanArray < u8 > zip;
+//	ZLZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
+//
+//	STLString base64;
+//	base64.base_64_encode ( zip.Data (), zip.Size ());
+//	
+//	lua_pushstring ( state, base64.str ());
+//	lua_setfield ( state, -2, "mData" );
+}

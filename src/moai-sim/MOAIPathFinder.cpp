@@ -79,7 +79,7 @@ int MOAIPathFinder::_getPathEntry ( lua_State* L ) {
 int MOAIPathFinder::_getPathSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
 	
-	state.Push ( self->mPath.Size ());
+	state.Push (( u32 )self->mPath.Size ()); // TODO: overflow?
 	return 1;
 }
 

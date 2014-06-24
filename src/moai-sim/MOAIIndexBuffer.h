@@ -54,6 +54,8 @@ public:
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 	void		ReserveIndices			( u32 indexCount );
+	void		SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void		SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void		SetIndex				( u32 idx, u32 value );
 };
 

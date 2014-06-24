@@ -43,6 +43,13 @@ size_t ZLBase64Writer::GetCursor () {
 }
 
 //----------------------------------------------------------------//
+// returns an approx. len no smaller than actual encoded size
+size_t ZLBase64Writer::GetEncodedLength ( size_t plainLength ) {
+
+	return 4 * ( size_t )ceilf (( double )plainLength / 3.0 );
+}
+
+//----------------------------------------------------------------//
 size_t ZLBase64Writer::GetLength () {
 
 	return this->mCursor;

@@ -29,8 +29,8 @@
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
-			state.Push ( mRange.location );
-			state.Push ( mRange.length );
+			state.Push (( u32 )mRange.location ); // TODO: overflow?
+			state.Push (( u32 )mRange.length ); // TODO: overflow?
 			state.Push ([ string UTF8String ]);
 			state.DebugCall ( 3, 0 );
 		}

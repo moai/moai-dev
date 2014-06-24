@@ -30,6 +30,12 @@ size_t ZLHexWriter::GetCursor () {
 }
 
 //----------------------------------------------------------------//
+size_t ZLHexWriter::GetEncodedLength ( size_t plainLength ) {
+
+	return plainLength << 1;
+}
+
+//----------------------------------------------------------------//
 size_t ZLHexWriter::GetLength () {
 
 	return this->mCursor;

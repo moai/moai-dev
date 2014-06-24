@@ -382,7 +382,8 @@
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 
 		JNI_GET_CSTRING ( jfilename, filename );
-		AKURunScript ( filename );
+		AKULoadFuncFromFile ( filename );
+		AKUCallFunc ();
 		JNI_RELEASE_CSTRING ( jfilename, filename );
 	}
 

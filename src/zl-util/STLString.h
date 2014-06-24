@@ -20,21 +20,38 @@ using namespace std;
 	STLString str; \
 	STLSTRING_APPEND_VA_ARGS ( str, format, top )
 
+class ZLStreamReader;
+class ZLStreamWriter;
+
 //================================================================//
 // STLString
 //================================================================//
 class STLString :
 	public string {
+	
+	//----------------------------------------------------------------//
+	void		zl_decode			( ZLStreamReader& reader, void* buffer, size_t len );
+	void		zl_encode			( ZLStreamWriter& writer, const void* buffer, size_t len );
+	
 public:
 
 	//----------------------------------------------------------------//
 	void		base_64_decode		( void* buffer, size_t len );
+	size_t		base_64_decode_len	( size_t len ); // calc the *approx* len of a plain str from the len of an encoded str; safe to use for buffer allocation
 	void		base_64_encode		( const void* buffer, size_t len );
+	size_t		base_64_encode_len	( size_t len ); // calc the *approx* len of an encoded str from the len of a plain str; safe to use for buffer allocation
+	
 	STLString	clip				( size_t first, size_t last );
 	STLString	clip_to_back		( size_t first );
 	STLString	clip_to_front		( size_t last );
+	
+	void		hex_decode			( void* buffer, size_t len );
+	size_t		hex_decode_len		( size_t len ); // calc the len of a plain str from the len of an encoded str
 	void		hex_encode			( const void* buffer, size_t len );
+	size_t		hex_encode_len		( size_t len ); // calc the len of an encoded str from the len of a plain str
+	
 	static u8	hex_to_byte			( u32 c );
+	
 	void		replace_char		( cc8 match, cc8 sub );
 	void		tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
 	double		to_double			();

@@ -528,6 +528,8 @@ void MOAITouchSensor::Reset () {
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down, float x, float y, float time ) {
 
+	//printf ( "TOUCH EVENT: %s %d %f %f\n", down ? "down" : "up", touchID, x, y );
+
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
 	eventStream.Write < u32 >( eventType );
@@ -539,6 +541,8 @@ void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down
 
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEventCancel ( ZLStream& eventStream ) {
+
+	//printf ( "TOUCH EVENT: cancel\n" );
 
 	eventStream.Write < u32 >( TOUCH_CANCEL );
 }

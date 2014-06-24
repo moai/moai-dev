@@ -180,6 +180,56 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+
+//	this->mIndexCount	= state.GetField < u32 >( -1, "mIndexCount", 0 );
+//	this->mHint			= state.GetField < u32 >( -1, "mHint", 0 );
+//
+//	state.GetField ( -1, "mBuffer" );
+//
+//	if ( state.IsType ( -1, LUA_TSTRING )) {
+//		
+//		void* tiles = this->mTiles;
+//		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
+//		
+//		STLString base64 = lua_tostring ( state, -1 ); 
+//		base64.base_64_decode ( tiles, tilesSize );
+//		
+//		ZLLeanArray < u8 > unzip;
+//		ZLZip::Inflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), unzip );
+//		
+//		tiles = unzip.Data ();
+//		if ( unzip.Size () < tilesSize ) {
+//			tilesSize = unzip.Size ();
+//		}
+//		memcpy ( this->mTiles, tiles, tilesSize );
+//	}
+//	
+//	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+
+//	state.SetField ( -1, "mXOff", this->mXOff );
+//
+//	this->MOAIGridSpace::SerializeOut ( state, serializer );
+//
+//	ZLLeanArray < u8 > zip;
+//	ZLZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
+//
+//	STLString base64;
+//	base64.base_64_encode ( zip.Data (), zip.Size ());
+//	
+//	lua_pushstring ( state, base64.str ());
+//	lua_setfield ( state, -2, "mData" );
+}
+
+//----------------------------------------------------------------//
 void MOAIIndexBuffer::SetIndex ( u32 idx, u32 value ) {
 
 	if ( idx < this->mIndexCount ) {
