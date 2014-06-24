@@ -3939,6 +3939,8 @@
 		CD8081F21831C76900E658D9 /* ZLHashWriterSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239217FA808A00FB64BB /* ZLHashWriterSHA512.h */; };
 		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
+		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
 		CD93078217EC473A00AED686 /* MOAILuaClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */; };
 		CD93078317EC473A00AED686 /* MOAILuaClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */; };
 		CD93078417EC473A00AED686 /* MOAILuaClass.h in Headers */ = {isa = PBXBuildFile; fileRef = CD93077F17EC473A00AED686 /* MOAILuaClass.h */; };
@@ -7697,6 +7699,8 @@
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moai-ios/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
+		CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moai-ios/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 		CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaClass.cpp; sourceTree = "<group>"; };
 		CD93077F17EC473A00AED686 /* MOAILuaClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaClass.h; sourceTree = "<group>"; };
 		CD93078017EC473A00AED686 /* MOAILuaRefTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaRefTable.cpp; sourceTree = "<group>"; };
@@ -10096,6 +10100,8 @@
 				CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */,
 				CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */,
 				CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */,
+				CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */,
+				CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */,
 				CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */,
 				CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */,
 				CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */,
@@ -12846,6 +12852,7 @@
 				89BE6B04173975E500DFE837 /* MOAIDeserializer.h in Headers */,
 				89BE6B08173975E500DFE837 /* MOAIEventSource.h in Headers */,
 				89BE6B0C173975E500DFE837 /* MOAIFoo.h in Headers */,
+				CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */,
 				89BE6B10173975E500DFE837 /* MOAIFooMgr.h in Headers */,
 				89BE6B14173975E500DFE837 /* MOAIGlobals.h in Headers */,
 				89BE6B18173975E500DFE837 /* MOAILogMessages.h in Headers */,
@@ -16662,6 +16669,7 @@
 				89BE6D241739A42500DFE837 /* MOAIMutex.cpp in Sources */,
 				89BE6D281739A42500DFE837 /* MOAIMutex_posix.cpp in Sources */,
 				89BE6D2C1739A42500DFE837 /* MOAIMutex_win32.cpp in Sources */,
+				CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */,
 				89BE6D301739A42500DFE837 /* MOAIParser.cpp in Sources */,
 				89BE6D341739A42500DFE837 /* MOAIStream.cpp in Sources */,
 				89BE6D381739A42500DFE837 /* MOAIStreamReader.cpp in Sources */,

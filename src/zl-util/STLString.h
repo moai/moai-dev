@@ -37,18 +37,18 @@ public:
 
 	//----------------------------------------------------------------//
 	void		base_64_decode		( void* buffer, size_t len );
-	size_t		base_64_decode_len	( size_t len ); // calc the *approx* len of a plain str from the len of an encoded str; safe to use for buffer allocation
+	size_t		base_64_decode_len	(); // calc the *approx* len of a plain str; safe to use for buffer allocation
 	void		base_64_encode		( const void* buffer, size_t len );
-	size_t		base_64_encode_len	( size_t len ); // calc the *approx* len of an encoded str from the len of a plain str; safe to use for buffer allocation
+	size_t		base_64_encode_len	(); // calc the *approx* len of an encoded str; safe to use for buffer allocation
 	
 	STLString	clip				( size_t first, size_t last );
 	STLString	clip_to_back		( size_t first );
 	STLString	clip_to_front		( size_t last );
 	
 	void		hex_decode			( void* buffer, size_t len );
-	size_t		hex_decode_len		( size_t len ); // calc the len of a plain str from the len of an encoded str
+	size_t		hex_decode_len		(); // calc the len of a plain str
 	void		hex_encode			( const void* buffer, size_t len );
-	size_t		hex_encode_len		( size_t len ); // calc the len of an encoded str from the len of a plain str
+	size_t		hex_encode_len		(); // calc the len of an encoded str
 	
 	static u8	hex_to_byte			( u32 c );
 	
@@ -61,6 +61,9 @@ public:
 	void		to_upper			();
 	void		write				( cc8* format, ... );
 	void		write_var			( cc8* format, va_list args );
+
+	void		zip_deflate			( const void* buffer, size_t len ); // deflate then base64 encode
+	size_t		zip_inflate			( void* buffer, size_t len ); // base64 decode then inflate
 
 	//----------------------------------------------------------------//
 	inline operator const char* () const {
