@@ -42,17 +42,11 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op )
-{
-	if ( MOAIPinTransformAttr::Check ( attrID ) ) {
-		switch ( UNPACK_ATTR ( attrID ) ) {
+bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+
+	if ( MOAIPinTransformAttr::Check ( attrID )) {
+		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FRONT:
-				
-				// Z component is out of NDC space
-				if ( mFront < -1.0f ) {
-					this->mFront = 0.0f;
-				}
-				
 				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 				return true;
 		}
@@ -90,16 +84,11 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
 	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
 	
-//	this->mSourceLayer->GetWorldToWndMtx ( mtx );
-//	mtx.Project ( loc );
-//	
-//	this->mDestLayer->GetWndToWorldMtx ( mtx );
-//	mtx.Transform ( loc );
-	
-	mFront = loc.mZ;
-	
 	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
 	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
+	
+	// Z component is at the back of the NDC's near plane
+	this->mFront = loc.mZ < -1.0f ? 0.0f : 1.0f;
 }
 
 //----------------------------------------------------------------//
