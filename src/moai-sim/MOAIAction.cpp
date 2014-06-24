@@ -127,6 +127,20 @@ int MOAIAction::_isDone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isPaused
+	@text	Checks to see if an action is 'paused.'
+ 
+	@in		MOAIAction self
+	@out	bool isPaused
+*/
+int MOAIAction::_isPaused ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+	
+	lua_pushboolean ( state, self->IsPaused ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	pause
 	@text	Leaves the action in the action tree but prevents it from
 			receiving updates. Call pause ( false ) or start () to unpause.
@@ -255,7 +269,8 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if ( parent ) {
 		// TODO: there are some edge cases that may lead to the action
 		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this.
+		// state may need to be introduced to handle this. the TODO is
+		// to investigate the edge cases and (possibly) provide a fix.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
 	}
@@ -304,6 +319,12 @@ bool MOAIAction::IsCurrent () {
 bool MOAIAction::IsDone () {
 
 	return ( this->mAutoStop && ( this->mChildren.Count () == 0 ));
+}
+
+//----------------------------------------------------------------//
+bool MOAIAction::IsPaused () {
+	// TODO: better to do this with a state?
+	return this->mIsPaused || (this->mParent && this->mParent->IsPaused ());
 }
 
 //----------------------------------------------------------------//
@@ -386,6 +407,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
+		{ "isPaused",			_isPaused },
 		{ "pause",					_pause },
 		{ "setAutoStop",			_setAutoStop },
 		{ "start",					_start },
@@ -404,8 +426,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
 
-	if ( this->mIsPaused || this->IsBlocked ()){
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further updates
+	if ( this->IsPaused () || this->IsBlocked ()) {
+		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
 			step = 0.0f;
 			checkPass = false;
 			this->mPass = 0;
@@ -428,10 +450,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	}
 	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
-		
 		actionMgr.SetCurrentAction ( this );
 		actionMgr.SetDefaultParent ( 0 );
-		
 		this->OnUpdate ( step );
 	}
 

@@ -45,7 +45,7 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 	
 	if ( state.IsType ( 3, LUA_TTABLE )) {
 		
-		NSMutableDictionary* userInfoDictionary = [[ NSMutableDictionary alloc ] init ];
+		NSMutableDictionary* userInfoDictionary = [[[ NSMutableDictionary alloc ] init ] autorelease ];
 		[ userInfoDictionary initWithLua:state stackIndex:3 ];
 		notification.userInfo = userInfoDictionary;
 	}
@@ -218,7 +218,7 @@ void MOAINotificationsIOS::NotifyRemoteDeregistrationComplete () {
 }
 
 //----------------------------------------------------------------//
-void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToken ) {
+void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToken, NSError *error ) {
 	
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_REGISTRATION_COMPLETE ];
 	
@@ -233,10 +233,15 @@ void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToke
 		
 			lua_pushinteger ( state, REMOTE_NOTIFICATION_RESULT_REGISTERED );
 			lua_pushstring ( state, token );
-		} else {
-			
+		}
+		else {			
 			lua_pushinteger ( state, REMOTE_NOTIFICATION_RESULT_ERROR );
-			lua_pushnil ( state );
+
+			if ( error != nil ) {
+				[[ error localizedDescription ] toLua:state ];
+			} else {
+				lua_pushnil ( state );
+			}
 		}
 		
 		state.DebugCall ( 2, 0 );

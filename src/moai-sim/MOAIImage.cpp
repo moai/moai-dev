@@ -10,8 +10,6 @@
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIGfxDevice.h>
 
-#define DEFAULT_ELLIPSE_STEPS 64
-
 //================================================================//
 // local
 //================================================================//

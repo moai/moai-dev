@@ -53,16 +53,21 @@ void loadMoaiLib_NSObject () {
 	
 		int type = lua_type ( state, idx );
 		switch ( type ) {
+
+			case LUA_TBOOLEAN:
+				return lua_toboolean ( state, idx ) > 0 ? @YES : @NO;
+				break;
+				
 			case LUA_TNUMBER:
-				return [[ NSNumber alloc ] initWithLua:state stackIndex:idx ];
+				return [[[ NSNumber alloc ] initWithLua:state stackIndex:idx ] autorelease ];
 				break;
 				
 			case LUA_TSTRING:
-				return [[ NSString alloc ] initWithLua:state stackIndex:idx ];
+				return [[[ NSString alloc ] initWithLua:state stackIndex:idx ] autorelease ];
 				break;
 				
 			case LUA_TTABLE:
-				return [[ NSMutableDictionary dictionary ] initWithLua:state stackIndex:idx ];
+				return [[[ NSMutableDictionary dictionary ] initWithLua:state stackIndex:idx ] autorelease ];
 				break;
 				
 			default:

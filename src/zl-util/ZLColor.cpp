@@ -308,6 +308,113 @@ u32 ZLColor::ConvertToRGBA ( u32 color, Format format ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColor::Desaturate(void *colors, ZLColor::Format format, u32 nColors, float K) {
+	u32 color;
+	u32 alpha;
+
+	// TODO: support other formats
+	switch ( format ) {
+			
+		case A_8:
+			assert("A8 format not supported");
+			break;
+			
+		case RGB_565:
+			assert("RGB_565 format not supported");
+			break;
+			
+		case RGBA_5551:
+			assert("RGBA_5551 format not supported");
+			break;
+			
+		case RGBA_4444:
+			assert("RGBA_4444 format not supported");
+			break;
+			
+		case RGB_888:
+			assert("RGB_888 format not supported");
+			break;
+			
+		case RGBA_8888:
+			
+			for ( u32 i = 0; i < nColors; ++i ) {
+				color = *( u32* )colors;
+				alpha = ( color >> 0x18 ) & 0xFF;
+				u8 r = ( color >> 0x00 ) & 0xFF;
+				u8 g = ( color >> 0x08 ) & 0xFF;
+				u8 b = ( color >> 0x10 ) & 0xFF;
+				float grey = 0.3 * r + 0.59 * g + 0.11 * b;
+				r = (u8)(r * (1. - K) + grey * K);
+				g = (u8)(g * (1. - K) + grey * K);
+				b = (u8)(b * (1. - K) + grey * K);
+
+				*( u32* )colors =
+				(r << 0x00 ) +
+				(g << 0x08 ) +
+				(b << 0x10 ) +
+				( alpha << 0x18 );
+				colors = ( void* )(( uintptr )colors + 4 );
+			}
+			break;
+			
+		default:
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLColor::GammaCorrection ( void* colors, Format format, u32 nColors, float gamma ) {
+	u32 color;
+	u32 alpha;
+	float gammaCorrection = 1. / gamma;
+	
+	// TODO: support other formats
+	switch ( format ) {
+			
+		case A_8:
+			assert("A8 format not supported");
+			break;
+			
+		case RGB_565:
+			assert("RGB_565 format not supported");
+			break;
+			
+		case RGBA_5551:
+			assert("RGBA_5551 format not supported");
+			break;
+			
+		case RGBA_4444:
+			assert("RGBA_4444 format not supported");
+			break;
+			
+		case RGB_888:
+			assert("RGB_888 format not supported");
+			break;
+
+		case RGBA_8888:
+			
+			for ( u32 i = 0; i < nColors; ++i ) {
+				color = *( u32* )colors;
+				alpha = ( color >> 0x18 ) & 0xFF;
+				u8 r = (u8)(255. * pow((( color >> 0x00 ) & 0xFF ) / 255., gammaCorrection));
+				u8 g = (u8)(255. * pow((( color >> 0x08 ) & 0xFF ) / 255., gammaCorrection));
+				u8 b = (u8)(255. * pow((( color >> 0x10 ) & 0xFF ) / 255., gammaCorrection));
+								 
+				*( u32* )colors =
+					(r << 0x00 ) +
+					(g << 0x08 ) +
+					(b << 0x10 ) +
+					( alpha << 0x18 );
+				colors = ( void* )(( uintptr )colors + 4 );
+			}
+			break;
+			
+		default:
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
 u32 ZLColor::GetDepth ( Format format ) {
 
 	switch ( format ) {

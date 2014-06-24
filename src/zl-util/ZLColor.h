@@ -28,6 +28,8 @@ namespace ZLColor {
 	void			Convert				( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors );
 	u32				ConvertFromRGBA		( u32 color, Format format );
 	u32				ConvertToRGBA		( u32 color, Format format );
+	void			Desaturate			( void* colors, Format format, u32 nColors, float K );
+	void			GammaCorrection		( void* colors, Format format, u32 nColors, float gamma );	
 	u32				GetDepth			( Format format );
 	u32				GetMask				( Format format );
 	u32				GetSize				( Format format );

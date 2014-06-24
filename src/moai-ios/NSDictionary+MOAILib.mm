@@ -75,6 +75,10 @@ void loadMoaiLib_NSDictionary () {
 	//----------------------------------------------------------------//
 	-( id ) initWithLua:( lua_State* )state stackIndex:( int )idx {
 
+		// make sure to use an absolute index for lua_next
+		// pushing a nil key would make it invalid if negative
+		idx = ( idx < 0 ) ? lua_gettop ( state ) + idx + 1 : idx;
+
 		// table is in the stack at index 'idx'
 		lua_pushnil ( state );  // first key
 		while ( lua_next ( state, idx ) != 0 ) {

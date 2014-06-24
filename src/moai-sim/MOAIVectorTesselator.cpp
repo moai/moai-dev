@@ -1060,8 +1060,11 @@ void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 co
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
+	STLString log;
+
 	if ( this->mVerbose ) {
-		MOAIPrint ( "WRITING VERTICES:\n" );
+		log = "";
+		log.write ( "WRITING VERTICES:\n" );
 	}
 
 	const float* verts = tessGetVertices ( tess );
@@ -1072,13 +1075,14 @@ void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 co
 		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
 		
 		if ( this->mVerbose ) {
-			MOAIPrint ( "%d: %f, %f\n", i, vert.mX, vert.mY );
+			log.write ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}
 		this->WriteVertex ( vert.mX, vert.mY, z, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "\n" );
+		log.write ( "\n" );
+		MOAILog ( 0, 0, log.c_str ());
 	}
 
 	this->mDepthOffset += this->mDepthBias;

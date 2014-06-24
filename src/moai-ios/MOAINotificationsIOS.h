@@ -67,7 +67,7 @@ public:
 	void	NotifyRemoteDeregistrationComplete	();
 	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
-	void	NotifyRemoteRegistrationComplete	( NSData* token );
+	void	NotifyRemoteRegistrationComplete	( NSData* token, NSError *error );
 	void	RegisterLuaClass					( MOAILuaState& state );
 };
 

@@ -328,5 +328,4 @@ extern void		zglBindVertexArray				( u32 vertexArrayID );
 extern u32		zglCreateVertexArray			();
 extern void		zglDeleteVertexArray			( u32 vertexArrayID );
 
-
 #endif

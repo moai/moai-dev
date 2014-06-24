@@ -58,7 +58,7 @@ int MOAIBrowserIOS::_openURL ( lua_State* L ) {
 		[myURL release];
 	}
 	
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//

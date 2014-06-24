@@ -192,24 +192,27 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 	float volume	= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	
-	if ( delay > 0.0f ) {
+	if ( self->mSound ) {
+		
+		if ( delay > 0.0f ) {
 	
-		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+			u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 1 );
+			MOAIEaseDriver* action = new MOAIEaseDriver ();
+			action->ReserveLinks ( 1 );
 		
-		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
+			action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
 		
-		action->SetSpan ( delay );
-		action->Start ();
-		action->PushLuaUserdata ( state );
+			action->SetSpan ( delay );
+			action->Start ();
+			action->PushLuaUserdata ( state );
 
-		return 1;
-	}
+			return 1;
+		}
 	
-	self->mSound->setVolume ( self->mSound->getVolume () + volume );
-	self->ScheduleUpdate ();
+		self->mSound->setVolume ( self->mSound->getVolume () + volume );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -247,6 +250,27 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	release
+	@text	Release memory before gc does.
+ 
+	@in		MOAIUntzSound self
+	@out	nil
+ */
+int MOAIUntzSound::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		
+		self->mSound->stop ();
+		
+		UNTZ::Sound::dispose ( self->mSound );
+		self->mSound = NULL;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	seekVolume
 	@text	Animation helper for volume attribute,
 	
@@ -264,24 +288,27 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 	float volume	= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	
-	if ( delay > 0.0f ) {
+	if ( self->mSound ) {
+		
+		if ( delay > 0.0f ) {
 	
-		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+			u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 1 );
+			MOAIEaseDriver* action = new MOAIEaseDriver ();
+			action->ReserveLinks ( 1 );
 		
-		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
+			action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
 		
-		action->SetSpan ( delay );
-		action->Start ();
-		action->PushLuaUserdata ( state );
+			action->SetSpan ( delay );
+			action->Start ();
+			action->PushLuaUserdata ( state );
 
-		return 1;
-	}
+			return 1;
+		}
 	
-	self->mSound->setVolume ( volume );
-	self->ScheduleUpdate ();
+		self->mSound->setVolume ( volume );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -438,6 +465,7 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "moveVolume",			_moveVolume },
 		{ "pause",				_pause },
 		{ "play",				_play },
+		{ "release",			_release },		
 		{ "seekVolume",			_seekVolume },
 		{ "setLooping",			_setLooping },
 		{ "setLoopPoints",		_setLoopPoints },

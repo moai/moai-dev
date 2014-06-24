@@ -288,7 +288,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mGLFrameBufferID ( 0 ),
 	mGrabNextFrame ( false ),
 	mRenderCounter ( 0 ),
-	mLastDrawCount( 0 ) {
+	mLastDrawCount ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIClearableView )
@@ -364,7 +364,6 @@ void MOAIFrameBuffer::Render () {
 void MOAIFrameBuffer::RenderTable ( MOAILuaState& state, int idx ) {
 
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-
 	idx = state.AbsIndex ( idx );
 
 	int n = 1;

@@ -409,40 +409,44 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::PrintStacks () {
 
-	MOAIPrint ( "[" );
+	STLString stacks = "";
+
+	stacks.write ( "[" );
 
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 	
-		MOAIPrint ( "%d", ( int )this->mAllocStack [ i ]);
+		stacks.write ( "%d", ( int )this->mAllocStack [ i ]);
 	}
 	
-	MOAIPrint ( " ] [" );
+	stacks.write ( " ] [" );
 	
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 		
 		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			MOAIPrint ( "%d", ( int )this->mActiveStack [ i ]);
+			stacks.write ( "%d", ( int )this->mActiveStack [ i ]);
 		}
 		else {
-			MOAIPrint ( "-" );
+			stacks.write ( "-" );
 		}
 	}
 	
-	MOAIPrint ( " ]\n" );
+	stacks.write ( " ]\n" );
+	
+	MOAILog ( 0, 0, stacks.c_str ());
 }
 
 //----------------------------------------------------------------//
