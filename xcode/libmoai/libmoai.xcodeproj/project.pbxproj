@@ -2250,6 +2250,7 @@
 		CD52323C1808ADC900B81720 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */; };
 		CD52323D1808ADC900B81720 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232391808ADC900B81720 /* MOAIStoreKitListener.h */; };
 		CD52323E1808ADC900B81720 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD52323A1808ADC900B81720 /* MOAIStoreKitListener.mm */; };
+		CD608268195F47C60023C697 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD608267195F47C60023C697 /* FacebookSDK.framework */; };
 		CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -6681,6 +6682,7 @@
 		CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moai-ios-chartboost/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		CD5232421808ADDA00B81720 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moai-ios-chartboost/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD608267195F47C60023C697 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-3.14.1/FacebookSDK.framework"; sourceTree = "<group>"; };
 		CD69AB0417FA6C7E0053E028 /* MOAIPinTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPinTransform.cpp; sourceTree = "<group>"; };
 		CD69AB0517FA6C7E0053E028 /* MOAIPinTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPinTransform.h; sourceTree = "<group>"; };
 		CD69AB0617FA6C7E0053E028 /* MOAIVectorCombo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorCombo.cpp; sourceTree = "<group>"; };
@@ -8101,6 +8103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD608268195F47C60023C697 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8823,6 +8826,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CD608267195F47C60023C697 /* FacebookSDK.framework */,
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
@@ -19458,7 +19462,7 @@
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -19547,7 +19551,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -21311,7 +21314,7 @@
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21399,7 +21402,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -23785,6 +23787,10 @@
 		CDA4B8961808AC82000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -23821,6 +23827,10 @@
 		CDA4B8971808AC82000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23852,6 +23862,10 @@
 		CDA4B8981808AC82000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -23883,6 +23897,10 @@
 		CDA4B8991808AC82000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25223,7 +25241,7 @@
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25312,7 +25330,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
@@ -25628,7 +25645,7 @@
 					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.8/build",
+					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
 					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25717,7 +25734,6 @@
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
 					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0\"",
