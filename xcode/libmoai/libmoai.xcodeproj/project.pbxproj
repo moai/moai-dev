@@ -1586,6 +1586,10 @@
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
 		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
+		CD3B36DC195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */; };
+		CD3B36DD195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */; };
+		CD3B36DE195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */; };
+		CD3B36DF195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -2250,7 +2254,6 @@
 		CD52323C1808ADC900B81720 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */; };
 		CD52323D1808ADC900B81720 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232391808ADC900B81720 /* MOAIStoreKitListener.h */; };
 		CD52323E1808ADC900B81720 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD52323A1808ADC900B81720 /* MOAIStoreKitListener.mm */; };
-		CD608268195F47C60023C697 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD608267195F47C60023C697 /* FacebookSDK.framework */; };
 		CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -6605,6 +6608,8 @@
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
+		CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUntzSoundQueue.cpp; sourceTree = "<group>"; };
+		CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUntzSoundQueue.h; sourceTree = "<group>"; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		CD490041141AB6EC00913D80 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../3rdparty/lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
 		CD490042141AB6EC00913D80 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "../../3rdparty/lua-5.1.3/src/lauxlib.c"; sourceTree = SOURCE_ROOT; };
@@ -6682,7 +6687,6 @@
 		CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moai-ios-chartboost/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		CD5232421808ADDA00B81720 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moai-ios-chartboost/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD608267195F47C60023C697 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-3.14.1/FacebookSDK.framework"; sourceTree = "<group>"; };
 		CD69AB0417FA6C7E0053E028 /* MOAIPinTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPinTransform.cpp; sourceTree = "<group>"; };
 		CD69AB0517FA6C7E0053E028 /* MOAIPinTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPinTransform.h; sourceTree = "<group>"; };
 		CD69AB0617FA6C7E0053E028 /* MOAIVectorCombo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorCombo.cpp; sourceTree = "<group>"; };
@@ -8103,7 +8107,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD608268195F47C60023C697 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8829,7 +8832,6 @@
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
-				CD608267195F47C60023C697 /* FacebookSDK.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -9209,6 +9211,8 @@
 				89BE6B6317399FEB00DFE837 /* MOAIUntzSampleBuffer.h */,
 				89BE6B6417399FEB00DFE837 /* MOAIUntzSound.cpp */,
 				89BE6B6517399FEB00DFE837 /* MOAIUntzSound.h */,
+				CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */,
+				CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */,
 				89BE6B6617399FEB00DFE837 /* MOAIUntzSystem.cpp */,
 				89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */,
 			);
@@ -13852,6 +13856,7 @@
 				CDD4913817FA7C2C00525B77 /* residue_16.h in Headers */,
 				CDD4913E17FA7C2C00525B77 /* setup_16.h in Headers */,
 				CDD4916017FA7C3900525B77 /* lpc.h in Headers */,
+				CD3B36DE195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */,
 				CDD4913D17FA7C2C00525B77 /* setup_11.h in Headers */,
 				CDD4913417FA7C2C00525B77 /* psych_11.h in Headers */,
 				89BE6B7617399FEB00DFE837 /* MOAIUntzSystem.h in Headers */,
@@ -13930,6 +13935,7 @@
 				CDD491B717FA7C5000525B77 /* setup_8.h in Headers */,
 				CDD491B117FA7C5000525B77 /* psych_44.h in Headers */,
 				CDD491D517FA7C6500525B77 /* lpc.h in Headers */,
+				CD3B36DF195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */,
 				CDD491BE17FA7C5000525B77 /* setup_44u.h in Headers */,
 				89BE6B7717399FEB00DFE837 /* MOAIUntzSystem.h in Headers */,
 				CDD491BC17FA7C5000525B77 /* setup_44.h in Headers */,
@@ -17510,6 +17516,7 @@
 				031BBBAE13B18A0C0005ECE0 /* vorbisenc.c in Sources */,
 				031BBBAF13B18A0C0005ECE0 /* vorbisfile.c in Sources */,
 				031BBBB013B18A0C0005ECE0 /* window.c in Sources */,
+				CD3B36DC195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */,
 				89BE6B6817399FEB00DFE837 /* host.cpp in Sources */,
 				89BE6B6C17399FEB00DFE837 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				CDD4927317FA7D1300525B77 /* WaveFileAudioSource.cpp in Sources */,
@@ -17558,6 +17565,7 @@
 				CDD491EA17FA7C6500525B77 /* window.c in Sources */,
 				CDD491D617FA7C6500525B77 /* lsp.c in Sources */,
 				CDD491C317FA7C6500525B77 /* analysis.c in Sources */,
+				CD3B36DD195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */,
 				89BE6B6917399FEB00DFE837 /* host.cpp in Sources */,
 				89BE6B6D17399FEB00DFE837 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				CDD492A217FA7D1900525B77 /* WaveFileAudioSource.cpp in Sources */,
