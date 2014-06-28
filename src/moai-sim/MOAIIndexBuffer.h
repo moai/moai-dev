@@ -44,7 +44,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
-	GET ( u32, IndexCount, mIndices.Size ())
+	GET ( u32, IndexCount, ( u32 )mIndices.Size ())
 	GET ( ZLStream&, Stream, mStream )
 	
 	//----------------------------------------------------------------//

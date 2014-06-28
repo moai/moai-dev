@@ -6441,7 +6441,7 @@
 		CD07C2A713A172B900C9386C /* RThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RThread.h; path = ../../3rdparty/untz/src/threading/RThread.h; sourceTree = SOURCE_ROOT; };
 		CD07C2AF13A172D800C9386C /* ExtAudioFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExtAudioFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B013A172D800C9386C /* ExtAudioFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExtAudioFileAudioSource.h; path = ../../3rdparty/untz/src/native/ios/ExtAudioFileAudioSource.h; sourceTree = SOURCE_ROOT; };
-		CD07C2B113A172D800C9386C /* UntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UntzSystem.cpp; path = ../../3rdparty/untz/src/native/ios/UntzSystem.cpp; sourceTree = SOURCE_ROOT; };
+		CD07C2B113A172D800C9386C /* UntzSystem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = UntzSystem.cpp; path = ../../3rdparty/untz/src/native/ios/UntzSystem.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B213A172D800C9386C /* vector_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vector_util.cpp; path = ../../3rdparty/untz/src/native/ios/vector_util.cpp; sourceTree = SOURCE_ROOT; };
 		CD07C2B313A172D800C9386C /* vector_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vector_util.h; path = ../../3rdparty/untz/src/native/ios/vector_util.h; sourceTree = SOURCE_ROOT; };
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8826,10 +8826,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CD608267195F47C60023C697 /* FacebookSDK.framework */,
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
+				CD608267195F47C60023C697 /* FacebookSDK.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
