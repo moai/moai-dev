@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h> 
 #import <moai-core/headers.h>
-#import <FacebookSDK.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @class MOAIFacebookIOSDialogDelegate;
 @class MOAIFacebookIOSRequestDelegate;
