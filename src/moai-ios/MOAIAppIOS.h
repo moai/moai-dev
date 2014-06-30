@@ -79,7 +79,7 @@ public:
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
 	MOAITakeCameraListener*		mTakeCameraListener;
-	MoaiMailComposeDelegate*	mMailDelegate;
+	//MoaiMailComposeDelegate*	mMailDelegate;
 	UIPopoverController*		mImagePickerPopover;
 
 	//----------------------------------------------------------------//
@@ -98,9 +98,9 @@ public:
 //================================================================//
 // MoaiMailComposeDelegate
 //================================================================//
-@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
-@private
-}
-@end
+//@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
+//@private
+//}
+//@end
 
 #endif
