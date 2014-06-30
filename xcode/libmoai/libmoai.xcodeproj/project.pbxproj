@@ -5040,7 +5040,6 @@
 		CDD491EA17FA7C6500525B77 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C19F13A16CED00C9386C /* window.c */; };
 		CDD491EB17FA7C6500525B77 /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C1A013A16CED00C9386C /* window.h */; };
 		CDD491EC17FA7C7900525B77 /* luacurl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8D13A7FD89008337E7 /* luacurl.c */; };
-		CDD491ED17FA7C7E00525B77 /* luacurl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8D13A7FD89008337E7 /* luacurl.c */; };
 		CDD491EE17FA7C8700525B77 /* fullluasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0567155DB5D500A5CE7F /* fullluasocket.c */; };
 		CDD491EF17FA7C8700525B77 /* fullluasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 669C0568155DB5D500A5CE7F /* fullluasocket.h */; };
 		CDD491F017FA7C8700525B77 /* luasocketscripts.c in Sources */ = {isa = PBXBuildFile; fileRef = 669C0569155DB5D500A5CE7F /* luasocketscripts.c */; };
@@ -18475,7 +18474,6 @@
 				CDECEE2818E0CD5F00546426 /* sqlite3.c in Sources */,
 				CDD06DB21398838D00AB0420 /* buffer.c in Sources */,
 				CDD06DB41398838D00AB0420 /* except.c in Sources */,
-				CDD491ED17FA7C7E00525B77 /* luacurl.c in Sources */,
 				CDD06DB61398838D00AB0420 /* inet.c in Sources */,
 				CDD06DB81398838D00AB0420 /* io.c in Sources */,
 				CDD06DBA1398838D00AB0420 /* luasocket.c in Sources */,
