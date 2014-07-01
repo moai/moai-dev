@@ -31,10 +31,13 @@ protected:
 	static int				_gc					( lua_State* L );
 	static int				_getClass			( lua_State* L );
 	static int				_getClassName		( lua_State* L );
+	static int				_getMemberTable		( lua_State* L );
 	static int				_getRefTable		( lua_State* L );
 	static int				_index				( lua_State* L );
 	static int				_pin				( lua_State* L );
 	static int				_newindex			( lua_State* L );
+	static int				_serializeIn		( lua_State* L );
+	static int				_serializeOut		( lua_State* L );
 	static int				_setFinalizer		( lua_State* L );
 	static int				_setInterface		( lua_State* L );
 	static int				_setMembers			( lua_State* L );

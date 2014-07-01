@@ -175,6 +175,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 
 	if ( status ) {
 		lua_settop ( this->mState, errIdx - 1 );
+		this->PrintErrors( ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
@@ -373,6 +374,47 @@ bool MOAILuaState::GetFieldWithType ( int idx, cc8* name, int type ) {
 bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 
 	this->GetField ( idx, key );
+	if ( lua_type ( this->mState, -1 ) != type ) {
+		lua_pop ( this->mState, 1 );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::GetSubfieldWithType ( int idx, cc8* format, int type, ... ) {
+
+	va_list args;
+	va_start ( args, type );
+	
+	idx = this->AbsIndex ( idx );
+	lua_pushvalue ( this->mState, idx );
+
+	for ( cc8* c = format; *c; ++c ) {
+		
+		switch ( *c ) {
+		
+			// number
+			case 'N':
+				lua_pushnumber ( this->mState, va_arg ( args, int ));
+				lua_gettable ( this->mState, -1 );
+				break;
+			
+			// string
+			case 'S':
+				lua_getfield ( this->mState, -1, va_arg ( args, char* ));
+				break;
+			
+			default:
+				lua_pushnil ( this->mState );
+		}
+	
+		if ( lua_isnil ( this->mState, -1 )) break;
+		lua_replace ( this->mState, -2 );
+	}
+	
+	va_end ( args );
+	
 	if ( lua_type ( this->mState, -1 ) != type ) {
 		lua_pop ( this->mState, 1 );
 		return false;
@@ -739,6 +781,19 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 	lua_pop ( this->mState, 1 );
 	
 	return hasField;
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::HasKeys ( int idx ) {
+
+	idx = this->AbsIndex ( idx );
+
+	lua_pushnil ( this->mState );  /* first key */
+	if ( lua_next ( this->mState, idx ) != 0 ) {
+		lua_pop ( this->mState, 2 );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

@@ -347,6 +347,88 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	this->mTotalAttributes		= state.GetField < u32 >( -1, "mTotalAttributes", 0 );
+	this->mVertexSize			= state.GetField < u32 >( -1, "mVertexSize", 0 );
+
+	this->mAttributes.Init ( this->mTotalAttributes );
+
+	state.GetField ( -1, "mAttributes" );
+	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+		
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+		
+		state.GetField ( -1, i + 1 );
+		
+		attribute.mIndex			= state.GetField < u32 >( -1, "mIndex", 0 );
+		attribute.mSize				= state.GetField < u32 >( -1, "mSize", 0 );
+		attribute.mType				= state.GetField < u32 >( -1, "mType", 0 );
+		attribute.mNormalized		= state.GetField < bool >( -1, "mNormalized", 0 );
+		attribute.mOffset			= state.GetField < u32 >( -1, "mOffset", 0 );
+		
+		state.Pop ( 1 );
+	}
+	lua_pop ( state, 1 );
+	
+	state.GetField ( -1, "mAttributeUseTable" );
+	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
+		
+		MOAIVertexAttributeUse& attributeUse = this->mAttributeUseTable [ i ];
+		
+		state.GetField ( -1, i + 1 );
+		
+		attributeUse.mUse			= state.GetField < u32 >( -1, "mUse", 0 );
+		attributeUse.mAttrID		= state.GetField < u32 >( -1, "mAttrID", 0 );
+		
+		state.Pop ( 1 );
+	}
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.SetField ( -1, "mTotalAttributes", this->mTotalAttributes );
+	state.SetField ( -1, "mVertexSize", this->mVertexSize );
+
+	lua_newtable ( state );
+	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+	
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+	
+		state.Push ( i + 1 );
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "mIndex",			attribute.mIndex );
+		state.SetField ( -1, "mSize",			attribute.mSize );
+		state.SetField ( -1, "mType",			attribute.mType );
+		state.SetField ( -1, "mNormalized",		attribute.mNormalized );
+		state.SetField ( -1, "mOffset",			attribute.mOffset );
+		
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributes" );
+
+	lua_newtable ( state );
+	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
+		
+		MOAIVertexAttributeUse& attributeUse = this->mAttributeUseTable [ i ];
+	
+		state.Push ( i + 1 );
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "mUse",			attributeUse.mUse );
+		state.SetField ( -1, "mAttrID",			attributeUse.mAttrID );
+		
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributeUseTable" );
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexFormat::Unbind () const {
 
 	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {

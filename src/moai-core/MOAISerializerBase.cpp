@@ -9,9 +9,12 @@
 // MOAISerializerBase
 //================================================================//
 
+const MOAISerializerBase::ObjID MOAISerializerBase::NULL_OBJ_ID = 0;
+
 //----------------------------------------------------------------//
 void MOAISerializerBase::Clear () {
 
+	this->mObjectIDs.clear ();
 	this->mObjectMap.clear ();
 	this->mTableMap.clear ();
 }
@@ -25,13 +28,18 @@ cc8* MOAISerializerBase::GetFileMagic () {
 MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = object->GetSelf ();
-	return ( ObjID )lua_topointer ( state, -1 );
+	return this->GetID ( state, -1 );
 }
 
 //----------------------------------------------------------------//
 MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
 
-	return ( ObjID )lua_topointer ( state, idx );
+	void const* ptr = lua_topointer ( state, idx );
+	
+	if ( !this->mObjectIDs.contains ( ptr )) {
+		this->mObjectIDs [ ptr ] = this->mObjectIDs.size () + 1;
+	}
+	return this->mObjectIDs [ ptr ];
 }
 
 //----------------------------------------------------------------//

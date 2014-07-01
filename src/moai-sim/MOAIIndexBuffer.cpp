@@ -171,7 +171,6 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
 	UNUSED ( serializer );
 
 	u32 indexCount		= state.GetField < u32 >( -1, "mTotalIndices", 0 );
@@ -192,7 +191,6 @@ void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seria
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mTotalIndices", ( u32 )this->mIndices.Size ()); // TODO: overflow

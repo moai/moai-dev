@@ -61,6 +61,14 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_getMemberTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
+	
+	self->PushMemberTable ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_getRefTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -79,6 +87,24 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 		return 1;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_serializeIn ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
+	
+	MOAIDeserializer dummy;
+	self->SerializeIn ( state, dummy );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_serializeOut ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
+	
+	MOAISerializer dummy;
+	self->SerializeOut ( state, dummy );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -454,8 +480,11 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getClass",				_getClass },
 		{ "getClassName",			_getClassName },
+		{ "getMemberTable",			_getMemberTable },
 		{ "getRefTable",			_getRefTable },
 		{ "pin",					_pin },
+		{ "serializeIn",			_serializeIn },
+		{ "serializeOut",			_serializeOut },
 		{ "setFinalizer",			_setFinalizer },
 		{ "setInterface",			_setInterface },
 		{ "setMembers",				_setMembers },

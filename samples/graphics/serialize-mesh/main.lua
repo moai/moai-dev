@@ -18,6 +18,10 @@ camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 
+local vertexFormat = MOAIVertexFormat.new ()
+vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
+vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+
 function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax )
 	
 	local function writeVert ( vbo, x, y, z, r, g, b )
@@ -37,10 +41,6 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax )
 		writeTri ( ibo, p1, p2, p4 )
 		writeTri ( ibo, p2, p3, p4 )
 	end
-	
-	local vertexFormat = MOAIVertexFormat.new ()
-	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
-	vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 	local vbo = MOAIVertexBuffer.new ()
 	vbo:setFormat ( vertexFormat )
@@ -67,8 +67,19 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax )
 	writeFace ( ibo, 5, 6, 2, 1 )
 	writeFace ( ibo, 5, 1, 4, 8 )
 	writeFace ( ibo, 2, 6, 7, 3 )
+	
+	ibo.idx = nil
 
-	MOAISerializer.serializeToFile ( 'buffers.lua', { vbo = avo, ibo = ibo })
+	local serializer = MOAISerializer.new ()
+	
+	local _getObjectTables = serializer.getObjectTables
+	serializer.getObjectTables = function ( self, object, classname )
+		print ( 'GET OBJECT TABLES', classname )
+		if classname == 'MOAIVertexFormat' then return end
+		return _getObjectTables ( self, object, classname )
+	end
+
+	serializer:serializeToFile ( 'buffers.lua', { vertexFormat = vertexFormat, vbo = vbo, ibo = ibo })
 
 	local mesh = MOAIMesh.new ()
 	mesh:setVertexBuffer ( vbo )
@@ -87,11 +98,32 @@ end
 
 function loadMesh ( filename )
 	
-	local buffers = dofile ( filename )
+	deserializer = MOAIDeserializer.new ()
+	
+	local _createObject = deserializer.createObject
+	deserializer.createObject = function ( self, classname )
+		print ( 'CREATE', classname )
+		if classname == 'MOAIVertexFormat' then return vertexFormat end
+		return _createObject ( self, classname )
+	end
+	
+	local _initObject = deserializer.initObject
+	deserializer.initObject = function ( self, object, classname, userTable, memberTable, initTable )
+		print ( 'INIT', classname )
+		if classname == 'MOAIVertexFormat' then return end
+		_initObject ( self, object, classname, userTable, memberTable, initTable )
+	end
+	
+	local buffers = loadfile ( filename )( deserializer )
+	
+	local vertexFormat, vbo, ibo = buffers.vertexFormat, buffers.vbo, buffers.ibo
+	
+	vbo:setFormat ( vertexFormat )
+	vbo:bless ()
 	
 	local mesh = MOAIMesh.new ()
-	mesh:setVertexBuffer ( buffers.vbo )
-	mesh:setIndexBuffer ( buffers.ibo )
+	mesh:setVertexBuffer ( vbo )
+	mesh:setIndexBuffer ( ibo )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	
@@ -105,9 +137,9 @@ prop:moveRot ( 360, 360, 0, 6 )
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 layer:insertProp ( prop )
 
---prop = MOAIProp.new ()
---prop:setDeck ( loadMesh ( 'buffers.lua' ))
---prop:setLoc ( 64, 0, 0 )
---prop:moveRot ( 360, 360, 0, 6 )
---prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
---layer:insertProp ( prop )
+prop = MOAIProp.new ()
+prop:setDeck ( loadMesh ( 'buffers.lua' ))
+prop:setLoc ( 64, 0, 0 )
+prop:moveRot ( 360, 360, 0, 6 )
+prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+layer:insertProp ( prop )

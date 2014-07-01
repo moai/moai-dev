@@ -806,8 +806,7 @@ void MOAIHarness::ReceiveEvaluate(lua_State *L, json_t* node)
 	// Load the string from the message
 	MOAIScopedLuaState state ( L );
 	int status = luaL_loadstring ( state, json_string_value(np_eval) );
-	if ( state.PrintErrors ( ZLLog::CONSOLE, status ))
-		return;
+	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return;
 
 	// Call the string
 	state.DebugCall ( 0, 0 );
