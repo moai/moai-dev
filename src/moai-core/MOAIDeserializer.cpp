@@ -39,14 +39,21 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, false );
 	if ( !object ) return 0;
 
-	if ( state.IsType ( 5, LUA_TTABLE )) {
-		object->SetMemberTable ( state, 4 );
+	int memberTableIdx = 3;
+	int initTableIdx = 4;
+
+	if ( state.CheckParams ( 1, "UUS**T")) {
+		memberTableIdx = 5;
+		memberTableIdx = 6;
 	}
 	
-	if ( state.IsType ( 6, LUA_TTABLE )) {
+	if ( state.IsType ( memberTableIdx, LUA_TTABLE )) {
+		object->SetMemberTable ( state, memberTableIdx );
+	}
+		
+	if ( state.IsType ( initTableIdx, LUA_TTABLE )) {
 		object->SerializeIn ( state, *self );
 	}
-
 	return 0;
 }
 

@@ -37,7 +37,7 @@ MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaState& state, int i
 	void const* ptr = lua_topointer ( state, idx );
 	
 	if ( !this->mObjectIDs.contains ( ptr )) {
-		this->mObjectIDs [ ptr ] = this->mObjectIDs.size () + 1;
+		this->mObjectIDs [ ptr ] = ( u32 )( this->mObjectIDs.size () + 1 );
 	}
 	return this->mObjectIDs [ ptr ];
 }
