@@ -327,6 +327,10 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 MOAILuaObject::MOAILuaObject ():
 	mCollected ( false ) {
 	RTTI_SINGLE ( RTTIBase )
+	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

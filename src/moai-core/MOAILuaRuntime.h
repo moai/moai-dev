@@ -90,6 +90,7 @@ private:
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();
 	void					OnGlobalsRetire			();
+	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
 public:

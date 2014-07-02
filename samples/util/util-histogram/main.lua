@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.setHistogramEnabled ( true )
+MOAILuaRuntime.setTrackingFlags ( MOAILuaRuntime.TRACK_OBJECTS )
 
 objects = {}
 
@@ -18,11 +18,11 @@ table.insert ( objects, MOAILayer.new ())
 table.insert ( objects, MOAITransform.new ())
 
 print ( "REPORTING HISTOGRAM" )
-MOAISim.reportHistogram ()
+MOAILuaRuntime.reportHistogram ( 'report.txt' )
 print ()
 
 print ( "GETTING, ITERATING HISTOGRAM" )
-histogram = MOAISim.getHistogram ()
+histogram = MOAILuaRuntime.getHistogram ()
 for k, v in pairs ( histogram ) do
 	print ( k, v )
 end
@@ -34,7 +34,5 @@ MOAISim.forceGC ()
 print ()
 
 print ( "REPORTING HISTOGRAM" )
-MOAISim.reportHistogram ()
+MOAILuaRuntime.reportHistogram ()
 print ()
-
-

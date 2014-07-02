@@ -113,7 +113,15 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 */
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
-	MOAISim::Get ().mForceGC = true;
+	
+	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
+	if ( current ) {
+		MOAISim::Get ().mForceGC = true;
+	}
+	else {
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		MOAISim::Get ().mForceGC = false;
+	}
 	return 0;
 }
 

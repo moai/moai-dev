@@ -580,7 +580,7 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 		void *ud = state.GetPtrUserData ( -1 );
 		for ( LeakPtrList::const_iterator i = objects.begin (); i != objects.end (); ++i ) {
 			if( *i == ud ) {
-				fprintf ( f, "Lua Ref: %s = %s <%p>\n", prefix, ( *i )->TypeName (), ud );
+				ZLLog::LogF ( f, "Lua Ref: %s = %s <%p>\n", prefix, ( *i )->TypeName (), ud );
 //				if ( strcmp((*i)->TypeName(), "MOAICoroutine") == 0 ) {
 //					MOAICoroutine *t = (MOAICoroutine*)ud;
 //				}
@@ -806,7 +806,7 @@ void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool auto
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::RegisterObject ( MOAILuaState& state, MOAILuaObject& object ) {
+void MOAILuaRuntime::RegisterObject ( MOAILuaObject& object ) {
 
 	if ( this != &object ) {
 
@@ -816,10 +816,19 @@ void MOAILuaRuntime::RegisterObject ( MOAILuaState& state, MOAILuaObject& object
 		
 			MOAILuaObjectInfo& info = this->mTrackingMap [ &object ];
 			info.mTrackingGroup = this->mTrackingGroup;
+		}
+	}
+}
 
-			if ( this->mTrackingFlags & TRACK_OBJECTS_STACK_TRACE ) {
-				info.mStackTrace = state.GetStackTrace ( 0 );
-			}
+//----------------------------------------------------------------//
+void MOAILuaRuntime::RegisterObject ( MOAILuaState& state, MOAILuaObject& object ) {
+
+	if ( this != &object ) {
+	
+		if ( this->mTrackingFlags & TRACK_OBJECTS_STACK_TRACE ) {
+		
+			MOAILuaObjectInfo& info = this->mTrackingMap [ &object ];
+			info.mStackTrace = state.GetStackTrace ( 0 );
 		}
 	}
 }
@@ -837,7 +846,7 @@ void MOAILuaRuntime::ReportHistogram ( cc8* filename, cc8* trackingGroup ) {
 	}
 	
 	size_t totalTracked = this->mTrackingMap.size ();
-	fprintf ( file, "tracking %d of %d allocated MOAIObjects\n", ( int )totalTracked, ( int )this->mObjectCount );
+	ZLLog::LogF ( file, "tracking %d of %d allocated MOAIObjects\n", ( int )totalTracked, ( int )this->mObjectCount );
 	
 	HistMap histogram;
 	this->BuildHistogram ( histogram, trackingGroup );
@@ -849,7 +858,7 @@ void MOAILuaRuntime::ReportHistogram ( cc8* filename, cc8* trackingGroup ) {
 		size_t count = histogramIt->second;
 		float percent = (( float )count / ( float )totalTracked ) * 100.0f;
 	
-		fprintf ( file, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )totalTracked );
+		ZLLog::LogF ( file, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )totalTracked );
 	}
 	
 	if ( log ) {
@@ -882,8 +891,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		stacks [ info.mStackTrace ].push_back ( i->first );
 	}
 	
-	fprintf ( file, "------------------------------------------------\n" );
-	fprintf ( file, "-- BEGIN LUA OBJECT LEAKS --\n" );
+	ZLLog::LogF ( file, "------------------------------------------------\n" );
+	ZLLog::LogF ( file, "-- BEGIN LUA OBJECT LEAKS --\n" );
 	
 	// Then, print out each unique allocation spot along with all references
 	// (including multiple references) followed by the alloction stack
@@ -893,10 +902,10 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		
 		const LeakPtrList& list = i->second;
 		
-		fprintf ( file, "Allocation: %lu\n", list.size ()); 
+		ZLLog::LogF ( file, "Allocation: %lu\n", list.size ());
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
 			MOAILuaObject* o = *j;
-			fprintf ( file, "<%s> - %p\n", o->TypeName (), o );
+			ZLLog::LogF ( file, "<%s> - %p\n", o->TypeName (), o );
 		}
 		// A table to use as a traversal set.
 		lua_newtable ( L );
@@ -906,12 +915,11 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		this->FindAndPrintLuaRefs ( -2, "_G", file, list );
 		
 		lua_pop ( L, 2 ); // Pop the 'done' set and our globals table
-		fputs ( i->first.c_str (), file );
-		fputs ( "\n", file );
-		fflush ( file );
+		ZLLog::LogF ( file, i->first.c_str ());
+		ZLLog::LogF ( file, "\n" );
 	}
 	assert ( top == lua_gettop ( L ));
-	fprintf ( file, "-- END LUA LEAKS --\n" );
+	ZLLog::LogF ( file, "-- END LUA LEAKS --\n" );
 	
 	if ( log ) {
 		fclose ( log );
@@ -932,16 +940,16 @@ void MOAILuaRuntime::ReportLeaksRaw ( cc8* filename, cc8* trackingGroup ) {
 
 	this->ForceGarbageCollection ();
 	
-	fprintf ( file, "-- LUA OBJECT LEAK REPORT ------------\n" );
+	ZLLog::LogF ( file, "-- LUA OBJECT LEAK REPORT ------------\n" );
 	u32 count = 0;
 	
 	for ( TrackingMap::const_iterator i = this->mTrackingMap.begin () ; i != this->mTrackingMap.end (); ++i ) {
 		const MOAILuaObjectInfo& info = i->second;
 		if ( trackingGroup && ( info.mTrackingGroup.compare ( trackingGroup ) != 0 )) continue;
-		fputs ( info.mStackTrace.c_str (), file );
+		ZLLog::LogF ( file, info.mStackTrace.c_str ());
 		count++;
 	}
-	fprintf ( file, "-- END LEAK REPORT (Total Objects: %d) ---------\n", count );
+	ZLLog::LogF ( file, "-- END LEAK REPORT (Total Objects: %d) ---------\n", count );
 	
 	if ( log ) {
 		fclose ( log );

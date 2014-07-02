@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.setLeakTrackingEnabled ( true )
+MOAILuaRuntime.setTrackingFlags ( MOAILuaRuntime.TRACK_OBJECTS + MOAILuaRuntime.TRACK_OBJECTS_STACK_TRACE )
 
 objects = {}
 
@@ -18,5 +18,5 @@ table.insert ( objects, MOAILayer.new ())
 table.insert ( objects, MOAITransform.new ())
 
 print ( "REPORTING LEAKS" )
-MOAISim.reportLeaks ()
+MOAILuaRuntime.reportLeaks ()
 print ()
