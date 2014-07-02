@@ -22,6 +22,12 @@ int MOAISerializer::_getObjectTables ( lua_State* L ) {
 	// member table
 	object->PushMemberTable ( state );
 	
+	// if the member table is empty, omit it
+	if ( !state.HasKeys ( -1 )) {
+		state.Pop ( 1 );
+		state.Push ();
+	}
+	
 	// init table
 	lua_newtable ( state );
 	object->SerializeOut ( state, *self );
@@ -203,12 +209,6 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		top = state.GetTop ();
 	}
 	else if ( state.IsType ( idx, LUA_TTABLE )) {
-		
-		// handle empties
-		if ( !state.HasKeys ( idx )) {
-			this->mEmpties.insert ( memberID );
-			return NULL_OBJ_ID;
-		}
 		
 		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
