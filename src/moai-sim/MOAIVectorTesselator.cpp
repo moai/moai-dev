@@ -615,7 +615,7 @@ int MOAIVectorTesselator::Finish () {
 			this->mVertexStack.Clear ();
 			error = this->Tesselate ();
 			
-			if ( !error ) return error;
+			if ( error ) return error;
 		}
 	}
 	
@@ -930,7 +930,7 @@ int MOAIVectorTesselator::Tesselate () {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this );
 		
-		if ( !error ) return error;
+		if ( error ) return error;
 	}
 	
 	return error;
