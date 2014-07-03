@@ -92,14 +92,14 @@ void MOAICameraAnchor2D::OnDepNodeUpdate () {
 void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "INHERIT_LOC", MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
 }
 
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
-
-	state.SetField ( -1, "INHERIT_LOC", MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
 
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
