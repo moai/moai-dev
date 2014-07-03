@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
+int MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
 	
 	if ( this->mVertices.Size () < 3 ) return;
 	
@@ -21,14 +21,16 @@ void MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
 
 	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 	
-	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	int error = MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( tess, outline );
 	
 	tessDeleteTess ( outline );
+	
+	return error;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
+int MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 
 	if ( this->mIsClosed ) {
 		MOAIVectorShape::AddStrokeContours ( tess );
@@ -77,6 +79,8 @@ void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour1, joins1, nJoins, width, false );
 	
 	tessAddContour ( tess, 2, contour, sizeof ( ZLVec2D ), nContourVerts );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//

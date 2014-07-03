@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
+int MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
 
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
@@ -24,10 +24,12 @@ void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
 		//}
 	}
 	
-	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	int error = MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( tess, outline );
 	
 	tessDeleteTess ( outline );
+	
+	return error;
 }
 
 

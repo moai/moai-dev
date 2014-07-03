@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
+int MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * 4 );
 
@@ -33,12 +33,14 @@ void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 3 ]);
 
 	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), 4 );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
+int MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( tess );
+	return MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//

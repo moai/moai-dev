@@ -5,6 +5,7 @@
 #define	MOAIVECTORUTIL_H
 
 #include <moai-sim/MOAIVectorStyle.h>
+#include <setjmp.h>
 
 class MOAIVectorShape;
 struct TESStesselator;
@@ -31,6 +32,8 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		StrokeWedge				( const MOAIVectorStyle& style, ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, float width );
+	
+	static void		AbortHandler			( int signum );
 	
 public:
 	
