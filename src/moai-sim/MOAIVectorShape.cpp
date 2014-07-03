@@ -14,20 +14,25 @@
 const ZLVec3D MOAIVectorShape::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::AddFillContours ( TESStesselator* tess ) {
+int MOAIVectorShape::AddFillContours ( TESStesselator* tess ) {
 	UNUSED ( tess );
+	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
+int MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 
+	int error = 0;
+	
 	assert ( tess );
 
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
 	
 	this->AddFillContours ( outline );
-	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	error = MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	
+	if ( error ) return error;
 	
 	TESStesselator* exterior = tessNewTess ( 0 );
 	TESStesselator* interior = tessNewTess ( 0 );
@@ -57,14 +62,17 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 	assert ( outline );
 	
 	this->StrokeBoundaries ( exterior, outline, exteriorWidth, true, false );
-	MOAIVectorUtil::Tessallate ( exterior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	error = MOAIVectorUtil::Tessallate ( exterior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	if ( error ) return error;
 	this->CopyBoundaries ( stroke, exterior );
 	
 	this->StrokeBoundaries ( interior, outline, interiorWidth, false, false );
-	MOAIVectorUtil::Tessallate ( interior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	error = MOAIVectorUtil::Tessallate ( interior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	if ( error ) return error;
 	this->CopyBoundaries ( stroke, interior );
 	
-	MOAIVectorUtil::Tessallate ( stroke, TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	error = MOAIVectorUtil::Tessallate ( stroke, TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	if ( error ) return error;
 	this->CopyBoundaries ( tess, stroke );
 	
 	tessDeleteTess ( interior );

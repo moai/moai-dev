@@ -4,11 +4,28 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
-#include <setjmp.h>
+#include <signal.h>
 
 //================================================================//
 // MOAIVectorUtil
 //================================================================//
+
+typedef void SIG_PROC_t( int sig );
+typedef SIG_PROC_t *SIG_PROC_p_t;
+jmp_buf	mEnv;
+
+//----------------------------------------------------------------//
+void MOAIVectorUtil::AbortHandler( int signum )
+{
+	switch( signum )
+	{
+		case SIGABRT:
+			longjmp ( mEnv, 1);
+			return;
+	}
+	
+	exit ( 0 );
+}
 
 //----------------------------------------------------------------//
 void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior ) {
@@ -266,19 +283,15 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 //------------------------------------------------------------------//
 int MOAIVectorUtil::Tessallate ( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
 {
-	jmp_buf env;
+	SIG_PROC_p_t initial_handler = signal( SIGABRT, AbortHandler );
 	
-	int val = -1;
-	
-	if ( setjmp ( env ))
+	if ( setjmp ( mEnv ))
 	{
-		return 0;
+		return 1;
 	}
 	
-	if ( !tessTesselate ( tess, windingRule, elementType, polySize, vertexSize, normal ))
-	{
-		longjmp(env, 1);
-	}
+	tessTesselate ( tess, windingRule, elementType, polySize, vertexSize, normal );
 	
-	return 1;
+	return 0;
 }
+

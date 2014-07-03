@@ -18,8 +18,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( TESStesselator* tess );
-	void			AddStrokeContours		( TESStesselator* tess );
+	int				AddFillContours			( TESStesselator* tess );
+	int				AddStrokeContours		( TESStesselator* tess );
 	void			Init					( float xMin, float yMin, float xMax, float yMax );
 	bool			IsClosed				();
 					MOAIVectorRect			();

@@ -33,8 +33,8 @@ public:
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
 	//----------------------------------------------------------------//
-	virtual void		AddFillContours				( TESStesselator* tess );
-	virtual void		AddStrokeContours			( TESStesselator* tess );
+	virtual int			AddFillContours				( TESStesselator* tess );
+	virtual int			AddStrokeContours			( TESStesselator* tess );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		IsClosed					() = 0;

@@ -19,8 +19,8 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( TESStesselator* tess );
-	void			AddStrokeContours		( TESStesselator* tess );
+	int				AddFillContours			( TESStesselator* tess );
+	int				AddStrokeContours		( TESStesselator* tess );
 	bool			IsClosed				();
 					MOAIVectorPoly			();
 					~MOAIVectorPoly			();
