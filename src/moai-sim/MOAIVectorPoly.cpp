@@ -21,7 +21,7 @@ void MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
 
 	tessAddContour ( outline, 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 	
-	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( tess, outline );
 	
 	tessDeleteTess ( outline );

@@ -83,11 +83,13 @@ int MOAIVectorTesselator::_drawingToWorldVec ( lua_State* L ) {
 int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->Finish ();
+	int error = self->Finish ();
 	
 	bool hasContent = self->mVtxStream.GetLength () > 0;
+	
+	state.Push ( error );
 	state.Push ( hasContent );
-	return 1;
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -576,10 +578,12 @@ u32 MOAIVectorTesselator::CountVertices () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::Finish () {
+int MOAIVectorTesselator::Finish () {
 
 	u32 vertsTop = this->mVertexStack.GetTop ();
 	u32 shapesTop = this->mShapeStack.GetTop ();
+	
+	int error = 0;
 	
 	if ( vertsTop ) {
 	
@@ -609,9 +613,13 @@ void MOAIVectorTesselator::Finish () {
 		
 		if ( this->mShapeStack.GetTop () == shapesTop ) {
 			this->mVertexStack.Clear ();
-			this->Tesselate ();
+			error = this->Tesselate ();
+			
+			if ( !error ) return error;
 		}
 	}
+	
+	return error;
 }
 
 //----------------------------------------------------------------//
@@ -910,17 +918,22 @@ void MOAIVectorTesselator::SetVertexExtra ( u32 idx, void* extra, size_t size ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::Tesselate () {
+int MOAIVectorTesselator::Tesselate () {
 
 	mDepthOffset = 0.0f;
-
+	int error = 0;
+	
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
-		shape->Tesselate ( *this );
+		error = shape->Tesselate ( *this );
+		
+		if ( !error ) return error;
 	}
+	
+	return error;
 }
 
 //----------------------------------------------------------------//

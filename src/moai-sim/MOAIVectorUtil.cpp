@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
+#include <setjmp.h>
 
 //================================================================//
 // MOAIVectorUtil
@@ -260,4 +261,24 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 		}
 	}
 	return ( int )( steps + 1 );
+}
+
+//------------------------------------------------------------------//
+int MOAIVectorUtil::Tessallate ( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
+{
+	jmp_buf env;
+	
+	int val = -1;
+	
+	if ( setjmp ( env ))
+	{
+		return 0;
+	}
+	
+	if ( !tessTesselate ( tess, windingRule, elementType, polySize, vertexSize, normal ))
+	{
+		longjmp(env, 1);
+	}
+	
+	return 1;
 }

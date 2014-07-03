@@ -27,7 +27,7 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 	assert ( outline );
 	
 	this->AddFillContours ( outline );
-	tessTesselate ( outline, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	
 	TESStesselator* exterior = tessNewTess ( 0 );
 	TESStesselator* interior = tessNewTess ( 0 );
@@ -57,14 +57,14 @@ void MOAIVectorShape::AddStrokeContours ( TESStesselator* tess ) {
 	assert ( outline );
 	
 	this->StrokeBoundaries ( exterior, outline, exteriorWidth, true, false );
-	tessTesselate ( exterior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( exterior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( stroke, exterior );
 	
 	this->StrokeBoundaries ( interior, outline, interiorWidth, false, false );
-	tessTesselate ( interior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( interior, TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( stroke, interior );
 	
-	tessTesselate ( stroke, TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( stroke, TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( tess, stroke );
 	
 	tessDeleteTess ( interior );
@@ -159,10 +159,11 @@ void MOAIVectorShape::StrokeBoundaries ( TESStesselator* tess, TESStesselator* o
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 	
 	u32 fillExtraID = this->mStyle.GetFillExtraID ();
 	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();
+	int error = 0;
 	
 	if ( this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID ) {
 	
@@ -171,22 +172,27 @@ void MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 			TESStesselator* skirt = tessNewTess ( 0 );
 			
 			this->AddFillContours ( skirt );
-			tessTesselate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
+			error = MOAIVectorUtil::Tessallate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
 			
 			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetFillColor (), fillExtraID );
 			
 			tessDeleteTess ( skirt );
+			
+			if ( !error ) return error;
 		}
 		
 		TESStesselator* triangles = tessNewTess ( 0 );
 		
 		this->AddFillContours ( triangles );
-		tessTesselate ( triangles, ( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
+		
+		error = MOAIVectorUtil::Tessallate ( triangles, ( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
 		drawing.WriteTriangleIndices ( triangles, drawing.CountVertices ());
 		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
 		
 		tessDeleteTess ( triangles );
+		
+		if ( !error ) return error;
 	}
 	
 	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) {
@@ -196,7 +202,8 @@ void MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 			TESStesselator* skirt = tessNewTess ( 0 );
 			
 			this->AddStrokeContours ( skirt );
-			tessTesselate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
+			
+			error = MOAIVectorUtil::Tessallate ( skirt, ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2, ( const TESSreal* )&sNormal );
 			
 			drawing.WriteSkirt ( skirt, this->mStyle, this->mStyle.GetStrokeColor (), strokeExtraID );
 			
@@ -206,11 +213,15 @@ void MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 		TESStesselator* triangles = tessNewTess ( 0 );
 		
 		this->AddStrokeContours ( triangles );
-		tessTesselate ( triangles, TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
+		error = MOAIVectorUtil::Tessallate ( triangles, TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
 		drawing.WriteTriangleIndices ( triangles, drawing.CountVertices ());
 		drawing.WriteVertices ( triangles, this->mStyle.GetExtrude (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
 		
 		tessDeleteTess ( triangles );
+		
+		if ( !error ) return error;
 	}
+	
+	return error;
 }
