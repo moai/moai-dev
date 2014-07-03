@@ -97,7 +97,7 @@ private:
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			Tesselate				();
+	int				Tesselate				();
 	void			WriteVertex				( float x, float y, float z, u32 color, u32 vertexExtraID );
 	
 public:
@@ -113,7 +113,7 @@ public:
 	void			Clear						();
 	void			ClearTransforms				();
 	u32				CountVertices				();
-	void			Finish						();
+	int				Finish						();
 	void			GetTriangles				( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
 					MOAIVectorTesselator		();
 					~MOAIVectorTesselator		();

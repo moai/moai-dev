@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorCombo.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -23,7 +24,7 @@ void MOAIVectorCombo::AddFillContours ( TESStesselator* tess ) {
 		//}
 	}
 	
-	tessTesselate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	MOAIVectorUtil::Tessallate ( outline, ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	this->CopyBoundaries ( tess, outline );
 	
 	tessDeleteTess ( outline );

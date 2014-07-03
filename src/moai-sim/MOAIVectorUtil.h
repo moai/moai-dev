@@ -8,6 +8,7 @@
 
 class MOAIVectorShape;
 struct TESStesselator;
+typedef float TESSreal;
 
 //================================================================//
 // MOAIVectorLineJoin
@@ -36,6 +37,7 @@ public:
 	//----------------------------------------------------------------//
 	static void		ComputeLineJoins		( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
 	static int		StrokeLine				( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
+	static int      Tessallate              ( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal );
 };
 
 #endif
