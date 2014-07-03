@@ -281,7 +281,7 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 }
 
 //------------------------------------------------------------------//
-int MOAIVectorUtil::Tessallate ( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
+int MOAIVectorUtil::Tesselate ( TESStesselator *tess, int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
 {
 	SIG_PROC_p_t initial_handler = signal( SIGABRT, AbortHandler );
 	
