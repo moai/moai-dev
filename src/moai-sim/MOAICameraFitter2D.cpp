@@ -642,6 +642,13 @@ void MOAICameraFitter2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
 	MOAINode::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
+	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
+	state.SetField ( -1, "FITTING_MODE_APPLY_ANCHORS", ( u32 )FITTING_MODE_APPLY_ANCHORS );
+	state.SetField ( -1, "FITTING_MODE_APPLY_BOUNDS", ( u32 )FITTING_MODE_APPLY_BOUNDS );
+	state.SetField ( -1, "FITTING_MODE_DEFAULT", ( u32 )FITTING_MODE_DEFAULT );
+	state.SetField ( -1, "FITTING_MODE_MASK", ( u32 )FITTING_MODE_MASK );
 }
 
 //----------------------------------------------------------------//
@@ -649,13 +656,6 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
 	MOAINode::RegisterLuaFuncs ( state );
-	
-	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
-	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
-	state.SetField ( -1, "FITTING_MODE_APPLY_ANCHORS", ( u32 )FITTING_MODE_APPLY_ANCHORS );
-	state.SetField ( -1, "FITTING_MODE_APPLY_BOUNDS", ( u32 )FITTING_MODE_APPLY_BOUNDS );
-	state.SetField ( -1, "FITTING_MODE_DEFAULT", ( u32 )FITTING_MODE_DEFAULT );
-	state.SetField ( -1, "FITTING_MODE_MASK", ( u32 )FITTING_MODE_MASK );
 	
 	luaL_Reg regTable [] = {
 		{ "clearAnchors",		_clearAnchors },
