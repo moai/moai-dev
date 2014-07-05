@@ -319,8 +319,7 @@ int MOAICoroutine::Resume ( float step ) {
 			this->mRef.Clear ();
 			this->mState = 0;
 		}
-		
-		if (( result == LUA_YIELD ) || ( result == 0 )) {
+		else {
 			returnCount = lua_gettop ( this->mState );
 		}
 	}
