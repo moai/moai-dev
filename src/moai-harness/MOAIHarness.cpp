@@ -396,7 +396,7 @@ void MOAIHarness::HandleError(const char* message, lua_State* L, int level)
     {
         ZLLog::LogF ( "%s\n", message );
         MOAIScopedLuaState state ( L );
-        state.PrintStackTrace ( ZLLog::CONSOLE, level );
+        state.PrintStackTrace ( ZLLog::CONSOLE, NULL, level );
     }
     else
     {

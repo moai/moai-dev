@@ -57,6 +57,7 @@ public:
 	friend class MOAILuaCanary;
 	friend class MOAILuaClass;
 	friend class MOAILuaMemberRef;
+	friend class MOAILuaRuntime;
 	friend class MOAIDeserializer;
 	friend class MOAISerializer;
 
@@ -67,6 +68,7 @@ public:
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
+	static bool				IsMoaiUserdata				( MOAILuaState& state, int idx );
 	bool					IsSingleton					();
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					( MOAILuaObject* object );

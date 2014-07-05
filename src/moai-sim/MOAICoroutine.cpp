@@ -86,6 +86,18 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_resume ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+
+	self->mNarg = lua_gettop ( state ) - 1;
+	if ( self->mNarg > 0 ) {
+		lua_xmove ( state, self->mState, self->mNarg );
+	}
+	return self->Resume ( 0.0f );
+}
+
+//----------------------------------------------------------------//
 /**	@name	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
@@ -186,8 +198,7 @@ MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
 	mNarg ( 0 ),
 	mIsUpdating ( false ),
-	mIsActive ( false ),
-	mIsFirstRun ( true ) {
+	mIsActive ( false ) {
 
 	RTTI_SINGLE ( MOAIAction )
 	
@@ -200,56 +211,8 @@ MOAICoroutine::~MOAICoroutine () {
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnUpdate ( float step ) {
-	UNUSED ( step );
 	
-	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
-	
-	if ( this->mState ) {
-		
-		int result;
-		
-		if ( this->mIsFirstRun ) {
-			#if LUA_VERSION_NUM < 502
-				result = lua_resume ( this->mState, this->mNarg );
-			#else
-				result = lua_resume ( this->mState, NULL, this->mNarg );
-			#endif
-			this->mNarg = 0;
-			this->mIsFirstRun = false;
-		}
-		else {	
-			// Pass the step value as the return result from coroutine.yield ()
-			lua_pushnumber ( this->mState, step );
-			#if LUA_VERSION_NUM < 502
-				result = lua_resume ( this->mState, 1 );	
-			#else
-				result = lua_resume ( this->mState, NULL, 1 );	
-			#endif	
-		}
-		
-		if ( this->IsActive ()) {
-			if (( result != LUA_YIELD )) {
-			
-				if ( result != 0 ) {
-					
-					cc8* msg = lua_tostring ( this->mState, -1 );
-
-					MOAILuaState state ( this->mState );
-					MOAILuaRuntime::Get ().PushTraceback ( state );
-					state.Push ( msg );
-					lua_call ( this->mState, 1, 0 );
-					lua_pop ( this->mState, 1 );
-				}
-				this->Stop ();
-			}
-		}
-		else {
-			this->mRef.Clear ();
-			this->mState = 0;
-		}
-	}
-	
-	MOAILuaRuntime::Get ().SetTrackingGroup ();
+	this->Resume ( step );
 }
 
 //----------------------------------------------------------------//
@@ -289,6 +252,7 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTrackingGroup",		_getTrackingGroup },
 		{ "reportHistogram",		_reportHistogram },
 		{ "reportLeaks",			_reportLeaks },
+		{ "floob",					_resume },
 		{ "run",					_run },
 		{ "setDefaultParent",		_setDefaultParent },
 		{ "setTrackingGroup",		_setTrackingGroup },
@@ -308,4 +272,60 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 	lua_setfield ( state, -3, "resume" );
 	
 	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+int MOAICoroutine::Resume ( float step ) {
+	UNUSED ( step );
+	
+	int returnCount = 0;
+	
+	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
+	
+	if ( this->mState ) {
+		
+		int result;
+		
+		int narg = this->mNarg;
+		this->mNarg = 0;
+		
+		if ( narg == 0 ) {
+			lua_pushnumber ( this->mState, step );
+			narg = 1;
+		}
+		
+		#if LUA_VERSION_NUM < 502
+			result = lua_resume ( this->mState, narg );
+		#else
+			result = lua_resume ( this->mState, NULL, narg );
+		#endif
+		
+		bool err = false;
+		
+		if (( result != LUA_YIELD )) {
+		
+			if ( result != 0 ) {
+				
+				err = true;
+				cc8* msg = lua_tostring ( this->mState, -1 );
+
+				MOAILuaState state ( this->mState );
+				MOAILuaRuntime::Get ().PushTraceback ( state );
+				state.Push ( msg );
+				lua_call ( this->mState, 1, 0 );
+				lua_pop ( this->mState, 1 );
+			}
+			this->Stop ();
+			this->mRef.Clear ();
+			this->mState = 0;
+		}
+		
+		if (( result == LUA_YIELD ) || ( result == 0 )) {
+			returnCount = lua_gettop ( this->mState );
+		}
+	}
+	
+	MOAILuaRuntime::Get ().SetTrackingGroup ();
+	
+	return returnCount;
 }

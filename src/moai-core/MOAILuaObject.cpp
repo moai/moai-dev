@@ -8,6 +8,7 @@
 #include <moai-core/MOAILuaState-impl.h>
 
 #define FINALIZE_FUNC_NAME "finalize"
+#define MOAI_TAG "moai"
 
 //================================================================//
 // local
@@ -265,6 +266,19 @@ bool MOAILuaObject::IsBound () {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaObject::IsMoaiUserdata ( MOAILuaState& state, int idx ) {
+
+	bool result = false;
+	if ( state.IsType ( idx, LUA_TUSERDATA )) {
+		if ( lua_getmetatable ( state, idx )) {
+			result = state.HasField ( -1, MOAI_TAG );
+			state.Pop ( 1 );
+		}
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaObject::IsSingleton () {
 
 	MOAILuaClass* luaClass = this->GetLuaClass ();
@@ -379,6 +393,11 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	lua_pushcfunction ( state, MOAILuaObject::_tostring );
 	lua_setfield ( state, refTable, "__tostring" );
 	
+	// ref table gets 'moai' tag set to true
+	lua_pushboolean ( state, 1 );
+	lua_setfield ( state, refTable, MOAI_TAG );
+	
+	
 	// member table is __index and __newindex for ref table
 	lua_pushvalue ( state, memberTable );
 	lua_setfield ( state, refTable, "__index" );
@@ -457,7 +476,7 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 		lua_pushnil ( state );
 		return false;
 	}
-		
+	
 	if ( luaClass->IsSingleton ()) {
 		luaClass->PushRefTable ( state );
 		return true;

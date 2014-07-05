@@ -475,6 +475,7 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				continue;
 		}
 		
+		// TODO: warn about unsupported key types
 		switch ( keyType ) {
 		
 			case LUA_TSTRING: {

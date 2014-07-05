@@ -24,7 +24,6 @@ private:
 	
 	bool				mIsUpdating;
 	bool				mIsActive;
-	bool				mIsFirstRun;
 	
 	//----------------------------------------------------------------//
 	static int			_blockOnAction			( lua_State* L );
@@ -33,6 +32,7 @@ private:
 	static int			_getTrackingGroup		( lua_State* L );
 	static int			_reportHistogram		( lua_State* L );
 	static int			_reportLeaks			( lua_State* L );
+	static int			_resume					( lua_State* L );
 	static int			_run					( lua_State* L );
 	static int			_setDefaultParent		( lua_State* L );
 	static int			_setTrackingGroup		( lua_State* L );
@@ -40,6 +40,7 @@ private:
 	//----------------------------------------------------------------//
 	void				OnStart					();
 	void				OnStop					();
+	int					Resume					( float step );
 
 protected:
 	STLString			GetDebugInfo			() const;

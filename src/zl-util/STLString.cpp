@@ -48,6 +48,25 @@ size_t STLString::base_64_encode_len () {
 }
 
 //----------------------------------------------------------------//
+STLString STLString::build ( cc8* format, ... ) {
+
+	va_list args;
+	va_start ( args, format );
+	STLString result = STLString::build_var ( format, args );
+	va_end ( args );
+
+	return result;
+}
+
+//----------------------------------------------------------------//
+STLString STLString::build_var ( cc8* format, va_list args ) {
+
+	STLString result;
+	result.write_var ( format, args );
+	return result;
+}
+
+//----------------------------------------------------------------//
 STLString STLString::clip ( size_t first, size_t last ) {
 
 	return this->substr ( first, last - first );

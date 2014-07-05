@@ -292,6 +292,10 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 	data.MOAILuaObject::RegisterLuaClass ( state );
 	data.RegisterLuaClass ( state );
 	
+	// attach the ref table (for leak reporting only; no metamethods)
+	this->PushRefTable ( state );
+	lua_setmetatable ( state, -2 ); // for leak reporting only (no metamethods)
+	
 	// init the extend method
 	state.PushPtrUserData ( &data ); // copy of userdata
 	lua_pushvalue ( state, -2 ); // copy of class table

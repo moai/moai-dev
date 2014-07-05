@@ -220,7 +220,7 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				if ( L ) {
 					this->Print ( "\n" );
 					MOAILuaState state ( L );
-					state.PrintStackTrace ( this->mFile, 0 );
+					state.PrintStackTrace ( this->mFile, NULL, 0 );
 					this->Print ( "\n" );
 				}
 			}

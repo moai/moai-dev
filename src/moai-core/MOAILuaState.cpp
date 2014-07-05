@@ -505,7 +505,7 @@ STLString MOAILuaState::GetStackDump () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAILuaState::GetStackTrace ( int level ) {
+STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 
 	int firstpart = 1;  /* still before eventual `...' */
 	lua_Debug ar;
@@ -514,7 +514,7 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 
 	STLString out;
 	
-	out.append ( "stack traceback:" );
+	out.append ( title ? title : "stack traceback:" );
 	
 	while ( lua_getstack ( L, level++, &ar )) {
 		
@@ -911,8 +911,8 @@ void MOAILuaState::PrintStackDump ( FILE* file  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
-	STLString stackTrace = this->GetStackTrace ( level );
+void MOAILuaState::PrintStackTrace ( FILE* file, cc8* title, int level ) {
+	STLString stackTrace = this->GetStackTrace ( title, level );
 	ZLLog::LogF ( file, stackTrace.str ());
 }
 
