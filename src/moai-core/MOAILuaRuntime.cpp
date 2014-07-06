@@ -253,6 +253,19 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name forceGC
+	@text	Runs the garbage collector repeatedly until no more MOAIObjects
+			can be collected.
+
+	@out	nil
+*/
+int MOAILuaRuntime::_forceGC ( lua_State* L ) {
+	UNUSED ( L );
+	MOAILuaRuntime::Get ().ForceGarbageCollection ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getHistogram
 	@text	Generates a histogram of active MOAIObjects and returns it
 			in a table containing object tallies indexed by object
@@ -484,6 +497,28 @@ void MOAILuaRuntime::DeregisterObject ( MOAILuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::FindLuaRefs ( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet ) {
+
+	MOAILuaState state ( L );
+
+	lua_Debug ar;
+	for ( int level = 0; lua_getstack ( state, level, &ar ) != 0; ++level ) {
+	
+		cc8* localname;
+		for ( int i = 1; ( localname = lua_getlocal ( state, &ar, i )) != NULL; ++i ) {
+		
+			STLString localPath = STLString::build ( "%s.<local: %s>", path.c_str (), localname );
+			this->FindLuaRefs ( state, -1, file, localPath.c_str (), trackingGroup, pathMap, traversalSet );
+			state.Pop ( 1 );
+		}
+	
+		lua_getinfo ( state, "f", &ar );
+		this->FindLuaRefs ( state, -1, file, path.c_str (), trackingGroup, pathMap, traversalSet );
+		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
 // This monstrosity will walk through all tables and functions accessible in the
 // current lua state and update the reference line for each one found to help
 // track who is pointing to it.
@@ -503,7 +538,6 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 				StringSet& pathSet = pathMap [ object ];
 				pathSet.affirm ( path );
 			}
-			
 		}
 	}
 	
@@ -608,26 +642,10 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 			break;
 		}
 		case LUA_TTHREAD: {
-		
+			
 			STLString funcPath = STLString::build ( "%s.<func>", path.c_str ());
-		
 			MOAILuaState threadState ( lua_tothread ( state, idx ));
-		
-			lua_Debug ar;
-			lua_getstack ( threadState, 1, &ar );
-			
-			cc8* localname;
-			for ( int i = 1; ( localname = lua_getlocal ( threadState, &ar, i )) != NULL; ++i ) {
-			
-				STLString localPath = STLString::build ( "%s.<local: %s>", funcPath.c_str (), localname );
-				this->FindLuaRefs ( threadState, -1, file, localPath.c_str (), trackingGroup, pathMap, traversalSet );
-				threadState.Pop ( 1 );
-			}
-		
-			lua_getinfo ( threadState, "f", &ar );
-			this->FindLuaRefs ( threadState, -1, file, funcPath.c_str (), trackingGroup, pathMap, traversalSet );
-			threadState.Pop ( 1 );
-			
+			this->FindLuaRefs ( threadState, file, funcPath, trackingGroup, pathMap, traversalSet );
 			break;
 			
 		}
@@ -662,6 +680,7 @@ void MOAILuaRuntime::ForceGarbageCollection () {
 		size_t b0 = this->mTotalBytes;
 		size_t c0 = this->mObjectCount;
 		
+		lua_gc ( L, LUA_GCCOLLECT, 0 );
 		lua_gc ( L, LUA_GCCOLLECT, 0 );
 		
 		size_t b1 = this->mTotalBytes;
@@ -827,6 +846,7 @@ void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "deref",					_deref },
 		{ "dump",					_dump },
 		{ "dumpStack",				_dumpStack },
+		{ "forceGC",				_forceGC },
 		{ "getHistogram",			_getHistogram },
 		{ "getRef",					_getRef },
 		{ "reportGC",				_reportGC },
@@ -935,6 +955,9 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 	lua_pushglobaltable ( state );
 	this->FindLuaRefs ( state, -1, file, "_G", trackingGroup, pathMap, traversalSet );
 	state.Pop ( 1 );
+	
+	// check the stack
+	this->FindLuaRefs ( state, file, "_G", trackingGroup, pathMap, traversalSet );
 	
 	// print the strong refs
 	this->mStrongRefs.PushRefTable ( state );

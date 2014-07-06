@@ -105,23 +105,10 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name forceGC
-	@text	Runs the garbage collector repeatedly until no more MOAIObjects
-			can be collected.
-
-	@out	nil
-*/
+// TODO: deprecate
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
-	
-	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
-	if ( current ) {
-		MOAISim::Get ().mForceGC = true;
-	}
-	else {
-		MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		MOAISim::Get ().mForceGC = false;
-	}
+	MOAILuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -653,8 +640,7 @@ MOAISim::MOAISim () :
 	mShowCursorFunc ( 0 ),
 	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
-	mGCStep ( 0 ),
-	mForceGC ( false ) {
+	mGCStep ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -847,11 +833,6 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
-
-		if ( this->mForceGC ) {
-			MOAILuaRuntime::Get ().ForceGarbageCollection ();
-			this->mForceGC = false;
-		}
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		

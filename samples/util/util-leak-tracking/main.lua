@@ -33,9 +33,9 @@ end )
 coroutine.resume ( thread1 )
 thread2:floob ()
 
-foo = objects [ 1 ]
-bar = objects [ 2 ]
-baz = objects [ 3 ]
+local foo = objects [ 1 ]
+local bar = objects [ 2 ]
+local baz = objects [ 3 ]
 
 print ( "REPORTING LEAKS" )
 MOAILuaRuntime.reportLeaks ()

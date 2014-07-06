@@ -88,6 +88,7 @@ private:
 	static int				_deref					( lua_State* L );
 	static int				_dump					( lua_State* L );
 	static int				_dumpStack				( lua_State* L );
+	static int				_forceGC				( lua_State* L );
 	static int				_getHistogram			( lua_State* L );
 	static int				_getRef					( lua_State* L );
 	static int				_panic					( lua_State* L );
@@ -101,6 +102,7 @@ private:
 	//----------------------------------------------------------------//
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
 	void					DeregisterObject		( MOAILuaObject& object );
+	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet );
 	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet );
 	static bool				IsLuaIdentifier			( const char *str );
 	void					OnGlobalsFinalize		();
