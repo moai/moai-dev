@@ -22,6 +22,7 @@ thread1 = coroutine.create ( function ()
 	print ( "hi from thread1" )
 	coroutine.yield ()
 end )
+coroutine.resume ( thread1 )
 
 thread2 = MOAICoroutine.new ()
 thread2:run ( function ()
@@ -29,9 +30,7 @@ thread2:run ( function ()
 	print ( "hi from thread2" )
 	coroutine.yield ( 1, 2, 3, 4, 5 )
 end )
-
-coroutine.resume ( thread1 )
-thread2:floob ()
+thread2:step ()
 
 local foo = objects [ 1 ]
 local bar = objects [ 2 ]

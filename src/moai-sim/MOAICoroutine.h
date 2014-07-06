@@ -32,10 +32,10 @@ private:
 	static int			_getTrackingGroup		( lua_State* L );
 	static int			_reportHistogram		( lua_State* L );
 	static int			_reportLeaks			( lua_State* L );
-	static int			_resume					( lua_State* L );
 	static int			_run					( lua_State* L );
 	static int			_setDefaultParent		( lua_State* L );
 	static int			_setTrackingGroup		( lua_State* L );
+	static int			_step					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				OnStart					();

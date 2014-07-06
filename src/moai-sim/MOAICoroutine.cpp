@@ -86,18 +86,6 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAICoroutine::_resume ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
-
-	self->mNarg = lua_gettop ( state ) - 1;
-	if ( self->mNarg > 0 ) {
-		lua_xmove ( state, self->mState, self->mNarg );
-	}
-	return self->Resume ( 0.0f );
-}
-
-//----------------------------------------------------------------//
 /**	@name	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
@@ -178,6 +166,18 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_step ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+
+	self->mNarg = lua_gettop ( state ) - 1;
+	if ( self->mNarg > 0 ) {
+		lua_xmove ( state, self->mState, self->mNarg );
+	}
+	return self->Resume ( 0.0f );
+}
+
 //================================================================//
 // MOAICoroutine
 //================================================================//
@@ -252,10 +252,10 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTrackingGroup",		_getTrackingGroup },
 		{ "reportHistogram",		_reportHistogram },
 		{ "reportLeaks",			_reportLeaks },
-		{ "floob",					_resume },
 		{ "run",					_run },
 		{ "setDefaultParent",		_setDefaultParent },
 		{ "setTrackingGroup",		_setTrackingGroup },
+		{ "step",					_step },
 		{ NULL, NULL }
 	};
 	

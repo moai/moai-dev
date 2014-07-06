@@ -28,6 +28,31 @@ private:
 };
 
 //================================================================//
+// MOAILuaTraversalState
+//================================================================//
+class MOAILuaTraversalState {
+private:
+
+	friend class MOAILuaRuntime;
+	
+	typedef STLSet < STLString >							StringSet;
+	typedef StringSet::iterator								StringSetIt;
+
+	typedef STLSet < const void* >							TraversalSet;
+	typedef TraversalSet::iterator							TraversalSetIt;
+
+	typedef STLMap < MOAILuaObject*, StringSet >			ObjectPathMap;
+	typedef ObjectPathMap::iterator							ObjectPathMapIt;
+
+	TraversalSet		mTraversalStack; // to hold traversed objects
+	TraversalSet		mTraversalSet; // all traversed objects
+	TraversalSet		mIgnoreSet; // to hold ignored objects
+	ObjectPathMap		mPathMap; // sets of Lua reference paths to objects
+	
+	bool				mIgnoreTraversed;
+};
+
+//================================================================//
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
@@ -41,17 +66,8 @@ private:
 	static const u32 WEAK_REF_BIT	= 0x80000000;
 	static const u32 REF_MASK		= 0x7fffffff;
 
-	typedef STLSet < STLString >							StringSet;
-	typedef StringSet::iterator								StringSetIt;
-
 	typedef STLSet < MOAILuaObject* >						ObjectSet;
 	typedef ObjectSet::iterator								ObjectSetIt;
-
-	typedef STLMap < MOAILuaObject*, StringSet >			ObjectPathMap;
-	typedef ObjectPathMap::iterator							ObjectPathMapIt;
-
-	typedef STLSet < const void* >							TraversalSet;
-	typedef TraversalSet::iterator							TraversalSetIt;
 
 	typedef STLMap < MOAILuaObject*, MOAILuaObjectInfo >	TrackingMap;
 	typedef TrackingMap::iterator							TrackingMapIt;
@@ -102,8 +118,9 @@ private:
 	//----------------------------------------------------------------//
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
 	void					DeregisterObject		( MOAILuaObject& object );
-	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet );
-	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet );
+	void					FindLuaRefs				( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
+	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
+	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	static bool				IsLuaIdentifier			( const char *str );
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();

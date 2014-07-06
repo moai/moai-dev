@@ -497,23 +497,52 @@ void MOAILuaRuntime::DeregisterObject ( MOAILuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::FindLuaRefs ( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet ) {
+void MOAILuaRuntime::FindLuaRefs ( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState ) {
+
+	MOAILuaState state ( L );
+
+	traversalState.mTraversalStack.clear ();
+	traversalState.mTraversalSet.clear ();
+	traversalState.mIgnoreSet.clear ();
+	traversalState.mPathMap.clear ();
+
+	traversalState.mIgnoreTraversed = false;
+	
+	// check all the globals
+	lua_pushglobaltable ( state );
+	this->FindLuaRefs ( state, -1, file, "_G", trackingGroup, traversalState );
+	state.Pop ( 1 );
+	
+	traversalState.mIgnoreTraversed = true;
+	
+	// check the stack
+	this->FindLuaRefs ( state, file, "<caller>", trackingGroup, traversalState );
+	
+	// print the strong refs
+	this->mStrongRefs.PushRefTable ( state );
+	this->FindLuaRefs ( state, -1, file, "<STRONG REFS>", trackingGroup, traversalState );
+	state.Pop ( 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::FindLuaRefs ( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState ) {
 
 	MOAILuaState state ( L );
 
 	lua_Debug ar;
 	for ( int level = 0; lua_getstack ( state, level, &ar ) != 0; ++level ) {
 	
+		STLString stackPath = STLString::build ( "%s[stack: %d]", path.c_str (), level );
+	
 		cc8* localname;
 		for ( int i = 1; ( localname = lua_getlocal ( state, &ar, i )) != NULL; ++i ) {
-		
-			STLString localPath = STLString::build ( "%s.<local: %s>", path.c_str (), localname );
-			this->FindLuaRefs ( state, -1, file, localPath.c_str (), trackingGroup, pathMap, traversalSet );
+			STLString localPath = STLString::build ( "%s.%s", stackPath.c_str (), localname );
+			this->FindLuaRefs ( state, -1, file, localPath.c_str (), trackingGroup, traversalState );
 			state.Pop ( 1 );
 		}
-	
+		
 		lua_getinfo ( state, "f", &ar );
-		this->FindLuaRefs ( state, -1, file, path.c_str (), trackingGroup, pathMap, traversalSet );
+		this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<func>", path.c_str ()), trackingGroup, traversalState );
 		state.Pop ( 1 );
 	}
 }
@@ -522,7 +551,7 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, FILE* file, STLString path, cc8
 // This monstrosity will walk through all tables and functions accessible in the
 // current lua state and update the reference line for each one found to help
 // track who is pointing to it.
-void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, ObjectPathMap& pathMap, TraversalSet& traversalSet ) {
+void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState ) {
 
 	L = L ? L : ( lua_State* )this->mState;
 	MOAILuaState state ( L );
@@ -535,16 +564,21 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 		if ( object && this->mTrackingMap.contains ( object )) {
 			MOAILuaObjectInfo& objectInfo = this->mTrackingMap [ object ];
 			if ( !trackingGroup || ( objectInfo.mTrackingGroup.compare ( trackingGroup ) != 0 )) {
-				StringSet& pathSet = pathMap [ object ];
+				MOAILuaTraversalState::StringSet& pathSet = traversalState.mPathMap [ object ];
 				pathSet.affirm ( path );
+				//printf ( "found: %s\n", path.c_str ());
 			}
 		}
 	}
 	
 	// bail if we've already iterated into this item
 	const void* addr = lua_topointer ( state, idx );
-	if ( traversalSet.contains ( addr )) return;
-	traversalSet.insert ( addr );
+	
+	if ( traversalState.mTraversalStack.contains ( addr ) || traversalState.mIgnoreSet.contains ( addr )) return;
+	traversalState.mTraversalStack.insert ( addr );
+	
+	if ( traversalState.mIgnoreTraversed && ( traversalState.mTraversalSet.contains ( addr ))) return;
+	traversalState.mTraversalSet.insert ( addr );
 	
 	//printf ( "%s\n", path.c_str ());
 	
@@ -610,15 +644,16 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 						}
 						
 						keyPath.write ( "[%s: %p]", keyTypeName.c_str (), keyAddr );
-						this->FindLuaRefs ( state, keyIdx, file, STLString::build ( "%s.<key>", keyPath.c_str ()), trackingGroup, pathMap, traversalSet );
+						this->FindLuaRefs ( state, keyIdx, file, STLString::build ( "%s(as key)", keyPath.c_str ()), trackingGroup, traversalState );
 					}
 				}
 				
 				// follow the values
-				this->FindLuaRefs ( state, valIdx, file, keyPath, trackingGroup, pathMap, traversalSet );
+				this->FindLuaRefs ( state, valIdx, file, keyPath, trackingGroup, traversalState );
 			}
 			break;
 		}
+		
 		case LUA_TFUNCTION: {
 			
 			cc8* upname;
@@ -632,33 +667,49 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 					upPath.write ( "%d>", i );
 				}
 				
-				this->FindLuaRefs ( state, -1, file, upPath.c_str (), trackingGroup, pathMap, traversalSet );
+				this->FindLuaRefs ( state, -1, file, upPath.c_str (), trackingGroup, traversalState );
 				state.Pop ( 1 );
 			}
 			
 			lua_getfenv ( state, idx );
-			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<env: %p>", path.c_str (), lua_topointer ( state, -1 )), trackingGroup, pathMap, traversalSet );
+			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<env: %p>", path.c_str (), lua_topointer ( state, -1 )), trackingGroup, traversalState );
+			traversalState.mIgnoreSet.insert ( lua_topointer ( state, -1 ));
 			state.Pop ( 1 );
 			break;
 		}
+		
 		case LUA_TTHREAD: {
 			
-			STLString funcPath = STLString::build ( "%s.<func>", path.c_str ());
+			STLString threadPath = STLString::build ( "%s.<thread>", path.c_str ());
 			MOAILuaState threadState ( lua_tothread ( state, idx ));
-			this->FindLuaRefs ( threadState, file, funcPath, trackingGroup, pathMap, traversalSet );
+			this->FindLuaRefs ( threadState, file, threadPath, trackingGroup, traversalState );
 			break;
-			
 		}
 	}
 	
 	// follow the metatable
 	if (( type == LUA_TTABLE ) || ( type == LUA_TUSERDATA )) {
-		if ( lua_getmetatable ( state, -1 )) {
-			path.write ( ".<meta: 0x%p>", lua_topointer ( state, -1 ));
-			this->FindLuaRefs ( state, -1, file, path, trackingGroup, pathMap, traversalSet );
+	
+		MOAILuaObject* object = MOAILuaObject::IsMoaiUserdata ( state, idx ) ? ( MOAILuaObject* )state.GetPtrUserData ( idx ) : NULL;
+		if ( object ) {
+			
+			object->PushRefTable ( state );
+			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<ref>", path.c_str ()), trackingGroup, traversalState );
+			state.Pop ( 1 );
+			
+			object->PushMemberTable ( state );
+			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<member>", path.c_str ()), trackingGroup, traversalState );
 			state.Pop ( 1 );
 		}
+		else {
+			if ( lua_getmetatable ( state, idx )) {
+				this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<meta: 0x%p>", path.c_str (), lua_topointer ( state, -1 )), trackingGroup, traversalState );
+				state.Pop ( 1 );
+			}
+		}
 	}
+	
+	traversalState.mTraversalStack.erase ( addr );
 }
 
 //----------------------------------------------------------------//
@@ -947,22 +998,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 	MOAILuaState& state = this->mState;
 	
 	// Update Lua references for all tracked objects
-	
-	TraversalSet traversalSet; // to hold traversed objects
-	ObjectPathMap pathMap; // to hold sets of Lua reference paths to objects
-	
-	// check all the globals
-	lua_pushglobaltable ( state );
-	this->FindLuaRefs ( state, -1, file, "_G", trackingGroup, pathMap, traversalSet );
-	state.Pop ( 1 );
-	
-	// check the stack
-	this->FindLuaRefs ( state, file, "_G", trackingGroup, pathMap, traversalSet );
-	
-	// print the strong refs
-	this->mStrongRefs.PushRefTable ( state );
-	this->FindLuaRefs ( state, -1, file, "<STRONG REFS>", trackingGroup, pathMap, traversalSet );
-	state.Pop ( 1 );
+	MOAILuaTraversalState traversalState;
+	this->FindLuaRefs ( state, file, trackingGroup, traversalState );
 	
 	// Correlate leaks by identical stack traces.
 	LeakStackMap stacks;
@@ -992,9 +1029,9 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 			MOAILuaObject* object = *objectSetIt;
 			ZLLog::LogF ( file, "<%s> %p\n", object->TypeName (), object );
 			
-			if ( pathMap.contains ( object )) {
-				StringSet& pathSet = pathMap [ object ];
-				for ( StringSetIt j = pathSet.begin (); j != pathSet.end (); ++j ) {
+			if ( traversalState.mPathMap.contains ( object )) {
+				MOAILuaTraversalState::StringSet& pathSet = traversalState.mPathMap [ object ];
+				for ( MOAILuaTraversalState::StringSetIt j = pathSet.begin (); j != pathSet.end (); ++j ) {
 					ZLLog::LogF ( file, "path: %s\n", j->c_str ());
 				}
 			}
