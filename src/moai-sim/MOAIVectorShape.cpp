@@ -11,7 +11,7 @@
 // MOAIVectorShape
 //================================================================//
 
-const ZLVec3D MOAIVectorShape::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
+const ZLVec3D MOAIVectorShape::sNormal = ZLVec3D ( 0.0f, 0.0f, 0.5f );
 
 //----------------------------------------------------------------//
 int MOAIVectorShape::AddFillContours ( SafeTesselator* tess ) {

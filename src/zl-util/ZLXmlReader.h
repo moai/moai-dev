@@ -107,6 +107,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear			();
 	ZLXmlElement*	GetElement		();
+	int				GetLineNumber	();
 	ZLXmlElement*	Parse			();
 	void			SetStream		( ZLStream& stream );
 					ZLXmlReader		();

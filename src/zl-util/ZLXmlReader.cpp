@@ -91,6 +91,12 @@ ZLXmlElement* ZLXmlReader::GetElement () {
 }
 
 //----------------------------------------------------------------//
+int ZLXmlReader::GetLineNumber () {
+	
+	return XML_GetCurrentLineNumber ( this->mParser );
+}
+
+//----------------------------------------------------------------//
 ZLXmlElement* ZLXmlReader::GetTopElement () {
 
 	if ( this->mElementStack.size ()) {
