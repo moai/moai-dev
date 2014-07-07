@@ -22,10 +22,10 @@ class MOAIBox2DPrim :
 	public virtual MOAILuaObject  {
 protected:
 
-	MOAIBox2DWorld* mWorld;
+	MOAIBox2DWorld*		mWorld;
 	
-	bool			mDestroy;
-	MOAIBox2DPrim*	mDestroyNext;
+	bool				mDestroy;
+	MOAIBox2DPrim*		mDestroyNext;
 
 	//----------------------------------------------------------------//
 	
@@ -41,8 +41,8 @@ public:
 					MOAIBox2DPrim			();
 	
 	//----------------------------------------------------------------//
-	inline bool IsDestroyed () {
-		return this->mDestroy;
+	inline bool IsValid () {
+		return this->mWorld != NULL;
 	}
 };
 

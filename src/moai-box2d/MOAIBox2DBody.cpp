@@ -1002,11 +1002,9 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::Destroy () {
 
-	if ( this->mBody ) {
-		b2World* world = this->mWorld->mWorld;
-		world->DestroyBody ( this->mBody );
-		this->mBody = 0;
-	}
+	b2World* world = this->mWorld->mWorld;
+	world->DestroyBody ( this->mBody );
+	this->mBody = 0;
 }
 
 //----------------------------------------------------------------//
@@ -1020,8 +1018,6 @@ MOAIBox2DBody::MOAIBox2DBody () :
 
 //----------------------------------------------------------------//
 MOAIBox2DBody::~MOAIBox2DBody () {
-
-	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

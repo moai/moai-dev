@@ -223,12 +223,21 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DFixture::Clear () {
+
+	if ( this->mFixture ) {
+		this->mFixture = 0;
+	}
+	this->mWorld = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DFixture::Destroy () {
 
 	if ( this->mFixture ) {
 		b2Body* body = this->mFixture->GetBody ();
 		body->DestroyFixture ( this->mFixture );
-		this->mFixture = 0;
+		this->Clear ();
 	}
 }
 
@@ -293,8 +302,6 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 
 //----------------------------------------------------------------//
 MOAIBox2DFixture::~MOAIBox2DFixture () {
-
-	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

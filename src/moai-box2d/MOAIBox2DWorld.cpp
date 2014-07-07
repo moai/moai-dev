@@ -119,13 +119,13 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorA_X	in units, in world coordinates, converted to meters
-	@in		number anchorA_Y	in units, in world coordinates, converted to meters
-	@in		number anchorB_X	in units, in world coordinates, converted to meters
-	@in		number anchorB_Y	in units, in world coordinates, converted to meters
+	@in		number anchorA_X			in units, in world coordinates, converted to meters
+	@in		number anchorA_Y			in units, in world coordinates, converted to meters
+	@in		number anchorB_X			in units, in world coordinates, converted to meters
+	@in		number anchorB_Y			in units, in world coordinates, converted to meters
 	@opt	number frequencyHz			in Hz. Default value determined by Box2D
 	@opt	number dampingRatio			Default value determined by Box2D
-	@opt	boolean collideConnected		Default value is false
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
@@ -174,10 +174,11 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX	in units, in world coordinates, converted to meters
-	@in		number anchorY	in units, in world coordinates, converted to meters
-	@opt	number maxForce			in kg * units / s^2, converted to N [kg * m / s^2]. 	Default value determined by Box2D
-	@opt	number maxTorque		in kg * units / s^2 * units, converted to N-m [kg * m / s^2 * m].	Default value determined by Box2D
+	@in		number anchorX				in units, in world coordinates, converted to meters
+	@in		number anchorY				in units, in world coordinates, converted to meters
+	@opt	number maxForce				in kg * units / s^2, converted to N [kg * m / s^2]. 	Default value determined by Box2D
+	@opt	number maxTorque			in kg * units / s^2 * units, converted to N-m [kg * m / s^2 * m].	Default value determined by Box2D
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
@@ -206,6 +207,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	/* Convert to/from N-m (kg m / s^2) * m from/to (kg unit / s^2) * unit */
 	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque / ( unitsToMeters * unitsToMeters ) ) * unitsToMeters * unitsToMeters;
 	
+	jointDef.collideConnected = state.GetValue < bool >( 8, false );
+	
 	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
@@ -225,6 +228,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	@in		MOAIBox2DJoint jointA
 	@in		MOAIBox2DJoint jointB
 	@in		number ratio
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
@@ -242,11 +246,12 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	
 	b2GearJointDef jointDef;
 	
-	jointDef.bodyA	= jointA->mJoint->GetBodyA ();
-	jointDef.bodyB	= jointB->mJoint->GetBodyB ();
-	jointDef.joint1	= jointA->mJoint;
-	jointDef.joint2	= jointB->mJoint;
-	jointDef.ratio	= state.GetValue < float >( 4, 0.0f );
+	jointDef.bodyA				= jointA->mJoint->GetBodyA ();
+	jointDef.bodyB				= jointB->mJoint->GetBodyB ();
+	jointDef.joint1				= jointA->mJoint;
+	jointDef.joint2				= jointB->mJoint;
+	jointDef.ratio				= state.GetValue < float >( 4, 0.0f );
+	jointDef.collideConnected	= state.GetValue < bool >( 5, false );
 	
 	MOAIBox2DGearJoint* joint = new MOAIBox2DGearJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -267,6 +272,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
@@ -284,6 +290,8 @@ int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
 	
 	b2MotorJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody );
+	
+	jointDef.collideConnected = state.GetValue < bool >( 4, false );
 	
 	MOAIBox2DMotorJoint* joint = new MOAIBox2DMotorJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -303,11 +311,12 @@ int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number targetX	in units, in world coordinates, converted to meters
-	@in		number targetY	in units, in world coordinates, converted to meters
-	@in		number maxForce	in kg * units / s^2, converted to N [kg * m / s^2].
+	@in		number targetX				in units, in world coordinates, converted to meters
+	@in		number targetY				in units, in world coordinates, converted to meters
+	@in		number maxForce				in kg * units / s^2, converted to N [kg * m / s^2].
 	@opt	number frequencyHz			in Hz. Default value determined by Box2D
 	@opt	number dampingRatio			Default value determined by Box2D
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
@@ -328,12 +337,13 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	target.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2MouseJointDef jointDef;
-	jointDef.bodyA			= bodyA->mBody;
-	jointDef.bodyB			= bodyB->mBody;
-	jointDef.target			= target;
-	jointDef.maxForce		= state.GetValue < float >( 6, 0.0f ) * self->mUnitsToMeters;
-	jointDef.frequencyHz	= state.GetValue < float >( 7, jointDef.frequencyHz );
-	jointDef.dampingRatio	= state.GetValue < float >( 8, jointDef.dampingRatio );
+	jointDef.bodyA				= bodyA->mBody;
+	jointDef.bodyB				= bodyB->mBody;
+	jointDef.target				= target;
+	jointDef.maxForce			= state.GetValue < float >( 6, 0.0f ) * self->mUnitsToMeters;
+	jointDef.frequencyHz		= state.GetValue < float >( 7, jointDef.frequencyHz );
+	jointDef.dampingRatio		= state.GetValue < float >( 8, jointDef.dampingRatio );
+	jointDef.collideConnected	= state.GetValue < bool >( 9, false );
 	
 	MOAIBox2DMouseJoint* joint = new MOAIBox2DMouseJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -353,10 +363,11 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorA	in units, in world coordinates, converted to meters
-	@in		number anchorB	in units, in world coordinates, converted to meters
-	@in		number axisA	translation axis vector X component (no units)
-	@in		number axisB	translation axis vector Y component (no units)
+	@in		number anchorA				in units, in world coordinates, converted to meters
+	@in		number anchorB				in units, in world coordinates, converted to meters
+	@in		number axisA				translation axis vector X component (no units)
+	@in		number axisB				translation axis vector Y component (no units)
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
@@ -383,6 +394,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	b2PrismaticJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
 	
+	jointDef.collideConnected = state.GetValue < bool >( 8, false );
+	
 	MOAIBox2DPrismaticJoint* joint = new MOAIBox2DPrismaticJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
@@ -401,17 +414,18 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number groundAnchorA_X	in units, in world coordinates, converted to meters
-	@in		number groundAnchorA_Y	in units, in world coordinates, converted to meters
-	@in		number groundAnchorB_X	in units, in world coordinates, converted to meters
-	@in		number groundAnchorB_Y	in units, in world coordinates, converted to meters
-	@in		number anchorA_X	in units, in world coordinates, converted to meters
-	@in		number anchorA_Y	in units, in world coordinates, converted to meters
-	@in		number anchorB_X	in units, in world coordinates, converted to meters
-	@in		number anchorB_Y	in units, in world coordinates, converted to meters
+	@in		number groundAnchorA_X		in units, in world coordinates, converted to meters
+	@in		number groundAnchorA_Y		in units, in world coordinates, converted to meters
+	@in		number groundAnchorB_X		in units, in world coordinates, converted to meters
+	@in		number groundAnchorB_Y		in units, in world coordinates, converted to meters
+	@in		number anchorA_X			in units, in world coordinates, converted to meters
+	@in		number anchorA_Y			in units, in world coordinates, converted to meters
+	@in		number anchorB_X			in units, in world coordinates, converted to meters
+	@in		number anchorB_Y			in units, in world coordinates, converted to meters
 	@in		number ratio
-	@in		number maxLengthA	in units, converted to meters
-	@in		number maxLengthB	in units, converted to meters
+	@in		number maxLengthA			in units, converted to meters
+	@in		number maxLengthB			in units, converted to meters
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
@@ -451,6 +465,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	jointDef.lengthA	= state.GetValue < float >( 13, 0 ) * self->mUnitsToMeters;
 	jointDef.lengthB	= state.GetValue < float >( 14, 0 ) * self->mUnitsToMeters;
 	
+	jointDef.collideConnected = state.GetValue < bool >( 15, false );
+	
 	MOAIBox2DPulleyJoint* joint = new MOAIBox2DPulleyJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
@@ -469,8 +485,9 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX	in units, in world coordinates, converted to meters
-	@in		number anchorY	in units, in world coordinates, converted to meters
+	@in		number anchorX				in units, in world coordinates, converted to meters
+	@in		number anchorY				in units, in world coordinates, converted to meters
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
@@ -493,6 +510,8 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	b2RevoluteJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
+	jointDef.collideConnected = state.GetValue < bool >( 6, false );
+	
 	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
@@ -506,18 +525,18 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	addRopeJoint
- @text	Create and add a rope joint to the world. See Box2D documentation.
+	@text	Create and add a rope joint to the world. See Box2D documentation.
  
- @in		MOAIBox2DWorld self
- @in		MOAIBox2DBody bodyA
- @in		MOAIBox2DBody bodyB 
- @in		number maxLength	in units, converted to meters
- @opt		number anchorAX		in units, in world coordinates, converted to meters
- @opt		number anchorAY		in units, in world coordinates, converted to meters
- @opt		number anchorBX		in units, in world coordinates, converted to meters
- @opt		number anchorBY		in units, in world coordinates, converted to meters
- @opt		boolean collideConnected		Default value is false		
- @out	MOAIBox2DJoint joint
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number maxLength				in units, converted to meters
+	@opt	number anchorAX					in units, in world coordinates, converted to meters
+	@opt	number anchorAY					in units, in world coordinates, converted to meters
+	@opt	number anchorBX					in units, in world coordinates, converted to meters
+	@opt	number anchorBY					in units, in world coordinates, converted to meters
+	@opt	boolean collideConnected		Default value is false
+	@out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
@@ -566,8 +585,9 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	@in		MOAIBox2DWorld self
 	@in		MOAIBox2DBody bodyA
 	@in		MOAIBox2DBody bodyB
-	@in		number anchorX	in units, in world coordinates, converted to meters
-	@in		number anchorY	in units, in world coordinates, converted to meters
+	@in		number anchorX				in units, in world coordinates, converted to meters
+	@in		number anchorY				in units, in world coordinates, converted to meters
+	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
@@ -590,6 +610,8 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	b2WeldJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
+	jointDef.collideConnected = state.GetValue < bool >( 6, false );
+	
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
@@ -602,17 +624,18 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name addWheelJoint
+/**	@name	addWheelJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
  
- @in		MOAIBox2DWorld self
- @in		MOAIBox2DBody bodyA
- @in		MOAIBox2DBody bodyB
- @in		number anchorX	in units, in world coordinates, converted to meters
- @in		number anchorY	in units, in world coordinates, converted to meters
- @in		number axisX	translation axis vector X component (no units)
- @in		number axisY	translation axis vector Y component (no units)
- @out	MOAIBox2DJoint joint
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorX				in units, in world coordinates, converted to meters
+	@in		number anchorY				in units, in world coordinates, converted to meters
+	@in		number axisX				translation axis vector X component (no units)
+	@in		number axisY				translation axis vector Y component (no units)
+	@opt	boolean collideConnected	Default value is false
+	@out	MOAIBox2DJoint joint
  */
 int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
@@ -637,6 +660,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	
 	b2WheelJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
+	
+	jointDef.collideConnected = state.GetValue < bool >( 8, false );
 	
 	MOAIBox2DWheelJoint* joint = new MOAIBox2DWheelJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -715,18 +740,18 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**     @name   getRayCast
-        @text   return RayCast 1st point hit
+/**	@name   getRayCast
+	@text   return RayCast 1st point hit
        
-        @in		MOAIBox2DWorld self
-        @in		number p1x
-        @in		number p1y
-        @in		number p2x
-        @in		number p2y
-        @out	boolean hit					true if hit, false otherwise
-		@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
-        @out	number hitpointX
-        @out	number hitpointY
+	@in		MOAIBox2DWorld self
+	@in		number p1x
+	@in		number p1y
+	@in		number p2x
+	@in		number p2y
+	@out	boolean hit					true if hit, false otherwise
+	@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
+	@out	number hitpointX
+	@out	number hitpointY
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
@@ -891,8 +916,8 @@ int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
-	@opt	number velocityIteratons			Default value is current value of velocity iterations.
-	@opt	number positionIterations			Default value is current value of positions iterations.
+	@opt	number velocityIteratons		Default value is current value of velocity iterations.
+	@opt	number positionIterations		Default value is current value of positions iterations.
 	@out	nil
 */
 int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
@@ -963,27 +988,25 @@ void MOAIBox2DWorld::Destroy () {
 	while ( this->mDestroyFixtures ) {
 		MOAIBox2DPrim* prim = this->mDestroyFixtures;
 		this->mDestroyFixtures = this->mDestroyFixtures->mDestroyNext;
-		prim->Destroy ();
-		
-		prim->SetWorld ( 0 );
-		this->LuaRelease ( prim );
+		if ( prim->IsValid ()) {
+			prim->Destroy ();
+			this->LuaRelease ( prim );
+		}
 	}
 	
 	while ( this->mDestroyJoints ) {
 		MOAIBox2DPrim* prim = this->mDestroyJoints;
 		this->mDestroyJoints = this->mDestroyJoints->mDestroyNext;
-		prim->Destroy ();
-		
-		prim->SetWorld ( 0 );
-		this->LuaRelease ( prim );
+		if ( prim->IsValid ()) {
+			prim->Destroy ();
+			this->LuaRelease ( prim );
+		}
 	}
 	
 	while ( this->mDestroyBodies ) {
 		MOAIBox2DPrim* prim = this->mDestroyBodies;
 		this->mDestroyBodies = this->mDestroyBodies->mDestroyNext;
 		prim->Destroy ();
-		
-		prim->SetWorld ( 0 );
 		this->LuaRelease ( prim );
 	}
 	
@@ -1040,10 +1063,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 
 	while ( b2Body* body = this->mWorld->GetBodyList ()) {
 		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
-		
-		this->mWorld->DestroyBody ( body );
-		moaiBody->mBody = 0;
-		moaiBody->SetWorld ( 0 );
+		moaiBody->Destroy ();
 		this->LuaRelease ( moaiBody );
 	}
 	
@@ -1147,9 +1167,8 @@ void MOAIBox2DWorld::Render () {
 void MOAIBox2DWorld::SayGoodbye ( b2Fixture* fixture ) {
 
 	MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* )fixture->GetUserData ();
-	if ( moaiFixture->mFixture ) {
-		moaiFixture->mFixture = 0;
-		moaiFixture->SetWorld ( 0 );
+	if ( moaiFixture->IsValid ()) {
+		moaiFixture->Clear ();
 		this->LuaRelease ( moaiFixture );
 	}
 }
@@ -1158,9 +1177,8 @@ void MOAIBox2DWorld::SayGoodbye ( b2Fixture* fixture ) {
 void MOAIBox2DWorld::SayGoodbye ( b2Joint* joint ) {
 
 	MOAIBox2DJoint* moaiJoint = ( MOAIBox2DJoint* )joint->GetUserData ();
-	if ( moaiJoint->mJoint ) {
-		moaiJoint->mJoint = 0;
-		moaiJoint->SetWorld ( 0 );
+	if ( moaiJoint->IsValid ()) {
+		moaiJoint->Clear ();
 		this->LuaRelease ( moaiJoint );
 	}
 }
@@ -1179,7 +1197,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DBody& body ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
 
-	if ( !fixture.mDestroy ) {
+	if ( fixture.IsValid () && !fixture.mDestroy ) {
 		fixture.mDestroyNext = this->mDestroyFixtures;
 		this->mDestroyFixtures = &fixture;
 		fixture.mDestroy = true;
@@ -1190,7 +1208,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 
-	if ( !joint.mDestroy ) {
+	if ( joint.IsValid () && !joint.mDestroy ) {
 		joint.mDestroyNext = this->mDestroyJoints;
 		this->mDestroyJoints = &joint;
 		joint.mDestroy = true;

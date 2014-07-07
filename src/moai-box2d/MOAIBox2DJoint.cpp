@@ -175,12 +175,39 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::Destroy () {
+void MOAIBox2DJoint::Clear () {
+	
+	if ( this->mJoint ) {
+	
+		b2Body* b2BodyA = this->mJoint->GetBodyA ();
+		b2Body* b2BodyB = this->mJoint->GetBodyB ();
+	
+		if ( b2BodyA ) {
+			MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )b2BodyA->GetUserData ();
+			if ( bodyA ) {
+				this->LuaRelease ( bodyA );
+			}
+		}
+		
+		if ( b2BodyB ) {
+			MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )b2BodyB->GetUserData ();
+			if ( bodyB ) {
+				this->LuaRelease ( bodyB );
+			}
+		}
+		
+		this->mJoint = 0;
+	}
+	this->mWorld = 0;
+}
 
+//----------------------------------------------------------------//
+void MOAIBox2DJoint::Destroy () {
+	
 	if ( this->mJoint ) {
 		b2World* world = this->mWorld->mWorld;
 		world->DestroyJoint ( this->mJoint );
-		this->mJoint = 0;
+		this->Clear ();
 	}
 }
 
@@ -195,17 +222,6 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 
 //----------------------------------------------------------------//
 MOAIBox2DJoint::~MOAIBox2DJoint () {
-
-	if ( this->mJoint ) {
-
-		MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
-		MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
-	
-		this->LuaRelease ( bodyA );
-		this->LuaRelease ( bodyB );
-	}
-	
-	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

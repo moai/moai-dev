@@ -30,6 +30,7 @@ protected:
 	static int			_getReactionTorque		( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void				Clear					();
 	void				SetJoint				( b2Joint* joint );
 
 public:
