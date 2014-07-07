@@ -26,6 +26,7 @@ private:
 	//----------------------------------------------------------------//
 	static int	_getElementAttribute		( lua_State* L );
 	static int	_getElementAttributes		( lua_State* L );
+	static int	_getElementLineNumber		( lua_State* L );
 	static int	_getElementName				( lua_State* L );
 	static int	_getElementText				( lua_State* L );
 	static int	_parseFile					( lua_State* L );
