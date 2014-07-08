@@ -494,8 +494,6 @@ MOAIXmlParser.extend (
 				getName			= function () return parser:getElementName () end,
 				getText			= function () return parser:getElementText () end,
 			}
-			
-			print ( "INTERFACE TEST ", element.getLineNumber () )
 	
 			return function ()
 				if more then

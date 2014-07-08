@@ -5,7 +5,6 @@
 #define	MOAIVECTORUTIL_H
 
 #include <moai-sim/MOAIVectorStyle.h>
-#include <setjmp.h>
 
 class MOAIVectorShape;
 struct TESStesselator;
