@@ -62,14 +62,17 @@ size_t ZLStream::Print ( cc8* format, va_list args ) {
 	
 	for ( ;; ) {
 	
-		result = vsnprintf ( buffer, buffSize, format, args );
+		va_list copy;
+		va_copy ( copy, args );
+		result = vsnprintf ( buffer, buffSize, format, copy );
+		va_end ( copy );
 		
 		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
 		if (( result == buffSize ) || ( result == -1 ) || ( result == buffSize - 1 ))  {
 			buffSize = buffSize << 1;
 		}
 		else if ( result > buffSize ) {
-			buffSize = ( size_t )result;
+			buffSize = ( size_t )result + 2;
 		}
 		else {
 			break;

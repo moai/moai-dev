@@ -48,7 +48,7 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_appDisplayName,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_appID,					[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_appVersion,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_buildVersion,		[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);	
+	environment.SetValue ( MOAI_ENV_buildVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,			[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devModel,				[[ UIDevice currentDevice ].model UTF8String ] );
 	environment.SetValue ( MOAI_ENV_horizontalResolution,	[[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );	
@@ -57,7 +57,7 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_osBrand,				"iOS" );
 	environment.SetValue ( MOAI_ENV_osVersion,				[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_openUdid,				[[ MOAIOpenUDID value] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_systemLanguageCode,	[[[ NSLocale preferredLanguages ] objectAtIndex: 0 ] UTF8String ]);	
+	environment.SetValue ( MOAI_ENV_systemLanguageCode,		[[[ NSLocale preferredLanguages ] objectAtIndex: 0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_verticalResolution,		[[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ]);
 	
 	environment.SetValue ( MOAI_ENV_cacheDirectory,			[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
