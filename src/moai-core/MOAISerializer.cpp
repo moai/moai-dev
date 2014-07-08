@@ -140,6 +140,14 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISerializer, "U" );
+	
+	self->mBase64 = state.GetValue < bool >( 2, false );
+	return  0;
+}
+
 //================================================================//
 // MOAISerializer
 //================================================================//
@@ -229,28 +237,51 @@ void MOAISerializer::Clear () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAISerializer::EscapeString ( cc8* str ) {
-	
-	u32 len = ( u32 )strlen ( str );
+STLString MOAISerializer::EscapeString ( cc8* str, size_t len ) {
 
 	STLString outStr;
 	outStr.reserve ( len * 2 );
 
+	outStr.append ( "\'" );
+
 	for ( u32 i = 0; i < len; ++i ) {
+		
 		char c = str [ i ];
-		if ( c == '\\' ) {
-			outStr.append ( "\\\\" );
-		}
-		else if ( c == '"' ) {
-			outStr.append ( "\\\"" );
-		}
-		else if ( c == '\'' ) {
-			outStr.append ( "\\\'" );
-		}
+		
+		if (( c >= 32 ) && ( c <= 126 )) {
+		
+			switch ( c ) {
+				case '\\':
+					outStr.append ( "\\\\" );
+					break;
+				case '"':
+					outStr.append ( "\\\"" );
+					break;
+				case '\'':
+					outStr.append ( "\\\'" );
+					break;
+				default:
+					outStr.push_back ( c );
+			}
+        }
 		else {
-			outStr.push_back ( c );
+		
+			if ( this->mBase64 ) {
+			
+				STLString base64;
+				base64.base_64_encode ( str, len );
+				
+				outStr = "";
+				outStr.write ( "base64 ( '%s' )", base64.c_str ());
+				
+				return outStr;
+			}
+			int b = ( int )(( u8* )str )[ i ];
+			outStr.write ( "\\%03d", b );
 		}
 	}
+
+	outStr.append ( "\'" );
 	return outStr;
 }
 
@@ -275,7 +306,8 @@ bool MOAISerializer::IsSimpleStringKey ( cc8* str ) {
 }
 
 //----------------------------------------------------------------//
-MOAISerializer::MOAISerializer () {
+MOAISerializer::MOAISerializer () :
+	mBase64 ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAISerializerBase )
@@ -316,9 +348,10 @@ void MOAISerializer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAISerializer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getObjectTables",	_getObjectTables },
-		{ "serializeToFile",	_serializeToFile },
-		{ "serializeToString",	_serializeToString },
+		{ "getObjectTables",		_getObjectTables },
+		{ "serializeToFile",		_serializeToFile },
+		{ "serializeToString",		_serializeToString },
+		{ "setBase64Enabled",		_setBase64Enabled },
 		{ NULL, NULL }
 	};
 	
@@ -349,6 +382,7 @@ void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	
 	stream.Print ( "%s\n", this->GetFileMagic ());
 	stream.Print ( "local deserializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local base64 = MOAIDeserializer.base64Decode\n" );
 	
 	stream.Print ( "\n" );
 	
@@ -509,8 +543,10 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TSTRING: {
-				STLString str = MOAISerializer::EscapeString ( lua_tostring ( state, -1 ));
-				stream.Print ( "\'%s\'\n", str.c_str ());
+				size_t len;
+				cc8* rawStr = lua_tolstring ( state, -1, &len );
+				STLString str = MOAISerializer::EscapeString ( rawStr, len );
+				stream.Print ( "%s\n", str.c_str ());
 				break;
 			}
 			case LUA_TNUMBER: {

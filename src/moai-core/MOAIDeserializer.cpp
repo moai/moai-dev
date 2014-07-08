@@ -11,6 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIDeserializer::_base64Decode ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	state.Base64Decode ( 1 );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIDeserializer::_createObject ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeserializer, "US" );
 
@@ -104,7 +112,13 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 
 //----------------------------------------------------------------//
 void MOAIDeserializer::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "base64Decode",			_base64Decode },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

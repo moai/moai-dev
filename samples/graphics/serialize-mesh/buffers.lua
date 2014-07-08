@@ -1,5 +1,6 @@
 --MOAI
 local deserializer = ... or MOAIDeserializer.new ()
+local base64 = MOAIDeserializer.base64Decode
 
 local function init ( objects )
 
@@ -12,8 +13,7 @@ local function init ( objects )
 	table.vertexFormat = objects [ 0x06 ]
 
 	table = objects [ 0x03 ]
-	table.mBufferSize = 128
-	table.mBuffer = 'TYxBDgAgCMP6NOLT+dgUUCQZh5JuYA624gQnyfVT8mpGj8tX++VIs+/6/mVm32N/A2=='
+	table.mBuffer = base64 ( 'TYxBDgAgCMP6NOLT+dgUUCQZh5JuYA624gQnyfVT8mpGj8tX++VIs+/6/mVm32N/A2==' )
 
 	table = objects [ 0x05 ]
 	table.mTotalIndices = 36

@@ -136,13 +136,8 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 int MOAIDataBuffer::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
-	size_t size;
-	void* buffer;
+	self->PushString ( state );
 	
-	self->Lock ( &buffer, &size );
-	lua_pushlstring ( state, ( cc8* )buffer, size );
-	self->Unlock ();
-
 	return 1;
 }
 
@@ -236,7 +231,7 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
-	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	boolean success			Whether the file could be loaded into the object.
 */
@@ -356,11 +351,8 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 */
 int MOAIDataBuffer::_setString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
-
-	size_t len;
-	cc8* str = lua_tolstring ( state, 2, &len );
 	
-	self->Load (( void* )str, len );
+	self->Load ( state, 2 );
 
 	return 0;
 }
@@ -583,6 +575,15 @@ void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDataBuffer::Load ( MOAILuaState& state, int idx ) {
+
+	size_t len;
+	cc8* str = lua_tolstring ( state, idx, &len );
+	
+	this->Load (( void* )str, len );
+}
+
+//----------------------------------------------------------------//
 void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
@@ -600,6 +601,31 @@ MOAIDataBuffer::MOAIDataBuffer () {
 MOAIDataBuffer::~MOAIDataBuffer () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::PushString ( MOAILuaState& state ) {
+
+	size_t size;
+	void* buffer;
+	
+	this->Lock ( &buffer, &size );
+	lua_pushlstring ( state, ( cc8* )buffer, size );
+	this->Unlock ();
+}
+
+//----------------------------------------------------------------//
+size_t MOAIDataBuffer::Read ( void* buffer, size_t size ) {
+
+	this->mMutex.Lock ();
+	
+	ZLByteStream byteStream;
+	byteStream.SetBuffer ( this->mBytes, this->mBytes.Size (), this->mBytes.Size ());
+	size = byteStream.ReadBytes ( buffer, size );
+	
+	this->mMutex.Unlock ();
+	
+	return size;
 }
 
 //----------------------------------------------------------------//
