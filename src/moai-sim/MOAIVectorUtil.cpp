@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 #include <signal.h>
+#include <setjmp.h>
 
 //================================================================//
 // SafeTesselator

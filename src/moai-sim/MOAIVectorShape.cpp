@@ -31,10 +31,7 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess ) {
 	this->AddFillContours ( &outline );
 	error = outline.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
 	
-	if ( error )
-	{
-		return error;
-	}
+	if ( error ) return error;
 	
 	SafeTesselator exterior;
 	SafeTesselator interior;
