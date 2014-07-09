@@ -10,8 +10,10 @@ class MOAIVectorShape;
 struct TESStesselator;
 typedef float TESSreal;
 
-class SafeTesselator
-{
+//================================================================//
+// SafeTesselator
+//================================================================//
+class SafeTesselator {
 public:
 	SafeTesselator();
 	~SafeTesselator();
