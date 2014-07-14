@@ -13,6 +13,7 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVertexBuffer.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -83,11 +84,13 @@ int MOAIVectorTesselator::_drawingToWorldVec ( lua_State* L ) {
 int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->Finish ();
+	int error = self->Finish ();
 	
 	bool hasContent = self->mVtxStream.GetLength () > 0;
+	
+	state.Push ( error );
 	state.Push ( hasContent );
-	return 1;
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -576,10 +579,12 @@ u32 MOAIVectorTesselator::CountVertices () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::Finish () {
+int MOAIVectorTesselator::Finish () {
 
 	u32 vertsTop = this->mVertexStack.GetTop ();
 	u32 shapesTop = this->mShapeStack.GetTop ();
+	
+	int error = 0;
 	
 	if ( vertsTop ) {
 	
@@ -609,9 +614,13 @@ void MOAIVectorTesselator::Finish () {
 		
 		if ( this->mShapeStack.GetTop () == shapesTop ) {
 			this->mVertexStack.Clear ();
-			this->Tesselate ();
+			error = this->Tesselate ();
+			
+			if ( error ) return error;
 		}
 	}
+	
+	return error;
 }
 
 //----------------------------------------------------------------//
@@ -910,24 +919,29 @@ void MOAIVectorTesselator::SetVertexExtra ( u32 idx, void* extra, size_t size ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::Tesselate () {
+int MOAIVectorTesselator::Tesselate () {
 
 	mDepthOffset = 0.0f;
-
+	int error = 0;
+	
 	this->mIdxStream.Clear ();
 	this->mVtxStream.Clear ();
 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
-		shape->Tesselate ( *this );
+		error = shape->Tesselate ( *this );
+		
+		if ( error ) return error;
 	}
+	
+	return error;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteContourIndices ( TESStesselator* tess, u32 base ) {
+void MOAIVectorTesselator::WriteContourIndices ( SafeTesselator* tess, u32 base ) {
 
-	const int* elems = tessGetElements ( tess );
-	const int nelems = tessGetElementCount ( tess );
+	const int* elems = tessGetElements ( tess->mTess );
+	const int nelems = tessGetElementCount ( tess->mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
@@ -940,7 +954,7 @@ void MOAIVectorTesselator::WriteContourIndices ( TESStesselator* tess, u32 base 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteSkirt ( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
 
 	u32 base = this->CountVertices ();
 	float z = style.GetExtrude ();
@@ -961,9 +975,9 @@ void MOAIVectorTesselator::WriteSkirt ( TESStesselator* tess, const MOAIVectorSt
 
 	u32 color32 = fillColor.PackRGBA ();
 
-	const int* elems = tessGetElements ( tess );
-	const int nelems = tessGetElementCount ( tess );
-	const float* verts = tessGetVertices ( tess );
+	const int* elems = tessGetElements ( tess->mTess );
+	const int nelems = tessGetElementCount ( tess->mTess );
+	const float* verts = tessGetVertices ( tess->mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
@@ -1015,14 +1029,14 @@ void MOAIVectorTesselator::WriteSkirt ( TESStesselator* tess, const MOAIVectorSt
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteTriangleIndices ( TESStesselator* tess, u32 base ) {
+void MOAIVectorTesselator::WriteTriangleIndices ( SafeTesselator* tess, u32 base ) {
 
 	if ( this->mVerbose ) {
 		MOAIPrint ( "WRITING INDICES:\n" );
 	}
 
-	const int* elems = tessGetElements ( tess );
-	const int nelems = tessGetElementCount ( tess );
+	const int* elems = tessGetElements ( tess->mTess );
+	const int nelems = tessGetElementCount ( tess->mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		const int* tri = &elems [ i * 3 ];
@@ -1056,7 +1070,7 @@ void MOAIVectorTesselator::WriteVertex ( float x, float y, float z, u32 color, u
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteVertices ( SafeTesselator* tess, float z, u32 color, u32 vertexExtraID ) {
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
@@ -1067,8 +1081,8 @@ void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 co
 		log.write ( "WRITING VERTICES:\n" );
 	}
 
-	const float* verts = tessGetVertices ( tess );
-	const int nverts = tessGetVertexCount ( tess );
+	const float* verts = tessGetVertices ( tess->mTess );
+	const int nverts = tessGetVertexCount ( tess->mTess );
 	
 	for ( int i = 0; i < nverts; ++i ) {
 		

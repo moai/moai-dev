@@ -18,7 +18,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( TESStesselator* tess );
+	int				AddFillContours			( SafeTesselator* tess );
 	bool			IsClosed				();
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();

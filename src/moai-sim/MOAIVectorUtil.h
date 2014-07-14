@@ -8,6 +8,21 @@
 
 class MOAIVectorShape;
 struct TESStesselator;
+typedef float TESSreal;
+
+//================================================================//
+// SafeTesselator
+//================================================================//
+class SafeTesselator {
+public:
+	SafeTesselator();
+	~SafeTesselator();
+	
+	int			Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal );
+
+	struct TESStesselator* mTess;
+private:
+};
 
 //================================================================//
 // MOAIVectorLineJoin

@@ -490,6 +490,7 @@ MOAIXmlParser.extend (
 			local element = {
 				getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
 				getAttributes	= function () return parser:getElementAttributes () end,
+				getLineNumber	= function () return parser:getElementLineNumber () end,
 				getName			= function () return parser:getElementName () end,
 				getText			= function () return parser:getElementText () end,
 			}

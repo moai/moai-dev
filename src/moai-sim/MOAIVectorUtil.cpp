@@ -4,6 +4,57 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
+#include <signal.h>
+#include <setjmp.h>
+
+//================================================================//
+// SafeTesselator
+//================================================================//
+
+
+typedef void SIG_PROC_t( int sig );
+typedef SIG_PROC_t *SIG_PROC_p_t;
+jmp_buf	mEnv;
+
+//----------------------------------------------------------------//
+void AbortHandler( int signum )
+{
+	switch( signum )
+	{
+		case SIGABRT:
+			longjmp ( mEnv, 1);
+			return;
+	}
+	
+	exit ( 0 );
+}
+
+//------------------------------------------------------------------//
+SafeTesselator::SafeTesselator()
+{
+	mTess = tessNewTess ( 0 );
+}
+
+//------------------------------------------------------------------//
+SafeTesselator::~SafeTesselator()
+{
+	tessDeleteTess ( mTess );
+}
+
+//------------------------------------------------------------------//
+int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
+{
+	SIG_PROC_p_t initial_handler = signal( SIGABRT, AbortHandler );
+	
+	if ( setjmp ( mEnv ))
+	{
+		return 1;
+	}
+	
+	tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
+	
+	return 0;
+}
 
 //================================================================//
 // MOAIVectorUtil
@@ -261,3 +312,5 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 	}
 	return ( int )( steps + 1 );
 }
+
+
