@@ -14,18 +14,13 @@
 
 typedef void SIG_PROC_t( int sig );
 typedef SIG_PROC_t *SIG_PROC_p_t;
-jmp_buf	mEnv;
+static jmp_buf* sEnv = 0;
 
 //----------------------------------------------------------------//
-void AbortHandler( int signum )
-{
-	switch( signum )
-	{
-		case SIGABRT:
-			longjmp ( mEnv, 1);
-			return;
+void AbortHandler( int signum ) {
+	if ( sEnv && ( signum == SIGABRT )) {
+		longjmp ( *sEnv, 1 );
 	}
-	
 	exit ( 0 );
 }
 
@@ -42,18 +37,24 @@ SafeTesselator::~SafeTesselator()
 }
 
 //------------------------------------------------------------------//
-int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal)
-{
-	SIG_PROC_p_t initial_handler = signal( SIGABRT, AbortHandler );
+int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
+
+	SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
+	int err = 0;
 	
-	if ( setjmp ( mEnv ))
-	{
-		return 1;
+	sEnv = ( jmp_buf* )calloc ( 1, sizeof ( jmp_buf ));
+	if ( setjmp ( *sEnv )) {
+		err = 1;
 	}
 	
-	tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
+	if ( err == 0 ) {
+		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
+	}
 	
-	return 0;
+	signal ( SIGABRT, initial_handler );
+	free ( sEnv );
+	
+	return err;
 }
 
 //================================================================//
