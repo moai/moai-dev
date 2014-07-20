@@ -615,6 +615,23 @@ int MOAIProp::_setScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getScissorRect
+	@text	Retrieve the prop's scissor rect.
+	
+	@in		MOAIProp self
+	@out	MOAIScissorRect scissorRect		Or nil if none exists.
+*/
+int MOAIProp::_getScissorRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mScissorRect ) {
+		self->mScissorRect->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setShader
 	@text	Sets or clears the prop's shader. The prop's shader takes
 			precedence over any shader specified by the deck or its
@@ -1197,6 +1214,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "getPriority",		_getPriority },
+		{ "getScissorRect",		_getScissorRect },
 		{ "getTexture",			_getTexture },
 		{ "getWorldBounds",		_getWorldBounds },
 		{ "isVisible",			_isVisible },

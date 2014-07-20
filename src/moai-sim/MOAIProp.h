@@ -124,6 +124,7 @@ private:
 	static int		_setPriority		( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
 	static int		_setScissorRect		( lua_State* L );
+	static int		_getScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
@@ -215,6 +216,7 @@ public:
 	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
 	GET ( MOAIPartition*, Partition, mPartition )
+	GET ( MOAIScissorRect*, ScissorRect, mScissorRect )
 	
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
