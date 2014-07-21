@@ -220,8 +220,6 @@ MOAIBox2DMouseJoint::MOAIBox2DMouseJoint () {
 
 //----------------------------------------------------------------//
 MOAIBox2DMouseJoint::~MOAIBox2DMouseJoint () {
-
-	printf ( "~MOAIBox2DMouseJoint\n" );
 }
 
 //----------------------------------------------------------------//
