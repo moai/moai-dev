@@ -283,6 +283,7 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->mReveal = REVEAL_ALL;
+	self->mSpool = ( float )self->mSprites.GetTop ();
 	
 	return 0;
 }
