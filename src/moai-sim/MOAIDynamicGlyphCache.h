@@ -40,13 +40,18 @@ class MOAIDynamicGlyphCache :
 	public MOAIInstanceEventSource {
 protected:
 
+	friend class MOAIDynamicGlyphCachePage;
+
 	MOAIFont* mFont;
 	ZLLeanArray < MOAIDynamicGlyphCachePage* > mPages;
 
 	ZLColor::Format mColorFormat;
-
+	
+	ZLRect mPadding;
+	
 	//----------------------------------------------------------------//
 	static int			_setColorFormat				( lua_State* L );
+	static int			_setPadding					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				ClearPages					();

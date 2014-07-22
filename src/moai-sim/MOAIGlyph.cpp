@@ -12,34 +12,37 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetTexture ( &texture );
 	
 	MOAIQuadBrush glQuad;
 	
-	x += this->mBearingX * xScale;
-	y -= this->mBearingY * yScale;
+	//float padWidth = padding.Width ();
+	//float padHeight = padding.Height ();
+	
+	x += ( this->mBearingX * xScale );
+	y -= ( this->mBearingY * yScale );
 
 	glQuad.SetVerts (
-		x,
-		y,
-		x + ( this->mWidth * xScale ),
-		y + ( this->mHeight * yScale )
+		x + ( padding.mXMin * xScale ),
+		y + ( padding.mYMin * yScale ),
+		x + ( this->mWidth * xScale ) + ( padding.mXMax * xScale ),
+		y + ( this->mHeight * yScale ) + ( padding.mYMax * yScale )
 	);
 	
 	float uScale = 1.0f / texture.GetWidth ();
 	float vScale = 1.0f / texture.GetHeight ();
 	
-	float u = this->mSrcX * uScale;
-	float v = this->mSrcY * vScale;
+	float u = ( this->mSrcX * uScale );
+	float v = ( this->mSrcY * vScale );
 	
 	glQuad.SetUVs (
-		u,
-		v,
-		u + ( this->mWidth * uScale ),
-		v + ( this->mHeight * vScale )
+		u + ( padding.mXMin * uScale ),
+		v + ( padding.mYMin * vScale ),
+		u + ( this->mWidth * uScale ) + ( padding.mXMax * uScale ),
+		v + ( this->mHeight * vScale ) + ( padding.mYMax * vScale )
 	);
 	glQuad.Draw ();
 }

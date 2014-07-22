@@ -217,6 +217,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		u32 size = this->mSprites.GetTop ();
 		for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
+			const MOAITextStyle* style = sprite.mStyle;
 			
 			rgba0 = sprite.mMask & MOAITextSprite::MASK_COLOR ? sprite.mRGBA : sprite.mStyle->mColor;
 			
@@ -227,8 +228,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
-			
-			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY, style->mPadding );
 		}
 	}
 }
@@ -246,7 +246,16 @@ void MOAITextLayout::DrawDebug () {
 		u32 size = this->mSprites.GetTop ();
 		for ( u32 i = 0; i < size; ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
-			draw.DrawRectOutline ( sprite.mGlyph->GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY ));
+			
+			ZLRect glyphRect = sprite.mGlyph->GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			
+			const ZLRect& padding = sprite.mStyle->mPadding;
+			glyphRect.mXMin += padding.mXMin;
+			glyphRect.mYMin += padding.mYMin;
+			glyphRect.mXMax += padding.mXMax;
+			glyphRect.mYMax += padding.mYMax;
+			
+			draw.DrawRectOutline ( glyphRect );
 		}
 	}
 	

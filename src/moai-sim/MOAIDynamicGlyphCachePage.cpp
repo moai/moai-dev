@@ -20,7 +20,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
-		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, owner.mColorFormat, USPixel::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();
@@ -39,8 +39,8 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDynamicGlyphCache& owner, MOAIFont& font, MOAIGlyph& glyph ) {
 	
-	u32 width = ( u32 )glyph.mWidth + 2;
-	u32 height = ( u32 )glyph.mHeight + 2;
+	u32 width = ( u32 )glyph.mWidth + ( owner.mPadding.mXMax - owner.mPadding.mXMin );
+	u32 height = ( u32 )glyph.mHeight + ( owner.mPadding.mYMax - owner.mPadding.mYMin );
 	
 	RowSpan* rowIt = this->mRows.mHead;
 	RowSpan* bestRowIt = 0;
@@ -92,7 +92,7 @@ MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDyn
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc ( glyphSpan->mBase, bestRowIt->mBase );
+		glyph.SetSourceLoc ( glyphSpan->mBase - owner.mPadding.mXMin, bestRowIt->mBase - owner.mPadding.mYMin);
 	}
 	
 	this->AffirmCanvas ( owner, font );
@@ -139,7 +139,7 @@ bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCachePage::MOAIDynamicGlyphCachePage () :
 	mImageTexture ( 0 ),
-	mColorFormat ( ZLColor::A_8 ),
+	//mColorFormat ( ZLColor::A_8 ),
 	mThreshold ( 0.8f ) {
 }
 
