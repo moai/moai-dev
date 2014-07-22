@@ -19,17 +19,14 @@ void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale,
 	
 	MOAIQuadBrush glQuad;
 	
-	//float padWidth = padding.Width ();
-	//float padHeight = padding.Height ();
-	
 	x += ( this->mBearingX * xScale );
 	y -= ( this->mBearingY * yScale );
 
 	glQuad.SetVerts (
 		x + ( padding.mXMin * xScale ),
 		y + ( padding.mYMin * yScale ),
-		x + ( this->mWidth * xScale ) + ( padding.mXMax * xScale ),
-		y + ( this->mHeight * yScale ) + ( padding.mYMax * yScale )
+		x + (( this->mWidth + padding.mXMax ) * xScale ),
+		y + (( this->mHeight + padding.mYMax ) * yScale )
 	);
 	
 	float uScale = 1.0f / texture.GetWidth ();
@@ -41,8 +38,8 @@ void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale,
 	glQuad.SetUVs (
 		u + ( padding.mXMin * uScale ),
 		v + ( padding.mYMin * vScale ),
-		u + ( this->mWidth * uScale ) + ( padding.mXMax * uScale ),
-		v + ( this->mHeight * vScale ) + ( padding.mYMax * vScale )
+		u + (( this->mWidth + padding.mXMax ) * uScale ),
+		v + (( this->mHeight + padding.mYMax ) * vScale )
 	);
 	glQuad.Draw ();
 }

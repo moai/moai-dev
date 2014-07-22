@@ -49,6 +49,6 @@ textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 
 style = textbox:getStyle ()
---style:setPadding ( 10, 10 )
+style:setPadding ( 10, 10 )
 
 layer:insertProp ( textbox )
