@@ -1787,12 +1787,12 @@
 		CD4C3E35180A63BB00C02381 /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */; };
 		CD4C3E36180A63BB00C02381 /* MOAIGlyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6B173AD0CA00DFE837 /* MOAIGlyph.cpp */; };
 		CD4C3E37180A63BB00C02381 /* MOAIGlyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6C173AD0CA00DFE837 /* MOAIGlyph.h */; };
-		CD4C3E38180A63BB00C02381 /* MOAIGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6D173AD0CA00DFE837 /* MOAIGlyphCache.cpp */; };
-		CD4C3E39180A63BB00C02381 /* MOAIGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6E173AD0CA00DFE837 /* MOAIGlyphCache.h */; };
-		CD4C3E3A180A63BB00C02381 /* MOAIGlyphCacheBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCacheBase.cpp */; };
-		CD4C3E3B180A63BB00C02381 /* MOAIGlyphCacheBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F70173AD0CA00DFE837 /* MOAIGlyphCacheBase.h */; };
-		CD4C3E3C180A63BB00C02381 /* MOAIGlyphCachePage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F71173AD0CA00DFE837 /* MOAIGlyphCachePage.cpp */; };
-		CD4C3E3D180A63BB00C02381 /* MOAIGlyphCachePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F72173AD0CA00DFE837 /* MOAIGlyphCachePage.h */; };
+		CD4C3E38180A63BB00C02381 /* MOAIDynamicGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6D173AD0CA00DFE837 /* MOAIDynamicGlyphCache.cpp */; };
+		CD4C3E39180A63BB00C02381 /* MOAIDynamicGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6E173AD0CA00DFE837 /* MOAIDynamicGlyphCache.h */; };
+		CD4C3E3A180A63BB00C02381 /* MOAIGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCache.cpp */; };
+		CD4C3E3B180A63BB00C02381 /* MOAIGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F70173AD0CA00DFE837 /* MOAIGlyphCache.h */; };
+		CD4C3E3C180A63BB00C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F71173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.cpp */; };
+		CD4C3E3D180A63BB00C02381 /* MOAIDynamicGlyphCachePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F72173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.h */; };
 		CD4C3E3E180A63BB00C02381 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F73173AD0CA00DFE837 /* MOAIGlyphSet.cpp */; };
 		CD4C3E3F180A63BB00C02381 /* MOAIGlyphSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F74173AD0CA00DFE837 /* MOAIGlyphSet.h */; };
 		CD4C3E40180A63BB00C02381 /* MOAIGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F75173AD0CA00DFE837 /* MOAIGrid.cpp */; };
@@ -2056,12 +2056,12 @@
 		CD4C4067180A63C200C02381 /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */; };
 		CD4C4068180A63C200C02381 /* MOAIGlyph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6B173AD0CA00DFE837 /* MOAIGlyph.cpp */; };
 		CD4C4069180A63C200C02381 /* MOAIGlyph.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6C173AD0CA00DFE837 /* MOAIGlyph.h */; };
-		CD4C406A180A63C200C02381 /* MOAIGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6D173AD0CA00DFE837 /* MOAIGlyphCache.cpp */; };
-		CD4C406B180A63C200C02381 /* MOAIGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6E173AD0CA00DFE837 /* MOAIGlyphCache.h */; };
-		CD4C406C180A63C200C02381 /* MOAIGlyphCacheBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCacheBase.cpp */; };
-		CD4C406D180A63C200C02381 /* MOAIGlyphCacheBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F70173AD0CA00DFE837 /* MOAIGlyphCacheBase.h */; };
-		CD4C406E180A63C200C02381 /* MOAIGlyphCachePage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F71173AD0CA00DFE837 /* MOAIGlyphCachePage.cpp */; };
-		CD4C406F180A63C200C02381 /* MOAIGlyphCachePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F72173AD0CA00DFE837 /* MOAIGlyphCachePage.h */; };
+		CD4C406A180A63C200C02381 /* MOAIDynamicGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6D173AD0CA00DFE837 /* MOAIDynamicGlyphCache.cpp */; };
+		CD4C406B180A63C200C02381 /* MOAIDynamicGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F6E173AD0CA00DFE837 /* MOAIDynamicGlyphCache.h */; };
+		CD4C406C180A63C200C02381 /* MOAIGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCache.cpp */; };
+		CD4C406D180A63C200C02381 /* MOAIGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F70173AD0CA00DFE837 /* MOAIGlyphCache.h */; };
+		CD4C406E180A63C200C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F71173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.cpp */; };
+		CD4C406F180A63C200C02381 /* MOAIDynamicGlyphCachePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F72173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.h */; };
 		CD4C4070180A63C200C02381 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F73173AD0CA00DFE837 /* MOAIGlyphSet.cpp */; };
 		CD4C4071180A63C200C02381 /* MOAIGlyphSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F74173AD0CA00DFE837 /* MOAIGlyphSet.h */; };
 		CD4C4072180A63C200C02381 /* MOAIGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F75173AD0CA00DFE837 /* MOAIGrid.cpp */; };
@@ -6032,12 +6032,12 @@
 		89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxResource.h; sourceTree = "<group>"; };
 		89BE6F6B173AD0CA00DFE837 /* MOAIGlyph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyph.cpp; sourceTree = "<group>"; };
 		89BE6F6C173AD0CA00DFE837 /* MOAIGlyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyph.h; sourceTree = "<group>"; };
-		89BE6F6D173AD0CA00DFE837 /* MOAIGlyphCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyphCache.cpp; sourceTree = "<group>"; };
-		89BE6F6E173AD0CA00DFE837 /* MOAIGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyphCache.h; sourceTree = "<group>"; };
-		89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCacheBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyphCacheBase.cpp; sourceTree = "<group>"; };
-		89BE6F70173AD0CA00DFE837 /* MOAIGlyphCacheBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyphCacheBase.h; sourceTree = "<group>"; };
-		89BE6F71173AD0CA00DFE837 /* MOAIGlyphCachePage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyphCachePage.cpp; sourceTree = "<group>"; };
-		89BE6F72173AD0CA00DFE837 /* MOAIGlyphCachePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyphCachePage.h; sourceTree = "<group>"; };
+		89BE6F6D173AD0CA00DFE837 /* MOAIDynamicGlyphCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDynamicGlyphCache.cpp; sourceTree = "<group>"; };
+		89BE6F6E173AD0CA00DFE837 /* MOAIDynamicGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDynamicGlyphCache.h; sourceTree = "<group>"; };
+		89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyphCache.cpp; sourceTree = "<group>"; };
+		89BE6F70173AD0CA00DFE837 /* MOAIGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyphCache.h; sourceTree = "<group>"; };
+		89BE6F71173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDynamicGlyphCachePage.cpp; sourceTree = "<group>"; };
+		89BE6F72173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDynamicGlyphCachePage.h; sourceTree = "<group>"; };
 		89BE6F73173AD0CA00DFE837 /* MOAIGlyphSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlyphSet.cpp; sourceTree = "<group>"; };
 		89BE6F74173AD0CA00DFE837 /* MOAIGlyphSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlyphSet.h; sourceTree = "<group>"; };
 		89BE6F75173AD0CA00DFE837 /* MOAIGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGrid.cpp; sourceTree = "<group>"; };
@@ -9394,7 +9394,6 @@
 				89BE6FEA173AD0CA00DFE837 /* MOAIScriptNode.h */,
 				89BE6FF1173AD0CA00DFE837 /* MOAISim.cpp */,
 				89BE6FF2173AD0CA00DFE837 /* MOAISim.h */,
-				89BE6FF3173AD0CA00DFE837 /* MOAISpanList.h */,
 				89BE7022173AD0CB00DFE837 /* pch.cpp */,
 				89BE7023173AD0CB00DFE837 /* pch.h */,
 				89BE7024173AD0CB00DFE837 /* shaders */,
@@ -12344,6 +12343,10 @@
 			children = (
 				89BE6F2E173AD0CA00DFE837 /* MOAIBitmapFontReader.cpp */,
 				89BE6F2F173AD0CA00DFE837 /* MOAIBitmapFontReader.h */,
+				89BE6F6D173AD0CA00DFE837 /* MOAIDynamicGlyphCache.cpp */,
+				89BE6F6E173AD0CA00DFE837 /* MOAIDynamicGlyphCache.h */,
+				89BE6F71173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.cpp */,
+				89BE6F72173AD0CA00DFE837 /* MOAIDynamicGlyphCachePage.h */,
 				89BE6F56173AD0CA00DFE837 /* MOAIFont.cpp */,
 				89BE6F57173AD0CA00DFE837 /* MOAIFont.h */,
 				89BE6F58173AD0CA00DFE837 /* MOAIFont_bmfont.cpp */,
@@ -12353,14 +12356,11 @@
 				89BE6F60173AD0CA00DFE837 /* MOAIFreeTypeFontReader.h */,
 				89BE6F6B173AD0CA00DFE837 /* MOAIGlyph.cpp */,
 				89BE6F6C173AD0CA00DFE837 /* MOAIGlyph.h */,
-				89BE6F6D173AD0CA00DFE837 /* MOAIGlyphCache.cpp */,
-				89BE6F6E173AD0CA00DFE837 /* MOAIGlyphCache.h */,
-				89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCacheBase.cpp */,
-				89BE6F70173AD0CA00DFE837 /* MOAIGlyphCacheBase.h */,
-				89BE6F71173AD0CA00DFE837 /* MOAIGlyphCachePage.cpp */,
-				89BE6F72173AD0CA00DFE837 /* MOAIGlyphCachePage.h */,
+				89BE6F6F173AD0CA00DFE837 /* MOAIGlyphCache.cpp */,
+				89BE6F70173AD0CA00DFE837 /* MOAIGlyphCache.h */,
 				89BE6F73173AD0CA00DFE837 /* MOAIGlyphSet.cpp */,
 				89BE6F74173AD0CA00DFE837 /* MOAIGlyphSet.h */,
+				89BE6FF3173AD0CA00DFE837 /* MOAISpanList.h */,
 				89BE6FF4173AD0CA00DFE837 /* MOAIStaticGlyphCache.cpp */,
 				89BE6FF5173AD0CA00DFE837 /* MOAIStaticGlyphCache.h */,
 			);
@@ -12991,7 +12991,7 @@
 				CD4C3E1C180A63BB00C02381 /* MOAIEaseDriver.h in Headers */,
 				CD4C3DF3180A63BB00C02381 /* MOAIAnimCurveBase.h in Headers */,
 				CD4C3EB1180A63BB00C02381 /* MOAIScissorRect.h in Headers */,
-				CD4C3E3B180A63BB00C02381 /* MOAIGlyphCacheBase.h in Headers */,
+				CD4C3E3B180A63BB00C02381 /* MOAIGlyphCache.h in Headers */,
 				CDEFD578181ECB3E0058D772 /* MOAIVectorEllipse.h in Headers */,
 				CD4C3EAB180A63BB00C02381 /* MOAIQuadBrush.h in Headers */,
 				CD9F765D1808CE9D0001EF0C /* NSDictionary+MOAILib.h in Headers */,
@@ -13005,7 +13005,7 @@
 				CD9613721905ED2D00156BEF /* MOAIDeck2DSnappingShader-fsh.h in Headers */,
 				CD4C3DE9180A63BB00C02381 /* host_particles.h in Headers */,
 				CD4C3E74180A63BB00C02381 /* MOAIParticlePexPlugin.h in Headers */,
-				CD4C3E3D180A63BB00C02381 /* MOAIGlyphCachePage.h in Headers */,
+				CD4C3E3D180A63BB00C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
 				CD4C3E8A180A63BB00C02381 /* MOAIPathFinder.h in Headers */,
 				CD9F76491808CE9D0001EF0C /* MOAIAppIOS.h in Headers */,
 				CD9F76611808CE9D0001EF0C /* NSNumber+MOAILib.h in Headers */,
@@ -13088,7 +13088,7 @@
 				CD4C3E67180A63BB00C02381 /* MOAINode.h in Headers */,
 				CD4C3E8C180A63BB00C02381 /* MOAIPathGraph.h in Headers */,
 				CD4C3EF7180A63BB00C02381 /* MOAIVertexFormatMgr.h in Headers */,
-				CD4C3E39180A63BB00C02381 /* MOAIGlyphCache.h in Headers */,
+				CD4C3E39180A63BB00C02381 /* MOAIDynamicGlyphCache.h in Headers */,
 				CD4C3DF1180A63BB00C02381 /* MOAIAnimCurve.h in Headers */,
 				89BE724B173AD0CB00DFE837 /* MOAIFontShader-fsh.h in Headers */,
 				89BE724D173AD0CB00DFE837 /* MOAIFontShader-vsh.h in Headers */,
@@ -13141,7 +13141,7 @@
 				89BE7246173AD0CB00DFE837 /* MOAIDeck2DShader-vsh.h in Headers */,
 				CD4C4023180A63C200C02381 /* MOAIAnimCurve.h in Headers */,
 				CD4C4063180A63C200C02381 /* MOAIGfxQuadDeck2D.h in Headers */,
-				CD4C406D180A63C200C02381 /* MOAIGlyphCacheBase.h in Headers */,
+				CD4C406D180A63C200C02381 /* MOAIGlyphCache.h in Headers */,
 				CD4C40C0180A63C200C02381 /* MOAIPathTerrainDeck.h in Headers */,
 				CD4C4125180A63C200C02381 /* MOAIVertexBuffer.h in Headers */,
 				CD4C4040180A63C200C02381 /* MOAIColor.h in Headers */,
@@ -13194,7 +13194,7 @@
 				CD4C4091180A63C200C02381 /* MOAILocationSensor.h in Headers */,
 				CD4C40F4180A63C200C02381 /* MOAIStretchPatch2D.h in Headers */,
 				CDEFD569181ECB3E0058D772 /* MOAITextDesignParser.h in Headers */,
-				CD4C406F180A63C200C02381 /* MOAIGlyphCachePage.h in Headers */,
+				CD4C406F180A63C200C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
 				CD4C4030180A63C200C02381 /* MOAIBlocker.h in Headers */,
 				CD4C4069180A63C200C02381 /* MOAIGlyph.h in Headers */,
 				CD4C4036180A63C200C02381 /* MOAICamera.h in Headers */,
@@ -13276,7 +13276,7 @@
 				CDEFD56D181ECB3E0058D772 /* MOAITextLabel.h in Headers */,
 				CD4C404E180A63C200C02381 /* MOAIEaseDriver.h in Headers */,
 				CDEFD575181ECB3E0058D772 /* MOAITextStyleParser.h in Headers */,
-				CD4C406B180A63C200C02381 /* MOAIGlyphCache.h in Headers */,
+				CD4C406B180A63C200C02381 /* MOAIDynamicGlyphCache.h in Headers */,
 				CD4C40B6180A63C200C02381 /* MOAIPartitionLevel.h in Headers */,
 				CD4C4106180A63C200C02381 /* MOAITextureBase.h in Headers */,
 				CD4C405B180A63C200C02381 /* MOAIFrameBufferTexture.h in Headers */,
@@ -16715,7 +16715,7 @@
 				CD4C3E2A180A63BB00C02381 /* MOAIFreeTypeFontReader.cpp in Sources */,
 				CD4C3E01180A63BB00C02381 /* MOAIButtonSensor.cpp in Sources */,
 				CD9F76541808CE9D0001EF0C /* MOAIWebViewDelegate.mm in Sources */,
-				CD4C3E3C180A63BB00C02381 /* MOAIGlyphCachePage.cpp in Sources */,
+				CD4C3E3C180A63BB00C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */,
 				CD4C3E52180A63BB00C02381 /* MOAIInputMgr.cpp in Sources */,
 				CD9F76661808CE9D0001EF0C /* NSString+MOAILib.mm in Sources */,
 				CD4C3EB6180A63BB00C02381 /* MOAISensor.cpp in Sources */,
@@ -16835,7 +16835,7 @@
 				CDEFD566181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */,
 				CD4C3E64180A63BB00C02381 /* MOAIMultiTexture.cpp in Sources */,
 				CD4C3EAE180A63BB00C02381 /* MOAIRenderMgr.cpp in Sources */,
-				CD4C3E38180A63BB00C02381 /* MOAIGlyphCache.cpp in Sources */,
+				CD4C3E38180A63BB00C02381 /* MOAIDynamicGlyphCache.cpp in Sources */,
 				CD4C3E03180A63BB00C02381 /* MOAICamera.cpp in Sources */,
 				CD4C3EB8180A63BB00C02381 /* MOAIShader.cpp in Sources */,
 				CD4C3ED9180A63BB00C02381 /* MOAITimer.cpp in Sources */,
@@ -16867,7 +16867,7 @@
 				CD781099187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */,
 				CD4C3E44180A63BB00C02381 /* MOAIGridPathGraph.cpp in Sources */,
 				CD4C3EEF180A63BB00C02381 /* MOAIVectorShape.cpp in Sources */,
-				CD4C3E3A180A63BB00C02381 /* MOAIGlyphCacheBase.cpp in Sources */,
+				CD4C3E3A180A63BB00C02381 /* MOAIGlyphCache.cpp in Sources */,
 				CD4C3E2E180A63BB00C02381 /* MOAIGfxQuad2D.cpp in Sources */,
 				CD4C3E19180A63BB00C02381 /* MOAIDraw.cpp in Sources */,
 				CD4C3E15180A63BB00C02381 /* MOAIDeck.cpp in Sources */,
@@ -16949,7 +16949,7 @@
 				CDEFD577181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
 				CD4C405E180A63C200C02381 /* MOAIGfxDevice.cpp in Sources */,
 				CD4C40BF180A63C200C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
-				CD4C406A180A63C200C02381 /* MOAIGlyphCache.cpp in Sources */,
+				CD4C406A180A63C200C02381 /* MOAIDynamicGlyphCache.cpp in Sources */,
 				CD4C411D180A63C200C02381 /* MOAIVectorPoly.cpp in Sources */,
 				CD4C4109180A63C200C02381 /* MOAITileFlags.cpp in Sources */,
 				CD4C408E180A63C200C02381 /* MOAILayoutFrame.cpp in Sources */,
@@ -16978,7 +16978,7 @@
 				CD73A5FD188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */,
 				CD4C40DE180A63C200C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C412A180A63C200C02381 /* MOAIViewport.cpp in Sources */,
-				CD4C406C180A63C200C02381 /* MOAIGlyphCacheBase.cpp in Sources */,
+				CD4C406C180A63C200C02381 /* MOAIGlyphCache.cpp in Sources */,
 				CD4C4045180A63C200C02381 /* MOAIDebugLines.cpp in Sources */,
 				CD4C40D7180A63C200C02381 /* MOAIProp.cpp in Sources */,
 				CD4C40A9180A63C200C02381 /* MOAIParticleScript.cpp in Sources */,
@@ -17025,7 +17025,7 @@
 				CD4C40BB180A63C200C02381 /* MOAIPathFinder.cpp in Sources */,
 				CDEFD56B181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */,
 				CD4C40CF180A63C200C02381 /* MOAIProfilerReport.cpp in Sources */,
-				CD4C406E180A63C200C02381 /* MOAIGlyphCachePage.cpp in Sources */,
+				CD4C406E180A63C200C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */,
 				CD4C4066180A63C200C02381 /* MOAIGfxResource.cpp in Sources */,
 				CD4C4103180A63C200C02381 /* MOAITexture.cpp in Sources */,
 				CDC5203718A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */,

@@ -5,7 +5,7 @@
 #include <contrib/utf8.h>
 #include <moai-sim/MOAIBitmapFontReader.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImageTexture.h>
 
 //================================================================//
@@ -279,7 +279,7 @@ void MOAIBitmapFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
 	if ( !this->mCurrentPage ) return;
 
-	MOAIGlyphCacheBase* glyphCache = font.GetCache ();
+	MOAIGlyphCache* glyphCache = font.GetCache ();
 	bool useCache = glyphCache && glyphCache->IsDynamic ();
 
 	if ( !this->mCurrentPage->mBitmapGlyphs.contains ( glyph.mCode )) return;
@@ -314,6 +314,7 @@ void MOAIBitmapFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 				width,
 				height
 			);
+			glyphCache->PostRender ( glyph );
 		}
 	}
 }

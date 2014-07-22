@@ -77,7 +77,7 @@ class MOAIFont;
 			<p>Finally, we iterate through all of the fonts used by the text
 			and instruct them to load and render any pending glyphs. If
 			the font is dynamic and has a valid implementation of MOAIFontReader
-			and MOAIGlyphCache attached to it then the glyphs will be rendered
+			and MOAIDynamicGlyphCache attached to it then the glyphs will be rendered
 			and placed in the cache.</p>
 			
 			<p>Once the glyphs have been rendered, we know their metrics and

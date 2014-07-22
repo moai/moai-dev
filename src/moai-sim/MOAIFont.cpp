@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>
@@ -16,6 +16,14 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_getCache ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push (( MOAILuaObject* )self->mCache );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	getDefaultSize
@@ -78,6 +86,14 @@ int MOAIFont::_getImage ( lua_State* L ) {
 		}
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_getReader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push (( MOAILuaObject* )self->mReader );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -212,19 +228,19 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setCache
 	@text	Attaches or clears the glyph cache associated with the font.
-			The cache is an object derived from MOAIGlyphCacheBase and may be
+			The cache is an object derived from MOAIGlyphCache and may be
 			a dynamic cache that can allocate space for new glyphs on an
 			as-needed basis or a static cache that only supports direct
 			loading of glyphs and glyph textures through MOAIFont's
 			setImage () command.
 
 	@in		MOAIFont self
-	@opt	MOAIGlyphCacheBase cache		Default value is nil.
+	@opt	MOAIGlyphCache cache		Default value is nil.
 	@out	nil
 */
 int MOAIFont::_setCache ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mCache.Set ( *self, state.GetLuaObject < MOAIGlyphCacheBase >( 2, true ));
+	self->mCache.Set ( *self, state.GetLuaObject < MOAIGlyphCache >( 2, true ));
 	return 0;
 }
 
@@ -298,7 +314,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "UU" )
 
 	if ( !self->mCache ) {
-		MOAIGlyphCacheBase* glyphCache = new MOAIStaticGlyphCache ();
+		MOAIGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
 		self->mCache.Set ( *self, glyphCache );
 	}
 
@@ -578,7 +594,6 @@ void MOAIFont::ProcessGlyphs () {
 			this->BuildKerning ( glyphs, pendingGlyphs );
 		}
 		
-		//----------------------------------------------------------------//
 		// render the new glyphs and move them to the processed list
 		for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; ) {
 			MOAIGlyph& glyph = *glyphIt;
@@ -677,10 +692,12 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "getCache",					_getCache },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFlags",					_getFlags },
 		{ "getFilename",				_getFilename },
 		{ "getImage",					_getImage },
+		{ "getReader",					_getReader },
 		{ "load",						_load },
 		{ "loadFromBMFont",				_loadFromBMFont },
 		{ "preloadGlyphs",				_preloadGlyphs },	

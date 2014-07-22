@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
-#include <moai-sim/MOAIGlyphCachePage.h>
+#include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
@@ -93,13 +93,13 @@ ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
 	mPageID ( NULL_PAGE_ID ),
-	mWidth ( 0.0f ),
-	mHeight ( 0.0f ),
 	mAdvanceX ( 0.0f ),
 	mBearingX ( 0.0f ),
 	mBearingY ( 0.0f ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
+	mWidth ( 0.0f ),
+	mHeight ( 0.0f ),
 	mNext ( 0 ) {
 }
 

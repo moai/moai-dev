@@ -12,6 +12,8 @@ class MOAIKernVec;
 //================================================================//
 // MOAIFontReader
 //================================================================//
+// this is a class to abstract getting glyph information from font
+// files and rendering glyphs
 class MOAIFontReader :
 	public MOAILuaObject {
 public:

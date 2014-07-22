@@ -9,7 +9,7 @@
 
 class MOAIFontReader;
 class MOAIGlyph;
-class MOAIGlyphCacheBase;
+class MOAIGlyphCache;
 class MOAITextureBase;
 class MOAITexture;
 
@@ -36,13 +36,13 @@ class MOAITexture;
 			feasible to pre-render a full set of glyphs to texture (or bitmap fonts), static
 			fonts may be used.</p>
 			
-			<p>MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCacheBase
+			<p>MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCache
 			to render glyphs into glyph sets. MOAIFontReader is responsible for interpreting
 			the font file format (if any), retrieving glyph metrics (including kerning)
-			and rendering glyphs to texture. MOAIGlyphCache is responsible for
+			and rendering glyphs to texture. MOAIDynamicGlyphCache is responsible for
 			allocating textures to hold glyphs and for managing glyph placement within
 			textures. For dynamic fonts, the typical setup uses MOAIFreeTypeFontReader
-			and MOAIGlyphCache. For static fonts, there is usually no font reader;
+			and MOAIDynamicGlyphCache. For static fonts, there is usually no font reader;
 			MOAIStaticGlyphCache is loaded directly from a serialized file and its texture
 			memory is initialized with MOAIFont's setImage () command.</p>
 			
@@ -69,7 +69,7 @@ protected:
 	u32 mFlags;
 	
 	MOAILuaSharedPtr < MOAIFontReader > mReader;
-	MOAILuaSharedPtr < MOAIGlyphCacheBase > mCache;
+	MOAILuaSharedPtr < MOAIGlyphCache > mCache;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
@@ -81,10 +81,12 @@ protected:
 	int	mMagFilter;
 
 	//----------------------------------------------------------------//
-	 static int			_getDefaultSize         ( lua_State* L );
+	static int			_getCache				( lua_State* L );
+	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
+	static int			_getReader				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_loadFromBMFont			( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
@@ -110,7 +112,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFont )
 	
 	GET ( cc8*, Filename, mFilename );
-	GET ( MOAIGlyphCacheBase*, Cache, mCache );
+	GET ( MOAIGlyphCache*, Cache, mCache );
 
 	GET ( int, MinFilter, mMinFilter );
 	GET ( int, MagFilter, mMagFilter );

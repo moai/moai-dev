@@ -536,7 +536,7 @@ int MOAIImage::_setColor32 ( lua_State* L ) {
 	@out	nil
 */
 int MOAIImage::_setRGBA ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
 
 	u32 x		= state.GetValue < u32 >( 2, 0 );
 	u32 y		= state.GetValue < u32 >( 3, 0 );

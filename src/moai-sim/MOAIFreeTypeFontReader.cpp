@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFreeTypeFontReader.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImageTexture.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -41,7 +41,8 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 		u32 alpha = ( u32 )span.coverage;
 		
 		for ( int j = 0; j < len; ++j ) {
-			render->mImage->SetPixel ( x + j, line, alpha );
+			// TODO: change to take image format into account; only convert if necessary
+			render->mImage->SetPixel ( x + j, line, alpha ); // assumes grayscale
 		}
 	}
 }
@@ -137,7 +138,7 @@ void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
-	MOAIGlyphCacheBase* glyphCache = font.GetCache ();
+	MOAIGlyphCache* glyphCache = font.GetCache ();
 	bool useCache = glyphCache && glyphCache->IsDynamic ();
 
 	FT_Face face = this->mFace;
@@ -180,6 +181,8 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 			render.mPenY = glyph.mSrcY + bearingY;
 			
 			FT_Outline_Render ( this->mLibrary, &face->glyph->outline, &params );
+			
+			glyphCache->PostRender ( glyph );
 		}
 	}
 }
