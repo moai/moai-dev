@@ -231,6 +231,17 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIImage::_generateSDF( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	
+	u32 x = state.GetValue < u32 >( 2, 0 );
+	u32 y = state.GetValue < u32 >( 3, 0 );
+	
+	self->GenerateSDF ( x, y );
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	getColor32
 	@text	Returns a 32-bit packed RGBA value from the image for a
@@ -673,6 +684,56 @@ void MOAIImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 		void* destRow = ( void* )(( size_t )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::CalculateSDF( Pixel** grid ) {
+	
+	// Pass 0
+	for (int y = 0; y < HEIGHT; y++)
+	{
+		for (int x = 0; x < WIDTH; x++)
+		{
+			Pixel p = grid[y][x];
+			Compare( g, p, x, y, -1,  0 );
+			Compare( g, p, x, y,  0, -1 );
+			Compare( g, p, x, y, -1, -1 );
+			Compare( g, p, x, y,  1, -1 );
+			grid[y][x] = p;
+			//Put( g, x, y, p );
+		}
+		
+		for (int x = WIDTH - 1; x >= 0; x--)
+		{
+			Pixel p = grid[y][x];
+			Compare( g, p, x, y, 1, 0 );
+			grid[y][x] = p;
+			//Put( g, x, y, p );
+		}
+	}
+	
+	// Pass 1
+	for (int y = HEIGHT - 1; y >= 0; y--)
+	{
+		for (int x = WIDTH - 1; x >= 0; x--)
+		{
+			Pixel p = grid[y][x];
+			Compare( g, p, x, y,  1,  0 );
+			Compare( g, p, x, y,  0,  1 );
+			Compare( g, p, x, y, -1,  1 );
+			Compare( g, p, x, y,  1,  1 );
+			grid[y][x] = p;
+		}
+		
+		for (int x=0;x<WIDTH;x++)
+		{
+			Pixel p = grid[y][x];
+			Compare( g, p, x, y, -1, 0 );
+			grid[y][x] = p;
+		}
+	}
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -1340,6 +1401,56 @@ void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::GenerateSDF ( int width, int height ) {
+	
+	//int width = rect.Width();
+	//int height = rect.Height();
+	
+	Pixel grid1[width][height];
+	Pixel grid2[width][height];
+	
+	Pixel* grid1P = &grid1[0][0];
+	Pixel* grid2P = &grid2[0][0];
+	
+	//Pixel** grid1PP = &(&grid1[0][0]);
+	//Pixel** grid2PP = &(&grid2[0][0]);
+	
+	Pixel inside = { 0, 0 };
+	Pixel empty = { 9999, 9999 };
+	
+	// Set up the initial grid
+	for (int y = 0; y < height; ++y)
+	{
+		for (int x = 0; x < width; ++x)
+		{
+			ZLColorVec colorVec;
+			u32 color = this->GetColor(x, y);
+			
+			colorVec.SetRGBA(color);
+			// Points inside get marked with a dx/dy of zero.
+			// Points outside get marked with an infinitely large distance.
+			if ( colorVec.mG < 0.5f )
+			{
+				//this->Put( &&grid1[0][0], x, y, inside );
+				//this->Put( grid2, x, y, empty );
+				grid1[y][x] = inside;
+				grid2[y][x] = empty;
+			} else {
+				//this->Put( grid2, x, y, inside );
+				//this->Put( grid1, x, y, empty );
+				grid2[y][x] = inside;
+				grid1[y][x] = empty;
+			}
+			//Pixel p = Get(
+		}
+	}
+	
+	CalculateSDF( &grid1P );
+	CalculateSDF( &grid2P );
+	
+}
+
+//----------------------------------------------------------------//
 u32 MOAIImage::GetBitmapSize () const {
 
 	return this->GetRowSize () * this->mHeight;
@@ -1587,6 +1698,12 @@ bool MOAIImage::IsPng ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::Put (Pixel** grid, int x, int y, const Pixel &p)
+{
+	grid[y][x] = p;
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 	this->Clear ();
@@ -1785,6 +1902,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copyRect",			_copyRect },
 		{ "fillCircle",			_fillCircle },
 		{ "fillRect",			_fillRect },
+		{ "generateSDF",		_generateSDF },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },

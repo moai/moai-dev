@@ -45,6 +45,13 @@ class MOAIImage :
 	public virtual MOAILuaObject {
 private:
 
+	struct Pixel
+	{
+		int dx, dy;  // distance to the closest pixel
+		
+		int DistanceSq() const { return dx * dx + dy * dy; }
+	};
+	
 	USPixel::Format		mPixelFormat;
 	ZLColor::Format		mColorFormat;
 
@@ -64,6 +71,7 @@ private:
 	static int		_copyRect			( lua_State* L );
 	static int		_fillCircle			( lua_State* L );
 	static int		_fillRect			( lua_State* L );
+	static int		_generateSDF		( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );
 	static int		_getRGBA			( lua_State* L );
@@ -81,11 +89,14 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Alloc				();
+	//void			ComparePixel        ();
+	void			CalculateSDF        ( Pixel** grid );
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
 	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( ZLStream& stream );
 	static bool		IsPng				( ZLStream& stream );
-	
+	void			Put					( Pixel** grid, int x, int y, const Pixel &p);
+		
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBJPG
 		void			LoadJpg				( ZLStream& stream, u32 transform );
@@ -130,6 +141,7 @@ public:
 	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
+	void				GenerateSDF				( int x, int y );
 	u32					GetBitmapSize			() const;
 	ZLIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;
