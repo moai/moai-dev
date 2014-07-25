@@ -1488,7 +1488,7 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 			//}
 			
 			// Clamp and scale it, just for display purposes.
-			int c = dist * 8 + 128;
+			int c = dist * 10 + 128;
 			if ( c < 0 ) c = 0;
 			if ( c > 255 ) c = 255;
 			
