@@ -45,13 +45,6 @@ class MOAIImage :
 	public virtual MOAILuaObject {
 private:
 
-	//struct Pixel
-	//{
-		//int dx, dy;  // distance to the closest pixel
-		
-		//int DistanceSq() const { return dx * dx + dy * dy; }
-	//};
-	
 	USPixel::Format		mPixelFormat;
 	ZLColor::Format		mColorFormat;
 
@@ -95,7 +88,6 @@ private:
 	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( ZLStream& stream );
 	static bool		IsPng				( ZLStream& stream );
-	//void			Put					( ZLIntVec2D** grid, int x, int y, const ZLIntVec2D &p);
 		
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBJPG

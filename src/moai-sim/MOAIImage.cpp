@@ -1465,17 +1465,12 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 			// Points outside get marked with an infinitely large distance.
 			if ( colorVec.mA != 0.0f )
 			{
-				//this->Put( &&grid1[0][0], x, y, inside );
-				//this->Put( grid2, x, y, empty );
 				grid1[y][x] = inside;
 				grid2[y][x] = empty;
 			} else {
-				//this->Put( grid2, x, y, inside );
-				//this->Put( grid1, x, y, empty );
 				grid2[y][x] = inside;
 				grid1[y][x] = empty;
 			}
-			//Pixel p = Get(
 		}
 	}
 	
