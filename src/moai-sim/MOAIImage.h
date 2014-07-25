@@ -89,8 +89,8 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Alloc				();
-	void			ComparePixel        ( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY );
-	void			CalculateSDF        ( ZLIntVec2D** grid, int height, int width );
+	void			ComparePixel        ( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
+	void			CalculateSDF        ( ZLIntVec2D** grid, int width, int height );
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
 	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( ZLStream& stream );
@@ -141,7 +141,7 @@ public:
 	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
-	void				GenerateSDF				( int x, int y );
+	void				GenerateSDF				( ZLIntRect rect );
 	u32					GetBitmapSize			() const;
 	ZLIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;

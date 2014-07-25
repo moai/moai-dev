@@ -20,12 +20,17 @@ onGlyph = function ( cache, code, image, xMin, yMin, xMax, yMax )
 	
 	print ( 'GLYPH:', code, image, xMin, yMin, xMax, yMax )
 
-	for x = xMin, xMax do
-		for y = yMin, yMax do
-			local r, g, b, a = image:getRGBA ( x, y )
-			image:setRGBA ( x, y, 1 - r, 1 - b, 1 - g, 1 - a )
-		end
-	end
+	image:generateSDF (xMin, yMin, xMax, yMax)
+
+	
+	--for x = xMin, xMax do
+		--for y = yMin, yMax do
+			--local r, g, b, a = image:getRGBA ( x, y )
+			--print ( 'COLOR:', r, g, b, a )
+			--image:setRGBA ( x, y, 1 - r, 1 - b, 1 - g, 1 - a )
+		--end
+	--end
+	
 end
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
