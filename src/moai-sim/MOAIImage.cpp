@@ -1449,15 +1449,6 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 		grid2[i] = new ZLIntVec2D[width];
 	}
 	
-	//ZLIntVec2D grid1[width][height];
-	//ZLIntVec2D grid2[width][height];
-	
-	//ZLIntVec2D* grid1P = &grid1[0][0];
-	//ZLIntVec2D* grid2P = &grid2[0][0];
-	
-	//Pixel** grid1PP = &(&grid1[0][0]);
-	//Pixel** grid2PP = &(&grid2[0][0]);
-	
 	ZLIntVec2D inside(0, 0);
 	ZLIntVec2D empty(9999, 9999);
 	
@@ -1491,8 +1482,6 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	CalculateSDF( grid1, width, height );
 	CalculateSDF( grid2, width, height );
 	
-	int minDistance = 1000000, maxDistance = 0;
-	
 	for( int y=0; y < height; y++ )
 	{
 		for ( int x=0; x < width; x++ )
@@ -1501,7 +1490,7 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 			int dist1 = (int)( grid1[y][x].Length() );
 			int dist2 = (int)( grid2[y][x].Length() );
 			int dist = dist1 - dist2;
-			printf("%d\n", dist);
+			
 			//int temp1 = rect.mXMin;
 			//int temp2 = rect.mYMin;
 			//this->SetColor( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA());
@@ -1524,21 +1513,9 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 			//}
 			
 			// Clamp and scale it, just for display purposes.
-			//if (dist < minDistance)
-				//minDistance = dist;
-			
-			//if (dist > maxDistance)
-				//maxDistance = dist;
-				
-			
 			int c = dist * 8 + 128;
 			if ( c < 0 ) c = 0;
 			if ( c > 255 ) c = 255;
-			
-			//if (dist == 0)
-				//c = 255;
-			//else if (dist == 118)
-				//printf("wtf!!!\n");
 			
 			ZLColorVec colorVec(0, 0, 0, c);
 			colorVec = colorVec.ScaleAlpha( 1.0f / 255);
