@@ -6,7 +6,7 @@
 #include <moai-sim/MOAICoroutine.h>
 
 //----------------------------------------------------------------//
-/**	@name	blockOnAction
+/**	@lua	blockOnAction
 	@text	Skip updating current thread until the specified action is
 			no longer busy. A little more efficient than spinlocking from
 			Lua.
@@ -30,7 +30,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	currentThread
+/**	@lua	currentThread
 	@text	Returns the currently running thread (if any).
 	
 	@out	MOAICoroutine currentThread	Current thread or nil.
@@ -86,7 +86,7 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	run
+/**	@lua	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
 	@in		MOAICoroutine self

@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getValueAtTime
+/**	@lua	getValueAtTime
 	@text	Return the interpolated vector components given a point in
 			time along the curve. This does not change the curve's built in TIME
 			attribute (it simply performs the requisite computation on demand).
@@ -32,7 +32,7 @@ int MOAIAnimCurveVec::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setKey
+/**	@lua	setKey
 	@text	Initialize a key frame at a given time with a give vector.
 			Also set the transition type between the specified key frame
 			and the next key frame.

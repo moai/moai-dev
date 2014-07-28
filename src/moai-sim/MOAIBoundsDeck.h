@@ -12,7 +12,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIBoundsDeck
 //================================================================//
-/**	@name	MOAIBoundsDeck
+/**	@lua	MOAIBoundsDeck
 	@text	<p>Deck of bounding boxes. Bounding boxes are allocated in
 			a separate array from that used for box indices. The index
 			array is used to map deck indices onto bounding boxes. In

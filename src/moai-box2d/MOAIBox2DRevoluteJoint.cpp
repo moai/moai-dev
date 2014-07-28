@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getJointAngle
+/**	@lua	getJointAngle
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -35,7 +35,7 @@ int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getJointSpeed
+/**	@lua	getJointSpeed
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -56,7 +56,7 @@ int MOAIBox2DRevoluteJoint::_getJointSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLowerLimit
+/**	@lua	getLowerLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -77,7 +77,7 @@ int MOAIBox2DRevoluteJoint::_getLowerLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMotorSpeed
+/**	@lua	getMotorSpeed
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -98,7 +98,7 @@ int MOAIBox2DRevoluteJoint::_getMotorSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMotorTorque
+/**	@lua	getMotorTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -122,7 +122,7 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUpperLimit
+/**	@lua	getUpperLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -143,7 +143,7 @@ int MOAIBox2DRevoluteJoint::_getUpperLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isLimitEnabled
+/**	@lua	isLimitEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -164,7 +164,7 @@ int MOAIBox2DRevoluteJoint::_isLimitEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isMotorEnabled
+/**	@lua	isMotorEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -185,7 +185,7 @@ int MOAIBox2DRevoluteJoint::_isMotorEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLimit
+/**	@lua	setLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -212,7 +212,7 @@ int MOAIBox2DRevoluteJoint::_setLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLimitEnabled
+/**	@lua	setLimitEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -236,7 +236,7 @@ int MOAIBox2DRevoluteJoint::_setLimitEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxMotorTorque
+/**	@lua	setMaxMotorTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
@@ -262,7 +262,7 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotor
+/**	@lua	setMotor
 	@text	See Box2D documentation.
 			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
 
@@ -295,7 +295,7 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotorSpeed
+/**	@lua	setMotorSpeed
 	@text	See Box2D documentation.
 
 	@in		MOAIBox2DRevoluteJoint self
@@ -320,7 +320,7 @@ int MOAIBox2DRevoluteJoint::_setMotorSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotorEnabled
+/**	@lua	setMotorEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self

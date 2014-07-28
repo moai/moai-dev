@@ -16,7 +16,7 @@ class MOAIViewport;
 //================================================================//
 // MOAIRenderMgr
 //================================================================//
-/**	@name	MOAIRenderMgr
+/**	@lua	MOAIRenderMgr
 	@text	MOAIRenderMgr is responsible for drawing a list of MOAIRenderable
 			objects. MOAIRenderable is the base class for any object that can be
 			drawn. This includes MOAIProp and MOAILayer. To use MOAIRenderMgr

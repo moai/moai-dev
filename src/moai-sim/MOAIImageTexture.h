@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIImageTexture
 //================================================================//
-/**	@name	MOAIImageTexture
+/**	@lua	MOAIImageTexture
 	@text	Binds an image (CPU memory) to a texture (GPU memory).
 			Regions of the texture (or the entire texture) may be
 			invalidated. Invalidated regions will be reloaded

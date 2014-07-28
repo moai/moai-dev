@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
+/**	@lua	getVolume
  @text	Returns the current volume of the channel.
  
  @in	MOAIFmodExChannel self
@@ -26,7 +26,7 @@ int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPlaying
+/**	@lua	isPlaying
  @text	Returns true if channel is playing.
  
  @in	MOAIFmodExChannel self
@@ -46,7 +46,7 @@ int MOAIFmodExChannel::_isPlaying ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveVolume
+/**	@lua	moveVolume
 	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
 
 	@in		MOAIFmodExChannel self
@@ -75,7 +75,7 @@ int MOAIFmodExChannel::_moveVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Plays the specified sound, looping it if desired.
 
 	@in		MOAIFmodExChannel self
@@ -98,7 +98,7 @@ int MOAIFmodExChannel::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekVolume
+/**	@lua	seekVolume
 	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
 
 	@in		MOAIFmodExChannel self
@@ -127,7 +127,7 @@ int MOAIFmodExChannel::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@lua	setVolume
 	@text	Immediately sets the volume of this channel.
 
 	@in		MOAIFmodExChannel self
@@ -144,7 +144,7 @@ int MOAIFmodExChannel::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPaused
+/**	@lua	setPaused
 	@text	Sets whether this channel is paused and hence does not play any sounds.
 
 	@in		MOAIFmodExChannel self
@@ -162,7 +162,7 @@ int MOAIFmodExChannel::_setPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLooping
+/**	@lua	setLooping
 	@text	Immediately sets looping for this channel.
 
 	@in		MOAIFmodExChannel self
@@ -179,7 +179,7 @@ int MOAIFmodExChannel::_setLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stops playing the sound on this channel.
 
 	@in		MOAIFmodExChannel self

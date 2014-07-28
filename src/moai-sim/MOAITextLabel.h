@@ -18,7 +18,7 @@ class MOAIFont;
 //================================================================//
 // MOAITextLabel
 //================================================================//
-/**	@name	MOAITextLabel
+/**	@lua	MOAITextLabel
 	@text	<p>The text box manages styling, laying out and displaying text.
 			You can attach named styles to the text box to be applied to
 			the text using style escapes. You can also inline style

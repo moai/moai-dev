@@ -20,7 +20,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDirectoryInDomain
+/**	@lua	getDirectoryInDomain
 	@text	Search the platform's internal directory structure for 
 			a special directory as defined by the platform.
  
@@ -61,7 +61,7 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getInterfaceOrientation
+/**	@lua	getInterfaceOrientation
  @text	Get the current orientation of the user interface
  
  @in	nil
@@ -128,7 +128,7 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUTCTime
+/**	@lua	getUTCTime
  @text	Get the current UTC time in seconds
  
  @in	nil
@@ -144,7 +144,7 @@ int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendMail
+/**	@lua	sendMail
  @text	Send a mail with the passed in default values
  
  @in	string recipient
@@ -197,7 +197,7 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name _takeCamera
+/** @lua _takeCamera
 	@text Allows to pick a photo from the CameraRoll or from the Camera
 	@in function	callback
 	@in NSUInteger	input camera source

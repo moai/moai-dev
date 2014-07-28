@@ -20,7 +20,7 @@ class MOAITexture;
 //================================================================//
 // MOAIFont
 //================================================================//
-/**	@name	MOAIFont
+/**	@lua	MOAIFont
 	@text	<p>MOAIFont is the top level object for managing sets of
 			glyphs associated with a single font face. An instance of
 			MOAIFont may contain glyph sets for multiple sizes of the font.
@@ -81,10 +81,12 @@ protected:
 	int	mMagFilter;
 
 	//----------------------------------------------------------------//
-	 static int			_getDefaultSize         ( lua_State* L );
+	static int			_getCache				( lua_State* L );
+	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
+	static int			_getReader				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_loadFromBMFont			( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );

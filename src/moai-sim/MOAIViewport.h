@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIViewport
 //================================================================//
-/**	@name	MOAIViewport
+/**	@lua	MOAIViewport
 	@text	Viewport object.
 */
 class MOAIViewport :

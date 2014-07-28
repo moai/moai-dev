@@ -16,7 +16,7 @@
 //================================================================//
 // MOAIKeyboardAndroid
 //================================================================//
-/** @name MOAIKeyboardAndroid
+/** @lua MOAIKeyboardAndroid
   @text <p>Wrapper for the native keyboard on Android.  Compatible
   with the iOS methods, albeit with JNI interjection.
 */

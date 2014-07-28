@@ -16,7 +16,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize the video player with the URL of a video to play.
 	
 	@in		string 	url				The URL of the video to play.
@@ -52,7 +52,7 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Play the video as soon as playback is ready.
 	
 	@out	nil
@@ -83,7 +83,7 @@ int MOAIMoviePlayerAndroid::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Pause video playback.
 	
 	@out	nil
@@ -129,7 +129,7 @@ int MOAIMoviePlayerAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stop video playback and reset the video player.
 	
 	@out	nil

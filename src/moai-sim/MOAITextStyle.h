@@ -31,7 +31,7 @@ public:
 //================================================================//
 // MOAITextStyle
 //================================================================//
-/**	@name	MOAITextStyle
+/**	@lua	MOAITextStyle
 	@text	Represents a style that may be applied to a text box or a
 			section of text in a text box using a style escape.
 */

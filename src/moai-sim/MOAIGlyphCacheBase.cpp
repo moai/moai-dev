@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setColorFormat
+/**	@lua	setColorFormat
 	@text	The color format may be used by dynamic cache implementations
 			when allocating new textures.
 	

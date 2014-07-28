@@ -94,7 +94,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getText
+/**	@lua	getText
 	@text	Returns the text currently being edited (or nil if no editing).
 	
 	@out	string text
@@ -107,7 +107,7 @@ int MOAIKeyboardIOS::_getText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxLength
+/**	@lua	setMaxLength
  @text	Set the maxLength.
  
  @in	number maxLength
@@ -123,7 +123,7 @@ int MOAIKeyboardIOS::_setMaxLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showKeyboard
+/**	@lua	showKeyboard
 	@text	Show the native software keyboard to the use.
 
 	@opt	string text			Text to edit (if any). Default value is ''.
@@ -158,7 +158,7 @@ int MOAIKeyboardIOS::_showKeyboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hideKeyboard
+/**	@lua	hideKeyboard
  @text	Hide the native software keyboard.
  
  @out	nil

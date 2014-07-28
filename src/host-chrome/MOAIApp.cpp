@@ -129,7 +129,7 @@ void MOAIApp::HandleStoreMessage ( std::string & message ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	alert
+/** @lua	alert
 	@text	Display a modal style dialog box with one or more buttons, including a
 			cancel button. This will not halt execution (this function returns immediately),
 			so if you need to respond to the user's selection, pass a callback.
@@ -155,7 +155,7 @@ int MOAIApp::_alert( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	canMakePayments
+/**	@lua	canMakePayments
 	@text	Verify that the app has permission to request payments.
 	
 	@out	boolean canMakePayments
@@ -170,7 +170,7 @@ int MOAIApp::_canMakePayments ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestPaymentForProduct
+/**	@lua	requestPaymentForProduct
 	@text	Request payment for a product.
 	
 	@in		string productIdentifier
@@ -201,7 +201,7 @@ int MOAIApp::_requestPaymentForProduct ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	requestProductIdentifiers
+/**	@lua	requestProductIdentifiers
 	@text	Verify the validity of a set of products.
 	
 	@in		table productIdentifiers			A table of product identifiers.
@@ -237,7 +237,7 @@ int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	restoreCompletedTransactions
+/** @lua	restoreCompletedTransactions
 	@text	Request a restore of all purchased non-consumables from the App Store.
 			Use this to retrieve a list of all previously purchased items (for example
 			after reinstalling the app on a different device).
@@ -254,7 +254,7 @@ int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	setListener
+/**	@lua	setListener
 	@text	Set a callback to handle events of a type.
 	
 	@in		number event		One of MOAIApp.ERROR, MOAIApp.DID_REGISTER, MOAIApp.REMOTE_NOTIFICATION,
@@ -275,7 +275,7 @@ int MOAIApp::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDirectoryInDomain
+/**	@lua	getDirectoryInDomain
 	@text	Search the platform's internal directory structure for a special directory
 			as defined by the platform.
  

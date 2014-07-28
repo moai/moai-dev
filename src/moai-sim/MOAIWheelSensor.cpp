@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getValue
+/**	@lua	getValue
 	@text	Returns the current value of the wheel, based on delta events
 
 	@in		MOAIWheelSensor self
@@ -25,7 +25,7 @@ int MOAIWheelSensor::_getValue ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDelta
+/**	@lua	getDelta
 	@text	Returns the delta of the wheel
 
 	@in		MOAIWheelSensor self
@@ -40,7 +40,7 @@ int MOAIWheelSensor::_getDelta ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued on a wheel delta event
 
 	@in		MOAIWheelSensor self

@@ -16,7 +16,7 @@ namespace FMODDesigner {
 //================================================================//
 // MOAIFmodEx
 //================================================================//
-/**	@name	MOAIFmodEventMgr
+/**	@lua	MOAIFmodEventMgr
 	@text	Event Manager singleton that provides an interface to all implemented FMOD Designer features. 
 */
 class MOAIFmodEventMgr :

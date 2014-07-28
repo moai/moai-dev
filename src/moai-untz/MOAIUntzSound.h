@@ -13,7 +13,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIUntzSound
 //================================================================//
-/**	@name	MOAIUntzSound
+/**	@lua	MOAIUntzSound
 	@text	Untz sound object.
 	
 	@attr	ATTR_VOLUME

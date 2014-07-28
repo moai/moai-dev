@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveLinks
+/**	@lua	reserveLinks
 	@text	Reserve links.
 
 	@in		MOAIEaseDriver self
@@ -27,7 +27,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLink
+/**	@lua	setLink
 	@text	Set the ease for a target node attribute.
 
 	@overload	Target is a number.

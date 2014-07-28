@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIScriptDeck
 //================================================================//
-/**	@name MOAIScriptDeck
+/**	@lua MOAIScriptDeck
 	@text Scriptable deck object.
 */
 class MOAIScriptDeck :

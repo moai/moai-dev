@@ -12,7 +12,7 @@
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
-/**	@name	MOAIAppAndroid
+/**	@lua	MOAIAppAndroid
 	@text	Wrapper for base application class on Android devices.
 			Exposed to Lua via MOAIApp on all mobile platforms.
 

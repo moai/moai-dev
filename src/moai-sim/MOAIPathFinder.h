@@ -37,7 +37,7 @@ private:
 //================================================================//
 // MOAIPathFinder
 //================================================================//
-/**	@name	MOAIPathFinder
+/**	@lua	MOAIPathFinder
 	@text	Object for maintaining pathfinding state.
 */
 class MOAIPathFinder :

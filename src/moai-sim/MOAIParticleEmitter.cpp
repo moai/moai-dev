@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setAngle
+/**	@lua	setAngle
 	@text	Set the size and angle of the emitter.
 	
 	@in		MOAIParticleEmitter self
@@ -29,7 +29,7 @@ int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setEmission
+/**	@lua	setEmission
 	@text	Set the size of each emission.
 	
 	@in		MOAIParticleEmitter self
@@ -48,7 +48,7 @@ int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMagnitude
+/**	@lua	setMagnitude
 	@text	Set the starting magnitude of particles deltas.
 	
 	@in		MOAIParticleEmitter self
@@ -67,7 +67,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRadius
+/**	@lua	setRadius
 	@text	Set the shape and radius of the emitter.
 	
 	@overload
@@ -101,7 +101,7 @@ int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the shape and dimensions of the emitter.
 	
 	@in		MOAIParticleEmitter self
@@ -129,7 +129,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSystem
+/**	@lua	setSystem
 	@text	Attaches the emitter to a particle system.
 	
 	@in		MOAIParticleEmitter self
@@ -145,7 +145,7 @@ int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	surge
+/**	@lua	surge
 	@text	Forces the emission of one or more particles.
 	
 	@in		MOAIParticleEmitter self

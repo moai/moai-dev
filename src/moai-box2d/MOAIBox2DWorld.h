@@ -49,7 +49,7 @@ public:
 //================================================================//
 // MOAIBox2DWorld
 //================================================================//
-/**	@name	MOAIBox2DWorld
+/**	@lua	MOAIBox2DWorld
 	@text	Box2D world.
 	
 	@const DEBUG_DRAW_SHAPES

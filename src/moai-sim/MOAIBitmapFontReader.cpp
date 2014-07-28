@@ -174,7 +174,7 @@ void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	loadPage
+/**	@lua	loadPage
 	@text	Rips a set of glyphs from a bitmap and associates them with a size.
 
 	@in		MOAIBitmapFontReader self

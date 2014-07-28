@@ -12,7 +12,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIGfxQuadDeck2D
 //================================================================//
-/**	@name	MOAIGfxQuadDeck2D
+/**	@lua	MOAIGfxQuadDeck2D
 	@text	Deck of textured quads.
 */
 class MOAIGfxQuadDeck2D :

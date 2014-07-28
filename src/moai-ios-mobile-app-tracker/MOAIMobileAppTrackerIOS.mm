@@ -101,7 +101,7 @@ int MOAIMobileAppTrackerIOS::_setUserId ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	startTracker
+/**	@lua	startTracker
 	@text	Starts Mobile App Tracker.
  
 	@in		string advertiserId

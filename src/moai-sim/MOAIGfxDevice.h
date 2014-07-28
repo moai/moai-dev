@@ -47,7 +47,7 @@ public:
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
-/**	@name	MOAIGfxDevice
+/**	@lua	MOAIGfxDevice
 	@text	Interface to the graphics singleton.
 	
 	@const	EVENT_RESIZE

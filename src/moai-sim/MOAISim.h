@@ -13,7 +13,7 @@ class MOAIProp;
 //================================================================//
 // MOAISim
 //================================================================//
-/**	@name	MOAISim
+/**	@lua	MOAISim
 	@text	Sim timing and settings class.
 	
 	@const	EVENT_FINALIZE

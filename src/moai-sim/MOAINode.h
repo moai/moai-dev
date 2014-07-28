@@ -25,7 +25,7 @@ class MOAIDepLink;
 //================================================================//
 // MOAINode
 //================================================================//
-/**	@name	MOAINode
+/**	@lua	MOAINode
 	@text	Base for all attribute bearing Moai objects and dependency
 			graph nodes.
 */

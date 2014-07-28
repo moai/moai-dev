@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Close the memory stream and release its buffers.
 	
 	@in		MOAIMemStream self
@@ -58,7 +58,7 @@ int MOAIMemStream::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	open
+/**	@lua	open
 	@text	Create a memory stream and optionally reserve some memory and set
 			the chunk size by which the stream will grow if additional memory
 			is needed.

@@ -19,7 +19,7 @@ namespace MOAIImageTransform {
 //================================================================//
 // MOAIImage
 //================================================================//
-/**	@name	MOAIImage
+/**	@lua	MOAIImage
 	@text	Image/bitmap class.
 	
 	@const	FILTER_LINEAR

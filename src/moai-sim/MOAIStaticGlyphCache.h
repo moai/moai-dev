@@ -11,7 +11,7 @@ class MOAITexture;
 //================================================================//
 // MOAIStaticGlyphCache
 //================================================================//
-/**	@name	MOAIStaticGlyphCache
+/**	@lua	MOAIStaticGlyphCache
 	@text	This is the default implementation of a static glyph cache.
 			All is does is accept an image via setImage () and create
 			a set of textures from that image. It does not implement

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIScissorRect
 //================================================================//
-/**	@name	MOAIScissorRect
+/**	@lua	MOAIScissorRect
 	@text	Class for clipping props when drawing.
 */
 class MOAIScissorRect :

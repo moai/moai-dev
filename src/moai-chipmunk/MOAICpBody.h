@@ -13,7 +13,7 @@ class MOAICpShape;
 //================================================================//
 // MOAICpBody
 //================================================================//
-/**	@name	MOAICpBody
+/**	@lua	MOAICpBody
 	@text	Chipmunk Body.
 	
 	@const	NONE

@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize AdColony.
 	
 	@in		string	appId			Available in AdColony dashboard settings.
@@ -48,7 +48,7 @@ int MOAIAdColonyIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	playVideo
+/**	@lua	playVideo
 	@text	Play an AdColony video ad.
 	
 	@in 	string	zone			The zone from which to play a video ad.
@@ -71,7 +71,7 @@ int MOAIAdColonyIOS::_playVideo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	videoReadyForZone
+/**	@lua	videoReadyForZone
 	@text	Check the readiness of a video ad for a given zone.
 	
 	@in 	string	zone			The zone from which to check for a video ad.

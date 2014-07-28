@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	findPath
+/**	@lua	findPath
 	@text	Attempts to find an efficient path from the start node
 			to the finish node. May be called incrementally.
 
@@ -31,7 +31,7 @@ int MOAIPathFinder::_findPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGraph
+/**	@lua	getGraph
 	@text	Returns the attached graph (if any).
 
 	@in		MOAIPathFinder self
@@ -48,7 +48,7 @@ int MOAIPathFinder::_getGraph ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPathEntry
+/**	@lua	getPathEntry
 	@text	Returns a path entry. This is a node ID that may be
 			passed back to the graph to get a location.
 
@@ -70,7 +70,7 @@ int MOAIPathFinder::_getPathEntry ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPathSize
+/**	@lua	getPathSize
 	@text	Returns the size of the path (in nodes).
 
 	@in		MOAIPathFinder self
@@ -84,7 +84,7 @@ int MOAIPathFinder::_getPathSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Specify the ID of the start and target node.
 
 	@in		MOAIPathFinder self
@@ -104,7 +104,7 @@ int MOAIPathFinder::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveTerrainWeights
+/**	@lua	reserveTerrainWeights
 	@text	Specify the size of the terrain weight vector. 
 
 	@in		MOAIPathFinder self
@@ -122,7 +122,7 @@ int MOAIPathFinder::_reserveTerrainWeights ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFlags
+/**	@lua	setFlags
 	@text	Set flags to use for pathfinding. These are graph specific
 			flags provided by the graph implementation.
 
@@ -139,7 +139,7 @@ int MOAIPathFinder::_setFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGraph
+/**	@lua	setGraph
 	@text	Set graph data to use for pathfinding. 
 
 	@overload
@@ -177,7 +177,7 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setHeuristic
+/**	@lua	setHeuristic
 	@text	Set heuristic to use for pathfinding. This is a const provided
 			by the graph implementation being used.
 
@@ -194,7 +194,7 @@ int MOAIPathFinder::_setHeuristic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainDeck
+/**	@lua	setTerrainDeck
 	@text	Set terrain deck to use with graph.
 
 	@in		MOAIPathFinder self
@@ -210,7 +210,7 @@ int MOAIPathFinder::_setTerrainDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainMask
+/**	@lua	setTerrainMask
 	@text	Set 32-bit mask to apply to terrain samples.
 
 	@in		MOAIPathFinder self
@@ -226,7 +226,7 @@ int MOAIPathFinder::_setTerrainMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainWeight
+/**	@lua	setTerrainWeight
 	@text	Set a component of the terrain weight vector.
 
 	@in		MOAIPathFinder self
@@ -250,7 +250,7 @@ int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWeight
+/**	@lua	setWeight
 	@text	Sets weights to be applied to G and H.
 
 	@in		MOAIPathFinder self

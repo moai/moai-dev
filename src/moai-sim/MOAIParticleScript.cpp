@@ -217,7 +217,7 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	add
+/**	@lua	add
 	@text	r0 = v0 + v1
 	
 	@in		MOAIParticleScript self
@@ -231,7 +231,7 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	angleVec
+/**	@lua	angleVec
 	@text	Load two registers with the X and Y components of a unit
 			vector with a given angle.
 	
@@ -246,7 +246,7 @@ int MOAIParticleScript::_angleVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	color
+/**	@lua	color
  @text	r0, r1, r2, r3 = color (of the MOAIParticleSystem)
 
  Note that if you do not specify SPRITE_RED and related values,
@@ -266,7 +266,7 @@ int MOAIParticleScript::_color ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	cos
+/**	@lua	cos
  @text	r0 = cos(v0)
  
  @in		MOAIParticleScript self
@@ -279,7 +279,7 @@ int MOAIParticleScript::_cos ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	cycle
+/**	@lua	cycle
 	@text	Cycle v0 between v1 and v2.
 	
 	@in		MOAIParticleScript self
@@ -294,7 +294,7 @@ int MOAIParticleScript::_cycle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	div
+/**	@lua	div
 	@text	r0 = v0 / v1
 	
 	@in		MOAIParticleScript self
@@ -308,7 +308,7 @@ int MOAIParticleScript::_div ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	ease
+/**	@lua	ease
 	@text	Load a register with a value interpolated between two numbers
 			using an ease curve.
 	
@@ -324,7 +324,7 @@ int MOAIParticleScript::_ease ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	easeDelta
+/**	@lua	easeDelta
 	@text	Load a register with a value interpolated between two numbers
 			using an ease curve. Apply as a delta.
 	
@@ -340,7 +340,7 @@ int MOAIParticleScript::_easeDelta ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	mul
+/**	@lua	mul
 	@text	r0 = v0 * v1
 	
 	@in		MOAIParticleScript self
@@ -354,7 +354,7 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	norm
+/**	@lua	norm
 	@text	<p>r0 = v0 / |v|</p>
 			<p>r1 = v1 / |v|</p>
 			<p>Where |v| == sqrt( v0^2 + v1^2)</p>
@@ -371,7 +371,7 @@ int MOAIParticleScript::_norm ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	packConst
+/**	@lua	packConst
 	@text	Pack a const value into a particle script param.
 	
 	@in		number const		Const value to pack.
@@ -389,7 +389,7 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	packLiveReg
+/**	@lua	packLiveReg
 	@text	Pack a live register index into a particle script param.
 	
 	@in		number regIdx		Register index to pack.
@@ -405,7 +405,7 @@ int MOAIParticleScript::_packLiveReg ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	packReg
+/**	@lua	packReg
 	@text	Pack a register index into a particle script param.
 	
 	@in		number regIdx		Register index to pack.
@@ -421,7 +421,7 @@ int MOAIParticleScript::_packReg ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rand
+/**	@lua	rand
 	@text	Load a register with a random number from a range.
 	
 	@in		MOAIParticleScript self
@@ -435,7 +435,7 @@ int MOAIParticleScript::_rand ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	randVec
+/**	@lua	randVec
 	@text	Load two registers with the X and Y components of a vector
 			with randomly chosen direction and length.
 	
@@ -451,7 +451,7 @@ int MOAIParticleScript::_randVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	set
+/**	@lua	set
 	@text	Load a value into a register.
 	
 	@in		MOAIParticleScript self
@@ -464,7 +464,7 @@ int MOAIParticleScript::_set ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLiveReg
+/**	@lua	setLiveReg
 	@text	Load a value into a live register. Live registers can be updated
 			by additional calls to setReg, which does not alter the compiled particle
 			script. Live registers are a distinct register set from the normal register
@@ -492,7 +492,7 @@ int MOAIParticleScript::_setLiveReg ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sin
+/**	@lua	sin
  @text	r0 = sin(v0)
  
  @in		MOAIParticleScript self
@@ -505,7 +505,7 @@ int MOAIParticleScript::_sin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sprite
+/**	@lua	sprite
 	@text	Push a new sprite for rendering. To render a particle, first
 			call 'sprite' to create a new sprite at the particle's location.
 			Then modify the sprite's registers to create animated effects
@@ -519,7 +519,7 @@ int MOAIParticleScript::_sprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sub
+/**	@lua	sub
 	@text	r0 = v0 - v1
 	
 	@in		MOAIParticleScript self
@@ -533,7 +533,7 @@ int MOAIParticleScript::_sub ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	tan
+/**	@lua	tan
  @text	r0 = tan(v0)
  
  @in		MOAIParticleScript self
@@ -546,7 +546,7 @@ int MOAIParticleScript::_tan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	time
+/**	@lua	time
 	@text	Load the normalized age of the particle into a register.
 	
 	@in		MOAIParticleScript self
@@ -558,7 +558,7 @@ int MOAIParticleScript::_time ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	wrap
+/**	@lua	wrap
 	@text	Wrap v0 between v1 and v2.
 	
 	@in		MOAIParticleScript self
@@ -573,7 +573,7 @@ int MOAIParticleScript::_wrap ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	vecAngle
+/**	@lua	vecAngle
 	@text	Compute angle (in degrees) between v0 and v1.
 	
 	@in		MOAIParticleScript self

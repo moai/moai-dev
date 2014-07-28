@@ -12,7 +12,7 @@ class MOAIGfxState;
 //================================================================//
 // MOAIGfxQuad2D
 //================================================================//
-/**	@name	MOAIGfxQuad2D
+/**	@lua	MOAIGfxQuad2D
 	@text	Single textured quad.
 */
 class MOAIGfxQuad2D :

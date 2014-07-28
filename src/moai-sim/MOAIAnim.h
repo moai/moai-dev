@@ -23,7 +23,7 @@ public:
 //================================================================//
 // MOAIAnim
 //================================================================//
-/**	@name MOAIAnim
+/**	@lua MOAIAnim
 	@text Bind animation curves to nodes and provides timer controls for animation playback.
 */
 class MOAIAnim :

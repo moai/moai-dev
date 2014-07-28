@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	authenticatePlayer
+/**	@lua	authenticatePlayer
 	@text	Makes sure GameCenter is supported and an account is 
 			logged in. If none are logged in, this will prompt the 
 			user to log in. This must be called before any other 
@@ -70,7 +70,7 @@ int MOAIGameCenterIOS::_authenticatePlayer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPlayerAlias
+/**	@lua	getPlayerAlias
 	@text	Returns the user visible player name string from GameCenter.
 
 	@in 	nil
@@ -87,7 +87,7 @@ int MOAIGameCenterIOS::_getPlayerAlias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScores
+/**	@lua	getScores
 	@text	Returns the top ten scores of everyone for all-time. 
 			Optionally specify a leaderboard, player scope, time scope 
 			and range. If no leaderboard was specified, this will 
@@ -143,7 +143,7 @@ int MOAIGameCenterIOS::_getScores ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isAuthenticated
+/**	@lua	isAuthenticated
 	@text	Returns whether or not there is an authenticated local player.
 			
 	@in		nil
@@ -159,7 +159,7 @@ int MOAIGameCenterIOS::_isAuthenticated ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isSupported
+/**	@lua	isSupported
 	@text	Returns whether or not GameCenter is supported on the 
 			current device.
 			
@@ -176,7 +176,7 @@ int MOAIGameCenterIOS::_isSupported ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportAchievementProgress
+/**	@lua	reportAchievementProgress
 	@text	Reports an achievement progress to GameCenter.
 			
 	@in		string	identifier
@@ -201,7 +201,7 @@ int MOAIGameCenterIOS::_reportAchievementProgress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportScore
+/**	@lua	reportScore
 	@text	Reports a score to a desired leaderboard on GameCenter.
 			
 	@in		number	score
@@ -226,7 +226,7 @@ int MOAIGameCenterIOS::_reportScore ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGetScoresCallabck
+/**	@lua	setGetScoresCallabck
 	@text	Sets the function to be called upon a successful '
 			getScores () call.
 			
@@ -243,7 +243,7 @@ int MOAIGameCenterIOS::_setGetScoresCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showDefaultAchievments
+/**	@lua	showDefaultAchievments
 	@text	Displays the default achievements view.
 			
 	@in		nil
@@ -272,7 +272,7 @@ int MOAIGameCenterIOS::_showDefaultAchievements ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showDefaultLeaderboard
+/**	@lua	showDefaultLeaderboard
 	@text	Displays the default leaderboard view.
 			
 	@in		nil

@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getFarPlane
+/**	@lua	getFarPlane
 	@text	Returns the camera's far plane.
 
 	@in		MOAICamera self
@@ -27,7 +27,7 @@ int MOAICamera::_getFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFieldOfView
+/**	@lua	getFieldOfView
 	@text	Returns the camera's horizontal field of view.
 
 	@in		MOAICamera self
@@ -77,7 +77,7 @@ int MOAICamera::_getFloorMove ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFocalLength
+/**	@lua	getFocalLength
 	@text	Returns the camera's focal length given the width of
 			the view plane.
 
@@ -94,7 +94,7 @@ int MOAICamera::_getFocalLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNearPlane
+/**	@lua	getNearPlane
 	@text	Returns the camera's near plane.
 
 	@in		MOAICamera self
@@ -167,7 +167,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFarPlane
+/**	@lua	setFarPlane
 	@text	Sets the camera's far plane distance.
 
 	@in		MOAICamera self
@@ -181,7 +181,7 @@ int MOAICamera::_setFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFieldOfView
+/**	@lua	setFieldOfView
 	@text	Sets the camera's horizontal field of view.
 
 	@in		MOAICamera self
@@ -195,7 +195,7 @@ int MOAICamera::_setFieldOfView( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNearPlane
+/**	@lua	setNearPlane
 	@text	Sets the camera's near plane distance.
 
 	@in		MOAICamera self
@@ -209,7 +209,7 @@ int MOAICamera::_setNearPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setOrtho
+/**	@lua	setOrtho
 	@text	Sets orthographic mode.
 
 	@in		MOAICamera self

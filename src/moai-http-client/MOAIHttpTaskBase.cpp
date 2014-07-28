@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getProgress
+/**	@lua	getProgress
 	@text	Returns the progress of the download.
 	
 	@in		MOAIHttpTaskBase self
@@ -29,7 +29,7 @@ int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getResponseCode
+/**	@lua	getResponseCode
 	@text	Returns the response code returned by the server after a httpPost or httpGet call.
  
 	@in		MOAIHttpTaskBase self
@@ -44,7 +44,7 @@ int MOAIHttpTaskBase::_getResponseCode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getResponseHeader
+/**	@lua	getResponseHeader
 	@text	Returns the response header given its name, or nil if it wasn't provided by the server.
 			Header names are case-insensitive and if multiple responses are given, they will be
 			concatenated with a comma separating the values.
@@ -70,7 +70,7 @@ int MOAIHttpTaskBase::_getResponseHeader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the size of the string obtained from a httpPost or httpGet call.
 
 	@in		MOAIHttpTaskBase self
@@ -85,7 +85,7 @@ int MOAIHttpTaskBase::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getString
+/**	@lua	getString
 	@text	Returns the text obtained from a httpPost or httpGet call.
 
 	@in		MOAIHttpTaskBase self
@@ -102,7 +102,7 @@ int MOAIHttpTaskBase::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	httpGet
+/**	@lua	httpGet
 	@text	Sends an API call to the server for downloading data.  The callback function (from setCallback) will run when the call is complete, i.e. this action is asynchronous and returns almost instantly.
 
 	@in		MOAIHttpTaskBase self
@@ -132,7 +132,7 @@ int MOAIHttpTaskBase::_httpGet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	httpPost
+/**	@lua	httpPost
 	@text	Sends an API call to the server for downloading data.  The callback function (from setCallback) will run when the call is complete, i.e. this action is asynchronous and returns almost instantly.
 
 	@overload
@@ -193,7 +193,7 @@ int MOAIHttpTaskBase::_httpPost ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isBusy
+/**	@lua	isBusy
 	@text	Returns whether or not the task is busy.
  
 	@in		MOAIHttpTaskBase self
@@ -207,7 +207,7 @@ int MOAIHttpTaskBase::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	parseXml
+/**	@lua	parseXml
 	@text	Parses the text data returned from a httpGet or httpPost operation as XML and then returns a MOAIXmlParser with the XML content initialized.
 
 	@in		MOAIHttpTaskBase self
@@ -234,7 +234,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	performAsync
+/**	@lua	performAsync
 	@text	Perform the HTTP task asynchronously.
 
 	@in		MOAIHttpTaskBase self
@@ -249,7 +249,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	performSync
+/**	@lua	performSync
 	@text	Perform the HTTP task synchronously ( blocking).
 
 	@in		MOAIHttpTaskBase self
@@ -264,7 +264,7 @@ int MOAIHttpTaskBase::_performSync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBody
+/**	@lua	setBody
 	@text	Sets the body for a POST or PUT.
 
 	@overload
@@ -305,7 +305,7 @@ int MOAIHttpTaskBase::_setBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets the callback function used when a request is complete.
 
 	@in		MOAIHttpTaskBase self
@@ -320,7 +320,7 @@ int MOAIHttpTaskBase::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCookieDst
+/**	@lua	setCookieDst
 	@text	Sets the file to save the cookies for this HTTP request
  
 	@in		MOAIHttpTaskBase self
@@ -338,7 +338,7 @@ int	MOAIHttpTaskBase::_setCookieDst		( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCookieSrc
+/**	@lua	setCookieSrc
 	@text	Sets the file to read the cookies for this HTTP request
  
 	@in		MOAIHttpTaskBase self
@@ -356,7 +356,7 @@ int MOAIHttpTaskBase::_setCookieSrc		( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFailOnError
+/**	@lua	setFailOnError
  @text	Sets whether or not curl calls will fail if the HTTP status code is above 400
  
  @in	MOAIHttpTaskBase self
@@ -374,7 +374,7 @@ int MOAIHttpTaskBase::_setFailOnError ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFollowRedirects
+/**	@lua	setFollowRedirects
  @text	Sets whether or not curl should follow HTTP header redirects.
  
  @in	MOAIHttpTaskBase self
@@ -391,7 +391,7 @@ int MOAIHttpTaskBase::_setFollowRedirects ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setHeader
+/**	@lua	setHeader
 	@text	Sets a custom header field. May be used to override default headers.
 
 	@in		MOAIHttpTaskBase self
@@ -410,7 +410,7 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStream
+/**	@lua	setStream
 	@text	Sets a custom stream to read data into.
  
 	@in		MOAIHttpTaskBase self
@@ -426,7 +426,7 @@ int MOAIHttpTaskBase::_setStream ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTimeout
+/**	@lua	setTimeout
  @text	Sets the timeout for the task.
  
  @in		MOAIHttpTaskBase self
@@ -441,7 +441,7 @@ int  MOAIHttpTaskBase::_setTimeout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUrl
+/**	@lua	setUrl
 	@text	Sets the URL for the task.
 
 	@in		MOAIHttpTaskBase self
@@ -456,7 +456,7 @@ int  MOAIHttpTaskBase::_setUrl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUserAgent
+/**	@lua	setUserAgent
 	@text	Sets the 'useragent' header for the task.
 
 	@in		MOAIHttpTaskBase self
@@ -471,7 +471,7 @@ int  MOAIHttpTaskBase::_setUserAgent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVerb
+/**	@lua	setVerb
 	@text	Sets the HTTP verb.
 
 	@in		MOAIHttpTaskBase self
@@ -488,7 +488,7 @@ int  MOAIHttpTaskBase::_setVerb ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVerbose
+/**	@lua	setVerbose
 	@text	Sets the task implementation to print out debug information (if any).
 
 	@in		MOAIHttpTaskBase self

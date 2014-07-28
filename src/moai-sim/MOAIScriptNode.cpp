@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveAttrs
+/**	@lua	reserveAttrs
 	@text	Reserve memory for custom attributes and initializes them to 0.
 	
 	@in		MOAIScriptNode self
@@ -27,7 +27,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets a Lua function to be called whenever the node is updated.
 	
 	@in		MOAIScriptNode self

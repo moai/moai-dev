@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DGearJoint
 //================================================================//
-/**	@name MOAIBox2DGearJoint
+/**	@lua MOAIBox2DGearJoint
 	@text Box2D gear joint.
 */
 class MOAIBox2DGearJoint :

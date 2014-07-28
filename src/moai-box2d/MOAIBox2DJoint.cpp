@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	destroy
+/**	@lua	destroy
 	@text	Schedule joint for destruction.
 	
 	@in		MOAIBox2DJoint self
@@ -30,7 +30,7 @@ int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAnchorA
+/**	@lua	getAnchorA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -54,7 +54,7 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAnchorB
+/**	@lua	getAnchorB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -78,7 +78,7 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBodyA
+/**	@lua	getBodyA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -99,7 +99,7 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBodyB
+/**	@lua	getBodyB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -120,7 +120,7 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionForce
+/**	@lua	getReactionForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -146,7 +146,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionTorque
+/**	@lua	getReactionTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self

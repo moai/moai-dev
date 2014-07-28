@@ -12,7 +12,7 @@
 //================================================================//
 // MOAIMobileAppTrackerIOS
 //================================================================//
-/**	@name	MOAIMobileAppTrackerIOS
+/**	@lua	MOAIMobileAppTrackerIOS
 	@text	Wrapper for WebAppTracker interface.
 */
 class MOAIMobileAppTrackerIOS :

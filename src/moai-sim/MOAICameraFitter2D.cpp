@@ -10,7 +10,7 @@
 #include <moai-sim/MOAIViewport.h>
 
 //----------------------------------------------------------------//
-/**	@name	clearAnchors
+/**	@lua	clearAnchors
 	@text	Remove all camera anchors from the fitter.
 	
 	@in		MOAICameraFitter2D self
@@ -25,7 +25,7 @@ int MOAICameraFitter2D::_clearAnchors ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clearFitMode
+/**	@lua	clearFitMode
 	@text	Clears bits in the fitting mask.
 	
 	@in		MOAICameraFitter2D self
@@ -43,7 +43,7 @@ int MOAICameraFitter2D::_clearFitMode( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFitDistance
+/**	@lua	getFitDistance
 	@text	Returns the distance between the camera's current x, y, scale and
 			the target x, y, scale. As the camera approaches its target, the
 			distance approaches 0. Check the value returned by this function
@@ -61,7 +61,7 @@ int MOAICameraFitter2D::_getFitDistance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFitLoc
+/**	@lua	getFitLoc
 	@text	Get the fitter location.
 	
 	@in		MOAICameraFitter2D self
@@ -77,7 +77,7 @@ int MOAICameraFitter2D::_getFitLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFitMode
+/**	@lua	getFitMode
 	@text	Gets bits in the fitting mask.
 	
 	@in		MOAICameraFitter2D self
@@ -91,7 +91,7 @@ int MOAICameraFitter2D::_getFitMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFitScale
+/**	@lua	getFitScale
 	@text	Returns the fit scale
 	
 	@in		MOAICameraFitter2D self
@@ -105,7 +105,7 @@ int MOAICameraFitter2D::_getFitScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTargetLoc
+/**	@lua	getTargetLoc
  @text	Get the target location.
  
  @in	MOAICameraFitter2D self
@@ -121,7 +121,7 @@ int MOAICameraFitter2D::_getTargetLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTargetScale
+/**	@lua	getTargetScale
  @text	Returns the target scale
  
  @in	MOAICameraFitter2D self
@@ -135,7 +135,7 @@ int MOAICameraFitter2D::_getTargetScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertAnchor
+/**	@lua	insertAnchor
 	@text	Add an anchor to the fitter.
 	
 	@in		MOAICameraFitter2D self
@@ -153,7 +153,7 @@ int MOAICameraFitter2D::_insertAnchor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removeAnchor
+/**	@lua	removeAnchor
 	@text	Remove an anchor from the fitter.
 	
 	@in		MOAICameraFitter2D self
@@ -171,7 +171,7 @@ int MOAICameraFitter2D::_removeAnchor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBounds
+/**	@lua	setBounds
 	@text	Sets or clears the world bounds of the fitter. The camera will not
 			move outside of the fitter's bounds.
 	
@@ -211,7 +211,7 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCamera
+/**	@lua	setCamera
 	@text	Set a MOAITransform for the fitter to use as a camera.
 			The fitter will dynamically change the location and
 			scale of the camera to keep all of the anchors on the
@@ -229,7 +229,7 @@ int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDamper
+/**	@lua	setDamper
 	@text	Sets the fitter's damper coefficient. This is a scalar
 			applied to the difference between the camera transform's
 			location and the fitter's target location every frame.
@@ -249,7 +249,7 @@ int MOAICameraFitter2D::_setDamper ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFitLoc
+/**	@lua	setFitLoc
 	@text	Set the fitter's location.
 	
 	@in		MOAICameraFitter2D self
@@ -275,7 +275,7 @@ int MOAICameraFitter2D::_setFitLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFitMode
+/**	@lua	setFitMode
 	@text	Sets bits in the fitting mask.
 	
 	@in		MOAICameraFitter2D self
@@ -290,7 +290,7 @@ int MOAICameraFitter2D::_setFitMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFitScale
+/**	@lua	setFitScale
 	@text	Set the fitter's scale.
 	
 	@in		MOAICameraFitter2D self
@@ -314,7 +314,7 @@ int MOAICameraFitter2D::_setFitScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMin
+/**	@lua	setMin
 	@text	Set the minimum number of world units to be displayed by
 			the camera along either axis.
 	
@@ -330,7 +330,7 @@ int MOAICameraFitter2D::_setMin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setViewport
+/**	@lua	setViewport
 	@text	Set the viewport to be used for fitting.
 	
 	@in		MOAICameraFitter2D self
@@ -345,7 +345,7 @@ int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	snapToTarget
+/**	@lua	snapToTarget
 	@text	Snap the camera to the target fitting.
 	
 	@overload	Snap the fitter's camera transform to the target.

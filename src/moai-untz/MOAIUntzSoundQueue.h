@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIUntzSoundQueue
 //================================================================//
-/**	@name	MOAIUntzSoundQueue
+/**	@lua	MOAIUntzSoundQueue
 	@text	Untz sound queue object.
 	
 	@attr	ATTR_VOLUME

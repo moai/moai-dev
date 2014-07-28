@@ -11,7 +11,7 @@ class MOAIViewport;
 //================================================================//
 // MOAICamera
 //================================================================//
-/**	@name	MOAICamera
+/**	@lua	MOAICamera
 	@text	Perspective or orthographic camera.
 */
 class MOAICamera :

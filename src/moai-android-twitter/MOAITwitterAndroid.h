@@ -11,7 +11,7 @@
 //================================================================//
 // MOAITwitterAndroid
 //================================================================//
-/**	@name	MOAITwitterAndroid
+/**	@lua	MOAITwitterAndroid
 	@text	Wrapper for Twitter integration on Android devices.
 			Twitter provides social integration for sharing on
 			www.twitter.com.

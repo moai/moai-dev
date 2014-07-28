@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	forceException
+/**	@lua	forceException
 	@text	Force and exception to send breadcrumbs to crittercism
 
 	@out	nil
@@ -51,7 +51,7 @@ int MOAICrittercismAndroid::_forceException ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize Crittercism.
 
 	@in		string appId			Available in Crittercism dashboard settings.
@@ -87,7 +87,7 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	leaveBreadcrumb
+/**	@lua	leaveBreadcrumb
 	@text	Leave a breadcrumb (log statement) to trace execution.
 
 	@in		string breadcrumb		A string describing the code location.
@@ -123,7 +123,7 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUser
+/**	@lua	setUser
 	@text	Sets an identifier for a user
 
 	@in		string identifier		A string identifying the user.

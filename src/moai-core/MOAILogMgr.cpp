@@ -45,7 +45,7 @@ void MOAIPrint ( cc8* message, ... ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	closeFile
+/**	@lua	closeFile
 	@text	Resets log output to stdout.
 
 	@out	nil
@@ -59,7 +59,7 @@ int MOAILogMgr::_closeFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDebugBuild
+/**	@lua	isDebugBuild
 	@text	Returns a boolean value indicating whether Moai has been
 			compiles as a debug build or not.
 
@@ -79,7 +79,7 @@ int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	log
+/**	@lua	log
 	@text	Alias for print.
 
 	@in		string message
@@ -97,7 +97,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openFile
+/**	@lua	openFile
 	@text	Opens a new file to receive log messages.
 
 	@in		string filename
@@ -115,7 +115,7 @@ int MOAILogMgr::_openFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	registerLogMessage
+/**	@lua	registerLogMessage
 	@text	Register a format string to handle a log message. Register
 			an empty string to hide messages.
 
@@ -141,7 +141,7 @@ int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLogLevel
+/**	@lua	setLogLevel
 	@text	Set the logging level.
 
 	@in		number logLevel		One of MOAILogMgr LOG_NONE, LOG_ERROR, LOG_WARNING, LOG_STATUS
@@ -158,7 +158,7 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTypeCheckLuaParams
+/**	@lua	setTypeCheckLuaParams
 	@text	Set or clear type checking of parameters passed to Lua bound Moai API functions.
 
 	@opt	boolean check		Default value is false.

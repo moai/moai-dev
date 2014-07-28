@@ -18,7 +18,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDefaultSize
+// TODO: doxygen
+int MOAIFont::_getCache ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push (( MOAILuaObject* )self->mCache );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getDefaultSize
 	@text	Requests the font's default size
 	
 	@in		MOAIFont self
@@ -31,7 +39,7 @@ int MOAIFont::_getDefaultSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFilename
+/**	@lua	getFilename
 	@text	Returns the filename of the font.
 	
 	@in		MOAIFont self
@@ -44,7 +52,7 @@ int MOAIFont::_getFilename ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFlags
+/**	@lua	getFlags
 	@text	Returns the current flags.
 	
 	@in		MOAIFont self
@@ -57,7 +65,7 @@ int MOAIFont::_getFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getImage
+/**	@lua	getImage
 	@text	Requests a 'glyph map image' from the glyph cache currently
 			attached to the font. The glyph map image stitches together the
 			texture pages used by the glyph cache to produce a single image
@@ -81,7 +89,15 @@ int MOAIFont::_getImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+// TODO: doxygen
+int MOAIFont::_getReader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push (( MOAILuaObject* )self->mReader );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	load
 	@text	Sets the filename of the font for use when loading glyphs.
 
 	@in		MOAIFont self
@@ -98,7 +114,7 @@ int MOAIFont::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadFromBMFont
+/**	@lua	loadFromBMFont
 	@text	Sets the filename of the font for use when loading a BMFont.
  
 	@in		MOAIFont self
@@ -140,7 +156,7 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	preloadGlyphs
+/**	@lua	preloadGlyphs
 	@text	Loads and caches glyphs for quick access later.
 
 	@in		MOAIFont self
@@ -172,7 +188,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rebuildKerningTables
+/**	@lua	rebuildKerningTables
 	@text	Forces a full reload of the kerning tables for either a single
 			glyph set within the font (if a size is specified) or for all
 			glyph sets in the font.
@@ -210,7 +226,7 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCache
+/**	@lua	setCache
 	@text	Attaches or clears the glyph cache associated with the font.
 			The cache is an object derived from MOAIGlyphCacheBase and may be
 			a dynamic cache that can allocate space for new glyphs on an
@@ -229,7 +245,7 @@ int MOAIFont::_setCache ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDefaultSize
+/**	@lua	setDefaultSize
 	@text	Selects a glyph set size to use as the default size when no
 			other size is specified by objects wishing to use MOAIFont to
 			render text.
@@ -262,7 +278,7 @@ int MOAIFont::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFlags
+/**	@lua	setFlags
 	@text	Set flags to control font loading behavior. Right now the
 			only supported flag is FONT_AUTOLOAD_KERNING which may be used
 			to enable automatic loading of kern tables. This flag is initially
@@ -280,7 +296,7 @@ int MOAIFont::_setFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setImage
+/**	@lua	setImage
 	@text	Passes an image to the glyph cache currently attached to the font.
 			The image will be used to recreate and initialize the texture memory
 			managed by the glyph cache and used by the font. It will not affect
@@ -312,7 +328,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setReader
+/**	@lua	setReader
 	@text	Attaches or clears the MOAIFontReader associated with the font.
 			MOAIFontReader is responsible for loading and rendering glyphs from
 			a font file on demand. If you are using a static font and do not
@@ -335,7 +351,7 @@ int MOAIFont::_setReader ( lua_State* L ) {
 #ifdef DOXYGEN
 
 	//----------------------------------------------------------------//
-	/**	@name	loadFromTTF
+	/**	@lua	loadFromTTF
 		@text	Preloads a set of glyphs from a TTF or OTF. Included for
 				backward compatibility. May be removed in a future release.
 		
@@ -677,10 +693,12 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "getCache",					_getCache },
 		{ "getDefaultSize",				_getDefaultSize },
 		{ "getFlags",					_getFlags },
 		{ "getFilename",				_getFilename },
 		{ "getImage",					_getImage },
+		{ "getReader",					_getReader },
 		{ "load",						_load },
 		{ "loadFromBMFont",				_loadFromBMFont },
 		{ "preloadGlyphs",				_preloadGlyphs },	

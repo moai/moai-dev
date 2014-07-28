@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMoviePlayerAndroid
 //================================================================//
-/**	@name	MOAIMoviePlayerAndroid
+/**	@lua	MOAIMoviePlayerAndroid
 	@text	Wrapper for simple video playback. Exposed to Lua via 
 			MOAIMoviePlayer on all mobile platforms.
 */

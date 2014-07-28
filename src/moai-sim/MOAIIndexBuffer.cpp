@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Release any memory held by this index buffer.
 	
 	@in		MOAIIndexBuffer self
@@ -23,7 +23,7 @@ int	MOAIIndexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Set capacity of buffer.
 	
 	@in		MOAIIndexBuffer self
@@ -40,7 +40,7 @@ int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIndex
+/**	@lua	setIndex
 	@text	Initialize an index.
 	
 	@in		MOAIIndexBuffer self

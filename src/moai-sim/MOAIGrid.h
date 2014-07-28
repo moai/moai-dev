@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIGrid
 //================================================================//
-/**	@name	MOAIGrid
+/**	@lua	MOAIGrid
 	@text	Grid data object. Grid cells are indexed starting and (1,1).
 			Grid indices will wrap if out of range.
 */

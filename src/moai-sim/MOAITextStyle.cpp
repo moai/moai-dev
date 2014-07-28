@@ -41,7 +41,7 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getColor
+/**	@lua	getColor
 	@text	Gets the color of the style.
 	
 	@in		MOAITextStyle self
@@ -64,7 +64,7 @@ int MOAITextStyle::_getColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFont
+/**	@lua	getFont
 	@text	Gets the font of the style.
 	
 	@in		MOAITextStyle self
@@ -83,7 +83,7 @@ int MOAITextStyle::_getFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScale
+/**	@lua	getScale
 	@text	Gets the scale of the style.
 	
 	@in		MOAITextStyle self
@@ -97,7 +97,7 @@ int MOAITextStyle::_getScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Gets the size of the style.
 	
 	@in		MOAITextStyle self
@@ -110,7 +110,7 @@ int MOAITextStyle::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor
+/**	@lua	setColor
 	@text	Initialize the style's color.
 	
 	@in		MOAITextStyle self
@@ -127,7 +127,7 @@ int MOAITextStyle::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFont
+/**	@lua	setFont
 	@text	Sets or clears the style's font.
 	
 	@in		MOAITextStyle self
@@ -144,7 +144,7 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScale
+/**	@lua	setScale
 	@text	Sets the scale of the style. The scale is applied to
 			any glyphs drawn using the style after the glyph set
 			has been selected by size.
@@ -161,7 +161,7 @@ int MOAITextStyle::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSize
+/**	@lua	setSize
 	@text	Sets or clears the style's size.
 	
 	@in		MOAITextStyle self

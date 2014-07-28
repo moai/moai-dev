@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIPointerSensor
 //================================================================//
-/**	@name	MOAIPointerSensor
+/**	@lua	MOAIPointerSensor
 	@text	Pointer sensor.
 */
 class MOAIPointerSensor :

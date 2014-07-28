@@ -6,7 +6,7 @@
 //================================================================//
 // MOAITransform2D
 //================================================================//
-/**	@name	MOAITransform2D
+/**	@lua	MOAITransform2D
 	@text	2D transformation hierarchy node.
 
 	@attr	ATTR_X_PIV

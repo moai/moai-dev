@@ -59,7 +59,7 @@ int MOAIChartBoostAndroid::_showInterstitial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasCachedInterstitial
+/**	@lua	hasCachedInterstitial
 	@text	Determine whether or not a cached interstitial is available.
 
 	@out 	boolean	hasCached

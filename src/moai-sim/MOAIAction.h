@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAction
 //================================================================//
-/**	@name MOAIAction
+/**	@lua MOAIAction
 	@text Base class for actions.
 	
 	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()

@@ -21,7 +21,7 @@ public:
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-/**	@name	MOAIVertexBuffer
+/**	@lua	MOAIVertexBuffer
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :

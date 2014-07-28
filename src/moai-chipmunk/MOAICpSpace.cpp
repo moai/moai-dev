@@ -166,7 +166,7 @@ static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, 
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	activateShapesTouchingShape
+/**	@lua	activateShapesTouchingShape
 	@text	Activates shapes that are currently touching the specified shape.
 	
 	@in		MOAICpSpace self
@@ -184,7 +184,7 @@ int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDamping
+/**	@lua	getDamping
 	@text	Returns the current damping in the space.
 
 	@in		MOAICpSpace self
@@ -198,7 +198,7 @@ int MOAICpSpace::_getDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGravity
+/**	@lua	getGravity
 	@text	Returns the current gravity as two return values (x grav, y grav).
 
 	@in		MOAICpSpace self
@@ -214,7 +214,7 @@ int MOAICpSpace::_getGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getIdleSpeedThreshold
+/**	@lua	getIdleSpeedThreshold
 	@text	Returns the speed threshold which indicates whether a body
 			is idle (less than or equal to threshold) or in motion (greater than threshold).
 
@@ -229,7 +229,7 @@ int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getIterations
+/**	@lua	getIterations
 	@text	Returns the number of iterations the space is configured to perform.
 	
 	@in		MOAICpSpace self
@@ -243,7 +243,7 @@ int MOAICpSpace::_getIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSleepTimeThreshold
+/**	@lua	getSleepTimeThreshold
 	@text	Returns the sleep time threshold.
 
 	@in		MOAICpSpace self
@@ -257,7 +257,7 @@ int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStaticBody
+/**	@lua	getStaticBody
 	@text	Returns the static body associated with this space.
 
 	@in		MOAICpSpace self
@@ -277,7 +277,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertPrim
+/**	@lua	insertPrim
 	@text	Inserts a new prim into the world (can be used as a body, joint, etc.)
 
 	@in		MOAICpSpace self
@@ -295,7 +295,7 @@ int MOAICpSpace::_insertPrim ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rehashShape
+/**	@lua	rehashShape
 	@text	Updates the shape in the spatial hash.
 
 	@in		MOAICpSpace self
@@ -313,7 +313,7 @@ int MOAICpSpace::_rehashShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rehashStatic
+/**	@lua	rehashStatic
 	@text	Updates the static shapes in the spatial hash.
 
 	@in		MOAICpSpace self
@@ -327,7 +327,7 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removePrim
+/**	@lua	removePrim
 	@text	Removes a prim (body, joint, etc.) from the space.
 
 	@in		MOAICpSpace self
@@ -345,7 +345,7 @@ int MOAICpSpace::_removePrim ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resizeActiveHash
+/**	@lua	resizeActiveHash
 	@text	Sets the dimensions of the active object hash.
 
 	@in		MOAICpSpace self
@@ -364,7 +364,7 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resizeStaticHash
+/**	@lua	resizeStaticHash
 	@text	Sets the dimensions of the static object hash.
 
 	@in		MOAICpSpace self
@@ -383,7 +383,7 @@ int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCollisionHandler
+/**	@lua	setCollisionHandler
 	@text	Sets a function to handle the specific collision type on
 			this object.  If nil is passed as the handler, the collision
 			handler is unset.
@@ -461,7 +461,7 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDamping
+/**	@lua	setDamping
 	@text	Sets the current damping in the space.
 
 	@in		MOAICpSpace self
@@ -476,7 +476,7 @@ int MOAICpSpace::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGravity
+/**	@lua	setGravity
 	@text	Sets the current gravity in the space.
 
 	@in		MOAICpSpace self
@@ -494,7 +494,7 @@ int MOAICpSpace::_setGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIdleSpeedThreshold
+/**	@lua	setIdleSpeedThreshold
 	@text	Sets the speed threshold which indicates whether a body is
 			idle (less than or equal to threshold) or in motion (greater than threshold).
 
@@ -510,7 +510,7 @@ int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIterations
+/**	@lua	setIterations
 	@text	Sets the number of iterations performed each simulation step.
 
 	@in		MOAICpSpace self
@@ -525,7 +525,7 @@ int MOAICpSpace::_setIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSleepTimeThreshold
+/**	@lua	setSleepTimeThreshold
 	@text	Sets the sleep time threshold. This is the amount of time
 			it takes bodies at rest to fall asleep.
 
@@ -541,7 +541,7 @@ int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeForPoint
+/**	@lua	shapeForPoint
 	@text	Retrieves a shape located at the specified X and Y position,
 			that exists on the specified layer (or any layer if nil) and
 			is part of the specified group (or any group if nil).
@@ -573,7 +573,7 @@ int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeForSegment
+/**	@lua	shapeForSegment
 	@text	Retrieves a shape that crosses the segment specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
@@ -623,7 +623,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeListForPoint
+/**	@lua	shapeListForPoint
 	@text	Retrieves a list of shapes that overlap the point specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
@@ -661,7 +661,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeListForRect
+/**	@lua	shapeListForRect
 	@text	Retrieves a list of shapes that overlap the rect specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
@@ -706,7 +706,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeListForSegment
+/**	@lua	shapeListForSegment
 	@text	Retrieves a list of shapes that overlap the segment specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).

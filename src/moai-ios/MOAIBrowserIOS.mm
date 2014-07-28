@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	canOpenURL
+/**	@lua	canOpenURL
  @text	Return true if iOS will handle the passed URL.
  
  @in	string url
@@ -38,7 +38,7 @@ int MOAIBrowserIOS::_canOpenURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openURL
+/**	@lua	openURL
 	@text	Open the native device web browser at the specified URL.
  
 	@in		string url
@@ -62,7 +62,7 @@ int MOAIBrowserIOS::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openURLWithParams
+/**	@lua	openURLWithParams
 	@text	Open the native device web browser at the specified URL
 			with the specified list of query string parameters.
  

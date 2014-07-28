@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIHttpTaskNSURL
 //================================================================//
-/**	@name	MOAIHttpTaskNSURL
+/**	@lua	MOAIHttpTaskNSURL
  @text	Implementation of MOAIHttpTask based on libcurl.
  */
 class MOAIHttpTaskNSURL :

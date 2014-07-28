@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getGroundAnchorA
+/**	@lua	getGroundAnchorA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
@@ -41,7 +41,7 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGroundAnchorB
+/**	@lua	getGroundAnchorB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
@@ -68,7 +68,7 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLength1
+/**	@lua	getLength1
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
@@ -91,7 +91,7 @@ int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLength2
+/**	@lua	getLength2
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self
@@ -113,7 +113,7 @@ int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRatio
+/**	@lua	getRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPulleyJoint self

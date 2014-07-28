@@ -34,7 +34,7 @@ private:
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
-/**	@name	MOAIVertexFormat
+/**	@lua	MOAIVertexFormat
 	@text	Vertex format class.
 */
 class MOAIVertexFormat :

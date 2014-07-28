@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setFrequency
+/**	@lua	setFrequency
 	@text	Set timer frequency.
 	
 	@in		MOAIParticleTimedEmitter self

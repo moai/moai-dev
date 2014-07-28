@@ -7,7 +7,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize Playhaven.
 	
 	@in		string	appId			Available in Playhaven dashboard settings.
@@ -43,7 +43,7 @@ int MOAIPlayhavenIOS::_setListener(lua_State* L) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContent
+/**	@lua	getContent
 	@text	Shows Playhaven content.
  
 	@in		string	placement	Placement position.
@@ -61,7 +61,7 @@ int MOAIPlayhavenIOS::_getContent(lua_State* L) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportIAPSolution
+/**	@lua	reportIAPSolution
 	@text	Reports IAP resolution status.
 
 	@in		number	status	Status code.

@@ -16,7 +16,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getAppIconBadgeNumber
+/**	@lua	getAppIconBadgeNumber
 	@text	Get the current icon badge number.
 				
 	@out 	integer	count
@@ -59,7 +59,7 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	registerForRemoteNotifications
+/**	@lua	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
 	@in		integer	types			A mask of requested notification types. See Apple documentation.
@@ -76,7 +76,7 @@ int MOAINotificationsIOS::_registerForRemoteNotifications ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAppIconBadgeNumber
+/**	@lua	setAppIconBadgeNumber
 	@text	Set the current icon badge number.
 			
 	@in		integer	count			The count to set on the icon badge.
@@ -108,7 +108,7 @@ int MOAINotificationsIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unregisterForRemoteNotifications
+/**	@lua	unregisterForRemoteNotifications
 	@text	Dregister for remote notifications.
 			
 	@out 	nil

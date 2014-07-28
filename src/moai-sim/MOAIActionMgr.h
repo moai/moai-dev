@@ -9,7 +9,7 @@ class MOAIAction;
 //================================================================//
 // MOAIActionMgr
 //================================================================//
-/**	@name MOAIActionMgr
+/**	@lua MOAIActionMgr
 	@text Manager class for MOAIActions.
 */
 class MOAIActionMgr :

@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize the bridge transform (map coordinates in one layer onto
 			another; useful for rendering screen space objects tied to world
 			space coordinates - map pins, for example).

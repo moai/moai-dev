@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setQuad
+/**	@lua	setQuad
 	@text	Set model space quad. Vertex order is clockwise from
 			upper left (xMin, yMax)
 	
@@ -51,7 +51,7 @@ int MOAITileDeck2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the model space dimensions of a single tile. When grid drawing, this
 			should be a unit rect centered at the origin for tiles that fit each grid
 			cell. Growing or shrinking the rect will cause tiles to overlap or leave
@@ -79,7 +79,7 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVQuad
+/**	@lua	setUVQuad
 	@text	Set the UV space dimensions of the quad. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -114,7 +114,7 @@ int MOAITileDeck2D::_setUVQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVRect
+/**	@lua	setUVRect
 	@text	Set the UV space dimensions of the quad.
 	
 	@in		MOAITileDeck2D self
@@ -138,7 +138,7 @@ int MOAITileDeck2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSize
+/**	@lua	setSize
 	@text	Controls how the texture is subdivided into tiles. Default
 			behavior is to subdivide the texture into N by M tiles,
 			but is tile dimensions are provided (in UV space) then the resulting
@@ -189,7 +189,7 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transform
+/**	@lua	transform
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
 	@in		MOAITileDeck2D self
@@ -209,7 +209,7 @@ int MOAITileDeck2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transformUV
+/**	@lua	transformUV
 	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
 	
 	@in		MOAITileDeck2D self

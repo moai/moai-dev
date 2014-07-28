@@ -78,7 +78,7 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	addBody
+/**	@lua	addBody
 	@text	Create and add a body to the world.
 	
 	@in		MOAIBox2DWorld self
@@ -113,7 +113,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addDistanceJoint
+/**	@lua	addDistanceJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -168,7 +168,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addFrictionJoint
+/**	@lua	addFrictionJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -221,7 +221,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addGearJoint
+/**	@lua	addGearJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -266,7 +266,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	addMotorJoint
+/** @lua	addMotorJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -305,7 +305,7 @@ int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addMouseJoint
+/**	@lua	addMouseJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -357,7 +357,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addPrismaticJoint
+/**	@lua	addPrismaticJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -408,7 +408,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addPulleyJoint
+/**	@lua	addPulleyJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -479,7 +479,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRevoluteJoint
+/**	@lua	addRevoluteJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -524,7 +524,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRopeJoint
+/**	@lua	addRopeJoint
 	@text	Create and add a rope joint to the world. See Box2D documentation.
  
 	@in		MOAIBox2DWorld self
@@ -579,7 +579,7 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	addWeldJoint
+/**	@lua	addWeldJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -624,7 +624,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addWheelJoint
+/**	@lua	addWheelJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
  
 	@in		MOAIBox2DWorld self
@@ -675,7 +675,7 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngularSleepTolerance
+/**	@lua	getAngularSleepTolerance
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -691,7 +691,7 @@ int MOAIBox2DWorld::_getAngularSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAutoClearForces
+/**	@lua	getAutoClearForces
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -707,7 +707,7 @@ int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGravity
+/**	@lua	getGravity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -726,7 +726,7 @@ int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLinearSleepTolerance
+/**	@lua	getLinearSleepTolerance
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -740,7 +740,7 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name   getRayCast
+/**	@lua   getRayCast
 	@text   return RayCast 1st point hit
        
 	@in		MOAIBox2DWorld self
@@ -791,7 +791,7 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTimeToSleep
+/**	@lua	getTimeToSleep
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -805,7 +805,7 @@ int MOAIBox2DWorld::_getTimeToSleep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngularSleepTolerance
+/**	@lua	setAngularSleepTolerance
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -822,7 +822,7 @@ int MOAIBox2DWorld::_setAngularSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAutoClearForces
+/**	@lua	setAutoClearForces
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -840,7 +840,7 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDebugDrawEnabled
+/**	@lua	setDebugDrawEnabled
 	@text	enable/disable debug drawing.
  
 	@in		MOAIBox2DWorld self
@@ -870,7 +870,7 @@ int MOAIBox2DWorld::_setDebugDrawEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDebugDrawFlags
+/**	@lua	setDebugDrawFlags
 	@text	Sets mask for debug drawing.
 	
 	@in		MOAIBox2DWorld self
@@ -890,7 +890,7 @@ int MOAIBox2DWorld::_setDebugDrawFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGravity
+/**	@lua	setGravity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -912,7 +912,7 @@ int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIterations
+/**	@lua	setIterations
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -930,7 +930,7 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLinearSleepTolerance
+/**	@lua	setLinearSleepTolerance
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -945,7 +945,7 @@ int MOAIBox2DWorld::_setLinearSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTimeToSleep
+/**	@lua	setTimeToSleep
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -960,7 +960,7 @@ int MOAIBox2DWorld::_setTimeToSleep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUnitsToMeters
+/**	@lua	setUnitsToMeters
 	@text	Sets a scale factor for converting game world units to Box2D meters.
 	
 	@in		MOAIBox2DWorld self

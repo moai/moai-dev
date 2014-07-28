@@ -11,7 +11,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIMultiTexture
 //================================================================//
-/**	@name	MOAIMultiTexture
+/**	@lua	MOAIMultiTexture
 	@text	Array of textures for multi-texturing.
 */
 class MOAIMultiTexture :

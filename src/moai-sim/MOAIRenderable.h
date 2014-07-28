@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIRenderable
 //================================================================//
-/**	@name	MOAIRenderable
+/**	@lua	MOAIRenderable
 	@text	Abstract base class for objects that can be rendered by MOAIRenderMgr.
 */
 class MOAIRenderable :

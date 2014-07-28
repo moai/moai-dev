@@ -12,7 +12,7 @@ class MOAILayer;
 //================================================================//
 // MOAIPinTransform
 //================================================================//
-/**	@name	MOAIPinTransform
+/**	@lua	MOAIPinTransform
 	@text	2D transform for connecting transforms across layers. Useful for
 			HUD overlay items and map pins.
 */

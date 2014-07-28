@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getJointSpeed
+/**	@lua	getJointSpeed
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -36,7 +36,7 @@ int MOAIBox2DPrismaticJoint::_getJointSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getJointTranslation
+/**	@lua	getJointTranslation
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -58,7 +58,7 @@ int MOAIBox2DPrismaticJoint::_getJointTranslation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLowerLimit
+/**	@lua	getLowerLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -80,7 +80,7 @@ int MOAIBox2DPrismaticJoint::_getLowerLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMotorForce
+/**	@lua	getMotorForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -104,7 +104,7 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMotorSpeed
+/**	@lua	getMotorSpeed
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -126,7 +126,7 @@ int MOAIBox2DPrismaticJoint::_getMotorSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUpperLimit
+/**	@lua	getUpperLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -148,7 +148,7 @@ int MOAIBox2DPrismaticJoint::_getUpperLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isLimitEnabled
+/**	@lua	isLimitEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -169,7 +169,7 @@ int MOAIBox2DPrismaticJoint::_isLimitEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isMotorEnabled
+/**	@lua	isMotorEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -190,7 +190,7 @@ int MOAIBox2DPrismaticJoint::_isMotorEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLimit
+/**	@lua	setLimit
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -219,7 +219,7 @@ int MOAIBox2DPrismaticJoint::_setLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLimitEnabled
+/**	@lua	setLimitEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -243,7 +243,7 @@ int MOAIBox2DPrismaticJoint::_setLimitEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxMotorForce
+/**	@lua	setMaxMotorForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -268,7 +268,7 @@ int MOAIBox2DPrismaticJoint::_setMaxMotorForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotor
+/**	@lua	setMotor
 	@text	See Box2D documentation.
 			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
 	
@@ -301,7 +301,7 @@ int MOAIBox2DPrismaticJoint::_setMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotorEnabled
+/**	@lua	setMotorEnabled
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
@@ -325,7 +325,7 @@ int MOAIBox2DPrismaticJoint::_setMotorEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMotorSpeed
+/**	@lua	setMotorSpeed
 	@text	See Box2D documentation.
 
 	@in		MOAIBox2DPrismaticJoint self

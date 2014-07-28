@@ -11,7 +11,7 @@
 //================================================================//
 // MOAITstoreGamecenterAndroid
 //================================================================//
-/**	@name	MOAITstoreGamecenterAndroid
+/**	@lua	MOAITstoreGamecenterAndroid
 */
 class MOAITstoreGamecenterAndroid :
 	public MOAIGlobalClass < MOAITstoreGamecenterAndroid, MOAILuaObject > {

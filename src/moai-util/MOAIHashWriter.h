@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIHashWriter
 //================================================================//
-/**	@name	MOAIHashWriter
+/**	@lua	MOAIHashWriter
 	@text	MOAIHashWriter may be attached to another stream for the
 			purpose of computing a hash while writing data to the other
 			stream.

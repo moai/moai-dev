@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DMouseJoint
 //================================================================//
-/**	@name MOAIBox2DMouseJoint
+/**	@lua MOAIBox2DMouseJoint
 	@text Box2D 'mouse' joint.
 */
 class MOAIBox2DMouseJoint :

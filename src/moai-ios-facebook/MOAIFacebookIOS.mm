@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	extendToken
+/**	@lua	extendToken
  @text	Extends the life of an active token. Should be called on app resume/start.
  
  @in		nil
@@ -26,7 +26,7 @@ int MOAIFacebookIOS::_extendToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getExpirationDate
+/**	@lua	getExpirationDate
  @text	Retrieve the Facebook login token expiration date.
  
  @in		nil
@@ -46,7 +46,7 @@ int MOAIFacebookIOS::_getExpirationDate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getToken
+/**	@lua	getToken
  @text	Retrieve the Facebook login token.
  
  @in		nil
@@ -68,7 +68,7 @@ int MOAIFacebookIOS::_getToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	graphRequest
+/**	@lua	graphRequest
 	@text	Make a request on Facebook's Graph API
  
 	@in		string	path
@@ -131,7 +131,7 @@ int MOAIFacebookIOS::_handleOpenUrl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
  @text	Initialize Facebook.
  
  @in		string	appId			Available in Facebook developer settings.
@@ -147,7 +147,7 @@ int MOAIFacebookIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	login
+/**	@lua	login
  @text	Prompt the user to login to Facebook.
  
  @opt	table	permissions		Optional set of required permissions. See Facebook documentation for a full list. Default is nil.
@@ -197,7 +197,7 @@ int MOAIFacebookIOS::_login ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	logout
+/**	@lua	logout
  @text	Log the user out of Facebook.
  
  @in		nil
@@ -213,7 +213,7 @@ int MOAIFacebookIOS::_logout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	postToFeed
+/**	@lua	postToFeed
  @text	Post a message to the logged in users' news feed.
  
  @in		string	link			The URL that the post links to. See Facebook documentation.
@@ -299,7 +299,7 @@ int MOAIFacebookIOS::_restoreSession ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendRequest
+/**	@lua	sendRequest
 	@text	Send an app request to the logged in users' friends.
  
 	@opt	string	message			The message for the request. See Facebook documentation. Default is nil.
@@ -350,7 +350,7 @@ int MOAIFacebookIOS::_sendRequest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sessionValid
+/**	@lua	sessionValid
  @text	Determine whether or not the current Facebook session is valid.
  
  @in		nil

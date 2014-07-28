@@ -12,7 +12,7 @@ class MOAIDataIOTask;
 //================================================================//
 // MOAIDataBuffer
 //================================================================//
-/**	@name	MOAIDataBuffer
+/**	@lua	MOAIDataBuffer
 	@text	Buffer for loading and holding data. Data operations may be
 			performed without additional penalty of marshalling buffers
 			between Lua and C.

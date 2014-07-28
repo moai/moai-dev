@@ -36,7 +36,7 @@ int MOAISerializer::_getObjectTables ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	serializeToFile
+/**	@lua	serializeToFile
 	@text	Serializes the specified table or object to a file.
 
 	@overload
@@ -91,7 +91,7 @@ int MOAISerializer::_serializeToFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	serializeToString
+/**	@lua	serializeToString
 	@text	Serializes the specified table or object to a string.
 
 	@overload

@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIGooglePlayServicesAndroid
 //================================================================//
-/**	@name	MOAIGooglePlayServicesAndroid
+/**	@lua	MOAIGooglePlayServicesAndroid
 	@text	Wrapper for Google Play services.
 */
 class MOAIGooglePlayServicesAndroid :

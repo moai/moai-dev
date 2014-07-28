@@ -92,7 +92,7 @@ namespace FMODDesigner
     }
 
 
-    /*!
+    /**
     * \class EventManager
     * \brief Manages loading and playback of sounds and sound "events"
     * 
@@ -105,7 +105,7 @@ namespace FMODDesigner
         struct SoundCategoryState;
         struct GroupData;
     public:
-        /*! @return true if project exists. */
+        /** @return true if project exists. */
         static bool VoiceDataExists( const char* szProject );
         static const char* GetVoiceEncryptionKey();
         static const char* GetSoundEncryptionKey();
@@ -116,71 +116,71 @@ namespace FMODDesigner
         EventManager();
         ~EventManager();
 
-        /*! Pass m_enableSoundSystem=false to initialize EventManager, but leave it disabled
+        /** Pass m_enableSoundSystem=false to initialize EventManager, but leave it disabled
          * @return true if the sound system is enabled.
          */
         bool Init(const SoundInitParams& );
 
-        /*! Shuts down the sound manager and does cleanup */
+        /** Shuts down the sound manager and does cleanup */
         void Shutdown();
 
-        /*! Returns true if the sound system is initialized and enabled */
+        /** Returns true if the sound system is initialized and enabled */
         bool IsEnabled() const                                      { return m_enabled; }
 
-        /*!
+        /**
         * Updates the sound system.
         * Should be called roughly every game tick.
         */
         void Update(float fDeltaTime);
 
-        /*! Returns platform-specific low-level sound system handle (XAudio2 on 360) */
+        /** Returns platform-specific low-level sound system handle (XAudio2 on 360) */
         void* GetPlatformOutputHandle();
 
-        /*! Sets the sizes of all stream buffers created after this call. */
+        /** Sets the sizes of all stream buffers created after this call. */
         void SetStreamBufferSize(u32 nBytes);
 
-        /*! Returns the current stream buffer size. */
+        /** Returns the current stream buffer size. */
         u32 GetStreamBufferSize() const;    
 
         //---------------------------------------------------------------------------------------
         // Data/Memory Management API
 
-        /*!
+        /**
          * Loads a project from disk but does not load any wav or instance data.
          * Projects must be loaded before sounds can be played from them.
          */
         bool LoadProject( const char* szProject );
 
-        /*!
+        /**
          * Unloads all data associated with a particular project.
          * Completely flushes all memory associated with the project.
          * Returns true if the project is no longer loaded after this call.
          */
         bool UnloadProject( const char* szProject );
 
-        /*!
+        /**
          * Calls LoadProject and does all attendant special voice load stuff as well
          */
         bool LoadVoiceProject( const char* szProject, std::vector<std::pair<cc8*, float> >* lineCodeInfo );
 
-        /*!
+        /**
         * Calls UnloadProject and does all attendant special voice unload stuff as well
         */
         bool UnloadVoiceProjects();
 
-        /*!
+        /**
         *   High demand voice line that must go into the voice LRU now.
         *   Returns true if the line is loaded and ready to play.
         */
         void AddLineToLRU(const Event& soundEvent, const LineCode& lineCode);
 
-        /*!
+        /**
         *   Returns true if and only if the given linecode's voice data is in a "loading" state.
         *   Note that this is NOT simply the negation of AddLineToLRU's return value.
         */
         bool IsLineLoading(const LineCode& lineCode);
 
-        /*!
+        /**
         * Loads the wave data and instance data associated with a particular group.
         * Groups are reference counted internally, with each call to LoadGroup incrementing the ref count.
         * szGroup should be of the form ProjectName/GroupName
@@ -190,7 +190,7 @@ namespace FMODDesigner
         */
         bool LoadGroup( const STLString& groupPath, bool bPersistant, bool blockOnLoad );
 
-        /*!
+        /**
         * Unloads the wave data and instance data associated with a particular group.
         * Groups may not be unloaded immediately either because their reference count is not zero,
         * or because the sound system is not ready to release the group.
@@ -202,21 +202,21 @@ namespace FMODDesigner
         bool UnloadGroup( const STLString& groupPath, bool bUnloadImmediately = false );  
 
 
-        /*!
+        /**
         * Unloads all the pending unload groups, use between missions, etc
         */
         void UnloadPendingUnloads(bool bBlockOnUnload = false);
 
-        /*! Creates a sound from a buffer of raw PCM data. */
+        /** Creates a sound from a buffer of raw PCM data. */
         void CreateSound( const char* pData, u32 size, u32 frequency, Event& newSound );
 
-        /*! Destroys a low level FMOD sound contained in a Event. */
+        /** Destroys a low level FMOD sound contained in a Event. */
         void DestroySound( Event& sound ) const;
 
         //---------------------------------------------------------------------------------------
         // Play Sounds API
 
-        /*! 
+        /**
         * Plays a sound in 2D.
         * Calling this function on 3D sounds is undefined.
         * loopSound will force the sound to loop even if it does not in the data.
@@ -224,7 +224,7 @@ namespace FMODDesigner
         */
         EventHandle PlayEvent2D(const Event& soundEvent, bool loopSound = false, const LineCode* pLineCode = NULL);
 
-        /*!
+        /**
         * Plays a sound in 3D.
         * Calling this function on 2D sounds is harmless, but not advised.
         * All 3D sounds must pass in a velocity if using Doppler.
@@ -233,32 +233,32 @@ namespace FMODDesigner
         */
         EventHandle PlayEvent3D(const Event& soundEvent, const ZLVec3D& vPos, bool loopSound = false, const ZLVec3D& vVelocity = ZLVec3D( 0.f, 0.f, 0.f ), const LineCode* pLineCode = NULL);
 
-        /*! Stops all events/sounds from playing. */
+        /** Stops all events/sounds from playing. */
         void StopAllEvents();
 
-        /*! Stops all events/sounds from playing. */
+        /** Stops all events/sounds from playing. */
         void MuteAllEvents( bool bSetting ); 
 
-        /*!
+        /**
         * Unloads the data associated with an Event.
         * All instances of this Event will be stopped when this call is made.
         * Returns true if the Event is no longer loaded after this call.
         */
         bool UnloadEvent(const Event& soundEvent, bool blockOnUnload) const;
 
-        /*! Returns the number of active instances of a given sound. */
+        /** Returns the number of active instances of a given sound. */
         u32 GetNumInstances(const Event& soundEvent);
 
-        /*! Returns the properties associated with an Event */
+        /** Returns the properties associated with an Event */
         const EventProperties* GetEventProperties(const Event& soundEvent) const;
 
         //---------------------------------------------------------------------------------------
         // Microphone Recording API
 
-        /*! Starts recording. */
+        /** Starts recording. */
         void StartRecording();
 
-        /*!
+        /**
          * Stops recording into the original sound event.
          * Passing NULL will wipe the record buffer.
          */    
@@ -267,25 +267,25 @@ namespace FMODDesigner
         //---------------------------------------------------------------------------------------
         // Process Sounds API
             
-        /*! WIP system to DSP process the sound contained in the event. */
+        /** WIP system to DSP process the sound contained in the event. */
         EventHandle ProcessSound( const Event& soundEvent, const SoundDSP* pDSPChain, bool processSilently );
 
-        /*! Creates a new Event from the results of the last call to ProcessSound. */
+        /** Creates a new Event from the results of the last call to ProcessSound. */
         void CreateSoundFromLastProcess( Event& newSound );    
 
-	    /*! Very basic pitch detection */
+	    /** Very basic pitch detection */
 	    float GetFrequencyOfRecordingSound();
 
         //---------------------------------------------------------------------------------------
         // 3D Microphone/Listener API
     	
-        /*!
+        /**
         * Sets the transform for the microphone
         * All a velocity must be passed in if using Doppler.
         */
         void SetMicrophoneTransform(const ZLVec3D &vPos, const ZLVec3D& vVelocity = ZLVec3D(0.f,0.f,0.f), const ZLVec3D &vLook = ZLVec3D(0.f, 0.f, 1.f), const ZLVec3D &vUp = ZLVec3D(0.f, 1.f, 0.f), const ZLVec3D& vRight = ZLVec3D(-1.f,0.f,0.f) );    
 
-        /*! Returns the position of the microphone */
+        /** Returns the position of the microphone */
         const ZLVec3D& GetMicrophonePosition() const   { return m_vListenerPosition; }
         const ZLVec3D& GetMicrophoneVelocity() const   { return m_vListenerVelocity; }
         const ZLVec3D& GetMicrophoneForward() const    { return m_vListenerForward; }
@@ -294,34 +294,34 @@ namespace FMODDesigner
         //---------------------------------------------------------------------------------------
         // Category (Mixing bus) API    
         
-        /*! Mutes all sounds in a particular sound category. */
+        /** Mutes all sounds in a particular sound category. */
         void MuteSoundCategory(const STLString& category, bool bMute);	
 
-        /*! Returns the mute status of a particular sound category. */
+        /** Returns the mute status of a particular sound category. */
         bool IsSoundCategoryMuted(const STLString& category) const;    
 
-        /*! Pauses all sounds in a given category */
+        /** Pauses all sounds in a given category */
         void PauseSoundCategory(const STLString& category, bool bPause);
 
-        /*! Returns the pause status of a given category */
+        /** Returns the pause status of a given category */
         bool IsSoundCategoryPaused(const STLString& category) const;    
 
-        /*! Sets the volume for a sound category */
+        /** Sets the volume for a sound category */
         void SetSoundCategoryVolume(const STLString& category, float fVolume);
 
-        /*! Returns the volume of a given category */
+        /** Returns the volume of a given category */
         float GetSoundCategoryVolume(const STLString& category) const;
 
         //---------------------------------------------------------------------------------------
         // Ducking API
 
-        /*!
+        /**
         * Ducks the specified categories for the specified amount of time.
         * A duration of -1 means "forever" or "until I tell you otherwise".
         */
 	    void DuckSoundCategories(DuckingRequestHandle& handle, const vector<STLString>& aAffectedCategories, const vector<float>& aVolumes, float duration );
 
-        /*!
+        /**
         * Changes the volumes of an existing duck.    
         */
         void ChangeDuckVolumes(DuckingRequestHandle& handle, const vector<float>& aVolumes );
@@ -332,13 +332,13 @@ namespace FMODDesigner
         //---------------------------------------------------------------------------------------
         // Environmental Reverb API   
 
-        /*! Set the default regional reverb */
+        /** Set the default regional reverb */
         void SetDefaultReverb( const STLString& name );
 
-        /*! Clear the default regional reverb */
+        /** Clear the default regional reverb */
         void ClearDefaultReverb();
 
-        /*! Create an regional reverb */
+        /** Create an regional reverb */
         ReverbHandle AddReverb( const STLString& name );
 
 	    void ClearReverb(ReverbInstance* pInstance);
@@ -347,16 +347,16 @@ namespace FMODDesigner
 
 	    const vector<ReverbInstance*>& GetActiveReverbs() const { return m_aReverbInstances; }
 
-        /*! Sets a lowpass filter on distant sounds */
+        /** Sets a lowpass filter on distant sounds */
         void SetDistantOcclusion( float minRange, float maxRange, float maxOcclussion );
 
-        /*! Blend sounds near the microphone to 2D sounds */
+        /** Blend sounds near the microphone to 2D sounds */
         void SetNear2DBlend( float minRange, float maxRange, float maxLevel );
 
         //---------------------------------------------------------------------------------------
         // Geometric Sound Occludders API
 
-        /*! Create a sound occluder */
+        /** Create a sound occluder */
         SoundOccluder CreateSoundOccluder();
 
         //---------------------------------------------------------------------------------------
@@ -371,13 +371,13 @@ namespace FMODDesigner
         //---------------------------------------------------------------------------------------
         // Sound Instance API
 
-        /*!
+        /**
         * Gets a non-const reference to the sound instance array.
         * Meant for use by people who promise not do do anything nefarious with it.
         */    
         const vector<EventInstance*>& GetEventInstances() const                  { return m_aEventInstances; }
 
-        /*!
+        /**
         * Informs the sound manager that a EventInstance has completed.
         * Intended to be called by platform specific trampoline functions.
         */

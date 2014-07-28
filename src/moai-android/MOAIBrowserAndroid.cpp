@@ -16,7 +16,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	canOpenURL
+/**	@lua	canOpenURL
 	@text	Return true if the device has an app installed that can open the URL.
 
 	@in		string	url				The URL to check.
@@ -31,7 +31,7 @@ int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openURL
+/**	@lua	openURL
 	@text	Open the given URL in the device browser.
 
 	@in		string	url				The URL to open.
@@ -48,7 +48,7 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openURLWithParams
+/**	@lua	openURLWithParams
 	@text	Open the native device web browser at the specified URL
 			with the specified list of query string parameters.
 

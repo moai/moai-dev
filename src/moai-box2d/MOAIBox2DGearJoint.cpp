@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getJointA
+/**	@lua	getJointA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DGearJoint self
@@ -29,7 +29,7 @@ int MOAIBox2DGearJoint::_getJointA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getJointB
+/**	@lua	getJointB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DGearJoint self
@@ -44,7 +44,7 @@ int MOAIBox2DGearJoint::_getJointB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRatio
+/**	@lua	getRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DGearJoint self
@@ -65,7 +65,7 @@ int MOAIBox2DGearJoint::_getRatio ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRatio
+/**	@lua	setRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DGearJoint self

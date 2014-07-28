@@ -10,7 +10,7 @@
 
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
+/**	@lua	getVolume
 	@text	Return the volume of the sound.
 
 	@in		MOAIUntzSound self
@@ -24,7 +24,7 @@ int MOAIUntzSoundQueue::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPaused
+/**	@lua	isPaused
 	@text	Return the pause status of the sound.
 
 	@in		MOAIUntzSoundQueue self
@@ -41,7 +41,7 @@ int MOAIUntzSoundQueue::_isPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPlaying
+/**	@lua	isPlaying
 	@text	Return the playing status of the sound.
 
 	@in		MOAIUntzSoundQueue self
@@ -59,7 +59,7 @@ int MOAIUntzSoundQueue::_isPlaying ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	moveVolume
+/**	@lua	moveVolume
 	@text	Animation helper for volume attribute,
 
 	@in		MOAITransform self
@@ -99,7 +99,7 @@ int MOAIUntzSoundQueue::_moveVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addSound
+/**	@lua	addSound
 	@text	enqueue a MOAIUntzSound into the queue
 
 	@in		MOAIUntzSoundQueue self
@@ -124,7 +124,7 @@ int MOAIUntzSoundQueue::_addSound ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Pause the sound.
 
 	@in		MOAIUntzSoundQueue self
@@ -205,7 +205,7 @@ Int64 MOAIUntzSoundQueue::StreamCallback(float* buffers, UInt32 numChannels, UIn
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Play the sound.
 
 	@in		MOAIUntzSoundQueue self
@@ -236,7 +236,7 @@ int MOAIUntzSoundQueue::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekVolume
+/**	@lua	seekVolume
 	@text	Animation helper for volume attribute,
 
 	@in		MOAITransform self
@@ -276,7 +276,7 @@ int MOAIUntzSoundQueue::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@lua	setVolume
 	@text	Sets the volume of the sound.
 
 	@in		MOAIUntzSoundQueue self
@@ -292,7 +292,7 @@ int MOAIUntzSoundQueue::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stops the sound from playing.
 
 	@in		MOAIUntzSoundQueue self

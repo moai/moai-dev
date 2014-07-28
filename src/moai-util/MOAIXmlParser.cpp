@@ -88,7 +88,7 @@ int MOAIXmlParser::_getElementText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	parseFile
+/**	@lua	parseFile
 	@text	Parses the contents of the specified file as XML.
 
 	@in		MOAIXmlParser self
@@ -112,7 +112,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	parseString
+/**	@lua	parseString
 	@text	Parses the contents of the specified string as XML.
 
 	@in		MOAIXmlParser self

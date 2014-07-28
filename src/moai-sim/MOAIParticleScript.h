@@ -11,7 +11,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleScript
 //================================================================//
-/**	@name	MOAIParticleScript
+/**	@lua	MOAIParticleScript
 	@text	Particle script. A particle script contains a series of operations, which
 	can perform simple computations on values. Values can be hard-coded using packConst
 	to create constant values, or stored in registers. There is a set of innate registers,

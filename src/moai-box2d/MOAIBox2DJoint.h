@@ -11,7 +11,7 @@ class b2Joint;
 //================================================================//
 // MOAIBox2DJoint
 //================================================================//
-/**	@name MOAIBox2DJoint
+/**	@lua MOAIBox2DJoint
 	@text Box2D joint.
 */
 class MOAIBox2DJoint :
