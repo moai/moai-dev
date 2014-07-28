@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
@@ -180,7 +180,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {
-		u32 c = u8_nextchar ( charCodes, &idx );
+		u32 c = moai_u8_nextchar ( charCodes, &idx );
 		self->AffirmGlyph ( size, c );
 	}
 	self->ProcessGlyphs ();

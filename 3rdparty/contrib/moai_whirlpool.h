@@ -113,8 +113,8 @@ typedef struct Whirlpool {
 	wp_u64 hash[DIGESTBYTES/8];		/* the hashing state */
 } Whirlpool;
 
-void Whirlpool_Add(const unsigned char * const source, unsigned long sourceBits, struct Whirlpool * const structpointer);
-void Whirlpool_Finalize(struct Whirlpool * const structpointer, unsigned char * const result);
-void Whirlpool_Init(struct Whirlpool * const structpointer);
+void MOAIWhirlpool_Add(const unsigned char * const source, unsigned long sourceBits, struct Whirlpool * const structpointer);
+void MOAIWhirlpool_Finalize(struct Whirlpool * const structpointer, unsigned char * const result);
+void MOAIWhirlpool_Init(struct Whirlpool * const structpointer);
 
 #endif   /* PORTABLE_C__ */

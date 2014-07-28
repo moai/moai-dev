@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextDesigner.h>

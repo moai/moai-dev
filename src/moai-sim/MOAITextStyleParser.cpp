@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
@@ -57,7 +57,7 @@ u32 MOAITextStyleParser::GetChar () {
 
 	this->mPrev = this->mIdx;
 	if ( this->mStr [ this->mIdx ]) {
-		return u8_nextchar ( this->mStr, &this->mIdx );
+		return moai_u8_nextchar ( this->mStr, &this->mIdx );
 	}
 	++this->mIdx;
 	return 0;

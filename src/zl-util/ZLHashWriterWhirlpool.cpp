@@ -5,7 +5,7 @@
 #include <zl-util/ZLHashWriterWhirlpool.h>
 
 extern "C" {
-	#include <contrib/whirlpool.h>
+	#include <contrib/moai_whirlpool.h>
 }
 
 //================================================================//
@@ -15,7 +15,7 @@ extern "C" {
 //----------------------------------------------------------------//
 void ZLHashWriterWhirlpool::FinalizeHash () {
 
-	Whirlpool_Finalize (( Whirlpool* )this->mAlgorithm, ( u8* )this->mHash );
+	MOAIWhirlpool_Finalize (( Whirlpool* )this->mAlgorithm, ( u8* )this->mHash );
 }
 
 //----------------------------------------------------------------//
@@ -39,7 +39,7 @@ size_t ZLHashWriterWhirlpool::GetHashSize () {
 void ZLHashWriterWhirlpool::HashBytes ( const void* buffer, size_t size ) {
 	
 	// size in *bits*
-	Whirlpool_Add (( const u8* )buffer, ( unsigned long )size << 3, ( Whirlpool* )this->mAlgorithm );
+	MOAIWhirlpool_Add (( const u8* )buffer, ( unsigned long )size << 3, ( Whirlpool* )this->mAlgorithm );
 }
 
 //----------------------------------------------------------------//
@@ -47,7 +47,7 @@ void ZLHashWriterWhirlpool::InitHash () {
 
 	memset ( &this->mHash, 0, sizeof ( this->mHash ));
 	memset ( this->mAlgorithm, 0, sizeof ( Whirlpool ));
-	Whirlpool_Init (( Whirlpool* )this->mAlgorithm );
+	MOAIWhirlpool_Init (( Whirlpool* )this->mAlgorithm );
 }
 
 //----------------------------------------------------------------//
