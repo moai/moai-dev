@@ -152,7 +152,7 @@ int MOAITextStyle::_setPadding ( lua_State* L ) {
 	
 	// TODO: pasted from MOAIDynamicGlyphCache; find some central place for this
 	
-	if ( state.CheckParams ( 2, "NNNN" )) {
+	if ( state.CheckParams ( 2, "NNNN", false )) {
 	
 		self->mPadding.mXMin = state.GetValue < float >( 2, 0.0f );
 		self->mPadding.mYMin = state.GetValue < float >( 3, 0.0f );
