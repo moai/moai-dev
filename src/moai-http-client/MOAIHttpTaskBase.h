@@ -12,7 +12,7 @@ class MOAIStream;
 //================================================================//
 // MOAIHttpTaskBase
 //================================================================//
-/**	@name	MOAIHttpTaskBase
+/**	@lua	MOAIHttpTaskBase
 	@text	Object for performing asynchronous HTTP/HTTPS tasks.
 	
 	@const	HTTP_GET

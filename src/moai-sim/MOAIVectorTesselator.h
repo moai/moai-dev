@@ -15,7 +15,7 @@ class SafeTesselator;
 //================================================================//
 // MOAIVectorTesselator
 //================================================================//
-/**	@name	MOAIVectorTessalator
+/**	@lua	MOAIVectorTessalator
 	@text	Convert vector primitives into triangles.
 */
 class MOAIVectorTesselator :

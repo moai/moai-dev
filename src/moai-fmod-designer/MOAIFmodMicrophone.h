@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIFmodMicrophone
 //================================================================//
-/**	@name	MOAIFmodMicrophone
+/**	@lua	MOAIFmodMicrophone
 	@text	The in-game Microphone, with respect to which
            all the sounds are heard in the game. The Event Manager
            (MOAIFmodEventManager) must be initialized before the

@@ -11,7 +11,7 @@ class MOAIFmodExSound;
 //================================================================//
 // MOAIFmodExChannel
 //================================================================//
-/**	@name	MOAIFmodExChannel
+/**	@lua	MOAIFmodExChannel
 	@text	FMOD singleton.
 */
 class MOAIFmodExChannel :

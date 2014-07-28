@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Return the particle size expected by the plugin.
 	
 	@in		MOAIParticlePlugin self

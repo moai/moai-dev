@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	declareAttribute
+/**	@lua	declareAttribute
 	@text	Declare a custom attribute (for use with programmable pipeline).
 	
 	@in		MOAIVertexFormat self
@@ -34,7 +34,7 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareColor
+/**	@lua	declareColor
 	@text	Declare a vertex color.
 	
 	@in		MOAIVertexFormat self
@@ -54,7 +54,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareCoord
+/**	@lua	declareCoord
 	@text	Declare a vertex coordinate.
 	
 	@in		MOAIVertexFormat self
@@ -76,7 +76,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareNormal
+/**	@lua	declareNormal
 	@text	Declare a vertex normal.
 	
 	@in		MOAIVertexFormat self
@@ -96,7 +96,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUV
+/**	@lua	declareUV
 	@text	Declare a vertex texture coordinate.
 	
 	@in		MOAIVertexFormat self

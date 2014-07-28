@@ -9,7 +9,7 @@ class MOAISensor;
 //================================================================//
 // MOAIInputDevice
 //================================================================//
-/**	@name	MOAIInputDevice
+/**	@lua	MOAIInputDevice
 	@text	Manager class for input bindings. Has no public methods.
 */
 class MOAIInputDevice :

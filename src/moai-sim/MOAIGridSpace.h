@@ -38,7 +38,7 @@ public:
 //================================================================//
 // MOAIGridSpace
 //================================================================//
-/**	@name	MOAIGridSpace
+/**	@lua	MOAIGridSpace
 	@text	Represents spatial configuration of a grid. The grid is made
 			up of cells. Inside of each cell is a tile. The tile can be
 			larger or smaller than the cell and also offset from the cell.

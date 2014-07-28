@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIParticlePlugin
 //================================================================//
-/**	@name	MOAIParticlePlugin
+/**	@lua	MOAIParticlePlugin
 	@text	Allows custom particle processing.
 */
 class MOAIParticlePlugin :

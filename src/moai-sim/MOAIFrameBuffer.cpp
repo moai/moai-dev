@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setClearColor
+/**	@lua	setClearColor
 	@text	At the start of each frame the device will by default automatically
 			render a background color.  Using this function you can set the
 			background color that is drawn each frame.  If you specify no arguments
@@ -64,7 +64,7 @@ int MOAIClearableView::_setClearColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setClearDepth
+/**	@lua	setClearDepth
 	@text	At the start of each frame the buffer will by default automatically
 			clear the depth buffer.  This function sets whether or not the depth
 			buffer should be cleared at the start of each frame.
@@ -166,7 +166,7 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getPerformanceDrawCount	
+/**	@lua	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
 	@in		MOAIFrameBuffer self
@@ -179,7 +179,7 @@ int MOAIFrameBuffer::_getPerformanceDrawCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRenderTable
+/**	@lua	getRenderTable
 	@text	Returns the table currently being used for rendering.
 	
 	@in		MOAIFrameBuffer self
@@ -192,7 +192,7 @@ int MOAIFrameBuffer::_getRenderTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	grabNextFrame
+/**	@lua	grabNextFrame
 	@text	Save the next frame rendered to 
 
 	@in		MOAIFrameBuffer self
@@ -215,7 +215,7 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRenderTable
+/**	@lua	setRenderTable
 	@text	Sets the table to be used for rendering. This should be
 			an array indexed from 1 consisting of MOAIRenderable objects
 			and sub-tables. Objects will be rendered in order starting

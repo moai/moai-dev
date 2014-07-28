@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getRect
+/**	@lua	getRect
 	@text	Return the extents of the scissor rect.
 	
 	@in		MOAIScissorRect self
@@ -27,7 +27,7 @@ int MOAIScissorRect::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Sets the extents of the scissor rect.
 	
 	@in		number x1					The X coordinate of the rect's upper-left point.
@@ -45,7 +45,7 @@ int MOAIScissorRect::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScissorRect
+/**	@lua	setScissorRect
 	@text	Set or clear the parent scissor rect.
 	
 	@in		MOAIScissorRect self

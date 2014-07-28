@@ -14,7 +14,7 @@
 //================================================================//
 // MOAITapjoyIOS
 //================================================================//
-/**	@name	MOAITapjoyIOS
+/**	@lua	MOAITapjoyIOS
 	@text	Wrapper for Tapjoy integration on iOS devices.
 			Tapjoy provides a turnkey advertising platform that 
 			delivers cost-effective, high-value new users and helps 

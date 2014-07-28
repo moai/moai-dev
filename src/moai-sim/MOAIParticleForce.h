@@ -12,7 +12,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleForce
 //================================================================//
-/**	@name	MOAIParticleForce
+/**	@lua	MOAIParticleForce
 	@text	Particle force.
 
 	@const	FORCE

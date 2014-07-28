@@ -7,7 +7,7 @@
 //================================================================//
 // MOAISensor
 //================================================================//
-/**	@name	MOAISensor
+/**	@lua	MOAISensor
 	@text	Base class for sensors.
 */
 class MOAISensor :

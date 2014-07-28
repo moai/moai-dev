@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearTileFlags
+/**	@lua	clearTileFlags
 	@text	Clears bits specified in mask.
 
 	@in		MOAIGrid self
@@ -35,7 +35,7 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fill
+/**	@lua	fill
 	@text	Set all tiles to a single value
 
 	@in		MOAIGrid self
@@ -53,7 +53,7 @@ int MOAIGrid::_fill ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTile
+/**	@lua	getTile
 	@text	Returns the value of a given tile.
 
 	@in		MOAIGrid self
@@ -73,7 +73,7 @@ int MOAIGrid::_getTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTileFlags
+/**	@lua	getTileFlags
 	@text	Returns the masked value of a given tile.
 
 	@in		MOAIGrid self
@@ -99,7 +99,7 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRow
+/**	@lua	setRow
 	@text	Initializes a grid row given a variable argument list of values.
 
 	@in		MOAIGrid self
@@ -123,7 +123,7 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTile
+/**	@lua	setTile
 	@text	Sets the value of a given tile
 
 	@in		MOAIGrid self
@@ -145,7 +145,7 @@ int MOAIGrid::_setTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTileFlags
+/**	@lua	setTileFlags
 	@text	Sets a tile's flags given a mask.
 
 	@in		MOAIGrid self
@@ -171,7 +171,7 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	streamTilesIn
+/**	@lua	streamTilesIn
 	@text	Reads tiles directly from a stream. Call this only after
 			initializing the grid. Only the content of the tiles
 			buffer is read.
@@ -192,7 +192,7 @@ int MOAIGrid::_streamTilesIn ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	streamTilesOut
+/**	@lua	streamTilesOut
 	@text	Writes tiles directly to a stream. Only the content of
 			the tiles buffer is written.
 
@@ -212,7 +212,7 @@ int MOAIGrid::_streamTilesOut ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	toggleTileFlags
+/**	@lua	toggleTileFlags
 	@text	Toggles a tile's flags given a mask.
 
 	@in		MOAIGrid self

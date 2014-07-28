@@ -19,7 +19,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getVector
+/**	@lua	getVector
 	@text	Returns the joystick vector.
 
 	@in		MOAIJoystickSensor self
@@ -35,7 +35,7 @@ int MOAIJoystickSensor::_getVector ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the joystick vector changes.
 
 	@in		MOAIJoystickSensor self

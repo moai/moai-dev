@@ -61,7 +61,7 @@ private:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearAttrLink
+/**	@lua	clearAttrLink
 	@text	Clears an attribute *pull* link - call this from the node
 			receiving the attribute value.
 	
@@ -79,7 +79,7 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clearNodeLink
+/**	@lua	clearNodeLink
 	@text	Clears a dependency on a foreign node.
 	
 	@in		MOAINode self
@@ -98,7 +98,7 @@ int MOAINode::_clearNodeLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	forceUpdate
+/**	@lua	forceUpdate
 	@text	Evaluates the dependency graph for this node. Typically,
 			the entire active dependency graph is evaluated once per
 			frame, but in some cases it may be desirable to force
@@ -117,7 +117,7 @@ int MOAINode::_forceUpdate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAttr
+/**	@lua	getAttr
 	@text	Returns the value of the attribute if it exists or nil if it doesn't.
 	
 	@in		MOAINode self
@@ -142,7 +142,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAttrLink
+/**	@lua	getAttrLink
 	@text	Returns the link if it exists or nil if it doesn't.
 	
 	@in		MOAINode self
@@ -168,7 +168,7 @@ int MOAINode::_getAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveAttr
+/**	@lua	moveAttr
 	@text	Animate the attribute by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -207,7 +207,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	scheduleUpdate
+/**	@lua	scheduleUpdate
 	@text	Schedule the node for an update next time the dependency graph
 			is processed. Any dependent nodes will also be updated.
 	
@@ -222,7 +222,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekAttr
+/**	@lua	seekAttr
 	@text	Animate the attribute by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -267,7 +267,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAttr
+/**	@lua	setAttr
 	@text	Sets the value of an attribute.
 	
 	@in		MOAINode self
@@ -298,7 +298,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAttrLink
+/**	@lua	setAttrLink
 	@text	Sets a *pull* attribute connecting an attribute in the
 			node to an attribute in a foreign node.
 	
@@ -329,7 +329,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNodeLink
+/**	@lua	setNodeLink
 	@text	Creates a dependency between the node and a foreign node
 			without the use of attributes; if the foreign node is updated,
 			the dependent node will be updated after.

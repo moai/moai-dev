@@ -14,7 +14,7 @@
 //================================================================//
 // MOAINotificationsIOS
 //================================================================//
-/**	@name	MOAINotificationsIOS
+/**	@lua	MOAINotificationsIOS
 	@text	Wrapper for push notification integration on iOS 
 			devices. Exposed to Lua via MOAINotifications on all
 			mobile platforms.

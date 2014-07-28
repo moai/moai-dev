@@ -50,7 +50,7 @@
 //================================================================//
 // MOAIEnvironment
 //================================================================//
-/**	@name	MOAIEnvironment
+/**	@lua	MOAIEnvironment
 	@text	<p>Table of key/value pairs containing information about the current
 			environment. Also contains the generateGUID (), which will move to
 			MOAIUnique in a future release.</p>

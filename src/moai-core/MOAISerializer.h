@@ -22,7 +22,7 @@ private:
 //================================================================//
 // MOAISerializer
 //================================================================//
-/**	@name	MOAISerializer
+/**	@lua	MOAISerializer
 	@text	Manages serialization state of Lua tables and Moai objects.
 			The serializer will produce a Lua script that, when executed,
 			will return the ordered list of objects added to it using the

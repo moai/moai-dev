@@ -173,6 +173,9 @@ public:
 //================================================================//
 // MOAIGlobalClass
 //================================================================//
+/**	@lua	MOAIGlobalClass
+	@text	Base class for Moai singletons.
+*/
 template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
 	public MOAIGlobalClassBase,

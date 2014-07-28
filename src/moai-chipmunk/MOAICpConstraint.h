@@ -12,7 +12,7 @@ struct cpConstraint;
 //================================================================//
 // MOAICpConstraint
 //================================================================//
-/**	@name	MOAICpConstraint
+/**	@lua	MOAICpConstraint
 	@text	Chipmunk Constraint.
 */
 class MOAICpConstraint :

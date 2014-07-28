@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	canMakePayments
+/**	@lua	canMakePayments
 	@text	Determines whether or not the app has permission to 
 			request payments for in-app purchases.
 	
@@ -28,7 +28,7 @@ int MOAIBillingIOS::_canMakePayments ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestPaymentForProduct
+/**	@lua	requestPaymentForProduct
 	@text	Request payment for an in-app purchase.
 	
 	@in		string 	sku				The SKU to purchase.
@@ -53,7 +53,7 @@ int MOAIBillingIOS::_requestPaymentForProduct ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestProductIdentifiers
+/**	@lua	requestProductIdentifiers
 	@text	Verify the validity of a set of products and retrieve
 			relevant information thereabout.
 	
@@ -94,7 +94,7 @@ int MOAIBillingIOS::_requestProductIdentifiers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	restoreCompletedTransactions
+/** @lua	restoreCompletedTransactions
 	@text	Request the restoration of any previously purchased items.
 
 	@out 	nil

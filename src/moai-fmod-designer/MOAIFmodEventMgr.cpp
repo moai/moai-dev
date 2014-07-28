@@ -21,7 +21,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMemoryStats
+/**	@lua	getMemoryStats
 	@text	Get memory usage.
 
 	@opt	boolean blocking		Default value is 'false.'
@@ -46,7 +46,7 @@ int	MOAIFmodEventMgr::_getMemoryStats ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initializes the sound system.
 
 	@out	boolean enabled
@@ -87,7 +87,7 @@ int MOAIFmodEventMgr::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isEnabled
+/**	@lua	isEnabled
 	@text	Returns true if the Event Manager is enabled (active).
 
 	@out	boolean enabled    True if the Event Manager is active, false otherwise
@@ -103,7 +103,7 @@ int MOAIFmodEventMgr::_isEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadProject
+/**	@lua	loadProject
 	@text	Loads a project from disk, but does not load any wav or instance data. 
            Projects must be loaded before sounds can be played from them.
            For special voice projects, use loadVoiceProject() 
@@ -128,7 +128,7 @@ int MOAIFmodEventMgr::_loadProject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadProject
+/**	@lua	unloadProject
     @text	Unloads all data associated with a particular project.
            Completely flushes all memory associated with the project.
            For special voice projects, use unloadAllVoiceProjects() 
@@ -153,7 +153,7 @@ int MOAIFmodEventMgr::_unloadProject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadVoiceProject
+/**	@lua	loadVoiceProject
 	@text	Calls LoadProject and does all attendant special voice load stuff, as well.
            For regular projects, use loadProject() 
     
@@ -218,7 +218,7 @@ int MOAIFmodEventMgr::_loadVoiceProject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadAllVoiceProjects
+/**	@lua	unloadAllVoiceProjects
     @text	Calls UnloadProject and does all attendant special voice unload stuff, as well.
            For regular projects, use unloadProject()
     
@@ -234,7 +234,7 @@ int MOAIFmodEventMgr::_unloadAllVoiceProjects ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadGroup
+/**	@lua	loadGroup
     @text	Loads the wave data and instance data associated with a particular group.
            Groups are reference counted internally, with each call to LoadGroup incrementing the ref count.           
     
@@ -267,7 +267,7 @@ int MOAIFmodEventMgr::_loadGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadGroup
+/**	@lua	unloadGroup
     @text	Unloads the wave data and instance data associated with a particular group.
            Groups might not be unloaded immediately either because their reference count is not zero,
            or because the sound system is not ready to release the group.            
@@ -299,7 +299,7 @@ int MOAIFmodEventMgr::_unloadGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadPendingUnloads
+/**	@lua	unloadPendingUnloads
 	@text	Unloads all the pending unload groups. Use between act changes in the game.
 
 	@opt	boolean blockOnUnload		Passing true means that the main thread will block while unloading
@@ -316,7 +316,7 @@ int MOAIFmodEventMgr::_unloadPendingUnloads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSoundCategoryVolume
+/**	@lua	setSoundCategoryVolume
     @text	Sets the volume for a sound category           
     
     @in    string  categoryName  Name of the category whose volume you wanna modify
@@ -340,7 +340,7 @@ int MOAIFmodEventMgr::_setSoundCategoryVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSoundCategoryVolume
+/**	@lua	getSoundCategoryVolume
     @text	Gets the volume for a sound category           
     
     @in    string  categoryName      Name of the category whose volume you wanna know    
@@ -364,7 +364,7 @@ int MOAIFmodEventMgr::_getSoundCategoryVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	muteSoundCategory
+/**	@lua	muteSoundCategory
     @text	Mute a sound category           
     
     @in    string  categoryName  Name of the category whose volume you wanna modify
@@ -388,7 +388,7 @@ int MOAIFmodEventMgr::_muteSoundCategory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isSoundCategoryMuted
+/**	@lua	isSoundCategoryMuted
     @text	Checks to see whether a sound category is muted           
     
     @in    string  categoryName      Name of the category whose volume you wanna know    
@@ -412,7 +412,7 @@ int MOAIFmodEventMgr::_isSoundCategoryMuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pauseSoundCategory
+/**	@lua	pauseSoundCategory
     @text	Mute a sound category           
     
     @in    string  categoryName      Name of the category whose volume you wanna modify
@@ -436,7 +436,7 @@ int MOAIFmodEventMgr::_pauseSoundCategory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isSoundCategoryPaused
+/**	@lua	isSoundCategoryPaused
     @text	Checks to see whether a sound category is muted           
     
     @in    string  categoryName      Name of the category whose volume you wanna know    
@@ -460,7 +460,7 @@ int MOAIFmodEventMgr::_isSoundCategoryPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	playEvent2D
+/**	@lua	playEvent2D
     @text	Plays an FMOD Event in 2D. Calling this function on 3D Events is undefined.
     
     @in    string                    eventName  Event to play
@@ -504,7 +504,7 @@ int MOAIFmodEventMgr::_playEvent2D ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	playEvent3D
+/**	@lua	playEvent3D
     @text	Plays an FMOD Event 3D. Calling this function on 2D Events is harmless, but not advised.
     
     @in    string                    eventName  Event to play
@@ -554,7 +554,7 @@ int MOAIFmodEventMgr::_playEvent3D ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	playVoiceLine
+/**	@lua	playVoiceLine
     @text	Plays a voice line that exists in a loaded voice project.  
            Will play it 2D or 3D based on Event settings.  
            Uses a unique identifier for the line that is not the name
@@ -628,7 +628,7 @@ int MOAIFmodEventMgr::_playVoiceLine ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadEvent
+/**	@lua	unloadEvent
 	@text	Unloads the data associated with an Event. 
 			All instances of this Event will be stopped when this call is made.
 			Returns true if the Event is no longer loaded after this call.
@@ -657,7 +657,7 @@ int MOAIFmodEventMgr::_unloadEvent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stopAllEvents
+/**	@lua	stopAllEvents
     @text	Stops all events/sounds from playing.
 
 	@out	nil
@@ -672,7 +672,7 @@ int MOAIFmodEventMgr::_stopAllEvents ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	muteAllEvents
+/**	@lua	muteAllEvents
     @text	Stops all events/sounds from playing.
 
     @in    boolean muteSetting   Whether to mute (true) or unmute (false)
@@ -690,7 +690,7 @@ int MOAIFmodEventMgr::_muteAllEvents ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	preloadVoiceLine
+/**	@lua	preloadVoiceLine
     @text	Preload a high demand voice line
 
     @in    string eventName      The Event template to use for this line
@@ -718,7 +718,7 @@ int MOAIFmodEventMgr::_preloadVoiceLine ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDefaultReverb
+/**	@lua	setDefaultReverb
     @text	Set the default regional Reverb
 
     @in    string reverbName      Name of the Reverb (defined in Designer)
@@ -738,7 +738,7 @@ int MOAIFmodEventMgr::_setDefaultReverb ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDistantOcclusion
+/**	@lua	setDistantOcclusion
     @text	Sets a lowpass filter on distant sounds -- a filter added to 
            everything greater than a certain distance (minRange to maxRange) 
            from the microphone to make it sound muffled/far away.                            
@@ -762,7 +762,7 @@ int MOAIFmodEventMgr::_setDistantOcclusion ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNear2DBlend
+/**	@lua	setNear2DBlend
     @text	Blend sounds near the microphone to 2D sounds. 
            When 3D Events are playing near the microphone, their
            positioning becomes distracting rather than helpful/interesting,
@@ -788,7 +788,7 @@ int MOAIFmodEventMgr::_setNear2DBlend ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getEventDuration
+/**	@lua	getEventDuration
     @text	Returns the duration of an Event.  Although multiple sounds
            can potentially be played from 1 Event, to support determinism,
            a consistent duration will be returned for a given Event.
@@ -833,7 +833,7 @@ int MOAIFmodEventMgr::_getEventDuration ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMicrophone
+/**	@lua	getMicrophone
     @text	Returns the game microphone.    
         
     @out   MOAIFmodMicrophone mic  The game microphone

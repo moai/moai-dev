@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	authTstore	
+/**	@lua	authTstore	
 	@text	Authorizes the app through Tstore
 	
 	@in		boolean wantsLogin			
@@ -51,7 +51,7 @@ int MOAITstoreGamecenterAndroid::_authTstore ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkTstoreInstalled
+/**	@lua	checkTstoreInstalled
 	@text	Checks if the Tstore app is installed
 
 	@out	boolean installed
@@ -84,7 +84,7 @@ int MOAITstoreGamecenterAndroid::_checkTstoreInstalled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	disableGamecenter
+/**	@lua	disableGamecenter
 	@text	Disables Tstore Gamecenter
 
 	@out	nil
@@ -116,7 +116,7 @@ int MOAITstoreGamecenterAndroid::_disableGamecenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	enableGamecenter
+/**	@lua	enableGamecenter
 	@text	Enables Tstore Gamecenter
 
 	@out	nil
@@ -148,7 +148,7 @@ int MOAITstoreGamecenterAndroid::_enableGamecenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRankList
+/**	@lua	getRankList
 	@text	Gets the leaderboard list
 
 	@out	nil
@@ -180,7 +180,7 @@ int MOAITstoreGamecenterAndroid::_getRankList ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUserInfo
+/**	@lua	getUserInfo
 	@text	Gets the userinfo
 
 	@out	nil
@@ -212,7 +212,7 @@ int MOAITstoreGamecenterAndroid::_getUserInfo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	installGamecenter
+/**	@lua	installGamecenter
 	@text	Installs the Tstore Gamecenter app
 
 	@out	nil
@@ -244,7 +244,7 @@ int MOAITstoreGamecenterAndroid::_installGamecenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	installTstore
+/**	@lua	installTstore
 	@text	Installs the Tstore app
 
 	@out	nil
@@ -275,7 +275,7 @@ int MOAITstoreGamecenterAndroid::_installTstore ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	invokeTstoreJoinPage
+/**	@lua	invokeTstoreJoinPage
 	@text	Invokes the Tstore join page
 
 	@out	nil
@@ -306,7 +306,7 @@ int MOAITstoreGamecenterAndroid::_invokeTstoreJoinPage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openGallery
+/**	@lua	openGallery
 	@text	opens gallery for profile pic selection
 
 	@out	nil
@@ -351,7 +351,7 @@ int MOAITstoreGamecenterAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPoint
+/**	@lua	setPoint
 	@text	Records a point to the leaderboard
 
 	@in 	string score  ( convert number to string in Lua )
@@ -388,7 +388,7 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUserInfo
+/**	@lua	setUserInfo
 	@text	Records a new user nickname
 
 	@in 	string nickname
@@ -422,7 +422,7 @@ int MOAITstoreGamecenterAndroid::_setUserInfo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	startGamecenter
+/**	@lua	startGamecenter
 	@text	Starts the gamecenter app
 	
 	@out	number status		Can be GAMECENTER_INSTALLED, GAMECENTER_UPGRADING, GAMECENTER_NOT_INSTALLED

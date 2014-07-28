@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	bleedRect
+/**	@lua	bleedRect
 	@text	'Bleeds' the interior of the rectangle out by one pixel.
 
 	@in		MOAIImage self
@@ -39,7 +39,7 @@ int MOAIImage::_bleedRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	compare
+/**	@lua	compare
 	@text	Compares the image to another image.
 	
 	@in		MOAIImage self
@@ -58,7 +58,7 @@ int MOAIImage::_compare ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	convertColors
+/**	@lua	convertColors
 	@text	Return a copy of the image with a new color format. Not
 			all provided formats are supported by OpenGL.
 
@@ -80,7 +80,7 @@ int MOAIImage::_convertColors ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copy
+/**	@lua	copy
 	@text	Copies an image.
 
 	@in		MOAIImage self
@@ -97,7 +97,7 @@ int MOAIImage::_copy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copyBits
+/**	@lua	copyBits
 	@text	Copy a section of one image to another.
 
 	@in		MOAIImage self
@@ -133,7 +133,7 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copyRect
+/**	@lua	copyRect
 	@text	Copy a section of one image to another. Accepts two rectangles.
 			Rectangles may be of different size and proportion. Section of
 			image may also be flipped horizontally or vertically by
@@ -181,7 +181,7 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillCircle
+/**	@lua	fillCircle
 	@text	Draw a filled circle.
 
 	@in		number x
@@ -206,7 +206,7 @@ int MOAIImage::_fillCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillRect
+/**	@lua	fillRect
 	@text	Fill a rectangle in the image with a solid color.
 
 	@in		MOAIImage self
@@ -232,7 +232,7 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	generateSDF
+/**	@lua	generateSDF
 	@text	Given a rect, creates a signed distance field from it
  
 	 @in	MOAIImage self
@@ -253,7 +253,7 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getColor32
+/**	@lua	getColor32
 	@text	Returns a 32-bit packed RGBA value from the image for a
 			given pixel coordinate.
 
@@ -275,7 +275,7 @@ int MOAIImage::_getColor32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFormat
+/**	@lua	getFormat
 	@text	Returns the color format of the image.
 
 	@in		MOAIImage self
@@ -290,7 +290,7 @@ int MOAIImage::_getFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRGBA
+/**	@lua	getRGBA
 	@text	Returns an RGBA color as four floating point values.
 
 	@in		MOAIImage self
@@ -321,7 +321,7 @@ int MOAIImage::_getRGBA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the width and height of the image.
 
 	@in		MOAIImage self
@@ -341,7 +341,7 @@ int MOAIImage::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initializes the image with a width, height and color format.
 
 	@in		MOAIImage self
@@ -365,7 +365,7 @@ int MOAIImage::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads an image from a PNG.
 
 	@in		MOAIImage self
@@ -386,7 +386,7 @@ int MOAIImage::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadFromBuffer
+/**	@lua	loadFromBuffer
 	@text	Loads an image from a buffer.
 
 	@in		MOAIImage self
@@ -420,7 +420,7 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	padToPow2
+/**	@lua	padToPow2
 	@text	Copies an image and returns a new image padded to the next
 			power of 2 along each dimension. Original image will be
 			in the upper left hand corner of the new image.
@@ -440,7 +440,7 @@ int MOAIImage::_padToPow2 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resize
+/**	@lua	resize
 	@text	Copies the image to an image with a new size.
 
 	@in		MOAIImage self
@@ -472,7 +472,7 @@ int MOAIImage::_resize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resizeCanvas
+/**	@lua	resizeCanvas
 	@text	Copies the image to a canvas with a new size. If the canvas
 			is larger than the original image, the extra pixels will be
 			initialized with 0. Pass in a new frame or just a new width
@@ -520,7 +520,7 @@ int MOAIImage::_resizeCanvas ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor32
+/**	@lua	setColor32
 	@text	Sets 32-bit the packed RGBA value for a given pixel
 			coordinate. Parameter will be converted to the native format
 			of the image.
@@ -544,7 +544,7 @@ int MOAIImage::_setColor32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRGBA
+/**	@lua	setRGBA
 	@text	Sets a color using RGBA floating point values.
 
 	@in		MOAIImage self
@@ -573,7 +573,7 @@ int MOAIImage::_setRGBA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writePNG
+/**	@lua	writePNG
 	@text	Write image to a PNG file.
 
 	@in		MOAIImage self
@@ -595,7 +595,7 @@ int MOAIImage::_writePNG ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	convertToGrayScale
+/**	@lua	convertToGrayScale
 	@text	Convert image to grayscale.
 
 	@in		MOAIImage self

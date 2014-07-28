@@ -34,7 +34,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearLoopFlags
+/**	@lua	clearLoopFlags
 	@text	Uses the mask provided to clear the loop flags.
 
 	@opt	number mask		Default value is 0xffffffff.
@@ -47,7 +47,7 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	crash
+/**	@lua	crash
 	@text	Crashes Moai with a null pointer dereference.
  
 	@out	nil
@@ -69,7 +69,7 @@ int MOAISim::_collectgarbage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	enterFullscreenMode
+/**	@lua	enterFullscreenMode
 	@text	Enters fullscreen mode on the device if possible.
 
 	@out	nil
@@ -87,7 +87,7 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	exitFullscreenMode
+/**	@lua	exitFullscreenMode
 	@text	Exits fullscreen mode on the device if possible.
 
 	@out	nil
@@ -113,7 +113,7 @@ int MOAISim::_forceGC ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	framesToTime
+/**	@lua	framesToTime
 	@text	Converts the number of frames to time passed in seconds.
 
 	@in		number frames		The number of frames.
@@ -133,7 +133,7 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDeviceTime
+/**	@lua	getDeviceTime
 	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
 
 	@out	number time			The device clock time in seconds.
@@ -145,7 +145,7 @@ int MOAISim::_getDeviceTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getElapsedTime
+/**	@lua	getElapsedTime
 	@text	Gets the number of seconds elapsed since the application was started.
 
 	@out	number time			The number of elapsed seconds.
@@ -157,7 +157,7 @@ int MOAISim::_getElapsedTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLoopFlags
+/**	@lua	getLoopFlags
 	@text	Returns the current loop flags.
 
 	@out	number mask
@@ -168,7 +168,7 @@ int MOAISim::_getLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLuaObjectCount
+/**	@lua	getLuaObjectCount
 	@text	Gets the total number of objects in memory that inherit MOAILuaObject. Count includes
 			objects that are not bound to the Lua runtime.
 
@@ -180,7 +180,7 @@ int MOAISim::_getLuaObjectCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	getMemoryUsage
+/** @lua	getMemoryUsage
 	@text	Get the current amount of memory used by MOAI and its subsystems. This will
 			attempt to return reasonable estimates where exact values cannot be obtained.
 			Some fields represent informational fields (i.e. are not double counted in the
@@ -262,7 +262,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPerformance
+/**	@lua	getPerformance
 	@text	Returns an estimated frames per second based on measurements
 			taken at every render.
 
@@ -277,7 +277,7 @@ int MOAISim::_getPerformance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStep
+/**	@lua	getStep
 	@text	Gets the amount of time (in seconds) that it takes for one frame to pass.
 
 	@out	number size			The size of the frame; the time it takes for one frame to pass.
@@ -289,7 +289,7 @@ int MOAISim::_getStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStepCount
+/**	@lua	getStepCount
 	@text	Gets the number of times the sim was stepped since the application was started.
 
 	@out	number steps		The number of times the sim was stepped.
@@ -301,7 +301,7 @@ int MOAISim::_getStepCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hideCursor
+/**	@lua	hideCursor
 	@text	Hides system cursor.
 
 	@out	nil
@@ -319,7 +319,7 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openWindow
+/**	@lua	openWindow
 	@text	Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
 
 	@in		string title		The title of the window.
@@ -346,7 +346,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pauseTimer
+/**	@lua	pauseTimer
 	@text	Pauses or unpauses the device timer, preventing any visual updates (rendering) while paused.
 
 	@in		boolean pause		Whether the device timer should be paused.
@@ -367,7 +367,7 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBoostThreshold
+/**	@lua	setBoostThreshold
 	@text	Sets the boost threshold, a scalar applied to step. If the gap
 			between simulation time and device time is greater than the step
 			size multiplied by the boost threshold and MOAISim.SIM_LOOP_ALLOW_BOOST
@@ -384,7 +384,7 @@ int MOAISim::_setBoostThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCpuBudget
+/**	@lua	setCpuBudget
 	@text	Sets the amount of time (given in simulation steps) to allow
 			for updating the simulation.
 	
@@ -414,7 +414,7 @@ int MOAISim::_setGCStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLongDelayThreshold
+/**	@lua	setLongDelayThreshold
 	@text	Sets the long delay threshold. If the simulation step falls behind
 			the given threshold, the deficit will be dropped: the simulation will
 			neither spin nor boost to catch up.
@@ -429,7 +429,7 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLoopFlags
+/**	@lua	setLoopFlags
 	@text	Fine tune behavior of the simulation loop. MOAISim.SIM_LOOP_ALLOW_SPIN
 			will allow the simulation step to run multiple times per update to try
 			and catch up with device time, but will abort if processing the simulation
@@ -453,7 +453,7 @@ int MOAISim::_setLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLuaAllocLogEnabled
+/**	@lua	setLuaAllocLogEnabled
 	@text	Toggles log messages from Lua allocator.
 
 	@opt	boolean enable			Default value is 'false.'
@@ -466,7 +466,7 @@ int MOAISim::_setLuaAllocLogEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStep
+/**	@lua	setStep
 	@text	Sets the size of each simulation step (in seconds).
 	
 	@in		number step		The step size. Default value is 1 / DEFAULT_STEPS_PER_SECOND.
@@ -479,7 +479,7 @@ int MOAISim::_setStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStepMultiplier
+/**	@lua	setStepMultiplier
 	@text	Runs the simulation multiple times per step (but with a fixed
 			step size). This is used to speed up the simulation without
 			providing a larger step size (which could destabilize physics
@@ -495,7 +495,7 @@ int MOAISim::_setStepMultiplier ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTimerError
+/**	@lua	setTimerError
 	@text	Sets the tolerance for timer error. This is a multiplier of step.
 			Timer error tolerance is step * timerError.
 	
@@ -509,7 +509,7 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTraceback
+/**	@lua	setTraceback
 	@text	Sets the function to call when a traceback occurs in Lua
  
 	@in		function callback		Function to execute when the traceback occurs
@@ -524,7 +524,7 @@ int MOAISim::_setTraceback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showCursor
+/**	@lua	showCursor
 	@text	Shows system cursor.
 
 	@out	nil
@@ -542,7 +542,7 @@ int MOAISim::_showCursor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	timeToFrames
+/**	@lua	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
 	@in		number time			The number of seconds.
@@ -568,7 +568,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 #ifdef DOXYGEN
 
 	//----------------------------------------------------------------//
-	/**	@name	clearRenderStack
+	/**	@lua	clearRenderStack
 		@text	Alias for MOAIRenderMgr.clearRenderStack (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -578,7 +578,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	popRenderPass
+	/**	@lua	popRenderPass
 		@text	Alias for MOAIRenderMgr.popRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -588,7 +588,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	pushRenderPass
+	/**	@lua	pushRenderPass
 		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -599,7 +599,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	removeRenderPass
+	/**	@lua	removeRenderPass
 		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 

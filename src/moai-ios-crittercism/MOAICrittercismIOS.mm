@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize Crittercism.
 	
 	@in		string appId			Available in Crittercism dashboard settings.
@@ -45,7 +45,7 @@ int MOAICrittercismIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	forceException
+/**	@lua	forceException
 	@text	Forces a crash and crittercism report, can be used for internal errors or debugging crittercism
  
 	@out	nil 
@@ -58,7 +58,7 @@ int	MOAICrittercismIOS::_forceException ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	leaveBreadcrumb
+/**	@lua	leaveBreadcrumb
 	@text	Leave a breadcrumb (log statement) to trace execution.
 	
 	@in		string breadcrumb		A string describing the code location.
@@ -80,7 +80,7 @@ int MOAICrittercismIOS::_leaveBreadcrumb ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUser
+/**	@lua	setUser
  @text	Sets the username
  
  @in	string username

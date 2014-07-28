@@ -9,7 +9,7 @@
 //================================================================//
 // MOAICoroutine
 //================================================================//
-/**	@name MOAICoroutine
+/**	@lua MOAICoroutine
 	@text Binds a Lua coroutine to a MOAIAction.
 */
 class MOAICoroutine :

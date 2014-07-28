@@ -14,7 +14,7 @@
 //================================================================//
 // MOAIBillingIOS
 //================================================================//
-/**	@name	MOAIBillingIOS
+/**	@lua	MOAIBillingIOS
 	@text	Wrapper for in-app purchase integration on iOS devices 
 			using Apple StoreKit. Exposed to Lua via MOAIBilling on 
 			all mobile platforms, but API differs on iOS and Android.

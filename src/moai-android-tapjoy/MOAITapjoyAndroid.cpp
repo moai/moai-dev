@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initializes Tapjoy.
 				
 	@in		string	appId				Available in Tapjoy dashboard settings.
@@ -37,7 +37,7 @@ int MOAITapjoyAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUserId
+/**	@lua	setUserId
  	@text	Sets the tapjoy user ID.
  
  	@in		string userId
@@ -53,7 +53,7 @@ int MOAITapjoyAndroid::_setUserId ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showOffers
+/**	@lua	showOffers
 	@text	Displays the Tapjoy marketplace.
 				
 	@out	nil

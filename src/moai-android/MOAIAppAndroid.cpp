@@ -32,7 +32,7 @@ int MOAIAppAndroid::_getPicturePath( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUTCTime
+/**	@lua	getUTCTime
 	@text	Gets the UTC time.
 
 	@out 	number time		UTC Time
@@ -66,7 +66,7 @@ int MOAIAppAndroid::_getUTCTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStatusBarHeight
+/**	@lua	getStatusBarHeight
 	@text	Gets the Height of an Android 3.x status bar
 
 	@out 	number height
@@ -134,7 +134,7 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendMail
+/**	@lua	sendMail
     @text Send a mail with the passed in default values
 
     @in	string recipient
@@ -175,7 +175,7 @@ int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	share
+/**	@lua	share
 	@text	Open a generic Android dialog to allow the user to share
 			via email, SMS, Facebook, Twitter, etc.
 

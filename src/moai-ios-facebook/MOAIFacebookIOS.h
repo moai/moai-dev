@@ -18,7 +18,7 @@
 //================================================================//
 // MOAIFacebookIOS
 //================================================================//
-/**	@name	MOAIFacebookIOS
+/**	@lua	MOAIFacebookIOS
 	@text	Wrapper for Facebook integration on iOS devices.
 			Facebook provides social integration for sharing on
 			www.facebook.com. Exposed to Lua via MOAIFacebook on 

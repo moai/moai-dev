@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIDialogAndroid
 //================================================================//
-/**	@name	MOAIDialogAndroid
+/**	@lua	MOAIDialogAndroid
 	@text	Wrapper for a simple native dialog implementation on 
 			Android devices. Exposed to Lua via MOAIDialog on all 
 			mobile platforms.

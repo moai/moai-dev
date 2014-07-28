@@ -12,7 +12,7 @@ class MOAIDynamicGlyphCachePage;
 //================================================================//
 // MOAIDynamicGlyphCache
 //================================================================//
-/**	@name	MOAIDynamicGlyphCache
+/**	@lua	MOAIDynamicGlyphCache
 	@text	<p>This is the default implementation of a dynamic glyph cache.
 			Right now it can only grow but support for reference counting
 			glyphs and garbage collection will be added later.</p>

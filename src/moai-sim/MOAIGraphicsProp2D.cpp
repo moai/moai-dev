@@ -7,7 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	getBounds
+/**	@lua	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
 			be overridden by the prop's frame if it's been set (using
@@ -23,7 +23,7 @@ int MOAIGraphicsProp2D::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGrid
+/**	@lua	getGrid
 	@text	Get the grid currently connected to the prop.
 	
 	@in		MOAIGraphicsProp2D self
@@ -33,7 +33,7 @@ int MOAIGraphicsProp2D::_getGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getIndex
+/**	@lua	getIndex
 	@text	Gets the value of the deck indexer.
 	
 	@in		MOAIGraphicsProp2D self
@@ -43,7 +43,7 @@ int MOAIGraphicsProp2D::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPriority
+/**	@lua	getPriority
 	@text	Returns the current priority of the node or 'nil' if the
 			priority is uninitialized.
 	
@@ -54,7 +54,7 @@ int MOAIGraphicsProp2D::_getPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	inside
+/**	@lua	inside
 	@text	Returns true if the given world space point falls inside
 			the prop's bounds.
 	
@@ -69,7 +69,7 @@ int	MOAIGraphicsProp2D::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setBlendMode
+/** @lua	setBlendMode
 	@text	Set the blend mode.
 
 	@overload	Reset the blend mode to MOAIGraphicsProp2D.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA)
@@ -95,7 +95,7 @@ int MOAIGraphicsProp2D::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCullMode
+/**	@lua	setCullMode
 	@text	Sets and enables face culling.
 	
 	@in		MOAIGraphicsProp2D self
@@ -106,7 +106,7 @@ int MOAIGraphicsProp2D::_setCullMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDeck
+/**	@lua	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
 	@in		MOAIGraphicsProp2D self
@@ -117,7 +117,7 @@ int MOAIGraphicsProp2D::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDepthMask
+/**	@lua	setDepthMask
 	@text	Disables or enables depth writing.
 	
 	@in		MOAIGraphicsProp2D self
@@ -128,7 +128,7 @@ int MOAIGraphicsProp2D::_setDepthMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDepthTest
+/**	@lua	setDepthTest
 	@text	Sets and enables depth testing (assuming depth buffer is present).
 	
 	@in		MOAIGraphicsProp2D self
@@ -139,7 +139,7 @@ int MOAIGraphicsProp2D::_setDepthTest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setExpandForSort
+/**	@lua	setExpandForSort
 	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
 			Expanding for sort causes the prop to emit a sub-prim
 			for each component of the layout. For example, when
@@ -157,7 +157,7 @@ int MOAIGraphicsProp2D::_setExpandForSort ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFrame
+/**	@lua	setFrame
 	@text	Sets the fitting frame of the prop.
 	
 	@overload	Clear the fitting frame.
@@ -178,7 +178,7 @@ int MOAIGraphicsProp2D::_setFrame ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGrid
+/**	@lua	setGrid
 	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
 			will override the standard indexer.
 	
@@ -190,7 +190,7 @@ int MOAIGraphicsProp2D::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGridScale
+/**	@lua	setGridScale
 	@text	Scale applied to deck items before rendering to grid cell.
 	
 	@in		MOAIGraphicsProp2D self
@@ -202,7 +202,7 @@ int MOAIGraphicsProp2D::_setGridScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIndex
+/**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
 	@in		MOAIGraphicsProp2D self
@@ -213,7 +213,7 @@ int MOAIGraphicsProp2D::_setIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
 	@in		MOAIGraphicsProp2D self
@@ -224,7 +224,7 @@ int MOAIGraphicsProp2D::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPriority
+/**	@lua	setPriority
 	@text	Sets or clears the node's priority. Clear the priority
 			to have MOAIPartition automatically assign a priority
 			to a node when it is added.
@@ -237,7 +237,7 @@ int MOAIGraphicsProp2D::_setPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRemapper
+/**	@lua	setRemapper
 	@text	Set a remapper for this prop to use when drawing deck members.
 	
 	@in		MOAIGraphicsProp2D self
@@ -248,7 +248,7 @@ int MOAIGraphicsProp2D::_setRemapper ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setShader
+/**	@lua	setShader
 	@text	Sets or clears the prop's shader. The prop's shader takes
 			precedence over any shader specified by the deck or its
 			elements.
@@ -261,7 +261,7 @@ int MOAIGraphicsProp2D::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
+/**	@lua	setTexture
 	@text	Set or load a texture for this prop. The prop's texture will
 			override the deck's texture.
 	
@@ -274,7 +274,7 @@ int MOAIGraphicsProp2D::_setTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVTransform
+/**	@lua	setUVTransform
 	@text	Sets or clears the prop's UV transform.
 	
 	@in		MOAIGraphicsProp2D self
@@ -285,7 +285,7 @@ int MOAIGraphicsProp2D::_setUVTransform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVisible
+/**	@lua	setVisible
 	@text	Sets or clears the prop's visibility.
 	
 	@in		MOAIGraphicsProp2D self

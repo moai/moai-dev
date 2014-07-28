@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	updateRegion
+/**	@lua	updateRegion
 	@text	Update either a sub-region of the texture or the whole
 			texture to match changes in the image. Updated regions will
 			be reloaded from the image the next time the texture is bound.

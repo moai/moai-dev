@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAnimCurveVec
 //================================================================//
-/**	@name	MOAIAnimCurveVec
+/**	@lua	MOAIAnimCurveVec
 	@text	Implementation of animation curve for 3D vector values.
 */
 class MOAIAnimCurveVec :

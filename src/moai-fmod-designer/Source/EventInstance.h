@@ -14,8 +14,7 @@ namespace FMODDesigner
     // but it'll cost you 24 bytes per sound instance.
 #define SUPPORT_FULL_3D_SOUNDS 0
 
-    /// \class EventInstance
-    /// An instance of a playing Event.
+    // An instance of a playing Event.
     class EventInstance
     {
         friend class EventManager;

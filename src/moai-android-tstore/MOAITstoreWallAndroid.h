@@ -11,7 +11,7 @@
 //================================================================//
 // MOAITstoreWallAndroid
 //================================================================//
-/**	@name	MOAITstoreWallAndroid
+/**	@lua	MOAITstoreWallAndroid
 */
 class MOAITstoreWallAndroid :
 	public MOAIGlobalClass < MOAITstoreWallAndroid, MOAILuaObject > {

@@ -56,7 +56,7 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getListener
+/**	@lua	getListener
 	@text	Gets the listener callback for a given event ID.
 
 	@in		MOAIInstanceEventSource self
@@ -75,7 +75,7 @@ int MOAIInstanceEventSource::_getListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setListener
+/**	@lua	setListener
 	@text	Sets a listener callback for a given event ID. It is up
 			to individual classes to declare their event IDs.
 

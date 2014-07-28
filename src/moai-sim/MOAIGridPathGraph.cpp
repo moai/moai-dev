@@ -27,7 +27,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setGrid
+/**	@lua	setGrid
 	@text	Set graph data to use for pathfinding. 
 
 	@in		MOAIGridPathGraph self

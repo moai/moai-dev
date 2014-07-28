@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	connect
+/**	@lua	connect
 	@text	Connects to the Google Play Game Services
 
 	@out	nil
@@ -52,7 +52,7 @@ int MOAIGooglePlayServicesAndroid::_connect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isConnected
+/**	@lua	isConnected
 	@text	Connects to the Google Play Game Services
 
 	@out	nil
@@ -101,7 +101,7 @@ int MOAIGooglePlayServicesAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showAchievements
+/**	@lua	showAchievements
 	@text	Shows the achievements
 
 	@out	nil
@@ -131,7 +131,7 @@ int MOAIGooglePlayServicesAndroid::_showAchievements ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showLeaderboard
+/**	@lua	showLeaderboard
 	@text	Shows the desired leaderboard
 
 	@in		string leaderboardID
@@ -166,7 +166,7 @@ int MOAIGooglePlayServicesAndroid::_showLeaderboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	submitScore
+/**	@lua	submitScore
 	@text	Submits a score for the passed in leaderboard
 
 	@in		string leaderboardID
@@ -203,7 +203,7 @@ int MOAIGooglePlayServicesAndroid::_submitScore ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unlockAchievement
+/**	@lua	unlockAchievement
 	@text	Grants an achievement to the player
 
 	@in		string achievementID

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMotionSensor
 //================================================================//
-/**	@name	MOAIMotionSensor
+/**	@lua	MOAIMotionSensor
 	@text	Gravity/acceleration sensor.
 */
 class MOAIMotionSensor :

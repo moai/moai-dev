@@ -19,7 +19,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	keyDown
+/**	@lua	keyDown
 	@text	Checks to see if one or more buttons were pressed during the last iteration.
 
 	@overload
@@ -57,7 +57,7 @@ int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	keyIsDown
+/**	@lua	keyIsDown
 	@text	Checks to see if the button is currently down.
 
 	@overload
@@ -95,7 +95,7 @@ int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	keyIsUp
+/**	@lua	keyIsUp
 	@text	Checks to see if the specified key is currently up.
 
 	@overload
@@ -133,7 +133,7 @@ int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	keyUp
+/**	@lua	keyUp
 	@text	Checks to see if the specified key was released during the last iteration.
 
 	@overload
@@ -171,7 +171,7 @@ int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when a key is pressed.
 
 	@in		MOAIKeyboardSensor self

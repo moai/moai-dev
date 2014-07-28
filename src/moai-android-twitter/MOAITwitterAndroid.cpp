@@ -18,7 +18,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize Twitter.
 
 	@in		string	consumerKey		    OAuth consumer key
@@ -60,7 +60,7 @@ int MOAITwitterAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	login
+/**	@lua	login
 	@text	Prompt the user to login to Twitter.
 
 	@out 	nil
@@ -91,7 +91,7 @@ int MOAITwitterAndroid::_login ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isLoggedIn
+/**	@lua	isLoggedIn
 	@text   Determine if twitter is currently authorized.
 
 	@out    boolean isLoggedIn		True if logged in, false otherwise.
@@ -123,7 +123,7 @@ int MOAITwitterAndroid::_isLoggedIn ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAccessToken
+/**	@lua	setAccessToken
 	@text	Set the access token that authenticates the user.
 
 	@in		string	token		        OAuth token
@@ -162,7 +162,7 @@ int MOAITwitterAndroid::_setAccessToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendTweet
+/**	@lua	sendTweet
 	@text   Tweet the provided text
 
 	@opt	string	text		 The text for the tweet.

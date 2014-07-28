@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIButtonSensor
 //================================================================//
-/**	@name	MOAIButtonSensor
+/**	@lua	MOAIButtonSensor
 	@text	Button sensor.
 */
 class MOAIButtonSensor :

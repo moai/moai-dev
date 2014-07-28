@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getHeading
+/**	@lua	getHeading
 	@text	Returns the current heading according to the built-in compass.
 
 	@in		MOAICompassSensor self
@@ -24,7 +24,7 @@ int MOAICompassSensor::_getHeading ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the heading changes.
 
 	@in		MOAICompassSensor self

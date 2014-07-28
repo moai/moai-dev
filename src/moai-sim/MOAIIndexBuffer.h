@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIIndexBuffer
 //================================================================//
-/**	@name	MOAIIndexBuffer
+/**	@lua	MOAIIndexBuffer
 	@text	Index buffer class. Unused at this time.
 */
 class MOAIIndexBuffer :

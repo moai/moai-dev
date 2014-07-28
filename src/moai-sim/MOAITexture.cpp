@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads a texture from a data buffer or a file. Optionally pass
 			in an image transform (not applicable to PVR textures).
 	

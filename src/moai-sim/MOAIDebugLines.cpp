@@ -27,7 +27,7 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setStyle
+/**	@lua	setStyle
 	@text	Sets the particulars of a given debug line style.
 	
 	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
@@ -58,7 +58,7 @@ int MOAIDebugLines::_setStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showStyle
+/**	@lua	showStyle
 	@text	Enables or disables drawing of a given debug line style.
 	
 	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.

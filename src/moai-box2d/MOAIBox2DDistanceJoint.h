@@ -11,7 +11,7 @@ class b2Joint;
 //================================================================//
 // MOAIBox2DDistanceJoint
 //================================================================//
-/**	@name MOAIBox2DDistanceJoint
+/**	@lua MOAIBox2DDistanceJoint
 	@text Box2D distance joint.
 */
 class MOAIBox2DDistanceJoint :

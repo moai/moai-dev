@@ -30,7 +30,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearHighlights
+/**	@lua	clearHighlights
 	@text	Removes all highlights currently associated with the text box.
 
 	@in		MOAITextLabel self
@@ -46,7 +46,7 @@ int MOAITextLabel::_clearHighlights ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAlignment
+/**	@lua	getAlignment
 	@text	Returns the alignment of the text
 
 	@in		MOAITextLabel self
@@ -61,7 +61,7 @@ int MOAITextLabel::_getAlignment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGlyphScale
+/**	@lua	getGlyphScale
 	@text	Returns the current glyph scale.
 
 	@in		MOAITextLabel self
@@ -74,7 +74,7 @@ int MOAITextLabel::_getGlyphScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLineSpacing
+/**	@lua	getLineSpacing
 	@text	Returns the spacing between lines (in pixels).
 
 	@in		MOAITextLabel self
@@ -88,7 +88,7 @@ int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRect
+/**	@lua	getRect
 	@text	Returns the two-dimensional boundary of the text box.
 
 	@in		MOAITextLabel self
@@ -107,7 +107,7 @@ int MOAITextLabel::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStyle
+/**	@lua	getStyle
 	@text	Returns the style associated with a name or, if no name
 			is given, returns the default style.
 
@@ -138,7 +138,7 @@ int MOAITextLabel::_getStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getText
+/**	@lua	getText
 	@text	Return the text string.
 
 	@in		MOAITextLabel self
@@ -155,7 +155,7 @@ int MOAITextLabel::_getText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTextBounds
+/**	@lua	getTextBounds
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
 
@@ -201,7 +201,7 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	more
+/**	@lua	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
 	@in		MOAITextLabel self
@@ -215,7 +215,7 @@ int MOAITextLabel::_more ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	nextPage
+/**	@lua	nextPage
 	@text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
 
 	@in		MOAITextLabel self
@@ -233,7 +233,7 @@ int MOAITextLabel::_nextPage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveCurves
+/**	@lua	reserveCurves
 	@text	Reserves a set of IDs for animation curves to be binding to this text object.  See setCurves.
 
 	@in		MOAITextLabel self
@@ -250,7 +250,7 @@ int MOAITextLabel::_reserveCurves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	revealAll
+/**	@lua	revealAll
 	@text	Displays as much text as will fit in the text box.
 
 	@in		MOAITextLabel self
@@ -265,7 +265,7 @@ int MOAITextLabel::_revealAll ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAlignment
+/**	@lua	setAlignment
 	@text	Sets the horizontal and/or vertical alignment of the text in the text box.
 
 	@in		MOAITextLabel self
@@ -294,7 +294,7 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCurve
+/**	@lua	setCurve
 	@text	Binds an animation curve to the text, where the Y value of the curve indicates the text offset, or clears the curves.
 
 	@overload
@@ -330,7 +330,7 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGlyphScale
+/**	@lua	setGlyphScale
 	@text	Sets the glyph scale. This is a scalar applied to glyphs
 			as they are positioned in the text box.
 
@@ -345,7 +345,7 @@ int MOAITextLabel::_setGlyphScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setHighlight
+/**	@lua	setHighlight
 	@text	Set or clear the highlight color of a sub string in the text.
 			Only affects text displayed on the current page. Highlight
 			will automatically clear when layout or page changes.
@@ -388,7 +388,7 @@ int MOAITextLabel::_setHighlight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLineSnap
+/**	@lua	setLineSnap
 	@text	Sets the snapping boundary for lines of text. Only applied during layout and in the
 			text label's local space.
 
@@ -410,7 +410,7 @@ int MOAITextLabel::_setLineSnap ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLineSpacing
+/**	@lua	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
 			the default spacing.
 
@@ -430,7 +430,7 @@ int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Sets the rectangular area for this text box.
 
 	@in		MOAITextLabel self
@@ -454,7 +454,7 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRectLimits
+/**	@lua	setRectLimits
 	@text	Toggles width/height constraints based on the rect.
 
 	@in		MOAITextLabel self
@@ -472,7 +472,7 @@ int MOAITextLabel::_setRectLimits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setReveal
+/**	@lua	setReveal
 	@text	Sets the number of renderable characters to be shown. 
 			Can range from 0 to any value; values greater than the
 			number of renderable characters in the current text will
@@ -492,7 +492,7 @@ int MOAITextLabel::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpeed
+/**	@lua	setSpeed
 	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
 
 	@in		MOAITextLabel self
@@ -508,7 +508,7 @@ int MOAITextLabel::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setText
+/**	@lua	setText
 	@text	Sets the text string to be displayed by this textbox.
 
 	@in		MOAITextLabel self
@@ -525,7 +525,7 @@ int MOAITextLabel::_setText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStyle
+/**	@lua	setStyle
 	@text	Attaches a style to the textbox and associates a name with it.
 			If no name is given, sets the default style.
 
@@ -564,7 +564,7 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWordBreak
+/**	@lua	setWordBreak
 	@text	Sets the rule for breaking words across lines.
 
 	@in		MOAITextLabel self
@@ -580,7 +580,7 @@ int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setYFlip
+/**	@lua	setYFlip
 	@text	Sets the rendering direction for the text. Default assumes
 			a window style screen space (positive Y moves down the screen). Set
 			to true to render text for world style coordinate systems (positive
@@ -600,7 +600,7 @@ int MOAITextLabel::_setYFlip ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	spool
+/**	@lua	spool
 	@text	Creates a new MOAIAction which when run has the effect of increasing
 			the amount of characters revealed from 0 to the length of the string
 			currently set.  The spool action is automatically added to the root
@@ -629,7 +629,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 #ifdef DOXYGEN
 
 	//----------------------------------------------------------------//
-	/**	@name	affirmStyle
+	/**	@lua	affirmStyle
 		@text	Returns the textbox's default style. If no default style
 				exists, creates an empty style, sets it as the default and
 				returns it.
@@ -641,7 +641,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	setFont
+	/**	@lua	setFont
 		@text	Sets the font to be used by the textbox's default style.
 				If no default style exists, a default style is created.
 
@@ -653,7 +653,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	setTextSize
+	/**	@lua	setTextSize
 		@text	Sets the size to be used by the textbox's default style.
 				If no default style exists, a default style is created.
 

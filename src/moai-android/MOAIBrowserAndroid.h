@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIBrowserAndroid
 //================================================================//
-/**	@name	MOAIBrowserAndroid
+/**	@lua	MOAIBrowserAndroid
 	@text	Wrapper for access to the native web browser.
 			Exposed to Lua via MOAIBrowser on all mobile platforms.
 */

@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveBounds
+/**	@lua	reserveBounds
 	@text	Reserve an array of bounds to be indexed.
 	
 	@in		MOAIBoundsDeck self
@@ -35,7 +35,7 @@ int	MOAIBoundsDeck::_reserveBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveIndices
+/**	@lua	reserveIndices
 	@text	Reserve indices. Each index maps a deck item onto a
 			bounding box.
 	
@@ -56,7 +56,7 @@ int	MOAIBoundsDeck::_reserveIndices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBounds
+/**	@lua	setBounds
 	@text	Set the dimensions of a bounding box at a given index.
 	
 	@in		MOAIBoundsDeck self
@@ -84,7 +84,7 @@ int	MOAIBoundsDeck::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIndex
+/**	@lua	setIndex
 	@text	Associate a deck index with a bounding box.
 	
 	@in		MOAIBoundsDeck self

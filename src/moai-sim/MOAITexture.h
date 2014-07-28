@@ -12,7 +12,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAITexture
 //================================================================//
-/**	@name	MOAITexture
+/**	@lua	MOAITexture
 	@text	Texture class.
 */
 class MOAITexture :

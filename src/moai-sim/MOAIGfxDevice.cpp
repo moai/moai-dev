@@ -57,7 +57,7 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getFrameBuffer
+/**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
 	@out	MOAIFrameBuffer frameBuffer
@@ -71,7 +71,7 @@ int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTextureUnits
+/**	@lua	getMaxTextureUnits
 	@text	Returns the total number of texture units available on the device.
 
 	@out	number maxTextureUnits
@@ -85,7 +85,7 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getViewSize
+/**	@lua	getViewSize
 	@text	Returns the width and height of the view
 	
 	@out	number width
@@ -103,7 +103,7 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	isProgrammable
+/**	@lua	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
 
@@ -145,7 +145,7 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenColor
+/**	@lua	setPenColor
 
 	@in		number r
 	@in		number g
@@ -167,7 +167,7 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenWidth
+/**	@lua	setPenWidth
 
 	@in		number width
 	@out	nil
@@ -182,7 +182,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPointSize
+/**	@lua	setPointSize
 
 	@in		number size
 	@out	nil
@@ -197,7 +197,7 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 
 	@in		release textures scheduled to be released
 	@out	nil

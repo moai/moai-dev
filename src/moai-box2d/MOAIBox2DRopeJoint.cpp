@@ -17,7 +17,7 @@ MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLimitState
+/**	@lua	getLimitState
  @text	See Box2D documentation.
  
  @in		MOAIBox2DRopeJoint self
@@ -38,7 +38,7 @@ int MOAIBox2DRopeJoint::_getLimitState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxLength
+/**	@lua	getMaxLength
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRopeJoint self
@@ -61,7 +61,7 @@ int MOAIBox2DRopeJoint::_getMaxLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxLength
+/**	@lua	setMaxLength
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRopeJoint self

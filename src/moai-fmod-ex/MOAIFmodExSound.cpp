@@ -19,7 +19,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads the specified sound from file, or from a MOAIDataBuffer.
 
 	@overload
@@ -60,7 +60,7 @@ int MOAIFmodExSound::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadBGM
+/**	@lua	loadBGM
 	@text	Loads the specified BGM sound from file, or from a MOAIDataBuffer.
 
 	@overload
@@ -94,7 +94,7 @@ int	MOAIFmodExSound::_loadBGM ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadSFX
+/**	@lua	loadSFX
 	@text	Loads the specified SFX sound from file, or from a MOAIDataBuffer.
 
 	@overload
@@ -126,7 +126,7 @@ int	MOAIFmodExSound::_loadSFX ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Releases the sound data from memory.
 
 	@in		MOAIFmodExSound self

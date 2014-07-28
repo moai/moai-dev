@@ -18,7 +18,7 @@
 //================================================================//
 // MOAIAppIOS
 //================================================================//
-/**	@name	MOAIAppIOS
+/**	@lua	MOAIAppIOS
 	@text	Wrapper for base application class on iOS devices.
 			Exposed to Lua via MOAIApp on all mobile platforms.
 

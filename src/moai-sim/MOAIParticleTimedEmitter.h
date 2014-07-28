@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIParticleTimedEmitter
 //================================================================//
-/**	@name	MOAIParticleTimedEmitter
+/**	@lua	MOAIParticleTimedEmitter
 	@text	Particle emitter.
 */
 class MOAIParticleTimedEmitter :

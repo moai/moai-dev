@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	areaForCircle
+/**	@lua	areaForCircle
 	@text	Returns the area for a ring or circle.
 	
 	@overload
@@ -46,7 +46,7 @@ int MOAICpShape::_areaForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	areaForPolygon
+/**	@lua	areaForPolygon
 	@text	Returns the area for a polygon.
 	
 	@in		table vertices		Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
@@ -69,7 +69,7 @@ int MOAICpShape::_areaForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	areaForRect
+/**	@lua	areaForRect
 	@text	Returns the area for the specified rectangle.
 
 	@in		number x1
@@ -90,7 +90,7 @@ int MOAICpShape::_areaForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	areaForSegment
+/**	@lua	areaForSegment
 	@text	Returns the area for the specified segment.
 
 	@in		number x1
@@ -119,7 +119,7 @@ int MOAICpShape::_areaForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBody
+/**	@lua	getBody
 	@text	Returns the current body for the shape.
 
 	@in		MOAICpShape self
@@ -136,7 +136,7 @@ int MOAICpShape::_getBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getElasticity
+/**	@lua	getElasticity
 	@text	Returns the current elasticity.
 
 	@in		MOAICpShape self
@@ -153,7 +153,7 @@ int MOAICpShape::_getElasticity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFriction
+/**	@lua	getFriction
 	@text	Returns the current friction.
 
 	@in		MOAICpShape self
@@ -170,7 +170,7 @@ int MOAICpShape::_getFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGroup
+/**	@lua	getGroup
 	@text	Returns the current group ID.
 
 	@in		MOAICpShape self
@@ -187,7 +187,7 @@ int MOAICpShape::_getGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLayers
+/**	@lua	getLayers
 	@text	Returns the current layer ID.
 
 	@in		MOAICpShape self
@@ -204,7 +204,7 @@ int MOAICpShape::_getLayers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSurfaceVel
+/**	@lua	getSurfaceVel
 	@text	Returns the current surface velocity?
 
 	@in		MOAICpShape self
@@ -223,7 +223,7 @@ int MOAICpShape::_getSurfaceVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getType
+/**	@lua	getType
 	@text	Returns the current collision type.
 
 	@in		MOAICpShape self
@@ -240,7 +240,7 @@ int MOAICpShape::_getType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	inside
+/**	@lua	inside
 	@text	Returns whether the specified point is inside the shape.
 
 	@in		MOAICpShape self
@@ -264,7 +264,7 @@ int MOAICpShape::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isSensor
+/**	@lua	isSensor
 	@text	Returns whether the current shape is a sensor.
 
 	@in		MOAICpShape self
@@ -281,7 +281,7 @@ int MOAICpShape::_isSensor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForCircle
+/**	@lua	momentForCircle
 	@text	Return the moment of inertia for the circle.
 
 	@in		number m
@@ -318,7 +318,7 @@ int MOAICpShape::_momentForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForPolygon
+/**	@lua	momentForPolygon
 	@text	Returns the moment of intertia for the polygon.
 
 	@in		number m
@@ -347,7 +347,7 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForRect
+/**	@lua	momentForRect
 	@text	Returns the moment of intertia for the rect.
 
 	@in		number m
@@ -371,7 +371,7 @@ int MOAICpShape::_momentForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForSegment
+/**	@lua	momentForSegment
 	@text	Returns the moment of intertia for the segment.
 
 	@in		number m
@@ -400,7 +400,7 @@ int MOAICpShape::_momentForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setElasticity
+/**	@lua	setElasticity
 	@text	Sets the current elasticity.
 
 	@in		MOAICpShape self
@@ -417,7 +417,7 @@ int MOAICpShape::_setElasticity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFriction
+/**	@lua	setFriction
 	@text	Sets the current friction.
 
 	@in		MOAICpShape self
@@ -434,7 +434,7 @@ int MOAICpShape::_setFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGroup
+/**	@lua	setGroup
 	@text	Sets the current group ID.
 
 	@in		MOAICpShape self
@@ -451,7 +451,7 @@ int MOAICpShape::_setGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIsSensor
+/**	@lua	setIsSensor
 	@text	Sets whether this shape is a sensor.
 
 	@in		MOAICpShape self
@@ -468,7 +468,7 @@ int MOAICpShape::_setIsSensor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLayers
+/**	@lua	setLayers
 	@text	Sets the current layer ID.
 
 	@in		MOAICpShape self
@@ -485,7 +485,7 @@ int MOAICpShape::_setLayers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSurfaceVel
+/**	@lua	setSurfaceVel
 	@text	Sets the current surface velocity.
 
 	@in		MOAICpShape self
@@ -506,7 +506,7 @@ int MOAICpShape::_setSurfaceVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setType
+/**	@lua	setType
 	@text	Sets the current collision type.
 
 	@in		MOAICpShape self

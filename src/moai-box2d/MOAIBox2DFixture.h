@@ -12,7 +12,7 @@ class MOAIBox2DArbiter;
 //================================================================//
 // MOAIBox2DFixture
 //================================================================//
-/**	@name MOAIBox2DFixture
+/**	@lua MOAIBox2DFixture
 	@text Box2D fixture.
 */
 class MOAIBox2DFixture :

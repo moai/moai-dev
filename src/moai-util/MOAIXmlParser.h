@@ -11,7 +11,7 @@ class TiXmlNode;
 //================================================================//
 // MOAIXmlParser
 //================================================================//
-/**	@name	MOAIXmlParser
+/**	@lua	MOAIXmlParser
 	@text	Converts XML DOM to Lua trees. Provided as a convenience;
 			not advised for parsing very large XML documents. (Use of
 			XML not advised at all - use JSON or Lua.)

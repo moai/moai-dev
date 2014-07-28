@@ -7,7 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	addLoc
+/**	@lua	addLoc
 	@text	Adds a delta to the transform's location.
 	
 	@in		MOAITransform2D self
@@ -19,7 +19,7 @@ int MOAITransform2D::_addLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addPiv
+/**	@lua	addPiv
 	@text	Adds a delta to the transform's pivot.
 	
 	@in		MOAITransform2D self
@@ -31,7 +31,7 @@ int MOAITransform2D::_addPiv ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRot
+/**	@lua	addRot
 	@text	Adds a delta to the transform's rotation
 	
 	@in		MOAITransform2D self
@@ -43,7 +43,7 @@ int MOAITransform2D::_addRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addScl
+/**	@lua	addScl
 	@text	Adds a delta to the transform's scale
 	
 	@in		MOAITransform2D self
@@ -55,7 +55,7 @@ int MOAITransform2D::_addScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLoc
+/**	@lua	getLoc
 	@text	Returns the transform's current location.
 	
 	@in		MOAITransform2D self
@@ -66,7 +66,7 @@ int	MOAITransform2D::_getLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPiv
+/**	@lua	getPiv
 	@text	Returns the transform's current pivot.
 	
 	@in		MOAITransform2D self
@@ -77,7 +77,7 @@ int	MOAITransform2D::_getPiv ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRot
+/**	@lua	getRot
 	@text	Returns the transform's current rotation.
 	
 	@in		MOAITransform2D self
@@ -87,7 +87,7 @@ int	MOAITransform2D::_getRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScl
+/**	@lua	getScl
 	@text	Returns the transform's current scale.
 	
 	@in		MOAITransform2D self
@@ -98,7 +98,7 @@ int	MOAITransform2D::_getScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	modelToWorld
+/**	@lua	modelToWorld
 	@text	Transform a point in model space to world space.
 	
 	@in		MOAITransform2D self
@@ -111,7 +111,7 @@ int MOAITransform2D::_modelToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	move
+/**	@lua	move
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -131,7 +131,7 @@ int MOAITransform2D::_move ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveLoc
+/**	@lua	moveLoc
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -148,7 +148,7 @@ int MOAITransform2D::_moveLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	movePiv
+/**	@lua	movePiv
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -165,7 +165,7 @@ int MOAITransform2D::_movePiv ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveRot
+/**	@lua	moveRot
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -181,7 +181,7 @@ int MOAITransform2D::_moveRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveScl
+/**	@lua	moveScl
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -198,7 +198,7 @@ int MOAITransform2D::_moveScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seek
+/**	@lua	seek
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -219,7 +219,7 @@ int MOAITransform2D::_seek ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekLoc
+/**	@lua	seekLoc
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -237,7 +237,7 @@ int MOAITransform2D::_seekLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekPiv
+/**	@lua	seekPiv
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -255,7 +255,7 @@ int MOAITransform2D::_seekPiv ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekRot
+/**	@lua	seekRot
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -272,7 +272,7 @@ int MOAITransform2D::_seekRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekScl
+/**	@lua	seekScl
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -290,7 +290,7 @@ int MOAITransform2D::_seekScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLoc
+/**	@lua	setLoc
 	@text	Sets the transform's location.
 	
 	@in		MOAITransform2D self
@@ -302,7 +302,7 @@ int MOAITransform2D::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
 	@in		MOAITransform2D self
@@ -313,7 +313,7 @@ int MOAITransform2D::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPiv
+/**	@lua	setPiv
 	@text	Sets the transform's pivot.
 	
 	@in		MOAITransform2D self
@@ -325,7 +325,7 @@ int MOAITransform2D::_setPiv ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRot
+/**	@lua	setRot
 	@text	Sets the transform's rotation.
 	
 	@in		MOAITransform2D self
@@ -336,7 +336,7 @@ int MOAITransform2D::_setRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScl
+/**	@lua	setScl
 	@text	Sets the transform's scale.
 	
 	@in		MOAITransform2D self
@@ -348,7 +348,7 @@ int MOAITransform2D::_setScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	worldToModel
+/**	@lua	worldToModel
 	@text	Transform a point in world space to model space.
 	
 	@in		MOAITransform2D self

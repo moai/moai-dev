@@ -8,7 +8,7 @@
 //================================================================//
 // MOAIParser
 //================================================================//
-/**	@name	MOAIParser
+/**	@lua	MOAIParser
 	@text	Parses strings using a LALR parser. Generates an
 			abstract syntax tree that may then be traversed in Lua.
 			

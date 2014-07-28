@@ -32,7 +32,7 @@ int MOAITstoreWallAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showOfferWall
+/**	@lua	showOfferWall
 	@text	Displays the Tstore marketplace.
 				
 	@out	nil

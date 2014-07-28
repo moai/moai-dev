@@ -12,7 +12,7 @@ const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	down
+/**	@lua	down
 	@text	Checks to see if the screen was touched during the last iteration.
 
 	@in		MOAITouchSensor self
@@ -32,7 +32,7 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getActiveTouches
+/**	@lua	getActiveTouches
 	@text	Returns the IDs of all of the touches currently occurring (for use with getTouch).
 
 	@in		MOAITouchSensor self
@@ -85,7 +85,7 @@ int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTouch
+/**	@lua	getTouch
 	@text	Checks to see if there are currently touches being made on the screen.
 
 	@in		MOAITouchSensor self
@@ -113,7 +113,7 @@ int MOAITouchSensor::_getTouch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasTouches
+/**	@lua	hasTouches
 	@text	Checks to see if there are currently touches being made on the screen.
 
 	@in		MOAITouchSensor self
@@ -127,7 +127,7 @@ int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDown
+/**	@lua	isDown
 	@text	Checks to see if the touch status is currently down.
 
 	@in		MOAITouchSensor self
@@ -147,7 +147,7 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAcceptCancel
+/**	@lua	setAcceptCancel
 	@text	Sets whether or not to accept cancel events ( these happen on iOS backgrounding ), default value is false
  
 	@in		MOAITouchSensor self
@@ -163,7 +163,7 @@ int MOAITouchSensor::_setAcceptCancel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the pointer location changes.
 
 	@in		MOAITouchSensor self
@@ -179,7 +179,7 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTapMargin
+/**	@lua	setTapMargin
 	@text	Sets maximum distance between two touches for them to be considered a tap
 	 
 	@in		MOAITouchSensor self
@@ -196,7 +196,7 @@ int MOAITouchSensor::_setTapMargin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTapTime
+/**	@lua	setTapTime
 	@text	Sets the time between each touch for it to be counted as a tap
 	 
 	@in		MOAITouchSensor self
@@ -213,7 +213,7 @@ int MOAITouchSensor::_setTapTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	up
+/**	@lua	up
 	@text	Checks to see if the screen was untouched (is no longer being touched) during the last iteration.
 
 	@in		MOAITouchSensor self

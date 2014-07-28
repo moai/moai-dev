@@ -54,7 +54,7 @@ public:
 //================================================================//
 // MOAIBitmapFontReader
 //================================================================//
-/**	@name	MOAIBitmapFontReader
+/**	@lua	MOAIBitmapFontReader
 	@text	<p>Legacy font reader for Moai's original bitmap font format.
 			The original format is just a bitmap containing each glyph
 			in the font divided by solid-color guide lines (see examples).

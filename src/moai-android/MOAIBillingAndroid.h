@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIBillingAndroid
 //================================================================//
-/**	@name	MOAIBillingAndroid
+/**	@lua	MOAIBillingAndroid
 	@text	Wrapper for in-app purchase integration on Android
 			devices using either Google Play or Amazon. Exposed 
 			to Lua via MOAIBilling on all mobile platforms, but 

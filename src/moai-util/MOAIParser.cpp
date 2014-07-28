@@ -12,7 +12,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	loadFile
+/**	@lua	loadFile
 	@text	Parses the contents of a file and builds an abstract
 			syntax tree.
 
@@ -40,7 +40,7 @@ int MOAIParser::_loadFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadRules
+/**	@lua	loadRules
 	@text	Parses the contents of the specified CGT.
 
 	@in		MOAIParser self
@@ -59,7 +59,7 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadString
+/**	@lua	loadString
 	@text	Parses the contents of a string and builds an abstract
 			syntax tree.
 
@@ -87,7 +87,7 @@ int MOAIParser::_loadString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallbacks
+/**	@lua	setCallbacks
 	@text	Set Lua syntax tree node handlers for tree traversal.
 
 	@in		MOAIParser self
@@ -107,7 +107,7 @@ int MOAIParser::_setCallbacks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	traverse
+/**	@lua	traverse
 	@text	Top-down traversal of the abstract syntax tree.
 
 	@in		MOAIParser self

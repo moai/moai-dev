@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clear
+/**	@lua	clear
 	@text	Remove all props from the partition.
 	
 	@in		MOAIPartition self
@@ -29,7 +29,7 @@ int MOAIPartition::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertProp
+/**	@lua	insertProp
 	@text	Inserts a prop into the partition. A prop can only be
 			in one partition at a time.
 	
@@ -50,7 +50,7 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propForPoint
+/**	@lua	propForPoint
 	@text	Returns the prop with the highest priority that contains
 			the given world space point.
 	
@@ -99,7 +99,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propForRay
+/**	@lua	propForRay
 	@text	Returns the prop closest to the camera that intersects the given ray
 	 
 	@in		MOAIPartition self
@@ -143,7 +143,7 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propList
+/**	@lua	propList
 	@text	Returns all props.
 	
 	@in		MOAIPartition self
@@ -177,7 +177,7 @@ int MOAIPartition::_propList ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propListForPoint
+/**	@lua	propListForPoint
 	@text	Returns all props under a given world space point.
 	
 	@in		MOAIPartition self
@@ -219,7 +219,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propListForRay
+/**	@lua	propListForRay
 	@text	Returns all props under a given world space point.
 	
 	@in		MOAIPartition self
@@ -272,7 +272,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propListForRect
+/**	@lua	propListForRect
 	@text	Returns all props under a given world space rect.
 	
 	@in		MOAIPartition self
@@ -320,7 +320,7 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removeProp
+/**	@lua	removeProp
 	@text	Removes a prop from the partition.
 	
 	@in		MOAIPartition self
@@ -340,7 +340,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveLevels
+/**	@lua	reserveLevels
 	@text	Reserves a stack of levels in the partition. Levels must be
 			initialized with setLevel (). This will trigger a full rebuild
 			of the partition if it contains any props.
@@ -360,7 +360,7 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLevel
+/**	@lua	setLevel
 	@text	Initializes a level previously created by reserveLevels ().
 			This will trigger a full rebuild of the partition if it contains any props.
 			Each level is a loose grid. Props of a given size may be placed by
@@ -392,7 +392,7 @@ int MOAIPartition::_setLevel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPlane
+/**	@lua	setPlane
 	@text	Selects the plane the partition will use. If this is different
 			from the current plane then all non-global props will be redistributed.
 			Redistribution works by moving all props to the 'empties' cell and then

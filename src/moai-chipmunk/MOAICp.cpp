@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name getBiasCoefficient
+/**	@lua getBiasCoefficient
 	@text Returns the current bias coefficient.
 
 	@out	number	bias	The bias coefficient.
@@ -21,7 +21,7 @@ int MOAICp::_getBiasCoefficient ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCollisionSlop
+/**	@lua	getCollisionSlop
 	@text	Returns the current collision slop.
 	@out	number slop	
 */
@@ -32,7 +32,7 @@ int MOAICp::_getCollisionSlop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContactPersistence
+/**	@lua	getContactPersistence
 	@text	Returns the current contact persistence.
 	@out	number persistence	
 */
@@ -43,7 +43,7 @@ int MOAICp::_getContactPersistence ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBiasCoefficient
+/**	@lua	setBiasCoefficient
 	@text	Sets the bias coefficient.
 	@in		number bias
 	@out	nil
@@ -56,7 +56,7 @@ int MOAICp::_setBiasCoefficient ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCollisionSlop
+/**	@lua	setCollisionSlop
 	@text	Sets the collision slop.
 	@in		number slop
 	@out	nil
@@ -69,7 +69,7 @@ int MOAICp::_setCollisionSlop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setContactPersistence
+/**	@lua	setContactPersistence
 	@text	Sets the contact persistance.
 	@in		number persistance
 	@out	nil

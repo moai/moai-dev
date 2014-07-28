@@ -11,7 +11,7 @@ class b2Body;
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
-/**	@name	MOAIBox2DBody
+/**	@lua	MOAIBox2DBody
 	@text	Box2D body.
 
 	@const	DYNAMIC
