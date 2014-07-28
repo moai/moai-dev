@@ -2661,7 +2661,7 @@
 		CD8079161831C3B500E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
 		CD8079171831C3B500E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD8079191831C3B500E658D9 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD80791B1831C3B500E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD80791C1831C3B500E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -2963,7 +2963,7 @@
 		CD807BC31831C3C600E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
 		CD807BC41831C3C600E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD807BC51831C3C600E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD807BC61831C3C600E658D9 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD807BC81831C3C600E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD807BC91831C3C600E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -3941,8 +3941,8 @@
 		CD8081F01831C76900E658D9 /* ZLHashWriterSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239017FA808A00FB64BB /* ZLHashWriterSHA384.h */; };
 		CD8081F11831C76900E658D9 /* ZLHashWriterSHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1239117FA808A00FB64BB /* ZLHashWriterSHA512.cpp */; };
 		CD8081F21831C76900E658D9 /* ZLHashWriterSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239217FA808A00FB64BB /* ZLHashWriterSHA512.h */; };
-		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
-		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
+		CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
 		CD93078217EC473A00AED686 /* MOAILuaClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */; };
@@ -4890,8 +4890,8 @@
 		CDD48CBE17FA79ED00525B77 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5313564CAF000ADC60 /* cpSlideJoint.c */; };
 		CDD48CBF17FA79ED00525B77 /* cpSlideJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5413564CAF000ADC60 /* cpSlideJoint.h */; };
 		CDD48CC017FA79ED00525B77 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5513564CAF000ADC60 /* util.h */; };
-		CDD48CC117FA79FE00525B77 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
-		CDD48CC217FA79FE00525B77 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
+		CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CDD490FE17FA7A8000525B77 /* ftbbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3113564CB0000ADC60 /* ftbbox.c */; };
 		CDD490FF17FA7A8000525B77 /* ftgxval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3213564CB0000ADC60 /* ftgxval.c */; };
 		CDD4910017FA7A8000525B77 /* ftlcdfil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3313564CB0000ADC60 /* ftlcdfil.c */; };
@@ -7702,8 +7702,8 @@
 		CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-curl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIIso8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.h; sourceTree = "<group>"; };
+		CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIIso8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.m; sourceTree = "<group>"; };
 		CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moai-ios/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moai-ios/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 		CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaClass.cpp; sourceTree = "<group>"; };
@@ -8321,8 +8321,8 @@
 			children = (
 				CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */,
 				CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */,
-				CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */,
-				CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */,
+				CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */,
+				CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */,
 				03240A7713564CAF000ADC60 /* utf8.c */,
 				03240A7813564CAF000ADC60 /* utf8.h */,
 				66E345451614CA710021FC4B /* whirlpool.c */,
@@ -12480,7 +12480,7 @@
 				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
-				CDD48CC117FA79FE00525B77 /* ISO8601DateFormatter.h in Headers */,
+				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD4900AD141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD4900B0141AB6EC00913D80 /* lcode.h in Headers */,
 				CD4900B3141AB6EC00913D80 /* ldebug.h in Headers */,
@@ -12774,7 +12774,7 @@
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
-				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
+				CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD69AB3D17FA6CF90053E028 /* dict.h in Headers */,
 				CD69AB4917FA6CF90053E028 /* priorityq.h in Headers */,
 				CDD48B7917FA794E00525B77 /* SFMT-params216091.h in Headers */,
@@ -14167,7 +14167,7 @@
 				CD8079161831C3B500E658D9 /* strbuffer.h in Headers */,
 				CD8079171831C3B500E658D9 /* utf.h in Headers */,
 				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
-				CD8079191831C3B500E658D9 /* ISO8601DateFormatter.h in Headers */,
+				CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
 				CD80791B1831C3B500E658D9 /* lcode.h in Headers */,
 				CD80813F1831C6D300E658D9 /* spr.h in Headers */,
@@ -14525,7 +14525,7 @@
 				CD807EC61831C53F00E658D9 /* ssl23.h in Headers */,
 				CD807EC41831C53F00E658D9 /* ssl2.h in Headers */,
 				CD807BC51831C3C600E658D9 /* lapi.h in Headers */,
-				CD807BC61831C3C600E658D9 /* ISO8601DateFormatter.h in Headers */,
+				CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */,
 				CD807EBE1831C53F00E658D9 /* ssl_locl.h in Headers */,
 				CD807BC81831C3C600E658D9 /* lcode.h in Headers */,
@@ -16311,7 +16311,7 @@
 				CD795D0517F0850F006AEB47 /* SDL_rect.c in Sources */,
 				CD795D0617F0850F006AEB47 /* SDL_RLEaccel.c in Sources */,
 				CD795D0817F0850F006AEB47 /* SDL_shape.c in Sources */,
-				CDD48CC217FA79FE00525B77 /* ISO8601DateFormatter.m in Sources */,
+				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD795D0A17F0850F006AEB47 /* SDL_stretch.c in Sources */,
 				CD795D0B17F0850F006AEB47 /* SDL_surface.c in Sources */,
 				CD795D0D17F0850F006AEB47 /* SDL_video.c in Sources */,
@@ -16499,7 +16499,7 @@
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
-				CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */,
+				CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */,
 				CDD4911A17FA7A8600525B77 /* ftcache.c in Sources */,
 				CDD4910D17FA7A8000525B77 /* psmodule.c in Sources */,
 				CD69AB4717FA6CF90053E028 /* priorityq.c in Sources */,
