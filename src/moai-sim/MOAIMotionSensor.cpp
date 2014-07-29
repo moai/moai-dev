@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLevel
+/**	@lua	getLevel
 	@text	Polls the current status of the level sensor.
 
 	@in		MOAIMotionSensor self
@@ -28,7 +28,7 @@ int MOAIMotionSensor::_getLevel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the level changes.
 
 	@in		MOAIMotionSensor self

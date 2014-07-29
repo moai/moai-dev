@@ -13,7 +13,7 @@ class MOAIPathFinder;
 //================================================================//
 // MOAIGridPathGraph
 //================================================================//
-/**	@name	MOAIGridPathGraph
+/**	@lua	MOAIGridPathGraph
 	@text	Pathfinder graph adapter for MOAIGrid.
 */
 class MOAIGridPathGraph :

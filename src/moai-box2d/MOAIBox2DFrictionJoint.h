@@ -11,7 +11,7 @@ class b2Joint;
 //================================================================//
 // MOAIBox2DFrictionJoint
 //================================================================//
-/**	@name MOAIBox2DFrictionJoint
+/**	@lua MOAIBox2DFrictionJoint
 	@text Box2D friction joint.
 */
 class MOAIBox2DFrictionJoint :

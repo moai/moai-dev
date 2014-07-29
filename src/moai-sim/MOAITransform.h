@@ -10,7 +10,7 @@
 //================================================================//
 // MOAITransform
 //================================================================//
-/**	@name	MOAITransform
+/**	@lua	MOAITransform
 	@text	Transformation hierarchy node.
 
 	@attr	ATTR_X_PIV

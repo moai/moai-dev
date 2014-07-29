@@ -23,7 +23,7 @@ private:
 //================================================================//
 // MOAISurfaceDeck2D
 //================================================================//
-/**	@name	MOAISurfaceDeck2D
+/**	@lua	MOAISurfaceDeck2D
 	@text	Deck of surface edge lists. Unused in this version of Moai.
 */
 class MOAISurfaceDeck2D :

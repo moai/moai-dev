@@ -34,7 +34,7 @@ private:
 //================================================================//
 // MOAIGfxQuadListDeck2D
 //================================================================//
-/**	@name	MOAIGfxQuadListDeck2D
+/**	@lua	MOAIGfxQuadListDeck2D
 	@text	Deck of lists of textured quads. UV and model space quads are
 			specified independently and associated via pairs. Pairs are referenced
 			by lists sequentially. There may be multiple pairs with the same

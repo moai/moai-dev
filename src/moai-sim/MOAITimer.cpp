@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getSpeed
+/**	@lua	getSpeed
 	@text	Return the playback speed.
 
 	@in		MOAITimer self
@@ -25,7 +25,7 @@ int MOAITimer::_getSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTime
+/**	@lua	getTime
 	@text	Return the current time.
 
 	@in		MOAITimer self
@@ -39,7 +39,7 @@ int MOAITimer::_getTime( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTimesExecuted
+/**	@lua	getTimesExecuted
 	@text	Gets the number of times the timer has completed a cycle.
 
 	@in		MOAITimer self
@@ -53,7 +53,7 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCurve
+/**	@lua	setCurve
 	@text	Set or clear the curve to use for event generation.
 	
 	@in		MOAITimer self
@@ -70,7 +70,7 @@ int MOAITimer::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMode
+/**	@lua	setMode
 	@text	Sets the playback mode of the timer.
 
 	@in		MOAITimer self
@@ -92,7 +92,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpan
+/**	@lua	setSpan
 	@text	Sets the playback mode of the timer.
 
 	@overload	Span will be 0 to endTime.
@@ -127,7 +127,7 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpeed
+/**	@lua	setSpeed
 	@text	Sets the playback speed. This affects only the timer, not
 			its children in the action tree.
 
@@ -144,7 +144,7 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTime
+/**	@lua	setTime
 	@text	Manually set the current time. This will be wrapped
 			into the current span.
 

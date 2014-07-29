@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveColumns
+/**	@lua	reserveColumns
 	@text	Reserve total columns in patch.
 	
 	@in		MOAIStretchPatch2D self
@@ -33,7 +33,7 @@ int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveRows
+/**	@lua	reserveRows
 	@text	Reserve total rows in patch.
 	
 	@in		MOAIStretchPatch2D self
@@ -51,7 +51,7 @@ int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveUVRects
+/**	@lua	reserveUVRects
 	@text	Reserve total UV rects in patch. When a patch is indexed
 			it will change its UV rects.
 	
@@ -72,7 +72,7 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColumn
+/**	@lua	setColumn
 	@text	Set the stretch properties of a patch column.
 	
 	@in		MOAIStretchPatch2D self
@@ -97,7 +97,7 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the model space dimensions of the patch.
 	
 	@in		MOAIStretchPatch2D self
@@ -117,7 +117,7 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRow
+/**	@lua	setRow
 	@text	Set the stretch properties of a patch row.
 	
 	@in		MOAIStretchPatch2D self
@@ -142,7 +142,7 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVRect
+/**	@lua	setUVRect
 	@text	Set the UV space dimensions of the patch.
 	
 	@in		MOAIStretchPatch2D self

@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIMoviePlayerIOS
 //================================================================//
-/**	@name	MOAIMoviePlayerIOS
+/**	@lua	MOAIMoviePlayerIOS
 	@text	Wrapper for simple video playback. Exposed to Lua via 
 			MOAIMoviePlayer on all mobile platforms.
 */

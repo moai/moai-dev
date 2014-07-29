@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getBiasCoef
+/**	@lua	getBiasCoef
 	@text	Returns the current bias coefficient.
 
 	@in		MOAICpConstraint self
@@ -27,7 +27,7 @@ int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxBias
+/**	@lua	getMaxBias
 	@text	Returns the maximum bias coefficient.
 
 	@in		MOAICpConstraint self
@@ -44,7 +44,7 @@ int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxForce
+/**	@lua	getMaxForce
 	@text	Returns the maximum force allowed.
 
 	@in		MOAICpConstraint self
@@ -61,7 +61,7 @@ int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newDampedRotarySpring
+/**	@lua	newDampedRotarySpring
 	@text	Creates a new damped rotary string between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -96,7 +96,7 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newDampedSpring
+/**	@lua	newDampedSpring
 	@text	Creates a new damped string between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -143,7 +143,7 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newGearJoint
+/**	@lua	newGearJoint
 	@text	Creates a new gear joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -176,7 +176,7 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newGrooveJoint
+/**	@lua	newGrooveJoint
 	@text	Creates a new groove joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -222,7 +222,7 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newPinJoint
+/**	@lua	newPinJoint
 	@text	Creates a new pin joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -262,7 +262,7 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newPivotJoint
+/**	@lua	newPivotJoint
 	@text	Creates a new pivot joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -310,7 +310,7 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newRatchetJoint
+/**	@lua	newRatchetJoint
 	@text	Creates a new ratchet joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -343,7 +343,7 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newRotaryLimitJoint
+/**	@lua	newRotaryLimitJoint
 	@text	Creates a new rotary limit joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -376,7 +376,7 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newSimpleMotor
+/**	@lua	newSimpleMotor
 	@text	Creates a new simple motor joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -407,7 +407,7 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newSlideJoint
+/**	@lua	newSlideJoint
 	@text	Creates a new slide joint between the two specified bodies.
 
 	@in		MOAICpBody first
@@ -452,7 +452,7 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBiasCoef
+/**	@lua	setBiasCoef
 	@text	Sets the current bias coefficient.
 
 	@in		MOAICpConstraint self
@@ -469,7 +469,7 @@ int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxBias
+/**	@lua	setMaxBias
 	@text	Sets the maximum bias coefficient.
 
 	@in		MOAICpConstraint self
@@ -486,7 +486,7 @@ int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxForce
+/**	@lua	setMaxForce
 	@text	Sets the maximum force allowed.
 
 	@in		MOAICpConstraint self

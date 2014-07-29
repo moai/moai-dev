@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveLists
+/**	@lua	reserveLists
 	@text	Reserve quad lists.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -31,7 +31,7 @@ int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reservePairs
+/**	@lua	reservePairs
 	@text	Reserve pairs.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -48,7 +48,7 @@ int MOAIGfxQuadListDeck2D::_reservePairs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveQuads
+/**	@lua	reserveQuads
 	@text	Reserve quads.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -65,7 +65,7 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveUVQuads
+/**	@lua	reserveUVQuads
 	@text	Reserve UV quads.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -82,7 +82,7 @@ int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setList
+/**	@lua	setList
 	@text	Initializes quad pair list at index. A list starts at the index
 			of a pair and then continues sequentially for n pairs after. So
 			a list with base 3 and a run of 4 would display pair 3, 4, 5,
@@ -107,7 +107,7 @@ int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPair
+/**	@lua	setPair
 	@text	Associates a quad with its UV coordinates.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -140,7 +140,7 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setQuad
+/**	@lua	setQuad
 	@text	Set model space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -180,7 +180,7 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set model space quad given a valid deck index and a rect.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -211,7 +211,7 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVQuad
+/**	@lua	setUVQuad
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -250,7 +250,7 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVRect
+/**	@lua	setUVRect
 	@text	Set UV space quad given a valid deck index and a rect.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -280,7 +280,7 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transform
+/**	@lua	transform
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
 	@in		MOAIGfxQuadListDeck2D self
@@ -300,7 +300,7 @@ int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transformUV
+/**	@lua	transformUV
 	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
 	
 	@in		MOAIGfxQuadListDeck2D self

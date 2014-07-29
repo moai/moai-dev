@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIStream
 //================================================================//
-/**	@name	MOAIStream
+/**	@lua	MOAIStream
 	@text	Interface for reading/writing binary data.
 	
 	@const	SEEK_CUR

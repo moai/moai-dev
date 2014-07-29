@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Reserve or clears indices for textures.
 	
 	@in		MOAIMultiTexture self
@@ -29,7 +29,7 @@ int MOAIMultiTexture::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
+/**	@lua	setTexture
 	@text	Sets of clears a texture for the given index.
 	
 	@in		MOAIMultiTexture self

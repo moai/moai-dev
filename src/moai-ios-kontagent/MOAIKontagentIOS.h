@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIKontagentIOS
 //================================================================//
-/**	@name	MOAIKontagentIOS
+/**	@lua	MOAIKontagentIOS
 	@text	Wrapper for Mixpanel interface.
 */
 class MOAIKontagentIOS :

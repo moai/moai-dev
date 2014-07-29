@@ -10,7 +10,7 @@ class MOAIShaderProgram;
 //================================================================//
 // MOAIShaderMgr
 //================================================================//
-/**	@name	MOAIShaderMgr
+/**	@lua	MOAIShaderMgr
 	@text	Shader presets.
 	
 	@const DECK2D_SHADER

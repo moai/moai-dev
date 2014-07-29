@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	areNeighbors
+/**	@lua	areNeighbors
 	@text	Checks if two nodes are neighbors.
 
 	@in		MOAIVecPathGraph self
@@ -37,7 +37,7 @@ int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNode
+/**	@lua	getNode
 	@text	Returns the coordinates of a node.
 
 	@in		MOAIVecPathGraph self
@@ -65,7 +65,7 @@ int MOAIVecPathGraph::_getNode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNodeCount
+/**	@lua	getNodeCount
 	@text	Returns the number of nodes in the graph.
 
 	@in		MOAIVecPathGraph self
@@ -81,7 +81,7 @@ int MOAIVecPathGraph::_getNodeCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveNodes
+/**	@lua	reserveNodes
 	@text	Reserves memory for a given number of nodes.
 
 	@in		MOAIVecPathGraph self
@@ -98,7 +98,7 @@ int MOAIVecPathGraph::_reserveNodes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNeighbors
+/**	@lua	setNeighbors
 	@text	Sets the neighborhood relation for two nodes.
 
 	@in		MOAIVecPathGraph self
@@ -124,7 +124,7 @@ int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNode
+/**	@lua	setNode
 	@text	Sets the coordinates of a node.
 
 	@in		MOAIVecPathGraph self

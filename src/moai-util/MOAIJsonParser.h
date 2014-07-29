@@ -8,7 +8,7 @@
 //================================================================//
 // MOAIJsonParser
 //================================================================//
-/**	@name	MOAIJsonParser
+/**	@lua	MOAIJsonParser
 	@text	Converts between Lua and JSON.
 */
 class MOAIJsonParser :

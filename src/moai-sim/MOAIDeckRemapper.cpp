@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	The total number of indices to remap. Index remaps will be
 			initialized from 1 to N.
 	
@@ -31,7 +31,7 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBase
+/**	@lua	setBase
 	@text	Set the base offset for the range of indices to remap.
 			Used when remapping only a portion of the indices in
 			the original deck.
@@ -49,7 +49,7 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRemap
+/**	@lua	setRemap
 	@text	Remap a single index to a new value.
 	
 	@in		MOAIDeckRemapper self

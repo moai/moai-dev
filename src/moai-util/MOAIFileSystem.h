@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIFileSystem
 //================================================================//
-/**	@name	MOAIFileSystem
+/**	@lua	MOAIFileSystem
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :

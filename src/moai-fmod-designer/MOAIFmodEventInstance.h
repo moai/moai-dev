@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIFmodEventInstance
 //================================================================//
-/**	@name	MOAIFmodEventInstance
+/**	@lua	MOAIFmodEventInstance
 	@text	An instance of an FMOD Event
            Not to be confused with an Event, MOAIFmodEvent.           
 */

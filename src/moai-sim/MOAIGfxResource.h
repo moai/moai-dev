@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIGfxState
 //================================================================//
-/**	@name	MOAIGfxState
+/**	@lua	MOAIGfxState
 	@text	Abstract base class for objects that represent changes
 			to graphics state.
 */
@@ -32,7 +32,7 @@ public:
 //================================================================//
 // MOAIGfxResource
 //================================================================//
-/**	@name	MOAIGfxResource
+/**	@lua	MOAIGfxResource
 	@text	Base class for graphics resources owned by OpenGL. Implements
 			resource lifecycle including restoration from a lost graphics
 			context (if possible).

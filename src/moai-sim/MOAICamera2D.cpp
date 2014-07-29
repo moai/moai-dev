@@ -7,7 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	getFarPlane
+/**	@lua	getFarPlane
 	@text	Returns the camera's far plane.
 
 	@in		MOAICamera2D self
@@ -20,7 +20,7 @@ int MOAICamera2D::_getFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNearPlane
+/**	@lua	getNearPlane
 	@text	Returns the camera's near plane.
 
 	@in		MOAICamera2D self
@@ -33,7 +33,7 @@ int MOAICamera2D::_getNearPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFarPlane
+/**	@lua	setFarPlane
 	@text	Sets the camera's far plane distance.
 
 	@in		MOAICamera2D self
@@ -47,7 +47,7 @@ int MOAICamera2D::_setFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNearPlane
+/**	@lua	setNearPlane
 	@text	Sets the camera's near plane distance.
 
 	@in		MOAICamera2D self

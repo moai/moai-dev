@@ -12,7 +12,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIFmodExSound
 //================================================================//
-/**	@name	MOAIFmodExSound
+/**	@lua	MOAIFmodExSound
 	@text	FMOD singleton.
 */
 class MOAIFmodExSound :

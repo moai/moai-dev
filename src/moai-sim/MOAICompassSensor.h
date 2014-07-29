@@ -9,7 +9,7 @@
 //================================================================//
 // MOAICompassSensor
 //================================================================//
-/**	@name	MOAICompassSensor
+/**	@lua	MOAICompassSensor
 	@text	Device heading sensor.
 */
 class MOAICompassSensor :

@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIDialogIOS
 //================================================================//
-/**	@name	MOAIDialogIOS
+/**	@lua	MOAIDialogIOS
 	@text	Wrapper for a simple native dialog implementation on 
 			iOS devices. Exposed to Lua via MOAIDialog on all 
 			mobile platforms.

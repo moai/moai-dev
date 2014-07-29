@@ -253,7 +253,7 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name forceGC
+/**	@lua forceGC
 	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
 
@@ -266,7 +266,7 @@ int MOAILuaRuntime::_forceGC ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getHistogram
+/**	@lua	getHistogram
 	@text	Generates a histogram of active MOAIObjects and returns it
 			in a table containing object tallies indexed by object
 			class names.
@@ -312,7 +312,7 @@ int MOAILuaRuntime::_reportGC ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportHistogram
+/**	@lua	reportHistogram
 	@text	Generates a histogram of active MOAIObjects.
 
 	@opt	string filename
@@ -331,7 +331,7 @@ int MOAILuaRuntime::_reportHistogram ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reportLeaks
+/**	@lua	reportLeaks
 	@text	Analyze the currently allocated MOAI objects and create a textual
 			report of where they were declared, and what Lua references (if any)
 			can be found. NOTE: This is incredibly slow, so only use to debug
@@ -356,7 +356,7 @@ int MOAILuaRuntime::_reportLeaks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTrackingFlags
+/**	@lua	setTrackingFlags
 	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
 			tracked back to their point of allocation (in Lua). Use together with
 			MOAILuaRuntime.reportLeaks() to determine exactly where your memory usage is

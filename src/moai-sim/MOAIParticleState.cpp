@@ -16,7 +16,7 @@ class MOAIDataBuffer;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearForces
+/**	@lua	clearForces
 	@text	Removes all particle forces from the state.
 	
 	@in		MOAIParticleState self
@@ -31,7 +31,7 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pushForce
+/**	@lua	pushForce
 	@text	Adds a force to the state.
 	
 	@in		MOAIParticleState self
@@ -49,7 +49,7 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDamping
+/**	@lua	setDamping
 	@text	Sets damping for particle physics model.
 	
 	@in		MOAIParticleState self
@@ -65,7 +65,7 @@ int MOAIParticleState::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setInitScript
+/**	@lua	setInitScript
 	@text	Sets the particle script to use for initializing new particles.
 	
 	@in		MOAIParticleState self
@@ -86,7 +86,7 @@ int MOAIParticleState::_setInitScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMass
+/**	@lua	setMass
 	@text	Sets range of masses (chosen randomly) for particles
 			initialized by the state.
 	
@@ -108,7 +108,7 @@ int MOAIParticleState::_setMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNext
+/**	@lua	setNext
 	@text	Sets the next state (if any).
 	
 	@in		MOAIParticleState self
@@ -124,7 +124,7 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPlugin
+/**	@lua	setPlugin
 	@text	Sets the particle plugin to use for initializing and updating particles.
 	
 	@in		MOAIParticleState self
@@ -140,7 +140,7 @@ int MOAIParticleState::_setPlugin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRenderScript
+/**	@lua	setRenderScript
 	@text	Sets the particle script to use for rendering particles.
 	
 	@in		MOAIParticleState self
@@ -161,7 +161,7 @@ int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerm
+/**	@lua	setTerm
 	@text	Sets range of terms (chosen randomly) for particles
 			initialized by the state.
 	

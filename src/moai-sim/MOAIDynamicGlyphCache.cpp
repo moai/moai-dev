@@ -17,7 +17,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setColorFormat
+/**	@lua	setColorFormat
 	@text	The color format may be used by dynamic cache implementations
 			when allocating new textures.
 	
@@ -39,7 +39,7 @@ int MOAIDynamicGlyphCache::_setColorFormat ( lua_State* L ) {
 int MOAIDynamicGlyphCache::_setPadding ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDynamicGlyphCache, "U" )
 	
-	if ( state.CheckParams ( 2, "NNNN" )) {
+	if ( state.CheckParams ( 2, "NNNN", false )) {
 	
 		self->mPadding.mXMin = state.GetValue < float >( 2, 0.0f );
 		self->mPadding.mYMin = state.GetValue < float >( 3, 0.0f );

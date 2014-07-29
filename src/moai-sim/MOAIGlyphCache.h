@@ -12,7 +12,7 @@ class MOAIFont;
 //================================================================//
 // MOAIGlyphCache
 //================================================================//
-/**	@name	MOAIGlyphCache
+/**	@lua	MOAIGlyphCache
 	@text	<p>Base class for implementations of glyph caches. A glyph
 			cache is responsible for allocating textures to hold
 			rendered glyphs and for placing individuals glyphs on

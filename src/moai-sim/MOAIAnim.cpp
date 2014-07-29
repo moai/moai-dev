@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	apply
+/**	@lua	apply
 	@text	Apply the animation at a given time or time step.
 
 	@overload	Apply the animation at time t0.
@@ -38,7 +38,7 @@ int MOAIAnim::_apply ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLength
+/**	@lua	getLength
 	@text	Return the length of the animation.
 	
 	@in		MOAIAnim self
@@ -53,7 +53,7 @@ int	MOAIAnim::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveLinks
+/**	@lua	reserveLinks
 	@text	Reserves a specified number of links for the animation.
 	
 	@in		MOAIAnim self
@@ -70,7 +70,7 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLink
+/**	@lua	setLink
 	@text	Connect a curve to a given node attribute.
 	
 	@in		MOAIAnim self

@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Disassociates and unlocks the stream's MOAIDataBuffer.
 	
 	@in		MOAIDataBufferStream self
@@ -24,7 +24,7 @@ int MOAIDataBufferStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	open
+/**	@lua	open
 	@text	Associate the stream with a MOAIDataBuffer. Note that the
 			MOAIDataBuffer will be locked with a mutex while it is open
 			thus blocking any asynchronous operations.

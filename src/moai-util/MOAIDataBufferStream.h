@@ -11,7 +11,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIDataBufferStream
 //================================================================//
-/**	@name	MOAIDataBufferStream
+/**	@lua	MOAIDataBufferStream
 	@text	MOAIDataBufferStream locks an associated MOAIDataBuffer for
 			reading and writing.
 */

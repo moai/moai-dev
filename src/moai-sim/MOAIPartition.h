@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIPartition
 //================================================================//
-/**	@name	MOAIPartition
+/**	@lua	MOAIPartition
 	@text	Class for optimizing spatial queries against sets of primitives.
 			Configure for performance; default behavior is a simple list.
 	

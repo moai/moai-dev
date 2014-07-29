@@ -19,7 +19,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	affirmPath
+/**	@lua	affirmPath
 	@text	Creates a folder at 'path' if none exists.
 
 	@in		string path
@@ -35,7 +35,7 @@ int MOAIFileSystem::_affirmPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkFileExists
+/**	@lua	checkFileExists
 	@text	Check for the existence of a file.
 
 	@in		string filename
@@ -52,7 +52,7 @@ int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkPathExists
+/**	@lua	checkPathExists
 	@text	Check for the existence of a path.
 
 	@in		string path
@@ -69,7 +69,7 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copy
+/**	@lua	copy
 	@text	Copy a file or directory to a new location.
 
 	@in		string srcPath
@@ -89,7 +89,7 @@ int MOAIFileSystem::_copy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deleteDirectory
+/**	@lua	deleteDirectory
 	@text	Deletes a directory and all of its contents.
 
 	@in		string path
@@ -109,7 +109,7 @@ int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deleteFile
+/**	@lua	deleteFile
 	@text	Deletes a file.
 
 	@in		string filename
@@ -126,7 +126,7 @@ int MOAIFileSystem::_deleteFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAbsoluteDirectoryPath
+/**	@lua	getAbsoluteDirectoryPath
 	@text	Returns the absolute path given a relative path.
 
 	@in		string path
@@ -143,7 +143,7 @@ int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAbsoluteFilePath
+/**	@lua	getAbsoluteFilePath
 	@text	Returns the absolute path to a file. Result includes the
 			file name.
 
@@ -161,7 +161,7 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRelativePath
+/**	@lua	getRelativePath
 	@text	Given an absolute path returns the relative path
 			in relation to the current working directory.
 
@@ -179,7 +179,7 @@ int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorkingDirectory
+/**	@lua	getWorkingDirectory
 	@text	Returns the path to current working directory.
 
 	@out	string path
@@ -194,7 +194,7 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	listDirectories
+/**	@lua	listDirectories
 	@text	Lists the sub-directories contained in a directory.
  
 	@opt	string path				Path to search. Default is current directory.
@@ -239,7 +239,7 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	listFiles
+/**	@lua	listFiles
 	@text	Lists the files contained in a directory
  
 	@opt	string path		Path to search. Default is current directory.
@@ -278,7 +278,7 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	mountVirtualDirectory
+/**	@lua	mountVirtualDirectory
 	@text	Mount an archive as a virtual filesystem directory.
 
 	@in		string path			Virtual path.
@@ -318,7 +318,7 @@ int MOAIFileSystem::_pathToRef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rename
+/**	@lua	rename
 	@text	Renames a file or folder.
 
 	@in		string oldPath
@@ -351,7 +351,7 @@ int MOAIFileSystem::_setPathRef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWorkingDirectory
+/**	@lua	setWorkingDirectory
 	@text	Sets the current working directory.
 
 	@in		string path

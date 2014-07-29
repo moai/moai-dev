@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIJoystickSensor
 //================================================================//
-/**	@name	MOAIJoystickSensor
+/**	@lua	MOAIJoystickSensor
 	@text	Analog and digital joystick sensor.
 */
 class MOAIJoystickSensor :

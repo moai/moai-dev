@@ -26,7 +26,7 @@ private:
 //================================================================//
 // MOAIDebugLines
 //================================================================//
-/**	@name	MOAIDebugLines
+/**	@lua	MOAIDebugLines
 	@text	Singleton for managing rendering of world space debug vectors.
 
 	@const	COLLISION_ACTIVE_PROP_BOUNDS

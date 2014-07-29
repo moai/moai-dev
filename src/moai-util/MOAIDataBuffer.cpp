@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	base64Decode
+/**	@lua	base64Decode
 	@text	If a string is provided, decodes it as a base64 encoded string.  Otherwise, decodes the current data stored in this object as a base64 encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -38,7 +38,7 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	base64Encode
+/**	@lua	base64Encode
 	@text	If a string is provided, encodes it in base64.  Otherwise, encodes the current data stored in this object as a base64 encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -73,7 +73,7 @@ int MOAIDataBuffer::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deflate
+/**	@lua	deflate
 	@text	Compresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@overload
@@ -106,7 +106,7 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the number of bytes in this data buffer object.
 
 	@in		MOAIDataBuffer self
@@ -127,7 +127,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getString
+/**	@lua	getString
 	@text	Returns the contents of the data buffer object as a string value.
 
 	@in		MOAIDataBuffer self
@@ -142,7 +142,7 @@ int MOAIDataBuffer::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hexDecode
+/**	@lua	hexDecode
 	@text	If a string is provided, decodes it as a hex encoded string.  Otherwise, decodes the current data stored in this object as a hex encoded sequence of bytes.
 
 	@opt	MOAIDataBuffer self
@@ -169,7 +169,7 @@ int MOAIDataBuffer::_hexDecode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hexEncode
+/**	@lua	hexEncode
 	@text	If a string is provided, encodes it in hex.  Otherwise, encodes the current data stored in this object as a hex encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -196,7 +196,7 @@ int MOAIDataBuffer::_hexEncode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	inflate
+/**	@lua	inflate
 	@text	Decompresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@overload
@@ -226,7 +226,7 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Copies the data from the given file into this object.  This method is a synchronous operation and will block until the file is loaded.
 
 	@in		MOAIDataBuffer self
@@ -255,7 +255,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadAsync
+/**	@lua	loadAsync
 	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous
 			operation and will return immediately.
 
@@ -294,7 +294,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	save
+/**	@lua	save
 	@text	Saves the data in this object to the given file.  This method is a synchronous operation and will block until the data is saved.
 
 	@in		MOAIDataBuffer self
@@ -313,7 +313,7 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	saveAsync
+/**	@lua	saveAsync
 	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous
 			operation and will return immediately.
 
@@ -342,7 +342,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setString
+/**	@lua	setString
 	@text	Replaces the contents of this object with the string specified.
 
 	@in		MOAIDataBuffer self
@@ -358,7 +358,7 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	toCppHeader
+/**	@lua	toCppHeader
 	@text	Convert data to CPP header file.
 
 	@overload

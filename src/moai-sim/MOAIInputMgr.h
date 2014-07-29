@@ -10,7 +10,7 @@ class MOAISensor;
 //================================================================//
 // MOAIInputMgr
 //================================================================//
-/**	@name	MOAIInputMgr
+/**	@lua	MOAIInputMgr
 	@text	Input device class.
 */
 class MOAIInputMgr :

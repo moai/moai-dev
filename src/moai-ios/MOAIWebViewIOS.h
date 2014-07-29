@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIWebViewIOS
 //================================================================//
-/**	@name	MOAIWebViewIOS
+/**	@lua	MOAIWebViewIOS
 	@text	Wrapper for UIWebView interaction on iOS devices.
 
 	@const	DID_FAIL_LOAD_WITH_ERROR		Event indicating a failed UIWebView load.

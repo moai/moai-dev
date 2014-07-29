@@ -10,7 +10,7 @@
 //================================================================//
 // MOAICpShape
 //================================================================//
-/**	@name	MOAICpShape
+/**	@lua	MOAICpShape
 	@text	Chipmunk Shape.
 */
 class MOAICpShape :

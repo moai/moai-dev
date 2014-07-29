@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DPrismaticJoint
 //================================================================//
-/**	@name MOAIBox2DPrismaticJoint
+/**	@lua MOAIBox2DPrismaticJoint
 	@text Box2D prismatic joint.
 */
 class MOAIBox2DPrismaticJoint :

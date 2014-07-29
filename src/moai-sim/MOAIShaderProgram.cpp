@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearUniform
+/**	@lua	clearUniform
 	@text	Clears a uniform mapping.
 
 	@in		MOAIShaderProgram self
@@ -31,7 +31,7 @@ int MOAIShaderProgram::_clearUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUniform
+/**	@lua	declareUniform
 	@text	Declares a uniform mapping.
 
 	@in		MOAIShaderProgram self
@@ -55,7 +55,7 @@ int MOAIShaderProgram::_declareUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUniformFloat
+/**	@lua	declareUniformFloat
 	@text	Declares an float uniform.
 
 	@in		MOAIShaderProgram self
@@ -77,7 +77,7 @@ int MOAIShaderProgram::_declareUniformFloat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUniformInt
+/**	@lua	declareUniformInt
 	@text	Declares an integer uniform.
 
 	@in		MOAIShaderProgram self
@@ -99,7 +99,7 @@ int MOAIShaderProgram::_declareUniformInt ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUniformSampler
+/**	@lua	declareUniformSampler
 	@text	Declares an uniform to be used as a texture unit index. This uniform is
 			internally an int, but when loaded into the shader the number one is subtracted
 			from its value. This allows the user to maintain consistency with Lua's
@@ -124,7 +124,7 @@ int MOAIShaderProgram::_declareUniformSampler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Load a shader program.
 
 	@in		MOAIShaderProgram self
@@ -155,7 +155,7 @@ int MOAIShaderProgram::_reserveGlobals ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveUniforms
+/**	@lua	reserveUniforms
 	@text	Reserve shader uniforms.
 
 	@in		MOAIShaderProgram self
@@ -186,7 +186,7 @@ int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVertexAttribute
+/**	@lua	setVertexAttribute
 	@text	Names a shader vertex attribute.
 
 	@in		MOAIShaderProgram self

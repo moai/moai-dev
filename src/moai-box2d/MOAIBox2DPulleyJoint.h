@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DPulleyJoint
 //================================================================//
-/**	@name MOAIBox2DPulleyJoint
+/**	@lua MOAIBox2DPulleyJoint
 	@text Box2D pulley joint.
 */
 class MOAIBox2DPulleyJoint :

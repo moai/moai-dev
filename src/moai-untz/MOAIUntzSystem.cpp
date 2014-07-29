@@ -43,7 +43,7 @@ int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSampleRate
+/**	@lua	getSampleRate
 	@text	Return the system's current sample rate.
 	
 	@out	number sampleRate
@@ -73,7 +73,7 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initialize
+/**	@lua	initialize
 	@text	Initialize the sound system.
 	
 	@opt	number sampleRate		Default value is 44100.
@@ -126,7 +126,7 @@ int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSampleRate
+/**	@lua	setSampleRate
 	@text	Set the system sample rate.
 	
 	@opt	number sampleRate		Default value is 44100.
@@ -142,7 +142,7 @@ int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@lua	setVolume
 	@text	Set the system level volume.
 	
 	@opt	number volume		Valid Range: 0 >= x <= 1.0 (Default value is 1.0)
@@ -158,7 +158,7 @@ int MOAIUntzSystem::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
+/**	@lua	getVolume
 	@text	Return the system's current volume
 	
 	@out	number volume

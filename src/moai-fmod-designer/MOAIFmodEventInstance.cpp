@@ -17,7 +17,7 @@
 #endif
 
 //----------------------------------------------------------------//
-/**	@name	isValid
+/**	@lua	isValid
 	@text	Checks to see if the instance is valid (i.e., currently playing)
 	
 	@in		MOAIFmodEventInstance self
@@ -40,7 +40,7 @@ int	MOAIFmodEventInstance::_isValid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name   stop
+/**	@lua   stop
 	@text   Stops the Event Instance from playing.
 
 	@in     MOAIFmodEventInstance    self
@@ -59,7 +59,7 @@ int	MOAIFmodEventInstance::_stop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name   pause
+/**	@lua   pause
 	@text   Pauses the Event Instance currently playing.
 
 	@in     MOAIFmodEventInstance    self
@@ -80,7 +80,7 @@ int	MOAIFmodEventInstance::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name   mute
+/**	@lua   mute
 	@text   Mutes the Event Instance currently playing.
 
 	@in     MOAIFmodEventInstance    self
@@ -101,7 +101,7 @@ int	MOAIFmodEventInstance::_mute ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@lua	setVolume
 	@text	Sets the volume of the Event Instance.
 	
 	@in		MOAIFmodEventInstance self
@@ -123,7 +123,7 @@ int MOAIFmodEventInstance::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
+/**	@lua	getVolume
 	@text	Gets the volume of the Event Instance.
 	
 	@in		MOAIFmodEventInstance self	
@@ -146,7 +146,7 @@ int MOAIFmodEventInstance::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPitch
+/**	@lua	setPitch
 	@text	Sets the pitch of the Event Instance.
 	
 	@in		MOAIFmodEventInstance self
@@ -168,7 +168,7 @@ int MOAIFmodEventInstance::_setPitch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPitch
+/**	@lua	getPitch
 	@text	Gets the pitch of the Event Instance.
 	
 	@in		MOAIFmodEventInstance self	
@@ -191,7 +191,7 @@ int MOAIFmodEventInstance::_getPitch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getParameter
+/**	@lua	getParameter
 	@text	Gets the value (a number) of an Event parameter
 	
 	@in		MOAIFmodEventInstance self
@@ -227,7 +227,7 @@ int MOAIFmodEventInstance::_getParameter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParameter
+/**	@lua	setParameter
 	@text	Sets the value (a number) of an Event parameter
 	
 	@in		MOAIFmodEventInstance self
@@ -262,7 +262,7 @@ int MOAIFmodEventInstance::_setParameter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	keyOff
+/**	@lua	keyOff
 	@text	Sets the Event Instance to key off based on the passed in Event Parameter
 	
 	@in		MOAIFmodEventInstance self
@@ -295,7 +295,7 @@ int MOAIFmodEventInstance::_keyOff ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unloadOnSilence
+/**	@lua	unloadOnSilence
 	@text	For streaming sounds -- unloads the Event from memory on silence.
            (A good guideline to use is: for sounds that don't repeat often)
 	
@@ -318,7 +318,7 @@ int MOAIFmodEventInstance::_unloadOnSilence ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getName
+/**	@lua	getName
 	@text	Get the name of the Event
 	
 	@in		MOAIFmodEventInstance self    
@@ -341,7 +341,7 @@ int MOAIFmodEventInstance::_getName ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNumChannels
+/**	@lua	getNumChannels
 	@text	Get the number of Channels in this Event's Channel Group
 	
 	@in		MOAIFmodEventInstance self    
@@ -364,7 +364,7 @@ int MOAIFmodEventInstance::_getNumChannels ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTime
+/**	@lua	getTime
     @text	Returns time within the Event, or if useSubsoundTime, will return the time
            within the *the first subsound only*
 	
@@ -390,7 +390,7 @@ int MOAIFmodEventInstance::_getTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDominantFrequency
+/**	@lua	getDominantFrequency
     @text	Returns the fundamental frequency of this Event Instance.
 	
 	@in		MOAIFmodEventInstance self    
@@ -413,7 +413,7 @@ int MOAIFmodEventInstance::_getDominantFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTempo
+/**	@lua	getTempo
     @text	Returns the tempo of this Event Instance (useful for music)
 	
 	@in		MOAIFmodEventInstance self    
@@ -436,7 +436,7 @@ int MOAIFmodEventInstance::_getTempo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBeatFraction
+/**	@lua	getBeatFraction
     @text	Returns the beat fraction of this Event Instance (useful for music)
 	
 	@in		MOAIFmodEventInstance self    
@@ -459,7 +459,7 @@ int MOAIFmodEventInstance::_getBeatFraction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMeasureFraction
+/**	@lua	getMeasureFraction
     @text	Returns the measure fraction of this Event Instance (useful for music)
 	
 	@in		MOAIFmodEventInstance self    

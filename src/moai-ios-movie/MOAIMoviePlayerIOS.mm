@@ -18,7 +18,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize the video player with the URL of a video to play.
 	
 	@in		string 	url				The URL of the video to play.
@@ -50,7 +50,7 @@ int MOAIMoviePlayerIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Play the video as soon as playback is ready.
 	
 	@out	nil
@@ -87,7 +87,7 @@ int MOAIMoviePlayerIOS::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Pause video playback.
 	
 	@out	nil
@@ -119,7 +119,7 @@ int MOAIMoviePlayerIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stop video playback and reset the video player.
 	
 	@out	nil

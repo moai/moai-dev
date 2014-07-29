@@ -19,7 +19,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	canTweet
+/**	@lua	canTweet
  	@text	Determines whether or not Twitter interaction is enabled.
  
  	@out	bool canTweet
@@ -41,7 +41,7 @@ int MOAITwitterIOS::_canTweet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	composeTweet
+/**	@lua	composeTweet
 	@text	Opens a view to compose a tweet.
  
 	@opt	string text				The default text of the tweet. Default is nil.

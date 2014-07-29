@@ -6,8 +6,7 @@
 
 namespace FMODDesigner
 {
-    /// \class ReverbInstance
-    /// An instance of a loaded Reverb setting
+    // An instance of a loaded Reverb setting
     class ReverbInstance
     {
         friend class EventManager;

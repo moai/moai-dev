@@ -11,7 +11,7 @@ class MOAICpSpace;
 //================================================================//
 // MOAICpArbiter
 //================================================================//
-/**	@name	MOAICpArbiter
+/**	@lua	MOAICpArbiter
 	@text	Chipmunk Arbiter.
 */
 class MOAICpArbiter :

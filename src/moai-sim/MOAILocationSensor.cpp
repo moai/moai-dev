@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLocation
+/**	@lua	getLocation
 	@text	Returns the current information about the physical location.
 
 	@in		MOAILocationSensor self
@@ -34,7 +34,7 @@ int MOAILocationSensor::_getLocation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the location changes.
 
 	@in		MOAILocationSensor self

@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	canGoBack
+/**	@lua	canGoBack
 	@text	Checks if the UIWebView can go back.
 
 	@in		MOAIWebViewIOSIOS self
@@ -29,7 +29,7 @@ int MOAIWebViewIOS::_canGoBack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	canGoForward
+/**	@lua	canGoForward
 	@text	Checks if the UIWebView can go forward.
 
 	@in		MOAIWebViewIOSIOS self
@@ -45,7 +45,7 @@ int MOAIWebViewIOS::_canGoForward ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clickBack
+/**	@lua	clickBack
 	@text	Sends an event to the UIWebView that the user has clicked
 			'back'.
 
@@ -62,7 +62,7 @@ int MOAIWebViewIOS::_clickBack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clickForward
+/**	@lua	clickForward
 	@text	Sends an event to the UIWebView that the user has clicked
 			'forward'.
 
@@ -79,7 +79,7 @@ int MOAIWebViewIOS::_clickForward ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clickRefresh
+/**	@lua	clickRefresh
 	@text	Sends an event to the UIWebView that the user has clicked
 			'refresh'.
 
@@ -96,7 +96,7 @@ int MOAIWebViewIOS::_clickRefresh ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clickStop
+/**	@lua	clickStop
 	@text	Sends an event to the UIWebView that the user has clicked
 			'stop'.
 
@@ -113,7 +113,7 @@ int MOAIWebViewIOS::_clickStop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	closeWebView
+/**	@lua	closeWebView
 	@text	Closes the current UIWebView.
 
 	@in		MOAIWebViewIOS self
@@ -134,7 +134,7 @@ int MOAIWebViewIOS::_closeWebView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAllowsInlineMediaPlayback
+/**	@lua	getAllowsInlineMediaPlayback
 	@text	Returns whether or not the UIWebView allows inline media
 			playback.
 
@@ -151,7 +151,7 @@ int MOAIWebViewIOS::_getAllowsInlineMediaPlayback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCurrentRequest
+/**	@lua	getCurrentRequest
 	@text	Returns the currently active URL.
 			
 	@in		MOAIWebViewIOS self
@@ -169,7 +169,7 @@ int MOAIWebViewIOS::_getCurrentRequest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMediaPlaybackRequiresAction
+/**	@lua	getMediaPlaybackRequiresAction
 	@text	Returns whether or not the UIWebView requires user input
 			to start media playback or if it start automatically.
 			
@@ -186,7 +186,7 @@ int MOAIWebViewIOS::_getMediaPlaybackRequiresAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScalesPageToFit
+/**	@lua	getScalesPageToFit
 	@text	Returns whether or not the UIWebView automatically scales
 			pages to fit the view.
 			
@@ -203,7 +203,7 @@ int MOAIWebViewIOS::_getScalesPageToFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasToolBar
+/**	@lua	hasToolBar
 	@text	Sets whether or not the UIWebView has a tool bar. Default is true.
 			
 	@in		MOAIWebViewIOS self
@@ -220,7 +220,7 @@ int MOAIWebViewIOS::_hasToolBar ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hideWebView
+/**	@lua	hideWebView
 	@text	Sets the UIWebView to hidden.
 			
 	@in		MOAIWebViewIOS self
@@ -237,7 +237,7 @@ int MOAIWebViewIOS::_hideWebView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initWebView
+/**	@lua	initWebView
 	@text	Kills current UIWebView (if one exists) and creates a
 			new one with desired dimensions.
 			
@@ -311,7 +311,7 @@ int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isHidden
+/**	@lua	isHidden
 	@text	Returns whether or not the UIWebView is hidden.
 				
 	@in		MOAIWebViewIOS self
@@ -327,7 +327,7 @@ int MOAIWebViewIOS::_isHidden ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isLoading
+/**	@lua	isLoading
 	@text	Returns whether or not the UIWebView is loading a page.
 				
 	@in		MOAIWebViewIOS self
@@ -352,7 +352,7 @@ int MOAIWebViewIOS::_loadData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadHTML
+/**	@lua	loadHTML
 	@text	Sets the UIWebView main page content and base URL.
 
 	@in		MOAIWebViewIOS self
@@ -384,7 +384,7 @@ int MOAIWebViewIOS::_loadHTML ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadRequest
+/**	@lua	loadRequest
 	@text	Sets the UIWebView main page content and base URL.
 
 	@in		MOAIWebViewIOS self
@@ -411,7 +411,7 @@ int MOAIWebViewIOS::_loadRequest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openUrlInSafari
+/**	@lua	openUrlInSafari
 	@text	Opens the URL in Safari.
 
 	@in		string url
@@ -436,7 +436,7 @@ int MOAIWebViewIOS::_openUrlInSafari ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	runJavaScript
+/**	@lua	runJavaScript
 	@text	Runs the specified JavaScript stringin the UIWebView.
 	
 	@in		MOAIWebViewIOS self
@@ -456,7 +456,7 @@ int MOAIWebViewIOS::_runJavaScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAllowsInlineMediaPlayback
+/**	@lua	setAllowsInlineMediaPlayback
 	@text	Sets the value of the allowsInlineMediaPlayback on the 
 			UIWebView.
 	
@@ -475,7 +475,7 @@ int MOAIWebViewIOS::_setAllowsInlineMediaPlayback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMediaPlaybackRequiresAction
+/**	@lua	setMediaPlaybackRequiresAction
 	@text	Sets the value of the mediaPlaybackRequiresUserAction on the 
 			UIWebView.
 	
@@ -494,7 +494,7 @@ int MOAIWebViewIOS::_setMediaPlaybackRequiresAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScalesPageToFit
+/**	@lua	setScalesPageToFit
 	@text	Sets the value of the scalesPageToFit on the UIWebView.
 	
 	@in		MOAIWebViewIOS self
@@ -512,7 +512,7 @@ int MOAIWebViewIOS::_setScalesPageToFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	show
+/**	@lua	show
 	@text	Shows the UIWebView.
 	
 	@in		MOAIWebViewIOS self

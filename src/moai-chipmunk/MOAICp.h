@@ -9,7 +9,7 @@
 //================================================================//
 // MOAICp
 //================================================================//
-/**	@name	MOAICp
+/**	@lua	MOAICp
 	@text	Singleton for Chipmunk global configuration.
 */
 class MOAICp :

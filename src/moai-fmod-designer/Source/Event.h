@@ -12,8 +12,7 @@ namespace FMODDesigner
     class EventParameter;
     class LineCode;
 
-    /// \class Event
-    /// The definition of a sound.
+    // The definition of a sound.
     class Event
     {
         friend class EventManager;

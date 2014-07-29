@@ -16,7 +16,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	showDialog
+/**	@lua	showDialog
 	@text	Show a native dialog to the user.
 				
 	@in		string		title			The title of the dialog box. Can be nil.

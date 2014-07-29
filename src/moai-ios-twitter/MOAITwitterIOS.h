@@ -13,7 +13,7 @@
 //================================================================//
 // MOAITwitterIOS
 //================================================================//
-/**	@name	MOAITwitterIOS
+/**	@lua	MOAITwitterIOS
 	@text	Wrapper for Twitter interaction on iOS devices. Only 
 			available on iOS 5.0 and above.
 

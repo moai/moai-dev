@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIFlurryIOS
 //================================================================//
-/**	@name	MOAIFlurryIOS
+/**	@lua	MOAIFlurryIOS
 	@text	Wrapper for Flurry interface.
 */
 class MOAIFlurryIOS :

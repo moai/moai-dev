@@ -18,7 +18,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setIndexBuffer
+/**	@lua	setIndexBuffer
 	@text	Set the index buffer to render.
 	
 	@in		MOAIMesh self
@@ -34,7 +34,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenWidth
+/**	@lua	setPenWidth
 	@text	Sets the pen with for drawing prims in this vertex buffer.
 			Only valid with prim types GL_LINES, GL_LINE_LOOP, GL_LINE_STRIP.
 	
@@ -51,7 +51,7 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPointSize
+/**	@lua	setPointSize
 	@text	Sets the point size for drawing prims in this vertex buffer.
 			Only valid with prim types GL_POINTS.
 	
@@ -68,7 +68,7 @@ int MOAIMesh::_setPointSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPrimType
+/**	@lua	setPrimType
 	@text	Sets the prim type the buffer represents.
 	
 	@in		MOAIMesh self
@@ -85,7 +85,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVertexBuffer
+/**	@lua	setVertexBuffer
 	@text	Set the vertex buffer to render.
 	
 	@in		MOAIMesh self

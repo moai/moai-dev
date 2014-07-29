@@ -27,7 +27,7 @@ class MOAILogMessage {
 //================================================================//
 // MOAILogMgr
 //================================================================//
-/**	@name	MOAILogMgr
+/**	@lua	MOAILogMgr
 	@text	Singleton for managing debug log messages and log level.
 
 	@const LOG_NONE

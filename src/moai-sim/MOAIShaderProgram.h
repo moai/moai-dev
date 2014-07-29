@@ -27,7 +27,7 @@ private:
 //================================================================//
 // MOAIShaderProgram
 //================================================================//
-/**	@name	MOAIShaderProgram
+/**	@lua	MOAIShaderProgram
 	@text	Programmable shader class.
 
 	@const	UNIFORM_COLOR

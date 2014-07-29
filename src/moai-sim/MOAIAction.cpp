@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	addChild
+/**	@lua	addChild
 	@text	Attaches a child action for updating.
 
 	@in		MOAIAction self
@@ -31,7 +31,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	attach
+/**	@lua	attach
 	@text	Attaches a child to a parent action. The child will receive
 			updates from the parent only if the parent is in the action tree.
 
@@ -50,7 +50,7 @@ int MOAIAction::_attach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clear
+/**	@lua	clear
 	@text	Removes all child actions.
 
 	@in		MOAIAction self
@@ -66,7 +66,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	detach
+/**	@lua	detach
 	@text	Detaches an action from its parent (if any) thereby removing
 			it from the action tree. Same effect as calling stop ().
 
@@ -83,7 +83,7 @@ int MOAIAction::_detach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isActive
+/**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
 	@in		MOAIAction self
@@ -97,7 +97,7 @@ int MOAIAction::_isActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isBusy
+/**	@lua	isBusy
 	@text	Checks to see if an action is currently busy. An action is
 			'busy' only if it is 'active' and not 'done.'
 
@@ -112,7 +112,7 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDone
+/**	@lua	isDone
 	@text	Checks to see if an action is 'done.' Definition of 'done'
 			is up to individual action implementations.
 
@@ -127,7 +127,7 @@ int MOAIAction::_isDone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPaused
+/**	@lua	isPaused
 	@text	Checks to see if an action is 'paused.'
  
 	@in		MOAIAction self
@@ -141,7 +141,7 @@ int MOAIAction::_isPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Leaves the action in the action tree but prevents it from
 			receiving updates. Call pause ( false ) or start () to unpause.
 
@@ -165,7 +165,7 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	start
+/**	@lua	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
 	@in		MOAIAction self
@@ -189,7 +189,7 @@ int MOAIAction::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Removed the action from its parent action; action will
 			stop being updated.
 
@@ -207,7 +207,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	throttle
+/**	@lua	throttle
 	@text	Sets the actions throttle. Throttle is a scalar on time.
 			Is is passed to the action's children.
 	

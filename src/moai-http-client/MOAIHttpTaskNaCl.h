@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIHttpTaskNaCl
 //================================================================//
-/**	@name	MOAIHttpTaskNaCl
+/**	@lua	MOAIHttpTaskNaCl
 	@text	Implementation of MOAIHttpTask based on NaCl.
 */
 class MOAIHttpTaskNaCl :

@@ -85,7 +85,7 @@ int MOAIParticlePexPlugin::_getRect( lua_State* L ){
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTextureName
+/**	@lua	getTextureName
 	@text	Return the texture name associated with plugin.
 	
 	@in		MOAIParticlePexPlugin self
@@ -99,7 +99,7 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Create a particle plugin from an XML file
 	
 	@in		string fileName					file to load

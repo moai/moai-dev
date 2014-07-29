@@ -41,7 +41,7 @@ public:
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
-/**	@name	MOAIFrameBuffer
+/**	@lua	MOAIFrameBuffer
 	@text	MOAIFrameBuffer is responsible for drawing a list of MOAIRenderable
 			objects. MOAIRenderable is the base class for any object that can be
 			drawn. This includes MOAIProp and MOAILayer. To use MOAIFrameBuffer

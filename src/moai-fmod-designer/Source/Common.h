@@ -56,7 +56,7 @@ inline float Lerp(float fA, float fB, float fT)
 // Helper Classes
 //-----------------------------------------------------------------------------
 
-/// Handy class for representing ranges of numbers.
+// Handy class for representing ranges of numbers.
 template< typename T >
 struct Range
 {

@@ -8,7 +8,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	openMD5
+/**	@lua	openMD5
 	@text	Open a MD5 hash stream for writing. (i.e. compute MD5
 			hash of data while writing)
 	
@@ -21,7 +21,7 @@ int MOAIHashWriterCrypto::_openMD5 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openSHA1
+/**	@lua	openSHA1
 	@text	Open a SHA1 hash stream for writing. (i.e. compute SHA1
 			hash of data while writing)
 	
@@ -34,7 +34,7 @@ int MOAIHashWriterCrypto::_openSHA1 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openSHA224
+/**	@lua	openSHA224
 	@text	Open a SHA224 hash stream for writing. (i.e. compute SHA256
 			hash of data while writing)
 	
@@ -47,7 +47,7 @@ int MOAIHashWriterCrypto::_openSHA224 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openSHA256
+/**	@lua	openSHA256
 	@text	Open a SHA256 hash stream for writing. (i.e. compute SHA256
 			hash of data while writing)
 	
@@ -60,7 +60,7 @@ int MOAIHashWriterCrypto::_openSHA256 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openSHA384
+/**	@lua	openSHA384
 	@text	Open a SHA384 hash stream for writing. (i.e. compute SHA256
 			hash of data while writing)
 	
@@ -73,7 +73,7 @@ int MOAIHashWriterCrypto::_openSHA384 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openSHA512
+/**	@lua	openSHA512
 	@text	Open a SHA512 hash stream for writing. (i.e. compute SHA256
 			hash of data while writing)
 	

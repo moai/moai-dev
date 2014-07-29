@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DWheelJoint
 //================================================================//
-/**	@name MOAIBox2DWheelJoint
+/**	@lua MOAIBox2DWheelJoint
 	@text Box2D wheel joint.
  */
 class MOAIBox2DWheelJoint :

@@ -30,7 +30,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getProgram
+/**	@lua	getProgram
 	@text	Return one of the built-in shader programs.
 
 	@in		number shaderID		One of MOAIShaderMgr.DECK2D_SHADER, MOAIShaderMgr.FONT_SHADER,

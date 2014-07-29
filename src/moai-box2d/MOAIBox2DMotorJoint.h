@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DMotorJoint
 //================================================================//
-/**	@name MOAIBox2DMotorJoint
+/**	@lua MOAIBox2DMotorJoint
 	@text Box2D motor joint.
 */
 class MOAIBox2DMotorJoint :

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMixpanelIOS
 //================================================================//
-/**	@name	MOAIMixpanelIOS
+/**	@lua	MOAIMixpanelIOS
 	@text	Wrapper for Mixpanel interface.
 */
 class MOAIMixpanelIOS :

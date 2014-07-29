@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLength
+/**	@lua	getLength
 	@text	Return the duration of the sound.
                
 	@in		MOAIUntzSound self
@@ -26,7 +26,7 @@ int MOAIUntzSound::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPosition
+/**	@lua	getPosition
 	@text	Return the position of the cursor in the sound.
 	
 	@in		MOAIUntzSound self
@@ -43,7 +43,7 @@ int MOAIUntzSound::_getPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVolume
+/**	@lua	getVolume
 	@text	Return the volume of the sound.
 	
 	@in		MOAIUntzSound self
@@ -60,7 +60,7 @@ int MOAIUntzSound::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFilename
+/**	@lua	getFilename
  @text	Return the file name of the sound.
  
  @in	MOAIUntzSound self
@@ -77,7 +77,7 @@ int MOAIUntzSound::_getFilename ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isLooping
+/**	@lua	isLooping
 	@text	Return the looping status if the sound.
 	
 	@in		MOAIUntzSound self
@@ -94,7 +94,7 @@ int MOAIUntzSound::_isLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPaused
+/**	@lua	isPaused
 	@text	Return the pause status of the sound.
 	
 	@in		MOAIUntzSound self
@@ -111,7 +111,7 @@ int MOAIUntzSound::_isPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isPlaying
+/**	@lua	isPlaying
 	@text	Return the playing status of the sound.
 	
 	@in		MOAIUntzSound self
@@ -128,7 +128,7 @@ int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads a sound from disk or from a buffer.
 	
 	@overload
@@ -175,7 +175,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveVolume
+/**	@lua	moveVolume
 	@text	Animation helper for volume attribute,
 	
 	@in		MOAIUntzSound self
@@ -218,7 +218,7 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Pause the sound.
 	
 	@in		MOAIUntzSound self
@@ -234,7 +234,7 @@ int MOAIUntzSound::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Play the sound.
 	
 	@in		MOAIUntzSound self
@@ -250,7 +250,7 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Release memory before gc does.
  
 	@in		MOAIUntzSound self
@@ -271,7 +271,7 @@ int MOAIUntzSound::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekVolume
+/**	@lua	seekVolume
 	@text	Animation helper for volume attribute,
 	
 	@in		MOAIUntzSound self
@@ -314,7 +314,7 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLooping
+/**	@lua	setLooping
 	@text	Set or clear the looping status of the sound.
 	
 	@in		MOAIUntzSound self
@@ -332,7 +332,7 @@ int MOAIUntzSound::_setLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLoopPoints
+/**	@lua	setLoopPoints
 	@text	Sets the start and end looping positions for the sound
 	
 	@in		MOAIUntzSound self
@@ -353,7 +353,7 @@ int MOAIUntzSound::_setLoopPoints ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPosition
+/**	@lua	setPosition
 	@text	Sets the position of the sound cursor.
 	
 	@in		MOAIUntzSound self
@@ -371,7 +371,7 @@ int MOAIUntzSound::_setPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@lua	setVolume
 	@text	Sets the volume of the sound.
 	
 	@in		MOAIUntzSound self
@@ -389,7 +389,7 @@ int MOAIUntzSound::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stops the sound from playing.
 	
 	@in		MOAIUntzSound self

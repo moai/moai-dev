@@ -55,7 +55,7 @@ void MOAIFacet::OnDetach ( MOAIProp& prop ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getBounds
+/**	@lua	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
 			be overridden by the prop's bounds if it's been set (using
@@ -89,7 +89,7 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDeck
+/**	@lua	getDeck
 	@text	Get the deck.
                
 	@in		MOAIProp self
@@ -106,7 +106,7 @@ int MOAIProp::_getDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDims
+/**	@lua	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
 	@in		MOAIProp self
@@ -145,7 +145,7 @@ int MOAIProp::_getFacet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGrid
+/**	@lua	getGrid
 	@text	Get the grid currently connected to the prop.
 	
 	@in		MOAIProp self
@@ -162,7 +162,7 @@ int MOAIProp::_getGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getIndex
+/**	@lua	getIndex
 	@text	Gets the value of the deck indexer.
 	
 	@in		MOAIProp self
@@ -177,7 +177,7 @@ int MOAIProp::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPriority
+/**	@lua	getPriority
 	@text	Returns the current priority of the node or 'nil' if the
 			priority is uninitialized.
 	
@@ -195,7 +195,7 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldBounds
+/**	@lua	getWorldBounds
 	@text	Return the prop's world bounds or 'nil' if prop bounds is
 			global or missing.
 	
@@ -252,7 +252,7 @@ int MOAIProp::_getWorldBoundsCenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	inside
+/**	@lua	inside
 	@text	Returns true if the given world space point falls inside
 			the prop's bounds.
 	
@@ -280,7 +280,7 @@ int	MOAIProp::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBounds
+/**	@lua	setBounds
 	@text	Sets or clears the partition bounds override.
 	
 	@overload	Clear the bounds override.
@@ -331,7 +331,7 @@ int MOAIProp::_setBoundsPad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDeck
+/**	@lua	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
 	@in		MOAIProp self
@@ -354,7 +354,7 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setExpandForSort
+/**	@lua	setExpandForSort
 	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
 			Expanding for sort causes the prop to emit a sub-prim
 			for each component of the layout. For example, when
@@ -397,7 +397,7 @@ int MOAIProp::_setFacet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGrid
+/**	@lua	setGrid
 	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
 			will override the standard indexer.
 	
@@ -417,7 +417,7 @@ int MOAIProp::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGridScale
+/**	@lua	setGridScale
 	@text	Scale applied to deck items before rendering to grid cell.
 	
 	@in		MOAIProp self
@@ -435,7 +435,7 @@ int MOAIProp::_setGridScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIndex
+/**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
 	@in		MOAIProp self
@@ -474,7 +474,7 @@ int MOAIProp::_setPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPriority
+/**	@lua	setPriority
 	@text	Sets or clears the node's priority. Clear the priority
 			to have MOAIPartition automatically assign a priority
 			to a node when it is added.
@@ -499,7 +499,7 @@ int MOAIProp::_setPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRemapper
+/**	@lua	setRemapper
 	@text	Set a remapper for this prop to use when drawing deck members.
 	
 	@in		MOAIProp self

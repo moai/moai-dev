@@ -11,7 +11,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAITileDeck2D
 //================================================================//
-/**	@name	MOAITileDeck2D
+/**	@lua	MOAITileDeck2D
 	@text	Subdivides a single texture into uniform tiles enumerated
 			from the texture's left top to right bottom.
 */
