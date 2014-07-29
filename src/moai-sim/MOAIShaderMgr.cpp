@@ -156,10 +156,10 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				
 			case FONT_EFFECTS_SHADER:
 				
-				program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				//program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				
 				//program->ReserveUniforms ( 2 );
 				//program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
