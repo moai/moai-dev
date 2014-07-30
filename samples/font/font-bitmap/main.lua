@@ -5,9 +5,9 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -17,7 +17,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
+charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 .,:;!?()&/-'
 text = 'The quick brown fox jumps over the lazy dog.'
 
 font = MOAIFont.new ()
@@ -26,7 +26,7 @@ bitmapFontReader = MOAIBitmapFontReader.new ()
 bitmapFontReader:loadPage ( 'FontVerdana18.png', charcodes, 16 )
 font:setReader ( bitmapFontReader )
 
-glyphCache = MOAIGlyphCache.new ()
+glyphCache = MOAIDynamicGlyphCache.new ()
 glyphCache:setColorFormat ( MOAIImage.COLOR_FMT_RGBA_8888 )
 font:setCache ( glyphCache )
 

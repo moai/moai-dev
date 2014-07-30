@@ -115,10 +115,10 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 
 	zglBindTexture ( this->mGLTexID );
 
-	USPixel::Format pixelFormat = image.GetPixelFormat ();
+	ZLPixel::Format pixelFormat = image.GetPixelFormat ();
 	ZLColor::Format colorFormat = image.GetColorFormat ();
 
-	if ( pixelFormat != USPixel::TRUECOLOR ) return; // only support truecolor textures
+	if ( pixelFormat != ZLPixel::TRUECOLOR ) return; // only support truecolor textures
 
 	// generate mipmaps if set up to use them
 	bool genMipMaps = this->GenerateMipmaps ();

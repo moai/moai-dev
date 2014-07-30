@@ -36,8 +36,7 @@ class MOAIDynamicGlyphCachePage;
 			from MOAIGlyphCache.</p>
 */
 class MOAIDynamicGlyphCache :
-	public MOAIGlyphCache,
-	public MOAIInstanceEventSource {
+	public MOAIGlyphCache {
 protected:
 
 	friend class MOAIDynamicGlyphCachePage;
@@ -60,10 +59,6 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIDynamicGlyphCache )
 	
-	enum {
-		EVENT_RENDER_GLYPH,
-	};
-	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
 	MOAITextureBase*	GetGlyphTexture				( MOAIGlyph& glyph );
@@ -72,7 +67,6 @@ public:
 						MOAIDynamicGlyphCache		();
 						~MOAIDynamicGlyphCache		();
 	int					PlaceGlyph					( MOAIFont& font, MOAIGlyph& glyph );
-	void				PostRender					( MOAIGlyph& glyph );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );

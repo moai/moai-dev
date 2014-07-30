@@ -47,8 +47,6 @@ MOAIGlyph* MOAIGlyphSet::GetGlyph ( u32 c ) {
 //----------------------------------------------------------------//
 MOAIGlyphSet::MOAIGlyphSet () :
 	mSize ( 0.0f ),
-	mHeight ( 0.0f ),
-	mAscent ( 0.0f ),
 	mPending ( 0 ),
 	mGlyphs ( 0 ) {
 }
