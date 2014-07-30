@@ -16,10 +16,10 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-onGlyph = function ( cache, code, image, xMin, yMin, xMax, yMax )
-	
-	print ( 'GLYPH:', code, image, xMin, yMin, xMax, yMax )
+onGlyph = function ( font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
 
+	print ( 'GLYPH:', font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
+	reader:renderGlyph ( image, x, y )
 	image:generateSDFDeadReckoning (xMin - 10, yMin - 10, xMax + 10, yMax + 10)
 	
 end
@@ -57,10 +57,10 @@ shader:setAttrLink ( 3, color, MOAIColor.COLOR_TRAIT )
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 
 font = MOAIFont.new ()
+font:setListener ( MOAIFont.EVENT_RENDER_GLYPH, onGlyph )
 
 cache = font:getCache ()
 cache:setPadding ( 20, 20 )
-cache:setListener ( MOAIDynamicGlyphCache.EVENT_RENDER_GLYPH, onGlyph )
 
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 50 )
 
