@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-xScale = 4
-yScale = 4
+xScale = 2
+yScale = 2
 
 srcImage = MOAIImage.new ()
 srcImage:load ( "moai.png" )
@@ -17,11 +17,14 @@ h1 = h0 * yScale
 
 image = MOAIImage.new ()
 image:init ( w1, h1 )
+image:fillCircle ( w1 * 0.5, h1 * 0.5, w1 * 0.5, 0, 0, 0, 1 )
 
 image:copyRect ( srcImage,
 	0, 0, w0, h0,
 	0, 0, w1, h1,
-	MOAIImage.FILTER_LINEAR
+	MOAIImage.FILTER_LINEAR,
+	MOAIImage.BLEND_FACTOR_DST_ALPHA,
+	MOAIImage.BLEND_FACTOR_ZERO
 )
 
 MOAISim.openWindow ( "test", w1, h1 )

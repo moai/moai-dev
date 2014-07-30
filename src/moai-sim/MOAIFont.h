@@ -62,7 +62,8 @@ class MOAITexture;
 	@const	DEFAULT_FLAGS
 */
 class MOAIFont :
-	public MOAILuaObject {
+	public virtual MOAILuaObject,
+	public MOAIInstanceEventSource {
 protected:
 
 	STLString mFilename;
@@ -106,6 +107,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildKerning			( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs );
 	void				RebuildKerning			( MOAIGlyphSet& glyphSet );
+	void				RenderGlyph				( MOAIGlyph& glyph );
 
 public:
 	
@@ -121,6 +123,10 @@ public:
 	
 	enum {
 		FONT_AUTOLOAD_KERNING		= 0x01,
+	};
+	
+	enum {
+		EVENT_RENDER_GLYPH,
 	};
 	
 	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;

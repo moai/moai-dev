@@ -4,23 +4,16 @@
 #ifndef	MOAIGLYPH_H
 #define	MOAIGLYPH_H
 
+#include <moai-sim/MOAIFontReader.h>
+
 class MOAIDynamicGlyphCachePage;
 class MOAITextureBase;
 
 //================================================================//
-// MOAIKernVec
-//================================================================//
-class MOAIKernVec :
-	public ZLVec2D {
-public:
-
-	u32			mName;
-};
-
-//================================================================//
 // MOAIGlyph
 //================================================================//
-class MOAIGlyph {
+class MOAIGlyph :
+	public MOAIGlyphMetrics {
 private:
 	
 	static const u32 MAX_KERN_TABLE_SIZE	= 512;
@@ -30,18 +23,8 @@ private:
 	u32			mCode;   // The character code of the glyph
 	u32			mPageID; // ID of texture page in glyph cache
 	
-	float		mAdvanceX; // The distance the pen moves to the next glyph
-	float		mBearingX; // The distance from the pen's x coordinate to the bounding box
-	float		mBearingY; // The distance from the pen's y coordinate to the bounding box
-	
-	// we keep these dimensions in pixels rather than UVs to make it easier to generate the
-	// screen rect for the glyph and also to keep the glyph's UV bounds from being invalidated
-	// if the texture page gets resized to make room for more glyphs
-	
 	u32			mSrcX; // corresponds to glyph location on page (in pixels)
 	u32			mSrcY; // corresponds to glyph location on page (in pixels)
-	float		mWidth; // width of the glyph's bounding box (in pixels)
-	float		mHeight; // height of the glyph's bounding box (in pixels)
 	
 	ZLLeanArray < MOAIKernVec > mKernTable;
 	

@@ -220,7 +220,7 @@ void MOAIImage::LoadJpg ( void* jpgInfoParam, u32 transform ) {
 	}
 	
 	// override the image settings
-	this->mPixelFormat = USPixel::TRUECOLOR;
+	this->mPixelFormat = ZLPixel::TRUECOLOR;
 	this->mColorFormat = jpgColorFormat;
 	
 	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepth ( jpgColorFormat ) > 16 )) {

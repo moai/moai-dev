@@ -144,7 +144,6 @@ MOAIDynamicGlyphCache::MOAIDynamicGlyphCache () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGlyphCache )
-		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END
 }
 
@@ -182,37 +181,13 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::PostRender ( MOAIGlyph& glyph ) {
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( EVENT_RENDER_GLYPH, state )) {
-	
-		state.Push ( glyph.GetCode ());
-	
-		state.Push ( this->GetGlyphImage ( glyph ));
-	
-		state.Push ( glyph.GetSrcX ());
-		state.Push ( glyph.GetSrcY ());
-	
-		state.Push ( glyph.GetSrcX () + glyph.GetWidth ());
-		state.Push ( glyph.GetSrcY () + glyph.GetHeight ());
-	
-		state.DebugCall ( 7, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIDynamicGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGlyphCache::RegisterLuaClass ( state );
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "EVENT_RENDER_GLYPH", ( u32 )EVENT_RENDER_GLYPH );
 }
 
 //----------------------------------------------------------------//
 void MOAIDynamicGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIGlyphCache::RegisterLuaFuncs ( state );
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setColorFormat",			_setColorFormat },
