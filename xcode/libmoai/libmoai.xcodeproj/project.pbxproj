@@ -196,6 +196,8 @@
 		07658751145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
 		07658752145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
+		078EA4061983314C00880938 /* MOAIFontEffectsShader-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 078EA4041983314C00880938 /* MOAIFontEffectsShader-fsh.h */; };
+		078EA4071983314C00880938 /* MOAIFontEffectsShader-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 078EA4051983314C00880938 /* MOAIFontEffectsShader-vsh.h */; };
 		079529DD1447907100143A72 /* jaricom.c in Sources */ = {isa = PBXBuildFile; fileRef = 079529311447907100143A72 /* jaricom.c */; };
 		079529DE1447907100143A72 /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = 079529321447907100143A72 /* jcapimin.c */; };
 		079529DF1447907100143A72 /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = 079529331447907100143A72 /* jcapistd.c */; };
@@ -5479,6 +5481,8 @@
 		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
 		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
+		078EA4041983314C00880938 /* MOAIFontEffectsShader-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAIFontEffectsShader-fsh.h"; sourceTree = "<group>"; };
+		078EA4051983314C00880938 /* MOAIFontEffectsShader-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAIFontEffectsShader-vsh.h"; sourceTree = "<group>"; };
 		079529311447907100143A72 /* jaricom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jaricom.c; sourceTree = "<group>"; };
 		079529321447907100143A72 /* jcapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jcapimin.c; sourceTree = "<group>"; };
 		079529331447907100143A72 /* jcapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jcapistd.c; sourceTree = "<group>"; };
@@ -9404,6 +9408,8 @@
 		89BE7024173AD0CB00DFE837 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				078EA4041983314C00880938 /* MOAIFontEffectsShader-fsh.h */,
+				078EA4051983314C00880938 /* MOAIFontEffectsShader-vsh.h */,
 				CD9613701905ED2D00156BEF /* MOAILineShader3D-fsh.h */,
 				CD9613711905ED2D00156BEF /* MOAILineShader3D-vsh.h */,
 				89BE7025173AD0CB00DFE837 /* MOAIDeck2DShader-fsh.h */,
@@ -12868,8 +12874,10 @@
 				89BE6B24173975E500DFE837 /* MOAILuaObject.h in Headers */,
 				89BE6B28173975E500DFE837 /* MOAILuaRef.h in Headers */,
 				89BE6B2C173975E500DFE837 /* MOAILuaRuntime.h in Headers */,
+				078EA4071983314C00880938 /* MOAIFontEffectsShader-vsh.h in Headers */,
 				89BE6B2E173975E500DFE837 /* MOAILuaSharedPtr.h in Headers */,
 				89BE6B30173975E500DFE837 /* MOAILuaState-impl.h in Headers */,
+				078EA4061983314C00880938 /* MOAIFontEffectsShader-fsh.h in Headers */,
 				89BE6B34173975E500DFE837 /* MOAILuaState.h in Headers */,
 				89BE6B3C173975E500DFE837 /* MOAIObject.h in Headers */,
 				89BE6B40173975E500DFE837 /* MOAIRtti.h in Headers */,

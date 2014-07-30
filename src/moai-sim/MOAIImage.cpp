@@ -1452,10 +1452,12 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	
 	ZLIntVec2D** grid1 = new ZLIntVec2D* [height];
 	ZLIntVec2D** grid2 = new ZLIntVec2D* [height];
+	int** gridDistance = new int* [height];
 	
 	for ( int i = 0; i < height; ++i ) {
 		grid1[i] = new ZLIntVec2D[width];
 		grid2[i] = new ZLIntVec2D[width];
+		gridDistance[i] = new int[width];
 	}
 	
 	ZLIntVec2D inside(0, 0);
@@ -1483,45 +1485,50 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	CalculateSDF( grid1, width, height );
 	CalculateSDF( grid2, width, height );
 		
-	for( int y=0; y < height; y++ ) {
-		for ( int x=0; x < width; x++ ) {
+	int maxDist = INT_MIN;
+	int minDist = INT_MAX;
+	
+	for( int y = 0; y < height; y++ ) {
+		for ( int x = 0; x < width; x++ ) {
 			// Calculate the actual distance from the dx/dy
 			int dist1 = (int)( grid1[y][x].Length() );
 			int dist2 = (int)( grid2[y][x].Length() );
 			int dist = dist1 - dist2;
-			
-			//ZLColorVec colorVec(0, 0, 0, 1);
-			// Draw the pixel
-			//if (dist <= 0)
-			//{
-				//this->SetColor(x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA());
-			//}
-			// ignore it
-			//else
-			//{
-				//colorVec.SetWhite();
-				//colorVec.Set(0, 0, 0, 0.5);
-				//this->SetColor(x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA());
-			//}
-			
-			// Clamp and scale it, just for display purposes.
-			int c = dist * 10 + 128;
-			if ( c < 0 ) c = 0;
-			if ( c > 255 ) c = 255;
-			
-			ZLColorVec colorVec( 0, 0, 0, c );
-			colorVec = colorVec.ScaleAlpha( 1.0f / 255 );
-			this->SetColor( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA() );
+			gridDistance[y][x] = dist;
+
+			if (minDist > dist)
+				minDist = dist;
+			if (maxDist < dist)
+				maxDist = dist;
 		}
 	}
+	
+	// Hard coded spread factor for testing, need to pass in!
+	int range = 60;
+
+	// Have to scale the distance value from minDis - maxDis to 0 - 1
+	for( int y = 0; y < height; y++ ) {
+		for ( int x = 0; x < width; x++ ) {
+			
+			float scaledDistVal = gridDistance[y][x];
+			scaledDistVal = ( scaledDistVal + 30 ) / range;
+			ZLColorVec colorVec;
+			colorVec.Set ( 0, 0, 0, scaledDistVal );
+			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA() );
+
+		}
+	}
+	
 	
 	for ( int i = 0; i < height; i++ ) {
   		delete [] grid1[i];
 		delete [] grid2[i];
+		delete [] gridDistance[i];
   	}
 	
 	delete [] grid1;
 	delete [] grid2;
+	delete [] gridDistance;
 	
 }
 

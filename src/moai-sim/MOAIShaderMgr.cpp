@@ -153,6 +153,23 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
 				
 				break;
+				
+			case FONT_EFFECTS_SHADER:
+				
+				//program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				
+				//program->ReserveUniforms ( 2 );
+				//program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				//program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				
+				//program->ReserveGlobals ( 2 );
+				//program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
+				//program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+				
+				break;
 			
 			case LINE_SHADER:
 				
@@ -259,6 +276,7 @@ void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )DECK2D_TEX_ONLY_SHADER );
 	state.SetField ( -1, "FONT_SHADER",				( u32 )FONT_SHADER );
 	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )FONT_SNAPPING_SHADER );
+	state.SetField ( -1, "FONT_EFFECTS_SHADER",	    ( u32 )FONT_EFFECTS_SHADER );
 	state.SetField ( -1, "LINE_SHADER",				( u32 )LINE_SHADER );
 	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )LINE_SHADER_3D );
 	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
