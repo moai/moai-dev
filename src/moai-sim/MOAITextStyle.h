@@ -19,6 +19,8 @@ protected:
 	ZLVec2D		mScale;
 	u32			mColor;
 	ZLRect		mPadding;
+	u32			mOutlineColor;
+	float		mOutlineWidth;
 
 public:
 
@@ -55,6 +57,8 @@ private:
 	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
 	static int		_setFont				( lua_State* L );
+	static int		_setOutlineColor		( lua_State* L );
+	static int		_setOutlineWidth		( lua_State* L );
 	static int		_setPadding				( lua_State* L );
 	static int		_setScale				( lua_State* L );
 	static int		_setSize				( lua_State* L );

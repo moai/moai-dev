@@ -146,6 +146,37 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setOutlineColor
+	@text	Sets the outline color of the style
+
+	@in		MOAITextStyle self
+	@in		number r	Default value is 0.
+	@in		number g	Default value is 0.
+	@in		number b	Default value is 0.
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int	MOAITextStyle::_setOutlineColor		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "UNNN" )
+	self->mOutlineColor = state.GetColor32 ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setOutlineWidth
+	@text	Sets the outline width of the style
+
+	@in		MOAITextStyle self
+	@in		number width
+	@out	nil
+*/
+int	MOAITextStyle::_setOutlineWidth		( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	self->mOutlineWidth = state.GetValue < float >( 2, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAITextStyle::_setPadding ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
@@ -264,6 +295,8 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",				_getSize },
 		{ "setColor",				_setColor },
 		{ "setFont",				_setFont },
+		{ "setOutlineColor",		_setOutlineColor },
+		{ "setOutlineWidth",		_setOutlineWidth },
 		{ "setPadding",				_setPadding },
 		{ "setScale",				_setScale },
 		{ "setSize",				_setSize },
