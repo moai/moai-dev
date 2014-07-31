@@ -2760,6 +2760,7 @@
 		B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFreeTypeFont.h; sourceTree = "<group>"; };
 		B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICCParticleSystem.cpp; sourceTree = "<group>"; };
 		B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICCParticleSystem.h; sourceTree = "<group>"; };
+		B4F51FA11989EB00005F5779 /* MOAICCParticle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOAICCParticle.h; sourceTree = "<group>"; };
 		CB4B0B8E1858F1B80020381E /* c_hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = c_hook.c; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4287,6 +4288,7 @@
 			children = (
 				B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */,
 				B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */,
+				B4F51FA11989EB00005F5779 /* MOAICCParticle.h */,
 			);
 			name = particles;
 			sourceTree = "<group>";
