@@ -101,6 +101,8 @@ private:
 public:
 	DECL_LUA_FACTORY ( MOAICCParticleSystem )
 	
+	
+	void			Draw					( int subPrimID );
 					MOAICCParticleSystem	();
 					~MOAICCParticleSystem	();
 	void			RegisterLuaClass		( MOAILuaState& state );
