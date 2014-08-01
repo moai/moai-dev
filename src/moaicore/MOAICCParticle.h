@@ -14,20 +14,8 @@
 class MOAICCParticle {
 public:
 	
-	enum {
-		PARTICLE_X,
-		PARTICLE_Y,
-		PARTICLE_DX,
-		PARTICLE_DY,
-		TOTAL_PARTICLE_REG,
-	};
-	
 	// how much longer the particle will be active
 	float mTimeToLive;
-	
-	// the dynamically allocated array storing four basic particle registers and registers for properties with variance
-	float*			mData;
-	
 	
 	MOAICCParticle *mNext;
 	
@@ -36,8 +24,6 @@ public:
 	
 	
 	// properties from Cocos2D's CCParticle struct.
-	// TODO: decide wheter to keep the CCParticle properties
-	// I could go with MOAI's way of using dynamically allocated registers for properties with variance.
 	
 	// position
 	float mCurrentPosition[2];
