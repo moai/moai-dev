@@ -136,7 +136,7 @@ public:
 	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
 	void				GenerateSDF				( ZLIntRect rect );
-	void				GenerateSDFDeadReckoning( ZLIntRect rect );
+	void				GenerateSDFDeadReckoning( ZLIntRect rect, int threshold );
 	u32					GetBitmapSize			() const;
 	ZLIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;

@@ -265,19 +265,21 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 /**	@lua	generateSDFDeadReckoning
 	@text	Given a rect, creates a signed distance field from it using dead reckoning technique
 
-	@in	MOAIImage self
-	@in	number xMin
-	@in	number yMin
-	@in	number xMax
-	@in	number yMax
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number threshold default is 256
 	@out	nil
  */
 int MOAIImage::_generateSDFDeadReckoning( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
 	
 	ZLIntRect rect = state.GetRect <int> ( 2 );
+	u32 threshold = state.GetValue < u32 >( 6, 256 );
 	
-	self->GenerateSDFDeadReckoning ( rect );
+	self->GenerateSDFDeadReckoning ( rect, threshold );
 	
 	return 0;
 }
@@ -1554,7 +1556,7 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect ) {
+void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	
 	const float FLT_MAX = 3.40282347E+38F;
 	// Specified in the paper
@@ -1584,8 +1586,8 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect ) {
 			u32 color = this->GetColor ( x + rect.mXMin, y + rect.mYMin );
 			ZLColorVec colorVec;
 			colorVec.SetRGBA (color);
-			
-			if ( colorVec.mA != 0 ) {
+			//printf("color: %f, %f, %f, %f\n", colorVec.mR, colorVec.mG, colorVec.mB, colorVec.mA);
+			if ( colorVec.mA > 0.5f ) {
 				binaryMap[y][x] = 1;
 			}
 			else {
@@ -1656,14 +1658,19 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect ) {
 	}
 	
 	// Hard coded spread factor for testing, need to pass in!
-	int range = 190;
+	int half = threshold / 2;
 	
 	// Have to scale the distance value from minDis - maxDis to 0 - 1
 	for( int y = 0; y < height; y++ ) {
 		for ( int x = 0; x < width; x++ ) {
 			
 			float scaledDistVal = distanceMap[y][x];
-			scaledDistVal = ( scaledDistVal + 95 ) / range;
+			scaledDistVal = ( scaledDistVal + half ) / threshold;
+			
+			// If distance is more than the max threshold specified, snap to 0
+			if (scaledDistVal < 0)
+				scaledDistVal = 0;
+			
 			ZLColorVec colorVec;
 			colorVec.Set ( 0, 0, 0, scaledDistVal );
 			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA() );

@@ -20,7 +20,9 @@ MOAITextStyleState::MOAITextStyleState () :
 	mFont ( 0 ),
 	mSize ( 0.0f ),
 	mScale ( 1.0f, 1.0f ),
-	mColor ( 0xffffffff ) {
+	mColor ( 0xffffffff ),
+	mOutlineColor ( 0xffffffff ),
+	mOutlineWidth ( 0 ) {
 	
 	this->mPadding.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
