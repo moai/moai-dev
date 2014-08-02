@@ -26,8 +26,8 @@ public:
 	// properties from Cocos2D's CCParticle struct.
 	
 	// position
-	float mCurrentPosition[2];
-	float mStartPosition[2];
+	USVec2D mCurrentPosition;
+	USVec2D mStartPosition;
 	
 	// color
 	float mColor[4];
@@ -39,10 +39,10 @@ public:
 	
 	// particle rotation
 	float mParticleRotation;
-	float mParticleRotation;
+	float mDeltaParticleRotation;
 	
 	// gravity properties
-	float mDirection[2];
+	USVec2D mDirection;
 	float mRadialAcceleration;
 	float mTangentialAcceleration;
 	

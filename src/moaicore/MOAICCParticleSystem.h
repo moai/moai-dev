@@ -11,6 +11,8 @@
 
 #include <moaicore/MOAIProp.h>
 
+#include <moaicore/MOAICCParticle.h>
+
 class MOAICCParticleSystem : public virtual MOAIProp {
 private:
 	
@@ -19,7 +21,16 @@ private:
 		EMITTER_RADIAL,
 	};
 	
-	u32 mNumParticles;
+	
+	// Array of particles.
+	MOAICCParticle *mParticles;
+	u32 mParticleCount;
+	u32 mAllocatedParticles;
+	
+	// Maximum particles.
+	u32 mTotalParticles;
+	
+	
 	EmitterType mEmitterType;
 	
 	float mLifespan;
@@ -84,8 +95,11 @@ private:
 	STLString mParticlePath;
 	
 	// Emission information.
-	u32 mEmissionCount;
+	float mEmitCounter;
 	float mEmissionRate;
+	
+	// time since start of system in seconds.
+	float mElapsed;
 	
 	// true if the particle system is active
 	bool mActive;
@@ -98,6 +112,13 @@ private:
 	static int		_stop       						( lua_State* L );
 	static int		_reset								( lua_State* L );
 	
+	
+	bool			AddParticle							();
+	void			InitParticle						( MOAICCParticle *particle );
+	bool			IsFull								();
+	void			OnDepNodeUpdate						();
+	void			OnUpdate							( float step );
+	
 public:
 	DECL_LUA_FACTORY ( MOAICCParticleSystem )
 	
@@ -107,6 +128,12 @@ public:
 					~MOAICCParticleSystem	();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	
+	void			SetVisible				( bool visible );
+	void			ResetSystem				();
+	void			StartSystem				();
+	void			StopSystem				();
+	
 };
 
 
