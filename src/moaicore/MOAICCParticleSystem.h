@@ -13,6 +13,8 @@
 
 #include <moaicore/MOAICCParticle.h>
 
+#include <tinyxml.h>
+
 class MOAICCParticleSystem : public virtual MOAIProp {
 private:
 	
@@ -118,6 +120,7 @@ private:
 	bool			IsFull								();
 	void			OnDepNodeUpdate						();
 	void			OnUpdate							( float step );
+	void			ParseXML							( cc8* filename, TiXmlNode* node );
 	
 public:
 	DECL_LUA_FACTORY ( MOAICCParticleSystem )
@@ -126,6 +129,7 @@ public:
 	void			Draw					( int subPrimID );
 					MOAICCParticleSystem	();
 					~MOAICCParticleSystem	();
+	
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	

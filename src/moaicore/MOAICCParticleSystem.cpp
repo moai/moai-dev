@@ -7,6 +7,8 @@
 //
 
 #include "pch.h"
+#include <tinyxml.h>
+
 #include <moaicore/MOAICCParticleSystem.h>
 
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
@@ -16,8 +18,25 @@ int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	load
+	@text	Initialize particle system properties with an XML file
+ 
+	@in		MOAICCParticleSystem	self
+	@in		String					file to load
+	@out	nil
+ */
+
 int MOAICCParticleSystem::_load( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "US" )
+	cc8* xml = lua_tostring( state, 2);
+	
+	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
+		TiXmlDocument doc;
+		doc.LoadFile ( xml );
+		self->ParseXML ( xml, doc.RootElement ());
+		
+	}
 	
 	return 0;
 }
@@ -181,6 +200,11 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 		}
 	}
 	
+}
+
+void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ){
+	UNUSED(filename);
+	UNUSED(node);
 }
 
 void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
