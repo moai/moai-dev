@@ -1,0 +1,11 @@
+<!-- Tapjoy -->
+<activity android:name="com.tapjoy.TJCVirtualGoods" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation" />
+<activity android:name="com.tapjoy.DownloadVirtualGood" android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" />
+<activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation" />
+<activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation" />
+<activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation" />
+<receiver android:name="com.tapjoy.TapjoyReferralTracker" android:exported="true">    
+    <intent-filter>
+        <action android:name="com.android.vending.INSTALL_REFERRER" />
+    </intent-filter>
+</receiver>

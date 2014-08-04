@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 int MOAIVectorPoly::AddFillContours ( SafeTesselator* tess ) {
 	
-	if ( this->mVertices.Size () < 3 ) return;
+	if ( this->mVertices.Size () < 3 ) return 0;
 	
 	SafeTesselator outline;
 
@@ -36,7 +36,7 @@ int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess ) {
 	}
 
 	int nVerts = ( int )this->mVertices.Size ();
-	if ( nVerts < 2 ) return;
+	if ( nVerts < 2 ) return 0;
 
 	// filter out duplicate vertices
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * nVerts );
@@ -52,7 +52,7 @@ int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess ) {
 			verts [ nJoins++ ] = v1;
 		}
 	}
-	if ( nJoins < 2 ) return;
+	if ( nJoins < 2 ) return 0;
 
 	MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nJoins * 2 );
 	

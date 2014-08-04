@@ -767,8 +767,6 @@ void MOAIImage::CalculateSDF( ZLIntVec2D** grid, int width, int height ) {
 			grid[y][x] = p;
 		}
 	}
-	
-	return 0;
 }
 
 //----------------------------------------------------------------//

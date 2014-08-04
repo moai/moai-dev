@@ -243,17 +243,17 @@ int MOAIAppAndroid::_takePicture( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIAppAndroid::AppOpenedFromURL ( jstring url ) {
-	MOAILuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
 
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( APP_OPENED_FROM_URL, state )) {
 			
 		JNI_GET_ENV ( jvm, env );
 		JNI_GET_CSTRING ( url, returnurl );
 
 		lua_pushstring ( state, returnurl );
 		state.DebugCall ( 1, 0 );
-			
+
 		JNI_RELEASE_CSTRING ( url, returnurl );
 	}
 }
@@ -273,7 +273,6 @@ MOAIAppAndroid::~MOAIAppAndroid () {
 //----------------------------------------------------------------//
 void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "ACTIVITY_ON_CREATE",		( u32 )ACTIVITY_ON_CREATE );
 	state.SetField ( -1, "ACTIVITY_ON_DESTROY",		( u32 )ACTIVITY_ON_DESTROY );
 	state.SetField ( -1, "ACTIVITY_ON_START",		( u32 )ACTIVITY_ON_START );
@@ -281,6 +280,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ACTIVITY_ON_PAUSE",		( u32 )ACTIVITY_ON_PAUSE );
 	state.SetField ( -1, "ACTIVITY_ON_RESUME",		( u32 )ACTIVITY_ON_RESUME );
 	state.SetField ( -1, "ACTIVITY_ON_RESTART",		( u32 )ACTIVITY_ON_RESTART );
+	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 	state.SetField ( -1, "EVENT_PICTURE_TAKEN",		( u32 )EVENT_PICTURE_TAKEN );
 
@@ -305,10 +305,9 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIAppAndroid::NotifyPictureTaken() {
 	JNI_GET_ENV( jvm, env );
 
-	MOAILuaRef& callback = this->mListeners[ EVENT_PICTURE_TAKEN ];
-	MOAIScopedLuaState state = callback.GetSelf();
-
-	if( callback ) {
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( MOAIAppAndroid::Get ().PushListener ( EVENT_PICTURE_TAKEN, state )) {
+		
 		jclass t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );
 		jmethodID t_getResultPath_mid = env->GetStaticMethodID( t_class, "getResultPath", "()Ljava/lang/String;" );
 		jmethodID t_getResultCode_mid = env->GetStaticMethodID( t_class, "getResultCode", "()I" );
@@ -343,7 +342,7 @@ void MOAIAppAndroid::PushPictureCode( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIAppAndroid::PushPictureData( MOAILuaState& state ) {
-	ZLLog::Print( "MOAIAppAndroid::PushPictureData" );
+	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid::PushPictureData" );
 	JNI_GET_ENV( jvm, env );
 
 	jclass t_class = env->FindClass( "com/ziplinegames/moai/MoaiCamera" );

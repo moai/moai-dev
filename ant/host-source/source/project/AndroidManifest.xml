@@ -27,13 +27,6 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<!-- Add your URL-scheme here -->
-				<data android:scheme="moaisample" />
-			</intent-filter>
 		</activity>
 		
 		<activity 
@@ -45,9 +38,6 @@
 		</activity>
 		
 		<receiver android:name="com.ziplinegames.moai.MoaiLocalNotificationReceiver"></receiver>
-		<!-- Used for google play services. You MUST set your app id in res/values/strings.xml -->
-		<meta-data android:name="com.google.android.gms.games.APP_ID"
-			android:value="@string/app_id" />
 		
 		<!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
 		
@@ -70,4 +60,4 @@
 	
 	<uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
 	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
-</manifest>
+</manifest>   
