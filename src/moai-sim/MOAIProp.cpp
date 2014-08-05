@@ -1014,10 +1014,10 @@ u32 MOAIProp::GetPropBounds ( ZLBox& bounds ) {
 		
 		ZLRect rect = this->mGrid->GetBounds ();
 		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
-		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
+		return BOUNDS_OK;
 	}
-	else if ( this->mDeck ) {
 	
+	if ( this->mDeck ) {
 		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
 		return BOUNDS_OK;
 	}
