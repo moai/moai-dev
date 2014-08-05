@@ -43,6 +43,7 @@ public:
 	
 	// gravity properties
 	USVec2D mDirection;
+	USVec2D mGravity;
 	float mRadialAcceleration;
 	float mTangentialAcceleration;
 	

@@ -129,7 +129,99 @@ void MOAICCParticleSystem::Draw	( int subPrimID ) {
 }
 
 void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
-	UNUSED(particle);
+	
+	// timeToLive
+	particle->mTimeToLive = USFloat::Rand(this->mLifespanTerm[0], this->mLifespanTerm[1]);
+	
+	
+	// position
+	particle->mStartPosition.mX = this->mSourcePos[0] + this->mSourcePosVariance[0] * USFloat::Rand(-1.0f, 1.0f);
+	particle->mStartPosition.mY = this->mSourcePos[1] + this->mSourcePosVariance[1] * USFloat::Rand(-1.0f, 1.0f);
+	
+	// color
+	float start;
+	float end;
+	
+	for (int i = 0; i < 4; ++i) {
+		start = USFloat::Clamp(this->mStartColor[i] + this->mStartColorVariance[i] * USFloat::Rand(-1.0f, 1.0f), 0.0f, 1.0f);
+		
+		end = USFloat::Clamp(this->mFinishColor[i] + this->mFinishColorVariance[i] * USFloat::Rand(-1.0f, 1.0f), 0.0f, 1.0f);
+		
+		particle->mColor[i] = start;
+		
+		particle->mDeltaColor[i] = (end - start) / particle->mTimeToLive;
+	}
+	
+	// partice size
+	start = this->mStartSize + this->mStartSizeVariance * USFloat::Rand(-1.0f, 1.0f);
+	start = MAX(0, start);
+	
+	particle->mParticleSize = start;
+	
+	end = this->mFinishSize + this->mFinishSizeVariance * USFloat::Rand(-1.0f, 1.0f);
+	particle->mDeltaParticleSize = (end - start) / particle->mTimeToLive;
+	
+	
+	// particle rotation
+	start = this->mRotStart + this->mRotStartVariance * USFloat::Rand(-1.0f, 1.0f);
+	end = this->mRotEnd + this->mRotEndVariance * USFloat::Rand(-1.0f, 1.0f);
+	
+	particle->mParticleRotation = start;
+	particle->mDeltaParticleRotation = (end - start) / particle->mTimeToLive;
+	
+	// position
+	// TODO: implement relative type for particle position
+	// free particle position
+	{
+		USVec3D loc;
+		loc.Init(0.0f, 0.0f, 0.0f);
+		USAffine3D modelToWorld = this->GetLocalToWorldMtx ();
+		modelToWorld.Transform(loc);
+		particle->mStartPosition.Init(loc.mX, loc.mY);
+	}
+	
+	// direction
+	float a = D2R * (this->mAngle + this->mAngleVariance * USFloat::Rand(-1.0f, 1.0f));
+	
+	
+	// gravity mode
+	if ( this->mEmitterType == EMITTER_GRAVITY ) {
+		USVec2D v;
+		v.Init(Cos(a), Sin(a));
+		
+		float s = this->mSpeed + this->mSpeedVariance * USFloat::Rand(-1.0f, 1.0f);
+		v.Scale( s );
+		
+		// direction
+		particle->mDirection.Init(v);
+		
+		// gravity variance
+		particle->mGravity.mX = this->mGravity[0] + this->mGravityVariance[0] * USFloat::Rand(-1.0f, 1.0f);
+		particle->mGravity.mY = this->mGravity[1] + this->mGravityVariance[1] * USFloat::Rand(-1.0f, 1.0f);
+		
+		// radial accel
+		particle->mRadialAcceleration = this->mRadialAcceleration + this->mRadialAccelVariance * USFloat::Rand(-1.0f, 1.0f);
+		
+		// tangential accel
+		particle->mTangentialAcceleration = this->mTangentialAcceleration + this->mTangentialAccelVariance * USFloat::Rand(-1.0f, 1.0f);
+		
+	}
+	// radial mode
+	else {
+		float startRadius = this->mMinRadius + this->mMinRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
+		float endRadius = this->mMaxRadius + this->mMaxRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
+		
+		particle->mRadius = startRadius;
+		
+		particle->mDeltaRadius = (endRadius - startRadius) / particle->mTimeToLive;
+		
+		particle->mAngle = a;
+		particle->mDegreesPerSecond = D2R * (this->mRotPerSecond + this->mRotPerSecondVariance * USFloat::Rand(-1.0f, 1.0f));
+		
+		// rotational acceleration
+		particle->mRotationalAcceleration = D2R * (this->mRotationalAcceleration + this->mRotationalAccelVariance * USFloat::Rand(-1.0f, 1.0f));
+		
+	}
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
@@ -216,7 +308,7 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 					
 					// (gravity + radial + tangential) * dt
 					USVec2D tmp;
-					tmp.Init(this->mGravity[0], this->mGravity[1]);
+					tmp.Init(p->mGravity);
 					tmp.Add(radialVector);
 					tmp.Add(tangentialVector);
 					
