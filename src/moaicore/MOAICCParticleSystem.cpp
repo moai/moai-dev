@@ -19,6 +19,7 @@ int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
 	u32 total = state.GetValue < u32 >( 2, 1 );
 	
+	self->SetTotalParticles( total );
 	
 	
 	return 0;
