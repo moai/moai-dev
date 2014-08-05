@@ -107,6 +107,7 @@ private:
 	bool mActive;
 	
 	// TODO: add methods for accessing properties
+	static int		_setTotalParticles					( lua_State* L );
 	
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
@@ -134,6 +135,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	
+	void			SetTotalParticles		( u32 numberOfParticles );
 	void			SetVisible				( bool visible );
 	void			ResetSystem				();
 	void			StartSystem				();

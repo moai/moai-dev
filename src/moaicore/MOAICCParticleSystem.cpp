@@ -14,6 +14,20 @@
 
 #include <moaicore/MOAICCParticleSystem.h>
 
+//----------------------------------------------------------------//
+int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	u32 total = state.GetValue < u32 >( 2, 1 );
+	
+	
+	
+	return 0;
+}
+
+
+
+//----------------------------------------------------------------//
+
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	
@@ -243,7 +257,62 @@ bool MOAICCParticleSystem::IsFull () {
 	return (this->mParticleCount == this->mTotalParticles);
 }
 
-MOAICCParticleSystem::MOAICCParticleSystem () {
+MOAICCParticleSystem::MOAICCParticleSystem() :
+	mParticles( NULL ),
+	mParticleCount( 0 ),
+	mAllocatedParticles( 0 ),
+	mTotalParticles( 0 ),
+	mEmitterType( EMITTER_GRAVITY ),
+	mLifespan( 0.0f ),
+	mLifespanVariance( 0.0f ),
+	mAngle( 0.0f ),
+	mAngleVariance( 0.0f ),
+	mStartSize( 16.0f ),
+	mStartSizeVariance( 0.0f ),
+	mFinishSize( 0.0f ),
+	mFinishSizeVariance( 0.0f ),
+	mMaxRadius( 0.0f ),
+	mMaxRadiusVariance( 0.0f ),
+	mMinRadius( 0.0f ),
+	mMinRadiusVariance( 0.0f ),
+	mRadialAcceleration( 0.0f ),
+	mRadialAccelVariance( 0.0f ),
+	mTangentialAcceleration( 0.0f ),
+	mTangentialAccelVariance( 0.0f ),
+	mRotStart( 0.0f ),
+	mRotStartVariance( 0.0f ),
+	mRotEnd( 0.0f ),
+	mRotEndVariance( 0.0f ),
+	mSpeed( 0.0f ),
+	mSpeedVariance( 0.0f ),
+	mRotPerSecond( 0.0f ),
+	mRotPerSecondVariance( 0.0f ),
+	mRotationalAcceleration( 0.0f ),
+	mRotationalAccelVariance( 0.0f ),
+	mDuration( -1.0f ),
+	mBlendFuncSrc( GL_ONE ),
+	mBlendFuncDst( GL_ONE_MINUS_SRC_ALPHA ),
+	mEmitCounter( 0.0f ),
+	mEmissionRate( 0.0f ),
+	mElapsed( 0.0f ),
+	mActive( true )
+{
+	int i = 0;
+	for ( ; i < 2;  ++i) {
+		this->mLifespanTerm[i] = 0.0f;
+		this->mGravity[i] = 0.0f;
+		this->mGravityVariance[i] = 0.0f;
+		this->mSourcePos[i] = 0.0f;
+		this->mSourcePosVariance[i] = 0.0f;
+	}
+	
+	for (i = 0; i < 4; ++i) {
+		this->mStartColor[i] = 1.0f;
+		this->mStartColorVariance[i] = 0.0f;
+		this->mFinishColor[i] = 0.0f;
+		this->mFinishColorVariance[i] = 0.0f;
+	}
+	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
 	RTTI_END
@@ -541,6 +610,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "initializeProperties",			_initializeProperties },
 		{ "load",							_load },
 		{ "reset",							_reset },
+		{ "setTotalParticles",				_setTotalParticles },
 		{ "start",							_start },
 		{ "stop",							_stop },
 		{ NULL, NULL }
@@ -558,7 +628,26 @@ void MOAICCParticleSystem::ResetSystem () {
 	}
 }
 
-void MOAICCParticleSystem::SetVisible(bool visible) {
+void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
+	this->mTotalParticles = numberOfParticles;
+	
+	if (!this->mParticles ||  numberOfParticles > this->mAllocatedParticles) {
+		// allocate new memory
+		size_t particlesize = numberOfParticles * sizeof( MOAICCParticle );
+		
+		this->mParticles = (MOAICCParticle *)realloc(this->mParticles, particlesize);
+		bzero(this->mParticles, particlesize);
+		
+		this->mAllocatedParticles = numberOfParticles;
+	}
+	
+	this->mTotalParticles = numberOfParticles;
+	this->ResetSystem();
+	
+}
+
+
+void MOAICCParticleSystem::SetVisible ( bool visible ) {
 	MOAIProp::SetVisible(visible);
 }
 
