@@ -64,6 +64,7 @@ private:
 	static int		_copyRect					( lua_State* L );
 	static int		_fillCircle					( lua_State* L );
 	static int		_fillRect					( lua_State* L );
+	static int		_generateOutlineFromSDF		( lua_State* L );
 	static int		_generateSDF				( lua_State* L );
 	static int		_generateSDFDeadReckoning	( lua_State* L );
 	static int		_getColor32					( lua_State* L );
@@ -135,6 +136,7 @@ public:
 	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
+	void				GenerateOutlineFromSDF	( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
 	void				GenerateSDF				( ZLIntRect rect );
 	void				GenerateSDFDeadReckoning( ZLIntRect rect, int threshold );
 	u32					GetBitmapSize			() const;

@@ -241,15 +241,45 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	generateOutlineFromSDF
+	@text	Given a rect, and min and max distance values, transform
+			to a binary image where 0 means not on the outline and
+			1 means part of the outline
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@in		number distMin
+	@in		number distMax
+	@out	nil
+ */
+int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
+	
+	ZLIntRect rect = state.GetRect < int >( 2 );
+	float distMin = state.GetValue < float >( 6, 0.46f );
+	float distMax = state.GetValue < float >( 7, 0.499f );
+	float r		= state.GetValue < float >( 8, 1.0f );
+	float g		= state.GetValue < float >( 9, 1.0f );
+	float b		= state.GetValue < float >( 10, 1.0f );
+	float a		= state.GetValue < float >( 11, 1.0f );
+	
+	self->GenerateOutlineFromSDF ( rect, distMin, distMax, r, g, b, a );
+	
+}
+
+//----------------------------------------------------------------//
 /**	@lua	generateSDF
 	@text	Given a rect, creates a signed distance field from it
  
-	 @in	MOAIImage self
-	 @in	number xMin
-	 @in	number yMin
-	 @in	number xMax
-	 @in	number yMax
-	 @out	nil
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
  */
 int MOAIImage::_generateSDF( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
@@ -263,7 +293,8 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	generateSDFDeadReckoning
-	@text	Given a rect, creates a signed distance field from it using dead reckoning technique
+	@text	Given a rect, creates a signed distance field from it 
+			using dead reckoning technique
 
 	@in		MOAIImage self
 	@in		number xMin
@@ -1467,6 +1498,35 @@ void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::GenerateOutlineFromSDF ( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a ) {
+	u32 width = rect.Width() + 1;
+	u32 height = rect.Height() + 1;
+	
+	for ( int y = 0; y < height; ++y ) {
+		for ( int x = 0; x < width; ++x ) {
+			u32 color = this->GetColor ( x + rect.mXMin, y + rect.mYMin );
+			ZLColorVec colorVec;
+			colorVec.SetRGBA ( color );
+			
+			if ( colorVec.mA >= distMin && colorVec.mA <= distMax ) {
+				colorVec.mR = r;
+				colorVec.mG = g;
+				colorVec.mB = b;
+				colorVec.mA = a;
+			}
+			else {
+				//colorVec.mR = 0;
+				//colorVec.mG = 0;
+				//colorVec.mB = 0;
+				colorVec.mA = 0;
+			}
+			
+			this->SetColor( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA () );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	
 	// Plus one because rect goes to exact end
@@ -2151,6 +2211,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copyRect",					_copyRect },
 		{ "fillCircle",					_fillCircle },
 		{ "fillRect",					_fillRect },
+		{ "generateOutlineFromSDF",		_generateOutlineFromSDF },
 		{ "generateSDF",				_generateSDF },
 		{ "generateSDFDeadReckoning",	_generateSDFDeadReckoning },
 		{ "getColor32",					_getColor32 },
