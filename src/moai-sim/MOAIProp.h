@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
+#include <moai-core/MOAILuaSharedPtr.h>
 
 class MOAICellCoord;
 class MOAICollisionShape;
@@ -138,7 +139,7 @@ protected:
 
 	u32										mFlags;
 
-	MOAILuaSharedPtr < MOAIDeck >			mDeck;
+	MOAILuaSharedPtr<MOAIDeck>				mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
 	u32										mIndex;
 	
