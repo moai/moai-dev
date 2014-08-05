@@ -117,6 +117,7 @@ private:
 	
 	bool			AddParticle							();
 	void			InitParticle						( MOAICCParticle *particle );
+	void			InitializeEmitter					();
 	bool			IsFull								();
 	void			OnDepNodeUpdate						();
 	void			OnUpdate							( float step );

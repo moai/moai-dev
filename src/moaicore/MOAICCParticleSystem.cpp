@@ -14,6 +14,7 @@
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	
+	self->InitializeEmitter();
 	
 	return 0;
 }
@@ -61,7 +62,7 @@ int MOAICCParticleSystem::_reset ( lua_State *L ) {
 	return 0;
 }
 
-bool MOAICCParticleSystem::AddParticle(){
+bool MOAICCParticleSystem::AddParticle () {
 	if ( this->IsFull() ) {
 		return false;
 	}
@@ -81,8 +82,22 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 	UNUSED(particle);
 }
 
+void MOAICCParticleSystem::InitializeEmitter () {
+	this->mEmissionRate = 1.0f / (this->mTotalParticles);
+	
+	float minLifespan = this->mLifespan - this->mLifespanVariance;
+	if ( minLifespan < 0.0f ) {
+		minLifespan = 0.0f;
+	}
+	
+	this->mLifespanTerm[0] = minLifespan;
+	
+	float maxLifespan = this->mLifespan + this->mLifespanVariance;
+	this->mLifespanTerm[1] = maxLifespan;
+}
 
-bool MOAICCParticleSystem::IsFull(){
+
+bool MOAICCParticleSystem::IsFull () {
 	return (this->mParticleCount == this->mTotalParticles);
 }
 
@@ -202,9 +217,175 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 	
 }
 
-void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ){
-	UNUSED(filename);
-	UNUSED(node);
+void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
+	if (!node) {
+		return;
+	}
+	
+	this->mParticlePath = filename;
+	
+	STLString absFilePath = USFileSys::GetAbsoluteFilePath ( filename );
+	STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
+	
+	TiXmlElement* element = node->ToElement();
+	if (element && (strcmp(element->Value(), "particleEmitterConfig") == 0)) {
+		
+		TiXmlElement* childElement = node->FirstChildElement ();
+		
+		for ( ; childElement; childElement = childElement->NextSiblingElement() ) {
+			STLString text = childElement->Value ();
+			TiXmlAttribute* attribute = childElement->FirstAttribute ();
+			int i = 0;
+			if (!attribute || !text || text == "") {
+				continue;
+			}
+			
+			if (text == "angle") {
+				this->mAngle = (float)atof(attribute->Value());
+			}
+			else if (text == "angleVariance") {
+				this->mAngleVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "blendFuncSource") {
+				this->mBlendFuncSrc = atoi(attribute->Value());
+			}
+			else if (text == "blendFuncDestination") {
+				this->mBlendFuncDst = atoi(attribute->Value());
+			}
+			else if (text == "duration") {
+				this->mDuration = (float)atof(attribute->Value());
+			}
+			else if (text == "emitterType") {
+				this->mEmitterType = (EmitterType)atoi(attribute->Value());
+			}
+			else if (text == "finishColor") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mFinishColor[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "finishColorVariance") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mFinishColorVariance[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "finishParticleSize") {
+				this->mFinishSize = (float)atof(attribute->Value());
+			}
+			else if (text == "finishParticleSizeVariance") {
+				this->mFinishSizeVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "gravity") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mGravity[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "gravityVariance") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mGravityVariance[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "maxParticles") {
+				this->mTotalParticles = atoi(attribute->Value());
+			}
+			else if (text == "maxRadius") {
+				this->mMaxRadius = (float)atof(attribute->Value());
+			}
+			else if( text == "maxRadiusVariance") {
+				this->mMaxRadiusVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "minRadius") {
+				this->mMinRadius = (float)atof(attribute->Value());
+			}
+			else if (text == "minRadiusVariance") {
+				this->mMinRadiusVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "particleLifeSpan") {
+				this->mLifespan = (float)atof(attribute->Value());
+			}
+			else if (text == "particleLifespanVariance") {
+				this->mLifespanVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "radialAcceleration") {
+				this->mRadialAcceleration = (float)atof(attribute->Value());
+			}
+			else if (text == "radialAccelVariance") {
+				this->mRadialAccelVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "rotatePerSecond") {
+				this->mRotPerSecond = (float)atof(attribute->Value());
+			}
+			else if (text == "rotatePerSecondVariance") {
+				this->mRotPerSecondVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationEnd") {
+				this->mRotEnd = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationEndVariance") {
+				this->mRotEndVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationStart") {
+				this->mRotStart = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationStartVariance") {
+				this->mRotStartVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationalAcceleration") {
+				this->mRotationalAcceleration = (float)atof(attribute->Value());
+			}
+			else if (text == "rotationalAccelVariance") {
+				this->mRotationalAccelVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "sourcePosition") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mSourcePos[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "sourcePositionVariance") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mSourcePosVariance[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "speed") {
+				this->mSpeed = (float)atof(attribute->Value());
+			}
+			else if (text == "speedVariance") {
+				this->mSpeedVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "startColor") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mStartColor[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "startColorVariance") {
+				for ( ; attribute; attribute = attribute->Next (), i++) {
+					this->mStartColorVariance[i] = (float)atof(attribute->Value());
+				}
+			}
+			else if (text == "startParticleSize") {
+				this->mStartSize = (float)atof(attribute->Value());
+			}
+			else if (text == "startParticleSizeVariance") {
+				this->mStartSizeVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "tangentialAcceleration") {
+				this->mTangentialAcceleration = (float)atof(attribute->Value());
+			}
+			else if (text == "tangentialAccelVariance") {
+				this->mTangentialAccelVariance = (float)atof(attribute->Value());
+			}
+			else if (text == "texture") {
+				this->mTextureName = absDirPath;
+				this->mTextureName.append ( attribute->Value ());
+			}
+			
+			
+			
+		}
+		
+		this->InitializeEmitter();
+		
+	}
+	
 }
 
 void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
