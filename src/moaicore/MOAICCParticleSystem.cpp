@@ -8,6 +8,9 @@
 
 #include "pch.h"
 #include <tinyxml.h>
+#include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIGfxDevice.h>
+
 
 #include <moaicore/MOAICCParticleSystem.h>
 
@@ -76,6 +79,53 @@ bool MOAICCParticleSystem::AddParticle () {
 
 void MOAICCParticleSystem::Draw	( int subPrimID ) {
 	UNUSED(subPrimID);
+	
+	if ( !this->mDeck ) {
+		return;
+	}
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	if ( this->mUVTransform ) {
+		USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+		gfxDevice.SetUVTransform ( uvMtx );
+	}
+	else {
+		gfxDevice.SetUVTransform ();
+	}
+	
+	this->LoadGfxState();
+	
+	USAffine3D drawingMtx;
+	USAffine3D spriteMtx;
+	
+	u32 maxParticles = this->mTotalParticles;
+	u32 total = this->mParticleCount;
+	if (total > maxParticles) {
+		total = maxParticles;
+	}
+	
+	
+	for ( u32 i = 0 ; i < total; ++i ) {
+		u32 idx = i;
+		MOAICCParticle *particle = &(this->mParticles[ idx ]);
+		
+		// set pen color
+		gfxDevice.SetPenColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
+		
+		// set transforms
+		spriteMtx.ScRoTr(particle->mParticleSize, particle->mParticleSize, 1.0f,
+						 0.0f, 0.0f, particle->mParticleRotation,
+						 particle->mCurrentPosition.mX, particle->mCurrentPosition.mY, 0.0f);
+		
+		drawingMtx = this->GetLocalToWorldMtx();
+		drawingMtx.Prepend( spriteMtx );
+		
+		gfxDevice.SetVertexTransform( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
+		
+		this->mDeck->Draw ( this->mIndex + (u32) particle->mDeckIndex, this->mRemapper);
+		
+	}
 }
 
 void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
