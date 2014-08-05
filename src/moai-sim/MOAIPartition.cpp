@@ -684,7 +684,6 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 	float height = rect.Height ();
 	float cellSize = ( width > height ) ? width : height;
 	
-	u32 layerID;
 	if ( cellSize > 0.0f ) {
 		
 		MOAIPartitionLevel* layer = 0;
@@ -697,7 +696,6 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 			if ( cellSize <= testLayer->mCellSize ) {
 				if (( layer == 0 ) || ( testLayer->mCellSize  < layer->mCellSize )) {
 					layer = testLayer;
-					layerID = i;
 				}
 			}
 		}
