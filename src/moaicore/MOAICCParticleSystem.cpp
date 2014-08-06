@@ -14,6 +14,208 @@
 
 #include <moaicore/MOAICCParticleSystem.h>
 
+
+int MOAICCParticleSystem::_getAngle( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mAngle );
+	
+	return 1;
+}
+
+int MOAICCParticleSystem::_setAngle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mAngle = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getAngleVariance( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mAngleVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setAngleVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mAngleVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int	MOAICCParticleSystem::_getBlendMode( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mBlendFuncSrc );
+	lua_pushnumber ( state, self->mBlendFuncDst );
+	return 2;
+}
+
+int MOAICCParticleSystem::_setBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
+	self->mBlendFuncSrc = state.GetValue < float >( 2, 0 );
+	self->mBlendFuncDst = state.GetValue < float >( 3, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getDuration( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mDuration );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setDuration ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mDuration = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getEmitterType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mEmitterType );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setEmitterType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mEmitterType = (EmitterType)state.GetValue < u32 >( 2, 0 );
+	return 0;
+}
+
+int	MOAICCParticleSystem::_getFinishColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mFinishColor[0] );
+	lua_pushnumber ( state, self->mFinishColor[1] );
+	lua_pushnumber ( state, self->mFinishColor[2] );
+	lua_pushnumber ( state, self->mFinishColor[3] );
+	return 4;
+}
+
+int MOAICCParticleSystem::_setFinishColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNN" )
+	self->mFinishColor[0] = state.GetValue < float >( 2, 0 );
+	self->mFinishColor[1] = state.GetValue < float >( 3, 0 );
+	self->mFinishColor[2] = state.GetValue < float >( 4, 0 );
+	self->mFinishColor[3] = state.GetValue < float >( 5, 1 );
+	return 0;
+}
+
+int	MOAICCParticleSystem::_getFinishColorVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mFinishColorVariance[0] );
+	lua_pushnumber ( state, self->mFinishColorVariance[1] );
+	lua_pushnumber ( state, self->mFinishColorVariance[2] );
+	lua_pushnumber ( state, self->mFinishColorVariance[3] );
+	return 4;
+}
+
+int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNN" )
+	self->mFinishColorVariance[0] = state.GetValue < float >( 2, 0 );
+	self->mFinishColorVariance[1] = state.GetValue < float >( 3, 0 );
+	self->mFinishColorVariance[2] = state.GetValue < float >( 4, 0 );
+	self->mFinishColorVariance[3] = state.GetValue < float >( 5, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mFinishSize = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getFinishParticleSizeVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mFinishSizeVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setFinishParticleSizeVariance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mFinishSizeVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getFrequency ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mEmissionRate );
+	return 1;
+}
+
+int MOAICCParticleSystem::_getGravity ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mGravity[0] );
+	lua_pushnumber ( state, self->mGravity[1] );
+	return 2;
+}
+
+int MOAICCParticleSystem::_setGravity ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
+	self->mGravity[0] = state.GetValue < float >( 2, 0 );
+	self->mGravity[1] = state.GetValue < float >( 3, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mLifespanTerm[0] );
+	lua_pushnumber ( state, self->mLifespanTerm[1] );
+	return 2;
+}
+
+int MOAICCParticleSystem::_getStartRadius ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mMaxRadius );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mMaxRadius = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getStartRadiusVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mMaxRadiusVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mMaxRadiusVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getEndRadius ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mMinRadius );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mMinRadius = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getEndRadiusVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mMinRadiusVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mMinRadiusVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+int MOAICCParticleSystem::_getTotalParticles( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mTotalParticles );
+	
+	return 1;
+}
+
 //----------------------------------------------------------------//
 int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
@@ -79,6 +281,9 @@ int MOAICCParticleSystem::_reset ( lua_State *L ) {
 	self->ResetSystem();
 	return 0;
 }
+
+//----------------------------------------------------------------//
+//----------------------------------------------------------------//
 
 bool MOAICCParticleSystem::AddParticle () {
 	if ( this->IsFull() ) {
