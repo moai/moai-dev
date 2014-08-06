@@ -11,7 +11,7 @@
 
 #include <vector>
 
-#if defined(__QNX__) | defined(__linux__) | defined(__MINGW32__)
+#if defined(__QNX__) | defined(__linux__)
 #include <string.h>
 #endif
 
@@ -55,11 +55,7 @@ public:
 	void clear()
 	{
 		if(mOwnsBuffer)
-		{
 			 mBuffer.clear();
-			// release memory
-			std::vector<float>().swap(mBuffer);
-		}
 	}
 
 	UInt32 size() const

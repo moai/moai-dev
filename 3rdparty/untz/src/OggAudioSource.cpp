@@ -62,8 +62,6 @@ void OggAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
-    incrementPositionVersion();
-
 	int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
@@ -95,11 +93,9 @@ UInt32 OggAudioSource::getBitsPerSample()
 	return 0;
 }
 
-Int64 OggAudioSource::decodeData(float* buffer, UInt32 numFrames, int &version)
+Int64 OggAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
 	RScopedLock l(&mDecodeLock);
-
-    version = getPositionVersion();
 
 	int bitStream;
 	float** data = 0;

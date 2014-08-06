@@ -36,14 +36,14 @@ int MOAIUntzSystem::_getDeviceInfo ( lua_State* L ) {
 // placeholder
 int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 
-	UInt32 options = UNTZ::System::get ()->getOptions ();
-	lua_pushnumber ( L, options );
+	//UInt32 options = UNTZ::System::get ()->getOptions ();
+	//lua_pushnumber ( L, options );
 	
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	getSampleRate
+/**	@name	getSampleRate
 	@text	Return the system's current sample rate.
 	
 	@out	number sampleRate
@@ -73,8 +73,8 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	initialize
-	@text	Initialize the sound system.
+/**	@name	initialize
+	@text	Inititalize the sound system.
 	
 	@opt	number sampleRate		Default value is 44100.
 	@opt	number numFrames		Default value is 8192
@@ -108,8 +108,8 @@ int MOAIUntzSystem::_setInputDevice ( lua_State* L ) {
 int MOAIUntzSystem::_setOptions ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	u32 options = state.GetValue ( 1, DEFAULT_OPTIONS );
-	UNTZ::System::get ()->setOptions ( options );
+	//u32 options = state.GetValue ( 1, DEFAULT_OPTIONS );
+	//UNTZ::System::get ()->_setOptions ( options );
 	
 	return 0;
 }
@@ -126,7 +126,7 @@ int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setSampleRate
+/**	@name	setSampleRate
 	@text	Set the system sample rate.
 	
 	@opt	number sampleRate		Default value is 44100.
@@ -142,7 +142,7 @@ int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setVolume
+/**	@name	setVolume
 	@text	Set the system level volume.
 	
 	@opt	number volume		Valid Range: 0 >= x <= 1.0 (Default value is 1.0)
@@ -158,7 +158,7 @@ int MOAIUntzSystem::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	getVolume
+/**	@name	getVolume
 	@text	Return the system's current volume
 	
 	@out	number volume
@@ -184,10 +184,6 @@ MOAIUntzSystem::MOAIUntzSystem () {
 
 //----------------------------------------------------------------//
 MOAIUntzSystem::~MOAIUntzSystem () {
-	
-	if ( UNTZ::System::get () ) {
-		UNTZ::System::get ()->shutdown ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -196,12 +192,12 @@ void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		//{ "getDeviceCount",			_getDeviceCount },
 		//{ "getDeviceInfo",			_getDeviceInfo },
-		{ "getOptions",				_getOptions },
+		//{ "getOptions",				_getOptions },
 		{ "getSampleRate",			_getSampleRate },
 		//{ "getSupportedFormats",	_getSupportedFormats },
 		{ "initialize",				_initialize },
 		//{ "setInputDevice",			_setInputDevice },
-		{ "setOptions",				_setOptions },
+		//{ "setOptions",				_setOptions },
 		//{ "setOutputDevice",		_setOutputDevice },
 		{ "setSampleRate",			_setSampleRate },
 		{ "setVolume",				_setVolume },
@@ -212,9 +208,6 @@ void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 	
 	state.SetField(-1,"RECORDABLE", (u32) UNTZ::RECORDABLE ); // bitwise
-	state.SetField(-1, "MIX_WITH_OTHERS", (u32) UNTZ::MIX_WITH_OTHERS ); // bitwise
-	state.SetField(-1, "USE_VPIO",		  (u32) UNTZ::USE_VPIO ); // bitwise
-	state.SetField(-1, "VOICECHAT_MODE",  (u32) UNTZ::VOICECHAT_MODE ); // bitwise
 }
 
 //----------------------------------------------------------------//

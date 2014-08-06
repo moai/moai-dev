@@ -120,48 +120,22 @@ void ExtAudioFileAudioSource::close()
 	RPRINT("done closing.\n");
 }
  
-
-void ExtAudioFileAudioSource::flush()
-{
-	RPRINT("clearing...\n");
-
-    BufferedAudioSource::flush();
-	doneDecoding();
-
-	RPRINT("done clearing.\n");
-}
-
 void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
-    incrementPositionVersion();
-	
-	// Flush current buffer
-	doneDecoding();
-
-	RPRINT("setting decoder position %d\n", startFrame);
+	RPRINT("setting decoder position\n");
     ExtAudioFileSeek(mAudioFile, startFrame);  
 	if(startFrame < getLength() * getSampleRate())
-	{
 		mEOF = false;
 }
-}
 
-Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &version)
+Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
-    version = getPositionVersion();
-	
 	RPRINT("decoding data\n");
     UInt32 numChannels = getNumChannels();
     OSStatus err = noErr;
     
-	if(mEOF)
-	{
-		RPRINT("already reached end\n");
-		return 0;
-	}
-
     mReadBuffer.resize(numChannels * numFrames);
     
     // Set up the buffers
@@ -182,7 +156,6 @@ Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &
     if(err || framesRead == 0)
     {
         mEOF = true;
-		doneDecoding();
 		RPRINT("done decoding data\n");
         return 0;
     }
@@ -192,7 +165,7 @@ Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &
     {
         float *pTemp = &mReadBuffer[j * numFrames];
         float *pOut = &buffer[j];
-        for(UInt32 i = 0; i < framesRead; i++)
+        for(UInt32 i = j; i < framesRead; i++)
         {
             *pOut = *pTemp++;
             pOut += numChannels;

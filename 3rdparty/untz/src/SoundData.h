@@ -11,7 +11,6 @@
 
 #include "Untz.h"
 #include "AudioSource.h"
-#include <threading/Threading.h>
 
 namespace UNTZ
 {
@@ -35,7 +34,6 @@ namespace UNTZ
 			mPlayState == kPlayStateStopped;
 		};
 
-		RCriticalSection& getLock() { return mLock; }
 		PlayState getState() const { return mPlayState; }
 		void setState(PlayState state) { mPlayState = state; }
 		AudioSourcePtr getSource() const { return mpSource; }
@@ -46,7 +44,6 @@ namespace UNTZ
 	protected:
 		AudioSourcePtr mpSource;
 		PlayState mPlayState;
-		RCriticalSection mLock;
 	};
 };
 

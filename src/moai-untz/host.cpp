@@ -5,7 +5,6 @@
 #include <moai-untz/MOAIUntzSampleBuffer.h>
 #include <moai-untz/MOAIUntzSound.h>
 #include <moai-untz/MOAIUntzSystem.h>
-#include <moai-untz/MOAIUntzSoundQueue.h>
 #include <UntzSound.h>
 
 //================================================================//
@@ -28,7 +27,6 @@ void AKUUntzContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIUntzSampleBuffer )
 	REGISTER_LUA_CLASS ( MOAIUntzSound )
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )
-	REGISTER_LUA_CLASS ( MOAIUntzSoundQueue )
 }
 
 //----------------------------------------------------------------//
@@ -41,3 +39,4 @@ void AKUUntzPause ( bool pause ) {
 		MOAIUntzSystem::Get ().Resume ();
 	}
 }
+

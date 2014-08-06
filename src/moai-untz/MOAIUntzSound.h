@@ -13,7 +13,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIUntzSound
 //================================================================//
-/**	@lua	MOAIUntzSound
+/**	@name	MOAIUntzSound
 	@text	Untz sound object.
 	
 	@attr	ATTR_VOLUME
@@ -21,8 +21,6 @@ class MOAIDataBuffer;
 class MOAIUntzSound :
 	public virtual MOAINode {
 private:
-
-	friend class MOAIUntzSoundQueue;
 
 	UNTZ::Sound* mSound;
 	STLString mFilename;
@@ -40,7 +38,6 @@ private:
 	static int		_moveVolume			( lua_State* L );
 	static int		_pause				( lua_State* L );
 	static int		_play				( lua_State* L );
-	static int		_release			( lua_State* L );	
 	static int		_seekVolume			( lua_State* L );
 	static int		_setLooping			( lua_State* L );
 	static int		_setLoopPoints		( lua_State* L );

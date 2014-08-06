@@ -21,14 +21,13 @@ namespace UNTZ
 	{
 	public:
 		SystemData() : mError(0), mIsActive(true) {};
-		virtual ~SystemData() {}
 
 		virtual UInt32 getNumFrames() = 0;
 		virtual UInt32 getNumOutputChannels() = 0;
 		bool getError() const { return mError; }
 		void setError(bool error) { mError = error; }
-		virtual void setActive(bool active) { mIsActive = active; }
-		virtual bool isActive() const { return mIsActive; }
+		void setActive(bool active) { mIsActive = active; }
+		bool isActive() const { return mIsActive; }
 
 		UNTZ::Sound* getSound(const RString& url)
 		{

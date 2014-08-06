@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIUntzSampleBuffer
 //================================================================//
-/**	@lua	MOAIUntzSampleBuffer
+/**	@name	MOAIUntzSampleBuffer
 	@text	Uncompressed WAV data held in memory. May be shared between
 			multiple MOAIUntzSound objects.
 */

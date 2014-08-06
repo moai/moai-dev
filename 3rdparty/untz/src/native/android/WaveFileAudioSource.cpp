@@ -11,7 +11,7 @@ WaveFileAudioSource::WaveFileAudioSource()
 
 WaveFileAudioSource::~WaveFileAudioSource()
 {
-	close();
+	mWaveFile.close();
 }
 
 double WaveFileAudioSource::getSampleRate()
@@ -59,31 +59,11 @@ bool WaveFileAudioSource::init(const RString& path, bool loadIntoMemory)
 
 void WaveFileAudioSource::close()
 {
-    BufferedAudioSource::close();
-    
 	mWaveFile.close();
 }
 
-void WaveFileAudioSource::doneDecoding()
+Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
-	RPRINT("freeing decoder memory.\n");
-	
-	mRawBuffer.clear();
-	std::vector<UInt8>().swap(mRawBuffer);
-}
-
-void WaveFileAudioSource::flush()
-{
-    BufferedAudioSource::flush();
-	doneDecoding();
-}
-
-Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &version)
-{
-	RScopedLock l(&mDecodeLock);
-
-    version = getPositionVersion();
-	
 #if defined(__ANDROID__)
     char str[512];
 #endif
@@ -161,7 +141,6 @@ Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &vers
 		printf("EOF reached\n", readFrames);
 #endif
 		mEOF = true;
-		doneDecoding();
 	}
 
 	return readFrames;
@@ -169,13 +148,6 @@ Int64 WaveFileAudioSource::decodeData(float* buffer, UInt32 numFrames, int &vers
 
 void WaveFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
-	RScopedLock l(&mDecodeLock);
-
-    incrementPositionVersion();
-	
-	// Flush current buffer
-	doneDecoding();
-
 	mWaveFile.setPosition(startFrame * mWaveFile.getHeader().bytesPerFrame);
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
