@@ -207,6 +207,333 @@ int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
 	return 0;
 }
 
+int MOAICCParticleSystem::_getParticleLifespan ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mLifespan );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mLifespan = state.GetValue < float >( 2, 0 );
+	
+	self->InitializeEmitter();
+	
+	return 0;
+}
+
+int MOAICCParticleSystem::_getParticleLifespanVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mLifespanVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setParticleLifespanVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mLifespanVariance = state.GetValue < float >( 2, 0 );
+	
+	self->InitializeEmitter();
+	
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRadialAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRadialAcceleration );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRadialAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRadialAcceleration = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRadialAccelVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRadialAccelVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRadialAccelVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRadialAccelVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRect ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, -self->mSourcePosVariance[0] );
+	lua_pushnumber ( state, -self->mSourcePosVariance[1] );
+	lua_pushnumber ( state, self->mSourcePosVariance[0] );
+	lua_pushnumber ( state, self->mSourcePosVariance[1] );
+	return 4;
+}
+
+int MOAICCParticleSystem::_getRotatePerSecond ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotPerSecond );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotPerSecond = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotatePerSecondVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotPerSecondVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotatePerSecondVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotPerSecondVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationEnd ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotEnd );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationEnd ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotEnd = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationEndVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotEndVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationEndVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotEndVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationStart ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotStart );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationStart ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotStart = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationStartVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotStartVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationStartVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotStartVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getSourcePosition ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSourcePos[0] );
+	lua_pushnumber ( state, self->mSourcePos[1] );
+	return 2;
+}
+
+int MOAICCParticleSystem::_setSourcePosition ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
+	self->mSourcePos[0] = state.GetValue < float >( 2, 0 );
+	self->mSourcePos[1] = state.GetValue < float >( 3, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getSourcePositionVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSourcePosVariance[0] );
+	lua_pushnumber ( state, self->mSourcePosVariance[1] );
+	return 2;
+}
+
+int MOAICCParticleSystem::_setSourcePositionVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
+	self->mSourcePosVariance[0] = state.GetValue < float >( 2, 0 );
+	self->mSourcePosVariance[1] = state.GetValue < float >( 3, 0 );
+	return 0;
+}
+
+
+int MOAICCParticleSystem::_getSpeed ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSpeed );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setSpeed ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mSpeed = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getSpeedVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSpeedVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setSpeedVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mSpeedVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getStartColor ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mStartColor[0] );
+	lua_pushnumber ( state, self->mStartColor[1] );
+	lua_pushnumber ( state, self->mStartColor[2] );
+	lua_pushnumber ( state, self->mStartColor[3] );
+	return 4;
+}
+
+int MOAICCParticleSystem::_setStartColor ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNNN" )
+	self->mStartColor[0] = state.GetValue < float >( 2, 0 );
+	self->mStartColor[1] = state.GetValue < float >( 3, 0 );
+	self->mStartColor[2] = state.GetValue < float >( 4, 0 );
+	self->mStartColor[3] = state.GetValue < float >( 5, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getStartColorVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mStartColorVariance[0] );
+	lua_pushnumber ( state, self->mStartColorVariance[1] );
+	lua_pushnumber ( state, self->mStartColorVariance[2] );
+	lua_pushnumber ( state, self->mStartColorVariance[3] );
+	return 4;
+}
+
+int MOAICCParticleSystem::_setStartColorVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNNN" )
+	self->mStartColorVariance[0] = state.GetValue < float >( 2, 0 );
+	self->mStartColorVariance[1] = state.GetValue < float >( 3, 0 );
+	self->mStartColorVariance[2] = state.GetValue < float >( 4, 0 );
+	self->mStartColorVariance[3] = state.GetValue < float >( 5, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getStartParticleSize ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mStartSize );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setStartParticleSize ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mStartSize = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getStartParticleSizeVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mStartSizeVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setStartParticleSizeVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mStartSizeVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getTangentalAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mTangentialAcceleration );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setTangentalAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mTangentialAcceleration = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getTangentalAccelerationVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mTangentialAccelVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setTangentalAccelerationVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mTangentialAccelVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getGravityVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mGravityVariance[0] );
+	lua_pushnumber ( state, self->mGravityVariance[1] );
+	return 2;
+}
+
+int MOAICCParticleSystem::_setGravityVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
+	self->mGravityVariance[0] = state.GetValue < float >( 2, 0 );
+	self->mGravityVariance[1] = state.GetValue < float >( 3, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationalAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotationalAcceleration );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationalAcceleration ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotationalAcceleration = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+int MOAICCParticleSystem::_getRotationalAccelerationVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mRotationalAccelVariance );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setRotationalAccelerationVariance ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mRotationalAccelVariance = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTextureName
+	@text	Return the texture name associated with plugin.
+ 
+	@in		MOAIParticlePlugin self
+	@out	string textureName
+ */
+
+int MOAICCParticleSystem::_getTextureName ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	
+	lua_pushstring( state, self->mTextureName);
+	
+	return 1;
+}
+
+
 
 //----------------------------------------------------------------//
 int MOAICCParticleSystem::_getTotalParticles( lua_State *L ) {
@@ -226,6 +553,8 @@ int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 	
 	return 0;
 }
+
+
 
 
 
@@ -812,10 +1141,92 @@ void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 	MOAIProp::RegisterLuaFuncs ( state );
 	
+	
+	// TODO: Format this table so the columns line up.
 	luaL_Reg regTable [] = {
+		{ "getAngle", _getAngle },
+		{ "setAngle", _setAngle },
+		{ "getAngleVariance", _getAngleVariance },
+		{ "setAngleVariance", _setAngleVariance },
+		{ "getBlendMode", _getBlendMode },
+		{ "setBlendMode", _setBlendMode },
+		{ "getDuration", _getDuration},
+		{ "setDuration", _setDuration},
+		{ "getEmitterType", _getEmitterType},
+		{ "setEmitterType", _setEmitterType},
+		{ "getFinishColor", _getFinishColor},
+		{ "setFinishColor", _setFinishColor},
+		{ "getFinishColorVariance", _getFinishColorVariance},
+		{ "setFinishColorVariance", _setFinishColorVariance},
+		{ "getFinishParticleSize", _getFinishParticleSize},
+		{ "setFinishParticleSize", _setFinishParticleSize},
+		{ "getFinishParticleSizeVariance", _getFinishParticleSizeVariance},
+		{ "setFinishParticleSizeVariance", _setFinishParticleSizeVariance},
+		{ "getFrequency", _getFrequency},
+		{ "getGravity", _getGravity},
+		{ "setGravity", _setGravity},
+		{ "getLifespan", _getLifespan},
+		{ "getStartRadius", _getStartRadius},
+		{ "setStartRadius", _setStartRadius},
+		{ "getStartRadiusVariance", _getStartRadiusVariance},
+		{ "setStartRadiusVariance", _setStartRadiusVariance},
+		{ "getEndRadius", _getEndRadius},
+		{ "setEndRadius", _setEndRadius},
+		{ "getEndRadiusVariance", _getEndRadiusVariance},
+		{ "setEndRadiusVariance", _setEndRadiusVariance},
+		{ "getParticleLifespan", _getParticleLifespan},
+		{ "setParticleLifespan", _setParticleLifespan},
+		{ "getParticleLifespanVariance", _getParticleLifespanVariance},
+		{ "setParticleLifespanVariance", _setParticleLifespanVariance},
+		{ "getRadialAcceleration", _getRadialAcceleration},
+		{ "setRadialAcceleration", _setRadialAcceleration},
+		{ "getRadialAccelVariance", _getRadialAccelVariance},
+		{ "setRadialAccelVariance", _setRadialAccelVariance},
+		{ "getRect", _getRect},
+		{ "getRotatePerSecond", _getRotatePerSecond},
+		{ "setRotatePerSecond", _setRotatePerSecond},
+		{ "getRotatePerSecondVariance", _getRotatePerSecondVariance},
+		{ "setRotatePerSecondVariance", _setRotatePerSecondVariance},
+		{ "getRotationEnd", _getRotationEnd},
+		{ "setRotationEnd", _setRotationEnd},
+		{ "getRotationEndVariance", _getRotationEndVariance},
+		{ "setRotationEndVariance", _setRotationEndVariance},
+		{ "getRotationStart", _getRotationStart},
+		{ "setRotationStart", _setRotationStart},
+		{ "getRotationStartVariance", _getRotationStartVariance},
+		{ "setRotationStartVariance", _setRotationStartVariance},
+		{ "getSourcePosition", _getSourcePosition},
+		{ "setSourcePosition", _setSourcePosition},
+		{ "getSourcePositionVariance", _getSourcePositionVariance},
+		{ "setSourcePositionVariance", _setSourcePositionVariance},
+		{ "getSpeed", _getSpeed},
+		{ "setSpeed", _setSpeed},
+		{ "getSpeedVariance", _getSpeedVariance},
+		{ "setSpeedVariance", _setSpeedVariance},
+		{ "getStartColor", _getStartColor},
+		{ "setStartColor", _setStartColor},
+		{ "getStartColorVariance", _getStartColorVariance},
+		{ "setStartColorVariance", _setStartColorVariance},
+		{ "getStartParticleSize", _getStartParticleSize},
+		{ "setStartParticleSize", _setStartParticleSize},
+		{ "getStartParticleSizeVariance", _getStartParticleSizeVariance},
+		{ "setStartParticleSizeVariance", _setStartParticleSizeVariance},
+		{ "getTangentalAcceleration", _getTangentalAcceleration},
+		{ "setTangentalAcceleration", _setTangentalAcceleration},
+		{ "getTangentalAccelerationVariance", _getTangentalAccelerationVariance},
+		{ "setTangentalAccelerationVariance", _setTangentalAccelerationVariance},
+		{ "getGravityVariance", _getGravityVariance},
+		{ "setGravityVariance", _setGravityVariance},
+		{ "getRotationalAcceleration", _getRotationalAcceleration},
+		{ "setRotationalAcceleration", _setRotationalAcceleration},
+		{ "getRotationalAccelerationVariance", _getRotationalAccelerationVariance},
+		{ "setRotationalAccelerationVariance", _setRotationalAccelerationVariance},
+		
+		{ "getTextureName", _getTextureName },
 		{ "initializeProperties",			_initializeProperties },
 		{ "load",							_load },
 		{ "reset",							_reset },
+		{ "getTotalParticles",				_getTotalParticles },
 		{ "setTotalParticles",				_setTotalParticles },
 		{ "start",							_start },
 		{ "stop",							_stop },

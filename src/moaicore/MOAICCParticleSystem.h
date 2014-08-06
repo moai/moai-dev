@@ -106,7 +106,6 @@ private:
 	// true if the particle system is active
 	bool mActive;
 	
-	// TODO: add methods for accessing properties
 	static int		_getAngle							( lua_State* L );
 	static int		_setAngle							( lua_State* L );
 	static int		_getAngleVariance					( lua_State* L );
