@@ -130,12 +130,12 @@
 
 // text stuff here for now
 #include <moai-sim/MOAIBitmapFontReader.h>
+#include <moai-sim/MOAIDynamicGlyphCache.h>
+#include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFreeTypeFontReader.h>
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIGlyphCache.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
-#include <moai-sim/MOAIGlyphCachePage.h>
 #include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>

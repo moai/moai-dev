@@ -73,7 +73,9 @@ private:
 	typedef STLMap < float, MOAIBitmapFontPage >::iterator PagesIt;
 	STLMap < float, MOAIBitmapFontPage > mPages;
 	
-	MOAIBitmapFontPage* mCurrentPage;
+	MOAIBitmapFontPage*		mCurrentPage;
+	float					mCurrentPageSize;
+	MOAIBitmapGlyph*		mCurrentGlyph;
 
 	//----------------------------------------------------------------//
 	static int		_loadPage					( lua_State* L );
@@ -86,19 +88,17 @@ public:
 	DECL_LUA_FACTORY ( MOAIBitmapFontReader )
 
 	//----------------------------------------------------------------//
-	void			CloseFont					();
-	void			GetFaceMetrics				( MOAIGlyphSet& glyphSet );
-	bool			GetKernVec					( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec );
-	bool			HasKerning					();
+	int				GetFaceMetrics				( MOAIFontFaceMetrics& faceMetrics );
+	int				GetGlyphMetrics				( MOAIGlyphMetrics& glyphMetrics );
 					MOAIBitmapFontReader		();
 					~MOAIBitmapFontReader		();
-	void			OpenFont					( MOAIFont& font );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			RenderGlyph					( MOAIFont& font, MOAIGlyph& glyph );
+	int				RenderGlyph					( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc );
+	int				SelectFace					( float size );
+	int				SelectGlyph					( u32 c );
 	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetFaceSize					( float size );
 };
 
 #endif

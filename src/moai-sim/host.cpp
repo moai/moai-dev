@@ -120,7 +120,7 @@ void AKUSimContextInitialize () {
 	
 	// text stuff here for now
 	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIGlyphCache )
+	REGISTER_LUA_CLASS ( MOAIDynamicGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAITextBundle )

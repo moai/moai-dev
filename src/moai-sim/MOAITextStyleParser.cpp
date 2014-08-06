@@ -92,9 +92,9 @@ u32 MOAITextStyleParser::PackColor ( const u8* color, u32 colorSize ) {
 		}
 		case COLOR_RGB_16: {
 			rgba = ZLColor::PackRGBA (
-				( color [ 0 ] << 4 ) + color [ 0 ],
-				( color [ 1 ] << 4 ) + color [ 1 ],
-				( color [ 2 ] << 4 ) + color [ 2 ],
+				( u8 )( color [ 0 ] << 4 ) + color [ 0 ],
+				( u8 )( color [ 1 ] << 4 ) + color [ 1 ],
+				( u8 )( color [ 2 ] << 4 ) + color [ 2 ],
 				0xff
 			);
 			break;
