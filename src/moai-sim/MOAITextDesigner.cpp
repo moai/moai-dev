@@ -25,11 +25,11 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
+void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
 
 	MOAITextDesignParser parser;
 	
-	parser.BuildLayout ( layout, styleMap, *this, str, idx, offset );
+	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx, offset );
 	layout.ApplyHighlights ();
 	
 	if ( more ) {
