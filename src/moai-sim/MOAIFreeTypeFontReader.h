@@ -24,28 +24,40 @@ class MOAIFreeTypeFontReader :
 	public MOAIFontReader {
 private:
 
+	u32				mGlyphCode;
+	float			mFaceSize;
+
 	FT_Library		mLibrary;
 	FT_Face			mFace;
 	float			mFaceHeight;
+
+	bool			mAntiAlias;
+	ZLColorVec		mPenColor;
+
+	//----------------------------------------------------------------//
+	static int		_enableAntiAliasing			( lua_State* L );
+	static int		_setPenColor				( lua_State* L );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFreeTypeFontReader )
 
 	//----------------------------------------------------------------//
-	void			CloseFont					();
-	void			GetFaceMetrics				( MOAIGlyphSet& glyphSet );
-	bool			GetKernVec					( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec );
+	int				CloseFontFile				();
+	int				GetFaceMetrics				( MOAIFontFaceMetrics& faceMetrics );
+	int				GetGlyphMetrics				( MOAIGlyphMetrics& glyphMetrics );
+	int				GetKernVec					( u32 c, MOAIKernVec& kernVec );
 	bool			HasKerning					();
 					MOAIFreeTypeFontReader		();
 					~MOAIFreeTypeFontReader		();
-	void			OpenFont					( MOAIFont& font );
+	int				OpenFontFile				( cc8* filename );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			RenderGlyph					( MOAIFont& font, MOAIGlyph& glyph );
+	int				RenderGlyph					( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc );
+	int				SelectFace					( float size );
+	int				SelectGlyph					( u32 c );
 	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetFaceSize					( float size );
 };
 
 #endif

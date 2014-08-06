@@ -6,6 +6,7 @@
 
 class MOAITextLayout;
 class MOAITextStyle;
+class MOAITextStyleCache;
 class MOAITextStyleMap;
 class MOAITextStyleSpan;
 
@@ -78,7 +79,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void		ClearCurves					();
-	void		Layout						( MOAITextLayout& layout, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx );
+	void		Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx );
 	void		Init						( const MOAITextDesigner& designer );
 				MOAITextDesigner			();
 				~MOAITextDesigner			();

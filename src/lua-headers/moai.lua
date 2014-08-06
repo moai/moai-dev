@@ -234,7 +234,7 @@ if MOAIFreeTypeFontReader then
 			
 			function class.new ()
 				local self = new ()
-				superInterface.setCache ( self, MOAIGlyphCache.new ())
+				superInterface.setCache ( self, MOAIDynamicGlyphCache.new ())
 				superInterface.setReader ( self, MOAIFreeTypeFontReader.new ())
 				return self
 			end

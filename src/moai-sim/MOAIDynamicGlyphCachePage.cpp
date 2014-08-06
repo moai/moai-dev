@@ -3,26 +3,29 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIFont.h>
+#include <moai-sim/MOAIDynamicGlyphCache.h>
+#include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAIGlyph.h>
-#include <moai-sim/MOAIGlyphCachePage.h>
 #include <moai-sim/MOAIImageTexture.h>
 
 #define MAX_TEXTURE_SIZE 1024
 
 //================================================================//
-// MOAIGlyphCachePage
+// MOAIDynamicGlyphCachePage
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
+void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOAIFont& font ) {
 	
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
-		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, owner.mColorFormat, ZLPixel::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();
+		
+		owner.LuaRetain ( this->mImageTexture );
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
 		
@@ -34,10 +37,10 @@ void MOAIGlyphCachePage::AffirmCanvas ( MOAIFont& font ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIGlyph& glyph ) {
+MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDynamicGlyphCache& owner, MOAIFont& font, MOAIGlyph& glyph ) {
 	
-	u32 width = ( u32 )glyph.mWidth + 2;
-	u32 height = ( u32 )glyph.mHeight + 2;
+	u32 width = ( u32 )glyph.mWidth + ( owner.mPadding.mXMax - owner.mPadding.mXMin );
+	u32 height = ( u32 )glyph.mHeight + ( owner.mPadding.mYMax - owner.mPadding.mYMin );
 	
 	RowSpan* rowIt = this->mRows.mHead;
 	RowSpan* bestRowIt = 0;
@@ -89,15 +92,15 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIFont& font, MOAIG
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc ( glyphSpan->mBase, bestRowIt->mBase );
+		glyph.SetSourceLoc ( glyphSpan->mBase - owner.mPadding.mXMin, bestRowIt->mBase - owner.mPadding.mYMin);
 	}
 	
-	this->AffirmCanvas ( font );
+	this->AffirmCanvas ( owner, font );
 	return glyphSpan;
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCachePage::RowSpan* MOAIGlyphCachePage::AllocRow ( u32 height ) {
+MOAIDynamicGlyphCachePage::RowSpan* MOAIDynamicGlyphCachePage::AllocRow ( u32 height ) {
 
 	RowSpan* rowIt = this->mRows.Alloc ( height );
 		
@@ -111,16 +114,17 @@ MOAIGlyphCachePage::RowSpan* MOAIGlyphCachePage::AllocRow ( u32 height ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCachePage::Clear () {
+void MOAIDynamicGlyphCachePage::Clear ( MOAIDynamicGlyphCache& owner ) {
 
 	if ( this->mImageTexture ) {
-		delete this->mImageTexture;
+		owner.LuaRelease ( this->mImageTexture );
+		//delete this->mImageTexture;
 		this->mImageTexture = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIGlyphCachePage::ExpandToNextPowerofTwo () {
+bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 
 	//u32 maxTextureSize = MOAIGfxDevice::Get ().GetMaxTextureSize ();
 	u32 maxTextureSize = MAX_TEXTURE_SIZE;
@@ -133,14 +137,14 @@ bool MOAIGlyphCachePage::ExpandToNextPowerofTwo () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCachePage::MOAIGlyphCachePage () :
+MOAIDynamicGlyphCachePage::MOAIDynamicGlyphCachePage () :
 	mImageTexture ( 0 ),
-	mColorFormat ( ZLColor::A_8 ),
+	//mColorFormat ( ZLColor::A_8 ),
 	mThreshold ( 0.8f ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCachePage::~MOAIGlyphCachePage () {
+MOAIDynamicGlyphCachePage::~MOAIDynamicGlyphCachePage () {
 
-	this->Clear ();
+	assert ( !this->mImageTexture ); // call Clear () w/ owner
 }
