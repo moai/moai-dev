@@ -87,6 +87,44 @@ int MOAITextStyle::_getFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getOutlineColor
+	@text	Gets the outline color of the style.
+
+	@in		MOAITextStyle self
+	@out	number r
+	@out	number g
+	@out	number b
+	@out	number a
+ */
+int	MOAITextStyle::_getOutlineColor	( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	
+	ZLColorVec color = ZLColor::Set ( self->mOutlineColor );
+	
+	lua_pushnumber ( state, color.mR );
+	lua_pushnumber ( state, color.mG );
+	lua_pushnumber ( state, color.mB );
+	lua_pushnumber ( state, color.mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getOutlineWidth
+	@text	Gets the outline width of the style.
+
+	@in		MOAITextStyle self
+	@out	number outlineWidth
+ */
+int	MOAITextStyle::_getOutlineWidth	( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	
+	lua_pushnumber ( state, self->mOutlineWidth );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getScale
 	@text	Gets the scale of the style.
 	
@@ -293,6 +331,8 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getColor",				_getColor },
 		{ "getFont",				_getFont },
+		{ "getOutlineColor",		_getOutlineColor },
+		{ "getOutlineWidth",		_getOutlineWidth },
 		{ "getScale",				_getScale },
 		{ "getSize",				_getSize },
 		{ "setColor",				_setColor },

@@ -53,6 +53,8 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getColor				( lua_State* L );
 	static int		_getFont				( lua_State* L );
+	static int		_getOutlineColor		( lua_State* L );
+	static int		_getOutlineWidth		( lua_State* L );
 	static int		_getScale				( lua_State* L );
 	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
