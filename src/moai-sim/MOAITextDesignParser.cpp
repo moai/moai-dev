@@ -9,6 +9,7 @@
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
+#include <moai-sim/MOAITextStyleCache.h>
 #include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
@@ -376,11 +377,12 @@ void MOAITextDesignParser::BuildLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset ) {
+void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset ) {
 	
 	if ( styleMap.CountSpans () == 0 ) return;
 	
 	this->mLayout = &layout;
+	this->mStyleCache = &styleCache;
 	this->mStyleMap = &styleMap;
 	this->mDesigner = &designer;
 	
@@ -429,7 +431,11 @@ float MOAITextDesignParser::GetLayoutHeight () {
 }
 
 //----------------------------------------------------------------//
-MOAITextDesignParser::MOAITextDesignParser () {
+MOAITextDesignParser::MOAITextDesignParser () :
+	mDesigner ( 0 ),
+	mLayout ( 0 ),
+	mStyleCache ( 0 ),
+	mStyleMap ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -473,17 +479,27 @@ u32 MOAITextDesignParser::NextChar () {
 	
 		if ( newSpan ) {
 		
+			MOAITextStyle* defaultStyle = this->mStyleCache->GetStyle ();
+			MOAIFont* defaultFont = defaultStyle ? defaultStyle->mFont : 0;
+		
 			if ( this->mIdx < this->mStyleSpan->mBase ) {
 				this->mIdx = this->mStyleSpan->mBase;
 			}
 		
 			this->mStyle = this->mStyleSpan->mStyle;
-			assert ( this->mStyle );
+			this->mStyle = this->mStyle ? this->mStyle : defaultStyle;
+			if ( !this->mStyle ) return 0; // TODO: report error
 			
 			MOAIFont* font = this->mStyle->mFont;
-			assert ( font );
+			font = font ? font : defaultFont;
+			if ( !font ) return 0; // TODO: report error
 			
 			this->mDeck = font->GetGlyphSet ( this->mStyle->mSize );
+			if ( !this->mDeck && defaultFont ) {
+				this->mDeck = defaultFont->GetGlyphSet ( this->mStyle->mSize );
+			}
+			if ( !this->mDeck ) return 0; // TODO: report error
+			
 			this->mDeckScale = this->mDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mDeck->GetSize () : 1.0f;
 		}
 		

@@ -5,7 +5,7 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIBitmapFontReader.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImageTexture.h>
 
 //================================================================//
@@ -203,33 +203,37 @@ int MOAIBitmapFontReader::_loadPage ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::CloseFont () {
+int MOAIBitmapFontReader::GetFaceMetrics ( MOAIFontFaceMetrics& faceMetrics  ) {
+
+	if ( !this->mCurrentPage ) return ERROR;
+
+	faceMetrics.mAscent = ( float )this->mCurrentPage->mBase;
+	faceMetrics.mHeight = ( float )this->mCurrentPage->mHeight;
+	
+	return OK;
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::GetFaceMetrics ( MOAIGlyphSet& glyphSet ) {
+int MOAIBitmapFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 
-	assert ( this->mCurrentPage );
-
-	glyphSet.SetAscent (( float )this->mCurrentPage->mBase );
-	glyphSet.SetHeight (( float )this->mCurrentPage->mHeight );
-}
-
-//----------------------------------------------------------------//
-bool MOAIBitmapFontReader::GetKernVec ( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec ) {
-	UNUSED ( glyph0 );
-	UNUSED ( glyph1 );
-
-	kernVec.mX = 0.0f;
-	kernVec.mY = 0.0f;
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIBitmapFontReader::HasKerning () {
-
-	return false;
+	if ( !this->mCurrentGlyph ) return ERROR;
+	
+	MOAIBitmapGlyph& bitmapGlyph = *this->mCurrentGlyph;
+	
+	int width = bitmapGlyph.mSrcRect.Width ();
+	int height = bitmapGlyph.mSrcRect.Height ();
+	
+	glyphMetrics.mWidth = ( float )bitmapGlyph.mSrcRect.Width ();
+	glyphMetrics.mHeight = ( float )bitmapGlyph.mSrcRect.Height ();
+	glyphMetrics.mAdvanceX = glyphMetrics.mWidth;
+	glyphMetrics.mBearingX = 0.0f;
+	glyphMetrics.mBearingY = ( float )bitmapGlyph.mBase;
+	
+	if ( bitmapGlyph.mIsWhitespace ) {
+		glyphMetrics.mWidth = 0.0f;
+	}
+	
+	return OK;
 }
 
 //----------------------------------------------------------------//
@@ -241,7 +245,9 @@ void MOAIBitmapFontReader::LoadPage ( cc8* filename, float size, cc8* charCodes 
 
 //----------------------------------------------------------------//
 MOAIBitmapFontReader::MOAIBitmapFontReader () :
-	mCurrentPage ( 0 ) {
+	mCurrentPage ( 0 ),
+	mCurrentPageSize ( 0.0f ),
+	mCurrentGlyph ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFontReader )
@@ -250,11 +256,6 @@ MOAIBitmapFontReader::MOAIBitmapFontReader () :
 
 //----------------------------------------------------------------//
 MOAIBitmapFontReader::~MOAIBitmapFontReader () {
-}
-
-//----------------------------------------------------------------//
-void MOAIBitmapFontReader::OpenFont ( MOAIFont& font ) {
-	UNUSED ( font );
 }
 
 //----------------------------------------------------------------//
@@ -275,68 +276,65 @@ void MOAIBitmapFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
+int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
+	UNUSED ( blendFunc );
 
-	if ( !this->mCurrentPage ) return;
+	if ( !this->mCurrentGlyph ) return ERROR;
+	
+	MOAIBitmapGlyph& bitmapGlyph = *this->mCurrentGlyph;
 
-	MOAIGlyphCacheBase* glyphCache = font.GetCache ();
-	bool useCache = glyphCache && glyphCache->IsDynamic ();
+	ZLIntRect destRect;
+	destRect.mXMin = ( int )x;
+	destRect.mYMin = ( int )( y -= bitmapGlyph.mBase );
+	destRect.mXMax = destRect.mXMin + ( int )bitmapGlyph.mSrcRect.Width ();
+	destRect.mYMax = destRect.mYMin + ( int )bitmapGlyph.mSrcRect.Height ();
+	
+	y -= bitmapGlyph.mBase;
+	
+	image.CopyRect (
+		this->mCurrentPage->mImage,
+		bitmapGlyph.mSrcRect,
+		destRect,
+		MOAIImage::FILTER_LINEAR,
+		blendFunc
+	);
+}
 
-	if ( !this->mCurrentPage->mBitmapGlyphs.contains ( glyph.mCode )) return;
-	MOAIBitmapGlyph& bitmapGlyph = this->mCurrentPage->mBitmapGlyphs [ glyph.mCode ];
+//----------------------------------------------------------------//
+int MOAIBitmapFontReader::SelectFace ( float size ) {
+
+	if ( this->mCurrentPageSize != size ) {
 	
-	int width = bitmapGlyph.mSrcRect.Width ();
-	int height = bitmapGlyph.mSrcRect.Height ();
+		this->mCurrentPage = 0;
+		this->mCurrentGlyph = 0;
 	
-	glyph.mWidth = ( float )width;
-	glyph.mHeight = ( float )height;
-	glyph.mAdvanceX = glyph.mWidth;
-	glyph.mBearingX = 0.0f;
-	glyph.mBearingY = ( float )bitmapGlyph.mBase;
-	
-	if ( bitmapGlyph.mIsWhitespace ) {
-		
-		glyph.mWidth = 0.0f;
-	}
-	else if ( useCache ) {
-	
-		glyphCache->PlaceGlyph ( font, glyph );
-		
-		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );
-		if ( image ) {
-			
-			image->CopyBits (
-				this->mCurrentPage->mImage,
-				bitmapGlyph.mSrcRect.mXMin,
-				bitmapGlyph.mSrcRect.mYMin,
-				glyph.mSrcX,
-				glyph.mSrcY,
-				width,
-				height
-			);
+		if ( this->mPages.contains ( size )) {
+			this->mCurrentPage = &this->mPages [ size ];
+			return OK;
 		}
 	}
+	return ERROR;
+}
+
+//----------------------------------------------------------------//
+int MOAIBitmapFontReader::SelectGlyph ( u32 c ) {
+
+	if ( !this->mCurrentPage ) return ERROR;
+
+	if ( this->mCurrentPage->mBitmapGlyphs.contains ( c )) {
+		this->mCurrentGlyph = &this->mCurrentPage->mBitmapGlyphs [ c ];
+		return OK;
+	}
+	this->mCurrentGlyph = 0;
+	return ERROR;
 }
 
 //----------------------------------------------------------------//
 void MOAIBitmapFontReader::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
+	MOAIFontReader::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIBitmapFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIBitmapFontReader::SetFaceSize ( float size ) {
-
-	if ( this->mPages.contains ( size )) {
-		this->mCurrentPage = &this->mPages [ size ];
-	}
-	else {
-		this->mCurrentPage = 0;
-	}
+	MOAIFontReader::SerializeOut ( state, serializer );
 }

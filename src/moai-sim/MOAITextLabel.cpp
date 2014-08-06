@@ -918,7 +918,7 @@ void MOAITextLabel::RefreshLayout () {
 	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
 
 	ZLVec2D offset ( 0.0f, 0.0f );
-	this->mDesigner.Layout ( this->mLayout, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx );
+	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx );
 }
 
 //----------------------------------------------------------------//

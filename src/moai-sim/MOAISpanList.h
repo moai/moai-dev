@@ -28,6 +28,12 @@ public:
 //================================================================//
 // MOAISpanList
 //================================================================//
+// this is basically a crappy one-dimensional allocator
+// it's used by MOAIDynamicGlyphCachePage to build rows of glyphs
+// could be replaced with something good and more generic
+// like a heap allocator, maybe?
+// in the v1 implementation of dynamic glyph cache we don't do
+// garbage collection or any kind of balancing so hasn't been a big deal
 template < typename TYPE >
 class MOAISpanList {
 public:
