@@ -189,6 +189,7 @@ private:
 	
 	static int		_getTotalParticles					( lua_State* L );
 	static int		_setTotalParticles					( lua_State* L );
+	static int		_getParticleCount					( lua_State* L );
 	
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );

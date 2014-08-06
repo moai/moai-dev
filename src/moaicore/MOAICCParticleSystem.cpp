@@ -49,8 +49,8 @@ int	MOAICCParticleSystem::_getBlendMode( lua_State* L ) {
 
 int MOAICCParticleSystem::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
-	self->mBlendFuncSrc = state.GetValue < float >( 2, 0 );
-	self->mBlendFuncDst = state.GetValue < float >( 3, 0 );
+	self->mBlendFuncSrc = state.GetValue < u32 >( 2, 0 );
+	self->mBlendFuncDst = state.GetValue < u32 >( 3, 0 );
 	return 0;
 }
 
@@ -554,8 +554,12 @@ int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 	return 0;
 }
 
-
-
+//----------------------------------------------------------------//
+int MOAICCParticleSystem::_getParticleCount( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mParticleCount );
+	return 1;
+}
 
 
 //----------------------------------------------------------------//
@@ -1222,7 +1226,8 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "getRotationalAccelerationVariance", _getRotationalAccelerationVariance},
 		{ "setRotationalAccelerationVariance", _setRotationalAccelerationVariance},
 		
-		{ "getTextureName", _getTextureName },
+		{ "getParticleCount",				_getParticleCount },
+		{ "getTextureName",					_getTextureName },
 		{ "initializeProperties",			_initializeProperties },
 		{ "load",							_load },
 		{ "reset",							_reset },
