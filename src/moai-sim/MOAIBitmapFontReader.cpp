@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIBitmapFontReader.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGlyphCache.h>
@@ -140,7 +140,7 @@ void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
 					if ( !frame.Width ()) continue;
 					if ( !frame.Height ()) continue;
 					
-					u32 c = u8_nextchar ( charCodes, &idx );
+					u32 c = moai_u8_nextchar ( charCodes, &idx );
 					if ( c == 0 ) {
 						y = height;
 						break;

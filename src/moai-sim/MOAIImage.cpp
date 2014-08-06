@@ -241,15 +241,45 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	generateOutlineFromSDF
+	@text	Given a rect, and min and max distance values, transform
+			to a binary image where 0 means not on the outline and
+			1 means part of the outline
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@in		number distMin
+	@in		number distMax
+	@out	nil
+ */
+int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
+	
+	ZLIntRect rect = state.GetRect < int >( 2 );
+	float distMin = state.GetValue < float >( 6, 0.46f );
+	float distMax = state.GetValue < float >( 7, 0.499f );
+	float r		= state.GetValue < float >( 8, 1.0f );
+	float g		= state.GetValue < float >( 9, 1.0f );
+	float b		= state.GetValue < float >( 10, 1.0f );
+	float a		= state.GetValue < float >( 11, 1.0f );
+	
+	self->GenerateOutlineFromSDF ( rect, distMin, distMax, r, g, b, a );
+	
+}
+
+//----------------------------------------------------------------//
 /**	@lua	generateSDF
 	@text	Given a rect, creates a signed distance field from it
  
-	 @in	MOAIImage self
-	 @in	number xMin
-	 @in	number yMin
-	 @in	number xMax
-	 @in	number yMax
-	 @out	nil
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
  */
 int MOAIImage::_generateSDF( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
@@ -257,6 +287,30 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 	ZLIntRect rect = state.GetRect <int> ( 2 );
 	
 	self->GenerateSDF ( rect );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	generateSDFDeadReckoning
+	@text	Given a rect, creates a signed distance field from it 
+			using dead reckoning technique
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number threshold default is 256
+	@out	nil
+ */
+int MOAIImage::_generateSDFDeadReckoning( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
+	
+	ZLIntRect rect = state.GetRect <int> ( 2 );
+	u32 threshold = state.GetValue < u32 >( 6, 256 );
+	
+	self->GenerateSDFDeadReckoning ( rect, threshold );
 	
 	return 0;
 }
@@ -1442,6 +1496,32 @@ void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::GenerateOutlineFromSDF ( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a ) {
+	u32 width = rect.Width () + 1;
+	u32 height = rect.Height () + 1;
+	
+	for ( int y = 0; y < height; ++y ) {
+		for ( int x = 0; x < width; ++x ) {
+			u32 color = this->GetColor ( x + rect.mXMin, y + rect.mYMin );
+			ZLColorVec colorVec;
+			colorVec.SetRGBA ( color );
+			
+			if ( colorVec.mA >= distMin && colorVec.mA < distMax ) {
+				colorVec.mR = r;
+				colorVec.mG = g;
+				colorVec.mB = b;
+				colorVec.mA = a;
+			}
+			else {
+				colorVec.mA = 0;
+			}
+			
+			this->SetColor( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA () );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	
 	// Plus one because rect goes to exact end
@@ -1469,7 +1549,7 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 			colorVec.SetRGBA(color);
 			// Points inside get marked with a dx/dy of zero.
 			// Points outside get marked with an infinitely large distance.
-			if ( colorVec.mA != 0.0f ) {
+			if ( colorVec.mA == 0.0f ) {
 				grid1[y][x] = inside;
 				grid2[y][x] = empty;
 			}
@@ -1528,6 +1608,141 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 	delete [] grid2;
 	delete [] gridDistance;
 	
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
+	
+	const float FLT_MAX = 3.40282347E+38F;
+	// Specified in the paper
+	// d1 is horizontal pixel distance, d2 is diagonal pixel distance
+	const int d1 = 3;
+	const int d2 = 4;
+	
+	// Plus one because rect goes to exact end
+	int width = rect.Width () + 1;
+	int height = rect.Height () + 1;
+		
+	//ZLIntVec2D** pixels = new ZLIntVec2D* [height];
+	float** distanceMap = new float* [height];
+	int** binaryMap  = new int* [height];
+	
+	for ( int i = 0; i < height; ++i ) {
+		
+		//pixels[i] = new ZLIntVec2D[width];
+		distanceMap[i] = new float [width];
+		binaryMap[i] = new int [width];
+	}
+	
+	// Init the binary map and distance map
+	for ( int y = 0; y < height; ++y ) {
+		for ( int x = 0; x < width; ++x ) {
+			
+			u32 color = this->GetColor ( x + rect.mXMin, y + rect.mYMin );
+			ZLColorVec colorVec;
+			colorVec.SetRGBA (color);
+			//printf("color: %f, %f, %f, %f\n", colorVec.mR, colorVec.mG, colorVec.mB, colorVec.mA);
+			if ( colorVec.mA > 0.5f ) {
+				binaryMap[y][x] = 1;
+			}
+			else {
+				binaryMap[y][x] = 0;
+			}
+			
+			distanceMap[y][x] = FLT_MAX;
+		}
+	}
+	
+	// Looking for the edge
+	for ( int y = 1; y < height - 1; ++y ) {
+		for ( int x = 1; x < width - 1; ++x ) {
+			
+			if ( binaryMap[y][x - 1] != binaryMap[y][x] ||
+				 binaryMap[y][x + 1] != binaryMap[y][x] ||
+				 binaryMap[y - 1][x] != binaryMap[y][x] ||
+				 binaryMap[y + 1][x] != binaryMap[y][x] ) {
+				distanceMap[y][x] = 0;
+			}
+		}
+	}
+	
+	
+	// Perform first pass
+	for ( int y = 1; y < height - 1; ++y ) {
+		for (int x = 1; x < width - 1; ++x ) {
+			
+			if ( distanceMap[y - 1][x - 1] + d2 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y - 1][x - 1] + d2;
+			
+			if ( distanceMap[y - 1][x] + d1 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y - 1][x] + d1;
+			
+			if ( distanceMap[y - 1][x + 1] + d2 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y - 1][x + 1] + d2;
+			
+			if ( distanceMap[y][x - 1] + d1 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y][x - 1] + d1;
+		}
+	}
+	
+	// Perform second pass
+	for ( int y = height - 2; y > 0; --y ) {
+		for ( int x = width - 2; x > 0; --x ) {
+			
+			if ( distanceMap[y][x + 1] + d1 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y][x + 1] + d1;
+			
+			if ( distanceMap[y + 1][x - 1] + d2 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y + 1][x - 1] + d2;
+			
+			if ( distanceMap[y + 1][x] + d1 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y + 1][x] + d1;
+			
+			if ( distanceMap[y + 1][x + 1] + d2 < distanceMap[y][x])
+				distanceMap[y][x] = distanceMap[y + 1][x + 1] + d2;
+		}
+	}
+	
+	// Indicate inside and outside
+	for ( int y = height - 1; y > 0; --y ) {
+		for ( int x = width - 1; x > 0; --x ) {
+			
+			if (binaryMap[y][x] == 0)
+				distanceMap[y][x] *= -1;
+		}
+	}
+	
+	// Hard coded spread factor for testing, need to pass in!
+	int half = threshold / 2;
+	
+	// Have to scale the distance value from minDis - maxDis to 0 - 1
+	for( int y = 0; y < height; y++ ) {
+		for ( int x = 0; x < width; x++ ) {
+			
+			float scaledDistVal = distanceMap[y][x];
+			scaledDistVal = ( scaledDistVal + half ) / threshold;
+			
+			// If distance is more than the max threshold specified, snap to 0
+			if (scaledDistVal < 0)
+				scaledDistVal = 0;
+			
+			ZLColorVec colorVec;
+			colorVec.Set ( 0, 0, 0, scaledDistVal );
+			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA() );
+			
+		}
+	}
+	
+	
+	for ( int i = 0; i < height; i++ ) {
+
+		delete [] binaryMap[i];
+		delete [] distanceMap[i];
+  	}
+	
+	delete [] binaryMap;
+	delete [] distanceMap;
+
 }
 
 //----------------------------------------------------------------//
@@ -1983,29 +2198,31 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
-		{ "bleedRect",			_bleedRect },
-		{ "compare",			_compare },
-		{ "convertColors",		_convertColors },
-		{ "copy",				_copy },
-		{ "copyBits",			_copyBits },
-		{ "copyRect",			_copyRect },
-		{ "fillCircle",			_fillCircle },
-		{ "fillRect",			_fillRect },
-		{ "generateSDF",		_generateSDF },
-		{ "getColor32",			_getColor32 },
-		{ "getFormat",			_getFormat },
-		{ "getRGBA",			_getRGBA },
-		{ "getSize",			_getSize },
-		{ "init",				_init },
-		{ "load",				_load },
-		{ "loadFromBuffer",		_loadFromBuffer },
-		{ "padToPow2",			_padToPow2 },
-		{ "resize",				_resize },
-		{ "resizeCanvas",		_resizeCanvas },
-		{ "setColor32",			_setColor32 },
-		{ "setRGBA",			_setRGBA },
-		{ "writePNG",			_writePNG },
-		{ "convertToGrayScale",	_convertToGrayScale },
+		{ "bleedRect",					_bleedRect },
+		{ "compare",					_compare },
+		{ "convertColors",				_convertColors },
+		{ "copy",						_copy },
+		{ "copyBits",					_copyBits },
+		{ "copyRect",					_copyRect },
+		{ "fillCircle",					_fillCircle },
+		{ "fillRect",					_fillRect },
+		{ "generateOutlineFromSDF",		_generateOutlineFromSDF },
+		{ "generateSDF",				_generateSDF },
+		{ "generateSDFDeadReckoning",	_generateSDFDeadReckoning },
+		{ "getColor32",					_getColor32 },
+		{ "getFormat",					_getFormat },
+		{ "getRGBA",					_getRGBA },
+		{ "getSize",					_getSize },
+		{ "init",						_init },
+		{ "load",						_load },
+		{ "loadFromBuffer",				_loadFromBuffer },
+		{ "padToPow2",					_padToPow2 },
+		{ "resize",						_resize },
+		{ "resizeCanvas",				_resizeCanvas },
+		{ "setColor32",					_setColor32 },
+		{ "setRGBA",					_setRGBA },
+		{ "writePNG",					_writePNG },
+		{ "convertToGrayScale",			_convertToGrayScale },
 		{ NULL, NULL }
 	};
 

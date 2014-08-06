@@ -34,7 +34,7 @@ typedef NSUInteger ISO8601DateFormat;
 //The default separator for time values. Currently, this is ':'.
 extern unichar ISO8601DefaultTimeSeparatorCharacter;
 
-@interface ISO8601DateFormatter: NSFormatter
+@interface MOAIIso8601DateFormatter: NSFormatter
 {
 	NSTimeZone *defaultTimeZone;
 	ISO8601DateFormat format;

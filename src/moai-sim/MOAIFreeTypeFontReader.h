@@ -6,7 +6,7 @@
 
 #if MOAI_WITH_FREETYPE
 
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_STROKER_H

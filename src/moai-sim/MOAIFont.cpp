@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
-#include <moai-sim/MOAIGlyphCache.h>
+#include <contrib/moai_utf8.h>
+#include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
 #include <moai-sim/MOAIGfxDevice.h>
@@ -180,7 +180,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {
-		u32 c = u8_nextchar ( charCodes, &idx );
+		u32 c = moai_u8_nextchar ( charCodes, &idx );
 		self->AffirmGlyph ( size, c );
 	}
 	self->ProcessGlyphs ();
@@ -374,6 +374,9 @@ int MOAIFont::_setReader ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyph ( float size, u32 c ) {
 
+	size = size > 0.0f ? size : this->mDefaultSize;
+	if ( size ==  0.0f ) return;
+
 	if ( this->mCache && this->mCache->IsDynamic ()) {
 		MOAIGlyphSet& glyphSet = this->AffirmGlyphSet ( size );
 		glyphSet.AffirmGlyph ( c );
@@ -382,6 +385,8 @@ void MOAIFont::AffirmGlyph ( float size, u32 c ) {
 
 //----------------------------------------------------------------//
 MOAIGlyphSet& MOAIFont::AffirmGlyphSet ( float size ) {
+
+	assert ( size > 0.0f );
 
 	MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
 	glyphSet.mSize = size;
@@ -608,6 +613,11 @@ void MOAIFont::ProcessGlyphs () {
 			// move the glyph into the processed glyphs list
 			glyph.mNext = glyphSet.mGlyphs;
 			glyphSet.mGlyphs = &glyph;
+			
+			u8 foo [ 2 ];
+			foo [ 0 ] = ( u8 )glyph.GetCode ();
+			foo [ 1 ] = 0;
+			printf ( "%s\n", foo );
 			
 			fontReader->SelectGlyph ( glyph.mCode );
 			fontReader->GetGlyphMetrics ( glyph );

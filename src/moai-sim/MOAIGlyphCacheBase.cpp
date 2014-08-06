@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIImage.h>
 

@@ -27,7 +27,7 @@
 #include <alloca.h>
 #endif
 
-#include "utf8.h"
+#include "moai_utf8.h"
 
 static const u_int32_t offsetsFromUTF8[6] = {
     0x00000000UL, 0x00003080UL, 0x000E2080UL,
@@ -46,7 +46,7 @@ static const char trailingBytesForUTF8[256] = {
 };
 
 /* returns length of next utf-8 sequence */
-int u8_seqlen(char *s)
+int moai_u8_seqlen(char *s)
 {
     return trailingBytesForUTF8[(unsigned int)(unsigned char)s[0]] + 1;
 }
@@ -61,7 +61,7 @@ int u8_seqlen(char *s)
    for all the characters.
    if sz = srcsz+1 (i.e. 4*srcsz+4 bytes), there will always be enough space.
 */
-int u8_toucs(u_int32_t *dest, int sz, char *src, int srcsz)
+int moai_u8_toucs(u_int32_t *dest, int sz, char *src, int srcsz)
 {
     u_int32_t ch;
     char *src_end = src + srcsz;
@@ -106,7 +106,7 @@ int u8_toucs(u_int32_t *dest, int sz, char *src, int srcsz)
    the NUL as well.
    the destination string will never be bigger than the source string.
 */
-int u8_toutf8(char *dest, int sz, u_int32_t *src, int srcsz)
+int moai_u8_toutf8(char *dest, int sz, u_int32_t *src, int srcsz)
 {
     u_int32_t ch;
     int i = 0;
@@ -147,7 +147,7 @@ int u8_toutf8(char *dest, int sz, u_int32_t *src, int srcsz)
     return i;
 }
 
-int u8_wc_toutf8(char *dest, u_int32_t ch)
+int moai_u8_wc_toutf8(char *dest, u_int32_t ch)
 {
     if (ch < 0x80) {
         dest[0] = (char)ch;
@@ -175,7 +175,7 @@ int u8_wc_toutf8(char *dest, u_int32_t ch)
 }
 
 /* charnum => byte offset */
-int u8_offset(char *str, int charnum)
+int moai_u8_offset(char *str, int charnum)
 {
     int offs=0;
 
@@ -188,7 +188,7 @@ int u8_offset(char *str, int charnum)
 }
 
 /* byte offset => charnum */
-int u8_charnum(char *s, int offset)
+int moai_u8_charnum(char *s, int offset)
 {
     int charnum = 0, offs=0;
 
@@ -201,19 +201,19 @@ int u8_charnum(char *s, int offset)
 }
 
 /* number of characters */
-int u8_strlen(const char *s)
+int moai_u8_strlen(const char *s)
 {
     int count = 0;
     int i = 0;
 
-    while (u8_nextchar(s, &i) != 0)
+    while (moai_u8_nextchar(s, &i) != 0)
         count++;
 
     return count;
 }
 
 /* reads the next utf-8 sequence out of a string, updating an index */
-u_int32_t u8_nextchar(const char *s, int *i)
+u_int32_t moai_u8_nextchar(const char *s, int *i)
 {
     u_int32_t ch = 0;
     int sz = 0;
@@ -228,24 +228,24 @@ u_int32_t u8_nextchar(const char *s, int *i)
     return ch;
 }
 
-void u8_inc(char *s, int *i)
+void moai_u8_inc(char *s, int *i)
 {
     (void)(isutf(s[++(*i)]) || isutf(s[++(*i)]) ||
            isutf(s[++(*i)]) || ++(*i));
 }
 
-void u8_dec(char *s, int *i)
+void moai_u8_dec(char *s, int *i)
 {
     (void)(isutf(s[--(*i)]) || isutf(s[--(*i)]) ||
            isutf(s[--(*i)]) || --(*i));
 }
 
-int octal_digit(char c)
+int moai_octal_digit(char c)
 {
     return (c >= '0' && c <= '7');
 }
 
-int hex_digit(char c)
+int moai_hex_digit(char c)
 {
     return ((c >= '0' && c <= '9') ||
             (c >= 'A' && c <= 'F') ||
@@ -254,7 +254,7 @@ int hex_digit(char c)
 
 /* assumes that src points to the character after a backslash
    returns number of input characters processed */
-int u8_read_escape_sequence(char *str, u_int32_t *dest)
+int moai_u8_read_escape_sequence(char *str, u_int32_t *dest)
 {
     u_int32_t ch;
     char digs[9]="\0\0\0\0\0\0\0\0";
@@ -275,29 +275,29 @@ int u8_read_escape_sequence(char *str, u_int32_t *dest)
         ch = L'\v';
     else if (str[0] == 'a')
         ch = L'\a';
-    else if (octal_digit(str[0])) {
+    else if (moai_octal_digit(str[0])) {
         i = 0;
         do {
             digs[dno++] = str[i++];
-        } while (octal_digit(str[i]) && dno < 3);
+        } while (moai_octal_digit(str[i]) && dno < 3);
         ch = strtol(digs, NULL, 8);
     }
     else if (str[0] == 'x') {
-        while (hex_digit(str[i]) && dno < 2) {
+        while (moai_hex_digit(str[i]) && dno < 2) {
             digs[dno++] = str[i++];
         }
         if (dno > 0)
             ch = strtol(digs, NULL, 16);
     }
     else if (str[0] == 'u') {
-        while (hex_digit(str[i]) && dno < 4) {
+        while (moai_hex_digit(str[i]) && dno < 4) {
             digs[dno++] = str[i++];
         }
         if (dno > 0)
             ch = strtol(digs, NULL, 16);
     }
     else if (str[0] == 'U') {
-        while (hex_digit(str[i]) && dno < 8) {
+        while (moai_hex_digit(str[i]) && dno < 8) {
             digs[dno++] = str[i++];
         }
         if (dno > 0)
@@ -309,9 +309,9 @@ int u8_read_escape_sequence(char *str, u_int32_t *dest)
 }
 
 /* convert a string with literal \uxxxx or \Uxxxxxxxx characters to UTF-8
-   example: u8_unescape(mybuf, 256, "hello\\u220e")
+   example: moai_u8_unescape(mybuf, 256, "hello\\u220e")
    note the double backslash is needed if called on a C string literal */
-int u8_unescape(char *buf, int sz, char *src)
+int moai_u8_unescape(char *buf, int sz, char *src)
 {
     int c=0, amt;
     u_int32_t ch;
@@ -320,14 +320,14 @@ int u8_unescape(char *buf, int sz, char *src)
     while (*src && c < sz) {
         if (*src == '\\') {
             src++;
-            amt = u8_read_escape_sequence(src, &ch);
+            amt = moai_u8_read_escape_sequence(src, &ch);
         }
         else {
             ch = (u_int32_t)*src;
             amt = 1;
         }
         src += amt;
-        amt = u8_wc_toutf8(temp, ch);
+        amt = moai_u8_wc_toutf8(temp, ch);
         if (amt > sz-c)
             break;
         memcpy(&buf[c], temp, amt);
@@ -338,7 +338,7 @@ int u8_unescape(char *buf, int sz, char *src)
     return c;
 }
 
-int u8_escape_wchar(char *buf, int sz, u_int32_t ch)
+int moai_u8_escape_wchar(char *buf, int sz, u_int32_t ch)
 {
     if (ch == L'\n')
         return _snprintf(buf, sz, "\\n");
@@ -366,7 +366,7 @@ int u8_escape_wchar(char *buf, int sz, u_int32_t ch)
     return _snprintf(buf, sz, "%c", (char)ch);
 }
 
-int u8_escape(char *buf, int sz, char *src, int escape_quotes)
+int moai_u8_escape(char *buf, int sz, char *src, int escape_quotes)
 {
     int c=0, i=0, amt;
 
@@ -376,7 +376,7 @@ int u8_escape(char *buf, int sz, char *src, int escape_quotes)
             i++;
         }
         else {
-            amt = u8_escape_wchar(buf, sz - c, u8_nextchar(src, &i));
+            amt = moai_u8_escape_wchar(buf, sz - c, moai_u8_nextchar(src, &i));
         }
         c += amt;
         buf += amt;
@@ -386,14 +386,14 @@ int u8_escape(char *buf, int sz, char *src, int escape_quotes)
     return c;
 }
 
-char *u8_strchr(char *s, u_int32_t ch, int *charn)
+char *moai_u8_strchr(char *s, u_int32_t ch, int *charn)
 {
     int i = 0, lasti=0;
     u_int32_t c;
 
     *charn = 0;
     while (s[i]) {
-        c = u8_nextchar(s, &i);
+        c = moai_u8_nextchar(s, &i);
         if (c == ch) {
             return &s[lasti];
         }
@@ -403,7 +403,7 @@ char *u8_strchr(char *s, u_int32_t ch, int *charn)
     return NULL;
 }
 
-char *u8_memchr(char *s, u_int32_t ch, size_t sz, int *charn)
+char *moai_u8_memchr(char *s, u_int32_t ch, size_t sz, int *charn)
 {
     int i = 0, lasti=0;
     u_int32_t c;
@@ -428,7 +428,7 @@ char *u8_memchr(char *s, u_int32_t ch, size_t sz, int *charn)
     return NULL;
 }
 
-int u8_is_locale_utf8(char *locale)
+int moai_u8_is_locale_utf8(char *locale)
 {
     /* this code based on libutf8 */
     const char* cp = locale;
@@ -447,7 +447,7 @@ int u8_is_locale_utf8(char *locale)
     return 0;
 }
 
-int u8_vprintf(char *fmt, va_list ap)
+int moai_u8_vprintf(char *fmt, va_list ap)
 {
     int cnt, sz=0;
     char *buf;
@@ -463,19 +463,19 @@ int u8_vprintf(char *fmt, va_list ap)
         goto try_print;
     }
     wcs = (u_int32_t*)alloca((cnt+1) * sizeof(u_int32_t));
-    cnt = u8_toucs(wcs, cnt+1, buf, cnt);
+    cnt = moai_u8_toucs(wcs, cnt+1, buf, cnt);
     printf("%ls", (wchar_t*)wcs);
     return cnt;
 }
 
-int u8_printf(char *fmt, ...)
+int moai_u8_printf(char *fmt, ...)
 {
     int cnt;
     va_list args;
 
     va_start(args, fmt);
 
-    cnt = u8_vprintf(fmt, args);
+    cnt = moai_u8_vprintf(fmt, args);
 
     va_end(args);
     return cnt;

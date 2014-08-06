@@ -53,8 +53,8 @@
 		031BBBAE13B18A0C0005ECE0 /* vorbisenc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C19D13A16CED00C9386C /* vorbisenc.c */; };
 		031BBBAF13B18A0C0005ECE0 /* vorbisfile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C19E13A16CED00C9386C /* vorbisfile.c */; };
 		031BBBB013B18A0C0005ECE0 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C19F13A16CED00C9386C /* window.c */; };
-		03240C2913564CB0000ADC60 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* utf8.c */; };
-		03240C2A13564CB0000ADC60 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
+		03240C2913564CB0000ADC60 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
+		03240C2A13564CB0000ADC60 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		03240CC213564CB0000ADC60 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
 		03240CC313564CB0000ADC60 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
 		03240CC413564CB0000ADC60 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
@@ -141,8 +141,8 @@
 		03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
-		03240DCF13564CB0000ADC60 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* utf8.c */; };
-		03240DD013564CB0000ADC60 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
+		03240DCF13564CB0000ADC60 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
+		03240DD013564CB0000ADC60 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		03240E6813564CB0000ADC60 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
 		03240E6913564CB0000ADC60 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
 		03240E6A13564CB0000ADC60 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
@@ -308,10 +308,10 @@
 		07952A6E1447907100143A72 /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297C1447907100143A72 /* jquant2.c */; };
 		07952A6F1447907100143A72 /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297D1447907100143A72 /* jutils.c */; };
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
-		663704171612813D002D0D27 /* whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* whirlpool.h */; };
-		663704191612813E002D0D27 /* whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* whirlpool.h */; };
-		66E345461614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
-		66E345471614CA710021FC4B /* whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* whirlpool.c */; };
+		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
+		663704191612813E002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
+		66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
+		66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		89BE694A173974FD00DFE837 /* zl_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6888173974FC00DFE837 /* zl_platform.h */; };
 		89BE694C173974FD00DFE837 /* zl_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6889173974FC00DFE837 /* zl_types.h */; };
 		89BE694D173974FD00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE688B173974FC00DFE837 /* headers.h */; };
@@ -2623,7 +2623,7 @@
 		CD795ECB17F08BB6006AEB47 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD8078A21831C3B500E658D9 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
+		CD8078A21831C3B500E658D9 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
 		CD8078C41831C3B500E658D9 /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
 		CD8078CA1831C3B500E658D9 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
@@ -2663,7 +2663,7 @@
 		CD8079161831C3B500E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
 		CD8079171831C3B500E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD8079191831C3B500E658D9 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD80791B1831C3B500E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD80791C1831C3B500E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -2711,7 +2711,7 @@
 		CD8079481831C3B500E658D9 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
 		CD8079491831C3B500E658D9 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD80794A1831C3B500E658D9 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
-		CD80794B1831C3B500E658D9 /* whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* whirlpool.h */; };
+		CD80794B1831C3B500E658D9 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD80794C1831C3B500E658D9 /* SDL_assert_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBB17F08459006AEB47 /* SDL_assert_c.h */; };
 		CD80794D1831C3B500E658D9 /* SDL_error_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBD17F08459006AEB47 /* SDL_error_c.h */; };
 		CD80794E1831C3B500E658D9 /* SDL_blit.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CDB17F0850F006AEB47 /* SDL_blit.h */; };
@@ -2859,7 +2859,7 @@
 		CD8079DC1831C3B500E658D9 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
 		CD807B4D1831C3C600E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD807B4E1831C3C600E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD807B4F1831C3C600E658D9 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* utf8.h */; };
+		CD807B4F1831C3C600E658D9 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD807B5B1831C3C600E658D9 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
 		CD807B5C1831C3C600E658D9 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
 		CD807B5D1831C3C600E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
@@ -2965,7 +2965,7 @@
 		CD807BC31831C3C600E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
 		CD807BC41831C3C600E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD807BC51831C3C600E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD807BC61831C3C600E658D9 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD807BC81831C3C600E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD807BC91831C3C600E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -3013,7 +3013,7 @@
 		CD807BF51831C3C600E658D9 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
 		CD807BF61831C3C600E658D9 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD807BF71831C3C600E658D9 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
-		CD807BF81831C3C600E658D9 /* whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* whirlpool.h */; };
+		CD807BF81831C3C600E658D9 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD807BF91831C3C600E658D9 /* SDL_assert_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBB17F08459006AEB47 /* SDL_assert_c.h */; };
 		CD807BFA1831C3C600E658D9 /* SDL_error_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBD17F08459006AEB47 /* SDL_error_c.h */; };
 		CD807BFB1831C3C600E658D9 /* SDL_blit.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CDB17F0850F006AEB47 /* SDL_blit.h */; };
@@ -3943,8 +3943,8 @@
 		CD8081F01831C76900E658D9 /* ZLHashWriterSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239017FA808A00FB64BB /* ZLHashWriterSHA384.h */; };
 		CD8081F11831C76900E658D9 /* ZLHashWriterSHA512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1239117FA808A00FB64BB /* ZLHashWriterSHA512.cpp */; };
 		CD8081F21831C76900E658D9 /* ZLHashWriterSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239217FA808A00FB64BB /* ZLHashWriterSHA512.h */; };
-		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
-		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
+		CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
 		CD93078217EC473A00AED686 /* MOAILuaClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */; };
@@ -4892,8 +4892,8 @@
 		CDD48CBE17FA79ED00525B77 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5313564CAF000ADC60 /* cpSlideJoint.c */; };
 		CDD48CBF17FA79ED00525B77 /* cpSlideJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5413564CAF000ADC60 /* cpSlideJoint.h */; };
 		CDD48CC017FA79ED00525B77 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5513564CAF000ADC60 /* util.h */; };
-		CDD48CC117FA79FE00525B77 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
-		CDD48CC217FA79FE00525B77 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
+		CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CDD490FE17FA7A8000525B77 /* ftbbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3113564CB0000ADC60 /* ftbbox.c */; };
 		CDD490FF17FA7A8000525B77 /* ftgxval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3213564CB0000ADC60 /* ftgxval.c */; };
 		CDD4910017FA7A8000525B77 /* ftlcdfil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3313564CB0000ADC60 /* ftlcdfil.c */; };
@@ -5232,8 +5232,8 @@
 		03240A7313564CAF000ADC60 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpVect.c; path = "../../3rdparty/chipmunk-5.3.4/src/cpVect.c"; sourceTree = SOURCE_ROOT; };
 		03240A7413564CAF000ADC60 /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpVect.h; path = "../../3rdparty/chipmunk-5.3.4/include/chipmunk/cpVect.h"; sourceTree = SOURCE_ROOT; };
 		03240A7513564CAF000ADC60 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prime.h; path = "../../3rdparty/chipmunk-5.3.4/src/prime.h"; sourceTree = SOURCE_ROOT; };
-		03240A7713564CAF000ADC60 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../../3rdparty/contrib/utf8.c; sourceTree = SOURCE_ROOT; };
-		03240A7813564CAF000ADC60 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8.h; path = ../../3rdparty/contrib/utf8.h; sourceTree = SOURCE_ROOT; };
+		03240A7713564CAF000ADC60 /* moai_utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = moai_utf8.c; path = ../../3rdparty/contrib/moai_utf8.c; sourceTree = SOURCE_ROOT; };
+		03240A7813564CAF000ADC60 /* moai_utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_utf8.h; path = ../../3rdparty/contrib/moai_utf8.h; sourceTree = SOURCE_ROOT; };
 		03240A7B13564CAF000ADC60 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curl.h; path = "../../3rdparty/curl-7.19.7/include-iphone/curl/curl.h"; sourceTree = SOURCE_ROOT; };
 		03240A7C13564CAF000ADC60 /* curl_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curl_config.h; path = "../../3rdparty/curl-7.19.7/include-iphone/curl/curl_config.h"; sourceTree = SOURCE_ROOT; };
 		03240A7D13564CAF000ADC60 /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curlbuild.h; path = "../../3rdparty/curl-7.19.7/include-iphone/curl/curlbuild.h"; sourceTree = SOURCE_ROOT; };
@@ -5596,7 +5596,7 @@
 		43BA2E9C177332B2007DCDF0 /* PlayHavenSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayHavenSDK.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PlayHavenSDK.h"; sourceTree = "<group>"; };
 		43BA2E9D177332B2007DCDF0 /* UIDevice+HardwareString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+HardwareString.h"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.h"; sourceTree = "<group>"; };
 		43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+HardwareString.m"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.m"; sourceTree = "<group>"; };
-		663704111612812C002D0D27 /* whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = whirlpool.h; path = ../../3rdparty/contrib/whirlpool.h; sourceTree = "<group>"; };
+		663704111612812C002D0D27 /* moai_whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_whirlpool.h; path = ../../3rdparty/contrib/moai_whirlpool.h; sourceTree = "<group>"; };
 		6671AE9C15915C1500B36122 /* RiffFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffFile.cpp; path = ../../3rdparty/untz/src/native/android/RiffFile.cpp; sourceTree = "<group>"; };
 		6671AE9D15915C1500B36122 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../../3rdparty/untz/src/native/android/WaveFile.cpp; sourceTree = "<group>"; };
 		6671AE9E15915C1500B36122 /* WaveFileAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFileAudioSource.cpp; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.cpp; sourceTree = "<group>"; };
@@ -5607,7 +5607,7 @@
 		669E287215914B320037E24C /* RiffFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RiffFile.h; path = ../../3rdparty/untz/src/native/android/RiffFile.h; sourceTree = "<group>"; };
 		669E287415914B320037E24C /* WaveFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFile.h; path = ../../3rdparty/untz/src/native/android/WaveFile.h; sourceTree = "<group>"; };
 		669E287615914B320037E24C /* WaveFileAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveFileAudioSource.h; path = ../../3rdparty/untz/src/native/android/WaveFileAudioSource.h; sourceTree = "<group>"; };
-		66E345451614CA710021FC4B /* whirlpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = whirlpool.c; path = ../../3rdparty/contrib/whirlpool.c; sourceTree = "<group>"; };
+		66E345451614CA710021FC4B /* moai_whirlpool.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = moai_whirlpool.c; path = ../../3rdparty/contrib/moai_whirlpool.c; sourceTree = "<group>"; };
 		8942AFF01731BB90009E233E /* SFMT-alti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFMT-alti.h"; path = "../../3rdparty/sfmt-1.4/SFMT-alti.h"; sourceTree = "<group>"; };
 		8942AFF11731BB90009E233E /* SFMT-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFMT-common.h"; path = "../../3rdparty/sfmt-1.4/SFMT-common.h"; sourceTree = "<group>"; };
 		8942AFF21731BB90009E233E /* SFMT-params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFMT-params.h"; path = "../../3rdparty/sfmt-1.4/SFMT-params.h"; sourceTree = "<group>"; };
@@ -7706,8 +7706,8 @@
 		CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-curl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIIso8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.h; sourceTree = "<group>"; };
+		CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIIso8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.m; sourceTree = "<group>"; };
 		CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moai-ios/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moai-ios/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
 		CD93077E17EC473A00AED686 /* MOAILuaClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaClass.cpp; sourceTree = "<group>"; };
@@ -8325,12 +8325,12 @@
 			children = (
 				CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */,
 				CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */,
-				CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */,
-				CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */,
-				03240A7713564CAF000ADC60 /* utf8.c */,
-				03240A7813564CAF000ADC60 /* utf8.h */,
-				66E345451614CA710021FC4B /* whirlpool.c */,
-				663704111612812C002D0D27 /* whirlpool.h */,
+				CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */,
+				CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */,
+				03240A7713564CAF000ADC60 /* moai_utf8.c */,
+				03240A7813564CAF000ADC60 /* moai_utf8.h */,
+				66E345451614CA710021FC4B /* moai_whirlpool.c */,
+				663704111612812C002D0D27 /* moai_whirlpool.h */,
 			);
 			name = contrib;
 			sourceTree = "<group>";
@@ -12446,7 +12446,7 @@
 			files = (
 				CDD48B5517FA794B00525B77 /* SFMT-params11213.h in Headers */,
 				CDD48B5717FA794B00525B77 /* SFMT-params44497.h in Headers */,
-				03240C2A13564CB0000ADC60 /* utf8.h in Headers */,
+				03240C2A13564CB0000ADC60 /* moai_utf8.h in Headers */,
 				CDD48B5217FA794B00525B77 /* SFMT-params1279.h in Headers */,
 				CDD48B5117FA794B00525B77 /* SFMT-params607.h in Headers */,
 				CDD48B5B17FA794B00525B77 /* SFMT-sse2.h in Headers */,
@@ -12486,7 +12486,7 @@
 				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
-				CDD48CC117FA79FE00525B77 /* ISO8601DateFormatter.h in Headers */,
+				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD4900AD141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD4900B0141AB6EC00913D80 /* lcode.h in Headers */,
 				CD4900B3141AB6EC00913D80 /* ldebug.h in Headers */,
@@ -12536,7 +12536,7 @@
 				CD04AF0514725714009C20E5 /* zconf.h in Headers */,
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
-				663704171612813D002D0D27 /* whirlpool.h in Headers */,
+				663704171612813D002D0D27 /* moai_whirlpool.h in Headers */,
 				CD795CC217F08459006AEB47 /* SDL_assert_c.h in Headers */,
 				CD795CC417F08459006AEB47 /* SDL_error_c.h in Headers */,
 				CD795CF517F0850F006AEB47 /* SDL_blit.h in Headers */,
@@ -12754,7 +12754,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */,
-				03240DD013564CB0000ADC60 /* utf8.h in Headers */,
+				03240DD013564CB0000ADC60 /* moai_utf8.h in Headers */,
 				03240E6813564CB0000ADC60 /* ascii.h in Headers */,
 				03240E6913564CB0000ADC60 /* asciitab.h in Headers */,
 				03240E6A13564CB0000ADC60 /* expat.h in Headers */,
@@ -12780,7 +12780,7 @@
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
-				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
+				CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD69AB3D17FA6CF90053E028 /* dict.h in Headers */,
 				CD69AB4917FA6CF90053E028 /* priorityq.h in Headers */,
 				CDD48B7917FA794E00525B77 /* SFMT-params216091.h in Headers */,
@@ -12851,7 +12851,7 @@
 				CD69AB5117FA6CF90053E028 /* tess.h in Headers */,
 				CD9F761F1808CC5A0001EF0C /* MOAIOpenUDID.h in Headers */,
 				CDD48B7517FA794E00525B77 /* SFMT-params19937.h in Headers */,
-				663704191612813E002D0D27 /* whirlpool.h in Headers */,
+				663704191612813E002D0D27 /* moai_whirlpool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14092,7 +14092,7 @@
 				CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */,
 				CD80809A1831C68500E658D9 /* evp.h in Headers */,
 				CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */,
-				CD8078A21831C3B500E658D9 /* utf8.h in Headers */,
+				CD8078A21831C3B500E658D9 /* moai_utf8.h in Headers */,
 				CD8080FE1831C6AA00E658D9 /* sha.h in Headers */,
 				CD807F061831C5CA00E658D9 /* asn1.h in Headers */,
 				CD80812C1831C6D300E658D9 /* des_locl.h in Headers */,
@@ -14175,7 +14175,7 @@
 				CD8079161831C3B500E658D9 /* strbuffer.h in Headers */,
 				CD8079171831C3B500E658D9 /* utf.h in Headers */,
 				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
-				CD8079191831C3B500E658D9 /* ISO8601DateFormatter.h in Headers */,
+				CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
 				CD80791B1831C3B500E658D9 /* lcode.h in Headers */,
 				CD80813F1831C6D300E658D9 /* spr.h in Headers */,
@@ -14233,7 +14233,7 @@
 				CD80794A1831C3B500E658D9 /* zutil.h in Headers */,
 				CD807FCB1831C62200E658D9 /* blowfish.h in Headers */,
 				CD8080EE1831C69900E658D9 /* rand.h in Headers */,
-				CD80794B1831C3B500E658D9 /* whirlpool.h in Headers */,
+				CD80794B1831C3B500E658D9 /* moai_whirlpool.h in Headers */,
 				CD80794C1831C3B500E658D9 /* SDL_assert_c.h in Headers */,
 				CD80794D1831C3B500E658D9 /* SDL_error_c.h in Headers */,
 				CD80794E1831C3B500E658D9 /* SDL_blit.h in Headers */,
@@ -14425,7 +14425,7 @@
 			files = (
 				CD807B4D1831C3C600E658D9 /* SFMT-params11213.h in Headers */,
 				CD807B4E1831C3C600E658D9 /* SFMT-params44497.h in Headers */,
-				CD807B4F1831C3C600E658D9 /* utf8.h in Headers */,
+				CD807B4F1831C3C600E658D9 /* moai_utf8.h in Headers */,
 				CD807B5B1831C3C600E658D9 /* arpa_telnet.h in Headers */,
 				CD807B5C1831C3C600E658D9 /* connect.h in Headers */,
 				CD807B5D1831C3C600E658D9 /* SFMT-params1279.h in Headers */,
@@ -14533,7 +14533,7 @@
 				CD807EC61831C53F00E658D9 /* ssl23.h in Headers */,
 				CD807EC41831C53F00E658D9 /* ssl2.h in Headers */,
 				CD807BC51831C3C600E658D9 /* lapi.h in Headers */,
-				CD807BC61831C3C600E658D9 /* ISO8601DateFormatter.h in Headers */,
+				CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */,
 				CD807EBE1831C53F00E658D9 /* ssl_locl.h in Headers */,
 				CD807BC81831C3C600E658D9 /* lcode.h in Headers */,
@@ -14582,7 +14582,7 @@
 				CD807BF51831C3C600E658D9 /* zconf.h in Headers */,
 				CD807BF61831C3C600E658D9 /* zlib.h in Headers */,
 				CD807BF71831C3C600E658D9 /* zutil.h in Headers */,
-				CD807BF81831C3C600E658D9 /* whirlpool.h in Headers */,
+				CD807BF81831C3C600E658D9 /* moai_whirlpool.h in Headers */,
 				CD807BF91831C3C600E658D9 /* SDL_assert_c.h in Headers */,
 				CD807BFA1831C3C600E658D9 /* SDL_error_c.h in Headers */,
 				CD807BFB1831C3C600E658D9 /* SDL_blit.h in Headers */,
@@ -16132,7 +16132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03240C2913564CB0000ADC60 /* utf8.c in Sources */,
+				03240C2913564CB0000ADC60 /* moai_utf8.c in Sources */,
 				03240CCD13564CB0000ADC60 /* xmlparse.c in Sources */,
 				03240CCE13564CB0000ADC60 /* xmlrole.c in Sources */,
 				03240CD013564CB0000ADC60 /* xmltok.c in Sources */,
@@ -16298,7 +16298,7 @@
 				CD04AEFC14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0214725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
-				66E345471614CA710021FC4B /* whirlpool.c in Sources */,
+				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CD795CC317F08459006AEB47 /* SDL_assert.c in Sources */,
 				CD795CC517F08459006AEB47 /* SDL_error.c in Sources */,
 				CD795CC617F08459006AEB47 /* SDL_hints.c in Sources */,
@@ -16319,7 +16319,7 @@
 				CD795D0517F0850F006AEB47 /* SDL_rect.c in Sources */,
 				CD795D0617F0850F006AEB47 /* SDL_RLEaccel.c in Sources */,
 				CD795D0817F0850F006AEB47 /* SDL_shape.c in Sources */,
-				CDD48CC217FA79FE00525B77 /* ISO8601DateFormatter.m in Sources */,
+				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD795D0A17F0850F006AEB47 /* SDL_stretch.c in Sources */,
 				CD795D0B17F0850F006AEB47 /* SDL_surface.c in Sources */,
 				CD795D0D17F0850F006AEB47 /* SDL_video.c in Sources */,
@@ -16476,7 +16476,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03240DCF13564CB0000ADC60 /* utf8.c in Sources */,
+				03240DCF13564CB0000ADC60 /* moai_utf8.c in Sources */,
 				CDD4911F17FA7A8600525B77 /* ftgzip.c in Sources */,
 				03240E7313564CB0000ADC60 /* xmlparse.c in Sources */,
 				03240E7413564CB0000ADC60 /* xmlrole.c in Sources */,
@@ -16507,7 +16507,7 @@
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
-				CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */,
+				CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */,
 				CDD4911A17FA7A8600525B77 /* ftcache.c in Sources */,
 				CDD4910D17FA7A8000525B77 /* psmodule.c in Sources */,
 				CD69AB4717FA6CF90053E028 /* priorityq.c in Sources */,
@@ -16647,7 +16647,7 @@
 				CD04AEFA14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0014725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0914725714009C20E5 /* zutil.c in Sources */,
-				66E345461614CA710021FC4B /* whirlpool.c in Sources */,
+				66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

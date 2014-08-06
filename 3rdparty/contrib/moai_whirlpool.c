@@ -61,7 +61,7 @@
 #include <string.h>
 #include <time.h>
 
-#include "whirlpool.h"
+#include "moai_whirlpool.h"
 
 /* #define TRACE_INTERMEDIATE_VALUES */
 
@@ -860,7 +860,7 @@ static void processBuffer(struct Whirlpool * const structpointer) {
 /**
  * Initialize the hashing state.
  */
-void Whirlpool_Init(struct Whirlpool * const structpointer) {
+void MOAIWhirlpool_Init(struct Whirlpool * const structpointer) {
     int i;
 
     memset(structpointer->bitLength, 0, 32);
@@ -879,7 +879,7 @@ void Whirlpool_Init(struct Whirlpool * const structpointer) {
  *
  * This method maintains the invariant: bufferBits < DIGESTBITS
  */
-void Whirlpool_Add(const unsigned char * const source,
+void MOAIWhirlpool_Add(const unsigned char * const source,
                unsigned long sourceBits,
                struct Whirlpool * const structpointer) {
     /*
@@ -997,7 +997,7 @@ void Whirlpool_Add(const unsigned char * const source,
  * 
  * This method uses the invariant: bufferBits < DIGESTBITS
  */
-void Whirlpool_Finalize(struct Whirlpool * const structpointer,
+void MOAIWhirlpool_Finalize(struct Whirlpool * const structpointer,
                     unsigned char * const result) {
     int i;
     wp_u8 *buffer      = structpointer->buffer;

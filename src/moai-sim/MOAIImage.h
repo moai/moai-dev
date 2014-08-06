@@ -56,29 +56,31 @@ private:
 	void*	mBitmap;
 
 	//----------------------------------------------------------------//
-	static int		_bleedRect			( lua_State* L );
-	static int		_compare			( lua_State* L );
-	static int		_convertColors		( lua_State* L );
-	static int		_copy				( lua_State* L );
-	static int		_copyBits			( lua_State* L );
-	static int		_copyRect			( lua_State* L );
-	static int		_fillCircle			( lua_State* L );
-	static int		_fillRect			( lua_State* L );
-	static int		_generateSDF		( lua_State* L );
-	static int		_getColor32			( lua_State* L );
-	static int		_getFormat			( lua_State* L );
-	static int		_getRGBA			( lua_State* L );
-	static int		_getSize			( lua_State* L );
-	static int		_init				( lua_State* L );
-	static int		_load				( lua_State* L );
-	static int		_loadFromBuffer		( lua_State* L );
-	static int		_padToPow2			( lua_State* L );
-	static int		_resize				( lua_State* L );
-	static int		_resizeCanvas		( lua_State* L );
-	static int		_setColor32			( lua_State* L );
-	static int		_setRGBA			( lua_State* L );
-	static int		_writePNG			( lua_State* L );
-	static int		_convertToGrayScale ( lua_State* L );
+	static int		_bleedRect					( lua_State* L );
+	static int		_compare					( lua_State* L );
+	static int		_convertColors				( lua_State* L );
+	static int		_copy						( lua_State* L );
+	static int		_copyBits					( lua_State* L );
+	static int		_copyRect					( lua_State* L );
+	static int		_fillCircle					( lua_State* L );
+	static int		_fillRect					( lua_State* L );
+	static int		_generateOutlineFromSDF		( lua_State* L );
+	static int		_generateSDF				( lua_State* L );
+	static int		_generateSDFDeadReckoning	( lua_State* L );
+	static int		_getColor32					( lua_State* L );
+	static int		_getFormat					( lua_State* L );
+	static int		_getRGBA					( lua_State* L );
+	static int		_getSize					( lua_State* L );
+	static int		_init						( lua_State* L );
+	static int		_load						( lua_State* L );
+	static int		_loadFromBuffer				( lua_State* L );
+	static int		_padToPow2					( lua_State* L );
+	static int		_resize						( lua_State* L );
+	static int		_resizeCanvas				( lua_State* L );
+	static int		_setColor32					( lua_State* L );
+	static int		_setRGBA					( lua_State* L );
+	static int		_writePNG					( lua_State* L );
+	static int		_convertToGrayScale			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Alloc				();
@@ -134,7 +136,9 @@ public:
 	void				DrawLine				( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void				FillCircle				( float x, float y, float xRad, u32 color );
 	void				FillRect				( ZLIntRect rect, u32 color );
+	void				GenerateOutlineFromSDF	( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
 	void				GenerateSDF				( ZLIntRect rect );
+	void				GenerateSDFDeadReckoning( ZLIntRect rect, int threshold );
 	u32					GetBitmapSize			() const;
 	ZLIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;
