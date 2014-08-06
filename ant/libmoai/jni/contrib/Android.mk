@@ -11,8 +11,8 @@
 	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zl-vfs/zl_replace.h
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/utf8.c
-	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/whirlpool.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/moai_utf8.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/moai_whirlpool.c
 
 	include $(BUILD_STATIC_LIBRARY)
  

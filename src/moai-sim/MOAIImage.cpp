@@ -1613,7 +1613,6 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 //----------------------------------------------------------------//
 void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	
-	const float FLT_MAX = 3.40282347E+38F;
 	// Specified in the paper
 	// d1 is horizontal pixel distance, d2 is diagonal pixel distance
 	const int d1 = 3;
@@ -1649,7 +1648,7 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 				binaryMap[y][x] = 0;
 			}
 			
-			distanceMap[y][x] = FLT_MAX;
+			distanceMap[y][x] = MAXFLOAT;
 		}
 	}
 	
