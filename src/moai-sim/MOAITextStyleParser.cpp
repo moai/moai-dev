@@ -28,6 +28,8 @@ void MOAITextStyleParser::BuildStyleMap ( MOAITextStyleMap& styleMap, MOAITextSt
 	MOAITextStyle* defaultStyle = styleCache.GetStyle ();
 	if ( !( defaultStyle && defaultStyle->mFont )) return;
 	
+	this->mDefaultStyle = defaultStyle;
+	
 	this->mIdx = 0;
 	this->mPrev = 0;
 	this->mStyleCache = &styleCache;
