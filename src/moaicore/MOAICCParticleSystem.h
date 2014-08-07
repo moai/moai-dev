@@ -9,13 +9,13 @@
 #ifndef MOAICCPARTICLESYSTEM_H
 #define MOAICCPARTICLESYSTEM_H
 
-#include <moaicore/MOAIProp.h>
-
-#include <moaicore/MOAICCParticle.h>
-
 #include <tinyxml.h>
 
-class MOAICCParticleSystem : public virtual MOAIProp {
+#include <moaicore/MOAIProp.h>
+#include <moaicore/MOAICCParticle.h>
+
+
+class MOAICCParticleSystem : public MOAIProp {
 private:
 	
 	enum EmitterType{
@@ -211,6 +211,7 @@ public:
 	
 	
 	void			Draw					( int subPrimID );
+	
 					MOAICCParticleSystem	();
 					~MOAICCParticleSystem	();
 	

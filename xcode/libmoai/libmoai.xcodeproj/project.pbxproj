@@ -1106,8 +1106,12 @@
 		B464B3B2187E07D0002E4E0C /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
 		B489B0791756A43400C114DA /* MOAIFreeTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */; };
 		B489B07A1756A43400C114DA /* MOAIFreeTypeFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B489B0781756A43400C114DA /* MOAIFreeTypeFont.h */; };
-		B4F51F9B19898558005F5779 /* MOAICCParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */; };
-		B4F51F9C19898558005F5779 /* MOAICCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */; };
+		B4A3C42E19930764006DEEB6 /* MOAICCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */; };
+		B4A3C42F19930766006DEEB6 /* MOAICCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */; };
+		B4A3C43019930769006DEEB6 /* MOAICCParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */; };
+		B4A3C4311993076B006DEEB6 /* MOAICCParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */; };
+		B4A3C43219930789006DEEB6 /* MOAICCParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F51FA11989EB00005F5779 /* MOAICCParticle.h */; };
+		B4A3C4331993078A006DEEB6 /* MOAICCParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = B4F51FA11989EB00005F5779 /* MOAICCParticle.h */; };
 		CB4B0B8F1858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
 		CB4B0B901858F1B80020381E /* c_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = CB4B0B8E1858F1B80020381E /* c_hook.c */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
@@ -5691,6 +5695,7 @@
 				E9940DBF14B7A4A0006465CC /* USAffine2D.h in Headers */,
 				E9940DC114B7A4A0006465CC /* USBinarySearch.h in Headers */,
 				E9940DC514B7A4A0006465CC /* USBox.h in Headers */,
+				B4A3C42F19930766006DEEB6 /* MOAICCParticleSystem.h in Headers */,
 				E9940DC914B7A4A0006465CC /* USCgt.h in Headers */,
 				E9940DCD14B7A4A0006465CC /* USColor.h in Headers */,
 				E9940DD114B7A4A0006465CC /* USCurve.h in Headers */,
@@ -5792,6 +5797,7 @@
 				663703E316128038002D0D27 /* USHashWriterAdler32.h in Headers */,
 				663703E716128038002D0D27 /* USHashWriterCRC32.h in Headers */,
 				663703EB16128038002D0D27 /* USHashWriterMD5.h in Headers */,
+				B4A3C43219930789006DEEB6 /* MOAICCParticle.h in Headers */,
 				663703EF16128038002D0D27 /* USHashWriterSHA1.h in Headers */,
 				663703F316128038002D0D27 /* USHashWriterSHA224.h in Headers */,
 				663703F716128038002D0D27 /* USHashWriterSHA256.h in Headers */,
@@ -6063,6 +6069,7 @@
 				0324E72713564BC8000ADC60 /* MOAISim.h in Headers */,
 				4D851D991873DDE6009DF1C4 /* MOAIEaseBackOut.h in Headers */,
 				0324E72B13564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */,
+				B4A3C4331993078A006DEEB6 /* MOAICCParticle.h in Headers */,
 				0324E72D13564BC8000ADC60 /* MOAISurfaceDeck2D.h in Headers */,
 				0324E72F13564BC8000ADC60 /* MOAISurfaceSampler2D.h in Headers */,
 				0324E73113564BC8000ADC60 /* MOAITextBox.h in Headers */,
@@ -6161,7 +6168,7 @@
 				CDBD3D331425DC2600BC33D4 /* MOAIBox2DGearJoint.h in Headers */,
 				CDBD3D371425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */,
 				CDBD3D391425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */,
-				B4F51F9C19898558005F5779 /* MOAICCParticleSystem.h in Headers */,
+				B4A3C42E19930764006DEEB6 /* MOAICCParticleSystem.h in Headers */,
 				CDBD3D3B1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
 				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
@@ -7011,6 +7018,7 @@
 				CD18CED514693BC100990FE1 /* MOAIRtti.cpp in Sources */,
 				CD18CED914693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
 				668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */,
+				B4A3C4311993076B006DEEB6 /* MOAICCParticleSystem.cpp in Sources */,
 				075110EA149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */,
 				075110EE149AD7C3006C0B61 /* MOAIPathFinder.cpp in Sources */,
 				075110F2149AD7C3006C0B61 /* MOAIPathGraph.cpp in Sources */,
@@ -7426,7 +7434,6 @@
 				0324E6BF13564BC8000ADC60 /* MOAICpDebugDraw.cpp in Sources */,
 				0324E6C113564BC8000ADC60 /* MOAICpShape.cpp in Sources */,
 				0324E6C313564BC8000ADC60 /* MOAICpSpace.cpp in Sources */,
-				B4F51F9B19898558005F5779 /* MOAICCParticleSystem.cpp in Sources */,
 				0324E6C513564BC8000ADC60 /* MOAIDataBuffer.cpp in Sources */,
 				0324E6C913564BC8000ADC60 /* MOAIDebugLines.cpp in Sources */,
 				0324E6CB13564BC8000ADC60 /* MOAIDeck.cpp in Sources */,
@@ -7570,6 +7577,7 @@
 				4D49736A1872793400D46882 /* MOAIEaseCustom.cpp in Sources */,
 				E9940DE614B7A4A0006465CC /* USInterpolate.cpp in Sources */,
 				E9940DEA14B7A4A0006465CC /* USIntersect.cpp in Sources */,
+				B4A3C43019930769006DEEB6 /* MOAICCParticleSystem.cpp in Sources */,
 				E9940DEE14B7A4A0006465CC /* USLexStream.cpp in Sources */,
 				E9940DFA14B7A4A0006465CC /* USMercator.cpp in Sources */,
 				E9940E0614B7A4A0006465CC /* USParser.cpp in Sources */,

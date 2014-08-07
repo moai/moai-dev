@@ -114,6 +114,12 @@ int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
 	return 0;
 }
 
+int MOAICCParticleSystem::_getFinishParticleSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mFinishSize );
+	return 1;
+}
+
 int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mFinishSize = state.GetValue < float >( 2, 0 );
