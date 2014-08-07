@@ -251,8 +251,12 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@in		number distMin
-	@in		number distMax
+	@opt	number distMin
+	@opt	number distMax
+	@opt	number r			Default value is 1.
+	@opt	number g			Default value is 1.
+	@opt	number b			Default value is 1.
+	@opt	number a			Default value is 1.
 	@out	nil
  */
 int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
@@ -260,7 +264,7 @@ int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
 	
 	ZLIntRect rect = state.GetRect < int >( 2 );
 	float distMin = state.GetValue < float >( 6, 0.46f );
-	float distMax = state.GetValue < float >( 7, 0.499f );
+	float distMax = state.GetValue < float >( 7, 0.5f );
 	float r		= state.GetValue < float >( 8, 1.0f );
 	float g		= state.GetValue < float >( 9, 1.0f );
 	float b		= state.GetValue < float >( 10, 1.0f );
@@ -284,7 +288,7 @@ int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
 int MOAIImage::_generateSDF( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
 	
-	ZLIntRect rect = state.GetRect <int> ( 2 );
+	ZLIntRect rect = state.GetRect <int>( 2 );
 	
 	self->GenerateSDF ( rect );
 	
@@ -307,7 +311,7 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 int MOAIImage::_generateSDFDeadReckoning( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
 	
-	ZLIntRect rect = state.GetRect <int> ( 2 );
+	ZLIntRect rect = state.GetRect <int>( 2 );
 	u32 threshold = state.GetValue < u32 >( 6, 256 );
 	
 	self->GenerateSDFDeadReckoning ( rect, threshold );
@@ -1706,7 +1710,7 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for ( int y = height - 1; y > 0; --y ) {
 		for ( int x = width - 1; x > 0; --x ) {
 			
-			if (binaryMap[y][x] == 0)
+			if ( binaryMap[y][x] == 0 )
 				distanceMap[y][x] *= -1;
 		}
 	}
@@ -1722,12 +1726,12 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 			scaledDistVal = ( scaledDistVal + half ) / threshold;
 			
 			// If distance is more than the max threshold specified, snap to 0
-			if (scaledDistVal < 0)
+			if ( scaledDistVal < 0 )
 				scaledDistVal = 0;
 			
 			ZLColorVec colorVec;
 			colorVec.Set ( 0, 0, 0, scaledDistVal );
-			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA() );
+			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA ());
 			
 		}
 	}
