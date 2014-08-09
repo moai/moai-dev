@@ -946,20 +946,20 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 
 	if ( !( cellRect || paddedRect )) return false;
 	
-	if ( this->mLayer ) {
+	if ( this->mLevel ) {
 	
 		ZLVec3D center;
 		this->mBounds.GetCenter ( center );
 		
-		MOAICellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center.mX, center.mY );
-		ZLRect rect = this->mLayer->mGridSpace.GetCellRect ( coord );
+		MOAICellCoord coord = this->mLevel->mGridSpace.GetCellCoord ( center.mX, center.mY );
+		ZLRect rect = this->mLevel->mGridSpace.GetCellRect ( coord );
 		
 		if ( cellRect ) {
 			*cellRect = rect;
 		}
 		
 		if ( paddedRect ) {
-			rect.Inflate ( this->mLayer->mCellSize * 0.5f );
+			rect.Inflate ( this->mLevel->mCellSize * 0.5f );
 			*paddedRect = rect;
 		}
 		return true;
@@ -1092,7 +1092,7 @@ void MOAIProp::LoadGfxState () {
 MOAIProp::MOAIProp () :
 	mPartition ( 0 ),
 	mCell ( 0 ),
-	mLayer ( 0 ),
+	mLevel ( 0 ),
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
