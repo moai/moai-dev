@@ -84,7 +84,7 @@ private:
 	MOAIPartitionCell*			mCell;
 	
 	// this is only for debug draw
-	MOAIPartitionLevel*			mLayer;
+	MOAIPartitionLevel*			mLevel;
 	
 	ZLLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
