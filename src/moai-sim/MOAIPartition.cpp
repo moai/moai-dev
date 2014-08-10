@@ -220,7 +220,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	propListForRay
-	@text	Returns all props under a given world space point.
+	@text	Returns all props that intersect the given ray.
 	
 	@in		MOAIPartition self
 	@in		number x
