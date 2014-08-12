@@ -211,6 +211,7 @@ public:
 	
 	
 	void			Draw					( int subPrimID );
+	bool			IsDone					();
 	
 					MOAICCParticleSystem	();
 					~MOAICCParticleSystem	();

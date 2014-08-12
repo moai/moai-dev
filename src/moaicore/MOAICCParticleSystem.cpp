@@ -798,6 +798,10 @@ void MOAICCParticleSystem::InitializeEmitter () {
 	this->mLifespanTerm[1] = maxLifespan;
 }
 
+bool MOAICCParticleSystem::IsDone () {
+	return false;
+}
+
 
 bool MOAICCParticleSystem::IsFull () {
 	return (this->mParticleCount == this->mTotalParticles);
