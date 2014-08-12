@@ -841,7 +841,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	mEmitCounter( 0.0f ),
 	mEmissionRate( 0.0f ),
 	mElapsed( 0.0f ),
-	mActive( true )
+	mActive( false )
 {
 	int i = 0;
 	for ( ; i < 2;  ++i) {
@@ -861,6 +861,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND( MOAIProp )
+		RTTI_EXTEND( MOAIAction )
 	RTTI_END
 }
 
@@ -872,7 +873,6 @@ MOAICCParticleSystem::~MOAICCParticleSystem () {
 }
 
 void MOAICCParticleSystem::OnUpdate ( float step ) {
-	UNUSED(step);
 	
 	if (this->mActive && this->mEmissionRate) {
 		float rate = 1.0f / this->mEmissionRate;
@@ -1150,11 +1150,12 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 
 void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
+	MOAIAction::RegisterLuaClass( state );
 }
 
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 	MOAIProp::RegisterLuaFuncs ( state );
-	
+	MOAIAction::RegisterLuaFuncs ( state );
 	
 	// TODO: Format this table so the columns line up.
 	luaL_Reg regTable [] = {

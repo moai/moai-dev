@@ -11,11 +11,12 @@
 
 #include <tinyxml.h>
 
+#include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAICCParticle.h>
 
 
-class MOAICCParticleSystem : public MOAIProp {
+class MOAICCParticleSystem : public MOAIProp, public MOAIAction {
 private:
 	
 	enum EmitterType{
