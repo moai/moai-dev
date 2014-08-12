@@ -219,7 +219,7 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	
 	void			SetTotalParticles		( u32 numberOfParticles );
-	void			SetVisible				( bool visible );
+	void			SetVisibility			( bool visible );
 	void			ResetSystem				();
 	void			StartSystem				();
 	void			StopSystem				();

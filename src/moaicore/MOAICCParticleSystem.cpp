@@ -802,6 +802,7 @@ bool MOAICCParticleSystem::IsFull () {
 	return (this->mParticleCount == this->mTotalParticles);
 }
 
+
 MOAICCParticleSystem::MOAICCParticleSystem() :
 	mParticles( NULL ),
 	mParticleCount( 0 ),
@@ -863,8 +864,11 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	RTTI_END
 }
 
-MOAICCParticleSystem::~MOAICCParticleSystem	() {
-	
+MOAICCParticleSystem::~MOAICCParticleSystem () {
+	// clean up the allocated array
+	if (this->mParticles) {
+		
+	}
 }
 
 void MOAICCParticleSystem::OnUpdate ( float step ) {
@@ -1275,7 +1279,7 @@ void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
 }
 
 
-void MOAICCParticleSystem::SetVisible ( bool visible ) {
+void MOAICCParticleSystem::SetVisibility ( bool visible ) {
 	MOAIProp::SetVisible(visible);
 }
 
