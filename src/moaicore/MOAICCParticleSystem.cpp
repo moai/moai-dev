@@ -785,7 +785,7 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
-	this->mEmissionRate = 1.0f / (this->mTotalParticles);
+	this->mEmissionRate = 1.0f / (this->mTotalParticles / this->mLifespan);
 	
 	float minLifespan = this->mLifespan - this->mLifespanVariance;
 	if ( minLifespan < 0.0f ) {
@@ -880,7 +880,7 @@ MOAICCParticleSystem::~MOAICCParticleSystem () {
 void MOAICCParticleSystem::OnUpdate ( float step ) {
 	
 	if (this->mActive && this->mEmissionRate) {
-		float rate = 1.0f / this->mEmissionRate;
+		float rate = this->mEmissionRate;
 		
 		if (this->mParticleCount < this->mTotalParticles) {
 			this->mEmitCounter += step;
