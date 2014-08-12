@@ -202,7 +202,6 @@ private:
 	void			InitParticle						( MOAICCParticle *particle );
 	void			InitializeEmitter					();
 	bool			IsFull								();
-	void			OnDepNodeUpdate						();
 	void			OnUpdate							( float step );
 	void			ParseXML							( cc8* filename, TiXmlNode* node );
 	
