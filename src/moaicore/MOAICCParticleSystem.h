@@ -194,8 +194,8 @@ private:
 	
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
-	static int		_start								( lua_State* L );
-	static int		_stop       						( lua_State* L );
+	static int		_startSystem						( lua_State* L );
+	static int		_stopSystem       					( lua_State* L );
 	static int		_reset								( lua_State* L );
 	
 	
@@ -220,7 +220,7 @@ public:
 	
 	void			SetTotalParticles		( u32 numberOfParticles );
 	void			SetVisibility			( bool visible );
-	void			ResetSystem				();
+	void			ResetSystem				( bool activate );
 	void			StartSystem				();
 	void			StopSystem				();
 	

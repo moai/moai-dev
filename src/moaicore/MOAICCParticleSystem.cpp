@@ -601,13 +601,13 @@ int MOAICCParticleSystem::_load( lua_State *L ) {
 	return 0;
 }
 
-int MOAICCParticleSystem::_start ( lua_State *L ) {
+int MOAICCParticleSystem::_startSystem ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	self->StartSystem();
 	return 0;
 }
 
-int MOAICCParticleSystem::_stop ( lua_State *L ) {
+int MOAICCParticleSystem::_stopSystem ( lua_State *L ) {
 	
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	self->StopSystem();
@@ -617,7 +617,8 @@ int MOAICCParticleSystem::_stop ( lua_State *L ) {
 
 int MOAICCParticleSystem::_reset ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
-	self->ResetSystem();
+	bool activate = state.GetValue < bool > (2, true);
+	self->ResetSystem( activate );
 	return 0;
 }
 
@@ -1045,7 +1046,8 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 				}
 			}
 			else if (text == "maxParticles") {
-				this->mTotalParticles = atoi(attribute->Value());
+				u32 numParticles = atoi(attribute->Value());
+				this->SetTotalParticles(numParticles);
 			}
 			else if (text == "maxRadius") {
 				this->mMaxRadius = (float)atof(attribute->Value());
@@ -1244,16 +1246,18 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "reset",							_reset },
 		{ "getTotalParticles",				_getTotalParticles },
 		{ "setTotalParticles",				_setTotalParticles },
-		{ "start",							_start },
-		{ "stop",							_stop },
+		{ "startSystem",					_startSystem },
+		{ "stopSystem",						_stopSystem },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
 }
 
-void MOAICCParticleSystem::ResetSystem () {
-	this->mActive = true;
+void MOAICCParticleSystem::ResetSystem ( bool activate ) {
+	if (activate){
+		this->mActive = true;
+	}
 	this->mElapsed = 0.0f;
 	for (int i = 0; i < (int)this->mParticleCount; ++i) {
 		MOAICCParticle *p = &(this->mParticles[i]);
@@ -1275,7 +1279,7 @@ void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
 	}
 	
 	this->mTotalParticles = numberOfParticles;
-	this->ResetSystem();
+	this->ResetSystem(false);
 	
 }
 
@@ -1286,6 +1290,9 @@ void MOAICCParticleSystem::SetVisibility ( bool visible ) {
 
 void MOAICCParticleSystem::StartSystem () {
 	this->mActive = true;
+	
+	//MOAIAction::Start();
+	
 }
 
 
