@@ -1157,6 +1157,9 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass( state );
+	
+	state.SetField(-1, "EMITTER_GRAVITY", (u32) EMITTER_GRAVITY);
+	state.SetField(-1, "EMITTER_RADIAL", (u32) EMITTER_RADIAL);
 }
 
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
@@ -1170,7 +1173,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "getAngleVariance", _getAngleVariance },
 		{ "setAngleVariance", _setAngleVariance },
 		{ "getBlendMode", _getBlendMode },
-		{ "setBlendMode", _setBlendMode },
+		{ "setBlendModeParams", _setBlendMode }, // changed name to avoid conflict with MOAIProp Lua method
 		{ "getDuration", _getDuration},
 		{ "setDuration", _setDuration},
 		{ "getEmitterType", _getEmitterType},
@@ -1203,6 +1206,8 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "setRadialAcceleration", _setRadialAcceleration},
 		{ "getRadialAccelVariance", _getRadialAccelVariance},
 		{ "setRadialAccelVariance", _setRadialAccelVariance},
+		{ "getRadialAccelerationVariance", _getRadialAccelVariance}, // alias without abbreviation
+		{ "setRadialAccelerationVariance", _setRadialAccelVariance}, // alias without abbreviation
 		{ "getRect", _getRect},
 		{ "getRotatePerSecond", _getRotatePerSecond},
 		{ "setRotatePerSecond", _setRotatePerSecond},
