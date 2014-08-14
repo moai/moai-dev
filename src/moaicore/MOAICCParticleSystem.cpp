@@ -767,6 +767,9 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 		particle->mStartPosition.Init(loc.mX, loc.mY);
 	}
 	
+	// set current position
+	particle->mCurrentPosition.Init(particle->mStartPosition);
+	
 	// direction
 	float a = D2R * (this->mAngle + this->mAngleVariance * USFloat::Rand(-1.0f, 1.0f));
 	
