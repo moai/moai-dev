@@ -751,10 +751,16 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 	particle->mDeltaParticleRotation = (end - start) / particle->mTimeToLive;
 	
 	// position
-	// TODO: implement relative type for particle position
+	
+	// relative particle position
+	USVec3D loc;
+	if (this->mParticlePositionType == PARTICLE_POSITION_RELATIVE) {
+		loc = this->GetLoc();
+		particle->mStartPosition.Init(loc.mX, loc.mY);
+	}
 	// free particle position
-	{
-		USVec3D loc;
+	else if (this->mParticlePositionType == PARTICLE_POSITION_FREE) {
+		
 		loc.Init(0.0f, 0.0f, 0.0f);
 		USAffine3D modelToWorld = this->GetLocalToWorldMtx ();
 		modelToWorld.Transform(loc);
@@ -803,6 +809,10 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 		particle->mRotationalAcceleration = D2R * (this->mRotationalAcceleration + this->mRotationalAccelVariance * USFloat::Rand(-1.0f, 1.0f));
 		
 	}
+	
+	// deck index
+	// TODO: implement deck index from extended XML
+	particle->mDeckIndex = 0;
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
@@ -868,7 +878,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	mEmissionRate( 0.0f ),
 	mElapsed( 0.0f ),
 	mActive( false ),
-	mParticlePositionType( PARTICLE_POSITION_RELATIVE )
+	mParticlePositionType( PARTICLE_POSITION_GROUPED )
 {
 	int i = 0;
 	for ( ; i < 2;  ++i) {
@@ -1184,7 +1194,8 @@ void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField(-1, "EMITTER_RADIAL", (u32) EMITTER_RADIAL);
 	
 	state.SetField(-1, "PARTICLE_POSITION_RELATIVE", (u32) PARTICLE_POSITION_RELATIVE );
-	state.SetField(-1, "PARTICLE_POSITION_ABSOLUTE", (u32) PARTICLE_POSITION_ABSOLUTE );
+	state.SetField(-1, "PARTICLE_POSITION_FREE", (u32) PARTICLE_POSITION_FREE );
+	state.SetField(-1, "PARTICLE_POSITION_GROUPED", (u32) PARTICLE_POSITION_GROUPED );
 }
 
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
