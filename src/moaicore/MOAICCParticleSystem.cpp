@@ -568,6 +568,27 @@ int MOAICCParticleSystem::_getParticleCount( lua_State *L ) {
 }
 
 
+int MOAICCParticleSystem::_setEmissionRate( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	self->mEmissionRate = state.GetValue < float >(2, 1.0);
+	
+	return 0;
+}
+
+
+int MOAICCParticleSystem::_getParticlePositionType( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mParticlePositionType );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setParticlePositionType( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	ParticlePositionType type = ( ParticlePositionType )state.GetValue < u32 >( 2, PARTICLE_POSITION_RELATIVE );
+	self->mParticlePositionType = type;
+	return 0;
+}
+
 //----------------------------------------------------------------//
 
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
@@ -846,7 +867,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	mEmitCounter( 0.0f ),
 	mEmissionRate( 0.0f ),
 	mElapsed( 0.0f ),
-	mActive( false )
+	mActive( false ),
+	mParticlePositionType( PARTICLE_POSITION_RELATIVE )
 {
 	int i = 0;
 	for ( ; i < 2;  ++i) {
@@ -1160,6 +1182,9 @@ void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField(-1, "EMITTER_GRAVITY", (u32) EMITTER_GRAVITY);
 	state.SetField(-1, "EMITTER_RADIAL", (u32) EMITTER_RADIAL);
+	
+	state.SetField(-1, "PARTICLE_POSITION_RELATIVE", (u32) PARTICLE_POSITION_RELATIVE );
+	state.SetField(-1, "PARTICLE_POSITION_ABSOLUTE", (u32) PARTICLE_POSITION_ABSOLUTE );
 }
 
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
@@ -1248,11 +1273,17 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "getRotationalAccelerationVariance", _getRotationalAccelerationVariance},
 		{ "setRotationalAccelerationVariance", _setRotationalAccelerationVariance},
 		
+		{ "getEmissionRate",				_getFrequency},
+		{ "setEmissionRate",				_setEmissionRate },
+		{ "getParticlePositionType",		_getParticlePositionType },
+		{ "setParticlePositionType",		_setParticlePositionType },
+		
 		{ "getParticleCount",				_getParticleCount },
 		{ "getTextureName",					_getTextureName },
 		{ "initializeProperties",			_initializeProperties },
 		{ "load",							_load },
 		{ "reset",							_reset },
+		
 		{ "getTotalParticles",				_getTotalParticles },
 		{ "setTotalParticles",				_setTotalParticles },
 		{ "startSystem",					_startSystem },

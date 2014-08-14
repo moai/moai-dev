@@ -19,9 +19,14 @@
 class MOAICCParticleSystem : public MOAIProp, public MOAIAction {
 private:
 	
-	enum EmitterType{
+	enum EmitterType {
 		EMITTER_GRAVITY,
 		EMITTER_RADIAL,
+	};
+	
+	enum ParticlePositionType {
+		PARTICLE_POSITION_RELATIVE = 0,
+		PARTICLE_POSITION_ABSOLUTE,
 	};
 	
 	
@@ -107,6 +112,10 @@ private:
 	// true if the particle system is active
 	bool mActive;
 	
+	ParticlePositionType mParticlePositionType;
+	
+	
+	
 	static int		_getAngle							( lua_State* L );
 	static int		_setAngle							( lua_State* L );
 	static int		_getAngleVariance					( lua_State* L );
@@ -191,6 +200,9 @@ private:
 	static int		_getTotalParticles					( lua_State* L );
 	static int		_setTotalParticles					( lua_State* L );
 	static int		_getParticleCount					( lua_State* L );
+	static int		_setEmissionRate					( lua_State* L );
+	static int		_getParticlePositionType			( lua_State* L );
+	static int		_setParticlePositionType			( lua_State* L );
 	
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
