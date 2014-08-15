@@ -205,6 +205,7 @@ private:
 	static int		_getParticlePositionType			( lua_State* L );
 	static int		_setParticlePositionType			( lua_State* L );
 	
+	static int		_flipY								( lua_State* L );
 	static int		_initializeProperties				( lua_State* L );
 	static int		_load								( lua_State* L );
 	static int		_startSystem						( lua_State* L );
@@ -224,6 +225,7 @@ public:
 	
 	
 	void			Draw					( int subPrimID );
+	void			FlipY					();
 	bool			IsDone					();
 	
 					MOAICCParticleSystem	();

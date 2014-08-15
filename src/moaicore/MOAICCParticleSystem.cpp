@@ -590,6 +590,21 @@ int MOAICCParticleSystem::_setParticlePositionType( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	flipY
+	@text	Adjust the properties of the system so they mirror around the Y axis.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	nil
+ */
+int MOAICCParticleSystem::_flipY( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	
+	self->FlipY();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
@@ -707,6 +722,22 @@ void MOAICCParticleSystem::Draw	( int subPrimID ) {
 		this->mDeck->Draw ( this->mIndex + (u32) particle->mDeckIndex, this->mRemapper);
 		
 	}
+}
+
+void MOAICCParticleSystem::FlipY ( ) {
+	this->mAngle = 360.0f - this->mAngle;
+	
+	// invert y component of gravity
+	this->mGravity[1] = -this->mGravity[1];
+	
+	// invert angular velocity
+	this->mRotPerSecond = -this->mRotPerSecond;
+	
+	// invert angular acceleration
+	this->mRotationalAcceleration = -this->mRotationalAcceleration;
+	
+	// invert tangential acceleration
+	this->mTangentialAcceleration = -this->mTangentialAcceleration;
 }
 
 void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
@@ -1295,6 +1326,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		
 		{ "getParticleCount",				_getParticleCount },
 		{ "getTextureName",					_getTextureName },
+		{ "flipY", _flipY },
 		{ "initializeProperties",			_initializeProperties },
 		{ "load",							_load },
 		{ "reset",							_reset },
