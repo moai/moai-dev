@@ -17,8 +17,6 @@ public:
 	// how much longer the particle will be active
 	float mTimeToLive;
 	
-	MOAICCParticle *mNext;
-	
 	// The index from the deck this particle should use
 	u32 mDeckIndex;
 	
