@@ -969,6 +969,7 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 					tmp.Init(p->mGravity);
 					tmp.Add(radialVector);
 					tmp.Add(tangentialVector);
+					tmp.Scale(step);
 					
 					p->mDirection.Add(tmp);
 					tmp.Init(p->mDirection);
