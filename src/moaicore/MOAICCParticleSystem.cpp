@@ -590,6 +590,107 @@ int MOAICCParticleSystem::_setParticlePositionType( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAICCParticleSystem::_getIndexMode( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mIndexMode );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setIndexMode ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	IndexModeType mode = ( IndexModeType ) state.GetValue < u32 > ( 2, INDEX_MODE_SEQUENTIAL );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAICCParticleSystem::_getStartIndex( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mStartIndex );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setStartIndex( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	self->mStartIndex = state.GetValue < u32 >(2, 1.0);
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAICCParticleSystem::_getEndIndex( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mEndIndex );
+	return 1;
+}
+
+int MOAICCParticleSystem::_setEndIndex( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	self->mEndIndex = state.GetValue < u32 >(2, 1.0);
+	return 0;
+}
+//----------------------------------------------------------------//
+/** @name	getDeckTileCount
+	@text
+ 
+	@in     MOAICCParticleSystem	self
+	@out	number					x
+	@out    number					y
+ 
+ */
+int MOAICCParticleSystem::_getDeckTileCount( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mDeckTilesX);
+	lua_pushnumber( state, self->mDeckTilesY);
+	return 2;
+}
+//----------------------------------------------------------------//
+/** @name	getDeckTileDimensions
+	@text
+ 
+	@in     MOAICCParticleSystem	self
+	@out	number					width
+	@out    number					height
+ 
+ */
+int MOAICCParticleSystem::_getDeckTileDimensions( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mDeckTileWidth);
+	lua_pushnumber( state, self->mDeckTileHeight);
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/** @name	getDeckCellDimensions
+	@text
+ 
+	@in     MOAICCParticleSystem	self
+	@out	number					width
+	@out    number					height
+ 
+ */
+int MOAICCParticleSystem::_getDeckCellDimensions( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mDeckCellWidth);
+	lua_pushnumber( state, self->mDeckCellHeight);
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/** @name	getDeckTileOffset
+	@text
+ 
+	@in     MOAICCParticleSystem	self
+	@out	number					x
+	@out    number					y
+ 
+ */
+int MOAICCParticleSystem::_getDeckTileOffset ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber( state, self->mDeckOffsetX);
+	lua_pushnumber( state, self->mDeckOffsetY);
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	flipY
 	@text	Adjust the properties of the system so they mirror around the Y axis.
  
@@ -1323,6 +1424,17 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "setEmissionRate",				_setEmissionRate },
 		{ "getParticlePositionType",		_getParticlePositionType },
 		{ "setParticlePositionType",		_setParticlePositionType },
+		
+		{ "getIndexMode", _getIndexMode },
+		{ "setIndexMode", _setIndexMode },
+		{ "getStartIndex", _getStartIndex },
+		{ "setIndexMode", _setStartIndex },
+		{ "getEndIndex", _getEndIndex },
+		{ "setEndIndex", _setEndIndex },
+		{ "getDeckCellDimensions", _getDeckCellDimensions },
+		{ "getDeckTileCount", _getDeckTileCount },
+		{ "getDeckTileDimensions", _getDeckTileDimensions },
+		{ "getDeckTileOffset", _getDeckTileOffset },
 		
 		{ "getParticleCount",				_getParticleCount },
 		{ "getTextureName",					_getTextureName },

@@ -115,6 +115,23 @@ private:
 	
 	ParticlePositionType mParticlePositionType;
 	
+	enum IndexModeType{
+		INDEX_MODE_SEQUENTIAL = 0,
+		INDEX_MODE_RANDOM,
+	};
+	// Index Mode properties
+	IndexModeType mIndexMode;
+	u32			mStartIndex;
+	u32			mEndIndex;
+	
+	u32			mDeckTilesX;
+	u32			mDeckTilesY;
+	float		mDeckCellWidth;
+	float		mDeckCellHeight;
+	float		mDeckOffsetX;
+	float		mDeckOffsetY;
+	float		mDeckTileWidth;
+	float		mDeckTileHeight;
 	
 	
 	static int		_getAngle							( lua_State* L );
@@ -204,6 +221,17 @@ private:
 	static int		_setEmissionRate					( lua_State* L );
 	static int		_getParticlePositionType			( lua_State* L );
 	static int		_setParticlePositionType			( lua_State* L );
+	
+	static int		_getIndexMode						( lua_State* L );
+	static int		_setIndexMode						( lua_State* L );
+	static int		_getStartIndex						( lua_State* L );
+	static int		_setStartIndex						( lua_State* L );
+	static int		_getEndIndex						( lua_State* L );
+	static int		_setEndIndex						( lua_State* L );
+	static int		_getDeckTileCount					( lua_State* L );
+	static int		_getDeckTileDimensions				( lua_State* L );
+	static int		_getDeckCellDimensions				( lua_State* L );
+	static int		_getDeckTileOffset					( lua_State* L );
 	
 	static int		_flipY								( lua_State* L );
 	static int		_initializeProperties				( lua_State* L );
