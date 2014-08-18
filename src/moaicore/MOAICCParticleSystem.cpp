@@ -1013,7 +1013,18 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	mEmissionRate( 0.0f ),
 	mElapsed( 0.0f ),
 	mActive( false ),
-	mParticlePositionType( PARTICLE_POSITION_GROUPED )
+	mParticlePositionType( PARTICLE_POSITION_GROUPED ),
+	mIndexMode( INDEX_MODE_SEQUENTIAL ),
+	mStartIndex( 0 ),
+	mEndIndex( 0 ),
+	mDeckTilesX( 1 ),
+	mDeckTilesY( 1 ),
+	mDeckCellWidth( 1.0 ),
+	mDeckCellHeight( 1.0 ),
+	mDeckOffsetX( 0.0 ),
+	mDeckOffsetY( 0.0 ),
+	mDeckTileWidth( 1.0 ),
+	mDeckTileHeight( 1.0 )
 {
 	int i = 0;
 	for ( ; i < 2;  ++i) {
@@ -1332,6 +1343,9 @@ void MOAICCParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField(-1, "PARTICLE_POSITION_RELATIVE", (u32) PARTICLE_POSITION_RELATIVE );
 	state.SetField(-1, "PARTICLE_POSITION_FREE", (u32) PARTICLE_POSITION_FREE );
 	state.SetField(-1, "PARTICLE_POSITION_GROUPED", (u32) PARTICLE_POSITION_GROUPED );
+	
+	state.SetField(-1, "INDEX_MODE_SEQUENTIAL", (u32) INDEX_MODE_SEQUENTIAL );
+	state.SetField(-1, "INDEX_MODE_RANDOM", (u32) INDEX_MODE_RANDOM );
 }
 
 void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
