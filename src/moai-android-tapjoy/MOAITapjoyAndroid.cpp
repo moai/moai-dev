@@ -7,7 +7,7 @@
 #include "moai-sim/pch.h"
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAITapjoyAndroid.h>
+#include <moai-android-tapjoy/MOAITapjoyAndroid.h>
 
 //================================================================//
 // lua

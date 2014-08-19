@@ -9,7 +9,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAIFlurryAndroid.h>
+#include <moai-android-flurry/MOAIFlurryAndroid.h>
 
 //================================================================//
 // lua

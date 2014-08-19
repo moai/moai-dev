@@ -1,15 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TWITTER
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAITwitterAndroid.h>
+#include <moai-android-twitter/MOAITwitterAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -308,5 +306,3 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterTweetComp
 
 	MOAITwitterAndroid::Get ().NotifyTweetComplete ( code );
 }
-
-#endif

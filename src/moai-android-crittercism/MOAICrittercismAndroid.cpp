@@ -9,7 +9,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAICrittercismAndroid.h>
+#include <moai-android-crittercism/MOAICrittercismAndroid.h>
 
 extern JavaVM* jvm;
 

@@ -7,7 +7,7 @@
 #include "moai-sim/pch.h"
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAIChartBoostAndroid.h>
+#include <moai-android-chartboost/MOAIChartBoostAndroid.h>
 
 //================================================================//
 // lua
@@ -55,41 +55,6 @@ int MOAIChartBoostAndroid::_showInterstitial ( lua_State* L ) {
 
 	jmethodID showInterstitial = self->GetStaticMethod ( "showInterstitial", "(Ljava/lang/String;)V" );
 	self->CallStaticVoidMethod ( showInterstitial, jlocation );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	hasCachedInterstitial
-	@text	Determine whether or not a cached interstitial is available.
-
-	@out 	boolean	hasCached
-*/
-int MOAIChartBoostAndroid::_hasCachedInterstitial ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-
-	JNI_GET_ENV ( jvm, env );
-	
-	jclass chartboost = env->FindClass ( "com/ziplinegames/moai/MoaiChartBoost" );
-	if ( chartboost == NULL ) {
-
-		ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiChartBoost" );
-	} else {
-
-		jmethodID hasCachedInterstitial = env->GetStaticMethodID ( chartboost, "hasCachedInterstitial", "()Z" );
-		if ( hasCachedInterstitial == NULL ) {
-
-			ZLLog::Print ( "MOAIChartBoostAndroid: Unable to find static java method %s", "hasCachedInterstitial" );
-		} else {
-
-			jboolean hasCached = ( jboolean )env->CallStaticBooleanMethod ( chartboost, hasCachedInterstitial );	
-
-			lua_pushboolean ( state, hasCached );
-
-			return 1;		
-		}
-	}
-
 	return 0;
 }
 

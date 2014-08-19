@@ -7,7 +7,7 @@
 #include "moai-sim/pch.h"
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAIVungleAndroid.h>
+#include <moai-android-vungle/MOAIVungleAndroid.h>
 
 //================================================================//
 // lua

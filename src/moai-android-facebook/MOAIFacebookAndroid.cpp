@@ -9,7 +9,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAIFacebookAndroid.h>
+#include <moai-android-facebook/MOAIFacebookAndroid.h>
 
 extern JavaVM* jvm;
 

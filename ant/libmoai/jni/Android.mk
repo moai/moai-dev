@@ -126,28 +126,30 @@
 #----------------------------------------------------------------#
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
+	LOCAL_SRC_FILES 	+= src/jni.cpp
 
 #----------------------------------------------------------------#
 # libraries
 #----------------------------------------------------------------#
 
-	LOCAL_STATIC_LIBRARIES += libmoaicore
+	LOCAL_WHOLE_STATIC_LIBRARIES += libmoaicore
 	
 	
-	LOCAL_STATIC_LIBRARIES += libmoaiext-android
-	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
+	LOCAL_WHOLE_STATIC_LIBRARIES += libmoaiext-android
+	LOCAL_WHOLE_STATIC_LIBRARIES += libmoaiext-luaext
 
 	ifeq ($(USE_FMOD),true)
-		LOCAL_STATIC_LIBRARIES += libmoaiext-fmod-ex
+		LOCAL_WHOLE_STATIC_LIBRARIES += libmoaiext-fmod-ex
 	endif
 
 	ifeq ($(USE_UNTZ),true)
-		LOCAL_STATIC_LIBRARIES += libmoaiext-untz
+		LOCAL_WHOLE_STATIC_LIBRARIES += libmoaiext-untz
 		LOCAL_STATIC_LIBRARIES += libvorbis
 		LOCAL_STATIC_LIBRARIES += libogg
 	endif
 
-	LOCAL_STATIC_LIBRARIES += libzlcore
+	LOCAL_WHOLE_STATIC_LIBRARIES += libzlcore
+	LOCAL_WHOLE_STATIC_LIBRARIES += libzlvfs
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
 	LOCAL_STATIC_LIBRARIES += libcares
@@ -165,6 +167,7 @@
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
 	LOCAL_STATIC_LIBRARIES += libtess
+	LOCAL_STATIC_LIBRARIES += libzlib
 
 	include $(BUILD_SHARED_LIBRARY)
 
@@ -202,5 +205,7 @@
 	include tinyxml/Android.mk
 	include tess/Android.mk
 	include zlcore/Android.mk
+	include zlib/Android.mk
+	include zlvfs/Android.mk
 
 	include moaicore/Android.mk
