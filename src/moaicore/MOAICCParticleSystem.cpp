@@ -1076,7 +1076,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 MOAICCParticleSystem::~MOAICCParticleSystem () {
 	// clean up the allocated array
 	if (this->mParticles) {
-		
+		free (this->mParticles);
+		this->mParticles = NULL;
 	}
 }
 
