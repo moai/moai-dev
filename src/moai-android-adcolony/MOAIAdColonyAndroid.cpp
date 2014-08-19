@@ -9,7 +9,7 @@
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAIAdColonyAndroid.h>
+#include <moai-android-adcolony/MOAIAdColonyAndroid.h>
 
 //================================================================//
 // lua

@@ -4,8 +4,6 @@
 #ifndef	MOAITWITTERANDROID_H
 #define	MOAITWITTERANDROID_H
 
-#ifndef DISABLE_TWITTER
-
 #include <moai-core/headers.h>
 
 //================================================================//
@@ -61,7 +59,5 @@ public:
 	void 	NotifyTweetComplete	        ( int code );
 	void	RegisterLuaClass		    ( MOAILuaState& state );
 };
-
-#endif  //DISABLE_TWITTER
 
 #endif  //MOAITWITTER_H

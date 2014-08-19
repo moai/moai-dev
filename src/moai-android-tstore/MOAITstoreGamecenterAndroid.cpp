@@ -1,15 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TSTOREGAMECENTER
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAITstoreGamecenterAndroid.h>
+#include <moai-android-tstore/MOAITstoreGamecenterAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -611,5 +609,3 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyUserInf
 
 	JNI_RELEASE_CSTRING ( jjsonData, jsonData );
 }
-
-#endif
