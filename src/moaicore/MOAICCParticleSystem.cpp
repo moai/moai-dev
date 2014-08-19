@@ -599,6 +599,7 @@ int MOAICCParticleSystem::_getIndexMode( lua_State *L ) {
 int MOAICCParticleSystem::_setIndexMode ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	IndexModeType mode = ( IndexModeType ) state.GetValue < u32 > ( 2, INDEX_MODE_SEQUENTIAL );
+	self->mIndexMode = mode;
 	return 0;
 }
 
@@ -946,8 +947,31 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 	}
 	
 	// deck index
-	// TODO: implement deck index from extended XML
-	particle->mDeckIndex = 0;
+	if ( this->mIndexMode == INDEX_MODE_RANDOM) { // random
+		u32 endIdx;
+		u32 startIdx;
+		if (this->mEndIndex > this->mStartIndex) {
+			endIdx = this->mEndIndex;
+			startIdx = this->mStartIndex;
+		}
+		else{
+			endIdx = this->mStartIndex;
+			startIdx = this->mEndIndex;
+		}
+		
+		particle->mDeckIndex = (u32) Rand(startIdx, endIdx);
+	}
+	else { // sequential
+		u32 span = (this->mEndIndex - this->mStartIndex) + 1;
+		if (this->mEndIndex > this->mStartIndex) {
+			particle->mDeckIndex = this->mStartIndex + (this->mSeqIndex++ % span);
+		}
+		else{
+			particle->mDeckIndex = this->mStartIndex;
+		}
+	}
+	
+	
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
@@ -1024,7 +1048,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 	mDeckOffsetX( 0.0 ),
 	mDeckOffsetY( 0.0 ),
 	mDeckTileWidth( 1.0 ),
-	mDeckTileHeight( 1.0 )
+	mDeckTileHeight( 1.0 ),
+	mSeqIndex( 0 )
 {
 	int i = 0;
 	for ( ; i < 2;  ++i) {
@@ -1196,11 +1221,42 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 			else if (text == "blendFuncDestination") {
 				this->mBlendFuncDst = atoi(attribute->Value());
 			}
+			else if (text == "deckCellDimensions") {
+				this->mDeckCellHeight = (float) atof(attribute->Value());
+				attribute = attribute->Next ();
+				if (attribute) {
+					this->mDeckCellWidth = (float) atof(attribute->Value());
+				}
+			}
+			else if (text == "deckOffset") {
+				this->mDeckOffsetX = (float) atof(attribute->Value());
+				attribute = attribute->Next ();
+				if (attribute) {
+					this->mDeckOffsetY = (float) atof(attribute->Value());
+				}
+			}
+			else if (text == "deckTileCount") {
+				this->mDeckTilesX = (u32) atoi(attribute->Value());
+				attribute = attribute->Next ();
+				if (attribute) {
+					this->mDeckTilesY = (u32) atoi(attribute->Value());
+				}
+			}
+			else if (text == "deckTileDimensions") {
+				this->mDeckTileHeight = (float) atof(attribute->Value());
+				attribute = attribute->Next ();
+				if (attribute) {
+					this->mDeckTileWidth = (float) atof(attribute->Value());
+				}
+			}
 			else if (text == "duration") {
 				this->mDuration = (float)atof(attribute->Value());
 			}
 			else if (text == "emitterType") {
 				this->mEmitterType = (EmitterType)atoi(attribute->Value());
+			}
+			else if (text == "endIndex") {
+				this->mEndIndex = (u32) atoi(attribute->Value());
 			}
 			else if (text == "finishColor") {
 				for ( ; attribute; attribute = attribute->Next (), i++) {
@@ -1227,6 +1283,9 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 				for ( ; attribute; attribute = attribute->Next (), i++) {
 					this->mGravityVariance[i] = (float)atof(attribute->Value());
 				}
+			}
+			else if (text == "indexMode") {
+				this->mIndexMode = (IndexModeType) atoi(attribute->Value());
 			}
 			else if (text == "maxParticles") {
 				u32 numParticles = atoi(attribute->Value());
@@ -1306,6 +1365,9 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 					this->mStartColorVariance[i] = (float)atof(attribute->Value());
 				}
 			}
+			else if (text == "startIndex") {
+				this->mStartIndex = (u32) atoi(attribute->Value());
+			}
 			else if (text == "startParticleSize") {
 				this->mStartSize = (float)atof(attribute->Value());
 			}
@@ -1322,8 +1384,6 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
 				this->mTextureName = absDirPath;
 				this->mTextureName.append ( attribute->Value ());
 			}
-			
-			
 			
 		}
 		
@@ -1442,7 +1502,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "getIndexMode", _getIndexMode },
 		{ "setIndexMode", _setIndexMode },
 		{ "getStartIndex", _getStartIndex },
-		{ "setIndexMode", _setStartIndex },
+		{ "setStartIndex", _setStartIndex },
 		{ "getEndIndex", _getEndIndex },
 		{ "setEndIndex", _setEndIndex },
 		{ "getDeckCellDimensions", _getDeckCellDimensions },
@@ -1472,6 +1532,7 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
 		this->mActive = true;
 	}
 	this->mElapsed = 0.0f;
+	this->mSeqIndex = 0;
 	for (int i = 0; i < (int)this->mParticleCount; ++i) {
 		MOAICCParticle *p = &(this->mParticles[i]);
 		p->mTimeToLive = 0;

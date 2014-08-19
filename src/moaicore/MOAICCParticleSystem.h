@@ -133,6 +133,8 @@ private:
 	float		mDeckTileWidth;
 	float		mDeckTileHeight;
 	
+	u32			mSeqIndex;
+	
 	
 	static int		_getAngle							( lua_State* L );
 	static int		_setAngle							( lua_State* L );
