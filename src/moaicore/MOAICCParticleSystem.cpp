@@ -14,7 +14,7 @@
 
 #include <moaicore/MOAICCParticleSystem.h>
 
-
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getAngle( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mAngle );
@@ -28,6 +28,7 @@ int MOAICCParticleSystem::_setAngle ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getAngleVariance( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mAngleVariance );
@@ -40,6 +41,7 @@ int MOAICCParticleSystem::_setAngleVariance ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int	MOAICCParticleSystem::_getBlendMode( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mBlendFuncSrc );
@@ -54,6 +56,7 @@ int MOAICCParticleSystem::_setBlendMode ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getDuration( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mDuration );
@@ -66,6 +69,7 @@ int MOAICCParticleSystem::_setDuration ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getEmitterType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mEmitterType );
@@ -78,6 +82,7 @@ int MOAICCParticleSystem::_setEmitterType ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int	MOAICCParticleSystem::_getFinishColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishColor[0] );
@@ -96,6 +101,7 @@ int MOAICCParticleSystem::_setFinishColor ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int	MOAICCParticleSystem::_getFinishColorVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishColorVariance[0] );
@@ -114,6 +120,7 @@ int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getFinishParticleSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishSize );
@@ -126,6 +133,7 @@ int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getFinishParticleSizeVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishSizeVariance );
@@ -138,12 +146,20 @@ int MOAICCParticleSystem::_setFinishParticleSizeVariance ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name getFrequency
+	@text Returns the emission rate of the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					frequency
+ */
 int MOAICCParticleSystem::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mEmissionRate );
 	return 1;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mGravity[0] );
@@ -158,6 +174,14 @@ int MOAICCParticleSystem::_setGravity ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name getLifespan
+	@text Returns the minimum and maximum lifespans of particles in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					minLifespan
+	@out	number					maxLifespan
+ */
 int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mLifespanTerm[0] );
@@ -165,6 +189,7 @@ int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMaxRadius );
@@ -177,6 +202,7 @@ int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMaxRadiusVariance );
@@ -189,6 +215,7 @@ int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getEndRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMinRadius );
@@ -201,6 +228,7 @@ int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getEndRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMinRadiusVariance );
@@ -213,6 +241,7 @@ int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getParticleLifespan ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mLifespan );
@@ -228,6 +257,7 @@ int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getParticleLifespanVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mLifespanVariance );
@@ -243,6 +273,7 @@ int MOAICCParticleSystem::_setParticleLifespanVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRadialAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRadialAcceleration );
@@ -255,6 +286,7 @@ int MOAICCParticleSystem::_setRadialAcceleration ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRadialAccelVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRadialAccelVariance );
@@ -267,6 +299,16 @@ int MOAICCParticleSystem::_setRadialAccelVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name	getRect
+	@text	Returns the bounds of starting positions for particles in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					xMin
+	@out	number					yMin
+	@out	number					xMax
+	@out	number					yMax
+ */
 int MOAICCParticleSystem::_getRect ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, -self->mSourcePosVariance[0] );
@@ -276,6 +318,7 @@ int MOAICCParticleSystem::_getRect ( lua_State *L ) {
 	return 4;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotatePerSecond ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotPerSecond );
@@ -288,6 +331,7 @@ int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotatePerSecondVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotPerSecondVariance );
@@ -300,6 +344,7 @@ int MOAICCParticleSystem::_setRotatePerSecondVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationEnd ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotEnd );
@@ -312,6 +357,7 @@ int MOAICCParticleSystem::_setRotationEnd ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationEndVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotEndVariance );
@@ -324,6 +370,7 @@ int MOAICCParticleSystem::_setRotationEndVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationStart ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotStart );
@@ -336,6 +383,7 @@ int MOAICCParticleSystem::_setRotationStart ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationStartVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotStartVariance );
@@ -348,6 +396,7 @@ int MOAICCParticleSystem::_setRotationStartVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getSourcePosition ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSourcePos[0] );
@@ -362,6 +411,7 @@ int MOAICCParticleSystem::_setSourcePosition ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getSourcePositionVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSourcePosVariance[0] );
@@ -376,7 +426,7 @@ int MOAICCParticleSystem::_setSourcePositionVariance ( lua_State *L ) {
 	return 0;
 }
 
-
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getSpeed ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSpeed );
@@ -389,6 +439,7 @@ int MOAICCParticleSystem::_setSpeed ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getSpeedVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSpeedVariance );
@@ -401,6 +452,7 @@ int MOAICCParticleSystem::_setSpeedVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartColor ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartColor[0] );
@@ -419,6 +471,7 @@ int MOAICCParticleSystem::_setStartColor ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartColorVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartColorVariance[0] );
@@ -437,6 +490,7 @@ int MOAICCParticleSystem::_setStartColorVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartParticleSize ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartSize );
@@ -449,6 +503,7 @@ int MOAICCParticleSystem::_setStartParticleSize ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getStartParticleSizeVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartSizeVariance );
@@ -461,6 +516,7 @@ int MOAICCParticleSystem::_setStartParticleSizeVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getTangentalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mTangentialAcceleration );
@@ -473,6 +529,7 @@ int MOAICCParticleSystem::_setTangentalAcceleration ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getTangentalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mTangentialAccelVariance );
@@ -485,6 +542,7 @@ int MOAICCParticleSystem::_setTangentalAccelerationVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getGravityVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mGravityVariance[0] );
@@ -499,6 +557,7 @@ int MOAICCParticleSystem::_setGravityVariance ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotationalAcceleration );
@@ -511,6 +570,7 @@ int MOAICCParticleSystem::_setRotationalAcceleration ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getRotationalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotationalAccelVariance );
@@ -527,8 +587,8 @@ int MOAICCParticleSystem::_setRotationalAccelerationVariance ( lua_State *L ) {
 /**	@name	getTextureName
 	@text	Return the texture name associated with plugin.
  
-	@in		MOAIParticlePlugin self
-	@out	string textureName
+	@in		MOAICCParticleSystem	self
+	@out	string					textureName
  */
 
 int MOAICCParticleSystem::_getTextureName ( lua_State *L ) {
@@ -542,6 +602,12 @@ int MOAICCParticleSystem::_getTextureName ( lua_State *L ) {
 
 
 //----------------------------------------------------------------//
+/**	@name	getTotalParticles
+	@text	Returns the maximum number of particles in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					totalParticles
+ */
 int MOAICCParticleSystem::_getTotalParticles( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mTotalParticles );
@@ -550,6 +616,13 @@ int MOAICCParticleSystem::_getTotalParticles( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTotalParticles
+	@text	Set the maximum number of particles in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					totalParticles
+	@out	nil
+ */
 int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
 	u32 total = state.GetValue < u32 >( 2, 1 );
@@ -561,13 +634,26 @@ int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getParticleCount
+	@text	Returns the number of currently active particles in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					particleCount
+ */
 int MOAICCParticleSystem::_getParticleCount( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mParticleCount );
 	return 1;
 }
 
-
+//----------------------------------------------------------------//
+/**	@name	setEmissionRate
+	@text	Set the rate of particle generation in the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					emissionRate
+	@out	nil
+ */
 int MOAICCParticleSystem::_setEmissionRate( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
 	self->mEmissionRate = state.GetValue < float >(2, 1.0);
@@ -575,7 +661,7 @@ int MOAICCParticleSystem::_setEmissionRate( lua_State* L ) {
 	return 0;
 }
 
-
+//----------------------------------------------------------------//
 int MOAICCParticleSystem::_getParticlePositionType( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mParticlePositionType );
@@ -630,7 +716,7 @@ int MOAICCParticleSystem::_setEndIndex( lua_State* L ) {
 }
 //----------------------------------------------------------------//
 /** @name	getDeckTileCount
-	@text
+	@text	Returns the number of tiles in a tile deck in the X and Y directions.
  
 	@in     MOAICCParticleSystem	self
 	@out	number					x
@@ -645,7 +731,7 @@ int MOAICCParticleSystem::_getDeckTileCount( lua_State *L ) {
 }
 //----------------------------------------------------------------//
 /** @name	getDeckTileDimensions
-	@text
+	@text	Returns the dimensions of a tile for a tile deck.
  
 	@in     MOAICCParticleSystem	self
 	@out	number					width
@@ -661,7 +747,7 @@ int MOAICCParticleSystem::_getDeckTileDimensions( lua_State *L ) {
 
 //----------------------------------------------------------------//
 /** @name	getDeckCellDimensions
-	@text
+	@text	Returns the dimensions of a cell for a tile deck.
  
 	@in     MOAICCParticleSystem	self
 	@out	number					width
@@ -677,7 +763,7 @@ int MOAICCParticleSystem::_getDeckCellDimensions( lua_State *L ) {
 
 //----------------------------------------------------------------//
 /** @name	getDeckTileOffset
-	@text
+	@text	Returns the offset of the first tile for a tile deck.
  
 	@in     MOAICCParticleSystem	self
 	@out	number					x
@@ -707,7 +793,13 @@ int MOAICCParticleSystem::_flipY( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-
+/**	@name	initializeProperties
+	@text	Sets the emission rate property based on lifespan and maximum particles.  Also sets lifespan term member variable.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		String					file to load
+	@out	nil
+ */
 int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	
@@ -718,7 +810,7 @@ int MOAICCParticleSystem::_initializeProperties( lua_State *L ) {
 
 //----------------------------------------------------------------//
 /**	@name	load
-	@text	Initialize particle system properties with an XML file
+	@text	Initialize particle system properties with an XML file.
  
 	@in		MOAICCParticleSystem	self
 	@in		String					file to load
@@ -738,6 +830,13 @@ int MOAICCParticleSystem::_load( lua_State *L ) {
 	
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	startSystem
+	@text	Begin the generation of particles.  Use in conjenction with start().
+ 
+	@in		MOAICCParticleSystem	self
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_startSystem ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
@@ -745,6 +844,13 @@ int MOAICCParticleSystem::_startSystem ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/** @name	stopSystem
+	@text	Halt the generation of particles.  Any remaining particles will be allowed to stay until the end of their lifespan. Use stop() to halt the animation of particles.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	nil
+ */
 int MOAICCParticleSystem::_stopSystem ( lua_State *L ) {
 	
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
@@ -752,6 +858,14 @@ int MOAICCParticleSystem::_stopSystem ( lua_State *L ) {
 	
 	return 0;
 }
+//----------------------------------------------------------------//
+/** @name	reset
+	@text	Make all particles get cleared out at the next frame.
+ 
+	@in		MOAICCParticleSystem	self
+	@opt	boolean					activate	Default true.  Whether to begin the generation of particles after clearing the particles.
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_reset ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
