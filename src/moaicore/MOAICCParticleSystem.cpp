@@ -15,12 +15,28 @@
 #include <moaicore/MOAICCParticleSystem.h>
 
 //----------------------------------------------------------------//
+/** @name	getAngle
+	@text	Returns the system attribute angle.  Determines initial direction of particle in gravity mode and initial position in radial mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					angle
+ */
 int MOAICCParticleSystem::_getAngle( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mAngle );
 	
 	return 1;
 }
+
+
+//----------------------------------------------------------------//
+/** @name	setAngle
+	@text	Set the system attribute angle.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					angle
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
@@ -29,11 +45,27 @@ int MOAICCParticleSystem::_setAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getAngleVariance
+	@text	Returns the system attribute angle variance.  The initial value for a particle for any base attribute with variance will be between (base - variance) and (base + variance).
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					angleVariance
+ */
+
 int MOAICCParticleSystem::_getAngleVariance( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mAngleVariance );
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/** @name	getAngle
+	@text	Set the system attribute angle variance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					angleVariance
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setAngleVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
@@ -42,6 +74,13 @@ int MOAICCParticleSystem::_setAngleVariance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getBlendMode
+	@text	Returns the system attributes blend source and blend destination.  The returned values can be used in a call to the MOAIProp method setBlendMode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					blendSrc
+	@out	number					blendDest
+ */
 int	MOAICCParticleSystem::_getBlendMode( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mBlendFuncSrc );
@@ -49,6 +88,15 @@ int	MOAICCParticleSystem::_getBlendMode( lua_State* L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+/** @name	setBlendModeParams
+	@text	Set the system attributes blend source and blend destination.  Can be set to one of MOAIProp's OpenGL blend mode constants.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					blendSrc
+	@in		number					blendDest
+	@out	nil
+ */
 int MOAICCParticleSystem::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
 	self->mBlendFuncSrc = state.GetValue < u32 >( 2, 0 );
@@ -57,12 +105,26 @@ int MOAICCParticleSystem::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getDuration
+	@text	Returns the system attribute duration.  The amount of time the system will be active.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					duration
+ */
 int MOAICCParticleSystem::_getDuration( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mDuration );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setDuration
+	@text	Set the system attribute duration.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					duration
+	@out	nil
+ */
 int MOAICCParticleSystem::_setDuration ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mDuration = state.GetValue < float >( 2, 0 );
@@ -70,12 +132,26 @@ int MOAICCParticleSystem::_setDuration ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getEmitterType
+	@text	Returns the system attribute emitter type.  Currently, gravity and radial emitters are supported.  Values exposed as MOAICCParticleSystem class constants EMITTER_GRAVITY and EMITTER_RADIAL.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					emitterType
+ */
 int MOAICCParticleSystem::_getEmitterType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mEmitterType );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setEmitterType
+	@text	Set the system attribute emitter type.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					emitterType
+	@out	nil
+ */
 int MOAICCParticleSystem::_setEmitterType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mEmitterType = (EmitterType)state.GetValue < u32 >( 2, 0 );
@@ -83,6 +159,15 @@ int MOAICCParticleSystem::_setEmitterType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getFinishColor
+	@text	Returns the system attribute finishColor in RGBA components.  The color of the particle at the end of its lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					red
+	@out	number					green
+	@out	number					blue
+	@out	number					alpha
+ */
 int	MOAICCParticleSystem::_getFinishColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishColor[0] );
@@ -92,16 +177,36 @@ int	MOAICCParticleSystem::_getFinishColor ( lua_State* L ) {
 	return 4;
 }
 
+//----------------------------------------------------------------//
+/** @name	setFinishColor
+	@text	Set the RGBA components of system attribute finishColor.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					red
+	@in		number					green
+	@in		number					blue
+	@in		number					alpha
+	@out	nil
+ */
 int MOAICCParticleSystem::_setFinishColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNN" )
-	self->mFinishColor[0] = state.GetValue < float >( 2, 0 );
-	self->mFinishColor[1] = state.GetValue < float >( 3, 0 );
-	self->mFinishColor[2] = state.GetValue < float >( 4, 0 );
-	self->mFinishColor[3] = state.GetValue < float >( 5, 1 );
+	self->mFinishColor[0] = state.GetValue < float >( 2, 0.0 );
+	self->mFinishColor[1] = state.GetValue < float >( 3, 0.0 );
+	self->mFinishColor[2] = state.GetValue < float >( 4, 0.0 );
+	self->mFinishColor[3] = state.GetValue < float >( 5, 1.0 );
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/** @name	getFinishColorVariance
+	@text	Returns the system attribute finishColorVariance in RGBA components.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					red
+	@out	number					green
+	@out	number					blue
+	@out	number					alpha
+ */
 int	MOAICCParticleSystem::_getFinishColorVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishColorVariance[0] );
@@ -111,6 +216,17 @@ int	MOAICCParticleSystem::_getFinishColorVariance ( lua_State* L ) {
 	return 4;
 }
 
+//----------------------------------------------------------------//
+/** @name	setFinishColorVariance
+	@text	Set the RGBA components of system attribute finishColorVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					red
+	@in		number					green
+	@in		number					blue
+	@in		number					alpha
+	@out	nil
+ */
 int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNN" )
 	self->mFinishColorVariance[0] = state.GetValue < float >( 2, 0 );
@@ -121,12 +237,26 @@ int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getFinishParticleSize
+	@text	Returns the system attribute finishParticleSize.  The size in pixels of the particle at the end of its lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					finishParticleSize
+ */
 int MOAICCParticleSystem::_getFinishParticleSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishSize );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setFinishParticleSize
+	@text	Set the system attribute finishParticleSize.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					finishParticleSize
+	@out	nil
+ */
 int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mFinishSize = state.GetValue < float >( 2, 0 );
@@ -134,12 +264,26 @@ int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getFinishParticleSizeVariance
+	@text	Returns the system attribute finishParticleSizeVariance.  
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					finishParticleSizeVariance
+ */
 int MOAICCParticleSystem::_getFinishParticleSizeVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mFinishSizeVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setFinishParticleSizeVariance
+	@text	Set the system attribute finishParticleSizeVariance.   
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					finishParticleSizeVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setFinishParticleSizeVariance ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mFinishSizeVariance = state.GetValue < float >( 2, 0 );
