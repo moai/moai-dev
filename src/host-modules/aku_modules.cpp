@@ -13,6 +13,7 @@
 void AKUModulesAppFinalize () {
 
 	#if AKU_WITH_BOX2D
+		florb
 		AKUBox2DAppFinalize ();
 	#endif
 

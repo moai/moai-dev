@@ -227,10 +227,24 @@
 		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
 	
+	export AKU_WITH_BOX2D=false
+	export AKU_WITH_CHIPMUNK=false
+	export AKU_WITH_CRYPTO=false
+	export AKU_WITH_FMOD_DESIGNER=false
+	export AKU_WITH_FMOD_EX=false
+	export AKU_WITH_HARNESS=false
+	export AKU_WITH_HTTP_CLIENT=false
+	export AKU_WITH_HTTP_SERVER=false
+	export AKU_WITH_LUAEXT=false
+	export AKU_WITH_SIM=false
+	export AKU_WITH_TEST=false
+	export AKU_WITH_UNTZ=false
+	export AKU_WITH_UTIL=false
+	
 	# build libcrypto
-	pushd jni/crypto > /dev/null
-		bash build.sh
-	popd > /dev/null
+	#pushd jni/crypto > /dev/null
+	#	bash build.sh
+	#popd > /dev/null
 	
 	# build libmoai
 	pushd jni > /dev/null
