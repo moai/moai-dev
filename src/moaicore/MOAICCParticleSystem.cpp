@@ -304,6 +304,13 @@ int MOAICCParticleSystem::_getFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getGravity
+	@text	Returns the system attribute gravity in x and y components.  The linear acceleration vector of the particles.  Used only in gravity mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					gravityX
+	@out	number					gravityY
+ */
 int MOAICCParticleSystem::_getGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mGravity[0] );
@@ -311,6 +318,15 @@ int MOAICCParticleSystem::_getGravity ( lua_State* L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+/** @name	setGravity
+	@text	Set the x and y components of the system attribute gravity.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					gravityX
+	@in		number					gravityY
+	@out	nil
+ */
 int MOAICCParticleSystem::_setGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
 	self->mGravity[0] = state.GetValue < float >( 2, 0 );
@@ -334,12 +350,26 @@ int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartRadius
+	@text	Returns the system attribute startRadius.  Also called maximum radius.  The initial distance of the particle from the center of a system in radial mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startRadius
+ */
 int MOAICCParticleSystem::_getStartRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMaxRadius );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartRadius
+	@text	Set the system attribute startRadius.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startRadius
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mMaxRadius = state.GetValue < float >( 2, 0 );
@@ -347,12 +377,26 @@ int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartRadiusVariance
+	@text	Returns the system attribute startRadiusVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startRadiusVariance
+ */
 int MOAICCParticleSystem::_getStartRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMaxRadiusVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartRadiusVariance
+	@text	Set the system attribute startRadiusVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startRadiusVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mMaxRadiusVariance = state.GetValue < float >( 2, 0 );
@@ -360,12 +404,26 @@ int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getEndRadius
+	@text	Returns the system attribute endRadius.  Also called minimum radius.  The final distance of the particle from the center of a system in radial mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					endRadius
+ */
 int MOAICCParticleSystem::_getEndRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMinRadius );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setEndRadius
+	@text	Set the system attribute endRadius.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					endRadius
+	@out	nil
+ */
 int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mMinRadius = state.GetValue < float >( 2, 0 );
@@ -373,11 +431,26 @@ int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getEndRadiusVariance
+	@text	Returns the system attribute endRadiusVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					endRadiusVariance
+ */
 int MOAICCParticleSystem::_getEndRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mMinRadiusVariance );
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/** @name	setEndRadiusVariance
+	@text	Set the system attribute endRadiusVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					endRadiusVariance
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
@@ -386,12 +459,26 @@ int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getParticleLifespan
+	@text	Returns the system attribute particleLifespan.  The amount of time a particle in the system will be active.  The center of the range when used in conjunction with particleLifespanVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					particleLifespan
+ */
 int MOAICCParticleSystem::_getParticleLifespan ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mLifespan );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setParticleLifespan
+	@text	Set the system attribute particleLifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					particleLifespan
+	@out	nil
+ */
 int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mLifespan = state.GetValue < float >( 2, 0 );
@@ -402,12 +489,26 @@ int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getParticleLifespanVariance
+	@text	Returns the system attribute particleLifespanVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					particleLifespanVariance
+ */
 int MOAICCParticleSystem::_getParticleLifespanVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mLifespanVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setParticleLifespanVariance
+	@text	Set the system attribute particleLifespanVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					particleLifespanVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setParticleLifespanVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mLifespanVariance = state.GetValue < float >( 2, 0 );
@@ -418,12 +519,27 @@ int MOAICCParticleSystem::_setParticleLifespanVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRadialAcceleration
+	@text	Returns the system attribute radialAcceleration.  The acceleration away (or toward) the center for particles in a system in gravity mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					radialAcceleration
+ */
 int MOAICCParticleSystem::_getRadialAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRadialAcceleration );
 	return 1;
 }
 
+
+//----------------------------------------------------------------//
+/** @name	setRadialAcceleration
+	@text	Set the system attribute radialAcceleration.  
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					radialAcceleration
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRadialAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRadialAcceleration = state.GetValue < float >( 2, 0 );
@@ -431,11 +547,26 @@ int MOAICCParticleSystem::_setRadialAcceleration ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRadialAccelVariance
+	@text	Returns the system attribute radialAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					radialAccelerationVariance
+ */
 int MOAICCParticleSystem::_getRadialAccelVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRadialAccelVariance );
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/** @name	setRadialAccelVariance
+	@text	Set the system attribute radialAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					radialAccelerationVariance
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setRadialAccelVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
@@ -463,12 +594,26 @@ int MOAICCParticleSystem::_getRect ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotatePerSecond
+	@text	Returns the system attribute rotatePerSecond.  The particle's angular velocity around the center in degrees per seconds for systems in radial mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotatePerSecond
+ */
 int MOAICCParticleSystem::_getRotatePerSecond ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotPerSecond );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotatePerSecond
+	@text	Set the system attribute rotatePerSecond.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotatePerSecond
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotPerSecond = state.GetValue < float >( 2, 0 );
@@ -476,12 +621,26 @@ int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotatePerSecondVariance
+	@text	Returns the system attribute rotatePerSecondVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotatePerSecondVariance
+ */
 int MOAICCParticleSystem::_getRotatePerSecondVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotPerSecondVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotatePerSecondVariance
+	@text	Set the system attribute rotatePerSecondVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotatePerSecondVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotatePerSecondVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotPerSecondVariance = state.GetValue < float >( 2, 0 );
@@ -489,12 +648,26 @@ int MOAICCParticleSystem::_setRotatePerSecondVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationEnd
+	@text	Returns the system attribute rotationEnd.  The orientation of a particle at the end of the particle's lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationEnd
+ */
 int MOAICCParticleSystem::_getRotationEnd ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotEnd );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationEnd
+	@text	Set the system attribute rotationEnd.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationEnd
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationEnd ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotEnd = state.GetValue < float >( 2, 0 );
@@ -502,12 +675,26 @@ int MOAICCParticleSystem::_setRotationEnd ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationEndVariance
+	@text	Returns the system attribute rotationEndVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationEndVariance
+ */
 int MOAICCParticleSystem::_getRotationEndVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotEndVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationEndVariance
+	@text	Set the system attribute rotationEndVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationEndVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationEndVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotEndVariance = state.GetValue < float >( 2, 0 );
@@ -515,12 +702,26 @@ int MOAICCParticleSystem::_setRotationEndVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationStart
+	@text	Returns the system attribute rotationStart.  The orientation of a particle at the beginning of the particle's lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationStart
+ */
 int MOAICCParticleSystem::_getRotationStart ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotStart );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationStart
+	@text	Set the system attribute rotationStart.  The orientation of a particle at the beginning of the particle's lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationStart
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationStart ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotStart = state.GetValue < float >( 2, 0 );
@@ -528,12 +729,26 @@ int MOAICCParticleSystem::_setRotationStart ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationStartVariance
+	@text	Returns the system attribute rotationStartVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationStartVariance
+ */
 int MOAICCParticleSystem::_getRotationStartVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotStartVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationStartVariance
+	@text	Set the system attribute rotationStartVariance.  The orientation of a particle at the beginning of the particle's lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationStartVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationStartVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotStartVariance = state.GetValue < float >( 2, 0 );
@@ -541,12 +756,30 @@ int MOAICCParticleSystem::_setRotationStartVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getSourcePosition
+	@text	Returns the x and y components of system attribute sourcePosition.  This attribute can be interpreted several ways depending on the particle position type.  With the default particle positon type PARTICLE_POSITION_GROUPED, the location of the particle system is affected by changes to the position property.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					sourcePositionX
+	@out	number					sourcePositionY
+ */
 int MOAICCParticleSystem::_getSourcePosition ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSourcePos[0] );
 	lua_pushnumber ( state, self->mSourcePos[1] );
 	return 2;
 }
+
+
+//----------------------------------------------------------------//
+/** @name	setSourcePosition
+	@text	Set the x and y components of system attribute sourcePosition.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					sourcePositionX
+	@in		number					sourcePositionY
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setSourcePosition ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
@@ -556,6 +789,13 @@ int MOAICCParticleSystem::_setSourcePosition ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getSourcePositionVariance
+	@text	Returns the x and y components of system attribute sourcePositionVariance.  Particles will spawn within x units to the left or right of the source position and y units above or below the source position.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					sourcePositionVarianceX
+	@out	number					sourcePositionVarianceY
+ */
 int MOAICCParticleSystem::_getSourcePositionVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSourcePosVariance[0] );
@@ -563,6 +803,14 @@ int MOAICCParticleSystem::_getSourcePositionVariance ( lua_State *L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+/** @name	getSourcePositionVariance
+	@text	Set the x and y components of system attribute sourcePositionVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					sourcePositionVarianceX
+	@out	number					sourcePositionVarianceY
+ */
 int MOAICCParticleSystem::_setSourcePositionVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
 	self->mSourcePosVariance[0] = state.GetValue < float >( 2, 0 );
@@ -571,11 +819,26 @@ int MOAICCParticleSystem::_setSourcePositionVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getSpeed
+	@text	Returns the system attribute speed.  The initial velocity in units per seconds that a particle will have when spawned in a system under gravity mode.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					speed
+ */
 int MOAICCParticleSystem::_getSpeed ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSpeed );
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/** @name	setSpeed
+	@text	Set the system attribute speed.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					speed
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setSpeed ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
@@ -584,12 +847,26 @@ int MOAICCParticleSystem::_setSpeed ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getSpeedVariance
+	@text	Returns the system attribute speedVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					speedVariance
+ */
 int MOAICCParticleSystem::_getSpeedVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mSpeedVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setSpeedVariance
+	@text	Set the system attribute speedVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					speedVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setSpeedVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mSpeedVariance = state.GetValue < float >( 2, 0 );
@@ -597,6 +874,15 @@ int MOAICCParticleSystem::_setSpeedVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartColor
+	@text	Returns the system attribute startColor in RGBA components.  The color of the particle at the beginning of its lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					red
+	@out	number					green
+	@out	number					blue
+	@out	number					alpha
+ */
 int MOAICCParticleSystem::_getStartColor ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartColor[0] );
@@ -606,16 +892,36 @@ int MOAICCParticleSystem::_getStartColor ( lua_State *L ) {
 	return 4;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartColor
+	@text	Set the RGBA components of system attribute startColor.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					red
+	@in		number					green
+	@in		number					blue
+	@in		number					alpha
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartColor ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNNN" )
-	self->mStartColor[0] = state.GetValue < float >( 2, 0 );
-	self->mStartColor[1] = state.GetValue < float >( 3, 0 );
-	self->mStartColor[2] = state.GetValue < float >( 4, 0 );
-	self->mStartColor[3] = state.GetValue < float >( 5, 0 );
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNN" )
+	self->mStartColor[0] = state.GetValue < float >( 2, 0.0f );
+	self->mStartColor[1] = state.GetValue < float >( 3, 0.0f );
+	self->mStartColor[2] = state.GetValue < float >( 4, 0.0f );
+	self->mStartColor[3] = state.GetValue < float >( 5, 1.0f );
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartColorVariance
+	@text	Returns the system attribute startColorVariance in RGBA components.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					red
+	@out	number					green
+	@out	number					blue
+	@out	number					alpha
+ */
 int MOAICCParticleSystem::_getStartColorVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartColorVariance[0] );
@@ -625,9 +931,20 @@ int MOAICCParticleSystem::_getStartColorVariance ( lua_State *L ) {
 	return 4;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartColorVariance
+	@text	Set the RGBA components of system attribute startColorVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					red
+	@in		number					green
+	@in		number					blue
+	@in		number					alpha
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartColorVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNNNN" )
-	self->mStartColorVariance[0] = state.GetValue < float >( 2, 0 );
+	self->mStartColorVariance[0] = state.GetValue < float >( 2, 0.0 );
 	self->mStartColorVariance[1] = state.GetValue < float >( 3, 0 );
 	self->mStartColorVariance[2] = state.GetValue < float >( 4, 0 );
 	self->mStartColorVariance[3] = state.GetValue < float >( 5, 0 );
@@ -635,12 +952,26 @@ int MOAICCParticleSystem::_setStartColorVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartParticleSize
+	@text	Returns the system attribute startParticleSize.  The size of a particle in pixels at the beginning of its lifespan.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startParticleSize
+ */
 int MOAICCParticleSystem::_getStartParticleSize ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartSize );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartParticleSize
+	@text	Set the system attribute startParticleSize.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startParticleSize
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartParticleSize ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mStartSize = state.GetValue < float >( 2, 0 );
@@ -648,12 +979,26 @@ int MOAICCParticleSystem::_setStartParticleSize ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartParticleSizeVariance
+	@text	Returns the system attribute startParticleSizeVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startParticleSizeVariance
+ */
 int MOAICCParticleSystem::_getStartParticleSizeVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mStartSizeVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartParticleSizeVariance
+	@text	Set the system attribute startParticleSizeVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startParticleSizeVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartParticleSizeVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mStartSizeVariance = state.GetValue < float >( 2, 0 );
@@ -661,12 +1006,26 @@ int MOAICCParticleSystem::_setStartParticleSizeVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getTangentalAcceleration
+	@text	Returns the system attribute tangentalAcceleration.  The acceleration of a particle perpendicular to the direction toward the center of the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					tangentalAcceleration
+ */
 int MOAICCParticleSystem::_getTangentalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mTangentialAcceleration );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setTangentalAcceleration
+	@text	Set the system attribute tangentalAcceleration.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					tangentalAcceleration
+	@out	nil
+ */
 int MOAICCParticleSystem::_setTangentalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mTangentialAcceleration = state.GetValue < float >( 2, 0 );
@@ -674,12 +1033,25 @@ int MOAICCParticleSystem::_setTangentalAcceleration ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getTangentalAccelerationVariance
+	@text	Returns the system attribute tangentalAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					tangentalAccelerationVariance
+ */
 int MOAICCParticleSystem::_getTangentalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mTangentialAccelVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setTangentalAccelerationVariance
+	@text	Set the system attribute tangentalAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					tangentalAccelerationVariance
+ */
 int MOAICCParticleSystem::_setTangentalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mTangentialAccelVariance = state.GetValue < float >( 2, 0 );
@@ -687,12 +1059,29 @@ int MOAICCParticleSystem::_setTangentalAccelerationVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getGravityVariance
+	@text	Returns the x and y components of system attribute gravityVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					gravityVarianceX
+	@out	number					gravityVarianceY
+ */
 int MOAICCParticleSystem::_getGravityVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mGravityVariance[0] );
 	lua_pushnumber ( state, self->mGravityVariance[1] );
 	return 2;
 }
+
+//----------------------------------------------------------------//
+/** @name	setGravityVariance
+ @text	Set the x and y components of system attribute gravityVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					gravityVarianceX
+	@in		number					gravityVarianceY
+	@out	nil
+ */
 
 int MOAICCParticleSystem::_setGravityVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
@@ -702,12 +1091,26 @@ int MOAICCParticleSystem::_setGravityVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationalAcceleration
+	@text	Returns the system attribute rotationalAcceleration.  The rate at which angular velocity of a particle increases each second in a radial system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationalAcceleration
+ */
 int MOAICCParticleSystem::_getRotationalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotationalAcceleration );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationalAcceleration
+	@text	Set the system attribute rotationalAcceleration.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationalAcceleration
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationalAcceleration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotationalAcceleration = state.GetValue < float >( 2, 0 );
@@ -715,12 +1118,26 @@ int MOAICCParticleSystem::_setRotationalAcceleration ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getRotationalAccelerationVariance
+	@text	Returns the system attribute rotationalAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					rotationalAccelerationVariance
+ */
 int MOAICCParticleSystem::_getRotationalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber ( state, self->mRotationalAccelVariance );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setRotationalAccelerationVariance
+	@text	Set the system attribute rotationalAccelerationVariance.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					rotationalAccelerationVariance
+	@out	nil
+ */
 int MOAICCParticleSystem::_setRotationalAccelerationVariance ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	self->mRotationalAccelVariance = state.GetValue < float >( 2, 0 );
@@ -806,26 +1223,53 @@ int MOAICCParticleSystem::_setEmissionRate( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getParticlePositionType
+	@text	Returns the system attribute particlePositionType.  PARTICLE_POSITION_GROUPED, PARTICLE_POSITION_RELATIVE, and PARTICLE_POSITION_FREE are the named constants of MOAICCParticleSystem for values of this attribute.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					particlePositionType
+ */
 int MOAICCParticleSystem::_getParticlePositionType( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mParticlePositionType );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setParticlePositionType
+	@text	Set the system attribute particlePositionType.  PARTICLE_POSITION_GROUPED, PARTICLE_POSITION_RELATIVE, and PARTICLE_POSITION_FREE are the named constants of MOAICCParticleSystem for values of this attribute.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					particlePositionType
+	@out	nil
+ */
 int MOAICCParticleSystem::_setParticlePositionType( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
-	ParticlePositionType type = ( ParticlePositionType )state.GetValue < u32 >( 2, PARTICLE_POSITION_RELATIVE );
+	ParticlePositionType type = ( ParticlePositionType )state.GetValue < u32 >( 2, PARTICLE_POSITION_GROUPED );
 	self->mParticlePositionType = type;
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/** @name	getIndexMode
+	@text	Returns the system attribute indexMode.  INDEX_MODE_SEQUENTIAL, and INDEX_MODE_RANDOM are the named constants of MOAICCParticleSystem for values of this attribute.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					indexMode
+ */
 int MOAICCParticleSystem::_getIndexMode( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mIndexMode );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setIndexMode
+	@text	Set the system attribute indexMode.  INDEX_MODE_SEQUENTIAL, and INDEX_MODE_RANDOM are the named constants of MOAICCParticleSystem for values of this attribute.  INDEX_MODE_SEQUENTIAL makes the index of successive particles go up incrementally from the value of startIndex to the value of endIndex and loop back.  INDEX_MODE_RANDOM makes each particle have a random value between and including the values of startIndex and endIndex.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					indexMode
+ */
 int MOAICCParticleSystem::_setIndexMode ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
 	IndexModeType mode = ( IndexModeType ) state.GetValue < u32 > ( 2, INDEX_MODE_SEQUENTIAL );
@@ -834,12 +1278,26 @@ int MOAICCParticleSystem::_setIndexMode ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getStartIndex
+	@text	Returns the system attribute startIndex.  The starting point for deck indices of particles created by the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startIndex
+ */
 int MOAICCParticleSystem::_getStartIndex( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mStartIndex );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setStartIndex
+	@text	Set the system attribute startIndex.  The starting point for deck indices of particles created by the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startIndex
+	@out	nil
+ */
 int MOAICCParticleSystem::_setStartIndex( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
 	self->mStartIndex = state.GetValue < u32 >(2, 1.0);
@@ -847,12 +1305,26 @@ int MOAICCParticleSystem::_setStartIndex( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @name	getEndIndex
+	@text	Returns the system attribute startIndex.  The ending point for deck indices of particles created by the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					startIndex
+ */
 int MOAICCParticleSystem::_getEndIndex( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
 	lua_pushnumber( state, self->mEndIndex );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/** @name	setEndIndex
+ @text	Set the system attribute startIndex.  The ending point for deck indices of particles created by the system.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					startIndex
+	@out	nil
+ */
 int MOAICCParticleSystem::_setEndIndex( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
 	self->mEndIndex = state.GetValue < u32 >(2, 1.0);
