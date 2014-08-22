@@ -18,8 +18,6 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void			PinTop					();
-	void			PinTop					( int top );
 	void			Take					( const MOAIScopedLuaState& assign );
 					MOAIScopedLuaState		();
 					MOAIScopedLuaState		( lua_State* L );

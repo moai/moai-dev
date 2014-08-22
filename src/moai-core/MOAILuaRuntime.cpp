@@ -580,14 +580,6 @@ void MOAILuaRuntime::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRuntime::OnGlobalsRetire () {
-}
-
-//----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaRuntime::Open () {
 
 	if ( this->IsOpen ()) {

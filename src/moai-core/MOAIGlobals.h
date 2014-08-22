@@ -47,8 +47,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void	OnGlobalsFinalize			();
-	virtual void	OnGlobalsRestore			();
-	virtual void	OnGlobalsRetire				();
 					MOAIGlobalClassBase			();
 	virtual			~MOAIGlobalClassBase		();
 };
@@ -72,7 +70,6 @@ class MOAIGlobals {
 private:
 
 	friend class MOAIGlobalsMgr;
-	friend class MOAIGlobalClassFinalizer;
 
 	enum {
 		CHUNK_SIZE = 32,
@@ -81,8 +78,6 @@ private:
 	ZLLeanArray < MOAIGlobalPair >	mGlobals;
 
 	//----------------------------------------------------------------//
-	void		Restore				();
-	void		Retire				();
 				MOAIGlobals			();
 				~MOAIGlobals		();
 

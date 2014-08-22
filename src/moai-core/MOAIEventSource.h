@@ -73,10 +73,6 @@ private:
 
 	MOAILuaStrongRef	mListenerTable;
 
-	//----------------------------------------------------------------//
-	static int		_getListener				( lua_State* L );
-	static int		_setListener				( lua_State* L );
-
 protected:
 
 	//----------------------------------------------------------------//
