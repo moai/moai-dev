@@ -95,13 +95,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	// Rotates the vector (1, 0, 0) by the matrix, ignoring translation and scale
 	ZLMetaVec3D < TYPE > GetHeading () const {
 
 		ZLMetaVec3D < TYPE > heading;
 	
 		heading.mX = m [ C0_R0 ];
 		heading.mY = m [ C0_R1 ];
-		heading.mZ = m [ C0_R1 ];
+		heading.mZ = m [ C0_R2 ];
 
 		heading.NormSafe ();
 		
