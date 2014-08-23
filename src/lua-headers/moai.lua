@@ -464,8 +464,8 @@ MOAIGfxDevice.extend (
 	function ( class, superClass )
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		-- extend the class
-		function class.setClearColor ( r, g, b, a )
-			MOAIGfxDevice.getFrameBuffer():setClearColor ( r, g, b, a )
+		function class.setClearColor ( ... )
+			MOAIGfxDevice.getFrameBuffer():setClearColor ( ... )
 		end
 	end
 )
