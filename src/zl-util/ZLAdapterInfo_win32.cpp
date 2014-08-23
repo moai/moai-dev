@@ -30,15 +30,15 @@ void ZLAdapterInfo::SetNameFromMACAddress ( u8* address, u32 length ) {
 
 STLString ZLAdapterInfo::GetMACAddress () {
 
-	USMacAddress macAddress;
-	memset ( macAddress.bytes , 0 , 6 );
-		
-	//AJV TODO: find mac address for windows
+	// stolen from MOAIEnvironment.cpp
 		
 	char address[13];
 	memset ( address , 0 , 13 );
 
-	sprintf( address, "%02X%02X%02X%02X%02X%02X", macAddress.bytes[0], macAddress.bytes[1], macAddress.bytes[2], macAddress.bytes[3], macAddress.bytes[4], macAddress.bytes[5] );
+	UUID uuid;
+	UuidCreateSequential ( &uuid );
+
+	sprintf ( address, "%02X%02X%02X%02X%02X%02X", uuid.Data4[2], uuid.Data4[3], uuid.Data4[4], uuid.Data4[5], uuid.Data4[6], uuid.Data4[7]);
 	STLString macString = address;
 	return macString;
 }
