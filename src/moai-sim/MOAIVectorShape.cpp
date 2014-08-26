@@ -179,7 +179,9 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 		
 		SafeTesselator triangles;
 		
-		this->AddFillContours ( &triangles );
+		error = this->AddFillContours ( &triangles );
+		
+		if ( error ) return error;
 		
 		error = triangles.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
