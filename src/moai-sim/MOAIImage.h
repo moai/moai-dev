@@ -83,17 +83,17 @@ private:
 	void			Alloc				();
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
 	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
-	static bool		IsJpg				( ZLStream& stream );
-	static bool		IsPng				( ZLStream& stream );
 	
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBJPG
+		static bool		IsJpg				( ZLStream& stream );
 		void			LoadJpg				( ZLStream& stream, u32 transform );
 		void			LoadJpg				( void* jpgInfoParam, u32 transform );
 	#endif
 	
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBPNG
+		static bool		IsPng				( ZLStream& stream );
 		void			LoadPng				( ZLStream& stream, u32 transform );
 		void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
 	#endif

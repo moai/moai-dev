@@ -165,6 +165,18 @@ static void set_jpeg_usstream_source ( j_decompress_ptr cinfo, ZLStream* stream 
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIImage::IsJpg ( ZLStream& stream ) {
+
+	u8 magic[] = { 0xFF, 0xD8, 0xFF }; // <?> <?> <?> <?>
+
+	char buffer[4];
+	u32 size = stream.PeekBytes ( buffer, 4 );
+	if ( size < 4 ) return false;
+
+	return ( memcmp ( buffer, magic, 3 ) == 0 ) && ( ( ( unsigned char* )buffer )[3] >= 0xe0 && ( ( unsigned char* )buffer )[3] <= 0xef );
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::LoadJpg ( ZLStream& stream, u32 transform ) {
 
 	struct jpeg_decompress_struct cinfo;
