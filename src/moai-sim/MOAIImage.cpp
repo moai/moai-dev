@@ -347,7 +347,9 @@ int MOAIImage::_init ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	load
-	@text	Loads an image from a PNG.
+	@text	Loads an image from an image file.
+			Depending on the build configuration, the following file formats are supported:
+			PNG, JPG, WebP.
 
 	@in		MOAIImage self
 	@in		string filename
@@ -1595,6 +1597,13 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	#if MOAI_WITH_LIBJPG
 		if ( MOAIImage::IsJpg ( stream ) ) {
 			this->LoadJpg ( stream, transform );
+			return;
+		}
+	#endif
+	
+	#if MOAI_WITH_LIBWEBP
+		if ( MOAIImage::IsWebP ( stream ) ) {
+			this->LoadWebP ( stream, transform );
 			return;
 		}
 	#endif

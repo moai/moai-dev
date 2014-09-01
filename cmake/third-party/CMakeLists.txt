@@ -46,6 +46,7 @@ add_subdirectory ( ssl )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
+add_subdirectory ( webp )
 add_subdirectory ( zlib )
 
 #SDL is for pc only

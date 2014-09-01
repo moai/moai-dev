@@ -25,10 +25,10 @@ namespace MOAIImageTransform {
 	@const	FILTER_LINEAR
 	@const	FILTER_NEAREST
 	
-	@flag	POW_TWO
-	@flag	QUANTIZE
-	@flag	TRUECOLOR
-	@flag	PREMULTIPLY_ALPHA
+	@flag	POW_TWO				Adds padding at the right and bottom to make the image dimensions powers of 2.
+	@flag	QUANTIZE			Uses less than 8 bits per channel to reduce memory consumption.
+	@flag	TRUECOLOR			Converts palettized color formats to true color.
+	@flag	PREMULTIPLY_ALPHA	Premultiplies the pixel colors with their alpha values.
 	
 	@flag	PIXEL_FMT_TRUECOLOR
 	@flag	PIXEL_FMT_INDEX_4
@@ -96,6 +96,13 @@ private:
 		static bool		IsPng				( ZLStream& stream );
 		void			LoadPng				( ZLStream& stream, u32 transform );
 		void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
+	#endif
+
+	//----------------------------------------------------------------//
+	#if MOAI_WITH_LIBWEBP
+		static bool		IsWebP				( ZLStream& stream );
+		void			LoadWebP			( ZLStream& stream, u32 transform );
+		void			LoadWebP			( const u8* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
 	#endif
 
 public:
