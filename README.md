@@ -21,7 +21,10 @@ Please clones the source in the following way.
 Tools needed to build the MOAI SDK.
 
 * [Android SDK](http://developer.android.com/sdk/index.html)
-* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only)
+* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only, r8e or earlier)
+   * windows: http://dl.google.com/android/ndk/android-ndk-r8e-windows-x86.zip
+   * linux: http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2
+   * osx: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2	 
 * [Java SE 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Ant 1.9](http://ant.apache.org/)
 * [CMake 2.8.11](http://www.cmake.org/)
