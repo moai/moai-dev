@@ -1957,18 +1957,6 @@ void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::Format colo
 }
 
 //----------------------------------------------------------------//
-bool MOAIImage::IsJpg ( ZLStream& stream ) {
-
-	u8 magic [] = { 0xFF, 0xD8, 0xFF }; // <?> <?> <?> <?>
-
-	char buffer [ 4 ];
-	u32 size = stream.PeekBytes ( buffer, 4 );
-	if ( size < 4 ) return false;
-	
-	return ( memcmp ( buffer, magic, 3 ) == 0 )  &&  ((( unsigned char* )buffer)[ 3 ] >= 0xe0  &&  (( unsigned char* )buffer )[ 3 ] <= 0xef );
-}
-
-//----------------------------------------------------------------//
 bool MOAIImage::IsPow2 () {
 
 	return ( MOAIImage::IsPow2 ( this->mWidth ) && MOAIImage::IsPow2 ( this->mHeight ));
@@ -1978,18 +1966,6 @@ bool MOAIImage::IsPow2 () {
 bool MOAIImage::IsPow2 ( u32 n ) {
 
 	return (( n == 1 ) || (( n & ( n - 1 )) == 0 ));
-}
-
-//----------------------------------------------------------------//
-bool MOAIImage::IsPng ( ZLStream& stream ) {
-
-	u8 magic [] = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }; // <?> P N G <CR><LF><SUB><LF>
-
-	char buffer [ 8 ];
-	u32 size = stream.PeekBytes ( buffer, 8 );
-	if ( size < 8 ) return false;
-	
-	return ( memcmp ( buffer, magic, 8 ) == 0 );
 }
 
 //----------------------------------------------------------------//
@@ -2008,20 +1984,24 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
+	UNUSED ( stream );
 	UNUSED ( transform );
 
 	this->Clear ();
 	
-	if ( MOAIImage::IsPng ( stream )) {
-		#if MOAI_WITH_LIBPNG
+	#if MOAI_WITH_LIBPNG
+		if ( MOAIImage::IsPng ( stream ) ) {
 			this->LoadPng ( stream, transform );
-		#endif
-	}
-	else if ( MOAIImage::IsJpg ( stream )) {
-		#if MOAI_WITH_LIBJPG
+			return;
+		}
+	#endif
+	
+	#if MOAI_WITH_LIBJPG
+		if ( MOAIImage::IsJpg ( stream ) ) {
 			this->LoadJpg ( stream, transform );
-		#endif
-	}
+			return;
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//

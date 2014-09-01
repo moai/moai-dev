@@ -45,6 +45,18 @@ static void _pngWrite ( png_structp png, png_bytep buffer, png_size_t size ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIImage::IsPng ( ZLStream& stream ) {
+
+	u8 magic[] = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }; // <?> P N G <CR><LF><SUB><LF>
+
+	char buffer[8];
+	u32 size = stream.PeekBytes ( buffer, 8 );
+	if ( size < 8 ) return false;
+
+	return ( memcmp ( buffer, magic, 8 ) == 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::LoadPng ( ZLStream& stream, u32 transform ) {
 
 	png_structp png = png_create_read_struct ( PNG_LIBPNG_VER_STRING, 0, _pngError, 0 );
