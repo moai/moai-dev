@@ -90,7 +90,7 @@ int MOAIDeck::_setShader ( lua_State* L ) {
 	
 	@in		MOAIDeck self
 	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
+	@opt	number transform	Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
 	@out	MOAIGfxState texture
 */
 int MOAIDeck::_setTexture ( lua_State* L ) {
