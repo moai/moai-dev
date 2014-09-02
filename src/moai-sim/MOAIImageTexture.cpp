@@ -44,7 +44,7 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 void MOAIImageTexture::InvalidateAll () {
 
 	this->mStatus = INVALID;
- 	this->MOAIGfxResource::Load ();
+	this->MOAIGfxResource::InvalidateContents ();
 }
 
 //----------------------------------------------------------------//
@@ -63,7 +63,7 @@ void MOAIImageTexture::Invalidate ( ZLIntRect rect ) {
 	}
 	this->mStatus = INVALID_REGION;
 	
-	this->MOAIGfxResource::Load ();
+	this->MOAIGfxResource::InvalidateContents ();
 }
 
 //----------------------------------------------------------------//
