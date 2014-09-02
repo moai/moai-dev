@@ -202,6 +202,12 @@ void AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int
 }
 
 //----------------------------------------------------------------//
+int AKUCheckContext ( AKUContextID contextID ) {
+	
+	return sContextMap->contains ( contextID ) ? 0 : -1;
+}
+
+//----------------------------------------------------------------//
 void AKUClearMemPool () {
 
 	ZL_TLSF_POOL* pool = zl_tlsf_get_pool ();
@@ -382,7 +388,7 @@ int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetContext ( AKUContextID contextID ) {
+int AKUSetContext ( AKUContextID contextID ) {
 	
 	if ( sContextID != contextID ) {
 		
@@ -391,11 +397,11 @@ void AKUSetContext ( AKUContextID contextID ) {
 		
 		if ( sContext ) {
 			MOAIGlobalsMgr::Set ( sContext->mGlobals );
-		}
-		else {
-			MOAIGlobalsMgr::Set ( 0 );
+			return 0;
 		}
 	}
+	MOAIGlobalsMgr::Set ( 0 );
+	return -1;
 }
 
 //----------------------------------------------------------------//
