@@ -66,9 +66,10 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk',
 			'$(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-d.mk',
 			'$(MOAI_SDK_HOME)/ant/libmoai/modules/zl-crypto.mk',
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-crypto.mk',
 		},
 		
-		STATIC_LIBRARIES = 'libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-crypto',
+		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libcrypto-a libcrypto-b libcrypto-c libcrypto-d',
 	},
 	
 	----------------------------------------------------------------
@@ -222,13 +223,10 @@ EXTERNAL_LIBRARIES = {
 	'liblua',
 	'libmoai-android',
 	'libmoai-core',
-	'libmoai-sim',
-	'libmoai-util',
 	'libsfmt',
 	'libsqlite',
 	'libtinyxml',
 	'libzl-core',
-	'libzl-crypto',
 	'libzl-gfx',
 	'libzl-vfs',
 	'libzlib',
@@ -244,6 +242,7 @@ STATIC_LIBRARIES = {
 	'libmoai-luaext',
 	'libmoai-untz',
 	'libmoai-sim',
+	'libmoai-crypto',
 	'libmoai-util',
 	'libmoai-core',
 	
@@ -290,4 +289,8 @@ WHOLE_STATIC_LIBRARIES = {
 	'libmoai-android',
 	'libmoai-sim',
 	'libmoai-core',
+	'libcrypto-a',
+	'libcrypto-b',
+	'libcrypto-c',
+	'libcrypto-d',
 }
