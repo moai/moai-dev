@@ -23,7 +23,7 @@ public:
 	static STLString		GetAbsoluteFilePath		( cc8* path );
 	static STLString		GetCurrentPath			();
 	static bool				GetFileStat				( cc8* path, zl_stat& fileStat );
-	static STLString		GetRelativePath			( cc8* path );
+	static STLString		GetRelativePath			( cc8* path, cc8* base = 0 );
 	static bool				MountVirtualDirectory	( cc8* path, cc8* archive );
 	static STLString		PathFromRef				( const char* path );
 	static STLString		PathToRef				( const char* path );

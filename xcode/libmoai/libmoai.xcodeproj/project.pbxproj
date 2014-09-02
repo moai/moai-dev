@@ -1588,10 +1588,6 @@
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
 		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
-		CD3B36DC195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */; };
-		CD3B36DD195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */; };
-		CD3B36DE195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */; };
-		CD3B36DF195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -6611,8 +6607,6 @@
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
-		CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUntzSoundQueue.cpp; sourceTree = "<group>"; };
-		CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUntzSoundQueue.h; sourceTree = "<group>"; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		CD490041141AB6EC00913D80 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../3rdparty/lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
 		CD490042141AB6EC00913D80 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "../../3rdparty/lua-5.1.3/src/lauxlib.c"; sourceTree = SOURCE_ROOT; };
@@ -9214,8 +9208,6 @@
 				89BE6B6317399FEB00DFE837 /* MOAIUntzSampleBuffer.h */,
 				89BE6B6417399FEB00DFE837 /* MOAIUntzSound.cpp */,
 				89BE6B6517399FEB00DFE837 /* MOAIUntzSound.h */,
-				CD3B36DA195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp */,
-				CD3B36DB195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h */,
 				89BE6B6617399FEB00DFE837 /* MOAIUntzSystem.cpp */,
 				89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */,
 			);
@@ -13863,7 +13855,6 @@
 				CDD4913817FA7C2C00525B77 /* residue_16.h in Headers */,
 				CDD4913E17FA7C2C00525B77 /* setup_16.h in Headers */,
 				CDD4916017FA7C3900525B77 /* lpc.h in Headers */,
-				CD3B36DE195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */,
 				CDD4913D17FA7C2C00525B77 /* setup_11.h in Headers */,
 				CDD4913417FA7C2C00525B77 /* psych_11.h in Headers */,
 				89BE6B7617399FEB00DFE837 /* MOAIUntzSystem.h in Headers */,
@@ -13942,7 +13933,6 @@
 				CDD491B717FA7C5000525B77 /* setup_8.h in Headers */,
 				CDD491B117FA7C5000525B77 /* psych_44.h in Headers */,
 				CDD491D517FA7C6500525B77 /* lpc.h in Headers */,
-				CD3B36DF195F4FEF00EB5F9A /* MOAIUntzSoundQueue.h in Headers */,
 				CDD491BE17FA7C5000525B77 /* setup_44u.h in Headers */,
 				89BE6B7717399FEB00DFE837 /* MOAIUntzSystem.h in Headers */,
 				CDD491BC17FA7C5000525B77 /* setup_44.h in Headers */,
@@ -17523,7 +17513,6 @@
 				031BBBAE13B18A0C0005ECE0 /* vorbisenc.c in Sources */,
 				031BBBAF13B18A0C0005ECE0 /* vorbisfile.c in Sources */,
 				031BBBB013B18A0C0005ECE0 /* window.c in Sources */,
-				CD3B36DC195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */,
 				89BE6B6817399FEB00DFE837 /* host.cpp in Sources */,
 				89BE6B6C17399FEB00DFE837 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				CDD4927317FA7D1300525B77 /* WaveFileAudioSource.cpp in Sources */,
@@ -17572,7 +17561,6 @@
 				CDD491EA17FA7C6500525B77 /* window.c in Sources */,
 				CDD491D617FA7C6500525B77 /* lsp.c in Sources */,
 				CDD491C317FA7C6500525B77 /* analysis.c in Sources */,
-				CD3B36DD195F4FEF00EB5F9A /* MOAIUntzSoundQueue.cpp in Sources */,
 				89BE6B6917399FEB00DFE837 /* host.cpp in Sources */,
 				89BE6B6D17399FEB00DFE837 /* MOAIUntzSampleBuffer.cpp in Sources */,
 				CDD492A217FA7D1900525B77 /* WaveFileAudioSource.cpp in Sources */,

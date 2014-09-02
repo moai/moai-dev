@@ -170,9 +170,9 @@ bool ZLFileSys::GetFileStat ( cc8* filename, zl_stat& fileStat ) {
 }
 
 //----------------------------------------------------------------//
-STLString ZLFileSys::GetRelativePath ( cc8* path ) {
+STLString ZLFileSys::GetRelativePath ( cc8* path, cc8* base ) {
 
-	return ZLVfsFileSystem::Get ().GetRelativePath ( path );
+	return ZLVfsFileSystem::Get ().GetRelativePath ( path, base );
 }
 
 //----------------------------------------------------------------//

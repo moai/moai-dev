@@ -239,6 +239,7 @@
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
+		/*
 		#ifndef DISABLE_ADCOLONY
 			MOAIAdColonyAndroid::Affirm ();
 			REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
@@ -298,6 +299,7 @@
 			MOAIGooglePlayServicesAndroid::Affirm ();
 			REGISTER_LUA_CLASS ( MOAIGooglePlayServicesAndroid );
 		#endif
+		*/
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}

@@ -76,7 +76,6 @@
 		CD795F9917F093CD006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9A17F093DE006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9B17F093E5006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
-		CD95D48B1831D4430080C34E /* aku_modules_custom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD95D4861831D4430080C34E /* aku_modules_custom.cpp */; };
 		CD95D48C1831D4430080C34E /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD95D4891831D4430080C34E /* aku_modules_util.cpp */; };
 		CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CDE8A816155E435800C2DFF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
@@ -546,6 +545,13 @@
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
 		};
+		CDDF912119AD2DE800FE962C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD27BE0D191D9F44000A7770;
+			remoteInfo = "libmoai-ios-adcolony";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -614,8 +620,6 @@
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
-		CD95D4861831D4430080C34E /* aku_modules_custom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_custom.cpp; path = "../host-modules/aku_modules_custom.cpp"; sourceTree = "<group>"; };
-		CD95D4871831D4430080C34E /* aku_modules_custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_custom.h; path = "../host-modules/aku_modules_custom.h"; sourceTree = "<group>"; };
 		CD95D4891831D4430080C34E /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../host-modules/aku_modules_util.cpp"; sourceTree = "<group>"; };
 		CD95D48A1831D4430080C34E /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../host-modules/aku_modules_util.h"; sourceTree = "<group>"; };
 		CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-ex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -749,8 +753,6 @@
 				CD795EEB17F08C21006AEB47 /* aku_modules.cpp */,
 				CD795EEC17F08C21006AEB47 /* aku_modules.h */,
 				CD795EEA17F08C21006AEB47 /* aku_modules_config.h */,
-				CD95D4861831D4430080C34E /* aku_modules_custom.cpp */,
-				CD95D4871831D4430080C34E /* aku_modules_custom.h */,
 				CD95D4891831D4430080C34E /* aku_modules_util.cpp */,
 				CD95D48A1831D4430080C34E /* aku_modules_util.h */,
 				CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */,
@@ -769,6 +771,7 @@
 				CD2FCFD71832EA10000C3674 /* libmoai-ios-3rdparty-crypto.a */,
 				CD2FCFD91832EA10000C3674 /* libmoai-ios-3rdparty-curl.a */,
 				CD096FC418E0E55700A36EDD /* libmoai-ios-3rdparty-mixpanel.a */,
+				CDDF912219AD2DE800FE962C /* libmoai-ios-adcolony.a */,
 				CD2FCFDB1832EA10000C3674 /* libmoai-ios-billing.a */,
 				CD2FCFDD1832EA10000C3674 /* libmoai-ios-box2d.a */,
 				CD2FCFDF1832EA10000C3674 /* libmoai-ios-chartboost.a */,
@@ -1325,6 +1328,13 @@
 			remoteRef = CD2FD02C1832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CDDF912219AD2DE800FE962C /* libmoai-ios-adcolony.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-adcolony.a";
+			remoteRef = CDDF912119AD2DE800FE962C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1335,7 +1345,6 @@
 				CD795EE217F08C0B006AEB47 /* SDLHost.cpp in Sources */,
 				CD795EE617F08C0B006AEB47 /* SDLHostMain.cpp in Sources */,
 				CD95D48C1831D4430080C34E /* aku_modules_util.cpp in Sources */,
-				CD95D48B1831D4430080C34E /* aku_modules_custom.cpp in Sources */,
 				CD795EED17F08C21006AEB47 /* aku_modules.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1535,7 +1544,7 @@
 					"\"$(MOAI_SDK)/src/config-default\"",
 					"\"$(MOAI_SDK)/3rdparty/sdl2-2.0.0/include\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -1634,7 +1643,7 @@
 					"\"$(MOAI_SDK)/src/config-default\"",
 					"\"$(MOAI_SDK)/3rdparty/sdl2-2.0.0/include\"",
 				);
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};

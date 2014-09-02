@@ -163,16 +163,20 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@lua	getRelativePath
 	@text	Given an absolute path returns the relative path
-			in relation to the current working directory.
+			in relation to the current working directory or a
+			user supplied 'base' directory.
 
 	@in		string path
+	@opt	string base
 	@out	string path
 -*/
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
-	STLString result = ZLFileSys::GetRelativePath ( path );
+	cc8* base = state.GetValue < cc8* >( 2, 0 );
+	
+	STLString result = ZLFileSys::GetRelativePath ( path, base );
 	
 	lua_pushstring ( state, result );
 	return 1;

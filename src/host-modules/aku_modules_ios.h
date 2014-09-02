@@ -67,6 +67,7 @@
 void		AKUModulesIosAppFinalize				();
 void		AKUModulesIosAppInitialize				();
 void		AKUModulesIosContextInitialize			();
+void		AKUModulesIosPause						( bool pause );
 void		AKUModulesIosUpdate						();
 
 #endif

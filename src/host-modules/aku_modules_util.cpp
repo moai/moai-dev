@@ -10,7 +10,7 @@
 // local
 //================================================================//
 
-int		_parseArgStringAndCall		( char* exeName, char* scriptName, int argc, char** argv, int i );
+int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** argv, int i );
 
 //----------------------------------------------------------------//
 int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** argv, int i ) {

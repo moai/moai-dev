@@ -1,0 +1,45 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#include <string.h>
+#include <host-modules/aku_plugins.h>
+
+// Copy this file and add your own module initalizers to it. Link the copy to your host
+// instead of this version. This is an easier way to add custom modules to the host
+// without having to copy and change the source of the host itself.
+
+@AKU_PLUGINS_HEADERS@
+
+//================================================================//
+// implementation
+//================================================================//
+
+//----------------------------------------------------------------//
+void AKUPluginsAppFinalize () {
+
+	@AKU_PLUGINS_APP_FINALIZE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsAppInitialize () {
+
+	@AKU_PLUGINS_APP_INITIALIZE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsContextInitialize () {
+
+	@AKU_PLUGINS_CONTEXT_INITIALIZE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsPause ( bool pause ) {
+
+	@AKU_PLUGINS_PAUSE@
+}
+
+//----------------------------------------------------------------//
+void AKUPluginsUpdate () {
+
+	@AKU_PLUGINS_UPDATE@
+}

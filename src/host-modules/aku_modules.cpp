@@ -3,7 +3,32 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
-#include <host-modules/aku_modules_custom.h>
+
+//================================================================//
+// objc modules
+//================================================================//
+
+#if AKU_WITH_IOS
+
+	//----------------------------------------------------------------//
+	extern void		AKUModulesIosAppFinalize			();
+	extern void		AKUModulesIosAppInitialze			();
+	extern void		AKUModulesIosContextInitialize		();
+	extern void		AKUModulesIosPause					( bool pause );
+	extern void		AKUModulesIosUpdate					();
+
+#endif
+
+#if AKU_WITH_PLUGINS
+
+	//----------------------------------------------------------------//
+	extern void		AKUPluginsAppFinalize				();
+	extern void		AKUPluginsAppInitialize				();
+	extern void		AKUPluginsContextInitialize			();
+	extern void		AKUPluginsPause						( bool pause );
+	extern void		AKUPluginsUpdate					();
+
+#endif
 
 //================================================================//
 // implementation
@@ -13,7 +38,6 @@
 void AKUModulesAppFinalize () {
 
 	#if AKU_WITH_BOX2D
-		florb
 		AKUBox2DAppFinalize ();
 	#endif
 
@@ -64,12 +88,14 @@ void AKUModulesAppFinalize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppFinalize ();
 	#endif
-
+	
+	#if AKU_WITH_IOS
+		AKUModulesIosAppFinalize ();
+	#endif
+	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppFinalize ();
 	#endif
-	
-	AKUModulesCustomAppFinalize ();
 }
 
 //----------------------------------------------------------------//
@@ -127,11 +153,13 @@ void AKUModulesAppInitialize () {
 		AKUUtilAppInitialize ();
 	#endif
 
+	#if AKU_WITH_IOS
+		AKUModulesIosAppInitialize ();
+	#endif
+
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppInitialize ();
 	#endif
-	
-	AKUModulesCustomAppInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -188,12 +216,14 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilContextInitialize ();
 	#endif
-
+	
+	#if AKU_WITH_IOS
+		AKUModulesIosContextInitialize ();
+	#endif
+	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsContextInitialize ();
 	#endif
-	
-	AKUModulesCustomContextInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -205,6 +235,14 @@ void AKUModulesPause ( bool pause ) {
 	
 	#if AKU_WITH_UNTZ
 		AKUUntzPause ( pause );
+	#endif
+	
+	#if AKU_WITH_IOS
+		AKUModulesIosPause ( pause );
+	#endif
+	
+	#if AKU_WITH_PLUGINS
+		AKUPluginsPause ( pause );
 	#endif
 }
 
@@ -230,10 +268,12 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_SIM
 		AKUUpdate ();
 	#endif
-
+	
+	#if AKU_WITH_IOS
+		AKUModulesIosUpdate ();
+	#endif
+	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsUpdate ();
 	#endif
-		
-	AKUModulesCustomUpdate ();
 }

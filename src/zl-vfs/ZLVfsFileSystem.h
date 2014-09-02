@@ -44,7 +44,7 @@ public:
 	std::string					GetAbsoluteFilePath			( const char* path );
 	std::string					GetAbsolutePath				( const char* path );
 	static std::string			GetBasename					( const char* filename );
-	std::string					GetRelativePath				( const char* path );
+	std::string					GetRelativePath				( const char* path, const char* base = 0 );
 	std::string					GetWorkingPath				();
 	void						Init						();
 	static bool					IsSeparator					( char c );
