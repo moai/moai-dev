@@ -399,9 +399,10 @@ int AKUSetContext ( AKUContextID contextID ) {
 			MOAIGlobalsMgr::Set ( sContext->mGlobals );
 			return 0;
 		}
+		MOAIGlobalsMgr::Set ( 0 );
+		return -1;
 	}
-	MOAIGlobalsMgr::Set ( 0 );
-	return -1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
