@@ -260,6 +260,17 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAppIOS::DidBecomeActive () {
+
+	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
@@ -276,6 +287,27 @@ MOAIAppIOS::~MOAIAppIOS () {
 
 	//[ this->mMailDelegate release ];
 	[ this->mTakeCameraListener release];
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::OnGlobalsFinalize () {
+
+	[ this->mReachabilityListener stopListener ];
+	[ this->mReachabilityListener release ];
+	this->mReachabilityListener = nil;
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
+
+	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
+
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		[[ url absoluteString ] toLua:state ];
+		[ sourceApplication toLua:state ];
+		state.DebugCall ( 2, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -310,27 +342,9 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::DidBecomeActive () {
+void MOAIAppIOS::UpdateReachability () {
 
-	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
-
-	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		[[ url absoluteString ] toLua:state ];
-		[ sourceApplication toLua:state ];
-		state.DebugCall ( 2, 0 );
-	}
+	[ this->mReachabilityListener updateMoaiEnvironment ];
 }
 
 //----------------------------------------------------------------//

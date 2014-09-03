@@ -39,18 +39,16 @@ public:
 // MOAIGlobalClassBase
 //================================================================//
 class MOAIGlobalClassBase {
-private:
+protected:
 
 	friend class MOAIGlobals;
 
-protected:
-
 	//----------------------------------------------------------------//
-	virtual void	OnGlobalsFinalize			();
-	virtual void	OnGlobalsRestore			();
-	virtual void	OnGlobalsRetire				();
-					MOAIGlobalClassBase			();
-	virtual			~MOAIGlobalClassBase		();
+	virtual void			OnGlobalsFinalize			();
+	virtual void			OnGlobalsRestore			();
+	virtual void			OnGlobalsRetire				();
+							MOAIGlobalClassBase			();
+	virtual					~MOAIGlobalClassBase		();
 };
 
 //================================================================//
@@ -150,6 +148,8 @@ public:
 class MOAIGlobalsMgr {
 private:
 
+	friend class MOAIGlobalClassBase;
+
 	typedef STLSet < MOAIGlobals* >::iterator GlobalsSetIt;
 	typedef STLSet < MOAIGlobals* > GlobalsSet;
 
@@ -157,17 +157,18 @@ private:
 	static MOAIGlobals* sInstance;
 
 	//----------------------------------------------------------------//
-						MOAIGlobalsMgr			();
-						~MOAIGlobalsMgr			();
+							MOAIGlobalsMgr			();
+							~MOAIGlobalsMgr			();
 
 public:
 
 	//----------------------------------------------------------------//
-	static MOAIGlobals*		Create			();	
-	static void				Delete			( MOAIGlobals* globals );
-	static void				Finalize		();
-	static MOAIGlobals*		Get				();
-	static void				Set				( MOAIGlobals* globals );
+	static bool				Check					( MOAIGlobals* globals );
+	static MOAIGlobals*		Create					();
+	static void				Delete					( MOAIGlobals* globals );
+	static void				Finalize				();
+	static MOAIGlobals*		Get						();
+	static void				Set						( MOAIGlobals* globals );
 };
 
 //================================================================//

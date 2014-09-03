@@ -39,7 +39,14 @@
 class MOAIAppIOS :
 	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {
 private:
-		
+	
+	MOAIReachabilityListener*	mReachabilityListener;
+
+	MOAILuaStrongRef			mOnTakeCameraCallback;
+	MOAITakeCameraListener*		mTakeCameraListener;
+	//MoaiMailComposeDelegate*	mMailDelegate;
+	UIPopoverController*		mImagePickerPopover;
+	
 	//----------------------------------------------------------------//
 	static int	_getDirectoryInDomain		( lua_State* L );
 	static int	_getInterfaceOrientation	( lua_State* L );
@@ -75,20 +82,15 @@ public:
 	};
 
 	MOAILuaStrongRef			mListeners [ TOTAL ];
-	MOAIReachabilityListener*	mReachabilityListener;
-
-	MOAILuaStrongRef			mOnTakeCameraCallback;
-	MOAITakeCameraListener*		mTakeCameraListener;
-	//MoaiMailComposeDelegate*	mMailDelegate;
-	UIPopoverController*		mImagePickerPopover;
 
 	//----------------------------------------------------------------//
-	
 	void			DidBecomeActive			();
 					MOAIAppIOS				();
 					~MOAIAppIOS				();
+	void			OnGlobalsFinalize		();
 	void			OpenUrl					( NSURL* url, NSString* sourceApplication );
 	void			RegisterLuaClass		( MOAILuaState& state );
+	void			UpdateReachability		();
 	void			WillResignActive		();
 	void			WillTerminate			();
 

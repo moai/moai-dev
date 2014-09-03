@@ -3,17 +3,20 @@
 #import <Foundation/Foundation.h>
 
 @class MOAIReachability;
+class MOAIGlobals;
 
 //================================================================//
 // MOAIReachabilityListener
 //================================================================//
 @interface MOAIReachabilityListener : NSObject {
 
+	MOAIGlobals*			mContext;
 	MOAIReachability*		mReach;
 }
 
 	//----------------------------------------------------------------//
 	-( void )	startListener;
-	+( void )	updateMoaiEnvironment;
+	-( void )	stopListener;
+	-( void )	updateMoaiEnvironment;
 
 @end

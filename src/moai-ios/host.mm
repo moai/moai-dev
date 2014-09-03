@@ -77,7 +77,7 @@ void AKUIosContextInitialize () {
 		}
     }
 	
-	[ MOAIReachabilityListener updateMoaiEnvironment ];
+	MOAIAppIOS::Get ().UpdateReachability ();
 }
 
 //----------------------------------------------------------------//
