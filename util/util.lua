@@ -22,6 +22,7 @@ local		exec						= nil
 			isSysPath					= nil
 			iterateCommandLine			= nil
 			iterateFiles				= nil
+			joinTables					= nil
 			listDirectories				= nil
 			listFiles					= nil
 local		makeDlcResourceSig			= nil
@@ -310,6 +311,22 @@ iterateFiles = function ( path, fileFilter, recurse )
 		local status, result = coroutine.resume ( co )
 		return status and result or nil
 	end
+end
+
+----------------------------------------------------------------
+joinTables = function ( t1, t2 )
+	
+	local t = {}
+	
+	for i, v in ipairs ( t1 or {}) do
+		table.insert ( t, v )
+	end
+	
+	for i, v in ipairs ( t2 or {}) do
+		table.insert ( t, v )
+	end
+	
+	return t
 end
 
 ----------------------------------------------------------------

@@ -20,6 +20,8 @@ MY_ARM_MODE			= 'arm'
 MY_ARM_ARCH			= 'armeabi-v7a'
 MY_APP_PLATFORM		= 'android-10'
 
+CONFIGS				= {}
+
 DISABLED			= {}
 DISABLE_ALL			= false
 
@@ -32,10 +34,14 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	
 	if param then
 	
+		if escape == 'c' or escape == 'config' then
+			table.insert ( CONFIGS, MOAIFileSystem.getAbsoluteFilePath ( INVOKE_DIR .. param ))
+		end
+
 		if escape == 'd' or escape == 'disable' then
 			DISABLED [ param ] = true
 		end
-		
+
 		if escape == 'o' or escape == 'out' then
 			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
 				param = INVOKE_DIR .. param
@@ -214,8 +220,15 @@ processConfigFile = function ( filename )
 	local config = {}
 	util.dofileWithEnvironment ( filename, config )
 
-	STATIC_LIBRARIES = config.STATIC_LIBRARIES or STATIC_LIBRARIES
-	WHOLE_STATIC_LIBRARIES = config.WHOLE_STATIC_LIBRARIES or WHOLE_STATIC_LIBRARIES
+	if config.STATIC_LIBRARIES then
+	end
+
+	if config.WHOLE_STATIC_LIBRARIES then
+		
+	end
+
+	STATIC_LIBRARIES = util.joinTables ( config.STATIC_LIBRARIES, STATIC_LIBRARIES )
+	WHOLE_STATIC_LIBRARIES = util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
 
 	if config.CONFIG_NAME then
 		local configPath = util.getFolderFromPath ( filename )
@@ -315,6 +328,11 @@ MOAIFileSystem.copy ( 'ant-libmoai/src/', JNI_DIR .. 'src/' )
 MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
 
 processConfigFile ( MOAI_SDK_HOME .. 'ant/libmoai/modules.lua' )
+
+for i, config in ipairs ( CONFIGS ) do
+	print ( 'config', config )
+	processConfigFile ( config )
+end
 
 util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
