@@ -1625,16 +1625,15 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	// Plus one because rect goes to exact end
 	int width = rect.Width () + 1;
 	int height = rect.Height () + 1;
-		
-	//ZLIntVec2D** pixels = new ZLIntVec2D* [height];
-	float** distanceMap = new float* [height];
-	int** binaryMap  = new int* [height];
+	int size = height * width;
 	
-	for ( int i = 0; i < height; ++i ) {
-		
-		//pixels[i] = new ZLIntVec2D[width];
-		distanceMap[i] = new float [width];
-		binaryMap[i] = new int [width];
+	// Treating 1d array as 2d
+	float* distanceMap = ( float * ) malloc ( sizeof ( float ) * size );
+	int* binaryMap = ( int * ) malloc ( sizeof ( int ) * size );
+	
+	if ( distanceMap == NULL || binaryMap == NULL ) {
+		printf("ERROR: Out of memory\n");
+		return;
 	}
 	
 	// Init the binary map and distance map
@@ -1646,13 +1645,13 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 			colorVec.SetRGBA (color);
 			//printf("color: %f, %f, %f, %f\n", colorVec.mR, colorVec.mG, colorVec.mB, colorVec.mA);
 			if ( colorVec.mA > 0.5f ) {
-				binaryMap[y][x] = 1;
+				binaryMap[y * width + x] = 1;
 			}
 			else {
-				binaryMap[y][x] = 0;
+				binaryMap[y * width + x] = 0;
 			}
 			
-			distanceMap[y][x] = MAXFLOAT;
+			distanceMap[y * width + x] = MAXFLOAT;
 		}
 	}
 	
@@ -1660,11 +1659,12 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for ( int y = 1; y < height - 1; ++y ) {
 		for ( int x = 1; x < width - 1; ++x ) {
 			
-			if ( binaryMap[y][x - 1] != binaryMap[y][x] ||
-				 binaryMap[y][x + 1] != binaryMap[y][x] ||
-				 binaryMap[y - 1][x] != binaryMap[y][x] ||
-				 binaryMap[y + 1][x] != binaryMap[y][x] ) {
-				distanceMap[y][x] = 0;
+			int currentVal = binaryMap[y * width + x];
+			if ( binaryMap[y * width + (x - 1)] != currentVal ||
+				 binaryMap[y * width + (x + 1)] != currentVal ||
+				 binaryMap[(y - 1) * width + x] != currentVal ||
+				 binaryMap[(y + 1) * width + x] != currentVal ) {
+				distanceMap[y * width + x] = 0;
 			}
 		}
 	}
@@ -1674,17 +1674,19 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for ( int y = 1; y < height - 1; ++y ) {
 		for (int x = 1; x < width - 1; ++x ) {
 			
-			if ( distanceMap[y - 1][x - 1] + d2 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y - 1][x - 1] + d2;
+			float *pCurDistVal = &distanceMap[y * width + x];
 			
-			if ( distanceMap[y - 1][x] + d1 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y - 1][x] + d1;
+			if ( distanceMap[(y - 1) * width + (x - 1)] + d2 < *pCurDistVal )
+				*pCurDistVal = distanceMap[(y - 1) * width + (x - 1)] + d2;
 			
-			if ( distanceMap[y - 1][x + 1] + d2 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y - 1][x + 1] + d2;
+			if ( distanceMap[(y - 1) * width + x] + d1 < *pCurDistVal)
+				*pCurDistVal = distanceMap[(y - 1) * width + x] + d1;
 			
-			if ( distanceMap[y][x - 1] + d1 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y][x - 1] + d1;
+			if ( distanceMap[(y - 1) * width + (x + 1)] + d2 < *pCurDistVal )
+				*pCurDistVal = distanceMap[(y - 1) * width + (x + 1)] + d2;
+			
+			if ( distanceMap[y * width + (x - 1)] + d1 < *pCurDistVal )
+				*pCurDistVal = distanceMap[y * width + (x - 1)] + d1;
 		}
 	}
 	
@@ -1692,17 +1694,19 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for ( int y = height - 2; y > 0; --y ) {
 		for ( int x = width - 2; x > 0; --x ) {
 			
-			if ( distanceMap[y][x + 1] + d1 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y][x + 1] + d1;
+			float *pCurDistVal = &distanceMap[y * width + x];
 			
-			if ( distanceMap[y + 1][x - 1] + d2 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y + 1][x - 1] + d2;
+			if ( distanceMap[y * width + (x + 1)] + d1 < *pCurDistVal)
+				*pCurDistVal = distanceMap[y * width + (x + 1)] + d1;
 			
-			if ( distanceMap[y + 1][x] + d1 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y + 1][x] + d1;
+			if ( distanceMap[(y + 1) * width + (x - 1)] + d2 < *pCurDistVal)
+				*pCurDistVal = distanceMap[(y + 1) * width + (x - 1)] + d2;
 			
-			if ( distanceMap[y + 1][x + 1] + d2 < distanceMap[y][x])
-				distanceMap[y][x] = distanceMap[y + 1][x + 1] + d2;
+			if ( distanceMap[(y + 1) * width + x] + d1 < *pCurDistVal)
+				*pCurDistVal = distanceMap[(y + 1) * width + x] + d1;
+			
+			if ( distanceMap[(y + 1) * width + (x + 1)] + d2 < *pCurDistVal)
+				*pCurDistVal = distanceMap[(y + 1) * width + (x + 1)] + d2;
 		}
 	}
 	
@@ -1710,8 +1714,8 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for ( int y = height - 1; y > 0; --y ) {
 		for ( int x = width - 1; x > 0; --x ) {
 			
-			if ( binaryMap[y][x] == 0 )
-				distanceMap[y][x] *= -1;
+			if ( binaryMap[y * width + x] == 0 )
+				distanceMap[y * width + x] *= -1;
 		}
 	}
 	
@@ -1722,7 +1726,7 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	for( int y = 0; y < height; y++ ) {
 		for ( int x = 0; x < width; x++ ) {
 			
-			float scaledDistVal = distanceMap[y][x];
+			float scaledDistVal = distanceMap[y * width + x];
 			scaledDistVal = ( scaledDistVal + half ) / threshold;
 			
 			// If distance is more than the max threshold specified, snap to 0
@@ -1736,16 +1740,8 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 		}
 	}
 	
-	
-	for ( int i = 0; i < height; i++ ) {
-
-		delete [] binaryMap[i];
-		delete [] distanceMap[i];
-  	}
-	
-	delete [] binaryMap;
-	delete [] distanceMap;
-
+	free ( binaryMap );
+	free ( distanceMap );
 }
 
 //----------------------------------------------------------------//
