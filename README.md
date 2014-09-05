@@ -13,7 +13,8 @@ You can work in Lua or C++, and Moai SDK runs on multiple platforms including iO
 ## Download
 Please clones the source in the following way.
 
-    git clone git@github.com:moai/moai-dev.git
+    git clone https://github.com/moai/moai-dev.git
+    cd moai-dev
     git submodule init
     git submodule update
 
