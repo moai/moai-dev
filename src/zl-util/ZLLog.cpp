@@ -8,10 +8,6 @@
 
 #include <zl-util/ZLLog.h>
 
-#ifdef ANDROID
-	#include <android/log.h>
-#endif
-
 //================================================================//
 // ZLLog
 //================================================================//
@@ -41,14 +37,10 @@ void ZLLog::LogV ( FILE* file, cc8* format, va_list args ) {
 	else {
 	
 		if ( file ) {
-			vfprintf (( FILE* )file, format, args );
+			zl_vfprintf (( FILE* )file, format, args );
 		}
 		else {
-			#ifdef ANDROID
-				__android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, args );
-			#else
-				vprintf ( format, args );
-			#endif
+			zl_vprintf ( format, args );
 		}
 	}
 }

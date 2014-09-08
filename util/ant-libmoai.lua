@@ -2,7 +2,7 @@
 -- setup
 --==============================================================
 
-MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' )
+MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
 SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
 INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
 
@@ -42,6 +42,10 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 			DISABLED [ param ] = true
 		end
 
+		if escape == 'm' or escape == 'moai' then
+			MOAI_SDK_HOME =  MOAIFileSystem.getAbsoluteDirectoryPath ( INVOKE_DIR .. param )
+		end
+
 		if escape == 'o' or escape == 'out' then
 			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
 				param = INVOKE_DIR .. param
@@ -55,6 +59,7 @@ end
 JNI_DIR					= OUTPUT_DIR .. 'jni/'
 TEMP_FILENAME			= OUTPUT_DIR .. '.tmp'
 
+print ( 'MOAI_SDK_HOME', MOAI_SDK_HOME )
 print ( 'SCRIPT_DIR', SCRIPT_DIR )
 print ( 'INVOKE_DIR', INVOKE_DIR )
 print ( 'OUTPUT_DIR', OUTPUT_DIR )
