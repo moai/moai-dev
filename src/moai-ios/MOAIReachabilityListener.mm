@@ -61,12 +61,15 @@
 //----------------------------------------------------------------//
 -( void ) updateMoaiEnvironment {
 
+	MOAIScopedContext scopedContext;
+
 	if ( !MOAIGlobalsMgr::Check ( mContext )) return;
-	if ( !mContext->IsValid < MOAIEnvironment >()) return;
+	MOAIGlobalsMgr::Set ( mContext );
+	
+	if ( !MOAIEnvironment::IsValid ()) return;
+	MOAIEnvironment& environment = MOAIEnvironment::Get();
 
 	NetworkStatus status = [[ MOAIReachability reachabilityForInternetConnection ] currentReachabilityStatus ];
-	
-	MOAIEnvironment& environment = *mContext->GetGlobal < MOAIEnvironment >();
 	environment.SetValue ( MOAI_ENV_connectionType, ( int )status );
 	
 	// If we have a cellualr connection, get carrier information

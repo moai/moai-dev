@@ -168,7 +168,7 @@ public:
 	static void				Delete					( MOAIGlobals* globals );
 	static void				Finalize				();
 	static MOAIGlobals*		Get						();
-	static void				Set						( MOAIGlobals* globals );
+	static MOAIGlobals*		Set						( MOAIGlobals* globals );
 };
 
 //================================================================//
@@ -185,6 +185,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Affirm () {
+		assert ( MOAIGlobalsMgr::Get ());
 		TYPE* global = MOAIGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
 		assert ( global );
 		return *global;
@@ -192,6 +193,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
+		assert ( MOAIGlobalsMgr::Get ());
 		TYPE* global = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
@@ -199,8 +201,24 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static bool IsValid () {
+		assert ( MOAIGlobalsMgr::Get ());
 		return MOAIGlobalsMgr::Get ()->IsValid < TYPE >();
 	}
+};
+
+//================================================================//
+// MOAIScopedContext
+//================================================================//
+class MOAIScopedContext {
+private:
+
+	MOAIGlobals*	mOriginalContext;
+
+public:
+	
+	//----------------------------------------------------------------//
+						MOAIScopedContext			();
+						~MOAIScopedContext			();
 };
 
 #endif
