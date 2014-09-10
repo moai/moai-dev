@@ -11,7 +11,7 @@ Moai SDK is an open source game framework for quickly developing great mobile ga
 You can work in Lua or C++, and Moai SDK runs on multiple platforms including iOS, Android, Chrome, Windows, Mac and Linux.
 
 ## Download
-Please clones the source in the following way.
+Please clone the source in the following way.
 
     git clone https://github.com/moai/moai-dev.git
     cd moai-dev
