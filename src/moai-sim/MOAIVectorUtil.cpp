@@ -42,7 +42,11 @@ int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, 
 	SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
 	int err = 0;
 	
+	
 	sEnv = ( jmp_buf* )calloc ( 1, sizeof ( jmp_buf ));
+	
+	zl_setassertenv(*sEnv);
+	
 	if ( setjmp ( *sEnv )) {
 		err = 1;
 	}
