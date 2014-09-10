@@ -7,7 +7,7 @@
 #include <zl-vfs/pch.h>
 #include <zl-vfs/zl_mutex.h>
 
-extern int* zl_env;
+extern jmp_buf* zl_env;
 
 #define zl_assert(cond) \
 do \
@@ -16,7 +16,12 @@ do \
 	{ \
 		printf("Assertion failed: %s, function %s, file %s, line %d\n", #cond, __func__, __FILE__, __LINE__); \
 		raise(SIGABRT); \
-		longjmp(zl_env, 1); \
+		if (zl_env) \
+		{ \
+			jmp_buf* tmp = zl_env; \
+			zl_env = 0; \
+			longjmp(*tmp, 1); \
+		} \
 	} \
 } while(0)
 
@@ -86,7 +91,7 @@ extern void					zl_tlsf_set_pool			( ZL_TLSF_POOL* opaque );
 //================================================================//
 
 //----------------------------------------------------------------//
-extern void					zl_setassertenv			( jmp_buf env );
+extern void					zl_setassertenv			( jmp_buf* env );
 extern void					zl_clearerr				( ZLFILE* fp );
 extern int					zl_fclose				( ZLFILE* fp );
 extern int					zl_feof					( ZLFILE* fp );
