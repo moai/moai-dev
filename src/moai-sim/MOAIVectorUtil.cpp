@@ -39,10 +39,14 @@ SafeTesselator::~SafeTesselator()
 //------------------------------------------------------------------//
 int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
 
-	SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
+	//SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
 	int err = 0;
 	
 	sEnv = ( jmp_buf* )calloc ( 1, sizeof ( jmp_buf ));
+	
+	// save the environment off so the assert macro can return to this point if something goes wrong!
+	zl_setassertenv(sEnv);
+	
 	if ( setjmp ( *sEnv )) {
 		err = 1;
 	}
@@ -51,8 +55,12 @@ int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, 
 		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
 	}
 	
-	signal ( SIGABRT, initial_handler );
+	//signal ( SIGABRT, initial_handler );
+	
 	free ( sEnv );
+	
+	// macro automatically sets env pointer back to null before longjmp, otherwise this would have to be called
+	// zl_setassertenv ( NULL );
 	
 	return err;
 }

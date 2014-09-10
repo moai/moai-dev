@@ -117,6 +117,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <signal.h>
+#include <setjmp.h>
 
 #ifdef __cplusplus
 	#include <algorithm>
