@@ -15,7 +15,6 @@ do \
 	if (!(cond)) \
 	{ \
 		printf("Assertion failed: %s, function %s, file %s, line %d\n", #cond, __func__, __FILE__, __LINE__); \
-		raise(SIGABRT); \
 		if (zl_env) \
 		{ \
 			jmp_buf* tmp = zl_env; \
