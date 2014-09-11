@@ -9,6 +9,23 @@
 
 extern jmp_buf* zl_env;
 
+#ifdef _DEBUG
+#define zl_assert(cond) \
+do \
+{ \
+	if (!(cond)) \
+	{ \
+		printf("Assertion failed: %s, function %s, file %s, line %d\n", #cond, __func__, __FILE__, __LINE__); \
+		raise(SIGABRT); \
+		if (zl_env) \
+		{ \
+			jmp_buf* tmp = zl_env; \
+			zl_env = 0; \
+			longjmp(*tmp, 1); \
+		} \
+	} \
+} while(0)
+#else
 #define zl_assert(cond) \
 do \
 { \
@@ -23,6 +40,7 @@ do \
 		} \
 	} \
 } while(0)
+#endif
 
 #ifdef  __cplusplus
 	extern "C" {
