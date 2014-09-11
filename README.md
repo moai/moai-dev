@@ -54,8 +54,8 @@ Please set the following environment variables.
 
 ### Windows
 
-	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
-	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
+	set MOAI_BIN=<install_path>\moai-dev\release\win32\host-sdl\bin
+	set MOAI_CONFIG=<install_path>\moai-dev\samples\config
 
 ## Build Hosts
 Please build according to the following procedure.
