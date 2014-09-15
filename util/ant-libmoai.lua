@@ -225,13 +225,6 @@ processConfigFile = function ( filename )
 	local config = {}
 	util.dofileWithEnvironment ( filename, config )
 
-	if config.STATIC_LIBRARIES then
-	end
-
-	if config.WHOLE_STATIC_LIBRARIES then
-		
-	end
-
 	STATIC_LIBRARIES = util.joinTables ( config.STATIC_LIBRARIES, STATIC_LIBRARIES )
 	WHOLE_STATIC_LIBRARIES = util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
 

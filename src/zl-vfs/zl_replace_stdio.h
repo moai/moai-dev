@@ -123,7 +123,7 @@
 #define _popen zl_popen
 
 #undef printf
-#define putc zl_printf
+#define printf zl_printf
 
 #undef putc
 #define putc zl_putc
