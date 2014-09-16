@@ -5,6 +5,7 @@
 #define ZL_REPLACE_H
 
 // include these here to invoke headerguards; make sure they don't get re-included later and undo our work
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 

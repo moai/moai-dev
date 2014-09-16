@@ -1380,6 +1380,8 @@
 		CD23666F180A547F006A7236 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75B71808AE8E0001EF0C /* host.mm */; };
 		CD236670180A547F006A7236 /* MOAIVungleIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F75B81808AE8E0001EF0C /* MOAIVungleIOS.h */; };
 		CD236671180A547F006A7236 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75B91808AE8E0001EF0C /* MOAIVungleIOS.mm */; };
+		CD27718019C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
+		CD27718119C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
 		CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
 		CD27BD04191D5352000A7770 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
 		CD27BD05191D5352000A7770 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
@@ -1588,6 +1590,7 @@
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
 		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
+		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -6565,6 +6568,7 @@
 		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
 		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
 		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
+		CD27717F19C8CE940079A731 /* assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = assert.cpp; sourceTree = "<group>"; };
 		CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD27BE11191DA1C5000A7770 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-adcolony/host.h"; sourceTree = "<group>"; };
 		CD27BE12191DA1C5000A7770 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-adcolony/host.mm"; sourceTree = "<group>"; };
@@ -6607,6 +6611,7 @@
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
+		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		CD490041141AB6EC00913D80 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../3rdparty/lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
 		CD490042141AB6EC00913D80 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "../../3rdparty/lua-5.1.3/src/lauxlib.c"; sourceTree = SOURCE_ROOT; };
@@ -9102,6 +9107,8 @@
 		89BE692E173974FD00DFE837 /* zl-vfs */ = {
 			isa = PBXGroup;
 			children = (
+				CD27717F19C8CE940079A731 /* assert.cpp */,
+				CD34A24E19C7D77A00BFF405 /* assert.h */,
 				89BE692F173974FD00DFE837 /* headers.cpp */,
 				89BE6930173974FD00DFE837 /* headers.h */,
 				89BE6931173974FD00DFE837 /* pch.cpp */,
@@ -14009,6 +14016,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD34A24F19C7D77A00BFF405 /* assert.h in Headers */,
 				CD6D74C017EE415D00964415 /* headers.h in Headers */,
 				CD6D74C117EE415D00964415 /* pch.h in Headers */,
 				CD6D74C217EE415D00964415 /* zl_mutex.h in Headers */,
@@ -17634,6 +17642,7 @@
 				CD6D751A17EE415D00964415 /* ZLVfsFile.cpp in Sources */,
 				CD6D751B17EE415D00964415 /* ZLVfsFileSystem.cpp in Sources */,
 				CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */,
+				CD27718119C8CE940079A731 /* assert.cpp in Sources */,
 				CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */,
 				CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */,
 			);
@@ -19263,6 +19272,7 @@
 				CDF288B117ED41CF00FD4F59 /* ZLVfsFile.cpp in Sources */,
 				CDF288B217ED41CF00FD4F59 /* ZLVfsFileSystem.cpp in Sources */,
 				CDF288B317ED41CF00FD4F59 /* ZLVfsVirtualPath.cpp in Sources */,
+				CD27718019C8CE940079A731 /* assert.cpp in Sources */,
 				CDF288B417ED41CF00FD4F59 /* ZLVfsZipArchive.cpp in Sources */,
 				CDF288B517ED41CF00FD4F59 /* ZLVfsZipStream.cpp in Sources */,
 			);
@@ -19520,6 +19530,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"../../src/zl-vfs\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
@@ -21372,6 +21383,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"../../src/zl-vfs\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
@@ -25301,6 +25313,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"../../src/zl-vfs\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
@@ -25706,6 +25719,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"../../src/zl-vfs\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",

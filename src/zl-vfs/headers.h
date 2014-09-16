@@ -7,41 +7,6 @@
 #include <zl-vfs/pch.h>
 #include <zl-vfs/zl_mutex.h>
 
-extern jmp_buf* zl_env;
-
-#ifdef _DEBUG
-#define zl_assert(cond) \
-do \
-{ \
-	if (!(cond)) \
-	{ \
-		printf("Assertion failed: %s, function %s, file %s, line %d\n", #cond, __func__, __FILE__, __LINE__); \
-		raise(SIGABRT); \
-		if (zl_env) \
-		{ \
-			jmp_buf* tmp = zl_env; \
-			zl_env = 0; \
-			longjmp(*tmp, 1); \
-		} \
-	} \
-} while(0)
-#else
-#define zl_assert(cond) \
-do \
-{ \
-	if (!(cond)) \
-	{ \
-		printf("Assertion failed: %s, function %s, file %s, line %d\n", #cond, __func__, __FILE__, __LINE__); \
-		if (zl_env) \
-		{ \
-			jmp_buf* tmp = zl_env; \
-			zl_env = 0; \
-			longjmp(*tmp, 1); \
-		} \
-	} \
-} while(0)
-#endif
-
 #ifdef  __cplusplus
 	extern "C" {
 #endif
@@ -108,7 +73,6 @@ extern void					zl_tlsf_set_pool			( ZL_TLSF_POOL* opaque );
 //================================================================//
 
 //----------------------------------------------------------------//
-extern void					zl_setassertenv			( jmp_buf* env );
 extern void					zl_clearerr				( ZLFILE* fp );
 extern int					zl_fclose				( ZLFILE* fp );
 extern int					zl_feof					( ZLFILE* fp );

@@ -11,19 +11,6 @@
 // SafeTesselator
 //================================================================//
 
-
-typedef void SIG_PROC_t( int sig );
-typedef SIG_PROC_t *SIG_PROC_p_t;
-static jmp_buf* sEnv = 0;
-
-//----------------------------------------------------------------//
-void AbortHandler( int signum ) {
-	if ( sEnv && ( signum == SIGABRT )) {
-		longjmp ( *sEnv, 1 );
-	}
-	exit ( 0 );
-}
-
 //------------------------------------------------------------------//
 SafeTesselator::SafeTesselator()
 {
@@ -38,30 +25,12 @@ SafeTesselator::~SafeTesselator()
 
 //------------------------------------------------------------------//
 int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
-
-	//SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
-	int err = 0;
 	
-	sEnv = ( jmp_buf* )calloc ( 1, sizeof ( jmp_buf ));
-	
-	// save the environment off so the assert macro can return to this point if something goes wrong!
-	zl_setassertenv(sEnv);
-	
-	if ( setjmp ( *sEnv )) {
-		err = 1;
-	}
-	
+	int err = zl_begin_assert_env ();
 	if ( err == 0 ) {
 		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
 	}
-	
-	//signal ( SIGABRT, initial_handler );
-	
-	free ( sEnv );
-	
-	// macro automatically sets env pointer back to null before longjmp, otherwise this would have to be called
-	// zl_setassertenv ( NULL );
-	
+	zl_end_assert_env ();
 	return err;
 }
 
