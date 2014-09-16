@@ -709,6 +709,13 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	
 	FT_Int pen_x, pen_y;
 	
+	// initialize mGlyphArray
+	size_t glyphArraySize = glyphsInText(text);
+	this->mGlyphArray = new FT_Glyph [ glyphArraySize ];
+
+	// initialize mAdvanceArray
+	this->mAdvanceArray = new FT_Vector [ glyphArraySize ];
+
 	// get the number of lines needed to display the text and populate line vector
 	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
 	
@@ -821,6 +828,16 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	rect.mXMax = maxLineWidth;
 	rect.mYMax = lineHeight * numLines;
 	
+	// clean up the glyph array
+	deleteGlyphArray(this->mGlyphArray, glyphArraySize);
+
+	// clean up the advance array
+	delete [] this->mAdvanceArray;
+
+	// set member variable arrays to NULL
+	this->mGlyphArray = NULL;
+	this->mAdvanceArray = NULL;
+
 	return rect;
 }
 
