@@ -41,6 +41,16 @@ MOAIGlobals::MOAIGlobals () {
 MOAIGlobals::~MOAIGlobals () {
 
 	size_t total = this->mGlobals.Size ();
+	
+	for ( size_t i = 1; i <= total; ++i ) {
+		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
+		MOAIGlobalClassBase* global = pair.mGlobal;
+
+		if ( global ) {
+			global->OnGlobalsFinalize ();
+		}
+	}
+	
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
 		MOAIGlobalClassBase* global = pair.mGlobal;
@@ -48,7 +58,6 @@ MOAIGlobals::~MOAIGlobals () {
 		pair.mIsValid = false;
 
 		if ( global ) {
-			global->OnGlobalsFinalize ();
 			delete global;
 		}
 	}
