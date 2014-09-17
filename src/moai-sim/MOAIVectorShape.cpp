@@ -185,10 +185,10 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 		
 		error = triangles.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
+		if ( error ) return error;
+		
 		drawing.WriteTriangleIndices ( &triangles, drawing.CountVertices ());
 		drawing.WriteVertices ( &triangles, this->mStyle.GetExtrude (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
-		
-		if ( error ) return error;
 	}
 	
 	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) {
@@ -209,10 +209,10 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing ) {
 		this->AddStrokeContours ( &triangles );
 		error = triangles.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2, ( const TESSreal* )&sNormal );
 		
+		if ( error ) return error;
+		
 		drawing.WriteTriangleIndices ( &triangles, drawing.CountVertices ());
 		drawing.WriteVertices ( &triangles, this->mStyle.GetExtrude (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
-		
-		if ( error ) return error;
 	}
 	
 	return error;
