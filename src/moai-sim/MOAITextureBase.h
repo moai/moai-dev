@@ -84,6 +84,7 @@ public:
 	friend class MOAIGfxDevice;
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
+	GET ( u32, TextureID, mGLTexID );
 
 	//----------------------------------------------------------------//
 	void			DeleteTexture			();

@@ -625,6 +625,12 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::OnGlobalsFinalize () {
+
+	this->ReleaseResources ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::ProcessDeleters () {
 
 	u32 top = this->mDeleterStack.GetTop ();

@@ -250,6 +250,8 @@ public:
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
+	void					OnGlobalsFinalize		();
+	
 	void					ProcessDeleters			();
 	void					PushDeleter				( u32 type, u32 id );
 

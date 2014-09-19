@@ -794,11 +794,11 @@ MOAILuaRuntime::MOAILuaRuntime () :
 
 //----------------------------------------------------------------//
 MOAILuaRuntime::~MOAILuaRuntime () {
+	this->Close ();
 }
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::OnGlobalsFinalize () {
-	this->Close ();
 }
 
 //----------------------------------------------------------------//
