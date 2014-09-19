@@ -272,6 +272,7 @@ int	MOAIImage::_generateOutlineFromSDF( lua_State* L ) {
 	
 	self->GenerateOutlineFromSDF ( rect, distMin, distMax, r, g, b, a );
 	
+	return 0;
 }
 
 //----------------------------------------------------------------//
