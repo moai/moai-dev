@@ -30,6 +30,7 @@
 # core
 #================================================================#
 
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/zl-vfs
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/config-default
@@ -85,12 +86,7 @@
 	#--------------------------------------------------------------#
 	# CHIPMUNK
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_CHIPMUNK=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-chipmunk.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chipmunk.mk
+	MY_LOCAL_CFLAGS += -DAKU_WITH_CHIPMUNK=0
 
 	#--------------------------------------------------------------#
 	# SIM
@@ -145,6 +141,11 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-util.mk
 
 	#--------------------------------------------------------------#
+	# FMOD_EX
+
+	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
+
+	#--------------------------------------------------------------#
 	# LUAEXT
 
 	MY_LOCAL_CFLAGS += -DAKU_WITH_LUAEXT=1
@@ -155,11 +156,6 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-luaext.mk
-
-	#--------------------------------------------------------------#
-	# FMOD_EX
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
 
 	#--------------------------------------------------------------#
 	# HTTP_CLIENT
@@ -202,7 +198,7 @@
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
-	LOCAL_STATIC_LIBRARIES := libmoai-chipmunk libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libchipmunk libuntz libvorbis libogg libcontrib libexpat libjson liblua libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
+	LOCAL_STATIC_LIBRARIES := libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
 	LOCAL_WHOLE_STATIC_LIBRARIES := libmoai-android libmoai-sim libmoai-core libcrypto-a libcrypto-b libcrypto-c libcrypto-d
 
 #----------------------------------------------------------------#

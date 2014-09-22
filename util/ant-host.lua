@@ -53,21 +53,17 @@ config.LUA_MAIN						= 'main.lua'
 -- util
 --==============================================================
 
-local importJava
+local importBin
 local importLib
+local importSrc
 local processConfigFile
 
 ----------------------------------------------------------------
-local importJava = function ( path, namespace )
+local importBin = function ( path )
 
 	if not path then return end
-
-	local projectSrcFolder	= string.format ( '%ssrc/%s/', MOAI_PROJECT_PATH, string.gsub ( namespace, '%.', '/' ))
-
-	local files = util.listFiles ( path, 'java' )
-	for i, filename in ipairs ( files ) do
-		MOAIFileSystem.copy (  path .. filename, projectSrcFolder .. filename )
-	end
+	local filename = util.getFilenameFromPath ( path )
+	MOAIFileSystem.copy (  path, MOAI_PROJECT_PATH .. 'libs/armeabi-v7a/' .. filename )
 end
 
 ----------------------------------------------------------------
@@ -112,6 +108,19 @@ local importLib = function ( path )
 end
 
 ----------------------------------------------------------------
+local importSrc = function ( path, namespace )
+
+	if not path then return end
+
+	local projectSrcFolder	= string.format ( '%ssrc/%s/', MOAI_PROJECT_PATH, string.gsub ( namespace, '%.', '/' ))
+
+	local files = util.listFiles ( path, 'java' )
+	for i, filename in ipairs ( files ) do
+		MOAIFileSystem.copy (  path .. filename, projectSrcFolder .. filename )
+	end
+end
+
+----------------------------------------------------------------
 processConfigFile = function ( filename )
 
 	filename = MOAIFileSystem.getAbsoluteFilePath ( filename )
@@ -125,19 +134,22 @@ processConfigFile = function ( filename )
 		config [ k ] = config [ k ] and v
 	end
 
+	local resolvePath = function ( path )
+		return path and string.find ( path, '^%.' ) and configPath .. path or path
+	end
+
 	if configFile.MODULES then
 		for name, mod in pairs ( configFile.MODULES ) do
 
-			local src = mod.src
-			if src and string.find ( src, '^%.' ) then src = configPath .. src end
-
-			local lib = mod.lib
-			if lib and string.find ( lib, '^%.' ) then lib = configPath .. lib end
+			local src = resolvePath ( mod.src )
+			local lib = resolvePath ( mod.lib )
+			local bin = resolvePath ( mod.bin )
 
 			MODULES [ name ] = {
 				namespace = mod.namespace,
-				src = MOAIFileSystem.getAbsoluteDirectoryPath ( src ),
-				lib = MOAIFileSystem.getAbsoluteDirectoryPath ( lib ),
+				src = src and MOAIFileSystem.getAbsoluteDirectoryPath ( src ),
+				lib = lib and MOAIFileSystem.getAbsoluteDirectoryPath ( lib ),
+				bin = bin and MOAIFileSystem.getAbsoluteFilePath ( bin ),
 			}
 		end
 	end
@@ -159,7 +171,7 @@ COPY = {
 }
 ]]--
 
-processConfigFile ( MOAI_SDK_HOME .. 'ant/host/config.lua' )
+processConfigFile ( MOAI_SDK_HOME .. 'util/ant-host/config.lua' )
 
 MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
 MOAIFileSystem.affirmPath ( OUTPUT_DIR )
@@ -171,8 +183,9 @@ if config.KEYSTORE_PATH and config.KEYSTORE_NAME then
 end
 
 for name, mod in pairs ( MODULES ) do
-	importJava ( mod.src, mod.namespace or MOAI_JAVA_NAMESPACE )
+	importSrc ( mod.src, mod.namespace or MOAI_JAVA_NAMESPACE )
 	importLib ( mod.lib )
+	importBin ( mod.bin )
 end
 
 util.replaceInFiles ({

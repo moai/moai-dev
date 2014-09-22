@@ -30,6 +30,7 @@
 # core
 #================================================================#
 
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/zl-vfs
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/config-default

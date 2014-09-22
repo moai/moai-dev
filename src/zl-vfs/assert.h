@@ -22,11 +22,23 @@
 extern void					zl_handle_assert			( const char* condition, const char* funcname, const char* filename, int lineno );
 extern jmp_buf*				zl_set_assert_jmp_buf		( jmp_buf* env );
 
-#define __assert zl_assert
-#define assert zl_assert
-
 #ifdef  __cplusplus
 	}
 #endif
 
+#endif
+
+//================================================================//
+// replace
+//================================================================//
+
+#undef __assert
+#undef assert
+
+#ifdef NDEBUG
+	#define __assert(x) (( void )0 )
+	#define assert(x) (( void )0 )
+#else
+	#define __assert zl_assert
+	#define assert zl_assert
 #endif
