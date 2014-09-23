@@ -51,6 +51,9 @@ struct MOAIOptimalSizeParameters {
 
 
 class MOAIFreeTypeFont : public virtual MOAILuaObject {
+private:
+	void createGlyphAndAdvanceArrays(size_t glyphArraySize);
+	void destroyGlyphAndAdvanceArrays(size_t glyphArraySize);
 protected:
 	STLString mFilename;
 	float mDefaultSize;

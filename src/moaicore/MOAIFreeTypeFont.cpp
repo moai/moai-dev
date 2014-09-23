@@ -709,6 +709,9 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	
 	FT_Int pen_x, pen_y;
 	
+	size_t glyphArraySize = glyphsInText(text);
+	this->createGlyphAndAdvanceArrays(glyphArraySize);
+
 	// get the number of lines needed to display the text and populate line vector
 	int numLines = this->NumberOfLinesToDisplayText(text, width, wordBreak, true);
 	
@@ -820,6 +823,8 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 	
 	rect.mXMax = maxLineWidth;
 	rect.mYMax = lineHeight * numLines;
+
+	this->destroyGlyphAndAdvanceArrays(glyphArraySize);
 	
 	return rect;
 }
@@ -1554,14 +1559,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	
 	FT_Int imageWidth = (FT_Int)width;
 	FT_Int imageHeight = (FT_Int)height;
-	
-	// initialize mGlyphArray
+
 	size_t glyphArraySize = glyphsInText(text);
-	this->mGlyphArray = new FT_Glyph [ glyphArraySize ];
-	
-	// initialize mAdvanceArray
-	this->mAdvanceArray = new FT_Vector [ glyphArraySize ];
-	
+	this->createGlyphAndAdvanceArrays(glyphArraySize);
+
 	// create the image data buffer
 	this->InitBitmapData(imageWidth, imageHeight);
 	
@@ -1579,17 +1580,9 @@ MOAITexture* MOAIFreeTypeFont::RenderTexture(cc8 *text, float size, float width,
 	// create a texture from the image
 	MOAITexture *texture = new MOAITexture();
 	texture->Init(bitmapImg, "");
-	
-	// clean up the glyph array
-	deleteGlyphArray(this->mGlyphArray, glyphArraySize);
-	
-	// clean up the advance array
-	delete [] this->mAdvanceArray;
-	
-	// set member variable arrays to NULL
-	this->mGlyphArray = NULL;
-	this->mAdvanceArray = NULL;
-	
+
+	this->destroyGlyphAndAdvanceArrays(glyphArraySize);
+
 	return texture;
 }
 
@@ -1822,4 +1815,29 @@ u32 MOAIFreeTypeFont::WideCharStringLength(u32 *string){
 		length++;
 	}
 	return length;
+}
+
+void MOAIFreeTypeFont::createGlyphAndAdvanceArrays(size_t glyphArraySize)
+{
+	assert(this->mGlyphArray == NULL);
+	assert(this->mAdvanceArray == NULL);
+
+	// initialize mGlyphArray
+	this->mGlyphArray = new FT_Glyph [ glyphArraySize ];
+
+	// initialize mAdvanceArray
+	this->mAdvanceArray = new FT_Vector [ glyphArraySize ];
+}
+
+void MOAIFreeTypeFont::destroyGlyphAndAdvanceArrays(size_t glyphArraySize)
+{
+	// clean up the glyph array
+	deleteGlyphArray(this->mGlyphArray, glyphArraySize);
+
+	// clean up the advance array
+	delete [] this->mAdvanceArray;
+
+	// set member variable arrays to NULL
+	this->mGlyphArray = NULL;
+	this->mAdvanceArray = NULL;
 }
