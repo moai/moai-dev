@@ -53,6 +53,7 @@ AKU_API void			AKUAppFinalize					();
 AKU_API void			AKUAppInitialize				();
 AKU_API int				AKUCheckContext					( AKUContextID context );
 AKU_API void			AKUClearMemPool					();
+AKU_API int				AKUCountContexts				();
 AKU_API AKUContextID	AKUCreateContext				();
 AKU_API void			AKUDeleteContext				( AKUContextID context );
 AKU_API AKUContextID	AKUGetContext					();

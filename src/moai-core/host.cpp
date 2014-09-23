@@ -219,6 +219,12 @@ void AKUClearMemPool () {
 }
 
 //----------------------------------------------------------------//
+int AKUCountContexts () {
+
+	return sContextMap ? ( int )sContextMap->size () : 0;
+}
+
+//----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 
 	sContext = new AKUContext;
