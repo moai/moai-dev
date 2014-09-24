@@ -15,14 +15,33 @@ require ( 'util' )
 --==============================================================
 
 OUTPUT_DIR				= INVOKE_DIR .. 'host/'
-MOAI_PROJECT_PATH		= OUTPUT_DIR .. 'project/'
 MOAI_JAVA_NAMESPACE		= 'com.ziplinegames.moai'
+
+CONFIGS					= {}
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
+	
+	if param then
+	
+		if escape == 'c' or escape == 'config' then
+			table.insert ( CONFIGS, MOAIFileSystem.getAbsoluteFilePath ( INVOKE_DIR .. param ))
+		end
+
+		if escape == 'o' or escape == 'out' then
+			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
+				param = INVOKE_DIR .. param
+			end 
+			
+			OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
+		end
+	end
 end
 
-MODULES = {}
+ANT_DIR							= OUTPUT_DIR .. 'ant/'
+MOAI_PROJECT_PATH				= ANT_DIR .. 'project/'
+
+MODULES							= {}
 
 MODULE_APP_DECLARATIONS			= ''
 MODULE_MANIFEST_PERMISSIONS		= ''
@@ -86,7 +105,7 @@ local importLib = function ( path )
 	local projectPath = path .. 'project/'
 	if MOAIFileSystem.checkPathExists ( projectPath ) then
 		for i, pathname in ipairs ( util.listDirectories ( projectPath )) do
-			MOAIFileSystem.copy (  projectPath .. pathname, OUTPUT_DIR .. pathname )
+			MOAIFileSystem.copy (  projectPath .. pathname, ANT_DIR .. pathname )
 			MODULE_PROJECT_INCLUDES = MODULE_PROJECT_INCLUDES .. string.format ( 'android.library.reference.1=../%s/\n', pathname )
 		end
 	end
@@ -173,8 +192,13 @@ COPY = {
 
 processConfigFile ( MOAI_SDK_HOME .. 'util/ant-host/config.lua' )
 
-MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
-MOAIFileSystem.affirmPath ( OUTPUT_DIR )
+for i, config in ipairs ( CONFIGS ) do
+	print ( 'config', config )
+	processConfigFile ( config )
+end
+
+MOAIFileSystem.deleteDirectory ( ANT_DIR, true )
+MOAIFileSystem.affirmPath ( ANT_DIR )
 
 MOAIFileSystem.copy ( 'ant-host/project', MOAI_PROJECT_PATH )
 

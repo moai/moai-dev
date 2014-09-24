@@ -297,6 +297,12 @@ void MOAIGfxDevice::DetectContext () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::DetectFramebuffer () {
+	
+	this->mDefaultBuffer->DetectGLFrameBufferID ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
 
 	if ( activeTextures < this->mActiveTextures ) {
@@ -566,11 +572,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
-#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
-	mIsOpenGLES ( true ),
-#else
-	mIsOpenGLES ( false ),
-#endif
+	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
+		mIsOpenGLES ( true ),
+	#else
+		mIsOpenGLES ( false ),
+	#endif
 	mIsProgrammable ( false ),
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),

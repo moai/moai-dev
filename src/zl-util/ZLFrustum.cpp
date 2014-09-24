@@ -297,15 +297,6 @@ void ZLFrustum::Init ( const ZLMatrix4x4& invViewProjMtx ) {
 	this->mPlanes [ NEAR_PLANE ].Init ( nrt, nlt, nlb );
 	this->mPlanes [ FAR_PLANE ].Init ( flt, frt, frb );
 	
-	ZLVec3D center;
-	this->mAABB.GetCenter ( center );
-	
-	for ( u32 i = 0; i < TOTAL_PLANES; ++i ) {
-		if ( ZLDist::VecToPlane ( center, this->mPlanes [ i ]) > 0.0f ) {
-			this->mPlanes [ i ].Flip ();
-		}
-	}
-	
 	double frustArea = _frustArea ( *this );
 	double boxArea = this->mAABB.Area ();
 	

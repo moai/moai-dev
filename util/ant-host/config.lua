@@ -47,7 +47,7 @@ MODULES = {
 	
 	moai = {
 		src		= MOAI_SDK_HOME .. 'src/moai-android',
-		bin		= MOAI_SDK_HOME .. 'ant/libmoai/libs/armeabi-v7a/libmoai.so'
+		bin		= MOAI_SDK_HOME .. 'ant/libmoai/libs/armeabi-v7a/libmoai.so',
 	},
 
 	tapjoy = {

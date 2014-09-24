@@ -139,6 +139,12 @@ void AKUSimContextInitialize () {
 }
 
 //----------------------------------------------------------------//
+void AKUDetectFramebuffer () {
+
+	MOAIGfxDevice::Get ().DetectFramebuffer ();
+}
+
+//----------------------------------------------------------------//
 void AKUDetectGfxContext () {
 
 	MOAIGfxDevice::Get ().DetectContext ();

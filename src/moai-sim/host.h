@@ -28,6 +28,7 @@ AKU_API void			AKUSimAppInitialize				();
 AKU_API void			AKUSimContextInitialize			();
 
 // management api
+AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
 AKU_API double			AKUGetSimStep					();
 AKU_API void			AKUPause						( bool pause );
