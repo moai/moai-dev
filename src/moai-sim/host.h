@@ -31,6 +31,7 @@ AKU_API void			AKUSimContextInitialize			();
 AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
 AKU_API double			AKUGetSimStep					();
+AKU_API int				AKUGetLoopState					();
 AKU_API void			AKUPause						( bool pause );
 AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();

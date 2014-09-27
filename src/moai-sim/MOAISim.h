@@ -167,6 +167,7 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAISim )
 	
+	GET ( u32, LoopState, mLoopState )
 	GET ( double, Step, mStep )
 	GET ( double, SimDuration, mSimDuration )
 	GET ( double, SimTime, mSimTime )

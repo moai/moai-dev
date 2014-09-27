@@ -235,6 +235,12 @@ double AKUGetSimStep () {
 }
 
 //----------------------------------------------------------------//
+int AKUGetLoopState () {
+	
+	return MOAISim::Get ().GetLoopState ();
+}
+
+//----------------------------------------------------------------//
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
