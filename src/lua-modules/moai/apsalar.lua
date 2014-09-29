@@ -10,6 +10,7 @@
 module ( "apsalar", package.seeall )
 
 require "crypto"
+require "cloud-manager"
 
 --==============================================================
 -- database
@@ -139,15 +140,16 @@ end
 
 --------------------------------
 local function sendEvent ( record, connType )
-	
-	record.query = record.query .. "&c=" .. connType
+	local query
+	query = record.query
+	query = query .. "&c=" .. connType
 
 	-- update lag time for events that are not the start event
 	if record.name ~= "" and record.name ~= "start" then
 		record.query = record.query .. "&lag=" .. os.time () - record.curTime
 	end
 
-	local hashedQuery = addSecurityHash ( record.query )
+	local hashedQuery = addSecurityHash ( query )
 
 	local sendCallback = function ( httpTask )
 		
@@ -156,6 +158,7 @@ local function sendEvent ( record, connType )
 			resetBackoff ()
 			table.remove ( mEventsToSend, 1 )			
 		else
+			print('apsalar sendEvent failed', httpTask:getResponseCode (), httpTask:getString())
 		--	if httpTask:getResponseCode () ~= 500 or httpTask:getResponseCode () ~= 504 then
 				increaseBackoff ()				
 		--	end
@@ -204,6 +207,8 @@ local function sendThreadFunction ()
 			if #mEventsToSend > 0 and not mWaitForCallback then
 				sendEvent ( mEventsToSend [ 1 ], connectionTypeStr )
 				mWaitForCallback = true
+			else
+				--print('no events to send')
 			end
 		end
 	end
@@ -253,13 +258,13 @@ function event ( name, data )
 		k 	= mCanonicalKeySpace
 	}
 			
-	if ANDROID then
+	if MOAIEnvironment.osBrand == "Android" then
 		params.ab = MOAIEnvironment.cpuabi
-        params.br = MOAIEnvironment.devBrand 
-        params.de = MOAIEnvironment.devName
-        params.ma = MOAIEnvironment.devManufacturer
-        params.mo = MOAIEnvironment.devModel
-        params.pr = MOAIEnvironment.devProduct
+		params.br = MOAIEnvironment.devBrand 
+		params.de = MOAIEnvironment.devName
+		params.ma = MOAIEnvironment.devManufacturer
+		params.mo = MOAIEnvironment.devModel
+		params.pr = MOAIEnvironment.devProduct
 	end
 	
 	local queryString = cloud.encode ( params )
@@ -325,13 +330,13 @@ function start ( apiKey, apiSecret, ids )
 		params.dk = MOAIJsonParser.encode ( ids )
 	end
 	
-	if ANDROID then
+	if MOAIEnvironment.osBrand == "Android" then
 		params.ab = MOAIEnvironment.cpuabi
-        params.br = MOAIEnvironment.devBrand 
-        params.de = MOAIEnvironment.devName
-        params.ma = MOAIEnvironment.devManufacturer
-        params.mo = MOAIEnvironment.devModel
-        params.pr = MOAIEnvironment.devProduct
+		params.br = MOAIEnvironment.devBrand 
+		params.de = MOAIEnvironment.devName
+		params.ma = MOAIEnvironment.devManufacturer
+		params.mo = MOAIEnvironment.devModel
+		params.pr = MOAIEnvironment.devProduct
 	end
 	
 	local queryString = cloud.encode ( params )
@@ -513,4 +518,10 @@ function getConID ()
 	if mCanonicalUID == nil then return nil end
 	local idTable = { id = mCanonicalUID, key = mCanonicalKeySpace }
 	return idTable
+end
+
+if ( MOAIEnvironment.osBrand == "iOS" ) then
+	mCanonicalUID = MOAIEnvironment.openUdid
+else
+	mCanonicalUID = MOAIEnvironment.udid
 end
