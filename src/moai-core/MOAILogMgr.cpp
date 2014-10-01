@@ -86,12 +86,31 @@ int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 	@out	nil
 */
 int MOAILogMgr::_log ( lua_State* L ) {
-
 	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "S" )) return 0;
 
-	cc8* msg = state.GetValue < cc8* >( 1, "" );
-	ZLLog::LogF ( ZLLog::CONSOLE, msg );
+	u32 idx = 1;
+	u32 level = LOG_STATUS;
+
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+		level = state.GetValue < u32 >( 1, LOG_STATUS );
+		idx++;
+	}
+	
+	cc8* str1 =  state.GetValue < cc8* >( idx++, "" );
+	cc8* str2 =  state.GetValue < cc8* >( idx, 0 );
+
+	cc8* msg = str1;
+	cc8* token = "MOAI";
+	
+	if ( str2 ) {
+		token = str1;
+		msg = str2;
+	}
+
+	STLString log;
+	log.write ( "[%s] %s", token, msg );
+
+	ZLLog::LogF ( ZLLog::CONSOLE, log.c_str ());
 
 	return 0;
 }
@@ -294,6 +313,7 @@ void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOG_ERROR",			( u32 )LOG_ERROR );
 	state.SetField ( -1, "LOG_WARNING",			( u32 )LOG_WARNING );
 	state.SetField ( -1, "LOG_STATUS",			( u32 )LOG_STATUS );
+	state.SetField ( -1, "LOG_DEBUG",			( u32 )LOG_DEBUG );
 
 	MOAILogMessages::RegisterLogMessageIDs ( state );
 

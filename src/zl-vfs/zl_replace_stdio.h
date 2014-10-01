@@ -29,9 +29,6 @@
 #define stdout zl_stdout
 
 //----------------------------------------------------------------//
-#undef assert
-#define assert zl_assert
-		
 #undef clearerr
 #define clearerr zl_clearerr
 

@@ -34,6 +34,7 @@ class MOAILogMessage {
 	@const LOG_ERROR
 	@const LOG_WARNING
 	@const LOG_STATUS
+	@const LOG_DEBUG
 */
 class MOAILogMgr :
 	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
@@ -65,6 +66,7 @@ public:
 		LOG_ERROR,
 		LOG_WARNING,
 		LOG_STATUS,
+		LOG_DEBUG,
 	};
 	
 	GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )

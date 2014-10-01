@@ -87,6 +87,12 @@ void AKUIosDidBecomeActive () {
 }
 
 //----------------------------------------------------------------//
+void AKUIosDidEnterBackground () {
+
+	MOAIAppIOS::Get ().DidEnterBackground ();
+}
+
+//----------------------------------------------------------------//
 void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
 
 	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
@@ -114,6 +120,12 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID ( frameBuffer );
+}
+
+//----------------------------------------------------------------//
+void AKUIosWillEnterForeground () {
+
+	MOAIAppIOS::Get ().WillEnterForeground ();
 }
 
 //----------------------------------------------------------------//

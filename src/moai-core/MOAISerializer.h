@@ -43,6 +43,8 @@ private:
 	bool				mBase64;
 
 	//----------------------------------------------------------------//
+	static int			_floatToHex					( lua_State* L );
+	static int			_hexToFloat					( lua_State* L );
 	static int			_getObjectTables			( lua_State* L );
 	static int			_serializeToFile			( lua_State* L );
 	static int			_serializeToString			( lua_State* L );

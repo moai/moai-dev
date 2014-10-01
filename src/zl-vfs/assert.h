@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef ASSERT_H
-#define ASSERT_H
+#ifndef ZL_ASSERT_H
+#define ZL_ASSERT_H
 
 #ifdef  __cplusplus
 	extern "C" {

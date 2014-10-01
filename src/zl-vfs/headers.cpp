@@ -669,7 +669,7 @@ int zl_pclose ( ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
-ZLFILE* zl_popen ( const char *command, const char *mode ) {
+ZLFILE* zl_popen ( const char* command, const char *mode ) {
 
 	ZLVfsFile* file = new ZLVfsFile ();
 	int result = file->OpenProcess ( command, mode );
@@ -682,7 +682,7 @@ ZLFILE* zl_popen ( const char *command, const char *mode ) {
 }
 
 //----------------------------------------------------------------//
-int zl_printf ( const char * format, ... ) {
+int zl_printf ( const char* format, ... ) {
 
 	int result;
 

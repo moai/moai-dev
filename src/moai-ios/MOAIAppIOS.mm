@@ -262,7 +262,20 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 //----------------------------------------------------------------//
 void MOAIAppIOS::DidBecomeActive () {
 
+	this->UpdateReachability ();
+
 	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::DidEnterBackground () {
+
+	MOAILuaRef& callback = this->mListeners [ DID_ENTER_BACKGROUND ];
 	
 	if ( callback ) {
 		MOAIScopedLuaState state = callback.GetSelf ();
@@ -313,14 +326,16 @@ void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "DID_BECOME_ACTIVE",	( u32 )DID_BECOME_ACTIVE );
-	state.SetField ( -1, "OPEN_URL",			( u32 )OPEN_URL );
-	state.SetField ( -1, "WILL_RESIGN_ACTIVE",	( u32 )WILL_RESIGN_ACTIVE );
-	state.SetField ( -1, "WILL_TERMINATE",		( u32 )WILL_TERMINATE );
+	state.SetField ( -1, "DID_BECOME_ACTIVE",		( u32 )DID_BECOME_ACTIVE );
+	state.SetField ( -1, "DID_ENTER_BACKGROUND",	( u32 )DID_ENTER_BACKGROUND );
+	state.SetField ( -1, "OPEN_URL",				( u32 )OPEN_URL );
+	state.SetField ( -1, "WILL_ENTER_FOREGROUND",	( u32 )WILL_ENTER_FOREGROUND );
+	state.SetField ( -1, "WILL_RESIGN_ACTIVE",		( u32 )WILL_RESIGN_ACTIVE );
+	state.SetField ( -1, "WILL_TERMINATE",			( u32 )WILL_TERMINATE );
 	
-	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
-	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
-	state.SetField ( -1, "DOMAIN_CACHES",		( u32 )DOMAIN_CACHES );
+	state.SetField ( -1, "DOMAIN_DOCUMENTS",		( u32 )DOMAIN_DOCUMENTS );
+	state.SetField ( -1, "DOMAIN_APP_SUPPORT",		( u32 )DOMAIN_APP_SUPPORT );
+	state.SetField ( -1, "DOMAIN_CACHES",			( u32 )DOMAIN_CACHES );
 	
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT",				( u32 )INTERFACE_ORIENTATION_PORTRAIT );
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN",	( u32 )INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN );
@@ -345,6 +360,17 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIAppIOS::UpdateReachability () {
 
 	[ this->mReachabilityListener updateMoaiEnvironment ];
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::WillEnterForeground () {
+
+	MOAILuaRef& callback = this->mListeners [ WILL_ENTER_FOREGROUND ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
