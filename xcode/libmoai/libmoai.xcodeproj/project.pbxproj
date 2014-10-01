@@ -3981,7 +3981,6 @@
 		CD9F76201808CC5A0001EF0C /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
 		CD9F76461808CE9D0001EF0C /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
 		CD9F76471808CE9D0001EF0C /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C9217FA573B00EBA2DB /* host.mm */; };
-		CD9F76481808CE9D0001EF0C /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9317FA573B00EBA2DB /* host.h */; };
 		CD9F76491808CE9D0001EF0C /* MOAIAppIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */; };
 		CD9F764A1808CE9D0001EF0C /* MOAIAppIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */; };
 		CD9F764B1808CE9D0001EF0C /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */; };
@@ -13021,7 +13020,6 @@
 				CD4C3EA4180A63BB00C02381 /* MOAIProfilerScope.h in Headers */,
 				CDB0CA32193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */,
 				CD9613741905ED2D00156BEF /* MOAIDeck2DSnappingShader-vsh.h in Headers */,
-				CD9F76481808CE9D0001EF0C /* host.h in Headers */,
 				CD9F76571808CE9D0001EF0C /* NSArray+MOAILib.h in Headers */,
 				CD4C3EBD180A63BB00C02381 /* MOAISim.h in Headers */,
 				CD4C3ED6180A63BB00C02381 /* MOAITileDeck2D.h in Headers */,

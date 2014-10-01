@@ -62,7 +62,9 @@ public:
 	
 	enum {
 		DID_BECOME_ACTIVE,
+		DID_ENTER_BACKGROUND,
 		OPEN_URL,
+		WILL_ENTER_FOREGROUND,
 		WILL_RESIGN_ACTIVE,
 		WILL_TERMINATE,
 		TOTAL,
@@ -81,16 +83,18 @@ public:
 		INTERFACE_ORIENTATION_LANDSCAPE_RIGHT      = UIInterfaceOrientationLandscapeRight,
 	};
 
-	MOAILuaStrongRef			mListeners [ TOTAL ];
+	MOAILuaStrongRef			mListeners [ TOTAL ]; // TODO: rewrite to use moai event source
 
 	//----------------------------------------------------------------//
 	void			DidBecomeActive			();
+	void			DidEnterBackground		();
 					MOAIAppIOS				();
 					~MOAIAppIOS				();
 	void			OnGlobalsFinalize		();
 	void			OpenUrl					( NSURL* url, NSString* sourceApplication );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			UpdateReachability		();
+	void			WillEnterForeground		();
 	void			WillResignActive		();
 	void			WillTerminate			();
 

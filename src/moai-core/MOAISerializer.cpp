@@ -11,6 +11,19 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAISerializer::_floatToHex ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	double num = state.GetValue < double >( 1, 0.0 );
+	STLString hex;
+	hex.write ( "%la", num );
+	
+	state.Push ( hex );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAISerializer::_getObjectTables ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISerializer, "UU" );
 
@@ -33,6 +46,25 @@ int MOAISerializer::_getObjectTables ( lua_State* L ) {
 	object->SerializeOut ( state, *self );
 
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISerializer::_hexToFloat ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* hex = state.GetValue < cc8* >( 1, 0 );
+	if ( hex ) {
+	
+		double num;
+		int result = sscanf ( hex, "%la", &num );
+		
+		if (( result != EOF ) && ( result > 0 )) {
+			state.Push ( num );
+			return 1;
+		}
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -336,6 +368,8 @@ void MOAISerializer::PrintObjectID ( ZLStream& stream, cc8* format, ObjID objID 
 void MOAISerializer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "floatToHex",			_floatToHex },
+		{ "hexToFloat",			_hexToFloat },
 		{ "serializeToFile",	_serializeToFile },
 		{ "serializeToString",	_serializeToString },
 		{ NULL, NULL }
