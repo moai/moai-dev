@@ -220,7 +220,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	propListForRay
-	@text	Returns all props under a given world space point.
+	@text	Returns all props that intersect the given ray.
 	
 	@in		MOAIPartition self
 	@in		number x
@@ -373,9 +373,9 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	
 	@in		MOAIPartition self
 	@in		number levelID
-	@in		number cellSize		Dimensions of the layer's cells.
-	@in		number xCells		Width of layer in cells.
-	@in		number yCells		Height of layer in cells.
+	@in		number cellSize		Dimensions of the level's cells.
+	@in		number xCells		Width of level in cells.
+	@in		number yCells		Height of level in cells.
 	@out	nil
 */
 int MOAIPartition::_setLevel ( lua_State* L ) {
@@ -428,8 +428,8 @@ void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].Clear ();
 	}
 	this->mBiggies.Clear ();
@@ -442,8 +442,8 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherProps ( results, ignore, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, mask );
@@ -458,8 +458,8 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherProps ( results, ignore, point, orientation, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, point, orientation, mask );
@@ -473,8 +473,8 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherProps ( results, ignore, point, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, point, mask );
@@ -489,8 +489,8 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	results.Reset ();
 	box.Bless ();
 	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherProps ( results, ignore, box, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, box, mask );
@@ -504,8 +504,8 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	results.Reset ();
 	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherProps ( results, ignore, frustum, this->mPlaneID, mask );
 	}
 	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
@@ -566,8 +566,8 @@ MOAIPartition::~MOAIPartition () {
 // This moves all props to the 'empties' cell
 void MOAIPartition::PrepareRebuild () {
 
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
+	u32 totalLevels = this->mLevels.Size ();
+	for ( u32 i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].ExtractProps ( this->mEmpties, 0 );
 	}
 	this->mBiggies.ExtractProps ( this->mEmpties, 0 );
@@ -643,9 +643,9 @@ void MOAIPartition::SetLevel ( int levelID, float cellSize, int width, int heigh
 //----------------------------------------------------------------//
 void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 
-	// clear out the layer; layer will be re-calculated below
-	// also: prop.mLayer is *only* for debug drawing 
-	prop.mLayer = 0;
+	// clear out the level; level will be re-calculated below
+	// also: prop.mLevel is *only* for debug drawing 
+	prop.mLevel = 0;
 
 	// status is not 'OK' so prop is either global or empty
 	if ( status != MOAIProp::BOUNDS_OK ) {
@@ -665,31 +665,29 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 	float height = rect.Height ();
 	float cellSize = ( width > height ) ? width : height;
 	
-	u32 layerID;
 	if ( cellSize > 0.0f ) {
 		
-		MOAIPartitionLevel* layer = 0;
+		MOAIPartitionLevel* level = 0;
 		
-		u32 totalLayers = this->mLevels.Size ();
-		for ( u32 i = 0; i < totalLayers; ++i ) {
+		u32 totalLevels = this->mLevels.Size ();
+		for ( u32 i = 0; i < totalLevels; ++i ) {
 			
-			MOAIPartitionLevel* testLayer = &this->mLevels [ i ];
+			MOAIPartitionLevel* testLevel = &this->mLevels [ i ];
 			
-			if ( cellSize <= testLayer->mCellSize ) {
-				if (( layer == 0 ) || ( testLayer->mCellSize  < layer->mCellSize )) {
-					layer = testLayer;
-					layerID = i;
+			if ( cellSize <= testLevel->mCellSize ) {
+				if (( level == 0 ) || ( testLevel->mCellSize  < level->mCellSize )) {
+					level = testLevel;
 				}
 			}
 		}
 		
-		if ( layer ) {
-			// layer prop
-			layer->PlaceProp ( prop );
-			prop.mLayer = layer;
+		if ( level ) {
+			// level prop
+			level->PlaceProp ( prop );
+			prop.mLevel = level;
 		}
 		else {
-			// biggie prop - has dimension but too big to fit in any layer
+			// biggie prop - has dimension but too big to fit in any level
 			this->mBiggies.InsertProp ( prop );
 		}
 	}
