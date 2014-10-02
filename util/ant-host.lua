@@ -47,6 +47,8 @@ MODULE_APP_DECLARATIONS			= ''
 MODULE_MANIFEST_PERMISSIONS		= ''
 MODULE_PROJECT_INCLUDES			= ''
 
+COPY							= {}
+
 ----------------------------------------------------------------
 local config = {}
 
@@ -59,11 +61,7 @@ config.LUA_MAIN						= 'main.lua'
 
 config.MANIFEST_DEBUGGABLE			= 'false'
 
-config.KEYSTORE_PATH				= nil
-config.KEYSTORE_NAME				= nil
-config.KEYSTORE_PASSWORD			= nil
-config.KEYSTORE_ALIAS				= nil
-config.KEYSTORE_ALIAS_PASSWORD		= nil
+config.ANDROID_PLATFORM_TARGET		= 10
 
 config.LUA_WORKING_DIR				= 'bundle/assets/lua'
 config.LUA_MAIN						= 'main.lua'
@@ -150,11 +148,11 @@ processConfigFile = function ( filename )
 	util.dofileWithEnvironment ( filename, configFile )
 
 	for k, v in pairs ( configFile ) do
-		config [ k ] = config [ k ] and v
+		config [ k ] = v
 	end
 
 	local resolvePath = function ( path )
-		return path and string.find ( path, '^%.' ) and configPath .. path or path
+		return path and ( string.find ( path, '^/' ) and path or configPath .. path )
 	end
 
 	if configFile.MODULES then
@@ -172,6 +170,16 @@ processConfigFile = function ( filename )
 			}
 		end
 	end
+
+	if configFile.COPY then
+		for dst, src in pairs ( configFile.COPY ) do
+			COPY [ MOAI_PROJECT_PATH .. dst ] = resolvePath ( src )
+		end
+	end
+
+	if configFile.KEYSTORE_PATH then
+		config.KEYSTORE_PATH = resolvePath ( configFile.KEYSTORE_PATH )
+	end
 end
 
 --==============================================================
@@ -179,11 +187,6 @@ end
 --==============================================================
 
 --[[
-PACKAGE_NAME				= string.lower ( string.format ( 'com.%s.%s', PUBLISHER_NAME, PROJECT_NAME ))
-PACKAGE_PATH				= string.gsub ( PACKAGE_NAME, '.', '/' )
-
-APP_SRC_PATH				= MOAI_PROJECT_PATH .. 'src/' .. PACKAGE_PATH .. '/'
-
 COPY = {
 	{ dst = MOAI_PROJECT_PATH .. 'assets/lua',		src = LUA_SRC_PATH },
 	{ dst = MOAI_PROJECT_PATH .. 'res/',			src = string.format ( '%sres-%s', TEMPLATE_PATH, TARGET )},
@@ -210,6 +213,10 @@ for name, mod in pairs ( MODULES ) do
 	importSrc ( mod.src, mod.namespace or MOAI_JAVA_NAMESPACE )
 	importLib ( mod.lib )
 	importBin ( mod.bin )
+end
+
+for dst, src in pairs ( COPY ) do
+	MOAIFileSystem.copy ( src, dst )
 end
 
 util.replaceInFiles ({
@@ -266,3 +273,9 @@ util.replaceInFiles ({
 		[ '@WORKING_DIR@' ]						= config.LUA_WORKING_DIR,
 	},
 })
+
+os.execute ( string.format ( 'android update project --name %s --target %s --path %s',
+	config.PROJECT_NAME,
+	tostring ( config.ANDROID_PLATFORM_TARGET ),
+	MOAI_PROJECT_PATH
+))
