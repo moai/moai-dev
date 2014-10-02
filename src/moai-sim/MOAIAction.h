@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAction
 //================================================================//
-/**	@name MOAIAction
+/**	@lua MOAIAction
 	@text Base class for actions.
 	
 	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
@@ -45,6 +45,7 @@ private:
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
+	static int			_isPaused				( lua_State* L );
 	static int			_pause					( lua_State* L );
 	static int			_setAutoStop			( lua_State* L );
 	static int			_start					( lua_State* L );
@@ -84,6 +85,7 @@ public:
 	bool				IsBusy					();
 	bool				IsCurrent				();
 	virtual bool		IsDone					();
+	bool				IsPaused				();
 						MOAIAction				();
 						~MOAIAction				();
 	void				RegisterLuaClass		( MOAILuaState& state );

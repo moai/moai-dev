@@ -25,7 +25,12 @@ class MOAISerializerBase :
 	public virtual MOAILuaObject {
 public:
 
-	typedef void* ObjID;
+	typedef u32 ObjID;
+	static const ObjID NULL_OBJ_ID;
+
+private:
+
+	STLMap < const void*, u32 > mObjectIDs;
 
 protected:
 

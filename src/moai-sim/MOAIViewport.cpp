@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setOffset
+/**	@lua	setOffset
 	@text	Sets the viewport offset in normalized view space (size of
 			viewport is -1 to 1 in both directions).
 	
@@ -30,7 +30,7 @@ int MOAIViewport::_setOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRotation
+/**	@lua	setRotation
 	@text	Sets global rotation to be added to camera transform.
 	
 	@in		MOAIViewport self
@@ -47,7 +47,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScale
+/**	@lua	setScale
 	@text	Sets the number of world units visible of the viewport for one or both
 			dimensions. Set 0 for one of the dimensions to use a derived value based on
 			the other dimension and the aspect ratio. Negative values are also OK.
@@ -81,7 +81,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSize
+/**	@lua	setSize
 	@text	Sets the dimensions of the this->
 	
 	

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAITransformBase
 //================================================================//
-/**	@name	MOAITransformBase
+/**	@lua	MOAITransformBase
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC

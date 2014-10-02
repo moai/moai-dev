@@ -15,7 +15,7 @@ class MOAIImage;
 //================================================================//
 // MOAITextureBase
 //================================================================//
-/**	@name	MOAITextureBase
+/**	@lua	MOAITextureBase
 	@text	Base class for texture resources.
 
 	@const	GL_LINEAR

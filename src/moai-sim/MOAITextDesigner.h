@@ -6,6 +6,7 @@
 
 class MOAITextLayout;
 class MOAITextStyle;
+class MOAITextStyleCache;
 class MOAITextStyleMap;
 class MOAITextStyleSpan;
 
@@ -32,6 +33,9 @@ protected:
 	
 	float		mGlyphScale;
 	float		mLineSpacing;
+	
+	float		mHLineSnap; // snap lines to this boundary
+	float		mVLineSnap; // snap lines to this boundary
 	
 	ZLLeanArray < MOAIAnimCurve* > mCurves;
 
@@ -70,9 +74,12 @@ public:
 	GET_SET ( float, GlyphScale, mGlyphScale )
 	GET_SET ( float, LineSpacing, mLineSpacing )
 
+	GET_SET ( float, HLineSnap, mHLineSnap )
+	GET_SET ( float, VLineSnap, mVLineSnap )
+
 	//----------------------------------------------------------------//
 	void		ClearCurves					();
-	void		Layout						( MOAITextLayout& layout, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx );
+	void		Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx );
 	void		Init						( const MOAITextDesigner& designer );
 				MOAITextDesigner			();
 				~MOAITextDesigner			();

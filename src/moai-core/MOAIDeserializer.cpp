@@ -11,17 +11,57 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIDeserializer::_base64Decode ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	state.Base64Decode ( 1 );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIDeserializer::_createObject ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeserializer, "US" );
+
+	cc8* classname = state.GetValue < cc8* >( 2, 0 );
+	if ( !classname ) return 0;
+	
+	lua_getglobal ( state, classname );
+	
+	if ( state.IsNil ()) {
+		state.Pop ( 1 );
+	}
+	else {
+		if ( state.GetFieldWithType ( -1, "new", LUA_TFUNCTION )) {
+			lua_replace ( state, -2 );
+			int status = state.DebugCall ( 0, 1 );
+			if ( status == 0 ) return 1;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIDeserializer::_initObject ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeserializer, "UU*T" );
+	MOAI_LUA_SETUP ( MOAIDeserializer, "UU" );
 
 	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, false );
 	if ( !object ) return 0;
 
-	if ( state.IsType ( 3, LUA_TTABLE )) {
-		object->SetMemberTable ( state, 3 );
-	}
-	object->SerializeIn ( state, *self );
+	int memberTableIdx = 3;
+	int initTableIdx = 4;
 
+	if ( state.CheckParams ( 1, "UUS**T")) {
+		memberTableIdx = 5;
+		initTableIdx = 6;
+	}
+	
+	if ( state.IsType ( memberTableIdx, LUA_TTABLE )) {
+		object->SetMemberTable ( state, memberTableIdx );
+	}
+		
+	if ( state.IsType ( initTableIdx, LUA_TTABLE )) {
+		object->SerializeIn ( state, *self );
+	}
 	return 0;
 }
 
@@ -72,13 +112,20 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 
 //----------------------------------------------------------------//
 void MOAIDeserializer::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "base64Decode",			_base64Decode },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
 void MOAIDeserializer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "createObject",			_createObject },
 		{ "initObject",				_initObject },
 		{ "registerObjectID",		_registerObjectID },
 		{ NULL, NULL }
@@ -97,7 +144,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 
 	// load the lua file
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( ZLLog::CONSOLE, status )) return LOAD_ERROR;
+	if ( status ) return LOAD_ERROR;
 	
 	// load self as the func param
 	this->PushLuaUserdata ( state );

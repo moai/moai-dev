@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorEllipse.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -11,8 +12,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorEllipse::AddFillContours ( TESStesselator* tess ) {
-
+int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
+	
 	u32 steps = this->mStyle.GetCircleResolution ();
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * steps );
@@ -25,13 +26,15 @@ void MOAIVectorEllipse::AddFillContours ( TESStesselator* tess ) {
 		verts [ i ].mY = this->mLoc.mY + ( Sin ( angle ) * this->mYRad );
 		this->mStyle.GetDrawingToWorld ().Transform ( verts [ i ]);
 	}
-	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), steps );
+	tessAddContour ( tess->mTess, 2, verts, sizeof ( ZLVec2D ), steps );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorEllipse::AddStrokeContours ( TESStesselator* tess ) {
+int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( tess );
+	return MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//

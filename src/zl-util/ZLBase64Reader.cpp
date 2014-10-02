@@ -35,6 +35,13 @@ size_t ZLBase64Reader::GetCursor () {
 }
 
 //----------------------------------------------------------------//
+// returns an approx. len no smaller than actual decoded size
+size_t ZLBase64Reader::GetDecodedLength ( size_t encodedLength ) {
+
+	return 3 * ( size_t )ceilf (( double )encodedLength / 4.0 ); // should not need ceil
+}
+
+//----------------------------------------------------------------//
 size_t ZLBase64Reader::GetLength () {
 
 	return this->mSize > this->mLength ? this->mSize : this->mLength;

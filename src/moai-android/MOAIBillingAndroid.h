@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIBillingAndroid
 //================================================================//
-/**	@name	MOAIBillingAndroid
+/**	@lua	MOAIBillingAndroid
 	@text	Wrapper for in-app purchase integration on Android
 			devices using either Google Play or Amazon. Exposed 
 			to Lua via MOAIBilling on all mobile platforms, but 
@@ -59,6 +59,7 @@ private:
 	static int _consumePurchaseSync			( lua_State* L );
 	static int _getPurchasedProducts		( lua_State* L );
 	static int _purchaseProduct				( lua_State* L );
+	static int _purchaseProductFortumo		( lua_State* L );
 	static int _requestProductsSync			( lua_State* L );
 	
 public:
@@ -77,7 +78,8 @@ public:
 	enum {
         BILLING_PROVIDER_GOOGLE,
         BILLING_PROVIDER_AMAZON,
-		BILLING_PROVIDER_TSTORE
+		BILLING_PROVIDER_TSTORE,
+		BILLING_PROVIDER_FORTUMO
 	};
 
 	enum {
@@ -164,6 +166,7 @@ public:
 	void			NotifyPurchaseStateChanged		( int code, cc8* identifier, cc8* order, cc8* user, cc8* notification, cc8* payload );
 	void			NotifyRestoreResponseReceived	( int code, bool more, cc8* offset );
 	void			NotifyUserIdDetermined			( int code, cc8* user );
+	void 			NotifyFortumoPurchaseStateChanged( int, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*);
 	void			RegisterLuaClass				( MOAILuaState& state );
 };
 

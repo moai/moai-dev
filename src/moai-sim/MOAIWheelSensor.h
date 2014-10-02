@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIWheelSensor
 //================================================================//
-/**	@name	MOAIWheelSensor
+/**	@lua	MOAIWheelSensor
 	@text	Hardware wheel sensor.
 */
 class MOAIWheelSensor :

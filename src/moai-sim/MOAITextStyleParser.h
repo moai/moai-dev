@@ -72,7 +72,8 @@ private:
 	ZLLeanStack < MOAITextStyle*, 8 > mStyleStack;
 	ZLLeanStack < MOAITextStyle*, 8 > mActiveStyles;
 
-	MOAITextStyle* mCurrentStyle;
+	MOAITextStyle*	mDefaultStyle;
+	MOAITextStyle*	mCurrentStyle;
 
 	//----------------------------------------------------------------//
 	void			BuildStyleMap				( MOAITextStyleMap& styleMap, MOAITextStyleCache& styleCache, cc8* str );

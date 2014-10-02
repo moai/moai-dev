@@ -28,6 +28,31 @@ private:
 };
 
 //================================================================//
+// MOAILuaTraversalState
+//================================================================//
+class MOAILuaTraversalState {
+private:
+
+	friend class MOAILuaRuntime;
+	
+	typedef STLSet < STLString >							StringSet;
+	typedef StringSet::iterator								StringSetIt;
+
+	typedef STLSet < const void* >							TraversalSet;
+	typedef TraversalSet::iterator							TraversalSetIt;
+
+	typedef STLMap < MOAILuaObject*, StringSet >			ObjectPathMap;
+	typedef ObjectPathMap::iterator							ObjectPathMapIt;
+
+	TraversalSet		mTraversalStack; // to hold traversed objects
+	TraversalSet		mTraversalSet; // all traversed objects
+	TraversalSet		mIgnoreSet; // to hold ignored objects
+	ObjectPathMap		mPathMap; // sets of Lua reference paths to objects
+	
+	bool				mIgnoreTraversed;
+};
+
+//================================================================//
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
@@ -41,12 +66,19 @@ private:
 	static const u32 WEAK_REF_BIT	= 0x80000000;
 	static const u32 REF_MASK		= 0x7fffffff;
 
+	typedef STLSet < MOAILuaObject* >						ObjectSet;
+	typedef ObjectSet::iterator								ObjectSetIt;
+
 	typedef STLMap < MOAILuaObject*, MOAILuaObjectInfo >	TrackingMap;
 	typedef TrackingMap::iterator							TrackingMapIt;
 	typedef TrackingMap::const_iterator						TrackingMapConstIt;
 	
 	typedef STLArray < MOAILuaObject* >						LeakPtrList;
-	typedef STLMap < STLString, LeakPtrList >				LeakStackMap;
+	typedef LeakPtrList::iterator							LeakPtrListIt;
+	
+	typedef STLMap < STLString, ObjectSet >					LeakStackMap;
+	typedef LeakStackMap::iterator							LeakStackMapIt;
+	
 	typedef STLMap < STLString, size_t >					HistMap;
 
 	STLString			mTrackingGroup;
@@ -72,9 +104,10 @@ private:
 	static int				_deref					( lua_State* L );
 	static int				_dump					( lua_State* L );
 	static int				_dumpStack				( lua_State* L );
+	static int				_forceGC				( lua_State* L );
 	static int				_getHistogram			( lua_State* L );
 	static int				_getRef					( lua_State* L );
-	static int				_panic					( lua_State *L );
+	static int				_panic					( lua_State* L );
 	static int				_reportGC				( lua_State* L );
 	static int				_reportHistogram		( lua_State* L );
 	static int				_reportLeaks			( lua_State* L );
@@ -85,11 +118,14 @@ private:
 	//----------------------------------------------------------------//
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
 	void					DeregisterObject		( MOAILuaObject& object );
-	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
+	void					FindLuaRefs				( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
+	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
+	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	static bool				IsLuaIdentifier			( const char *str );
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();
 	void					OnGlobalsRetire			();
+	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
 public:

@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize the bridge transform (map coordinates in one layer onto
 			another; useful for rendering screen space objects tied to world
 			space coordinates - map pins, for example).
@@ -22,6 +22,7 @@
 	@out	nil
 */
 int MOAIPinTransform::_init ( lua_State* L ) {
+	
 	MOAI_LUA_SETUP ( MOAIPinTransform, "UUU" );
 	
 	MOAILayer* sourceLayer = state.GetLuaObject < MOAILayer >( 2, true );
@@ -41,7 +42,23 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPinTransform::MOAIPinTransform () {
+bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+
+	if ( MOAIPinTransformAttr::Check ( attrID )) {
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FRONT:
+				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				return true;
+		}
+	}
+	
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+}
+
+//----------------------------------------------------------------//
+MOAIPinTransform::MOAIPinTransform () :
+	mFront ( 1.0f )
+{
 	
 	RTTI_SINGLE ( MOAITransform )
 }
@@ -67,19 +84,18 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
 	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
 	
-//	this->mSourceLayer->GetWorldToWndMtx ( mtx );
-//	mtx.Project ( loc );
-//	
-//	this->mDestLayer->GetWndToWorldMtx ( mtx );
-//	mtx.Transform ( loc );
-	
 	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
 	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
+	
+	// Z component is at the back of the NDC's near plane
+	this->mFront = loc.mZ < -1.0f ? 0.0f : 1.0f;
 }
 
 //----------------------------------------------------------------//
 void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_FRONT", MOAIPinTransformAttr::Pack ( ATTR_FRONT ) );
 }
 
 //----------------------------------------------------------------//
@@ -94,4 +110,3 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-

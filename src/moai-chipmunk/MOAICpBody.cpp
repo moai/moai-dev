@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	activate
+/**	@lua	activate
 	@text	Activates a body after it has been put to sleep (physics will now be processed for this body again).
 
 	@in		MOAICpBody self
@@ -25,7 +25,7 @@ int MOAICpBody::_activate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addCircle
+/**	@lua	addCircle
 	@text	Adds a circle to the body.
 
 	@in		MOAICpBody self
@@ -53,7 +53,7 @@ int MOAICpBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addPolygon
+/**	@lua	addPolygon
 	@text	Adds a polygon to the body.
 
 	@in		MOAICpBody self
@@ -84,7 +84,7 @@ int MOAICpBody::_addPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRect
+/**	@lua	addRect
 	@text	Adds a rectangle to the body.
 
 	@in		MOAICpBody self
@@ -128,7 +128,7 @@ int MOAICpBody::_addRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addSegment
+/**	@lua	addSegment
 	@text	Adds a segment to the body.
 
 	@in		MOAICpBody self
@@ -162,7 +162,7 @@ int MOAICpBody::_addSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyForce
+/**	@lua	applyForce
 	@text	Applies force to the body, taking into account any existing forces being applied.
 
 	@in		MOAICpBody self
@@ -189,7 +189,7 @@ int MOAICpBody::_applyForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyImpulse
+/**	@lua	applyImpulse
 	@text	Applies impulse to the body, taking into account any existing impulses being applied.
 
 	@in		MOAICpBody self
@@ -216,7 +216,7 @@ int MOAICpBody::_applyImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngle
+/**	@lua	getAngle
 	@text	Returns the angle of the body.
 
 	@in		MOAICpBody self
@@ -231,7 +231,7 @@ int MOAICpBody::_getAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngVel
+/**	@lua	getAngVel
 	@text	Returns the angular velocity of the body.
 
 	@in		MOAICpBody self
@@ -247,7 +247,7 @@ int MOAICpBody::_getAngVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getForce
+/**	@lua	getForce
 	@text	Returns the force of the body.
 
 	@in		MOAICpBody self
@@ -265,7 +265,7 @@ int MOAICpBody::_getForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMass
+/**	@lua	getMass
 	@text	Returns the mass of the body.
 
 	@in		MOAICpBody self
@@ -281,7 +281,7 @@ int MOAICpBody::_getMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMoment
+/**	@lua	getMoment
 	@text	Returns the moment of the body.
 
 	@in		MOAICpBody self
@@ -297,7 +297,7 @@ int MOAICpBody::_getMoment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPos
+/**	@lua	getPos
 	@text	Returns the position of the body.
 
 	@in		MOAICpBody self
@@ -315,7 +315,7 @@ int MOAICpBody::_getPos ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRot
+/**	@lua	getRot
 	@text	Returns the rotation of the body.
 
 	@in		MOAICpBody self
@@ -333,7 +333,7 @@ int MOAICpBody::_getRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTorque
+/**	@lua	getTorque
 	@text	Returns the torque of the body.
 
 	@in		MOAICpBody self
@@ -349,7 +349,7 @@ int MOAICpBody::_getTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVel
+/**	@lua	getVel
 	@text	Returns the velocity of the body.
 
 	@in		MOAICpBody self
@@ -367,7 +367,7 @@ int MOAICpBody::_getVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isSleeping
+/**	@lua	isSleeping
 	@text	Returns whether the body is currently sleeping.
 
 	@in		MOAICpBody self
@@ -383,7 +383,7 @@ int MOAICpBody::_isSleeping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isStatic
+/**	@lua	isStatic
 	@text	Returns whether the body is static.
 
 	@in		MOAICpBody self
@@ -399,7 +399,7 @@ int MOAICpBody::_isStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isRogue
+/**	@lua	isRogue
 	@text	Returns whether the body is not yet currently associated with a space.
 
 	@in		MOAICpBody self
@@ -415,7 +415,7 @@ int MOAICpBody::_isRogue ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	localToWorld
+/**	@lua	localToWorld
 	@text	Converts the relative position to an absolute position based on position of the object being (0, 0) for the relative position.
 
 	@in		MOAICpBody self
@@ -440,7 +440,7 @@ int MOAICpBody::_localToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	new
+/**	@lua	new
 	@text	Creates a new body with the specified mass and moment.
 
 	@in		number m			The mass of the new body.
@@ -462,7 +462,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	newStatic
+/**	@lua	newStatic
 	@text	Creates a new static body.
 
 	@out	MOAICpBody body		The new static body.
@@ -479,7 +479,7 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resetForces
+/**	@lua	resetForces
 	@text	Resets all forces on the body.
 
 	@in		MOAICpBody self
@@ -494,7 +494,7 @@ int MOAICpBody::_resetForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngle
+/**	@lua	setAngle
 	@text	Sets the angle of the body.
 
 	@in		MOAICpBody self
@@ -511,7 +511,7 @@ int MOAICpBody::_setAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngVel
+/**	@lua	setAngVel
 	@text	Sets the angular velocity of the body.
 
 	@in		MOAICpBody self
@@ -528,7 +528,7 @@ int MOAICpBody::_setAngVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setForce
+/**	@lua	setForce
 	@text	Sets the force on the body.
 
 	@in		MOAICpBody self
@@ -548,7 +548,7 @@ int MOAICpBody::_setForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMass
+/**	@lua	setMass
 	@text	Sets the mass of the body.
 
 	@in		MOAICpBody self
@@ -565,7 +565,7 @@ int MOAICpBody::_setMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMoment
+/**	@lua	setMoment
 	@text	Sets the moment of the body.
 
 	@in		MOAICpBody self
@@ -582,7 +582,7 @@ int MOAICpBody::_setMoment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPos
+/**	@lua	setPos
 	@text	Sets the position of the body.
 
 	@in		MOAICpBody self
@@ -602,7 +602,7 @@ int MOAICpBody::_setPos ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRemoveFlag
+/**	@lua	setRemoveFlag
 	@text	Sets the removal flag on the body.
 
 	@in		MOAICpBody self
@@ -618,7 +618,7 @@ int MOAICpBody::_setRemoveFlag ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTorque
+/**	@lua	setTorque
 	@text	Sets the torque of the body.
 
 	@in		MOAICpBody self
@@ -635,7 +635,7 @@ int MOAICpBody::_setTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVel
+/**	@lua	setVel
 	@text	Sets the velocity of the body.
 
 	@in		MOAICpBody self
@@ -655,7 +655,7 @@ int MOAICpBody::_setVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sleep
+/**	@lua	sleep
 	@text	Puts the body to sleep (physics will no longer be processed for it until it is activated).
 
 	@in		MOAICpBody self
@@ -670,7 +670,7 @@ int MOAICpBody::_sleep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sleepWithGroup
+/**	@lua	sleepWithGroup
 	@text	Forces an object to sleep. Pass in another sleeping body
 			to add the object to the sleeping body's existing group.
 
@@ -689,7 +689,7 @@ int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	worldToLocal
+/**	@lua	worldToLocal
 	@text	Converts the absolute position to a relative position based on
 			position of the object being (0, 0) for the relative position.
 

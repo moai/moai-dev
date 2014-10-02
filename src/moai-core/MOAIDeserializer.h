@@ -14,6 +14,8 @@ class MOAIDeserializer :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_base64Decode				( lua_State* L );
+	static int		_createObject				( lua_State* L );
 	static int		_initObject					( lua_State* L );
 	static int		_registerObjectID			( lua_State* L );
 	

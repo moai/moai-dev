@@ -6,7 +6,7 @@
 //================================================================//
 // MOAIGraphicsProp2D
 //================================================================//
-/**	@name	MOAIGraphicsProp2D
+/**	@lua	MOAIGraphicsProp2D
 	@text	2D prop.
 */
 class MOAIGraphicsProp2D :

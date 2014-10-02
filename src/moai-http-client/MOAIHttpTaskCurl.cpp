@@ -164,6 +164,10 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 //----------------------------------------------------------------//
 void MOAIHttpTaskCurl::Clear () {
 
+	if ( MOAIUrlMgrCurl::IsValid ()) {
+		MOAIUrlMgrCurl::Get ().RemoveHandle ( *this );
+	}
+
 	this->mUrl.clear ();
 	this->mBody.Clear ();
 	this->mMemStream.Clear ();

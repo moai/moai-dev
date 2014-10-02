@@ -10,12 +10,12 @@ class MOAIIndexBuffer;
 class MOAIVectorShape;
 class MOAIVertexBuffer;
 
-struct TESStesselator;
+class SafeTesselator;
 
 //================================================================//
 // MOAIVectorTesselator
 //================================================================//
-/**	@name	MOAIVectorTessalator
+/**	@lua	MOAIVectorTessalator
 	@text	Convert vector primitives into triangles.
 */
 class MOAIVectorTesselator :
@@ -52,6 +52,7 @@ private:
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
+	static int		_getTransform			( lua_State* L );
 	static int		_getTriangles			( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
@@ -96,7 +97,7 @@ private:
 
 	//----------------------------------------------------------------//
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			Tesselate				();
+	int				Tesselate				();
 	void			WriteVertex				( float x, float y, float z, u32 color, u32 vertexExtraID );
 	
 public:
@@ -112,7 +113,7 @@ public:
 	void			Clear						();
 	void			ClearTransforms				();
 	u32				CountVertices				();
-	void			Finish						();
+	int				Finish						();
 	void			GetTriangles				( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
 					MOAIVectorTesselator		();
 					~MOAIVectorTesselator		();
@@ -133,10 +134,10 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ReserveVertexExtras			( u32 total, size_t size );
 	void			SetVertexExtra				( u32 idx, void* extra, size_t size );
-	void			WriteContourIndices			( TESStesselator* tess, u32 base );
-	void			WriteSkirt					( TESStesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
-	void			WriteTriangleIndices		( TESStesselator* tess, u32 base );
-	void			WriteVertices				( TESStesselator* tess, float z, u32 color, u32 vertexExtraID );
+	void			WriteContourIndices			( SafeTesselator* tess, u32 base );
+	void			WriteSkirt					( SafeTesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
+	void			WriteTriangleIndices		( SafeTesselator* tess, u32 base );
+	void			WriteVertices				( SafeTesselator* tess, float z, u32 color, u32 vertexExtraID );
 };
 
 #endif

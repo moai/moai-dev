@@ -27,7 +27,7 @@ class MOAILogMessage {
 //================================================================//
 // MOAILogMgr
 //================================================================//
-/**	@name	MOAILogMgr
+/**	@lua	MOAILogMgr
 	@text	Singleton for managing debug log messages and log level.
 
 	@const LOG_NONE
@@ -67,7 +67,7 @@ public:
 		LOG_STATUS,
 	};
 	
-	GET ( FILE*, File, mFile )
+	GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )
 	
 	//----------------------------------------------------------------//
 	void			CloseFile				();

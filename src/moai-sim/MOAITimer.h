@@ -12,7 +12,7 @@ class MOAIAnimCurve;
 //================================================================//
 // MOAITimer
 //================================================================//
-/**	@name	MOAITimer
+/**	@lua	MOAITimer
 	@text	Timer class for driving curves and animations.
 
 	@attr	ATTR_TIME

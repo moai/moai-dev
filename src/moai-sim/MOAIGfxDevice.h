@@ -47,7 +47,7 @@ public:
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
-/**	@name	MOAIGfxDevice
+/**	@lua	MOAIGfxDevice
 	@text	Interface to the graphics singleton.
 	
 	@const	EVENT_RESIZE
@@ -169,6 +169,7 @@ private:
 	static int				_setPenColor			( lua_State* L );
 	static int				_setPenWidth			( lua_State* L );
 	static int				_setPointSize			( lua_State* L );
+	static int				_release				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
@@ -215,9 +216,9 @@ public:
 	void					BeginLayer				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	void					ClearColorBuffer		( u32 color );
 	
 	void					ClearErrors				();
+	void					ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void					DetectContext			();
 	void					EndPrim					();
 	void					Flush					();

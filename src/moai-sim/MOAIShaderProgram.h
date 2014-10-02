@@ -27,7 +27,7 @@ private:
 //================================================================//
 // MOAIShaderProgram
 //================================================================//
-/**	@name	MOAIShaderProgram
+/**	@lua	MOAIShaderProgram
 	@text	Programmable shader class.
 
 	@const	UNIFORM_COLOR
@@ -89,6 +89,7 @@ protected:
 	void			OnDestroy					();
 	void			OnInvalidate				();
 	void			OnLoad						();
+	void			OnUnbind					();
 	bool			Validate					();
 
 public:

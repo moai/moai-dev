@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGlyph.h>
@@ -58,7 +58,7 @@ bool MOAIStaticGlyphCache::IsDynamic () {
 MOAIStaticGlyphCache::MOAIStaticGlyphCache () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGlyphCacheBase )
+		RTTI_EXTEND ( MOAIGlyphCache )
 	RTTI_END
 }
 
@@ -69,24 +69,13 @@ MOAIStaticGlyphCache::~MOAIStaticGlyphCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
-	UNUSED ( font );
-	UNUSED ( glyph );
-}
-
-//----------------------------------------------------------------//
 void MOAIStaticGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGlyphCacheBase::RegisterLuaClass ( state );
+	MOAIGlyphCache::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStaticGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIGlyphCacheBase::RegisterLuaFuncs ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::RemoveGlyph ( MOAIGlyph& glyph ) {
-	UNUSED ( glyph );
+	MOAIGlyphCache::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//
@@ -110,14 +99,14 @@ void MOAIStaticGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
+int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 
 	this->ClearTextures ();
 
 	u32 width = image.GetWidth ();
 	u32 height = image.GetHeight ();
 
-	if ( !( width && height )) return;
+	if ( !( width && height )) return STATUS_ERROR;
 
 	u32 totalTextures = ( height / width ) + 1;
 	this->mTextures.Init ( totalTextures );
@@ -137,6 +126,7 @@ void MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 		
 		this->SetTexture ( i, texture );
 	}
+	return STATUS_OK;
 }
 
 //----------------------------------------------------------------//

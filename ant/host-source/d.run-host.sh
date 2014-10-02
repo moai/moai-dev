@@ -96,7 +96,6 @@
 	}
 	
 	fr $out_dir/project/res/values/strings.xml @NAME@ "$app_name"
-	fr $out_dir/project/res/values/strings.xml @APP_ID@ "$app_id"
 	
 	cp -f host-source/project/.project $out_dir/project/.project 
 	fr $out_dir/project/.project @NAME@ "$project_name"

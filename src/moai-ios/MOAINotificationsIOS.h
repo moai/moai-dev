@@ -14,7 +14,7 @@
 //================================================================//
 // MOAINotificationsIOS
 //================================================================//
-/**	@name	MOAINotificationsIOS
+/**	@lua	MOAINotificationsIOS
 	@text	Wrapper for push notification integration on iOS 
 			devices. Exposed to Lua via MOAINotifications on all
 			mobile platforms.
@@ -67,7 +67,7 @@ public:
 	void	NotifyRemoteDeregistrationComplete	();
 	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
-	void	NotifyRemoteRegistrationComplete	( NSData* token );
+	void	NotifyRemoteRegistrationComplete	( NSData* token, NSError *error );
 	void	RegisterLuaClass					( MOAILuaState& state );
 };
 

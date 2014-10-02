@@ -234,7 +234,7 @@ if MOAIFreeTypeFontReader then
 			
 			function class.new ()
 				local self = new ()
-				superInterface.setCache ( self, MOAIGlyphCache.new ())
+				superInterface.setCache ( self, MOAIDynamicGlyphCache.new ())
 				superInterface.setReader ( self, MOAIFreeTypeFontReader.new ())
 				return self
 			end
@@ -490,6 +490,7 @@ MOAIXmlParser.extend (
 			local element = {
 				getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
 				getAttributes	= function () return parser:getElementAttributes () end,
+				getLineNumber	= function () return parser:getElementLineNumber () end,
 				getName			= function () return parser:getElementName () end,
 				getText			= function () return parser:getElementText () end,
 			}

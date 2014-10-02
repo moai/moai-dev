@@ -9,7 +9,7 @@
 //================================================================//
 // MOAICoroutine
 //================================================================//
-/**	@name MOAICoroutine
+/**	@lua MOAICoroutine
 	@text Binds a Lua coroutine to a MOAIAction.
 */
 class MOAICoroutine :
@@ -24,7 +24,6 @@ private:
 	
 	bool				mIsUpdating;
 	bool				mIsActive;
-	bool				mIsFirstRun;
 	
 	//----------------------------------------------------------------//
 	static int			_blockOnAction			( lua_State* L );
@@ -36,10 +35,12 @@ private:
 	static int			_run					( lua_State* L );
 	static int			_setDefaultParent		( lua_State* L );
 	static int			_setTrackingGroup		( lua_State* L );
+	static int			_step					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				OnStart					();
 	void				OnStop					();
+	int					Resume					( float step );
 
 protected:
 	STLString			GetDebugInfo			() const;

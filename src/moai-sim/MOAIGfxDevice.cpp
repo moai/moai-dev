@@ -57,7 +57,7 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getFrameBuffer
+/**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
 	@out	MOAIFrameBuffer frameBuffer
@@ -71,7 +71,7 @@ int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTextureUnits
+/**	@lua	getMaxTextureUnits
 	@text	Returns the total number of texture units available on the device.
 
 	@out	number maxTextureUnits
@@ -85,7 +85,7 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getViewSize
+/**	@lua	getViewSize
 	@text	Returns the width and height of the view
 	
 	@out	number width
@@ -103,7 +103,7 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	isProgrammable
+/**	@lua	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
 
@@ -145,7 +145,7 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenColor
+/**	@lua	setPenColor
 
 	@in		number r
 	@in		number g
@@ -167,7 +167,7 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenWidth
+/**	@lua	setPenWidth
 
 	@in		number width
 	@out	nil
@@ -182,7 +182,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPointSize
+/**	@lua	setPointSize
 
 	@in		number size
 	@out	nil
@@ -193,6 +193,22 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 
 	float size = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	release
+
+	@in		release textures scheduled to be released
+	@out	nil
+ */
+// TODO: rename this to something more descriptive?
+int MOAIGfxDevice::_release ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIGfxDevice::Get ().ProcessDeleters ();
+	zglFlush ();
 	return 0;
 }
 
@@ -235,22 +251,27 @@ void MOAIGfxDevice::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
-
-	ZLColorVec colorVec;
-	colorVec.SetRGBA ( color );
-	
-	zglClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
-	zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT );
+void MOAIGfxDevice::ClearErrors () {
+	#ifndef MOAI_OS_NACL
+		if ( this->mHasContext ) {
+			while ( zglGetError () != ZGL_ERROR_NONE );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearErrors () {
-#ifndef MOAI_OS_NACL
-	if ( this->mHasContext ) {
-		while ( zglGetError () != ZGL_ERROR_NONE );
+void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+
+	if ( clearFlags ) {
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
+			zglDepthMask ( true );
+			zglClear ( clearFlags );
+			zglDepthMask ( false );
+		}
+		else {
+			zglClear ( clearFlags );
+		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------//
@@ -641,6 +662,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
+		{ "release",					_release },
 		{ NULL, NULL }
 	};
 
@@ -745,9 +767,9 @@ void MOAIGfxDevice::ResetState () {
 	zglDisable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
-	// enable depth write
-	zglDepthMask ( true );
-	this->mDepthMask = true;
+	// disable depth write
+	zglDepthMask ( false );
+	this->mDepthMask = false;
 	
 	// clear the vertex format
 	this->SetVertexFormat ();

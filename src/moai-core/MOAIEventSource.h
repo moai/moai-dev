@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIEventSource
 //================================================================//
-/**	@name	MOAIEventSource
+/**	@lua	MOAIEventSource
 	@text	Base class for all Lua-bound Moai objects that emit events
 			and have an event table.
 */
@@ -35,7 +35,7 @@ public:
 //================================================================//
 // MOAIInstanceEventSource
 //================================================================//
-/**	@name	MOAIInstanceEventSource
+/**	@lua	MOAIInstanceEventSource
 	@text	Derivation of MOAIEventSource for non-global Lua objects.
 */
 class MOAIInstanceEventSource :
@@ -67,7 +67,7 @@ public:
 //================================================================//
 // MOAIGlobalEventSource
 //================================================================//
-/**	@name	MOAIGlobalEventSource
+/**	@lua	MOAIGlobalEventSource
 	@text	Derivation of MOAIEventSource for global Lua objects.
 */
 class MOAIGlobalEventSource :
@@ -83,7 +83,7 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	/**	@name	getListener
+	/**	@lua	getListener
 		@text	Gets the listener callback for a given event ID.
 
 		@in		number eventID				The ID of the event.
@@ -113,7 +113,7 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	/**	@name	setListener
+	/**	@lua	setListener
 		@text	Sets a listener callback for a given event ID. It is up
 				to individual classes to declare their event IDs.
 			

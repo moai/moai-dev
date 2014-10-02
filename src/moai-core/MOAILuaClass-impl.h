@@ -104,6 +104,7 @@ MOAILuaSingletonClass < TYPE >::MOAILuaSingletonClass () {
 //----------------------------------------------------------------//
 template < typename TYPE >
 void MOAILuaSingletonClass < TYPE >::Register () {
+
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	MOAILuaObject* type = this->GetSingleton ();
 	this->InitLuaSingletonClass ( *type, state );

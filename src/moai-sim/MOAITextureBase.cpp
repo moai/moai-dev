@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the width and height of the texture's source image.
 			Avoid using the texture width and height to compute UV
 			coordinates from pixels, as this will prevent texture
@@ -35,7 +35,7 @@ int MOAITextureBase::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Releases any memory associated with the texture.
 	
 	@in		MOAITextureBase self
@@ -50,7 +50,7 @@ int MOAITextureBase::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFilter
+/**	@lua	setFilter
 	@text	Set default filtering mode for texture.
 	
 	@in		MOAITextureBase self
@@ -71,7 +71,7 @@ int MOAITextureBase::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWrap
+/**	@lua	setWrap
 	@text	Set wrapping mode for texture.
 	
 	@in		MOAITextureBase self
@@ -115,10 +115,10 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 
 	zglBindTexture ( this->mGLTexID );
 
-	USPixel::Format pixelFormat = image.GetPixelFormat ();
+	ZLPixel::Format pixelFormat = image.GetPixelFormat ();
 	ZLColor::Format colorFormat = image.GetColorFormat ();
 
-	if ( pixelFormat != USPixel::TRUECOLOR ) return; // only support truecolor textures
+	if ( pixelFormat != ZLPixel::TRUECOLOR ) return; // only support truecolor textures
 
 	// generate mipmaps if set up to use them
 	bool genMipMaps = this->GenerateMipmaps ();

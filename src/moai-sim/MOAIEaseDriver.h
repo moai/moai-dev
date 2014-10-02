@@ -28,7 +28,7 @@ public:
 //================================================================//
 // MOAIEaseDriver
 //================================================================//
-/**	@name MOAIEaseDriver
+/**	@lua MOAIEaseDriver
 	@text Action that applies simple ease curves to node attributes.
 */
 class MOAIEaseDriver :

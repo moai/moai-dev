@@ -77,7 +77,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
-	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAIMesh )
@@ -93,6 +92,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPartition )
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
+	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
@@ -120,7 +120,7 @@ void AKUSimContextInitialize () {
 	
 	// text stuff here for now
 	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIGlyphCache )
+	REGISTER_LUA_CLASS ( MOAIDynamicGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAITextBundle )
@@ -306,9 +306,9 @@ void AKUSetInputDevice ( int deviceID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceExtendedName( int deviceID, char const* name ) {
+void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
 
-	MOAIInputMgr::Get ().SetDeviceExtendedName(( u8 )deviceID, name );
+	MOAIInputMgr::Get ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
 }
 
 //----------------------------------------------------------------//

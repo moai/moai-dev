@@ -31,10 +31,13 @@ protected:
 	static int				_gc					( lua_State* L );
 	static int				_getClass			( lua_State* L );
 	static int				_getClassName		( lua_State* L );
+	static int				_getMemberTable		( lua_State* L );
 	static int				_getRefTable		( lua_State* L );
 	static int				_index				( lua_State* L );
 	static int				_pin				( lua_State* L );
 	static int				_newindex			( lua_State* L );
+	static int				_serializeIn		( lua_State* L );
+	static int				_serializeOut		( lua_State* L );
 	static int				_setFinalizer		( lua_State* L );
 	static int				_setInterface		( lua_State* L );
 	static int				_setMembers			( lua_State* L );
@@ -54,6 +57,7 @@ public:
 	friend class MOAILuaCanary;
 	friend class MOAILuaClass;
 	friend class MOAILuaMemberRef;
+	friend class MOAILuaRuntime;
 	friend class MOAIDeserializer;
 	friend class MOAISerializer;
 
@@ -64,6 +68,7 @@ public:
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
+	static bool				IsMoaiUserdata				( MOAILuaState& state, int idx );
 	bool					IsSingleton					();
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					( MOAILuaObject* object );

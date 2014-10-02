@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleMap.h>
@@ -60,7 +60,7 @@ void MOAITextStyleMap::RefreshStyleGlyphs ( cc8* str ) {
 		
 		int idx = span.mBase;
 		while ( idx < span.mTop ) {
-			u32 c = u8_nextchar ( str, &idx );
+			u32 c = moai_u8_nextchar ( str, &idx );
 			span.mStyle->AffirmGlyph ( c );
 		}
 	}

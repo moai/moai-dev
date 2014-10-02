@@ -45,10 +45,11 @@ public:
 	STLString		GetField				( int idx, int key, const STLString& value );
 	bool			GetFieldWithType		( int idx, cc8* name, int type );
 	bool			GetFieldWithType		( int idx, int key, int type );
+	bool			GetSubfieldWithType		( int idx, cc8* format, int type, ... );
 	static cc8*		GetLuaTypeName			( int type );
 	void*			GetPtrUserData			( int idx );
 	STLString		GetStackDump			();
-	STLString		GetStackTrace			( int level );
+	STLString		GetStackTrace			( cc8* title, int level );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
 	void*			GetUserData				( int idx, cc8* name, void* value );
@@ -57,6 +58,7 @@ public:
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );
 	bool			HasField				( int idx, int name, int type );
+	bool			HasKeys					( int idx );
 	bool			HexDecode				( int idx );
 	bool			HexEncode				( int idx );
 	bool			Inflate					( int idx, int windowBits );
@@ -72,7 +74,7 @@ public:
 	bool			PrintErrors				( FILE* file, int status );
 	void			PrintStackDump			();
 	void			PrintStackDump			( FILE* file );
-	void			PrintStackTrace			( FILE* file, int level );
+	void			PrintStackTrace			( FILE* file, cc8* title, int level );
 	void			Push					();
 	void			Push					( bool value );
 	void			Push					( cc8* value );
@@ -82,7 +84,6 @@ public:
 	void			Push					( u16 value );
 	void			Push					( u32 value );
 	void			Push					( u64 value );
-	void			Push					( size_t value );
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );

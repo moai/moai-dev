@@ -224,7 +224,7 @@ enum {
 };
 
 //----------------------------------------------------------------//
-extern u32 zglMapFromGLEnum( u32 glEnum );
+extern u32 zglMapFromGLEnum( u32 glEnum ); // don't do this; this should be local to the OpenGL implementation
 
 extern void		zglFinalize				();
 extern void		zglInitialize			();
@@ -327,6 +327,5 @@ extern void		zglUnmapBuffer					( u32 target );
 extern void		zglBindVertexArray				( u32 vertexArrayID );
 extern u32		zglCreateVertexArray			();
 extern void		zglDeleteVertexArray			( u32 vertexArrayID );
-
 
 #endif

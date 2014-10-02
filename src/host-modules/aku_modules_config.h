@@ -37,6 +37,10 @@
 		#define AKU_WITH_LUAEXT 1
 	#endif
 
+	#ifndef AKU_WITH_PLUGINS
+		#define AKU_WITH_PLUGINS 0
+	#endif
+
 	#ifndef AKU_WITH_SIM
 		#define AKU_WITH_SIM 1
 	#endif

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIParticleCallbackPlugin
 //================================================================//
-/**	@name	MOAIParticleCallbackPlugin
+/**	@lua	MOAIParticleCallbackPlugin
 	@text	Allows custom particle processing via C language callbacks.
 */
 class MOAIParticleCallbackPlugin :

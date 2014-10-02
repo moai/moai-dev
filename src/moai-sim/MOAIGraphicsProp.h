@@ -30,7 +30,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIGraphicsProp
 //================================================================//
-/**	@name	MOAIGraphicsProp
+/**	@lua	MOAIGraphicsProp
 	@text	Base class for graphics props.
 	
 	@const	FRAME_FROM_DECK

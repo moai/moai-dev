@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIXmlWriter
 //================================================================//
-/**	@name	MOAIXmlWriter
+/**	@lua	MOAIXmlWriter
 	@text	Provides functions to programmatically write an XML document.
 */
 class MOAIXmlWriter {

@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDampingRatio
+/**	@lua	getDampingRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -35,7 +35,7 @@ int MOAIBox2DMouseJoint::_getDampingRatio ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFrequency
+/**	@lua	getFrequency
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -56,7 +56,7 @@ int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxForce
+/**	@lua	getMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -78,7 +78,7 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTarget
+/**	@lua	getTarget
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -105,7 +105,7 @@ int MOAIBox2DMouseJoint::_getTarget ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDampingRatio
+/**	@lua	setDampingRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -129,7 +129,7 @@ int MOAIBox2DMouseJoint::_setDampingRatio ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFrequency
+/**	@lua	setFrequency
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -153,7 +153,7 @@ int MOAIBox2DMouseJoint::_setFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxForce
+/**	@lua	setMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
@@ -178,7 +178,7 @@ int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTarget
+/**	@lua	setTarget
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self

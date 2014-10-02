@@ -51,3 +51,19 @@ void MOAIMutex::Unlock () {
 	this->Affirm ();
 	this->mImpl->Unlock ();
 }
+
+//================================================================//
+// MOAIAutoLock
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIAutoLock::MOAIAutoLock ( MOAIMutex& mutex ) :
+	mMutex( mutex ) {
+	this->mMutex.Lock ();
+}
+
+//----------------------------------------------------------------//
+MOAIAutoLock::~MOAIAutoLock () {
+	this->mMutex.Unlock ();
+}
+

@@ -63,7 +63,7 @@ int MOAIDeck::_getTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBoundsDeck
+/**	@lua	setBoundsDeck
 	@text	Set or clear the bounds override deck.
 	
 	@in		MOAIDeck self
@@ -79,7 +79,7 @@ int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setShader
+/**	@lua	setShader
 	@text	Set the shader to use if neither the deck item nor the prop specifies a shader.
 	
 	@in		MOAIDeck self
@@ -95,7 +95,7 @@ int MOAIDeck::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
+/**	@lua	setTexture
 	@text	Set or load a texture for this deck.
 	
 	@in		MOAIDeck self

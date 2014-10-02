@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DRevoluteJoint
 //================================================================//
-/**	@name MOAIBox2DRevoluteJoint
+/**	@lua MOAIBox2DRevoluteJoint
 	@text Box2D revolute joint.
 */
 class MOAIBox2DRevoluteJoint :

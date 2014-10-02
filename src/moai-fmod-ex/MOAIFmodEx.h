@@ -16,7 +16,7 @@ namespace FMOD {
 //================================================================//
 // MOAIFmodEx
 //================================================================//
-/**	@name	MOAIFmodEx
+/**	@lua	MOAIFmodEx
 	@text	FMOD singleton.
 */
 class MOAIFmodEx :

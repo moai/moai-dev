@@ -9,7 +9,7 @@
 //================================================================//
 // MOAILocationSensor
 //================================================================//
-/**	@name	MOAILocationSensor
+/**	@lua	MOAILocationSensor
 	@text	Location services sensor.
 */
 class MOAILocationSensor :

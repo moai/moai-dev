@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIGridFancy
 //================================================================//
-/**	@name	MOAIGridFancy
+/**	@lua	MOAIGridFancy
 	@text	Fancier grid which supports color/scale alterations
 */
 class MOAIGridFancy :

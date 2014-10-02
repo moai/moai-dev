@@ -39,7 +39,7 @@ public:
 //================================================================//
 // MOAIAnimCurveBase
 //================================================================//
-/**	@name	MOAIAnimCurveBase
+/**	@lua	MOAIAnimCurveBase
 	@text	Piecewise animation function with one input (time) and one output (value). This
 			is the base class for typed animation curves (float, quaternion, etc.).
 	

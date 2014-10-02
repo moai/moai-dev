@@ -34,7 +34,7 @@ private:
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
-/**	@name	MOAIVertexFormat
+/**	@lua	MOAIVertexFormat
 	@text	Vertex format class.
 */
 class MOAIVertexFormat :
@@ -93,6 +93,8 @@ public:
 					~MOAIVertexFormat				();
 	void			RegisterLuaClass				( MOAILuaState& state );
 	void			RegisterLuaFuncs				( MOAILuaState& state );
+	void			SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 	void			Unbind							() const;
 };
 

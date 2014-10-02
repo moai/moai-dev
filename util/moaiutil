@@ -1,0 +1,12 @@
+SCRIPT_DIR=$(dirname "${0}")
+INVOKE_DIR=$(pwd)
+
+SCRIPT="${SCRIPT_DIR}/${1}.lua"
+
+shift
+set $SCRIPT_DIR $INVOKE_DIR $@
+
+pushd $SCRIPT_DIR > /dev/null
+moai $SCRIPT $@
+popd > /dev/null
+

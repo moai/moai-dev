@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMask
+/**	@lua	getMask
 	@text	Returns mask for cell.
 
 	@in		MOAIPathTerrainDeck self
@@ -29,7 +29,7 @@ int MOAIPathTerrainDeck::_getMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTerrainVec
+/**	@lua	getTerrainVec
 	@text	Returns terrain vector for cell.
 
 	@in		MOAIPathTerrainDeck self
@@ -52,7 +52,7 @@ int MOAIPathTerrainDeck::_getTerrainVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMask
+/**	@lua	setMask
 	@text	Returns mask for cell.
 
 	@in		MOAIPathTerrainDeck self
@@ -73,7 +73,7 @@ int MOAIPathTerrainDeck::_setMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainVec
+/**	@lua	setTerrainVec
 	@text	Sets terrain vector for cell.
 
 	@in		MOAIPathTerrainDeck self
@@ -101,7 +101,7 @@ int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Allocates terrain vectors.
 
 	@in		MOAIPathTerrainDeck self

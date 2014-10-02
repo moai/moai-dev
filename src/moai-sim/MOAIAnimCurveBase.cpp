@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLength
+/**	@lua	getLength
 	@text	Return the largest key frame time value in the curve.
 	
 	@in		MOAIAnimCurveBase self
@@ -24,7 +24,7 @@ int MOAIAnimCurveBase::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveKeys
+/**	@lua	reserveKeys
 	@text	Reserve key frames.
 	
 	@in		MOAIAnimCurveBase self
@@ -42,7 +42,7 @@ int MOAIAnimCurveBase::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWrapMode
+/**	@lua	setWrapMode
 	@text	Sets the wrap mode for values above 1.0 and below 0.0.
 			CLAMP sets all values above and below 1.0 and 0.0 to
 			values at 1.0 and 0.0 respectively

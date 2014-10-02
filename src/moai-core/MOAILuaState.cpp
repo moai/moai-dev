@@ -175,6 +175,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 
 	if ( status ) {
 		lua_settop ( this->mState, errIdx - 1 );
+		this->PrintErrors( ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
@@ -381,6 +382,47 @@ bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::GetSubfieldWithType ( int idx, cc8* format, int type, ... ) {
+
+	va_list args;
+	va_start ( args, type );
+	
+	idx = this->AbsIndex ( idx );
+	lua_pushvalue ( this->mState, idx );
+
+	for ( cc8* c = format; *c; ++c ) {
+		
+		switch ( *c ) {
+		
+			// number
+			case 'N':
+				lua_pushnumber ( this->mState, va_arg ( args, int ));
+				lua_gettable ( this->mState, -1 );
+				break;
+			
+			// string
+			case 'S':
+				lua_getfield ( this->mState, -1, va_arg ( args, char* ));
+				break;
+			
+			default:
+				lua_pushnil ( this->mState );
+		}
+	
+		if ( lua_isnil ( this->mState, -1 )) break;
+		lua_replace ( this->mState, -2 );
+	}
+	
+	va_end ( args );
+	
+	if ( lua_type ( this->mState, -1 ) != type ) {
+		lua_pop ( this->mState, 1 );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 
 	switch ( type ) {
@@ -463,7 +505,7 @@ STLString MOAILuaState::GetStackDump () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAILuaState::GetStackTrace ( int level ) {
+STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 
 	int firstpart = 1;  /* still before eventual `...' */
 	lua_Debug ar;
@@ -472,7 +514,7 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 
 	STLString out;
 	
-	out.append ( "stack traceback:" );
+	out.append ( title ? title : "stack traceback:" );
 	
 	while ( lua_getstack ( L, level++, &ar )) {
 		
@@ -742,6 +784,19 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::HasKeys ( int idx ) {
+
+	idx = this->AbsIndex ( idx );
+
+	lua_pushnil ( this->mState );  /* first key */
+	if ( lua_next ( this->mState, idx ) != 0 ) {
+		lua_pop ( this->mState, 2 );
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::HexDecode ( int idx ) {
 
 	ZLHexReader hex;
@@ -856,8 +911,8 @@ void MOAILuaState::PrintStackDump ( FILE* file  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
-	STLString stackTrace = this->GetStackTrace ( level );
+void MOAILuaState::PrintStackTrace ( FILE* file, cc8* title, int level ) {
+	STLString stackTrace = this->GetStackTrace ( title, level );
 	ZLLog::LogF ( file, stackTrace.str ());
 }
 
@@ -911,13 +966,6 @@ void MOAILuaState::Push ( u32 value ) {
 
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( u64 value ) {
-
-	// TODO: check for overflow
-	lua_pushnumber ( this->mState, ( double )value );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::Push ( size_t value ) {
 
 	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );

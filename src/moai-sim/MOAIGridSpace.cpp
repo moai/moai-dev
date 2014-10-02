@@ -40,7 +40,7 @@ MOAICellCoord::~MOAICellCoord () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	cellAddrToCoord
+/**	@lua	cellAddrToCoord
 	@text	Returns the coordinate of a cell given an address.
 
 	@in		MOAIGridSpace self
@@ -61,7 +61,7 @@ int MOAIGridSpace::_cellAddrToCoord	( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCellAddr
+/**	@lua	getCellAddr
 	@text	Returns the address of a cell given a coordinate (in tiles).
 
 	@in		MOAIGridSpace self
@@ -80,7 +80,7 @@ int MOAIGridSpace::_getCellAddr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCellSize
+/**	@lua	getCellSize
 	@text	Returns the dimensions of a single grid cell.
 
 	@in		MOAIGridSpace self
@@ -97,7 +97,7 @@ int MOAIGridSpace::_getCellSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getOffset
+/**	@lua	getOffset
 	@text	Returns the offset of tiles from cells.
 
 	@in		MOAIGridSpace self
@@ -114,7 +114,7 @@ int MOAIGridSpace::_getOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the dimensions of the grid (in tiles).
 
 	@in		MOAIGridSpace self
@@ -131,7 +131,7 @@ int MOAIGridSpace::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTileLoc
+/**	@lua	getTileLoc
 	@text	Returns the grid space coordinate of the tile. The optional 'position'
 			flag determines the location of the coordinate within the tile.
 
@@ -158,7 +158,7 @@ int MOAIGridSpace::_getTileLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTileSize
+/**	@lua	getTileSize
 	@text	Returns the dimensions of a single grid tile.
 
 	@in		MOAIGridSpace self
@@ -175,7 +175,7 @@ int MOAIGridSpace::_getTileSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initAxialHexGrid
+/**	@lua	initAxialHexGrid
 	@text	Initialize a grid with hex tiles, using an axial coordinate system. The axial grid assumes that the flat sides of hexes are on the sides, and the points are up/down.
 
 	@in		MOAIGridSpace self
@@ -219,7 +219,7 @@ int MOAIGridSpace::_initAxialHexGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initDiamondGrid
+/**	@lua	initDiamondGrid
 	@text	Initialize a grid with diamond tiles.
 
 	@in		MOAIGridSpace self
@@ -263,7 +263,7 @@ int MOAIGridSpace::_initDiamondGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initHexGrid
+/**	@lua	initHexGrid
 	@text	Initialize a grid with hexagonal tiles.
 
 	@in		MOAIGridSpace self
@@ -308,7 +308,7 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initObliqueGrid
+/**	@lua	initObliqueGrid
 	@text	Initialize a grid with oblique tiles.
 
 	@in		MOAIGridSpace self
@@ -352,7 +352,7 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initRectGrid
+/**	@lua	initRectGrid
 	@text	Initialize a grid with rectangular tiles.
 
 	@in		MOAIGridSpace self
@@ -396,7 +396,7 @@ int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	locToCellAddr
+/**	@lua	locToCellAddr
 	@text	Returns the address of a cell given a a coordinate in grid space.
 
 	@in		MOAIGridSpace self
@@ -419,7 +419,7 @@ int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	locToCoord
+/**	@lua	locToCoord
 	@text	Transforms a coordinate in grid space into a tile index.
 
 	@in		MOAIGridSpace self
@@ -444,7 +444,7 @@ int MOAIGridSpace::_locToCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRepeat
+/**	@lua	setRepeat
 	@text	Repeats a grid indexer along X or Y. Only used when a grid
 			is attached.
 	
@@ -467,7 +467,7 @@ int MOAIGridSpace::_setRepeat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setShape
+/**	@lua	setShape
 	@text	Set the shape of the grid tiles.
 
 	@in		MOAIGridSpace self
@@ -485,7 +485,7 @@ int MOAIGridSpace::_setShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSize
+/**	@lua	setSize
 	@text	Initializes dimensions of grid and reserves storage for tiles.
 
 	@in		MOAIGridSpace self
@@ -532,7 +532,7 @@ int MOAIGridSpace::_setSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	wrapCoord
+/**	@lua	wrapCoord
 	@text	Wraps a tile index to the range of the grid.
 
 	@in		MOAIGridSpace self
@@ -614,6 +614,37 @@ MOAICellCoord MOAIGridSpace::ClampY ( MOAICellCoord cellCoord ) const {
 	result.mX = cellCoord.mX;
 
 	return result;
+}
+
+//----------------------------------------------------------------//
+MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
+	float t1, t2, q, r;
+
+	/* normalize to units of hex dimensions */
+	x = ( x / this->mCellWidth ) - 0.5f;
+	y = ( y / this->mCellHeight );
+
+	/*
+	 * from a comment thread on Amit Patel's hexagon page:
+
+	 	x = (x - halfHexWidth) / hexWidth;
+
+	 	double t1 = z / hexRadius, t2 = Math.Floor(x + t1);
+	 	double r = Math.Floor((Math.Floor(t1 - x) + t2) / 3);
+	 	double q = Math.Floor((Math.Floor(2 * x + 1) + t2) / 3) - r;
+
+	 	return new Coord((int) q, (int) r); 
+	 * note that "hexRadius" is pretty close to "mHeight / 2" for
+	 * our purposes. The example assumed that z increases as you go
+	 * down the screen, but it also assumed that the hex grid was
+	 * counting the same way.
+	 */
+	t1 = ( y * 2 );
+	t2 = floorf ( x + t1 );
+	r = floorf (( floorf ( t1 - x ) + t2 ) / 3.0f );
+	q = floorf (( floorf ( 2.0f * x + 1.0f ) + t2) / 3.0f );
+
+	return MOAICellCoord ( q, r );
 }
 
 //----------------------------------------------------------------//
@@ -787,6 +818,7 @@ ZLVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
+	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
 		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
 		return this->GetRectPoint (
@@ -893,36 +925,6 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 	return cellCoord;
 }
 
-MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
-	float t1, t2, q, r;
-
-	/* normalize to units of hex dimensions */
-	x = (x / this->mCellWidth) - 0.5;
-	y = (y / this->mCellHeight);
-
-	/*
-	 * from a comment thread on Amit Patel's hexagon page:
-
-	 	x = (x - halfHexWidth) / hexWidth;
-
-	 	double t1 = z / hexRadius, t2 = Math.Floor(x + t1);
-	 	double r = Math.Floor((Math.Floor(t1 - x) + t2) / 3);
-	 	double q = Math.Floor((Math.Floor(2 * x + 1) + t2) / 3) - r;
-
-	 	return new Coord((int) q, (int) r); 
-	 * note that "hexRadius" is pretty close to "mHeight / 2" for
-	 * our purposes. The example assumed that z increases as you go
-	 * down the screen, but it also assumed that the hex grid was
-	 * counting the same way.
-	 */
-	t1 = (y * 2);
-	t2 = floorf(x + t1);
-	r = floorf((floorf(t1 - x) + t2) / 3);
-	q = floorf((floorf(2 * x + 1) + t2) / 3);
-
-	return MOAICellCoord(q, r);
-}
-
 //----------------------------------------------------------------//
 MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 
@@ -1007,6 +1009,7 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
 		xOff = this->mCellWidth * 0.5f;
 	}
+	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
 		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
 		return this->GetRectPoint (
@@ -1017,6 +1020,7 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 			position
 		);
 	}
+	
 	return this->GetRectPoint (
 		( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
 		( cellCoord.mY * this->mCellHeight ) + this->mYOff,

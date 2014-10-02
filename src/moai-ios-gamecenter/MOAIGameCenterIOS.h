@@ -13,7 +13,7 @@
 //================================================================//
 // MOAIGameCenterIOS
 //================================================================//
-/**	@name	MOAIGameCenterIOS
+/**	@lua	MOAIGameCenterIOS
 	@text	Wrapper for iOS GameCenter functionality.
 	
 	@const	TIMESCOPE_TODAY			Get leaderboard scores for today.

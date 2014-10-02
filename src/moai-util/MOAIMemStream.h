@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMemStream
 //================================================================//
-/**	@name	MOAIMemStream
+/**	@lua	MOAIMemStream
 	@text	MOAIMemStream implements an in-memory stream and grows as
 			needed. The memory stream expands on demands by allocating
 			additional 'chunks' or memory. The chunk size may be configured

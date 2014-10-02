@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIVectorShape.h>
 
+class SafeTesselator;
+
 //================================================================//
 // MOAIVectorEllipse
 //================================================================//
@@ -20,8 +22,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	void			AddFillContours			( TESStesselator* tess );
-	void			AddStrokeContours		( TESStesselator* tess );
+	int				AddFillContours			( SafeTesselator* tess );
+	int				AddStrokeContours		( SafeTesselator* tess );
 	void			Init					( float x, float y, float xRad, float yRad );
 	bool			IsClosed				();
 					MOAIVectorEllipse		();

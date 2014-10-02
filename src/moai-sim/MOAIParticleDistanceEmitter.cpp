@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reset
+/**	@lua	reset
 	@text	Resets the distance traveled. Use this to avoid large emissions
 			when 'warping' the emitter to a new location.
 	
@@ -25,7 +25,7 @@ int MOAIParticleDistanceEmitter::_reset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDistance
+/**	@lua	setDistance
 	@text	Set the travel distance required for new particle emission.
 	
 	@in		MOAIParticleDistanceEmitter self

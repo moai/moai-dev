@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getColor
+/**	@lua	getColor
 	@text	Return the color.
 	
 	@in		MOAIProp self
@@ -31,7 +31,7 @@ int MOAIColor::_getColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	moveColor
+/**	@lua	moveColor
 	@text	Animate the color by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -81,7 +81,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekColor
+/**	@lua	seekColor
 	@text	Animate the color by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -133,7 +133,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor
+/**	@lua	setColor
 	@text	Initialize the color.
 	
 	@in		MOAIColor self
@@ -158,7 +158,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
 	@in		MOAIColor self

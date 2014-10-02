@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIPathTerrainDeck
 //================================================================//
-/**	@name	MOAIPathTerrainDeck
+/**	@lua	MOAIPathTerrainDeck
 	@text	Terrain specifications for use with pathfinding graphs. Contains
 			indexed terrain types for graph nodes.
 */

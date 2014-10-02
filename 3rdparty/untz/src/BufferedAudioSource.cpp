@@ -32,6 +32,9 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 	if(loadIntoMemory)
 	{
 		RPRINT("loading sound into memory...\n");
+        int channels = getNumChannels();
+        double length = getLength();
+		double srate = getSampleRate();
 		UInt32 totalFrames = getSampleRate() * getLength();
 		mBuffer.resize(getNumChannels(), totalFrames);//getSampleRate() * getLength());
 		float *pWritePos = mBuffer.getData();
@@ -99,6 +102,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 	mLock.unlock();
 
 	Int64 loopEndFrame = convertSecondsToSamples(state.mLoopEnd);
+	Int64 totalFrames = convertSecondsToSamples(getLength());
 	bool needToLoop = state.mLooping && ((state.mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
 	
 	if(framesAvailable > 0 && !needToLoop)

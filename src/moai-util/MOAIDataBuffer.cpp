@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	base64Decode
+/**	@lua	base64Decode
 	@text	If a string is provided, decodes it as a base64 encoded string.  Otherwise, decodes the current data stored in this object as a base64 encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -38,7 +38,7 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	base64Encode
+/**	@lua	base64Encode
 	@text	If a string is provided, encodes it in base64.  Otherwise, encodes the current data stored in this object as a base64 encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -73,7 +73,7 @@ int MOAIDataBuffer::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deflate
+/**	@lua	deflate
 	@text	Compresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@overload
@@ -106,7 +106,7 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the number of bytes in this data buffer object.
 
 	@in		MOAIDataBuffer self
@@ -127,7 +127,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getString
+/**	@lua	getString
 	@text	Returns the contents of the data buffer object as a string value.
 
 	@in		MOAIDataBuffer self
@@ -136,18 +136,13 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 int MOAIDataBuffer::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
-	size_t size;
-	void* buffer;
+	self->PushString ( state );
 	
-	self->Lock ( &buffer, &size );
-	lua_pushlstring ( state, ( cc8* )buffer, size );
-	self->Unlock ();
-
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	hexDecode
+/**	@lua	hexDecode
 	@text	If a string is provided, decodes it as a hex encoded string.  Otherwise, decodes the current data stored in this object as a hex encoded sequence of bytes.
 
 	@opt	MOAIDataBuffer self
@@ -174,7 +169,7 @@ int MOAIDataBuffer::_hexDecode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hexEncode
+/**	@lua	hexEncode
 	@text	If a string is provided, encodes it in hex.  Otherwise, encodes the current data stored in this object as a hex encoded sequence of characters.
 
 	@opt	MOAIDataBuffer self
@@ -201,7 +196,7 @@ int MOAIDataBuffer::_hexEncode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	inflate
+/**	@lua	inflate
 	@text	Decompresses the string or the current data stored in this object using the DEFLATE algorithm.
 
 	@overload
@@ -231,12 +226,12 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Copies the data from the given file into this object.  This method is a synchronous operation and will block until the file is loaded.
 
 	@in		MOAIDataBuffer self
 	@in		string filename			The path to the file that the data should be loaded from.
-	@opt	number detectZip		One of MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP, MOAIDataBuffer.NO_UNZIP
+	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
 	@out	boolean success			Whether the file could be loaded into the object.
 */
@@ -260,7 +255,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	loadAsync
+/**	@lua	loadAsync
 	@text	Asynchronously copies the data from the given file into this object.  This method is an asynchronous
 			operation and will return immediately.
 
@@ -299,7 +294,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	save
+/**	@lua	save
 	@text	Saves the data in this object to the given file.  This method is a synchronous operation and will block until the data is saved.
 
 	@in		MOAIDataBuffer self
@@ -318,7 +313,7 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	saveAsync
+/**	@lua	saveAsync
 	@text	Asynchronously saves the data in this object to the given file.  This method is an asynchronous
 			operation and will return immediately.
 
@@ -347,7 +342,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setString
+/**	@lua	setString
 	@text	Replaces the contents of this object with the string specified.
 
 	@in		MOAIDataBuffer self
@@ -356,17 +351,14 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 */
 int MOAIDataBuffer::_setString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
-
-	size_t len;
-	cc8* str = lua_tolstring ( state, 2, &len );
 	
-	self->Load (( void* )str, len );
+	self->Load ( state, 2 );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	toCppHeader
+/**	@lua	toCppHeader
 	@text	Convert data to CPP header file.
 
 	@overload
@@ -503,6 +495,11 @@ bool MOAIDataBuffer::Encode ( ZLStreamWriter& writer ) {
 }
 
 //----------------------------------------------------------------//
+void* MOAIDataBuffer::GetBuffer () {
+	return this->mBytes.Data ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIDataBuffer::HexDecode () {
 
 	ZLHexReader hex;
@@ -578,6 +575,15 @@ void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDataBuffer::Load ( MOAILuaState& state, int idx ) {
+
+	size_t len;
+	cc8* str = lua_tolstring ( state, idx, &len );
+	
+	this->Load (( void* )str, len );
+}
+
+//----------------------------------------------------------------//
 void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
@@ -595,6 +601,31 @@ MOAIDataBuffer::MOAIDataBuffer () {
 MOAIDataBuffer::~MOAIDataBuffer () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::PushString ( MOAILuaState& state ) {
+
+	size_t size;
+	void* buffer;
+	
+	this->Lock ( &buffer, &size );
+	lua_pushlstring ( state, ( cc8* )buffer, size );
+	this->Unlock ();
+}
+
+//----------------------------------------------------------------//
+size_t MOAIDataBuffer::Read ( void* buffer, size_t size ) {
+
+	this->mMutex.Lock ();
+	
+	ZLByteStream byteStream;
+	byteStream.SetBuffer ( this->mBytes, this->mBytes.Size (), this->mBytes.Size ());
+	size = byteStream.ReadBytes ( buffer, size );
+	
+	this->mMutex.Unlock ();
+	
+	return size;
 }
 
 //----------------------------------------------------------------//
@@ -657,8 +688,8 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-ZLLeanArray<u8> *MOAIDataBuffer::getBuffer() {
-	return &mBytes;
+size_t MOAIDataBuffer::Size () {
+	return this->mBytes.Size ();
 }
 
 //----------------------------------------------------------------//

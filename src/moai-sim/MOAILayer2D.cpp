@@ -7,7 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	clear
+/**	@lua	clear
 	@text	Remove all props from the layer's partition.
 	
 	@in		MOAILayer2D self
@@ -17,7 +17,7 @@ int MOAILayer2D::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFitting
+/**	@lua	getFitting
 	@text	Computes a camera fitting for a given world rect along with
 			an optional screen space padding. To do a fitting, compute
 			the world rect based on whatever you are fitting to, use
@@ -39,7 +39,7 @@ int MOAILayer2D::_getFitting ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPartition
+/**	@lua	getPartition
 	@text	Returns the partition (if any) currently attached to this layer.
 	
 	@in		MOAILayer2D self
@@ -49,7 +49,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSortMode
+/**	@lua	getSortMode
 	@text	Get the sort mode for rendering.
 	
 	@in		MOAILayer2D self
@@ -59,7 +59,7 @@ int MOAILayer2D::_getSortMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSortScale
+/**	@lua	getSortScale
 	@text	Return the scalar applied to axis sorts.
 	
 	@in		MOAILayer2D self
@@ -71,7 +71,7 @@ int	MOAILayer2D::_getSortScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertProp
+/**	@lua	insertProp
 	@text	Adds a prop to the layer's partition.
 	
 	@in		MOAILayer2D self
@@ -82,7 +82,7 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removeProp
+/**	@lua	removeProp
 	@text	Removes a prop from the layer's partition.
 	
 	@in		MOAILayer2D self
@@ -93,7 +93,7 @@ int	MOAILayer2D::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBox2DWorld
+/**	@lua	setBox2DWorld
 	@text	Sets a Box2D world for debug drawing.
 	
 	@in		MOAILayer2D self
@@ -104,7 +104,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCamera
+/**	@lua	setCamera
 	@text	Sets a camera for the layer. If no camera is supplied,
 			layer will render using the identity matrix as view/proj.
 	
@@ -124,7 +124,7 @@ int MOAILayer2D::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCpSpace
+/**	@lua	setCpSpace
 	@text	Sets a Chipmunk space for debug drawing.
 	
 	@in		MOAILayer2D self
@@ -135,7 +135,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFrameBuffer
+/**	@lua	setFrameBuffer
 	@text	Attach a frame buffer. Layer will render to frame buffer
 			instead of the main view.
 	
@@ -147,7 +147,7 @@ int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParallax
+/**	@lua	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
 	
@@ -160,7 +160,7 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPartition
+/**	@lua	setPartition
 	@text	Sets a partition for the layer to use. The layer will automatically
 			create a partition when the first prop is added if no partition
 			has been set.
@@ -173,7 +173,7 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSortMode
+/**	@lua	setSortMode
 	@text	Set the sort mode for rendering.
 	
 	@in		MOAILayer2D self
@@ -187,7 +187,7 @@ int MOAILayer2D::_setSortMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSortScale
+/**	@lua	setSortScale
 	@text	Set the scalar applied to axis sorts.
 	
 	@in		MOAILayer2D self
@@ -200,7 +200,7 @@ int	MOAILayer2D::_setSortScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setViewport
+/**	@lua	setViewport
 	@text	Set the layer's viewport.
 	
 	@in		MOAILayer2D self
@@ -211,7 +211,7 @@ int MOAILayer2D::_setViewport ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showDebugLines
+/**	@lua	showDebugLines
 	@text	Display debug lines for props in this layer.
 	
 	@in		MOAILayer2D self
@@ -222,7 +222,7 @@ int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	wndToWorld
+/**	@lua	wndToWorld
 	@text	Project a point from window space into world space.
 	
 	@in		MOAILayer2D self
@@ -235,7 +235,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	worldToWnd
+/**	@lua	worldToWnd
 	@text	Transform a point from world space to window space.
 	
 	@in		MOAILayer2D self

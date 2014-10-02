@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Flush any remaining buffered data and detach the target stream.
 			(This only detaches the target from the formatter; it does
 			not also close the target stream). Return the hash as a hex
@@ -91,7 +91,7 @@ int MOAIHashWriter::_getHashHex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openAdler32
+/**	@lua	openAdler32
 	@text	Open a Adler32 hash stream for writing. (i.e. compute Adler32
 			hash of data while writing)
 	
@@ -104,7 +104,7 @@ int MOAIHashWriter::_openAdler32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openCRC32
+/**	@lua	openCRC32
 	@text	Open a CRC32 hash stream for writing. (i.e. compute CRC32
 			hash of data while writing)
 	
@@ -119,7 +119,7 @@ int MOAIHashWriter::_openCRC32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openCRC32b
+/**	@lua	openCRC32b
 	@text	Open a CRC32b hash stream for writing. (i.e. compute CRC32b
 			hash of data while writing)
 	
@@ -134,7 +134,7 @@ int MOAIHashWriter::_openCRC32b ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openWhirlpool
+/**	@lua	openWhirlpool
 	@text	Open a Whirlpool hash stream for writing. (i.e. compute Whirlpool
 			hash of data while writing)
 	

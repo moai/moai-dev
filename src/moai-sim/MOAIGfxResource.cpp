@@ -26,7 +26,7 @@ MOAIGfxState::~MOAIGfxState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getAge
+/**	@lua	getAge
 	@text	Returns the 'age' of the graphics resource. The age
 			is the number of times MOAIRenderMgr has rendered a scene
 			since the resource was last bound. It is part of the
@@ -46,7 +46,7 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	softRelease
+/**	@lua	softRelease
 	@text	Attempt to release the resource. Generally this is used when
 			responding to a memory warning from the system. A resource
 			will only be released if it is renewable (i.e. has a renew

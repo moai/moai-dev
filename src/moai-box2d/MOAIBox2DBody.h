@@ -11,7 +11,7 @@ class b2Body;
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
-/**	@name	MOAIBox2DBody
+/**	@lua	MOAIBox2DBody
 	@text	Box2D body.
 
 	@const	DYNAMIC
@@ -63,8 +63,10 @@ private:
 	static int		_setMassData			( lua_State* L );
 	static int		_setTransform			( lua_State* L );
 	static int		_setType				( lua_State* L );
+	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void			Clear					();
 	void			SetBody					( b2Body* body );
 	void			OnDepNodeUpdate			();
 

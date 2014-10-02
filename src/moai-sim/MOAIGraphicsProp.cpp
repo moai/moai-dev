@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
@@ -27,14 +26,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getTexture
+/**	@lua	getTexture
 	@text	Returns the texture.
 	
 	@in		MOAIProp self
 	@out	MOAITexture texture
 */
-int MOAIProp::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
+int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
 	if ( self->mTexture ) {
 		self->mTexture->PushLuaUserdata ( state );
@@ -44,7 +43,7 @@ int MOAIProp::_getTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isVisible
+/**	@lua	isVisible
 	@text	Returns true if the given prop is visible. An optional
 			LOD factor may be passed in to test the prop's LOD
 			settings.
@@ -82,7 +81,7 @@ int MOAIGraphicsProp::_setBillboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setBlendEquation
+/** @lua	setBlendEquation
 	@text	Set the blend equation. This determines how the srcFactor and dstFactor values set with setBlendMode are interpreted.
 
 	@overload	Reset the blend function to GL_FUNC_ADD.
@@ -114,7 +113,7 @@ int MOAIGraphicsProp::_setBlendEquation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setBlendMode
+/** @lua	setBlendMode
 	@text	Set the blend mode.
 
 	@overload	Reset the blend mode to MOAIGraphicsProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
@@ -162,7 +161,7 @@ int MOAIGraphicsProp::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCullMode
+/**	@lua	setCullMode
 	@text	Sets and enables face culling.
 	
 	@in		MOAIGraphicsProp self
@@ -178,7 +177,7 @@ int MOAIGraphicsProp::_setCullMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDepthMask
+/**	@lua	setDepthMask
 	@text	Disables or enables depth writing.
 	
 	@in		MOAIGraphicsProp self
@@ -194,7 +193,7 @@ int MOAIGraphicsProp::_setDepthMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDepthTest
+/**	@lua	setDepthTest
 	@text	Sets and enables depth testing (assuming depth buffer is present).
 	
 	@in		MOAIGraphicsProp self
@@ -231,7 +230,7 @@ int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
 	@in		MOAIGraphicsProp self
@@ -253,7 +252,7 @@ int MOAIGraphicsProp::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScissorRect
+/**	@lua	setScissorRect
 	@text	Set or clear the prop's scissor rect.
 	
 	@in		MOAIGraphicsProp self
@@ -270,7 +269,7 @@ int MOAIGraphicsProp::_setScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setShader
+/**	@lua	setShader
 	@text	Sets or clears the prop's shader. The prop's shader takes
 			precedence over any shader specified by the deck or its
 			elements.
@@ -289,7 +288,7 @@ int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
+/**	@lua	setTexture
 	@text	Set or load a texture for this prop. The prop's texture will
 			override the deck's texture.
 	
@@ -312,7 +311,7 @@ int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVTransform
+/**	@lua	setUVTransform
 	@text	Sets or clears the prop's UV transform.
 	
 	@in		MOAIGraphicsProp self
@@ -329,7 +328,7 @@ int MOAIGraphicsProp::_setUVTransform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVisible
+/**	@lua	setVisible
 	@text	Sets or clears the prop's visibility.
 	
 	@in		MOAIGraphicsProp self
@@ -699,10 +698,6 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "BLEND_ADD",					( u32 )MOAIBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY",				( u32 )MOAIBlendMode::BLEND_MULTIPLY );
-	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
-
-	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
-	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
 	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
 	
 	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );

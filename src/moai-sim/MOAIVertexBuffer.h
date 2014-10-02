@@ -21,7 +21,7 @@ public:
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-/**	@name	MOAIVertexBuffer
+/**	@lua	MOAIVertexBuffer
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
@@ -86,6 +86,8 @@ public:
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	void						Reserve					( u32 size );
 	void						ReserveVBOs				( u32 gpuBuffers );
+	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

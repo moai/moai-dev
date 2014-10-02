@@ -6,7 +6,6 @@
 
 package com.ziplinegames.moai;
 
-import com.ziplinegames.moai.MoaiGooglePlayServices;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -26,7 +25,6 @@ public class MoaiPlayServicesCallbacks implements ConnectionCallbacks, OnConnect
 	public void onConnected ( Bundle connectionHint ) {
 
 		MoaiLog.i ( "MoaiPlayServicesCallbacks onConnected" );
-		MoaiGooglePlayServices.connectionComplete();
 	}
 
 	//----------------------------------------------------------------//

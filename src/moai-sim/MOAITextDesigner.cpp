@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextDesigner.h>
@@ -25,11 +25,11 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
+void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
 
 	MOAITextDesignParser parser;
 	
-	parser.BuildLayout ( layout, styleMap, *this, str, idx, offset );
+	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx, offset );
 	layout.ApplyHighlights ();
 	
 	if ( more ) {
@@ -74,7 +74,9 @@ MOAITextDesigner::MOAITextDesigner () :
 	mYFlip ( false ),
 	mWordBreak ( MOAITextDesigner::WORD_BREAK_NONE ),
 	mGlyphScale ( 1.0f ),
-	mLineSpacing ( 0.0f ) {
+	mLineSpacing ( 0.0f ),
+	mHLineSnap ( 0.0f ),
+	mVLineSnap ( 0.0f ) {
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }

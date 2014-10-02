@@ -45,7 +45,7 @@ const cc8* kCloumn_Names[] = {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getRect
+/**	@lua	getRect
 	@text	Returns the two dimensional boundary of the frame.
 
 	@in		MOAIProfilerReportBox self
@@ -69,7 +69,7 @@ int MOAIProfilerReportBox::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFont
+/**	@lua	getFont
 	@text	Gets the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -87,7 +87,7 @@ int MOAIProfilerReportBox::_getFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFontSize
+/**	@lua	getFontSize
 	@text	Gets the size of the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -102,7 +102,7 @@ int MOAIProfilerReportBox::_getFontSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBackgroundColor
+/**	@lua	getBackgroundColor
 	@text	Gets the background color.
 	
 	@in		MOAIProfilerReportBox self
@@ -125,7 +125,7 @@ int MOAIProfilerReportBox::_getBackgroundColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRowColor
+/**	@lua	getRowColor
 	@text	Gets the row color.
 	
 	@in		MOAIProfilerReportBox self
@@ -148,7 +148,7 @@ int MOAIProfilerReportBox::_getRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTextColor
+/**	@lua	getTextColor
 	@text	Gets the text color.
 	
 	@in		MOAIProfilerReportBox self
@@ -171,7 +171,7 @@ int MOAIProfilerReportBox::_getTextColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getOrientation
+/**	@lua	getOrientation
 	@text	Gets the orientation.
 	
 	@in		MOAIProfilerReportBox self
@@ -186,7 +186,7 @@ int MOAIProfilerReportBox::_getOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Sets the rectangular area for this frame.
 
 	@in		MOAIProfilerReportBox self
@@ -210,7 +210,7 @@ int MOAIProfilerReportBox::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFont
+/**	@lua	setFont
 	@text	Sets or clears the style's font.
 	
 	@in		MOAIProfilerReportBox self
@@ -225,7 +225,7 @@ int MOAIProfilerReportBox::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFontSize
+/**	@lua	setFontSize
 	@text	Sets the size of the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -245,7 +245,7 @@ int MOAIProfilerReportBox::_setUserMemory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBackgroundColor
+/**	@lua	setBackgroundColor
 	@text	Initialize the background color.
 	
 	@in		MOAIProfilerReportBox self
@@ -262,7 +262,7 @@ int MOAIProfilerReportBox::_setBackgroundColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRowColor
+/**	@lua	setRowColor
 	@text	Initialize the row color.
 	
 	@in		MOAIProfilerReportBox self
@@ -279,7 +279,7 @@ int MOAIProfilerReportBox::_setRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTextColor
+/**	@lua	setTextColor
 	@text	Initialize the text color.
 	
 	@in		MOAIProfilerReportBox self
@@ -296,7 +296,7 @@ int MOAIProfilerReportBox::_setTextColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setOrientation
+/**	@lua	setOrientation
 	@text	Sets the orientation.
 	
 	@in		MOAIProfilerReportBox self
@@ -310,7 +310,7 @@ int MOAIProfilerReportBox::_setOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	enableProfiling
+/**	@lua	enableProfiling
 	@text	Enables profile stats collection
 	
 	@in		MOAIProfilerReportBox self
@@ -323,7 +323,7 @@ int MOAIProfilerReportBox::_enableProfiling ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	disableProfiling
+/**	@lua	disableProfiling
 	@text	Disables profile stats collection
 	
 	@in		MOAIProfilerReportBox self

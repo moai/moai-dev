@@ -22,7 +22,9 @@ public:
 	void				Close					();
 	u32					GetCaps					();
 	size_t				GetCursor				();
+	static size_t		GetDecodedLength		( size_t encodedLength );
 	size_t				GetLength				();
+	static u8			HexToByte				( u32 c );
 	bool				Open					( ZLStream& stream );
 	size_t				ReadBytes				( void* buffer, size_t size );
 						ZLHexReader				();

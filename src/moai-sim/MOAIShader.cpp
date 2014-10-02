@@ -33,19 +33,23 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( attrID >= this->mUniformBuffers.Size ()) return false;
 
-	if ( op == MOAIAttrOp::CHECK ) {
-		attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
-		return true;
-	}
+	switch ( op ) {
 
-	if ( op == MOAIAttrOp::SET ) {
-		this->mUniformBuffers [ attrID ].SetValue ( attrOp, false );
-		return true;
-	}
+		case MOAIAttrOp::CHECK:
+			this->mUniformBuffers [ attrID ].GetFlags ( attrOp );
+			return true;
 
-	if ( op == MOAIAttrOp::ADD ) {
-		this->mUniformBuffers [ attrID ].AddValue ( attrOp );
-		return true;
+		case MOAIAttrOp::SET:
+			this->mUniformBuffers [ attrID ].SetValue ( attrOp, true );
+			return true;
+
+		case MOAIAttrOp::ADD:
+			this->mUniformBuffers [ attrID ].AddValue ( attrOp );
+			return true;
+		
+		case MOAIAttrOp::GET:
+			this->mUniformBuffers [ attrID ].GetValue ( attrOp );
+			return true;
 	}
 
 	return false;

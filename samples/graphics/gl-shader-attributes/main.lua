@@ -49,8 +49,8 @@ prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 6 )
-prop:moveLoc ( -512, 0, 6 )
+--prop:moveRot ( 360, 6 )
+--prop:moveLoc ( -512, 0, 6 )
 
 program = MOAIShaderProgram.new ()
 
@@ -66,11 +66,10 @@ program:load ( vsh, fsh )
 
 shader = MOAIShader.new ()
 shader:setProgram ( program )
+tileDeck:setShader ( shader )
 
 shader:setAttr ( 1, 2 )
 shader:setAttr ( 2, 0 )
 
-shader:moveAttr ( 1, -2, 6 )
-shader:moveAttr ( 2, 2, 6 )
-
-tileDeck:setShader ( shader )
+shader:seekAttr ( 1, 0, 6 )
+shader:seekAttr ( 2, 2, 6 )

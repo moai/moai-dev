@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLoc
+/**	@lua	getLoc
 	@text	Returns the location of the pointer on the screen.
 
 	@in		MOAIPointerSensor self
@@ -26,7 +26,7 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the pointer location changes.
 
 	@in		MOAIPointerSensor self

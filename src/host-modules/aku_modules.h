@@ -59,18 +59,11 @@
 	#include <moai-util/host.h>
 #endif
 
-#if AKU_WITH_PLUGINS
-	#include <moai-plugins/host.h>
-#endif
 //----------------------------------------------------------------//
 void		AKUModulesAppFinalize					();
 void		AKUModulesAppInitialize					();
 void		AKUModulesContextInitialize				();
-void		AKUModulesParseArgs						( int argc, char** argv );
 void		AKUModulesPause							( bool pause );
-void		AKUModulesRunLuaAPIWrapper				();
 void		AKUModulesUpdate						();
-void		AKUModulesPause							();
-void		AKUModulesResume						();
 
 #endif

@@ -22,7 +22,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	allowAutoRotate
+/**	@lua	allowAutoRotate
 	@text	Set to true to keep your users from rotating the device from landscape to portrait to properly view the video ad
  
 	@in		bool autorotate 
@@ -37,7 +37,7 @@ int	MOAIVungleIOS::_allowAutoRotate	( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	cacheSizeGet
+/**	@lua	cacheSizeGet
 	@text	Detects if an add has been downloaded
  
 	@out 	number current video cache size
@@ -52,7 +52,7 @@ int	MOAIVungleIOS::_cacheSizeGet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	cacheSizeSet
+/**	@lua	cacheSizeSet
 	@text	Detects if an add has been downloaded
  
 	@in		number size size in megabytes to set the video cache to
@@ -87,7 +87,7 @@ int	MOAIVungleIOS::_displayAdvert ( lua_State* L ) {
 }
 	
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize Vungle.
 	
 	@in		string	appId			Available in Vungle dashboard settings.
@@ -121,7 +121,7 @@ int MOAIVungleIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isVideoAvailable
+/**	@lua	isVideoAvailable
 	@text	Detects if an add has been downloaded
  
 	@out 	bool	True, if an ad is cached and will be displayed.

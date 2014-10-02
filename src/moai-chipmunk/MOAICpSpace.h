@@ -39,7 +39,7 @@ public:
 //================================================================//
 // MOAICpSpace
 //================================================================//
-/**	@name	MOAICpSpace
+/**	@lua	MOAICpSpace
 	@text	Chipmunk Space.
 	
 	@flag	BEGIN

@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getUserId
+/**	@lua	getUserId
  @text	Gets the tapjoy user ID.
  
  @out	string userId
@@ -24,7 +24,7 @@ int MOAITapjoyIOS::_getUserId ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
  @text	Initializes Tapjoy.
  
  @in		string	appId			Available in Tapjoy dashboard settings.
@@ -50,7 +50,7 @@ int MOAITapjoyIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initVideoAds
+/**	@lua	initVideoAds
  @text	Initializes Tapjoy to display video ads.
  
  @opt	number count			The optional number of ads to cache. Default is Tapjoy dependent.
@@ -73,7 +73,7 @@ int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUserId
+/**	@lua	setUserId
  @text	Sets the tapjoy user ID.
  
  @in	string userId
@@ -91,7 +91,7 @@ int MOAITapjoyIOS::_setUserId ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showOffers
+/**	@lua	showOffers
  @text	Displays the Tapjoy marketplace.
  
  @out	nil

@@ -26,6 +26,7 @@ public:
 	void				Close					();
 	u32					GetCaps					();
 	size_t				GetCursor				();
+	static size_t		GetEncodedLength		( size_t plainLength );
 	size_t				GetLength				();
 	bool				Open					( ZLStream& stream );
 						ZLBase64Writer			();

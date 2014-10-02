@@ -43,6 +43,52 @@ void MOAIShaderUniformBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderUniformBuffer::GetFlags ( MOAIAttrOp& attrOp ) {
+    
+	switch ( this->mType ) {
+			
+		case UNIFORM_FLOAT:
+		case UNIFORM_INT:
+			
+			attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
+            break;
+
+        default:
+
+            attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
+            break;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniformBuffer::GetValue ( MOAIAttrOp& attrOp ) {
+
+	// TODO: support color type hint
+
+	switch ( this->mType ) {
+			
+		case UNIFORM_FLOAT: {
+			
+			attrOp.Apply ( this->mFloat, MOAIAttrOp::GET, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+			break;
+		}
+		case UNIFORM_INDEX:
+		case UNIFORM_INT: {
+			
+			attrOp.Apply ( this->mInt, MOAIAttrOp::GET, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_INT );
+			break;
+		}
+		case UNIFORM_MATRIX_F3:
+		case UNIFORM_MATRIX_F4: {
+			// TODO:
+		}
+		case UNIFORM_VECTOR_F4: {
+			// TODO:
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetBuffer ( void* buffer, size_t size, bool check ) {
 
 	if ( check ) {
@@ -125,6 +171,9 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) 
 				return this->SetValue ( *affine, check );
 			}
 			break;
+		}
+		case MOAIAttrOp::ATTR_TYPE_VECTOR: {
+			// TODO:
 		}
 	}
 	return false;

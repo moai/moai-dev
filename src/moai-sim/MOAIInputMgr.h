@@ -10,7 +10,7 @@ class MOAISensor;
 //================================================================//
 // MOAIInputMgr
 //================================================================//
-/**	@name	MOAIInputMgr
+/**	@lua	MOAIInputMgr
 	@text	Input device class.
 */
 class MOAIInputMgr :
@@ -65,7 +65,7 @@ public:
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name );
 	void				SetDeviceActive				( u8 deviceID, bool active );
-	void				SetDeviceExtendedName		( u8 deviceID, cc8* nameExtended );
+	void				SetDeviceHardwareInfo		( u8 deviceID, cc8* hardwareInfo );
 	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
 	void				Update						( double timestep );
 };

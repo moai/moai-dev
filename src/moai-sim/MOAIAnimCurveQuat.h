@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAnimCurveQuat
 //================================================================//
-/**	@name	MOAIAnimCurveQuat
+/**	@lua	MOAIAnimCurveQuat
 	@text	Implementation of animation curve for rotation (via quaternion) values.
 */
 class MOAIAnimCurveQuat :

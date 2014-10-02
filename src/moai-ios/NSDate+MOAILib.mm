@@ -1,6 +1,6 @@
 #import <moai-ios/NSDate+MOAILib.h>
 #import <moai-ios/NSString+MOAILib.h>
-#import <contrib/ISO8601DateFormatter.h>
+#import <contrib/MOAIIso8601DateFormatter.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSDate () {
@@ -16,11 +16,9 @@ void loadMoaiLib_NSDate () {
 	+( NSDate* ) dateFromISO8601String :( NSString* )iso8601String {
 	
 		if ( iso8601String ) {
-			
-			ISO8601DateFormatter* formatter = [[[ ISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIIso8601DateFormatter* formatter = [[[ MOAIIso8601DateFormatter alloc ] init ] autorelease ];
 			return [ formatter dateFromString:iso8601String ];
 		}
-		
 		return nil;
 	}
 	
@@ -28,8 +26,7 @@ void loadMoaiLib_NSDate () {
 	+( NSString* ) iso8601StringFromDate :( NSDate* )date {
 	
 		if ( date ) {
-
-			ISO8601DateFormatter* formatter = [[[ ISO8601DateFormatter alloc ] init ] autorelease ];
+			MOAIIso8601DateFormatter* formatter = [[[ MOAIIso8601DateFormatter alloc ] init ] autorelease ];
 			formatter.includeTime = true;
 			return [ formatter stringFromDate:date ];
 		}

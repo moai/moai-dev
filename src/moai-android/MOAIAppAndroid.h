@@ -12,7 +12,7 @@
 //================================================================//
 // MOAIAppAndroid
 //================================================================//
-/**	@name	MOAIAppAndroid
+/**	@lua	MOAIAppAndroid
 	@text	Wrapper for base application class on Android devices.
 			Exposed to Lua via MOAIApp on all mobile platforms.
 
@@ -32,6 +32,7 @@ private:
 		ACTIVITY_ON_PAUSE,
 		ACTIVITY_ON_RESUME,
 		ACTIVITY_ON_RESTART,
+		APP_OPENED_FROM_URL,
 		BACK_BUTTON_PRESSED,
 		EVENT_PICTURE_TAKEN,
 	};
@@ -41,7 +42,7 @@ private:
 	static int	_getPicturePath			( lua_State* L );
 	static int	_getUTCTime				( lua_State* L );
 	static int 	_getStatusBarHeight 	( lua_State* L );
-	static int	_openURL			( lua_State* L );
+	static int	_openURL				( lua_State* L );
 	static int	_sendMail				( lua_State* L );
 	static int	_share					( lua_State* L );
 	static int	_takePicture			( lua_State* L );

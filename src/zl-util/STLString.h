@@ -20,30 +20,53 @@ using namespace std;
 	STLString str; \
 	STLSTRING_APPEND_VA_ARGS ( str, format, top )
 
+class ZLStreamReader;
+class ZLStreamWriter;
+
 //================================================================//
 // STLString
 //================================================================//
 class STLString :
 	public string {
+	
+	//----------------------------------------------------------------//
+	void				zl_decode			( ZLStreamReader& reader, void* buffer, size_t len );
+	void				zl_encode			( ZLStreamWriter& writer, const void* buffer, size_t len );
+	
 public:
 
 	//----------------------------------------------------------------//
-	void		base_64_decode		( void* buffer, size_t len );
-	void		base_64_encode		( const void* buffer, size_t len );
-	STLString	clip				( size_t first, size_t last );
-	STLString	clip_to_back		( size_t first );
-	STLString	clip_to_front		( size_t last );
-	void		hex_encode			( const void* buffer, size_t len );
-	static u8	hex_to_byte			( u32 c );
-	void		replace_char		( cc8 match, cc8 sub );
-	void		tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
-	double		to_double			();
-	float		to_float			();
-	int			to_int				();
-	void		to_lower			();
-	void		to_upper			();
-	void		write				( cc8* format, ... );
-	void		write_var			( cc8* format, va_list args );
+	void				base_64_decode		( void* buffer, size_t len );
+	size_t				base_64_decode_len	(); // calc the *approx* len of a plain str; safe to use for buffer allocation
+	void				base_64_encode		( const void* buffer, size_t len );
+	size_t				base_64_encode_len	(); // calc the *approx* len of an encoded str; safe to use for buffer allocation
+	
+	static STLString	build				( cc8* format, ... );
+	static STLString	build_var			( cc8* format, va_list args );
+	
+	STLString			clip				( size_t first, size_t last );
+	STLString			clip_to_back		( size_t first );
+	STLString			clip_to_front		( size_t last );
+
+	void				hex_decode			( void* buffer, size_t len );
+	size_t				hex_decode_len		(); // calc the len of a plain str
+	void				hex_encode			( const void* buffer, size_t len );
+	size_t				hex_encode_len		(); // calc the len of an encoded str
+	
+	static u8			hex_to_byte			( u32 c );
+	
+	void				replace_char		( cc8 match, cc8 sub );
+	void				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
+	double				to_double			();
+	float				to_float			();
+	int					to_int				();
+	void				to_lower			();
+	void				to_upper			();
+	void				write				( cc8* format, ... );
+	void				write_var			( cc8* format, va_list args );
+
+	void				zip_deflate			( const void* buffer, size_t len ); // deflate then base64 encode
+	size_t				zip_inflate			( void* buffer, size_t len ); // base64 decode then inflate
 
 	//----------------------------------------------------------------//
 	inline operator const char* () const {

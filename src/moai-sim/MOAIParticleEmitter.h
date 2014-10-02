@@ -12,7 +12,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleEmitter
 //================================================================//
-/**	@name	MOAIParticleEmitter
+/**	@lua	MOAIParticleEmitter
 	@text	Particle emitter.
 */
 class MOAIParticleEmitter :

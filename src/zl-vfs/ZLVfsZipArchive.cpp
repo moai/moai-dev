@@ -48,7 +48,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 		for ( i = scansize - 4; i >= 0; --i ) {
 			
 			// maybe found it
-			if ( *( unsigned long* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
+			if ( *( u32* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
 
 				if ( offset ) {
 					( *offset ) = cursor + i;

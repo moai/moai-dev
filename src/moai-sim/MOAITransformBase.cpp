@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getWorldDir
+/**	@lua	getWorldDir
 	@text	Returns the normalized direction vector of the transform.
 			This value is returned in world space so includes parent
 			transforms (if any).
@@ -32,7 +32,7 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldLoc
+/**	@lua	getWorldLoc
 	@text	Get the transform's location in world space.
 	
 	@in		MOAITransformBase self
@@ -53,7 +53,7 @@ int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldRot
+/**	@lua	getWorldRot
 	@text	Get the transform's rotation in world space.
 	
 	@in		MOAITransformBase self
@@ -70,7 +70,7 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldScl
+/**	@lua	getWorldScl
 	@text	Get the transform's scale in world space.
 	
 	@in		MOAITransformBase self

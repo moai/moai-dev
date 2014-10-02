@@ -5,13 +5,14 @@
 #define	MOAIPINTRANSFORM_H
 
 #include <moai-sim/MOAITransform.h>
+#include <moai-sim/MOAINode.h>
 
 class MOAILayer;
 
 //================================================================//
 // MOAIPinTransform
 //================================================================//
-/**	@name	MOAIPinTransform
+/**	@lua	MOAIPinTransform
 	@text	2D transform for connecting transforms across layers. Useful for
 			HUD overlay items and map pins.
 */
@@ -21,7 +22,9 @@ private:
 
 	MOAILuaSharedPtr < MOAILayer > mSourceLayer;
 	MOAILuaSharedPtr < MOAILayer > mDestLayer;
-
+		
+	float			mFront;
+	
 	//----------------------------------------------------------------//
 	static int		_init						( lua_State* L );
 
@@ -31,9 +34,16 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAIPinTransform )
-	
+	DECL_ATTR_HELPER ( MOAIPinTransform )
+		
+	enum {
+		ATTR_FRONT
+	};
+		
 	//----------------------------------------------------------------//
-					MOAIPinTransform				();
+		
+	virtual bool	ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+					MOAIPinTransform			();
 					~MOAIPinTransform			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );

@@ -16,7 +16,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getAppIconBadgeNumber
+/**	@lua	getAppIconBadgeNumber
 	@text	Get the current icon badge number.
 				
 	@out 	integer	count
@@ -45,7 +45,7 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 	
 	if ( state.IsType ( 3, LUA_TTABLE )) {
 		
-		NSMutableDictionary* userInfoDictionary = [[ NSMutableDictionary alloc ] init ];
+		NSMutableDictionary* userInfoDictionary = [[[ NSMutableDictionary alloc ] init ] autorelease ];
 		[ userInfoDictionary initWithLua:state stackIndex:3 ];
 		notification.userInfo = userInfoDictionary;
 	}
@@ -59,7 +59,7 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	registerForRemoteNotifications
+/**	@lua	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
 	@in		integer	types			A mask of requested notification types. See Apple documentation.
@@ -76,7 +76,7 @@ int MOAINotificationsIOS::_registerForRemoteNotifications ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAppIconBadgeNumber
+/**	@lua	setAppIconBadgeNumber
 	@text	Set the current icon badge number.
 			
 	@in		integer	count			The count to set on the icon badge.
@@ -108,7 +108,7 @@ int MOAINotificationsIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	unregisterForRemoteNotifications
+/**	@lua	unregisterForRemoteNotifications
 	@text	Dregister for remote notifications.
 			
 	@out 	nil
@@ -218,7 +218,7 @@ void MOAINotificationsIOS::NotifyRemoteDeregistrationComplete () {
 }
 
 //----------------------------------------------------------------//
-void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToken ) {
+void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToken, NSError *error ) {
 	
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_REGISTRATION_COMPLETE ];
 	
@@ -233,10 +233,15 @@ void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToke
 		
 			lua_pushinteger ( state, REMOTE_NOTIFICATION_RESULT_REGISTERED );
 			lua_pushstring ( state, token );
-		} else {
-			
+		}
+		else {			
 			lua_pushinteger ( state, REMOTE_NOTIFICATION_RESULT_ERROR );
-			lua_pushnil ( state );
+
+			if ( error != nil ) {
+				[[ error localizedDescription ] toLua:state ];
+			} else {
+				lua_pushnil ( state );
+			}
 		}
 		
 		state.DebugCall ( 2, 0 );

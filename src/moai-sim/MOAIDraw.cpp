@@ -234,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 			const GlyphPlacement& glyphPlacement = *it;
 			MOAIGlyph* glyph = glyphPlacement.glyph;
 			MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
-			glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
+			//glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
 		}
 	}
 
@@ -304,7 +304,7 @@ int MOAIDraw::_drawBezierCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawBoxOutline
+/**	@lua	drawBoxOutline
 	@text	Draw a box outline.
 	
 	@in		number x0
@@ -331,7 +331,7 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawCircle
+/**	@lua	drawCircle
 	@text	Draw a circle.
 	
 	@in		number x
@@ -354,7 +354,7 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawEllipse
+/**	@lua	drawEllipse
 	@text	Draw an ellipse.
 	
 	@in		number x
@@ -387,7 +387,7 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawLine
+/**	@lua	drawLine
 	@text	Draw a line.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -405,7 +405,7 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawPoints
+/**	@lua	drawPoints
 	@text	Draw a list of points.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -423,7 +423,7 @@ int MOAIDraw::_drawPoints ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawRay
+/**	@lua	drawRay
 	@text	Draw a ray.
 	
 	@in		number x
@@ -446,7 +446,7 @@ int MOAIDraw::_drawRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawRect
+/**	@lua	drawRect
 	@text	Draw a rectangle.
 	
 	@in		number x0
@@ -469,7 +469,7 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillCircle
+/**	@lua	fillCircle
 	@text	Draw a filled circle.
 	
 	@in		number x
@@ -492,7 +492,7 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillEllipse
+/**	@lua	fillEllipse
 	@text	Draw a filled ellipse.
 	
 	@in		number x
@@ -518,7 +518,7 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillFan
+/**	@lua	fillFan
 	@text	Draw a filled fan.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -536,7 +536,7 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillRect
+/**	@lua	fillRect
 	@text	Draw a filled rectangle.
 	
 	@in		number x0
@@ -559,7 +559,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawTexture
+/**	@lua	drawTexture
 	@text	Draw a filled rectangle.
 	
 	@in		number x0
@@ -584,7 +584,7 @@ int MOAIDraw::_drawTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawText
+/**	@lua	drawText
 	@text	Draws a string.
 	
 	@in		MOAIFont font

@@ -11,7 +11,7 @@
 //================================================================//
 // MOAIKeyboardIOS
 //================================================================//
-/**	@name	MOAIKeyboardIOS
+/**	@lua	MOAIKeyboardIOS
 	@text	<p>Wrapper for the native keyboard. This is a first pass
 			of the keyboard functionality and is missing some
 			important features (such as spell check) that will be

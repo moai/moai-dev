@@ -10,7 +10,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAITextBundle
 //================================================================//
-/**	@name	MOAITextBundle
+/**	@lua	MOAITextBundle
  @text	A read-only lookup table of strings suitable for internationalization purposes. This
  currently wraps a loaded gettext() style MO file (see http://www.gnu.org/software/gettext/manual/gettext.html).
  So you are going to want to generate the .mo file from one of the existing tools such as poedit or msgfmt,

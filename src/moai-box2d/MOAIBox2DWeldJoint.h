@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DWeldJoint
 //================================================================//
-/**	@name MOAIBox2DWeldJoint
+/**	@lua MOAIBox2DWeldJoint
 	@text Box2D weld joint.
 */
 class MOAIBox2DWeldJoint :

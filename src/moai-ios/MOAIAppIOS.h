@@ -11,10 +11,14 @@
 #import <moai-core/headers.h>
 #import <moai-ios/MOAIReachabilityListener.h>
 
+// TODO: rename to MOAIMailComposeDelegate
+@class MoaiMailComposeDelegate;
+@class MOAITakeCameraListener;
+
 //================================================================//
 // MOAIAppIOS
 //================================================================//
-/**	@name	MOAIAppIOS
+/**	@lua	MOAIAppIOS
 	@text	Wrapper for base application class on iOS devices.
 			Exposed to Lua via MOAIApp on all mobile platforms.
 
@@ -41,7 +45,9 @@ private:
 	static int	_getInterfaceOrientation	( lua_State* L );
 	static int	_getIPAddress				( lua_State* L );
 	static int	_getUTCTime					( lua_State* L );
+	static int	_sendMail					( lua_State* L );
 	static int	_setListener				( lua_State* L );
+	static int	_takeCamera					( lua_State* L );
 		
 public:
 	
@@ -71,6 +77,11 @@ public:
 	MOAILuaStrongRef			mListeners [ TOTAL ];
 	MOAIReachabilityListener*	mReachabilityListener;
 
+	MOAILuaStrongRef			mOnTakeCameraCallback;
+	MOAITakeCameraListener*		mTakeCameraListener;
+	//MoaiMailComposeDelegate*	mMailDelegate;
+	UIPopoverController*		mImagePickerPopover;
+
 	//----------------------------------------------------------------//
 	
 	void			DidBecomeActive			();
@@ -80,6 +91,16 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			WillResignActive		();
 	void			WillTerminate			();
+
+	static void		callTakeCameraLuaCallback									(NSString* imagePath);
 };
+
+//================================================================//
+// MoaiMailComposeDelegate
+//================================================================//
+//@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
+//@private
+//}
+//@end
 
 #endif

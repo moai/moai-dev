@@ -67,14 +67,10 @@ void AKUModulesIosAppFinalize () {
 	#if AKU_WITH_IOS_VUNGLE
 		AKUIosVungleAppFinalize ();
 	#endif
-	
-	AKUModulesAppFinalize ();
 }
 
 //----------------------------------------------------------------//
 void AKUModulesIosAppInitialize () {
-
-	AKUModulesAppInitialize ();
 
 	#if AKU_WITH_IOS
 		AKUIosAppInitialize ();
@@ -136,8 +132,6 @@ void AKUModulesIosAppInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesIosContextInitialize () {
 
-	AKUModulesContextInitialize ();
-
 	#if AKU_WITH_IOS
 		AKUIosContextInitialize ();
 	#endif
@@ -196,7 +190,11 @@ void AKUModulesIosContextInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUModulesIosUpdate () {
+void AKUModulesIosPause ( bool pause ) {
+	UNUSED ( pause );
+}
 
-	AKUModulesUpdate ();
+
+//----------------------------------------------------------------//
+void AKUModulesIosUpdate () {
 }

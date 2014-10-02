@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	bless
+/**	@lua	bless
 	@text	Call this after initializing the buffer and settings it vertices
 			to prepare it for use.
 	
@@ -27,7 +27,7 @@ int MOAIVertexBuffer::_bless ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Releases any memory associated with buffer.
 	
 	@in		MOAIVertexBuffer self
@@ -41,7 +41,7 @@ int	MOAIVertexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Sets capacity of buffer in bytes.
 	
 	@in		MOAIVertexBuffer self
@@ -67,7 +67,7 @@ int	MOAIVertexBuffer::_reserveVBOs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveVerts
+/**	@lua	reserveVerts
 	@text	Sets capacity of buffer in vertices. This function should
 			only be used after attaching a valid MOAIVertexFormat
 			to the buffer.
@@ -88,7 +88,7 @@ int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reset
+/**	@lua	reset
 	@text	Resets the vertex stream writing to the head of the stream.
 	
 	@in		MOAIVertexBuffer self
@@ -103,7 +103,7 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFormat
+/**	@lua	setFormat
 	@text	Sets the vertex format for the buffer.
 	
 	@in		MOAIVertexBuffer self
@@ -119,7 +119,7 @@ int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeColor32
+/**	@lua	writeColor32
 	@text	Write a packed 32-bit color to the vertex buffer.
 	
 	@in		MOAIVertexBuffer self
@@ -389,4 +389,38 @@ void MOAIVertexBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 		this->mVBOs.Clear ();
 		this->mUseVBOs = false;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.GetField ( -1, "mBuffer" );
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+		
+		MOAIDataBuffer dataBuffer;
+		dataBuffer.Load ( state, -1 );
+		dataBuffer.Inflate ();
+		
+		size_t bufferSize = dataBuffer.Size ();
+		this->Reserve ( bufferSize );
+		dataBuffer.Read ( this->mBuffer.Data (), bufferSize );
+		
+		this->mStream.SetLength ( bufferSize );
+		this->mStream.Seek ( bufferSize, SEEK_SET );
+	}
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	size_t size = this->mStream.GetLength ();
+	
+	MOAIDataBuffer dataBuffer;
+	dataBuffer.Load ( this->mBuffer.Data (), size );
+	dataBuffer.Deflate ();
+	dataBuffer.PushString ( state );
+	lua_setfield ( state, -2, "mBuffer" );
 }

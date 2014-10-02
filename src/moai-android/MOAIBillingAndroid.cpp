@@ -33,7 +33,7 @@ cc8* MOAIBillingAndroid::_luaParseTable ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkBillingSupported
+/**	@lua	checkBillingSupported
 	@text	Check to see if the currently selected billing provider is available.
 
 	@out 	boolean	success			True, if the request was successfully initiated.
@@ -70,7 +70,7 @@ int MOAIBillingAndroid::_checkBillingSupported ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	confirmNotification
+/**	@lua	confirmNotification
 	@text	Confirm a previously received notification. Only applies
 			to the Google Play billing provider.
 
@@ -113,7 +113,7 @@ int MOAIBillingAndroid::_confirmNotification ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUserId
+/**	@lua	getUserId
 	@text	Get the ID of the current user for the currently selected
 			billing provider. Only applies to the Amazon billing
 			provider.
@@ -152,7 +152,7 @@ int MOAIBillingAndroid::_getUserId ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestPurchase
+/**	@lua	requestPurchase
 	@text	Request the purchase of an item.
 
 	@in		string	sku				The SKU to purchase.
@@ -197,7 +197,7 @@ int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	restoreTransactions
+/**	@lua	restoreTransactions
 	@text	Request the restoration of any previously purchased items.
 
 	@opt	string	offset			The offset in the paginated results to start from. Only applies to the Amazon billing provider. Default is nil.
@@ -239,7 +239,7 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBillingProvider
+/**	@lua	setBillingProvider
 	@text	Set the billing provider to use for in-app purchases.
 	
 	@in		number provider			The billing provider.
@@ -300,7 +300,7 @@ int MOAIBillingAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPublicKey
+/**	@lua	setPublicKey
 	@text	Set the public key to be used for receipt verification.
 			Only applies to the Google Play billing provider.
 
@@ -339,7 +339,7 @@ int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {
 // Google Play In App Biling v3: TODO - make this meld with existing interface better...
 
 //----------------------------------------------------------------//
-/**	@name	checkInAppSupported
+/**	@lua	checkInAppSupported
 	@text	Check to see if the device can get in app billing
 
 	@out 	boolean	success
@@ -374,7 +374,7 @@ int MOAIBillingAndroid::_checkInAppSupported ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkSubscriptionSupported
+/**	@lua	checkSubscriptionSupported
 	@text	Check to see if the device can get subscription billing
 
 	@out 	boolean	success
@@ -409,7 +409,7 @@ int MOAIBillingAndroid::_checkSubscriptionSupported ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	consumePurchaseSync
+/**	@lua	consumePurchaseSync
 	@text	Consumes a purchase
 
 	@in		string token
@@ -447,7 +447,7 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPurchasedProducts
+/**	@lua	getPurchasedProducts
 	@text	Gets the user's purchased products 
 				
 	@in		number type
@@ -490,7 +490,7 @@ int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	purchaseProduct
+/**	@lua	purchaseProduct
 	@text	Starts a purchase intent for the desired product
 
 	@in		string sku
@@ -533,7 +533,7 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	purchaseProductFortumo
+/**	@lua	purchaseProductFortumo
 	@text	Starts a purchase intent for the desired product
 
 	@in		string sku
@@ -578,7 +578,7 @@ int MOAIBillingAndroid::_purchaseProductFortumo( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	requestProductsSync
+/**	@lua	requestProductsSync
 	@text	Gets the products from Google Play for the current app
 				
     @in		table skus

@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	classHello
+/**	@lua	classHello
 	@text	Class (a.k.a. static) method. Prints the string 'MOAIFoo class foo!' to the console.
 
 	@out	nil
@@ -23,10 +23,10 @@ int MOAIFoo::_classHello ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	instanceHello
+/**	@lua	instanceHello
 	@text	Prints the string 'MOAIFoo instance foo!' to the console.
+	
 	@in		MOAIFoo self
-
 	@out	nil
 */
 int MOAIFoo::_instanceHello ( lua_State* L ) {

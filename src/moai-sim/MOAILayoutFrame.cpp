@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	layout
+/**	@lua	layout
 	@text	Perform the layout algorithm to layout hierarchy.
 
 	@in		MOAILayoutFrame self
@@ -26,7 +26,7 @@ int MOAILayoutFrame::_layout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFit
+/**	@lua	setFit
 	@text	Sets the fitting mode for each axis.
 
 	@in		MOAILayoutFrame self
@@ -44,7 +44,7 @@ int	MOAILayoutFrame::_setFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIdealSize
+/**	@lua	setIdealSize
 	@text	Sets the size hint used for fitting.
 
 	@in		MOAILayoutFrame self
@@ -62,7 +62,7 @@ int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLayout
+/**	@lua	setLayout
 	@text	Sets the layout mode for each axis.  Each argument can be one of LAYOUT_ALIGN_{MIN,CENTER,MAX} combined with LAYOUT_JUSTIFY_{MIN,CENTER,MAX}.  In this case, MIN, CENTER and MAX refer to the border along each axis; for the X axis MIN would be left and MAX would be right.
 
 	@in		MOAILayoutFrame self
@@ -80,7 +80,7 @@ int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMargin
+/**	@lua	setMargin
 	@text	Sets the interior margins of the layout.  This is the space between the edge of the layout and the content.
 
 	@in		MOAILayoutFrame self
@@ -102,7 +102,7 @@ int MOAILayoutFrame::_setMargin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWeight
+/**	@lua	setWeight
 	@text	Sets the stretch weighting for stretchable layouts (i.e. FIT_EXPAND).  This is the proportional stretch relative to each other, so any number space can be used; 1, 2, 5 is the same as 0.5, 1, 2.5.
 
 	@in		MOAILayoutFrame self

@@ -21,6 +21,8 @@ MOAITextStyleState::MOAITextStyleState () :
 	mSize ( 0.0f ),
 	mScale ( 1.0f, 1.0f ),
 	mColor ( 0xffffffff ) {
+	
+	this->mPadding.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -41,7 +43,7 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getColor
+/**	@lua	getColor
 	@text	Gets the color of the style.
 	
 	@in		MOAITextStyle self
@@ -64,7 +66,7 @@ int MOAITextStyle::_getColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFont
+/**	@lua	getFont
 	@text	Gets the font of the style.
 	
 	@in		MOAITextStyle self
@@ -83,7 +85,7 @@ int MOAITextStyle::_getFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScale
+/**	@lua	getScale
 	@text	Gets the scale of the style.
 	
 	@in		MOAITextStyle self
@@ -97,7 +99,7 @@ int MOAITextStyle::_getScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Gets the size of the style.
 	
 	@in		MOAITextStyle self
@@ -110,7 +112,7 @@ int MOAITextStyle::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor
+/**	@lua	setColor
 	@text	Initialize the style's color.
 	
 	@in		MOAITextStyle self
@@ -127,7 +129,7 @@ int MOAITextStyle::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFont
+/**	@lua	setFont
 	@text	Sets or clears the style's font.
 	
 	@in		MOAITextStyle self
@@ -144,7 +146,39 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScale
+// TODO: doxygen
+int MOAITextStyle::_setPadding ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	
+	// TODO: pasted from MOAIDynamicGlyphCache; find some central place for this
+	
+	if ( state.CheckParams ( 2, "NNNN", false )) {
+	
+		self->mPadding.mXMin = state.GetValue < float >( 2, 0.0f );
+		self->mPadding.mYMin = state.GetValue < float >( 3, 0.0f );
+		
+		self->mPadding.mXMax = state.GetValue < float >( 4, 0.0f );
+		self->mPadding.mYMax = state.GetValue < float >( 5, 0.0f );
+	}
+	else {
+	
+		float hPad = state.GetValue < float >( 2, 0.0f );
+		float vPad = state.GetValue < float >( 3, hPad );
+	
+		hPad *= 0.5f;
+		vPad *= 0.5f;
+		
+		self->mPadding.mXMin = -hPad;
+		self->mPadding.mYMin = -vPad;
+		
+		self->mPadding.mXMax = hPad;
+		self->mPadding.mYMax = vPad;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setScale
 	@text	Sets the scale of the style. The scale is applied to
 			any glyphs drawn using the style after the glyph set
 			has been selected by size.
@@ -161,7 +195,7 @@ int MOAITextStyle::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSize
+/**	@lua	setSize
 	@text	Sets or clears the style's size.
 	
 	@in		MOAITextStyle self
@@ -230,6 +264,7 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getSize",				_getSize },
 		{ "setColor",				_setColor },
 		{ "setFont",				_setFont },
+		{ "setPadding",				_setPadding },
 		{ "setScale",				_setScale },
 		{ "setSize",				_setSize },
 		{ NULL, NULL }

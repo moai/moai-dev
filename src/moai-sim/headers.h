@@ -53,7 +53,6 @@
 #include <moai-sim/MOAIJoystickSensor.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
-#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMesh.h>
@@ -79,6 +78,7 @@
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPathFinder.h>
 #include <moai-sim/MOAIPathTerrainDeck.h>
+#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAIPointerSensor.h>
 //#include <moai-sim/MOAIProfiler.h>
 //#include <moai-sim/MOAIProfilerAutoScope.h>
@@ -130,12 +130,12 @@
 
 // text stuff here for now
 #include <moai-sim/MOAIBitmapFontReader.h>
+#include <moai-sim/MOAIDynamicGlyphCache.h>
+#include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFreeTypeFontReader.h>
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIGlyphCache.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
-#include <moai-sim/MOAIGlyphCachePage.h>
 #include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>

@@ -13,7 +13,7 @@ class MOAIGlyph;
 //================================================================//
 // MOAIDraw
 //================================================================//
-/**	@name	MOAIDraw
+/**	@lua	MOAIDraw
 	@text	Singleton for performing immediate mode drawing operations.
 			See MOAIScriptDeck.
 */

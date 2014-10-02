@@ -16,7 +16,7 @@ class MOAICpSpace;
 //================================================================//
 // MOAILayer
 //================================================================//
-/**	@name	MOAILayer
+/**	@lua	MOAILayer
 	@text	Scene controls class.
 	
 	@const	SORT_NONE

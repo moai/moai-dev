@@ -4,21 +4,21 @@
 #ifndef	MOAISTATICGLYPHCACHE_H
 #define	MOAISTATICGLYPHCACHE_H
 
-#include <moai-sim/MOAIGlyphCacheBase.h>
+#include <moai-sim/MOAIGlyphCache.h>
 
 class MOAITexture;
 
 //================================================================//
 // MOAIStaticGlyphCache
 //================================================================//
-/**	@name	MOAIStaticGlyphCache
+/**	@lua	MOAIStaticGlyphCache
 	@text	This is the default implementation of a static glyph cache.
 			All is does is accept an image via setImage () and create
 			a set of textures from that image. It does not implement
 			getImage ().
 */
 class MOAIStaticGlyphCache :
-	public MOAIGlyphCacheBase {
+	public MOAIGlyphCache {
 protected:
 
 	ZLLeanArray < MOAITexture* > mTextures;
@@ -38,14 +38,12 @@ public:
 	bool				IsDynamic					();
 						MOAIStaticGlyphCache		();
 						~MOAIStaticGlyphCache		();
-	void				PlaceGlyph					( MOAIFont& font, MOAIGlyph& glyph );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				RemoveGlyph					( MOAIGlyph& glyph );
 	void				ReserveTextures				( u32 total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetImage					( MOAIFont& font, MOAIImage& image );
+	int					SetImage					( MOAIFont& font, MOAIImage& image );
 	void				SetTexture					( int id, MOAITexture * texture );
 };
 

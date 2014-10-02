@@ -308,15 +308,16 @@ string ZLVfsFileSystem::GetBasename ( const char* filename ) {
 }
 
 //----------------------------------------------------------------//
-string ZLVfsFileSystem::GetRelativePath ( char const* path ) {
+std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* base ) {
+
+	if ( !path ) return 0;
+
+	string workpath = base ? base : this->GetWorkingPath ();
 
 	int depth = 0;
 	int same;
 
-	if ( !path ) return 0;
-
 	string abspath = this->GetAbsoluteFilePath ( path );
-	string workpath = this->GetWorkingPath ();
 	
 	same = ComparePaths ( abspath.c_str (), workpath.c_str ());
 	if ( same == 0 ) {
@@ -325,7 +326,7 @@ string ZLVfsFileSystem::GetRelativePath ( char const* path ) {
 
 	// count the number of steps up in the current directory
 	for ( int i = same; workpath [ i ]; ++i ) {
-		if ( workpath [ i ] == '/' ) {
+		if ( base [ i ] == '/' ) {
 			depth++;
 		}
 	}

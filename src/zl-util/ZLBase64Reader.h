@@ -35,6 +35,7 @@ public:
 	void				Close					();
 	u32					GetCaps					();
 	size_t				GetCursor				();
+	static size_t		GetDecodedLength		( size_t encodedLength );
 	size_t				GetLength				();
 	bool				IsAtEnd					();
 	bool				Open					( ZLStream& stream );

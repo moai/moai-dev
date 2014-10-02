@@ -39,3 +39,4 @@ void AKUUntzPause ( bool pause ) {
 		MOAIUntzSystem::Get ().Resume ();
 	}
 }
+

@@ -18,7 +18,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setDrawCallback
+/**	@lua	setDrawCallback
 	@text	Sets the callback to be issued when draw events occur.
 			The callback's parameters are ( number index, number xOff, number yOff, number xScale, number yScale ).
 
@@ -34,7 +34,7 @@ int MOAIScriptDeck::_setDrawCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the model space dimensions of the deck's default rect.
 	
 	@in		MOAIScriptDeck self
@@ -53,7 +53,7 @@ int MOAIScriptDeck::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRectCallback
+/**	@lua	setRectCallback
 	@text	Sets the callback to be issued when the size of a deck item
 			needs to be determined.
 			The callback's parameters are ( number index ).
@@ -70,7 +70,7 @@ int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTotalRectCallback
+/**	@lua	setTotalRectCallback
 	@text	Sets the callback to be issued when the size of a deck item
 			needs to be determined.
 			The callback's parameters are ( ).

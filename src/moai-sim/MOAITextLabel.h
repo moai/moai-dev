@@ -18,7 +18,7 @@ class MOAIFont;
 //================================================================//
 // MOAITextLabel
 //================================================================//
-/**	@name	MOAITextLabel
+/**	@lua	MOAITextLabel
 	@text	<p>The text box manages styling, laying out and displaying text.
 			You can attach named styles to the text box to be applied to
 			the text using style escapes. You can also inline style
@@ -77,7 +77,7 @@ class MOAIFont;
 			<p>Finally, we iterate through all of the fonts used by the text
 			and instruct them to load and render any pending glyphs. If
 			the font is dynamic and has a valid implementation of MOAIFontReader
-			and MOAIGlyphCache attached to it then the glyphs will be rendered
+			and MOAIDynamicGlyphCache attached to it then the glyphs will be rendered
 			and placed in the cache.</p>
 			
 			<p>Once the glyphs have been rendered, we know their metrics and
@@ -171,6 +171,7 @@ protected:
 	static int			_setCurve				( lua_State* L );
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setHighlight			( lua_State* L );
+	static int			_setLineSnap			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );

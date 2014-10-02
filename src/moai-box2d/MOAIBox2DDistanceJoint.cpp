@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDampingRatio
+/**	@lua	getDampingRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
@@ -35,7 +35,7 @@ int MOAIBox2DDistanceJoint::_getDampingRatio ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFrequency
+/**	@lua	getFrequency
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
@@ -56,7 +56,7 @@ int MOAIBox2DDistanceJoint::_getFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLength
+/**	@lua	getLength
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
@@ -78,7 +78,7 @@ int MOAIBox2DDistanceJoint::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDampingRatio
+/**	@lua	setDampingRatio
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
@@ -102,7 +102,7 @@ int MOAIBox2DDistanceJoint::_setDampingRatio ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFrequency
+/**	@lua	setFrequency
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self
@@ -126,7 +126,7 @@ int MOAIBox2DDistanceJoint::_setFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLength
+/**	@lua	setLength
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DDistanceJoint self

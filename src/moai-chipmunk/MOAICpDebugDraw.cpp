@@ -123,7 +123,7 @@ static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool dr
 }
 
 //----------------------------------------------------------------//
-static u32 color_from_pointer(void *ptr) {
+static u32 color_from_pointer ( void *ptr ) {
 
 	unsigned long val = (long)ptr;
 	

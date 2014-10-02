@@ -12,7 +12,7 @@
 //================================================================//
 // MOAIAudioSampler
 //================================================================//
-/**	@name	MOAIAudioSampler
+/**	@lua	MOAIAudioSampler
 	@text	Audio sampler singleton
 */
 class MOAIAudioSampler :

@@ -7,6 +7,8 @@
 class MOAITextDesigner;
 class MOAITextLayout;
 class MOAITextStyle;
+class MOAITextStyleCache;
+class MOAITextStyleMap;
 class MOAITextStyler;
 class MOAITextStyleSpan;
 
@@ -61,6 +63,7 @@ private:
 	
 	MOAITextDesigner*		mDesigner;
 	MOAITextLayout*			mLayout;
+	MOAITextStyleCache*		mStyleCache;
 	MOAITextStyleMap*		mStyleMap;
 	
 	//----------------------------------------------------------------//
@@ -70,14 +73,14 @@ private:
 	void				BuildLayout					();
 	float				GetLayoutHeight				();
 	u32					NextChar					();
-	float				Snap						( float f );
+	float				Snap						( float f, float b );
 
 public:
 
 	GET ( u32, Index, mIdx )
 
 	//----------------------------------------------------------------//
-	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset );
+	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset );
 						MOAITextDesignParser		();
 	virtual				~MOAITextDesignParser		();
 	bool				More						();

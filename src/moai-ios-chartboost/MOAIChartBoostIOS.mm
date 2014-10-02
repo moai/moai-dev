@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	cacheInterstitial
+/**	@lua	cacheInterstitial
 	@text	Request that an interstitial ad be cached for later display.
 	
 	@out 	nil
@@ -24,7 +24,7 @@ int MOAIChartBoostIOS::_cacheInterstitial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasCachedInterstitial
+/**	@lua	hasCachedInterstitial
  @text	returns whether a cached ad is available
  
  @out 	bool	True, if an ad is cached.
@@ -40,7 +40,7 @@ int MOAIChartBoostIOS::_hasCachedInterstitial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize ChartBoost.
 	
 	@in		string	appId			Available in ChartBoost dashboard settings.
@@ -63,7 +63,7 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showInterstitial
+/**	@lua	showInterstitial
 	@text	Request an interstitial ad display if a cached ad is available.
 	
 	@out 	bool					True, if an ad is cached and will be displayed.

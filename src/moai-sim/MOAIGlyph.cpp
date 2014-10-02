@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
-#include <moai-sim/MOAIGlyphCachePage.h>
+#include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
@@ -12,34 +12,34 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetTexture ( &texture );
 	
 	MOAIQuadBrush glQuad;
 	
-	x += this->mBearingX * xScale;
-	y -= this->mBearingY * yScale;
+	x += ( this->mBearingX * xScale );
+	y -= ( this->mBearingY * yScale );
 
 	glQuad.SetVerts (
-		x,
-		y,
-		x + ( this->mWidth * xScale ),
-		y + ( this->mHeight * yScale )
+		x + ( padding.mXMin * xScale ),
+		y + ( padding.mYMin * yScale ),
+		x + (( this->mWidth + padding.mXMax ) * xScale ),
+		y + (( this->mHeight + padding.mYMax ) * yScale )
 	);
 	
 	float uScale = 1.0f / texture.GetWidth ();
 	float vScale = 1.0f / texture.GetHeight ();
 	
-	float u = this->mSrcX * uScale;
-	float v = this->mSrcY * vScale;
+	float u = ( this->mSrcX * uScale );
+	float v = ( this->mSrcY * vScale );
 	
 	glQuad.SetUVs (
-		u,
-		v,
-		u + ( this->mWidth * uScale ),
-		v + ( this->mHeight * vScale )
+		u + ( padding.mXMin * uScale ),
+		v + ( padding.mYMin * vScale ),
+		u + (( this->mWidth + padding.mXMax ) * uScale ),
+		v + (( this->mHeight + padding.mYMax ) * vScale )
 	);
 	glQuad.Draw ();
 }
@@ -93,11 +93,6 @@ ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
 	mPageID ( NULL_PAGE_ID ),
-	mWidth ( 0.0f ),
-	mHeight ( 0.0f ),
-	mAdvanceX ( 0.0f ),
-	mBearingX ( 0.0f ),
-	mBearingY ( 0.0f ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
 	mNext ( 0 ) {

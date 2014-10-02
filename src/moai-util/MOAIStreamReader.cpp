@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Detach the target stream. (This only detaches the target
 			from the formatter; it does not also close the target stream).
 	
@@ -24,7 +24,7 @@ int MOAIStreamReader::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openBase64
+/**	@lua	openBase64
 	@text	Open a base 64 formatted stream for reading (i.e. decode
 			bytes from base64).
 	
@@ -49,7 +49,7 @@ int MOAIStreamReader::_openBase64 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openDeflate
+/**	@lua	openDeflate
 	@text	Open a 'deflate' formatted stream for reading (i.e. decompress
 			bytes using the 'deflate' algorithm).
 	

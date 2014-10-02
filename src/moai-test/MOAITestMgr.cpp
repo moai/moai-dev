@@ -331,7 +331,7 @@ void MOAITestMgr::RunScript ( cc8* filename ) {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	int status = luaL_loadfile ( state, filename );
 	
-	if ( status ) {
+	if ( status == 0 ) {
 		state.PrintErrors ( ZLLog::CONSOLE, status );
 	}
 	else {

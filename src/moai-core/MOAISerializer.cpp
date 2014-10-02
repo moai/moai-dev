@@ -10,66 +10,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	exportToFile
-	@text	Exports the contents of the serializer to a file.
+// TODO: doxygen
+int MOAISerializer::_getObjectTables ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISerializer, "UU" );
 
-	@in		MOAISerializer self
-	@in		string filename
-	@out	nil
-*/
-int MOAISerializer::_exportToFile ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAISerializer, "US" )
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, true );
 	
-	self->SerializeToFile ( lua_tostring ( state, 2 ));
+	// user table
+	state.Push ();
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	exportToString
-	@text	Exports the contents of the serializer to a string.
-
-	@in		MOAISerializer self
-	@out	string result
-*/
-int MOAISerializer::_exportToString ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAISerializer, "U" )
+	// member table
+	object->PushMemberTable ( state );
 	
-	STLString retStr = self->SerializeToString ();
-	
-	lua_pushstring ( L, retStr.str() );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	serialize
-	@text	Adds a table or object to the serializer.
-
-	@overload
-
-		@in		MOAISerializer self
-		@in		table data				The table to serialize.
-		@out	nil
-	
-	@overload
-
-		@in		MOAISerializer self
-		@in		MOAILuaObject data		The object to serialize.
-		@out	nil
-*/
-int MOAISerializer::_serialize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAISerializer, "U" )
-
-	if ( state.IsType ( 2, LUA_TTABLE ) || state.IsType ( 2, LUA_TUSERDATA )) {
-		self->AddLuaReturn ( state, 2 );
+	// if the member table is empty, omit it
+	if ( !state.HasKeys ( -1 )) {
+		state.Pop ( 1 );
+		state.Push ();
 	}
 	
-	return 0;
+	// init table
+	lua_newtable ( state );
+	object->SerializeOut ( state, *self );
+
+	return 3;
 }
 
 //----------------------------------------------------------------//
-/**	@name	serializeToFile
+/**	@lua	serializeToFile
 	@text	Serializes the specified table or object to a file.
 
 	@overload
@@ -81,26 +48,50 @@ int MOAISerializer::_serialize ( lua_State* L ) {
 	@overload
 
 		@in		string filename			The file to create.
-		@in		MOAILuaObject data			The object to serialize.
+		@in		MOAILuaObject data		The object to serialize.
+		@out	nil
+	
+	@overload
+
+		@in		MOAISerializer self
+		@in		string filename			The file to create.
+		@in		table data				The table to serialize.
+		@out	nil
+	
+	@overload
+
+		@in		MOAISerializer self
+		@in		string filename			The file to create.
+		@in		MOAILuaObject data		The object to serialize.
 		@out	nil
 */
 int MOAISerializer::_serializeToFile ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	if ( !( state.IsType ( 1, LUA_TSTRING ))) return 0;
-	if ( !( state.IsType ( 2, LUA_TTABLE ) || state.IsType ( 2, LUA_TUSERDATA ))) return 0;
-
-	cc8* filename = state.GetValue < cc8* >( 1, "" );
-
-	MOAISerializer serializer;
-	serializer.AddLuaReturn ( state, 2 );
-	serializer.SerializeToFile ( filename );
 	
+	MOAISerializer defaultSerializer;
+	MOAISerializer* serializer = &defaultSerializer;
+	int base = 2;
+	
+	if ( state.GetTop () == 3 ) {
+		serializer = state.GetLuaObject < MOAISerializer >( 1, true );
+		if ( !serializer ) return 0;
+		base = 3;
+	}
+	
+	if ( !( state.IsType ( base - 1, LUA_TSTRING ))) return 0;
+	if ( !( state.IsType ( base, LUA_TTABLE ) || state.IsType ( base, LUA_TUSERDATA ))) return 0;
+	
+	cc8* filename = state.GetValue < cc8* >( base - 1, "" );
+
+	serializer->mRoot = serializer->AffirmMemberID ( state, base );
+	serializer->SerializeToFile ( filename );
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	serializeToString
+/**	@lua	serializeToString
 	@text	Serializes the specified table or object to a string.
 
 	@overload
@@ -110,63 +101,56 @@ int MOAISerializer::_serializeToFile ( lua_State* L ) {
 	
 	@overload
 
-		@in		MOAILuaObject data			The object to serialize.
+		@in		MOAILuaObject data		The object to serialize.
+		@out	string serialized		The serialized string.
+
+	@overload
+
+		@in		MOAISerializer self
+		@in		table data				The table to serialize.
+		@out	string serialized		The serialized string.
+	
+	@overload
+
+		@in		MOAISerializer self
+		@in		MOAILuaObject data		The object to serialize.
 		@out	string serialized		The serialized string.
 */
 int MOAISerializer::_serializeToString ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	if ( !( state.IsType ( 1, LUA_TTABLE ) || state.IsType ( 1, LUA_TUSERDATA ))) return 0;
+	
+	MOAISerializer defaultSerializer;
+	MOAISerializer* serializer = &defaultSerializer;
+	int base = 1;
+	
+	if ( state.GetTop () == 3 ) {
+		serializer = state.GetLuaObject < MOAISerializer >( 1, true );
+		if ( !serializer ) return 0;
+		base = 2;
+	}
+	
+	if ( !( state.IsType ( base, LUA_TTABLE ) || state.IsType ( base, LUA_TUSERDATA ))) return 0;
 
-	MOAISerializer serializer;
-	serializer.AddLuaReturn ( state, 1 );
-	STLString result = serializer.SerializeToString ();
+	serializer->mRoot = serializer->AffirmMemberID ( state, base );
+	STLString result = serializer->SerializeToString ();
 
 	lua_pushstring ( state, result );
 
 	return 1;
 }
 
+//----------------------------------------------------------------//
+int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISerializer, "U" );
+	
+	self->mBase64 = state.GetValue < bool >( 2, false );
+	return  0;
+}
+
 //================================================================//
 // MOAISerializer
 //================================================================//
-
-//----------------------------------------------------------------//
-static STLString _escapeString ( cc8* str ) {
-	
-	u32 len = ( u32 )strlen ( str );
-
-	STLString outStr;
-	outStr.reserve ( len * 2 );
-
-	for ( u32 i = 0; i < len; ++i ) {
-		char c = str [ i ];
-		if ( c == '\\' ) {
-			outStr.append ( "\\\\" );
-		}
-		else if ( c == '"' ) {
-			outStr.append ( "\\\"" );
-		}
-		else {
-			outStr.push_back ( c );
-		}
-	}
-	return outStr;
-}
-
-//----------------------------------------------------------------//
-void MOAISerializer::AddLuaReturn ( MOAILuaObject* object ) {
-
-	MOAIScopedLuaState state = object->GetSelf ();
-	return this->AddLuaReturn ( state, -1 );
-}
-
-//----------------------------------------------------------------//
-void MOAISerializer::AddLuaReturn ( MOAILuaState& state, int idx ) {
-
-	ObjID memberID = this->AffirmMemberID ( state, idx );
-	this->mReturnList.push_back ( memberID );
-}
 
 //----------------------------------------------------------------//
 MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
@@ -178,10 +162,13 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object
 //----------------------------------------------------------------//
 MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 
-	idx = state.AbsIndex ( idx );
-	ObjID memberID = ( ObjID )lua_topointer ( state, idx );
+	if ( !( state.IsType ( idx, LUA_TUSERDATA ) || state.IsType ( idx, LUA_TTABLE ))) return NULL_OBJ_ID;
 
-	// bail if the table's already been added
+	idx = state.AbsIndex ( idx );
+	ObjID memberID = this->GetID ( state, idx );
+
+	// bail if the table's already been added (or is empty)
+	if ( this->mEmpties.contains ( memberID )) return NULL_OBJ_ID;
 	if ( this->mObjectMap.contains ( memberID )) return memberID;
 	if ( this->mTableMap.contains ( memberID )) return memberID;
 
@@ -207,14 +194,27 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		entry.mObject = object;
 		entry.mClassName = classname;
 		
-		this->mPending.push_back ( memberID );
+		MOAISerializerObjectInfo& objectInfo = this->mObjectInfoTable [ memberID ];
 		
-		// TODO
-		if ( !object->IsSingleton ()) {
-			object->PushMemberTable ( state );
-			this->AffirmMemberID ( state, -1 );
-			state.Pop ( 1 );
+		u32 top = state.GetTop ();
+		this->PushLuaUserdata ( state );
+		
+		if ( state.GetFieldWithType ( -1, "getObjectTables", LUA_TFUNCTION )) {
+		
+			lua_pushvalue ( state, -2 );
+			lua_pushvalue ( state, idx );
+			lua_pushstring ( state, classname );
+			int status = state.DebugCall ( 3, 3 );
+			
+			if ( status == 0 ) {
+				objectInfo.mUserTableID		= this->AffirmMemberID ( state, -3 );
+				objectInfo.mMemberTableID	= this->AffirmMemberID ( state, -2 );
+				objectInfo.mInitTableID		= this->AffirmMemberID ( state, -1 );
+				state.Pop ( 3 );
+			}
 		}
+		state.Pop ( 1 );
+		top = state.GetTop ();
 	}
 	else if ( state.IsType ( idx, LUA_TTABLE )) {
 		
@@ -233,14 +233,103 @@ void MOAISerializer::Clear () {
 
 	MOAISerializerBase::Clear ();
 
-	this->mPending.clear ();
-	this->mReturnList.clear ();
+	this->mObjectInfoTable.clear ();
+}
+
+//----------------------------------------------------------------//
+STLString MOAISerializer::EscapeString ( cc8* str, size_t len ) {
+
+	STLString outStr;
+	outStr.reserve ( len * 2 );
+
+	outStr.append ( "\'" );
+
+	for ( u32 i = 0; i < len; ++i ) {
+		
+		char c = str [ i ];
+		
+		if (( c >= 32 ) && ( c <= 126 )) {
+		
+			switch ( c ) {
+				case '\\':
+					outStr.append ( "\\\\" );
+					break;
+				case '"':
+					outStr.append ( "\\\"" );
+					break;
+				case '\'':
+					outStr.append ( "\\\'" );
+					break;
+				default:
+					outStr.push_back ( c );
+			}
+        }
+		else {
+		
+			if ( this->mBase64 ) {
+			
+				STLString base64;
+				base64.base_64_encode ( str, len );
+				
+				outStr = "";
+				outStr.write ( "base64 ( '%s' )", base64.c_str ());
+				
+				return outStr;
+			}
+			int b = ( int )(( u8* )str )[ i ];
+			outStr.write ( "\\%03d", b );
+		}
+	}
+
+	outStr.append ( "\'" );
+	return outStr;
 }
 
 //----------------------------------------------------------------//
 cc8* MOAISerializer::GetDeserializerTypeName () {
 
 	return "MOAIDeserializer";
+}
+
+//----------------------------------------------------------------//
+bool MOAISerializer::IsSimpleStringKey ( cc8* str ) {
+
+	for ( u32 i = 0; str [ i ]; ++i ) {
+		u8 c = str [ i ];
+		bool isAlpha		= (( c >= 'a' ) && ( c <= 'z' )) || (( c >= 'A' ) && ( c <= 'Z' ));
+		bool isNumeric		= (( c >= '0' ) && ( c <= '9' ));
+		
+		if (( i == 0 ) && !isAlpha ) return false;
+		if ( !( isAlpha || isNumeric )) return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+MOAISerializer::MOAISerializer () :
+	mBase64 ( true ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAISerializerBase )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAISerializer::~MOAISerializer () {
+}
+
+//----------------------------------------------------------------//
+void MOAISerializer::PrintObjectID ( ZLStream& stream, cc8* format, ObjID objID ) {
+
+	char buffer [ 32 ];
+
+	if ( objID != NULL_OBJ_ID ) {
+		sprintf ( buffer, "objects [ 0x%02X ]", objID );
+	}
+	else {
+		sprintf ( buffer, "nil" );
+	}
+	stream.Print ( format, ( cc8* )buffer );
 }
 
 //----------------------------------------------------------------//
@@ -259,9 +348,10 @@ void MOAISerializer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAISerializer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "exportToFile",		_exportToFile },
-		{ "exportToString",		_exportToString },
-		{ "serialize",			_serialize },
+		{ "getObjectTables",		_getObjectTables },
+		{ "serializeToFile",		_serializeToFile },
+		{ "serializeToString",		_serializeToString },
+		{ "setBase64Enabled",		_setBase64Enabled },
 		{ NULL, NULL }
 	};
 	
@@ -291,7 +381,8 @@ void MOAISerializer::SerializeToFile ( cc8* filename ) {
 void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	
 	stream.Print ( "%s\n", this->GetFileMagic ());
-	stream.Print ( "local serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local deserializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local base64 = MOAIDeserializer.base64Decode\n" );
 	
 	stream.Print ( "\n" );
 	
@@ -307,19 +398,11 @@ void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	// call the initializer
 	stream.Print ( "init ( objects )\n" );
 	
-	this->WriteReturnList ( stream );
-}
-
-//----------------------------------------------------------------//
-MOAISerializer::MOAISerializer () {
+	// and return the root
+	stream.Print ( "\n" );
+	stream.Print ( "--Returning Root\n" );
 	
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAISerializerBase )
-	RTTI_END
-}
-
-//----------------------------------------------------------------//
-MOAISerializer::~MOAISerializer () {
+	this->PrintObjectID ( stream, "return %s\n", this->mRoot );
 }
 
 //----------------------------------------------------------------//
@@ -353,7 +436,7 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 		cc8* classname = entry.mClassName;
 		
 		if ( !object->IsSingleton ()) {
-			stream.Print ( "\t[ 0x%08X ] = serializer:registerObjectID ( %s.new (), 0x%08X ),\n", id, classname, id );
+			stream.Print ( "\t[ 0x%02X ] = deserializer:registerObjectID ( deserializer:createObject ( \'%s\' ), 0x%02X ),\n", id, classname, id );
 		}
 	}
 	stream.Print ( "\n" );
@@ -362,179 +445,33 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 //----------------------------------------------------------------//
 void MOAISerializer::WriteObjectInits ( ZLStream& stream ) {
 	
-	if ( !this->mPending.size ()) return;
-	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-	while ( this->mPending.size ()) {
+	ObjectMapIt objectMapIt = this->mObjectMap.begin ();
+	for ( ; objectMapIt != this->mObjectMap.end (); ++objectMapIt ) {
 		
-		ObjID id = this->mPending.front ();
-		this->mPending.pop_front ();
+		ObjID id = objectMapIt->first;
+		MOAISerializerObjectEntry& entry = objectMapIt->second;
 		
-		if ( !this->mObjectMap.contains ( id )) continue;
-		MOAISerializerObjectEntry& entry = this->mObjectMap [ id ];
-		
-		MOAILuaObject* object = entry.mObject;
 		cc8* classname = entry.mClassName;
 		
-		stream.Print ( "\t--%s\n", classname );
-		stream.Print ( "\tserializer:initObject (\n" );
-		
+		MOAILuaObject* object = entry.mObject;
 		if ( object->IsSingleton ()) {
-			stream.Print ( "\t\t%s,\n", classname );
-			stream.Print ( "\t\tnil,\n" );
+			stream.Print ( "\tdeserializer:initObject ( %s, \'%s\', ", classname, classname );
 		}
 		else {
-			stream.Print ( "\t\tobjects [ 0x%08X ],\n", id );
-			
-			object->PushMemberTable ( state );
-			stream.Print ( "\t\tobjects [ 0x%08X ],\n", this->AffirmMemberID ( state, -1 ));
-			state.Pop ( 1 );
+			stream.Print ( "\tdeserializer:initObject ( objects [ 0x%02X ], \'%s\', ", id, classname );
 		}
 		
-		// this should fill the table for the class
-		lua_newtable ( state );
-		object->SerializeOut ( state, *this );
+		MOAISerializerObjectInfo& objectInfo = this->mObjectInfoTable [ id ];
 		
-		stream.Print ( "\t\t{" );
+		this->PrintObjectID ( stream, "%s, ", objectInfo.mUserTableID );
+		this->PrintObjectID ( stream, "%s, ", objectInfo.mMemberTableID );
+		this->PrintObjectID ( stream, "%s", objectInfo.mInitTableID );
 		
-		if ( this->WriteTable ( stream, state, -1, 3 )) {
-			stream.Print ( "\t\t}\n" );
-		}
-		else {
-			stream.Print ( "}\n" );
-		}
-		state.Pop ( 1 );
-		
-		stream.Print ( "\t)\n\n" );
+		stream.Print ( objectInfo.mUserTableID == NULL_OBJ_ID ? ")" : " )" );
+		stream.Print ( " --%s\n", classname );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAISerializer::WriteReturnList ( ZLStream& stream ) {
-
-	if ( !this->mReturnList.size ()) return;
-	
-	stream.Print ( "\n" );
-	stream.Print ( "--Returning Tables\n" );
-	stream.Print ( "return " );
-	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
-	ReturnListIt returnListIt = this->mReturnList.begin ();
-	for ( ; returnListIt != this->mReturnList.end (); ++returnListIt ) {
-		ObjID id = *returnListIt;
-		
-		if ( returnListIt != this->mReturnList.begin ()) {
-			stream.Print ( ", " );
-		}
-		
-		if ( this->mObjectMap.contains ( id )) {
-		
-			MOAISerializerObjectEntry& entry = this->mObjectMap [ id ];
-			
-			MOAILuaObject* object = entry.mObject;
-			cc8* classname = entry.mClassName;
-			
-			if ( object->IsSingleton ()) {
-				stream.Print ( "%s", classname );
-				id = 0;
-			}
-		}
-		
-		if ( id ) {
-			stream.Print ( "objects [ 0x%08X ]", id );
-		}
-	}
-	stream.Print ( "\n" );
-}
-
-//----------------------------------------------------------------//
-u32 MOAISerializer::WriteTable ( ZLStream& stream, MOAILuaState& state, int idx, u32 tab ) {
-
-	STLString indent;
-	
-	for ( u32 i = 0; i < tab; ++i ) {
-		indent.append ( "\t" );
-	}
-	
-	u32 count = 0;
-	u32 itr = state.PushTableItr ( idx );
-	while ( state.TableItrNext ( itr )) {
-		
-		int keyType = lua_type ( state, -2 );
-		int valType = lua_type ( state, -1 );
-		cc8* keyName = lua_tostring ( state, -2 );
-		
-		switch ( valType ) {
-			case LUA_TNONE:
-			case LUA_TNIL:
-			case LUA_TFUNCTION:
-			case LUA_TUSERDATA:
-			case LUA_TTHREAD:
-				continue;
-		}
-		
-		if ( count == 0 ) {
-			stream.Print ( "\n" );
-		}
-		
-		switch ( keyType ) {
-		
-			case LUA_TSTRING: {
-				stream.Print ( "%s[ \"%s\" ] = ", indent.c_str (), keyName );
-				break;
-			}
-			case LUA_TNUMBER: {
-				stream.Print ( "%s[ %s ]\t= ", indent.c_str (), keyName );
-				break;
-			}
-		};
-		
-		switch ( valType ) {
-			
-			case LUA_TBOOLEAN: {
-				int value = lua_toboolean ( state, -1 );
-				cc8* str = ( value ) ? "true": "false";
-				stream.Print ( "%s,\n", str );
-				break;
-			}
-			case LUA_TTABLE: {
-				
-				ObjID tableID = ( ObjID )lua_topointer ( state, -1 );
-				if ( this->mTableMap.contains ( tableID )) {
-					stream.Print ( "objects [ 0x%08X ],\n", tableID );
-				}
-				else {
-					stream.Print ( "{" );
-					if ( this->WriteTable ( stream, state, -1, tab + 1 )) {
-						stream.Print ( "%s},\n", indent.c_str ());
-					}
-					else {
-						stream.Print ( "},\n" );
-					}
-				}
-				break;
-			}
-			case LUA_TSTRING: {
-				STLString str = _escapeString ( lua_tostring ( state, -1 ));
-				stream.Print ( "\"%s\",\n", str.c_str ());
-				break;
-			}
-			case LUA_TNUMBER: {
-				stream.Print ( "%s,\n", lua_tostring ( state, -1 ));
-				break;
-			}
-			case LUA_TLIGHTUSERDATA: {
-				stream.Print ( "%p,\n", lua_touserdata ( state, -1 ));
-				break;
-			}
-		};
-		
-		++count;
-	}
-	
-	return count;
 }
 
 //----------------------------------------------------------------//
@@ -547,7 +484,7 @@ void MOAISerializer::WriteTableDecls ( ZLStream& stream ) {
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
 		ObjID tableID = tableIt->first;
-		stream.Print ( "\t[ 0x%08X ] = {},\n", tableID );
+		stream.Print ( "\t[ 0x%02X ] = {},\n", tableID );
 	}
 	
 	stream.Print ( "\n" );
@@ -568,15 +505,20 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 			case LUA_TNONE:
 			case LUA_TNIL:
 			case LUA_TFUNCTION:
-			case LUA_TUSERDATA:
 			case LUA_TTHREAD:
 				continue;
 		}
 		
+		// TODO: warn about unsupported key types
 		switch ( keyType ) {
 		
 			case LUA_TSTRING: {
-				stream.Print ( "\t%s [ \"%s\" ] = ", prefix, keyName );
+				if ( MOAISerializer::IsSimpleStringKey ( keyName )) {
+					stream.Print ( "\t%s.%s = ", prefix, keyName );
+				}
+				else {
+					stream.Print ( "\t%s [ \'%s\' ] = ", prefix, keyName );
+				}
 				break;
 			}
 			case LUA_TNUMBER: {
@@ -594,15 +536,17 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TTABLE: {
-				ObjID tableID = ( ObjID )lua_topointer ( state, -1 );
+				ObjID tableID = this->GetID ( state, -1 );
 				if ( this->mTableMap.contains ( tableID )) {
-					stream.Print ( "objects [ 0x%08X ]\n", tableID );
+					stream.Print ( "objects [ 0x%02X ]\n", tableID );
 				}
 				break;
 			}
 			case LUA_TSTRING: {
-				STLString str = _escapeString ( lua_tostring ( state, -1 ));
-				stream.Print ( "\"%s\"\n", str.c_str ());
+				size_t len;
+				cc8* rawStr = lua_tolstring ( state, -1, &len );
+				STLString str = MOAISerializer::EscapeString ( rawStr, len );
+				stream.Print ( "%s\n", str.c_str ());
 				break;
 			}
 			case LUA_TNUMBER: {
@@ -612,7 +556,7 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 			case LUA_TUSERDATA: {
 				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1, false );
 				ObjID instanceID = this->GetID ( object );
-				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
+				stream.Print ( "objects [ 0x%02X ]\n", instanceID );
 				break;
 			}
 			case LUA_TLIGHTUSERDATA: {
@@ -641,7 +585,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
 		
 		ObjID tableID = tableIt->first;
-		stream.Print ( "\ttable = objects [ 0x%08X ]\n", tableID );
+		stream.Print ( "\ttable = objects [ 0x%02X ]\n", tableID );
 		
 		MOAILuaStrongRef& tableRef = tableIt->second;
 		state.Push ( tableRef );

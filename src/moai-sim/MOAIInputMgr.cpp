@@ -67,8 +67,8 @@ void MOAIInputMgr::EnqueueCompassEvent ( u8 deviceID, u8 sensorID, float heading
 void MOAIInputMgr::EnqueueJoystickEvent( u8 deviceID, u8 sensorID, float x, float y ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::JOYSTICK )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::JOYSTICK );
-		MOAIJoystickSensor::WriteEvent ( this->mInput, x, y );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIJoystickSensor::WriteEvent ( this->mEventQueue, x, y );
 	}
 }
 
@@ -258,11 +258,11 @@ void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDeviceExtendedName ( u8 deviceID, cc8* nameExtended ) {
+void MOAIInputMgr::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
-		device->SetExtendedName(nameExtended);
+		device->SetHardwareInfo ( hardwareInfo );
 	}
 }
 

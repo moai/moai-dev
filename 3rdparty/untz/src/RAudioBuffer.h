@@ -11,7 +11,7 @@
 
 #include <vector>
 
-#if defined(__QNX__) | defined(__linux__) | defined(__MINGW32__)
+#if defined(__QNX__) | defined(__linux__)
 #include <string.h>
 #endif
 

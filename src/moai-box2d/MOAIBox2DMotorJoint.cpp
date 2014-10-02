@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setLinearOffset
+/**	@lua	setLinearOffset
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -43,7 +43,7 @@ int MOAIBox2DMotorJoint::_setLinearOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLinearOffset
+/**	@lua	getLinearOffset
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -71,7 +71,7 @@ int MOAIBox2DMotorJoint::_getLinearOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngularOffset
+/**	@lua	setAngularOffset
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -95,7 +95,7 @@ int	MOAIBox2DMotorJoint::_setAngularOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngularOffset
+/**	@lua	getAngularOffset
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -116,7 +116,7 @@ int	MOAIBox2DMotorJoint::_getAngularOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxForce
+/**	@lua	setMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -141,7 +141,7 @@ int	MOAIBox2DMotorJoint::_setMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxForce
+/**	@lua	getMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMotorJoint self
@@ -164,7 +164,7 @@ int	MOAIBox2DMotorJoint::_getMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setMaxTorque
+/** @lua	setMaxTorque
     @text	See Box2D documentation.
     
 	@in		MOAIBox2DMotorJoint self
@@ -190,7 +190,7 @@ int	MOAIBox2DMotorJoint::_setMaxTorque ( lua_State* L ) {
 }
  
 //----------------------------------------------------------------//
-/** @name	getMaxTorque
+/** @lua	getMaxTorque
     @text	See Box2D documentation.
     
 	@in		MOAIBox2DMotorJoint self
@@ -213,7 +213,7 @@ int MOAIBox2DMotorJoint::_getMaxTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	setCorrectionFactor
+/** @lua	setCorrectionFactor
     @text	See Box2D documentation.
     
 	@in		MOAIBox2DMotorJoint self
@@ -237,7 +237,7 @@ int MOAIBox2DMotorJoint::_setCorrectionFactor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	getCorrectionFactor
+/** @lua	getCorrectionFactor
     @text	See Box2D documentation.
     
 	@in		MOAIBox2DMotorJoint self

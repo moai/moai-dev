@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	fillAlpha
+/**	@lua	fillAlpha
 	@text	Set all tiles to a single alpha
 
 	@in		MOAIGridFancy self
@@ -28,7 +28,7 @@ int MOAIGridFancy::_fillAlpha ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillScale
+/**	@lua	fillScale
 	@text	Set all tiles to a single scale
 
 	@in		MOAIGridFancy self
@@ -46,7 +46,7 @@ int MOAIGridFancy::_fillScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillColor
+/**	@lua	fillColor
 	@text	Set all tiles to a single color
 
 	@in		MOAIGridFancy self
@@ -64,7 +64,7 @@ int MOAIGridFancy::_fillColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAlpha
+/**	@lua	getAlpha
 	@text	Returns the alpha channel of a given tile.
 
 	@in		MOAIGridFancy self
@@ -84,7 +84,7 @@ int MOAIGridFancy::_getAlpha ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getColor
+/**	@lua	getColor
 	@text	Returns the color index of a given tile.
 
 	@in		MOAIGridFancy self
@@ -104,7 +104,7 @@ int MOAIGridFancy::_getColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScale
+/**	@lua	getScale
 	@text	Returns the scale multiplier of a given tile.
 
 	@in		MOAIGridFancy self
@@ -124,7 +124,7 @@ int MOAIGridFancy::_getScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPalette
+/**	@lua	getPalette
 	@text	Returns the color components of a given palette index
 
 	@in		MOAIGridFancy self
@@ -148,7 +148,7 @@ int MOAIGridFancy::_getPalette ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRowAlpha
+/**	@lua	setRowAlpha
 	@text	Initializes a grid row's alpha values given a variable argument list of values.
 
 	@in		MOAIGridFancy self
@@ -172,7 +172,7 @@ int MOAIGridFancy::_setRowAlpha ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRowScale
+/**	@lua	setRowScale
 	@text	Initializes a grid row's scale values given a variable argument list of values.
 
 	@in		MOAIGridFancy self
@@ -196,7 +196,7 @@ int MOAIGridFancy::_setRowScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRowColor
+/**	@lua	setRowColor
 	@text	Initializes a grid row's color values given a variable argument list of values.
 
 	@in		MOAIGridFancy self
@@ -220,7 +220,7 @@ int MOAIGridFancy::_setRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAlpha
+/**	@lua	setAlpha
 	@text	Sets the alpha of a given tile
 
 	@in		MOAIGridFancy self
@@ -242,7 +242,7 @@ int MOAIGridFancy::_setAlpha ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor
+/**	@lua	setColor
 	@text	Sets the color index of a given tile
 
 	@in		MOAIGridFancy self
@@ -264,7 +264,7 @@ int MOAIGridFancy::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setScale
+/**	@lua	setScale
 	@text	Sets the scale of a given tile
 
 	@in		MOAIGridFancy self
@@ -286,7 +286,7 @@ int MOAIGridFancy::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPalette
+/**	@lua	setPalette
 	@text	Sets the color components for a given palette entry
 
 	@in		MOAIGridFancy self
@@ -340,7 +340,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			float scale = this->GetScale ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			if (color) {
 				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );

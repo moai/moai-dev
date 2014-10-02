@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorRect.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -11,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
+int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * 4 );
 
@@ -32,13 +33,15 @@ void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 2 ]);
 	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 3 ]);
 
-	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), 4 );
+	tessAddContour ( tess->mTess, 2, verts, sizeof ( ZLVec2D ), 4 );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
+int MOAIVectorRect::AddStrokeContours ( SafeTesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( tess );
+	return MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//

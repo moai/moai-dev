@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setQuad
+/**	@lua	setQuad
 	@text	Set model space quad. Vertex order is clockwise from
 			upper left (xMin, yMax)
 	
@@ -51,7 +51,7 @@ int MOAIGfxQuad2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the model space dimensions of the quad.
 	
 	@in		MOAIGfxQuad2D self
@@ -76,7 +76,7 @@ int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVQuad
+/**	@lua	setUVQuad
 	@text	Set the UV space dimensions of the quad. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -111,7 +111,7 @@ int MOAIGfxQuad2D::_setUVQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVRect
+/**	@lua	setUVRect
 	@text	Set the UV space dimensions of the quad.
 	
 	@in		MOAIGfxQuad2D self
@@ -135,7 +135,7 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transform
+/**	@lua	transform
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
 	@in		MOAIGfxQuad2D self
@@ -155,7 +155,7 @@ int MOAIGfxQuad2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transformUV
+/**	@lua	transformUV
 	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
 	
 	@in		MOAIGfxQuad2D self

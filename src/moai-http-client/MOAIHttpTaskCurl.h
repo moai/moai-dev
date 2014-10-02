@@ -18,7 +18,7 @@ extern "C" {
 //================================================================//
 // MOAIHttpTaskCurl
 //================================================================//
-/**	@name	MOAIHttpTaskCurl
+/**	@lua	MOAIHttpTaskCurl
 	@text	Implementation of MOAIHttpTask based on libcurl.
 */
 class MOAIHttpTaskCurl :

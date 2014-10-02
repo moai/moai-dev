@@ -81,6 +81,12 @@ void MOAILuaRefTable::PushRef ( MOAILuaState& state, int refID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRefTable::PushRefTable ( MOAILuaState& state ) {
+
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
+}
+
+//----------------------------------------------------------------//
 int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 
 	assert ( this->mTableID != LUA_NOREF );
