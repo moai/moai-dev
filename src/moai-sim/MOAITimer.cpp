@@ -498,6 +498,7 @@ void MOAITimer::OnLoop () {
 
 //----------------------------------------------------------------//
 void MOAITimer::OnStart () {
+	MOAIAction::OnStart ();
 
 	if( this->mDirection > 0.0f ) {
 		this->mTime = this->mStartTime;

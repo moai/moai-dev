@@ -274,8 +274,13 @@ util.replaceInFiles ({
 	},
 })
 
-os.execute ( string.format ( 'android update project --name %s --target %s --path %s',
-	config.PROJECT_NAME,
+-- TODO: these should come from a table of projects since we might have any number based on the config
+os.execute ( string.format ( 'android update project --target %s --path %s',
 	tostring ( config.ANDROID_PLATFORM_TARGET ),
 	MOAI_PROJECT_PATH
+))
+
+os.execute ( string.format ( 'android update project --target %s --path %s',
+	tostring ( config.ANDROID_PLATFORM_TARGET ),
+	ANT_DIR .. 'facebook'
 ))
