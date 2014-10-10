@@ -227,7 +227,11 @@ void AKURunData ( void* data, size_t size, int dataType, int compressed ) {
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
 
-	if ( !ZLFileSys::CheckFileExists ( filename )) return;
+	if ( !ZLFileSys::CheckFileExists ( filename ))
+	{
+		ZLLog::PrintFile ( ZLLog::CONSOLE, "Script does not exist: '%s'\n", filename );
+		return;
+	}
 
 	int status;
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
