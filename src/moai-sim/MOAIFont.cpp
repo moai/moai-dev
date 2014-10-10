@@ -484,6 +484,8 @@ void MOAIFont::Init ( cc8* filename ) {
 
 	if ( ZLFileSys::CheckFileExists ( filename, true )) {
 		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
+	} else {
+		ZLLog::PrintFile ( ZLLog::CONSOLE, "Font file does not exist: '%s'\n", filename );
 	}
 }
 
@@ -540,18 +542,22 @@ void MOAIFont::ProcessGlyphs () {
 		MOAIGlyph* glyphs = glyphSet.mGlyphs;
 		MOAIGlyph* pendingGlyphs = glyphSet.mPending;
 		
-		// all pending glyphs will be moved to the processed glyphs list
-		// so clear the pending glyphs list
-		glyphSet.mPending = 0;
 		
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
 		
 		if ( !fontIsOpen ) {
-			this->mReader->OpenFont ( *this );
-			fontIsOpen = true;
+			fontIsOpen = this->mReader->OpenFont ( *this );		
 		}
-		
+
+		if ( !fontIsOpen ) {
+			return;		
+		}
+
+		// all pending glyphs will be moved to the processed glyphs list
+		// so clear the pending glyphs list
+		glyphSet.mPending = 0;
+
 		// get the face metrics
 		this->mReader->SetFaceSize ( glyphSet.mSize );
 		this->mReader->GetFaceMetrics ( glyphSet );
@@ -585,18 +591,19 @@ void MOAIFont::RebuildKerning () {
 
 	if ( !this->mReader ) return;
 	if ( !this->mGlyphSets.size ()) return;
+
+	if ( this->mReader->OpenFont ( *this ) )
+	{
+		if ( this->mReader->HasKerning ()) {
 	
-	this->mReader->OpenFont ( *this );
-	
-	if ( this->mReader->HasKerning ()) {
-	
-		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
-		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
-			MOAIGlyphSet& glyphSet = glyphSetsIt->second;
-			this->RebuildKerning ( glyphSet );
+			MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+			for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+				MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+				this->RebuildKerning ( glyphSet );
+			}
 		}
+		this->mReader->CloseFont ();
 	}
-	this->mReader->CloseFont ();
 }
 
 //----------------------------------------------------------------//
@@ -606,12 +613,13 @@ void MOAIFont::RebuildKerning ( float size ) {
 	if ( !this->mReader->HasKerning ()) return;
 	if ( !this->mGlyphSets.contains ( size )) return;
 	
-	this->mReader->OpenFont ( *this );
-	
-	MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
-	this->RebuildKerning ( glyphSet );
-	
-	this->mReader->CloseFont ();
+	if ( this->mReader->OpenFont ( *this ) )
+	{
+		MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
+		this->RebuildKerning ( glyphSet );
+
+		this->mReader->CloseFont ();
+	}	
 }
 
 //----------------------------------------------------------------//

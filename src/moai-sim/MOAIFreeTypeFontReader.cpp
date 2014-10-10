@@ -72,6 +72,10 @@ void MOAIFreeTypeFontReader::GetFaceMetrics ( MOAIGlyphSet& glyphSet ) {
 //----------------------------------------------------------------//
 bool MOAIFreeTypeFontReader::GetKernVec ( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec ) {
 
+	assert ( this->mFace );
+	if ( !this->mFace ) 
+		return false;
+
 	kernVec.mX = 0.0f;
 	kernVec.mY = 0.0f;
 
@@ -90,6 +94,9 @@ bool MOAIFreeTypeFontReader::GetKernVec ( MOAIGlyph& glyph0, MOAIGlyph& glyph1, 
 //----------------------------------------------------------------//
 bool MOAIFreeTypeFontReader::HasKerning () {
 
+	assert ( this->mFace );
+	if ( !this->mFace ) 
+		return false;
 	return ( FT_HAS_KERNING ( this->mFace ) != 0 );
 }
 
@@ -109,19 +116,27 @@ MOAIFreeTypeFontReader::~MOAIFreeTypeFontReader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::OpenFont ( MOAIFont& font ) {
+bool MOAIFreeTypeFontReader::OpenFont ( MOAIFont& font ) {
 
 	assert ( !this->mLibrary );
 
 	cc8* filename = font.GetFilename ();
+	if ( filename[0] == '\0' ) {
+		return false;
+	}
 
 	FT_Init_FreeType( &this->mLibrary );
 
 	if ( FT_New_Face( this->mLibrary, filename, 0, &this->mFace )) {
 		FT_Done_FreeType ( this->mLibrary );
-		fprintf ( stderr, "Error loading font: %s\n", filename );
-		return;
+
+		assert ( !this->mFace );
+		this->mLibrary = 0;
+
+		ZLLog::PrintFile ( ZLLog::CONSOLE, "Error loading font: %s", filename );
+		return false;
 	}
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -141,6 +156,11 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	bool useCache = glyphCache && glyphCache->IsDynamic ();
 
 	FT_Face face = this->mFace;
+
+
+	assert ( this->mFace );
+	if ( !face ) 
+		return;
 
 	u32 index = FT_Get_Char_Index ( face, glyph.mCode );
 	FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
@@ -197,6 +217,10 @@ void MOAIFreeTypeFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer&
 
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::SetFaceSize ( float size ) {
+
+	assert ( this->mFace );
+	if ( !this->mFace ) 
+		return;
 
 	FT_Set_Char_Size ( this->mFace, 0, ( u32 )( size * 64.0f ), DPI, DPI );
 
