@@ -60,6 +60,9 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 				fread ( &this->mCDAddr, 4, 1, file );
 				fread ( &this->mCommentLength, 2, 1, file );
 				
+				this->mDataOffset = ( cursor + i ) - ( this->mCDSize + this->mCDAddr ); // saved for use in loading the entry files
+				this->mCDAddr += this->mDataOffset;
+
 				return 0;
 			}
 		}
@@ -74,7 +77,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file ) {
 //================================================================//
 	
 //----------------------------------------------------------------//
-int ZLVfsZipEntryHeader::Read ( FILE* file ) {
+int ZLVfsZipEntryHeader::Read ( FILE* file, u32 dataOffset ) {
 	
 	fread ( &this->mSignature, 4, 1, file );
 	
@@ -97,6 +100,8 @@ int ZLVfsZipEntryHeader::Read ( FILE* file ) {
 	fread ( &this->mExternalAttributes, 4, 1, file );
 	fread ( &this->mFileHeaderAddr, 4, 1, file );
 	
+	this->mFileHeaderAddr += dataOffset;
+
 	return 0;
 }
 
@@ -317,7 +322,7 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 	// parse in the entries
 	for ( i = 0; i < header.mTotalEntries; ++i ) {
 	
-		result = entryHeader.Read ( file );
+		result = entryHeader.Read ( file, header.mDataOffset );
 		if ( result ) goto error;
 		
 		if (( entryHeader.mNameLength + 1 ) > nameBufferSize ) {
