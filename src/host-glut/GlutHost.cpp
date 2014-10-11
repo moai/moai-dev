@@ -370,14 +370,15 @@ int GlutHost ( int argc, char** argv ) {
 
 	glutInit ( &argc, argv );
 
-	GlutRefreshContext ( argc, argv);
+	GlutRefreshContext ( argc, argv );
 
- AKUModulesParseArgs ( argc, argv );
+	AKUModulesParseArgs ( argc, argv );
 
 	if ( sHasWindow ) {
 		glutTimerFunc ( 0, _onTimer, 0 );
 		glutMainLoop ();
 	}
+
 	return 0;
 }
 

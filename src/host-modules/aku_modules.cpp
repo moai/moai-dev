@@ -228,23 +228,35 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 		
 	#else
 	
-		if ( argc < 2 ) {
-			AKURunScript ( "main.lua" );
-		}
-		else {
+		bool ranScript = false;
+		
+		AKUSetArgv ( argv );
 
-			AKUSetArgv ( argv );
-
+		// Only process args if this is not a fused exe
+		if ( AKUMountVirtualDirectory ( ".", argv[0] ) < 0 )
+		{
 			for ( int i = 1; i < argc; ++i ) {
 				char* arg = argv [ i ];
 				if (( strcmp ( arg, "-s" ) == 0 ) && ( ++i < argc )) {
 					char* script = argv [ i ];
 					AKURunString ( script );
+					ranScript = true;
 				}
 				else {
-					AKURunScript ( arg );
+					// Try to set the working directory to the arg in case it's a directory
+					// Try to mount the arg in case it's an archive
+					if ( AKUSetWorkingDirectory ( arg ) < 0 &&
+						 AKUMountVirtualDirectory ( ".", arg ) < 0 ) 
+					{
+						AKURunScript ( arg );
+						ranScript = true;
+					}
 				}
 			}
+		}
+
+		if ( !ranScript ) {
+			AKURunScript ( "main.lua" );
 		}
 	
 	#endif

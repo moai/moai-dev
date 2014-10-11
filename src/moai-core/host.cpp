@@ -303,9 +303,9 @@ void AKUSetArgv ( char **argv ) {
 	int newTable = lua_gettop ( L );
 
 	// arg[-1] => host binary (lua, luajit, moai-untz, ...)
-	// arg[0]  => first arg (script name as passed to host binary)
-	// arg[1]  => next arg/option/script
-	// arg[2]  => next arg/option/script
+	// arg[0]  => first arg/option/script/archive
+	// arg[1]  => next arg/option/script/archive
+	// arg[2]  => next arg/option/script/archive
 	// ...
 	for ( i=0; i < argc; i++ ) {
 		lua_pushstring ( L, argv[i] );
