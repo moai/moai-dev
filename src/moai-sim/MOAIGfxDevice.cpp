@@ -279,6 +279,8 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mHasContext = true;
 	
+	zglBegin ();
+	
 	zglInitialize ();
 	
 	this->mIsProgrammable = zglGetCap ( ZGL_CAPS_IS_PROGRAMMABLE ) == 1;
@@ -294,12 +296,18 @@ void MOAIGfxDevice::DetectContext () {
 	this->ResetResources ();
 	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectFramebuffer () {
 	
+	zglBegin ();
+	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -655,7 +663,7 @@ void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
 	deleter.mResourceID = id;
 	
 	this->mDeleterStack.Push ( deleter );
-	this->ProcessDeleters ();
+	//this->ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//
