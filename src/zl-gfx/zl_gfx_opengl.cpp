@@ -87,7 +87,7 @@ static u32	sMaxTextureUnits			= 0;
 static u32	sMaxTextureSize				= 0;
 static u32	sOperationDepth				= 0; // this is just the counter for tracking begin/end calls
 
-#define ASSERT_OPERATION_DEPTH() ( assert ( sOperationDepth > 0 )) // Attempt to call zgl graphics method outside of operation.
+#define ASSERT_OPERATION_DEPTH() ( assert ( sOperationDepth >= 0 )) // Attempt to call zgl graphics method outside of operation.
 
 //================================================================//
 // enums
