@@ -20,7 +20,9 @@ public:
 	u32	mCDSize;			// 4 Size of central directory in bytes
 	u32	mCDAddr;			// 4 Offset of start of central directory, relative to start of archive
 	u16	mCommentLength;		// 2 ZIP file comment length
-	
+
+	u32 mDataOffset;		// amount of junk before the central directory
+
 	//----------------------------------------------------------------//
 	int		FindAndRead		( FILE* file );
 };
@@ -50,7 +52,7 @@ public:
 	u32	mFileHeaderAddr;		// 4 Relative offset of file header
 	
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file );
+	int		Read	( FILE* file, u32 dataOffset );
 };
 
 //================================================================//
