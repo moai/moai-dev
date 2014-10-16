@@ -127,11 +127,6 @@ private:
 	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 #endif
 	
-	void			_initGravityScript			( float* particle, float* registers );
-	void			_initRadialScript			( float* particle, float* registers );
-	void			_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term );
-	void			_renderRadialScript		    ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term );
-
 public:
 	
 	friend class MOAIParticleState;

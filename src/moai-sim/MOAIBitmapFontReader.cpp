@@ -253,8 +253,9 @@ MOAIBitmapFontReader::~MOAIBitmapFontReader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::OpenFont ( MOAIFont& font ) {
+bool MOAIBitmapFontReader::OpenFont ( MOAIFont& font ) {
 	UNUSED ( font );
+	return true;
 }
 
 //----------------------------------------------------------------//

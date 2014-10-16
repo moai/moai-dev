@@ -291,9 +291,9 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	total += count;
 
 	// This is informational only (i.e. don't double count with the previous field).
-	// It doesn't actually seem to represent the real usage of lua, but maybe
-	// someone is interested.
-	lua_pushnumber ( L, lua_gc ( L, LUA_GCCOUNTB, 0 ) / divisor );
+	// see: http://pgl.yoyo.org/luai/i/lua_gc
+	int luabytes = lua_gc ( L, LUA_GCCOUNT, 0 ) * 1024 + lua_gc ( L, LUA_GCCOUNTB, 0 );
+	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
 	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();

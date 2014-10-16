@@ -474,6 +474,55 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	addRevoluteJointLocal
+	@text	Create and add a joint to the world, using local anchors. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorA_X	in units, in world coordinates, converted to meters
+	@in		number anchorA_Y	in units, in world coordinates, converted to meters
+	@in		number anchorB_X	in units, in world coordinates, converted to meters
+	@in		number anchorB_Y	in units, in world coordinates, converted to meters
+	@out	MOAIBox2DJoint joint
+*/
+int	MOAIBox2DWorld::_addRevoluteJointLocal( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2, true );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3, true );
+	
+	if ( !( bodyA && bodyB )) return 0;
+		
+	b2RevoluteJointDef jointDef;
+	jointDef.bodyA = bodyA->mBody;
+	jointDef.bodyB = bodyB->mBody;
+	
+	jointDef.localAnchorA.Set(
+		state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters, 
+		state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters);
+		
+	jointDef.localAnchorB.Set(
+		state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters, 
+		state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters);
+		
+	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
+	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
+	joint->SetWorld ( self );
+	joint->LuaRetain ( bodyA );
+	joint->LuaRetain ( bodyB );
+	self->LuaRetain ( joint );
+	
+	joint->PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	addRopeJoint
  @text	Create and add a rope joint to the world. See Box2D documentation.
  
@@ -502,18 +551,23 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	if ( !( bodyA && bodyB )) return 0;
 	
 	float maxLength = state.GetValue < float >( 4, 1 ) * self->mUnitsToMeters;
-	
+
+	b2Vec2 anchorA;
+	anchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	anchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
+
+	b2Vec2 anchorB;
+	anchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	anchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
+
+	bool collideConnected = state.GetValue < bool >( 9, false );
+
 	b2RopeJointDef jointDef;
-	jointDef.localAnchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
-	jointDef.localAnchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-
-	jointDef.localAnchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
-	jointDef.localAnchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
-
-	jointDef.collideConnected = state.GetValue < bool >( 9, false );
-	
 	jointDef.bodyA = bodyA->mBody;
 	jointDef.bodyB = bodyB->mBody;
+	jointDef.collideConnected = collideConnected;
+	jointDef.localAnchorA = bodyA->mBody->GetLocalPoint(anchorA);
+	jointDef.localAnchorB = bodyB->mBody->GetLocalPoint(anchorB);
 	jointDef.maxLength = maxLength;
 	
 	MOAIBox2DRopeJoint* joint = new MOAIBox2DRopeJoint ();
@@ -1034,6 +1088,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "addPrismaticJoint",			_addPrismaticJoint },
 		{ "addPulleyJoint",				_addPulleyJoint },
 		{ "addRevoluteJoint",			_addRevoluteJoint },
+		{ "addRevoluteJointLocal",		_addRevoluteJointLocal },
 		{ "addRopeJoint",				_addRopeJoint },
 		{ "addWeldJoint",				_addWeldJoint },
 		{ "addWheelJoint",				_addWheelJoint },

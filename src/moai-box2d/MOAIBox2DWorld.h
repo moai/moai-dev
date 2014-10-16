@@ -90,6 +90,7 @@ private:
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );
 	static int		_addRevoluteJoint			( lua_State* L );
+	static int		_addRevoluteJointLocal		( lua_State* L );
 	static int		_addRopeJoint				( lua_State* L );
 	static int		_addWeldJoint				( lua_State* L );
 	static int		_addWheelJoint				( lua_State* L );

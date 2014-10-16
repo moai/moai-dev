@@ -92,7 +92,7 @@ public:
 	bool			HasKerning					();
 					MOAIBitmapFontReader		();
 					~MOAIBitmapFontReader		();
-	void			OpenFont					( MOAIFont& font );
+	bool			OpenFont					( MOAIFont& font );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			RenderGlyph					( MOAIFont& font, MOAIGlyph& glyph );
