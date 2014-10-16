@@ -68,8 +68,8 @@ crossCompile()
 {
     ARCH=$1
     ISDKF="-arch $ARCH -isysroot $ISDK/SDKs/$ISDKVER"
-    make BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" CROSS="xcrun --sdk iphoneos " TARGET_CONLY_FLAGS="$CFLAGS" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS clean
-    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" CROSS="xcrun --sdk iphoneos " TARGET_CONLY_FLAGS="$CFLAGS" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS
+    make -C src BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" CROSS="xcrun --sdk iphoneos " BUILDMODE=static TARGET_CONLY_FLAGS="$CFLAGS" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS clean
+    make -C src -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" CROSS="xcrun --sdk iphoneos " BUILDMODE=static TARGET_CONLY_FLAGS="$CFLAGS" TARGET_FLAGS="$ISDKF" TARGET_SYS=iOS libluajit.a
     if [ $? -eq 0 ]; then
         mv "$SRCDIR"/src/$LUAJIT_LIB "$DESTDIR"/libluajit-$ARCH.a
     else
@@ -82,8 +82,8 @@ compile()
 {   
     
     #  make HOST_CC="$CC_ARGS" clean
-    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CONLY_FLAGS="$CFLAGS" clean
-    make -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CONLY_FLAGS="$CFLAGS"
+    make -C src -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" BUILDMODE=static HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CONLY_FLAGS="$CFLAGS" clean
+    make -C src -j BUILDTYPE=static CC="clang" HOST_CC="$CC_ARGS" HOST_CFLAGS="-arch i386" BUILDMODE=static HOST_LDFLAGS="-arch i386" STATIC_CC="clang" TARGET_SYS=iOS TARGET=x86 CROSS="xcrun --sdk iphonesimulator " TARGET_FLAGS="-isysroot $SIMDIR/SDKs/$SIMVER -arch i386"  TARGET_CONLY_FLAGS="$CFLAGS" libluajit.a
     if [ $? -eq 0 ]; then
         mv "$SRCDIR"/src/$LUAJIT_LIB "$DESTDIR"/libluajit-i386.a
     else

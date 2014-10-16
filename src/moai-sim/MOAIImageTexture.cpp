@@ -133,7 +133,7 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 void MOAIImageTexture::UpdateRegion () {
 
 	this->mStatus = INVALID;
- 	this->MOAIGfxResource::Load ();
+ 	this->MOAIGfxResource::InvalidateContents ();
 }
 
 //----------------------------------------------------------------//
@@ -152,5 +152,5 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	}
 	this->mStatus = INVALID_REGION;
 	
-	this->MOAIGfxResource::Load ();
+	this->MOAIGfxResource::InvalidateContents ();
 }

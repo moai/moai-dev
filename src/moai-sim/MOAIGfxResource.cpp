@@ -145,6 +145,15 @@ void MOAIGfxResource::Invalidate () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::InvalidateContents () {
+
+	if ( this->mState != STATE_ERROR ) {
+
+		this->mState = STATE_PRECREATE;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::Load () {
 
 	if ( this->mState != STATE_ERROR ) {

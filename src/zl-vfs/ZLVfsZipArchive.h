@@ -21,6 +21,8 @@ public:
 	u32	mCDAddr;			// 4 Offset of start of central directory, relative to start of archive
 	u16	mCommentLength;		// 2 ZIP file comment length
 	
+	u32 mDataOffset;		// amount of junk before the central directory
+
 	//----------------------------------------------------------------//
 	int				FindAndRead				( FILE* file, size_t* offset );
 	void			Write					( FILE* file );
@@ -51,7 +53,7 @@ public:
 	u32	mFileHeaderAddr;		// 4 Relative offset of file header
 	
 	//----------------------------------------------------------------//
-	int				Read					( FILE* file );
+	int		Read	( FILE* file, u32 dataOffset );
 	static int		StripTimestampsAndSkip	( FILE* file, size_t* fileHeaderAdd );
 	void			Write					( FILE* file );
 };

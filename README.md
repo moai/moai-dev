@@ -11,9 +11,10 @@ Moai SDK is an open source game framework for quickly developing great mobile ga
 You can work in Lua or C++, and Moai SDK runs on multiple platforms including iOS, Android, Chrome, Windows, Mac and Linux.
 
 ## Download
-Please clones the source in the following way.
+Please clone the source in the following way.
 
-    git clone git@github.com:moai/moai-dev.git
+    git clone https://github.com/moai/moai-dev.git
+    cd moai-dev
     git submodule init
     git submodule update
 
@@ -21,7 +22,10 @@ Please clones the source in the following way.
 Tools needed to build the MOAI SDK.
 
 * [Android SDK](http://developer.android.com/sdk/index.html)
-* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only)
+* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only, r8e or earlier)
+   * windows: http://dl.google.com/android/ndk/android-ndk-r8e-windows-x86.zip
+   * linux: http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2
+   * osx: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2	 
 * [Java SE 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Ant 1.9](http://ant.apache.org/)
 * [CMake 2.8.11](http://www.cmake.org/)
@@ -50,8 +54,8 @@ Please set the following environment variables.
 
 ### Windows
 
-	set MOAI_BIN=<install_path>¥moai-dev¥release¥win32¥host-sdl¥bin
-	set MOAI_CONFIG=<install_path>¥moai-dev¥samples¥config
+	set MOAI_BIN=<install_path>\moai-dev\release\win32\host-sdl\bin
+	set MOAI_CONFIG=<install_path>\moai-dev\samples\config
 
 ## Build Hosts
 Please build according to the following procedure.
