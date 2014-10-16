@@ -23,7 +23,7 @@ public:
 	virtual bool		HasKerning				() = 0;
 						MOAIFontReader			();
 						~MOAIFontReader			();
-	virtual void		OpenFont				( MOAIFont& font ) = 0;
+	virtual bool		OpenFont				( MOAIFont& font ) = 0;
 	virtual void		RenderGlyph				( MOAIFont& font, MOAIGlyph& glyph ) = 0;
 	virtual void		SetFaceSize				( float size ) = 0;
 };
