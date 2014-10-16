@@ -24,7 +24,7 @@ void MOAIPartitionCell::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
+void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
 	if ( &cell != this ) {
 	
@@ -32,7 +32,7 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 		for ( ; propIt; propIt = propIt->Next ()) {
 			MOAIProp* prop = propIt->Data ();
 			prop->mCell = &cell;
-			prop->mLayer = layer;
+			prop->mLevel = level;
 		}
 	
 		cell.mProps.Join ( cell.mProps, this->mProps );

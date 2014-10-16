@@ -20,11 +20,11 @@ void MOAIPartitionLevel::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
+void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].ExtractProps ( cell, layer );
+		this->mCells [ i ].ExtractProps ( cell, level );
 	}
 }
 

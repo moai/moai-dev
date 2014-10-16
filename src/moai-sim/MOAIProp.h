@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
+#include <moai-core/MOAILuaSharedPtr.h>
 
 class MOAICellCoord;
 class MOAICollisionFacet;
@@ -83,7 +84,7 @@ private:
 	MOAIPartitionCell*			mCell;
 	
 	// this is only for debug draw
-	MOAIPartitionLevel*			mLayer;
+	MOAIPartitionLevel*			mLevel;
 	
 	ZLLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
