@@ -19,9 +19,8 @@ project ( curl )
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-	     	"${CMAKE_CURRENT_SOURCE_DIR}"
        )
+      set ( RUN_CURL_CONFIGURE true )
   endif (BUILD_LINUX)
 
 
@@ -57,6 +56,45 @@ project ( curl )
        )
   endif (BUILD_IOS)
 
+
+  if (RUN_CURL_CONFIGURE)
+
+    if (NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/config.status")
+      message (STATUS "Running cURL configure script")
+      execute_process (COMMAND "/bin/sh"
+                       "${MOAI_ROOT}/3rdparty/curl-7.19.7/configure"
+                       "--no-create" "--disable-shared" "--disable-optimize"
+		       "--with-ca-path=/etc/ssl/certs/" "--disable-ldap"
+                       "--without-libidn" 
+                       "CC=${CMAKE_C_COMPILER}"
+                       "CFLAGS=${CMAKE_C_FLAGS} -DZL_REPLACE_H"
+                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+                       OUTPUT_QUIET RESULT_VARIABLE CONFIGURE_RESULT)
+      if (NOT ${CONFIGURE_RESULT} EQUAL 0)
+        message( FATAL_ERROR "Configure script failed")
+      endif ()
+    endif ()
+
+    if (("${CMAKE_CURRENT_BINARY_DIR}/config.status" IS_NEWER_THAN
+         "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h") OR
+        ("${CMAKE_CURRENT_BINARY_DIR}/config.status" IS_NEWER_THAN
+         "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"))
+      message (STATUS "Running cURL config.status")
+      execute_process (COMMAND "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       "--header=include/curl/curlbuild.h"
+                       "--header=include/curl/curl_config.h:lib/curl_config.h.in"
+                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+                       OUTPUT_QUIET RESULT_VARIABLE CONFIG_STATUS_RESULT)
+      if (NOT ${CONFIG_STATUS_RESULT} EQUAL 0)
+        message( FATAL_ERROR "config.status script failed")
+      endif ()
+    endif()
+
+    set ( CURL_INCLUDES
+          "${CMAKE_CURRENT_BINARY_DIR}/include/curl"
+          "${CMAKE_CURRENT_BINARY_DIR}/include" ${CURL_INCLUDES} )
+
+  endif (RUN_CURL_CONFIGURE)
 
 
 

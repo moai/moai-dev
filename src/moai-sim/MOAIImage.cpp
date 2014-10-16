@@ -614,7 +614,7 @@ void MOAIImage::Alloc () {
 	
 	u32 paletteSize = this->GetPaletteSize ();
 	if ( paletteSize ) {
-		this->mData = malloc ( paletteSize );
+		this->mPalette = malloc ( paletteSize );
 		memset ( this->mPalette, 0, paletteSize );
 	}
 }

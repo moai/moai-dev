@@ -1045,6 +1045,8 @@ void MOAIGfxDevice::SetScissorRect () {
 void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
+	this->mViewRect.Clip ( rect );
+
 	ZLRect& current = this->mScissorRect;
 	
 	if (	( current.mXMin != rect.mXMin ) ||
@@ -1061,6 +1063,9 @@ void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
 		
 		u32 w = ( u32 )( deviceRect.Width () + 0.5f );
 		u32 h = ( u32 )( deviceRect.Height () + 0.5f );
+
+		w = h == 0 ? 0 : w;
+		h = w == 0 ? 0 : h;
 		
 		zglScissor ( x, y, w, h );
 		this->mScissorRect = rect;

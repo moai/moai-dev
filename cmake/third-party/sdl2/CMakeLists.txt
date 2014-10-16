@@ -898,6 +898,13 @@ elseif(APPLE)
     set(SDL_FRAMEWORK_AUDIOUNIT 1)
   endif()
 
+  if(SDL_TIMERS)
+    set(SDL_TIMER_UNIX 1)
+    file(GLOB TIMER_SOURCES ${SDL2_SOURCE_DIR}/src/timer/unix/*.c)
+    set(SOURCE_FILES ${SOURCE_FILES} ${TIMER_SOURCES})
+    set(HAVE_SDL_TIMERS TRUE)
+  endif(SDL_TIMERS)
+
   if(SDL_JOYSTICK)
     set(SDL_JOYSTICK_IOKIT 1)
     file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/darwin/*.c)

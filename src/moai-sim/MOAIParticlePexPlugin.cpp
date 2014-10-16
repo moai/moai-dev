@@ -133,6 +133,25 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 //================================================================//
 #if MOAI_WITH_TINYXML
 #include <zl-gfx/headers.h>
+
+// warning: modifies size argument
+static
+void read_n_values(float *array, TiXmlAttribute *attribute, int max, int *registers, int &size) {
+	for (int i = 0; i < max; ++i) {
+		if (attribute) {
+			array[i] = atof(attribute->Value());
+			if (array[i] != 0) {
+				if (registers) {
+					registers[i] = size++;
+				}
+			}
+			attribute = attribute->Next();
+		} else {
+			array[i] = 0;
+		}
+	}
+}
+
 void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
@@ -144,7 +163,7 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 	
 	TiXmlElement* element = node->ToElement();
 
-	if ( element && strcmp(element->Value (), "patricleEmitterConfig") ) {
+	if ( element && !strcmp(element->Value (), "particleEmitterConfig") ) {
 		
 		plugin.mSize = 0;
 		// round up the children
@@ -175,27 +194,21 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 			else if(text == "emitterType")
 				plugin.mEmitterType = (EmitterType)atoi(attribute->Value());
 			else if(text == "finishColor")
-				for ( ; attribute; attribute = attribute->Next (), i++) {
-					plugin.mFinishColor[i] = (float)atof(attribute->Value());
-				}
+				read_n_values(plugin.mFinishColor, attribute, 4, NULL, plugin.mSize);
 			else if(text == "finishColorVariance")
-				for ( ; attribute; attribute = attribute->Next (), i++) {
-					plugin.mFinishColorVariance[i] = (float)atof(attribute->Value());
-					if(plugin.mFinishColorVariance[i] != 0)
-						plugin.mFinishColorRegister[i] = plugin.mSize++;
-				}
+			    read_n_values(plugin.mFinishColorVariance, attribute, 4, plugin.mFinishColorRegister, plugin.mSize);
 			else if(text == "finishParticleSize")
 				plugin.mFinishSize = (float)atof(attribute->Value());
-			else if(text == "FinishParticleSizeVariance")
+			// this used to be spelled with a capital F, accept that for
+			// compatibility.
+			else if(text == "finishParticleSizeVariance" || text == "FinishParticleSizeVariance")
 			{
 				plugin.mFinishSizeVariance = (float)atof(attribute->Value());
 				if(plugin.mFinishSizeVariance != 0)
 						plugin.mFinishSizeRegister = plugin.mSize++;
 			}
 			else if(text == "gravity")
-				for ( ; attribute; attribute = attribute->Next (), i++) {
-					plugin.mGravity[i] = (float)atof(attribute->Value());
-				}
+				read_n_values(plugin.mGravity, attribute, 2, NULL, plugin.mSize);
 			else if(text == "maxParticles")
 				plugin.mNumParticles = atoi(attribute->Value());
 			else if(text == "maxRadius")
@@ -247,13 +260,9 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 						plugin.mRotStartRegister = plugin.mSize++;
 			}
 			else if(text == "sourcePosition")
-				for ( ; attribute; attribute = attribute->Next (), i++) {
-						plugin.mSourcePos[i] = (float)atof(attribute->Value());
-					}
+				read_n_values(plugin.mSourcePos, attribute, 2, NULL, plugin.mSize);
 			else if(text == "sourcePositionVariance")
-				for ( ; attribute; attribute = attribute->Next (), i++) {
-						plugin.mSourcePosVariance[i] = (float)atof(attribute->Value());
-					}
+				read_n_values(plugin.mSourcePosVariance, attribute, 2, NULL, plugin.mSize);
 			else if(text == "speed")
 				plugin.mSpeed = (float)atof(attribute->Value());
 			else if(text == "speedVariance")
@@ -263,15 +272,9 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 					plugin.mSpeedRegister = plugin.mSize++;
 			}
 			else if(text == "startColor")
-					for ( ; attribute; attribute = attribute->Next (), i++) {
-						plugin.mStartColor[i] = (float)atof(attribute->Value());
-					}
+				read_n_values(plugin.mStartColor, attribute, 4, NULL, plugin.mSize);
 			else if(text == "startColorVariance")
-					for ( ; attribute; attribute = attribute->Next (), i++) {
-						plugin.mStartColorVariance[i] = (float)atof(attribute->Value());
-						if(plugin.mStartColorVariance[i] != 0)
-							plugin.mStartColorRegister[i] = plugin.mSize++;
-					}
+				read_n_values(plugin.mStartColorVariance, attribute, 4, plugin.mStartColorRegister, plugin.mSize);
 			else if(text == "startParticleSize")
 				plugin.mStartSize = (float)atof(attribute->Value());
 			else if(text == "startParticleSizeVariance")
@@ -320,25 +323,24 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 
 		plugin.mLifespanTerm[0] = plugin.mLifespan - plugin.mLifespanVariance < 0 ? 0 : plugin.mLifespan - plugin.mLifespanVariance;
 		plugin.mLifespanTerm[1] = plugin.mLifespan + plugin.mLifespanVariance;
-		
 	}
 }
 #endif
 
-void MOAIParticlePexPlugin::_initGravityScript( float* particle, float* registers)
+void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 {
 	// Set colors.
 	for(int i = 0; i < 4; i++)
 	{
 
-		if(mStartColorRegister[i] > -1 )
+		if (mStartColorRegister[i] > -1 )
 		{
 			float minVal = mStartColor[i] - mStartColorVariance[i] < 0 ? 0 : mStartColor[i] - mStartColorVariance[i];	
 			registers[mStartColorRegister[i]] = ZLFloat::Rand (minVal,  mStartColor[i] + mStartColorVariance[i] );
 		}	
 
 			
-		if(this->mFinishColorRegister[i]  > -1 )
+		if(mFinishColorRegister[i]  > -1 )
 		{
 			float minVal = mFinishColor[i] - mFinishColorVariance[i] < 0 ? 0 : mFinishColor[i] - mFinishColorVariance[i];	
 			registers[mFinishColorRegister[i]] =ZLFloat::Rand (minVal,  mFinishColor[i] + mFinishColorVariance[i] );
@@ -366,138 +368,80 @@ void MOAIParticlePexPlugin::_initGravityScript( float* particle, float* register
 	if(mRotEndRegister > -1)
 		registers[mRotStartRegister] = ZLFloat::Rand (mRotEnd-mRotEndVariance, mRotEnd+mRotEndVariance);
 
-
 	float angleStartDeg;
-	if(mAngleRegister > -1)
+	// have to compute the angle first, because the computed DX and DY may be used by later calculations.
+	if(mEmitterType == EMITTER_GRAVITY)
 	{
-		// S.S. updated angle to fix translation from degrees to radians
-		float randAngle = ZLFloat::Rand (- mAngleVariance, + mAngleVariance);
-
-		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D + randAngle);
-
-		particle[MOAIParticle::PARTICLE_DX] = (float)Cos((mAngle + randAngle) * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = (float)Sin((mAngle + randAngle) * (float)D2R);
+		// for gravity emitters, use mAngle as a modifier on the angle computed from dy and dx.
+		angleStartDeg = (atan2f ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D ) + mAngle;
 	}
 	else
 	{
-		angleStartDeg = (float)(atan2 ( particle[MOAIParticle::PARTICLE_DY], particle[MOAIParticle::PARTICLE_DX] ) * R2D) + mAngle;
-		particle[MOAIParticle::PARTICLE_DX] = (float)Cos(angleStartDeg * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = (float)Sin(angleStartDeg * (float)D2R);
-	}
-
-	
-	// Set initial speed
-	if(mSpeedRegister > -1)
-	{
-		registers[mSpeedRegister] = ZLFloat::Rand(mSpeed - mSpeedVariance, mSpeed + mSpeedVariance);
-		registers[mDirectionXRegister] = particle[MOAIParticle::PARTICLE_DX] * registers[mSpeedRegister];
-		registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * registers[mSpeedRegister];
-	}
-	else
-	{
-		registers[mDirectionXRegister] = particle[MOAIParticle::PARTICLE_DX] * mSpeed;
-		registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * mSpeed;
-	}
-
-	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
-	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
-	
-	if(mRadialAccelRegister > -1)
-		registers[mRadialAccelRegister] = ZLFloat::Rand(mRadialAcceleration - mRadialAccelVariance, mRadialAcceleration + mRadialAccelVariance);
-
-	
-	if(mTanAccelRegister > -1)
-		registers[mTanAccelRegister] = ZLFloat::Rand(mTanAccel - mTanAccelVariance, mTanAccel + mTanAccelVariance);
-
-}
-		
-void MOAIParticlePexPlugin::_initRadialScript( float* particle, float* registers)
-{
-
-	// Set colors.
-	for(int i = 0; i < 4; i++)
-	{
-
-		if(mStartColorRegister[i] > -1 )
-		{
-			float minVal = mStartColor[i] - mStartColorVariance[i] < 0 ? 0 : mStartColor[i] - mStartColorVariance[i];	
-			registers[mStartColorRegister[i]] = ZLFloat::Rand (minVal,  mStartColor[i] + mStartColorVariance[i] );
-		}	
-
-			
-		if(this->mFinishColorRegister[i]  > -1 )
-		{
-			float minVal = mFinishColor[i] - mFinishColorVariance[i] < 0 ? 0 : mFinishColor[i] - mFinishColorVariance[i];	
-			registers[mFinishColorRegister[i]] =ZLFloat::Rand (minVal,  mFinishColor[i] + mFinishColorVariance[i] );
-		}
-			
-	}
-
-	if(mStartSizeRegister > -1)
-	{
-		float minVal = mStartSize - mStartSizeVariance < 0 ? 0 :  mStartSize - mStartSizeVariance;
-		registers[mStartSizeRegister] = ZLFloat::Rand (minVal,  mStartSize + mStartSizeVariance);
-	}
-
-			
-	if(mFinishSizeRegister > -1)
-	{
-		float minVal = mFinishSize - mFinishSizeVariance < 0 ? 0 :  mFinishSize - mFinishSizeVariance;
-		registers[mFinishSizeRegister] = ZLFloat::Rand (minVal,  mFinishSize + mFinishSizeVariance);
-	}
-
-	if(mRotStartRegister > -1 )
-		registers[mRotStartRegister] = ZLFloat::Rand (mRotStart-mRotStartVariance, mRotStart+mRotStartVariance);
-	
-
-	if(mRotEndRegister > -1)
-		registers[mRotStartRegister] = ZLFloat::Rand (mRotEnd-mRotEndVariance, mRotEnd+mRotEndVariance);
-
-
-	float angleStartDeg;
-	if(mAngleRegister > -1)
-	{
-		float randAngle = ZLFloat::Rand (mAngle - mAngleVariance, mAngle + mAngleVariance);
-		particle[MOAIParticle::PARTICLE_DX] = Cos(randAngle * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = Sin(randAngle * (float)D2R);
-		angleStartDeg = randAngle;
-
-	}
-	else
-	{
-		particle[MOAIParticle::PARTICLE_DX] = Cos(mAngle * (float)D2R);
-		particle[MOAIParticle::PARTICLE_DY] = Sin(mAngle * (float)D2R);
 		angleStartDeg = mAngle;
 	}
-	
-	if( mRotPerSecondVariance != 0)
+
+	if (mAngleRegister > -1)
 	{
-		float randVal =  ZLFloat::Rand (mRotPerSecond - mRotPerSecondVariance, mRotPerSecond + mRotPerSecondVariance);
-		registers[mRotPerSecondRegister] = randVal;		
+		angleStartDeg += ZLFloat::Rand (- mAngleVariance, + mAngleVariance );
+	}
+	particle[MOAIParticle::PARTICLE_DX] = Cos(angleStartDeg * (float)D2R);                  
+	particle[MOAIParticle::PARTICLE_DY] = Sin(angleStartDeg * (float)D2R);
+
+	if (mEmitterType == EMITTER_GRAVITY)
+	{
+		// Set initial speed
+		if (mSpeedRegister > -1)
+		{
+			registers[mSpeedRegister] = ZLFloat::Rand(mSpeed - mSpeedVariance, mSpeed + mSpeedVariance);
+			registers[mDirectionXRegister] = particle[MOAIParticle::PARTICLE_DX] * registers[mSpeedRegister];
+			registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * registers[mSpeedRegister];
+		}
+		else
+		{
+			registers[mDirectionXRegister] = particle[MOAIParticle::PARTICLE_DX] * mSpeed;
+			registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * mSpeed;
+		}
+		if (mRadialAccelRegister > -1)
+			registers[mRadialAccelRegister] = ZLFloat::Rand(mRadialAcceleration - mRadialAccelVariance, mRadialAcceleration + mRadialAccelVariance);
+
+
+		if (mTanAccelRegister > -1)
+			registers[mTanAccelRegister] = ZLFloat::Rand(mTanAccel - mTanAccelVariance, mTanAccel + mTanAccelVariance);
 	}
 	else
-		registers[mRotPerSecondRegister] = mRotPerSecond;
-
-
-	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X];
-	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y];
-
-	if( mMaxRadiusRegister > -1 )
 	{
-		registers[mMaxRadiusRegister] = ZLFloat::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
-		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
-		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
-	}
-	else
-	{
-		particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * mMaxRadius;
-		particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * mMaxRadius;
+		if (mRotPerSecondVariance != 0)
+		{
+			float randVal =  ZLFloat::Rand (mRotPerSecond - mRotPerSecondVariance, mRotPerSecond + mRotPerSecondVariance);
+			registers[mRotPerSecondRegister] = randVal;		
+		} else {
+			registers[mRotPerSecondRegister] = mRotPerSecond;
+		}
+		
+		if (mMaxRadiusRegister > -1 )
+		{
+			registers[mMaxRadiusRegister] = ZLFloat::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
+			particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
+			particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
+		}
+		else
+		{
+			particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * mMaxRadius;
+			particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * mMaxRadius;
+		}
+
+		registers[mRadialRegister] = angleStartDeg;
 	}
 
-	registers[mRadialRegister] = angleStartDeg;	
+	// pick a slightly different source position, based on mSourcePos
+	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X] + mSourcePos[0] + ZLFloat::Rand(- mSourcePosVariance[0], + mSourcePosVariance[0]);
+	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y] + mSourcePos[1] + ZLFloat::Rand(- mSourcePosVariance[1], + mSourcePosVariance[1]);
+
+	particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister];
+	particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister];
 }
 
-void MOAIParticlePexPlugin::_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term )
+void  MOAIParticlePexPlugin::OnRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term)
 {
 	// Set colors.
 	float sVal, eVal;
@@ -568,205 +512,115 @@ void MOAIParticlePexPlugin::_renderGravityScript		( float* particle, float* regi
 	else
 		sprite->mZRot = sVal;
 
-	float moveX = 0;
-	float moveY = 0;
-
-	particle[MOAIParticle::PARTICLE_X] = particle[MOAIParticle::PARTICLE_X] - registers[mStartXRegister];
-	particle[MOAIParticle::PARTICLE_Y] = particle[MOAIParticle::PARTICLE_Y] - registers[mStartYRegister];
-
-	if(mRadialAcceleration != 0 || mRadialAccelVariance != 0 || 
-		mTanAccel != 0 || mTanAccelVariance != 0)
+	if (mEmitterType == EMITTER_GRAVITY)
 	{
-		float xVal, yVal;
-		float denom = Sqrt( (particle[MOAIParticle::PARTICLE_X] * particle[MOAIParticle::PARTICLE_X]) +
-								(particle[MOAIParticle::PARTICLE_Y] * particle[MOAIParticle::PARTICLE_Y]) );
+		float moveX = 0;
+		float moveY = 0;
+		
+		float dx = particle[MOAIParticle::PARTICLE_X] - registers[mStartXRegister];
+		float dy = particle[MOAIParticle::PARTICLE_Y] - registers[mStartYRegister];
 
-		// Set radial acceleration
-		if( mRadialAcceleration != 0 || mRadialAccelVariance != 0)
+		if(mRadialAcceleration != 0 || mRadialAccelVariance != 0 || 
+			mTanAccel != 0 || mTanAccelVariance != 0)
 		{
-			if(denom)
+			float xVal, yVal;
+			float denom = Sqrt( (dx * dx) + (dy * dy) );
+
+			// Set radial acceleration
+			if( mRadialAcceleration != 0 || mRadialAccelVariance != 0)
 			{
-				xVal = (float)( particle[MOAIParticle::PARTICLE_X] / denom );
-				yVal = (float)( particle[MOAIParticle::PARTICLE_Y] / denom );
+				if(denom)
+				{
+					xVal = (float)( dx / denom );
+					yVal = (float)( dy / denom );
+				}
+				else
+				{
+					xVal = 0;
+					yVal = 0;
+				}
+
+				if( mRadialAccelRegister > -1)
+				{
+					xVal *= registers[mRadialAccelRegister];
+					yVal *= registers[mRadialAccelRegister];
+				}
+				else
+				{
+					xVal *= mRadialAcceleration;
+					yVal *= mRadialAcceleration;
+				}
+				moveX += xVal;
+				moveY += yVal;
 			}
-			else
+
+			// Set tangential acceleration
+			if(mTanAccel != 0 || mTanAccelVariance != 0)
 			{
-				xVal = 0;
-				yVal = 0;
+				if(denom)
+				{
+					xVal = (float)( dx / denom );
+					yVal = (float)( dy / denom );
+				}
+				else
+				{
+					xVal = 0;
+					yVal = 0;
+				}
+
+				float yNewVal = xVal;
+				if( mTanAccelRegister > -1)
+				{
+					xVal = -yVal * registers[mTanAccelRegister];
+					yVal = yNewVal * registers[mTanAccelRegister];
+				}
+				else
+				{
+					xVal = -yVal * mTanAccel;
+					yVal = yNewVal * mTanAccel;
+				}
+
+				moveX += xVal;
+				moveY += yVal;
 			}
-	
-			if( mRadialAccelRegister > -1)
-			{
-				xVal *= registers[mRadialAccelRegister];
-				yVal *= registers[mRadialAccelRegister];
-			}
-			else
-			{
-				xVal *= mRadialAcceleration;
-				yVal *= mRadialAcceleration;
-			}
-			moveX += xVal;
-			moveY += yVal;
 		}
 
-		// Set tangential acceleration
-		if(mTanAccel != 0 || mTanAccelVariance != 0)
-		{
-			if(denom)
-			{
-				xVal = (float)( particle[MOAIParticle::PARTICLE_X] / denom );
-				yVal = (float)( particle[MOAIParticle::PARTICLE_Y] / denom );
-			}
-			else
-			{
-				xVal = 0;
-				yVal = 0;
-			}
+		moveX += mGravity[0];
+		moveY += mGravity[1];
 
-			float yNewVal = xVal;
-			if( mTanAccelRegister > -1)
-			{
-				xVal = -yVal * registers[mTanAccelRegister];
-				yVal = yNewVal * registers[mTanAccelRegister];
-			}
-			else
-			{
-				xVal = -yVal * mTanAccel;
-				yVal = yNewVal * mTanAccel;
-			}
+		float delta = t1 - t0;
+		delta *= term;
+		
+		moveX *= delta;
+		moveY *= delta;
 
-			moveX += xVal;
-			moveY += yVal;
-		}
+		registers[ mDirectionXRegister ] += moveX;
+		registers[ mDirectionYRegister ] += moveY;
+
+		moveX = registers[ mDirectionXRegister ] * delta;
+		moveY = registers[ mDirectionYRegister ] * delta;
+		
+		particle[ MOAIParticle::PARTICLE_X ] += moveX;
+		particle[ MOAIParticle::PARTICLE_Y ] += moveY;
 	}
-	
-	
-	moveX += mGravity[0];
-	moveY += mGravity[1];
-	
-	float delta = t1 - t0;
-	delta *= term;
-	
-	moveX *= delta;
-	moveY *= delta;
+	else
+	{
+		registers[mRadialRegister] += registers[mRotPerSecondRegister] * ((t1 - t0)*term);
 
-	registers[ mDirectionXRegister ] += moveX;
-	registers[ mDirectionYRegister ] += moveY;
+		if(mMaxRadiusRegister > -1)
+			sVal = registers[mMaxRadiusRegister];
+		else
+			sVal = mMaxRadius;
+		float magVal = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, mMinRadius, t1 );
 
-	moveX = registers[ mDirectionXRegister ] * delta;
-	moveY = registers[ mDirectionYRegister ] * delta;
-
-	particle[ MOAIParticle::PARTICLE_X ] += moveX + registers[mStartXRegister];
-	particle[ MOAIParticle::PARTICLE_Y ] += moveY + registers[mStartYRegister];
+		particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister] - Cos(registers[mRadialRegister] * (float)D2R) * magVal;
+	    particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister] - Sin(registers[mRadialRegister] * (float)D2R) * magVal;
+	}
 
 	sprite->mXLoc = particle[ MOAIParticle::PARTICLE_X ];
 	sprite->mYLoc = particle[ MOAIParticle::PARTICLE_Y ];
 
 	sprite->mGfxID = 1;
-	
-}
-void MOAIParticlePexPlugin::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term)
-{
-	// Set colors.
-	float sVal, eVal;
-	for(int i = 0; i < 4; i++)
-	{
-			
-		if(mStartColorRegister[i] > -1 )
-			sVal = registers[mStartColorRegister[i]];
-		else
-			sVal = mStartColor[i];
-
-		if(mFinishColorRegister[i] > -1 )
-			eVal = registers[mFinishColorRegister[i]];
-		else
-			eVal = mFinishColor[i];
-
-		switch(i)
-		{
-		case 0:
-			sprite->mRed = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-			break;
-		case 1:
-			sprite->mGreen = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-			break;
-		case 2:
-			sprite->mBlue = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-			break;
-		case 3:
-			sprite->mAlpha = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-			break;
-		}
-	}
-
-	if(mStartSizeRegister > -1 )
-		sVal = registers[mStartSizeRegister];
-	else
-		sVal = mStartSize;
-
-	if(mFinishSizeRegister > -1 )
-		eVal = registers[mFinishSizeRegister];
-	else
-		eVal = mFinishSize;
-
-	if(sVal != eVal)
-	{
-		sprite->mXScl = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-		sprite->mYScl = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-	}
-	else
-	{
-		sprite->mXScl = sVal;
-		sprite->mYScl = sVal;
-	}
-
-
-	if(mRotStartRegister > -1 )
-		sVal = registers[mRotStartRegister];
-	else
-		sVal = mRotStart;
-
-	if(mRotEndRegister > -1 )
-		eVal = registers[mRotEndRegister];
-	else
-		eVal = mRotEnd;
-
-
-	if( sVal != eVal)
-		sprite->mZRot = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, eVal, t1 );
-	else
-		sprite->mZRot = sVal;
-
-	
-	registers[mRadialRegister] += registers[mRotPerSecondRegister] * ((t1 - t0)*term);
-
-	if(mMaxRadiusRegister > -1)
-		sVal = registers[mMaxRadiusRegister];
-	else
-		sVal = mMaxRadius;
-	float magVal = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, sVal, mMinRadius, t1 );
-	
-	particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister] - Cos(registers[mRadialRegister] * (float)D2R) * magVal;
-    particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister] - Sin(registers[mRadialRegister] * (float)D2R) * magVal;
-
-	sprite->mXLoc = particle[ MOAIParticle::PARTICLE_X ];
-	sprite->mYLoc = particle[ MOAIParticle::PARTICLE_Y ];
-
-}
-
-void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
-{
-	if(mEmitterType == EMITTER_GRAVITY)
-		_initGravityScript( particle, registers);
-	else
-		_initRadialScript( particle, registers);
-}
-void  MOAIParticlePexPlugin::OnRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1,  float term)
-{
-	if(mEmitterType == EMITTER_GRAVITY)
-		_renderGravityScript( particle, registers, sprite, t0, t1, term);
-	else
-		_renderRadialScript( particle, registers, sprite, t0, t1, term);
 }
 
 //----------------------------------------------------------------//
@@ -784,7 +638,8 @@ MOAIParticlePexPlugin::MOAIParticlePexPlugin () :
 
 	memset(mStartColorRegister, -1, sizeof(mStartColorRegister));
 	memset(mFinishColorRegister, -1,sizeof(mFinishColorRegister));
-
+	mSourcePos[0] = mSourcePos[1] = 0;
+	mSourcePosVariance[0] = mSourcePosVariance[1] = 0;
 
 	RTTI_SINGLE ( MOAIParticlePlugin )
 }

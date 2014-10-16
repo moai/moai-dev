@@ -75,6 +75,7 @@ public:
 	void			Clear						();
 	void			Destroy						();
 	void			Invalidate					();
+	void			InvalidateContents			();
 	virtual bool	IsValid						() = 0; // return 'true' if the handle to the GPU-side resource is valid (or initialized) - GRAPHICS THREAD
 	void			Load						();
 					MOAIGfxResource				();
