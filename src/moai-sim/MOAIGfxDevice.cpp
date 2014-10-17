@@ -649,12 +649,16 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ProcessDeleters () {
 
+	zglBegin ();
+	
 	u32 top = this->mDeleterStack.GetTop ();
 	for ( u32 i = 0; i < top; ++i ) {
 		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
 		deleter.Delete ();
 	}
 	this->mDeleterStack.Reset ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -693,11 +697,15 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ReleaseResources () {
-
+	
+	zglBegin ();
+	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Destroy ();
 	}
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
