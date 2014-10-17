@@ -13,7 +13,7 @@ class MOAIVertexBuffer;
 //================================================================//
 // MOAIMesh
 //================================================================//
-/**	@name	MOAIMesh
+/**	@lua	MOAIMesh
 	@text	Loads a texture and renders the contents of a vertex buffer.
 			Grid drawing not supported.
 	

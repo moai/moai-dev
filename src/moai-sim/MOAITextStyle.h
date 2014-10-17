@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTSTYLE_H
 #define	MOAITEXTSTYLE_H
 
+#include <moai-sim/MOAINode.h>
+
 class MOAIFont;
 
 //================================================================//
@@ -14,8 +16,9 @@ protected:
 
 	MOAIFont*	mFont;
 	float		mSize;
-	float		mScale;
+	ZLVec2D		mScale;
 	u32			mColor;
+	ZLRect		mPadding;
 
 public:
 
@@ -29,7 +32,7 @@ public:
 //================================================================//
 // MOAITextStyle
 //================================================================//
-/**	@name	MOAITextStyle
+/**	@lua	MOAITextStyle
 	@text	Represents a style that may be applied to a text box or a
 			section of text in a text box using a style escape.
 */
@@ -38,9 +41,12 @@ class MOAITextStyle :
 	public MOAITextStyleState {
 private:
 
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextLabel;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
+	friend class MOAITextStyleCache;
+	friend class MOAITextStyleMap;
 
 	//----------------------------------------------------------------//
 	static int		_getColor				( lua_State* L );
@@ -49,6 +55,7 @@ private:
 	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
 	static int		_setFont				( lua_State* L );
+	static int		_setPadding				( lua_State* L );
 	static int		_setScale				( lua_State* L );
 	static int		_setSize				( lua_State* L );
 	

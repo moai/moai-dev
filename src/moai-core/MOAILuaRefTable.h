@@ -36,6 +36,7 @@ public:
 				MOAILuaRefTable		();
 				~MOAILuaRefTable	();
 	void		PushRef				( MOAILuaState& state, int refID );
+	void		PushRefTable		( MOAILuaState& state );
 	int			Ref					( MOAILuaState& state, int idx );
 	void		Unref				( int refID );
 };

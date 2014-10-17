@@ -7,33 +7,27 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef DOXYGEN
 
 //----------------------------------------------------------------//
-/**	@name	getFarPlane
+/**	@lua	getFarPlane
 	@text	Returns the camera's far plane.
 
 	@in		MOAICamera2D self
 	@out	number far
 */
 int MOAICamera2D::_getFarPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	lua_pushnumber ( state, self->mFarPlane );
-	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNearPlane
+/**	@lua	getNearPlane
 	@text	Returns the camera's near plane.
 
 	@in		MOAICamera2D self
 	@out	number near
 */
 int MOAICamera2D::_getNearPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	lua_pushnumber ( state, self->mNearPlane );
-	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFarPlane
+/**	@lua	setFarPlane
 	@text	Sets the camera's far plane distance.
 
 	@in		MOAICamera2D self
@@ -41,13 +35,10 @@ int MOAICamera2D::_getNearPlane ( lua_State* L ) {
 	@out	nil
 */
 int MOAICamera2D::_setFarPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	self->mFarPlane = state.GetValue < float >( 2, DEFAULT_FAR_PLANE );
-	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	setNearPlane
+/**	@lua	setNearPlane
 	@text	Sets the camera's near plane distance.
 
 	@in		MOAICamera2D self
@@ -55,9 +46,6 @@ int MOAICamera2D::_setFarPlane ( lua_State* L ) {
 	@out	nil
 */
 int MOAICamera2D::_setNearPlane ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICamera2D, "U" )
-	self->mNearPlane = state.GetValue < float >( 2, DEFAULT_NEAR_PLANE );
-	return 0;
 }
 
 #endif

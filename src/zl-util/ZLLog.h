@@ -4,25 +4,25 @@
 #ifndef ZLLOG_H
 #define ZLLOG_H
 
-
 //================================================================//
 // ZLLog
 //================================================================//
 class ZLLog {
-
-
-
 public:
+
 	static FILE* CONSOLE;
 
+	// TODO: some danger here if the caller isn't using VFS; should change this to
+	// not take a file pointer. implementers will need to provide their own.
+	typedef void ( *LogFunc )( void* file, cc8* format, va_list args, void* userdata );
+	static LogFunc sLogFunc;
+	
+	static void* sLogFuncUserdata;
+
 	//----------------------------------------------------------------//
-	static void	Print		( cc8* format, ... );
-	static void	PrintFileV	( FILE* file, cc8* format, va_list args );
-#ifdef ANDROID //maybe have this as USING_VFS. currently only android does the monkey patching.
-	static void	PrintFile	( ZLFILE* file, cc8* format, ... );
-#else
-	static void	PrintFile	( FILE* file, cc8* format, ... );
-#endif
+	static void	LogF		( FILE* file, cc8* format, ... );
+	static void	LogV		( FILE* file, cc8* format, va_list args );
+	static void SetLogFunc	( LogFunc logFunc, void* userdata );
 };
 
 #endif

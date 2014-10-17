@@ -12,18 +12,18 @@ class MOAIBox2DArbiter;
 //================================================================//
 // MOAIBox2DFixture
 //================================================================//
-/**	@name MOAIBox2DFixture
+/**	@lua MOAIBox2DFixture
 	@text Box2D fixture.
 */
 class MOAIBox2DFixture :
 	public MOAIBox2DPrim {
 private:
 
-	b2Fixture*		mFixture;
+	b2Fixture*			mFixture;
 
 	MOAILuaMemberRef	mCollisionHandler;
-	u32				mCollisionPhaseMask;
-	u32				mCollisionCategoryMask;
+	u32					mCollisionPhaseMask;
+	u32					mCollisionCategoryMask;
 
 	//----------------------------------------------------------------//
 	static int	_destroy				( lua_State* L );
@@ -37,6 +37,7 @@ private:
 	static int	_setSensor				( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void			Clear				();
 	void			HandleCollision		( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	static u32		LoadVerts			( MOAILuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
 	void			SetFixture			( b2Fixture* fixture );

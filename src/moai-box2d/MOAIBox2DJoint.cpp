@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	destroy
+/**	@lua	destroy
 	@text	Schedule joint for destruction.
 	
 	@in		MOAIBox2DJoint self
@@ -30,7 +30,7 @@ int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAnchorA
+/**	@lua	getAnchorA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -54,7 +54,7 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAnchorB
+/**	@lua	getAnchorB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -78,7 +78,7 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBodyA
+/**	@lua	getBodyA
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -99,7 +99,7 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBodyB
+/**	@lua	getBodyB
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -120,7 +120,7 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionForce
+/**	@lua	getReactionForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -146,7 +146,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionTorque
+/**	@lua	getReactionTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
@@ -175,12 +175,39 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::Destroy () {
+void MOAIBox2DJoint::Clear () {
+	
+	if ( this->mJoint ) {
+	
+		b2Body* b2BodyA = this->mJoint->GetBodyA ();
+		b2Body* b2BodyB = this->mJoint->GetBodyB ();
+	
+		if ( b2BodyA ) {
+			MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )b2BodyA->GetUserData ();
+			if ( bodyA ) {
+				this->LuaRelease ( bodyA );
+			}
+		}
+		
+		if ( b2BodyB ) {
+			MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )b2BodyB->GetUserData ();
+			if ( bodyB ) {
+				this->LuaRelease ( bodyB );
+			}
+		}
+		
+		this->mJoint = 0;
+	}
+	this->mWorld = 0;
+}
 
+//----------------------------------------------------------------//
+void MOAIBox2DJoint::Destroy () {
+	
 	if ( this->mJoint ) {
 		b2World* world = this->mWorld->mWorld;
 		world->DestroyJoint ( this->mJoint );
-		this->mJoint = 0;
+		this->Clear ();
 	}
 }
 
@@ -195,17 +222,6 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 
 //----------------------------------------------------------------//
 MOAIBox2DJoint::~MOAIBox2DJoint () {
-
-	if ( this->mJoint ) {
-
-		MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
-		MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
-	
-		this->LuaRelease ( bodyA );
-		this->LuaRelease ( bodyB );
-	}
-	
-	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

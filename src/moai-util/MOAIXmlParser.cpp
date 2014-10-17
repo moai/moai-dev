@@ -2,10 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-util/MOAIStream.h>
 #include <moai-util/MOAIXmlParser.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_TINYXML
+#if MOAI_WITH_TINYXML && MOAI_WITH_EXPAT
 #include <tinyxml.h>
 
 //================================================================//
@@ -13,7 +14,81 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	parseFile
+// TODO: doxygen
+int MOAIXmlParser::_getElementAttribute ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "US" )
+
+	ZLXmlElement* element = self->mReader.GetElement ();
+	if ( element ) {
+		
+		cc8* attribute = state.GetValue < cc8* >( 2, 0 );
+		if ( attribute && element->HasAttribute ( attribute )) {
+			state.Push ( element->GetAttribute ( attribute ));
+			return 1;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIXmlParser::_getElementAttributes ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+
+	lua_newtable ( state );
+
+	ZLXmlElement* element = self->mReader.GetElement ();
+	if ( element ) {
+		
+		const ZLXmlElement::AttributeMap& attributes = element->GetAttributes ();
+		
+		ZLXmlElement::AttributeMapConstIt attrIt = attributes.begin ();
+		for ( ; attrIt != attributes.end (); ++attrIt ) {
+			state.SetField ( -1, attrIt->first, attrIt->second );
+		}
+		state.Push (( u32 )attributes.size ());
+		return 2;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAIXmlParser::_getElementLineNumber ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	state.Push ( self->mReader.GetLineNumber ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIXmlParser::_getElementName ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+
+	ZLXmlElement* element = self->mReader.GetElement ();
+	if ( element ) {
+		state.Push ( element->GetName ());
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIXmlParser::_getElementText ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+
+	ZLXmlElement* element = self->mReader.GetElement ();
+	if ( element && ( element->GetText ().size () > 0 )) {
+		state.Push ( element->GetText ());
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	parseFile
 	@text	Parses the contents of the specified file as XML.
 
 	@in		MOAIXmlParser self
@@ -37,7 +112,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	parseString
+/**	@lua	parseString
 	@text	Parses the contents of the specified string as XML.
 
 	@in		MOAIXmlParser self
@@ -58,16 +133,46 @@ int MOAIXmlParser::_parseString ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIXmlParser::_setStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	self->mStream.Set ( *self, state.GetLuaObject< MOAIStream >( 2, false ));
+	
+	if ( self->mStream ) {
+		self->mReader.SetStream ( *self->mStream->GetZLStream ());
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIXmlParser::_step ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	self->mReader.Parse ();
+	state.Push ( self->mReader.GetEvent ());
+	
+	return 1;
+}
+
 //================================================================//
 // MOAIXmlParser
 //================================================================//
 
 //----------------------------------------------------------------//
 MOAIXmlParser::MOAIXmlParser () {
+
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIXmlParser::~MOAIXmlParser () {
+
+	this->mStream.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -85,7 +190,6 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 		lua_setfield ( state, -2, "type" );
 		
 		// parse attributes
-		
 		TiXmlAttribute* attribute = element->FirstAttribute ();
 		if ( attribute ) {
 			lua_newtable ( state );
@@ -136,6 +240,12 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 //----------------------------------------------------------------//
 void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "DONE",				( u32 )ZLXmlReader::DONE );
+	state.SetField ( -1, "ELEMENT",				( u32 )ZLXmlReader::ELEMENT );
+	state.SetField ( -1, "ELEMENT_BEGIN",		( u32 )ZLXmlReader::ELEMENT_BEGIN );
+	state.SetField ( -1, "ELEMENT_END",			( u32 )ZLXmlReader::ELEMENT_END );
+	state.SetField ( -1, "XML_ERROR",			( u32 )ZLXmlReader::XML_ERROR );
+
 	luaL_Reg regTable[] = {
 		{ "parseFile",				_parseFile },
 		{ "parseString",			_parseString },
@@ -147,7 +257,19 @@ void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable[] = {
+		{ "getElementAttribute",	_getElementAttribute },
+		{ "getElementAttributes",	_getElementAttributes },
+		{ "getElementLineNumber",	_getElementLineNumber },
+		{ "getElementName",			_getElementName },
+		{ "getElementText",			_getElementText },
+		{ "setStream",				_setStream },
+		{ "step",					_step },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }
 
 #endif

@@ -14,7 +14,7 @@ class MOAIViewport;
 //================================================================//
 // MOAICameraFitter2D
 //================================================================//
-/**	@name	MOAICameraFitter2D
+/**	@lua	MOAICameraFitter2D
 	@text	Action to dynamically fit a camera transform to a set of targets
 			given a viewport and world space constraints.
 	
@@ -31,7 +31,7 @@ class MOAICameraFitter2D :
 private:
 
 	MOAILuaSharedPtr < MOAITransform >	mCamera;
-	MOAILuaSharedPtr < MOAIViewport >		mViewport;
+	MOAILuaSharedPtr < MOAIViewport >	mViewport;
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;

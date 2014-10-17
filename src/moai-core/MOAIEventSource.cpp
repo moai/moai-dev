@@ -4,9 +4,7 @@
 #include "pch.h"
 
 #include <moai-core/MOAIEventSource.h>
-
-#include <moai-core/MOAILuaState-impl.h>
-#include <moai-core/MOAILuaClass-impl.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAIEventSource
@@ -38,16 +36,6 @@ bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
-
-	if ( this->PushListener ( eventID, state )) {
-		this->PushLuaUserdata ( state );
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 
 	MOAILuaState state ( L );
@@ -68,7 +56,7 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getListener
+/**	@lua	getListener
 	@text	Gets the listener callback for a given event ID.
 
 	@in		MOAIInstanceEventSource self
@@ -87,7 +75,7 @@ int MOAIInstanceEventSource::_getListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setListener
+/**	@lua	setListener
 	@text	Sets a listener callback for a given event ID. It is up
 			to individual classes to declare their event IDs.
 
@@ -119,6 +107,28 @@ void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
+
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushListenerAndSelf ( eventID, state )) {
+			state.DebugCall ( 0, 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInstanceEventSource::InvokeListenerWithSelf ( u32 eventID ) {
+
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushListenerAndSelf ( eventID, state )) {
+			state.DebugCall ( 1, 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 	RTTI_BEGIN
@@ -128,6 +138,16 @@ MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
 //----------------------------------------------------------------//
 MOAIInstanceEventSource::~MOAIInstanceEventSource () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIInstanceEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
+
+	if ( this->PushListener ( eventID, state )) {
+		this->PushLuaUserdata ( state );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -162,6 +182,15 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 		lua_newtable ( state );
 		this->mListenerTable.SetRef ( state, -1 );
 		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( eventID, state )) {
+		state.DebugCall ( 0, 0 );
 	}
 }
 

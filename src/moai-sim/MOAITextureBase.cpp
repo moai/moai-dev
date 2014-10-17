@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getSize
+/**	@lua	getSize
 	@text	Returns the width and height of the texture's source image.
 			Avoid using the texture width and height to compute UV
 			coordinates from pixels, as this will prevent texture
@@ -35,7 +35,7 @@ int MOAITextureBase::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Releases any memory associated with the texture.
 	
 	@in		MOAITextureBase self
@@ -50,7 +50,7 @@ int MOAITextureBase::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFilter
+/**	@lua	setFilter
 	@text	Set default filtering mode for texture.
 	
 	@in		MOAITextureBase self
@@ -71,7 +71,7 @@ int MOAITextureBase::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWrap
+/**	@lua	setWrap
 	@text	Set wrapping mode for texture.
 	
 	@in		MOAITextureBase self
@@ -115,18 +115,13 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 
 	zglBindTexture ( this->mGLTexID );
 
-	USPixel::Format pixelFormat = image.GetPixelFormat ();
+	ZLPixel::Format pixelFormat = image.GetPixelFormat ();
 	ZLColor::Format colorFormat = image.GetColorFormat ();
 
-	if ( pixelFormat != USPixel::TRUECOLOR ) return; // only support truecolor textures
+	if ( pixelFormat != ZLPixel::TRUECOLOR ) return; // only support truecolor textures
 
 	// generate mipmaps if set up to use them
-	bool genMipMaps = (
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
-	);
+	bool genMipMaps = this->GenerateMipmaps ();
 
 	// GL_ALPHA
 	// GL_RGB
@@ -387,6 +382,17 @@ u32 MOAITextureBase::GetWidth () {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextureBase::GenerateMipmaps () {
+
+	return (
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
+	);
+}
+
+//----------------------------------------------------------------//
 bool MOAITextureBase::IsRenewable () {
 
 	return false;
@@ -463,17 +469,29 @@ void MOAITextureBase::OnClear () {
 void MOAITextureBase::OnDestroy () {
 
 	if ( this->mGLTexID ) {
-		
-		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
-		this->mGLTexID = 0;
+		if ( MOAIGfxDevice::IsValid ()) {
+			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+			MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+		}
 	}
+	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//
 void MOAITextureBase::OnInvalidate () {
 
+	if ( this->mGLTexID ) {
+		if ( MOAIGfxDevice::IsValid ()) {
+			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		}
+	}
 	this->mGLTexID = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAITextureBase::OnUnbind () {
+
+	zglBindTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -559,8 +577,8 @@ void MOAITextureBase::SetWrap ( int wrap ) {
 //----------------------------------------------------------------//
 void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
-	// if the dimensions have changed, clear out the old texture
-	if (( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
+	if ( this->GenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );

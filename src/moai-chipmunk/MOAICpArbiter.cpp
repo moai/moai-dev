@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	countContacts
+/**	@lua	countContacts
 	@text	Returns the number of contacts occurring with this arbiter.
 
 	@in		MOAICpArbiter self
@@ -27,7 +27,7 @@ int MOAICpArbiter::_countContacts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContactDepth
+/**	@lua	getContactDepth
 	@text	Returns the depth of a contact point between two objects.
 
 	@in		MOAICpArbiter self
@@ -47,7 +47,7 @@ int MOAICpArbiter::_getContactDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContactNormal
+/**	@lua	getContactNormal
 	@text	Returns the normal of a contact point between two objects.
 
 	@in		MOAICpArbiter self
@@ -69,7 +69,7 @@ int MOAICpArbiter::_getContactNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContactPoint
+/**	@lua	getContactPoint
 	@text	Returns the position of a contact point between two objects.
 
 	@in		MOAICpArbiter self
@@ -91,7 +91,7 @@ int MOAICpArbiter::_getContactPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTotalImpulse
+/**	@lua	getTotalImpulse
 	@text	Returns the total impulse of a contact point between two objects.
 
 	@in		MOAICpArbiter self
@@ -111,7 +111,7 @@ int MOAICpArbiter::_getTotalImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTotalImpulseWithFriction
+/**	@lua	getTotalImpulseWithFriction
 	@text	Returns the total impulse of a contact point between two objects, also including frictional forces.
 
 	@in		MOAICpArbiter self
@@ -131,7 +131,7 @@ int MOAICpArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isFirstContact
+/**	@lua	isFirstContact
 	@text	Returns whether this is the first time that these two objects have contacted.
 
 	@in		MOAICpArbiter self

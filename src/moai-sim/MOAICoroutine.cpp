@@ -6,7 +6,7 @@
 #include <moai-sim/MOAICoroutine.h>
 
 //----------------------------------------------------------------//
-/**	@name	blockOnAction
+/**	@lua	blockOnAction
 	@text	Skip updating current thread until the specified action is
 			no longer busy. A little more efficient than spinlocking from
 			Lua.
@@ -30,7 +30,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	currentThread
+/**	@lua	currentThread
 	@text	Returns the currently running thread (if any).
 	
 	@out	MOAICoroutine currentThread	Current thread or nil.
@@ -46,7 +46,47 @@ int MOAICoroutine::_currentThread ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	run
+// TODO: doxygen
+int MOAICoroutine::_getHistogram ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	MOAILuaRuntime::Get ().PushHistogram ( state, self->mTrackingGroup );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_getTrackingGroup ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	state.Push ( self->mTrackingGroup );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_reportHistogram ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+
+	cc8* filename = state.GetValue < cc8* >( 1, 0 );
+	MOAILuaRuntime::Get ().ReportHistogram ( filename, self->mTrackingGroup );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_reportLeaks ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+	
+	cc8* filename = state.GetValue < cc8* >( 1, 0 );
+	MOAILuaRuntime::Get ().ReportLeaksFormatted ( filename, self->mTrackingGroup );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
 	@in		MOAICoroutine self
@@ -103,6 +143,41 @@ int MOAICoroutine::_run ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
+	
+	self->SetIsDefaultParent ( state.GetValue < bool >( 2, true ));
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
+	
+	self->mTrackingGroup = state.GetValue < cc8* >( 2, "" );
+	
+	if (  MOAIActionMgr::Get ().GetCurrentAction () == self ) {
+		MOAILuaRuntime::Get ().SetTrackingGroup ( self->mTrackingGroup );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICoroutine::_step ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
+
+	self->mNarg = lua_gettop ( state ) - 1;
+	if ( self->mNarg > 0 ) {
+		lua_xmove ( state, self->mState, self->mNarg );
+	}
+	return self->Resume ( 0.0f );
+}
+
 //================================================================//
 // MOAICoroutine
 //================================================================//
@@ -122,9 +197,12 @@ STLString MOAICoroutine::GetDebugInfo () const {
 MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
 	mNarg ( 0 ),
-	mIsFirstRun ( true ) {
+	mIsUpdating ( false ),
+	mIsActive ( false ) {
 
 	RTTI_SINGLE ( MOAIAction )
+	
+	this->mTrackingGroup.write ( "MOAICoroutine: 0x%p", this );
 }
 
 //----------------------------------------------------------------//
@@ -132,63 +210,8 @@ MOAICoroutine::~MOAICoroutine () {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::OnUpdate ( float step ) {
-	UNUSED ( step );
-	
-	if ( this->mState ) {
-		
-		int result;
-		
-		if ( this->mIsFirstRun ) {
-			#if LUA_VERSION_NUM < 502
-				result = lua_resume ( this->mState, this->mNarg );
-			#else
-				result = lua_resume ( this->mState, NULL, this->mNarg );
-			#endif
-			this->mNarg = 0;
-			this->mIsFirstRun = false;
-		}
-		else {	
-			// Pass the step value as the return result from coroutine.yield ()
-			lua_pushnumber ( this->mState, step );
-			#if LUA_VERSION_NUM < 502
-				result = lua_resume ( this->mState, 1 );	
-			#else
-				result = lua_resume ( this->mState, NULL, 1 );	
-			#endif	
-		}
-		
-		if ( this->IsActive ()) {
-			if (( result != LUA_YIELD )) {
-			
-				if ( result != 0 ) {
-					cc8* msg = lua_tostring ( this->mState, -1 );
-
-					MOAILuaState state ( this->mState );
-
-#if (MOAI_WITH_LUAJIT)
-					//luajit has assertions on lua_call if the thread has crashed due to runtime error
-					//this means we can't run our custom stacktrace using this state. we will just bail instead
-					if ( msg ) {
-						ZLLog::Print ( "%s\n", msg );
-					}
-					state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
-#else
-					MOAILuaRuntime::Get ().PushTraceback ( state );
-					state.Push ( msg );
-					
-					lua_call ( this->mState, 1, 0 );
-#endif
-					lua_pop ( this->mState, 1 );
-				}
-				this->Stop ();
-			}
-		}
-		else {
-			this->mRef.Clear ();
-			this->mState = 0;
-		}
-	}
+void MOAICoroutine::OnStart () {
+	MOAIAction::OnStart ();
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +223,11 @@ void MOAICoroutine::OnStop () {
 		this->mRef.Clear ();
 		this->mState = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::OnUpdate ( float step ) {
+	this->Resume ( step );
 }
 
 //----------------------------------------------------------------//
@@ -220,11 +248,20 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "run",			_run },
+		{ "getHistogram",			_getHistogram },
+		{ "getTrackingGroup",		_getTrackingGroup },
+		{ "reportHistogram",		_reportHistogram },
+		{ "reportLeaks",			_reportLeaks },
+		{ "run",					_run },
+		{ "setDefaultParent",		_setDefaultParent },
+		{ "setTrackingGroup",		_setTrackingGroup },
+		{ "step",					_step },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
+	
+	// ?
 	
 	lua_getglobal ( state, "coroutine" );
 	
@@ -235,4 +272,65 @@ void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
 	lua_setfield ( state, -3, "resume" );
 	
 	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+int MOAICoroutine::Resume ( float step ) {
+	UNUSED ( step );
+	
+	int returnCount = 0;
+	
+	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
+	
+	if ( this->mState ) {
+		
+		int result;
+		
+		int narg = this->mNarg;
+		this->mNarg = 0;
+		
+		if ( narg == 0 ) {
+			lua_pushnumber ( this->mState, step );
+			narg = 1;
+		}
+		
+		#if LUA_VERSION_NUM < 502
+			result = lua_resume ( this->mState, narg );
+		#else
+			result = lua_resume ( this->mState, NULL, narg );
+		#endif
+		
+		if (( result != LUA_YIELD )) {
+		
+			if ( result != 0 ) {
+
+				cc8* msg = lua_tostring ( this->mState, -1 );
+				MOAILuaState state ( this->mState );
+
+				#if (MOAI_WITH_LUAJIT)
+					//luajit has assertions on lua_call if the thread has crashed due to runtime error
+					//this means we can't run our custom stacktrace using this state. we will just bail instead
+					if ( msg ) {
+						ZLLog::Print ( "%s\n", msg );
+					}
+					state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
+				#else
+					MOAILuaRuntime::Get ().PushTraceback ( state );
+					state.Push ( msg );
+					lua_call ( this->mState, 1, 0 );
+					lua_pop ( this->mState, 1 );
+				#endif
+			}
+			this->Stop ();
+			this->mRef.Clear ();
+			this->mState = 0;
+		}
+		else {
+			returnCount = lua_gettop ( this->mState );
+		}
+	}
+	
+	MOAILuaRuntime::Get ().SetTrackingGroup ();
+	
+	return returnCount;
 }

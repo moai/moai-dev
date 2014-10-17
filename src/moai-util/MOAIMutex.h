@@ -33,4 +33,19 @@ public:
 	void			Unlock				();
 };
 
+//================================================================//
+// MOAIAutoLock
+//================================================================//
+// TODO: rename to MOAIScopedLock?
+class MOAIAutoLock {
+private:
+	MOAIMutex&		mMutex;
+	
+public:
+	
+	//----------------------------------------------------------------//
+	MOAIAutoLock					( MOAIMutex& );
+	~MOAIAutoLock					();
+};
+
 #endif

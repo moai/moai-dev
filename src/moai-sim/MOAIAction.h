@@ -10,9 +10,10 @@
 //================================================================//
 // MOAIAction
 //================================================================//
-/**	@name MOAIAction
+/**	@lua MOAIAction
 	@text Base class for actions.
 	
+	@const	EVENT_START
 	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
 */
 class MOAIAction :
@@ -22,6 +23,7 @@ private:
 	
 	bool	mNew;
 	u32		mPass;
+	bool	mIsDefaultParent;
 	
 	MOAIAction* mParent;
 	
@@ -29,6 +31,8 @@ private:
 	ZLLeanList < MOAIAction* > mChildren;
 	
 	ZLLeanLink < MOAIAction* > mLink;
+	
+	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
 	float	mThrottle;
 	bool	mIsPaused;
@@ -42,6 +46,7 @@ private:
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
+	static int			_isPaused				( lua_State* L );
 	static int			_pause					( lua_State* L );
 	static int			_setAutoStop			( lua_State* L );
 	static int			_start					( lua_State* L );
@@ -53,6 +58,8 @@ private:
 	void				Update					( float step, u32 pass, bool checkPass );
 
 protected:
+
+	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )
 
 	//----------------------------------------------------------------//
 	virtual void		OnStart					();
@@ -68,7 +75,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIAction )
 	
 	enum {
-		EVENT_STOP = MOAINode::TOTAL_EVENTS,
+		EVENT_START = MOAINode::TOTAL_EVENTS,
+		EVENT_STOP,
 		TOTAL_EVENTS,
 	};
 	
@@ -79,6 +87,7 @@ public:
 	bool				IsBusy					();
 	bool				IsCurrent				();
 	virtual bool		IsDone					();
+	bool				IsPaused				();
 						MOAIAction				();
 						~MOAIAction				();
 	void				RegisterLuaClass		( MOAILuaState& state );

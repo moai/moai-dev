@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAIVertexFormat.h>
@@ -56,7 +57,7 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getFrameBuffer
+/**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
 	@out	MOAIFrameBuffer frameBuffer
@@ -70,7 +71,7 @@ int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTextureUnits
+/**	@lua	getMaxTextureUnits
 	@text	Returns the total number of texture units available on the device.
 
 	@out	number maxTextureUnits
@@ -84,7 +85,7 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getViewSize
+/**	@lua	getViewSize
 	@text	Returns the width and height of the view
 	
 	@out	number width
@@ -102,7 +103,7 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	isProgrammable
+/**	@lua	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
 
@@ -144,7 +145,7 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenColor
+/**	@lua	setPenColor
 
 	@in		number r
 	@in		number g
@@ -166,7 +167,7 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenWidth
+/**	@lua	setPenWidth
 
 	@in		number width
 	@out	nil
@@ -181,7 +182,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPointSize
+/**	@lua	setPointSize
 
 	@in		number size
 	@out	nil
@@ -192,6 +193,22 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 
 	float size = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	release
+
+	@in		release textures scheduled to be released
+	@out	nil
+ */
+// TODO: rename this to something more descriptive?
+int MOAIGfxDevice::_release ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIGfxDevice::Get ().ProcessDeleters ();
+	zglFlush ();
 	return 0;
 }
 
@@ -223,8 +240,6 @@ void MOAIGfxDevice::Clear () {
 
 	this->mDefaultTexture.Set ( *this, 0 );
 
-	this->ProcessDeleters ();
-
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
 		this->mBuffer = 0;
@@ -234,28 +249,35 @@ void MOAIGfxDevice::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
-
-	ZLColorVec colorVec;
-	colorVec.SetRGBA ( color );
-	
-	zglClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
-	zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT );
+void MOAIGfxDevice::ClearErrors () {
+	#ifndef MOAI_OS_NACL
+		if ( this->mHasContext ) {
+			while ( zglGetError () != ZGL_ERROR_NONE );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearErrors () {
-#ifndef MOAI_OS_NACL
-	if ( this->mHasContext ) {
-		while ( zglGetError () != ZGL_ERROR_NONE );
+void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+
+	if ( clearFlags ) {
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
+			zglDepthMask ( true );
+			zglClear ( clearFlags );
+			zglDepthMask ( false );
+		}
+		else {
+			zglClear ( clearFlags );
+		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectContext () {
 
 	this->mHasContext = true;
+	
+	zglBegin ();
 	
 	zglInitialize ();
 	
@@ -270,6 +292,20 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mDeleterStack.Reset ();
 	this->ResetResources ();
+	
+	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::DetectFramebuffer () {
+	
+	zglBegin ();
+	
+	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -305,6 +341,7 @@ void MOAIGfxDevice::DrawPrims () {
 		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 			if ( count > 0 ) {
+				this->UpdateShaderGlobals ();
 				zglDrawArrays ( this->mPrimType, 0, count );
 				this->mDrawCount++;
 			}
@@ -356,12 +393,6 @@ void MOAIGfxDevice::Flush () {
 	this->mTop = 0;
 	this->mPrimTop = 0;
 	this->mPrimCount = 0;
-}
-
-//----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxDevice::GetBillboardMtx () const {
-
-	return this->mBillboardMtx;
 }
 
 //----------------------------------------------------------------//
@@ -547,11 +578,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
-#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
-	mIsOpenGLES ( true ),
-#else
-	mIsOpenGLES ( false ),
-#endif
+	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
+		mIsOpenGLES ( true ),
+	#else
+		mIsOpenGLES ( false ),
+	#endif
 	mIsProgrammable ( false ),
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
@@ -563,7 +594,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimSize ( 0 ),
 	mPrimTop ( 0 ),
 	mPrimType ( 0xffffffff ),
-	mShader ( 0 ),
+	mShaderProgram ( 0 ),
+	mShaderDirty ( false ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
@@ -586,7 +618,6 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
-	this->mBillboardMtx.Ident ();
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -602,18 +633,32 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
+	
+	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::OnGlobalsFinalize () {
+
+	// TODO: do we care about releasing resources on shutdown?
+	// commented out for now.
+	//this->ReleaseResources ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ProcessDeleters () {
 
+	zglBegin ();
+	
 	u32 top = this->mDeleterStack.GetTop ();
 	for ( u32 i = 0; i < top; ++i ) {
 		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
 		deleter.Delete ();
 	}
 	this->mDeleterStack.Reset ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -624,7 +669,7 @@ void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
 	deleter.mResourceID = id;
 	
 	this->mDeleterStack.Push ( deleter );
-	this->ProcessDeleters ();
+	//this->ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//
@@ -643,6 +688,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
+		{ "release",					_release },
 		{ NULL, NULL }
 	};
 
@@ -651,11 +697,15 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ReleaseResources () {
-
+	
+	zglBegin ();
+	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Destroy ();
 	}
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -720,7 +770,6 @@ void MOAIGfxDevice::ResetState () {
 	}
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
-	this->mBillboardMtx.Ident ();
 	
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
@@ -748,15 +797,15 @@ void MOAIGfxDevice::ResetState () {
 	zglDisable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
-	// enable depth write
-	zglDepthMask ( true );
-	this->mDepthMask = true;
+	// disable depth write
+	zglDepthMask ( false );
+	this->mDepthMask = false;
 	
 	// clear the vertex format
 	this->SetVertexFormat ();
 
 	// clear the shader
-	this->mShader = 0;
+	this->mShaderProgram = 0;
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
@@ -816,18 +865,6 @@ void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBillboardMtx () {
-
-	this->mBillboardMtx.Ident ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetBillboardMtx ( const ZLMatrix4x4& mtx ) {
-
-	this->mBillboardMtx = mtx;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode () {
 
 	if ( this->mBlendEnabled ) {
@@ -866,14 +903,13 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferScale ( float scale ) {
 
-	this->mDefaultBuffer->mBufferScale = scale;
+	this->mDefaultBuffer->SetBufferScale ( scale );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
-	this->mDefaultBuffer->mBufferWidth = width;
-	this->mDefaultBuffer->mBufferHeight = height;
+	this->mDefaultBuffer->SetBufferSize ( width, height );
 }
 
 //----------------------------------------------------------------//
@@ -1093,21 +1129,34 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
-	if (( this->mShader != shader ) && this->mIsProgrammable ) {
-	
-		this->Flush ();
-		this->mShader = shader;
-		
-		if ( shader ) {
-			shader->Bind ();
-		}
+	if ( shader ) {
+		this->SetShaderProgram ( shader->GetProgram ());
+		shader->BindUniforms ();
 	}
+	else {
+		this->SetShaderProgram ( 0 );
+	}	
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 
 	MOAIShaderMgr::Get ().BindShader ( preset );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
+
+	if (( this->mShaderProgram != program ) && this->mIsProgrammable ) {
+	
+		this->Flush ();
+		this->mShaderProgram = program;
+		
+		if ( program ) {
+			program->Bind ();
+		}
+	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1271,7 +1320,7 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 
-	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetPreset ( preset ));
+	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
 }
 
 //----------------------------------------------------------------//
@@ -1313,15 +1362,7 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) 
 		}
 	}
 	
-	// update any transforms in the shader that rely on the pipeline
-	// the shader caches the state of each uniform; only reloads when changed
-	if ( this->mShader ) {
-		this->mShader->UpdatePipelineTransforms (
-			this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
-			this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
-			this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
-		);
-	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1350,7 +1391,9 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 	
 	zglViewport ( x, y, w, h );
+	
 	this->mViewRect = rect;
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1367,7 +1410,7 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::TransformAndWriteQuad ( USVec4D* vtx, USVec2D* uv ) {
+void MOAIGfxDevice::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 
 	if ( this->mCpuVertexTransform ) {
 		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
@@ -1426,9 +1469,7 @@ void MOAIGfxDevice::UpdateFinalColor () {
 
 	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
 	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
-	}
+	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -1521,6 +1562,15 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateShaderGlobals () {
+
+	if ( this->mShaderProgram && this->mShaderDirty ) {
+		this->mShaderProgram->UpdateGlobals ();
+	}
+	this->mShaderDirty = false;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateUVMtx () {
 
 	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
@@ -1560,9 +1610,9 @@ void MOAIGfxDevice::UpdateViewVolume () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX;
 	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY;
@@ -1584,16 +1634,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv ) {
 	vtxBuffer [ 3 ].mZ = 0.0f;
 	vtxBuffer [ 3 ].mW = 1.0f;
 
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = vtx [ 0 ].mX + xOff;
 	vtxBuffer [ 0 ].mY = vtx [ 0 ].mY + yOff;
@@ -1615,16 +1665,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
 	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
@@ -1646,16 +1696,16 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
-	memcpy ( uvBuffer, uv, sizeof ( USVec2D ) * 4 );
+	ZLVec2D uvBuffer [ 4 ];
+	memcpy ( uvBuffer, uv, sizeof ( ZLVec2D ) * 4 );
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 
-	USVec4D vtxBuffer [ 4 ];
+	ZLVec4D vtxBuffer [ 4 ];
 	
 	vtxBuffer [ 0 ].mX = ( vtx [ 0 ].mX * xScale ) + xOff;
 	vtxBuffer [ 0 ].mY = ( vtx [ 0 ].mY * yScale ) + yOff;
@@ -1677,7 +1727,7 @@ void MOAIGfxDevice::WriteQuad ( const USVec2D* vtx, const USVec2D* uv, float xOf
 	vtxBuffer [ 3 ].mZ = zOff;
 	vtxBuffer [ 3 ].mW = 1.0f;
 	
-	USVec2D uvBuffer [ 4 ];
+	ZLVec2D uvBuffer [ 4 ];
 	
 	uvBuffer [ 0 ].mX = ( uv [ 0 ].mX * uScale ) + uOff;
 	uvBuffer [ 0 ].mY = ( uv [ 0 ].mY * vScale ) + vOff;

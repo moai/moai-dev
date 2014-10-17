@@ -13,13 +13,14 @@ uniform float yWarp;
 
 void main () {
 
-	float xScale = 1.0f + ( xWarp * position.y * position.y );
-	float yScale = 1.0f + ( yWarp * position.x * position.x );
+	gl_Position = position;
 
-	position.x *= xScale;
-	position.y *= yScale;
+	float xScale = 1.0 + ( xWarp * position.y * position.y );
+	float yScale = 1.0 + ( yWarp * position.x * position.x );
+
+	gl_Position.x = position.x * xScale;
+	gl_Position.y = position.y * yScale;
 	
-	gl_Position = position; 
 	uvVarying = uv;
     colorVarying = color;
 }

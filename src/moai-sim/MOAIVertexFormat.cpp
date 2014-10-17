@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	declareAttribute
+/**	@lua	declareAttribute
 	@text	Declare a custom attribute (for use with programmable pipeline).
 	
 	@in		MOAIVertexFormat self
@@ -28,13 +28,13 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	bool normalized		= state.GetValue < bool >( 5, false );
 
-	self->DeclareAttribute ( index, type, size, 0, normalized );
+	self->DeclareAttribute ( index, type, size, NULL_INDEX, normalized );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareColor
+/**	@lua	declareColor
 	@text	Declare a vertex color.
 	
 	@in		MOAIVertexFormat self
@@ -54,7 +54,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareCoord
+/**	@lua	declareCoord
 	@text	Declare a vertex coordinate.
 	
 	@in		MOAIVertexFormat self
@@ -76,7 +76,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareNormal
+/**	@lua	declareNormal
 	@text	Declare a vertex normal.
 	
 	@in		MOAIVertexFormat self
@@ -96,7 +96,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareUV
+/**	@lua	declareUV
 	@text	Declare a vertex texture coordinate.
 	
 	@in		MOAIVertexFormat self
@@ -122,18 +122,14 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::Bind ( void* buffer ) const {
+void MOAIVertexFormat::Bind ( void* buffer ) const {
 
-	if ( buffer ) {
-		if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
-			this->BindProgrammable ( buffer );
-		}
-		else {
-			this->BindFixed ( buffer );
-		}
-		return true;
+	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
+		this->BindProgrammable ( buffer );
 	}
-	return false;
+	else {
+		this->BindFixed ( buffer );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -184,13 +180,13 @@ void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
 
 		void* addr = ( void* )(( size_t )buffer + attr.mOffset );
-		zglVertexAttribPointer (	attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
+		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
 		zglEnableVertexAttribArray ( attr.mIndex );
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) {
+bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return false;
@@ -348,6 +344,88 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	this->mTotalAttributes		= state.GetField < u32 >( -1, "mTotalAttributes", 0 );
+	this->mVertexSize			= state.GetField < u32 >( -1, "mVertexSize", 0 );
+
+	this->mAttributes.Init ( this->mTotalAttributes );
+
+	state.GetField ( -1, "mAttributes" );
+	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+		
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+		
+		state.GetField ( -1, i + 1 );
+		
+		attribute.mIndex			= state.GetField < u32 >( -1, "mIndex", 0 );
+		attribute.mSize				= state.GetField < u32 >( -1, "mSize", 0 );
+		attribute.mType				= state.GetField < u32 >( -1, "mType", 0 );
+		attribute.mNormalized		= state.GetField < bool >( -1, "mNormalized", 0 );
+		attribute.mOffset			= state.GetField < u32 >( -1, "mOffset", 0 );
+		
+		state.Pop ( 1 );
+	}
+	lua_pop ( state, 1 );
+	
+	state.GetField ( -1, "mAttributeUseTable" );
+	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
+		
+		MOAIVertexAttributeUse& attributeUse = this->mAttributeUseTable [ i ];
+		
+		state.GetField ( -1, i + 1 );
+		
+		attributeUse.mUse			= state.GetField < u32 >( -1, "mUse", 0 );
+		attributeUse.mAttrID		= state.GetField < u32 >( -1, "mAttrID", 0 );
+		
+		state.Pop ( 1 );
+	}
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.SetField ( -1, "mTotalAttributes", this->mTotalAttributes );
+	state.SetField ( -1, "mVertexSize", this->mVertexSize );
+
+	lua_newtable ( state );
+	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+	
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+	
+		state.Push ( i + 1 );
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "mIndex",			attribute.mIndex );
+		state.SetField ( -1, "mSize",			attribute.mSize );
+		state.SetField ( -1, "mType",			attribute.mType );
+		state.SetField ( -1, "mNormalized",		attribute.mNormalized );
+		state.SetField ( -1, "mOffset",			attribute.mOffset );
+		
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributes" );
+
+	lua_newtable ( state );
+	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
+		
+		MOAIVertexAttributeUse& attributeUse = this->mAttributeUseTable [ i ];
+	
+		state.Push ( i + 1 );
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "mUse",			attributeUse.mUse );
+		state.SetField ( -1, "mAttrID",			attributeUse.mAttrID );
+		
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributeUseTable" );
 }
 
 //----------------------------------------------------------------//

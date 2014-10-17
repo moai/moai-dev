@@ -7,6 +7,7 @@
 #define MOAI_ENV_appDisplayName				"appDisplayName"
 #define MOAI_ENV_appID						"appID"
 #define MOAI_ENV_appVersion					"appVersion"
+#define MOAI_ENV_buildVersion				"buildVersion"
 #define MOAI_ENV_cacheDirectory				"cacheDirectory"
 #define MOAI_ENV_carrierISOCountryCode		"carrierISOCountryCode"
 #define MOAI_ENV_carrierMobileCountryCode	"carrierMobileCountryCode"
@@ -24,15 +25,20 @@
 #define MOAI_ENV_documentDirectory			"documentDirectory"
 #define MOAI_ENV_iosRetinaDisplay			"iosRetinaDisplay"
 #define MOAI_ENV_languageCode				"languageCode"
+#define MOAI_ENV_libraryDirectory			"libraryDirectory"
 #define MOAI_ENV_numProcessors				"numProcessors"
 #define MOAI_ENV_osBrand					"osBrand"
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
 #define MOAI_ENV_screenDpi					"screenDpi"
+#define MOAI_ENV_systemLanguageCode			"systemLanguageCode"
 #define MOAI_ENV_verticalResolution			"verticalResolution"
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
+
+#define MOAI_ENV_iosIFA						"iosIFA"
+#define MOAI_ENV_iosIFV						"iosIFV"
 
 #define OS_BRAND_ANDROID 		"Android"
 #define OS_BRAND_IOS 			"iOS"
@@ -44,7 +50,7 @@
 //================================================================//
 // MOAIEnvironment
 //================================================================//
-/**	@name	MOAIEnvironment
+/**	@lua	MOAIEnvironment
 	@text	<p>Table of key/value pairs containing information about the current
 			environment. Also contains the generateGUID (), which will move to
 			MOAIUnique in a future release.</p>
@@ -74,6 +80,8 @@
 			<li>devPlatform</li>
 			<li>devProduct</li>
 			<li>documentDirectory</li>
+			<li>iosIFA</li>
+			<li>iosIFV</li>
 			<li>iosRetinaDisplay</li>
 			<li>languageCode</li>
 			<li>numProcessors</li>

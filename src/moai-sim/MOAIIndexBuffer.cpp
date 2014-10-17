@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	release
+/**	@lua	release
 	@text	Release any memory held by this index buffer.
 	
 	@in		MOAIIndexBuffer self
@@ -23,7 +23,7 @@ int	MOAIIndexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Set capacity of buffer.
 	
 	@in		MOAIIndexBuffer self
@@ -40,7 +40,7 @@ int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setIndex
+/**	@lua	setIndex
 	@text	Initialize an index.
 	
 	@in		MOAIIndexBuffer self
@@ -52,7 +52,7 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
 	
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	u16 value	= state.GetValue < u16 >( 3, 1 ) - 1;
+	u32 value	= state.GetValue < u32 >( 3, 1 ) - 1;
 	
 	self->SetIndex ( idx, value );
 	
@@ -76,15 +76,7 @@ bool MOAIIndexBuffer::IsValid () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIIndexBuffer::LoadGfxState () {
-
-	return this->Bind ();
-}
-
-//----------------------------------------------------------------//
 MOAIIndexBuffer::MOAIIndexBuffer () :
-	mBuffer ( 0 ),
-	mIndexCount ( 0 ),
 	mGLBufferID ( 0 ),
 	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ) {
 	
@@ -108,22 +100,19 @@ void MOAIIndexBuffer::OnBind () {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::OnClear () {
 	
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
-		this->mBuffer = 0;
-	}
+	this->mIndices.Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::OnCreate () {
 
-	if ( this->mBuffer ) {
+	if ( this->mIndices.Size ()) {
 		
 		this->mGLBufferID = zglCreateBuffer ();
 		if ( this->mGLBufferID ) {
 		
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
-			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndexCount * sizeof ( u16 ), this->mBuffer, this->mHint );
+			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndices.BufferSize (), this->mIndices.Data (), this->mHint );
 		}
 	}
 }
@@ -148,6 +137,12 @@ void MOAIIndexBuffer::OnLoad () {
 }
 
 //----------------------------------------------------------------//
+void MOAIIndexBuffer::OnUnbind () {
+
+	zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -169,17 +164,49 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 
 	this->Clear ();
-	
-	this->mIndexCount = indexCount;
-	this->mBuffer = ( u16* )malloc ( indexCount * sizeof ( u16 ));
-	
+	this->mIndices.Init ( indexCount );
+	this->mStream.SetBuffer ( this->mIndices.Data (), this->mIndices.BufferSize ());
 	this->Load ();
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::SetIndex ( u32 idx, u16 value ) {
+void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
 
-	if ( idx < this->mIndexCount ) {
-		this->mBuffer [ idx ] = value;
+	u32 indexCount		= state.GetField < u32 >( -1, "mTotalIndices", 0 );
+	this->mHint			= state.GetField < u32 >( -1, "mHint", 0 );
+
+	this->ReserveIndices ( indexCount );
+
+	state.GetField ( -1, "mIndices" );
+
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+		
+		STLString zipString = lua_tostring ( state, -1 );
+		size_t unzipLen = zipString.zip_inflate ( this->mIndices.Data (), this->mIndices.BufferSize ());
+		assert ( unzipLen == this->mIndices.BufferSize ()); // TODO: fail gracefully
+	}
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.SetField ( -1, "mTotalIndices", ( u32 )this->mIndices.Size ()); // TODO: overflow
+	state.SetField ( -1, "mHint", this->mHint );
+	
+	STLString zipString;
+	zipString.zip_deflate ( this->mIndices.Data (), this->mIndices.BufferSize ());
+	
+	lua_pushstring ( state, zipString.str ());
+	lua_setfield ( state, -2, "mIndices" );
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::SetIndex ( u32 idx, u32 value ) {
+
+	if ( idx < this->mIndices.Size ()) {
+		this->mIndices [ idx ] = value;
 	}
 }

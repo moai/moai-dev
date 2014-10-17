@@ -13,7 +13,7 @@ class MOAIPathFinder;
 //================================================================//
 // MOAIGridPathGraph
 //================================================================//
-/**	@name	MOAIGridPathGraph
+/**	@lua	MOAIGridPathGraph
 	@text	Pathfinder graph adapter for MOAIGrid.
 */
 class MOAIGridPathGraph :
@@ -41,9 +41,9 @@ private:
 public:
 	
 	enum DISTANCE {
+		EUCLIDEAN_DISTANCE,
 		MANHATTAN_DISTANCE,
 		DIAGONAL_DISTANCE,
-		EUCLIDEAN_DISTANCE,
 	};
 	
 	static const u32 NO_DIAGONALS = 0x00000001;

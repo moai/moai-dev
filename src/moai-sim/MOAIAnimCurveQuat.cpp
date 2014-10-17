@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getValueAtTime
+/**	@lua	getValueAtTime
 	@text	Return the interpolated value (as Euler angles) given a point in
 			time along the curve. This does not change the curve's built in TIME
 			attribute (it simply performs the requisite computation on demand).
@@ -37,7 +37,7 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setKey
+/**	@lua	setKey
 	@text	Initialize a key frame at a given time with a give value
 			(as Euler angles). Also set the transition type between
 			the specified key frame and the next key frame.
@@ -77,7 +77,7 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
@@ -104,7 +104,7 @@ void MOAIAnimCurveQuat::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& sp
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLQuaternion >( v1 );
+	attrOp.SetValue < ZLQuaternion >( v1, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
@@ -138,7 +138,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ));
+	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//
@@ -146,7 +146,7 @@ void MOAIAnimCurveQuat::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	ZLQuaternion quat;
 	quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLQuaternion >( quat );
+	attrOp.SetValue < ZLQuaternion >( quat, MOAIAttrOp::ATTR_TYPE_QUATERNION );
 }
 
 //----------------------------------------------------------------//

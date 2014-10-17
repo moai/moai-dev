@@ -11,7 +11,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleScript
 //================================================================//
-/**	@name	MOAIParticleScript
+/**	@lua	MOAIParticleScript
 	@text	Particle script. A particle script contains a series of operations, which
 	can perform simple computations on values. Values can be hard-coded using packConst
 	to create constant values, or stored in registers. There is a set of innate registers,
@@ -109,8 +109,9 @@ private:
 	STLList < Instruction > mInstructions;
 	
 	ZLLeanArray < u8 > mBytecode;
-	bool mCompiled;
-	float mLiveRegisters[LIVE_REG_COUNT];
+
+	bool	mCompiled;
+	float	mLiveRegisters [ LIVE_REG_COUNT ]; // TODO: OK to let user reserve these?
 
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
@@ -124,12 +125,12 @@ private:
 	static int		_mul				( lua_State* L );
 	static int		_norm				( lua_State* L );
 	static int		_packConst			( lua_State* L );
-	static int		_packLiveReg			( lua_State* L );
+	static int		_packLiveReg		( lua_State* L );
 	static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );
 	static int		_randVec			( lua_State* L );
 	static int		_set				( lua_State* L );
-	static int		_setReg				( lua_State* L );
+	static int		_setLiveReg			( lua_State* L );
 	static int		_sin				( lua_State* L );
 	static int		_sprite				( lua_State* L );
 	static int		_sub				( lua_State* L );

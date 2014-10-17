@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIBox2DRopeJoint
 //================================================================//
-/**	@name MOAIBox2DRopeJoint
+/**	@lua MOAIBox2DRopeJoint
 	@text Box2D rope joint.
  */
 class MOAIBox2DRopeJoint :

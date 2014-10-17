@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIJoystickSensor
 //================================================================//
-/**	@name	MOAIJoystickSensor
+/**	@lua	MOAIJoystickSensor
 	@text	Analog and digital joystick sensor.
 */
 class MOAIJoystickSensor :
@@ -30,9 +30,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIJoystickSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAIJoystickSensor		();
 					~MOAIJoystickSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( ZLStream& eventStream, float x, float y );

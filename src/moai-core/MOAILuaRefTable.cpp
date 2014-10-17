@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaRefTable.h>
 #include <moai-core/MOAILuaRuntime.h>
 
@@ -13,13 +14,13 @@
 void MOAILuaRefTable::Clear () {
 
 	if ( this->mTableID != LUA_NOREF ) {
-		
+
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
+
 		luaL_unref ( state, LUA_REGISTRYINDEX, this->mTableID );
 		this->mTableID = LUA_NOREF;
 	}
-	
+
 	this->mRefIDStack.Clear ();
 	this->mRefIDStackTop = 0;
 }
@@ -80,6 +81,12 @@ void MOAILuaRefTable::PushRef ( MOAILuaState& state, int refID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRefTable::PushRefTable ( MOAILuaState& state ) {
+
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
+}
+
+//----------------------------------------------------------------//
 int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 
 	assert ( this->mTableID != LUA_NOREF );
@@ -92,8 +99,9 @@ int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 	lua_pushnumber ( state, refID );
 	lua_pushvalue ( state, idx );
 	lua_settable ( state, -3 );
+
 	lua_pop ( state, 1 );
-	
+
 	return refID;
 }
 
@@ -108,21 +116,22 @@ int MOAILuaRefTable::ReserveRefID () {
 
 	if ( !this->mRefIDStackTop ) {
 
-		u32 currentSize = this->mRefIDStack.Size ();
+		// TODO: 64-bit
+		u32 currentSize = ( u32 )this->mRefIDStack.Size ();
 
 		assert ( currentSize <= ( MAX_REF_ID - REFID_CHUNK_SIZE ));
 
 		u32 size = currentSize + REFID_CHUNK_SIZE;
 		this->mRefIDStack.Init ( size );
-		
+
 		for ( u32 i = 0; i < REFID_CHUNK_SIZE; ++i ) {
 			this->mRefIDStack [ i ] = size--;
 		}
 		this->mRefIDStackTop = REFID_CHUNK_SIZE;
 	}
-	
+
 	assert ( this->mRefIDStackTop );
-	
+
 	return this->mRefIDStack [ --this->mRefIDStackTop ];
 }
 
@@ -138,7 +147,8 @@ void MOAILuaRefTable::Unref ( int refID ) {
 	lua_pushnumber ( state, refID );
 	lua_pushnil ( state );
 	lua_settable ( state, -3 );
+
 	lua_pop ( state, 1 );
-	
+
 	this->ReleaseRefID ( refID );
 }

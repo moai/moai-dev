@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Disassociates and unlocks the stream's MOAIDataBuffer.
 	
 	@in		MOAIDataBufferStream self
@@ -24,7 +24,7 @@ int MOAIDataBufferStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	open
+/**	@lua	open
 	@text	Associate the stream with a MOAIDataBuffer. Note that the
 			MOAIDataBuffer will be locked with a mutex while it is open
 			thus blocking any asynchronous operations.
@@ -56,8 +56,7 @@ void MOAIDataBufferStream::Close () {
 
 	if ( this->mDataBuffer ) {
 		
-		this->mByteStream.SetBuffer ( 0, 0 );
-		this->mByteStream.SetLength ( 0 );
+		this->mByteStream.Clear ();
 		
 		this->SetZLStream ( 0 );
 		this->mDataBuffer->Unlock ();

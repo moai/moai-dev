@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserve
+/**	@lua	reserve
 	@text	Set capacity of quad deck.
 	
 	@in		MOAIGfxQuadDeck2D self
@@ -36,7 +36,7 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setQuad
+/**	@lua	setQuad
 	@text	Set model space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -77,7 +77,7 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set model space quad given a valid deck index and a rect.
 	
 	@in		MOAIGfxQuadDeck2D self
@@ -108,7 +108,7 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVQuad
+/**	@lua	setUVQuad
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
@@ -148,7 +148,7 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setUVRect
+/**	@lua	setUVRect
 	@text	Set UV space quad given a valid deck index and a rect.
 	
 	@in		MOAIGfxQuadDeck2D self
@@ -178,7 +178,7 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transform
+/**	@lua	transform
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
 	@in		MOAIGfxQuadDeck2D self
@@ -198,7 +198,7 @@ int MOAIGfxQuadDeck2D::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	transformUV
+/**	@lua	transformUV
 	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
 	
 	@in		MOAIGfxQuadDeck2D self

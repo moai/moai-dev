@@ -16,6 +16,19 @@
 #include <moai-sim/MOAIWheelSensor.h>
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+	
+	lua_pushstring(state, self->mHardwareInfo.c_str ());
+	return 1;
+}
+
+//================================================================//
 // MOAIInputDevice
 //================================================================//
 
@@ -26,15 +39,6 @@ MOAISensor* MOAIInputDevice::GetSensor ( u8 sensorID ) {
 		return this->mSensors [ sensorID ];
 	}
 	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIInputDevice::HandleEvent ( u8 sensorID, ZLStream& eventStream ) {
-
-	MOAISensor* sensor = this->GetSensor ( sensorID );
-	if ( sensor ) {
-		sensor->HandleEvent ( eventStream );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -56,7 +60,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getExtendedName",	_getExtendedName },
+		{ "getHardwareInfo",		_getHardwareInfo },
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
@@ -77,7 +81,7 @@ void MOAIInputDevice::ReserveSensors ( u8 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::Reset () {
+void MOAIInputDevice::ResetSensors () {
 
 	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
@@ -88,19 +92,9 @@ void MOAIInputDevice::Reset () {
 }
 
 //----------------------------------------------------------------//
-int MOAIInputDevice::_getExtendedName( lua_State* L )
-{
-	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+void MOAIInputDevice::SetHardwareInfo ( cc8* hardwareInfo ) {
 
-		lua_pushstring(state, self->mNameExtended.c_str());
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
-void MOAIInputDevice::SetExtendedName( cc8* nameExtended )
-{
-	this->mNameExtended = nameExtended;
+	this->mHardwareInfo = hardwareInfo;
 }
 
 //----------------------------------------------------------------//

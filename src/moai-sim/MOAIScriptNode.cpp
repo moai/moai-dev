@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveAttrs
+/**	@lua	reserveAttrs
 	@text	Reserve memory for custom attributes and initializes them to 0.
 	
 	@in		MOAIScriptNode self
@@ -27,7 +27,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets a Lua function to be called whenever the node is updated.
 	
 	@in		MOAIScriptNode self
@@ -50,7 +50,7 @@ bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	attrID = UNPACK_ATTR(attrID);
 
 	if ( attrID < this->mAttributes.Size ()) {
-		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op, MOAIAttrOp::ATTR_READ_WRITE );
+		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
 		return true;
 	}
 	return false;

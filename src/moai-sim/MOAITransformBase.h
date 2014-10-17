@@ -9,7 +9,7 @@
 //================================================================//
 // MOAITransformBase
 //================================================================//
-/**	@name	MOAITransformBase
+/**	@lua	MOAITransformBase
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC
@@ -33,6 +33,8 @@ protected:
 	static int	_getWorldLoc	( lua_State* L );
 	static int	_getWorldRot	( lua_State* L );
 	static int	_getWorldScl	( lua_State* L );
+	static int	_modelToWorld	( lua_State* L );
+	static int	_worldToModel	( lua_State* L );
 
 public:
 	
@@ -58,10 +60,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const ZLAffine3D&		GetLocalToWorldMtx			();
-	const ZLAffine3D*		GetLocTrait					();
-	const ZLAffine3D*		GetTransformTrait			();
-	const ZLAffine3D&		GetWorldToLocalMtx			();
+	const ZLAffine3D&		GetLocalToWorldMtx			() const;
+	const ZLAffine3D*		GetLocTrait					() const;
+	const ZLAffine3D*		GetTransformTrait			() const;
+	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransformBase			();
 							~MOAITransformBase			();
 	void					RegisterLuaClass			( MOAILuaState& state );

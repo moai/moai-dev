@@ -9,7 +9,7 @@
 
 class MOAIFontReader;
 class MOAIGlyph;
-class MOAIGlyphCacheBase;
+class MOAIGlyphCache;
 class MOAITextureBase;
 class MOAITexture;
 
@@ -20,7 +20,7 @@ class MOAITexture;
 //================================================================//
 // MOAIFont
 //================================================================//
-/**	@name	MOAIFont
+/**	@lua	MOAIFont
 	@text	<p>MOAIFont is the top level object for managing sets of
 			glyphs associated with a single font face. An instance of
 			MOAIFont may contain glyph sets for multiple sizes of the font.
@@ -36,13 +36,13 @@ class MOAITexture;
 			feasible to pre-render a full set of glyphs to texture (or bitmap fonts), static
 			fonts may be used.</p>
 			
-			<p>MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCacheBase
+			<p>MOAIFont orchestrates objects derived from MOAIFontReader and MOAIGlyphCache
 			to render glyphs into glyph sets. MOAIFontReader is responsible for interpreting
 			the font file format (if any), retrieving glyph metrics (including kerning)
-			and rendering glyphs to texture. MOAIGlyphCache is responsible for
+			and rendering glyphs to texture. MOAIDynamicGlyphCache is responsible for
 			allocating textures to hold glyphs and for managing glyph placement within
 			textures. For dynamic fonts, the typical setup uses MOAIFreeTypeFontReader
-			and MOAIGlyphCache. For static fonts, there is usually no font reader;
+			and MOAIDynamicGlyphCache. For static fonts, there is usually no font reader;
 			MOAIStaticGlyphCache is loaded directly from a serialized file and its texture
 			memory is initialized with MOAIFont's setImage () command.</p>
 			
@@ -62,14 +62,15 @@ class MOAITexture;
 	@const	DEFAULT_FLAGS
 */
 class MOAIFont :
-	public MOAILuaObject {
+	public virtual MOAILuaObject,
+	public MOAIInstanceEventSource {
 protected:
 
 	STLString mFilename;
 	u32 mFlags;
 	
 	MOAILuaSharedPtr < MOAIFontReader > mReader;
-	MOAILuaSharedPtr < MOAIGlyphCacheBase > mCache;
+	MOAILuaSharedPtr < MOAIGlyphCache > mCache;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
@@ -77,17 +78,23 @@ protected:
 
 	float mDefaultSize;
 
+	int	mMinFilter;
+	int	mMagFilter;
+
 	//----------------------------------------------------------------//
-	 static int			_getDefaultSize         ( lua_State* L );
+	static int			_getCache				( lua_State* L );
+	static int			_getDefaultSize         ( lua_State* L );
 	static int			_getFilename			( lua_State* L );
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
+	static int			_getReader				( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_loadFromBMFont			( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );
 	static int			_setDefaultSize			( lua_State* L );
+	static int			_setFilter				( lua_State* L );
 	static int			_setFlags				( lua_State* L );
 	static int			_setImage				( lua_State* L );
 	static int			_setReader				( lua_State* L );
@@ -100,18 +107,26 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildKerning			( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs );
 	void				RebuildKerning			( MOAIGlyphSet& glyphSet );
+	void				RenderGlyph				( MOAIGlyph& glyph );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFont )
 	
 	GET ( cc8*, Filename, mFilename );
-	GET ( MOAIGlyphCacheBase*, Cache, mCache );
+	GET ( MOAIGlyphCache*, Cache, mCache );
 
-	GET ( float, DefaultSize, mDefaultSize );
+	GET ( int, MinFilter, mMinFilter );
+	GET ( int, MagFilter, mMagFilter );
+
+	GET_SET ( float, DefaultSize, mDefaultSize );
 	
 	enum {
 		FONT_AUTOLOAD_KERNING		= 0x01,
+	};
+	
+	enum {
+		EVENT_RENDER_GLYPH,
 	};
 	
 	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;

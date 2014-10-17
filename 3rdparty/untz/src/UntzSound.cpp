@@ -13,9 +13,7 @@
 // Audio sources
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
-#if MOAI_WITH_VORBIS
-   #include "OggAudioSource.h"
-#endif
+#include "OggAudioSource.h"
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
 #else
@@ -34,10 +32,9 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
 	Sound* prevSound = UNTZ::System::get()->getData()->getInMemorySound(path);
 	Sound* newSound = new Sound();
-	
+
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
-#if MOAI_WITH_VORBIS
 		OggAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			// Use the existing AudioSource
@@ -65,10 +62,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			delete newSound;
 			return 0;
 		}
-#else
-			delete newSound;
-			return 0;
-#endif
 	}
 	else
 	{
@@ -164,29 +157,25 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	AudioSource* source = 0;
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
-#if MOAI_WITH_VORBIS
 		OggAudioSource* as = new OggAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
-#endif
 	}
 	else
 	{
-	
-	
 #if defined(__APPLE__)
 		ExtAudioFileAudioSource *as = new ExtAudioFileAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
-#elif defined(WIN32)
-		DShowAudioSource* as = new DShowAudioSource();
+#elif defined(__ANDROID__) | defined(__linux__) | defined(__OPENAL__) | defined(__SDL__) | defined ( __QNX__ )
+      WaveFileAudioSource *as = new WaveFileAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
 #else
-      WaveFileAudioSource *as = new WaveFileAudioSource();
+		DShowAudioSource* as = new DShowAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;

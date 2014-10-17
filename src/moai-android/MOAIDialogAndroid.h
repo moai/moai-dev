@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIDialogAndroid
 //================================================================//
-/**	@name	MOAIDialogAndroid
+/**	@lua	MOAIDialogAndroid
 	@text	Wrapper for a simple native dialog implementation on 
 			Android devices. Exposed to Lua via MOAIDialog on all 
 			mobile platforms.
@@ -24,12 +24,12 @@ class MOAIDialogAndroid :
 private:
 
 	MOAILuaStrongRef	mDialogCallback;
-	
+
 	//----------------------------------------------------------------//
 	static int	_showDialog	( lua_State* L );
 
 public:
-	
+
 	DECL_LUA_SINGLETON ( MOAIDialogAndroid )
 
 	enum {
@@ -38,7 +38,7 @@ public:
 		DIALOG_RESULT_NEGATIVE,
 		DIALOG_RESULT_CANCEL,
 	};
-	
+
 			MOAIDialogAndroid		();
 			~MOAIDialogAndroid		();
 	void	NotifyDialogDismissed	( int code );

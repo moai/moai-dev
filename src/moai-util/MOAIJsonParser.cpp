@@ -29,8 +29,8 @@ void _jsonArrayToLua ( lua_State* L, json_t* json ) {
 	
 	lua_newtable ( L );
 	
-	int size = json_array_size ( json );
-	for ( int i = 0; i < size; ++i ) {
+	size_t size = json_array_size ( json );
+	for ( size_t i = 0; i < size; ++i ) {
 		
 		json_t* value = json_array_get ( json, i );
 		
@@ -189,7 +189,7 @@ json_t* _luaToJSONObject ( lua_State* L, int idx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	decode
+/**	@lua	decode
 	@text	Decode a JSON string into a hierarchy of Lua tables.
 	
 	@in		string input
@@ -217,7 +217,7 @@ int MOAIJsonParser::_decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	encode
+/**	@lua	encode
 	@text	Encode a hierarchy of Lua tables into a JSON string.
 	
 	@in		table input

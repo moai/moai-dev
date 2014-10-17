@@ -16,7 +16,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	showDialog
+/**	@lua	showDialog
 	@text	Show a native dialog to the user.
 				
 	@in		string		title			The title of the dialog box. Can be nil.
@@ -61,13 +61,13 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		ZLLog::Print ( "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID showDialog = env->GetStaticMethodID ( moai, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
     	if ( showDialog == NULL ) {
 
-			ZLLog::Print ( "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
     	} else {
 
 			env->CallStaticVoidMethod ( moai, showDialog, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );	

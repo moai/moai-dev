@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	addChild
+/**	@lua	addChild
 	@text	Attaches a child action for updating.
 
 	@in		MOAIAction self
@@ -18,7 +18,7 @@
 	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAction, "UU" )
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
@@ -31,7 +31,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	attach
+/**	@lua	attach
 	@text	Attaches a child to a parent action. The child will receive
 			updates from the parent only if the parent is in the action tree.
 
@@ -50,7 +50,7 @@ int MOAIAction::_attach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clear
+/**	@lua	clear
 	@text	Removes all child actions.
 
 	@in		MOAIAction self
@@ -66,7 +66,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	detach
+/**	@lua	detach
 	@text	Detaches an action from its parent (if any) thereby removing
 			it from the action tree. Same effect as calling stop ().
 
@@ -83,7 +83,7 @@ int MOAIAction::_detach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isActive
+/**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
 	@in		MOAIAction self
@@ -97,7 +97,7 @@ int MOAIAction::_isActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isBusy
+/**	@lua	isBusy
 	@text	Checks to see if an action is currently busy. An action is
 			'busy' only if it is 'active' and not 'done.'
 
@@ -112,7 +112,7 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDone
+/**	@lua	isDone
 	@text	Checks to see if an action is 'done.' Definition of 'done'
 			is up to individual action implementations.
 
@@ -127,7 +127,21 @@ int MOAIAction::_isDone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	isPaused
+	@text	Checks to see if an action is 'paused.'
+ 
+	@in		MOAIAction self
+	@out	bool isPaused
+*/
+int MOAIAction::_isPaused ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+	
+	lua_pushboolean ( state, self->IsPaused ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	pause
 	@text	Leaves the action in the action tree but prevents it from
 			receiving updates. Call pause ( false ) or start () to unpause.
 
@@ -151,7 +165,7 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	start
+/**	@lua	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
 	@in		MOAIAction self
@@ -164,7 +178,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( !action ) {
-		action = MOAIActionMgr::Get ().AffirmRoot ();
+		action = MOAIActionMgr::Get ().GetDefaultParent ();
 	}
 
 	self->Attach ( action );
@@ -175,7 +189,7 @@ int MOAIAction::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Removed the action from its parent action; action will
 			stop being updated.
 
@@ -193,7 +207,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	throttle
+/**	@lua	throttle
 	@text	Sets the actions throttle. Throttle is a scalar on time.
 			Is is passed to the action's children.
 	
@@ -227,6 +241,17 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	}
 	
 	if ( oldParent ) {
+		
+		// if we're detaching the action while the parent action is updating
+		// then we need to handle the edge case where the action is referenced
+		// by mChildIt
+		if ( oldParent->mChildIt == &this->mLink ) {
+			oldParent->mChildIt = oldParent->mChildIt->Next ();
+			if ( oldParent->mChildIt ) {
+				oldParent->mChildIt->Data ()->Retain ();
+			}
+			this->Release ();
+		}
 		
 		oldParent->mChildren.Remove ( this->mLink );
 		
@@ -297,6 +322,12 @@ bool MOAIAction::IsDone () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIAction::IsPaused () {
+	// TODO: better to do this with a state?
+	return this->mIsPaused || (this->mParent && this->mParent->IsPaused ());
+}
+
+//----------------------------------------------------------------//
 STLString MOAIAction::GetDebugInfo() const {
 	return TypeName();
 }
@@ -305,7 +336,9 @@ STLString MOAIAction::GetDebugInfo() const {
 MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
+	mIsDefaultParent ( 0 ),
 	mParent ( 0 ),
+	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
 	mIsPaused ( false ),
 	mAutoStop ( true ) {
@@ -326,17 +359,14 @@ MOAIAction::~MOAIAction () {
 
 //----------------------------------------------------------------//
 void MOAIAction::OnStart () {
+
+	this->InvokeListenerWithSelf ( EVENT_START );
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::OnStop () {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
-			state.DebugCall ( 1, 0 );
-		}
-	}
+	this->InvokeListenerWithSelf ( EVENT_STOP );
 }
 
 //----------------------------------------------------------------//
@@ -358,7 +388,9 @@ void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
+	state.SetField ( -1, "EVENT_START", ( u32 )EVENT_START );
 	state.SetField ( -1, "EVENT_STOP", ( u32 )EVENT_STOP );
+
 }
 
 //----------------------------------------------------------------//
@@ -367,18 +399,19 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "addChild",			_addChild },
-		{ "attach",				_attach },
-		{ "clear",				_clear },
-		{ "detach",				_detach },
-		{ "isActive",			_isActive },
-		{ "isBusy",				_isBusy },
-		{ "isDone",				_isDone },
-		{ "pause",				_pause },
-		{ "setAutoStop",		_setAutoStop },
-		{ "start",				_start },
-		{ "stop",				_stop },
-		{ "throttle",			_throttle },
+		{ "addChild",				_addChild },
+		{ "attach",					_attach },
+		{ "clear",					_clear },
+		{ "detach",					_detach },
+		{ "isActive",				_isActive },
+		{ "isBusy",					_isBusy },
+		{ "isDone",					_isDone },
+		{ "isPaused",				_isPaused },
+		{ "pause",					_pause },
+		{ "setAutoStop",			_setAutoStop },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ "throttle",				_throttle },
 		{ NULL, NULL }
 	};
 	
@@ -388,9 +421,11 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
-	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
+	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
 
-	if ( this->mIsPaused || this->IsBlocked ()){
+	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
+
+	if ( this->IsPaused () || this->IsBlocked ()) {
 		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
 			step = 0.0f;
 			checkPass = false;
@@ -398,7 +433,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 			this->mNew = false;
 		}
 		return;
-	} 
+	}
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
 	double t0 = 0.0;
@@ -414,7 +449,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	}
 	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
-		MOAIActionMgr::Get ().SetCurrentAction ( this );
+		actionMgr.SetCurrentAction ( this );
+		actionMgr.SetDefaultParent ( 0 );
 		this->OnUpdate ( step );
 	}
 
@@ -429,16 +465,39 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mPass = 0;
 	this->mNew = false;
 	
-	ChildIt childIt = this->mChildren.Head ();
-	while ( childIt ) {
+	// the trick below is to alway retain the current child plus the
+	// *next* child in the list. each child is processed once and 
+	// released after processing, so all the children should be 
+	// retain/release'd exactly once.
+	
+	// we retain the head child in the list (if any)
+	// here because the first child retained inside the loop (below)
+	// is the *second* child in the list
+	this->mChildIt = this->mChildren.Head ();
+	if ( this->mChildIt ) {
+		this->mChildIt->Data ()->Retain ();
+	}
+	
+	MOAIAction* child = 0;
+	while ( this->mChildIt ) {
 		
-		MOAIAction* child = childIt->Data ();
-		childIt = childIt->Next ();
+		child = this->mChildIt->Data ();
+		
+		// retain the *next* child in the list (if any)
+		this->mChildIt = this->mChildIt->Next ();
+		if ( this->mChildIt ) {
+			this->mChildIt->Data ()->Retain ();
+		}
 		
 		if ( child->mParent ) {
 			child->Update ( step, pass, checkPass );
 		}
+		
+		// release the *current* child
+		child->Release ();
 	}
+	
+	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Attach ();
@@ -448,8 +507,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 //----------------------------------------------------------------//
 void MOAIAction::Start () {
 
-	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
-	this->Attach ( root );
+	MOAIAction* defaultParent = MOAIActionMgr::Get ().GetDefaultParent ();
+	this->Attach ( defaultParent );
 	this->mIsPaused = false;
 }
 

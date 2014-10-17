@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getSpeed
+/**	@lua	getSpeed
 	@text	Return the playback speed.
 
 	@in		MOAITimer self
@@ -21,12 +21,11 @@ int MOAITimer::_getSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
 	state.Push ( self->mSpeed );
-
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTime
+/**	@lua	getTime
 	@text	Return the current time.
 
 	@in		MOAITimer self
@@ -40,7 +39,7 @@ int MOAITimer::_getTime( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTimesExecuted
+/**	@lua	getTimesExecuted
 	@text	Gets the number of times the timer has completed a cycle.
 
 	@in		MOAITimer self
@@ -54,7 +53,7 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCurve
+/**	@lua	setCurve
 	@text	Set or clear the curve to use for event generation.
 	
 	@in		MOAITimer self
@@ -71,7 +70,7 @@ int MOAITimer::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMode
+/**	@lua	setMode
 	@text	Sets the playback mode of the timer.
 
 	@in		MOAITimer self
@@ -93,7 +92,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpan
+/**	@lua	setSpan
 	@text	Sets the playback mode of the timer.
 
 	@overload	Span will be 0 to endTime.
@@ -128,7 +127,7 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpeed
+/**	@lua	setSpeed
 	@text	Sets the playback speed. This affects only the timer, not
 			its children in the action tree.
 
@@ -145,7 +144,7 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTime
+/**	@lua	setTime
 	@text	Manually set the current time. This will be wrapped
 			into the current span.
 
@@ -162,6 +161,15 @@ int MOAITimer::_setTime ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITimer::_toggleDirection ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
+	
+	self->ToggleDirection ();
+	return 0;
+}
+
 //================================================================//
 // MOAITimer
 //================================================================//
@@ -173,7 +181,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
+			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 			return true;
 		}
 	}
@@ -490,6 +498,7 @@ void MOAITimer::OnLoop () {
 
 //----------------------------------------------------------------//
 void MOAITimer::OnStart () {
+	MOAIAction::OnStart ();
 
 	if( this->mDirection > 0.0f ) {
 		this->mTime = this->mStartTime;
@@ -546,6 +555,7 @@ void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSpan",			_setSpan },
 		{ "setSpeed",			_setSpeed },
 		{ "setTime",			_setTime },
+		{ "toggleDirection",	_toggleDirection },
 		{ NULL, NULL }
 	};
 
@@ -613,4 +623,45 @@ void MOAITimer::SetTime ( float time ) {
 	}
 
 	this->ScheduleUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::ToggleDirection () {
+
+	switch ( this->mMode ) {
+		
+		case NORMAL:
+			this->mMode = REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case REVERSE:
+			this->mMode = NORMAL;
+			this->mDirection = 1.0f;
+			break;
+		
+		case CONTINUE:
+			this->mMode = CONTINUE_REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case CONTINUE_REVERSE:
+			this->mMode = CONTINUE;
+			this->mDirection = 1.0f;
+			break;
+		
+		case LOOP:
+			this->mMode = LOOP_REVERSE;
+			this->mDirection = -1.0f;
+			break;
+		
+		case LOOP_REVERSE:
+			this->mMode = LOOP;
+			this->mDirection = 1.0f;
+			break;
+			
+		case PING_PONG:
+			this->mDirection = -1.0f;
+			break;
+	}
 }

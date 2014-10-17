@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getColor
+/**	@lua	getColor
 	@text	Return the color.
 	
 	@in		MOAIProp self
@@ -26,11 +26,12 @@ int MOAIColor::_getColor ( lua_State* L ) {
 	state.Push ( self->mG );
 	state.Push ( self->mB );
 	state.Push ( self->mA );
-
+	
 	return 4;
 }
+
 //----------------------------------------------------------------//
-/**	@name	moveColor
+/**	@lua	moveColor
 	@text	Animate the color by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
 	
@@ -80,7 +81,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seekColor
+/**	@lua	seekColor
 	@text	Animate the color by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
 			initialized to apply the delta.
@@ -132,7 +133,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setColor
+/**	@lua	setColor
 	@text	Initialize the color.
 	
 	@in		MOAIColor self
@@ -157,7 +158,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
 	@in		MOAIColor self
@@ -187,19 +188,19 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mR = ZLFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
 				return true;
 			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mG = ZLFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
 				return true;
 			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mB = ZLFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
 				return true;
 			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mA = ZLFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
 				return true;
 			case COLOR_TRAIT:
-				attrOp.ApplyNoAdd < ZLColorVec* >( &this->mColor, op, MOAIAttrOp::ATTR_READ );
+				attrOp.ApplyNoAdd < ZLColorVec* >( &this->mColor, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_COLOR );
 				return true;
 		}
 	}
@@ -210,6 +211,12 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 ZLColorVec MOAIColor::GetColorTrait () {
 
 	return this->mColor;
+}
+
+//----------------------------------------------------------------//
+bool MOAIColor::IsClear () {
+
+	return this->mColor.IsClear ();
 }
 
 //----------------------------------------------------------------//

@@ -5,8 +5,16 @@
 #include <moai-http-client/host.h>
 #include <moai-http-client/headers.h>
 
+#if MOAI_WITH_OPENSSL
+	#include <openssl/ssl.h>
+#endif
+
 #if MOAI_WITH_ARES
 	#include <ares.h>
+#endif
+
+#if MOAI_WITH_NSURL
+	extern void RegisterMOAIHttpTaskNSURL ();
 #endif
 
 //================================================================//
@@ -23,6 +31,11 @@ void AKUHttpClientAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUHttpClientAppInitialize () {
+
+	#if MOAI_WITH_OPENSSL
+		SSL_library_init ();
+		SSL_load_error_strings ();
+	#endif
 
 	#if MOAI_WITH_ARES
 		ares_set_default_dns_addr ( 0x08080808 );
@@ -42,7 +55,23 @@ void AKUHttpClientContextInitialize () {
 	#endif
 
 	#if MOAI_OS_NACL
-		MOAIUrlMgrnaCl::Affirm ();
+		MOAIUrlMgrNaCl::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
+	#endif
+	
+	#if MOAI_WITH_NSURL
+		RegisterMOAIHttpTaskNSURL ();
+	#endif
+}
+
+//----------------------------------------------------------------//
+void AKUHttpClientUpdate () {
+
+	#if MOAI_WITH_LIBCURL
+		MOAIUrlMgrCurl::Get ().Process ();
+	#endif
+
+	#if MOAI_OS_NACL
+		MOAIUrlMgrnaCl::Get ().Process ();
 	#endif
 }

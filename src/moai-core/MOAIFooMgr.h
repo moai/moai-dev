@@ -6,10 +6,13 @@
 
 #include <moai-core/MOAILua.h>
 
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
+
 //================================================================//
 // MOAIFooMgr
 //================================================================//
-/**	@name	MOAIFooMgr
+/**	@lua	MOAIFooMgr
 	@text	Example singleton for extending Moai using MOAILuaObject.
 			Copy this object, rename it and add your own stuff.
 			Just don't forget to register it with the runtime

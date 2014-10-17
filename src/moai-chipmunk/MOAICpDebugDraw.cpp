@@ -123,7 +123,7 @@ static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool dr
 }
 
 //----------------------------------------------------------------//
-static u32 color_from_pointer(void *ptr) {
+static u32 color_from_pointer ( void *ptr ) {
 
 	unsigned long val = (long)ptr;
 	
@@ -272,7 +272,7 @@ static void drawPolyShape ( cpBody* body, cpPolyShape* poly, cpSpace* space ) {
 			verts [ i ] = ( float )verts64 [ i ];
 		}
 	#else
-		USVec2D* verts = ( USVec2D* )poly->tVerts;
+		ZLVec2D* verts = ( ZLVec2D* )poly->tVerts;
 	#endif
 	
 	u32 color = color_for_shape (( cpShape* )poly, space );

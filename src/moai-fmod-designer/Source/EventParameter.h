@@ -5,8 +5,7 @@ namespace FMODDesigner
 {
     class Event;
 
-    /// \class EventParameter
-    /// A key/value pair passed into a EventInstance for use by the sound designer.
+    // A key/value pair passed into a EventInstance for use by the sound designer.
     class EventParameter
     {
     public:

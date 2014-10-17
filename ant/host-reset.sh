@@ -1,0 +1,1 @@
+../util/moaiutil ant-host

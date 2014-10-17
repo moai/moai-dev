@@ -179,6 +179,42 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetXAxis () const {
+	
+		ZLMetaVec3D < TYPE > axis;
+	
+		axis.mX = m [ C0_R0 ];
+		axis.mY = m [ C0_R1 ];
+		axis.mZ = m [ C0_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetYAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C1_R0 ];
+		axis.mY = m [ C1_R1 ];
+		axis.mZ = m [ C1_R2 ];
+		
+		return axis;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec3D < TYPE > GetZAxis () const {
+		
+		ZLMetaVec3D < TYPE > axis;
+		
+		axis.mX = m [ C2_R0 ];
+		axis.mY = m [ C2_R1 ];
+		axis.mZ = m [ C2_R2 ];
+		
+		return axis;
+	}
+
+	//----------------------------------------------------------------//
 	void Ident () {
 
 		m[C0_R0]	= 1;
@@ -533,12 +569,12 @@ public:
 		
 		m [ C2_R0 ] = 0;
 		m [ C2_R1 ] = 0;
-		m [ C2_R2 ] = ( zf + zn ) / ( zn - zf );
+		m [ C2_R2 ] = -( zf + zn ) / ( zf - zn );
 		m [ C2_R3 ] = -1;
 		
 		m [ C3_R0 ] = 0;
 		m [ C3_R1 ] = 0;
-		m [ C3_R2 ] = ( 2 * zn * zf ) / ( zn - zf );
+		m [ C3_R2 ] = -( 2 * zf * zn ) / ( zf - zn );
 		m [ C3_R3 ] = 0;
 	}
 
@@ -707,54 +743,66 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void ScRoTr	( ZLMetaVec3D < TYPE >& sc, ZLMetaVec3D < TYPE >& ro,	ZLMetaVec3D < TYPE >& tr ) {
+	void ScRoTr ( ZLMetaVec3D < TYPE >& sc, ZLMetaVec3D < TYPE >& ro, ZLMetaVec3D < TYPE >&	tr ) {
 
-		TYPE cx = Cos ( ro.mX );
-		TYPE sx = Sin ( ro.mX );
-		TYPE cy = Cos ( ro.mY );
-		TYPE sy = Sin ( ro.mY );
-		TYPE cz = Cos ( ro.mZ );
-		TYPE sz = Sin ( ro.mZ );
+		this->ScRoTr ( sc.mX, sc.mY, sc.mZ, ro.mX, ro.mY, ro.mZ, tr.mX, tr.mY, tr.mZ );
+	}
 
-		m[C0_R0]	= cz*cy*sc.mX;
-		m[C0_R1]	= sz*cy*sc.mX;
-		m[C0_R2]	= -sy*sc.mX;
+	//----------------------------------------------------------------//
+	void ScRoTr	( float scx, float scy, float scz, float rx, float ry, float rz, float tx, float ty, float tz ) {
+
+		TYPE cx = Cos ( rx );
+		TYPE sx = Sin ( rx );
+		TYPE cy = Cos ( ry );
+		TYPE sy = Sin ( ry );
+		TYPE cz = Cos ( rz );
+		TYPE sz = Sin ( rz );
+
+		m[C0_R0]	= cz*cy*scx;
+		m[C0_R1]	= sz*cy*scx;
+		m[C0_R2]	= -sy*scx;
 		m[C0_R3]	= 0;
 
-		m[C1_R0]	= ((cz*sy*sx)+(-sz*cx))*sc.mY;
-		m[C1_R1]	= ((sz*sy*sx)+(cz*cx))*sc.mY;
-		m[C1_R2]	= cy*sx*sc.mY;
+		m[C1_R0]	= ((cz*sy*sx)+(-sz*cx))*scy;
+		m[C1_R1]	= ((sz*sy*sx)+(cz*cx))*scy;
+		m[C1_R2]	= cy*sx*scy;
 		m[C1_R3]	= 0;
 
-		m[C2_R0]	= ((cz*sy*cx)+(-sz*-sx))*sc.mZ;
-		m[C2_R1]	= ((sz*sy*cx)+(cz*-sx))*sc.mZ;
-		m[C2_R2]	= cy*cx*sc.mZ;
+		m[C2_R0]	= ((cz*sy*cx)+(-sz*-sx))*scz;
+		m[C2_R1]	= ((sz*sy*cx)+(cz*-sx))*scz;
+		m[C2_R2]	= cy*cx*scz;
 		m[C2_R3]	= 0;
 
-		m[C3_R0]	= tr.mX;
-		m[C3_R1]	= tr.mY;
-		m[C3_R2]	= tr.mZ;
+		m[C3_R0]	= tx;
+		m[C3_R1]	= ty;
+		m[C3_R2]	= tz;
 		m[C3_R3]	= 1;
 	}
 
 	//----------------------------------------------------------------//
 	void ScRoTrInv ( ZLMetaVec3D < TYPE >& sc, ZLMetaVec3D < TYPE >& ro, ZLMetaVec3D < TYPE >&	tr ) {
 
-		TYPE cx = Cos ( -ro.mX	);
-		TYPE sx = Sin ( -ro.mX	);
-		TYPE cy = Cos ( -ro.mY	);
-		TYPE sy = Sin ( -ro.mY	);
-		TYPE cz = Cos ( -ro.mZ	);
-		TYPE sz = Sin ( -ro.mZ	);
+		this->ScRoTrInv ( sc.mX, sc.mY, sc.mZ, ro.mX, ro.mY, ro.mZ, tr.mX, tr.mY, tr.mZ );
+	}
 
-		TYPE x	= -tr.mX;
-		TYPE y	= -tr.mY;
-		TYPE z	= -tr.mZ;
+	//----------------------------------------------------------------//
+	void ScRoTrInv ( float scx, float scy, float scz, float rx, float ry, float rz, float tx, float ty, float tz ) {
+
+		TYPE cx = Cos ( -rx	);
+		TYPE sx = Sin ( -rx	);
+		TYPE cy = Cos ( -ry	);
+		TYPE sy = Sin ( -ry	);
+		TYPE cz = Cos ( -rz	);
+		TYPE sz = Sin ( -rz	);
+
+		TYPE x	= -tx;
+		TYPE y	= -ty;
+		TYPE z	= -tz;
 
 		ZLMetaVec3D < TYPE >	invScl;
-		invScl.mX =	1 / sc.mX;
-		invScl.mY =	1 / sc.mY;
-		invScl.mZ =	1 / sc.mZ;
+		invScl.mX =	1 / scx;
+		invScl.mY =	1 / scy;
+		invScl.mZ =	1 / scz;
 
 		m[C0_R0]	= invScl.mX*cy*cz;
 		m[C0_R1]	= invScl.mY*((cx*sz)+(-sx*-sy*cz));
@@ -885,7 +933,7 @@ public:
 	template < typename PARAM_TYPE >
 	void Transform ( ZLMetaRect < PARAM_TYPE >& rect ) const {
 
-		USVec2D point;
+		ZLVec2D point;
 		ZLRect newRect;
 		
 		point.Init ( rect.mXMin, rect.mYMin );

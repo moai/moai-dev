@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getRoot
+/**	@lua	getRoot
 	@text	Returns the current root action.
 
 	@out	MOAIAction root
@@ -26,7 +26,7 @@ int MOAIActionMgr::_getRoot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setProfilingEnabled
+/**	@lua	setProfilingEnabled
 	@text	Enables action profiling.
 
 	@opt	boolean enable		Default value is false.
@@ -42,7 +42,7 @@ int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRoot
+/**	@lua	setRoot
 	@text	Replaces or clears the root action.
 
 	@opt	MOAIAction root		Default value is nil.
@@ -59,7 +59,7 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setThreadInfoEnabled
+/**	@lua	setThreadInfoEnabled
 	@text	Enables function name and line number info for MOAICoroutine.
 
 	@opt	boolean enable		Default value is false.
@@ -88,6 +88,18 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 }
 
 //----------------------------------------------------------------//
+MOAIAction* MOAIActionMgr::GetDefaultParent () {
+
+	MOAIAction* cursor = this->mCurrentAction;
+	for ( ; cursor; cursor = cursor->mParent ) {
+		if ( cursor->mIsDefaultParent ) {
+			return cursor;
+		}
+	}
+	return this->AffirmRoot ();
+}
+
+//----------------------------------------------------------------//
 u32 MOAIActionMgr::GetNextPass () {
 
 	this->mTotalPasses = this->mPass + 2;
@@ -99,7 +111,8 @@ MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
-	mCurrentAction ( 0 ) {
+	mCurrentAction ( 0 ),
+	mDefaultParent ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -125,6 +138,18 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIActionMgr::SetDefaultParent () {
+
+	this->mDefaultParent = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIActionMgr::SetDefaultParent ( MOAIAction* defaultParent ) {
+
+	this->mDefaultParent = defaultParent;
+}
+
+//----------------------------------------------------------------//
 void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
 
 	this->mRoot.Set ( *this, root );
@@ -133,17 +158,23 @@ void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
 //----------------------------------------------------------------//
 void MOAIActionMgr::Update ( float step ) {
 
-	MOAIAction* root = this->mRoot;
+	MOAIAction* root = this->mRoot;	
 
 	if ( root ) {
 
 		this->GetNextPass ();
 		
+		root->Retain ();
+		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
+			this->mDefaultParent = 0;
 			root->Update ( step, this->mPass, true );
 		}
 
+		root->Release ();
+
 		this->mPass = RESET_PASS;
+		this->mDefaultParent = 0;
 		this->mCurrentAction = 0;
 	}
 }

@@ -3,9 +3,9 @@
 #ifndef	MOAIPROFILEREPORTBOX_H
 #define	MOAIPROFILEREPORTBOX_H
 
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIProfiler.h>
 #include <moai-sim/MOAIProfilerEntry.h>
-#include <moai-sim/MOAIProp.h>
 
 class MOAIFont;
 
@@ -13,7 +13,7 @@ class MOAIFont;
 // MOAIProfilerReportBox
 //================================================================//
 class MOAIProfilerReportBox :
-	public MOAIProp {
+	public MOAIGraphicsProp {
 private:
 	
 	struct Column {
@@ -49,16 +49,16 @@ private:
 
 	// a user memory value that will get displayed with the memory stats
 	u32                 mUserMemory;	
-	USVec2D				mMemoryXRange;
+	ZLVec2D				mMemoryXRange;
 	float				mLineHeight;
 
 	char				mTemp [ 128 ];
 	
-	USVec2D				mSummaryYRange;
-	USVec2D				mOverviewXRange;
+	ZLVec2D				mSummaryYRange;
+	ZLVec2D				mOverviewXRange;
 
-	USVec2D				mHeaderYRange;
-	USVec2D				mBodyYRange;
+	ZLVec2D				mHeaderYRange;
+	ZLVec2D				mBodyYRange;
 
 	Column				mColumns [ COLUMN_COUNT ];
 
@@ -120,8 +120,8 @@ public:
 						~MOAIProfilerReportBox	();
 	//----------------------------------------------------------------//
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Draw					( int subPrimID );
-	u32					GetPropBounds			( ZLBox& bounds );
+	void				Draw					( int subPrimID, float lod );
+	u32					OnGetModelBounds		( ZLBox& bounds );
 	//----------------------------------------------------------------//
 	void				SetRect					( float left, float top, float right, float bottom );
 };

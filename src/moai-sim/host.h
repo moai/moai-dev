@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_SIM_H
-#define AKU_SIM_H
+#ifndef MOAI_SIM_HOST_H
+#define MOAI_SIM_HOST_H
 
 #include <moai-core/host.h>
 
@@ -17,10 +17,10 @@ enum {
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
-typedef void ( *AKUShowCursorFunc )				();
 typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
+typedef void ( *AKUShowCursorFunc )				();
 
 // setup
 AKU_API void			AKUSimAppFinalize				();
@@ -28,6 +28,7 @@ AKU_API void			AKUSimAppInitialize				();
 AKU_API void			AKUSimContextInitialize			();
 
 // management api
+AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
 AKU_API double			AKUGetSimStep					();
 AKU_API void			AKUPause						( bool pause );
@@ -53,7 +54,7 @@ AKU_API void			AKUReserveInputDevices			( int total );
 AKU_API void			AKUReserveInputDeviceSensors	( int deviceID, int total );
 AKU_API void			AKUSetInputConfigurationName	( char const* name );
 AKU_API void			AKUSetInputDevice				( int deviceID, char const* name );
-AKU_API void			AKUSetInputDeviceExtendedName	( int deviceID, char const* name );
+AKU_API void			AKUSetInputDeviceHardwareInfo	( int deviceID, char const* hardwareInfo );
 AKU_API void			AKUSetInputDeviceActive			( int deviceID, bool active );
 AKU_API void			AKUSetInputDeviceButton			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceCompass		( int deviceID, int sensorID, char const* name );
@@ -64,6 +65,8 @@ AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char con
 AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputTimebase				( double timebase ); // optional: sets timebase event timestamps
+AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets timestamp for next input event
 
 // input events api
 AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );

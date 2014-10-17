@@ -34,7 +34,7 @@ private:
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
-/**	@name	MOAIVertexFormat
+/**	@lua	MOAIVertexFormat
 	@text	Vertex format class.
 */
 class MOAIVertexFormat :
@@ -69,13 +69,11 @@ private:
 	static int		_declareUV						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			Bind							( void* buffer ) const;
 	void			BindFixed						( void* buffer ) const;
 	void			BindProgrammable				( void* buffer ) const;
 	static u32		GetComponentSize				( u32 size, u32 type );
 	static u32		GetIndexForUse					( u32 use );
 	static u32		GetUseForIndex					( u32 idx );
-	void			Unbind							() const;
 	void			UnbindFixed						() const;
 	void			UnbindProgrammable				() const;
 	
@@ -88,12 +86,16 @@ public:
 	GET_CONST ( u32, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
-	bool			ComputeBounds					( void* buffer, u32 size, ZLBox& bounds );
+	void			Bind							( void* buffer ) const;
+	bool			ComputeBounds					( void* buffer, u32 size, ZLBox& bounds ) const;
 	void			DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();
 	void			RegisterLuaClass				( MOAILuaState& state );
 	void			RegisterLuaFuncs				( MOAILuaState& state );
+	void			SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
+	void			Unbind							() const;
 };
 
 #endif

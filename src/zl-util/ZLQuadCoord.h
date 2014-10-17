@@ -53,7 +53,7 @@ public:
 	//----------------------------------------------------------------//
 	inline u8 GetMask () {
 
-		return (( this->mXTile & 0x01 ) + 1 ) << (( this->mYTile & 0x01 ) << 1 );
+		return ( u8 )((( this->mXTile & 0x01 ) + 1 ) << (( this->mYTile & 0x01 ) << 1 ));
 	}
 	
 	//----------------------------------------------------------------//
@@ -79,9 +79,9 @@ public:
 		assert ( this->mLevel > 0 );
 	
 		this->mLevel--;
-		this->mXTile = ( this->mXTile << 1 );
-		this->mYTile = ( this->mYTile << 1 );
-		this->mResolution = this->mResolution << 1;
+		this->mXTile = ( u32 )( this->mXTile << 1 );
+		this->mYTile = ( u32 )( this->mYTile << 1 );
+		this->mResolution = ( u8 )( this->mResolution << 1 );
 	}
 	
 	//----------------------------------------------------------------//
@@ -90,7 +90,7 @@ public:
 		this->mLevel++;
 		this->mXTile = this->mXTile >> 1;
 		this->mYTile = this->mYTile >> 1;
-		this->mResolution = this->mResolution >> 1;
+		this->mResolution = ( u8 )( this->mResolution >> 1 );
 	}
 };
 

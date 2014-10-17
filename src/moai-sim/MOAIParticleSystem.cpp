@@ -16,7 +16,7 @@ class MOAIDataBuffer;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	capParticles
+/**	@lua	capParticles
 	@text	Controls capping vs. wrapping of particles in overflow situation.
 			Capping will prevent emission of additional particles when system
 			is full. Wrapping will overwrite the oldest particles with new particles.
@@ -33,7 +33,7 @@ int MOAIParticleSystem::_capParticles ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	capSprites
+/**	@lua	capSprites
 	@text	Controls capping vs. wrapping of sprites.
 	
 	@in		MOAIParticleSystem self
@@ -48,7 +48,7 @@ int MOAIParticleSystem::_capSprites ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clearSprites
+/**	@lua	clearSprites
 	@text	Flushes any existing sprites in system.
 	
 	@in		MOAIParticleSystem self
@@ -62,7 +62,7 @@ int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getState
+/**	@lua	getState
 	@text	Returns a particle state for an index or nil if none exists.
 	
 	@in		MOAIParticleSystem self
@@ -83,7 +83,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	isIdle
+/** @lua	isIdle
 	@text	Returns true if the current system is not currently
 			processing any particles.
 			
@@ -102,7 +102,7 @@ int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	pushParticle
+/**	@lua	pushParticle
 	@text	Adds a particle to the system.
 	
 	@in		MOAIParticleSystem self
@@ -127,7 +127,7 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pushSprite
+/**	@lua	pushSprite
 	@text	Adds a sprite to the system. Sprite will persist until
 			particle simulation is begun or 'clearSprites' is called.
 	
@@ -167,7 +167,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveParticles
+/**	@lua	reserveParticles
 	@text	Reserve particle capacity of system.
 	
 	@in		MOAIParticleSystem self
@@ -186,7 +186,7 @@ int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveSprites
+/**	@lua	reserveSprites
 	@text	Reserve sprite capacity of system.
 	
 	@in		MOAIParticleSystem self
@@ -201,7 +201,7 @@ int MOAIParticleSystem::_reserveSprites ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveStates
+/**	@lua	reserveStates
 	@text	Reserve total number of states for system.
 	
 	@in		MOAIParticleSystem self
@@ -217,7 +217,7 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setComputeBounds
+/**	@lua	setComputeBounds
 	@text	Set the a flag controlling whether the particle system
 			re-computes its bounds every frame.
 	
@@ -233,7 +233,7 @@ int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpriteColor
+/**	@lua	setSpriteColor
 	@text	Set the color of the most recently added sprite.
 	
 	@in		MOAIParticleSystem self
@@ -258,7 +258,7 @@ int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSpriteDeckIdx
+/**	@lua	setSpriteDeckIdx
 	@text	Set the sprite's deck index.
 	
 	@in		MOAIParticleSystem self
@@ -276,7 +276,7 @@ int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setState
+/**	@lua	setState
 	@text	Set a particle state.
 	
 	@in		MOAIParticleSystem self
@@ -303,7 +303,7 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	surge
+/**	@lua	surge
 	@text	Release a batch emission or particles into the system.
 	
 	@in		MOAIParticleSystem self
@@ -351,12 +351,12 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID ) {
+void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod ) ) return;
 	if ( !this->mDeck ) return;
-	
+	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
@@ -414,16 +414,6 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetPropBounds ( ZLBox& bounds ) {
-
-	if ( this->mComputeBounds ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
-	}
-	return BOUNDS_GLOBAL;
-}
-
-//----------------------------------------------------------------//
 MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 
 	if ( id < this->mStates.Size ()) {
@@ -460,19 +450,31 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mComputeBounds ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
 	// prop's index is *added* to particle's index;
 	// should be initialized to 0 instead of 1
 	this->mIndex = 0;
+	
+	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
 MOAIParticleSystem::~MOAIParticleSystem () {
 
 	this->ClearStates ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
+
+	if ( this->mComputeBounds ) {
+		bounds = this->mParticleBounds;
+		return BOUNDS_OK;
+	}
+	return BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//
@@ -606,14 +608,14 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -683,13 +685,13 @@ void MOAIParticleSystem::ReserveStates ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIProp::SerializeIn ( state, serializer );
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIProp::SerializeOut ( state, serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }

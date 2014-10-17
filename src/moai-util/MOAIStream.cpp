@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	flush
+/**	@lua	flush
 	@text	Forces any remaining buffered data into the stream.
 	
 	@in		MOAIStream self
@@ -26,7 +26,7 @@ int MOAIStream::_flush ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCursor
+/**	@lua	getCursor
 	@text	Returns the current cursor position in the stream.
 	
 	@in		MOAIStream self
@@ -35,13 +35,13 @@ int MOAIStream::_flush ( lua_State* L ) {
 int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 cursor = self->mStream->GetCursor ();
-	state.Push ( cursor );
+	size_t cursor = self->mStream->GetCursor ();
+	state.Push (( u32 )cursor ); // TODO: overflow?
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLength
+/**	@lua	getLength
 	@text	Returns the length of the stream.
 	
 	@in		MOAIStream self
@@ -50,13 +50,13 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
-	u32 length = self->mStream->GetLength ();
-	state.Push ( length );
+	size_t length = self->mStream->GetLength ();
+	state.Push (( u32 )length ); // TODO: overflow?
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	read
+/**	@lua	read
 	@text	Reads bytes from the stream.
 	
 	@in		MOAIStream self
@@ -67,10 +67,11 @@ int MOAIStream::_getLength ( lua_State* L ) {
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
-	u32 len = 0;
+	size_t len = 0;
 	
 	if ( self->mStream ) {
-		len = state.GetValue < u32 >( 2, self->mStream->GetLength ());
+		// TODO: 64-bit
+		len = state.GetValue < u32 >( 2, ( u32 )self->mStream->GetLength ());
 	}
 	
 	if ( !len ) {
@@ -101,12 +102,12 @@ int MOAIStream::_read ( lua_State* L ) {
 		free ( buffer );
 	}
 	
-	state.Push ( len );
+	state.Push (( u32 )len ); // TODO: overflow?
 	return 2;
 }
 
 //----------------------------------------------------------------//
-/**	@name	read8
+/**	@lua	read8
 	@text	Reads a signed 8-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -119,7 +120,7 @@ int MOAIStream::_read8 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	read16
+/**	@lua	read16
 	@text	Reads a signed 16-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -132,7 +133,7 @@ int MOAIStream::_read16 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	read32
+/**	@lua	read32
 	@text	Reads a signed 32-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -145,7 +146,7 @@ int MOAIStream::_read32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readDouble
+/**	@lua	readDouble
 	@text	Reads a 64-bit floating point value from the stream.
 	
 	@in		MOAIStream self
@@ -158,7 +159,7 @@ int MOAIStream::_readDouble ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readFloat
+/**	@lua	readFloat
 	@text	Reads a 32-bit floating point value from the stream.
 	
 	@in		MOAIStream self
@@ -171,10 +172,10 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readFormat
+/**	@lua	readFormat
 	@text	Reads a series of values from the stream given a format string.
 			Valid tokens for the format string are: u8 u16 u32 f d s8 s16 s32.
-			Tokens may be optionally separated by spaces of commas.
+			Tokens may be optionally separated by spaces or commas.
 	
 	@in		MOAIStream self
 	@in		string format
@@ -187,7 +188,7 @@ int MOAIStream::_readFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readU8
+/**	@lua	readU8
 	@text	Reads an unsigned 8-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -200,7 +201,7 @@ int MOAIStream::_readU8 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readU16
+/**	@lua	readU16
 	@text	Reads an unsigned 16-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -213,7 +214,7 @@ int MOAIStream::_readU16 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	readU32
+/**	@lua	readU32
 	@text	Reads an unsigned 32-bit value from the stream.
 	
 	@in		MOAIStream self
@@ -226,7 +227,7 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	seek
+/**	@lua	seek
 	@text	Repositions the cursor in the stream.
 	
 	@in		MOAIStream self
@@ -248,7 +249,7 @@ int MOAIStream::_seek ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write
+/**	@lua	write
 	@text	Write binary data to the stream.
 	
 	@in		MOAIStream self
@@ -264,19 +265,20 @@ int MOAIStream::_write ( lua_State* L ) {
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
-	size_t writeLen = state.GetValue < size_t >( 3, len );
+	// TODO: 64bit
+	size_t writeLen = state.GetValue < u32 >( 3, ( u32 )len );
 	if ( len < writeLen ) {
 		writeLen = len;
 	}
 	
 	writeLen = self->mStream->WriteBytes ( str, writeLen );
 	
-	state.Push ( writeLen );
+	state.Push (( u32 )writeLen ); // TODO: overflow?
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	write8
+/**	@lua	write8
 	@text	Writes a signed 8-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -289,7 +291,7 @@ int MOAIStream::_write8 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write16
+/**	@lua	write16
 	@text	Writes a signed 16-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -302,7 +304,7 @@ int MOAIStream::_write16 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write32
+/**	@lua	write32
 	@text	Writes a signed 32-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -315,7 +317,7 @@ int MOAIStream::_write32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeDouble
+/**	@lua	writeDouble
 	@text	Writes a 64-bit floating point value to the stream.
 	
 	@in		MOAIStream self
@@ -328,7 +330,7 @@ int MOAIStream::_writeDouble ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeFloat
+/**	@lua	writeFloat
 	@text	Writes a 32-bit floating point value to the stream.
 	
 	@in		MOAIStream self
@@ -341,7 +343,7 @@ int MOAIStream::_writeFloat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeFormat
+/**	@lua	writeFormat
 	@text	Writes a series of values to the stream given a format string.
 			See 'readFormat' for a list of valid format tokens.
 	
@@ -356,7 +358,7 @@ int MOAIStream::_writeFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeStream
+/**	@lua	writeStream
 	@text	Reads bytes from the given stream into the calling stream.
 	
 	@in		MOAIStream self
@@ -389,12 +391,12 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 		}
 	}
 	
-	state.Push ( result );
+	state.Push (( u32 )result ); // TODO: overflow?
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeU8
+/**	@lua	writeU8
 	@text	Writes an unsigned 8-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -407,7 +409,7 @@ int MOAIStream::_writeU8 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeU16
+/**	@lua	writeU16
 	@text	Writes an unsigned 16-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -420,7 +422,7 @@ int MOAIStream::_writeU16 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeU32
+/**	@lua	writeU32
 	@text	Writes an unsigned 32-bit value to the stream.
 	
 	@in		MOAIStream self
@@ -645,8 +647,8 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 	cc8* format = state.GetValue < cc8* >( idx++, "" );
 	
 	size_t size;
-	u32 result = 0;
-	u32 bytes = 0;
+	size_t result = 0;
+	size_t bytes = 0;
 	u32 type = UNKNOWN;
 	
 	while ( format ) {
@@ -699,6 +701,6 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 		}
 	}
 	
-	state.Push ( bytes );
+	state.Push (( u32 )bytes ); // TODO: overflow?
 	return 1;
 }

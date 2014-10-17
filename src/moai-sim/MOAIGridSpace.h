@@ -10,7 +10,7 @@
 // MOAICellCoord
 //================================================================//
 class MOAICellCoord :
-	public USIntVec2D {
+	public ZLIntVec2D {
 public:
 	
 	//----------------------------------------------------------------//
@@ -21,7 +21,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline MOAICellCoord ( int x, int y ) :
-		USIntVec2D ( x, y ) {
+		ZLIntVec2D ( x, y ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -38,7 +38,7 @@ public:
 //================================================================//
 // MOAIGridSpace
 //================================================================//
-/**	@name	MOAIGridSpace
+/**	@lua	MOAIGridSpace
 	@text	Represents spatial configuration of a grid. The grid is made
 			up of cells. Inside of each cell is a tile. The tile can be
 			larger or smaller than the cell and also offset from the cell.
@@ -109,7 +109,7 @@ protected:
 	MOAICellCoord	GetAxialHexCellCoord		( float x, float y ) const;
 	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
 	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
-	USVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
+	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
 	virtual void	OnResize				();
 
 public:
@@ -130,17 +130,17 @@ public:
 		TILE_CENTER,
 	};
 	
-	static const u32 REPEAT_X		= 0x00000001;
-	static const u32 REPEAT_Y		= 0x00000002;
+	static const u32 REPEAT_X			= 0x00000001;
+	static const u32 REPEAT_Y			= 0x00000002;
 	
-	static const u32 STAGGER_FLAG	= 0x80000000;
-	static const u32 STAGGER_MASK	= 0x80000000;
-	static const u32 SHAPE_MASK		= 0x7FFFFFFF;
+	static const u32 STAGGER_FLAG		= 0x80000000;
+	static const u32 STAGGER_MASK		= 0x80000000;
+	static const u32 SHAPE_MASK			= 0x7FFFFFFF;
 	
-	static const u32 RECT_SHAPE		= 0x00000000;
-	static const u32 DIAMOND_SHAPE	= 0x00000001 | STAGGER_FLAG;
-	static const u32 OBLIQUE_SHAPE	= 0x00000002;
-	static const u32 HEX_SHAPE		= 0x00000003 | STAGGER_FLAG;
+	static const u32 RECT_SHAPE			= 0x00000000;
+	static const u32 DIAMOND_SHAPE		= 0x00000001 | STAGGER_FLAG;
+	static const u32 OBLIQUE_SHAPE		= 0x00000002;
+	static const u32 HEX_SHAPE			= 0x00000003 | STAGGER_FLAG;
 	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
 	
 	GET_SET ( float, XOff, mXOff )
@@ -159,7 +159,7 @@ public:
 	GET_SET ( u32, Repeat, mRepeat )
 	
 	//----------------------------------------------------------------//
-	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;
+	ZLVec2D				CellToWorld				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
 	
 	MOAICellCoord		Clamp					( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		ClampX					( MOAICellCoord cellCoord ) const;
@@ -172,19 +172,19 @@ public:
 	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
 	int					GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
-	MOAICellCoord		GetCellCoord			( USVec2D loc ) const;
+	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
 	MOAICellCoord		GetCellCoord			( float x, float y ) const;
 	MOAICellCoord		GetCellCoord			( int xCell, int yCell ) const;
 	
-	USVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
+	ZLVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLRect				GetCellRect				( MOAICellCoord cellCoord ) const;
 	
-	USVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
+	ZLVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLRect				GetTileRect				( MOAICellCoord cellCoord ) const;
 	
 	int					GetTotalCells			() const;
 	
-	USVec2D				GridToWorld				( USVec2D loc ) const;
+	ZLVec2D				GridToWorld				( ZLVec2D loc ) const;
 	void				Init					( int width, int height, float tileWidth, float tileHeight );
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
 						MOAIGridSpace			();
@@ -194,8 +194,8 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	MOAICellCoord		WrapCellCoord			( int xCell, int yCell ) const;
-	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;
-	USVec2D				WorldToGrid				( USVec2D loc ) const;
+	ZLVec2D				WorldToCell				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
+	ZLVec2D				WorldToGrid				( ZLVec2D loc ) const;
 };
 
 #endif

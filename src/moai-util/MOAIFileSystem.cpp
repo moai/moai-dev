@@ -19,7 +19,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	affirmPath
+/**	@lua	affirmPath
 	@text	Creates a folder at 'path' if none exists.
 
 	@in		string path
@@ -35,7 +35,7 @@ int MOAIFileSystem::_affirmPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkFileExists
+/**	@lua	checkFileExists
 	@text	Check for the existence of a file.
 
 	@in		string filename
@@ -45,14 +45,14 @@ int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	bool result = ZLFileSys::CheckFileExists ( filename, true );
+	bool result = ZLFileSys::CheckFileExists ( filename );
 	
 	lua_pushboolean ( state, result );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	checkPathExists
+/**	@lua	checkPathExists
 	@text	Check for the existence of a path.
 
 	@in		string path
@@ -69,7 +69,7 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copy
+/**	@lua	copy
 	@text	Copy a file or directory to a new location.
 
 	@in		string srcPath
@@ -89,7 +89,7 @@ int MOAIFileSystem::_copy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deleteDirectory
+/**	@lua	deleteDirectory
 	@text	Deletes a directory and all of its contents.
 
 	@in		string path
@@ -109,7 +109,7 @@ int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	deleteFile
+/**	@lua	deleteFile
 	@text	Deletes a file.
 
 	@in		string filename
@@ -126,7 +126,7 @@ int MOAIFileSystem::_deleteFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAbsoluteDirectoryPath
+/**	@lua	getAbsoluteDirectoryPath
 	@text	Returns the absolute path given a relative path.
 
 	@in		string path
@@ -143,7 +143,7 @@ int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAbsoluteFilePath
+/**	@lua	getAbsoluteFilePath
 	@text	Returns the absolute path to a file. Result includes the
 			file name.
 
@@ -161,25 +161,29 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRelativePath
+/**	@lua	getRelativePath
 	@text	Given an absolute path returns the relative path
-			in relation to the current working directory.
+			in relation to the current working directory or a
+			user supplied 'base' directory.
 
 	@in		string path
+	@opt	string base
 	@out	string path
 -*/
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
-	STLString result = ZLFileSys::GetRelativePath ( path );
+	cc8* base = state.GetValue < cc8* >( 2, 0 );
+	
+	STLString result = ZLFileSys::GetRelativePath ( path, base );
 	
 	lua_pushstring ( state, result );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorkingDirectory
+/**	@lua	getWorkingDirectory
 	@text	Returns the path to current working directory.
 
 	@out	string path
@@ -194,7 +198,7 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	listDirectories
+/**	@lua	listDirectories
 	@text	Lists the sub-directories contained in a directory.
  
 	@opt	string path				Path to search. Default is current directory.
@@ -239,7 +243,7 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	listFiles
+/**	@lua	listFiles
 	@text	Lists the files contained in a directory
  
 	@opt	string path		Path to search. Default is current directory.
@@ -278,7 +282,7 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	mountVirtualDirectory
+/**	@lua	mountVirtualDirectory
 	@text	Mount an archive as a virtual filesystem directory.
 
 	@in		string path			Virtual path.
@@ -298,7 +302,27 @@ int MOAIFileSystem::_mountVirtualDirectory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	rename
+// TODO: doxygen
+int MOAIFileSystem::_pathFromRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	state.Push ( ZLFileSys::PathFromRef ( ref ).c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_pathToRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	state.Push ( ZLFileSys::PathToRef ( ref ).c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	rename
 	@text	Renames a file or folder.
 
 	@in		string oldPath
@@ -318,7 +342,20 @@ int MOAIFileSystem::_rename ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setWorkingDirectory
+// TODO: doxygen
+int MOAIFileSystem::_setPathRef ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* ref = state.GetValue < cc8* >( 1, "" );
+	cc8* path = state.GetValue < cc8* >( 2, 0 );
+	
+	ZLFileSys::SetPathRef ( ref, path );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setWorkingDirectory
 	@text	Sets the current working directory.
 
 	@in		string path
@@ -329,6 +366,19 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	bool result = ZLFileSys::SetCurrentPath ( path );
+	
+	lua_pushboolean ( state, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* infilename = state.GetValue < cc8* >( 1, "" );
+	cc8* outfilename = state.GetValue < cc8* >( 2, "" );
+	bool result = ZLFileSys::StripPKZipTimestamps ( infilename, outfilename );
 	
 	lua_pushboolean ( state, result );
 	return 1;
@@ -355,8 +405,12 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "listDirectories",			_listDirectories },
 		{ "listFiles",					_listFiles },
 		{ "mountVirtualDirectory",		_mountVirtualDirectory },
+		{ "pathFromRef",				_pathFromRef },
+		{ "pathToRef",					_pathToRef },
 		{ "rename",						_rename },
+		{ "setPathRef",					_setPathRef },
 		{ "setWorkingDirectory",		_setWorkingDirectory },
+		{ "stripPKZipTimestamps",		_stripPKZipTimestamps },
 		{ NULL, NULL }
 	};
 

@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIFileSystem
 //================================================================//
-/**	@name	MOAIFileSystem
+/**	@lua	MOAIFileSystem
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :
@@ -21,15 +21,19 @@ private:
 	static int		_copy						( lua_State* L );
 	static int		_deleteDirectory			( lua_State* L );
 	static int		_deleteFile					( lua_State* L );
-	static int		_getAbsoluteFilePath		( lua_State* L );
 	static int		_getAbsoluteDirectoryPath	( lua_State* L );
+	static int		_getAbsoluteFilePath		( lua_State* L );
 	static int		_getRelativePath			( lua_State* L );
 	static int		_getWorkingDirectory		( lua_State* L );
 	static int		_listDirectories			( lua_State* L );
 	static int		_listFiles					( lua_State* L );
 	static int		_mountVirtualDirectory		( lua_State* L );
+	static int		_pathFromRef				( lua_State* L );
+	static int		_pathToRef					( lua_State* L );
 	static int		_rename						( lua_State* L );
+	static int		_setPathRef					( lua_State* L );
 	static int		_setWorkingDirectory		( lua_State* L );
+	static int		_stripPKZipTimestamps		( lua_State* L );
 
 public:
 	

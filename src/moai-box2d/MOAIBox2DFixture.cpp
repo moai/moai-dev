@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	destroy
+/**	@lua	destroy
 	@text	Schedule fixture for destruction.
 	
 	@in		MOAIBox2DFixture self
@@ -30,7 +30,7 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBody
+/**	@lua	getBody
 	@text	Returns the body that owns the fixture.
 	
 	@in		MOAIBox2DFixture self
@@ -53,7 +53,7 @@ int MOAIBox2DFixture::_getBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFilter
+/**	@lua	getFilter
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -75,7 +75,7 @@ int MOAIBox2DFixture::_getFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCollisionHandler
+/**	@lua	setCollisionHandler
 	@text	Sets a Lua function to call when collisions occur. The handler should
 			accept the following parameters: ( phase, fixtureA, fixtureB, arbiter ). 'phase' will
 			be one of the phase masks. 'fixtureA' will be the fixture receiving the collision.
@@ -102,7 +102,7 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDensity
+/**	@lua	setDensity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -125,7 +125,7 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFilter
+/**	@lua	setFilter
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -153,7 +153,7 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFriction
+/**	@lua	setFriction
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -175,7 +175,7 @@ int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRestitution
+/**	@lua	setRestitution
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -197,7 +197,7 @@ int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setSensor
+/**	@lua	setSensor
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFixture self
@@ -223,12 +223,21 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DFixture::Clear () {
+
+	if ( this->mFixture ) {
+		this->mFixture = 0;
+	}
+	this->mWorld = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DFixture::Destroy () {
 
 	if ( this->mFixture ) {
 		b2Body* body = this->mFixture->GetBody ();
 		body->DestroyFixture ( this->mFixture );
-		this->mFixture = 0;
+		this->Clear ();
 	}
 }
 
@@ -293,8 +302,6 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 
 //----------------------------------------------------------------//
 MOAIBox2DFixture::~MOAIBox2DFixture () {
-
-	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

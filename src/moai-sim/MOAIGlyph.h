@@ -4,23 +4,16 @@
 #ifndef	MOAIGLYPH_H
 #define	MOAIGLYPH_H
 
-class MOAIGlyphCachePage;
+#include <moai-sim/MOAIFontReader.h>
+
+class MOAIDynamicGlyphCachePage;
 class MOAITextureBase;
-
-//================================================================//
-// MOAIKernVec
-//================================================================//
-class MOAIKernVec :
-	public USVec2D {
-public:
-
-	u32			mName;
-};
 
 //================================================================//
 // MOAIGlyph
 //================================================================//
-class MOAIGlyph {
+class MOAIGlyph :
+	public MOAIGlyphMetrics {
 private:
 	
 	static const u32 MAX_KERN_TABLE_SIZE	= 512;
@@ -30,14 +23,8 @@ private:
 	u32			mCode;   // The character code of the glyph
 	u32			mPageID; // ID of texture page in glyph cache
 	
-	float		mWidth; // width of the bounding box in pixels
-	float		mHeight; // height of the bounding box in pixels
-	float		mAdvanceX; // The distance the pen moves to the next glyph
-	float		mBearingX; // The distance from the pen's x coordinate to the bounding box
-	float		mBearingY; // The distance from the pen's y coordinate to the bounding box
-	
-	u32			mSrcX; // corresponds to glyph location on page
-	u32			mSrcY; // corresponds to glyph location on page
+	u32			mSrcX; // corresponds to glyph location on page (in pixels)
+	u32			mSrcY; // corresponds to glyph location on page (in pixels)
 	
 	ZLLeanArray < MOAIKernVec > mKernTable;
 	
@@ -50,20 +37,26 @@ public:
 	friend class MOAIFont;
 	friend class MOAIFreeTypeFontReader;
 	friend class MOAIGlyphSet;
-	friend class MOAIGlyphCacheBase;
-	friend class MOAIGlyphCachePage;
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAIGlyphCache;
+	friend class MOAIDynamicGlyphCachePage;
+	friend class MOAITextLabel;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
+	
+	GET ( u32, SrcX, mSrcX );
+	GET ( u32, SrcY, mSrcY );
+	GET ( float, Width, mWidth );
+	GET ( float, Height, mHeight );
 	
 	GET_SET ( u32, Code, mCode );
 	GET_SET ( u32, PageID, mPageID );
 	GET_SET ( float, AdvanceX, mAdvanceX );
 
 	//----------------------------------------------------------------//
-	void			Draw				( MOAITextureBase& texture, float x, float y, float scale ) const;
+	void			Draw				( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
-	ZLRect			GetRect				( float x, float y, float scale = 1) const;
+	ZLRect			GetRect				( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );

@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setParent
+/**	@lua	setParent
 	@text	Attach the anchor to a transform.
 	
 	@in		MOAICameraAnchor2D self
@@ -27,7 +27,7 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Set the dimensions (in world units) of the anchor.
 	
 	@in		MOAICameraAnchor2D self

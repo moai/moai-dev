@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads a texture from a data buffer or a file. Optionally pass
 			in an image transform (not applicable to PVR textures).
 	
@@ -211,13 +211,16 @@ void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 	void* bytes;
 	size_t size;
 	data.Lock ( &bytes, &size );
+	this->Init ( bytes, size, transform, debugname );
+	data.Unlock ();
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
 
 	ZLByteStream stream;
-	stream.SetBuffer ( bytes, size, size );
-
+	stream.SetBuffer ( data, size, size );
 	this->Init ( stream, transform, debugname );
-	
-	data.Unlock ();
 }
 
 //----------------------------------------------------------------//

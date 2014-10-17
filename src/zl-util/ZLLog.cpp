@@ -8,86 +8,46 @@
 
 #include <zl-util/ZLLog.h>
 
-#ifdef ANDROID
-	#include <android/log.h>
-#endif
-
 //================================================================//
 // ZLLog
 //================================================================//
 
-FILE* ZLLog::CONSOLE = 0;
+FILE*			ZLLog::CONSOLE				= 0;
+ZLLog::LogFunc	ZLLog::sLogFunc				= 0;
+void*			ZLLog::sLogFuncUserdata		= 0;
 
 //----------------------------------------------------------------//
-void ZLLog::Print ( cc8* format, ... ) {
+void ZLLog::LogF ( FILE* file, cc8* format, ... ) {
 
 	va_list args;
 	va_start ( args, format );	
 	
-#ifdef ANDROID
-		__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
-	#else
-		vprintf ( format, args );
-	#endif
-	
-	va_end ( args );
-}
-#ifdef ANDROID
-
-//----------------------------------------------------------------//
-void ZLLog::PrintFile ( ZLFILE* file, cc8* format, ... ) {
-
-	va_list args;
-	va_start ( args, format );	
-	
-	if ( file ) {
-		zl_vfprintf ( file, format, args );
-	}
-	else {
-		#ifdef ANDROID
-			__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
-		#else
-			vprintf ( format, args );
-		#endif
-	}
+	ZLLog::LogV ( file, format, args );
 	
 	va_end ( args );
 }
 
-#else
 //----------------------------------------------------------------//
-void ZLLog::PrintFile ( FILE* file, cc8* format, ... ) {
-
-	va_list args;
-	va_start ( args, format );	
+void ZLLog::LogV ( FILE* file, cc8* format, va_list args ) {
 	
-	if ( file ) {
-		vfprintf ( file, format, args );
+	if ( sLogFunc ) {
+	
+		sLogFunc ( file, format, args, sLogFuncUserdata );
 	}
 	else {
-		#ifdef ANDROID
-			__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
-		#else
-			vprintf ( format, args );
-		#endif
-	}
 	
-	va_end ( args );
+		if ( file ) {
+			zl_vfprintf (( FILE* )file, format, args );
+		}
+		else {
+			zl_vprintf ( format, args );
+		}
+	}
 }
 
-#endif
-
 //----------------------------------------------------------------//
-void ZLLog::PrintFileV ( FILE* file, cc8* format, va_list args ) {
-	
-	if ( file ) {
-		vfprintf ( file, format, args );
-	}
-	else {
-#ifdef ANDROID
-		__android_log_vprint(ANDROID_LOG_INFO,"MoaiLog", format, args);
-#else
-		vprintf ( format, args );
-#endif
-	}
+void ZLLog::SetLogFunc	( LogFunc logFunc, void* userdata ) {
+
+	sLogFunc = logFunc;
+	sLogFuncUserdata = userdata;
 }

@@ -10,7 +10,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAITextBundle
 //================================================================//
-/**	@name	MOAITextBundle
+/**	@lua	MOAITextBundle
  @text	A read-only lookup table of strings suitable for internationalization purposes. This
  currently wraps a loaded gettext() style MO file (see http://www.gnu.org/software/gettext/manual/gettext.html).
  So you are going to want to generate the .mo file from one of the existing tools such as poedit or msgfmt,
@@ -42,10 +42,10 @@ private:
 			unsigned long c1 = (v >> 8) & 0xff;
 			unsigned long c2 = (v >> 16) & 0xff;
 			unsigned long c3 = (v >> 24) & 0xff;
-			return (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
+			return ( int )((c0 << 24) | (c1 << 16) | (c2 << 8) | c3 );
 		}
 		else {
-			return *ptr;
+			return ( int )*ptr;
 		}
 	}
 		

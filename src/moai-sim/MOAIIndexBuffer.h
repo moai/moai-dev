@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIIndexBuffer
 //================================================================//
-/**	@name	MOAIIndexBuffer
+/**	@lua	MOAIIndexBuffer
 	@text	Index buffer class. Unused at this time.
 */
 class MOAIIndexBuffer :
@@ -17,11 +17,12 @@ class MOAIIndexBuffer :
 	public MOAIGfxResource {
 private:
 
-	u16*	mBuffer;
-	u32		mIndexCount;
+	ZLLeanArray < u32 > mIndices;
 	
 	u32		mGLBufferID;
 	u32		mHint;
+	
+	ZLByteStream mStream;
 	
 	//----------------------------------------------------------------//
 	static int	_release				( lua_State* L );
@@ -37,21 +38,24 @@ private:
 	void		OnDestroy				();
 	void		OnInvalidate			();
 	void		OnLoad					();
+	void		OnUnbind				();
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
-	GET ( u32, IndexCount, mIndexCount )
+	GET ( u32, IndexCount, ( u32 )mIndices.Size ())
+	GET ( ZLStream&, Stream, mStream )
 	
 	//----------------------------------------------------------------//
-	bool		LoadGfxState			();
 				MOAIIndexBuffer			();
 				~MOAIIndexBuffer		();
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 	void		ReserveIndices			( u32 indexCount );
-	void		SetIndex				( u32 idx, u16 value );
+	void		SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void		SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void		SetIndex				( u32 idx, u32 value );
 };
 
 #endif

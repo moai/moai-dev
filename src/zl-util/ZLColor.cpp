@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLFloat.h>
 #include <zl-util/ZLInterpolate.h>
 
 #define WR 0.299f
@@ -15,6 +16,45 @@
 //================================================================//
 // ZLColor
 //================================================================//
+
+//----------------------------------------------------------------//
+u32 ZLColor::Add ( u32 c0, u32 c1 ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	u8* cb1 = ( u8* )&c1;
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+
+	rb32 [ R_BYTE ] = cb0 [ R_BYTE ] + cb1 [ R_BYTE ];
+	rb32 [ G_BYTE ] = cb0 [ G_BYTE ] + cb1 [ G_BYTE ];
+	rb32 [ B_BYTE ] = cb0 [ B_BYTE ] + cb1 [ B_BYTE ];
+	rb32 [ A_BYTE ] = cb0 [ A_BYTE ] + cb1 [ A_BYTE ];
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::AddAndClamp ( u32 c0, u32 c1 ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	u8* cb1 = ( u8* )&c1;
+
+	u32 r = cb0 [ R_BYTE ] + cb1 [ R_BYTE ];
+	u32 g = cb0 [ G_BYTE ] + cb1 [ G_BYTE ];
+	u32 b = cb0 [ B_BYTE ] + cb1 [ B_BYTE ];
+	u32 a = cb0 [ A_BYTE ] + cb1 [ A_BYTE ];
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+	
+	rb32 [ R_BYTE ] = r > 0xff ? 0xff : r;
+	rb32 [ G_BYTE ] = g > 0xff ? 0xff : g;
+	rb32 [ B_BYTE ] = b > 0xff ? 0xff : b;
+	rb32 [ A_BYTE ] = a > 0xff ? 0xff : a;
+	
+	return r32;
+}
 
 //----------------------------------------------------------------//
 u32 ZLColor::Average ( u32 c0, u32 c1 ) {
@@ -48,6 +88,63 @@ u32 ZLColor::BilerpFixed ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
 }
 
 //----------------------------------------------------------------//
+u32 ZLColor::Blend ( u32 src32, u32 dst32, const ZLColorBlendFunc& blendFunc ) {
+
+	return Blend ( src32, dst32, blendFunc.mSrcFactor, blendFunc.mDstFactor, blendFunc.mEquation );
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendFactor srcFactor, ZLColor::BlendFactor dstFactor, ZLColor::BlendEquation blendEq ) {
+	
+	if ( blendEq == BLEND_EQ_NONE ) return src32;
+	
+	u32 srcBlend32 = Mul ( src32, GetBlendFactor ( src32, dst32, srcFactor ));
+	u32 dstBlend32 = Mul ( dst32, GetBlendFactor ( src32, dst32, dstFactor ));
+
+	switch ( blendEq ) {
+
+		case BLEND_EQ_ADD:
+			return AddAndClamp ( srcBlend32, dstBlend32 );
+			
+		case BLEND_EQ_SUBTRACT:
+			return Sub ( srcBlend32, dstBlend32 );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::BlendFactorAlpha ( u32 color32 ) {
+	
+	u8* colorBytes = ( u8* )&color32;
+	u8 a = colorBytes [ A_BYTE ];
+	return PackRGBA ( a, a, a, a );
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::BlendFactorOneMinusAlpha ( u32 color32 ) {
+	
+	u8* colorBytes = ( u8* )&color32;
+	u8 a = 0xff - colorBytes [ A_BYTE ];
+	return PackRGBA ( a, a, a, a );
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::BlendFactorOneMinusColor ( u32 color32 ) {
+	
+	u8* colorBytes = ( u8* )&color32;
+	
+	u32 result32;
+	u8* resultBytes = ( u8* )&result32;
+
+	resultBytes [ R_BYTE ] = 0xff - colorBytes [ R_BYTE ];
+	resultBytes [ G_BYTE ] = 0xff - colorBytes [ G_BYTE ];
+	resultBytes [ B_BYTE ] = 0xff - colorBytes [ B_BYTE ];
+	resultBytes [ A_BYTE ] = 0xff - colorBytes [ A_BYTE ];
+	
+	return result32;
+}
+
+//----------------------------------------------------------------//
 void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors ) {
 
 	static const u32 MAX_COLORS = 2048;
@@ -71,7 +168,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u8* )src;
-					src = ( void* )(( uintptr )src + 1 );
+					src = ( void* )(( size_t )src + 1 );
 					
 					buffer [ i ] = color << 0x18;
 				}
@@ -83,7 +180,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u32* )src;
-					src = ( void* )(( uintptr )src + 3 );
+					src = ( void* )(( size_t )src + 3 );
 					
 					buffer [ i ]= color | 0xff000000;
 				}
@@ -95,7 +192,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u16* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
@@ -111,7 +208,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u16* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
@@ -126,7 +223,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u32* )src;
-					src = ( void* )(( uintptr )src + 2 );
+					src = ( void* )(( size_t )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x0F ) << 0x04 ) +
 									((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
@@ -153,7 +250,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					color = bufferPtr [ i ];
 					
 					(( u8* )dest )[ 0 ] = ( color >> 0x18 ) & 0xFF;
-					dest = ( void* )(( uintptr )dest + 1 );
+					dest = ( void* )(( size_t )dest + 1 );
 				}
 				break;
 		
@@ -166,7 +263,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					(( u8* )dest )[ 0 ] = color & 0xFF;
 					(( u8* )dest )[ 1 ] = ( color >> 8 ) & 0xFF;
 					(( u8* )dest )[ 2 ] = ( color >> 16 ) & 0xFF;
-					dest = ( void* )(( uintptr )dest + 3 );
+					dest = ( void* )(( size_t )dest + 3 );
 				}
 				break;
 				
@@ -179,7 +276,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					*( u16* )dest =	((( color >> 0x03 ) & 0x1F ) << 0x0B ) +
 									((( color >> 0x0A ) & 0x3F ) << 0x05 ) +
 									((( color >> 0x13 ) & 0x1F ) << 0x00 );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 						
@@ -193,7 +290,7 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0B ) & 0x1F ) << 0x05 ) +
 										((( color >> 0x13 ) & 0x1F ) << 0x0A ) +
 										(((( color >> 0x1C ) & 0x0F ) ? 0x01 : 0x00 ) << 0x0F );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 
@@ -207,14 +304,14 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0C ) & 0x0F ) << 0x08 ) +
 										((( color >> 0x14 ) & 0x0F ) << 0x04 ) +
 										((( color >> 0x1C ) & 0x0F ) << 0x00 );
-					dest = ( void* )(( uintptr )dest + 2 );
+					dest = ( void* )(( size_t )dest + 2 );
 				}
 				break;
 
 			case RGBA_8888:
 				
 				memcpy ( dest, bufferPtr, copy * sizeof ( u32 ));
-				dest = ( void* )(( uintptr )dest + ( copy * sizeof ( u32 )));
+				dest = ( void* )(( size_t )dest + ( copy * sizeof ( u32 )));
 				break;
 			
 			default:
@@ -307,6 +404,152 @@ u32 ZLColor::ConvertToRGBA ( u32 color, Format format ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColor::Desaturate(void *colors, ZLColor::Format format, u32 nColors, float K) {
+	u32 color;
+	u32 alpha;
+
+	// TODO: support other formats
+	switch ( format ) {
+			
+		case A_8:
+			assert("A8 format not supported");
+			break;
+			
+		case RGB_565:
+			assert("RGB_565 format not supported");
+			break;
+			
+		case RGBA_5551:
+			assert("RGBA_5551 format not supported");
+			break;
+			
+		case RGBA_4444:
+			assert("RGBA_4444 format not supported");
+			break;
+			
+		case RGB_888:
+			assert("RGB_888 format not supported");
+			break;
+			
+		case RGBA_8888:
+			
+			for ( u32 i = 0; i < nColors; ++i ) {
+				color = *( u32* )colors;
+				alpha = ( color >> 0x18 ) & 0xFF;
+				u8 r = ( color >> 0x00 ) & 0xFF;
+				u8 g = ( color >> 0x08 ) & 0xFF;
+				u8 b = ( color >> 0x10 ) & 0xFF;
+				float grey = 0.3 * r + 0.59 * g + 0.11 * b;
+				r = (u8)(r * (1. - K) + grey * K);
+				g = (u8)(g * (1. - K) + grey * K);
+				b = (u8)(b * (1. - K) + grey * K);
+
+				*( u32* )colors =
+				(r << 0x00 ) +
+				(g << 0x08 ) +
+				(b << 0x10 ) +
+				( alpha << 0x18 );
+				colors = ( void* )(( uintptr )colors + 4 );
+			}
+			break;
+			
+		default:
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLColor::GammaCorrection ( void* colors, Format format, u32 nColors, float gamma ) {
+	u32 color;
+	u32 alpha;
+	float gammaCorrection = 1. / gamma;
+	
+	// TODO: support other formats
+	switch ( format ) {
+			
+		case A_8:
+			assert("A8 format not supported");
+			break;
+			
+		case RGB_565:
+			assert("RGB_565 format not supported");
+			break;
+			
+		case RGBA_5551:
+			assert("RGBA_5551 format not supported");
+			break;
+			
+		case RGBA_4444:
+			assert("RGBA_4444 format not supported");
+			break;
+			
+		case RGB_888:
+			assert("RGB_888 format not supported");
+			break;
+
+		case RGBA_8888:
+			
+			for ( u32 i = 0; i < nColors; ++i ) {
+				color = *( u32* )colors;
+				alpha = ( color >> 0x18 ) & 0xFF;
+				u8 r = (u8)(255. * pow((( color >> 0x00 ) & 0xFF ) / 255., gammaCorrection));
+				u8 g = (u8)(255. * pow((( color >> 0x08 ) & 0xFF ) / 255., gammaCorrection));
+				u8 b = (u8)(255. * pow((( color >> 0x10 ) & 0xFF ) / 255., gammaCorrection));
+								 
+				*( u32* )colors =
+					(r << 0x00 ) +
+					(g << 0x08 ) +
+					(b << 0x10 ) +
+					( alpha << 0x18 );
+				colors = ( void* )(( uintptr )colors + 4 );
+			}
+			break;
+			
+		default:
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::GetBlendFactor ( u32 src32, u32 dst32, BlendFactor factor ) {
+
+	switch ( factor ) {
+	
+		case BLEND_FACTOR_ONE:
+			return 0xffffffff;
+			
+		case BLEND_FACTOR_ZERO:
+			return 0x00000000;
+		
+		case BLEND_FACTOR_DST_ALPHA:
+			return BlendFactorAlpha ( dst32 );
+		
+		case BLEND_FACTOR_DST_COLOR:
+			return dst32;
+		
+		case BLEND_FACTOR_ONE_MINUS_DST_ALPHA:
+			return BlendFactorOneMinusAlpha ( dst32 );
+		
+		case BLEND_FACTOR_ONE_MINUS_DST_COLOR:
+			return BlendFactorOneMinusColor ( dst32 );
+		
+		case BLEND_FACTOR_ONE_MINUS_SRC_ALPHA:
+			return BlendFactorOneMinusAlpha ( src32 );
+		
+		case BLEND_FACTOR_ONE_MINUS_SRC_COLOR:
+			return BlendFactorOneMinusColor ( src32 );
+		
+		case BLEND_FACTOR_SRC_ALPHA:
+			return BlendFactorAlpha ( src32 );
+		
+		case BLEND_FACTOR_SRC_COLOR:
+			return src32;
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 u32 ZLColor::GetDepth ( Format format ) {
 
 	switch ( format ) {
@@ -373,6 +616,23 @@ u32 ZLColor::LerpFixed ( u32 c0, u32 c1, u8 t ) {
 }
 
 //----------------------------------------------------------------//
+u32 ZLColor::Mul ( u32 c0, u32 c1 ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	u8* cb1 = ( u8* )&c1;
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+
+	rb32 [ R_BYTE ] = (( u32 )cb0 [ R_BYTE ] * ( u32 )cb1 [ R_BYTE ]) / 0xff;
+	rb32 [ G_BYTE ] = (( u32 )cb0 [ G_BYTE ] * ( u32 )cb1 [ G_BYTE ]) / 0xff;
+	rb32 [ B_BYTE ] = (( u32 )cb0 [ B_BYTE ] * ( u32 )cb1 [ B_BYTE ]) / 0xff;
+	rb32 [ A_BYTE ] = (( u32 )cb0 [ A_BYTE ] * ( u32 )cb1 [ A_BYTE ]) / 0xff;
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
 u32 ZLColor::NearestNeighbor ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
 
 	if ( xt < 128 ) {
@@ -431,7 +691,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											(((( color >> 0x05 ) & 0x1F ) * alpha ) << 0x05 ) +
 											(((( color >> 0x0A ) & 0x1F ) * alpha ) << 0x0A ) +
 											( alpha << 0x0F ));
-				colors = ( void* )(( uintptr )colors + 2 );
+				colors = ( void* )(( size_t )colors + 2 );
 			}
 			break;
 
@@ -444,7 +704,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											((((( color >> 0x04 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x04 ) +
 											((((( color >> 0x08 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x08 ) +
 											((((( color >> 0x0c ) & 0x0F ) * alpha ) >> 0x04 ) << 0x0C ));
-				colors = ( void* )(( uintptr )colors + 2 );
+				colors = ( void* )(( size_t )colors + 2 );
 			}
 			break;
 
@@ -457,7 +717,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 									((((( color >> 0x08 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x08 ) +
 									((((( color >> 0x10 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x10 ) +
 									( alpha << 0x18 );
-				colors = ( void* )(( uintptr )colors + 4 );
+				colors = ( void* )(( size_t )colors + 4 );
 			}
 			break;
 		
@@ -470,7 +730,23 @@ void ZLColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 u32 ZLColor::ReadRGBA ( const void* stream, Format format ) {
 
 	u32 size = ZLColor::GetSize ( format );
-	return ZLColor::ConvertToRGBA ( USPixel::ReadPixel ( stream, size ), format );
+	return ZLColor::ConvertToRGBA ( ZLPixel::ReadPixel ( stream, size ), format );
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::Scale ( u32 c0, u8 s ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+
+	rb32 [ R_BYTE ] = (( u32 )cb0 [ R_BYTE ] * ( u32 )s ) / 0xff;
+	rb32 [ G_BYTE ] = (( u32 )cb0 [ G_BYTE ] * ( u32 )s ) / 0xff;
+	rb32 [ B_BYTE ] = (( u32 )cb0 [ B_BYTE ] * ( u32 )s ) / 0xff;
+	rb32 [ A_BYTE ] = (( u32 )cb0 [ A_BYTE ] * ( u32 )s ) / 0xff;
+	
+	return r32;
 }
 
 //----------------------------------------------------------------//
@@ -486,18 +762,61 @@ ZLColorVec ZLColor::Set ( u32 c0 ) {
 }
 
 //----------------------------------------------------------------//
+u32 ZLColor::Set ( u32 c0, u8 b, u8 v ) {
+	
+	u32 r32 = c0;
+	u8* rb32 = ( u8* )&r32;
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::Sub ( u32 c0, u32 c1 ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	u8* cb1 = ( u8* )&c1;
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+
+	rb32 [ R_BYTE ] = cb0 [ R_BYTE ] - cb1 [ R_BYTE ];
+	rb32 [ G_BYTE ] = cb0 [ G_BYTE ] - cb1 [ G_BYTE ];
+	rb32 [ B_BYTE ] = cb0 [ B_BYTE ] - cb1 [ B_BYTE ];
+	rb32 [ A_BYTE ] = cb0 [ A_BYTE ] - cb1 [ A_BYTE ];
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
+u32 ZLColor::Swizzle ( u32 c0, u32 sw ) {
+
+	u8* cb0 = ( u8* )&c0;
+	u8* swb = ( u8* )&sw;
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+
+	rb32 [ R_BYTE ] = cb0 [ swb [ R_BYTE & 0x02 ]];
+	rb32 [ G_BYTE ] = cb0 [ swb [ G_BYTE & 0x02 ]];
+	rb32 [ B_BYTE ] = cb0 [ swb [ B_BYTE & 0x02 ]];
+	rb32 [ A_BYTE ] = cb0 [ swb [ A_BYTE & 0x02 ]];
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
 void ZLColor::WriteRGBA ( void* stream, u32 color, Format format ) {
 
 	u32 size = ZLColor::GetSize ( format );
-	USPixel::WritePixel ( stream, ZLColor::ConvertFromRGBA ( color, format ), size );
+	ZLPixel::WritePixel ( stream, ZLColor::ConvertFromRGBA ( color, format ), size );
 }
 
 //================================================================//
-// USPixel
+// ZLPixel
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 USPixel::GetDepth ( Format format, ZLColor::Format colorFormat ) {
+u32 ZLPixel::GetDepth ( Format format, ZLColor::Format colorFormat ) {
 
 	switch ( format ) {
 		case TRUECOLOR:		return ZLColor::GetDepth ( colorFormat );
@@ -509,7 +828,7 @@ u32 USPixel::GetDepth ( Format format, ZLColor::Format colorFormat ) {
 }
 
 //----------------------------------------------------------------//
-u32 USPixel::GetMask ( Format format, ZLColor::Format colorFormat ) {
+u32 ZLPixel::GetMask ( Format format, ZLColor::Format colorFormat ) {
 
 	switch ( format ) {
 		case TRUECOLOR:		return ZLColor::GetMask ( colorFormat );
@@ -521,7 +840,7 @@ u32 USPixel::GetMask ( Format format, ZLColor::Format colorFormat ) {
 }
 
 //----------------------------------------------------------------//
-u32 USPixel::GetPaletteCount ( Format format ) {
+u32 ZLPixel::GetPaletteCount ( Format format ) {
 
 	switch ( format ) {
 		case TRUECOLOR:		return 0;
@@ -533,13 +852,13 @@ u32 USPixel::GetPaletteCount ( Format format ) {
 }
 
 //----------------------------------------------------------------//
-u32 USPixel::GetPaletteSize ( Format format, ZLColor::Format colorFormat ) {
+u32 ZLPixel::GetPaletteSize ( Format format, ZLColor::Format colorFormat ) {
 
-	return ( USPixel::GetPaletteCount ( format ) * ZLColor::GetSize ( colorFormat ));
+	return ( ZLPixel::GetPaletteCount ( format ) * ZLColor::GetSize ( colorFormat ));
 }
 
 //----------------------------------------------------------------//
-float USPixel::GetSize ( Format format, ZLColor::Format colorFormat ) {
+float ZLPixel::GetSize ( Format format, ZLColor::Format colorFormat ) {
 
 	switch ( format ) {
 		case TRUECOLOR:		return ( float )ZLColor::GetSize ( colorFormat );
@@ -551,7 +870,7 @@ float USPixel::GetSize ( Format format, ZLColor::Format colorFormat ) {
 }
 
 //----------------------------------------------------------------//
-u32 USPixel::ReadPixel ( const void* stream, u32 nBytes ) {
+u32 ZLPixel::ReadPixel ( const void* stream, u32 nBytes ) {
 
 	const u8* bytes = ( const u8* )stream;
 	u32 pixel = 0;
@@ -576,7 +895,7 @@ u32 USPixel::ReadPixel ( const void* stream, u32 nBytes ) {
 }
 
 //----------------------------------------------------------------//
-void USPixel::ToTrueColor ( void* destColors, const void* srcColors, const void* palette, u32 nColors, ZLColor::Format colorFormat, Format pixelFormat ) {
+void ZLPixel::ToTrueColor ( void* destColors, const void* srcColors, const void* palette, u32 nColors, ZLColor::Format colorFormat, Format pixelFormat ) {
 
 	u32 colorSize = ZLColor::GetDepth ( colorFormat );
 
@@ -603,7 +922,7 @@ void USPixel::ToTrueColor ( void* destColors, const void* srcColors, const void*
 }
 
 //----------------------------------------------------------------//
-void USPixel::WritePixel ( void* stream, u32 pixel, u32 nBytes ) {
+void ZLPixel::WritePixel ( void* stream, u32 pixel, u32 nBytes ) {
 
 	u8* bytes = ( u8* )stream;
 	u32 shift = 0;
@@ -638,6 +957,66 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColorVec::FromHSV ( float h, float s, float v ) {
+	
+	if( s == 0.0f ) {
+		this->mR = v;
+		this->mG = v;
+		this->mB = v;
+		return;
+	}
+	
+	h /= 60.0f;
+	
+	int i = ( int )floor ( h );
+	float f = h - ( float )i;
+	
+	float p = v * ( 1.0f - s );
+	float q = v * ( 1.0f - s * f );
+	float t = v * ( 1.0f - s * ( 1.0f - f ) );
+	
+	switch ( i ) {
+	
+		case 0:
+			this->mR = v;
+			this->mG = t;
+			this->mB = p;
+			break;
+			
+		case 1:
+			this->mR = q;
+			this->mG = v;
+			this->mB = p;
+			break;
+			
+		case 2:
+			this->mR = p;
+			this->mG = v;
+			this->mB = t;
+			break;
+			
+		case 3:
+			this->mR = p;
+			this->mG = q;
+			this->mB = v;
+			break;
+			
+		case 4:
+			this->mR = t;
+			this->mG = p;
+			this->mB = v;
+			break;
+			
+		case 5:
+		default:
+			this->mR = v;
+			this->mG = p;
+			this->mB = q;
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::FromYUV ( float y, float u, float v ) {
 
 	this->mR = y + ( v * (( 1.0f - WR ) / V_MAX ));
@@ -646,27 +1025,25 @@ void ZLColorVec::FromYUV ( float y, float u, float v ) {
 }
 
 //----------------------------------------------------------------//
-float ZLColorVec::GetLuma () {
+float ZLColorVec::GetLuma () const {
 
 	return ( WR * this->mR ) + ( WG * this->mG ) + ( WB * this->mB );
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::Lerp ( const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+bool ZLColorVec::IsClear () {
 
-	this->mR = v0.mR + (( v1.mR - v0.mR ) * t );
-	this->mG = v0.mG + (( v1.mG - v0.mG ) * t );
-	this->mB = v0.mB + (( v1.mB - v0.mB ) * t );
-	this->mA = v0.mA + (( v1.mA - v0.mA ) * t );
+	return (( this->mR == 0.0f ) && ( this->mG == 0.0f ) && ( this->mB == 0.0f ) && ( this->mA == 0.0f ));
 }
 
 //----------------------------------------------------------------//
-//void ZLColorVec::LoadGfxState () const {
-//
-//#if USE_OPENGLES1
-//	glColor4f ( this->mR, this->mG, this->mB, this->mA );
-//#endif
-//}
+void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+
+	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );
+	this->mG = ZLInterpolate::Interpolate ( mode, v0.mG, v1.mG, t );
+	this->mB = ZLInterpolate::Interpolate ( mode, v0.mB, v1.mB, t );
+	this->mA = ZLInterpolate::Interpolate ( mode, v0.mA, v1.mA, t );
+}
 
 //----------------------------------------------------------------//
 void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
@@ -678,7 +1055,7 @@ void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLColorVec::PackRGBA () {
+u32 ZLColorVec::PackRGBA () const {
 
 	return ZLColor::PackRGBA ( this->mR, this->mG, this->mB, this->mA );
 }
@@ -711,6 +1088,47 @@ void ZLColorVec::SetBlack () {
 void ZLColorVec::SetWhite () {
 
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::ToHSV ( float& h, float& s, float& v ) {
+
+	float r = this->mR;
+	float g = this->mG;
+	float b = this->mB;
+
+	float min = ZLFloat::Min ( r, g, b );
+	float max = ZLFloat::Min ( r, g, b );
+	float delta = max - min;
+	
+	v = max;
+	
+	if ( max != 0.0f ) {
+		s = delta / max;
+	}
+	else {
+		// r = g = b = 0
+		// s = 0, v is undefined
+		s = 0.0f;
+		h = -1.0f;
+		return;
+	}
+	
+	if ( r == max ) {
+		h = ( g - b ) / delta; // between yellow & magenta
+	}
+	else if ( g == max ) {
+		h = 2.0f + ( b - r ) / delta; // between cyan & yellow
+	}
+	else {
+		h = 4.0f + ( r - g ) / delta; // between magenta & cyan
+	}
+
+	h *= 60.0f; // degrees
+	
+	if ( h < 0.0f ) {
+		h += 360.0f;
+	}
 }
 
 //----------------------------------------------------------------//

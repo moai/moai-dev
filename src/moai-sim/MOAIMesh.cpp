@@ -18,7 +18,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setIndexBuffer
+/**	@lua	setIndexBuffer
 	@text	Set the index buffer to render.
 	
 	@in		MOAIMesh self
@@ -34,7 +34,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPenWidth
+/**	@lua	setPenWidth
 	@text	Sets the pen with for drawing prims in this vertex buffer.
 			Only valid with prim types GL_LINES, GL_LINE_LOOP, GL_LINE_STRIP.
 	
@@ -51,7 +51,7 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPointSize
+/**	@lua	setPointSize
 	@text	Sets the point size for drawing prims in this vertex buffer.
 			Only valid with prim types GL_POINTS.
 	
@@ -68,7 +68,7 @@ int MOAIMesh::_setPointSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPrimType
+/**	@lua	setPrimType
 	@text	Sets the prim type the buffer represents.
 	
 	@in		MOAIMesh self
@@ -85,7 +85,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setVertexBuffer
+/**	@lua	setVertexBuffer
 	@text	Set the vertex buffer to render.
 	
 	@in		MOAIMesh self
@@ -123,11 +123,11 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 	// TODO: make use of offset and scale
 
 	if ( !this->mVertexBuffer ) return;
-	if ( !this->mVertexBuffer->IsValid ()) return;
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.Flush ();
 
 	if ( this->mVertexBuffer->Bind ()) {
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();	
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
@@ -136,15 +136,19 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
 		
+		gfxDevice.UpdateShaderGlobals ();
+		
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
-			if ( this->mIndexBuffer->LoadGfxState ()) {
-				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_SHORT, 0 );
+			if ( this->mIndexBuffer->Bind ()) {
+				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
+				this->mIndexBuffer->Unbind ();
 			}
 		}
 		else {
 			zglDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetVertexCount ());
 		}
+		this->mVertexBuffer->Unbind ();
 	}
 }
 
@@ -163,7 +167,7 @@ ZLBox MOAIMesh::GetItemBounds ( u32 idx ) {
 
 //----------------------------------------------------------------//
 MOAIMesh::MOAIMesh () :
-	mPrimType ( 0 ),
+	mPrimType ( ZGL_PRIM_TRIANGLES ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ) {
 

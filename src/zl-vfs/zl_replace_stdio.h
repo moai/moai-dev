@@ -10,6 +10,10 @@
 	extern "C" {
 #endif
 
+// NOTE: (PCM) zl_printf does not support the GCC __attribute__ extension, leading to some warnings in 3rd party headers.
+// At this time I haven't found how to support __attribute__ (only how to use it), so my best suggestion is to disable
+// these warnings with -Wno-ignored-attributes.
+
 //================================================================//
 // stdio
 //================================================================//
@@ -122,6 +126,9 @@
 #undef _popen
 #define _popen zl_popen
 
+#undef printf
+#define printf zl_printf
+
 #undef putc
 #define putc zl_putc
 
@@ -154,6 +161,9 @@
 
 #undef vfscanf
 #define vfscanf zl_vfscanf
+
+#undef vprintf
+#define vprintf zl_vprintf
 
 #ifdef  __cplusplus
 	}

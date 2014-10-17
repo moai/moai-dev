@@ -12,7 +12,7 @@ class MOAIDataIOTask;
 //================================================================//
 // MOAIDataBuffer
 //================================================================//
-/**	@name	MOAIDataBuffer
+/**	@lua	MOAIDataBuffer
 	@text	Buffer for loading and holding data. Data operations may be
 			performed without additional penalty of marshalling buffers
 			between Lua and C.
@@ -60,20 +60,24 @@ public:
 	bool			Base64Decode			();
 	bool			Base64Encode			();
 	void			Clear					();
-	bool			Deflate					( int level, int windowBits );
+	bool			Deflate					( int level = ZLDeflateWriter::DEFAULT_LEVEL, int windowBits = ZLDeflateWriter::DEFAULT_WBITS );
+	void*			GetBuffer				(); // NOTE: unsafe; bypasses the mutex
 	bool			HexDecode				();
 	bool			HexEncode				();
-	bool			Inflate					( int windowBits );
+	bool			Inflate					( int windowBits = ZLDeflateWriter::DEFAULT_WBITS );
 	bool			Load					( cc8* filename );
 	void			Load					( void* bytes, size_t size );
+	void			Load					( MOAILuaState& state, int idx );
 	void			Lock					( void** bytes, size_t* size );
 					MOAIDataBuffer			();
 					~MOAIDataBuffer			();
+	void			PushString				( MOAILuaState& state );
+	size_t			Read					( void* buffer, size_t size );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	size_t			Size					();
 	bool			Save					( cc8* filename );
 	void			Unlock					();
-	ZLLeanArray<u8> *getBuffer				();
 };
 
 #endif

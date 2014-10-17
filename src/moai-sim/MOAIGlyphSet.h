@@ -9,15 +9,14 @@
 //================================================================//
 // MOAIGlyphSet
 //================================================================//
-class MOAIGlyphSet {
+class MOAIGlyphSet :
+	public MOAIFontFaceMetrics {
 private:
 
 	friend class MOAIFont;
-	friend class MOAITextDesigner;
+	friend class MOAITextDesignParser;
 	
 	float	mSize;
-	float	mHeight;
-	float	mAscent;
 	
 	// TODO: optimize for printable ASCII characters
 	// TODO: find better container than STLMap

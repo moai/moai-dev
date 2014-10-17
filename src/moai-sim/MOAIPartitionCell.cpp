@@ -24,7 +24,7 @@ void MOAIPartitionCell::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
+void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
 	if ( &cell != this ) {
 	
@@ -32,7 +32,7 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 		for ( ; propIt; propIt = propIt->Next ()) {
 			MOAIProp* prop = propIt->Data ();
 			prop->mCell = &cell;
-			prop->mLayer = layer;
+			prop->mLevel = level;
 		}
 	
 		cell.mProps.Join ( cell.mProps, this->mProps );
@@ -49,7 +49,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		
 		float t;
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( !ZLSect::RayToBox( prop->mBounds, point, orientation, t )) {
+			if ( !ZLSect::RayToBox( prop->mWorldBounds, point, orientation, t )) {
 				prop->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
 			}
 		}
@@ -81,7 +81,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( prop->mBounds.Contains ( point )) {
+			if ( prop->mWorldBounds.Contains ( point )) {
 				if ( prop->Inside ( point, 0.0f )) {
 					prop->AddToSortBuffer ( results );
 				}
@@ -100,7 +100,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {	
-			if ( prop->mBounds.Overlap ( box )) {
+			if ( prop->mWorldBounds.Overlap ( box )) {
 				prop->AddToSortBuffer ( results );
 			}
 		}
@@ -117,7 +117,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {	
-			if ( !frustum.Cull ( prop->mBounds )) {
+			if ( !frustum.Cull ( prop->mWorldBounds )) {
 				prop->AddToSortBuffer ( results );
 			}
 		}

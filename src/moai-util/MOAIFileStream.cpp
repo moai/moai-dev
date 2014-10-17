@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Close and release the associated file handle.
 	
 	@in		MOAIFileStream self
@@ -23,7 +23,7 @@ int MOAIFileStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	open
+/**	@lua	open
 	@text	Open or create a file stream given a valid path.
 	
 	@in		MOAIFileStream self

@@ -11,7 +11,7 @@ class MOAITransformBase;
 //================================================================//
 // MOAIProp
 //================================================================//
-/**	@name	MOAICameraAnchor2D
+/**	@lua	MOAICameraAnchor2D
 	@text	Attaches fitting information to a transform. Used by
 			MOAICameraFitter2D.
 */

@@ -23,7 +23,7 @@ private:
 //================================================================//
 // MOAISurfaceDeck2D
 //================================================================//
-/**	@name	MOAISurfaceDeck2D
+/**	@lua	MOAISurfaceDeck2D
 	@text	Deck of surface edge lists. Unused in this version of Moai.
 */
 class MOAISurfaceDeck2D :
@@ -49,9 +49,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	//void			DrawDebug				( const ZLAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	//void			DrawDebug				( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	//void			DrawDebug				( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	//void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
 					MOAISurfaceDeck2D		();
 					~MOAISurfaceDeck2D		();
 	void			RegisterLuaClass		( MOAILuaState& state );

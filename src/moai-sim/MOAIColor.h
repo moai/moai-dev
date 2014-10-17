@@ -12,7 +12,7 @@ class MOAILayer;
 //================================================================//
 // MOAIColor
 //================================================================//
-/**	@name	MOAIColor
+/**	@lua	MOAIColor
 	@text	Color vector with animation helper methods.
 	
 	@attr	ATTR_R_COL
@@ -58,6 +58,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	ZLColorVec		GetColorTrait		();
+	bool			IsClear				();
 					MOAIColor			();
 					~MOAIColor			();
 	void			OnDepNodeUpdate		();

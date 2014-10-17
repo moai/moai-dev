@@ -12,7 +12,7 @@ class MOAIBox2DWorld;
 //================================================================//
 // MOAIBox2DArbiter
 //================================================================//
-/**	@name	MOAIBox2DArbiter
+/**	@lua	MOAIBox2DArbiter
 	@text	Box2D Arbiter.
 	
 	@flag	BEGIN

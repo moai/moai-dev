@@ -6,8 +6,8 @@
 
 //----------------------------------------------------------------//
 typedef unsigned int			uint;
-typedef unsigned long			uintptr;
-typedef long					sintptr;
+typedef size_t					uintptr;
+typedef ptrdiff_t				sintptr;
 
 typedef const char				cc8;
 

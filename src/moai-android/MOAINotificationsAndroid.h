@@ -11,7 +11,7 @@
 //================================================================//
 // MOAINotificationsAndroid
 //================================================================//
-/**	@name	MOAINotificationsAndroid
+/**	@lua	MOAINotificationsAndroid
 	@text	Wrapper for push notification integration on Android 
 			devices. Exposed to Lua via MOAINotifications on all
 			mobile platforms.
@@ -41,18 +41,18 @@ private:
 	static int	_setAppIconBadgeNumber				( lua_State* L );
 	static int	_setListener						( lua_State* L );
 	static int	_unregisterForRemoteNotifications	( lua_State* L );
-	
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAINotificationsAndroid );
-	
+
 	enum {
 		LOCAL_NOTIFICATION_MESSAGE_RECEIVED,
 		REMOTE_NOTIFICATION_REGISTRATION_COMPLETE,
 		REMOTE_NOTIFICATION_MESSAGE_RECEIVED,
 		TOTAL
 	};
-	
+
 	enum {
        	REMOTE_NOTIFICATION_RESULT_REGISTERED,
 		REMOTE_NOTIFICATION_RESULT_UNREGISTERED,

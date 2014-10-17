@@ -15,11 +15,26 @@
 #define DEFAULT_ELLIPSE_STEPS 64
 
 //================================================================//
+// ZLAbstractVertexWriter2D
+//================================================================//
+class MOAIDrawVertexWriter2D :
+	public ZLAbstractVertexWriter2D {
+public:
+
+	//----------------------------------------------------------------//
+	void WriteVertex ( const ZLVec2D& v ) {
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.WriteVtx ( v.mX, v.mY );
+		gfxDevice.WriteFinalColor4b ();
+	}
+};
+
+//================================================================//
 // text drawing stuff
 //================================================================//
 /*
 	TODO: I want to refactor/rewrite this stuff to consolidate the glyph layout and buffering
-	under a single code path - there's some redundancy here with MOAITextBox that can probably
+	under a single code path - there's some redundancy here with MOAITextLabel that can probably
 	be smoothed away.
 */
 
@@ -72,7 +87,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	// Transform the center into 'world' space
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	USVec2D pos ( x, y );
+	ZLVec2D pos ( x, y );
 	orgWorldTransform.Transform ( pos );
 	x = pos.mX;
 	y = pos.mY;
@@ -219,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 			const GlyphPlacement& glyphPlacement = *it;
 			MOAIGlyph* glyph = glyphPlacement.glyph;
 			MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
-			glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale );
+			//glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
 		}
 	}
 
@@ -264,7 +279,32 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawBoxOutline
+// TODO: doxygen
+int MOAIDraw::_drawBezierCurve ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	ZLCubicBezier2D bezier;
+	
+	bezier.mP0.mX = state.GetValue < float >( 1, 0.0f );
+	bezier.mP0.mY = state.GetValue < float >( 2, 0.0f );
+	
+	bezier.mP1.mX = state.GetValue < float >( 3, 0.0f );
+	bezier.mP1.mY = state.GetValue < float >( 4, 0.0f );
+	
+	bezier.mP2.mX = state.GetValue < float >( 5, 0.0f );
+	bezier.mP2.mY = state.GetValue < float >( 6, 0.0f );
+	
+	bezier.mP3.mX = state.GetValue < float >( 7, 0.0f );
+	bezier.mP3.mY = state.GetValue < float >( 8, 0.0f );
+	
+	MOAIDraw::DrawBezierCurve ( bezier );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	drawBoxOutline
 	@text	Draw a box outline.
 	
 	@in		number x0
@@ -288,11 +328,10 @@ int MOAIDraw::_drawBoxOutline ( lua_State* L ) {
 	box.mMax.mZ = state.GetValue < float >( 6, box.mMin.mZ );
 	MOAIDraw::DrawBoxOutline(box);
 	return 0;
-
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawCircle
+/**	@lua	drawCircle
 	@text	Draw a circle.
 	
 	@in		number x
@@ -315,7 +354,7 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawEllipse
+/**	@lua	drawEllipse
 	@text	Draw an ellipse.
 	
 	@in		number x
@@ -348,7 +387,7 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawLine
+/**	@lua	drawLine
 	@text	Draw a line.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -366,7 +405,7 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawPoints
+/**	@lua	drawPoints
 	@text	Draw a list of points.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -384,7 +423,7 @@ int MOAIDraw::_drawPoints ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawRay
+/**	@lua	drawRay
 	@text	Draw a ray.
 	
 	@in		number x
@@ -407,7 +446,7 @@ int MOAIDraw::_drawRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawRect
+/**	@lua	drawRect
 	@text	Draw a rectangle.
 	
 	@in		number x0
@@ -430,7 +469,7 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillCircle
+/**	@lua	fillCircle
 	@text	Draw a filled circle.
 	
 	@in		number x
@@ -453,7 +492,7 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillEllipse
+/**	@lua	fillEllipse
 	@text	Draw a filled ellipse.
 	
 	@in		number x
@@ -479,7 +518,7 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillFan
+/**	@lua	fillFan
 	@text	Draw a filled fan.
 	
 	@in		... vertices		List of vertices (x, y) or an array of vertices
@@ -497,7 +536,7 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fillRect
+/**	@lua	fillRect
 	@text	Draw a filled rectangle.
 	
 	@in		number x0
@@ -520,7 +559,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawTexture
+/**	@lua	drawTexture
 	@text	Draw a filled rectangle.
 	
 	@in		number x0
@@ -545,7 +584,7 @@ int MOAIDraw::_drawTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	drawText
+/**	@lua	drawText
 	@text	Draws a string.
 	
 	@in		MOAIFont font
@@ -606,7 +645,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
+void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
 	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
@@ -620,18 +659,18 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	mtx.TransformVec ( vec );
 
 	// Get the axis unit vector
-	USVec2D norm = vec;
+	ZLVec2D norm = vec;
 	size = norm.NormSafe ();
 	
 	// Get the axis normal
-	USVec2D perpNorm ( norm.mY, -norm.mX );
+	ZLVec2D perpNorm ( norm.mY, -norm.mX );
 	
 	// Project the corners of the viewport onto the axis to get the mix/max bounds
 	float dot;
 	float min;
 	float max;
 	
-	USVec2D corner;
+	ZLVec2D corner;
 	
 	// left, top
 	corner.Init ( -1.0f, 1.0f );
@@ -670,7 +709,7 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	s32 stop = ( s32 )( max / size ) + 1;
 	
 	// Set the pen to the first...
-	USVec2D pen = norm;
+	ZLVec2D pen = norm;
 	pen.Scale (( float )start * size );
 	pen.Add ( loc );
 	
@@ -680,8 +719,8 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	
 	for ( ; start < stop; ++start ) {
 		
-		USVec2D p0;
-		USVec2D p1;
+		ZLVec2D p0;
+		ZLVec2D p1;
 		
 		if ( viewRect.GetIntersection ( pen, perpNorm, p0, p1 )) {
 			
@@ -714,6 +753,17 @@ void MOAIDraw::DrawBoxOutline ( const ZLBox& box ) {
 	
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
 	MOAIDraw::DrawLine ( box.mMin.mX, box.mMin.mY, box.mMax.mZ, box.mMin.mX, box.mMax.mY, box.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIDrawVertexWriter2D writer;
+	
+	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	bezier.Flatten ( writer );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -760,15 +810,15 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	float angle = ( float )TWOPI / ( float )steps;
-	float angleStep = ( float )PI;
+	float step = ( float )TWOPI / ( float )steps;
+	float angle = ( float )PI;
 	
 	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
-	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
+	for ( u32 i = 0; i < steps; ++i, angle += step ) {
 		gfxDevice.WriteVtx (
-			x + ( Sin ( angleStep ) * xRad ),
-			y + ( Cos ( angleStep ) * yRad ),
+			x + ( Cos ( angle ) * xRad ),
+			y + ( Sin ( angle ) * yRad ),
 			0.0f
 		);
 		gfxDevice.WriteFinalColor4b ();
@@ -783,8 +833,8 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 		float xStep = rect.Width () / ( float )xCells;
 		for ( u32 i = 1; i < xCells; ++i ) {
 			float x = rect.mXMin + (( float )i * xStep );
-			USVec2D v0 ( x, rect.mYMin );
-			USVec2D v1 ( x, rect.mYMax );
+			ZLVec2D v0 ( x, rect.mYMin );
+			ZLVec2D v1 ( x, rect.mYMax );
 			
 			MOAIDraw::DrawLine ( v0, v1 );
 		}
@@ -794,8 +844,8 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 		float yStep = rect.Height () / ( float )yCells;
 		for ( u32 i = 1; i < yCells; ++i ) {
 			float y = rect.mYMin + (( float )i * yStep );
-			USVec2D v0 ( rect.mXMin, y );
-			USVec2D v1 ( rect.mXMax, y );
+			ZLVec2D v0 ( rect.mXMin, y );
+			ZLVec2D v1 ( rect.mXMax, y );
 			
 			MOAIDraw::DrawLine ( v0, v1 );
 		}
@@ -805,7 +855,7 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawLine ( const USVec2D& v0, const USVec2D& v1 ) {
+void MOAIDraw::DrawLine ( const ZLVec2D& v0, const ZLVec2D& v1 ) {
 
 	MOAIDraw::DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
 }
@@ -827,7 +877,7 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( ZGL_PRIM_LINES );
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_STRIP );
 
 	gfxDevice.BeginPrim ();
 	
@@ -899,7 +949,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawPoint ( const USVec2D& loc ) {
+void MOAIDraw::DrawPoint ( const ZLVec2D& loc ) {
 
 	MOAIDraw::DrawPoint ( loc.mX, loc.mY );
 }
@@ -929,8 +979,8 @@ void MOAIDraw::DrawQuad ( const ZLQuad& quad ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	
-	USVec2D loc ( x, y );
-	USVec2D vec ( dx, dy );
+	ZLVec2D loc ( x, y );
+	ZLVec2D vec ( dx, dy );
 	
 	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
@@ -943,8 +993,8 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLRect viewRect;
 	viewRect.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
 	
-	USVec2D p0;
-	USVec2D p1;
+	ZLVec2D p0;
+	ZLVec2D p1;
 	
 	if ( viewRect.GetIntersection ( loc, vec, p0, p1 )) {
 		
@@ -1168,6 +1218,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "drawAnimCurve",			_drawAnimCurve },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
+		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCircle",				_drawCircle },
 		{ "drawEllipse",			_drawEllipse },

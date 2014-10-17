@@ -39,18 +39,16 @@ public:
 // MOAIGlobalClassBase
 //================================================================//
 class MOAIGlobalClassBase {
-private:
+protected:
 
 	friend class MOAIGlobals;
 
-protected:
-
 	//----------------------------------------------------------------//
-	virtual void	OnGlobalsFinalize			();
-	virtual void	OnGlobalsRestore			();
-	virtual void	OnGlobalsRetire				();
-					MOAIGlobalClassBase			();
-	virtual			~MOAIGlobalClassBase		();
+	virtual void			OnGlobalsFinalize			();
+	virtual void			OnGlobalsRestore			();
+	virtual void			OnGlobalsRetire				();
+							MOAIGlobalClassBase			();
+	virtual					~MOAIGlobalClassBase		();
 };
 
 //================================================================//
@@ -72,7 +70,6 @@ class MOAIGlobals {
 private:
 
 	friend class MOAIGlobalsMgr;
-	friend class MOAIGlobalClassFinalizer;
 
 	enum {
 		CHUNK_SIZE = 32,
@@ -99,19 +96,20 @@ public:
 			MOAIGlobalPair pair;
 			pair.mGlobal	= 0;
 			pair.mPtr		= 0;
-			pair.mIsValid	= true;
+			pair.mIsValid	= false;
 			
 			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
 		
-		if ( !this->mGlobals [ id ].mIsValid ) {
-			return 0;
-		}
-		
 		if ( !this->mGlobals [ id ].mPtr ) {
 			TYPE* global = new TYPE;
-			this->mGlobals [ id ].mGlobal	= global;
-			this->mGlobals [ id ].mPtr		= global;
+			this->mGlobals [ id ].mGlobal		= global;
+			this->mGlobals [ id ].mPtr			= global;
+			this->mGlobals [ id ].mIsValid		= true;
+		}
+		
+		if ( !this->mGlobals [ id ].mIsValid ) {
+			return 0;
 		}
 		
 		return ( TYPE* )this->mGlobals [ id ].mPtr;
@@ -149,6 +147,8 @@ public:
 class MOAIGlobalsMgr {
 private:
 
+	friend class MOAIGlobalClassBase;
+
 	typedef STLSet < MOAIGlobals* >::iterator GlobalsSetIt;
 	typedef STLSet < MOAIGlobals* > GlobalsSet;
 
@@ -156,22 +156,26 @@ private:
 	static MOAIGlobals* sInstance;
 
 	//----------------------------------------------------------------//
-						MOAIGlobalsMgr			();
-						~MOAIGlobalsMgr			();
+							MOAIGlobalsMgr			();
+							~MOAIGlobalsMgr			();
 
 public:
 
 	//----------------------------------------------------------------//
-	static MOAIGlobals*		Create			();	
-	static void				Delete			( MOAIGlobals* globals );
-	static void				Finalize		();
-	static MOAIGlobals*		Get				();
-	static void				Set				( MOAIGlobals* globals );
+	static bool				Check					( MOAIGlobals* globals );
+	static MOAIGlobals*		Create					();
+	static void				Delete					( MOAIGlobals* globals );
+	static void				Finalize				();
+	static MOAIGlobals*		Get						();
+	static MOAIGlobals*		Set						( MOAIGlobals* globals );
 };
 
 //================================================================//
 // MOAIGlobalClass
 //================================================================//
+/**	@lua	MOAIGlobalClass
+	@text	Base class for Moai singletons.
+*/
 template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
 	public MOAIGlobalClassBase,
@@ -180,6 +184,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Affirm () {
+		assert ( MOAIGlobalsMgr::Get ());
 		TYPE* global = MOAIGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
 		assert ( global );
 		return *global;
@@ -187,6 +192,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
+		assert ( MOAIGlobalsMgr::Get ());
 		TYPE* global = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
@@ -194,8 +200,24 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static bool IsValid () {
+		assert ( MOAIGlobalsMgr::Get ());
 		return MOAIGlobalsMgr::Get ()->IsValid < TYPE >();
 	}
+};
+
+//================================================================//
+// MOAIScopedContext
+//================================================================//
+class MOAIScopedContext {
+private:
+
+	MOAIGlobals*	mOriginalContext;
+
+public:
+	
+	//----------------------------------------------------------------//
+						MOAIScopedContext			();
+						~MOAIScopedContext			();
 };
 
 #endif

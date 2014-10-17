@@ -16,7 +16,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initialize the video player with the URL of a video to play.
 	
 	@in		string 	url				The URL of the video to play.
@@ -35,13 +35,13 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( movie, "init", "(Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find static java method %s", "init" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, init, jurl );
@@ -52,7 +52,7 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	play
+/**	@lua	play
 	@text	Play the video as soon as playback is ready.
 	
 	@out	nil
@@ -66,13 +66,13 @@ int MOAIMoviePlayerAndroid::_play ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID play = env->GetStaticMethodID ( movie, "play", "()V" );
     	if ( play == NULL ) {
 
-			ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find static java method %s", "play" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "play" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, play );
@@ -83,7 +83,7 @@ int MOAIMoviePlayerAndroid::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	pause
+/**	@lua	pause
 	@text	Pause video playback.
 	
 	@out	nil
@@ -97,13 +97,13 @@ int MOAIMoviePlayerAndroid::_pause ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID pause = env->GetStaticMethodID ( movie, "pause", "()V" );
     	if ( pause == NULL ) {
 
-			ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find static java method %s", "pause" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "pause" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, pause );	
@@ -129,7 +129,7 @@ int MOAIMoviePlayerAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	stop
+/**	@lua	stop
 	@text	Stop video playback and reset the video player.
 	
 	@out	nil
@@ -143,13 +143,13 @@ int MOAIMoviePlayerAndroid::_stop ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID stop = env->GetStaticMethodID ( movie, "stop", "()V" );
     	if ( stop == NULL ) {
 
-			ZLLog::Print ( "MOAIMoviePlayerAndroid: Unable to find static java method %s", "stop" );
+			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "stop" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, stop );

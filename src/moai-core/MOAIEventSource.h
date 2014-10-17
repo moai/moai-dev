@@ -4,12 +4,13 @@
 #ifndef	MOAIEVENTSOURCE_H
 #define	MOAIEVENTSOURCE_H
 
-#include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaState.h>
 
 //================================================================//
 // MOAIEventSource
 //================================================================//
-/**	@name	MOAIEventSource
+/**	@lua	MOAIEventSource
 	@text	Base class for all Lua-bound Moai objects that emit events
 			and have an event table.
 */
@@ -25,16 +26,16 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	virtual void	InvokeListener			( u32 eventID ) = 0;
 					MOAIEventSource			();
 	virtual			~MOAIEventSource		();
 	bool			PushListener			( u32 eventID, MOAILuaState& state );
-	bool			PushListenerAndSelf		( u32 eventID, MOAILuaState& state );
 };
 
 //================================================================//
 // MOAIInstanceEventSource
 //================================================================//
-/**	@name	MOAIInstanceEventSource
+/**	@lua	MOAIInstanceEventSource
 	@text	Derivation of MOAIEventSource for non-global Lua objects.
 */
 class MOAIInstanceEventSource :
@@ -56,15 +57,18 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	void			InvokeListener				( u32 eventID );
+	void			InvokeListenerWithSelf		( u32 eventID );
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
+	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 //================================================================//
 // MOAIGlobalEventSource
 //================================================================//
-/**	@name	MOAIGlobalEventSource
+/**	@lua	MOAIGlobalEventSource
 	@text	Derivation of MOAIEventSource for global Lua objects.
 */
 class MOAIGlobalEventSource :
@@ -73,14 +77,10 @@ private:
 
 	MOAILuaStrongRef	mListenerTable;
 
-	//----------------------------------------------------------------//
-	static int		_getListener				( lua_State* L );
-	static int		_setListener				( lua_State* L );
-
 protected:
 
 	//----------------------------------------------------------------//
-	/**	@name	getListener
+	/**	@lua	getListener
 		@text	Gets the listener callback for a given event ID.
 
 		@in		number eventID				The ID of the event.
@@ -110,7 +110,7 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	/**	@name	setListener
+	/**	@lua	setListener
 		@text	Sets a listener callback for a given event ID. It is up
 				to individual classes to declare their event IDs.
 			
@@ -143,6 +143,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	void			InvokeListener				( u32 eventID );
 					MOAIGlobalEventSource		();
 	virtual			~MOAIGlobalEventSource		();
 };

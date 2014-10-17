@@ -164,6 +164,10 @@ void MOAIHttpTaskCurl::AffirmHandle () {
 //----------------------------------------------------------------//
 void MOAIHttpTaskCurl::Clear () {
 
+	if ( MOAIUrlMgrCurl::IsValid ()) {
+		MOAIUrlMgrCurl::Get ().RemoveHandle ( *this );
+	}
+
 	this->mUrl.clear ();
 	this->mBody.Clear ();
 	this->mMemStream.Clear ();
@@ -300,7 +304,7 @@ void MOAIHttpTaskCurl::PerformSync () {
 void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
 
 	if ( error ) {
-		ZLLog::Print ( "%s\n", curl_easy_strerror ( error ));
+		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", curl_easy_strerror ( error ));
 	}
 }
 

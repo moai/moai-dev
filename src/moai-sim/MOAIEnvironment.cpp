@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	generateGUID
+/**	@lua	generateGUID
 	@text	Generates a globally unique identifier. This method will be
 			moved to MOAIUnique in a future release.
 
@@ -28,7 +28,7 @@ int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMACAddress
+/**	@lua	getMACAddress
 	@text	Finds and returns the primary MAC Address
  
 	@out	string MAC
@@ -42,7 +42,7 @@ int MOAIEnvironment::_getMACAddress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setValue
+/**	@lua	setValue
 	@text	Sets an environment value and also triggers the listener
 			callback (if any).
 
@@ -224,8 +224,6 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	int top = state.GetTop ();
-
 	this->PushLuaClassTable ( state );
 		
 	state.CopyToTop ( -3 ); // key
@@ -241,6 +239,4 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 		
 		state.DebugCall ( 2, 0 );
 	}
-	
-	top = state.GetTop ();
 }

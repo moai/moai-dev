@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIParticleDistanceEmitter
 //================================================================//
-/**	@name	MOAIParticleDistanceEmitter
+/**	@lua	MOAIParticleDistanceEmitter
 	@text	Particle emitter.
 */
 class MOAIParticleDistanceEmitter :

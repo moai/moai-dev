@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	close
+/**	@lua	close
 	@text	Flush any remaining buffered data and detach the target stream.
 			(This only detaches the target from the formatter; it does
 			not also close the target stream).
@@ -25,7 +25,7 @@ int MOAIStreamWriter::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openBase64
+/**	@lua	openBase64
 	@text	Open a base 64 formatted stream for writing (i.e. encode
 			bytes to base64).
 	
@@ -50,7 +50,7 @@ int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openDeflate
+/**	@lua	openDeflate
 	@text	Open a 'deflate' formatted stream for writing (i.e. compress
 			bytes using the 'deflate' algorithm).
 	

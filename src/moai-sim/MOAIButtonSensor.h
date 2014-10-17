@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIButtonSensor
 //================================================================//
-/**	@name	MOAIButtonSensor
+/**	@lua	MOAIButtonSensor
 	@text	Button sensor.
 */
 class MOAIButtonSensor :
@@ -42,9 +42,9 @@ public:
 	bool			ButtonIsDown			();
 	bool			ButtonIsUp				();
 	bool			ButtonUp				();
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAIButtonSensor		();
 					~MOAIButtonSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();

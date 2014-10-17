@@ -18,7 +18,7 @@ int MOAIRenderMgr::_getBufferTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPerformanceDrawCount	
+/**	@lua	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
 	@out	number count		Number of underlying graphics "draw" calls last frame.	
@@ -39,6 +39,16 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
+
+	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, device.mRenderCounter );
+
+	return 1;
+}
+
 //================================================================//
 // DOXYGEN
 //================================================================//
@@ -46,7 +56,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 #ifdef DOXYGEN
 
 	//----------------------------------------------------------------//
-	/**	@name	clearRenderStack
+	/**	@lua	clearRenderStack
 		@text	Sets the render stack to nil. THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -56,7 +66,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	getRenderTable
+	/**	@lua	getRenderTable
 		@text	Returns the table currently being used for rendering.
 		
 		@out	table renderTable
@@ -65,7 +75,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 
 	//----------------------------------------------------------------//
-	/**	@name	grabNextFrame
+	/**	@lua	grabNextFrame
 		@text	Save the next frame rendered to 
 
 		@in		MOAIImage image			Image to save the backbuffer to
@@ -77,7 +87,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	popRenderPass
+	/**	@lua	popRenderPass
 		@text	Pops the top renderable from the render stack. THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -87,7 +97,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	pushRenderPass
+	/**	@lua	pushRenderPass
 		@text	Pushes a renderable onto the render stack. THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
@@ -98,7 +108,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@name	removeRenderPass
+	/**	@lua	removeRenderPass
 		@text	Removes a renderable from the render stack. THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 				Superseded by setRenderTable.
@@ -110,7 +120,7 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 	}
 
 	//----------------------------------------------------------------//
-	/**	@name	setRenderTable
+	/**	@lua	setRenderTable
 		@text	Sets the table to be used for rendering. This should be
 				an array indexed from 1 consisting of MOAIRenderable objects
 				and sub-tables. Objects will be rendered in order starting
@@ -132,7 +142,11 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 MOAIRenderMgr::MOAIRenderMgr () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
-	mRenderTime ( 0.0 ) {
+	mRenderTime ( 0.0 ),
+	mViewport ( 0 ),
+	mCamera ( 0 ),
+	mFrameBuffer ( 0 ),
+	mRenderable ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -147,6 +161,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getBufferTable",				_getBufferTable },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
+		{ "getRenderCount",				_getRenderCount },
 		{ "setBufferTable",				_setBufferTable },
 		{ NULL, NULL }
 	};
@@ -161,6 +176,8 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
+
+	zglBegin ();
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
@@ -183,6 +200,10 @@ void MOAIRenderMgr::Render () {
 	double endTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
+	
+	this->mFrameBuffer = 0;
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +221,7 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		if ( valType == LUA_TUSERDATA ) {
 			MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
 			if ( frameBuffer ) {
+				this->mFrameBuffer = frameBuffer;
 				frameBuffer->Render ();
 			}
 		}

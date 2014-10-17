@@ -16,11 +16,16 @@ class MOAIUrlMgrCurl :
 private:
 
 	STLMap < CURL*, MOAIHttpTaskCurl* > mHandleMap;
-	CURLM*	mMultiHandle;
-	bool	mMore;
+	CURLM*	    mMultiHandle;
+	bool	    mMore;
+	MOAIThread* mThread;
+	MOAIMutex   mLock;
 
 	//----------------------------------------------------------------//
 	void			AddHandle				( MOAIHttpTaskCurl& task );
+	void			RemoveHandle			( MOAIHttpTaskCurl& task );
+	void			Start					();
+	void			StopIfDone				( bool force = false);
 
 public:
 
@@ -29,7 +34,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAIUrlMgrCurl			();
 					~MOAIUrlMgrCurl			();
-	void			Process					();
+	bool			Process					();
+	void			ProcessHandle			();
+	void			ProcessAsync			();
 };
 
 #endif

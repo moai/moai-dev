@@ -14,7 +14,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleState
 //================================================================//
-/**	@name	MOAIParticleState
+/**	@lua	MOAIParticleState
 	@text	Particle state.
 */
 class MOAIParticleState :

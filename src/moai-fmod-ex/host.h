@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_FMOD_EX_H
-#define AKU_FMOD_EX_H
+#ifndef MOAI_FMOD_EX_HOST_H
+#define MOAI_FMOD_EX_HOST_H
 
 #include <moai-core/host.h>
 

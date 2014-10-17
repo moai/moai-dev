@@ -76,6 +76,10 @@
 		#define MOAI_WITH_LUAEXT 1
 	#endif
 	
+	#ifndef MOAI_WITH_NSURL
+		#define MOAI_WITH_NSURL 0
+	#endif
+	
 	#ifndef MOAI_WITH_MONGOOSE
 		#define MOAI_WITH_MONGOOSE 1
 	#endif

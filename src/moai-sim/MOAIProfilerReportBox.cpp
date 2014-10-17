@@ -45,7 +45,7 @@ const cc8* kCloumn_Names[] = {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getRect
+/**	@lua	getRect
 	@text	Returns the two dimensional boundary of the frame.
 
 	@in		MOAIProfilerReportBox self
@@ -69,7 +69,7 @@ int MOAIProfilerReportBox::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFont
+/**	@lua	getFont
 	@text	Gets the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -87,7 +87,7 @@ int MOAIProfilerReportBox::_getFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFontSize
+/**	@lua	getFontSize
 	@text	Gets the size of the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -102,7 +102,7 @@ int MOAIProfilerReportBox::_getFontSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBackgroundColor
+/**	@lua	getBackgroundColor
 	@text	Gets the background color.
 	
 	@in		MOAIProfilerReportBox self
@@ -125,7 +125,7 @@ int MOAIProfilerReportBox::_getBackgroundColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRowColor
+/**	@lua	getRowColor
 	@text	Gets the row color.
 	
 	@in		MOAIProfilerReportBox self
@@ -148,7 +148,7 @@ int MOAIProfilerReportBox::_getRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTextColor
+/**	@lua	getTextColor
 	@text	Gets the text color.
 	
 	@in		MOAIProfilerReportBox self
@@ -171,7 +171,7 @@ int MOAIProfilerReportBox::_getTextColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getOrientation
+/**	@lua	getOrientation
 	@text	Gets the orientation.
 	
 	@in		MOAIProfilerReportBox self
@@ -186,7 +186,7 @@ int MOAIProfilerReportBox::_getOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
+/**	@lua	setRect
 	@text	Sets the rectangular area for this frame.
 
 	@in		MOAIProfilerReportBox self
@@ -210,7 +210,7 @@ int MOAIProfilerReportBox::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFont
+/**	@lua	setFont
 	@text	Sets or clears the style's font.
 	
 	@in		MOAIProfilerReportBox self
@@ -225,7 +225,7 @@ int MOAIProfilerReportBox::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFontSize
+/**	@lua	setFontSize
 	@text	Sets the size of the font.
 	
 	@in		MOAIProfilerReportBox self
@@ -245,7 +245,7 @@ int MOAIProfilerReportBox::_setUserMemory ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBackgroundColor
+/**	@lua	setBackgroundColor
 	@text	Initialize the background color.
 	
 	@in		MOAIProfilerReportBox self
@@ -262,7 +262,7 @@ int MOAIProfilerReportBox::_setBackgroundColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRowColor
+/**	@lua	setRowColor
 	@text	Initialize the row color.
 	
 	@in		MOAIProfilerReportBox self
@@ -279,7 +279,7 @@ int MOAIProfilerReportBox::_setRowColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTextColor
+/**	@lua	setTextColor
 	@text	Initialize the text color.
 	
 	@in		MOAIProfilerReportBox self
@@ -296,7 +296,7 @@ int MOAIProfilerReportBox::_setTextColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setOrientation
+/**	@lua	setOrientation
 	@text	Sets the orientation.
 	
 	@in		MOAIProfilerReportBox self
@@ -310,7 +310,7 @@ int MOAIProfilerReportBox::_setOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	enableProfiling
+/**	@lua	enableProfiling
 	@text	Enables profile stats collection
 	
 	@in		MOAIProfilerReportBox self
@@ -323,7 +323,7 @@ int MOAIProfilerReportBox::_enableProfiling ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	disableProfiling
+/**	@lua	disableProfiling
 	@text	Disables profile stats collection
 	
 	@in		MOAIProfilerReportBox self
@@ -340,8 +340,9 @@ int MOAIProfilerReportBox::_disableProfiling ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBox::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
+	UNUSED ( lod );
 	
 	if ( !mFont ) return;
 	
@@ -480,10 +481,10 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	}
 	else {		
 		if ( relativeMemUsed < 0.75f ) {
-			memColorCur.Lerp ( memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
+			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
 		}
 		else {
-			memColorCur.Lerp ( memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
+			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
 		}
 	}
 
@@ -600,7 +601,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProfilerReportBox::GetPropBounds ( ZLBox& bounds ) {
+u32 MOAIProfilerReportBox::OnGetModelBounds ( ZLBox& bounds ) {
 
 	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;
@@ -617,7 +618,6 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mUserMemory ( 0 ),
 	mMemoryXRange ( 0, 0 ),
 	mLineHeight ( 0 ),
-	
 	mSummaryYRange ( 0, 0 ),
 	mOverviewXRange ( 0, 0 ),
 	mHeaderYRange ( 0, 0 ),
@@ -627,7 +627,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mOneOverTotalDurationMicroSec ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
@@ -642,7 +642,7 @@ MOAIProfilerReportBox::~MOAIProfilerReportBox () {
 //----------------------------------------------------------------//
 void MOAIProfilerReportBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getRect",				_getRect },

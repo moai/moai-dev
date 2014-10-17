@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIWheelSensor
 //================================================================//
-/**	@name	MOAIWheelSensor
+/**	@lua	MOAIWheelSensor
 	@text	Hardware wheel sensor.
 */
 class MOAIWheelSensor :
@@ -31,14 +31,12 @@ public:
 	DECL_LUA_FACTORY ( MOAIWheelSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAIWheelSensor			();
 					~MOAIWheelSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-
 	void			Reset					();
-
 	static void		WriteEvent				( ZLStream& eventStream, float heading );
 };
 

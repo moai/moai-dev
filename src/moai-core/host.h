@@ -30,7 +30,13 @@
 #endif
 
 struct lua_State;
+typedef struct lua_State lua_State;
 typedef int AKUContextID;
+
+enum {
+	AKU_AS_ARGS		= 0,
+	AKU_AS_PARAMS	= 1,
+};
 
 enum {
 	AKU_DATA_BYTECODE,
@@ -45,26 +51,30 @@ typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lu
 // context api
 AKU_API void			AKUAppFinalize					();
 AKU_API void			AKUAppInitialize				();
+AKU_API int				AKUCheckContext					( AKUContextID context );
 AKU_API void			AKUClearMemPool					();
+AKU_API int				AKUCountContexts				();
 AKU_API AKUContextID	AKUCreateContext				();
 AKU_API void			AKUDeleteContext				( AKUContextID context );
 AKU_API AKUContextID	AKUGetContext					();
 AKU_API void*			AKUGetUserdata					();
 
 AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
-AKU_API void			AKUSetContext					( AKUContextID context );
+AKU_API int				AKUSetContext					( AKUContextID context );
 AKU_API void			AKUSetUserdata					( void* user );
 
 // management api
+AKU_API void			AKUCallFunc						();
+AKU_API void			AKUCallFuncWithArgArray			( char* exeName, char* scriptName, int argc, char** argv, int asParams );
+AKU_API void			AKUCallFuncWithArgString		( char* exeName, char* scriptName, char* args, int asParams );
 AKU_API lua_State*		AKUGetLuaState					();
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
+AKU_API void			AKULoadFuncFromBuffer			( void* data, size_t size, int dataType, int compressed );
+AKU_API void			AKULoadFuncFromFile				( const char* filename );
+AKU_API void			AKULoadFuncFromString			( const char* script );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
-AKU_API void			AKURunData						( void* data, size_t size, int dataType, int compressed );
-AKU_API void			AKURunScript					( const char* filename );
-AKU_API void			AKURunString					( const char* script );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
-AKU_API void			AKUSetArgv						( char **argv );
 
 // callback management
 AKU_API void			AKUSetFunc_ErrorTraceback		( AKUErrorTracebackFunc func );

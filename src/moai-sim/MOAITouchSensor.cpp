@@ -12,7 +12,7 @@ const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	down
+/**	@lua	down
 	@text	Checks to see if the screen was touched during the last iteration.
 
 	@in		MOAITouchSensor self
@@ -32,7 +32,7 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getActiveTouches
+/**	@lua	getActiveTouches
 	@text	Returns the IDs of all of the touches currently occurring (for use with getTouch).
 
 	@in		MOAITouchSensor self
@@ -53,7 +53,39 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTouch
+// TODO: doxygen
+int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	u32 count = self->mTop;
+	if ( count == 0 ) return 0;
+	
+	ZLVec2D loc;
+	
+	for ( u32 i = 0; i < count; ++i ) {
+		u32 touchID = self->mActiveStack [ i ];
+		const MOAITouch& touch = self->mTouches [ touchID ];
+		
+		if ( i == 0 ) {
+			loc.mX = touch.mX;
+			loc.mY = touch.mY;
+		}
+		else {
+			loc.mX += touch.mX;
+			loc.mY += touch.mY;
+		}
+	}
+	
+	loc.Scale ( 1.0f / ( float )count );
+	
+	state.Push ( loc.mX );
+	state.Push ( loc.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getTouch
 	@text	Checks to see if there are currently touches being made on the screen.
 
 	@in		MOAITouchSensor self
@@ -81,7 +113,7 @@ int MOAITouchSensor::_getTouch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasTouches
+/**	@lua	hasTouches
 	@text	Checks to see if there are currently touches being made on the screen.
 
 	@in		MOAITouchSensor self
@@ -95,7 +127,7 @@ int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDown
+/**	@lua	isDown
 	@text	Checks to see if the touch status is currently down.
 
 	@in		MOAITouchSensor self
@@ -115,7 +147,7 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAcceptCancel
+/**	@lua	setAcceptCancel
 	@text	Sets whether or not to accept cancel events ( these happen on iOS backgrounding ), default value is false
  
 	@in		MOAITouchSensor self
@@ -131,7 +163,7 @@ int MOAITouchSensor::_setAcceptCancel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the pointer location changes.
 
 	@in		MOAITouchSensor self
@@ -147,7 +179,7 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTapMargin
+/**	@lua	setTapMargin
 	@text	Sets maximum distance between two touches for them to be considered a tap
 	 
 	@in		MOAITouchSensor self
@@ -164,7 +196,7 @@ int MOAITouchSensor::_setTapMargin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTapTime
+/**	@lua	setTapTime
 	@text	Sets the time between each touch for it to be counted as a tap
 	 
 	@in		MOAITouchSensor self
@@ -181,7 +213,7 @@ int MOAITouchSensor::_setTapTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	up
+/**	@lua	up
 	@text	Checks to see if the screen was untouched (is no longer being touched) during the last iteration.
 
 	@in		MOAITouchSensor self
@@ -277,7 +309,24 @@ u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAITouchSensor::MOAITouchSensor () {
+
+	RTTI_SINGLE ( MOAISensor )
+	
+	mTapTime = DEFAULT_TAPTIME;
+	mTapMargin = DEFAULT_TAPMARGIN;
+	
+	mAcceptCancel = false;
+	
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAITouchSensor::~MOAITouchSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	u32 eventType = eventStream.Read < u32 >( 0 );
 
@@ -343,7 +392,7 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 			
 			this->mTouches [ idx ] = touch;
 			
-			if (( idx != UNKNOWN_TOUCH ) && ( this->mCallback )) {
+			if ( this->mCallback ) {
 				
 				MOAIScopedLuaState state = this->mCallback.GetSelf ();
 				lua_pushnumber ( state, eventType );
@@ -358,59 +407,46 @@ void MOAITouchSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAITouchSensor::MOAITouchSensor () {
-
-	RTTI_SINGLE ( MOAISensor )
-	
-	mTapTime = DEFAULT_TAPTIME;
-	mTapMargin = DEFAULT_TAPMARGIN;
-	
-	mAcceptCancel = false;
-	
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-MOAITouchSensor::~MOAITouchSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAITouchSensor::PrintStacks () {
 
-	MOAIPrint ( "[" );
+	STLString stacks = "";
+
+	stacks.write ( "[" );
 
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 	
-		MOAIPrint ( "%d", ( int )this->mAllocStack [ i ]);
+		stacks.write ( "%d", ( int )this->mAllocStack [ i ]);
 	}
 	
-	MOAIPrint ( " ] [" );
+	stacks.write ( " ] [" );
 	
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 		
 		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			MOAIPrint ( "%d", ( int )this->mActiveStack [ i ]);
+			stacks.write ( "%d", ( int )this->mActiveStack [ i ]);
 		}
 		else {
-			MOAIPrint ( "-" );
+			stacks.write ( "-" );
 		}
 	}
 	
-	MOAIPrint ( " ]\n" );
+	stacks.write ( " ]\n" );
+	
+	MOAILog ( 0, 0, stacks.c_str ());
 }
 
 //----------------------------------------------------------------//
@@ -427,9 +463,12 @@ void MOAITouchSensor::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAISensor::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
 		{ "down",				_down },
 		{ "getActiveTouches",	_getActiveTouches },
+		{ "getCenterLoc",		_getCenterLoc },
 		{ "getTouch",			_getTouch },
 		{ "hasTouches",			_hasTouches },
 		{ "isDown",				_isDown },
@@ -493,6 +532,8 @@ void MOAITouchSensor::Reset () {
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down, float x, float y, float time ) {
 
+	//printf ( "TOUCH EVENT: %s %d %f %f\n", down ? "down" : "up", touchID, x, y );
+
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
 	eventStream.Write < u32 >( eventType );
@@ -504,6 +545,8 @@ void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down
 
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEventCancel ( ZLStream& eventStream ) {
+
+	//printf ( "TOUCH EVENT: cancel\n" );
 
 	eventStream.Write < u32 >( TOUCH_CANCEL );
 }

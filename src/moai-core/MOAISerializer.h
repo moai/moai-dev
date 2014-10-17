@@ -7,9 +7,22 @@
 #include <moai-core/MOAISerializerBase.h>
 
 //================================================================//
+// MOAISerializerObjectInfo
+//================================================================//
+class MOAISerializerObjectInfo {
+private:
+
+	friend class MOAISerializer;
+	
+	MOAISerializerBase::ObjID	mMemberTableID;
+	MOAISerializerBase::ObjID	mInitTableID;
+	MOAISerializerBase::ObjID	mUserTableID;
+};
+
+//================================================================//
 // MOAISerializer
 //================================================================//
-/**	@name	MOAISerializer
+/**	@lua	MOAISerializer
 	@text	Manages serialization state of Lua tables and Moai objects.
 			The serializer will produce a Lua script that, when executed,
 			will return the ordered list of objects added to it using the
@@ -19,31 +32,36 @@ class MOAISerializer :
 	public MOAISerializerBase {
 private:
 
-	// list of instances waiting to be processed
-	typedef STLList < uintptr >::iterator PendingIt;
-	STLList < uintptr > mPending;
+	// IDs of support tables for object initialization
+	typedef STLMap < ObjID, MOAISerializerObjectInfo >::iterator ObjectInfoTableIt;
+	STLMap < ObjID, MOAISerializerObjectInfo > mObjectInfoTable;
 
-	// return list for Lua runtime
-	typedef STLList < uintptr >::iterator ReturnListIt;
-	STLList < uintptr > mReturnList;
+	// cache empty objects
+	STLSet < ObjID > mEmpties;
 
-	//----------------------------------------------------------------//
-	static int		_exportToFile				( lua_State* L );
-	static int		_exportToString				( lua_State* L );
-	static int		_serialize					( lua_State* L );
-	static int		_serializeToFile			( lua_State* L );
-	static int		_serializeToString			( lua_State* L );
+	ObjID				mRoot;
+	bool				mBase64;
 
 	//----------------------------------------------------------------//
-	void			WriteDecls					( ZLStream& stream );
-	void			WriteObjectDecls			( ZLStream& stream );
-	void			WriteObjectInits			( ZLStream& stream );
-	void			WriteRecords				( ZLStream& stream );
-	void			WriteReturnList				( ZLStream& stream );
-	u32				WriteTable					( ZLStream& stream, MOAILuaState& state, int idx, u32 tab );
-	void			WriteTableDecls				( ZLStream& stream );
-	u32				WriteTableInitializer		( ZLStream& stream, MOAILuaState& state, int idx, cc8* prefix );
-	void			WriteTableInits				( ZLStream& stream );
+	static int			_floatToHex					( lua_State* L );
+	static int			_hexToFloat					( lua_State* L );
+	static int			_getObjectTables			( lua_State* L );
+	static int			_serializeToFile			( lua_State* L );
+	static int			_serializeToString			( lua_State* L );
+	static int			_setBase64Enabled			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	STLString			EscapeString				( cc8* str, size_t len );
+	static bool			IsSimpleStringKey			( cc8* str );
+	void				PrintObjectID				( ZLStream& stream, cc8* format, ObjID objID );
+	void				WriteDecls					( ZLStream& stream );
+	void				WriteObjectDecls			( ZLStream& stream );
+	void				WriteObjectInits			( ZLStream& stream );
+	void				WriteRecords				( ZLStream& stream );
+	void				WriteReturnList				( ZLStream& stream );
+	void				WriteTableDecls				( ZLStream& stream );
+	u32					WriteTableInitializer		( ZLStream& stream, MOAILuaState& state, int idx, cc8* prefix );
+	void				WriteTableInits				( ZLStream& stream );
 
 protected:
 
@@ -57,8 +75,8 @@ public:
 	//----------------------------------------------------------------//
 	void			AddLuaReturn				( MOAILuaObject* object );
 	void			AddLuaReturn				( MOAILuaState& state, int idx );
-	uintptr			AffirmMemberID				( MOAILuaObject* object );
-	uintptr			AffirmMemberID				( MOAILuaState& state, int idx );
+	ObjID			AffirmMemberID				( MOAILuaObject* object );
+	ObjID			AffirmMemberID				( MOAILuaState& state, int idx );
 	void			Clear						();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );

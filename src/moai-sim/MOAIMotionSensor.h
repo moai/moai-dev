@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMotionSensor
 //================================================================//
-/**	@name	MOAIMotionSensor
+/**	@lua	MOAIMotionSensor
 	@text	Gravity/acceleration sensor.
 */
 class MOAIMotionSensor :
@@ -31,9 +31,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIMotionSensor )
 
 	//----------------------------------------------------------------//
-	void			HandleEvent				( ZLStream& eventStream );
 					MOAIMotionSensor		();
 					~MOAIMotionSensor		();
+	void			ParseEvent				( ZLStream& eventStream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( ZLStream& eventStream, float x, float y, float z );

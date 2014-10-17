@@ -15,7 +15,7 @@
 //================================================================//
 // MOAIBreakpoint
 //================================================================//
-/**	@name	MOAIBreakpoint
+/**	@lua	MOAIBreakpoint
 	@text	Internal breakpoint definition class.
 */
 struct MOAIBreakpoint {
@@ -56,7 +56,7 @@ private:
 //================================================================//
 // MOAIHarness
 //================================================================//
-/**	@name	MOAIHarness
+/**	@lua	MOAIHarness
 	@text	Internal debugging and hooking class.
 */
 class MOAIHarness :

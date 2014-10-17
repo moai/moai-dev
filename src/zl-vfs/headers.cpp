@@ -20,6 +20,7 @@
 #endif
 
 #include <errno.h>
+#include <setjmp.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <tlsf.h>
@@ -30,6 +31,10 @@
 
 #ifdef NACL
 	#include "NaClFile.h"
+#endif
+
+#ifdef ANDROID
+	#include <android/log.h>
 #endif
 
 #include <zl-vfs/ZLVfsFile.h>
@@ -664,7 +669,7 @@ int zl_pclose ( ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
-ZLFILE* zl_popen ( const char *command, const char *mode ) {
+ZLFILE* zl_popen ( const char* command, const char *mode ) {
 
 	ZLVfsFile* file = new ZLVfsFile ();
 	int result = file->OpenProcess ( command, mode );
@@ -674,6 +679,19 @@ ZLFILE* zl_popen ( const char *command, const char *mode ) {
 		return 0;
 	}
 	return ( ZLFILE* )file;
+}
+
+//----------------------------------------------------------------//
+int zl_printf ( const char* format, ... ) {
+
+	int result;
+
+	va_list args;
+	va_start ( args, format );
+	result = zl_vprintf ( format, args );
+	va_end ( args );
+
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -757,4 +775,18 @@ int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 		return file->VarPrintf ( format, arg );
 	}
 	return -1;
+}
+
+//----------------------------------------------------------------//
+int zl_vprintf ( const char * format, va_list arg ) {
+
+	int result;
+	
+	#ifdef ANDROID
+		result = __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
+	#else
+		result = vprintf ( format, arg );
+	#endif
+
+	return result;
 }

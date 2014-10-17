@@ -3,31 +3,42 @@
 
 #ifndef	MOAIXMLPARSER_H
 #define	MOAIXMLPARSER_H
-#if MOAI_WITH_TINYXML
+#if MOAI_WITH_TINYXML && MOAI_WITH_EXPAT
 
+class MOAIStream;
 class TiXmlNode;
 
 //================================================================//
 // MOAIXmlParser
 //================================================================//
-/**	@name	MOAIXmlParser
+/**	@lua	MOAIXmlParser
 	@text	Converts XML DOM to Lua trees. Provided as a convenience;
 			not advised for parsing very large XML documents. (Use of
 			XML not advised at all - use JSON or Lua.)
 */
 class MOAIXmlParser :
-	public MOAIGlobalClass < MOAIXmlParser, MOAILuaObject > {
+	public virtual MOAILuaObject {
 private:
 
+	ZLXmlReader mReader;
+	MOAILuaSharedPtr < MOAIStream >	mStream;
+
 	//----------------------------------------------------------------//
+	static int	_getElementAttribute		( lua_State* L );
+	static int	_getElementAttributes		( lua_State* L );
+	static int	_getElementLineNumber		( lua_State* L );
+	static int	_getElementName				( lua_State* L );
+	static int	_getElementText				( lua_State* L );
 	static int	_parseFile					( lua_State* L );
 	static int	_parseString				( lua_State* L );
+	static int	_setStream					( lua_State* L );
+	static int	_step						( lua_State* L );
 
 	//----------------------------------------------------------------//
 
 public:
 	
-	DECL_LUA_SINGLETON ( MOAIXmlParser )
+	DECL_LUA_FACTORY ( MOAIXmlParser )
 	
 	//----------------------------------------------------------------//
 					MOAIXmlParser			();

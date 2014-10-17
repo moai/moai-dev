@@ -17,7 +17,7 @@
 
 static double	_frustArea		( const ZLFrustum& frust );
 static double	_quadArea		( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3 );
-static bool		_vecToXYPlane	( const ZLVec3D& v0, const ZLVec3D& v1, USVec2D& result );
+static bool		_vecToXYPlane	( const ZLVec3D& v0, const ZLVec3D& v1, ZLVec2D& result );
 
 //----------------------------------------------------------------//
 double _frustArea ( const ZLFrustum& frust ) {
@@ -101,7 +101,7 @@ double _quadArea ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, cons
 }
 
 //----------------------------------------------------------------//
-bool _vecToXYPlane ( const ZLVec3D& v0, const ZLVec3D& v1, USVec2D& result ) {
+bool _vecToXYPlane ( const ZLVec3D& v0, const ZLVec3D& v1, ZLVec2D& result ) {
 
 	ZLVec3D vec;
 	
@@ -194,7 +194,7 @@ bool ZLFrustum::Cull ( const ZLRhombus& rhombus ) const {
 bool ZLFrustum::GetXYSectRect ( const ZLAffine3D& mtx, ZLRect& rect ) const {
 
 	u32 nHits = 0;
-	USVec2D hits [ 12 ];
+	ZLVec2D hits [ 12 ];
 
 	ZLVec3D nlt = this->mPoints [ NEAR_LT_POINT ];
 	ZLVec3D nrt = this->mPoints [ NEAR_RT_POINT ];
@@ -242,7 +242,7 @@ bool ZLFrustum::GetXYSectRect ( const ZLAffine3D& mtx, ZLRect& rect ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
+void ZLFrustum::Init ( const ZLMatrix4x4& invViewProjMtx ) {
 
 	// set up the homogenous coordinates of the canonical view volume
 	ZLVec3D nlt ( -1.0f, 1.0f, -1.0f );
@@ -256,15 +256,15 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 	ZLVec3D flb ( -1.0f, -1.0f, 1.0f );
 
 	// compute the corners of the frustum
-	mtx.Project ( nlt );
-	mtx.Project ( nrt );
-	mtx.Project ( nrb );
-	mtx.Project ( nlb );
+	invViewProjMtx.Project ( nlt );
+	invViewProjMtx.Project ( nrt );
+	invViewProjMtx.Project ( nrb );
+	invViewProjMtx.Project ( nlb );
 	
-	mtx.Project ( flt );
-	mtx.Project ( frt );
-	mtx.Project ( frb );
-	mtx.Project ( flb );
+	invViewProjMtx.Project ( flt );
+	invViewProjMtx.Project ( frt );
+	invViewProjMtx.Project ( frb );
+	invViewProjMtx.Project ( flb );
 
 	this->mPoints [ NEAR_LT_POINT ].Init ( nlt.mX, nlt.mY, nlt.mZ );
 	this->mPoints [ NEAR_RT_POINT ].Init ( nrt.mX, nrt.mY, nrt.mZ );
@@ -297,15 +297,6 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 	this->mPlanes [ NEAR_PLANE ].Init ( nrt, nlt, nlb );
 	this->mPlanes [ FAR_PLANE ].Init ( flt, frt, frb );
 	
-	ZLVec3D center;
-	mtx.GetTranslation ( center );
-	
-	for ( u32 i = 0; i < TOTAL_PLANES; ++i ) {
-		if ( ZLDist::VecToPlane ( center, this->mPlanes [ i ]) > 0.0f ) {
-			this->mPlanes [ i ].Flip ();
-		}
-	}
-	
 	double frustArea = _frustArea ( *this );
 	double boxArea = this->mAABB.Area ();
 	
@@ -313,7 +304,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-//void ZLFrustum::Init ( ZLVec3D& loc, ZLRhombus rhombus, USPlane3D& near, USPlane3D& far ) {
+//void ZLFrustum::Init ( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far ) {
 //
 //	this->mLoc = loc;
 //
@@ -322,7 +313,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 //	this->mPlanes [ FAR_PLANE ] = far;
 //
 //	// Get the plane containing the rhombus
-//	USPlane3D rhomPlane;
+//	ZLPlane3D rhomPlane;
 //	rhombus.GetPlane ( rhomPlane );
 //	
 //	// Bless the rhombus
@@ -420,12 +411,12 @@ void ZLFrustum::Init ( const ZLMatrix4x4& mtx ) {
 //----------------------------------------------------------------//
 //void ZLFrustum::UpdateAABB () {
 //
-//	USPlane3D& left = this->mPlanes [ LEFT_PLANE ];
-//	USPlane3D& right = this->mPlanes [ RIGHT_PLANE ];
-//	USPlane3D& top = this->mPlanes [ TOP_PLANE ];
-//	USPlane3D& bottom = this->mPlanes [ BOTTOM_PLANE ];
-//	USPlane3D& near = this->mPlanes [ NEAR_PLANE ];
-//	USPlane3D& far = this->mPlanes [ FAR_PLANE ];
+//	ZLPlane3D& left = this->mPlanes [ LEFT_PLANE ];
+//	ZLPlane3D& right = this->mPlanes [ RIGHT_PLANE ];
+//	ZLPlane3D& top = this->mPlanes [ TOP_PLANE ];
+//	ZLPlane3D& bottom = this->mPlanes [ BOTTOM_PLANE ];
+//	ZLPlane3D& near = this->mPlanes [ NEAR_PLANE ];
+//	ZLPlane3D& far = this->mPlanes [ FAR_PLANE ];
 //
 //	ZLVec3D leftBottom;
 //	ZLVec3D rightBottom;

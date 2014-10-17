@@ -1,0 +1,499 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		886B395017E7DC3F004F8FB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886B394F17E7DC3F004F8FB3 /* CoreData.framework */; };
+		886B395217E7DC47004F8FB3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 886B395117E7DC47004F8FB3 /* Security.framework */; };
+		88E3A13218315F5B00ECB58B /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 888AFF0E1821C5FA00FD3A30 /* PassKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F767F5176286A700DF9C37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F767F4176286A700DF9C37 /* UIKit.framework */; };
+		D3F767F7176286A700DF9C37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F767F6176286A700DF9C37 /* Foundation.framework */; };
+		D3F767F9176286A700DF9C37 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F767F8176286A700DF9C37 /* CoreGraphics.framework */; };
+		D3F767FF176286A700DF9C37 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3F767FD176286A700DF9C37 /* InfoPlist.strings */; };
+		D3F76801176286A700DF9C37 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F76800176286A700DF9C37 /* main.m */; };
+		D3F76805176286A700DF9C37 /* TJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F76804176286A700DF9C37 /* TJAppDelegate.m */; };
+		D3F76807176286A700DF9C37 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F76806176286A700DF9C37 /* Default.png */; };
+		D3F76809176286A700DF9C37 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F76808176286A700DF9C37 /* Default@2x.png */; };
+		D3F7680B176286A700DF9C37 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F7680A176286A700DF9C37 /* Default-568h@2x.png */; };
+		D3F7680E176286A700DF9C37 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3F7680C176286A700DF9C37 /* MainStoryboard.storyboard */; };
+		D3F76814176286A700DF9C37 /* TJViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F76813176286A700DF9C37 /* TJViewController.m */; };
+		D3F7681E176286B400DF9C37 /* TapjoyResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D3F7681C176286B400DF9C37 /* TapjoyResources.bundle */; };
+		D3F7681F176286B400DF9C37 /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7681D176286B400DF9C37 /* Tapjoy.framework */; };
+		D3F76834176287BA00DF9C37 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76821176287BA00DF9C37 /* CFNetwork.framework */; };
+		D3F76835176287BA00DF9C37 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76822176287BA00DF9C37 /* CoreLocation.framework */; };
+		D3F76836176287BA00DF9C37 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76823176287BA00DF9C37 /* CoreMotion.framework */; };
+		D3F76837176287BA00DF9C37 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76824176287BA00DF9C37 /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F76838176287BA00DF9C37 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76825176287BA00DF9C37 /* EventKit.framework */; };
+		D3F76839176287BA00DF9C37 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76826176287BA00DF9C37 /* EventKitUI.framework */; };
+		D3F7683A176287BA00DF9C37 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76827176287BA00DF9C37 /* libsqlite3.0.dylib */; };
+		D3F7683B176287BA00DF9C37 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76828176287BA00DF9C37 /* libxml2.dylib */; };
+		D3F7683C176287BA00DF9C37 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76829176287BA00DF9C37 /* libz.dylib */; };
+		D3F7683D176287BA00DF9C37 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682A176287BA00DF9C37 /* MapKit.framework */; };
+		D3F7683E176287BA00DF9C37 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682B176287BA00DF9C37 /* MediaPlayer.framework */; };
+		D3F7683F176287BA00DF9C37 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682C176287BA00DF9C37 /* MessageUI.framework */; };
+		D3F76840176287BA00DF9C37 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682D176287BA00DF9C37 /* MobileCoreServices.framework */; };
+		D3F76841176287BA00DF9C37 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682E176287BA00DF9C37 /* QuartzCore.framework */; };
+		D3F76842176287BA00DF9C37 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F7682F176287BA00DF9C37 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F76843176287BA00DF9C37 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76830176287BA00DF9C37 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F76844176287BA00DF9C37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76831176287BA00DF9C37 /* SystemConfiguration.framework */; };
+		D3F76845176287BA00DF9C37 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76832176287BA00DF9C37 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F76847176287FF00DF9C37 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F76846176287FF00DF9C37 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D3F7684B176296DC00DF9C37 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F7684A176296DC00DF9C37 /* icon.png */; };
+		D3F7684F1762970B00DF9C37 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F7684E1762970B00DF9C37 /* icon@2x.png */; };
+		D3F768531762972900DF9C37 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F768521762972900DF9C37 /* icon-72.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		886B394F17E7DC3F004F8FB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		886B395117E7DC47004F8FB3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		888AFF0E1821C5FA00FD3A30 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		D3F767F1176286A700DF9C37 /* TapjoyEasyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapjoyEasyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3F767F4176286A700DF9C37 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D3F767F6176286A700DF9C37 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D3F767F8176286A700DF9C37 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D3F767FC176286A700DF9C37 /* TapjoyEasyApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TapjoyEasyApp-Info.plist"; sourceTree = "<group>"; };
+		D3F767FE176286A700DF9C37 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D3F76800176286A700DF9C37 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D3F76802176286A700DF9C37 /* TapjoyEasyApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TapjoyEasyApp-Prefix.pch"; sourceTree = "<group>"; };
+		D3F76803176286A700DF9C37 /* TJAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TJAppDelegate.h; sourceTree = "<group>"; };
+		D3F76804176286A700DF9C37 /* TJAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TJAppDelegate.m; sourceTree = "<group>"; };
+		D3F76806176286A700DF9C37 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D3F76808176286A700DF9C37 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D3F7680A176286A700DF9C37 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D3F7680D176286A700DF9C37 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		D3F76812176286A700DF9C37 /* TJViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TJViewController.h; sourceTree = "<group>"; };
+		D3F76813176286A700DF9C37 /* TJViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TJViewController.m; sourceTree = "<group>"; };
+		D3F7681C176286B400DF9C37 /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
+		D3F7681D176286B400DF9C37 /* Tapjoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Tapjoy.framework; sourceTree = "<group>"; };
+		D3F76821176287BA00DF9C37 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D3F76822176287BA00DF9C37 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D3F76823176287BA00DF9C37 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		D3F76824176287BA00DF9C37 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D3F76825176287BA00DF9C37 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		D3F76826176287BA00DF9C37 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		D3F76827176287BA00DF9C37 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		D3F76828176287BA00DF9C37 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D3F76829176287BA00DF9C37 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D3F7682A176287BA00DF9C37 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D3F7682B176287BA00DF9C37 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		D3F7682C176287BA00DF9C37 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D3F7682D176287BA00DF9C37 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D3F7682E176287BA00DF9C37 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D3F7682F176287BA00DF9C37 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		D3F76830176287BA00DF9C37 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D3F76831176287BA00DF9C37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D3F76832176287BA00DF9C37 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		D3F76846176287FF00DF9C37 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		D3F7684A176296DC00DF9C37 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		D3F7684E1762970B00DF9C37 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		D3F768521762972900DF9C37 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D3F767EE176286A700DF9C37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88E3A13218315F5B00ECB58B /* PassKit.framework in Frameworks */,
+				886B395217E7DC47004F8FB3 /* Security.framework in Frameworks */,
+				886B395017E7DC3F004F8FB3 /* CoreData.framework in Frameworks */,
+				D3F76847176287FF00DF9C37 /* AdSupport.framework in Frameworks */,
+				D3F76834176287BA00DF9C37 /* CFNetwork.framework in Frameworks */,
+				D3F76835176287BA00DF9C37 /* CoreLocation.framework in Frameworks */,
+				D3F76836176287BA00DF9C37 /* CoreMotion.framework in Frameworks */,
+				D3F76837176287BA00DF9C37 /* CoreTelephony.framework in Frameworks */,
+				D3F76838176287BA00DF9C37 /* EventKit.framework in Frameworks */,
+				D3F76839176287BA00DF9C37 /* EventKitUI.framework in Frameworks */,
+				D3F7683A176287BA00DF9C37 /* libsqlite3.0.dylib in Frameworks */,
+				D3F7683B176287BA00DF9C37 /* libxml2.dylib in Frameworks */,
+				D3F7683C176287BA00DF9C37 /* libz.dylib in Frameworks */,
+				D3F7683D176287BA00DF9C37 /* MapKit.framework in Frameworks */,
+				D3F7683E176287BA00DF9C37 /* MediaPlayer.framework in Frameworks */,
+				D3F7683F176287BA00DF9C37 /* MessageUI.framework in Frameworks */,
+				D3F76840176287BA00DF9C37 /* MobileCoreServices.framework in Frameworks */,
+				D3F76841176287BA00DF9C37 /* QuartzCore.framework in Frameworks */,
+				D3F76842176287BA00DF9C37 /* Social.framework in Frameworks */,
+				D3F76843176287BA00DF9C37 /* StoreKit.framework in Frameworks */,
+				D3F76844176287BA00DF9C37 /* SystemConfiguration.framework in Frameworks */,
+				D3F76845176287BA00DF9C37 /* Twitter.framework in Frameworks */,
+				D3F767F9176286A700DF9C37 /* CoreGraphics.framework in Frameworks */,
+				D3F767F7176286A700DF9C37 /* Foundation.framework in Frameworks */,
+				D3F767F5176286A700DF9C37 /* UIKit.framework in Frameworks */,
+				D3F7681F176286B400DF9C37 /* Tapjoy.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D3F767E8176286A600DF9C37 = {
+			isa = PBXGroup;
+			children = (
+				D3F767FA176286A700DF9C37 /* TapjoyEasyApp */,
+				D3F767F3176286A700DF9C37 /* Frameworks */,
+				D3F767F2176286A700DF9C37 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D3F767F2176286A700DF9C37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D3F767F1176286A700DF9C37 /* TapjoyEasyApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D3F767F3176286A700DF9C37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				886B395117E7DC47004F8FB3 /* Security.framework */,
+				886B394F17E7DC3F004F8FB3 /* CoreData.framework */,
+				888AFF0E1821C5FA00FD3A30 /* PassKit.framework */,
+				D3F76846176287FF00DF9C37 /* AdSupport.framework */,
+				D3F76821176287BA00DF9C37 /* CFNetwork.framework */,
+				D3F76822176287BA00DF9C37 /* CoreLocation.framework */,
+				D3F76823176287BA00DF9C37 /* CoreMotion.framework */,
+				D3F76824176287BA00DF9C37 /* CoreTelephony.framework */,
+				D3F76825176287BA00DF9C37 /* EventKit.framework */,
+				D3F76826176287BA00DF9C37 /* EventKitUI.framework */,
+				D3F76827176287BA00DF9C37 /* libsqlite3.0.dylib */,
+				D3F76828176287BA00DF9C37 /* libxml2.dylib */,
+				D3F76829176287BA00DF9C37 /* libz.dylib */,
+				D3F7682A176287BA00DF9C37 /* MapKit.framework */,
+				D3F7682B176287BA00DF9C37 /* MediaPlayer.framework */,
+				D3F7682C176287BA00DF9C37 /* MessageUI.framework */,
+				D3F7682D176287BA00DF9C37 /* MobileCoreServices.framework */,
+				D3F7682E176287BA00DF9C37 /* QuartzCore.framework */,
+				D3F7682F176287BA00DF9C37 /* Social.framework */,
+				D3F76830176287BA00DF9C37 /* StoreKit.framework */,
+				D3F76831176287BA00DF9C37 /* SystemConfiguration.framework */,
+				D3F76832176287BA00DF9C37 /* Twitter.framework */,
+				D3F7681A176286B300DF9C37 /* Tapjoy.embeddedframework */,
+				D3F767F4176286A700DF9C37 /* UIKit.framework */,
+				D3F767F6176286A700DF9C37 /* Foundation.framework */,
+				D3F767F8176286A700DF9C37 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D3F767FA176286A700DF9C37 /* TapjoyEasyApp */ = {
+			isa = PBXGroup;
+			children = (
+				D3F76803176286A700DF9C37 /* TJAppDelegate.h */,
+				D3F76804176286A700DF9C37 /* TJAppDelegate.m */,
+				D3F7680C176286A700DF9C37 /* MainStoryboard.storyboard */,
+				D3F76812176286A700DF9C37 /* TJViewController.h */,
+				D3F76813176286A700DF9C37 /* TJViewController.m */,
+				D3F767FB176286A700DF9C37 /* Supporting Files */,
+			);
+			path = TapjoyEasyApp;
+			sourceTree = "<group>";
+		};
+		D3F767FB176286A700DF9C37 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D3F7684A176296DC00DF9C37 /* icon.png */,
+				D3F7684E1762970B00DF9C37 /* icon@2x.png */,
+				D3F768521762972900DF9C37 /* icon-72.png */,
+				D3F767FC176286A700DF9C37 /* TapjoyEasyApp-Info.plist */,
+				D3F767FD176286A700DF9C37 /* InfoPlist.strings */,
+				D3F76800176286A700DF9C37 /* main.m */,
+				D3F76802176286A700DF9C37 /* TapjoyEasyApp-Prefix.pch */,
+				D3F76806176286A700DF9C37 /* Default.png */,
+				D3F76808176286A700DF9C37 /* Default@2x.png */,
+				D3F7680A176286A700DF9C37 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D3F7681A176286B300DF9C37 /* Tapjoy.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				D3F7681B176286B400DF9C37 /* Resources */,
+				D3F7681D176286B400DF9C37 /* Tapjoy.framework */,
+			);
+			name = Tapjoy.embeddedframework;
+			path = ../Libraries/Tapjoy.embeddedframework;
+			sourceTree = "<group>";
+		};
+		D3F7681B176286B400DF9C37 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D3F7681C176286B400DF9C37 /* TapjoyResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D3F767F0176286A700DF9C37 /* TapjoyEasyApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3F76817176286A700DF9C37 /* Build configuration list for PBXNativeTarget "TapjoyEasyApp" */;
+			buildPhases = (
+				D3F767ED176286A700DF9C37 /* Sources */,
+				D3F767EE176286A700DF9C37 /* Frameworks */,
+				D3F767EF176286A700DF9C37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TapjoyEasyApp;
+			productName = TapjoyEasyApp;
+			productReference = D3F767F1176286A700DF9C37 /* TapjoyEasyApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D3F767E9176286A600DF9C37 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TJ;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Tapjoy;
+			};
+			buildConfigurationList = D3F767EC176286A600DF9C37 /* Build configuration list for PBXProject "TapjoyEasyApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D3F767E8176286A600DF9C37;
+			productRefGroup = D3F767F2176286A700DF9C37 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D3F767F0176286A700DF9C37 /* TapjoyEasyApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D3F767EF176286A700DF9C37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F767FF176286A700DF9C37 /* InfoPlist.strings in Resources */,
+				D3F76807176286A700DF9C37 /* Default.png in Resources */,
+				D3F76809176286A700DF9C37 /* Default@2x.png in Resources */,
+				D3F7680B176286A700DF9C37 /* Default-568h@2x.png in Resources */,
+				D3F7680E176286A700DF9C37 /* MainStoryboard.storyboard in Resources */,
+				D3F7681E176286B400DF9C37 /* TapjoyResources.bundle in Resources */,
+				D3F7684B176296DC00DF9C37 /* icon.png in Resources */,
+				D3F7684F1762970B00DF9C37 /* icon@2x.png in Resources */,
+				D3F768531762972900DF9C37 /* icon-72.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D3F767ED176286A700DF9C37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F76801176286A700DF9C37 /* main.m in Sources */,
+				D3F76805176286A700DF9C37 /* TJAppDelegate.m in Sources */,
+				D3F76814176286A700DF9C37 /* TJViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D3F767FD176286A700DF9C37 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3F767FE176286A700DF9C37 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D3F7680C176286A700DF9C37 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3F7680D176286A700DF9C37 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D34E5E6917629DC400257553 /* Debug9.1 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug9.1;
+		};
+		D34E5E6A17629DC400257553 /* Debug9.1 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../Libraries/Tapjoy.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TapjoyEasyApp/TapjoyEasyApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"TJ_9_1_BUILD=1",
+				);
+				INFOPLIST_FILE = "TapjoyEasyApp/TapjoyEasyApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug9.1;
+		};
+		D3F76815176286A700DF9C37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D3F76816176286A700DF9C37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D3F76818176286A700DF9C37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../Libraries/Tapjoy.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TapjoyEasyApp/TapjoyEasyApp-Prefix.pch";
+				INFOPLIST_FILE = "TapjoyEasyApp/TapjoyEasyApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D3F76819176286A700DF9C37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../Libraries/Tapjoy.embeddedframework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TapjoyEasyApp/TapjoyEasyApp-Prefix.pch";
+				INFOPLIST_FILE = "TapjoyEasyApp/TapjoyEasyApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D3F767EC176286A600DF9C37 /* Build configuration list for PBXProject "TapjoyEasyApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3F76815176286A700DF9C37 /* Debug */,
+				D34E5E6917629DC400257553 /* Debug9.1 */,
+				D3F76816176286A700DF9C37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3F76817176286A700DF9C37 /* Build configuration list for PBXNativeTarget "TapjoyEasyApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3F76818176286A700DF9C37 /* Debug */,
+				D34E5E6A17629DC400257553 /* Debug9.1 */,
+				D3F76819176286A700DF9C37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D3F767E9176286A600DF9C37 /* Project object */;
+}

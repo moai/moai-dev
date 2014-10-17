@@ -10,88 +10,112 @@
 #include <zl-util/ZLBase64Reader.h>
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLByteStream.h>
+#include <zl-util/ZLHexReader.h>
+#include <zl-util/ZLHexWriter.h>
 #include <zl-util/ZLMemStream.h>
+#include <zl-util/ZLZip.h>
 
 //================================================================//
 // STLString
 //================================================================//
 
 //----------------------------------------------------------------//
-void STLString::base_64_decode ( void* buffer, u32 len ) {
+void STLString::base_64_decode ( void* buffer, size_t len ) {
 
-	ZLByteStream byteStream;
 	ZLBase64Reader base64;
-	
-	byteStream.SetBuffer (( void* )this->str (), this->size ());
-	byteStream.SetLength ( this->size ());
-	
-	base64.Open ( byteStream );
-	base64.ReadBytes ( buffer, len );
-	base64.Close ();
+	zl_decode ( base64, buffer, len );
 }
 
 //----------------------------------------------------------------//
-void STLString::base_64_encode ( const void* buffer, u32 len ) {
+// returns an approx. len no smaller than actual decoded size
+size_t STLString::base_64_decode_len () {
+
+	return ZLBase64Reader::GetDecodedLength ( this->size ());
+}
+
+//----------------------------------------------------------------//
+void STLString::base_64_encode ( const void* buffer, size_t len ) {
 	
-	( *this ) = "";
-	if ( !len ) return;
-	
-	ZLMemStream memStream;
 	ZLBase64Writer base64;
-	
-	base64.Open ( memStream );
-	base64.WriteBytes ( buffer, len );
-	base64.Close ();
-	
-	memStream.Seek ( 0, SEEK_SET );
-	( *this ) = memStream.ReadString ( memStream.GetLength ());
+	zl_encode ( base64, buffer, len );
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip ( u32 first, u32 last ) {
+// returns an approx. len no smaller than actual encoded size
+size_t STLString::base_64_encode_len () {
+
+	return ZLBase64Writer::GetEncodedLength ( this->size ());
+}
+
+//----------------------------------------------------------------//
+STLString STLString::build ( cc8* format, ... ) {
+
+	va_list args;
+	va_start ( args, format );
+	STLString result = STLString::build_var ( format, args );
+	va_end ( args );
+
+	return result;
+}
+
+//----------------------------------------------------------------//
+STLString STLString::build_var ( cc8* format, va_list args ) {
+
+	STLString result;
+	result.write_var ( format, args );
+	return result;
+}
+
+//----------------------------------------------------------------//
+STLString STLString::clip ( size_t first, size_t last ) {
 
 	return this->substr ( first, last - first );
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip_to_back ( u32 first ) {
+STLString STLString::clip_to_back ( size_t first ) {
 
 	return this->substr ( first );
 }
 
 //----------------------------------------------------------------//
-STLString STLString::clip_to_front ( u32 last ) {
+STLString STLString::clip_to_front ( size_t last ) {
 
 	return this->substr ( 0, last );
 }
 
 //----------------------------------------------------------------//
-void STLString::hex_encode ( const void* buffer, u32 len ) {
+void STLString::hex_decode ( void* buffer, size_t len ) {
 
-	if ( !len ) {
-		( *this ) = "";
-		return;
-	}
+	ZLHexReader hex;
+	zl_decode ( hex, buffer, len );
+}
 
-	u8* digits = ( u8* )buffer;
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual decoded size
+size_t STLString::hex_decode_len () {
+
+	return ZLHexReader::GetDecodedLength ( this->size ());
+}
+
+//----------------------------------------------------------------//
+void STLString::hex_encode ( const void* buffer, size_t len ) {
 	
-	char* hexStr = ( char* )alloca (( len * 2 ) + 1 );
-	char* hexPtr = hexStr;
-	for ( size_t i = 0; i < len; ++i ) {
-		hexPtr += sprintf ( hexPtr, "%02x", digits [ i ]);
-	}
+	ZLHexWriter hex;
+	zl_encode ( hex, buffer, len );
+}
 
-	( *this ) = hexStr;
+//----------------------------------------------------------------//
+// returns an approx. len no smaller than actual encoded size
+size_t STLString::hex_encode_len () {
+
+	return ZLHexWriter::GetEncodedLength ( this->size ());
 }
 
 //----------------------------------------------------------------//
 u8 STLString::hex_to_byte ( u32 c ) {
 
-	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
-	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
-	if (( c >= 'A' ) && ( c <= 'F' )) return ( u8 )( c + 10 - 'A' );
-
-	return 0xff;
+	return ZLHexReader::HexToByte ( c );
 }
 
 //----------------------------------------------------------------//
@@ -169,15 +193,18 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	int result;
 	
 	for ( ;; ) {
-	
-		result = vsnprintf ( buffer, buffSize, format, args );
+		
+		va_list copy;
+		va_copy ( copy, args );
+		result = vsnprintf ( buffer, buffSize, format, copy );
+		va_end ( copy );
 
 		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
 		if (( result == buffSize ) || ( result == -1 ) || ( result == buffSize - 1 ))  {
 			buffSize = buffSize << 1;
 		}
 		else if ( result > buffSize ) {
-			buffSize = result;
+			buffSize = ( size_t )result + 2;
 		}
 		else {
 			break;
@@ -200,6 +227,64 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	if ( buffer != stackBuffer ) {
 		free ( buffer );
 	}
+}
+
+//----------------------------------------------------------------//
+void STLString::zip_deflate ( const void* buffer, size_t len ) {
+
+	ZLLeanArray < u8 > zip;
+	ZLZip::Deflate ( buffer, len, zip );
+	this->base_64_encode ( zip.Data (), zip.Size ());
+}
+
+//----------------------------------------------------------------//
+size_t STLString::zip_inflate ( void* buffer, size_t len ) {
+
+	size_t zipLen = this->base_64_decode_len ();
+	
+	void* zip = malloc ( zipLen );
+	this->base_64_decode ( zip, zipLen );
+	
+	ZLLeanArray < u8 > unzip;
+	ZLZip::Inflate ( zip, zipLen, unzip );
+	
+	free ( zip );
+	
+	size_t unzipLen = unzip.Size ();
+	
+	len = unzipLen <= len ? unzipLen : len;
+	memcpy ( buffer, unzip.Data (), len );
+	
+	return unzipLen;
+}
+
+//----------------------------------------------------------------//
+void STLString::zl_decode ( ZLStreamReader& reader, void* buffer, size_t len ) {
+
+	ZLByteStream byteStream;
+	
+	byteStream.SetBuffer (( void* )this->str (), this->size ());
+	byteStream.SetLength ( this->size ());
+	
+	reader.Open ( byteStream );
+	reader.ReadBytes ( buffer, len );
+	reader.Close ();
+}
+
+//----------------------------------------------------------------//
+void STLString::zl_encode ( ZLStreamWriter& writer, const void* buffer, size_t len ) {
+
+	( *this ) = "";
+	if ( !len ) return;
+	
+	ZLMemStream memStream;
+	
+	writer.Open ( memStream );
+	writer.WriteBytes ( buffer, len );
+	writer.Close ();
+	
+	memStream.Seek ( 0, SEEK_SET );
+	( *this ) = memStream.ReadString ( memStream.GetLength ());
 }
 
 //----------------------------------------------------------------//

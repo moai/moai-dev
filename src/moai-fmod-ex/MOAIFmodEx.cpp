@@ -16,7 +16,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMemoryStats
+/**	@lua	getMemoryStats
 	@text	Get memory usage.
 
 	@opt	boolean blocking		Default value is 'false.'
@@ -40,7 +40,7 @@ int	MOAIFmodEx::_getMemoryStats( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initializes the sound system.
 
 	@out	nil

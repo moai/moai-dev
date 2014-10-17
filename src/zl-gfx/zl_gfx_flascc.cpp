@@ -12,6 +12,14 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+void zglBegin () {
+}
+
+//----------------------------------------------------------------//
+void zglEnd () {
+}
+
+//----------------------------------------------------------------//
 void zglFinalize () {
 }
 
@@ -380,6 +388,14 @@ void zglUniform1i ( u32 location, s32 v0 ) {
 void zglUniform4fv ( u32 location, u32 count, const float* value ) {
 	UNUSED ( location );
 	UNUSED ( count );
+	UNUSED ( value );
+}
+
+//----------------------------------------------------------------//
+void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+	UNUSED ( location );
+	UNUSED ( count );
+	UNUSED ( transpose );
 	UNUSED ( value );
 }
 

@@ -32,9 +32,9 @@ public:
 	friend class RTTIRecord;
 
 	//----------------------------------------------------------------//
+	virtual ptrdiff_t		GetOffset			( void* ptr ) = 0;
 							RTTILinkBase		() {}
 	virtual					~RTTILinkBase		() {}
-	virtual sintptr			GetOffset			( void* ptr ) = 0;
 };
 
 //================================================================//
@@ -52,8 +52,8 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	sintptr GetOffset ( void* ptr ) {
-		return ( sintptr )(( SUPER_TYPE* )( TYPE* )ptr ) - ( sintptr )( ptr );
+	ptrdiff_t GetOffset ( void* ptr ) {
+		return ( ptrdiff_t )(( SUPER_TYPE* )( TYPE* )ptr ) - ( ptrdiff_t )( ptr );
 	}
 };
 
@@ -71,14 +71,14 @@ private:
 	
 	RTTIRecord*		mTypeSet [ MAX ];
 	u32				mTypeCount;
-	s32				mJumpTable [ MAX ];
+	ptrdiff_t		mJumpTable [ MAX ];
 	bool			mIsComplete;
 
 	//----------------------------------------------------------------//
 	void		AffirmCasts		( void* ptr );
 	void*		AsType			( RTTIRecord& record, void* ptr );
 	void		Complete		();
-	void		Inherit			( RTTIRecord& record, void* ptr, s32 offset );
+	void		Inherit			( RTTIRecord& record, void* ptr, ptrdiff_t offset );
 	bool		IsType			( RTTIRecord& record, void* ptr );
 
 	//----------------------------------------------------------------//

@@ -26,7 +26,7 @@ MOAIGridDeckBrush::MOAIGridDeckBrush () :
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	reserveBrushes
+/**	@lua	reserveBrushes
 	@text	Set capacity of grid deck.
 	
 	@in		MOAIGridDeck2D self
@@ -43,7 +43,7 @@ int MOAIGridDeck2D::_reserveBrushes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBrush
+/**	@lua	setBrush
 	@text	Initializes a brush.
 	
 	@in		MOAIGridDeck2D self
@@ -77,7 +77,7 @@ int MOAIGridDeck2D::_setBrush ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDeck
+/**	@lua	setDeck
 	@text	Sets or clears the deck to be indexed by the grid.
 	
 	@in		MOAIGridDeck2D self
@@ -95,7 +95,7 @@ int MOAIGridDeck2D::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGrid
+/**	@lua	setGrid
 	@text	Sets or clears the grid to be sampled by the brushes.
 	
 	@in		MOAIGridDeck2D self
@@ -113,7 +113,7 @@ int MOAIGridDeck2D::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRemapper
+/**	@lua	setRemapper
 	@text	Sets or clears the remapper (for remapping index values
 			held in the grid).
 	
@@ -183,7 +183,7 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			loc.Scale ( xScl, yScl );
 			
 			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );

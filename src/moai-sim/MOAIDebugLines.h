@@ -26,9 +26,13 @@ private:
 //================================================================//
 // MOAIDebugLines
 //================================================================//
-/**	@name	MOAIDebugLines
+/**	@lua	MOAIDebugLines
 	@text	Singleton for managing rendering of world space debug vectors.
 
+	@const	COLLISION_ACTIVE_PROP_BOUNDS
+	@const	COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS
+	@const	COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS
+	@const	COLLISION_OVERLAP_PROP_BOUNDS
 	@const	PARTITION_CELLS
 	@const	PARTITION_PADDED_CELLS
 	@const	PROP_MODEL_BOUNDS
@@ -36,12 +40,17 @@ private:
 	@const	TEXT_BOX
 	@const	TEXT_BOX_BASELINES
 	@const	TEXT_BOX_LAYOUT
+	@const	TEXT_BOX_GLYPHS
 */
 class MOAIDebugLines :
 	public MOAIGlobalClass < MOAIDebugLines, MOAILuaObject > {
 public:
 
 	enum {
+		COLLISION_ACTIVE_PROP_BOUNDS,
+		COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS,
+		COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS,
+		COLLISION_OVERLAP_PROP_BOUNDS,
 		PARTITION_CELLS,
 		PARTITION_PADDED_CELLS,
 		PROP_MODEL_BOUNDS,
@@ -49,6 +58,7 @@ public:
 		TEXT_BOX,
 		TEXT_BOX_BASELINES,
 		TEXT_BOX_LAYOUT,
+		TEXT_BOX_GLYPHS,
 		TOTAL_STYLES,
 	};
 

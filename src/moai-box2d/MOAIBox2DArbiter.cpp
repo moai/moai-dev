@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getContactNormal
+/**	@lua	getContactNormal
  @text	Returns the normal for the contact.
  
  @in	MOAIBox2DArbiter self
@@ -29,7 +29,7 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNormalImpulse
+/**	@lua	getNormalImpulse
 	@text	Returns total normal impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
@@ -47,7 +47,7 @@ int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTangentImpulse
+/**	@lua	getTangentImpulse
 	@text	Returns total tangent impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
@@ -65,7 +65,7 @@ int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setContactEnabled
+/**	@lua	setContactEnabled
 	@text	Enabled or disable the contact.
 	
 	@in		MOAIBox2DArbiter self

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-vfs/ZLVfsZipArchive.h>
 #include <zl-vfs/ZLVfsFileSystem.h>
 #include <zl-util/ZLDirectoryItr.h>
 #include <zl-util/ZLFileStream.h>
@@ -20,18 +21,9 @@ bool ZLFileSys::AffirmPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLFileSys::CheckFileExists ( cc8* path, bool allowRemap  ) {
+bool ZLFileSys::CheckFileExists ( cc8* path ) {
 	//printf ( "CheckFileExists %s\n", path );
 	zl_stat fileStat;
-	
-	std::string remappedFilename;
-	if ( allowRemap ) {
-
-		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
-			path = remappedFilename.c_str ();
-		}
-		//printf ( "remapped path %s\n", path );
-	}
 	
 	if ( ZLFileSys::GetFileStat ( path, fileStat )) {
 		return ( fileStat.mExists != 0 && fileStat.mIsDir == 0 );
@@ -158,14 +150,7 @@ STLString ZLFileSys::GetAbsoluteDirPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-STLString ZLFileSys::GetAbsoluteFilePath ( cc8* path, bool allowRemap ) {
-	
-	string remappedFilename;
-	if ( allowRemap ) {
-		if ( ZLVfsFileSystem::Get ().CheckFileRemapping ( path, remappedFilename ) ) {
-			path = remappedFilename.c_str ();
-		}
-	}
+STLString ZLFileSys::GetAbsoluteFilePath ( cc8* path ) {
 
 	return ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( path );
 }
@@ -185,9 +170,9 @@ bool ZLFileSys::GetFileStat ( cc8* filename, zl_stat& fileStat ) {
 }
 
 //----------------------------------------------------------------//
-STLString ZLFileSys::GetRelativePath ( cc8* path ) {
+STLString ZLFileSys::GetRelativePath ( cc8* path, cc8* base ) {
 
-	return ZLVfsFileSystem::Get ().GetRelativePath ( path );
+	return ZLVfsFileSystem::Get ().GetRelativePath ( path, base );
 }
 
 //----------------------------------------------------------------//
@@ -195,6 +180,18 @@ bool ZLFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
 
 	int result = ZLVfsFileSystem::Get ().MountVirtual ( path, archive );
 	return ( result == 0 );
+}
+
+//----------------------------------------------------------------//
+STLString ZLFileSys::PathFromRef ( const char* path ) {
+
+	return ZLVfsFileSystem::Get ().PathFromRef ( path );
+}
+
+//----------------------------------------------------------------//
+STLString ZLFileSys::PathToRef ( const char* path ) {
+
+	return ZLVfsFileSystem::Get ().PathToRef ( path );
 }
 
 //----------------------------------------------------------------//
@@ -215,7 +212,19 @@ bool ZLFileSys::SetCurrentPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
+void ZLFileSys::SetPathRef ( const char* referenceName, const char* path ) {
+
+	ZLVfsFileSystem::Get ().SetPathRef ( referenceName, path );
+}
+
+//----------------------------------------------------------------//
 STLString ZLFileSys::TruncateFilename ( const char* filename ) {
 
 	return ZLVfsFileSystem::Get ().TruncateFilename ( filename );
+}
+
+//----------------------------------------------------------------//
+bool ZLFileSys::StripPKZipTimestamps ( const char* infilename, const char* outfilename ) {
+
+	return ZLVfsZipArchive::StripTimestamps ( infilename, outfilename ) == 0;
 }

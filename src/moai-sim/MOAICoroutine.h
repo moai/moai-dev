@@ -9,7 +9,7 @@
 //================================================================//
 // MOAICoroutine
 //================================================================//
-/**	@name MOAICoroutine
+/**	@lua MOAICoroutine
 	@text Binds a Lua coroutine to a MOAIAction.
 */
 class MOAICoroutine :
@@ -20,31 +20,42 @@ private:
 	lua_State*			mState;
 	u32					mNarg;
 	STLString			mFuncName;
+	STLString			mTrackingGroup;
 	
-	bool			mIsFirstRun;
-	
-	//----------------------------------------------------------------//
-	static int		_blockOnAction			( lua_State* L );
-	static int		_currentThread			( lua_State* L );
-	static int		_run					( lua_State* L );
+	bool				mIsUpdating;
+	bool				mIsActive;
 	
 	//----------------------------------------------------------------//
-	void			OnStop					();
+	static int			_blockOnAction			( lua_State* L );
+	static int			_currentThread			( lua_State* L );
+	static int			_getHistogram			( lua_State* L );
+	static int			_getTrackingGroup		( lua_State* L );
+	static int			_reportHistogram		( lua_State* L );
+	static int			_reportLeaks			( lua_State* L );
+	static int			_run					( lua_State* L );
+	static int			_setDefaultParent		( lua_State* L );
+	static int			_setTrackingGroup		( lua_State* L );
+	static int			_step					( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void				OnStart					();
+	void				OnStop					();
+	int					Resume					( float step );
 
 protected:
-	STLString		GetDebugInfo			() const;
+	STLString			GetDebugInfo			() const;
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAICoroutine )
 	
 	//----------------------------------------------------------------//						
-	bool			IsDone					();
-					MOAICoroutine			();
-					~MOAICoroutine			();
-	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	bool				IsDone					();
+						MOAICoroutine			();
+						~MOAICoroutine			();
+	void				OnUpdate				( float step );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

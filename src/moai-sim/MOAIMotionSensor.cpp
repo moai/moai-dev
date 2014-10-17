@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLevel
+/**	@lua	getLevel
 	@text	Polls the current status of the level sensor.
 
 	@in		MOAIMotionSensor self
@@ -28,7 +28,7 @@ int MOAIMotionSensor::_getLevel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the level changes.
 
 	@in		MOAIMotionSensor self
@@ -48,7 +48,20 @@ int MOAIMotionSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMotionSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAIMotionSensor::MOAIMotionSensor () :
+	mX ( 0.0f ),
+	mY ( 0.0f ),
+	mZ ( 0.0f ) {
+
+	RTTI_SINGLE ( MOAISensor )
+}
+
+//----------------------------------------------------------------//
+MOAIMotionSensor::~MOAIMotionSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAIMotionSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	this->mX = eventStream.Read < float >( 0.0f );
 	this->mY = eventStream.Read < float >( 0.0f );
@@ -64,19 +77,6 @@ void MOAIMotionSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMotionSensor::MOAIMotionSensor () :
-	mX ( 0.0f ),
-	mY ( 0.0f ),
-	mZ ( 0.0f ) {
-
-	RTTI_SINGLE ( MOAISensor )
-}
-
-//----------------------------------------------------------------//
-MOAIMotionSensor::~MOAIMotionSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAIMotionSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -84,6 +84,8 @@ void MOAIMotionSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIMotionSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getLevel",			_getLevel },

@@ -24,7 +24,8 @@ public:
 	u32 mDataOffset;		// amount of junk before the central directory
 
 	//----------------------------------------------------------------//
-	int		FindAndRead		( FILE* file );
+	int				FindAndRead				( FILE* file, size_t* offset );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -52,7 +53,9 @@ public:
 	u32	mFileHeaderAddr;		// 4 Relative offset of file header
 	
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file, u32 dataOffset );
+	int				Read					( FILE* file, u32 dataOffset );
+	static int		StripTimestampsAndSkip	( FILE* file, size_t* fileHeaderAdd );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -74,7 +77,9 @@ public:
 	u16	mExtraFieldLength;		// 2	Extra field length
 
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file );
+	int				Read					( FILE* file );
+	static int		StripTimestampsAndSkip	( FILE* file );
+	void			Write					( FILE* file );
 };
 
 //================================================================//
@@ -138,6 +143,7 @@ public:
 	ZLVfsZipFileDir*		FindDir				( char const* path );
 	ZLVfsZipFileEntry*		FindEntry			( char const* filename );
 	int						Open				( const char* filename );
+	static int				StripTimestamps		( const char* infilename, const char* outfilename );
 							ZLVfsZipArchive		();
 							~ZLVfsZipArchive	();
 };

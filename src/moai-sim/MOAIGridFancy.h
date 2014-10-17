@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIGridFancy
 //================================================================//
-/**	@name	MOAIGridFancy
+/**	@lua	MOAIGridFancy
 	@text	Fancier grid which supports color/scale alterations
 */
 class MOAIGridFancy :
@@ -21,6 +21,7 @@ private:
 	ZLLeanArray < float > mAlphas;
 	ZLLeanArray < float > mScales;
 
+	//----------------------------------------------------------------//
 	static int		_fillAlpha			( lua_State* L );
 	static int		_fillColor			( lua_State* L );
 	static int		_fillScale			( lua_State* L );
@@ -32,11 +33,13 @@ private:
 	static int		_setColor			( lua_State* L );
 	static int		_setPalette			( lua_State* L );
 	static int		_setScale			( lua_State* L );
-	static int		_setRowAlpha			( lua_State* L );
-	static int		_setRowColor			( lua_State* L );
-	static int		_setRowScale			( lua_State* L );
+	static int		_setRowAlpha		( lua_State* L );
+	static int		_setRowColor		( lua_State* L );
+	static int		_setRowScale		( lua_State* L );
 
 protected:
+
+	//----------------------------------------------------------------//
 	void			OnResize			();
 
 public:
@@ -44,18 +47,18 @@ public:
 	DECL_LUA_FACTORY ( MOAIGridFancy )
 	
 	//----------------------------------------------------------------//
-	float			GetAlpha			( int xTile, int yTile );
-	u32			GetColor			( int xTile, int yTile );
-	float			GetScale			( int xTile, int yTile );
-	ZLColorVec		GetPalette			( u32 idx );
-				MOAIGridFancy			();
-				~MOAIGridFancy			();
-	void			Draw			( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 );
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			Draw				( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			FillAlpha			( float value );
 	void			FillColor			( u32 value );
 	void			FillScale			( float value );
+	float			GetAlpha			( int xTile, int yTile );
+	u32				GetColor			( int xTile, int yTile );
+	float			GetScale			( int xTile, int yTile );
+	ZLColorVec		GetPalette			( u32 idx );
+					MOAIGridFancy		();
+					~MOAIGridFancy		();
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetAlpha			( u32 addr, float value );
 	void			SetColor			( u32 addr, u32 value );
 	void			SetScale			( u32 addr, float value );

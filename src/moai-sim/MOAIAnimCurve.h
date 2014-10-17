@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAnimCurve
 //================================================================//
-/**	@name	MOAIAnimCurve
+/**	@lua	MOAIAnimCurve
 	@text	Implementation of animation curve for floating point values.
 */
 class MOAIAnimCurve :

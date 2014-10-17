@@ -23,7 +23,7 @@ private:
 //================================================================//
 // MOAIStretchPatch2D
 //================================================================//
-/**	@name	MOAIStretchPatch2D
+/**	@lua	MOAIStretchPatch2D
 	@text	Moai implementation of a 9-patch. Textured quad with any number of
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */

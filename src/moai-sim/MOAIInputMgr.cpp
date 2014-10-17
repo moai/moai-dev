@@ -19,6 +19,18 @@
 #define LUAVAR_CONFIGURATION	"configuration"
 
 //================================================================//
+// MOAIInputMgr lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIInputMgr::_deferEvents ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAIInputMgr::Get ().mDefer = state.GetValue < bool >( -1, false );
+	return 0;
+}
+
+//================================================================//
 // MOAIInputMgr
 //================================================================//
 
@@ -37,8 +49,8 @@ bool MOAIInputMgr::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
 void MOAIInputMgr::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::BUTTON )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::BUTTON );
-		MOAIButtonSensor::WriteEvent ( this->mInput, down );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIButtonSensor::WriteEvent ( this->mEventQueue, down );
 	}
 }
 
@@ -46,8 +58,8 @@ void MOAIInputMgr::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
 void MOAIInputMgr::EnqueueCompassEvent ( u8 deviceID, u8 sensorID, float heading ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::COMPASS )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::COMPASS );
-		MOAICompassSensor::WriteEvent ( this->mInput, heading );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAICompassSensor::WriteEvent ( this->mEventQueue, heading );
 	}
 }
 
@@ -55,8 +67,8 @@ void MOAIInputMgr::EnqueueCompassEvent ( u8 deviceID, u8 sensorID, float heading
 void MOAIInputMgr::EnqueueJoystickEvent( u8 deviceID, u8 sensorID, float x, float y ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::JOYSTICK )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::JOYSTICK );
-		MOAIJoystickSensor::WriteEvent ( this->mInput, x, y );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIJoystickSensor::WriteEvent ( this->mEventQueue, x, y );
 	}
 }
 
@@ -64,8 +76,8 @@ void MOAIInputMgr::EnqueueJoystickEvent( u8 deviceID, u8 sensorID, float x, floa
 void MOAIInputMgr::EnqueueKeyboardEvent ( u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::KEYBOARD )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::KEYBOARD );
-		MOAIKeyboardSensor::WriteEvent ( this->mInput, keyID, down );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIKeyboardSensor::WriteEvent ( this->mEventQueue, keyID, down );
 	}
 }
 
@@ -73,8 +85,8 @@ void MOAIInputMgr::EnqueueKeyboardEvent ( u8 deviceID, u8 sensorID, u32 keyID, b
 void MOAIInputMgr::EnqueueLevelEvent ( u8 deviceID, u8 sensorID, float x, float y, float z ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::LEVEL )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::LEVEL );
-		MOAIMotionSensor::WriteEvent ( this->mInput, x, y, z );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIMotionSensor::WriteEvent ( this->mEventQueue, x, y, z );
 	}
 }
 
@@ -82,8 +94,8 @@ void MOAIInputMgr::EnqueueLevelEvent ( u8 deviceID, u8 sensorID, float x, float 
 void MOAIInputMgr::EnqueueLocationEvent ( u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::LOCATION )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::LOCATION );
-		MOAILocationSensor::WriteEvent ( this->mInput, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAILocationSensor::WriteEvent ( this->mEventQueue, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 	}
 }
 
@@ -91,8 +103,8 @@ void MOAIInputMgr::EnqueueLocationEvent ( u8 deviceID, u8 sensorID, double longi
 void MOAIInputMgr::EnqueuePointerEvent ( u8 deviceID, u8 sensorID, int x, int y ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::POINTER )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::POINTER );
-		MOAIPointerSensor::WriteEvent ( this->mInput, x, y );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIPointerSensor::WriteEvent ( this->mEventQueue, x, y );
 	}
 }
 
@@ -100,9 +112,9 @@ void MOAIInputMgr::EnqueuePointerEvent ( u8 deviceID, u8 sensorID, int x, int y 
 void MOAIInputMgr::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::TOUCH )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::TOUCH );
+		this->WriteEventHeader ( deviceID, sensorID );
 		float time = ( float )ZLDeviceTime::GetTimeInSeconds ();
-		MOAITouchSensor::WriteEvent ( this->mInput, touchID, down, x, y, time );
+		MOAITouchSensor::WriteEvent ( this->mEventQueue, touchID, down, x, y, time );
 	}
 }
 
@@ -110,8 +122,8 @@ void MOAIInputMgr::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bo
 void MOAIInputMgr::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::TOUCH )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::TOUCH );
-		MOAITouchSensor::WriteEventCancel ( this->mInput );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAITouchSensor::WriteEventCancel ( this->mEventQueue );
 	}
 }
 
@@ -119,9 +131,16 @@ void MOAIInputMgr::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
 void MOAIInputMgr::EnqueueWheelEvent ( u8 deviceID, u8 sensorID, float value ) {
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::WHEEL )) {
-		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::WHEEL );
-		MOAIWheelSensor::WriteEvent ( this->mInput, value );
+		this->WriteEventHeader ( deviceID, sensorID );
+		MOAIWheelSensor::WriteEvent ( this->mEventQueue, value );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::FlushEvents ( double skip ) {
+
+	this->mTimebase += skip;
+	this->mEventQueue.DiscardAll ();
 }
 
 //----------------------------------------------------------------//
@@ -144,11 +163,14 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIInputMgr::MOAIInputMgr () {
+MOAIInputMgr::MOAIInputMgr () :
+	mTimebase ( 0 ),
+	mTimestamp ( 0 ),
+	mDefer ( false ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	this->mInput.SetChunkSize ( 1024 );
+	this->mEventQueue.SetChunkSize ( CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//
@@ -161,7 +183,13 @@ MOAIInputMgr::~MOAIInputMgr () {
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "deferEvents",				_deferEvents },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -181,15 +209,14 @@ void MOAIInputMgr::ReserveSensors ( u8 deviceID, u8 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::Reset () {
+void MOAIInputMgr::ResetSensors () {
 
 	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
-			device->Reset ();
+			device->ResetSensors ();
 		}
 	}
-	this->mInput.Seek ( 0, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
@@ -231,14 +258,13 @@ void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDeviceExtendedName ( u8 deviceID, cc8* nameExtended ) {
+void MOAIInputMgr::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
-		device->SetExtendedName(nameExtended);
+		device->SetHardwareInfo ( hardwareInfo );
 	}
 }
-
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {
@@ -250,28 +276,55 @@ void MOAIInputMgr::SetSensor ( u8 deviceID, u8 sensorID, cc8* name, u32 type ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::Update () {
+void MOAIInputMgr::Update ( double timestep ) {
 
-	u32 total = this->mInput.GetCursor ();
-	this->Reset ();
-	
-	while ( this->mInput.GetCursor () < total ) {
-	
-		u8 deviceID		= this->mInput.Read < u8 >( 0 );
-		u8 sensorID		= this->mInput.Read < u8 >( 0 );
-		//u32 type		= ( u32 )this->mInput.Read < u8 >();
-		this->mInput.Read < u8 >( 0 );
+	// reset the input sensors
+	this->ResetSensors ();
+
+	size_t cursor = 0;
+
+	if ( !this->mDefer ) {
 		
-		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
-		sensor->HandleEvent ( this->mInput );
+		// rewind the event queue
+		this->mEventQueue.Seek ( 0, SEEK_SET );
+		
+		bool first = true;
+		double timebase = 0;
+		
+		// parse events until we run out or hit an event after the current sim time
+		while ( this->mEventQueue.GetCursor () < this->mEventQueue.GetLength ()) {
+			
+			u8 deviceID			= this->mEventQueue.Read < u8 >( 0 );
+			u8 sensorID			= this->mEventQueue.Read < u8 >( 0 );
+			double timestamp	= this->mEventQueue.Read < double >( 0 );
+			
+			if ( first ) {
+				timebase = timestamp;
+				first = false;
+			}
+			
+			if ( timestep < ( timestamp - timebase )) break;
+			
+			MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
+			assert ( sensor );
+			sensor->mTimestamp = timestamp;
+			sensor->ParseEvent ( this->mEventQueue );
+			
+			cursor = this->mEventQueue.GetCursor ();
+		}
+		
+		// discard processed events
+		this->mEventQueue.DiscardFront ( cursor );
+		
+		// back to the end of the queue
+		this->mEventQueue.Seek ( this->mEventQueue.GetLength (), SEEK_SET );
 	}
-	this->mInput.Seek ( 0, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
+void MOAIInputMgr::WriteEventHeader ( u8 deviceID, u8 sensorID ) {
 
-	this->mInput.Write < u8 >(( u8 )deviceID );
-	this->mInput.Write < u8 >(( u8 )sensorID );
-	this->mInput.Write < u8 >(( u8 )type );
+	this->mEventQueue.Write < u8 >(( u8 )deviceID );
+	this->mEventQueue.Write < u8 >(( u8 )sensorID );
+	this->mEventQueue.Write < double >( this->mTimestamp - this->mTimebase );
 }

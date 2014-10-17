@@ -20,11 +20,11 @@ void MOAIPartitionLevel::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* layer ) {
+void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].ExtractProps ( cell, layer );
+		this->mCells [ i ].ExtractProps ( cell, level );
 	}
 }
 
@@ -49,7 +49,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 planeID, u32 mask ) {
 
-	USVec2D cellPoint ( 0.0f, 0.0f );
+	ZLVec2D cellPoint ( 0.0f, 0.0f );
 	
 	switch ( planeID ) {
 		case ZLBox::PLANE_XY:
@@ -158,7 +158,7 @@ void MOAIPartitionLevel::Init ( float cellSize, u32 width, u32 height ) {
 MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIProp& prop ) {
 
 	ZLVec3D loc;
-	prop.mBounds.GetCenter ( loc );
+	prop.mWorldBounds.GetCenter ( loc );
 	
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	u32 cellAddr = this->mGridSpace.GetCellAddr ( coord );
@@ -179,7 +179,7 @@ MOAIPartitionLevel::~MOAIPartitionLevel () {
 void MOAIPartitionLevel::PlaceProp ( MOAIProp& prop ) {
 
 	//ZLVec3D loc;
-	//prop.mBounds.GetCenter ( loc );
+	//prop.mWorldBounds.GetCenter ( loc );
 	//MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetCellAddr ( coord ), coord.mX, coord.mY );
 

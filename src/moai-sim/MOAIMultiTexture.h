@@ -11,7 +11,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIMultiTexture
 //================================================================//
-/**	@name	MOAIMultiTexture
+/**	@lua	MOAIMultiTexture
 	@text	Array of textures for multi-texturing.
 */
 class MOAIMultiTexture :
@@ -29,13 +29,13 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Clear					();
+	bool			LoadGfxState			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMultiTexture )
 	
 	//----------------------------------------------------------------//
-	bool			LoadGfxState			();
 					MOAIMultiTexture		();
 					~MOAIMultiTexture		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

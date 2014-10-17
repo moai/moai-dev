@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
+#include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIImage.h>
 
@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setColorFormat
+/**	@lua	setColorFormat
 	@text	The color format may be used by dynamic cache implementations
 			when allocating new textures.
 	

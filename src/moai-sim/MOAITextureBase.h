@@ -15,7 +15,7 @@ class MOAIImage;
 //================================================================//
 // MOAITextureBase
 //================================================================//
-/**	@name	MOAITextureBase
+/**	@lua	MOAITextureBase
 	@text	Base class for texture resources.
 
 	@const	GL_LINEAR
@@ -69,11 +69,13 @@ protected:
 	//----------------------------------------------------------------//
 	void			CreateTextureFromImage	( MOAIImage& image );
 	void			CreateTextureFromPVR	( void* data, size_t size );
+	bool			GenerateMipmaps			();
 	bool			IsRenewable				();
 	void			OnBind					();
 	void			OnClear					();
 	void			OnDestroy				();
 	void			OnInvalidate			();
+	void			OnUnbind				();
 	void			ReleaseLoader			();
 	void			UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
 
@@ -82,6 +84,7 @@ public:
 	friend class MOAIGfxDevice;
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
+	GET ( u32, TextureID, mGLTexID );
 
 	//----------------------------------------------------------------//
 	void			DeleteTexture			();

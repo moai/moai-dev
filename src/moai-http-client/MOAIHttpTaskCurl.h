@@ -18,7 +18,7 @@ extern "C" {
 //================================================================//
 // MOAIHttpTaskCurl
 //================================================================//
-/**	@name	MOAIHttpTaskCurl
+/**	@lua	MOAIHttpTaskCurl
 	@text	Implementation of MOAIHttpTask based on libcurl.
 */
 class MOAIHttpTaskCurl :
@@ -38,7 +38,7 @@ private:
 	
 	// The streams below are used to hold data coming *back* from the request
 	
-	// The ZLMemStream is used when the size is not know (ZLMemStream grows dynamically)
+	// The ZLMemStream is used when the size is not known (ZLMemStream grows dynamically)
 	ZLMemStream			mMemStream;
 	
 	// The ZLByteStream and data buffer is used when the size of the data is known in advance

@@ -15,7 +15,7 @@
 //================================================================//
 // MOAIParticlePexPlugin
 //================================================================//
-/**	@name	MOAIParticlePexPlugin
+/**	@lua	MOAIParticlePexPlugin
 	@text	Allows custom particle processing  derived from .pex file via C language callback.
 */
 class MOAIParticlePexPlugin :

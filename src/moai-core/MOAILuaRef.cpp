@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaRuntime.h>
 
@@ -17,12 +18,9 @@
 //----------------------------------------------------------------//
 void MOAILuaRef::Clear () {
 
-	if (( this->mRef != LUA_NOREF ) && this->mOwnsRef && MOAILuaRuntime::IsValid () ) {
-		this->mRefTable->Unref ( this->mRef );
-		//cc8* tableName = this->mRefTable == &MOAILuaRuntime::Get ().mStrongRefs ? "strong" : "weak";
-		//printf ( "RELEASE REF: %s REF: %d\n", tableName, this->mRef );
+	if ( this->mOwnsRef && MOAILuaRuntime::IsValid () ) {
+		MOAILuaRuntime::Get ().ClearRef ( this->mRef );
 	}
-	this->mRefTable = 0;
 	this->mOwnsRef = false;
 	this->mRef = LUA_NOREF;
 }
@@ -50,49 +48,13 @@ bool MOAILuaRef::IsNil () {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaRef::IsWeak () {
-
-	return ( this->mRefTable == &MOAILuaRuntime::Get ().mWeakRefs );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRef::MakeStrong () {
-
-	if ( this->mRef == LUA_NOREF ) return;
-
-	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-	if ( this->mRefTable != &luaRuntime.mWeakRefs ) {
-		MOAIScopedLuaState state = luaRuntime.State ();
-		this->PushRef ( state );
-		this->Clear ();
-		this->SetRef ( state, -1, false );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRef::MakeWeak () {
-
-	if ( this->mRef == LUA_NOREF ) return;
-
-	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-	if ( this->mRefTable == &luaRuntime.mWeakRefs ) {
-		MOAIScopedLuaState state = luaRuntime.State ();
-		this->PushRef ( state );
-		this->Clear ();
-		this->SetRef ( state, -1, true );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAILuaRef::MOAILuaRef () :
-	mRefTable ( 0 ),
 	mOwnsRef ( false ),
 	mRef ( LUA_NOREF ) {
 }
 
 //----------------------------------------------------------------//
 MOAILuaRef::MOAILuaRef ( const MOAILuaRef& assign ) :
-	mRefTable ( 0 ),
 	mOwnsRef ( false ),
 	mRef ( LUA_NOREF ) {
 	this->Take ( assign );
@@ -107,20 +69,10 @@ MOAILuaRef::~MOAILuaRef () {
 //----------------------------------------------------------------//
 bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 
-	if ( this->mRef == LUA_NOREF ) {
-		lua_pushnil ( state );
-		return false;
-	}
-
-	this->mRefTable->PushRef ( state, this->mRef );
+	bool result = MOAILuaRuntime::Get ().PushRef ( state, this->mRef );
 	
-	if ( lua_isnil ( state, -1 )) {
-	
-		this->mRefTable->ReleaseRefID ( this->mRef );
-		
-		this->mRefTable = 0;
-		this->mOwnsRef = false;
-		this->mRef = LUA_NOREF;
+	if ( !result ) {
+		this->Clear ();
 		return false;
 	}
 	return true;
@@ -130,17 +82,8 @@ bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 
 	this->Clear ();
-
-	if ( !lua_isnil ( state, idx )) {
-		MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
-		
-		this->mRefTable = weak ? &luaRuntime.mWeakRefs : &luaRuntime.mStrongRefs;
-		this->mOwnsRef = true;
-		this->mRef = this->mRefTable->Ref ( state, idx );
-		
-		//cc8* tableName = this->mRefTable == &MOAILuaRuntime::Get ().mStrongRefs ? "strong" : "weak";
-		//printf ( "RETAIN REF: %s REF: %d\n", tableName, this->mRef );
-	}
+	this->mRef = MOAILuaRuntime::Get ().GetRef ( state, idx, weak );
+	this->mOwnsRef = ( this->mRef != LUA_NOREF );
 }
 
 //----------------------------------------------------------------//
@@ -162,7 +105,6 @@ void MOAILuaRef::Take ( const MOAILuaRef& assign ) {
 
 	this->mRef = assign.mRef;
 	this->mOwnsRef = assign.mOwnsRef;
-	this->mRefTable = assign.mRefTable;
 
 	// cast the const away
 	(( MOAILuaRef& )assign ).mOwnsRef = false;
@@ -221,9 +163,9 @@ MOAILuaMemberRef::~MOAILuaMemberRef () {
 bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 
 	if ( this->mRef != LUA_NOREF ) {
-	
+
 		bool isNil = true;
-	
+
 		if ( this->mOwner->IsBound ()) {
 			if ( this->mOwner->PushRefTable ( state )) {
 				lua_rawgeti ( state, -1, this->mRef );
@@ -231,7 +173,7 @@ bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 			}
 			isNil = lua_isnil ( state, -1 );
 		}
-		
+
 		if ( isNil ) {
 			this->mRef = LUA_NOREF;
 			this->mOwner = 0;
@@ -254,10 +196,10 @@ void MOAILuaMemberRef::SetRef ( MOAILuaObject& owner, MOAILuaState& state, int i
 
 		this->mOwner = &owner;
 		this->mOwner->PushRefTable ( state );
-		
+
 		lua_pushvalue ( state, idx );
 		this->mRef = luaL_ref ( state, -2 );
-		
+
 		lua_pop ( state, 1 );
 	}
 }

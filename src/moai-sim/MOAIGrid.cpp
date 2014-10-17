@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearTileFlags
+/**	@lua	clearTileFlags
 	@text	Clears bits specified in mask.
 
 	@in		MOAIGrid self
@@ -35,7 +35,7 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	fill
+/**	@lua	fill
 	@text	Set all tiles to a single value
 
 	@in		MOAIGrid self
@@ -53,7 +53,7 @@ int MOAIGrid::_fill ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTile
+/**	@lua	getTile
 	@text	Returns the value of a given tile.
 
 	@in		MOAIGrid self
@@ -73,7 +73,7 @@ int MOAIGrid::_getTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTileFlags
+/**	@lua	getTileFlags
 	@text	Returns the masked value of a given tile.
 
 	@in		MOAIGrid self
@@ -99,7 +99,7 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRow
+/**	@lua	setRow
 	@text	Initializes a grid row given a variable argument list of values.
 
 	@in		MOAIGrid self
@@ -123,7 +123,7 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTile
+/**	@lua	setTile
 	@text	Sets the value of a given tile
 
 	@in		MOAIGrid self
@@ -145,7 +145,7 @@ int MOAIGrid::_setTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTileFlags
+/**	@lua	setTileFlags
 	@text	Sets a tile's flags given a mask.
 
 	@in		MOAIGrid self
@@ -171,7 +171,7 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	streamTilesIn
+/**	@lua	streamTilesIn
 	@text	Reads tiles directly from a stream. Call this only after
 			initializing the grid. Only the content of the tiles
 			buffer is read.
@@ -185,14 +185,14 @@ int MOAIGrid::_streamTilesIn ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesIn ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesIn ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	streamTilesOut
+/**	@lua	streamTilesOut
 	@text	Writes tiles directly to a stream. Only the content of
 			the tiles buffer is written.
 
@@ -205,14 +205,14 @@ int MOAIGrid::_streamTilesOut ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesOut ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesOut ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name	toggleTileFlags
+/**	@lua	toggleTileFlags
 	@text	Toggles a tile's flags given a mask.
 
 	@in		MOAIGrid self
@@ -317,6 +317,8 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
+		// TODO: all this is unsafe; don't assume sizes will be reasonable of that deflated data is guaranteed to be smaller; rewrite this with checking and recover in place
+		
 		void* tiles = this->mTiles;
 		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
 		
@@ -405,7 +407,7 @@ void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICell
 			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			USVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
 		}

@@ -12,7 +12,7 @@ class MOAILayer;
 //================================================================//
 // MOAIDeckRemapper
 //================================================================//
-/**	@name	MOAIDeckRemapper
+/**	@lua	MOAIDeckRemapper
 	@text	Remap deck indices. Most useful for controlling animated tiles in tilemaps.
 			All indices are exposed as attributes that may be connected by setAttrLink
 			or driven using MOAIAnim or MOAIAnimCurve.

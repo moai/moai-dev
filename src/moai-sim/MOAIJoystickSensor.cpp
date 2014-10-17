@@ -19,7 +19,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getVector
+/**	@lua	getVector
 	@text	Returns the joystick vector.
 
 	@in		MOAIJoystickSensor self
@@ -35,7 +35,7 @@ int MOAIJoystickSensor::_getVector ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the joystick vector changes.
 
 	@in		MOAIJoystickSensor self
@@ -55,7 +55,17 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAIJoystickSensor::MOAIJoystickSensor () {
+
+	RTTI_SINGLE ( MOAISensor )
+}
+
+//----------------------------------------------------------------//
+MOAIJoystickSensor::~MOAIJoystickSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAIJoystickSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	this->mX = eventStream.Read < float >( 0.0f );
 	this->mY = eventStream.Read < float >( 0.0f );
@@ -69,16 +79,6 @@ void MOAIJoystickSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAIJoystickSensor::MOAIJoystickSensor () {
-
-	RTTI_SINGLE ( MOAISensor )
-}
-
-//----------------------------------------------------------------//
-MOAIJoystickSensor::~MOAIJoystickSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAIJoystickSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -86,6 +86,8 @@ void MOAIJoystickSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIJoystickSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getVector",		_getVector },

@@ -3,14 +3,18 @@
 
 #include "pch.h"
 #include <moai-core/MOAISerializerBase.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAISerializerBase
 //================================================================//
 
+const MOAISerializerBase::ObjID MOAISerializerBase::NULL_OBJ_ID = 0;
+
 //----------------------------------------------------------------//
 void MOAISerializerBase::Clear () {
 
+	this->mObjectIDs.clear ();
 	this->mObjectMap.clear ();
 	this->mTableMap.clear ();
 }
@@ -21,16 +25,21 @@ cc8* MOAISerializerBase::GetFileMagic () {
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializerBase::GetID ( MOAILuaObject* object ) {
+MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = object->GetSelf ();
-	return ( uintptr )lua_topointer ( state, -1 );
+	return this->GetID ( state, -1 );
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
+MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
 
-	return ( uintptr )lua_topointer ( state, idx );
+	void const* ptr = lua_topointer ( state, idx );
+	
+	if ( !this->mObjectIDs.contains ( ptr )) {
+		this->mObjectIDs [ ptr ] = ( u32 )( this->mObjectIDs.size () + 1 );
+	}
+	return this->mObjectIDs [ ptr ];
 }
 
 //----------------------------------------------------------------//

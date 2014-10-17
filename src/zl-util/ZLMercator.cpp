@@ -11,9 +11,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-USVec2D64 ZLMercator::Project ( double lon, double lat ) {
+ZLVec2D64 ZLMercator::Project ( double lon, double lat ) {
 
-	USVec2D64 coord;
+	ZLVec2D64 coord;
 		
 	coord.mX = lon * D2R;
 	coord.mY = log ( tan ( FORTPI + .5 * lat * D2R ));
@@ -22,9 +22,9 @@ USVec2D64 ZLMercator::Project ( double lon, double lat ) {
 }
 
 //----------------------------------------------------------------//
-USVec2D64 ZLMercator::ProjectInv ( double x, double y ) {
+ZLVec2D64 ZLMercator::ProjectInv ( double x, double y ) {
 	
-	USVec2D64 lonLat;
+	ZLVec2D64 lonLat;
 	
 	lonLat.mX = ( x ) * R2D;
 	lonLat.mY = ( HALFPI - 2.0 * atan ( exp ( -y ))) * R2D;
@@ -34,12 +34,12 @@ USVec2D64 ZLMercator::ProjectInv ( double x, double y ) {
 
 //----------------------------------------------------------------//
 // TODO: templatize this
-USVec2D ZLMercator::ProjectLonLatToWorld ( double lon, double lat ) {
+ZLVec2D ZLMercator::ProjectLonLatToWorld ( double lon, double lat ) {
 
-	USVec2D64 loc2d = Project ( lon, lat );
+	ZLVec2D64 loc2d = Project ( lon, lat );
 	loc2d.Scale ( 1.0 / TWOPI );
 
-	USVec2D loc2f;
+	ZLVec2D loc2f;
 
 	loc2f.mX = ( float )( loc2d.mX + 0.5 );
 	loc2f.mY = ( float )( loc2d.mY - 0.5 );

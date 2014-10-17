@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getValue
+/**	@lua	getValue
 	@text	Returns the current value of the wheel, based on delta events
 
 	@in		MOAIWheelSensor self
@@ -25,7 +25,7 @@ int MOAIWheelSensor::_getValue ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDelta
+/**	@lua	getDelta
 	@text	Returns the delta of the wheel
 
 	@in		MOAIWheelSensor self
@@ -40,7 +40,7 @@ int MOAIWheelSensor::_getDelta ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued on a wheel delta event
 
 	@in		MOAIWheelSensor self
@@ -60,19 +60,6 @@ int MOAIWheelSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIWheelSensor::HandleEvent ( ZLStream& eventStream ) {
-	
-	this->mDelta = eventStream.Read < float >( 0.0f );
-	this->mValue += this->mDelta;
-	
-	if ( this->mCallback ) {
-		MOAIScopedLuaState state = this->mCallback.GetSelf ();
-		lua_pushnumber ( state, this->mDelta );
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIWheelSensor::MOAIWheelSensor () :
 	mValue ( 0 ),
 	mDelta ( 0 ) {
@@ -86,6 +73,19 @@ MOAIWheelSensor::~MOAIWheelSensor () {
 }
 
 //----------------------------------------------------------------//
+void MOAIWheelSensor::ParseEvent ( ZLStream& eventStream ) {
+	
+	this->mDelta = eventStream.Read < float >( 0.0f );
+	this->mValue += this->mDelta;
+	
+	if ( this->mCallback ) {
+		MOAIScopedLuaState state = this->mCallback.GetSelf ();
+		lua_pushnumber ( state, this->mDelta );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIWheelSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -93,6 +93,8 @@ void MOAIWheelSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIWheelSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getValue",				_getValue },

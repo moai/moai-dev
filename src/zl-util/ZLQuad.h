@@ -16,18 +16,18 @@ class ZLQuad {
 private:
 
 	//----------------------------------------------------------------//
-	u32		Intersect			( const ZLQuad& quad, USVec2D* buffer, u32 max ) const;
-	bool	IsSeparatingAxis	( const USVec2D& e0, const USVec2D& e1, const USVec2D& e2, const USVec2D& e3 ) const;
+	u32			Intersect			( const ZLQuad& quad, ZLVec2D* buffer, u32 max ) const;
+	bool		IsSeparatingAxis	( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVec2D& e2, const ZLVec2D& e3 ) const;
 
 public:
 
-	USVec2D mV [ 4 ];
+	ZLVec2D mV [ 4 ];
 
 	//----------------------------------------------------------------//
 	bool		Contains			( float x, float y ) const;
 	ZLRect		GetBounds			() const;
 	ZLPlane2D	GetPlane			( u32 id );
-	USVec2D		GetVert				( u32 id );
+	ZLVec2D		GetVert				( u32 id );
 	void		Init				( const ZLRect& rect );
 	void		Init				( float x0, float y0, float x1, float y1 );
 	bool		Intersect			( const ZLQuad& quad, ZLRect& result ) const;

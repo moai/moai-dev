@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	init
+/**	@lua	init
 	@text	Initializes frame buffer.
 	
 	@in		MOAIFrameBufferTexture self
@@ -159,6 +159,10 @@ void MOAIFrameBufferTexture::OnCreate () {
 				
 		// refresh tex params on next bind
 		this->mIsDirty = true;
+		
+        // clearing framebuffer because it might contain garbage
+        zglClearColor ( 0, 0, 0, 0 );
+        zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 	}
 	else {
 		this->Clear ();

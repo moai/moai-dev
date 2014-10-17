@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIMoviePlayerAndroid
 //================================================================//
-/**	@name	MOAIMoviePlayerAndroid
+/**	@lua	MOAIMoviePlayerAndroid
 	@text	Wrapper for simple video playback. Exposed to Lua via 
 			MOAIMoviePlayer on all mobile platforms.
 */
@@ -23,11 +23,11 @@ private:
 	static int	_pause			( lua_State* L );
 	static int	_setListener	( lua_State* L );
 	static int	_stop			( lua_State* L );
-	
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIMoviePlayerAndroid );
-	
+
 	enum {
 		MOVIE_PLAYER_READY,
 		MOVIE_PLAYER_COMPLETED,

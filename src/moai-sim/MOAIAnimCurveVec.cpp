@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getValueAtTime
+/**	@lua	getValueAtTime
 	@text	Return the interpolated vector components given a point in
 			time along the curve. This does not change the curve's built in TIME
 			attribute (it simply performs the requisite computation on demand).
@@ -32,7 +32,7 @@ int MOAIAnimCurveVec::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setKey
+/**	@lua	setKey
 	@text	Initialize a key frame at a given time with a give vector.
 			Also set the transition type between the specified key frame
 			and the next key frame.
@@ -72,7 +72,7 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//
@@ -99,7 +99,7 @@ void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& spa
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLVec3D >( v1 );
+	attrOp.SetValue < ZLVec3D >( v1, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//
@@ -135,14 +135,14 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ));
+	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLVec3D >( zero );
+	attrOp.SetValue < ZLVec3D >( zero, MOAIAttrOp::ATTR_TYPE_VECTOR );
 }
 
 //----------------------------------------------------------------//

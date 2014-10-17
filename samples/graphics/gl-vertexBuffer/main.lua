@@ -58,16 +58,22 @@ if MOAIGfxDevice.isProgrammable () then
 	fsh = file:read ( '*all' )
 	file:close ()
 
-	shader = MOAIShader.new ()
+	local program = MOAIShaderProgram.new ()
 
-	shader:reserveUniforms ( 1 )
-	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
+	program:setVertexAttribute ( 1, 'position' )
+	program:setVertexAttribute ( 2, 'uv' )
+	program:setVertexAttribute ( 3, 'color' )
 	
-	shader:setVertexAttribute ( 1, 'position' )
-	shader:setVertexAttribute ( 2, 'uv' )
-	shader:setVertexAttribute ( 3, 'color' )
-
-	shader:load ( vsh, fsh )
+	program:reserveUniforms ( 1 )
+	program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
+	
+	program:reserveGlobals ( 1 )
+	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
+	
+	program:load ( vsh, fsh )
+	
+	local shader = MOAIShader.new ()
+	shader:setProgram ( program )
 	
 	mesh:setShader ( shader )
 end

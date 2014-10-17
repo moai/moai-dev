@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMaxForce
+/**	@lua	getMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
@@ -36,7 +36,7 @@ int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTorque
+/**	@lua	getMaxTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
@@ -59,7 +59,7 @@ int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxForce
+/**	@lua	setMaxForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
@@ -84,7 +84,7 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMaxTorque
+/**	@lua	setMaxTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self

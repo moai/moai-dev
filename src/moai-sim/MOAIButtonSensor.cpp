@@ -18,7 +18,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	down
+/**	@lua	down
 	@text	Checks to see if the button was pressed during the last iteration.
 
 	@in		MOAIButtonSensor self
@@ -32,7 +32,7 @@ int MOAIButtonSensor::_down ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isDown
+/**	@lua	isDown
 	@text	Checks to see if the button is currently down.
 
 	@in		MOAIButtonSensor self
@@ -46,7 +46,7 @@ int MOAIButtonSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isUp
+/**	@lua	isUp
 	@text	Checks to see if the button is currently up.
 
 	@in		MOAIButtonSensor self
@@ -60,7 +60,7 @@ int MOAIButtonSensor::_isUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	up
+/**	@lua	up
 	@text	Checks to see if the button was released during the last iteration.
 
 	@in		MOAIButtonSensor self
@@ -74,7 +74,7 @@ int MOAIButtonSensor::_up ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when button events occur.
 
 	@in		MOAIButtonSensor self
@@ -118,7 +118,18 @@ bool MOAIButtonSensor::ButtonUp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::HandleEvent ( ZLStream& eventStream ) {
+MOAIButtonSensor::MOAIButtonSensor () :
+	mState ( 0 ) {
+
+	RTTI_SINGLE ( MOAISensor )
+}
+
+//----------------------------------------------------------------//
+MOAIButtonSensor::~MOAIButtonSensor () {
+}
+
+//----------------------------------------------------------------//
+void MOAIButtonSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	bool down = eventStream.Read < bool >( false );
 	
@@ -138,17 +149,6 @@ void MOAIButtonSensor::HandleEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-MOAIButtonSensor::MOAIButtonSensor () :
-	mState ( 0 ) {
-
-	RTTI_SINGLE ( MOAISensor )
-}
-
-//----------------------------------------------------------------//
-MOAIButtonSensor::~MOAIButtonSensor () {
-}
-
-//----------------------------------------------------------------//
 void MOAIButtonSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
@@ -156,6 +156,8 @@ void MOAIButtonSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIButtonSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "down",				_down },

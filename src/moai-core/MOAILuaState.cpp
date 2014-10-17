@@ -166,22 +166,19 @@ void MOAILuaState::CopyToTop ( int idx ) {
 //----------------------------------------------------------------//
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
-	int status;
-	
 	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
 	MOAILuaRuntime::Get ().PushTraceback ( *this );
 	lua_insert ( this->mState, errIdx );
 
-	status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
+	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 	if ( status ) {
-		lua_settop ( this->mState, errIdx - 1 );
+		this->PrintErrors( ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
 	}
-
 	return status;
 }
 
@@ -384,6 +381,47 @@ bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::GetSubfieldWithType ( int idx, cc8* format, int type, ... ) {
+
+	va_list args;
+	va_start ( args, type );
+	
+	idx = this->AbsIndex ( idx );
+	lua_pushvalue ( this->mState, idx );
+
+	for ( cc8* c = format; *c; ++c ) {
+		
+		switch ( *c ) {
+		
+			// number
+			case 'N':
+				lua_pushnumber ( this->mState, va_arg ( args, int ));
+				lua_gettable ( this->mState, -1 );
+				break;
+			
+			// string
+			case 'S':
+				lua_getfield ( this->mState, -1, va_arg ( args, char* ));
+				break;
+			
+			default:
+				lua_pushnil ( this->mState );
+		}
+	
+		if ( lua_isnil ( this->mState, -1 )) break;
+		lua_replace ( this->mState, -2 );
+	}
+	
+	va_end ( args );
+	
+	if ( lua_type ( this->mState, -1 ) != type ) {
+		lua_pop ( this->mState, 1 );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 
 	switch ( type ) {
@@ -466,7 +504,7 @@ STLString MOAILuaState::GetStackDump () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAILuaState::GetStackTrace ( int level ) {
+STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 
 	int firstpart = 1;  /* still before eventual `...' */
 	lua_Debug ar;
@@ -475,7 +513,7 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 
 	STLString out;
 	
-	out.append ( "stack traceback:" );
+	out.append ( title ? title : "stack traceback:" );
 	
 	while ( lua_getstack ( L, level++, &ar )) {
 		
@@ -523,7 +561,6 @@ STLString MOAILuaState::GetStackTrace ( int level ) {
 	}
 	
 	out.append ( "\n" );
-
 	return out;
 }
 
@@ -697,10 +734,10 @@ u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
+void* MOAILuaState::GetValue < void* >( int idx, void* value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
-		return ( uintptr )lua_touserdata ( this->mState, idx );
+		return ( void* )lua_touserdata ( this->mState, idx );
 	}
 	return value;
 }
@@ -743,6 +780,19 @@ bool MOAILuaState::HasField ( int idx, int key, int type ) {
 	lua_pop ( this->mState, 1 );
 	
 	return hasField;
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::HasKeys ( int idx ) {
+
+	idx = this->AbsIndex ( idx );
+
+	lua_pushnil ( this->mState );  /* first key */
+	if ( lua_next ( this->mState, idx ) != 0 ) {
+		lua_pop ( this->mState, 2 );
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -839,9 +889,7 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			// TODO: Fix this on Android
-				ZLLog::PrintFile ( file, "-- %s\n", msg.c_str ());
-			
+			ZLLog::LogF ( file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -852,23 +900,19 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump () {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::Print ( stackDump );
+	ZLLog::LogF ( ZLLog::CONSOLE, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::PrintStackDump ( FILE* file  ) {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::PrintFile ( file, stackDump );
+	ZLLog::LogF ( file, stackDump );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
-
-	STLString stackTrace = this->GetStackTrace ( level );
-	// TODO: Fix this on Android
-	//#ifndef MOAI_OS_ANDROID
-		ZLLog::PrintFile ( file, stackTrace.str ());
-	//#endif
+void MOAILuaState::PrintStackTrace ( FILE* file, cc8* title, int level ) {
+	STLString stackTrace = this->GetStackTrace ( title, level );
+	ZLLog::LogF ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//
@@ -922,13 +966,8 @@ void MOAILuaState::Push ( u32 value ) {
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( u64 value ) {
 
+	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::Push ( uintptr value ) {
-
-	lua_pushlightuserdata ( this->mState, ( void* )value );
 }
 
 //----------------------------------------------------------------//
@@ -951,6 +990,12 @@ void MOAILuaState::Push ( MOAILuaObject* luaObject ) {
 void MOAILuaState::Push ( MOAILuaRef& ref ) {
 
 	ref.PushRef ( *this );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const void* value ) {
+
+	lua_pushlightuserdata ( this->mState, ( void* )value );
 }
 
 //----------------------------------------------------------------//
