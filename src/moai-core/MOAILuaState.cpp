@@ -167,7 +167,7 @@ void MOAILuaState::CopyToTop ( int idx ) {
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
-		
+
 	MOAILuaRuntime::Get ().PushTraceback ( *this );
 	lua_insert ( this->mState, errIdx );
 

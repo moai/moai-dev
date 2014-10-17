@@ -176,7 +176,6 @@ public:
 	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
 	GET ( MOAIPartition*, Partition, mPartition )
-	GET ( MOAIScissorRect*, ScissorRect, mScissorRect )
 	
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )

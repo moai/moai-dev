@@ -524,8 +524,6 @@ void MOAIFont::Init ( cc8* filename ) {
 
 	if ( ZLFileSys::CheckFileExists ( filename )) {
 		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
-	} else {
-		ZLLog::PrintFile ( ZLLog::CONSOLE, "Font file does not exist: '%s'\n", filename );
 	}
 }
 
@@ -586,6 +584,9 @@ void MOAIFont::ProcessGlyphs () {
 		MOAIGlyph* glyphs = glyphSet.mGlyphs;
 		MOAIGlyph* pendingGlyphs = glyphSet.mPending;
 		
+		// all pending glyphs will be moved to the processed glyphs list
+		// so clear the pending glyphs list
+		glyphSet.mPending = 0;
 		
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
@@ -594,14 +595,8 @@ void MOAIFont::ProcessGlyphs () {
 			fontIsOpen = this->mReader->OpenFontFile ( this->mFilename ) == MOAIFontReader::OK;
 		}
 
-		if ( !fontIsOpen ) {
-			return;		
-		}
-
-		// all pending glyphs will be moved to the processed glyphs list
-		// so clear the pending glyphs list
-		glyphSet.mPending = 0;
-
+		if ( !fontIsOpen ) return;		
+		
 		// get the face metrics
 		fontReader->SelectFace ( glyphSet.mSize );
 		fontReader->GetFaceMetrics ( glyphSet );

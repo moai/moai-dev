@@ -603,7 +603,7 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	if ( !( bodyA && bodyB )) return 0;
 	
 	float maxLength = state.GetValue < float >( 4, 1 ) * self->mUnitsToMeters;
-
+	
 	b2Vec2 anchorA;
 	anchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	anchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
@@ -613,7 +613,7 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	anchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
 
 	bool collideConnected = state.GetValue < bool >( 9, false );
-
+	
 	b2RopeJointDef jointDef;
 	jointDef.bodyA = bodyA->mBody;
 	jointDef.bodyB = bodyB->mBody;

@@ -138,10 +138,6 @@ int MOAIFreeTypeFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 //----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::GetKernVec ( u32 c, MOAIKernVec& kernVec ) {
 
-	assert ( this->mFace );
-	if ( !this->mFace ) 
-		return false;
-
 	kernVec.mX = 0.0f;
 	kernVec.mY = 0.0f;
 
@@ -160,9 +156,6 @@ int MOAIFreeTypeFontReader::GetKernVec ( u32 c, MOAIKernVec& kernVec ) {
 //----------------------------------------------------------------//
 bool MOAIFreeTypeFontReader::HasKerning () {
 
-	assert ( this->mFace );
-	if ( !this->mFace ) 
-		return false;
 	return ( FT_HAS_KERNING ( this->mFace ) != 0 );
 }
 
