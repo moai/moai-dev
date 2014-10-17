@@ -16042,7 +16042,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -19282,7 +19282,7 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -19325,7 +19325,7 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -19370,7 +19370,7 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19384,7 +19384,7 @@
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19584,7 +19584,10 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wno-ignored-attributes",
+				);
 			};
 			name = Release;
 		};
@@ -19776,7 +19779,7 @@
 		89BE6F14173AD07100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19811,7 +19814,7 @@
 		89BE6F15173AD07100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19846,7 +19849,7 @@
 		89BE6F16173AD07100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19881,7 +19884,7 @@
 		89BE6F17173AD07100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19916,7 +19919,7 @@
 		89BE7377173AD29200DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19953,7 +19956,7 @@
 		89BE7378173AD29200DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -19990,7 +19993,7 @@
 		89BE7379173AD29200DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20027,7 +20030,7 @@
 		89BE737A173AD29200DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20304,7 +20307,7 @@
 		89BE7572173C119600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20341,7 +20344,7 @@
 		89BE7573173C119600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20378,7 +20381,7 @@
 		89BE7574173C119600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20415,7 +20418,7 @@
 		89BE7575173C119600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20452,7 +20455,7 @@
 		89BE75D6173C121800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20487,7 +20490,7 @@
 		89BE75D7173C121800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20522,7 +20525,7 @@
 		89BE75D8173C121800DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20557,7 +20560,7 @@
 		89BE75D9173C121800DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20860,7 +20863,7 @@
 		89BE765C173C13EB00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20895,7 +20898,7 @@
 		89BE765D173C13EB00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20930,7 +20933,7 @@
 		89BE765E173C13EB00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -20965,7 +20968,7 @@
 		89BE765F173C13EB00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21120,7 +21123,7 @@
 		89BE769B173C160E00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21155,7 +21158,7 @@
 		89BE769C173C160E00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21190,7 +21193,7 @@
 		89BE769D173C160E00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21225,7 +21228,7 @@
 		89BE769E173C160E00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21260,7 +21263,7 @@
 		89E9D87B174BD4F100033CDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21274,7 +21277,7 @@
 		89E9D87C174BD4F100033CDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21288,7 +21291,7 @@
 		89E9D87D174BD4F100033CDD /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21302,7 +21305,7 @@
 		89E9D87E174BD4F100033CDD /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21428,6 +21431,7 @@
 					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
@@ -21436,7 +21440,10 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wno-ignored-attributes",
+				);
 			};
 			name = Debug;
 		};
@@ -21461,7 +21468,7 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21476,7 +21483,7 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21551,7 +21558,7 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -21587,7 +21594,7 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22395,7 +22402,7 @@
 		CD6D752117EE415D00964415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22411,7 +22418,7 @@
 		CD6D752217EE415D00964415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22427,7 +22434,7 @@
 		CD6D752317EE415D00964415 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22443,7 +22450,7 @@
 		CD6D752417EE415D00964415 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -22979,7 +22986,7 @@
 		CD807B461831C3B500E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -23022,7 +23029,7 @@
 		CD807B471831C3B500E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23067,7 +23074,7 @@
 		CD807B481831C3B500E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23112,7 +23119,7 @@
 		CD807B491831C3B500E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23157,7 +23164,7 @@
 		CD807DF31831C3C600E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
@@ -23200,7 +23207,7 @@
 		CD807DF41831C3C600E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23245,7 +23252,7 @@
 		CD807DF51831C3C600E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23290,7 +23297,7 @@
 		CD807DF61831C3C600E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -23335,7 +23342,7 @@
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23350,7 +23357,7 @@
 		CD807E951831C42100E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23365,7 +23372,7 @@
 		CD807E961831C42100E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23380,7 +23387,7 @@
 		CD807E971831C42100E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23395,7 +23402,7 @@
 		CD95D4A11831D4E20080C34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23432,7 +23439,7 @@
 		CD95D4A21831D4E20080C34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23469,7 +23476,7 @@
 		CD95D4A31831D4E20080C34E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -23506,7 +23513,7 @@
 		CD95D4A41831D4E20080C34E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24429,7 +24436,7 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24465,7 +24472,7 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24893,7 +24900,7 @@
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24931,7 +24938,7 @@
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -24969,7 +24976,7 @@
 		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25007,7 +25014,7 @@
 		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25045,7 +25052,7 @@
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25085,7 +25092,7 @@
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25125,7 +25132,7 @@
 		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25165,7 +25172,7 @@
 		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25367,7 +25374,10 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wno-ignored-attributes",
+				);
 			};
 			name = Distribution;
 		};
@@ -25505,7 +25515,7 @@
 		E90D02C614D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25519,7 +25529,7 @@
 		E90D02C714D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -25564,7 +25574,7 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25600,7 +25610,7 @@
 		E90D02C914D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25636,7 +25646,7 @@
 		E90D02CA14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25773,7 +25783,10 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
-				WARNING_CFLAGS = "-Wall";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wno-ignored-attributes",
+				);
 			};
 			name = AdHoc;
 		};
@@ -25911,7 +25924,7 @@
 		E9C405CE150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -25925,7 +25938,7 @@
 		E9C405CF150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -25970,7 +25983,7 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -26006,7 +26019,7 @@
 		E9C405D1150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -26042,7 +26055,7 @@
 		E9C405D2150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,

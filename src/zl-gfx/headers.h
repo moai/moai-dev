@@ -226,6 +226,8 @@ enum {
 //----------------------------------------------------------------//
 extern u32 zglMapFromGLEnum( u32 glEnum ); // don't do this; this should be local to the OpenGL implementation
 
+extern void		zglBegin				();
+extern void		zglEnd					();
 extern void		zglFinalize				();
 extern void		zglInitialize			();
 

@@ -217,6 +217,7 @@ void MOAICoroutine::OnUpdate ( float step ) {
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnStart () {
+	MOAIAction::OnStart ();
 }
 
 //----------------------------------------------------------------//

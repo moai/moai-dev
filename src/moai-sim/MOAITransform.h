@@ -62,7 +62,6 @@ protected:
 	static int	_getPiv			( lua_State* L );
 	static int	_getRot			( lua_State* L );
 	static int	_getScl			( lua_State* L );
-	static int	_modelToWorld	( lua_State* L );
 	static int	_move			( lua_State* L );
 	static int	_moveLoc		( lua_State* L );
 	static int	_movePiv		( lua_State* L );
@@ -81,7 +80,6 @@ protected:
 	static int	_setShearByX	( lua_State* L );
 	static int	_setShearByY	( lua_State* L );
 	static int	_setShearByZ	( lua_State* L );
-	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
