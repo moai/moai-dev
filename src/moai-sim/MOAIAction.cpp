@@ -359,17 +359,14 @@ MOAIAction::~MOAIAction () {
 
 //----------------------------------------------------------------//
 void MOAIAction::OnStart () {
+
+	this->InvokeListenerWithSelf ( EVENT_START );
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::OnStop () {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
-			state.DebugCall ( 1, 0 );
-		}
-	}
+	this->InvokeListenerWithSelf ( EVENT_STOP );
 }
 
 //----------------------------------------------------------------//
@@ -391,7 +388,9 @@ void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
+	state.SetField ( -1, "EVENT_START", ( u32 )EVENT_START );
 	state.SetField ( -1, "EVENT_STOP", ( u32 )EVENT_STOP );
+
 }
 
 //----------------------------------------------------------------//
@@ -407,7 +406,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
-		{ "isPaused",			_isPaused },
+		{ "isPaused",				_isPaused },
 		{ "pause",					_pause },
 		{ "setAutoStop",			_setAutoStop },
 		{ "start",					_start },

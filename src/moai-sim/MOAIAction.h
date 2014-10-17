@@ -13,6 +13,7 @@
 /**	@lua MOAIAction
 	@text Base class for actions.
 	
+	@const	EVENT_START
 	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
 */
 class MOAIAction :
@@ -74,7 +75,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIAction )
 	
 	enum {
-		EVENT_STOP = MOAINode::TOTAL_EVENTS,
+		EVENT_START = MOAINode::TOTAL_EVENTS,
+		EVENT_STOP,
 		TOTAL_EVENTS,
 	};
 	
