@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <zl-vfs/assert.h>
 #include "pch.h"
 #include <zl-gfx/headers.h>
 
@@ -74,7 +75,6 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
-
 #define REMAP_EXTENSION_PTR(target, ext) target = target ? target : ext;
 
 //================================================================//
@@ -86,6 +86,9 @@ static bool	sIsOpenGLES					= false;
 static bool	sIsProgrammable				= false;
 static u32	sMaxTextureUnits			= 0;
 static u32	sMaxTextureSize				= 0;
+static u32	sOperationDepth				= 0; // this is just the counter for tracking begin/end calls
+
+#define ASSERT_OPERATION_DEPTH() ( assert ( sOperationDepth > 0 )) // Attempt to call zgl graphics method outside of operation.
 
 //================================================================//
 // enums
@@ -412,11 +415,26 @@ GLenum _remapEnum ( u32 zglEnum ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void zglBegin () {
+
+	sOperationDepth++;
+}
+
+//----------------------------------------------------------------//
+void zglEnd () {
+
+	ASSERT_OPERATION_DEPTH ();
+	sOperationDepth--;
+}
+
+//----------------------------------------------------------------//
 void zglFinalize () {
 }
 
 //----------------------------------------------------------------//
 void zglInitialize () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	u32 majorVersion = 0;
 	u32 minorVersion = 0;
@@ -432,11 +450,8 @@ void zglInitialize () {
 	#endif
 
 	string version = zglGetString ( ZGL_STRING_VERSION );
-	std::transform(version.begin(),
-		version.end(),
-		version.begin(),
-		::tolower);
-
+	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
+	
 	string gles = "opengl es";
 
 	if ( version.find ( gles ) != version.npos ) {
@@ -529,21 +544,29 @@ void zglInitialize () {
 
 //----------------------------------------------------------------//
 void zglActiveTexture ( u32 textureUnit ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glActiveTexture ( GL_TEXTURE0 + textureUnit );
 }
 
 //----------------------------------------------------------------//
 void zglBlendFunc ( u32 sourceFactor, u32 destFactor ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBlendFunc ( _remapEnum ( sourceFactor ), _remapEnum ( destFactor ));
 }
 
 //----------------------------------------------------------------//
 void zglBlendMode ( u32 mode ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBlendEquation ( _remapEnum ( mode ));
 }
 
 //----------------------------------------------------------------//
 void zglClear ( u32 mask ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	GLbitfield glMask = 0;
 
@@ -564,88 +587,123 @@ void zglClear ( u32 mask ) {
 
 //----------------------------------------------------------------//
 void zglClearColor ( float r, float g, float b, float a ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glClearColor ( r, g, b, a );
 }
 
 //----------------------------------------------------------------//
 void zglColor ( float r, float g, float b, float a ) {
-  #if !MOAI_OS_NACL
-	  glColor4f ( r, g, b, a );
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glColor4f ( r, g, b, a );
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglCullFace ( u32 mode ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glCullFace ( _remapEnum ( mode ));
 }
 
 //----------------------------------------------------------------//
 void zglDeleteBuffer ( u32 buffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteBuffers ( 1, &buffer );
 }
 
 //----------------------------------------------------------------//
 void zglDeleteFramebuffer ( u32 buffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteFramebuffers ( 1, &buffer );
 }
 
 //----------------------------------------------------------------//
 void zglDeleteProgram ( u32 program ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteProgram ( program );
 }
 
 //----------------------------------------------------------------//
 void zglDeleteRenderbuffer ( u32 buffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteRenderbuffers ( 1, &buffer );
 }
 
 //----------------------------------------------------------------//
 void zglDeleteShader ( u32 shader ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteShader ( shader );
 }
 
 //----------------------------------------------------------------//
 void zglDeleteTexture ( u32 texture ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDeleteTextures ( 1, &texture );
 }
 
 //----------------------------------------------------------------//
 void zglDepthFunc ( u32 depthFunc ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDepthFunc ( _remapEnum ( depthFunc ));
 }
 
 //----------------------------------------------------------------//
 void zglDepthMask ( bool flag ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDepthMask ( flag ? GL_TRUE : GL_FALSE );
 }
 
 //----------------------------------------------------------------//
 void zglDisable ( u32 cap ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDisable ( _remapEnum ( cap ));
 }
 
 //----------------------------------------------------------------//
 void zglDrawArrays ( u32 primType, u32 first, u32 count ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDrawArrays ( _remapEnum ( primType ), ( GLint )first, ( GLsizei )count );
 }
 
 //----------------------------------------------------------------//
 void zglDrawElements ( u32 primType, u32 count, u32 indexType, const void* indices ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDrawElements ( _remapEnum ( primType ), ( GLsizei )count, _remapEnum ( indexType ), ( const GLvoid* )indices );
 }
 
 //----------------------------------------------------------------//
 void zglEnable ( u32 cap ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glEnable ( _remapEnum ( cap ));
 }
 
 //----------------------------------------------------------------//
 void zglFlush () {
+
+	ASSERT_OPERATION_DEPTH ();
 	glFlush ();
 }
 
 //----------------------------------------------------------------//
 u32 zglGetCap ( u32 cap ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	switch ( cap ) {
 		case ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED:
@@ -662,6 +720,8 @@ u32 zglGetCap ( u32 cap ) {
 
 //----------------------------------------------------------------//
 u32 zglGetError () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	GLenum error = glGetError ();
 
@@ -686,6 +746,8 @@ u32 zglGetError () {
 //----------------------------------------------------------------//
 cc8* zglGetErrorString ( u32 error ) {
 
+	ASSERT_OPERATION_DEPTH ();
+
 	switch ( error ) {
 		case ZGL_ERROR_NONE:				return "ZGL_ERROR_NONE";
 		case ZGL_ERROR_INVALID_ENUM:		return "ZGL_ERROR_INVALID_ENUM";
@@ -700,61 +762,86 @@ cc8* zglGetErrorString ( u32 error ) {
 
 //----------------------------------------------------------------//
 extern cc8* zglGetString ( u32 stringID ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	return ( cc8* )glGetString ( _remapEnum ( stringID ));
 }
 
 //----------------------------------------------------------------//
 void zglLineWidth ( float width ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glLineWidth (( GLfloat )width );
 }
 
 //----------------------------------------------------------------//
 void zglLoadIdentity () {
-  #if !MOAI_OS_NACL
-	  glLoadIdentity ();
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glLoadIdentity ();
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglLoadMatrix ( const float* matrix ) {
-  #if !MOAI_OS_NACL
-	  glLoadMatrixf ( matrix );
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glLoadMatrixf ( matrix );
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglMatrixMode ( u32 mode ) {
-  #if !MOAI_OS_NACL
-	  glMatrixMode ( _remapEnum ( mode ));
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glMatrixMode ( _remapEnum ( mode ));
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglMultMatrix ( const float* matrix ) {
-  #if !MOAI_OS_NACL
-	  glMultMatrixf ( matrix );
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glMultMatrixf ( matrix );
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglPointSize ( float size ) {
-  #if !MOAI_OS_NACL
-	  glPointSize (( GLfloat )size );
+
+	ASSERT_OPERATION_DEPTH ();
+
+	#if !MOAI_OS_NACL
+		glPointSize (( GLfloat )size );
 	#endif
 }
 
 //----------------------------------------------------------------//
 void zglReadPixels ( s32 x, s32 y, u32 width, u32 height, void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glReadPixels (( GLint )x, ( GLint )y, ( GLsizei )width, ( GLsizei )height, GL_RGBA, GL_UNSIGNED_BYTE, ( GLvoid* )data );
 }
 
 //----------------------------------------------------------------//
 void zglScissor ( s32 x, s32 y, u32 w, u32 h ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glScissor (( GLint )x, ( GLint )y, ( GLsizei )w, ( GLsizei )h );
 }
 
 //----------------------------------------------------------------//
 void zglViewport ( s32 x, s32 y, u32 w, u32 h ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glViewport (( GLint )x, ( GLint )y, ( GLsizei )w, ( GLsizei )h );
 }
 
@@ -764,6 +851,10 @@ void zglViewport ( s32 x, s32 y, u32 w, u32 h ) {
 
 //----------------------------------------------------------------//
 void zglColorPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
+
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glColorPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
 	#endif
@@ -771,6 +862,10 @@ void zglColorPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
 
 //----------------------------------------------------------------//
 void zglDisableClientState ( u32 cap ) {
+
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glDisableClientState ( _remapEnum ( cap ));
 	#endif
@@ -778,11 +873,16 @@ void zglDisableClientState ( u32 cap ) {
 
 //----------------------------------------------------------------//
 void zglDisableVertexAttribArray ( u32 index ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glDisableVertexAttribArray (( GLuint )index );
 }
 
 //----------------------------------------------------------------//
 void zglNormalPointer ( u32 type, u32 stride, const void* pointer ) {
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glNormalPointer ( _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
 	#endif
@@ -790,6 +890,10 @@ void zglNormalPointer ( u32 type, u32 stride, const void* pointer ) {
 
 //----------------------------------------------------------------//
 void zglTexCoordPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
+
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glTexCoordPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
 	#endif
@@ -797,6 +901,9 @@ void zglTexCoordPointer ( u32 size, u32 type, u32 stride, const void* pointer ) 
 
 //----------------------------------------------------------------//
 void zglVertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) {
+
+	ASSERT_OPERATION_DEPTH ();
+
 	glVertexAttribPointer (
 		( GLuint )index,
 		( GLint )size,
@@ -809,6 +916,9 @@ void zglVertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u3
 
 //----------------------------------------------------------------//
 void zglVertexPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glVertexPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
 	#endif
@@ -816,6 +926,9 @@ void zglVertexPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
 
 //----------------------------------------------------------------//
 void zglEnableClientState ( u32 cap ) {
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glEnableClientState ( _remapEnum ( cap ));
 	#endif
@@ -823,6 +936,8 @@ void zglEnableClientState ( u32 cap ) {
 
 //----------------------------------------------------------------//
 void zglEnableVertexAttribArray ( u32 index ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glEnableVertexAttribArray (( GLuint )index );
 }
 
@@ -832,96 +947,134 @@ void zglEnableVertexAttribArray ( u32 index ) {
 
 //----------------------------------------------------------------//
 void zglAttachShader ( u32 program, u32 shader ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glAttachShader (( GLuint )program, ( GLuint )shader );
 }
 
 //----------------------------------------------------------------//
 void zglBindAttribLocation ( u32 program, u32 index, cc8* name ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBindAttribLocation (( GLuint )program, ( GLuint )index, ( const GLchar* )name );
 }
 
 //----------------------------------------------------------------//
 void zglCompileShader ( u32 shader ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glCompileShader ( shader );
 }
 
 //----------------------------------------------------------------//
 u32 zglCreateProgram () {
+
+	ASSERT_OPERATION_DEPTH ();
 	return ( u32 )glCreateProgram ();
 }
 
 //----------------------------------------------------------------//
 u32 zglCreateShader ( u32 shaderType ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	return ( u32 )glCreateShader ( _remapEnum ( shaderType ));
 }
 
 //----------------------------------------------------------------//
 void zglGetProgramInfoLog ( u32 program, u32 maxLength, u32* length, char* log ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glGetProgramInfoLog (( GLuint )program, ( GLsizei )maxLength, ( GLsizei* )length, ( GLchar* )log );
 }
 
 //----------------------------------------------------------------//
 void zglGetProgramiv ( u32 program, u32 name, s32* params ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glGetProgramiv (( GLuint )program, _remapEnum ( name ), ( GLint* )params );
 }
 
 //----------------------------------------------------------------//
 void zglGetShaderInfoLog ( u32 shader, u32 maxLength, u32* length, char* log ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glGetShaderInfoLog (( GLuint )shader, ( GLsizei )maxLength, ( GLsizei* )length, ( GLchar* )log );
 }
 
 //----------------------------------------------------------------//
 void zglGetShaderiv ( u32 shader, u32 name, s32* params ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glGetShaderiv (( GLuint )shader, _remapEnum ( name ), params );
 }
 
 //----------------------------------------------------------------//
 u32 zglGetUniformLocation ( u32 program, cc8* name ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	return ( u32 )glGetUniformLocation (( GLuint )program, ( const GLchar* )name );
 }
 
 //----------------------------------------------------------------//
 void zglLinkProgram ( u32 program ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glLinkProgram (( GLuint )program );
 }
 
 //----------------------------------------------------------------//
 void zglShaderSource ( u32 shader, u32 count, const char** string, const s32* length ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glShaderSource (( GLuint )shader, ( GLsizei )count, ( const GLchar** )string, ( const GLint* )length );
 }
 
 //----------------------------------------------------------------//
 void zglValidateProgram ( u32 program ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glValidateProgram (( GLuint )program );
 }
 
 //----------------------------------------------------------------//
 void zglUniform1f ( u32 location, float v0 ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUniform1f (( GLint )location, ( GLfloat )v0 );
 }
 
 //----------------------------------------------------------------//
 void zglUniform1i ( u32 location, s32 v0 ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUniform1i (( GLint )location, ( GLint )v0 );
 }
 
 //----------------------------------------------------------------//
 void zglUniform4fv ( u32 location, u32 count, const float* value ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )value );
 }
 
 //----------------------------------------------------------------//
 void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
 }
 
 //----------------------------------------------------------------//
 void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* value ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
 }
 
 //----------------------------------------------------------------//
 void zglUseProgram ( u32 program ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glUseProgram (( GLuint )program );
 }
 
@@ -931,11 +1084,15 @@ void zglUseProgram ( u32 program ) {
 
 //----------------------------------------------------------------//
 void zglBindTexture ( u32 texID ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBindTexture ( GL_TEXTURE_2D, ( GLuint )texID );
 }
 
 //----------------------------------------------------------------//
 void zglCompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	glCompressedTexImage2D (
 		GL_TEXTURE_2D,
@@ -952,6 +1109,8 @@ void zglCompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 hei
 //----------------------------------------------------------------//
 u32 zglCreateTexture () {
 
+	ASSERT_OPERATION_DEPTH ();
+
 	u32 textureID;
 	glGenTextures ( 1, ( GLuint* )&textureID );
 	return textureID;
@@ -959,6 +1118,9 @@ u32 zglCreateTexture () {
 
 //----------------------------------------------------------------//
 void zglTexEnvi ( u32 pname, s32 param ) {
+
+	ASSERT_OPERATION_DEPTH ();
+
 	#if !MOAI_OS_NACL
 		glTexEnvi ( GL_TEXTURE_ENV, _remapEnum ( pname ), ( GLint )param );
 	#endif
@@ -966,6 +1128,8 @@ void zglTexEnvi ( u32 pname, s32 param ) {
 
 //----------------------------------------------------------------//
 void zglTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -984,11 +1148,15 @@ void zglTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 f
 
 //----------------------------------------------------------------//
 void zglTexParameteri ( u32 pname, s32 param ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glTexParameteri ( GL_TEXTURE_2D, _remapEnum ( pname ), ( GLint )_remapEnum ( param ));
 }
 
 //----------------------------------------------------------------//
 void zglTexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -1011,16 +1179,22 @@ void zglTexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 heig
 
 //----------------------------------------------------------------//
 void zglBindFramebuffer ( u32 target, u32 frameBuffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBindFramebuffer ( _remapEnum ( target ), frameBuffer );
 }
 
 //----------------------------------------------------------------//
 void zglBindRenderbuffer ( u32 renderbuffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBindRenderbuffer ( GL_RENDERBUFFER, renderbuffer );
 }
 
 //----------------------------------------------------------------//
 u32 zglCheckFramebufferStatus ( u32 target ) {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	GLenum status = glCheckFramebufferStatus ( _remapEnum ( target ));
 	return status == GL_FRAMEBUFFER_COMPLETE ? ZGL_FRAMEBUFFER_STATUS_COMPLETE : 0;
@@ -1028,6 +1202,8 @@ u32 zglCheckFramebufferStatus ( u32 target ) {
 
 //----------------------------------------------------------------//
 u32 zglCreateFramebuffer () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	u32 bufferID;
 	glGenFramebuffers ( 1, &bufferID );
@@ -1037,6 +1213,8 @@ u32 zglCreateFramebuffer () {
 //----------------------------------------------------------------//
 u32 zglCreateRenderbuffer () {
 
+	ASSERT_OPERATION_DEPTH ();
+
 	u32 bufferID;
 	glGenRenderbuffers ( 1, &bufferID );
 	return bufferID;
@@ -1044,16 +1222,22 @@ u32 zglCreateRenderbuffer () {
 
 //----------------------------------------------------------------//
 void zglFramebufferRenderbuffer ( u32 target, u32 attachment, u32 renderbuffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glFramebufferRenderbuffer ( _remapEnum ( target ), _remapEnum ( attachment ), GL_RENDERBUFFER, ( GLuint )renderbuffer );
 }
 
 //----------------------------------------------------------------//
 void zglFramebufferTexture2D ( u32 target, u32 attachment, u32 texture, s32 level ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glFramebufferTexture2D ( _remapEnum ( target ), _remapEnum ( attachment ), GL_TEXTURE_2D, ( GLuint )texture, ( GLint )level );
 }
 
 //----------------------------------------------------------------//
 u32 zglGetCurrentFramebuffer () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	int buffer;
 	glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
@@ -1062,6 +1246,8 @@ u32 zglGetCurrentFramebuffer () {
 
 //----------------------------------------------------------------//
 void zglRenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glRenderbufferStorage ( GL_RENDERBUFFER, _remapEnum ( internalFormat ), ( GLsizei )width, ( GLsizei )height );
 }
 
@@ -1078,16 +1264,22 @@ void zglRenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
 
 //----------------------------------------------------------------//
 void zglBindBuffer ( u32 target, u32 buffer ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBindBuffer ( _remapEnum ( target ), buffer );
 }
 
 //----------------------------------------------------------------//
 void zglBufferData ( u32 target, u32 size, const void* data, u32 usage ) {
+
+	ASSERT_OPERATION_DEPTH ();
 	glBufferData ( _remapEnum ( target ), ( GLsizeiptr )size, ( const GLvoid* )data, _remapEnum ( usage ));
 }
 
 //----------------------------------------------------------------//
 u32 zglCreateBuffer () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	u32 bufferID;
 	glGenBuffers ( 1, &bufferID );
@@ -1097,6 +1289,8 @@ u32 zglCreateBuffer () {
 //----------------------------------------------------------------//
 void* zglMapBuffer ( u32 target ) {
 	UNUSED ( target );
+
+	ASSERT_OPERATION_DEPTH ();
 
 	#ifdef MOAI_OS_IPHONE
 		return glMapBufferOES ( _remapEnum ( target ), 0x88B9 ); // TODO: what's wrong with Xcode?
@@ -1108,6 +1302,8 @@ void* zglMapBuffer ( u32 target ) {
 //----------------------------------------------------------------//
 void zglUnmapBuffer ( u32 target ) {
 	UNUSED ( target );
+
+	ASSERT_OPERATION_DEPTH ();
 
 	#ifdef MOAI_OS_IPHONE
 		glUnmapBufferOES ( _remapEnum ( target ));
@@ -1130,6 +1326,8 @@ void zglUnmapBuffer ( u32 target ) {
 void zglBindVertexArray ( u32 vertexArrayID ) {
 	UNUSED ( vertexArrayID );
 
+	ASSERT_OPERATION_DEPTH ();
+
 	#ifdef MOAI_OS_IPHONE
 		glBindVertexArrayOES ( vertexArrayID ); // TODO:
 	#endif
@@ -1137,6 +1335,8 @@ void zglBindVertexArray ( u32 vertexArrayID ) {
 
 //----------------------------------------------------------------//
 u32 zglCreateVertexArray () {
+
+	ASSERT_OPERATION_DEPTH ();
 
 	#ifdef MOAI_OS_IPHONE
 		u32 vertexArrayID;
@@ -1150,6 +1350,8 @@ u32 zglCreateVertexArray () {
 //----------------------------------------------------------------//
 void zglDeleteVertexArray ( u32 vertexArrayID ) {
 	UNUSED ( vertexArrayID );
+
+	ASSERT_OPERATION_DEPTH ();
 
 	#ifdef MOAI_OS_IPHONE
 		glDeleteVertexArraysOES ( 1, &vertexArrayID ); // TODO:

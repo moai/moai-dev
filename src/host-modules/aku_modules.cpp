@@ -12,7 +12,7 @@
 
 	//----------------------------------------------------------------//
 	extern void		AKUModulesIosAppFinalize			();
-	extern void		AKUModulesIosAppInitialze			();
+	extern void		AKUModulesIosAppInitialize			();
 	extern void		AKUModulesIosContextInitialize		();
 	extern void		AKUModulesIosPause					( bool pause );
 	extern void		AKUModulesIosUpdate					();

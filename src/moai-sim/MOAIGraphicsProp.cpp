@@ -26,6 +26,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getScissorRect
+	@text	Retrieve the prop's scissor rect.
+	
+	@in		MOAIProp self
+	@out	MOAIScissorRect scissorRect 	Or nil if none exists.
+*/
+int MOAIProp::_getScissorRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( self->mScissorRect ) {
+		self->mScissorRect->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getTexture
 	@text	Returns the texture.
 	
@@ -744,6 +761,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getScissorRect",		_getScissorRect },
 		{ "getTexture",			_getTexture },
 		{ "isVisible",			_isVisible },
 		{ "setBillboard",		_setBillboard },

@@ -79,6 +79,7 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_getScissorRect		( lua_State* L );
 	static int		_getTexture			( lua_State* L );
 	static int		_isVisible			( lua_State* L );
 	static int		_setBillboard		( lua_State* L );

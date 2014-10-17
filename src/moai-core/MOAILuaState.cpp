@@ -167,14 +167,13 @@ void MOAILuaState::CopyToTop ( int idx ) {
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
-	
+
 	MOAILuaRuntime::Get ().PushTraceback ( *this );
 	lua_insert ( this->mState, errIdx );
 
 	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 	if ( status ) {
-		lua_settop ( this->mState, errIdx - 1 );
 		this->PrintErrors( ZLLog::CONSOLE, status );
 	}
 	else {

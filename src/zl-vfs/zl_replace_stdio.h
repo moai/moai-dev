@@ -10,6 +10,10 @@
 	extern "C" {
 #endif
 
+// NOTE: (PCM) zl_printf does not support the GCC __attribute__ extension, leading to some warnings in 3rd party headers.
+// At this time I haven't found how to support __attribute__ (only how to use it), so my best suggestion is to disable
+// these warnings with -Wno-ignored-attributes.
+
 //================================================================//
 // stdio
 //================================================================//

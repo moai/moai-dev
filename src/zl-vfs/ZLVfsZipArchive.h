@@ -53,7 +53,7 @@ public:
 	u32	mFileHeaderAddr;		// 4 Relative offset of file header
 	
 	//----------------------------------------------------------------//
-	int		Read	( FILE* file, u32 dataOffset );
+	int				Read					( FILE* file, u32 dataOffset );
 	static int		StripTimestampsAndSkip	( FILE* file, size_t* fileHeaderAdd );
 	void			Write					( FILE* file );
 };

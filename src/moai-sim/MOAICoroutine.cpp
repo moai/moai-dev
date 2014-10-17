@@ -210,13 +210,8 @@ MOAICoroutine::~MOAICoroutine () {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::OnUpdate ( float step ) {
-	
-	this->Resume ( step );
-}
-
-//----------------------------------------------------------------//
 void MOAICoroutine::OnStart () {
+	MOAIAction::OnStart ();
 }
 
 //----------------------------------------------------------------//
@@ -228,6 +223,11 @@ void MOAICoroutine::OnStop () {
 		this->mRef.Clear ();
 		this->mState = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::OnUpdate ( float step ) {
+	this->Resume ( step );
 }
 
 //----------------------------------------------------------------//
@@ -300,31 +300,26 @@ int MOAICoroutine::Resume ( float step ) {
 			result = lua_resume ( this->mState, NULL, narg );
 		#endif
 		
-		bool err = false;
-		
 		if (( result != LUA_YIELD )) {
 		
 			if ( result != 0 ) {
-				
-				err = true;
-				cc8* msg = lua_tostring ( this->mState, -1 );
 
+				cc8* msg = lua_tostring ( this->mState, -1 );
 				MOAILuaState state ( this->mState );
-#if (MOAI_WITH_LUAJIT)
+
+				#if (MOAI_WITH_LUAJIT)
 					//luajit has assertions on lua_call if the thread has crashed due to runtime error
 					//this means we can't run our custom stacktrace using this state. we will just bail instead
 					if ( msg ) {
 						ZLLog::Print ( "%s\n", msg );
 					}
 					state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
-#else
+				#else
 					MOAILuaRuntime::Get ().PushTraceback ( state );
 					state.Push ( msg );
-					
 					lua_call ( this->mState, 1, 0 );
-#endif
-				
-				lua_pop ( this->mState, 1 );
+					lua_pop ( this->mState, 1 );
+				#endif
 			}
 			this->Stop ();
 			this->mRef.Clear ();

@@ -240,8 +240,6 @@ void MOAIGfxDevice::Clear () {
 
 	this->mDefaultTexture.Set ( *this, 0 );
 
-	this->ProcessDeleters ();
-
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
 		this->mBuffer = 0;
@@ -279,6 +277,8 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mHasContext = true;
 	
+	zglBegin ();
+	
 	zglInitialize ();
 	
 	this->mIsProgrammable = zglGetCap ( ZGL_CAPS_IS_PROGRAMMABLE ) == 1;
@@ -294,12 +294,18 @@ void MOAIGfxDevice::DetectContext () {
 	this->ResetResources ();
 	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectFramebuffer () {
 	
+	zglBegin ();
+	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -627,24 +633,32 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
+	
+	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::OnGlobalsFinalize () {
 
-	this->ReleaseResources ();
+	// TODO: do we care about releasing resources on shutdown?
+	// commented out for now.
+	//this->ReleaseResources ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ProcessDeleters () {
 
+	zglBegin ();
+	
 	u32 top = this->mDeleterStack.GetTop ();
 	for ( u32 i = 0; i < top; ++i ) {
 		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
 		deleter.Delete ();
 	}
 	this->mDeleterStack.Reset ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -655,7 +669,7 @@ void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
 	deleter.mResourceID = id;
 	
 	this->mDeleterStack.Push ( deleter );
-	this->ProcessDeleters ();
+	//this->ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//
@@ -683,11 +697,15 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ReleaseResources () {
-
+	
+	zglBegin ();
+	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Destroy ();
 	}
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//

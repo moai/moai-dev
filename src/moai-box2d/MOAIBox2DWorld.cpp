@@ -524,7 +524,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRevoluteJointLocal
+/**	@lua	addRevoluteJointLocal
 	@text	Create and add a joint to the world, using local anchors. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
@@ -555,11 +555,13 @@ int	MOAIBox2DWorld::_addRevoluteJointLocal( lua_State* L ) {
 	
 	jointDef.localAnchorA.Set(
 		state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters, 
-		state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters);
+		state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters
+	);
 		
 	jointDef.localAnchorB.Set(
 		state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters, 
-		state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters);
+		state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters
+	);
 		
 	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));

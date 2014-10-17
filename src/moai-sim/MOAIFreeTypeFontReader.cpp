@@ -188,7 +188,11 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 
 	if ( FT_New_Face ( this->mLibrary, filename, 0, &this->mFace )) {
 		FT_Done_FreeType ( this->mLibrary );
-		fprintf ( stderr, "Error loading font: %s\n", filename ); // TODO: use MOAILog
+
+		this->mFace = 0;
+		this->mLibrary = 0;
+
+		ZLLog::LogF ( ZLLog::CONSOLE, "Error loading font: %s\n", filename );
 		return ERROR;
 	}
 	return OK;
@@ -254,56 +258,6 @@ int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, co
 
 	return OK;
 }
-
-//----------------------------------------------------------------//
-//int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
-//
-//	MOAIGlyphCache* glyphCache = font.GetCache ();
-//	bool useCache = glyphCache && glyphCache->IsDynamic ();
-//
-//	FT_Face face = this->mFace;
-//
-//	u32 index = FT_Get_Char_Index ( face, glyph.mCode );
-//	FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
-//	
-//	// bail if glyph has no outline we can render
-//	if ( face->glyph->format!= FT_GLYPH_FORMAT_OUTLINE ) return;
-//
-//	// set up the render params in case they are needed
-//	RenderParams render;
-//	FT_Raster_Params params;
-//	memset ( &params, 0, sizeof ( params ));
-//	params.flags = FT_RASTER_FLAG_AA | FT_RASTER_FLAG_DIRECT;
-//	params.gray_spans = _renderSpan;
-//	params.user = &render;
-//	
-//	int glyphWidth = face->glyph->metrics.width >> 6;
-//	int glyphHeight = face->glyph->metrics.height >> 6;
-//	int advanceX = face->glyph->metrics.horiAdvance >> 6;
-//	int bearingX = face->glyph->metrics.horiBearingX >> 6;
-//	int bearingY = face->glyph->metrics.horiBearingY >> 6;
-//	
-//	glyph.mWidth = ( float )glyphWidth;
-//	glyph.mHeight = ( float )glyphHeight;
-//	glyph.mAdvanceX = ( float )advanceX;
-//	glyph.mBearingX = ( float )bearingX;
-//	glyph.mBearingY = ( float )bearingY;
-//	
-//	// place and render the glyph
-//	if ( useCache ) {
-//		glyphCache->PlaceGlyph ( font, glyph );
-//		
-//		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );
-//		if ( image ) {
-//			
-//			render.mImage = image;
-//			render.mPenX = glyph.mSrcX - bearingX;
-//			render.mPenY = glyph.mSrcY + bearingY;
-//			
-//			FT_Outline_Render ( this->mLibrary, &face->glyph->outline, &params );
-//		}
-//	}
-//}
 
 //----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::SelectFace ( float size ) {
