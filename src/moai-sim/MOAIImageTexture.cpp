@@ -96,6 +96,9 @@ void MOAIImageTexture::OnCreate () {
 void MOAIImageTexture::OnLoad () {
 }
 
+//----------------------------------------------------------------//
+void MOAIImageTexture::OnInvalidate () {
+}
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
@@ -132,25 +135,33 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion () {
 
-	this->mStatus = INVALID;
- 	this->MOAIGfxResource::Load ();
+	//this->mStatus = INVALID;
+ 	//this->MOAIGfxResource::Load ();
+	
+	this->mRegion = this->GetRect ();
+	
+	this->mStatus = INVALID_REGION;
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	
-	if ( this->mStatus == INVALID ) return;
+	if ( this->mStatus != INVALID ) {
 
-	rect.Bless ();
-	this->GetRect ().Clip ( rect );
+		rect.Bless ();
+		this->GetRect ().Clip ( rect );
 
-	if ( this->mStatus == VALID ) {
-		this->mRegion = rect;
+		if ( this->mStatus == VALID ) {
+			this->mRegion = rect;
+		}
+		else {
+			this->mRegion.Grow ( rect );
+		}
 	}
-	else {
-		this->mRegion.Grow ( rect );
-	}
-	this->mStatus = INVALID_REGION;
 	
+	this->mStatus = INVALID_REGION;
+	this->MOAIGfxResource::Invalidate ();
 	this->MOAIGfxResource::Load ();
 }

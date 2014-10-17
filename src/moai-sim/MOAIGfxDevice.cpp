@@ -240,8 +240,6 @@ void MOAIGfxDevice::Clear () {
 
 	this->mDefaultTexture.Set ( *this, 0 );
 
-	this->ProcessDeleters ();
-
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
 		this->mBuffer = 0;
@@ -635,13 +633,17 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
+	
+	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::OnGlobalsFinalize () {
 
-	this->ReleaseResources ();
+	// TODO: do we care about releasing resources on shutdown?
+	// commented out for now.
+	//this->ReleaseResources ();
 }
 
 //----------------------------------------------------------------//

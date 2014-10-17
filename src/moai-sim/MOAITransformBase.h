@@ -33,6 +33,8 @@ protected:
 	static int	_getWorldLoc	( lua_State* L );
 	static int	_getWorldRot	( lua_State* L );
 	static int	_getWorldScl	( lua_State* L );
+	static int	_modelToWorld	( lua_State* L );
+	static int	_worldToModel	( lua_State* L );
 
 public:
 	
