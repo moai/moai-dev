@@ -9,6 +9,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 #if MOAI_GFX_OPENGL
 
+#include <algorithm>
 #include <string>
 using namespace std;
 
@@ -449,9 +450,10 @@ void zglInitialize () {
 	#endif
 
 	string version = zglGetString ( ZGL_STRING_VERSION );
-	for ( u32 i = 0; version [ i ]; i++ ) {
-		version [ i ] = ( char )tolower ( version [ i ]);
-	}
+	std::transform(version.begin(),
+		version.end(),
+		version.begin(),
+		::tolower);
 
 	string gles = "opengl es";
 

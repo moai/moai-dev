@@ -398,14 +398,19 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 			if ( result ) {
 				ZLLog::LogF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
 				ZLLog::LogF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
+
+				if ( msg ) {
+					ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
 			}
+				state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
 		}
 	}
-
+	} else {
 	if ( msg ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
 	}
 	state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
+	}
 
 	return 0;
 }

@@ -52,15 +52,15 @@ TYPE* MOAILuaState::GetLuaObject ( int idx, bool verbose ) {
 template < typename TYPE >
 TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name, bool verbose ) {
 	
-	if ( this->GetField ( idx, name, LUA_TUSERDATA )) {
+	if ( this->GetFieldWithType ( idx, name, LUA_TUSERDATA )) {
 		
-		MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( idx );
+		MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( -1 );
 		this->Pop ( 1 );
 		
 		if ( luaData ) {
 			TYPE* type = luaData->AsType < TYPE >();
 			if (( type == 0 ) && verbose ) {
-				this->ReportBadCast ( this->AbsIndex ( idx ), luaData->TypeName ());
+				this->ReportBadCast ( this->AbsIndex ( -1 ), luaData->TypeName ());
 			}
 			return type;
 		}

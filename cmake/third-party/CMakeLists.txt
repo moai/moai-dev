@@ -52,6 +52,7 @@ add_subdirectory ( zlib )
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set(DIRECTX OFF CACHE BOOL "SDL DirectX")
   set (SDL_SHARED OFF)
+  set(X11_SHARED OFF CACHE BOOL "X11 Shared disable")
   
   add_subdirectory(sdl2)
   if (BUILD_LINUX OR BUILD_WINDOWS)
