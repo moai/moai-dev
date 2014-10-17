@@ -15,7 +15,7 @@ int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** a
 //----------------------------------------------------------------//
 int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** argv, int i ) {
 
-	int mode;
+	int mode = AKU_AS_ARGS;
 	char* args = 0;
 
 	if ( i < argc ) {

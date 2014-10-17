@@ -58,6 +58,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			InvokeListener				( u32 eventID );
+	void			InvokeListenerWithSelf		( u32 eventID );
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
 	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );

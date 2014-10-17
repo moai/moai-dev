@@ -177,6 +177,8 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
+	zglBegin ();
+
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 
@@ -200,6 +202,8 @@ void MOAIRenderMgr::Render () {
 	this->mRenderTime += this->mRenderDuration;
 	
 	this->mFrameBuffer = 0;
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
