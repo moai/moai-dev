@@ -32,8 +32,8 @@
 	@in		MOAIProp self
 	@out	MOAIScissorRect scissorRect 	Or nil if none exists.
 */
-int MOAIProp::_getScissorRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
+int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
 	if ( self->mScissorRect ) {
 		self->mScissorRect->PushLuaUserdata ( state );

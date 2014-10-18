@@ -105,6 +105,8 @@ int MOAIFreeTypeFontReader::CloseFontFile () {
 	
 	this->mFaceSize = 0.0f;
 	this->mGlyphCode = GLYPH_CODE_NULL;
+
+	return OK;
 }
 
 //----------------------------------------------------------------//

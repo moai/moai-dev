@@ -49,6 +49,8 @@
     	#define va_copy(d,s) ((d) = (s))
 	#endif
 	
+	#define __func__ __FUNCTION__
+    #define MAXFLOAT FLT_MAX
 #else
 	#define MOAI_COMPILER_GCC
 

@@ -1,10 +1,6 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( moai-sim )
 
-if ( BUILD_ANDROID )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
-   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${MOAI_ROOT}/src/zl-vfs/zl_replace.h" )
-endif ( BUILD_ANDROID )
 
 set ( MOAI_SIM_INCLUDES 
   "${MOAI_ROOT}/src/"
@@ -25,7 +21,7 @@ include_directories ( ${MOAI_SIM_INCLUDES} )
 
 add_library ( moai-sim STATIC ${MOAI_SIM_SRC} )
 
-target_link_libraries ( moai-sim moai-core moai-util contrib zlcore)
+target_link_libraries ( moai-sim moai-core moai-util contrib zlcore tess)
 
 #always point to freetype includes so the generated project is easy to turn freetype back on!
 get_target_property ( FREETYPE_INCLUDES freetype INCLUDE_DIRECTORIES )

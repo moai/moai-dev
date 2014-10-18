@@ -6,6 +6,7 @@
 #include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <zl-vfs/assert.h>
 
 //================================================================//
 // SafeTesselator
@@ -25,7 +26,7 @@ SafeTesselator::~SafeTesselator()
 
 //------------------------------------------------------------------//
 int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
-	
+
 	int err = zl_begin_assert_env ();
 	if ( err == 0 ) {
 		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );

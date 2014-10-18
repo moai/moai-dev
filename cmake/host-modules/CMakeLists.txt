@@ -16,7 +16,12 @@ include_directories ( ${HOST_MODULES_INCLUDES} )
 
 add_library ( host-modules STATIC ${HOST_MODULES_SRC} )
 set_target_properties( host-modules PROPERTIES FOLDER Modules )
-  
+ 
+#crypto
+if (MOAI_CRYPTO)
+   target_link_libraries ( host-modules moai-crypto )
+endif (MOAI_CRYPTO)
+
 #BOX2D
 if ( MOAI_BOX2D )
   target_link_libraries ( host-modules moai-box2d )
