@@ -4,6 +4,10 @@
 #ifndef ZL_TYPES
 #define ZL_TYPES
 
+#ifdef __linux__
+  #include <stddef.h>
+#endif
+
 //----------------------------------------------------------------//
 typedef unsigned int			uint;
 typedef size_t					uintptr;

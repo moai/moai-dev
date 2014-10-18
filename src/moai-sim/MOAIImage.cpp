@@ -9,7 +9,7 @@
 
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIGfxDevice.h>
-
+#include <float.h>
 //================================================================//
 // local
 //================================================================//
@@ -1652,7 +1652,7 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 				binaryMap[y * width + x] = 0;
 			}
 			
-			distanceMap[y * width + x] = MAXFLOAT;
+			distanceMap[y * width + x] = FLT_MAX;
 		}
 	}
 	
