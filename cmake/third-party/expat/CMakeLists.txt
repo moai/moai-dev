@@ -9,8 +9,9 @@ if ( BUILD_WINDOWS )
 endif (BUILD_WINDOWS)
 
 if ( BUILD_ANDROID ) 
-	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 -DXML_STATIC" )
+	set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 " )
 endif (BUILD_ANDROID )
+
 
 set ( EXPAT_INCLUDES "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib/" )
 
@@ -19,4 +20,5 @@ file ( GLOB_RECURSE EXPAT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_library ( expat STATIC ${EXPAT_SOURCES} ${EXPAT_HEADERS} )
 target_include_directories (expat PUBLIC ${EXPAT_INCLUDES})
+target_compile_definitions (expat PUBLIC "XML_STATIC")
 set_target_properties( expat PROPERTIES FOLDER Third-Party )

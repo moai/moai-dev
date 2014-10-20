@@ -103,7 +103,7 @@ int MOAIFontReader::_open ( lua_State* L ) {
 int MOAIFontReader::_renderGlyph ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFontReader, "UU" )
 	
-	int result = MOAIFontReader::ERROR;
+	int result = MOAIFontReader::FONT_ERROR;
 	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
 	
 	if ( image ) {

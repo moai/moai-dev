@@ -18,10 +18,11 @@ set ( ZLVFS_INCLUDES
 
 # Use all cpp files in directory as source code
 file ( GLOB ZLVFS_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-vfs/*.cpp" )
+file ( GLOB ZLVFS_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-vfs/*.h" )
 
 include_directories ( ${ZLVFS_INCLUDES} )
 
-add_library ( zlvfs STATIC ${ZLVFS_SOURCES} )
+add_library ( zlvfs STATIC ${ZLVFS_SOURCES} ${ZLVFS_HEADERS} )
 
 target_link_libraries ( zlvfs zlib tlsf )
 set_target_properties( zlvfs PROPERTIES FOLDER Core )

@@ -311,9 +311,9 @@ int MOAICoroutine::Resume ( float step ) {
 					//luajit has assertions on lua_call if the thread has crashed due to runtime error
 					//this means we can't run our custom stacktrace using this state. we will just bail instead
 					if ( msg ) {
-						ZLLog::Print ( "%s\n", msg );
+						ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
 					}
-					state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
+					state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
 				#else
 					MOAILuaRuntime::Get ().PushTraceback ( state );
 					state.Push ( msg );

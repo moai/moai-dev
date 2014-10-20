@@ -205,7 +205,7 @@ int MOAIBitmapFontReader::_loadPage ( lua_State* L ) {
 //----------------------------------------------------------------//
 int MOAIBitmapFontReader::GetFaceMetrics ( MOAIFontFaceMetrics& faceMetrics  ) {
 
-	if ( !this->mCurrentPage ) return ERROR;
+	if ( !this->mCurrentPage ) return FONT_ERROR;
 
 	faceMetrics.mAscent = ( float )this->mCurrentPage->mBase;
 	faceMetrics.mHeight = ( float )this->mCurrentPage->mHeight;
@@ -216,7 +216,7 @@ int MOAIBitmapFontReader::GetFaceMetrics ( MOAIFontFaceMetrics& faceMetrics  ) {
 //----------------------------------------------------------------//
 int MOAIBitmapFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 
-	if ( !this->mCurrentGlyph ) return ERROR;
+	if ( !this->mCurrentGlyph ) return FONT_ERROR;
 	
 	MOAIBitmapGlyph& bitmapGlyph = *this->mCurrentGlyph;
 	
@@ -279,7 +279,7 @@ void MOAIBitmapFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
 	UNUSED ( blendFunc );
 
-	if ( !this->mCurrentGlyph ) return ERROR;
+	if ( !this->mCurrentGlyph ) return FONT_ERROR;
 	
 	MOAIBitmapGlyph& bitmapGlyph = *this->mCurrentGlyph;
 
@@ -313,20 +313,20 @@ int MOAIBitmapFontReader::SelectFace ( float size ) {
 			return OK;
 		}
 	}
-	return ERROR;
+	return FONT_ERROR;
 }
 
 //----------------------------------------------------------------//
 int MOAIBitmapFontReader::SelectGlyph ( u32 c ) {
 
-	if ( !this->mCurrentPage ) return ERROR;
+	if ( !this->mCurrentPage ) return FONT_ERROR;
 
 	if ( this->mCurrentPage->mBitmapGlyphs.contains ( c )) {
 		this->mCurrentGlyph = &this->mCurrentPage->mBitmapGlyphs [ c ];
 		return OK;
 	}
 	this->mCurrentGlyph = 0;
-	return ERROR;
+	return FONT_ERROR;
 }
 
 //----------------------------------------------------------------//

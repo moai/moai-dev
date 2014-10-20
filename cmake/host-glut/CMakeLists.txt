@@ -58,6 +58,7 @@ if ( BUILD_LINUX )
     rt
     freeglutstatic
     Xi
+    Xxf86vm
   )
 endif ( BUILD_LINUX )
 

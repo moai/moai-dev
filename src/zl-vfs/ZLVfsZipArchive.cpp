@@ -552,7 +552,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	for ( int i = 0; i < header.mTotalEntries; ++i ) {
 	
 		ZLVfsZipEntryHeader entryHeader;
-		entryHeader.Read ( infile );
+		entryHeader.Read ( infile, header.mDataOffset);
 		fseek ( infile, entryHeader.mNameLength + entryHeader.mExtraFieldLength + entryHeader.mCommentLength, SEEK_CUR );
 		size_t resumeAddr = ftell ( infile );
 		fseek ( infile, entryHeader.mFileHeaderAddr, SEEK_SET );
@@ -592,7 +592,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	for ( int i = 0; i < header.mTotalEntries; ++i ) {	
 
 		ZLVfsZipEntryHeader entryHeader;
-		entryHeader.Read ( infile );
+		entryHeader.Read ( infile, header.mDataOffset );
 
 		entryHeader.mFileHeaderAddr = fileHeaderAddrTable [ i ];
 		entryHeader.mLastModDate = 0;

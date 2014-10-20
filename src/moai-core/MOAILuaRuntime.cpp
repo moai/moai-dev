@@ -406,7 +406,7 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 	if ( msg ) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
 	}
-	state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
+	state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
 
 	return 0;
 }

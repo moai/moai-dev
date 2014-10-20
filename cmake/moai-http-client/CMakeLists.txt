@@ -21,8 +21,7 @@ file ( GLOB MOAI_HTTP_CLIENT_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CU
 if (BUILD_IOS OR BUILD_OSX)
   set (MOAI_HTTP_CLIENT_SRC 
   	${MOAI_HTTP_CLIENT_SRC}  
-  	"${MOAI_ROOT}/src/moai-iphone/MOAIHttpTaskNSURL.mm" 
-  	"${MOAI_ROOT}/src/moai-iphone/MOAIUrlMgrNSURL.mm" 
+  	"${CMAKE_CURRENT_SOURCE_DIR}/MOAIHttpTaskNSURL.mm" 
   )	
 endif (BUILD_IOS OR BUILD_OSX)
 

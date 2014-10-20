@@ -19,10 +19,14 @@ file ( GLOB ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.cpp" )
 file ( GLOB ZLUTIL_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/*.h" )
 file ( GLOB ZLGFX_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.cpp" )
 file ( GLOB ZLGFX_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.h" )
+file ( GLOB ZLCRYPTO_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-crypto/*.cpp" )
+file ( GLOB ZLCRYPTO_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-crypto/*.h" )
+
+
 
 include_directories ( ${ZLCORE_INCLUDES} )
 
-add_library ( zlcore STATIC ${ZLUTIL_SOURCES} ${ZLUTIL_HEADERS} ${ZLGFX_SOURCES} ${ZLGFX_HEADERS} )
+add_library ( zlcore STATIC ${ZLUTIL_SOURCES} ${ZLUTIL_HEADERS} ${ZLGFX_SOURCES} ${ZLGFX_HEADERS} ${ZLCRYPTO_SOURCES} ${ZLCRYPTO_HEADERS} )
 
 target_include_directories ( zlcore PUBLIC "${MOAI_ROOT}/src/" "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib")
 
