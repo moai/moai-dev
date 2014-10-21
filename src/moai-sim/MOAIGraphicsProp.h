@@ -126,7 +126,8 @@ protected:
 	virtual ZLMatrix4x4		GetWorldDrawingMtx		(); // factors in billboard flags
 	MOAIGraphicsProp*		GetGraphicsProp			();
 	void					LoadGfxState			();
-	void					LoadTransforms			();
+	void					LoadUVTransform			();
+	void					LoadVertexTransform		();
 
 public:
 

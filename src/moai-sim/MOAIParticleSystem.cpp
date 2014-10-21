@@ -360,15 +360,8 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	if ( this->mUVTransform ) {
-		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
-	}
-	else {
-		gfxDevice.SetUVTransform ();
-	}
-	
 	this->LoadGfxState ();
+	this->LoadUVTransform ();
 
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;
