@@ -696,18 +696,10 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-		if ( this->mUVTransform ) {
-			ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-			gfxDevice.SetUVTransform ( uvMtx );
-		}
-		else {
-			gfxDevice.SetUVTransform ();
-		}
-		
 		this->LoadGfxState ();
-		
-		ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
+		this->LoadVertexTransform ();
+		this->LoadUVTransform ();
+	
 
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a

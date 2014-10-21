@@ -401,7 +401,8 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
-	this->LoadTransforms ();
+	this->LoadVertexTransform ();
+	this->LoadUVTransform ();
 	
 	if ( this->mGrid ) {
 		this->DrawGrid ( subPrimID );
@@ -424,7 +425,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	draw.Bind ();
 	
-	this->LoadTransforms ();
+	this->LoadVertexTransform ();
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
@@ -642,12 +643,10 @@ void MOAIGraphicsProp::LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::LoadTransforms () {
+void MOAIGraphicsProp::LoadUVTransform () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
-
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
 		gfxDevice.SetUVTransform ( uvMtx );
@@ -655,6 +654,13 @@ void MOAIGraphicsProp::LoadTransforms () {
 	else {
 		gfxDevice.SetUVTransform ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsProp::LoadVertexTransform () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
