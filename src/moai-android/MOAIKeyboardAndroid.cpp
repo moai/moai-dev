@@ -24,11 +24,11 @@ extern JavaVM* jvm;
   
 //----------------------------------------------------------------//
 // The listeners need to be called on the event
-extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyKeyEvent();
 }
 
-extern "C" void Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyTextDone();
 }
 

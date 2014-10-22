@@ -353,7 +353,7 @@ void MOAINotificationsAndroid::NotifyRemoteRegistrationComplete ( int code, cc8*
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
 
 	JNI_GET_CSTRING ( jregistration, registration );
 	
@@ -363,7 +363,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGoogl
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
 
 	if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
 
@@ -402,7 +402,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGoogl
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiLocalNotificationReceiver_AKUNotifyLocalNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificationReceiver_AKUNotifyLocalNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
 	
 	if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
 

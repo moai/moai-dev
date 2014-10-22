@@ -61,10 +61,7 @@ config.LUA_MAIN						= 'main.lua'
 
 config.MANIFEST_DEBUGGABLE			= 'false'
 
-config.ANDROID_PLATFORM_TARGET		= 10
-
-config.LUA_WORKING_DIR				= 'bundle/assets/lua'
-config.LUA_MAIN						= 'main.lua'
+config.ANDROID_PLATFORM_TARGET		= 'android-17'
 
 --==============================================================
 -- util
