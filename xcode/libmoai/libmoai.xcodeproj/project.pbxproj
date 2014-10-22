@@ -6,6 +6,60 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		3EDC16E519F6DD19007A7775 /* libmoai-osx-all */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3EDC16EA19F6DD1A007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-osx-all" */;
+			buildPhases = (
+			);
+			dependencies = (
+				3EDC16EC19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC16EE19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC16F419F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC16F619F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC16F819F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC16FC19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170219F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170619F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170819F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170A19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170C19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC170E19F6DD37007A7775 /* PBXTargetDependency */,
+				3EDC171019F6DD37007A7775 /* PBXTargetDependency */,
+			);
+			name = "libmoai-osx-all";
+			productName = "libmoai-osx-all";
+		};
+		3EDC171119F6DE00007A7775 /* libmoai-ios-all */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3EDC171219F6DE01007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-ios-all" */;
+			buildPhases = (
+			);
+			dependencies = (
+				3E72B9AA19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9AC19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9BC19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9C819F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9CE19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9D019F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9D619F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9DE19F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9E019F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9E419F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9E819F703FA00A9DE30 /* PBXTargetDependency */,
+			);
+			name = "libmoai-ios-all";
+			productName = "libmoai-ios-all";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		031BBB6713B189830005ECE0 /* BufferedAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */; };
 		031BBB8413B189B30005ECE0 /* BufferedAudioSourceThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */; };
@@ -308,6 +362,7 @@
 		07952A6E1447907100143A72 /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297C1447907100143A72 /* jquant2.c */; };
 		07952A6F1447907100143A72 /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297D1447907100143A72 /* jutils.c */; };
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
+		3E72B99C19F6EF2B00A9DE30 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
 		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		663704191612813E002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
@@ -1525,7 +1580,6 @@
 		CD27BD8F191D535A000A7770 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
 		CD27BD90191D535A000A7770 /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
 		CD27BD91191D535A000A7770 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
-		CD27BD92191D535A000A7770 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
 		CD27BD93191D535A000A7770 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
 		CD27BD94191D535A000A7770 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
 		CD27BD95191D535A000A7770 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
@@ -5174,6 +5228,226 @@
 		E9940D6B14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3E72B9A919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = "libmoai-ios";
+		};
+		3E72B9AB19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
+			remoteInfo = "libmoai-ios-3rdparty-core";
+		};
+		3E72B9B519F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B7391808AC61000129F9;
+			remoteInfo = "libmoai-ios-billing";
+		};
+		3E72B9B719F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE737C173AD2B600DFE837;
+			remoteInfo = "libmoai-ios-box2d";
+		};
+		3E72B9B919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B7AF1808AC6D000129F9;
+			remoteInfo = "libmoai-ios-chartboost";
+		};
+		3E72B9BB19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7519173C116400DFE837;
+			remoteInfo = "libmoai-ios-chipmunk";
+		};
+		3E72B9BD19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD5232471808ADF400B81720;
+			remoteInfo = "libmoai-ios-crittercism";
+		};
+		3E72B9C319F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD70C10F18441DD0005CEBC0;
+			remoteInfo = "libmoai-ios-flurry";
+		};
+		3E72B9C719F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD5089C6155E3A1B0002FC3B;
+			remoteInfo = "libmoai-ios-fmod-ex";
+		};
+		3E72B9C919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B89B1808AC8F000129F9;
+			remoteInfo = "libmoai-ios-gamecenter";
+		};
+		3E72B9CD19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE75DB173C126100DFE837;
+			remoteInfo = "libmoai-ios-http-client";
+		};
+		3E72B9CF19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE766E173C15F100DFE837;
+			remoteInfo = "libmoai-ios-http-server";
+		};
+		3E72B9D519F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD70C1701844891A005CEBC0;
+			remoteInfo = "libmoai-ios-mixpanel";
+		};
+		3E72B9D919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6EF5173AD06700DFE837;
+			remoteInfo = "libmoai-ios-sim";
+		};
+		3E72B9DD19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
+			remoteInfo = "libmoai-ios-untz";
+		};
+		3E72B9DF19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C4167180A9AEA00C02381;
+			remoteInfo = "libmoai-ios-urban-airship";
+		};
+		3E72B9E319F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04AABB14725568009C20E5;
+			remoteInfo = "libmoai-ios-zl-core";
+		};
+		3E72B9E719F703FA00A9DE30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDF287EC17ED41CF00FD4F59;
+			remoteInfo = "libmoai-ios-zl-vfs";
+		};
+		3EDC16EB19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2B11356485F000ADC60;
+			remoteInfo = "libmoai-osx";
+		};
+		3EDC16ED19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2A81356485F000ADC60;
+			remoteInfo = "libmoai-osx-3rdparty-core";
+		};
+		3EDC16F319F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE725E173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		3EDC16F519F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7548173C119600DFE837;
+			remoteInfo = "libmoai-osx-chipmunk";
+		};
+		3EDC16F719F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD95D48D1831D4E20080C34E;
+			remoteInfo = "libmoai-osx-crypto";
+		};
+		3EDC16FB19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDE8A7CF155E42EF00C2DFF5;
+			remoteInfo = "libmoai-osx-fmod-ex";
+		};
+		3EDC170119F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7687173C160E00DFE837;
+			remoteInfo = "libmoai-osx-http-server";
+		};
+		3EDC170519F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6F07173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		3EDC170719F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89E9D7F7174BD4F100033CDD;
+			remoteInfo = "libmoai-osx-test";
+		};
+		3EDC170919F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C4B913A1918600C9386C;
+			remoteInfo = "libmoai-osx-untz";
+		};
+		3EDC170B19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04ACB51472557F009C20E5;
+			remoteInfo = "libmoai-osx-zl-core";
+		};
+		3EDC170D19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD807DF81831C42100E658D9;
+			remoteInfo = "libmoai-osx-zl-crypto";
+		};
+		3EDC170F19F6DD37007A7775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD6D745F17EE415D00964415;
+			remoteInfo = "libmoai-osx-zl-vfs";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		03240A3F13564CAF000ADC60 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = "../../3rdparty/chipmunk-5.3.4/src/constraints/cpConstraint.c"; sourceTree = SOURCE_ROOT; };
 		03240A4013564CAF000ADC60 /* cpConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpConstraint.h; path = "../../3rdparty/chipmunk-5.3.4/include/chipmunk/constraints/cpConstraint.h"; sourceTree = SOURCE_ROOT; };
@@ -7380,72 +7654,72 @@
 		CD74E96C1377E73C0093EE68 /* txt_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt_db.h; sourceTree = "<group>"; };
 		CD74E96F1377E74D0093EE68 /* pqueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pqueue.c; sourceTree = "<group>"; };
 		CD74E9701377E74D0093EE68 /* pqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pqueue.h; sourceTree = "<group>"; };
-		CD74E9731377E7BD0093EE68 /* cpt_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpt_err.c; path = "../../3rdparty/openssl-1.0.0d/crypto/cpt_err.c"; sourceTree = "<group>"; };
-		CD74E9741377E7BD0093EE68 /* cryptlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cryptlib.c; path = "../../3rdparty/openssl-1.0.0d/crypto/cryptlib.c"; sourceTree = "<group>"; };
-		CD74E9751377E7BD0093EE68 /* cversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cversion.c; path = "../../3rdparty/openssl-1.0.0d/crypto/cversion.c"; sourceTree = "<group>"; };
-		CD74E9761377E7BD0093EE68 /* ebcdic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ebcdic.c; path = "../../3rdparty/openssl-1.0.0d/crypto/ebcdic.c"; sourceTree = "<group>"; };
-		CD74E9771377E7BD0093EE68 /* ex_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ex_data.c; path = "../../3rdparty/openssl-1.0.0d/crypto/ex_data.c"; sourceTree = "<group>"; };
-		CD74E9791377E7BD0093EE68 /* mem_clr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem_clr.c; path = "../../3rdparty/openssl-1.0.0d/crypto/mem_clr.c"; sourceTree = "<group>"; };
-		CD74E97A1377E7BD0093EE68 /* mem_dbg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem_dbg.c; path = "../../3rdparty/openssl-1.0.0d/crypto/mem_dbg.c"; sourceTree = "<group>"; };
-		CD74E97B1377E7BD0093EE68 /* mem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem.c; path = "../../3rdparty/openssl-1.0.0d/crypto/mem.c"; sourceTree = "<group>"; };
-		CD74E97C1377E7BD0093EE68 /* o_dir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_dir.c; path = "../../3rdparty/openssl-1.0.0d/crypto/o_dir.c"; sourceTree = "<group>"; };
-		CD74E97D1377E7BD0093EE68 /* o_str.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_str.c; path = "../../3rdparty/openssl-1.0.0d/crypto/o_str.c"; sourceTree = "<group>"; };
-		CD74E97E1377E7BD0093EE68 /* o_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_time.c; path = "../../3rdparty/openssl-1.0.0d/crypto/o_time.c"; sourceTree = "<group>"; };
-		CD74E9811377E7BD0093EE68 /* uid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = uid.c; path = "../../3rdparty/openssl-1.0.0d/crypto/uid.c"; sourceTree = "<group>"; };
+		CD74E9731377E7BD0093EE68 /* cpt_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpt_err.c; path = "../../3rdparty/openssl-1.0.0m/crypto/cpt_err.c"; sourceTree = "<group>"; };
+		CD74E9741377E7BD0093EE68 /* cryptlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cryptlib.c; path = "../../3rdparty/openssl-1.0.0m/crypto/cryptlib.c"; sourceTree = "<group>"; };
+		CD74E9751377E7BD0093EE68 /* cversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cversion.c; path = "../../3rdparty/openssl-1.0.0m/crypto/cversion.c"; sourceTree = "<group>"; };
+		CD74E9761377E7BD0093EE68 /* ebcdic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ebcdic.c; path = "../../3rdparty/openssl-1.0.0m/crypto/ebcdic.c"; sourceTree = "<group>"; };
+		CD74E9771377E7BD0093EE68 /* ex_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ex_data.c; path = "../../3rdparty/openssl-1.0.0m/crypto/ex_data.c"; sourceTree = "<group>"; };
+		CD74E9791377E7BD0093EE68 /* mem_clr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem_clr.c; path = "../../3rdparty/openssl-1.0.0m/crypto/mem_clr.c"; sourceTree = "<group>"; };
+		CD74E97A1377E7BD0093EE68 /* mem_dbg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem_dbg.c; path = "../../3rdparty/openssl-1.0.0m/crypto/mem_dbg.c"; sourceTree = "<group>"; };
+		CD74E97B1377E7BD0093EE68 /* mem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mem.c; path = "../../3rdparty/openssl-1.0.0m/crypto/mem.c"; sourceTree = "<group>"; };
+		CD74E97C1377E7BD0093EE68 /* o_dir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_dir.c; path = "../../3rdparty/openssl-1.0.0m/crypto/o_dir.c"; sourceTree = "<group>"; };
+		CD74E97D1377E7BD0093EE68 /* o_str.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_str.c; path = "../../3rdparty/openssl-1.0.0m/crypto/o_str.c"; sourceTree = "<group>"; };
+		CD74E97E1377E7BD0093EE68 /* o_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = o_time.c; path = "../../3rdparty/openssl-1.0.0m/crypto/o_time.c"; sourceTree = "<group>"; };
+		CD74E9811377E7BD0093EE68 /* uid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = uid.c; path = "../../3rdparty/openssl-1.0.0m/crypto/uid.c"; sourceTree = "<group>"; };
 		CD74E9981377F7D20093EE68 /* v3_conf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = v3_conf.c; sourceTree = "<group>"; };
-		CD74E99B137805910093EE68 /* bio_ssl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bio_ssl.c; path = "../../3rdparty/openssl-1.0.0d/ssl/bio_ssl.c"; sourceTree = "<group>"; };
-		CD74E99C137805910093EE68 /* d1_both.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_both.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_both.c"; sourceTree = "<group>"; };
-		CD74E99D137805910093EE68 /* d1_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_clnt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_clnt.c"; sourceTree = "<group>"; };
-		CD74E99E137805910093EE68 /* d1_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_enc.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_enc.c"; sourceTree = "<group>"; };
-		CD74E99F137805910093EE68 /* d1_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_lib.c"; sourceTree = "<group>"; };
-		CD74E9A0137805910093EE68 /* d1_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_meth.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_meth.c"; sourceTree = "<group>"; };
-		CD74E9A1137805910093EE68 /* d1_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_pkt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_pkt.c"; sourceTree = "<group>"; };
-		CD74E9A2137805910093EE68 /* d1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/d1_srvr.c"; sourceTree = "<group>"; };
-		CD74E9A3137805910093EE68 /* dtls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtls1.h; path = "../../3rdparty/openssl-1.0.0d/ssl/dtls1.h"; sourceTree = "<group>"; };
-		CD74E9A4137805910093EE68 /* kssl_lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kssl_lcl.h; path = "../../3rdparty/openssl-1.0.0d/ssl/kssl_lcl.h"; sourceTree = "<group>"; };
-		CD74E9A5137805910093EE68 /* kssl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kssl.c; path = "../../3rdparty/openssl-1.0.0d/ssl/kssl.c"; sourceTree = "<group>"; };
-		CD74E9A6137805910093EE68 /* kssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kssl.h; path = "../../3rdparty/openssl-1.0.0d/ssl/kssl.h"; sourceTree = "<group>"; };
-		CD74E9A7137805910093EE68 /* s2_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_clnt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_clnt.c"; sourceTree = "<group>"; };
-		CD74E9A8137805910093EE68 /* s2_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_enc.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_enc.c"; sourceTree = "<group>"; };
-		CD74E9A9137805910093EE68 /* s2_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_lib.c"; sourceTree = "<group>"; };
-		CD74E9AA137805910093EE68 /* s2_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_meth.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_meth.c"; sourceTree = "<group>"; };
-		CD74E9AB137805910093EE68 /* s2_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_pkt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_pkt.c"; sourceTree = "<group>"; };
-		CD74E9AC137805910093EE68 /* s2_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s2_srvr.c"; sourceTree = "<group>"; };
-		CD74E9AD137805910093EE68 /* s3_both.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_both.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_both.c"; sourceTree = "<group>"; };
-		CD74E9AE137805910093EE68 /* s3_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_clnt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_clnt.c"; sourceTree = "<group>"; };
-		CD74E9AF137805910093EE68 /* s3_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_enc.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_enc.c"; sourceTree = "<group>"; };
-		CD74E9B0137805910093EE68 /* s3_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_lib.c"; sourceTree = "<group>"; };
-		CD74E9B1137805910093EE68 /* s3_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_meth.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_meth.c"; sourceTree = "<group>"; };
-		CD74E9B2137805910093EE68 /* s3_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_pkt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_pkt.c"; sourceTree = "<group>"; };
-		CD74E9B3137805910093EE68 /* s3_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s3_srvr.c"; sourceTree = "<group>"; };
-		CD74E9B4137805910093EE68 /* s23_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_clnt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s23_clnt.c"; sourceTree = "<group>"; };
-		CD74E9B5137805910093EE68 /* s23_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s23_lib.c"; sourceTree = "<group>"; };
-		CD74E9B6137805910093EE68 /* s23_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_meth.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s23_meth.c"; sourceTree = "<group>"; };
-		CD74E9B7137805910093EE68 /* s23_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_pkt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s23_pkt.c"; sourceTree = "<group>"; };
-		CD74E9B8137805910093EE68 /* s23_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/s23_srvr.c"; sourceTree = "<group>"; };
-		CD74E9B9137805910093EE68 /* ssl_algs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_algs.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_algs.c"; sourceTree = "<group>"; };
-		CD74E9BA137805910093EE68 /* ssl_asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_asn1.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_asn1.c"; sourceTree = "<group>"; };
-		CD74E9BB137805910093EE68 /* ssl_cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_cert.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_cert.c"; sourceTree = "<group>"; };
-		CD74E9BC137805910093EE68 /* ssl_ciph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_ciph.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_ciph.c"; sourceTree = "<group>"; };
-		CD74E9BD137805910093EE68 /* ssl_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_err.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_err.c"; sourceTree = "<group>"; };
-		CD74E9BE137805910093EE68 /* ssl_err2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_err2.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_err2.c"; sourceTree = "<group>"; };
-		CD74E9BF137805910093EE68 /* ssl_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_lib.c"; sourceTree = "<group>"; };
-		CD74E9C0137805910093EE68 /* ssl_locl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl_locl.h; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_locl.h"; sourceTree = "<group>"; };
-		CD74E9C1137805910093EE68 /* ssl_rsa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_rsa.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_rsa.c"; sourceTree = "<group>"; };
-		CD74E9C2137805910093EE68 /* ssl_sess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_sess.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_sess.c"; sourceTree = "<group>"; };
-		CD74E9C3137805910093EE68 /* ssl_stat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_stat.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_stat.c"; sourceTree = "<group>"; };
-		CD74E9C5137805910093EE68 /* ssl_txt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_txt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl_txt.c"; sourceTree = "<group>"; };
-		CD74E9C6137805910093EE68 /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl.h; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl.h"; sourceTree = "<group>"; };
-		CD74E9C7137805910093EE68 /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl2.h; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl2.h"; sourceTree = "<group>"; };
-		CD74E9C8137805910093EE68 /* ssl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl3.h; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl3.h"; sourceTree = "<group>"; };
-		CD74E9C9137805910093EE68 /* ssl23.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl23.h; path = "../../3rdparty/openssl-1.0.0d/ssl/ssl23.h"; sourceTree = "<group>"; };
-		CD74E9CB137805910093EE68 /* t1_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_clnt.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_clnt.c"; sourceTree = "<group>"; };
-		CD74E9CC137805910093EE68 /* t1_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_enc.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_enc.c"; sourceTree = "<group>"; };
-		CD74E9CD137805910093EE68 /* t1_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_lib.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_lib.c"; sourceTree = "<group>"; };
-		CD74E9CE137805910093EE68 /* t1_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_meth.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_meth.c"; sourceTree = "<group>"; };
-		CD74E9CF137805910093EE68 /* t1_reneg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_reneg.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_reneg.c"; sourceTree = "<group>"; };
-		CD74E9D0137805910093EE68 /* t1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_srvr.c"; sourceTree = "<group>"; };
-		CD74E9D1137805910093EE68 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = "../../3rdparty/openssl-1.0.0d/ssl/tls1.h"; sourceTree = "<group>"; };
+		CD74E99B137805910093EE68 /* bio_ssl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bio_ssl.c; path = "../../3rdparty/openssl-1.0.0m/ssl/bio_ssl.c"; sourceTree = "<group>"; };
+		CD74E99C137805910093EE68 /* d1_both.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_both.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_both.c"; sourceTree = "<group>"; };
+		CD74E99D137805910093EE68 /* d1_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_clnt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_clnt.c"; sourceTree = "<group>"; };
+		CD74E99E137805910093EE68 /* d1_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_enc.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_enc.c"; sourceTree = "<group>"; };
+		CD74E99F137805910093EE68 /* d1_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_lib.c"; sourceTree = "<group>"; };
+		CD74E9A0137805910093EE68 /* d1_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_meth.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_meth.c"; sourceTree = "<group>"; };
+		CD74E9A1137805910093EE68 /* d1_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_pkt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_pkt.c"; sourceTree = "<group>"; };
+		CD74E9A2137805910093EE68 /* d1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = d1_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/d1_srvr.c"; sourceTree = "<group>"; };
+		CD74E9A3137805910093EE68 /* dtls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtls1.h; path = "../../3rdparty/openssl-1.0.0m/ssl/dtls1.h"; sourceTree = "<group>"; };
+		CD74E9A4137805910093EE68 /* kssl_lcl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kssl_lcl.h; path = "../../3rdparty/openssl-1.0.0m/ssl/kssl_lcl.h"; sourceTree = "<group>"; };
+		CD74E9A5137805910093EE68 /* kssl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kssl.c; path = "../../3rdparty/openssl-1.0.0m/ssl/kssl.c"; sourceTree = "<group>"; };
+		CD74E9A6137805910093EE68 /* kssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kssl.h; path = "../../3rdparty/openssl-1.0.0m/ssl/kssl.h"; sourceTree = "<group>"; };
+		CD74E9A7137805910093EE68 /* s2_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_clnt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_clnt.c"; sourceTree = "<group>"; };
+		CD74E9A8137805910093EE68 /* s2_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_enc.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_enc.c"; sourceTree = "<group>"; };
+		CD74E9A9137805910093EE68 /* s2_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_lib.c"; sourceTree = "<group>"; };
+		CD74E9AA137805910093EE68 /* s2_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_meth.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_meth.c"; sourceTree = "<group>"; };
+		CD74E9AB137805910093EE68 /* s2_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_pkt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_pkt.c"; sourceTree = "<group>"; };
+		CD74E9AC137805910093EE68 /* s2_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s2_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s2_srvr.c"; sourceTree = "<group>"; };
+		CD74E9AD137805910093EE68 /* s3_both.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_both.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_both.c"; sourceTree = "<group>"; };
+		CD74E9AE137805910093EE68 /* s3_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_clnt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_clnt.c"; sourceTree = "<group>"; };
+		CD74E9AF137805910093EE68 /* s3_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_enc.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_enc.c"; sourceTree = "<group>"; };
+		CD74E9B0137805910093EE68 /* s3_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_lib.c"; sourceTree = "<group>"; };
+		CD74E9B1137805910093EE68 /* s3_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_meth.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_meth.c"; sourceTree = "<group>"; };
+		CD74E9B2137805910093EE68 /* s3_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_pkt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_pkt.c"; sourceTree = "<group>"; };
+		CD74E9B3137805910093EE68 /* s3_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s3_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s3_srvr.c"; sourceTree = "<group>"; };
+		CD74E9B4137805910093EE68 /* s23_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_clnt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s23_clnt.c"; sourceTree = "<group>"; };
+		CD74E9B5137805910093EE68 /* s23_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s23_lib.c"; sourceTree = "<group>"; };
+		CD74E9B6137805910093EE68 /* s23_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_meth.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s23_meth.c"; sourceTree = "<group>"; };
+		CD74E9B7137805910093EE68 /* s23_pkt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_pkt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s23_pkt.c"; sourceTree = "<group>"; };
+		CD74E9B8137805910093EE68 /* s23_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = s23_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/s23_srvr.c"; sourceTree = "<group>"; };
+		CD74E9B9137805910093EE68 /* ssl_algs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_algs.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_algs.c"; sourceTree = "<group>"; };
+		CD74E9BA137805910093EE68 /* ssl_asn1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_asn1.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_asn1.c"; sourceTree = "<group>"; };
+		CD74E9BB137805910093EE68 /* ssl_cert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_cert.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_cert.c"; sourceTree = "<group>"; };
+		CD74E9BC137805910093EE68 /* ssl_ciph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_ciph.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_ciph.c"; sourceTree = "<group>"; };
+		CD74E9BD137805910093EE68 /* ssl_err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_err.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_err.c"; sourceTree = "<group>"; };
+		CD74E9BE137805910093EE68 /* ssl_err2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_err2.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_err2.c"; sourceTree = "<group>"; };
+		CD74E9BF137805910093EE68 /* ssl_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_lib.c"; sourceTree = "<group>"; };
+		CD74E9C0137805910093EE68 /* ssl_locl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl_locl.h; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_locl.h"; sourceTree = "<group>"; };
+		CD74E9C1137805910093EE68 /* ssl_rsa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_rsa.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_rsa.c"; sourceTree = "<group>"; };
+		CD74E9C2137805910093EE68 /* ssl_sess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_sess.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_sess.c"; sourceTree = "<group>"; };
+		CD74E9C3137805910093EE68 /* ssl_stat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_stat.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_stat.c"; sourceTree = "<group>"; };
+		CD74E9C5137805910093EE68 /* ssl_txt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ssl_txt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl_txt.c"; sourceTree = "<group>"; };
+		CD74E9C6137805910093EE68 /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl.h; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl.h"; sourceTree = "<group>"; };
+		CD74E9C7137805910093EE68 /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl2.h; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl2.h"; sourceTree = "<group>"; };
+		CD74E9C8137805910093EE68 /* ssl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl3.h; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl3.h"; sourceTree = "<group>"; };
+		CD74E9C9137805910093EE68 /* ssl23.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ssl23.h; path = "../../3rdparty/openssl-1.0.0m/ssl/ssl23.h"; sourceTree = "<group>"; };
+		CD74E9CB137805910093EE68 /* t1_clnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_clnt.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_clnt.c"; sourceTree = "<group>"; };
+		CD74E9CC137805910093EE68 /* t1_enc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_enc.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_enc.c"; sourceTree = "<group>"; };
+		CD74E9CD137805910093EE68 /* t1_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_lib.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_lib.c"; sourceTree = "<group>"; };
+		CD74E9CE137805910093EE68 /* t1_meth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_meth.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_meth.c"; sourceTree = "<group>"; };
+		CD74E9CF137805910093EE68 /* t1_reneg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_reneg.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_reneg.c"; sourceTree = "<group>"; };
+		CD74E9D0137805910093EE68 /* t1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_srvr.c"; sourceTree = "<group>"; };
+		CD74E9D1137805910093EE68 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = "../../3rdparty/openssl-1.0.0m/ssl/tls1.h"; sourceTree = "<group>"; };
 		CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleCache.cpp; sourceTree = "<group>"; };
 		CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleCache.h; sourceTree = "<group>"; };
 		CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleMap.cpp; sourceTree = "<group>"; };
@@ -10456,7 +10730,7 @@
 				CD74E4851377D9C10093EE68 /* aes.h */,
 			);
 			name = aes;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/aes";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/aes";
 			sourceTree = "<group>";
 		};
 		CD74E44C1377D6F50093EE68 /* camellia */ = {
@@ -10473,7 +10747,7 @@
 				CD74E4991377D9D40093EE68 /* cmll_ofb.c */,
 			);
 			name = camellia;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/camellia";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/camellia";
 			sourceTree = "<group>";
 		};
 		CD74E44D1377D7220093EE68 /* des */ = {
@@ -10509,7 +10783,7 @@
 				CD74E4BE1377DA9F0093EE68 /* xcbc_enc.c */,
 			);
 			name = des;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/des";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/des";
 			sourceTree = "<group>";
 		};
 		CD74E44E1377D7350093EE68 /* ecdsa */ = {
@@ -10525,7 +10799,7 @@
 				CD74E4E21377DACA0093EE68 /* ecs_vrf.c */,
 			);
 			name = ecdsa;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ecdsa";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ecdsa";
 			sourceTree = "<group>";
 		};
 		CD74E44F1377D7440093EE68 /* comp */ = {
@@ -10538,7 +10812,7 @@
 				CD74E4EF1377DAE10093EE68 /* comp.h */,
 			);
 			name = comp;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/comp";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/comp";
 			sourceTree = "<group>";
 		};
 		CD74E4501377D7520093EE68 /* idea */ = {
@@ -10553,7 +10827,7 @@
 				CD74E4FB1377DB0A0093EE68 /* idea.h */,
 			);
 			name = idea;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/idea";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/idea";
 			sourceTree = "<group>";
 		};
 		CD74E4511377D75F0093EE68 /* rc2 */ = {
@@ -10568,7 +10842,7 @@
 				CD74E5091377DB6E0093EE68 /* rc2ofb64.c */,
 			);
 			name = rc2;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/rc2";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/rc2";
 			sourceTree = "<group>";
 		};
 		CD74E4521377D7660093EE68 /* rc4 */ = {
@@ -10580,7 +10854,7 @@
 				CD74E5141377DB8A0093EE68 /* rc4.h */,
 			);
 			name = rc4;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/rc4";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/rc4";
 			sourceTree = "<group>";
 		};
 		CD74E4531377D7700093EE68 /* md5 */ = {
@@ -10592,7 +10866,7 @@
 				CD74E51C1377DBAA0093EE68 /* md5.h */,
 			);
 			name = md5;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/md5";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/md5";
 			sourceTree = "<group>";
 		};
 		CD74E4541377D77A0093EE68 /* sha */ = {
@@ -10608,7 +10882,7 @@
 				CD74E5281377DBE70093EE68 /* sha512.c */,
 			);
 			name = sha;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/sha";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/sha";
 			sourceTree = "<group>";
 		};
 		CD74E4551377D7860093EE68 /* seed */ = {
@@ -10623,7 +10897,7 @@
 				CD74E5371377DBFC0093EE68 /* seed.h */,
 			);
 			name = seed;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/seed";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/seed";
 			sourceTree = "<group>";
 		};
 		CD74E4561377D7920093EE68 /* md4 */ = {
@@ -10635,7 +10909,7 @@
 				CD74E5421377DC180093EE68 /* md4.h */,
 			);
 			name = md4;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/md4";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/md4";
 			sourceTree = "<group>";
 		};
 		CD74E4571377D79A0093EE68 /* rand */ = {
@@ -10654,7 +10928,7 @@
 				CD74E5511377DC450093EE68 /* randfile.c */,
 			);
 			name = rand;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/rand";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/rand";
 			sourceTree = "<group>";
 		};
 		CD74E4581377D7A60093EE68 /* x509 */ = {
@@ -10688,7 +10962,7 @@
 				CD74E5761377E0090093EE68 /* x509type.c */,
 			);
 			name = x509;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/x509";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/x509";
 			sourceTree = "<group>";
 		};
 		CD74E4591377D7B30093EE68 /* bio */ = {
@@ -10718,7 +10992,7 @@
 				CD74E5A61377E0450093EE68 /* bss_sock.c */,
 			);
 			name = bio;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/bio";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/bio";
 			sourceTree = "<group>";
 		};
 		CD74E45A1377D7BF0093EE68 /* evp */ = {
@@ -10784,7 +11058,7 @@
 				CD74E5F71377E2A50093EE68 /* pmeth_lib.c */,
 			);
 			name = evp;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/evp";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/evp";
 			sourceTree = "<group>";
 		};
 		CD74E45B1377D7DE0093EE68 /* err */ = {
@@ -10796,7 +11070,7 @@
 				CD74E6361377E2BB0093EE68 /* err.h */,
 			);
 			name = err;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/err";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/err";
 			sourceTree = "<group>";
 		};
 		CD74E45C1377D7EB0093EE68 /* ocsp */ = {
@@ -10814,7 +11088,7 @@
 				CD74E6441377E2D90093EE68 /* ocsp.h */,
 			);
 			name = ocsp;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ocsp";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ocsp";
 			sourceTree = "<group>";
 		};
 		CD74E45D1377D7F60093EE68 /* ui */ = {
@@ -10826,7 +11100,7 @@
 				CD74E6521377E2EE0093EE68 /* ui_util.c */,
 			);
 			name = ui;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ui";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ui";
 			sourceTree = "<group>";
 		};
 		CD74E45E1377D8020093EE68 /* asn1 */ = {
@@ -10916,7 +11190,7 @@
 				CD74E6A81377E3420093EE68 /* x_x509a.c */,
 			);
 			name = asn1;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/asn1";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/asn1";
 			sourceTree = "<group>";
 		};
 		CD74E45F1377D81A0093EE68 /* stack */ = {
@@ -10927,7 +11201,7 @@
 				CD74E6FD1377E35E0093EE68 /* stack.h */,
 			);
 			name = stack;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/stack";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/stack";
 			sourceTree = "<group>";
 		};
 		CD74E4601377D8250093EE68 /* bn */ = {
@@ -10965,7 +11239,7 @@
 				CD74E71E1377E39A0093EE68 /* bn.h */,
 			);
 			name = bn;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/bn";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/bn";
 			sourceTree = "<group>";
 		};
 		CD74E4611377D8330093EE68 /* ec */ = {
@@ -10992,7 +11266,7 @@
 				CD74E7511377E3C20093EE68 /* ecp_smpl.c */,
 			);
 			name = ec;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ec";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ec";
 			sourceTree = "<group>";
 		};
 		CD74E4621377D8420093EE68 /* lhash */ = {
@@ -11003,7 +11277,7 @@
 				CD74E7671377E3DB0093EE68 /* lhash.h */,
 			);
 			name = lhash;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/lhash";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/lhash";
 			sourceTree = "<group>";
 		};
 		CD74E4631377D84D0093EE68 /* objects */ = {
@@ -11020,7 +11294,7 @@
 				CD74E7731377E3F70093EE68 /* objects.h */,
 			);
 			name = objects;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/objects";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/objects";
 			sourceTree = "<group>";
 		};
 		CD74E4641377D85A0093EE68 /* engine */ = {
@@ -11054,7 +11328,7 @@
 				CD74E7961377E4230093EE68 /* tb_store.c */,
 			);
 			name = engine;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/engine";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/engine";
 			sourceTree = "<group>";
 		};
 		CD74E4651377D8690093EE68 /* buffer */ = {
@@ -11065,7 +11339,7 @@
 				CD74E7B31377E43A0093EE68 /* buffer.h */,
 			);
 			name = buffer;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/buffer";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/buffer";
 			sourceTree = "<group>";
 		};
 		CD74E4661377D8730093EE68 /* rsa */ = {
@@ -11094,7 +11368,7 @@
 				CD74E7CB1377E4660093EE68 /* rsa.h */,
 			);
 			name = rsa;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/rsa";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/rsa";
 			sourceTree = "<group>";
 		};
 		CD74E4671377D8810093EE68 /* hmac */ = {
@@ -11106,7 +11380,7 @@
 				CD74E7E41377E47D0093EE68 /* hmac.h */,
 			);
 			name = hmac;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/hmac";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/hmac";
 			sourceTree = "<group>";
 		};
 		CD74E4681377D88C0093EE68 /* pem */ = {
@@ -11128,7 +11402,7 @@
 				CD74E7F61377E4A40093EE68 /* pvkfmt.c */,
 			);
 			name = pem;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/pem";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/pem";
 			sourceTree = "<group>";
 		};
 		CD74E4691377D8970093EE68 /* dsa */ = {
@@ -11150,7 +11424,7 @@
 				CD74E8121377E4BD0093EE68 /* dsa.h */,
 			);
 			name = dsa;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/dsa";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/dsa";
 			sourceTree = "<group>";
 		};
 		CD74E46A1377D8A40093EE68 /* dh */ = {
@@ -11169,7 +11443,7 @@
 				CD74E82B1377E4E80093EE68 /* dh.h */,
 			);
 			name = dh;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/dh";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/dh";
 			sourceTree = "<group>";
 		};
 		CD74E46B1377D8B00093EE68 /* bf */ = {
@@ -11185,7 +11459,7 @@
 				CD74E83F1377E5180093EE68 /* blowfish.h */,
 			);
 			name = bf;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/bf";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/bf";
 			sourceTree = "<group>";
 		};
 		CD74E46C1377D8BC0093EE68 /* cast */ = {
@@ -11201,7 +11475,7 @@
 				CD74E8501377E5440093EE68 /* cast.h */,
 			);
 			name = cast;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/cast";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/cast";
 			sourceTree = "<group>";
 		};
 		CD74E46D1377D8C80093EE68 /* mdc2 */ = {
@@ -11212,7 +11486,7 @@
 				CD74E85B1377E5620093EE68 /* mdc2dgst.c */,
 			);
 			name = mdc2;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/mdc2";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/mdc2";
 			sourceTree = "<group>";
 		};
 		CD74E46E1377D8D30093EE68 /* ripemd */ = {
@@ -11225,7 +11499,7 @@
 				CD74E8631377E5940093EE68 /* rmdconst.h */,
 			);
 			name = ripemd;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ripemd";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ripemd";
 			sourceTree = "<group>";
 		};
 		CD74E46F1377D8DC0093EE68 /* whrlpool */ = {
@@ -11237,7 +11511,7 @@
 				CD74E86C1377E5AE0093EE68 /* wp_locl.h */,
 			);
 			name = whrlpool;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/whrlpool";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/whrlpool";
 			sourceTree = "<group>";
 		};
 		CD74E4701377D8E80093EE68 /* pkcs7 */ = {
@@ -11255,7 +11529,7 @@
 				CD74E87B1377E62C0093EE68 /* pkcs7err.c */,
 			);
 			name = pkcs7;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/pkcs7";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/pkcs7";
 			sourceTree = "<group>";
 		};
 		CD74E4711377D8F90093EE68 /* modes */ = {
@@ -11268,7 +11542,7 @@
 				CD74E88B1377E6520093EE68 /* ofb128.c */,
 			);
 			name = modes;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/modes";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/modes";
 			sourceTree = "<group>";
 		};
 		CD74E4721377D9030093EE68 /* x509v3 */ = {
@@ -11315,7 +11589,7 @@
 				CD74E8B91377E6860093EE68 /* x509v3.h */,
 			);
 			name = x509v3;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/x509v3";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/x509v3";
 			sourceTree = "<group>";
 		};
 		CD74E4731377D9130093EE68 /* ecdh */ = {
@@ -11329,7 +11603,7 @@
 				CD74E8E81377E6A20093EE68 /* ech_ossl.c */,
 			);
 			name = ecdh;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ecdh";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ecdh";
 			sourceTree = "<group>";
 		};
 		CD74E4741377D91C0093EE68 /* conf */ = {
@@ -11347,7 +11621,7 @@
 				CD74E8F81377E6C00093EE68 /* conf.h */,
 			);
 			name = conf;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/conf";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/conf";
 			sourceTree = "<group>";
 		};
 		CD74E4751377D92C0093EE68 /* pkcs12 */ = {
@@ -11371,7 +11645,7 @@
 				CD74E9121377E6DD0093EE68 /* pkcs12.h */,
 			);
 			name = pkcs12;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/pkcs12";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/pkcs12";
 			sourceTree = "<group>";
 		};
 		CD74E4761377D9390093EE68 /* dso */ = {
@@ -11389,7 +11663,7 @@
 				CD74E92C1377E6F80093EE68 /* dso.h */,
 			);
 			name = dso;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/dso";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/dso";
 			sourceTree = "<group>";
 		};
 		CD74E4771377D9430093EE68 /* cms */ = {
@@ -11411,7 +11685,7 @@
 				CD74E9441377E7120093EE68 /* cms.h */,
 			);
 			name = cms;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/cms";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/cms";
 			sourceTree = "<group>";
 		};
 		CD74E4781377D94E0093EE68 /* ts */ = {
@@ -11431,7 +11705,7 @@
 				CD74E95E1377E72E0093EE68 /* ts.h */,
 			);
 			name = ts;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/ts";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/ts";
 			sourceTree = "<group>";
 		};
 		CD74E4791377D95C0093EE68 /* txt_db */ = {
@@ -11441,7 +11715,7 @@
 				CD74E96C1377E73C0093EE68 /* txt_db.h */,
 			);
 			name = txt_db;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/txt_db";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/txt_db";
 			sourceTree = "<group>";
 		};
 		CD74E47A1377D9670093EE68 /* pqueue */ = {
@@ -11451,7 +11725,7 @@
 				CD74E9701377E74D0093EE68 /* pqueue.h */,
 			);
 			name = pqueue;
-			path = "../../3rdparty/openssl-1.0.0d/crypto/pqueue";
+			path = "../../3rdparty/openssl-1.0.0m/crypto/pqueue";
 			sourceTree = "<group>";
 		};
 		CD795CBA17F0834F006AEB47 /* sdl */ = {
@@ -14900,6 +15174,7 @@
 				CD27BD8A191D5352000A7770 /* transfer.h in Headers */,
 				CD27BD6A191D5352000A7770 /* sockaddr.h in Headers */,
 				CD27BDC4191D5382000A7770 /* ssl.h in Headers */,
+				3E72B99C19F6EF2B00A9DE30 /* curlrules.h in Headers */,
 				CD27BD0D191D5352000A7770 /* curl_base64.h in Headers */,
 				CD27BD2E191D5352000A7770 /* hostip.h in Headers */,
 				CD27BD86191D5352000A7770 /* tftp.h in Headers */,
@@ -14925,7 +15200,6 @@
 				CD27BD1B191D5352000A7770 /* easyif.h in Headers */,
 				CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */,
 				CD27BD08191D5352000A7770 /* content_encoding.h in Headers */,
-				CD27BD92191D535A000A7770 /* curlrules.h in Headers */,
 				CD27BD99191D535A000A7770 /* types.h in Headers */,
 				CD27BD10191D5352000A7770 /* curl_memory.h in Headers */,
 				CD27BD88191D5352000A7770 /* timeval.h in Headers */,
@@ -16119,6 +16393,8 @@
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */,
 				CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */,
 				CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */,
+				3EDC16E519F6DD19007A7775 /* libmoai-osx-all */,
+				3EDC171119F6DE00007A7775 /* libmoai-ios-all */,
 			);
 		};
 /* End PBXProject section */
@@ -19278,6 +19554,164 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3E72B9AA19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03C2F6F3104DE130009A2D5D /* libmoai-ios */;
+			targetProxy = 3E72B9A919F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9AC19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty-core */;
+			targetProxy = 3E72B9AB19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B7391808AC61000129F9 /* libmoai-ios-billing */;
+			targetProxy = 3E72B9B519F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */;
+			targetProxy = 3E72B9B719F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */;
+			targetProxy = 3E72B9B919F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9BC19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE7519173C116400DFE837 /* libmoai-ios-chipmunk */;
+			targetProxy = 3E72B9BB19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD5232471808ADF400B81720 /* libmoai-ios-crittercism */;
+			targetProxy = 3E72B9BD19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD70C10F18441DD0005CEBC0 /* libmoai-ios-flurry */;
+			targetProxy = 3E72B9C319F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9C819F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */;
+			targetProxy = 3E72B9C719F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */;
+			targetProxy = 3E72B9C919F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9CE19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE75DB173C126100DFE837 /* libmoai-ios-http-client */;
+			targetProxy = 3E72B9CD19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9D019F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE766E173C15F100DFE837 /* libmoai-ios-http-server */;
+			targetProxy = 3E72B9CF19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9D619F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD70C1701844891A005CEBC0 /* libmoai-ios-mixpanel */;
+			targetProxy = 3E72B9D519F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */;
+			targetProxy = 3E72B9D919F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9DE19F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD07C3A313A182AA00C9386C /* libmoai-ios-untz */;
+			targetProxy = 3E72B9DD19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9E019F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */;
+			targetProxy = 3E72B9DF19F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9E419F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */;
+			targetProxy = 3E72B9E319F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3E72B9E819F703FA00A9DE30 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */;
+			targetProxy = 3E72B9E719F703FA00A9DE30 /* PBXContainerItemProxy */;
+		};
+		3EDC16EC19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0324E2B11356485F000ADC60 /* libmoai-osx */;
+			targetProxy = 3EDC16EB19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC16EE19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */;
+			targetProxy = 3EDC16ED19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC16F419F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE725E173AD29200DFE837 /* libmoai-osx-box2d */;
+			targetProxy = 3EDC16F319F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC16F619F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */;
+			targetProxy = 3EDC16F519F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC16F819F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */;
+			targetProxy = 3EDC16F719F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC16FC19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */;
+			targetProxy = 3EDC16FB19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170219F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE7687173C160E00DFE837 /* libmoai-osx-http-server */;
+			targetProxy = 3EDC170119F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170619F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89BE6F07173AD07100DFE837 /* libmoai-osx-sim */;
+			targetProxy = 3EDC170519F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170819F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89E9D7F7174BD4F100033CDD /* libmoai-osx-test */;
+			targetProxy = 3EDC170719F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170A19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD07C4B913A1918600C9386C /* libmoai-osx-untz */;
+			targetProxy = 3EDC170919F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170C19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */;
+			targetProxy = 3EDC170B19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC170E19F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */;
+			targetProxy = 3EDC170D19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		3EDC171019F6DD37007A7775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */;
+			targetProxy = 3EDC170F19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -19463,6 +19897,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -19538,7 +19973,7 @@
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -19655,6 +20090,62 @@
 				SDKROOT = iphoneos;
 			};
 			name = Release;
+		};
+		3EDC16E619F6DD1A007A7775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3EDC16E719F6DD1A007A7775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3EDC16E819F6DD1A007A7775 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AdHoc;
+		};
+		3EDC16E919F6DD1A007A7775 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Distribution;
+		};
+		3EDC171319F6DE01007A7775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3EDC171419F6DE01007A7775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3EDC171519F6DE01007A7775 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = AdHoc;
+		};
+		3EDC171619F6DE01007A7775 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Distribution;
 		};
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -21320,6 +21811,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -21394,7 +21886,7 @@
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -22008,6 +22500,7 @@
 		CD4C4170180A9AEA00C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22044,6 +22537,7 @@
 		CD4C4171180A9AEA00C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22075,6 +22569,7 @@
 		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22106,6 +22601,7 @@
 		CD4C4173180A9AEA00C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24436,6 +24932,7 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24472,6 +24969,7 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25253,6 +25751,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -25328,7 +25827,7 @@
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -25574,6 +26073,7 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25662,6 +26162,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -25737,7 +26238,7 @@
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -25983,6 +26484,7 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26110,6 +26612,28 @@
 				03C2F6F7104DE131009A2D5D /* Release */,
 				E9C405C6150D999200C7AB04 /* AdHoc */,
 				E90D02C014D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3EDC16EA19F6DD1A007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-osx-all" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EDC16E619F6DD1A007A7775 /* Debug */,
+				3EDC16E719F6DD1A007A7775 /* Release */,
+				3EDC16E819F6DD1A007A7775 /* AdHoc */,
+				3EDC16E919F6DD1A007A7775 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3EDC171219F6DE01007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-ios-all" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EDC171319F6DE01007A7775 /* Debug */,
+				3EDC171419F6DE01007A7775 /* Release */,
+				3EDC171519F6DE01007A7775 /* AdHoc */,
+				3EDC171619F6DE01007A7775 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
