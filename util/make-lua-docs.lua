@@ -1,11 +1,44 @@
-package.path = package.path .. ';../../src/lua-util/?.lua'
+--==============================================================
+-- setup
+--==============================================================
+
+MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
+SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
+INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
+
+MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 
 require ( 'util' )
 
-SRC_PATH		= '../../src/'
+--==============================================================
+-- args
+--==============================================================
+
+SRC_PATH		= MOAI_SDK_HOME .. 'src/'
+WORK_PATH		= 'make-lua-docs'
 DST_PATH		= 'src-doxy-lua/'
-HTML_PATH		= 'html-lua/'
+HTML_PATH		= 'html/'
 TEMPLATE_PATH	= 'template-lua/'
+OUTPUT_DIR		= INVOKE_DIR .. 'lua-docs-html/'
+
+----------------------------------------------------------------
+for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
+	
+	if param then
+
+		if escape == 'o' or escape == 'out' then
+			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
+				param = INVOKE_DIR .. param
+			end 
+			
+			OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
+		end
+	end
+end
+
+--==============================================================
+-- util
+--==============================================================
 
 parseFile					= nil
 parseParam					= nil
@@ -438,6 +471,8 @@ end
 -- here's where the magic happens
 --==============================================================
 
+MOAIFileSystem.setWorkingDirectory ( WORK_PATH )
+
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
 
@@ -447,7 +482,7 @@ for filename in util.iterateFiles ( SRC_PATH, { '.c$', '.cpp$', '.h$', '.m$', '.
 	parseFile ( src, dst )
 end
 
-os.execute ( 'doxygen doxyfile-lua' )
+os.execute ( 'doxygen doxyfile' )
 
 local concat = function ( ... )
 	return table.concat ( arg )
@@ -498,3 +533,8 @@ for filename in util.iterateFiles ( TEMPLATE_PATH ) do
 	local dst = HTML_PATH .. 'html/' .. filename
 	MOAIFileSystem.copy ( src, dst )
 end
+
+MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
+
+MOAIFileSystem.deleteDirectory ( DST_PATH, true )
+MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
