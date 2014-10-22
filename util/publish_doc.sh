@@ -1,3 +1,3 @@
 #!/bin/bash
 
-put -r ./lua/docs /home/zipline/webapps/sdk_docs_develop_stable
+put -r ./sdk_docs_develop_stable /home/zipline/webapps/
