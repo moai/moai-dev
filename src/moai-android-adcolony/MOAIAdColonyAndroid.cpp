@@ -118,7 +118,7 @@ void MOAIAdColonyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAdColony_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MOAIAdColonyAndroid_AKUInvokeListener\n" );
 	MOAIAdColonyAndroid::Get ().InvokeListener (( u32 )eventID );

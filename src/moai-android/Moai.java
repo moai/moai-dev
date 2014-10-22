@@ -21,6 +21,7 @@ import android.util.DisplayMetrics;
 import java.lang.reflect.Method;
 import java.lang.Runtime;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -142,6 +143,8 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiGoogleBilling",
 		"com.ziplinegames.moai.MoaiGooglePlayServices",
 		"com.ziplinegames.moai.MoaiGooglePush",
+		"com.ziplinegames.moai.MoaiKeyboard",
+		"com.ziplinegames.moai.MoaiMoviePlayer",
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiVungle",
 	};
@@ -376,7 +379,7 @@ public class Moai {
 
 		sActivity = activity;
 
-		MoaiMoviePlayer.onCreate ( activity );
+		AKUAppInitialize ();
 
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onCreate", new Class < ? > [] { Activity.class }, new Object [] { activity });
@@ -495,6 +498,14 @@ public class Moai {
 
 		synchronized ( sAkuLock ) {
 			AKUSetScreenSize ( width, height );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public static void setScreenDpi ( int dpi ) {
+		
+		synchronized ( sAkuLock ) {
+			AKUSetScreenDpi ( dpi );
 		}
 	}
 
