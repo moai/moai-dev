@@ -538,7 +538,7 @@ for filename in util.iterateFiles ( TEMPLATE_PATH ) do
 	MOAIFileSystem.copy ( src, dst )
 end
 
---MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
-os.execute ( string.format("cp -r -p %s %s ", HTML_PATH, OUTPUT_DIR))
+MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
+--os.execute ( string.format("cp -r -p %s %s ", HTML_PATH, OUTPUT_DIR))
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
