@@ -289,6 +289,7 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
 	self->mAutoFlip = state.GetValue < bool >( 2, false );
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -341,6 +342,7 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 int MOAITextLabel::_setGlyphScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	self->mDesigner.SetGlyphScale ( state.GetValue < float >( 2, 1.0f ));
+	self->ScheduleLayout ();
 	return 0;
 }
 
@@ -405,6 +407,7 @@ int MOAITextLabel::_setLineSnap ( lua_State* L ) {
 	
 	self->mDesigner.SetHLineSnap ( hLineSnap );
 	self->mDesigner.SetVLineSnap ( vLineSnap );
+	self->ScheduleLayout ();
 	
 	return 0;
 }
@@ -450,6 +453,8 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 	self->mDesigner.SetLimitWidth ( true );
 	self->mDesigner.SetLimitHeight ( true );
 
+	self->ScheduleLayout ();
+
 	return 0;
 }
 
@@ -467,6 +472,8 @@ int MOAITextLabel::_setRectLimits ( lua_State* L ) {
 
 	self->mDesigner.SetLimitWidth ( state.GetValue < bool >( 2, false ));
 	self->mDesigner.SetLimitHeight ( state.GetValue < bool >( 3, false ));
+
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -503,7 +510,7 @@ int MOAITextLabel::_setSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 	
 	self->mSpeed = state.GetValue < float >( 2, self->mSpeed );
-	
+
 	return 0;
 }
 
@@ -872,12 +879,9 @@ void MOAITextLabel::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 
-	ZLRect frame;
-	if ( this->mLayout.GetBounds ( frame )) {
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
+	ZLRect frame = this->mDesigner.GetFrame ();
+	bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+	return MOAIProp::BOUNDS_OK;
 }
 
 //----------------------------------------------------------------//

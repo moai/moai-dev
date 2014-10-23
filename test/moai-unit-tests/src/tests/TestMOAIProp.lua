@@ -94,7 +94,7 @@ end
 
 ---
 -- test: getDeck
-function TestMOAIProp:test_getDims()
+function TestMOAIProp:test_getDeck()
     local deck = self.prop:getDeck()
     assertEquals(deck, self.deck)
 
