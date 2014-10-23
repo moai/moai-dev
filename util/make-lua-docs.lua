@@ -482,7 +482,7 @@ for filename in util.iterateFiles ( SRC_PATH, { '.c$', '.cpp$', '.h$', '.m$', '.
 	parseFile ( src, dst )
 end
 
-os.execute ( 'doxygen doxyfile' )
+os.execute ( '/usr/local/bin/doxygen doxyfile' )
 
 local concat = function ( ... )
 	return table.concat ( arg )
