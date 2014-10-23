@@ -21,6 +21,8 @@ HTML_PATH		= 'html/'
 TEMPLATE_PATH	= 'template-lua/'
 OUTPUT_DIR		= INVOKE_DIR .. 'lua-docs-html/'
 
+print ( 'SRC_PATH', SRC_PATH )
+
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	
@@ -514,19 +516,21 @@ REPLACE_IN_JS = {
 	[ '(")_([%a%d]*")' ]							= concat,
 }
 
---MOAIFileSystem.copy ( 'html-lua/html/class_m_o_a_i_prop.html', 'test.html' )
---util.replaceInFile ( 'test.html', REPLACE_IN_HTML )
-
 for filename in util.iterateFiles ( HTML_PATH, { '.html$' }) do
 	util.replaceInFile ( HTML_PATH .. filename, REPLACE_IN_HTML )
 end
 
---MOAIFileSystem.copy ( 'html-lua/html/class_m_o_a_i_action.js', 'test.js' )
---util.replaceInFile ( 'test.js', REPLACE_IN_JS )
-
 for filename in util.iterateFiles ( HTML_PATH, { '.js$' }) do
 	util.replaceInFile ( HTML_PATH .. filename, REPLACE_IN_JS )
 end
+
+-- for testing
+
+--MOAIFileSystem.copy ( 'html-lua/html/class_m_o_a_i_prop.html', 'test.html' )
+--util.replaceInFile ( 'test.html', REPLACE_IN_HTML )
+
+--MOAIFileSystem.copy ( 'html-lua/html/class_m_o_a_i_action.js', 'test.js' )
+--util.replaceInFile ( 'test.js', REPLACE_IN_JS )
 
 for filename in util.iterateFiles ( TEMPLATE_PATH ) do
 	local src = TEMPLATE_PATH .. filename

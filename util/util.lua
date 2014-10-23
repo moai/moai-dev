@@ -41,7 +41,9 @@ local		makeDlcResourceSig			= nil
 			replaceInFiles				= nil
 			saveTable					= nil
 			scanFiles					= nil
+			tokens						= nil
 			tokenize					= nil
+			trim						= nil
 			wrap						= nil
 			zip							= nil
 
@@ -284,27 +286,42 @@ iterateFiles = function ( path, fileFilter, recurse )
 
 	recurse = recurse or true
 	
+	path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+	
+	local match = function () return true end
+	
+	if type ( fileFilter ) == 'string' then
+		match = function ( filename ) return string.find ( filename, fileFilter ) end
+	end
+	
+	if type ( fileFilter ) == 'table' then
+		match = function ( filename )
+			for i, p in ipairs ( fileFilter ) do
+				if string.find ( filename, p ) then return true end
+			end
+		end
+	end
+	
 	local doRecurse
 	doRecurse = function ( dirname )
 		
-		local files = MOAIFileSystem.listFiles ( dirname ) or {}
+		local files = MOAIFileSystem.listFiles ( path .. dirname ) or {}
 		for i, filename in ipairs ( files ) do
-			local match = ( fileFilter == nil ) and true or string.find ( filename, fileFilter )
-			if match then
-				coroutine.yield ( string.format ( '%s/%s', dirname, filename ))
+			if match ( filename ) then
+				coroutine.yield ( string.format ( '%s%s', dirname, filename ))
 			end
 		end
 		
 		if recurse then
-			local dirs = MOAIFileSystem.listDirectories ( dirname ) or {}
+			local dirs = MOAIFileSystem.listDirectories ( path .. dirname ) or {}
 			for i, subdir in ipairs ( dirs ) do
-				doRecurse ( string.format ( '%s/%s', dirname, subdir ) )
+				doRecurse ( string.format ( '%s%s/', dirname, subdir ))
 			end
 		end
 	end
 	
 	local co = coroutine.create ( function ()
-		doRecurse ( path )
+		doRecurse ( '' )
 	end )
 	
 	return function ()
@@ -361,6 +378,20 @@ listFiles = function ( path, ... )
 	end
 
 	return files
+end
+
+----------------------------------------------------------------
+loadFileAsString = function ( filename )
+	
+	local str
+	
+	local fp = io.open ( filename, 'r' )
+	if fp then
+		str = fp:read ( "*all" )
+		fp:close ()
+	end
+	
+	return str
 end
 
 ----------------------------------------------------------------
@@ -531,8 +562,9 @@ replaceInFile = function ( filename, commands )
 	local dirty = false
  
 	for find, replace in pairs ( commands ) do
-		str = string.gsub ( str, find, replace )
-		dirty = true
+		local n
+		str, n = string.gsub ( str, find, replace )
+		dirty = dirty or n > 0
 	end
 
 	if dirty == true then
@@ -572,7 +604,7 @@ saveTable = function ( filename, table, raw )
 	
 	local bytes = MOAISerializer.serializeToString ( table )
 	
-	if COMPILE and not raw then
+	if not raw then
 		bytes = string.dump ( loadstring ( bytes, '' )) -- compile to lua bytecode
 	end
 	
@@ -615,6 +647,79 @@ tokenize = function ( str, sep )
 	local pattern = str.format ( "([^%s]+)", sep )
 	str:gsub ( pattern, function ( c ) fields [ #fields + 1 ] = c end )
 	return fields
+end
+
+----------------------------------------------------------------
+tokens = function ( s, patterns )
+
+	if type ( patterns ) == 'string' then
+		patterns = { patterns }
+	end
+
+	local start, finish, id
+
+	local nextCapture = function ()
+	
+		if s and start == nil then
+	
+			for i, pattern in ipairs ( patterns ) do
+			
+				local ts, tf = string.find ( s, pattern )
+				if ts and (( start == nil ) or ( ts < start )) then
+					start, finish = ts, tf
+					id = i
+				end
+		
+				if start == 1 then break end
+			end
+		end
+		
+		if start then
+			if start > 1 then
+				local result = string.sub ( s, 1, start - 1 )
+				s = string.sub ( s, start )
+			
+				finish = finish - start + 1
+				start = 1
+			
+				return result
+			end
+
+			local result = string.sub ( s, 1, finish )
+			s = string.sub ( s, finish + 1 )
+			start, finish = nil, nil
+			return result, id
+		end
+		
+		local result = s
+		s = nil
+		return result
+	end
+	
+	return nextCapture
+end
+
+----------------------------------------------------------------
+function trim ( str, p1, p2 )
+
+	local wsp = '[%s]*'
+
+	p1 = p1 or wsp
+	p2 = p2 or wsp
+
+	local s, f
+	
+	if p1 ~= '' then
+		s, f = string.find ( str, '^' .. p1 )
+		if s then str = string.sub ( str, f + 1 ) end
+	end
+	
+	if p2 ~= '' then
+		s, f = string.find ( str, p2 .. '$' )
+		if s then str = string.sub ( str, 1, s - 1 ) end
+	end
+	
+	return str
 end
 
 ----------------------------------------------------------------
