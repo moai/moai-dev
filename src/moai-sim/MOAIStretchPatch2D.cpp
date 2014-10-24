@@ -223,8 +223,8 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 	float nativeHeight = this->mRect.Height ();
 	
 	// TODO: make optional
-	xStretch /= nativeWidth;
-	yStretch /= nativeHeight;
+	// xStretch /= nativeWidth;
+	// yStretch /= nativeHeight;
 	
 	float rectWidth = nativeWidth * xStretch;
 	float rectHeight = nativeHeight * yStretch;
