@@ -198,7 +198,7 @@
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
-	LOCAL_STATIC_LIBRARIES := libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
+	LOCAL_STATIC_LIBRARIES := libmoai-android libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
 	LOCAL_WHOLE_STATIC_LIBRARIES := libmoai-android libmoai-sim libmoai-core libcrypto-a libcrypto-b libcrypto-c libcrypto-d
 
 #----------------------------------------------------------------#

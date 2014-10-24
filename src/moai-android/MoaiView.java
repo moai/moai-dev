@@ -10,10 +10,13 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
+import android.util.DisplayMetrics;
 
 // Moai
 import com.ziplinegames.moai.*;
@@ -23,18 +26,21 @@ import com.ziplinegames.moai.*;
 //================================================================//
 public class MoaiView extends GLSurfaceView {
 
+	private static final long	AKU_UPDATE_FREQUENCY = 1000 / 60; // 60 Hz, in milliseconds
+
+	private Context		mAppContext;
 	private Handler		mHandler;
 	private int 		mHeight;
 	private Runnable	mUpdateRunnable;
 	private int 		mWidth;
 	
-	private static final long	AKU_UPDATE_FREQUENCY = 1000 / 60; // 60 Hz, in milliseconds
-
     //----------------------------------------------------------------//
 	public MoaiView ( Context context, int width, int height, int glesVersion ) {
 
 		super ( context );
 		
+		mAppContext = context.getApplicationContext();
+
 		setScreenDimensions ( width, height );
 		Moai.setScreenSize ( mWidth, mHeight );
 		

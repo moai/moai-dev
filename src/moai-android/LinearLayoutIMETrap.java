@@ -58,9 +58,9 @@ public class LinearLayoutIMETrap extends LinearLayout {
 			if ( imm.isActive () && event.getKeyCode () == KeyEvent.KEYCODE_BACK ) {
 				MoaiLog.i ( "LinearLayoutIMETrap dispatchKeyEventPreIme, event: " + event );
 				MoaiKeyboard.hideKeyboard (); // hide the keyboard if its visible ..
-				if ( Moai.backButtonPressed ()) {
-					return true;
-				}
+				// if ( Moai.backButtonPressed ()) {
+				// 	return true;
+				// }
 			}
 		}
 

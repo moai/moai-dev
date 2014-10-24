@@ -223,13 +223,13 @@ void MOAIMoviePlayerAndroid::NotifyMoviePlayerReady () {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiMoviePlayer_AKUNotifyMoviePlayerCompleted ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiMoviePlayer_AKUNotifyMoviePlayerCompleted ( JNIEnv* env, jclass obj ) {
 
 	MOAIMoviePlayerAndroid::Get ().NotifyMoviePlayerCompleted ();
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiMoviePlayer_AKUNotifyMoviePlayerReady ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiMoviePlayer_AKUNotifyMoviePlayerReady ( JNIEnv* env, jclass obj ) {
 
 	MOAIMoviePlayerAndroid::Get ().NotifyMoviePlayerReady ();
 }

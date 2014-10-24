@@ -362,7 +362,6 @@
 		07952A6E1447907100143A72 /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297C1447907100143A72 /* jquant2.c */; };
 		07952A6F1447907100143A72 /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0795297D1447907100143A72 /* jutils.c */; };
 		07952A701447907100143A72 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
-		3E72B99C19F6EF2B00A9DE30 /* curlrules.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7E13564CAF000ADC60 /* curlrules.h */; };
 		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		663704191612813E002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
@@ -1092,12 +1091,8 @@
 		89BE760F173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FC173C12CE00DFE837 /* MOAIHttpTaskBase.cpp */; };
 		89BE7610173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FD173C12CE00DFE837 /* MOAIHttpTaskBase.h */; };
 		89BE7611173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FD173C12CE00DFE837 /* MOAIHttpTaskBase.h */; };
-		89BE7613173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FE173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp */; };
-		89BE7615173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75FF173C12CE00DFE837 /* MOAIHttpTaskCurl.h */; };
 		89BE7617173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7600173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp */; };
 		89BE7619173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7601173C12CE00DFE837 /* MOAIHttpTaskNaCl.h */; };
-		89BE761B173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7602173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp */; };
-		89BE761D173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7603173C12CE00DFE837 /* MOAIUrlMgrCurl.h */; };
 		89BE761F173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7604173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp */; };
 		89BE7621173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7605173C12CE00DFE837 /* MOAIUrlMgrNaCl.h */; };
 		89BE7622173C12CE00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7606173C12CE00DFE837 /* pch.cpp */; };
@@ -1437,209 +1432,6 @@
 		CD236671180A547F006A7236 /* MOAIVungleIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75B91808AE8E0001EF0C /* MOAIVungleIOS.mm */; };
 		CD27718019C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
 		CD27718119C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
-		CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
-		CD27BD04191D5352000A7770 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
-		CD27BD05191D5352000A7770 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
-		CD27BD06191D5352000A7770 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
-		CD27BD07191D5352000A7770 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
-		CD27BD08191D5352000A7770 /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
-		CD27BD09191D5352000A7770 /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
-		CD27BD0A191D5352000A7770 /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
-		CD27BD0B191D5352000A7770 /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
-		CD27BD0C191D5352000A7770 /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
-		CD27BD0D191D5352000A7770 /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
-		CD27BD0E191D5352000A7770 /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
-		CD27BD0F191D5352000A7770 /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
-		CD27BD10191D5352000A7770 /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
-		CD27BD11191D5352000A7770 /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
-		CD27BD12191D5352000A7770 /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
-		CD27BD13191D5352000A7770 /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
-		CD27BD14191D5352000A7770 /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
-		CD27BD15191D5352000A7770 /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
-		CD27BD16191D5352000A7770 /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
-		CD27BD17191D5352000A7770 /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
-		CD27BD18191D5352000A7770 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
-		CD27BD19191D5352000A7770 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
-		CD27BD1A191D5352000A7770 /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
-		CD27BD1B191D5352000A7770 /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
-		CD27BD1C191D5352000A7770 /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
-		CD27BD1D191D5352000A7770 /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
-		CD27BD1E191D5352000A7770 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
-		CD27BD1F191D5352000A7770 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
-		CD27BD20191D5352000A7770 /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
-		CD27BD21191D5352000A7770 /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
-		CD27BD22191D5352000A7770 /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
-		CD27BD23191D5352000A7770 /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
-		CD27BD24191D5352000A7770 /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
-		CD27BD25191D5352000A7770 /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
-		CD27BD26191D5352000A7770 /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
-		CD27BD27191D5352000A7770 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
-		CD27BD28191D5352000A7770 /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
-		CD27BD29191D5352000A7770 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
-		CD27BD2A191D5352000A7770 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
-		CD27BD2B191D5352000A7770 /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
-		CD27BD2C191D5352000A7770 /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
-		CD27BD2D191D5352000A7770 /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
-		CD27BD2E191D5352000A7770 /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
-		CD27BD2F191D5352000A7770 /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
-		CD27BD30191D5352000A7770 /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
-		CD27BD31191D5352000A7770 /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
-		CD27BD32191D5352000A7770 /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
-		CD27BD33191D5352000A7770 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
-		CD27BD34191D5352000A7770 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
-		CD27BD35191D5352000A7770 /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
-		CD27BD36191D5352000A7770 /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
-		CD27BD37191D5352000A7770 /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
-		CD27BD38191D5352000A7770 /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
-		CD27BD39191D5352000A7770 /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
-		CD27BD3A191D5352000A7770 /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
-		CD27BD3B191D5352000A7770 /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
-		CD27BD3C191D5352000A7770 /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
-		CD27BD3D191D5352000A7770 /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
-		CD27BD3E191D5352000A7770 /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
-		CD27BD3F191D5352000A7770 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
-		CD27BD40191D5352000A7770 /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
-		CD27BD41191D5352000A7770 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
-		CD27BD42191D5352000A7770 /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
-		CD27BD43191D5352000A7770 /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
-		CD27BD44191D5352000A7770 /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
-		CD27BD45191D5352000A7770 /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
-		CD27BD46191D5352000A7770 /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
-		CD27BD47191D5352000A7770 /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
-		CD27BD48191D5352000A7770 /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
-		CD27BD49191D5352000A7770 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
-		CD27BD4A191D5352000A7770 /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
-		CD27BD4B191D5352000A7770 /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
-		CD27BD4C191D5352000A7770 /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
-		CD27BD4D191D5352000A7770 /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
-		CD27BD4E191D5352000A7770 /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
-		CD27BD4F191D5352000A7770 /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
-		CD27BD50191D5352000A7770 /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
-		CD27BD51191D5352000A7770 /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
-		CD27BD52191D5352000A7770 /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
-		CD27BD53191D5352000A7770 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
-		CD27BD54191D5352000A7770 /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
-		CD27BD55191D5352000A7770 /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
-		CD27BD56191D5352000A7770 /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
-		CD27BD57191D5352000A7770 /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
-		CD27BD58191D5352000A7770 /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
-		CD27BD59191D5352000A7770 /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
-		CD27BD5A191D5352000A7770 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
-		CD27BD5B191D5352000A7770 /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
-		CD27BD5C191D5352000A7770 /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
-		CD27BD5D191D5352000A7770 /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
-		CD27BD5E191D5352000A7770 /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
-		CD27BD5F191D5352000A7770 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
-		CD27BD60191D5352000A7770 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
-		CD27BD61191D5352000A7770 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
-		CD27BD62191D5352000A7770 /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
-		CD27BD63191D5352000A7770 /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
-		CD27BD64191D5352000A7770 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
-		CD27BD65191D5352000A7770 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
-		CD27BD66191D5352000A7770 /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
-		CD27BD67191D5352000A7770 /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
-		CD27BD68191D5352000A7770 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
-		CD27BD69191D5352000A7770 /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
-		CD27BD6A191D5352000A7770 /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
-		CD27BD6B191D5352000A7770 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
-		CD27BD6C191D5352000A7770 /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
-		CD27BD6D191D5352000A7770 /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
-		CD27BD6E191D5352000A7770 /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
-		CD27BD6F191D5352000A7770 /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
-		CD27BD70191D5352000A7770 /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
-		CD27BD71191D5352000A7770 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
-		CD27BD72191D5352000A7770 /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
-		CD27BD73191D5352000A7770 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
-		CD27BD74191D5352000A7770 /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
-		CD27BD75191D5352000A7770 /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
-		CD27BD76191D5352000A7770 /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
-		CD27BD77191D5352000A7770 /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
-		CD27BD78191D5352000A7770 /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
-		CD27BD79191D5352000A7770 /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
-		CD27BD7A191D5352000A7770 /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
-		CD27BD7B191D5352000A7770 /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
-		CD27BD7C191D5352000A7770 /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
-		CD27BD7D191D5352000A7770 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
-		CD27BD7E191D5352000A7770 /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
-		CD27BD7F191D5352000A7770 /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
-		CD27BD80191D5352000A7770 /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
-		CD27BD81191D5352000A7770 /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
-		CD27BD82191D5352000A7770 /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
-		CD27BD83191D5352000A7770 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
-		CD27BD84191D5352000A7770 /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
-		CD27BD85191D5352000A7770 /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
-		CD27BD86191D5352000A7770 /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
-		CD27BD87191D5352000A7770 /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
-		CD27BD88191D5352000A7770 /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
-		CD27BD89191D5352000A7770 /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
-		CD27BD8A191D5352000A7770 /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
-		CD27BD8B191D5352000A7770 /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
-		CD27BD8C191D5352000A7770 /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
-		CD27BD8D191D5352000A7770 /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
-		CD27BD8E191D5352000A7770 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
-		CD27BD8F191D535A000A7770 /* curl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7B13564CAF000ADC60 /* curl.h */; };
-		CD27BD90191D535A000A7770 /* curl_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7C13564CAF000ADC60 /* curl_config.h */; };
-		CD27BD91191D535A000A7770 /* curlbuild.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7D13564CAF000ADC60 /* curlbuild.h */; };
-		CD27BD93191D535A000A7770 /* curlver.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7F13564CAF000ADC60 /* curlver.h */; };
-		CD27BD94191D535A000A7770 /* easy.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8013564CAF000ADC60 /* easy.h */; };
-		CD27BD95191D535A000A7770 /* mprintf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8113564CAF000ADC60 /* mprintf.h */; };
-		CD27BD96191D535A000A7770 /* multi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8213564CAF000ADC60 /* multi.h */; };
-		CD27BD97191D535A000A7770 /* stdcheaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8313564CAF000ADC60 /* stdcheaders.h */; };
-		CD27BD98191D535A000A7770 /* typecheck-gcc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8413564CAF000ADC60 /* typecheck-gcc.h */; };
-		CD27BD99191D535A000A7770 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8513564CAF000ADC60 /* types.h */; };
-		CD27BD9A191D5382000A7770 /* bio_ssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99B137805910093EE68 /* bio_ssl.c */; };
-		CD27BD9B191D5382000A7770 /* d1_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99C137805910093EE68 /* d1_both.c */; };
-		CD27BD9C191D5382000A7770 /* d1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99D137805910093EE68 /* d1_clnt.c */; };
-		CD27BD9D191D5382000A7770 /* d1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99E137805910093EE68 /* d1_enc.c */; };
-		CD27BD9E191D5382000A7770 /* d1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99F137805910093EE68 /* d1_lib.c */; };
-		CD27BD9F191D5382000A7770 /* d1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A0137805910093EE68 /* d1_meth.c */; };
-		CD27BDA0191D5382000A7770 /* d1_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A1137805910093EE68 /* d1_pkt.c */; };
-		CD27BDA1191D5382000A7770 /* d1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A2137805910093EE68 /* d1_srvr.c */; };
-		CD27BDA2191D5382000A7770 /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A3137805910093EE68 /* dtls1.h */; };
-		CD27BDA3191D5382000A7770 /* kssl_lcl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A4137805910093EE68 /* kssl_lcl.h */; };
-		CD27BDA4191D5382000A7770 /* kssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A5137805910093EE68 /* kssl.c */; };
-		CD27BDA5191D5382000A7770 /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A6137805910093EE68 /* kssl.h */; };
-		CD27BDA6191D5382000A7770 /* s2_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A7137805910093EE68 /* s2_clnt.c */; };
-		CD27BDA7191D5382000A7770 /* s2_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A8137805910093EE68 /* s2_enc.c */; };
-		CD27BDA8191D5382000A7770 /* s2_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A9137805910093EE68 /* s2_lib.c */; };
-		CD27BDA9191D5382000A7770 /* s2_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AA137805910093EE68 /* s2_meth.c */; };
-		CD27BDAA191D5382000A7770 /* s2_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AB137805910093EE68 /* s2_pkt.c */; };
-		CD27BDAB191D5382000A7770 /* s2_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AC137805910093EE68 /* s2_srvr.c */; };
-		CD27BDAC191D5382000A7770 /* s3_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AD137805910093EE68 /* s3_both.c */; };
-		CD27BDAD191D5382000A7770 /* s3_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AE137805910093EE68 /* s3_clnt.c */; };
-		CD27BDAE191D5382000A7770 /* s3_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AF137805910093EE68 /* s3_enc.c */; };
-		CD27BDAF191D5382000A7770 /* s3_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B0137805910093EE68 /* s3_lib.c */; };
-		CD27BDB0191D5382000A7770 /* s3_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B1137805910093EE68 /* s3_meth.c */; };
-		CD27BDB1191D5382000A7770 /* s3_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B2137805910093EE68 /* s3_pkt.c */; };
-		CD27BDB2191D5382000A7770 /* s3_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B3137805910093EE68 /* s3_srvr.c */; };
-		CD27BDB3191D5382000A7770 /* s23_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B4137805910093EE68 /* s23_clnt.c */; };
-		CD27BDB4191D5382000A7770 /* s23_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B5137805910093EE68 /* s23_lib.c */; };
-		CD27BDB5191D5382000A7770 /* s23_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B6137805910093EE68 /* s23_meth.c */; };
-		CD27BDB6191D5382000A7770 /* s23_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B7137805910093EE68 /* s23_pkt.c */; };
-		CD27BDB7191D5382000A7770 /* s23_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B8137805910093EE68 /* s23_srvr.c */; };
-		CD27BDB8191D5382000A7770 /* ssl_algs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B9137805910093EE68 /* ssl_algs.c */; };
-		CD27BDB9191D5382000A7770 /* ssl_asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BA137805910093EE68 /* ssl_asn1.c */; };
-		CD27BDBA191D5382000A7770 /* ssl_cert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BB137805910093EE68 /* ssl_cert.c */; };
-		CD27BDBB191D5382000A7770 /* ssl_ciph.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BC137805910093EE68 /* ssl_ciph.c */; };
-		CD27BDBC191D5382000A7770 /* ssl_err.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BD137805910093EE68 /* ssl_err.c */; };
-		CD27BDBD191D5382000A7770 /* ssl_err2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BE137805910093EE68 /* ssl_err2.c */; };
-		CD27BDBE191D5382000A7770 /* ssl_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BF137805910093EE68 /* ssl_lib.c */; };
-		CD27BDBF191D5382000A7770 /* ssl_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C0137805910093EE68 /* ssl_locl.h */; };
-		CD27BDC0191D5382000A7770 /* ssl_rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C1137805910093EE68 /* ssl_rsa.c */; };
-		CD27BDC1191D5382000A7770 /* ssl_sess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C2137805910093EE68 /* ssl_sess.c */; };
-		CD27BDC2191D5382000A7770 /* ssl_stat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C3137805910093EE68 /* ssl_stat.c */; };
-		CD27BDC3191D5382000A7770 /* ssl_txt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C5137805910093EE68 /* ssl_txt.c */; };
-		CD27BDC4191D5382000A7770 /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C6137805910093EE68 /* ssl.h */; };
-		CD27BDC5191D5382000A7770 /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C7137805910093EE68 /* ssl2.h */; };
-		CD27BDC6191D5382000A7770 /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C8137805910093EE68 /* ssl3.h */; };
-		CD27BDC7191D5382000A7770 /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C9137805910093EE68 /* ssl23.h */; };
-		CD27BDC8191D5382000A7770 /* t1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CB137805910093EE68 /* t1_clnt.c */; };
-		CD27BDC9191D5382000A7770 /* t1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CC137805910093EE68 /* t1_enc.c */; };
-		CD27BDCA191D5382000A7770 /* t1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CD137805910093EE68 /* t1_lib.c */; };
-		CD27BDCB191D5382000A7770 /* t1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CE137805910093EE68 /* t1_meth.c */; };
-		CD27BDCC191D5382000A7770 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
-		CD27BDCD191D5382000A7770 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
-		CD27BDCE191D5382000A7770 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
 		CD27BE15191DA1C5000A7770 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE11191DA1C5000A7770 /* host.h */; };
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
@@ -2309,6 +2101,10 @@
 		CD52323C1808ADC900B81720 /* MOAIBillingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232381808ADC900B81720 /* MOAIBillingIOS.mm */; };
 		CD52323D1808ADC900B81720 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232391808ADC900B81720 /* MOAIStoreKitListener.h */; };
 		CD52323E1808ADC900B81720 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD52323A1808ADC900B81720 /* MOAIStoreKitListener.mm */; };
+		CD57EC7019F90306007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
+		CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
+		CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
+		CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -2910,435 +2706,6 @@
 		CD8079DA1831C3B500E658D9 /* SDL_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9417F08BB6006AEB47 /* SDL_types.h */; };
 		CD8079DB1831C3B500E658D9 /* SDL_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9517F08BB6006AEB47 /* SDL_version.h */; };
 		CD8079DC1831C3B500E658D9 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
-		CD807B4D1831C3C600E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
-		CD807B4E1831C3C600E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD807B4F1831C3C600E658D9 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
-		CD807B5B1831C3C600E658D9 /* arpa_telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8713564CAF000ADC60 /* arpa_telnet.h */; };
-		CD807B5C1831C3C600E658D9 /* connect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8A13564CAF000ADC60 /* connect.h */; };
-		CD807B5D1831C3C600E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
-		CD807B5E1831C3C600E658D9 /* content_encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8C13564CAF000ADC60 /* content_encoding.h */; };
-		CD807B5F1831C3C600E658D9 /* cookie.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A8E13564CAF000ADC60 /* cookie.h */; };
-		CD807B601831C3C600E658D9 /* curl_addrinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9013564CAF000ADC60 /* curl_addrinfo.h */; };
-		CD807B611831C3C600E658D9 /* curl_base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9113564CAF000ADC60 /* curl_base64.h */; };
-		CD807B621831C3C600E658D9 /* curl_ldap.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9213564CAF000ADC60 /* curl_ldap.h */; };
-		CD807B631831C3C600E658D9 /* curl_md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9313564CAF000ADC60 /* curl_md5.h */; };
-		CD807B641831C3C600E658D9 /* curl_memory.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9413564CAF000ADC60 /* curl_memory.h */; };
-		CD807B651831C3C600E658D9 /* curl_memrchr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9613564CAF000ADC60 /* curl_memrchr.h */; };
-		CD807B661831C3C600E658D9 /* curl_rand.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9813564CAF000ADC60 /* curl_rand.h */; };
-		CD807B671831C3C600E658D9 /* curl_sspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9A13564CAF000ADC60 /* curl_sspi.h */; };
-		CD807B681831C3C600E658D9 /* curlx.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9B13564CAF000ADC60 /* curlx.h */; };
-		CD807B691831C3C600E658D9 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9D13564CAF000ADC60 /* dict.h */; };
-		CD807B6A1831C3C600E658D9 /* easyif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A9F13564CAF000ADC60 /* easyif.h */; };
-		CD807B6B1831C3C600E658D9 /* escape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA113564CAF000ADC60 /* escape.h */; };
-		CD807B6C1831C3C600E658D9 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA313564CAF000ADC60 /* file.h */; };
-		CD807B6D1831C3C600E658D9 /* formdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA513564CAF000ADC60 /* formdata.h */; };
-		CD807B6E1831C3C600E658D9 /* ftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AA713564CB0000ADC60 /* ftp.h */; };
-		CD807B6F1831C3C600E658D9 /* getinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAA13564CB0000ADC60 /* getinfo.h */; };
-		CD807B701831C3C600E658D9 /* gtls.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAC13564CB0000ADC60 /* gtls.h */; };
-		CD807B711831C3C600E658D9 /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
-		CD807B721831C3C600E658D9 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AAE13564CB0000ADC60 /* hash.h */; };
-		CD807B731831C3C600E658D9 /* hostip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB213564CB0000ADC60 /* hostip.h */; };
-		CD807B741831C3C600E658D9 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AB813564CB0000ADC60 /* http.h */; };
-		CD807B751831C3C600E658D9 /* http_chunks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABA13564CB0000ADC60 /* http_chunks.h */; };
-		CD807B761831C3C600E658D9 /* http_digest.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABC13564CB0000ADC60 /* http_digest.h */; };
-		CD807B771831C3C600E658D9 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
-		CD807B781831C3C600E658D9 /* http_negotiate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ABE13564CB0000ADC60 /* http_negotiate.h */; };
-		CD807B791831C3C600E658D9 /* http_ntlm.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC013564CB0000ADC60 /* http_ntlm.h */; };
-		CD807B7A1831C3C600E658D9 /* if2ip.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC213564CB0000ADC60 /* if2ip.h */; };
-		CD807B7B1831C3C600E658D9 /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC413564CB0000ADC60 /* inet_ntop.h */; };
-		CD807B7C1831C3C600E658D9 /* inet_pton.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC613564CB0000ADC60 /* inet_pton.h */; };
-		CD807B7D1831C3C600E658D9 /* krb4.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AC813564CB0000ADC60 /* krb4.h */; };
-		CD807B7E1831C3C600E658D9 /* llist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACC13564CB0000ADC60 /* llist.h */; };
-		CD807B7F1831C3C600E658D9 /* memdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ACF13564CB0000ADC60 /* memdebug.h */; };
-		CD807B801831C3C600E658D9 /* multiif.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD213564CB0000ADC60 /* multiif.h */; };
-		CD807B811831C3C600E658D9 /* netrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD413564CB0000ADC60 /* netrc.h */; };
-		CD807B821831C3C600E658D9 /* nonblock.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD613564CB0000ADC60 /* nonblock.h */; };
-		CD807B831831C3C600E658D9 /* nssg.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AD813564CB0000ADC60 /* nssg.h */; };
-		CD807B841831C3C600E658D9 /* parsedate.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADC13564CB0000ADC60 /* parsedate.h */; };
-		CD807B851831C3C600E658D9 /* progress.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240ADE13564CB0000ADC60 /* progress.h */; };
-		CD807B861831C3C600E658D9 /* qssl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE013564CB0000ADC60 /* qssl.h */; };
-		CD807B871831C3C600E658D9 /* rawstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE213564CB0000ADC60 /* rawstr.h */; };
-		CD807B881831C3C600E658D9 /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; };
-		CD807B891831C3C600E658D9 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE513564CB0000ADC60 /* select.h */; };
-		CD807B8A1831C3C600E658D9 /* sendf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE713564CB0000ADC60 /* sendf.h */; };
-		CD807B8B1831C3C600E658D9 /* setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE813564CB0000ADC60 /* setup.h */; };
-		CD807B8C1831C3C600E658D9 /* setup_once.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AE913564CB0000ADC60 /* setup_once.h */; };
-		CD807B8D1831C3C600E658D9 /* share.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEB13564CB0000ADC60 /* share.h */; };
-		CD807B8E1831C3C600E658D9 /* slist.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AED13564CB0000ADC60 /* slist.h */; };
-		CD807B8F1831C3C600E658D9 /* sockaddr.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AEE13564CB0000ADC60 /* sockaddr.h */; };
-		CD807B901831C3C600E658D9 /* socks.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF013564CB0000ADC60 /* socks.h */; };
-		CD807B911831C3C600E658D9 /* speedcheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF413564CB0000ADC60 /* speedcheck.h */; };
-		CD807B921831C3C600E658D9 /* splay.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF613564CB0000ADC60 /* splay.h */; };
-		CD807B931831C3C600E658D9 /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; };
-		CD807B941831C3C600E658D9 /* ssh.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AF813564CB0000ADC60 /* ssh.h */; };
-		CD807B951831C3C600E658D9 /* sslgen.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFA13564CB0000ADC60 /* sslgen.h */; };
-		CD807B961831C3C600E658D9 /* ssluse.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFC13564CB0000ADC60 /* ssluse.h */; };
-		CD807B971831C3C600E658D9 /* strdup.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240AFE13564CB0000ADC60 /* strdup.h */; };
-		CD807B981831C3C600E658D9 /* strequal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0013564CB0000ADC60 /* strequal.h */; };
-		CD807B991831C3C600E658D9 /* strerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0213564CB0000ADC60 /* strerror.h */; };
-		CD807B9A1831C3C600E658D9 /* strtok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0413564CB0000ADC60 /* strtok.h */; };
-		CD807B9B1831C3C600E658D9 /* strtoofft.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0613564CB0000ADC60 /* strtoofft.h */; };
-		CD807B9C1831C3C600E658D9 /* telnet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0813564CB0000ADC60 /* telnet.h */; };
-		CD807B9D1831C3C600E658D9 /* tftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0A13564CB0000ADC60 /* tftp.h */; };
-		CD807B9E1831C3C600E658D9 /* timeval.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0C13564CB0000ADC60 /* timeval.h */; };
-		CD807B9F1831C3C600E658D9 /* transfer.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B0E13564CB0000ADC60 /* transfer.h */; };
-		CD807BA01831C3C600E658D9 /* url.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1013564CB0000ADC60 /* url.h */; };
-		CD807BA11831C3C600E658D9 /* urldata.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1113564CB0000ADC60 /* urldata.h */; };
-		CD807BA21831C3C600E658D9 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
-		CD807BA31831C3C600E658D9 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
-		CD807BA41831C3C600E658D9 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
-		CD807BA51831C3C600E658D9 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1713564CB0000ADC60 /* expat_external.h */; };
-		CD807BA61831C3C600E658D9 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1813564CB0000ADC60 /* iasciitab.h */; };
-		CD807BA71831C3C600E658D9 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1913564CB0000ADC60 /* internal.h */; };
-		CD807BA81831C3C600E658D9 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1A13564CB0000ADC60 /* latin1tab.h */; };
-		CD807BA91831C3C600E658D9 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1B13564CB0000ADC60 /* macconfig.h */; };
-		CD807BAA1831C3C600E658D9 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1C13564CB0000ADC60 /* nametab.h */; };
-		CD807BAB1831C3C600E658D9 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1D13564CB0000ADC60 /* utf8tab.h */; };
-		CD807BAC1831C3C600E658D9 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1E13564CB0000ADC60 /* winconfig.h */; };
-		CD807BAD1831C3C600E658D9 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2113564CB0000ADC60 /* xmlrole.h */; };
-		CD807BAE1831C3C600E658D9 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2313564CB0000ADC60 /* xmltok.h */; };
-		CD807BAF1831C3C600E658D9 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2513564CB0000ADC60 /* xmltok_impl.h */; };
-		CD807BB01831C3C600E658D9 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
-		CD807BB11831C3C600E658D9 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
-		CD807BB21831C3C600E658D9 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
-		CD807BB31831C3C600E658D9 /* ftmodule.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2C13564CB0000ADC60 /* ftmodule.h */; };
-		CD807BB41831C3C600E658D9 /* ftoption.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2D13564CB0000ADC60 /* ftoption.h */; };
-		CD807BB51831C3C600E658D9 /* ftstdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2E13564CB0000ADC60 /* ftstdlib.h */; };
-		CD807BB61831C3C600E658D9 /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5A13564CB0000ADC60 /* png.h */; };
-		CD807BB71831C3C600E658D9 /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5B13564CB0000ADC60 /* pngconf.h */; };
-		CD807BB81831C3C600E658D9 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
-		CD807BBB1831C3C600E658D9 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
-		CD807BBC1831C3C600E658D9 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD807BBD1831C3C600E658D9 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD807BBE1831C3C600E658D9 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
-		CD807BBF1831C3C600E658D9 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD807BC01831C3C600E658D9 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD807BC11831C3C600E658D9 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
-		CD807BC21831C3C600E658D9 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD807BC31831C3C600E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD807BC41831C3C600E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
-		CD807BC51831C3C600E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
-		CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
-		CD807BC81831C3C600E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
-		CD807BC91831C3C600E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
-		CD807BCA1831C3C600E658D9 /* ldo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004B141AB6EC00913D80 /* ldo.h */; };
-		CD807BCB1831C3C600E658D9 /* lfunc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004E141AB6EC00913D80 /* lfunc.h */; };
-		CD807BCC1831C3C600E658D9 /* lgc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490050141AB6EC00913D80 /* lgc.h */; };
-		CD807BCD1831C3C600E658D9 /* llex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490054141AB6EC00913D80 /* llex.h */; };
-		CD807BCE1831C3C600E658D9 /* llimits.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490055141AB6EC00913D80 /* llimits.h */; };
-		CD807BCF1831C3C600E658D9 /* lmem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490058141AB6EC00913D80 /* lmem.h */; };
-		CD807BD01831C3C600E658D9 /* lobject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49005B141AB6EC00913D80 /* lobject.h */; };
-		CD807BD11831C3C600E658D9 /* lopcodes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49005D141AB6EC00913D80 /* lopcodes.h */; };
-		CD807BD21831C3C600E658D9 /* lparser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490060141AB6EC00913D80 /* lparser.h */; };
-		CD807BD31831C3C600E658D9 /* SFMT-params19937.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF81731BB90009E233E /* SFMT-params19937.h */; };
-		CD807BD41831C3C600E658D9 /* lstate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490062141AB6EC00913D80 /* lstate.h */; };
-		CD807BD51831C3C600E658D9 /* lstring.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490064141AB6EC00913D80 /* lstring.h */; };
-		CD807BD61831C3C600E658D9 /* ltable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490067141AB6EC00913D80 /* ltable.h */; };
-		CD807BD71831C3C600E658D9 /* ltm.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006A141AB6EC00913D80 /* ltm.h */; };
-		CD807BD81831C3C600E658D9 /* lua.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006B141AB6EC00913D80 /* lua.h */; };
-		CD807BD91831C3C600E658D9 /* luaconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006C141AB6EC00913D80 /* luaconf.h */; };
-		CD807BDA1831C3C600E658D9 /* lualib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006D141AB6EC00913D80 /* lualib.h */; };
-		CD807BDB1831C3C600E658D9 /* lundump.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006F141AB6EC00913D80 /* lundump.h */; };
-		CD807BDC1831C3C600E658D9 /* lvm.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490071141AB6EC00913D80 /* lvm.h */; };
-		CD807BDD1831C3C600E658D9 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490073141AB6EC00913D80 /* lzio.h */; };
-		CD807BDE1831C3C600E658D9 /* jconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529411447907100143A72 /* jconfig.h */; };
-		CD807BDF1831C3C600E658D9 /* jdct.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529561447907100143A72 /* jdct.h */; };
-		CD807BE01831C3C600E658D9 /* jerror.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529661447907100143A72 /* jerror.h */; };
-		CD807BE11831C3C600E658D9 /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795296D1447907100143A72 /* jinclude.h */; };
-		CD807BE21831C3C600E658D9 /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529751447907100143A72 /* jmemsys.h */; };
-		CD807BE31831C3C600E658D9 /* jmorecfg.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529761447907100143A72 /* jmorecfg.h */; };
-		CD807BE41831C3C600E658D9 /* jpegint.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529771447907100143A72 /* jpegint.h */; };
-		CD807BE51831C3C600E658D9 /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
-		CD807BE61831C3C600E658D9 /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 079529781447907100143A72 /* jpeglib.h */; };
-		CD807BE71831C3C600E658D9 /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0795297E1447907100143A72 /* jversion.h */; };
-		CD807BEA1831C3C600E658D9 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3017FA6CF90053E028 /* mesh.h */; };
-		CD807BEB1831C3C600E658D9 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
-		CD807BEC1831C3C600E658D9 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
-		CD807BED1831C3C600E658D9 /* crc32.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBA14725714009C20E5 /* crc32.h */; };
-		CD807BEE1831C3C600E658D9 /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
-		CD807BEF1831C3C600E658D9 /* deflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEBC14725714009C20E5 /* deflate.h */; };
-		CD807BF01831C3C600E658D9 /* inffast.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC014725714009C20E5 /* inffast.h */; };
-		CD807BF11831C3C600E658D9 /* inffixed.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC114725714009C20E5 /* inffixed.h */; };
-		CD807BF21831C3C600E658D9 /* inflate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC314725714009C20E5 /* inflate.h */; };
-		CD807BF31831C3C600E658D9 /* inftrees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC514725714009C20E5 /* inftrees.h */; };
-		CD807BF41831C3C600E658D9 /* trees.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC714725714009C20E5 /* trees.h */; };
-		CD807BF51831C3C600E658D9 /* zconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AEC914725714009C20E5 /* zconf.h */; };
-		CD807BF61831C3C600E658D9 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
-		CD807BF71831C3C600E658D9 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
-		CD807BF81831C3C600E658D9 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
-		CD807BF91831C3C600E658D9 /* SDL_assert_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBB17F08459006AEB47 /* SDL_assert_c.h */; };
-		CD807BFA1831C3C600E658D9 /* SDL_error_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CBD17F08459006AEB47 /* SDL_error_c.h */; };
-		CD807BFB1831C3C600E658D9 /* SDL_blit.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CDB17F0850F006AEB47 /* SDL_blit.h */; };
-		CD807BFC1831C3C600E658D9 /* SDL_blit_auto.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CE017F0850F006AEB47 /* SDL_blit_auto.h */; };
-		CD807BFD1831C3C600E658D9 /* SDL_blit_copy.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CE217F0850F006AEB47 /* SDL_blit_copy.h */; };
-		CD807BFE1831C3C600E658D9 /* SDL_blit_slow.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CE517F0850F006AEB47 /* SDL_blit_slow.h */; };
-		CD807BFF1831C3C600E658D9 /* SDL_pixels_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CEA17F0850F006AEB47 /* SDL_pixels_c.h */; };
-		CD807C001831C3C600E658D9 /* SDL_RLEaccel_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CED17F0850F006AEB47 /* SDL_RLEaccel_c.h */; };
-		CD807C011831C3C600E658D9 /* SDL_shape_internals.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CEF17F0850F006AEB47 /* SDL_shape_internals.h */; };
-		CD807C021831C3C600E658D9 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
-		CD807C031831C3C600E658D9 /* SDL_sysvideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795CF217F0850F006AEB47 /* SDL_sysvideo.h */; };
-		CD807C041831C3C600E658D9 /* imKStoUCS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D0F17F08522006AEB47 /* imKStoUCS.h */; };
-		CD807C051831C3C600E658D9 /* SDL_x11clipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1117F08522006AEB47 /* SDL_x11clipboard.h */; };
-		CD807C061831C3C600E658D9 /* SDL_x11dyn.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1317F08522006AEB47 /* SDL_x11dyn.h */; };
-		CD807C071831C3C600E658D9 /* SDL_x11events.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1517F08522006AEB47 /* SDL_x11events.h */; };
-		CD807C081831C3C600E658D9 /* SDL_x11framebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1717F08522006AEB47 /* SDL_x11framebuffer.h */; };
-		CD807C091831C3C600E658D9 /* SDL_x11keyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1917F08522006AEB47 /* SDL_x11keyboard.h */; };
-		CD807C0A1831C3C600E658D9 /* SDL_x11modes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1C17F08522006AEB47 /* SDL_x11modes.h */; };
-		CD807C0B1831C3C600E658D9 /* SDL_x11mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D1E17F08522006AEB47 /* SDL_x11mouse.h */; };
-		CD807C0C1831C3C600E658D9 /* SDL_x11opengl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2017F08522006AEB47 /* SDL_x11opengl.h */; };
-		CD807C0D1831C3C600E658D9 /* SDL_x11opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2217F08522006AEB47 /* SDL_x11opengles.h */; };
-		CD807C0E1831C3C600E658D9 /* SDL_x11shape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2417F08522006AEB47 /* SDL_x11shape.h */; };
-		CD807C0F1831C3C600E658D9 /* SDL_x11sym.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2517F08522006AEB47 /* SDL_x11sym.h */; };
-		CD807C101831C3C600E658D9 /* SDL_x11touch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2717F08522006AEB47 /* SDL_x11touch.h */; };
-		CD807C111831C3C600E658D9 /* SDL_x11video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2917F08522006AEB47 /* SDL_x11video.h */; };
-		CD807C121831C3C600E658D9 /* SDL_x11window.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2B17F08522006AEB47 /* SDL_x11window.h */; };
-		CD807C131831C3C600E658D9 /* SDL_x11xinput2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D2D17F08522006AEB47 /* SDL_x11xinput2.h */; };
-		CD807C141831C3C600E658D9 /* SDL_nullevents_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D4F17F0852B006AEB47 /* SDL_nullevents_c.h */; };
-		CD807C151831C3C600E658D9 /* SDL_nullframebuffer_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D5017F0852B006AEB47 /* SDL_nullframebuffer_c.h */; };
-		CD807C161831C3C600E658D9 /* SDL_nullvideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D5317F0852B006AEB47 /* SDL_nullvideo.h */; };
-		CD807C171831C3C600E658D9 /* SDL_cocoaclipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D5A17F08532006AEB47 /* SDL_cocoaclipboard.h */; };
-		CD807C181831C3C600E658D9 /* SDL_cocoaevents.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D5C17F08532006AEB47 /* SDL_cocoaevents.h */; };
-		CD807C191831C3C600E658D9 /* SDL_cocoakeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D5E17F08532006AEB47 /* SDL_cocoakeyboard.h */; };
-		CD807C1A1831C3C600E658D9 /* SDL_cocoamessagebox.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6017F08532006AEB47 /* SDL_cocoamessagebox.h */; };
-		CD807C1B1831C3C600E658D9 /* SDL_cocoamodes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6217F08532006AEB47 /* SDL_cocoamodes.h */; };
-		CD807C1C1831C3C600E658D9 /* SDL_cocoamouse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6417F08532006AEB47 /* SDL_cocoamouse.h */; };
-		CD807C1D1831C3C600E658D9 /* SDL_cocoamousetap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6617F08532006AEB47 /* SDL_cocoamousetap.h */; };
-		CD807C1E1831C3C600E658D9 /* SDL_cocoaopengl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6817F08532006AEB47 /* SDL_cocoaopengl.h */; };
-		CD807C1F1831C3C600E658D9 /* SDL_cocoashape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6A17F08532006AEB47 /* SDL_cocoashape.h */; };
-		CD807C201831C3C600E658D9 /* SDL_cocoavideo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6C17F08532006AEB47 /* SDL_cocoavideo.h */; };
-		CD807C211831C3C600E658D9 /* SDL_cocoawindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D6E17F08532006AEB47 /* SDL_cocoawindow.h */; };
-		CD807C221831C3C600E658D9 /* SDL_timer_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D8817F08548006AEB47 /* SDL_timer_c.h */; };
-		CD807C231831C3C600E658D9 /* SDL_systhread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D8E17F08560006AEB47 /* SDL_systhread.h */; };
-		CD807C241831C3C600E658D9 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2E17FA6CF90053E028 /* geom.h */; };
-		CD807C251831C3C600E658D9 /* SDL_thread_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D9017F08560006AEB47 /* SDL_thread_c.h */; };
-		CD807C261831C3C600E658D9 /* SDL_sysmutex_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D9617F08569006AEB47 /* SDL_sysmutex_c.h */; };
-		CD807C271831C3C600E658D9 /* SDL_systhread_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795D9917F08569006AEB47 /* SDL_systhread_c.h */; };
-		CD807C281831C3C600E658D9 /* mmx.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DB017F08591006AEB47 /* mmx.h */; };
-		CD807C291831C3C600E658D9 /* SDL_sysrender.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DB217F08591006AEB47 /* SDL_sysrender.h */; };
-		CD807C2A1831C3C600E658D9 /* SDL_yuv_sw_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DB417F08591006AEB47 /* SDL_yuv_sw_c.h */; };
-		CD807C2B1831C3C600E658D9 /* SDL_blendfillrect.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DBD17F0859D006AEB47 /* SDL_blendfillrect.h */; };
-		CD807C2C1831C3C600E658D9 /* SDL_blendline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DBF17F0859D006AEB47 /* SDL_blendline.h */; };
-		CD807C2D1831C3C600E658D9 /* SDL_blendpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DC117F0859D006AEB47 /* SDL_blendpoint.h */; };
-		CD807C2E1831C3C600E658D9 /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
-		CD807C2F1831C3C600E658D9 /* SDL_draw.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DC217F0859D006AEB47 /* SDL_draw.h */; };
-		CD807C301831C3C600E658D9 /* SDL_drawline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DC417F0859D006AEB47 /* SDL_drawline.h */; };
-		CD807C311831C3C600E658D9 /* SDL_drawpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DC617F0859D006AEB47 /* SDL_drawpoint.h */; };
-		CD807C321831C3C600E658D9 /* SDL_render_sw_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DC817F0859D006AEB47 /* SDL_render_sw_c.h */; };
-		CD807C331831C3C600E658D9 /* SDL_rotate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DCA17F0859D006AEB47 /* SDL_rotate.h */; };
-		CD807C341831C3C600E658D9 /* SDL_glfuncs.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DDA17F085A5006AEB47 /* SDL_glfuncs.h */; };
-		CD807C351831C3C600E658D9 /* SDL_shaders_gl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DDD17F085A5006AEB47 /* SDL_shaders_gl.h */; };
-		CD807C361831C3C600E658D9 /* SDL_joystick_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DEC17F085E3006AEB47 /* SDL_joystick_c.h */; };
-		CD807C371831C3C600E658D9 /* SDL_sysjoystick.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DEE17F085E3006AEB47 /* SDL_sysjoystick.h */; };
-		CD807C381831C3C600E658D9 /* SDL_sysjoystick_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DF417F085E9006AEB47 /* SDL_sysjoystick_c.h */; };
-		CD807C391831C3C600E658D9 /* SDL_haptic_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DF917F085FD006AEB47 /* SDL_haptic_c.h */; };
-		CD807C3A1831C3C600E658D9 /* SDL_syshaptic.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795DFA17F085FD006AEB47 /* SDL_syshaptic.h */; };
-		CD807C3B1831C3C600E658D9 /* SDL_rwopsbundlesupport.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0317F0862D006AEB47 /* SDL_rwopsbundlesupport.h */; };
-		CD807C3C1831C3C600E658D9 /* blank_cursor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0717F08638006AEB47 /* blank_cursor.h */; };
-		CD807C3D1831C3C600E658D9 /* default_cursor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0817F08638006AEB47 /* default_cursor.h */; };
-		CD807C3E1831C3C600E658D9 /* scancodes_darwin.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0917F08638006AEB47 /* scancodes_darwin.h */; };
-		CD807C3F1831C3C600E658D9 /* scancodes_linux.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0A17F08638006AEB47 /* scancodes_linux.h */; };
-		CD807C401831C3C600E658D9 /* scancodes_xfree86.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0B17F08638006AEB47 /* scancodes_xfree86.h */; };
-		CD807C411831C3C600E658D9 /* SDL_clipboardevents_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0D17F08638006AEB47 /* SDL_clipboardevents_c.h */; };
-		CD807C421831C3C600E658D9 /* SDL_dropevents_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E0E17F08638006AEB47 /* SDL_dropevents_c.h */; };
-		CD807C431831C3C600E658D9 /* SDL_events_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1117F08638006AEB47 /* SDL_events_c.h */; };
-		CD807C441831C3C600E658D9 /* SDL_gesture_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1317F08638006AEB47 /* SDL_gesture_c.h */; };
-		CD807C451831C3C600E658D9 /* SDL_keyboard_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1517F08638006AEB47 /* SDL_keyboard_c.h */; };
-		CD807C461831C3C600E658D9 /* SDL_mouse_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1717F08638006AEB47 /* SDL_mouse_c.h */; };
-		CD807C471831C3C600E658D9 /* SDL_sysevents.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1917F08638006AEB47 /* SDL_sysevents.h */; };
-		CD807C481831C3C600E658D9 /* SDL_touch_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1B17F08638006AEB47 /* SDL_touch_c.h */; };
-		CD807C491831C3C600E658D9 /* SDL_windowevents_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E1D17F08638006AEB47 /* SDL_windowevents_c.h */; };
-		CD807C4A1831C3C600E658D9 /* SDL_audio_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E3B17F08667006AEB47 /* SDL_audio_c.h */; };
-		CD807C4B1831C3C600E658D9 /* SDL_audiodev_c.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E3E17F08667006AEB47 /* SDL_audiodev_c.h */; };
-		CD807C4C1831C3C600E658D9 /* SDL_audiomem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E3F17F08667006AEB47 /* SDL_audiomem.h */; };
-		CD807C4D1831C3C600E658D9 /* SDL_sysaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E4217F08667006AEB47 /* SDL_sysaudio.h */; };
-		CD807C4E1831C3C600E658D9 /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; };
-		CD807C4F1831C3C600E658D9 /* SDL_wave.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E4417F08667006AEB47 /* SDL_wave.h */; };
-		CD807C501831C3C600E658D9 /* SDL_coreaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E5117F0866D006AEB47 /* SDL_coreaudio.h */; };
-		CD807C511831C3C600E658D9 /* SDL_dummyaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E5517F08675006AEB47 /* SDL_dummyaudio.h */; };
-		CD807C521831C3C600E658D9 /* SDL_diskaudio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E5917F0867B006AEB47 /* SDL_diskaudio.h */; };
-		CD807C531831C3C600E658D9 /* begin_code.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6217F08BB6006AEB47 /* begin_code.h */; };
-		CD807C541831C3C600E658D9 /* close_code.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6317F08BB6006AEB47 /* close_code.h */; };
-		CD807C551831C3C600E658D9 /* SDL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6417F08BB6006AEB47 /* SDL.h */; };
-		CD807C561831C3C600E658D9 /* SDL_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6517F08BB6006AEB47 /* SDL_assert.h */; };
-		CD807C571831C3C600E658D9 /* SDL_atomic.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6617F08BB6006AEB47 /* SDL_atomic.h */; };
-		CD807C581831C3C600E658D9 /* SDL_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6717F08BB6006AEB47 /* SDL_audio.h */; };
-		CD807C591831C3C600E658D9 /* SDL_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6817F08BB6006AEB47 /* SDL_bits.h */; };
-		CD807C5A1831C3C600E658D9 /* SDL_blendmode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6917F08BB6006AEB47 /* SDL_blendmode.h */; };
-		CD807C5B1831C3C600E658D9 /* SDL_clipboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6A17F08BB6006AEB47 /* SDL_clipboard.h */; };
-		CD807C5C1831C3C600E658D9 /* SDL_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6B17F08BB6006AEB47 /* SDL_config.h */; };
-		CD807C5D1831C3C600E658D9 /* SDL_config_macosx.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6C17F08BB6006AEB47 /* SDL_config_macosx.h */; };
-		CD807C5E1831C3C600E658D9 /* SDL_copying.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6D17F08BB6006AEB47 /* SDL_copying.h */; };
-		CD807C5F1831C3C600E658D9 /* SDL_cpuinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6E17F08BB6006AEB47 /* SDL_cpuinfo.h */; };
-		CD807C601831C3C600E658D9 /* SDL_endian.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E6F17F08BB6006AEB47 /* SDL_endian.h */; };
-		CD807C611831C3C600E658D9 /* SDL_error.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7017F08BB6006AEB47 /* SDL_error.h */; };
-		CD807C621831C3C600E658D9 /* SDL_events.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7117F08BB6006AEB47 /* SDL_events.h */; };
-		CD807C631831C3C600E658D9 /* SDL_gamecontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7217F08BB6006AEB47 /* SDL_gamecontroller.h */; };
-		CD807C641831C3C600E658D9 /* SDL_gesture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7317F08BB6006AEB47 /* SDL_gesture.h */; };
-		CD807C651831C3C600E658D9 /* SDL_haptic.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7417F08BB6006AEB47 /* SDL_haptic.h */; };
-		CD807C661831C3C600E658D9 /* SDL_hints.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7517F08BB6006AEB47 /* SDL_hints.h */; };
-		CD807C671831C3C600E658D9 /* SDL_joystick.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7617F08BB6006AEB47 /* SDL_joystick.h */; };
-		CD807C681831C3C600E658D9 /* SDL_keyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7717F08BB6006AEB47 /* SDL_keyboard.h */; };
-		CD807C691831C3C600E658D9 /* SDL_keycode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7817F08BB6006AEB47 /* SDL_keycode.h */; };
-		CD807C6A1831C3C600E658D9 /* SDL_loadso.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7917F08BB6006AEB47 /* SDL_loadso.h */; };
-		CD807C6B1831C3C600E658D9 /* SDL_log.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7A17F08BB6006AEB47 /* SDL_log.h */; };
-		CD807C6C1831C3C600E658D9 /* SDL_main.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7B17F08BB6006AEB47 /* SDL_main.h */; };
-		CD807C6D1831C3C600E658D9 /* SDL_messagebox.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7C17F08BB6006AEB47 /* SDL_messagebox.h */; };
-		CD807C6E1831C3C600E658D9 /* SDL_mouse.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7D17F08BB6006AEB47 /* SDL_mouse.h */; };
-		CD807C6F1831C3C600E658D9 /* SDL_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7E17F08BB6006AEB47 /* SDL_mutex.h */; };
-		CD807C701831C3C600E658D9 /* SDL_name.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E7F17F08BB6006AEB47 /* SDL_name.h */; };
-		CD807C711831C3C600E658D9 /* SDL_opengl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8017F08BB6006AEB47 /* SDL_opengl.h */; };
-		CD807C721831C3C600E658D9 /* SDL_opengles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8117F08BB6006AEB47 /* SDL_opengles.h */; };
-		CD807C731831C3C600E658D9 /* SDL_opengles2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8217F08BB6006AEB47 /* SDL_opengles2.h */; };
-		CD807C741831C3C600E658D9 /* SDL_pixels.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8317F08BB6006AEB47 /* SDL_pixels.h */; };
-		CD807C751831C3C600E658D9 /* SDL_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8417F08BB6006AEB47 /* SDL_platform.h */; };
-		CD807C761831C3C600E658D9 /* SDL_power.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8517F08BB6006AEB47 /* SDL_power.h */; };
-		CD807C771831C3C600E658D9 /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; };
-		CD807C781831C3C600E658D9 /* SDL_quit.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8617F08BB6006AEB47 /* SDL_quit.h */; };
-		CD807C791831C3C600E658D9 /* SDL_rect.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8717F08BB6006AEB47 /* SDL_rect.h */; };
-		CD807C7A1831C3C600E658D9 /* SDL_render.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8817F08BB6006AEB47 /* SDL_render.h */; };
-		CD807C7B1831C3C600E658D9 /* SDL_revision.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8917F08BB6006AEB47 /* SDL_revision.h */; };
-		CD807C7C1831C3C600E658D9 /* SDL_rwops.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8A17F08BB6006AEB47 /* SDL_rwops.h */; };
-		CD807C7D1831C3C600E658D9 /* SDL_scancode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8B17F08BB6006AEB47 /* SDL_scancode.h */; };
-		CD807C7E1831C3C600E658D9 /* SDL_shape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8C17F08BB6006AEB47 /* SDL_shape.h */; };
-		CD807C7F1831C3C600E658D9 /* SDL_stdinc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8D17F08BB6006AEB47 /* SDL_stdinc.h */; };
-		CD807C801831C3C600E658D9 /* SDL_surface.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8E17F08BB6006AEB47 /* SDL_surface.h */; };
-		CD807C811831C3C600E658D9 /* SDL_system.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E8F17F08BB6006AEB47 /* SDL_system.h */; };
-		CD807C821831C3C600E658D9 /* SDL_syswm.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9017F08BB6006AEB47 /* SDL_syswm.h */; };
-		CD807C831831C3C600E658D9 /* SDL_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9117F08BB6006AEB47 /* SDL_thread.h */; };
-		CD807C841831C3C600E658D9 /* SDL_timer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9217F08BB6006AEB47 /* SDL_timer.h */; };
-		CD807C851831C3C600E658D9 /* SDL_touch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9317F08BB6006AEB47 /* SDL_touch.h */; };
-		CD807C861831C3C600E658D9 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
-		CD807C871831C3C600E658D9 /* SDL_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9417F08BB6006AEB47 /* SDL_types.h */; };
-		CD807C881831C3C600E658D9 /* SDL_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9517F08BB6006AEB47 /* SDL_version.h */; };
-		CD807C891831C3C600E658D9 /* SDL_video.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795E9617F08BB6006AEB47 /* SDL_video.h */; };
-		CD807C8D1831C3C600E658D9 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8813564CAF000ADC60 /* base64.c */; };
-		CD807C8E1831C3C600E658D9 /* connect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8913564CAF000ADC60 /* connect.c */; };
-		CD807C8F1831C3C600E658D9 /* content_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8B13564CAF000ADC60 /* content_encoding.c */; };
-		CD807C901831C3C600E658D9 /* cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8D13564CAF000ADC60 /* cookie.c */; };
-		CD807C911831C3C600E658D9 /* curl_addrinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A8F13564CAF000ADC60 /* curl_addrinfo.c */; };
-		CD807C921831C3C600E658D9 /* curl_memrchr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9513564CAF000ADC60 /* curl_memrchr.c */; };
-		CD807C931831C3C600E658D9 /* curl_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9713564CAF000ADC60 /* curl_rand.c */; };
-		CD807C941831C3C600E658D9 /* curl_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9913564CAF000ADC60 /* curl_sspi.c */; };
-		CD807C951831C3C600E658D9 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9C13564CAF000ADC60 /* dict.c */; };
-		CD807C961831C3C600E658D9 /* easy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A9E13564CAF000ADC60 /* easy.c */; };
-		CD807C971831C3C600E658D9 /* escape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA013564CAF000ADC60 /* escape.c */; };
-		CD807C981831C3C600E658D9 /* file.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA213564CAF000ADC60 /* file.c */; };
-		CD807C991831C3C600E658D9 /* formdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA413564CAF000ADC60 /* formdata.c */; };
-		CD807C9A1831C3C600E658D9 /* ftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA613564CB0000ADC60 /* ftp.c */; };
-		CD807C9B1831C3C600E658D9 /* getenv.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA813564CB0000ADC60 /* getenv.c */; };
-		CD807C9C1831C3C600E658D9 /* getinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AA913564CB0000ADC60 /* getinfo.c */; };
-		CD807C9D1831C3C600E658D9 /* gtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAB13564CB0000ADC60 /* gtls.c */; };
-		CD807C9E1831C3C600E658D9 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAD13564CB0000ADC60 /* hash.c */; };
-		CD807C9F1831C3C600E658D9 /* hostares.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AAF13564CB0000ADC60 /* hostares.c */; };
-		CD807CA01831C3C600E658D9 /* hostasyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB013564CB0000ADC60 /* hostasyn.c */; };
-		CD807CA11831C3C600E658D9 /* hostip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB113564CB0000ADC60 /* hostip.c */; };
-		CD807CA21831C3C600E658D9 /* hostip4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB313564CB0000ADC60 /* hostip4.c */; };
-		CD807CA31831C3C600E658D9 /* hostip6.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB413564CB0000ADC60 /* hostip6.c */; };
-		CD807CA41831C3C600E658D9 /* hostsyn.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB513564CB0000ADC60 /* hostsyn.c */; };
-		CD807CA51831C3C600E658D9 /* hostthre.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB613564CB0000ADC60 /* hostthre.c */; };
-		CD807CA61831C3C600E658D9 /* http.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB713564CB0000ADC60 /* http.c */; };
-		CD807CA71831C3C600E658D9 /* http_chunks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AB913564CB0000ADC60 /* http_chunks.c */; };
-		CD807CA81831C3C600E658D9 /* http_digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABB13564CB0000ADC60 /* http_digest.c */; };
-		CD807CA91831C3C600E658D9 /* http_negotiate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABD13564CB0000ADC60 /* http_negotiate.c */; };
-		CD807CAA1831C3C600E658D9 /* http_ntlm.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ABF13564CB0000ADC60 /* http_ntlm.c */; };
-		CD807CAB1831C3C600E658D9 /* if2ip.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC113564CB0000ADC60 /* if2ip.c */; };
-		CD807CAC1831C3C600E658D9 /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC313564CB0000ADC60 /* inet_ntop.c */; };
-		CD807CAD1831C3C600E658D9 /* inet_pton.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC513564CB0000ADC60 /* inet_pton.c */; };
-		CD807CAE1831C3C600E658D9 /* krb4.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC713564CB0000ADC60 /* krb4.c */; };
-		CD807CAF1831C3C600E658D9 /* krb5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AC913564CB0000ADC60 /* krb5.c */; };
-		CD807CB01831C3C600E658D9 /* ldap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACA13564CB0000ADC60 /* ldap.c */; };
-		CD807CB11831C3C600E658D9 /* llist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACB13564CB0000ADC60 /* llist.c */; };
-		CD807CB21831C3C600E658D9 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACD13564CB0000ADC60 /* md5.c */; };
-		CD807CB31831C3C600E658D9 /* memdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ACE13564CB0000ADC60 /* memdebug.c */; };
-		CD807CB41831C3C600E658D9 /* mprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD013564CB0000ADC60 /* mprintf.c */; };
-		CD807CB51831C3C600E658D9 /* multi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD113564CB0000ADC60 /* multi.c */; };
-		CD807CB61831C3C600E658D9 /* netrc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD313564CB0000ADC60 /* netrc.c */; };
-		CD807CB71831C3C600E658D9 /* nonblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD513564CB0000ADC60 /* nonblock.c */; };
-		CD807CB81831C3C600E658D9 /* nss.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD713564CB0000ADC60 /* nss.c */; };
-		CD807CB91831C3C600E658D9 /* nwlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AD913564CB0000ADC60 /* nwlib.c */; };
-		CD807CBA1831C3C600E658D9 /* nwos.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADA13564CB0000ADC60 /* nwos.c */; };
-		CD807CBB1831C3C600E658D9 /* parsedate.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADB13564CB0000ADC60 /* parsedate.c */; };
-		CD807CBC1831C3C600E658D9 /* progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADD13564CB0000ADC60 /* progress.c */; };
-		CD807CBD1831C3C600E658D9 /* qssl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240ADF13564CB0000ADC60 /* qssl.c */; };
-		CD807CBE1831C3C600E658D9 /* rawstr.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE113564CB0000ADC60 /* rawstr.c */; };
-		CD807CBF1831C3C600E658D9 /* security.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE313564CB0000ADC60 /* security.c */; };
-		CD807CC01831C3C600E658D9 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE413564CB0000ADC60 /* select.c */; };
-		CD807CC11831C3C600E658D9 /* sendf.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AE613564CB0000ADC60 /* sendf.c */; };
-		CD807CC21831C3C600E658D9 /* share.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEA13564CB0000ADC60 /* share.c */; };
-		CD807CC31831C3C600E658D9 /* slist.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEC13564CB0000ADC60 /* slist.c */; };
-		CD807CC41831C3C600E658D9 /* socks.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AEF13564CB0000ADC60 /* socks.c */; };
-		CD807CC51831C3C600E658D9 /* socks_gssapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF113564CB0000ADC60 /* socks_gssapi.c */; };
-		CD807CC61831C3C600E658D9 /* socks_sspi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF213564CB0000ADC60 /* socks_sspi.c */; };
-		CD807CC71831C3C600E658D9 /* speedcheck.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF313564CB0000ADC60 /* speedcheck.c */; };
-		CD807CC81831C3C600E658D9 /* splay.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF513564CB0000ADC60 /* splay.c */; };
-		CD807CC91831C3C600E658D9 /* ssh.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF713564CB0000ADC60 /* ssh.c */; };
-		CD807CCA1831C3C600E658D9 /* sslgen.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AF913564CB0000ADC60 /* sslgen.c */; };
-		CD807CCB1831C3C600E658D9 /* ssluse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFB13564CB0000ADC60 /* ssluse.c */; };
-		CD807CCC1831C3C600E658D9 /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFD13564CB0000ADC60 /* strdup.c */; };
-		CD807CCD1831C3C600E658D9 /* strequal.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240AFF13564CB0000ADC60 /* strequal.c */; };
-		CD807CCE1831C3C600E658D9 /* strerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0113564CB0000ADC60 /* strerror.c */; };
-		CD807CCF1831C3C600E658D9 /* strtok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0313564CB0000ADC60 /* strtok.c */; };
-		CD807CD01831C3C600E658D9 /* strtoofft.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0513564CB0000ADC60 /* strtoofft.c */; };
-		CD807CD11831C3C600E658D9 /* telnet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0713564CB0000ADC60 /* telnet.c */; };
-		CD807CD21831C3C600E658D9 /* tftp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0913564CB0000ADC60 /* tftp.c */; };
-		CD807CD31831C3C600E658D9 /* timeval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0B13564CB0000ADC60 /* timeval.c */; };
-		CD807CD41831C3C600E658D9 /* transfer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0D13564CB0000ADC60 /* transfer.c */; };
-		CD807CD51831C3C600E658D9 /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B0F13564CB0000ADC60 /* url.c */; };
-		CD807CD61831C3C600E658D9 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1213564CB0000ADC60 /* version.c */; };
-		CD807E991831C53F00E658D9 /* bio_ssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99B137805910093EE68 /* bio_ssl.c */; };
-		CD807E9A1831C53F00E658D9 /* d1_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99C137805910093EE68 /* d1_both.c */; };
-		CD807E9B1831C53F00E658D9 /* d1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99D137805910093EE68 /* d1_clnt.c */; };
-		CD807E9C1831C53F00E658D9 /* d1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99E137805910093EE68 /* d1_enc.c */; };
-		CD807E9D1831C53F00E658D9 /* d1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E99F137805910093EE68 /* d1_lib.c */; };
-		CD807E9E1831C53F00E658D9 /* d1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A0137805910093EE68 /* d1_meth.c */; };
-		CD807E9F1831C53F00E658D9 /* d1_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A1137805910093EE68 /* d1_pkt.c */; };
-		CD807EA01831C53F00E658D9 /* d1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A2137805910093EE68 /* d1_srvr.c */; };
-		CD807EA11831C53F00E658D9 /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A3137805910093EE68 /* dtls1.h */; };
-		CD807EA21831C53F00E658D9 /* kssl_lcl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A4137805910093EE68 /* kssl_lcl.h */; };
-		CD807EA31831C53F00E658D9 /* kssl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A5137805910093EE68 /* kssl.c */; };
-		CD807EA41831C53F00E658D9 /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9A6137805910093EE68 /* kssl.h */; };
-		CD807EA51831C53F00E658D9 /* s2_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A7137805910093EE68 /* s2_clnt.c */; };
-		CD807EA61831C53F00E658D9 /* s2_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A8137805910093EE68 /* s2_enc.c */; };
-		CD807EA71831C53F00E658D9 /* s2_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9A9137805910093EE68 /* s2_lib.c */; };
-		CD807EA81831C53F00E658D9 /* s2_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AA137805910093EE68 /* s2_meth.c */; };
-		CD807EA91831C53F00E658D9 /* s2_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AB137805910093EE68 /* s2_pkt.c */; };
-		CD807EAA1831C53F00E658D9 /* s2_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AC137805910093EE68 /* s2_srvr.c */; };
-		CD807EAB1831C53F00E658D9 /* s3_both.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AD137805910093EE68 /* s3_both.c */; };
-		CD807EAC1831C53F00E658D9 /* s3_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AE137805910093EE68 /* s3_clnt.c */; };
-		CD807EAD1831C53F00E658D9 /* s3_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9AF137805910093EE68 /* s3_enc.c */; };
-		CD807EAE1831C53F00E658D9 /* s3_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B0137805910093EE68 /* s3_lib.c */; };
-		CD807EAF1831C53F00E658D9 /* s3_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B1137805910093EE68 /* s3_meth.c */; };
-		CD807EB01831C53F00E658D9 /* s3_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B2137805910093EE68 /* s3_pkt.c */; };
-		CD807EB11831C53F00E658D9 /* s3_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B3137805910093EE68 /* s3_srvr.c */; };
-		CD807EB21831C53F00E658D9 /* s23_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B4137805910093EE68 /* s23_clnt.c */; };
-		CD807EB31831C53F00E658D9 /* s23_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B5137805910093EE68 /* s23_lib.c */; };
-		CD807EB41831C53F00E658D9 /* s23_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B6137805910093EE68 /* s23_meth.c */; };
-		CD807EB51831C53F00E658D9 /* s23_pkt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B7137805910093EE68 /* s23_pkt.c */; };
-		CD807EB61831C53F00E658D9 /* s23_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B8137805910093EE68 /* s23_srvr.c */; };
-		CD807EB71831C53F00E658D9 /* ssl_algs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9B9137805910093EE68 /* ssl_algs.c */; };
-		CD807EB81831C53F00E658D9 /* ssl_asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BA137805910093EE68 /* ssl_asn1.c */; };
-		CD807EB91831C53F00E658D9 /* ssl_cert.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BB137805910093EE68 /* ssl_cert.c */; };
-		CD807EBA1831C53F00E658D9 /* ssl_ciph.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BC137805910093EE68 /* ssl_ciph.c */; };
-		CD807EBB1831C53F00E658D9 /* ssl_err.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BD137805910093EE68 /* ssl_err.c */; };
-		CD807EBC1831C53F00E658D9 /* ssl_err2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BE137805910093EE68 /* ssl_err2.c */; };
-		CD807EBD1831C53F00E658D9 /* ssl_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9BF137805910093EE68 /* ssl_lib.c */; };
-		CD807EBE1831C53F00E658D9 /* ssl_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C0137805910093EE68 /* ssl_locl.h */; };
-		CD807EBF1831C53F00E658D9 /* ssl_rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C1137805910093EE68 /* ssl_rsa.c */; };
-		CD807EC01831C53F00E658D9 /* ssl_sess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C2137805910093EE68 /* ssl_sess.c */; };
-		CD807EC11831C53F00E658D9 /* ssl_stat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C3137805910093EE68 /* ssl_stat.c */; };
-		CD807EC21831C53F00E658D9 /* ssl_txt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9C5137805910093EE68 /* ssl_txt.c */; };
-		CD807EC31831C53F00E658D9 /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C6137805910093EE68 /* ssl.h */; };
-		CD807EC41831C53F00E658D9 /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C7137805910093EE68 /* ssl2.h */; };
-		CD807EC51831C53F00E658D9 /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C8137805910093EE68 /* ssl3.h */; };
-		CD807EC61831C53F00E658D9 /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9C9137805910093EE68 /* ssl23.h */; };
-		CD807EC71831C53F00E658D9 /* t1_clnt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CB137805910093EE68 /* t1_clnt.c */; };
-		CD807EC81831C53F00E658D9 /* t1_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CC137805910093EE68 /* t1_enc.c */; };
-		CD807EC91831C53F00E658D9 /* t1_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CD137805910093EE68 /* t1_lib.c */; };
-		CD807ECA1831C53F00E658D9 /* t1_meth.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CE137805910093EE68 /* t1_meth.c */; };
-		CD807ECB1831C53F00E658D9 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
-		CD807ECC1831C53F00E658D9 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
-		CD807ECD1831C53F00E658D9 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
 		CD807ECE1831C5B700E658D9 /* cpt_err.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9731377E7BD0093EE68 /* cpt_err.c */; };
 		CD807ECF1831C5B700E658D9 /* cryptlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9741377E7BD0093EE68 /* cryptlib.c */; };
 		CD807ED01831C5B700E658D9 /* cversion.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9751377E7BD0093EE68 /* cversion.c */; };
@@ -4069,8 +3436,6 @@
 		CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */; };
 		CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */; };
 		CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */; };
-		CDAC02BE192407E700392FAB /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
-		CDAC02BF192407E700392FAB /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FA173C12CE00DFE837 /* host.cpp */; };
 		CDB0CA30193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */; };
 		CDB0CA31193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */; };
@@ -7976,7 +7341,6 @@
 		CD795EFE17F0901A006AEB47 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mongoose.c; path = ../../3rdparty/mongoose/mongoose.c; sourceTree = "<group>"; };
 		CD795EFF17F0901A006AEB47 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mongoose.h; path = ../../3rdparty/mongoose/mongoose.h; sourceTree = "<group>"; };
 		CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-curl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIIso8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.h; sourceTree = "<group>"; };
 		CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIIso8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.m; sourceTree = "<group>"; };
@@ -8089,7 +7453,6 @@
 		CDD06DAA1398838D00AB0420 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = "../../3rdparty/luasocket-2.0.2/src/unix.h"; sourceTree = SOURCE_ROOT; };
 		CDD06DAC1398838D00AB0420 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usocket.c; path = "../../3rdparty/luasocket-2.0.2/src/usocket.c"; sourceTree = SOURCE_ROOT; };
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
-		CDD47B9317FA789B00525B77 /* libmoai-ios-3rdparty-curl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-curl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDD30921574AE0000C410A0 /* libmoai-ios-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDD30A51574AE0F00C410A0 /* libmoai-osx-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8343,13 +7706,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD807DF11831C3C600E658D9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807E921831C42100E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8421,13 +7777,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDD06D82139882D900AB0420 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CDD47B8D17FA789B00525B77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9002,7 +8351,6 @@
 				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
 				CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */,
 				CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */,
-				CDD47B9317FA789B00525B77 /* libmoai-ios-3rdparty-curl.a */,
 				CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */,
 				CDC1238317FA804C00FB64BB /* libmoai-ios-zl-crypto.a */,
 				CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */,
@@ -9016,7 +8364,6 @@
 				CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */,
 				CD4C4174180A9AEA00C02381 /* libmoai-ios-urban-airship.a */,
 				CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */,
-				CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */,
 				CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */,
 				CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */,
 				CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */,
@@ -13810,9 +13157,8 @@
 				89BE7609173C12CE00DFE837 /* headers.h in Headers */,
 				89BE760D173C12CE00DFE837 /* host.h in Headers */,
 				89BE7611173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */,
-				89BE7615173C12CE00DFE837 /* MOAIHttpTaskCurl.h in Headers */,
+				CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE7619173C12CE00DFE837 /* MOAIHttpTaskNaCl.h in Headers */,
-				89BE761D173C12CE00DFE837 /* MOAIUrlMgrCurl.h in Headers */,
 				89BE7621173C12CE00DFE837 /* MOAIUrlMgrNaCl.h in Headers */,
 				89BE7625173C12CE00DFE837 /* pch.h in Headers */,
 			);
@@ -13824,8 +13170,8 @@
 			files = (
 				89BE7608173C12CE00DFE837 /* headers.h in Headers */,
 				89BE760C173C12CE00DFE837 /* host.h in Headers */,
-				CDAC02BE192407E700392FAB /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE7610173C12CE00DFE837 /* MOAIHttpTaskBase.h in Headers */,
+				CD57EC7019F90306007FEF66 /* MOAIHttpTaskNSURL.h in Headers */,
 				89BE7624173C12CE00DFE837 /* pch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14689,324 +14035,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD807B4C1831C3C600E658D9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD807B4D1831C3C600E658D9 /* SFMT-params11213.h in Headers */,
-				CD807B4E1831C3C600E658D9 /* SFMT-params44497.h in Headers */,
-				CD807B4F1831C3C600E658D9 /* moai_utf8.h in Headers */,
-				CD807B5B1831C3C600E658D9 /* arpa_telnet.h in Headers */,
-				CD807B5C1831C3C600E658D9 /* connect.h in Headers */,
-				CD807B5D1831C3C600E658D9 /* SFMT-params1279.h in Headers */,
-				CD807B5E1831C3C600E658D9 /* content_encoding.h in Headers */,
-				CD807B5F1831C3C600E658D9 /* cookie.h in Headers */,
-				CD807B601831C3C600E658D9 /* curl_addrinfo.h in Headers */,
-				CD807B611831C3C600E658D9 /* curl_base64.h in Headers */,
-				CD807B621831C3C600E658D9 /* curl_ldap.h in Headers */,
-				CD807B631831C3C600E658D9 /* curl_md5.h in Headers */,
-				CD807B641831C3C600E658D9 /* curl_memory.h in Headers */,
-				CD807B651831C3C600E658D9 /* curl_memrchr.h in Headers */,
-				CD807B661831C3C600E658D9 /* curl_rand.h in Headers */,
-				CD807B671831C3C600E658D9 /* curl_sspi.h in Headers */,
-				CD807B681831C3C600E658D9 /* curlx.h in Headers */,
-				CD807B691831C3C600E658D9 /* dict.h in Headers */,
-				CD807B6A1831C3C600E658D9 /* easyif.h in Headers */,
-				CD807B6B1831C3C600E658D9 /* escape.h in Headers */,
-				CD807B6C1831C3C600E658D9 /* file.h in Headers */,
-				CD807B6D1831C3C600E658D9 /* formdata.h in Headers */,
-				CD807B6E1831C3C600E658D9 /* ftp.h in Headers */,
-				CD807B6F1831C3C600E658D9 /* getinfo.h in Headers */,
-				CD807B701831C3C600E658D9 /* gtls.h in Headers */,
-				CD807B711831C3C600E658D9 /* SFMT-params607.h in Headers */,
-				CD807B721831C3C600E658D9 /* hash.h in Headers */,
-				CD807B731831C3C600E658D9 /* hostip.h in Headers */,
-				CD807B741831C3C600E658D9 /* http.h in Headers */,
-				CD807B751831C3C600E658D9 /* http_chunks.h in Headers */,
-				CD807B761831C3C600E658D9 /* http_digest.h in Headers */,
-				CD807B771831C3C600E658D9 /* SFMT-sse2.h in Headers */,
-				CD807B781831C3C600E658D9 /* http_negotiate.h in Headers */,
-				CD807B791831C3C600E658D9 /* http_ntlm.h in Headers */,
-				CD807B7A1831C3C600E658D9 /* if2ip.h in Headers */,
-				CD807B7B1831C3C600E658D9 /* inet_ntop.h in Headers */,
-				CD807B7C1831C3C600E658D9 /* inet_pton.h in Headers */,
-				CD807B7D1831C3C600E658D9 /* krb4.h in Headers */,
-				CD807B7E1831C3C600E658D9 /* llist.h in Headers */,
-				CD807B7F1831C3C600E658D9 /* memdebug.h in Headers */,
-				CD807B801831C3C600E658D9 /* multiif.h in Headers */,
-				CD807B811831C3C600E658D9 /* netrc.h in Headers */,
-				CD807B821831C3C600E658D9 /* nonblock.h in Headers */,
-				CD807B831831C3C600E658D9 /* nssg.h in Headers */,
-				CD807B841831C3C600E658D9 /* parsedate.h in Headers */,
-				CD807B851831C3C600E658D9 /* progress.h in Headers */,
-				CD807B861831C3C600E658D9 /* qssl.h in Headers */,
-				CD807B871831C3C600E658D9 /* rawstr.h in Headers */,
-				CD807B881831C3C600E658D9 /* SFMT-params132049.h in Headers */,
-				CD807B891831C3C600E658D9 /* select.h in Headers */,
-				CD807B8A1831C3C600E658D9 /* sendf.h in Headers */,
-				CD807B8B1831C3C600E658D9 /* setup.h in Headers */,
-				CD807B8C1831C3C600E658D9 /* setup_once.h in Headers */,
-				CD807B8D1831C3C600E658D9 /* share.h in Headers */,
-				CD807B8E1831C3C600E658D9 /* slist.h in Headers */,
-				CD807B8F1831C3C600E658D9 /* sockaddr.h in Headers */,
-				CD807B901831C3C600E658D9 /* socks.h in Headers */,
-				CD807B911831C3C600E658D9 /* speedcheck.h in Headers */,
-				CD807B921831C3C600E658D9 /* splay.h in Headers */,
-				CD807B931831C3C600E658D9 /* SFMT-params4253.h in Headers */,
-				CD807B941831C3C600E658D9 /* ssh.h in Headers */,
-				CD807B951831C3C600E658D9 /* sslgen.h in Headers */,
-				CD807B961831C3C600E658D9 /* ssluse.h in Headers */,
-				CD807B971831C3C600E658D9 /* strdup.h in Headers */,
-				CD807B981831C3C600E658D9 /* strequal.h in Headers */,
-				CD807B991831C3C600E658D9 /* strerror.h in Headers */,
-				CD807B9A1831C3C600E658D9 /* strtok.h in Headers */,
-				CD807B9B1831C3C600E658D9 /* strtoofft.h in Headers */,
-				CD807B9C1831C3C600E658D9 /* telnet.h in Headers */,
-				CD807B9D1831C3C600E658D9 /* tftp.h in Headers */,
-				CD807B9E1831C3C600E658D9 /* timeval.h in Headers */,
-				CD807B9F1831C3C600E658D9 /* transfer.h in Headers */,
-				CD807BA01831C3C600E658D9 /* url.h in Headers */,
-				CD807BA11831C3C600E658D9 /* urldata.h in Headers */,
-				CD807BA21831C3C600E658D9 /* ascii.h in Headers */,
-				CD807BA31831C3C600E658D9 /* asciitab.h in Headers */,
-				CD807BA41831C3C600E658D9 /* expat.h in Headers */,
-				CD807BA51831C3C600E658D9 /* expat_external.h in Headers */,
-				CD807BA61831C3C600E658D9 /* iasciitab.h in Headers */,
-				CD807BA71831C3C600E658D9 /* internal.h in Headers */,
-				CD807BA81831C3C600E658D9 /* latin1tab.h in Headers */,
-				CD807BA91831C3C600E658D9 /* macconfig.h in Headers */,
-				CD807BAA1831C3C600E658D9 /* nametab.h in Headers */,
-				CD807BAB1831C3C600E658D9 /* utf8tab.h in Headers */,
-				CD807BAC1831C3C600E658D9 /* winconfig.h in Headers */,
-				CD807BAD1831C3C600E658D9 /* xmlrole.h in Headers */,
-				CD807BAE1831C3C600E658D9 /* xmltok.h in Headers */,
-				CD807BAF1831C3C600E658D9 /* xmltok_impl.h in Headers */,
-				CD807BB01831C3C600E658D9 /* ft2build.h in Headers */,
-				CD807BB11831C3C600E658D9 /* ftconfig.h in Headers */,
-				CD807BB21831C3C600E658D9 /* ftheader.h in Headers */,
-				CD807BB31831C3C600E658D9 /* ftmodule.h in Headers */,
-				CD807BB41831C3C600E658D9 /* ftoption.h in Headers */,
-				CD807BB51831C3C600E658D9 /* ftstdlib.h in Headers */,
-				CD807BB61831C3C600E658D9 /* png.h in Headers */,
-				CD807BB71831C3C600E658D9 /* pngconf.h in Headers */,
-				CD807BB81831C3C600E658D9 /* pngpriv.h in Headers */,
-				CD807BBB1831C3C600E658D9 /* tinyxml.h in Headers */,
-				CD807BBC1831C3C600E658D9 /* sweep.h in Headers */,
-				CD807BBD1831C3C600E658D9 /* hashtable.h in Headers */,
-				CD807BBE1831C3C600E658D9 /* jansson_config.h in Headers */,
-				CD807BBF1831C3C600E658D9 /* SFMT-params216091.h in Headers */,
-				CD807BC01831C3C600E658D9 /* jansson_private.h in Headers */,
-				CD807BC11831C3C600E658D9 /* jansson.h in Headers */,
-				CD807BC21831C3C600E658D9 /* bucketalloc.h in Headers */,
-				CD807BC31831C3C600E658D9 /* strbuffer.h in Headers */,
-				CD807BC41831C3C600E658D9 /* utf.h in Headers */,
-				CD807EC61831C53F00E658D9 /* ssl23.h in Headers */,
-				CD807EC41831C53F00E658D9 /* ssl2.h in Headers */,
-				CD807BC51831C3C600E658D9 /* lapi.h in Headers */,
-				CD807BC61831C3C600E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
-				CD807BC71831C3C600E658D9 /* lauxlib.h in Headers */,
-				CD807EBE1831C53F00E658D9 /* ssl_locl.h in Headers */,
-				CD807BC81831C3C600E658D9 /* lcode.h in Headers */,
-				CD807BC91831C3C600E658D9 /* ldebug.h in Headers */,
-				CD807BCA1831C3C600E658D9 /* ldo.h in Headers */,
-				CD807BCB1831C3C600E658D9 /* lfunc.h in Headers */,
-				CD807BCC1831C3C600E658D9 /* lgc.h in Headers */,
-				CD807BCD1831C3C600E658D9 /* llex.h in Headers */,
-				CD807BCE1831C3C600E658D9 /* llimits.h in Headers */,
-				CD807BCF1831C3C600E658D9 /* lmem.h in Headers */,
-				CD807BD01831C3C600E658D9 /* lobject.h in Headers */,
-				CD807BD11831C3C600E658D9 /* lopcodes.h in Headers */,
-				CD807BD21831C3C600E658D9 /* lparser.h in Headers */,
-				CD807BD31831C3C600E658D9 /* SFMT-params19937.h in Headers */,
-				CD807BD41831C3C600E658D9 /* lstate.h in Headers */,
-				CD807BD51831C3C600E658D9 /* lstring.h in Headers */,
-				CD807BD61831C3C600E658D9 /* ltable.h in Headers */,
-				CD807BD71831C3C600E658D9 /* ltm.h in Headers */,
-				CD807BD81831C3C600E658D9 /* lua.h in Headers */,
-				CD807BD91831C3C600E658D9 /* luaconf.h in Headers */,
-				CD807BDA1831C3C600E658D9 /* lualib.h in Headers */,
-				CD807BDB1831C3C600E658D9 /* lundump.h in Headers */,
-				CD807BDC1831C3C600E658D9 /* lvm.h in Headers */,
-				CD807BDD1831C3C600E658D9 /* lzio.h in Headers */,
-				CD807BDE1831C3C600E658D9 /* jconfig.h in Headers */,
-				CD807BDF1831C3C600E658D9 /* jdct.h in Headers */,
-				CD807BE01831C3C600E658D9 /* jerror.h in Headers */,
-				CD807BE11831C3C600E658D9 /* jinclude.h in Headers */,
-				CD807BE21831C3C600E658D9 /* jmemsys.h in Headers */,
-				CD807BE31831C3C600E658D9 /* jmorecfg.h in Headers */,
-				CD807BE41831C3C600E658D9 /* jpegint.h in Headers */,
-				CD807BE51831C3C600E658D9 /* SFMT.h in Headers */,
-				CD807BE61831C3C600E658D9 /* jpeglib.h in Headers */,
-				CD807BE71831C3C600E658D9 /* jversion.h in Headers */,
-				CD807BEA1831C3C600E658D9 /* mesh.h in Headers */,
-				CD807BEB1831C3C600E658D9 /* SFMT-params2281.h in Headers */,
-				CD807BEC1831C3C600E658D9 /* tess.h in Headers */,
-				CD807BED1831C3C600E658D9 /* crc32.h in Headers */,
-				CD807BEE1831C3C600E658D9 /* SFMT-common.h in Headers */,
-				CD807BEF1831C3C600E658D9 /* deflate.h in Headers */,
-				CD807BF01831C3C600E658D9 /* inffast.h in Headers */,
-				CD807BF11831C3C600E658D9 /* inffixed.h in Headers */,
-				CD807BF21831C3C600E658D9 /* inflate.h in Headers */,
-				CD807BF31831C3C600E658D9 /* inftrees.h in Headers */,
-				CD807BF41831C3C600E658D9 /* trees.h in Headers */,
-				CD807BF51831C3C600E658D9 /* zconf.h in Headers */,
-				CD807BF61831C3C600E658D9 /* zlib.h in Headers */,
-				CD807BF71831C3C600E658D9 /* zutil.h in Headers */,
-				CD807BF81831C3C600E658D9 /* moai_whirlpool.h in Headers */,
-				CD807BF91831C3C600E658D9 /* SDL_assert_c.h in Headers */,
-				CD807BFA1831C3C600E658D9 /* SDL_error_c.h in Headers */,
-				CD807BFB1831C3C600E658D9 /* SDL_blit.h in Headers */,
-				CD807BFC1831C3C600E658D9 /* SDL_blit_auto.h in Headers */,
-				CD807BFD1831C3C600E658D9 /* SDL_blit_copy.h in Headers */,
-				CD807BFE1831C3C600E658D9 /* SDL_blit_slow.h in Headers */,
-				CD807BFF1831C3C600E658D9 /* SDL_pixels_c.h in Headers */,
-				CD807C001831C3C600E658D9 /* SDL_RLEaccel_c.h in Headers */,
-				CD807C011831C3C600E658D9 /* SDL_shape_internals.h in Headers */,
-				CD807C021831C3C600E658D9 /* priorityq.h in Headers */,
-				CD807C031831C3C600E658D9 /* SDL_sysvideo.h in Headers */,
-				CD807C041831C3C600E658D9 /* imKStoUCS.h in Headers */,
-				CD807EC31831C53F00E658D9 /* ssl.h in Headers */,
-				CD807C051831C3C600E658D9 /* SDL_x11clipboard.h in Headers */,
-				CD807C061831C3C600E658D9 /* SDL_x11dyn.h in Headers */,
-				CD807C071831C3C600E658D9 /* SDL_x11events.h in Headers */,
-				CD807C081831C3C600E658D9 /* SDL_x11framebuffer.h in Headers */,
-				CD807C091831C3C600E658D9 /* SDL_x11keyboard.h in Headers */,
-				CD807C0A1831C3C600E658D9 /* SDL_x11modes.h in Headers */,
-				CD807C0B1831C3C600E658D9 /* SDL_x11mouse.h in Headers */,
-				CD807C0C1831C3C600E658D9 /* SDL_x11opengl.h in Headers */,
-				CD807C0D1831C3C600E658D9 /* SDL_x11opengles.h in Headers */,
-				CD807C0E1831C3C600E658D9 /* SDL_x11shape.h in Headers */,
-				CD807C0F1831C3C600E658D9 /* SDL_x11sym.h in Headers */,
-				CD807C101831C3C600E658D9 /* SDL_x11touch.h in Headers */,
-				CD807C111831C3C600E658D9 /* SDL_x11video.h in Headers */,
-				CD807C121831C3C600E658D9 /* SDL_x11window.h in Headers */,
-				CD807C131831C3C600E658D9 /* SDL_x11xinput2.h in Headers */,
-				CD807C141831C3C600E658D9 /* SDL_nullevents_c.h in Headers */,
-				CD807C151831C3C600E658D9 /* SDL_nullframebuffer_c.h in Headers */,
-				CD807C161831C3C600E658D9 /* SDL_nullvideo.h in Headers */,
-				CD807C171831C3C600E658D9 /* SDL_cocoaclipboard.h in Headers */,
-				CD807C181831C3C600E658D9 /* SDL_cocoaevents.h in Headers */,
-				CD807C191831C3C600E658D9 /* SDL_cocoakeyboard.h in Headers */,
-				CD807C1A1831C3C600E658D9 /* SDL_cocoamessagebox.h in Headers */,
-				CD807C1B1831C3C600E658D9 /* SDL_cocoamodes.h in Headers */,
-				CD807C1C1831C3C600E658D9 /* SDL_cocoamouse.h in Headers */,
-				CD807C1D1831C3C600E658D9 /* SDL_cocoamousetap.h in Headers */,
-				CD807C1E1831C3C600E658D9 /* SDL_cocoaopengl.h in Headers */,
-				CD807C1F1831C3C600E658D9 /* SDL_cocoashape.h in Headers */,
-				CD807C201831C3C600E658D9 /* SDL_cocoavideo.h in Headers */,
-				CD807C211831C3C600E658D9 /* SDL_cocoawindow.h in Headers */,
-				CD807C221831C3C600E658D9 /* SDL_timer_c.h in Headers */,
-				CD807EA11831C53F00E658D9 /* dtls1.h in Headers */,
-				CD807C231831C3C600E658D9 /* SDL_systhread.h in Headers */,
-				CD807C241831C3C600E658D9 /* geom.h in Headers */,
-				CD807C251831C3C600E658D9 /* SDL_thread_c.h in Headers */,
-				CD807C261831C3C600E658D9 /* SDL_sysmutex_c.h in Headers */,
-				CD807C271831C3C600E658D9 /* SDL_systhread_c.h in Headers */,
-				CD807C281831C3C600E658D9 /* mmx.h in Headers */,
-				CD807C291831C3C600E658D9 /* SDL_sysrender.h in Headers */,
-				CD807C2A1831C3C600E658D9 /* SDL_yuv_sw_c.h in Headers */,
-				CD807C2B1831C3C600E658D9 /* SDL_blendfillrect.h in Headers */,
-				CD807C2C1831C3C600E658D9 /* SDL_blendline.h in Headers */,
-				CD807C2D1831C3C600E658D9 /* SDL_blendpoint.h in Headers */,
-				CD807C2E1831C3C600E658D9 /* SFMT-params.h in Headers */,
-				CD807C2F1831C3C600E658D9 /* SDL_draw.h in Headers */,
-				CD807C301831C3C600E658D9 /* SDL_drawline.h in Headers */,
-				CD807C311831C3C600E658D9 /* SDL_drawpoint.h in Headers */,
-				CD807C321831C3C600E658D9 /* SDL_render_sw_c.h in Headers */,
-				CD807C331831C3C600E658D9 /* SDL_rotate.h in Headers */,
-				CD807EA41831C53F00E658D9 /* kssl.h in Headers */,
-				CD807C341831C3C600E658D9 /* SDL_glfuncs.h in Headers */,
-				CD807C351831C3C600E658D9 /* SDL_shaders_gl.h in Headers */,
-				CD807C361831C3C600E658D9 /* SDL_joystick_c.h in Headers */,
-				CD807C371831C3C600E658D9 /* SDL_sysjoystick.h in Headers */,
-				CD807C381831C3C600E658D9 /* SDL_sysjoystick_c.h in Headers */,
-				CD807C391831C3C600E658D9 /* SDL_haptic_c.h in Headers */,
-				CD807C3A1831C3C600E658D9 /* SDL_syshaptic.h in Headers */,
-				CD807C3B1831C3C600E658D9 /* SDL_rwopsbundlesupport.h in Headers */,
-				CD807C3C1831C3C600E658D9 /* blank_cursor.h in Headers */,
-				CD807C3D1831C3C600E658D9 /* default_cursor.h in Headers */,
-				CD807C3E1831C3C600E658D9 /* scancodes_darwin.h in Headers */,
-				CD807C3F1831C3C600E658D9 /* scancodes_linux.h in Headers */,
-				CD807C401831C3C600E658D9 /* scancodes_xfree86.h in Headers */,
-				CD807C411831C3C600E658D9 /* SDL_clipboardevents_c.h in Headers */,
-				CD807C421831C3C600E658D9 /* SDL_dropevents_c.h in Headers */,
-				CD807C431831C3C600E658D9 /* SDL_events_c.h in Headers */,
-				CD807C441831C3C600E658D9 /* SDL_gesture_c.h in Headers */,
-				CD807C451831C3C600E658D9 /* SDL_keyboard_c.h in Headers */,
-				CD807C461831C3C600E658D9 /* SDL_mouse_c.h in Headers */,
-				CD807C471831C3C600E658D9 /* SDL_sysevents.h in Headers */,
-				CD807C481831C3C600E658D9 /* SDL_touch_c.h in Headers */,
-				CD807C491831C3C600E658D9 /* SDL_windowevents_c.h in Headers */,
-				CD807C4A1831C3C600E658D9 /* SDL_audio_c.h in Headers */,
-				CD807C4B1831C3C600E658D9 /* SDL_audiodev_c.h in Headers */,
-				CD807EC51831C53F00E658D9 /* ssl3.h in Headers */,
-				CD807C4C1831C3C600E658D9 /* SDL_audiomem.h in Headers */,
-				CD807C4D1831C3C600E658D9 /* SDL_sysaudio.h in Headers */,
-				CD807C4E1831C3C600E658D9 /* SFMT-alti.h in Headers */,
-				CD807C4F1831C3C600E658D9 /* SDL_wave.h in Headers */,
-				CD807C501831C3C600E658D9 /* SDL_coreaudio.h in Headers */,
-				CD807C511831C3C600E658D9 /* SDL_dummyaudio.h in Headers */,
-				CD807C521831C3C600E658D9 /* SDL_diskaudio.h in Headers */,
-				CD807C531831C3C600E658D9 /* begin_code.h in Headers */,
-				CD807C541831C3C600E658D9 /* close_code.h in Headers */,
-				CD807C551831C3C600E658D9 /* SDL.h in Headers */,
-				CD807C561831C3C600E658D9 /* SDL_assert.h in Headers */,
-				CD807C571831C3C600E658D9 /* SDL_atomic.h in Headers */,
-				CD807C581831C3C600E658D9 /* SDL_audio.h in Headers */,
-				CD807C591831C3C600E658D9 /* SDL_bits.h in Headers */,
-				CD807C5A1831C3C600E658D9 /* SDL_blendmode.h in Headers */,
-				CD807C5B1831C3C600E658D9 /* SDL_clipboard.h in Headers */,
-				CD807C5C1831C3C600E658D9 /* SDL_config.h in Headers */,
-				CD807C5D1831C3C600E658D9 /* SDL_config_macosx.h in Headers */,
-				CD807ECD1831C53F00E658D9 /* tls1.h in Headers */,
-				CD807C5E1831C3C600E658D9 /* SDL_copying.h in Headers */,
-				CD807C5F1831C3C600E658D9 /* SDL_cpuinfo.h in Headers */,
-				CD807C601831C3C600E658D9 /* SDL_endian.h in Headers */,
-				CD807C611831C3C600E658D9 /* SDL_error.h in Headers */,
-				CD807C621831C3C600E658D9 /* SDL_events.h in Headers */,
-				CD807C631831C3C600E658D9 /* SDL_gamecontroller.h in Headers */,
-				CD807C641831C3C600E658D9 /* SDL_gesture.h in Headers */,
-				CD807C651831C3C600E658D9 /* SDL_haptic.h in Headers */,
-				CD807C661831C3C600E658D9 /* SDL_hints.h in Headers */,
-				CD807C671831C3C600E658D9 /* SDL_joystick.h in Headers */,
-				CD807C681831C3C600E658D9 /* SDL_keyboard.h in Headers */,
-				CD807C691831C3C600E658D9 /* SDL_keycode.h in Headers */,
-				CD807C6A1831C3C600E658D9 /* SDL_loadso.h in Headers */,
-				CD807C6B1831C3C600E658D9 /* SDL_log.h in Headers */,
-				CD807C6C1831C3C600E658D9 /* SDL_main.h in Headers */,
-				CD807C6D1831C3C600E658D9 /* SDL_messagebox.h in Headers */,
-				CD807C6E1831C3C600E658D9 /* SDL_mouse.h in Headers */,
-				CD807C6F1831C3C600E658D9 /* SDL_mutex.h in Headers */,
-				CD807C701831C3C600E658D9 /* SDL_name.h in Headers */,
-				CD807C711831C3C600E658D9 /* SDL_opengl.h in Headers */,
-				CD807C721831C3C600E658D9 /* SDL_opengles.h in Headers */,
-				CD807C731831C3C600E658D9 /* SDL_opengles2.h in Headers */,
-				CD807C741831C3C600E658D9 /* SDL_pixels.h in Headers */,
-				CD807C751831C3C600E658D9 /* SDL_platform.h in Headers */,
-				CD807C761831C3C600E658D9 /* SDL_power.h in Headers */,
-				CD807C771831C3C600E658D9 /* SFMT-params86243.h in Headers */,
-				CD807C781831C3C600E658D9 /* SDL_quit.h in Headers */,
-				CD807C791831C3C600E658D9 /* SDL_rect.h in Headers */,
-				CD807C7A1831C3C600E658D9 /* SDL_render.h in Headers */,
-				CD807C7B1831C3C600E658D9 /* SDL_revision.h in Headers */,
-				CD807C7C1831C3C600E658D9 /* SDL_rwops.h in Headers */,
-				CD807C7D1831C3C600E658D9 /* SDL_scancode.h in Headers */,
-				CD807C7E1831C3C600E658D9 /* SDL_shape.h in Headers */,
-				CD807C7F1831C3C600E658D9 /* SDL_stdinc.h in Headers */,
-				CD807C801831C3C600E658D9 /* SDL_surface.h in Headers */,
-				CD807C811831C3C600E658D9 /* SDL_system.h in Headers */,
-				CD807C821831C3C600E658D9 /* SDL_syswm.h in Headers */,
-				CD807EA21831C53F00E658D9 /* kssl_lcl.h in Headers */,
-				CD807C831831C3C600E658D9 /* SDL_thread.h in Headers */,
-				CD807C841831C3C600E658D9 /* SDL_timer.h in Headers */,
-				CD807C851831C3C600E658D9 /* SDL_touch.h in Headers */,
-				CD807C861831C3C600E658D9 /* dict.h in Headers */,
-				CD807C871831C3C600E658D9 /* SDL_types.h in Headers */,
-				CD807C881831C3C600E658D9 /* SDL_version.h in Headers */,
-				CD807C891831C3C600E658D9 /* SDL_video.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807DF91831C42100E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15159,99 +14187,6 @@
 				CDD06DED1398838D00AB0420 /* usocket.h in Headers */,
 				E9940D6B14B7A217006465CC /* lfs.h in Headers */,
 				89BE6AC91739759C00DFE837 /* host.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CDD4765717FA789B00525B77 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD27BD48191D5352000A7770 /* llist.h in Headers */,
-				CD27BD63191D5352000A7770 /* sendf.h in Headers */,
-				CD27BD38191D5352000A7770 /* http_digest.h in Headers */,
-				CD27BD0E191D5352000A7770 /* curl_ldap.h in Headers */,
-				CD27BD0C191D5352000A7770 /* curl_addrinfo.h in Headers */,
-				CD27BD8A191D5352000A7770 /* transfer.h in Headers */,
-				CD27BD6A191D5352000A7770 /* sockaddr.h in Headers */,
-				CD27BDC4191D5382000A7770 /* ssl.h in Headers */,
-				3E72B99C19F6EF2B00A9DE30 /* curlrules.h in Headers */,
-				CD27BD0D191D5352000A7770 /* curl_base64.h in Headers */,
-				CD27BD2E191D5352000A7770 /* hostip.h in Headers */,
-				CD27BD86191D5352000A7770 /* tftp.h in Headers */,
-				CD27BD0F191D5352000A7770 /* curl_md5.h in Headers */,
-				CD27BD61191D5352000A7770 /* select.h in Headers */,
-				CD27BD67191D5352000A7770 /* share.h in Headers */,
-				CD27BD5C191D5352000A7770 /* qssl.h in Headers */,
-				CD27BD97191D535A000A7770 /* stdcheaders.h in Headers */,
-				CD27BD6C191D5352000A7770 /* socks.h in Headers */,
-				CD27BDC6191D5382000A7770 /* ssl3.h in Headers */,
-				CD27BD0A191D5352000A7770 /* cookie.h in Headers */,
-				CD27BD69191D5352000A7770 /* slist.h in Headers */,
-				CD27BD12191D5352000A7770 /* curl_memrchr.h in Headers */,
-				CD27BD96191D535A000A7770 /* multi.h in Headers */,
-				CD27BDC7191D5382000A7770 /* ssl23.h in Headers */,
-				CD27BD74191D5352000A7770 /* ssh.h in Headers */,
-				CD27BD50191D5352000A7770 /* netrc.h in Headers */,
-				CD27BD78191D5352000A7770 /* ssluse.h in Headers */,
-				CD27BD28191D5352000A7770 /* gtls.h in Headers */,
-				CD27BD3E191D5352000A7770 /* if2ip.h in Headers */,
-				CD27BDA5191D5382000A7770 /* kssl.h in Headers */,
-				CD27BD93191D535A000A7770 /* curlver.h in Headers */,
-				CD27BD1B191D5352000A7770 /* easyif.h in Headers */,
-				CD27BD03191D5352000A7770 /* arpa_telnet.h in Headers */,
-				CD27BD08191D5352000A7770 /* content_encoding.h in Headers */,
-				CD27BD99191D535A000A7770 /* types.h in Headers */,
-				CD27BD10191D5352000A7770 /* curl_memory.h in Headers */,
-				CD27BD88191D5352000A7770 /* timeval.h in Headers */,
-				CD27BD42191D5352000A7770 /* inet_pton.h in Headers */,
-				CD27BD44191D5352000A7770 /* krb4.h in Headers */,
-				CD27BD34191D5352000A7770 /* http.h in Headers */,
-				CD27BD8F191D535A000A7770 /* curl.h in Headers */,
-				CD27BD21191D5352000A7770 /* formdata.h in Headers */,
-				CD27BD7E191D5352000A7770 /* strerror.h in Headers */,
-				CD27BDA2191D5382000A7770 /* dtls1.h in Headers */,
-				CD27BD65191D5352000A7770 /* setup_once.h in Headers */,
-				CD27BD80191D5352000A7770 /* strtok.h in Headers */,
-				CD27BD3C191D5352000A7770 /* http_ntlm.h in Headers */,
-				CD27BD3A191D5352000A7770 /* http_negotiate.h in Headers */,
-				CD27BDA3191D5382000A7770 /* kssl_lcl.h in Headers */,
-				CD27BD90191D535A000A7770 /* curl_config.h in Headers */,
-				CD27BD7A191D5352000A7770 /* strdup.h in Headers */,
-				CD27BD17191D5352000A7770 /* curlx.h in Headers */,
-				CD27BD1F191D5352000A7770 /* file.h in Headers */,
-				CD27BD64191D5352000A7770 /* setup.h in Headers */,
-				CD27BD8C191D5352000A7770 /* url.h in Headers */,
-				CD27BD2A191D5352000A7770 /* hash.h in Headers */,
-				CD27BD4B191D5352000A7770 /* memdebug.h in Headers */,
-				CD27BD82191D5352000A7770 /* strtoofft.h in Headers */,
-				CD27BD52191D5352000A7770 /* nonblock.h in Headers */,
-				CD27BD16191D5352000A7770 /* curl_sspi.h in Headers */,
-				CD27BD14191D5352000A7770 /* curl_rand.h in Headers */,
-				CD27BD58191D5352000A7770 /* parsedate.h in Headers */,
-				CD27BD91191D535A000A7770 /* curlbuild.h in Headers */,
-				CD27BD94191D535A000A7770 /* easy.h in Headers */,
-				CD27BD19191D5352000A7770 /* dict.h in Headers */,
-				CD27BD23191D5352000A7770 /* ftp.h in Headers */,
-				CD27BD76191D5352000A7770 /* sslgen.h in Headers */,
-				CD27BDC5191D5382000A7770 /* ssl2.h in Headers */,
-				CD27BD84191D5352000A7770 /* telnet.h in Headers */,
-				CD27BD40191D5352000A7770 /* inet_ntop.h in Headers */,
-				CD27BD8D191D5352000A7770 /* urldata.h in Headers */,
-				CD27BD06191D5352000A7770 /* connect.h in Headers */,
-				CD27BDBF191D5382000A7770 /* ssl_locl.h in Headers */,
-				CD27BD5E191D5352000A7770 /* rawstr.h in Headers */,
-				CD27BD7C191D5352000A7770 /* strequal.h in Headers */,
-				CD27BD1D191D5352000A7770 /* escape.h in Headers */,
-				CD27BDCE191D5382000A7770 /* tls1.h in Headers */,
-				CD27BD95191D535A000A7770 /* mprintf.h in Headers */,
-				CD27BD36191D5352000A7770 /* http_chunks.h in Headers */,
-				CD27BD54191D5352000A7770 /* nssg.h in Headers */,
-				CD27BD5A191D5352000A7770 /* progress.h in Headers */,
-				CD27BD98191D535A000A7770 /* typecheck-gcc.h in Headers */,
-				CD27BD4E191D5352000A7770 /* multiif.h in Headers */,
-				CD27BD70191D5352000A7770 /* speedcheck.h in Headers */,
-				CD27BD72191D5352000A7770 /* splay.h in Headers */,
-				CD27BD26191D5352000A7770 /* getinfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16003,23 +14938,6 @@
 			productReference = CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD807B4B1831C3C600E658D9 /* libmoai-osx-3rdparty-curl */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD807DF21831C3C600E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-curl" */;
-			buildPhases = (
-				CD807B4C1831C3C600E658D9 /* Headers */,
-				CD807C8B1831C3C600E658D9 /* Sources */,
-				CD807DF11831C3C600E658D9 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-osx-3rdparty-curl";
-			productName = OpenUSLS;
-			productReference = CD807DF71831C3C600E658D9 /* libmoai-osx-3rdparty-curl.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807E931831C42100E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-crypto" */;
@@ -16207,23 +15125,6 @@
 			productReference = CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CDD4765617FA789B00525B77 /* libmoai-ios-3rdparty-curl */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CDD47B8E17FA789B00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-curl" */;
-			buildPhases = (
-				CDD4765717FA789B00525B77 /* Headers */,
-				CDD477F617FA789B00525B77 /* Sources */,
-				CDD47B8D17FA789B00525B77 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-3rdparty-curl";
-			productName = OpenUSLS;
-			productReference = CDD47B9317FA789B00525B77 /* libmoai-ios-3rdparty-curl.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDD480CC17FA78AE00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-crypto" */;
@@ -16345,7 +15246,6 @@
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
 				0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty-core */,
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
-				CDD4765617FA789B00525B77 /* libmoai-ios-3rdparty-curl */,
 				CD70C1B218448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel */,
 				CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */,
 				CDA4B7391808AC61000129F9 /* libmoai-ios-billing */,
@@ -16377,7 +15277,6 @@
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */,
 				CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */,
-				CD807B4B1831C3C600E658D9 /* libmoai-osx-3rdparty-curl */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
 				89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
@@ -17548,9 +16447,8 @@
 			files = (
 				89BE760B173C12CE00DFE837 /* host.cpp in Sources */,
 				89BE760F173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */,
-				89BE7613173C12CE00DFE837 /* MOAIHttpTaskCurl.cpp in Sources */,
 				89BE7617173C12CE00DFE837 /* MOAIHttpTaskNaCl.cpp in Sources */,
-				89BE761B173C12CE00DFE837 /* MOAIUrlMgrCurl.cpp in Sources */,
+				CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE761F173C12CE00DFE837 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				89BE7623173C12CE00DFE837 /* pch.cpp in Sources */,
 			);
@@ -17561,9 +16459,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE760E173C12CE00DFE837 /* MOAIHttpTaskBase.cpp in Sources */,
+				CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */,
-				CDAC02BF192407E700392FAB /* MOAIHttpTaskNSURL.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18526,131 +17424,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD807C8B1831C3C600E658D9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD807C8D1831C3C600E658D9 /* base64.c in Sources */,
-				CD807C8E1831C3C600E658D9 /* connect.c in Sources */,
-				CD807EC71831C53F00E658D9 /* t1_clnt.c in Sources */,
-				CD807C8F1831C3C600E658D9 /* content_encoding.c in Sources */,
-				CD807E9A1831C53F00E658D9 /* d1_both.c in Sources */,
-				CD807C901831C3C600E658D9 /* cookie.c in Sources */,
-				CD807C911831C3C600E658D9 /* curl_addrinfo.c in Sources */,
-				CD807C921831C3C600E658D9 /* curl_memrchr.c in Sources */,
-				CD807C931831C3C600E658D9 /* curl_rand.c in Sources */,
-				CD807C941831C3C600E658D9 /* curl_sspi.c in Sources */,
-				CD807EA31831C53F00E658D9 /* kssl.c in Sources */,
-				CD807C951831C3C600E658D9 /* dict.c in Sources */,
-				CD807EB71831C53F00E658D9 /* ssl_algs.c in Sources */,
-				CD807EC81831C53F00E658D9 /* t1_enc.c in Sources */,
-				CD807C961831C3C600E658D9 /* easy.c in Sources */,
-				CD807EB11831C53F00E658D9 /* s3_srvr.c in Sources */,
-				CD807EC11831C53F00E658D9 /* ssl_stat.c in Sources */,
-				CD807C971831C3C600E658D9 /* escape.c in Sources */,
-				CD807EAF1831C53F00E658D9 /* s3_meth.c in Sources */,
-				CD807E9D1831C53F00E658D9 /* d1_lib.c in Sources */,
-				CD807C981831C3C600E658D9 /* file.c in Sources */,
-				CD807C991831C3C600E658D9 /* formdata.c in Sources */,
-				CD807C9A1831C3C600E658D9 /* ftp.c in Sources */,
-				CD807C9B1831C3C600E658D9 /* getenv.c in Sources */,
-				CD807ECA1831C53F00E658D9 /* t1_meth.c in Sources */,
-				CD807C9C1831C3C600E658D9 /* getinfo.c in Sources */,
-				CD807C9D1831C3C600E658D9 /* gtls.c in Sources */,
-				CD807EB31831C53F00E658D9 /* s23_lib.c in Sources */,
-				CD807EA91831C53F00E658D9 /* s2_pkt.c in Sources */,
-				CD807C9E1831C3C600E658D9 /* hash.c in Sources */,
-				CD807C9F1831C3C600E658D9 /* hostares.c in Sources */,
-				CD807CA01831C3C600E658D9 /* hostasyn.c in Sources */,
-				CD807E991831C53F00E658D9 /* bio_ssl.c in Sources */,
-				CD807CA11831C3C600E658D9 /* hostip.c in Sources */,
-				CD807EBA1831C53F00E658D9 /* ssl_ciph.c in Sources */,
-				CD807ECC1831C53F00E658D9 /* t1_srvr.c in Sources */,
-				CD807EB41831C53F00E658D9 /* s23_meth.c in Sources */,
-				CD807CA21831C3C600E658D9 /* hostip4.c in Sources */,
-				CD807CA31831C3C600E658D9 /* hostip6.c in Sources */,
-				CD807EA81831C53F00E658D9 /* s2_meth.c in Sources */,
-				CD807CA41831C3C600E658D9 /* hostsyn.c in Sources */,
-				CD807EA01831C53F00E658D9 /* d1_srvr.c in Sources */,
-				CD807CA51831C3C600E658D9 /* hostthre.c in Sources */,
-				CD807CA61831C3C600E658D9 /* http.c in Sources */,
-				CD807E9B1831C53F00E658D9 /* d1_clnt.c in Sources */,
-				CD807CA71831C3C600E658D9 /* http_chunks.c in Sources */,
-				CD807EBF1831C53F00E658D9 /* ssl_rsa.c in Sources */,
-				CD807CA81831C3C600E658D9 /* http_digest.c in Sources */,
-				CD807CA91831C3C600E658D9 /* http_negotiate.c in Sources */,
-				CD807CAA1831C3C600E658D9 /* http_ntlm.c in Sources */,
-				CD807CAB1831C3C600E658D9 /* if2ip.c in Sources */,
-				CD807CAC1831C3C600E658D9 /* inet_ntop.c in Sources */,
-				CD807ECB1831C53F00E658D9 /* t1_reneg.c in Sources */,
-				CD807EBD1831C53F00E658D9 /* ssl_lib.c in Sources */,
-				CD807CAD1831C3C600E658D9 /* inet_pton.c in Sources */,
-				CD807CAE1831C3C600E658D9 /* krb4.c in Sources */,
-				CD807EAE1831C53F00E658D9 /* s3_lib.c in Sources */,
-				CD807EAB1831C53F00E658D9 /* s3_both.c in Sources */,
-				CD807CAF1831C3C600E658D9 /* krb5.c in Sources */,
-				CD807CB01831C3C600E658D9 /* ldap.c in Sources */,
-				CD807CB11831C3C600E658D9 /* llist.c in Sources */,
-				CD807CB21831C3C600E658D9 /* md5.c in Sources */,
-				CD807EA71831C53F00E658D9 /* s2_lib.c in Sources */,
-				CD807CB31831C3C600E658D9 /* memdebug.c in Sources */,
-				CD807CB41831C3C600E658D9 /* mprintf.c in Sources */,
-				CD807E9F1831C53F00E658D9 /* d1_pkt.c in Sources */,
-				CD807EBB1831C53F00E658D9 /* ssl_err.c in Sources */,
-				CD807CB51831C3C600E658D9 /* multi.c in Sources */,
-				CD807CB61831C3C600E658D9 /* netrc.c in Sources */,
-				CD807CB71831C3C600E658D9 /* nonblock.c in Sources */,
-				CD807CB81831C3C600E658D9 /* nss.c in Sources */,
-				CD807EB21831C53F00E658D9 /* s23_clnt.c in Sources */,
-				CD807EA51831C53F00E658D9 /* s2_clnt.c in Sources */,
-				CD807CB91831C3C600E658D9 /* nwlib.c in Sources */,
-				CD807CBA1831C3C600E658D9 /* nwos.c in Sources */,
-				CD807CBB1831C3C600E658D9 /* parsedate.c in Sources */,
-				CD807EC01831C53F00E658D9 /* ssl_sess.c in Sources */,
-				CD807CBC1831C3C600E658D9 /* progress.c in Sources */,
-				CD807CBD1831C3C600E658D9 /* qssl.c in Sources */,
-				CD807CBE1831C3C600E658D9 /* rawstr.c in Sources */,
-				CD807EB51831C53F00E658D9 /* s23_pkt.c in Sources */,
-				CD807CBF1831C3C600E658D9 /* security.c in Sources */,
-				CD807CC01831C3C600E658D9 /* select.c in Sources */,
-				CD807E9C1831C53F00E658D9 /* d1_enc.c in Sources */,
-				CD807CC11831C3C600E658D9 /* sendf.c in Sources */,
-				CD807EB91831C53F00E658D9 /* ssl_cert.c in Sources */,
-				CD807CC21831C3C600E658D9 /* share.c in Sources */,
-				CD807EC91831C53F00E658D9 /* t1_lib.c in Sources */,
-				CD807CC31831C3C600E658D9 /* slist.c in Sources */,
-				CD807E9E1831C53F00E658D9 /* d1_meth.c in Sources */,
-				CD807CC41831C3C600E658D9 /* socks.c in Sources */,
-				CD807CC51831C3C600E658D9 /* socks_gssapi.c in Sources */,
-				CD807CC61831C3C600E658D9 /* socks_sspi.c in Sources */,
-				CD807EAD1831C53F00E658D9 /* s3_enc.c in Sources */,
-				CD807CC71831C3C600E658D9 /* speedcheck.c in Sources */,
-				CD807CC81831C3C600E658D9 /* splay.c in Sources */,
-				CD807CC91831C3C600E658D9 /* ssh.c in Sources */,
-				CD807CCA1831C3C600E658D9 /* sslgen.c in Sources */,
-				CD807EBC1831C53F00E658D9 /* ssl_err2.c in Sources */,
-				CD807EA61831C53F00E658D9 /* s2_enc.c in Sources */,
-				CD807EAA1831C53F00E658D9 /* s2_srvr.c in Sources */,
-				CD807EB81831C53F00E658D9 /* ssl_asn1.c in Sources */,
-				CD807CCB1831C3C600E658D9 /* ssluse.c in Sources */,
-				CD807CCC1831C3C600E658D9 /* strdup.c in Sources */,
-				CD807CCD1831C3C600E658D9 /* strequal.c in Sources */,
-				CD807CCE1831C3C600E658D9 /* strerror.c in Sources */,
-				CD807EB01831C53F00E658D9 /* s3_pkt.c in Sources */,
-				CD807CCF1831C3C600E658D9 /* strtok.c in Sources */,
-				CD807EAC1831C53F00E658D9 /* s3_clnt.c in Sources */,
-				CD807CD01831C3C600E658D9 /* strtoofft.c in Sources */,
-				CD807CD11831C3C600E658D9 /* telnet.c in Sources */,
-				CD807EB61831C53F00E658D9 /* s23_srvr.c in Sources */,
-				CD807CD21831C3C600E658D9 /* tftp.c in Sources */,
-				CD807EC21831C53F00E658D9 /* ssl_txt.c in Sources */,
-				CD807CD31831C3C600E658D9 /* timeval.c in Sources */,
-				CD807CD41831C3C600E658D9 /* transfer.c in Sources */,
-				CD807CD51831C3C600E658D9 /* url.c in Sources */,
-				CD807CD61831C3C600E658D9 /* version.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807E531831C42100E658D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -18799,131 +17572,6 @@
 				CDD06DEC1398838D00AB0420 /* usocket.c in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				89BE6AC81739759C00DFE837 /* host.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CDD477F617FA789B00525B77 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD27BD5F191D5352000A7770 /* security.c in Sources */,
-				CD27BD3B191D5352000A7770 /* http_ntlm.c in Sources */,
-				CD27BDC8191D5382000A7770 /* t1_clnt.c in Sources */,
-				CD27BD6F191D5352000A7770 /* speedcheck.c in Sources */,
-				CD27BD9B191D5382000A7770 /* d1_both.c in Sources */,
-				CD27BD87191D5352000A7770 /* timeval.c in Sources */,
-				CD27BD4D191D5352000A7770 /* multi.c in Sources */,
-				CD27BD66191D5352000A7770 /* share.c in Sources */,
-				CD27BD3D191D5352000A7770 /* if2ip.c in Sources */,
-				CD27BD4C191D5352000A7770 /* mprintf.c in Sources */,
-				CD27BDA4191D5382000A7770 /* kssl.c in Sources */,
-				CD27BD2B191D5352000A7770 /* hostares.c in Sources */,
-				CD27BDB8191D5382000A7770 /* ssl_algs.c in Sources */,
-				CD27BDC9191D5382000A7770 /* t1_enc.c in Sources */,
-				CD27BD2F191D5352000A7770 /* hostip4.c in Sources */,
-				CD27BDB2191D5382000A7770 /* s3_srvr.c in Sources */,
-				CD27BDC2191D5382000A7770 /* ssl_stat.c in Sources */,
-				CD27BD15191D5352000A7770 /* curl_sspi.c in Sources */,
-				CD27BDB0191D5382000A7770 /* s3_meth.c in Sources */,
-				CD27BD9E191D5382000A7770 /* d1_lib.c in Sources */,
-				CD27BD73191D5352000A7770 /* ssh.c in Sources */,
-				CD27BD4A191D5352000A7770 /* memdebug.c in Sources */,
-				CD27BD45191D5352000A7770 /* krb5.c in Sources */,
-				CD27BD39191D5352000A7770 /* http_negotiate.c in Sources */,
-				CD27BDCB191D5382000A7770 /* t1_meth.c in Sources */,
-				CD27BD7D191D5352000A7770 /* strerror.c in Sources */,
-				CD27BD89191D5352000A7770 /* transfer.c in Sources */,
-				CD27BDB4191D5382000A7770 /* s23_lib.c in Sources */,
-				CD27BDAA191D5382000A7770 /* s2_pkt.c in Sources */,
-				CD27BD6E191D5352000A7770 /* socks_sspi.c in Sources */,
-				CD27BD5B191D5352000A7770 /* qssl.c in Sources */,
-				CD27BD0B191D5352000A7770 /* curl_addrinfo.c in Sources */,
-				CD27BD9A191D5382000A7770 /* bio_ssl.c in Sources */,
-				CD27BD30191D5352000A7770 /* hostip6.c in Sources */,
-				CD27BDBB191D5382000A7770 /* ssl_ciph.c in Sources */,
-				CD27BDCD191D5382000A7770 /* t1_srvr.c in Sources */,
-				CD27BDB5191D5382000A7770 /* s23_meth.c in Sources */,
-				CD27BD1C191D5352000A7770 /* escape.c in Sources */,
-				CD27BD07191D5352000A7770 /* content_encoding.c in Sources */,
-				CD27BDA9191D5382000A7770 /* s2_meth.c in Sources */,
-				CD27BD43191D5352000A7770 /* krb4.c in Sources */,
-				CD27BDA1191D5382000A7770 /* d1_srvr.c in Sources */,
-				CD27BD18191D5352000A7770 /* dict.c in Sources */,
-				CD27BD68191D5352000A7770 /* slist.c in Sources */,
-				CD27BD9C191D5382000A7770 /* d1_clnt.c in Sources */,
-				CD27BD75191D5352000A7770 /* sslgen.c in Sources */,
-				CD27BDC0191D5382000A7770 /* ssl_rsa.c in Sources */,
-				CD27BD8B191D5352000A7770 /* url.c in Sources */,
-				CD27BD59191D5352000A7770 /* progress.c in Sources */,
-				CD27BD11191D5352000A7770 /* curl_memrchr.c in Sources */,
-				CD27BD7F191D5352000A7770 /* strtok.c in Sources */,
-				CD27BD3F191D5352000A7770 /* inet_ntop.c in Sources */,
-				CD27BDCC191D5382000A7770 /* t1_reneg.c in Sources */,
-				CD27BDBE191D5382000A7770 /* ssl_lib.c in Sources */,
-				CD27BD60191D5352000A7770 /* select.c in Sources */,
-				CD27BD41191D5352000A7770 /* inet_pton.c in Sources */,
-				CD27BDAF191D5382000A7770 /* s3_lib.c in Sources */,
-				CD27BDAC191D5382000A7770 /* s3_both.c in Sources */,
-				CD27BD8E191D5352000A7770 /* version.c in Sources */,
-				CD27BD25191D5352000A7770 /* getinfo.c in Sources */,
-				CD27BD35191D5352000A7770 /* http_chunks.c in Sources */,
-				CD27BD55191D5352000A7770 /* nwlib.c in Sources */,
-				CD27BDA8191D5382000A7770 /* s2_lib.c in Sources */,
-				CD27BD57191D5352000A7770 /* parsedate.c in Sources */,
-				CD27BD31191D5352000A7770 /* hostsyn.c in Sources */,
-				CD27BDA0191D5382000A7770 /* d1_pkt.c in Sources */,
-				CD27BDBC191D5382000A7770 /* ssl_err.c in Sources */,
-				CD27BD53191D5352000A7770 /* nss.c in Sources */,
-				CD27BD2C191D5352000A7770 /* hostasyn.c in Sources */,
-				CD27BD29191D5352000A7770 /* hash.c in Sources */,
-				CD27BD81191D5352000A7770 /* strtoofft.c in Sources */,
-				CD27BDB3191D5382000A7770 /* s23_clnt.c in Sources */,
-				CD27BDA6191D5382000A7770 /* s2_clnt.c in Sources */,
-				CD27BD77191D5352000A7770 /* ssluse.c in Sources */,
-				CD27BD33191D5352000A7770 /* http.c in Sources */,
-				CD27BD2D191D5352000A7770 /* hostip.c in Sources */,
-				CD27BDC1191D5382000A7770 /* ssl_sess.c in Sources */,
-				CD27BD1A191D5352000A7770 /* easy.c in Sources */,
-				CD27BD49191D5352000A7770 /* md5.c in Sources */,
-				CD27BD46191D5352000A7770 /* ldap.c in Sources */,
-				CD27BDB6191D5382000A7770 /* s23_pkt.c in Sources */,
-				CD27BD7B191D5352000A7770 /* strequal.c in Sources */,
-				CD27BD13191D5352000A7770 /* curl_rand.c in Sources */,
-				CD27BD9D191D5382000A7770 /* d1_enc.c in Sources */,
-				CD27BD4F191D5352000A7770 /* netrc.c in Sources */,
-				CD27BDBA191D5382000A7770 /* ssl_cert.c in Sources */,
-				CD27BD22191D5352000A7770 /* ftp.c in Sources */,
-				CD27BDCA191D5382000A7770 /* t1_lib.c in Sources */,
-				CD27BD24191D5352000A7770 /* getenv.c in Sources */,
-				CD27BD9F191D5382000A7770 /* d1_meth.c in Sources */,
-				CD27BD5D191D5352000A7770 /* rawstr.c in Sources */,
-				CD27BD6B191D5352000A7770 /* socks.c in Sources */,
-				CD27BD51191D5352000A7770 /* nonblock.c in Sources */,
-				CD27BDAE191D5382000A7770 /* s3_enc.c in Sources */,
-				CD27BD32191D5352000A7770 /* hostthre.c in Sources */,
-				CD27BD85191D5352000A7770 /* tftp.c in Sources */,
-				CD27BD62191D5352000A7770 /* sendf.c in Sources */,
-				CD27BD83191D5352000A7770 /* telnet.c in Sources */,
-				CD27BDBD191D5382000A7770 /* ssl_err2.c in Sources */,
-				CD27BDA7191D5382000A7770 /* s2_enc.c in Sources */,
-				CD27BDAB191D5382000A7770 /* s2_srvr.c in Sources */,
-				CD27BDB9191D5382000A7770 /* ssl_asn1.c in Sources */,
-				CD27BD37191D5352000A7770 /* http_digest.c in Sources */,
-				CD27BD05191D5352000A7770 /* connect.c in Sources */,
-				CD27BD04191D5352000A7770 /* base64.c in Sources */,
-				CD27BD09191D5352000A7770 /* cookie.c in Sources */,
-				CD27BDB1191D5382000A7770 /* s3_pkt.c in Sources */,
-				CD27BD1E191D5352000A7770 /* file.c in Sources */,
-				CD27BDAD191D5382000A7770 /* s3_clnt.c in Sources */,
-				CD27BD20191D5352000A7770 /* formdata.c in Sources */,
-				CD27BD6D191D5352000A7770 /* socks_gssapi.c in Sources */,
-				CD27BDB7191D5382000A7770 /* s23_srvr.c in Sources */,
-				CD27BD79191D5352000A7770 /* strdup.c in Sources */,
-				CD27BDC3191D5382000A7770 /* ssl_txt.c in Sources */,
-				CD27BD27191D5352000A7770 /* gtls.c in Sources */,
-				CD27BD71191D5352000A7770 /* splay.c in Sources */,
-				CD27BD56191D5352000A7770 /* nwos.c in Sources */,
-				CD27BD47191D5352000A7770 /* llist.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19922,7 +18570,6 @@
 					USE_SSL,
 					USE_UNTZ,
 					"UNTZ_WITH_VORBIS=1",
-					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
 					TIXML_USE_STL,
@@ -19939,6 +18586,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -19974,6 +18626,9 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include\"",
+					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
+					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -21086,13 +19741,6 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"MOAI_WITH_ARES=0",
-					"MOAI_WITH_LIBCURL=0",
-					"MOAI_WITH_OPENSSL=0",
-					"MOAI_WITH_NSURL=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21123,13 +19771,6 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"MOAI_WITH_ARES=0",
-					"MOAI_WITH_LIBCURL=0",
-					"MOAI_WITH_OPENSSL=0",
-					"MOAI_WITH_NSURL=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21160,13 +19801,6 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"MOAI_WITH_ARES=0",
-					"MOAI_WITH_LIBCURL=0",
-					"MOAI_WITH_OPENSSL=0",
-					"MOAI_WITH_NSURL=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21197,13 +19831,6 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"MOAI_WITH_ARES=0",
-					"MOAI_WITH_LIBCURL=0",
-					"MOAI_WITH_OPENSSL=0",
-					"MOAI_WITH_NSURL=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21835,7 +20462,6 @@
 					USE_SSL,
 					USE_UNTZ,
 					"UNTZ_WITH_VORBIS=1",
-					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
 					TIXML_USE_STL,
@@ -21852,6 +20478,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -21887,6 +20518,9 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include\"",
+					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
+					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -23657,184 +22291,6 @@
 			};
 			name = Distribution;
 		};
-		CD807DF31831C3C600E658D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-curl";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CD807DF41831C3C600E658D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-curl";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CD807DF51831C3C600E658D9 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-curl";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CD807DF61831C3C600E658D9 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-curl";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -25003,134 +23459,6 @@
 			};
 			name = Release;
 		};
-		CDD47B8F17FA789B00525B77 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-curl";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CDD47B9017FA789B00525B77 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-curl";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CDD47B9117FA789B00525B77 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-curl";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		CDD47B9217FA789B00525B77 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-curl";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CDD480CD17FA78AE00525B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -25776,7 +24104,6 @@
 					USE_SSL,
 					USE_UNTZ,
 					"UNTZ_WITH_VORBIS=1",
-					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
 					TIXML_USE_STL,
@@ -25793,6 +24120,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -25828,6 +24160,9 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include\"",
+					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
+					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -26187,7 +24522,6 @@
 					USE_SSL,
 					USE_UNTZ,
 					"UNTZ_WITH_VORBIS=1",
-					BUILDING_LIBCURL,
 					POSIX,
 					SQLITE_ENABLE_COLUMN_METADATA,
 					TIXML_USE_STL,
@@ -26204,6 +24538,11 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_THREADSAFE_STATICS = NO;
@@ -26239,6 +24578,9 @@
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
+					"\"../../3rdparty/openssl-1.0.0m/include\"",
+					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
+					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
@@ -26968,17 +25310,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD807DF21831C3C600E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-curl" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD807DF31831C3C600E658D9 /* Debug */,
-				CD807DF41831C3C600E658D9 /* Release */,
-				CD807DF51831C3C600E658D9 /* AdHoc */,
-				CD807DF61831C3C600E658D9 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		CD807E931831C42100E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-crypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -27096,17 +25427,6 @@
 				CDD06D86139882D900AB0420 /* Release */,
 				E9C405D0150D999200C7AB04 /* AdHoc */,
 				E90D02C814D5E12700DD75AA /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		CDD47B8E17FA789B00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-curl" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CDD47B8F17FA789B00525B77 /* Debug */,
-				CDD47B9017FA789B00525B77 /* Release */,
-				CDD47B9117FA789B00525B77 /* AdHoc */,
-				CDD47B9217FA789B00525B77 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

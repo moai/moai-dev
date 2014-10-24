@@ -127,7 +127,7 @@ void MOAIDialogAndroid::NotifyDialogDismissed ( int dialogResult ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUAppDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIDialogAndroid::Get ().NotifyDialogDismissed ( code );
 }
