@@ -1,3 +1,2 @@
-#!/bin/bash
-
-put -r ./sdk_docs_develop_stable /home/zipline/webapps/
+put -r -f ./sdk_docs_develop_stable/ /home/zipline/webapps/
+bye
