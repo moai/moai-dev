@@ -45,6 +45,10 @@ if (MOAI_JPG)
 	target_link_libraries (moai-sim jpg)
 endif (MOAI_JPG)
 
+if (MOAI_WEBP)
+	target_link_libraries (moai-sim webp)
+endif (MOAI_WEBP)
+
 if (MOAI_BOX2D)
  target_link_libraries ( moai-sim moai-box2d)
 endif (MOAI_BOX2D)

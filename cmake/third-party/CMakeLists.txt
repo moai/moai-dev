@@ -8,6 +8,11 @@ if (MSVC)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
 endif (MSVC)
 
+if (BUILD_ANDROID)
+  add_subdirectory(android)
+endif(BUILD_ANDROID)
+
+
 add_subdirectory ( box2d )
 add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
@@ -47,6 +52,7 @@ add_subdirectory ( tess )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
+add_subdirectory ( webp )
 add_subdirectory ( zlib )
 
 #SDL is for pc only
