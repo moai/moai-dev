@@ -109,7 +109,7 @@ void MOAITstoreWallAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreWall_AKUNotifyCurrencyAwarded ( JNIEnv* env, jclass obj, jint amount) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreWall_AKUNotifyCurrencyAwarded ( JNIEnv* env, jclass obj, jint amount) {
 
 	MOAITstoreWallAndroid::Get ().NotifyCurrencyAwarded ( amount );
 }

@@ -6,7 +6,7 @@
 
 	include $(CLEAR_VARS)
 
-	LOCAL_MODULE 		:= host-android
+	LOCAL_MODULE 		:= moai-android
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS		:= $(MY_LOCAL_CFLAGS) -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h -fvisibility=hidden
 

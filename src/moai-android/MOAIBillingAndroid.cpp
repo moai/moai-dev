@@ -939,13 +939,13 @@ void MOAIBillingAndroid::NotifyUserIdDetermined ( int code, cc8* user ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
 
 	MOAIBillingAndroid::Get ().NotifyBillingSupported ( supported );
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
@@ -955,7 +955,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurc
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );
@@ -971,7 +971,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurc
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code, jboolean more, jstring joffset ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code, jboolean more, jstring joffset ) {
 
 	JNI_GET_CSTRING ( joffset, offset );
 
@@ -981,7 +981,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonRest
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonUserIdDetermined ( JNIEnv* env, jclass obj, jint code, jstring juser ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonUserIdDetermined ( JNIEnv* env, jclass obj, jint code, jstring juser ) {
 
 	JNI_GET_CSTRING ( juser, user );
 
@@ -995,13 +995,13 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonUser
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
 
 	MOAIBillingAndroid::Get ().NotifyBillingSupported ( supported );
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
@@ -1011,7 +1011,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurc
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring jnotification, jstring jpayload ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring jnotification, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );
@@ -1027,7 +1027,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurc
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIBillingAndroid::Get ().NotifyRestoreResponseReceived ( MOAIBillingAndroid::MapGoogleResponseCode ( code ), false, NULL );
 }
@@ -1038,7 +1038,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRest
 
 //----------------------------------------------------------------//
 
-extern "C" void Java_com_ziplinegames_moai_MoaiFortumoReciever_AKUNotifyFortumoPurchaseResponseReceived ( JNIEnv* env, jclass obj,  jint billing_status, jstring jcredit_amount,
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFortumoReciever_AKUNotifyFortumoPurchaseResponseReceived ( JNIEnv* env, jclass obj,  jint billing_status, jstring jcredit_amount,
 																																			jstring jcredit_name, jstring jmessage_id,
 																																			jstring jpayment_code, jstring jprice_amount,
 																																			jstring jprice_currency, jstring jproduct_name,
@@ -1072,7 +1072,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiFortumoReciever_AKUNotifyFortumoP
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
@@ -1082,7 +1082,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurc
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreBilling_AKUNotifyTstorePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );

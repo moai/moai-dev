@@ -243,7 +243,7 @@ JniUtils::JniUtils () :
     //jmethodID getActivity = this->Env ()->GetStaticMethodID ( clazz, "getActivity", "()Landroid/app/Activity;" );
 	//this->mActivity = this->Env ()->CallStaticObjectMethod ( clazz, getActivity );
 
-	assert ( this->mActivity );
+	//assert ( this->mActivity );
 }
 
 //----------------------------------------------------------------//
