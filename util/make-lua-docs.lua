@@ -484,7 +484,7 @@ for filename in util.iterateFiles ( SRC_PATH, { '.c$', '.cpp$', '.h$', '.m$', '.
 	parseFile ( src, dst )
 end
 
-os.execute ( '/usr/local/bin/doxygen doxyfile' )
+os.execute ( 'doxygen doxyfile' )
 
 local concat = function ( ... )
 	return table.concat ( arg )
@@ -539,6 +539,6 @@ for filename in util.iterateFiles ( TEMPLATE_PATH ) do
 end
 
 MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
-
+--os.execute ( string.format("cp -r -p %s %s ", HTML_PATH, OUTPUT_DIR))
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
