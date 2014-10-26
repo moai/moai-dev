@@ -573,25 +573,25 @@ void MOAITstoreGamecenterAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthExitResponse ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthExitResponse ( JNIEnv* env, jclass obj ) {
 
 	MOAITstoreGamecenterAndroid::Get ().AKUNotifyAuthExitResponse ();
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthSuccessResponse ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyAuthSuccessResponse ( JNIEnv* env, jclass obj ) {
 
 	MOAITstoreGamecenterAndroid::Get ().AKUNotifyAuthSuccessResponse ();
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyDisableSuccessResponse ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyDisableSuccessResponse ( JNIEnv* env, jclass obj ) {
 
 	MOAITstoreGamecenterAndroid::Get ().AKUNotifyDisableSuccessResponse ();
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreListResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreListResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
 
 	JNI_GET_CSTRING ( jjsonData, jsonData );
 
@@ -601,7 +601,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyScoreLi
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyUserInfoResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreGamecenter_AKUNotifyUserInfoResponse ( JNIEnv* env, jclass obj, jstring jjsonData ) {
 
 	JNI_GET_CSTRING ( jjsonData, jsonData );
 

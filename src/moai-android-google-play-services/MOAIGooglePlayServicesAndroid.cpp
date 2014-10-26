@@ -287,7 +287,7 @@ void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 // AKU Callbacks
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
 
 	MOAIGooglePlayServicesAndroid::Get ().NotifyConnectionComplete ();
 }

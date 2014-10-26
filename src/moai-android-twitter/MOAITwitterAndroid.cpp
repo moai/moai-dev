@@ -289,7 +289,7 @@ void MOAITwitterAndroid::NotifyTweetComplete ( int code ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterLoginComplete ( JNIEnv* env, jclass obj,
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterLoginComplete ( JNIEnv* env, jclass obj,
                                                                     jint code, jstring jtoken, jstring jtokenSecret ) {
 
 	JNI_GET_CSTRING ( jtoken, token );
@@ -302,7 +302,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterLoginComp
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterTweetComplete ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterTweetComplete ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAITwitterAndroid::Get ().NotifyTweetComplete ( code );
 }

@@ -382,7 +382,7 @@ void MOAIAppAndroid::PushPicturePath( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
+extern "C" JNIEXPORT jboolean JNICALL Java_com_ziplinegames_moai_Moai_AKUAppInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( MOAIAppAndroid::Get ().PushListener ( eventID, state )) {
@@ -393,11 +393,11 @@ extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppInvokeListener ( JNIEnv* e
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiCamera_AKUNotifyPictureTaken ( JNIEnv* env, jclass obj ) {
 	MOAIAppAndroid::Get ().NotifyPictureTaken ();
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUAppOpenedFromURL ( JNIEnv* env, jclass obj, jstring url ) {
 	MOAIAppAndroid::Get ().AppOpenedFromURL ( url );
 }

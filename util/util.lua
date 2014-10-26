@@ -34,6 +34,7 @@ local		makeDlcResourceSig			= nil
 			pack						= nil
 			package						= nil
 			powerIter					= nil
+			printTable					= nil
 			pruneEmptyDirs				= nil
 			quantize					= nil
 			readFileAll					= nil
@@ -495,6 +496,22 @@ powerIter = function ( iter, state, var )
 	
 	setmetatable ( wrapper, { __call = next })
 	return wrapper
+end
+
+----------------------------------------------------------------
+printTable = function ( t, d )
+
+	local depth = d or 0
+	local indent = ""
+	for i = 1, depth do indent = indent .. "> " end
+	for i, item in pairs ( t ) do
+
+		io.write ( indent )
+		print ( i, item )
+		if type ( item ) == "table" then
+			printTable ( item, depth + 1 )
+		end
+	end
 end
 
 ----------------------------------------------------------------
