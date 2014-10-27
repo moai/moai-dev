@@ -39,7 +39,6 @@ private:
 	void			OnClear					();
 	void			OnCreate				();
 	void			OnLoad					();
-	void			OnInvalidate			();
 
 public:
 	
