@@ -93,10 +93,18 @@ void MOAIImageTexture::OnCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnLoad () {
+void MOAIImageTexture::OnInvalidate () {
+
+	printf ( "MOAIImageTexture::OnInvalidate ()\n" );
+	
+	this->mGLTexID = 0;
 }
 
+//----------------------------------------------------------------//
+void MOAIImageTexture::OnLoad () {
 
+	printf ( "MOAIImageTexture::OnLoad ()\n" );
+}
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
@@ -132,14 +140,12 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion () {
-
-	//this->mStatus = INVALID;
- 	//this->MOAIGfxResource::Load ();
 	
 	this->mRegion = this->GetRect ();
 	
 	this->mStatus = INVALID_REGION;
-	this->MOAIGfxResource::InvalidateContents ();
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
@@ -159,5 +165,6 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	}
 	
 	this->mStatus = INVALID_REGION;
-	this->MOAIGfxResource::InvalidateContents ();
+	this->MOAIGfxResource::Invalidate ();
+	this->MOAIGfxResource::Load ();
 }

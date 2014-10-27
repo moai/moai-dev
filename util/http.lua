@@ -15,6 +15,18 @@ local PUT		= MOAIHttpTask.HTTP_PUT
 -- implementation
 --==============================================================
 
+		delete			= nil
+local	escapeUrl		= nil
+local	encodeParams	= nil
+		get				= nil
+		getVerbName		= nil
+		is200			= nil
+		is400			= nil
+		is500			= nil
+		perform			= nil
+		post			= nil
+		put				= nil
+
 ----------------------------------------------------
 delete = function ( url, params, headers, timeout )
 	return perform ( DELETE, url, params, nil, headers, timeout )
@@ -43,7 +55,7 @@ escapeUrl = function ( str )
 end
 
 ----------------------------------------------------------------
-_encodeParams = function ( t )
+encodeParams = function ( t )
 
 	if not t then return '' end
 
@@ -94,7 +106,7 @@ end
 ----------------------------------------------------------------
 perform = function ( verb, url, params, body, headers, timeout )
 
-	url = params and url .. _encodeParams ( params ) or url
+	url = params and url .. encodeParams ( params ) or url
 
 	if body and headers [ 'content-type' ] ~= 'text/plain' then
 		body = MOAIJsonParser.encode ( body ) or ''

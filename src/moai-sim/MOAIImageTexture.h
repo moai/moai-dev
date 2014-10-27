@@ -38,6 +38,7 @@ private:
 	bool			IsValid					();
 	void			OnClear					();
 	void			OnCreate				();
+	void			OnInvalidate			();
 	void			OnLoad					();
 
 public:
