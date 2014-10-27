@@ -39,14 +39,13 @@ private:
 	void			OnClear					();
 	void			OnCreate				();
 	void			OnLoad					();
-	void			OnInvalidate			();
 
 public:
-	
+
 	DECL_LUA_FACTORY ( MOAIImageTexture )
-	
+
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
-	
+
 	//----------------------------------------------------------------//
 					MOAIImageTexture		();
 					~MOAIImageTexture		();
