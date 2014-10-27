@@ -216,13 +216,13 @@ bool MOAIHashWriter::Open ( MOAIStream* stream, ZLHashWriter* writer ) {
 	this->Close ();
 	this->mWriter = writer;
 	
-	ZLStream* usStream = stream ? stream->GetZLStream () : 0;
+	ZLStream* zlStream = stream ? stream->GetZLStream () : 0;
 	
-	if ( usStream ) {
+	if ( zlStream ) {
 		this->mStream.Set ( *this, stream );
 	}
 	
-	this->mWriter->Open ( *usStream );
+	this->mWriter->Open ( zlStream );
 	this->SetZLStream ( this->mWriter );
 	
 	return true;

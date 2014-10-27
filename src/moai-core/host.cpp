@@ -327,7 +327,7 @@ void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compress
 	buffer.Load ( data, size );
 	
 	if ( compressed == AKU_DATA_ZIPPED ) {
-		buffer.Inflate ( ZLDeflateReader::DEFAULT_WBITS );
+		buffer.Inflate ( ZLDeflateWriter::DEFAULT_WBITS );
 	}
 
 	buffer.Lock ( &data, &size );

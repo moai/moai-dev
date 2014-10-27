@@ -20,8 +20,8 @@ using namespace std;
 	STLString str; \
 	STLSTRING_APPEND_VA_ARGS ( str, format, top )
 
-class ZLStreamReader;
-class ZLStreamWriter;
+class ZLStreamAdapter;
+class ZLStreamAdapter;
 
 //================================================================//
 // STLString
@@ -30,8 +30,8 @@ class STLString :
 	public string {
 	
 	//----------------------------------------------------------------//
-	void				zl_decode			( ZLStreamReader& reader, void* buffer, size_t len );
-	void				zl_encode			( ZLStreamWriter& writer, const void* buffer, size_t len );
+	void				zl_decode			( ZLStreamAdapter& reader, void* buffer, size_t len );
+	void				zl_encode			( ZLStreamAdapter& writer, const void* buffer, size_t len );
 	
 public:
 

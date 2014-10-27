@@ -75,6 +75,7 @@ void ZLBase64Encoder::FormatPlainBlock ( u8* block ) {
 ZLBase64Encoder::ZLBase64Encoder () {
 
 	// TODO: provide web safe alternatives, overrides
+	// TODO: keep this in a static
 	memcpy ( this->mBitsToASCII, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", 64 );
 	memset ( this->mASCIIToBits, 0, 256 );
 	

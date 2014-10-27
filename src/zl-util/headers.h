@@ -41,9 +41,8 @@
 #include <zl-util/ZLHashWriterAdler32.h>
 #include <zl-util/ZLHashWriterCRC32.h>
 #include <zl-util/ZLHashWriterWhirlpool.h>
+#include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
-#include <zl-util/ZLHexReader.h>
-#include <zl-util/ZLHexWriter.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLLeanArray.h>
@@ -73,8 +72,7 @@
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLStream.h>
-#include <zl-util/ZLStreamReader.h>
-#include <zl-util/ZLStreamWriter.h>
+#include <zl-util/ZLStreamAdapter.h>
 #include <zl-util/ZLSurface2D.h>
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>

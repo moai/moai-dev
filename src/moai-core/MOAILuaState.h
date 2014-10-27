@@ -16,8 +16,8 @@ private:
 	lua_State*	mState;
 
 	//----------------------------------------------------------------//
-	bool			Decode					( int idx, ZLStreamReader& reader );
-	bool			Encode					( int idx, ZLStreamWriter& writer );
+	bool			Decode					( int idx, ZLStreamAdapter& reader );
+	bool			Encode					( int idx, ZLStreamAdapter& writer );
 	void			ReportBadCast			( int idx, cc8* typeName );
 
 public:

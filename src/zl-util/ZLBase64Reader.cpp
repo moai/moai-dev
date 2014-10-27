@@ -9,73 +9,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLBase64Reader::Close () {
-	
-	this->mInputStream = 0;
-	this->mInputBase = 0;
-	
-	this->mCursor = 0;
-	this->mSize = 0;
-	this->mLength = 0;
-	
-	this->mBlockID = ( size_t )-1;
-	this->mBlockTop = 0;
-}
-
-//----------------------------------------------------------------//
-u32 ZLBase64Reader::GetCaps () {
-
-	return this->mInputStream ? CAN_READ | CAN_SEEK : 0;
-}
-
-//----------------------------------------------------------------//
-size_t ZLBase64Reader::GetCursor () {
-
-	return this->mCursor;
-}
-
-//----------------------------------------------------------------//
 // returns an approx. len no smaller than actual decoded size
-size_t ZLBase64Reader::GetDecodedLength ( size_t encodedLength ) {
+size_t ZLBase64Reader::EstimateDecodedLength ( size_t encodedLength ) {
 
 	return 3 * ( size_t )ceilf (( double )encodedLength / 4.0 ); // should not need ceil
 }
 
 //----------------------------------------------------------------//
-size_t ZLBase64Reader::GetLength () {
+u32 ZLBase64Reader::GetCaps () {
 
-	return this->mSize > this->mLength ? this->mSize : this->mLength;
+	return this->mStream ? CAN_READ | CAN_SEEK : 0;
 }
 
 //----------------------------------------------------------------//
-bool ZLBase64Reader::IsAtEnd () {
-
-	return this->mSize && ( this->mCursor >= this->mSize ? 1 : 0 );
-}
-
-//----------------------------------------------------------------//
-bool ZLBase64Reader::Open ( ZLStream& stream ) {
-
-	this->Close ();
-
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
+void ZLBase64Reader::OnClose () {
 	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool ZLBase64Reader::Open ( ZLStream& stream, size_t size ) {
-
-	this->Close ();
-
-	this->mInputStream = &stream;
-	this->mInputBase = stream.GetCursor ();
-	
-	this->mSize = size;
-	this->mLength = size;
-	
-	return true;
+	this->mBlockID = ( size_t )-1;
+	this->mBlockTop = 0;
 }
 
 //----------------------------------------------------------------//
@@ -110,6 +60,7 @@ size_t ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 			break;
 		}
 	}
+	
 	return size - remainder;
 }
 
@@ -129,12 +80,12 @@ void ZLBase64Reader::SyncBlock () {
 	
 		this->mBlockID = blockID;
 		
-		size_t cryptBlockAddr = ( blockID * ZLBase64Encoder::CRYPT_BLOCK_SIZE ) + this->mInputBase;
-		this->mInputStream->Seek ( cryptBlockAddr, SEEK_SET );
+		size_t cryptBlockAddr = ( blockID * ZLBase64Encoder::CRYPT_BLOCK_SIZE ) + this->mBase;
+		this->mStream->Seek ( cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 		this->mEncoder.FormatCryptBlock ( cryptBlock );
-		this->mInputStream->ReadBytes ( cryptBlock, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+		this->mStream->ReadBytes ( cryptBlock, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
 		
 		this->mBlockTop = this->mEncoder.Decode ( this->mPlainBlock, cryptBlock );
 	}
@@ -142,11 +93,6 @@ void ZLBase64Reader::SyncBlock () {
 
 //----------------------------------------------------------------//
 ZLBase64Reader::ZLBase64Reader () :
-	mInputStream ( 0 ),
-	mInputBase ( 0 ),
-	mCursor ( 0 ),
-	mSize ( 0 ),
-	mLength ( 0 ),
 	mBlockID (( size_t )-1 ),
 	mBlockTop ( 0 ) {
 }

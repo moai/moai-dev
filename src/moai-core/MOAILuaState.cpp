@@ -183,13 +183,17 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Decode ( int idx, ZLStreamReader& reader ) {
+bool MOAILuaState::Decode ( int idx, ZLStreamAdapter& reader ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
 	size_t len;
 	void* buffer = ( void* )lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
+	
+	if ( !len ) {
+		lua_pushstring ( this->mState, "" );
+		return true;
+	}
 	
 	ZLByteStream cryptStream;
 	cryptStream.SetBuffer ( buffer, len );
@@ -197,7 +201,7 @@ bool MOAILuaState::Decode ( int idx, ZLStreamReader& reader ) {
 	
 	ZLMemStream plainStream;
 	
-	reader.Open ( cryptStream );
+	reader.Open ( &cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -225,17 +229,21 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Encode ( int idx, ZLStreamWriter& writer ) {
+bool MOAILuaState::Encode ( int idx, ZLStreamAdapter& writer ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
 	size_t len;
 	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
+	
+	if ( !len ) {
+		lua_pushstring ( this->mState, "" );
+		return true;
+	}
 	
 	ZLMemStream stream;
 	
-	writer.Open ( stream );
+	writer.Open ( &stream );
 	writer.WriteBytes ( buffer, len );
 	writer.Close ();
 	
@@ -798,14 +806,14 @@ bool MOAILuaState::HasKeys ( int idx ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::HexDecode ( int idx ) {
 
-	ZLHexReader hex;
+	ZLHexAdapter hex;
 	return this->Decode ( idx, hex );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaState::HexEncode ( int idx ) {
 
-	ZLHexWriter hex;
+	ZLHexAdapter hex;
 	return this->Encode ( idx, hex );
 }
 

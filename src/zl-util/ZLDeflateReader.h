@@ -5,7 +5,7 @@
 #define ZLDEFLATEREADER_H
 
 #include <zl-util/ZLAccessors.h>
-#include <zl-util/ZLStreamReader.h>
+#include <zl-util/ZLStreamAdapter.h>
 #include <zlib.h>
 
 #define ZL_DEFLATE_READER_MAX_CACHE		4096
@@ -27,15 +27,8 @@ public:
 // ZLDeflateReader
 //================================================================//
 class ZLDeflateReader :
-	public ZLStreamReader {
+	public ZLStreamAdapter {
 private:
-
-	ZLStream*			mInputStream;			// compressed input stream
-	size_t				mInputBase;				// base of compressed stream (when opened)
-	
-	size_t				mUncompressedCursor;	// cursor in the output stream
-	size_t				mUncompressedSize;		// uncompressed size (if known)
-	size_t				mLength;
 	
 	z_stream			mZStream;				// underlying zip stream state
 	int					mWindowBits;
@@ -54,22 +47,17 @@ private:
 	int					AffirmChunk				( int chunkID );
 	size_t				Inflate					( void* dest, size_t size );
 	void				InflateChunk			( ZLStreamChunk& chunk );
+	void				OnClose					();
+	bool				OnOpen					();
+	size_t				ReadBytes				( void* buffer, size_t size );
 	int					ResetZipStream			();
 
 public:
 
-	static const int DEFAULT_WBITS = -15;
-
 	GET_SET ( int, WindowBits, mWindowBits )
 
 	//----------------------------------------------------------------//
-	void				Close					();
 	u32					GetCaps					();
-	size_t				GetCursor				();
-	size_t				GetLength				();
-	bool				IsAtEnd					();
-	bool				Open					( ZLStream& stream );
-	size_t				ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						ZLDeflateReader			();
 						~ZLDeflateReader		();

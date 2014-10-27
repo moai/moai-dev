@@ -75,8 +75,8 @@ int MOAIStream::_read ( lua_State* L ) {
 	}
 	
 	if ( !len ) {
-		state.Push ();
-		state.Push (  0 );
+		lua_pushstring ( state, "" );
+		state.Push ( 0 );
 		return 2;
 	}
 	

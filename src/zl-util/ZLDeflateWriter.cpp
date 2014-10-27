@@ -10,36 +10,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLDeflateWriter::Close () {
-	
-	if ( this->mOutputStream ) {
-	
-		this->Deflate ( 0, 0 );
-	
-		deflateEnd ( &this->mZStream );
-		memset ( &this->mZStream, 0, sizeof ( z_stream ));
-		
-		this->mUncompressedCursor = 0;
-		this->mOutputStream = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 u32 ZLDeflateWriter::GetCaps () {
 
-	return this->mOutputStream ? CAN_WRITE : 0;
-}
-
-//----------------------------------------------------------------//
-size_t ZLDeflateWriter::GetCursor () {
-
-	return this->mUncompressedCursor;
-}
-
-//----------------------------------------------------------------//
-size_t ZLDeflateWriter::GetLength () {
-
-	return this->mUncompressedCursor;
+	return this->mStream ? CAN_WRITE : 0;
 }
 
 //----------------------------------------------------------------//
@@ -63,7 +36,7 @@ size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 		
 		size_t have = ZL_DEFLATE_WRITER_CHUNK_SIZE - stream->avail_out;
 		if ( have ) {
-			size_t write = this->mOutputStream->WriteBytes ( buffer, have );
+			size_t write = this->mStream->WriteBytes ( buffer, have );
 			if ( write != have ) {
 				// TODO: report error
 				break;
@@ -83,23 +56,47 @@ size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLDeflateWriter::Open ( ZLStream& stream ) {
+void ZLDeflateWriter::OnClose () {
+	
+	if ( this->mStream ) {
+	
+		this->Deflate ( 0, 0 );
+	
+		deflateEnd ( &this->mZStream );
+		memset ( &this->mZStream, 0, sizeof ( z_stream ));
+		
+		this->mStream = 0;
+	}
+}
 
-	this->Close ();
+//----------------------------------------------------------------//
+bool ZLDeflateWriter::OnOpen () {
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	int result = deflateInit2 ( &this->mZStream, this->mCompressionLevel, Z_DEFLATED, this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
 
 	if ( result != Z_OK ) return false;
 
-	this->mOutputStream = &stream;
 	return true;
 }
 
 //----------------------------------------------------------------//
+size_t ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
+
+	if ( size ) {
+	
+		size = this->Deflate ( buffer, size );
+		
+		this->mCursor += size;
+		if ( this->mLength < this->mCursor ) {
+			this->mLength = this->mCursor;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 ZLDeflateWriter::ZLDeflateWriter () :
-	mOutputStream ( 0 ),
-	mUncompressedCursor ( 0 ),
 	mCompressionLevel ( DEFAULT_LEVEL ),
 	mWindowBits ( DEFAULT_WBITS ) {
 	
@@ -110,13 +107,4 @@ ZLDeflateWriter::ZLDeflateWriter () :
 ZLDeflateWriter::~ZLDeflateWriter () {
 
 	this->Close ();
-}
-
-//----------------------------------------------------------------//
-size_t ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
-
-	if ( size ) {
-		return this->Deflate ( buffer, size );
-	}
-	return 0;
 }

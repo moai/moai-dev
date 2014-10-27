@@ -6,7 +6,7 @@
 
 data = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultricies porttitor leo.'
 
- data = MOAIDataBuffer.base64Encode ( data )
+data = MOAIDataBuffer.base64Encode ( data )
 print ( data )
 
 data = MOAIDataBuffer.base64Decode ( data )
