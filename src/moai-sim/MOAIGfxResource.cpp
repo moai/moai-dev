@@ -132,49 +132,23 @@ void MOAIGfxResource::Destroy () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::Invalidate () {
 
-	printf ( "MOAIGfxResource::Invalidate ()\n" );
-
 	if ( this->mState == STATE_READY ) {
 
-		printf ( "this->mState == STATE_READY\n" );
-
 		this->OnInvalidate ();
-
 		this->mState = STATE_PRELOAD;
-		
-		printf ( "set state to STATE_PRELOAD\n" );
 	}
 	else if ( this->mState == STATE_PRECREATE ) {
 
-		printf ( "this->mState == STATE_PRECREATE\n" );
-
 		this->mState = STATE_PRELOAD;
-		
-		printf ( "set state to STATE_PRELOAD\n" );
 	}
 }
 
 //----------------------------------------------------------------//
-//void MOAIGfxResource::InvalidateContents () {
-//
-//	if ( this->mState != STATE_ERROR ) {
-//
-//		this->mState = STATE_PRECREATE;
-//	}
-//}
-
-//----------------------------------------------------------------//
 void MOAIGfxResource::Load () {
-
-	printf ( "MOAIGfxResource::Invalidate ()\n" );
 
 	if ( this->mState != STATE_ERROR ) {
 
-		printf ( "this->mState != STATE_ERROR\n" );
-
 		if ( this->mState == STATE_READY ) {
-		
-			printf ( "this->mState == STATE_READY\n" );
 		
 			this->OnDestroy ();
 			this->OnInvalidate ();
@@ -182,8 +156,6 @@ void MOAIGfxResource::Load () {
 
 		this->OnLoad ();
 		this->mState = STATE_PRECREATE;
-		
-		printf ( "set state to STATE_PRECREATE\n" );
 	}
 }
 

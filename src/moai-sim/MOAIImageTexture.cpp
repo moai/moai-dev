@@ -94,16 +94,12 @@ void MOAIImageTexture::OnCreate () {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnInvalidate () {
-
-	printf ( "MOAIImageTexture::OnInvalidate ()\n" );
 	
 	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnLoad () {
-
-	printf ( "MOAIImageTexture::OnLoad ()\n" );
 }
 
 //----------------------------------------------------------------//
