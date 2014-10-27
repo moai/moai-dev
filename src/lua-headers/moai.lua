@@ -432,6 +432,7 @@ MOAITextLabel.extend (
 		
 		initTextLabelInterface ( interface, superInterface )
 		
+		interface.getString = superInterface.getText
 		interface.getStringBounds = superInterface.getTextBounds
 		interface.setString = superInterface.setText
 	end

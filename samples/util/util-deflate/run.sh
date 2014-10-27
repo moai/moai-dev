@@ -16,13 +16,5 @@ if [ ! -f "$MOAI_BIN/moai" ]; then
     exit 1
 fi
 
-if [ ! -f "$MOAI_CONFIG/config.lua" ]; then
-    echo "---------------------------------------------------------------------------"
-    echo "WARNING: The MOAI_CONFIG environment variable either doesn't exist or it's"
-    echo "pointing to an invalid path.  Please point it at a folder containing config.lua"
-    echo "---------------------------------------------------------------------------"
-    exit 1
-fi
-
 # Run moai
-$MOAI_BIN/moai $MOAI_CONFIG/config.lua main.lua
+$MOAI_BIN/moai main.lua

@@ -179,8 +179,14 @@ void ZLColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				
 				for ( u32 i = 0; i < copy; ++i ) {
 					
-					color = *( u32* )src;
-					src = ( void* )(( size_t )src + 3 );
+					color = *( u8* )src;
+					src = ( void* )(( size_t )src + 1 );
+					
+					color += *( u8* )src << 8;
+					src = ( void* )(( size_t )src + 1 );
+					
+					color += *( u8* )src << 16;
+					src = ( void* )(( size_t )src + 1 );
 					
 					buffer [ i ]= color | 0xff000000;
 				}

@@ -26,4 +26,4 @@ fi
 
 # Run moai
 cd src
-$MOAI_BIN/moai $MOAI_CONFIG/config.lua main.lua
+$MOAI_BIN/moai main.lua
