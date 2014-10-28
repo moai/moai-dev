@@ -8,8 +8,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBWEBP
 
 extern "C" {
-#include "libwebp-0.4.1/src/webp/demux.h"
-#include "libwebp-0.4.1/src/webp/decode.h"
+	#include "libwebp-0.4.1/src/webp/demux.h"
+	#include "libwebp-0.4.1/src/webp/decode.h"
 }
 
 //================================================================//
