@@ -135,7 +135,6 @@ void MOAIGfxResource::Invalidate () {
 	if ( this->mState == STATE_READY ) {
 
 		this->OnInvalidate ();
-
 		this->mState = STATE_PRELOAD;
 	}
 	else if ( this->mState == STATE_PRECREATE ) {
@@ -145,20 +144,12 @@ void MOAIGfxResource::Invalidate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::InvalidateContents () {
-
-	if ( this->mState != STATE_ERROR ) {
-
-		this->mState = STATE_PRECREATE;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResource::Load () {
 
 	if ( this->mState != STATE_ERROR ) {
 
 		if ( this->mState == STATE_READY ) {
+		
 			this->OnDestroy ();
 			this->OnInvalidate ();
 		}

@@ -5,21 +5,14 @@
 #define ZLBASE64READER_H
 
 #include <zl-util/ZLBase64Encoder.h>
-#include <zl-util/ZLStreamReader.h>
+#include <zl-util/ZLStreamAdapter.h>
 
 //================================================================//
 // ZLBase64Reader
 //================================================================//
 class ZLBase64Reader :
-	public ZLStreamReader {
+	public ZLStreamAdapter {
 private:
-
-	ZLStream*			mInputStream;			// compressed input stream
-	size_t				mInputBase;				// base of compressed stream (when opened)
-	
-	size_t				mCursor;				// cursor in the output stream
-	size_t				mSize;					// size (if known)
-	size_t				mLength;
 
 	ZLBase64Encoder		mEncoder;
 	u8					mPlainBlock [ ZLBase64Encoder::PLAIN_BLOCK_SIZE ];
@@ -27,20 +20,15 @@ private:
 	u32					mBlockTop;
 
 	//----------------------------------------------------------------//
+	void				OnClose					();
+	size_t				ReadBytes				( void* buffer, size_t size );
 	void				SyncBlock				();
 
 public:
 
 	//----------------------------------------------------------------//
-	void				Close					();
+	static size_t		EstimateDecodedLength	( size_t encodedLength );
 	u32					GetCaps					();
-	size_t				GetCursor				();
-	static size_t		GetDecodedLength		( size_t encodedLength );
-	size_t				GetLength				();
-	bool				IsAtEnd					();
-	bool				Open					( ZLStream& stream );
-	bool				Open					( ZLStream& stream, size_t size );
-	size_t				ReadBytes				( void* buffer, size_t size );
 	int					SetCursor				( long offset );
 						ZLBase64Reader			();
 						~ZLBase64Reader			();

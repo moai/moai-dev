@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+print ( 'HELLO' )
+
 stream = MOAIMemStream.new ()
 stream:open ()
 

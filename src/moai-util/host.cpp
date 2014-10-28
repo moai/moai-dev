@@ -33,6 +33,7 @@ void AKUUtilContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIHashWriter )
 	REGISTER_LUA_CLASS ( MOAIMath )
 	REGISTER_LUA_CLASS ( MOAIMemStream )
+	REGISTER_LUA_CLASS ( MOAIStreamAdapter )
 	REGISTER_LUA_CLASS ( MOAIStreamReader )
 	REGISTER_LUA_CLASS ( MOAIStreamWriter )
 	REGISTER_LUA_CLASS ( MOAITaskQueue )

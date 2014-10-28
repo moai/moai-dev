@@ -252,7 +252,9 @@ size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 	if( this->mGuestBuffer ) {
 		memcpy ( &(( u8* )this->mGuestBuffer )[ cursor0 ], buffer, size );
 		this->mCursor += size;
-		this->mLength += size;
+		if ( this->mLength < this->mCursor ) {
+			this->mLength = this->mCursor;
+		}
 		return size;
 	}
 

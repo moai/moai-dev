@@ -42,8 +42,8 @@ private:
 	static int		_toCppHeader		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			Decode				( ZLStreamReader& reader );
-	bool			Encode				( ZLStreamWriter& writer );
+	bool			Decode				( ZLStreamAdapter& reader );
+	bool			Encode				( ZLStreamAdapter& writer );
 	static bool		IsZipFilename		( cc8* filename );
 
 public:

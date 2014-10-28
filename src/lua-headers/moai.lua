@@ -526,15 +526,15 @@ if MOAISim.forceGC then
     MOAISim.forceGarbageCollection = MOAISim.forceGC
 end
 
-MOAIApp = MOAIAppAndroid or MOAIAppIOS
-MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
+MOAIApp = MOAIApp or MOAIAppAndroid or MOAIAppIOS
+MOAIBrowser = MOAIBrowser or MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS
-MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
-MOAIMoviePlayer = MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
+MOAIDialog = MOAIDialog or MOAIDialogAndroid or MOAIDialogIOS
+MOAIMoviePlayer = MOAIMoviePlayer or MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
 
 -- Optional 3rd party extensions
 MOAIAdColony = MOAIAdColonyAndroid or MOAIAdColonyIOS
-MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
+MOAIBilling = MOAIBilling or MOAIBillingAndroid or MOAIBillingIOS
 MOAIChartBoost = MOAIChartBoostAndroid or MOAIChartBoostIOS
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS

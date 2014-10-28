@@ -4,37 +4,23 @@
 #ifndef MOAISTREAMWRITER_H
 #define MOAISTREAMWRITER_H
 
-#include <moai-util/MOAIStream.h>
+#include <moai-util/MOAIStreamAdapter.h>
 
 //================================================================//
 // MOAIStreamWriter
 //================================================================//
 /**	@lua	MOAIStreamWriter
-	@text	MOAIStreamWriter may be attached to another stream for the
-			purpose of encoding and/or compressing bytes written to that
-			stream using a given algorithm (such as base64 or 'deflate'). 
+	@text	This class has been deprecated. Use MOAIStreamAdapter instead.
 */
 class MOAIStreamWriter :
-	public virtual MOAIStream {
-private:
-	
-	MOAILuaSharedPtr < MOAIStream > mStream;
-	ZLStreamWriter* mWriter;
-	
-	//----------------------------------------------------------------//
-	static int		_close					( lua_State* L );
-	static int		_openBase64				( lua_State* L );
-	static int		_openDeflate			( lua_State* L );
-
+	public virtual MOAIStreamAdapter {
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStreamWriter )
 
 	//----------------------------------------------------------------//
-	void			Close					();
 					MOAIStreamWriter		();
 					~MOAIStreamWriter		();
-	bool			Open					( MOAIStream* stream, ZLStreamWriter* writer );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

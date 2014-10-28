@@ -9,9 +9,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLBase64Writer::Close () {
+// returns an approx. len no smaller than actual encoded size
+size_t ZLBase64Writer::EstimateEncodedLength ( size_t plainLength ) {
+
+	return 4 * ( size_t )ceilf (( double )plainLength / 3.0 );
+}
+
+//----------------------------------------------------------------//
+u32 ZLBase64Writer::GetCaps () {
+
+	return this->mStream ? CAN_WRITE : 0;
+}
+
+//----------------------------------------------------------------//
+void ZLBase64Writer::OnClose () {
 	
-	if ( this->mOutputStream ) {
+	if ( this->mStream ) {
 		
 		// space remaining in current block
 		u32 blockCursor = this->mCursor % ZLBase64Encoder::PLAIN_BLOCK_SIZE;
@@ -19,61 +32,19 @@ void ZLBase64Writer::Close () {
 		if ( blockCursor ) {
 			u8 crypt [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 			this->mEncoder.Encode ( crypt, this->mPlainBlock, blockCursor );
-			size_t write = this->mOutputStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+			size_t write = this->mStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
 			if ( write != ZLBase64Encoder::CRYPT_BLOCK_SIZE ) {
 				// TODO: report errors
 			}
 		}
-		
-		this->mCursor = 0;
-		this->mOutputStream = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-u32 ZLBase64Writer::GetCaps () {
+bool ZLBase64Writer::OnOpen () {
 
-	return this->mOutputStream ? CAN_WRITE : 0;
-}
-
-//----------------------------------------------------------------//
-size_t ZLBase64Writer::GetCursor () {
-
-	return this->mCursor;
-}
-
-//----------------------------------------------------------------//
-// returns an approx. len no smaller than actual encoded size
-size_t ZLBase64Writer::GetEncodedLength ( size_t plainLength ) {
-
-	return 4 * ( size_t )ceilf (( double )plainLength / 3.0 );
-}
-
-//----------------------------------------------------------------//
-size_t ZLBase64Writer::GetLength () {
-
-	return this->mCursor;
-}
-
-//----------------------------------------------------------------//
-bool ZLBase64Writer::Open ( ZLStream& stream ) {
-
-	this->Close ();
-
-	this->mOutputStream = &stream;
+	this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
 	return true;
-}
-
-//----------------------------------------------------------------//
-ZLBase64Writer::ZLBase64Writer () :
-	mOutputStream ( 0 ),
-	mCursor ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-ZLBase64Writer::~ZLBase64Writer () {
-
-	this->Close ();
 }
 
 //----------------------------------------------------------------//
@@ -99,7 +70,9 @@ size_t ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 		if ( ZLBase64Encoder::PLAIN_BLOCK_SIZE <= blockCursor ) {
 			// encode and write
 			this->mEncoder.Encode ( crypt, this->mPlainBlock, ZLBase64Encoder::PLAIN_BLOCK_SIZE );
-			size_t write = this->mOutputStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+			size_t write = this->mStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+			this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
+			
 			if ( write != ZLBase64Encoder::CRYPT_BLOCK_SIZE ) {
 				// TODO: report errors
 				break;
@@ -110,5 +83,19 @@ size_t ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 		remainder -= copySize;
 		this->mCursor += copySize;
 	}
+	
+	if ( this->mLength < this->mCursor ) {
+		this->mLength = this->mCursor;
+	}
 	return size - remainder;
+}
+
+//----------------------------------------------------------------//
+ZLBase64Writer::ZLBase64Writer () {
+}
+
+//----------------------------------------------------------------//
+ZLBase64Writer::~ZLBase64Writer () {
+
+	this->Close ();
 }

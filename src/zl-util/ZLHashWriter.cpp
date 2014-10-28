@@ -8,9 +8,20 @@
 // ZLHashWriter
 //================================================================//
 
+//----------------------------------------------------------------//
+u32 ZLHashWriter::GetCaps () {
+
+	return this->mStream ? CAN_WRITE : 0;
+}
 
 //----------------------------------------------------------------//
-void ZLHashWriter::Close () {
+u32 ZLHashWriter::GetChecksum () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void ZLHashWriter::OnClose () {
 
 	if ( this->mIsOpen ) {
 		this->FinalizeHash ();
@@ -42,38 +53,11 @@ void ZLHashWriter::Close () {
 		free ( this->mHMACKey );
 		this->mHMACKey = 0;
 	}
-	
-	this->mOutputStream = 0;
-	this->mIsOpen = false;
 }
 
 //----------------------------------------------------------------//
-u32 ZLHashWriter::GetCaps () {
+bool ZLHashWriter::OnOpen () {
 	
-	return this->mOutputStream ? CAN_WRITE : 0;
-}
-
-//----------------------------------------------------------------//
-u32 ZLHashWriter::GetChecksum () {
-	return 0;
-}
-
-//----------------------------------------------------------------//
-size_t ZLHashWriter::GetCursor () {
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-size_t ZLHashWriter::GetLength () {
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-bool ZLHashWriter::Open ( ZLStream& stream ) {
-	
-	this->Close ();
 	this->InitHash ();
 	
 	if ( this->mHMACKey ) {
@@ -86,9 +70,27 @@ bool ZLHashWriter::Open ( ZLStream& stream ) {
 		this->WriteBytes ( xorKey, blockSize );
 	}
 	
-	this->mOutputStream = &stream;
-	this->mIsOpen = true;
 	return true;
+}
+
+//----------------------------------------------------------------//
+size_t ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
+	
+	// Pass the write through to stream
+	if ( this->mStream ) {
+		size = this->mStream->WriteBytes( buffer, size );
+	}
+	
+	// Update the hash
+	if ( size ) {
+		this->HashBytes ( buffer, size );
+	}
+	
+	this->mCursor += size;
+	if ( this->mLength < this->mCursor ) {
+		this->mLength = this->mCursor;
+	}
+	return size;
 }
 
 //----------------------------------------------------------------//
@@ -123,25 +125,7 @@ void ZLHashWriter::SetHMACKey ( void* key, size_t keySize ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
-	
-	// Pass the write through to stream
-	if ( this->mOutputStream ) {
-		size = this->mOutputStream->WriteBytes( buffer, size );
-	}
-	
-	// Update the hash
-	if ( size ) {
-		this->HashBytes ( buffer, size );
-	}
-	
-	return size;
-}
-
-//----------------------------------------------------------------//
 ZLHashWriter::ZLHashWriter () :
-	mIsOpen ( false ),
-	mOutputStream ( 0 ),
 	mHMACKey ( 0 ) {
 }
 

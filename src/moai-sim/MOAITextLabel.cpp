@@ -879,9 +879,12 @@ void MOAITextLabel::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 
-	ZLRect frame = this->mDesigner.GetFrame ();
-	bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-	return MOAIProp::BOUNDS_OK;
+	ZLRect frame;
+	if ( this->mLayout.GetBounds ( frame )) {
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
+	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

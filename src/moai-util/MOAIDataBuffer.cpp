@@ -212,7 +212,7 @@ int MOAIDataBuffer::_hexEncode ( lua_State* L ) {
 int MOAIDataBuffer::_inflate ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int windowBits = state.GetValue < int >( 2, ZLDeflateReader::DEFAULT_WBITS );
+	int windowBits = state.GetValue < int >( 2, ZLDeflateWriter::DEFAULT_WBITS );
 
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		return state.Inflate ( 1, windowBits ) ? 1 : 0;
@@ -240,7 +240,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
 	u32 detectZip	= state.GetValue < u32 >( 3, NO_INFLATE );
-	int windowBits	= state.GetValue < int >( 4, ZLDeflateReader::DEFAULT_WBITS );
+	int windowBits	= state.GetValue < int >( 4, ZLDeflateWriter::DEFAULT_WBITS );
 
 	bool success = self->Load ( filename );
 	
@@ -275,7 +275,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	MOAITaskQueue* queue	= state.GetLuaObject < MOAITaskQueue >( 3, true );
 	u32 detectZip			= state.GetValue < u32 >( 5, NO_INFLATE );
 	bool inflateAsync		= state.GetValue < bool >( 6, false );
-	int windowBits			= state.GetValue < int >( 7, ZLDeflateReader::DEFAULT_WBITS );
+	int windowBits			= state.GetValue < int >( 7, ZLDeflateWriter::DEFAULT_WBITS );
 
 	if ( !queue ) return 0;
 
@@ -439,7 +439,7 @@ void MOAIDataBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDataBuffer::Decode ( ZLStreamReader& reader ) {
+bool MOAIDataBuffer::Decode ( ZLStreamAdapter& reader ) {
 	
 	this->mMutex.Lock ();
 	
@@ -449,7 +449,7 @@ bool MOAIDataBuffer::Decode ( ZLStreamReader& reader ) {
 	
 	ZLMemStream plainStream;
 	
-	reader.Open ( cryptStream );
+	reader.Open ( &cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -474,13 +474,13 @@ bool MOAIDataBuffer::Deflate ( int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDataBuffer::Encode ( ZLStreamWriter& writer ) {
+bool MOAIDataBuffer::Encode ( ZLStreamAdapter& writer ) {
 	
 	this->mMutex.Lock ();
 	
 	ZLMemStream stream;
 	
-	writer.Open ( stream );
+	writer.Open ( &stream );
 	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
 	writer.Close ();
 	
@@ -502,14 +502,14 @@ void* MOAIDataBuffer::GetBuffer () {
 //----------------------------------------------------------------//
 bool MOAIDataBuffer::HexDecode () {
 
-	ZLHexReader hex;
+	ZLHexAdapter hex;
 	return this->Decode ( hex );
 }
 
 //----------------------------------------------------------------//
 bool MOAIDataBuffer::HexEncode () {
 
-	ZLHexWriter hex;
+	ZLHexAdapter hex;
 	return this->Encode ( hex );
 }
 
