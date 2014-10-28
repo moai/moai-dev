@@ -60,10 +60,21 @@ MOAIImageTexture::MOAIImageTexture () :
 		RTTI_EXTEND ( MOAITextureBase )
 		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
+	
+	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
 MOAIImageTexture::~MOAIImageTexture () {
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::OnBind () {
+
+	if ( this->mStatus == INVALID ) {
+		this->UpdateTextureFromImage ( *this, this->mRegion );
+	}
+	MOAITextureBase::OnBind ();
 }
 
 //----------------------------------------------------------------//
@@ -81,21 +92,7 @@ void MOAIImageTexture::OnCreate () {
 	if ( !this->mGLTexID ) {
 		this->CreateTextureFromImage ( *this );
 	}
-	else if ( this->mStatus != VALID ) {
-		
-		ZLIntRect rect = this->mRegion;
-		if ( this->mStatus == INVALID ) {
-			rect = this->GetRect ();
-		}
-		this->UpdateTextureFromImage ( *this, rect );
-	}
 	this->mStatus = VALID;
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnInvalidate () {
-	
-	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//
@@ -138,29 +135,20 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 void MOAIImageTexture::UpdateRegion () {
 	
 	this->mRegion = this->GetRect ();
-	
-	this->mStatus = INVALID_REGION;
-	this->MOAIGfxResource::Invalidate ();
-	this->MOAIGfxResource::Load ();
+	this->mStatus = INVALID;
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	
-	if ( this->mStatus != INVALID ) {
-
-		rect.Bless ();
-		this->GetRect ().Clip ( rect );
-
-		if ( this->mStatus == VALID ) {
-			this->mRegion = rect;
-		}
-		else {
-			this->mRegion.Grow ( rect );
-		}
-	}
+	rect.Bless ();
+	this->GetRect ().Clip ( rect );
 	
-	this->mStatus = INVALID_REGION;
-	this->MOAIGfxResource::Invalidate ();
-	this->MOAIGfxResource::Load ();
+	if ( this->mStatus == VALID ) {
+		this->mRegion = rect;
+	}
+	else {
+		this->mRegion.Grow ( rect );
+	}
+	this->mStatus = INVALID;
 }

@@ -196,6 +196,8 @@ void MOAITextDesignParser::Align () {
 		}
 	}
 	
+	// center texbox in model space to make autoflip easier to implement
+	
 	this->mLayout->mXOffset = -localXOffset;
 	
 	if ( limitWidth == false ) {

@@ -24,7 +24,6 @@ private:
 	enum {
 		VALID,
 		INVALID,
-		INVALID_REGION,
 	};
 
 	u32			mStatus;
@@ -36,9 +35,9 @@ private:
 	//----------------------------------------------------------------//
 	bool			IsRenewable				();
 	bool			IsValid					();
+	void			OnBind					();
 	void			OnClear					();
 	void			OnCreate				();
-	void			OnInvalidate			();
 	void			OnLoad					();
 
 public:
