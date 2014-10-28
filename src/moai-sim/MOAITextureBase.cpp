@@ -585,8 +585,8 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 		this->mGLTexID = 0;	
 	}
 	
-	// if no texture, create a new one from the image
-	// otherwise just update the sub-region
+	// if the texture exists just update the sub-region
+	// otherwise create a new texture from the image
 	if ( this->mGLTexID ) {
 
 		zglBindTexture ( this->mGLTexID );
