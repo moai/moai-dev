@@ -111,7 +111,7 @@ void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
 
 	if ( MOAILuaRuntime::IsValid ()) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->PushListenerAndSelf ( eventID, state )) {
+		if ( this->PushListener ( eventID, state )) {
 			state.DebugCall ( 0, 0 );
 		}
 	}
