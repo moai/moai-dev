@@ -8,14 +8,14 @@ getCurrenttag = function ()
     str = util.loadFileAsString ( '../src/config/moai_version_major.h' )
 
 
-    type="MOAI_SDK_VERSION_MAJOR %d"
-    VERSION = string.match(string.sub(str, string.find(str, type)),"%d+")
+    Template="MOAI_SDK_VERSION_MAJOR %d"
+    VERSION = string.match(string.sub(str, string.find(str, Template)),"%d+")
 
     str = util.loadFileAsString ( '../src/config/moai_version_minor.h' )
-    type="MOAI_SDK_VERSION_MINOR %d"
-    SUBVERSION= string.match(string.sub(str, string.find(str, type)),"%d+")
-    type="MOAI_SDK_VERSION_REVISION %d"
-    REVISION= string.match(string.sub(str, string.find(str, type)),"%d+")
+    Template="MOAI_SDK_VERSION_MINOR %d"
+    SUBVERSION= string.match(string.sub(str, string.find(str, Template)),"%d+")
+    Template="MOAI_SDK_VERSION_REVISION %d"
+    REVISION= string.match(string.sub(str, string.find(str, Template)),"%d+")
     return VERSION , SUBVERSION ,REVISION
 end
 
@@ -35,9 +35,6 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
       
       RELEASE_NAME = param
     end
-    if escape == 'r'  then
-      RELEASE_TYPE = param
-      end
   end
 end
 
@@ -54,7 +51,6 @@ util.dofileWithEnvironment ( './upload-info.lua', config )
 
 if RELEASE_NAME == nil then 
   RELEASE_NAME = config['RELEASE_NAME']
-  do return end
 end
 
 
@@ -68,17 +64,16 @@ http_body =
 {
   tag_name= string.format("v%i.%i.%i",VERSION,SUBVERSION,REVISION),
   target_commitish = config['RELEASE_TRAGET_COMMITISH'],
-  name= RELEASE_NAME,
+  name= string.format("v%i.%i.%i",VERSION,SUBVERSION,REVISION),
   body= RELEASE_BODY,
   draft= config['RELEASE_DRAFT'],
   prerelease= config['RELEASE_PRERELEASE']
 }
- util.printTable ( http_body or {})
+util.printTable ( http_body or {})
 http_body = MOAIJsonParser.encode ( http_body )
-
-
+  
 local status, result = http.post ( config['RELEASE_REPO'],nil ,http_body,http_headers)
---local status, result = http.get ( 'https://api.github.com/repos/ConghuZhao/testRelease/releases')
+--local status, result = http.get ( config['RELEASE_REPO'])
 
 print ( status )
 json = http.is200 ( status ) and result and MOAIJsonParser.decode ( result )

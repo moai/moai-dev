@@ -108,9 +108,7 @@ perform = function ( verb, url, params, body, headers, timeout )
 
 	url = params and url .. encodeParams ( params ) or url
 
-	if body and headers [ 'content-type' ] ~= 'text/plain' then
-		body = MOAIJsonParser.encode ( body ) or ''
-	end
+
 
 	local httptask = MOAIHttpTask.new ()
 	httptask:setUrl ( url )
