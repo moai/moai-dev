@@ -37,22 +37,30 @@
 			);
 			dependencies = (
 				3E72B9AA19F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A291A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9AC19F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A2D1A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */,
+				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9BC19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */,
+				CDB14A311A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9C819F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9CE19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9D019F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9D619F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A371A01CCFB008CEA54 /* PBXTargetDependency */,
+				CDB14A391A01CCFB008CEA54 /* PBXTargetDependency */,
+				CDB14A3B1A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A3D1A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9DE19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9E019F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A3F1A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9E419F703FA00A9DE30 /* PBXTargetDependency */,
+				CDB14A411A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9E819F703FA00A9DE30 /* PBXTargetDependency */,
 			);
 			name = "libmoai-ios-all";
@@ -2678,36 +2686,6 @@
 		CD70C12618441E2F005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C11E18441E24005CEBC0 /* host.mm */; };
 		CD70C12718441E2F005CEBC0 /* MOAIFlurryIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C11F18441E24005CEBC0 /* MOAIFlurryIOS.h */; };
 		CD70C12818441E2F005CEBC0 /* MOAIFlurryIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C12018441E24005CEBC0 /* MOAIFlurryIOS.mm */; };
-		CD70C1A718448A04005CEBC0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A318448A04005CEBC0 /* host.h */; };
-		CD70C1A818448A04005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A418448A04005CEBC0 /* host.mm */; };
-		CD70C1A918448A04005CEBC0 /* MOAIMixpanelIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A518448A04005CEBC0 /* MOAIMixpanelIOS.h */; };
-		CD70C1AA18448A04005CEBC0 /* MOAIMixpanelIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A618448A04005CEBC0 /* MOAIMixpanelIOS.mm */; };
-		CD70C1B418448D9E005CEBC0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A318448A04005CEBC0 /* host.h */; };
-		CD70C1BC18448D9E005CEBC0 /* MOAIMixpanelIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A518448A04005CEBC0 /* MOAIMixpanelIOS.h */; };
-		CD70C1C318448D9E005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A418448A04005CEBC0 /* host.mm */; };
-		CD70C1C418448D9E005CEBC0 /* MOAIMixpanelIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A618448A04005CEBC0 /* MOAIMixpanelIOS.mm */; };
-		CD70C1E518448E59005CEBC0 /* Mixpanel.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1D218448E59005CEBC0 /* Mixpanel.h */; };
-		CD70C1E618448E59005CEBC0 /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1D318448E59005CEBC0 /* Mixpanel.m */; };
-		CD70C1E718448E59005CEBC0 /* MPSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1D418448E59005CEBC0 /* MPSurvey.h */; };
-		CD70C1E818448E59005CEBC0 /* MPSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1D518448E59005CEBC0 /* MPSurvey.m */; };
-		CD70C1E918448E59005CEBC0 /* MPSurveyNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1D718448E59005CEBC0 /* MPSurveyNavigationController.h */; };
-		CD70C1EA18448E59005CEBC0 /* MPSurveyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1D818448E59005CEBC0 /* MPSurveyNavigationController.m */; };
-		CD70C1EB18448E59005CEBC0 /* MPSurveyQuestion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1D918448E59005CEBC0 /* MPSurveyQuestion.h */; };
-		CD70C1EC18448E59005CEBC0 /* MPSurveyQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1DA18448E59005CEBC0 /* MPSurveyQuestion.m */; };
-		CD70C1ED18448E59005CEBC0 /* MPSurveyQuestionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1DB18448E59005CEBC0 /* MPSurveyQuestionViewController.h */; };
-		CD70C1EE18448E59005CEBC0 /* MPSurveyQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1DC18448E59005CEBC0 /* MPSurveyQuestionViewController.m */; };
-		CD70C1EF18448E59005CEBC0 /* NSData+MPBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1DD18448E59005CEBC0 /* NSData+MPBase64.h */; };
-		CD70C1F018448E59005CEBC0 /* NSData+MPBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1DE18448E59005CEBC0 /* NSData+MPBase64.m */; };
-		CD70C1F118448E59005CEBC0 /* UIImage+MPAverageColor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1DF18448E59005CEBC0 /* UIImage+MPAverageColor.h */; };
-		CD70C1F218448E59005CEBC0 /* UIImage+MPAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1E018448E59005CEBC0 /* UIImage+MPAverageColor.m */; };
-		CD70C1F318448E59005CEBC0 /* UIImage+MPImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1E118448E59005CEBC0 /* UIImage+MPImageEffects.h */; };
-		CD70C1F418448E59005CEBC0 /* UIImage+MPImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1E218448E59005CEBC0 /* UIImage+MPImageEffects.m */; };
-		CD70C1F518448E59005CEBC0 /* UIView+MPSnapshotImage.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1E318448E59005CEBC0 /* UIView+MPSnapshotImage.h */; };
-		CD70C1F618448E59005CEBC0 /* UIView+MPSnapshotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1E418448E59005CEBC0 /* UIView+MPSnapshotImage.m */; };
-		CD70C20318449935005CEBC0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A318448A04005CEBC0 /* host.h */; };
-		CD70C20418449935005CEBC0 /* MOAIMixpanelIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C1A518448A04005CEBC0 /* MOAIMixpanelIOS.h */; };
-		CD70C20618449935005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A418448A04005CEBC0 /* host.mm */; };
-		CD70C20718449935005CEBC0 /* MOAIMixpanelIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C1A618448A04005CEBC0 /* MOAIMixpanelIOS.mm */; };
 		CD70C2131844999E005CEBC0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C20F1844999E005CEBC0 /* host.h */; };
 		CD70C2141844999E005CEBC0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD70C2101844999E005CEBC0 /* host.mm */; };
 		CD70C2151844999E005CEBC0 /* MOAIKontagentIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD70C2111844999E005CEBC0 /* MOAIKontagentIOS.h */; };
@@ -4988,13 +4966,6 @@
 			remoteGlobalIDString = CD70C10F18441DD0005CEBC0;
 			remoteInfo = "libmoai-ios-flurry";
 		};
-		3E72B9C719F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD5089C6155E3A1B0002FC3B;
-			remoteInfo = "libmoai-ios-fmod-ex";
-		};
 		3E72B9C919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5015,13 +4986,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 89BE766E173C15F100DFE837;
 			remoteInfo = "libmoai-ios-http-server";
-		};
-		3E72B9D519F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD70C1701844891A005CEBC0;
-			remoteInfo = "libmoai-ios-mixpanel";
 		};
 		3E72B9D919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5148,6 +5112,76 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
+		};
+		CDB14A281A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD47B9417FA78AE00525B77;
+			remoteInfo = "libmoai-ios-3rdparty-crypto";
+		};
+		CDB14A2C1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD27BE00191D9F44000A7770;
+			remoteInfo = "libmoai-ios-adcolony";
+		};
+		CDB14A2E1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C3A69180A623200C02381;
+			remoteInfo = "libmoai-ios-crypto";
+		};
+		CDB14A301A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B8251808AC82000129F9;
+			remoteInfo = "libmoai-ios-facebook";
+		};
+		CDB14A361A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD70C20118449935005CEBC0;
+			remoteInfo = "libmoai-ios-kontagent";
+		};
+		CDB14A381A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420;
+			remoteInfo = "libmoai-ios-luaext";
+		};
+		CDB14A3A1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4C4132180A667300C02381;
+			remoteInfo = "libmoai-ios-mobile-app-tracker";
+		};
+		CDB14A3C1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B9111808AC9D000129F9;
+			remoteInfo = "libmoai-ios-tapjoy";
+		};
+		CDB14A3E1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B9871808ACA6000129F9;
+			remoteInfo = "libmoai-ios-vungle";
+		};
+		CDB14A401A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDC122D417FA804C00FB64BB;
+			remoteInfo = "libmoai-ios-zl-crypto";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -6690,30 +6724,6 @@
 		CD70C11E18441E24005CEBC0 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-flurry/host.mm"; sourceTree = "<group>"; };
 		CD70C11F18441E24005CEBC0 /* MOAIFlurryIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFlurryIOS.h; path = "moai-ios-flurry/MOAIFlurryIOS.h"; sourceTree = "<group>"; };
 		CD70C12018441E24005CEBC0 /* MOAIFlurryIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFlurryIOS.mm; path = "moai-ios-flurry/MOAIFlurryIOS.mm"; sourceTree = "<group>"; };
-		CD70C17D1844891A005CEBC0 /* libmoai-ios-mixpanel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-mixpanel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD70C1A318448A04005CEBC0 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-mixpanel/host.h"; sourceTree = "<group>"; };
-		CD70C1A418448A04005CEBC0 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-mixpanel/host.mm"; sourceTree = "<group>"; };
-		CD70C1A518448A04005CEBC0 /* MOAIMixpanelIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMixpanelIOS.h; path = "moai-ios-mixpanel/MOAIMixpanelIOS.h"; sourceTree = "<group>"; };
-		CD70C1A618448A04005CEBC0 /* MOAIMixpanelIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMixpanelIOS.mm; path = "moai-ios-mixpanel/MOAIMixpanelIOS.mm"; sourceTree = "<group>"; };
-		CD70C1D118448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-mixpanel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD70C1D218448E59005CEBC0 /* Mixpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mixpanel.h; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/Mixpanel.h"; sourceTree = "<group>"; };
-		CD70C1D318448E59005CEBC0 /* Mixpanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mixpanel.m; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/Mixpanel.m"; sourceTree = "<group>"; };
-		CD70C1D418448E59005CEBC0 /* MPSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPSurvey.h; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurvey.h"; sourceTree = "<group>"; };
-		CD70C1D518448E59005CEBC0 /* MPSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPSurvey.m; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurvey.m"; sourceTree = "<group>"; };
-		CD70C1D718448E59005CEBC0 /* MPSurveyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPSurveyNavigationController.h; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyNavigationController.h"; sourceTree = "<group>"; };
-		CD70C1D818448E59005CEBC0 /* MPSurveyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPSurveyNavigationController.m; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyNavigationController.m"; sourceTree = "<group>"; };
-		CD70C1D918448E59005CEBC0 /* MPSurveyQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPSurveyQuestion.h; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyQuestion.h"; sourceTree = "<group>"; };
-		CD70C1DA18448E59005CEBC0 /* MPSurveyQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPSurveyQuestion.m; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyQuestion.m"; sourceTree = "<group>"; };
-		CD70C1DB18448E59005CEBC0 /* MPSurveyQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPSurveyQuestionViewController.h; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyQuestionViewController.h"; sourceTree = "<group>"; };
-		CD70C1DC18448E59005CEBC0 /* MPSurveyQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPSurveyQuestionViewController.m; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/MPSurveyQuestionViewController.m"; sourceTree = "<group>"; };
-		CD70C1DD18448E59005CEBC0 /* NSData+MPBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MPBase64.h"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/NSData+MPBase64.h"; sourceTree = "<group>"; };
-		CD70C1DE18448E59005CEBC0 /* NSData+MPBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MPBase64.m"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/NSData+MPBase64.m"; sourceTree = "<group>"; };
-		CD70C1DF18448E59005CEBC0 /* UIImage+MPAverageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+MPAverageColor.h"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIImage+MPAverageColor.h"; sourceTree = "<group>"; };
-		CD70C1E018448E59005CEBC0 /* UIImage+MPAverageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MPAverageColor.m"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIImage+MPAverageColor.m"; sourceTree = "<group>"; };
-		CD70C1E118448E59005CEBC0 /* UIImage+MPImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+MPImageEffects.h"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIImage+MPImageEffects.h"; sourceTree = "<group>"; };
-		CD70C1E218448E59005CEBC0 /* UIImage+MPImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MPImageEffects.m"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIImage+MPImageEffects.m"; sourceTree = "<group>"; };
-		CD70C1E318448E59005CEBC0 /* UIView+MPSnapshotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+MPSnapshotImage.h"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIView+MPSnapshotImage.h"; sourceTree = "<group>"; };
-		CD70C1E418448E59005CEBC0 /* UIView+MPSnapshotImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+MPSnapshotImage.m"; path = "../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel/UIView+MPSnapshotImage.m"; sourceTree = "<group>"; };
 		CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-kontagent.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD70C20F1844999E005CEBC0 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-kontagent/host.h"; sourceTree = "<group>"; };
 		CD70C2101844999E005CEBC0 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-kontagent/host.mm"; sourceTree = "<group>"; };
@@ -8128,20 +8138,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD70C1771844891A005CEBC0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD70C1CB18448D9E005CEBC0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD70C20818449935005CEBC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8297,7 +8293,6 @@
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
 				CD218F8313A7FD34008337E7 /* luasql */,
-				CD70C1B118448D77005CEBC0 /* mixpanel */,
 				CD795EFD17F08FED006AEB47 /* mongoose */,
 				43BA2E5717733124007DCDF0 /* playhaven */,
 				CD795CBA17F0834F006AEB47 /* sdl */,
@@ -8750,7 +8745,6 @@
 				CD70C10E18441DB4005CEBC0 /* moai-ios-flurry */,
 				CDA4B7381808AB7B000129F9 /* moai-ios-gamecenter */,
 				CD70C16D184488BC005CEBC0 /* moai-ios-kontagent */,
-				CD70C16E184488CE005CEBC0 /* moai-ios-mixpanel */,
 				CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
 				CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */,
@@ -8818,8 +8812,6 @@
 				CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */,
 				CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */,
 				CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */,
-				CD70C17D1844891A005CEBC0 /* libmoai-ios-mixpanel.a */,
-				CD70C1D118448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel.a */,
 				CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */,
 				CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */,
 				CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */,
@@ -10303,42 +10295,6 @@
 				CD70C2121844999E005CEBC0 /* MOAIKontagentIOS.mm */,
 			);
 			name = "moai-ios-kontagent";
-			sourceTree = "<group>";
-		};
-		CD70C16E184488CE005CEBC0 /* moai-ios-mixpanel */ = {
-			isa = PBXGroup;
-			children = (
-				CD70C1A318448A04005CEBC0 /* host.h */,
-				CD70C1A418448A04005CEBC0 /* host.mm */,
-				CD70C1A518448A04005CEBC0 /* MOAIMixpanelIOS.h */,
-				CD70C1A618448A04005CEBC0 /* MOAIMixpanelIOS.mm */,
-			);
-			name = "moai-ios-mixpanel";
-			sourceTree = "<group>";
-		};
-		CD70C1B118448D77005CEBC0 /* mixpanel */ = {
-			isa = PBXGroup;
-			children = (
-				CD70C1D218448E59005CEBC0 /* Mixpanel.h */,
-				CD70C1D318448E59005CEBC0 /* Mixpanel.m */,
-				CD70C1D418448E59005CEBC0 /* MPSurvey.h */,
-				CD70C1D518448E59005CEBC0 /* MPSurvey.m */,
-				CD70C1D718448E59005CEBC0 /* MPSurveyNavigationController.h */,
-				CD70C1D818448E59005CEBC0 /* MPSurveyNavigationController.m */,
-				CD70C1D918448E59005CEBC0 /* MPSurveyQuestion.h */,
-				CD70C1DA18448E59005CEBC0 /* MPSurveyQuestion.m */,
-				CD70C1DB18448E59005CEBC0 /* MPSurveyQuestionViewController.h */,
-				CD70C1DC18448E59005CEBC0 /* MPSurveyQuestionViewController.m */,
-				CD70C1DD18448E59005CEBC0 /* NSData+MPBase64.h */,
-				CD70C1DE18448E59005CEBC0 /* NSData+MPBase64.m */,
-				CD70C1DF18448E59005CEBC0 /* UIImage+MPAverageColor.h */,
-				CD70C1E018448E59005CEBC0 /* UIImage+MPAverageColor.m */,
-				CD70C1E118448E59005CEBC0 /* UIImage+MPImageEffects.h */,
-				CD70C1E218448E59005CEBC0 /* UIImage+MPImageEffects.m */,
-				CD70C1E318448E59005CEBC0 /* UIView+MPSnapshotImage.h */,
-				CD70C1E418448E59005CEBC0 /* UIView+MPSnapshotImage.m */,
-			);
-			name = mixpanel;
 			sourceTree = "<group>";
 		};
 		CD74E4481377D6610093EE68 /* libcrypto */ = {
@@ -14475,41 +14431,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD70C1711844891A005CEBC0 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD70C1A718448A04005CEBC0 /* host.h in Headers */,
-				CD70C1A918448A04005CEBC0 /* MOAIMixpanelIOS.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD70C1B318448D9E005CEBC0 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD70C1ED18448E59005CEBC0 /* MPSurveyQuestionViewController.h in Headers */,
-				CD70C1E918448E59005CEBC0 /* MPSurveyNavigationController.h in Headers */,
-				CD70C1EB18448E59005CEBC0 /* MPSurveyQuestion.h in Headers */,
-				CD70C1E518448E59005CEBC0 /* Mixpanel.h in Headers */,
-				CD70C1F518448E59005CEBC0 /* UIView+MPSnapshotImage.h in Headers */,
-				CD70C1F318448E59005CEBC0 /* UIImage+MPImageEffects.h in Headers */,
-				CD70C1B418448D9E005CEBC0 /* host.h in Headers */,
-				CD70C1BC18448D9E005CEBC0 /* MOAIMixpanelIOS.h in Headers */,
-				CD70C1E718448E59005CEBC0 /* MPSurvey.h in Headers */,
-				CD70C1EF18448E59005CEBC0 /* NSData+MPBase64.h in Headers */,
-				CD70C1F118448E59005CEBC0 /* UIImage+MPAverageColor.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD70C20218449935005CEBC0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CD70C2131844999E005CEBC0 /* host.h in Headers */,
-				CD70C20318449935005CEBC0 /* host.h in Headers */,
 				CD70C2151844999E005CEBC0 /* MOAIKontagentIOS.h in Headers */,
-				CD70C20418449935005CEBC0 /* MOAIMixpanelIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15561,40 +15488,6 @@
 			productReference = CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD70C1701844891A005CEBC0 /* libmoai-ios-mixpanel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD70C1781844891A005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-mixpanel" */;
-			buildPhases = (
-				CD70C1711844891A005CEBC0 /* Headers */,
-				CD70C1741844891A005CEBC0 /* Sources */,
-				CD70C1771844891A005CEBC0 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-mixpanel";
-			productName = OpenUSLS;
-			productReference = CD70C17D1844891A005CEBC0 /* libmoai-ios-mixpanel.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		CD70C1B218448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD70C1CC18448D9E005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-mixpanel" */;
-			buildPhases = (
-				CD70C1B318448D9E005CEBC0 /* Headers */,
-				CD70C1BF18448D9E005CEBC0 /* Sources */,
-				CD70C1CB18448D9E005CEBC0 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-3rdparty-mixpanel";
-			productName = OpenUSLS;
-			productReference = CD70C1D118448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CD70C20118449935005CEBC0 /* libmoai-ios-kontagent */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD70C20918449935005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-kontagent" */;
@@ -15937,7 +15830,6 @@
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
 				0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty-core */,
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
-				CD70C1B218448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel */,
 				CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */,
 				CDA4B7391808AC61000129F9 /* libmoai-ios-billing */,
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
@@ -15955,7 +15847,6 @@
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				CD70C20118449935005CEBC0 /* libmoai-ios-kontagent */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
-				CD70C1701844891A005CEBC0 /* libmoai-ios-mixpanel */,
 				CD4C4132180A667300C02381 /* libmoai-ios-mobile-app-tracker */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */,
@@ -17835,41 +17726,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD70C1741844891A005CEBC0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD70C1A818448A04005CEBC0 /* host.mm in Sources */,
-				CD70C1AA18448A04005CEBC0 /* MOAIMixpanelIOS.mm in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD70C1BF18448D9E005CEBC0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD70C1F218448E59005CEBC0 /* UIImage+MPAverageColor.m in Sources */,
-				CD70C1F618448E59005CEBC0 /* UIView+MPSnapshotImage.m in Sources */,
-				CD70C1EA18448E59005CEBC0 /* MPSurveyNavigationController.m in Sources */,
-				CD70C1E818448E59005CEBC0 /* MPSurvey.m in Sources */,
-				CD70C1EC18448E59005CEBC0 /* MPSurveyQuestion.m in Sources */,
-				CD70C1EE18448E59005CEBC0 /* MPSurveyQuestionViewController.m in Sources */,
-				CD70C1F018448E59005CEBC0 /* NSData+MPBase64.m in Sources */,
-				CD70C1C318448D9E005CEBC0 /* host.mm in Sources */,
-				CD70C1E618448E59005CEBC0 /* Mixpanel.m in Sources */,
-				CD70C1C418448D9E005CEBC0 /* MOAIMixpanelIOS.mm in Sources */,
-				CD70C1F418448E59005CEBC0 /* UIImage+MPImageEffects.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD70C20518449935005CEBC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CD70C2141844999E005CEBC0 /* host.mm in Sources */,
 				CD70C2161844999E005CEBC0 /* MOAIKontagentIOS.mm in Sources */,
-				CD70C20618449935005CEBC0 /* host.mm in Sources */,
-				CD70C20718449935005CEBC0 /* MOAIMixpanelIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19248,11 +19110,6 @@
 			target = CD70C10F18441DD0005CEBC0 /* libmoai-ios-flurry */;
 			targetProxy = 3E72B9C319F703FA00A9DE30 /* PBXContainerItemProxy */;
 		};
-		3E72B9C819F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */;
-			targetProxy = 3E72B9C719F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
 		3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */;
@@ -19267,11 +19124,6 @@
 			isa = PBXTargetDependency;
 			target = 89BE766E173C15F100DFE837 /* libmoai-ios-http-server */;
 			targetProxy = 3E72B9CF19F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
-		3E72B9D619F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD70C1701844891A005CEBC0 /* libmoai-ios-mixpanel */;
-			targetProxy = 3E72B9D519F703FA00A9DE30 /* PBXContainerItemProxy */;
 		};
 		3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -19362,6 +19214,56 @@
 			isa = PBXTargetDependency;
 			target = CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */;
 			targetProxy = 3EDC170F19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		CDB14A291A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */;
+			targetProxy = CDB14A281A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A2D1A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */;
+			targetProxy = CDB14A2C1A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD4C3A69180A623200C02381 /* libmoai-ios-crypto */;
+			targetProxy = CDB14A2E1A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A311A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B8251808AC82000129F9 /* libmoai-ios-facebook */;
+			targetProxy = CDB14A301A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A371A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD70C20118449935005CEBC0 /* libmoai-ios-kontagent */;
+			targetProxy = CDB14A361A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A391A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDD06A061398822500AB0420 /* libmoai-ios-luaext */;
+			targetProxy = CDB14A381A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A3B1A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD4C4132180A667300C02381 /* libmoai-ios-mobile-app-tracker */;
+			targetProxy = CDB14A3A1A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A3D1A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */;
+			targetProxy = CDB14A3C1A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A3F1A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B9871808ACA6000129F9 /* libmoai-ios-vungle */;
+			targetProxy = CDB14A3E1A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDB14A411A01CCFB008CEA54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */;
+			targetProxy = CDB14A401A01CCFB008CEA54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -19668,7 +19570,7 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -21559,7 +21461,7 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -22315,7 +22217,6 @@
 		CD4C4170180A9AEA00C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -22352,7 +22253,6 @@
 		CD4C4171180A9AEA00C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22384,7 +22284,6 @@
 		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22416,7 +22315,6 @@
 		CD4C4173180A9AEA00C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22899,268 +22797,6 @@
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
-				SDKROOT = iphoneos;
-			};
-			name = Distribution;
-		};
-		CD70C1791844891A005CEBC0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		CD70C17A1844891A005CEBC0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = Release;
-		};
-		CD70C17B1844891A005CEBC0 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = AdHoc;
-		};
-		CD70C17C1844891A005CEBC0 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = Distribution;
-		};
-		CD70C1CD18448D9E005CEBC0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		CD70C1CE18448D9E005CEBC0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = Release;
-		};
-		CD70C1CF18448D9E005CEBC0 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
-				SDKROOT = iphoneos;
-			};
-			name = AdHoc;
-		};
-		CD70C1D018448D9E005CEBC0 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
 				SDKROOT = iphoneos;
 			};
 			name = Distribution;
@@ -24569,7 +24205,6 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24606,7 +24241,6 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25378,7 +25012,7 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -25588,7 +25222,6 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25795,7 +25428,7 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -26005,7 +25638,6 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26452,28 +26084,6 @@
 				CD70C11918441DD0005CEBC0 /* Release */,
 				CD70C11A18441DD0005CEBC0 /* AdHoc */,
 				CD70C11B18441DD0005CEBC0 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		CD70C1781844891A005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-mixpanel" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD70C1791844891A005CEBC0 /* Debug */,
-				CD70C17A1844891A005CEBC0 /* Release */,
-				CD70C17B1844891A005CEBC0 /* AdHoc */,
-				CD70C17C1844891A005CEBC0 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		CD70C1CC18448D9E005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-mixpanel" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD70C1CD18448D9E005CEBC0 /* Debug */,
-				CD70C1CE18448D9E005CEBC0 /* Release */,
-				CD70C1CF18448D9E005CEBC0 /* AdHoc */,
-				CD70C1D018448D9E005CEBC0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
