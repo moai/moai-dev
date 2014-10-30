@@ -6,16 +6,24 @@
 # http://getmoai.com
 #----------------------------------------------------------------#
 
-# osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
+# TODO: replace schemes with with targets (if possible)
+# TODO: use libmoai-all scheme or target for ios and osx
+
+# TODO: need to build both 32 and 64 bit flavors (for iOS, too?)
+
+# osx stuff
 osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
 osx_sdks=( "macosx" )
-osx_architectures_macosx=( "i386" )
+osx_architectures_macosx=( "i386" ) # is this right?
 
-# ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
+# ios stuff
 ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
 ios_sdks="iphoneos iphonesimulator"
-ios_architectures_iphonesimulator="i386"
-ios_architectures_iphoneos="armv7 armv7s"
+ios_architectures_iphonesimulator="i386" # $(ARCHS_STANDARD) can?
+ios_architectures_iphoneos="armv7 armv7s" # are these correct? can we use the settings from xcode instead?
+
+# all this stuff would be more maintainable using the moaitools/lua paradigm
+# the only thing we need command line for is xcodebuild itself and lipo
 
 usage() {
 	echo >&2 "usage: $0 [-v] [-j <jobName>] [-c Debug|Release|all] [-p osx|ios|all]"
@@ -64,6 +72,7 @@ fi
 
 basedir="/tmp/$job"
 
+# some kind of crappy shell script build function
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
 	mkdir -p $dir
@@ -92,13 +101,16 @@ build() {
 	fi
 }
 
+# iterate through all the platforms, configs and sdks we care about and call the build function
+# configs are 'Debug', 'Release'
 for platform in $platforms; do
 
 	schemes=
 	sdks=
 	architectures=
-	eval schemes=\$${platform}_schemes
-	eval sdks=\$${platform}_sdks
+
+	eval schemes=\$${platform}_schemes # this is from the top of the script; shouldn't need to do if we use the *_all scheme/target
+	eval sdks=\$${platform}_sdks # also defined at top of script
 
 	for config in $configurations; do
 		for sdk in $sdks; do		
@@ -109,14 +121,23 @@ for platform in $platforms; do
 		done
 	done
 
+
+	# make a directory for universal binaries and use lipo to join together each architecture
 	for config in $configurations; do
-		rm -rf "$basedir/$platform/$config/universal"
-		mkdir -p "$basedir/$platform/$config/universal"
+		rm -rf "$basedir/$platform/$config/universal" # clean out the old dir (if any)
+		mkdir -p "$basedir/$platform/$config/universal" # make the new dir
+
+		# TODO: since we don't want to list each target/scheme, we should replace this with a directory iterator
 		for scheme in $schemes; do
+
 			libs=
+			# iterate through each sdk (for example: iphonesimulator, iphoneos) and make a list of the source library filenames
+			# OR: change the build directories to be per target and output each platform's *.a into them; then we can use * notation below
 			for sdk in $sdks; do
-				libs="$libs $basedir/$platform/$scheme/$sdk/$config/$scheme.a"
+				libs="$libs $basedir/$platform/$scheme/$sdk/$config/$scheme.a" # '$scheme' is from the list above; if we use an iterator, we can just use the filename
 			done
+
+			# pass the lib names we just generated to lipo to produce a universal binary
 			if ! xcrun -sdk $sdk lipo -create -output "$basedir/$platform/$config/universal/$scheme.a" $libs; then
 				echo >&2 "lipo failed, giving up."
 				exit 1
@@ -124,6 +145,7 @@ for platform in $platforms; do
 		done
 	done
 
+	# what does this do? why are we doing this? are we just taking them back out again? WTF, Becky
 	for config in $configurations; do
 		for sdk in $sdks; do
 			eval architectures=\$${platform}_architectures_$sdk
