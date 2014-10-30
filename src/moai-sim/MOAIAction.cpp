@@ -388,8 +388,10 @@ void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "EVENT_START", ( u32 )EVENT_START );
-	state.SetField ( -1, "EVENT_STOP", ( u32 )EVENT_STOP );
+	state.SetField ( -1, "EVENT_ACTION_PRE_UPDATE",		( u32 )EVENT_ACTION_PRE_UPDATE );
+	state.SetField ( -1, "EVENT_ACTION_POST_UPDATE",	( u32 )EVENT_ACTION_POST_UPDATE );
+	state.SetField ( -1, "EVENT_START",					( u32 )EVENT_START );
+	state.SetField ( -1, "EVENT_STOP",					( u32 )EVENT_STOP );
 
 }
 
@@ -451,7 +453,9 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	if (( checkPass == false ) || ( pass == this->mPass )) {
 		actionMgr.SetCurrentAction ( this );
 		actionMgr.SetDefaultParent ( 0 );
+		this->InvokeListenerWithSelf ( EVENT_ACTION_PRE_UPDATE );
 		this->OnUpdate ( step );
+		this->InvokeListenerWithSelf ( EVENT_ACTION_POST_UPDATE );
 	}
 
 	if ( profilingEnabled ) {

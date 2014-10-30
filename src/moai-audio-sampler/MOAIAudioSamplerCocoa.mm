@@ -1,6 +1,20 @@
-#include <moai-audiosampler/MOAIAudioSampler.h>
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
-MOAIAudioSampler::MOAIAudioSampler ()  :
+#include <moai-audio-sampler/MOAIAudioSamplerCocoa.h>
+#include <Foundation/Foundation.h>
+
+//================================================================//
+// cpp helper
+//================================================================//
+
+//----------------------------------------------------------------//
+void RegisterMOAIAudioSamplerCocoa () {
+	REGISTER_LUA_CLASS ( MOAIAudioSamplerCocoa );
+}
+
+
+MOAIAudioSamplerCocoa::MOAIAudioSamplerCocoa ()  :
 mNumFrequency(0),
         mNumChannels(0),
     mMaxBufferSizeInBytes ( 0 ),
@@ -12,36 +26,89 @@ mNumFrequency(0),
     isActive(false),
     isQueueInitialized(false)
 {
-    //fprintf(stderr,"MOAIAudioSampler construct. %p\n", this );
+    //fprintf(stderr,"MOAIAudioSamplerCocoa construct. %p\n", this );
     RTTI_SINGLE ( MOAINode )
+    
+    mSessionActiveObserver =
+        [ [NSNotificationCenter defaultCenter] addObserverForName:@"UntzSessionActive"
+                                                           object:nil
+                                                            queue:nil
+                                                       usingBlock:^(NSNotification *) {
+        this->resume();
+     } ];
+    
+    mSessionInactiveObserver =
+        [ [NSNotificationCenter defaultCenter] addObserverForName:@"UntzSessionInactive"
+                                                           object:nil
+                                                            queue:nil
+                                                       usingBlock:^(NSNotification *) {
+        this->pause();
+     } ];
 }
 
-MOAIAudioSampler::~MOAIAudioSampler () {
-    //fprintf(stderr,"MOAIAudioSampler destruct. %p\n", this );
-
-    if(this->mBufferAry){
-        for(u32 i=0;i<this->mBufferAryLen;i++){
-            free( this->mBufferAry[i] );
-        }
-        free(this->mBufferAry);
-        free(this->mBufferReadSizeInBytes);
-    }
+MOAIAudioSamplerCocoa::~MOAIAudioSamplerCocoa () {
+    //fprintf(stderr,"MOAIAudioSamplerCocoa destruct. %p\n", this );
 
     if( this->isQueueInitialized ){
         AudioQueueDispose( this->queue, TRUE);
-    }    
+    
+    if(this->mBufferAry){
+        for(u32 i=0;i<this->mBufferAryLen;i++){
+            free( this->mBufferAry[i] );
+                AudioQueueFreeBuffer(this->queue, this->buffers[i]);
+        }
+            free(this->buffers);
+        free(this->mBufferAry);
+        free(this->mBufferReadSizeInBytes);
+    }
+        free(this->levels);
+    }
+
+    [[NSNotificationCenter defaultCenter] removeObserver:(id)mSessionActiveObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:(id)mSessionInactiveObserver];
 }
 
-int MOAIAudioSampler::_setFrequency ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "UN" )
+void MOAIAudioSamplerCocoa::pause() {
+    if ( queue ) {
+        AudioQueuePause( queue );
+		isActive = false;
+    }
+}
+
+void MOAIAudioSamplerCocoa::resume() {
+    if ( queue ) {
+        OSStatus result = AudioQueueStart( queue, NULL );
+        if(result){
+            fprintf(stderr, "AudioQueueStart failed %ld\n", result);
+        }
+		isActive = true;
+    }
+}
+
+int MOAIAudioSamplerCocoa::_setFrequency ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "UN" )
         ;
+    
+    if( self->isQueueInitialized ) {
+        fprintf(stderr, "Queue already initialized\n");
+        lua_pushstring ( L, "Queue already initialized" );
+        return 1;
+    }
+    
     self->mNumFrequency = state.GetValue < u32 >( 2, 44100 );        
     return 0;
 }
 
-int	MOAIAudioSampler::_setNumChannels ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "UN" )
+int	MOAIAudioSamplerCocoa::_setNumChannels ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "UN" )
         ;
+    
+    if( self->isQueueInitialized ) {
+        fprintf(stderr, "Queue already initialized\n");
+        lua_pushstring ( L, "Queue already initialized" );
+        return 1;
+    }
+    
     self->mNumChannels = state.GetValue < u32 >(2, 2 );
     return 0;
 }
@@ -86,7 +153,7 @@ static int MyComputeRecordBufferSize(const AudioStreamBasicDescription *format, 
 
 
 
-void MOAIAudioSampler::globalCallback( void *inUserData,
+void MOAIAudioSamplerCocoa::globalCallback( void *inUserData,
                                        AudioQueueRef inAQ,
                                        AudioQueueBufferRef inBuffer,
                                        const AudioTimeStamp *inStartTime,
@@ -96,14 +163,11 @@ void MOAIAudioSampler::globalCallback( void *inUserData,
     UNUSED ( inStartTime );
     UNUSED ( inPacketDesc );        
 
-    MOAIAudioSampler *sampler = (MOAIAudioSampler*) inUserData;
+    MOAIAudioSamplerCocoa *sampler = (MOAIAudioSamplerCocoa*) inUserData;
 
 //        fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
 //                inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
     
-    OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
-    if(result) printf("cannot enque buffer\n" );
-
     if( sampler->isActive ){        
         short *outbuf = sampler->mBufferAry[ sampler->currentWriteIndex];
         short *inbuf = (short*) inBuffer->mAudioData;
@@ -116,12 +180,22 @@ void MOAIAudioSampler::globalCallback( void *inUserData,
         if( sampler->currentWriteIndex >= sampler->mBufferAryLen ){
             sampler->currentWriteIndex = 0;
         }
+        
+        OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
+        if(result) printf("cannot enqueue buffer %d\n", ( int )result );
     }
 }
 
-int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "UNN" )
+int	MOAIAudioSamplerCocoa::_prepareBuffer ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "UNN" )
         ;
+    
+    if( self->isQueueInitialized ) {
+        fprintf(stderr, "Queue already initialized\n");
+        lua_pushstring ( L, "Queue already initialized" );
+        return 1;
+    }
+    
     double sec = state.GetValue < float > (2, 1);
     self->mBufferAryLen = state.GetValue < u32> (3, 5 );
 
@@ -144,52 +218,81 @@ int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
                                           0, /*flags */
                                           &self->queue );
     if(result){
-        printf("AudioQueueNewInput failed\n");
-        return 0;
+        fprintf(stderr, "AudioQueueNewInput failed\n");
+        lua_pushstring ( L, "" );
+        return 1;
     }
 
     int bufsize = MyComputeRecordBufferSize( &self->recFmt, self->queue, ( float )sec );
     if( bufsize < 0 ){
-        printf("invalid arg?");
-        return 0;
+        fprintf(stderr, "invalid arg?");
+        lua_pushstring ( L, "" );
+        return 1;
     }
 
     fprintf(stderr, "bufsize:%d\n", bufsize );
     self->mMaxBufferSizeInBytes = bufsize;
 
+    // where
     self->mBufferAry = (short**) malloc( self->mBufferAryLen * sizeof(short*));
     self->mBufferReadSizeInBytes = (size_t*) malloc( self->mBufferAryLen * sizeof(size_t));
     memset( self->mBufferReadSizeInBytes, 0, self->mBufferAryLen * sizeof(size_t));
+    self->buffers = (AudioQueueBufferRef*) malloc( self->mBufferAryLen * sizeof(AudioQueueBufferRef));
     
     assert(self->mBufferAry);
+    assert(self->buffers);
     for(u32 i=0;i< self->mBufferAryLen;++i){
         self->mBufferAry[i] = (short*) malloc( bufsize );        
         assert(self->mBufferAry[i]);
         
-        AudioQueueBufferRef buffer;
-        result = AudioQueueAllocateBuffer( self->queue, bufsize, &buffer );
+        result = AudioQueueAllocateBuffer( self->queue, bufsize, &self->buffers[i]);
         if(result){
-            printf("AudioQueueAllocateBuffer failed\n");
-            return 0;
+            fprintf(stderr, "AudioQueueAllocateBuffer failed with %ld\n", result);
+            lua_pushstring ( L, "" );
+            return 1;
         }
-        result = AudioQueueEnqueueBuffer( self->queue, buffer, 0, NULL );
+        }
+    
+    // enable level metering
+    UInt32 val = 1;
+    result = AudioQueueSetProperty( self->queue,
+                                    kAudioQueueProperty_EnableLevelMetering,
+                                    &val,
+                                    sizeof(UInt32) );
         if(result){
-            printf("AudioQueueEnqueueBuffer failed\n");
-            return 0;
-        }
+        fprintf(stderr, "AudioQueueSetProperty kAudioQueueProperty_EnableLevelMetering failed with %ld\n", result);
     }
+    self->levels = (AudioQueueLevelMeterState*) malloc( self->mNumChannels * sizeof(AudioQueueLevelMeterState));
+    
     self->isQueueInitialized = true;
     return 0;    
 }
 
-int MOAIAudioSampler::_start ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+int MOAIAudioSamplerCocoa::_start ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
         ;
+    
+    if (!self->isQueuePrimed) {
+        memset( self->mBufferReadSizeInBytes, 0, self->mBufferAryLen * sizeof(size_t));
+        
+        for(u32 i=0;i< self->mBufferAryLen;++i){
+            OSStatus result = AudioQueueEnqueueBuffer( self->queue, self->buffers[i], 0, NULL );
+            if(result){
+                fprintf(stderr, "AudioQueueEnqueueBuffer failed with %ld\n", result);
+                lua_pushstring ( L, "" );
+                return 1;
+            }
+        }
+        self->currentReadIndex = 0;
+        self->currentWriteIndex = 0;
+        self->isQueuePrimed = true;
+    }
     
     OSStatus result = AudioQueueStart( self->queue, NULL );
     if(result){
-        printf( "AudioQueueStart failed\n");
-        return 0;
+        fprintf(stderr, "AudioQueueStart failed with %ld\n", result);
+        lua_pushstring ( L, "" );
+        return 1;
     }
 
     self->isActive = true;
@@ -197,8 +300,8 @@ int MOAIAudioSampler::_start ( lua_State* L ) {
 }
 
 // @out data: array table
-int	MOAIAudioSampler::_read ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+int	MOAIAudioSamplerCocoa::_read ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
         ;
     cc8 *tn = state.GetValue < cc8 * > ( 2, "float" );    
 
@@ -221,7 +324,7 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
         if( self->mBufferReadSizeInBytes[useInd] > 0 ){
 
             short *data = self->mBufferAry[ useInd ];
-            int datanum = self->mBufferReadSizeInBytes[ useInd ] / sizeof(short);
+            int datanum = ( int )self->mBufferReadSizeInBytes[ useInd ] / sizeof(short);
 
 			if(tnid==255){
 				short *outdata = (short*) malloc(sizeof(short) * datanum);
@@ -258,29 +361,65 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
     lua_pushnil(L);
     return 1;    
 }
-int MOAIAudioSampler::_stop ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+int MOAIAudioSamplerCocoa::_stop ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
         ;
+    if ( self->queue ) {
     self->isActive = false;
 
     AudioQueueStop( self->queue, TRUE);
 
+        self->isQueuePrimed = false;
+    }
     return 0;
 }
-int MOAIAudioSampler::_pause ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+int MOAIAudioSamplerCocoa::_pause ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
         ;
-    self->isActive = false;
+    self->pause();
     return 0;
 }
-int MOAIAudioSampler::_resume ( lua_State* L ) {
-    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+int MOAIAudioSamplerCocoa::_resume ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
         ;
-    self->isActive = true;
+    self->resume();
     return 0;
+}
+int	MOAIAudioSamplerCocoa::_getLevels ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
+    ;
+    
+    if ( !self->isActive ) {
+        // no data is incoming.
+        lua_pushnil(L);
+        return 1;
+    }
+    
+    UInt32 data_sz = sizeof(AudioQueueLevelMeterState) * self->mNumChannels;
+    OSErr result = AudioQueueGetProperty( self->queue,
+                                          kAudioQueueProperty_CurrentLevelMeterDB, self->levels,
+                                          &data_sz );
+    if(result){
+        fprintf(stderr, "AudioQueueGetProperty kAudioQueueProperty_CurrentLevelMeterDB failed with %ld\n", result);
+        lua_pushnil(L);
+        return 1;
+    }
+    
+    // average both channels for detection
+    // if the device has a stereo mic (the macbook has) it's helpful
+    double average = 0;
+    double peak = 0;
+    for (u32 i=0; i<self->mNumChannels; i++) {
+        average += (float)(self->levels[0].mAveragePower);
+        peak    += (float)(self->levels[0].mPeakPower);
+    }
+    
+    lua_pushnumber( L, average / self->mNumChannels);
+    lua_pushnumber( L, peak / self->mNumChannels);
+    return 2;
 }
 
-void MOAIAudioSampler::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
@@ -288,7 +427,7 @@ void MOAIAudioSampler::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAudioSampler::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 
@@ -301,6 +440,7 @@ void MOAIAudioSampler::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "stop",				_stop },
 		{ "pause",				_pause },
 		{ "resume",				_resume },                
+		{ "getLevels",			_getLevels },
 		{ NULL, NULL }
 	};
 

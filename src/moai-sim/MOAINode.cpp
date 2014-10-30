@@ -460,12 +460,9 @@ void MOAINode::DepNodeUpdate () {
 		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
 
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->PushListenerAndSelf ( EVENT_UPDATE, state )) {
-			state.DebugCall ( 1, 0 );
-		}
-
+		InvokeListenerWithSelf ( EVENT_NODE_PRE_UPDATE );
 		this->OnDepNodeUpdate ();
+		InvokeListenerWithSelf ( EVENT_NODE_POST_UPDATE );
 	}
 	this->mState = STATE_ACTIVE;
 }
@@ -600,7 +597,10 @@ void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "EVENT_UPDATE", ( u32 )EVENT_UPDATE );
+	state.SetField ( -1, "EVENT_UPDATE",		( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
+	
+	state.SetField ( -1, "EVENT_NODE_PRE_UPDATE",	( u32 )EVENT_NODE_PRE_UPDATE );
+	state.SetField ( -1, "EVENT_NODE_POST_UPDATE",	( u32 )EVENT_NODE_POST_UPDATE );
 }
 
 //----------------------------------------------------------------//

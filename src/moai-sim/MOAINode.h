@@ -40,12 +40,12 @@ private:
 		STATE_UPDATING,		// currently being updated
 	};
 	
-	MOAIDepLink*	mPullLinks;
-	MOAIDepLink*	mPushLinks;
+	MOAIDepLink*		mPullLinks;
+	MOAIDepLink*		mPushLinks;
 
-	u32				mState;
-	MOAINode*		mPrev;
-	MOAINode*		mNext;
+	u32					mState;
+	MOAINode*			mPrev;
+	MOAINode*			mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearAttrLink		( lua_State* L );
@@ -113,7 +113,8 @@ public:
 	DECL_LUA_FACTORY ( MOAINode )
 
 	enum {
-		EVENT_UPDATE,
+		EVENT_NODE_PRE_UPDATE,
+		EVENT_NODE_POST_UPDATE,
 		TOTAL_EVENTS,
 	};
 

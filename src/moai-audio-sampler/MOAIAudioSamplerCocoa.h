@@ -1,7 +1,8 @@
-#ifndef	MOAIAUDIOSAMPLER_H
-#define	MOAIAUDIOSAMPLER_H
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
-#if __APPLE__
+#ifndef	MOAIAUDIOSAMPLERCOCOA_H
+#define	MOAIAUDIOSAMPLERCOCOA_H
 
 #include <AudioToolbox/AudioToolbox.h>
 #include <AudioToolbox/AudioServices.h>
@@ -10,15 +11,17 @@
 #include <moai-sim/headers.h>
 
 //================================================================//
-// MOAIAudioSampler
+// MOAIAudioSamplerCocoa
 //================================================================//
-/**	@lua	MOAIAudioSampler
+/**	@name	MOAIAudioSamplerCocoa
 	@text	Audio sampler singleton
 */
-class MOAIAudioSampler :
+class MOAIAudioSamplerCocoa :
 	public virtual MOAINode {
 
 private:
+    void pause();
+    void resume();
 
 	//----------------------------------------------------------------//
 	static int		_setFrequency			( lua_State* L );
@@ -29,6 +32,7 @@ private:
     static int		_stop					( lua_State* L );
     static int		_pause					( lua_State* L );
     static int		_resume					( lua_State* L );        
+    static int		_getLevels				( lua_State* L );
 
     u32 mNumFrequency;
     u32 mNumChannels;
@@ -39,11 +43,16 @@ private:
 
     AudioStreamBasicDescription recFmt;
     AudioQueueRef queue;
+    AudioQueueBufferRef *buffers;
+    AudioQueueLevelMeterState *levels;
     u32 currentWriteIndex;
     u32 currentReadIndex;
 
     bool isActive;
     bool isQueueInitialized;
+    bool isQueuePrimed;
+    void* mSessionActiveObserver;
+    void* mSessionInactiveObserver;
 
     static void globalCallback( void *inUserData,
                                 AudioQueueRef inAQ,
@@ -53,7 +62,7 @@ private:
                                 const AudioStreamPacketDescription *inPacketDesc );
 public:
 
-	DECL_LUA_FACTORY ( MOAIAudioSampler )
+	DECL_LUA_FACTORY ( MOAIAudioSamplerCocoa )
         //	DECL_ATTR_HELPER ( MOAIUntzSound )
         //	enum {
         //		ATTR_VOLUME,
@@ -63,14 +72,12 @@ public:
 
 
 	//----------------------------------------------------------------//
-					MOAIAudioSampler	();
-					~MOAIAudioSampler	();
+					MOAIAudioSamplerCocoa	();
+					~MOAIAudioSamplerCocoa	();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 
     
 };
-
-#endif
 
 #endif
