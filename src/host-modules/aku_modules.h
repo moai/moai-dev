@@ -9,6 +9,10 @@
 
 #include <moai-core/host.h>
 
+#if AKU_WITH_AUDIO_SAMPLER
+	#include <moai-audio-sampler/host.h>
+#endif
+
 #if AKU_WITH_BOX2D
 	#include <moai-box2d/host.h>
 #endif

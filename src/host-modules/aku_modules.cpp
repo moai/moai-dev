@@ -37,6 +37,10 @@
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
 
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerAppFinalize ();
+	#endif
+
 	#if AKU_WITH_BOX2D
 		AKUBox2DAppFinalize ();
 	#endif
@@ -101,6 +105,10 @@ void AKUModulesAppFinalize () {
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
 
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerAppInitialize ();
+	#endif
+
 	#if AKU_WITH_BOX2D
 		AKUBox2DAppInitialize ();
 	#endif
@@ -164,6 +172,10 @@ void AKUModulesAppInitialize () {
 
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
+
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerContextInitialize ();
+	#endif
 
 	#if AKU_WITH_BOX2D
 		AKUBox2DContextInitialize ();

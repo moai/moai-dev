@@ -3775,6 +3775,14 @@
 		CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */; };
 		CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */; };
 		CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */; };
+		CDA0DCC61A01B6F4002B71B6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC21A01B6F4002B71B6 /* host.cpp */; };
+		CDA0DCC71A01B6F4002B71B6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC21A01B6F4002B71B6 /* host.cpp */; };
+		CDA0DCC81A01B6F4002B71B6 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC31A01B6F4002B71B6 /* host.h */; };
+		CDA0DCC91A01B6F4002B71B6 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC31A01B6F4002B71B6 /* host.h */; };
+		CDA0DCCA1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */; };
+		CDA0DCCB1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */; };
+		CDA0DCCC1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */; };
+		CDA0DCCD1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */; };
 		CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FA173C12CE00DFE837 /* host.cpp */; };
 		CDB0CA30193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */; };
 		CDB0CA31193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */; };
@@ -7828,6 +7836,12 @@
 		CD9F76941808DE770001EF0C /* MOAIVectorPoly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorPoly.cpp; sourceTree = "<group>"; };
 		CD9F76951808DE770001EF0C /* MOAIVectorPoly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorPoly.h; sourceTree = "<group>"; };
 		CD9F76961808DE770001EF0C /* MOAIVectorStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorStyle.h; sourceTree = "<group>"; };
+		CDA0DA041A01B111002B71B6 /* libmoai-ios-audio-sampler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-audio-sampler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDA0DCA31A01B184002B71B6 /* libmoai-osx-audio-sampler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-audio-sampler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDA0DCC21A01B6F4002B71B6 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-audio-sampler/host.cpp"; sourceTree = "<group>"; };
+		CDA0DCC31A01B6F4002B71B6 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-audio-sampler/host.h"; sourceTree = "<group>"; };
+		CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAudioSamplerCocoa.h; path = "moai-audio-sampler/MOAIAudioSamplerCocoa.h"; sourceTree = "<group>"; };
+		CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAudioSamplerCocoa.mm; path = "moai-audio-sampler/MOAIAudioSamplerCocoa.mm"; sourceTree = "<group>"; };
 		CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-billing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B8241808AC6E000129F9 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B89A1808AC82000129F9 /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8164,6 +8178,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CD95D49F1831D4E20080C34E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA0D9FE1A01B111002B71B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA0DC9D1A01B184002B71B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8732,6 +8760,7 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
 				89BE74A2173AD2FA00DFE837 /* moai-box2d */,
 				89BE7577173C11D200DFE837 /* moai-chipmunk */,
 				89BE6ACA173975E500DFE837 /* moai-core */,
@@ -8823,6 +8852,8 @@
 				CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */,
 				CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */,
 				CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */,
+				CDA0DA041A01B111002B71B6 /* libmoai-ios-audio-sampler.a */,
+				CDA0DCA31A01B184002B71B6 /* libmoai-osx-audio-sampler.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12349,6 +12380,17 @@
 			name = node;
 			sourceTree = "<group>";
 		};
+		CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */ = {
+			isa = PBXGroup;
+			children = (
+				CDA0DCC21A01B6F4002B71B6 /* host.cpp */,
+				CDA0DCC31A01B6F4002B71B6 /* host.h */,
+				CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */,
+				CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */,
+			);
+			name = "moai-audio-sampler";
+			sourceTree = "<group>";
+		};
 		CDA4B7331808AB19000129F9 /* moai-ios-billing */ = {
 			isa = PBXGroup;
 			children = (
@@ -14742,6 +14784,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDA0D9F81A01B111002B71B6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA0DCCA1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h in Headers */,
+				CDA0DCC81A01B6F4002B71B6 /* host.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA0DC171A01B184002B71B6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA0DCCB1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h in Headers */,
+				CDA0DCC91A01B6F4002B71B6 /* host.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDA4B73A1808AC61000129F9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15671,6 +15731,40 @@
 			productReference = CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CDA0D9F71A01B111002B71B6 /* libmoai-ios-audio-sampler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDA0D9FF1A01B111002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-ios-audio-sampler" */;
+			buildPhases = (
+				CDA0D9F81A01B111002B71B6 /* Headers */,
+				CDA0D9FB1A01B111002B71B6 /* Sources */,
+				CDA0D9FE1A01B111002B71B6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-audio-sampler";
+			productName = OpenUSLS;
+			productReference = CDA0DA041A01B111002B71B6 /* libmoai-ios-audio-sampler.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDA0DC9E1A01B184002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-osx-audio-sampler" */;
+			buildPhases = (
+				CDA0DC171A01B184002B71B6 /* Headers */,
+				CDA0DC5B1A01B184002B71B6 /* Sources */,
+				CDA0DC9D1A01B184002B71B6 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-audio-sampler";
+			productName = OpenUSLS;
+			productReference = CDA0DCA31A01B184002B71B6 /* libmoai-osx-audio-sampler.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CDA4B7391808AC61000129F9 /* libmoai-ios-billing */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDA4B7A91808AC61000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-billing" */;
@@ -15947,6 +16041,7 @@
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
 				CD70C1B218448D9E005CEBC0 /* libmoai-ios-3rdparty-mixpanel */,
 				CD27BE00191D9F44000A7770 /* libmoai-ios-adcolony */,
+				CDA0D9F71A01B111002B71B6 /* libmoai-ios-audio-sampler */,
 				CDA4B7391808AC61000129F9 /* libmoai-ios-billing */,
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
 				CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */,
@@ -15977,6 +16072,7 @@
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */,
 				CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */,
 				CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */,
+				CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
 				89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
@@ -18458,6 +18554,24 @@
 			files = (
 				CD95D4DE1831D6350080C34E /* host.cpp in Sources */,
 				CD95D4E01831D6350080C34E /* MOAIHashWriterCrypto.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA0D9FB1A01B111002B71B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA0DCC61A01B6F4002B71B6 /* host.cpp in Sources */,
+				CDA0DCCC1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA0DC5B1A01B184002B71B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA0DCC71A01B6F4002B71B6 /* host.cpp in Sources */,
+				CDA0DCCD1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23688,6 +23802,283 @@
 			};
 			name = Distribution;
 		};
+		CDA0DA001A01B111002B71B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-audio-sampler";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CDA0DA011A01B111002B71B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-audio-sampler";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		CDA0DA021A01B111002B71B6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-audio-sampler";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		CDA0DA031A01B111002B71B6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-audio-sampler";
+				SDKROOT = iphoneos;
+			};
+			name = Distribution;
+		};
+		CDA0DC9F1A01B184002B71B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-audio-sampler";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CDA0DCA01A01B184002B71B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-audio-sampler";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CDA0DCA11A01B184002B71B6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-audio-sampler";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CDA0DCA21A01B184002B71B6 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-audio-sampler";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -26526,6 +26917,28 @@
 				CD95D4A21831D4E20080C34E /* Release */,
 				CD95D4A31831D4E20080C34E /* AdHoc */,
 				CD95D4A41831D4E20080C34E /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDA0D9FF1A01B111002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-ios-audio-sampler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDA0DA001A01B111002B71B6 /* Debug */,
+				CDA0DA011A01B111002B71B6 /* Release */,
+				CDA0DA021A01B111002B71B6 /* AdHoc */,
+				CDA0DA031A01B111002B71B6 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDA0DC9E1A01B184002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-osx-audio-sampler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDA0DC9F1A01B184002B71B6 /* Debug */,
+				CDA0DCA01A01B184002B71B6 /* Release */,
+				CDA0DCA11A01B184002B71B6 /* AdHoc */,
+				CDA0DCA21A01B184002B71B6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
