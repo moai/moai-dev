@@ -246,6 +246,8 @@ public:
 	ZLMatrix4x4				GetWndToNormMtx			() const;
 	ZLMatrix4x4				GetWndToWorldMtx		() const;
 	
+	bool					IsOpaque				() const;
+	
 	u32						LogErrors				();
 	
 							MOAIGfxDevice			();

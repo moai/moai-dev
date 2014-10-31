@@ -134,6 +134,20 @@ MOAIClearableView::~MOAIClearableView () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIClearableView::IsOpaque () const {
+
+	ZLColorVec clearColor;
+		
+	if ( this->mClearColorNode ) {
+		clearColor = this->mClearColorNode->GetColorTrait ();
+	}
+	else {
+		clearColor.SetRGBA ( this->mClearColor );
+	}
+	return clearColor.IsOpaque ();
+}
+
+//----------------------------------------------------------------//
 void MOAIClearableView::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }

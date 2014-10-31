@@ -101,8 +101,8 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 		
 		if ( !done ) {
 			MOAIStream* stream = state.GetLuaObject < MOAIStream >( idx, false );
-			if ( stream && stream->GetZLStream ()) {
-				this->Init ( *stream->GetZLStream (), transform, debugName ? debugName : "(texture from MOAIStream)" );
+			if ( stream ) {
+				this->Init ( *stream, transform, debugName ? debugName : "(texture from MOAIStream)" );
 				done = true;
 			}
 		}

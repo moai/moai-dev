@@ -58,7 +58,7 @@ int ZLDeflateReader::AffirmChunk ( int chunkID ) {
 //----------------------------------------------------------------//
 u32 ZLDeflateReader::GetCaps () {
 
-	return this->mStream ? CAN_READ | CAN_SEEK : 0;
+	return this->mProxiedStream ? CAN_READ | CAN_SEEK : 0;
 }
 
 //----------------------------------------------------------------//
@@ -73,7 +73,7 @@ size_t ZLDeflateReader::Inflate ( void* dest, size_t size ) {
 		
 		if ( stream->avail_in == 0 ) {
 			
-			size_t available = this->mStream->ReadBytes ( this->mInputChunk, ZL_DEFLATE_READER_CHUNK_SIZE );
+			size_t available = this->mProxiedStream->ReadBytes ( this->mInputChunk, ZL_DEFLATE_READER_CHUNK_SIZE );
 			if ( available <= 0 ) break;
 			
 			stream->next_in = ( Bytef* )this->mInputChunk;
@@ -107,7 +107,7 @@ void ZLDeflateReader::InflateChunk ( ZLStreamChunk& chunk ) {
 //----------------------------------------------------------------//
 void ZLDeflateReader::OnClose () {
 	
-	if ( this->mStream ) {
+	if ( this->mProxiedStream ) {
 		inflateEnd ( &this->mZStream );
 		memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	}
@@ -198,7 +198,7 @@ int ZLDeflateReader::ResetZipStream () {
 	inflateEnd ( &this->mZStream );
 	this->mZStream = newStream;
 
-	this->mStream->Seek ( this->mBase, SEEK_SET );
+	this->mProxiedStream->Seek ( this->mBase, SEEK_SET );
 	
 	return 0;
 }

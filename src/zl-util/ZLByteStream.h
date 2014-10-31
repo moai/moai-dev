@@ -10,7 +10,7 @@
 // ZLByteStream
 //================================================================//
 class ZLByteStream :
-	public ZLStream {
+	public virtual ZLStream {
 private:
 
 	const void*		mReadBuffer;

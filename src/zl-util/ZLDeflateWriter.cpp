@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 u32 ZLDeflateWriter::GetCaps () {
 
-	return this->mStream ? CAN_WRITE : 0;
+	return this->mProxiedStream ? CAN_WRITE : 0;
 }
 
 //----------------------------------------------------------------//
@@ -36,7 +36,7 @@ size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 		
 		size_t have = ZL_DEFLATE_WRITER_CHUNK_SIZE - stream->avail_out;
 		if ( have ) {
-			size_t write = this->mStream->WriteBytes ( buffer, have );
+			size_t write = this->mProxiedStream->WriteBytes ( buffer, have );
 			if ( write != have ) {
 				// TODO: report error
 				break;
@@ -58,14 +58,14 @@ size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 //----------------------------------------------------------------//
 void ZLDeflateWriter::OnClose () {
 	
-	if ( this->mStream ) {
+	if ( this->mProxiedStream ) {
 	
 		this->Deflate ( 0, 0 );
 	
 		deflateEnd ( &this->mZStream );
 		memset ( &this->mZStream, 0, sizeof ( z_stream ));
 		
-		this->mStream = 0;
+		this->mProxiedStream = 0;
 	}
 }
 

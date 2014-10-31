@@ -17,10 +17,9 @@
 			contiguous in memory.
 */
 class MOAIMemStream :
+	public virtual ZLMemStream,
 	public virtual MOAIStream {
 private:
-	
-	ZLMemStream mMemStream;
 	
 	//----------------------------------------------------------------//
 	static int		_close				( lua_State* L );
@@ -32,7 +31,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIMemStream )
 
 	//----------------------------------------------------------------//
-	void			Close				();
 					MOAIMemStream		();
 					~MOAIMemStream		();
 	bool			Open				( u32 reserve, u32 chunkSize );

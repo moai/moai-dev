@@ -18,7 +18,7 @@
 int MOAIMemStream::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 	
-	self->Close ();
+	self->Clear ();
 	return 0;
 }
 
@@ -27,13 +27,13 @@ int MOAIMemStream::_close ( lua_State* L ) {
 int MOAIMemStream::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 
-	size_t size = self->mMemStream.GetLength ();
+	size_t size = self->GetLength ();
 	
 	if ( size ) {
 		
-		size_t cursor = self->mMemStream.GetCursor ();
+		size_t cursor = self->GetCursor ();
 		
-		self->mMemStream.Seek ( 0, SEEK_SET );
+		self->Seek ( 0, SEEK_SET );
 		void* str = 0;
 		
 		if ( size > ALLOCA_MAX ) {
@@ -44,14 +44,14 @@ int MOAIMemStream::_getString ( lua_State* L ) {
 		}
 		
 		assert ( str );
-		self->mMemStream.ReadBytes ( str, size );
+		self->ReadBytes ( str, size );
 		lua_pushlstring ( state, ( cc8* )str, size );
 		
 		if ( size > ALLOCA_MAX ) {
 			free ( str );
 		}
 		
-		self->mMemStream.Seek ( cursor, SEEK_SET );
+		self->Seek ( cursor, SEEK_SET );
 		return 1;
 	}
 	return 0;
@@ -71,10 +71,18 @@ int MOAIMemStream::_getString ( lua_State* L ) {
 int MOAIMemStream::_open ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 	
+	self->Clear ();
+	
 	u32 reserve			= state.GetValue < u32 >( 2, 0 );
 	u32 chunkSize		= state.GetValue < u32 >( 3, ZLMemStream::DEFAULT_CHUNK_SIZE );
 	
-	bool result = self->Open ( reserve, chunkSize );
+	bool result = false;
+
+	if ( chunkSize ) {
+		self->SetChunkSize ( chunkSize );
+		self->Reserve ( reserve );
+		result = true;
+	}
 	
 	state.Push ( result );
 	return 1;
@@ -83,13 +91,6 @@ int MOAIMemStream::_open ( lua_State* L ) {
 //================================================================//
 // MOAIMemStream
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMemStream::Close () {
-
-	this->SetZLStream ( 0 );
-	this->mMemStream.Clear ();
-}
 
 //----------------------------------------------------------------//
 MOAIMemStream::MOAIMemStream () {
@@ -101,23 +102,6 @@ MOAIMemStream::MOAIMemStream () {
 
 //----------------------------------------------------------------//
 MOAIMemStream::~MOAIMemStream () {
-
-	this->Close ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIMemStream::Open ( u32 reserve, u32 chunkSize ) {
-
-	this->Close ();
-
-	if ( !chunkSize ) return false;
-
-	this->mMemStream.SetChunkSize ( chunkSize );
-	this->mMemStream.Reserve ( reserve );
-
-	this->SetZLStream ( &this->mMemStream );
-
-	return true;
 }
 
 //----------------------------------------------------------------//

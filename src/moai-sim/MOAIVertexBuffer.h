@@ -25,6 +25,7 @@ public:
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
+	public ZLByteStream,
 	public MOAIGfxResource,
 	public MOAIStream {
 private:
@@ -36,7 +37,6 @@ private:
 	u32										mVertexCount;
 
 	ZLLeanArray < u8 >			mBuffer;
-	ZLByteStream				mStream;
 	ZLBox						mBounds;
 	
 	ZLLeanArray < MOAIVbo >		mVBOs;
@@ -73,7 +73,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
 	GET ( const ZLBox&, Bounds, mBounds )
-	GET ( ZLStream&, Stream, mStream )
 	GET ( u32, VertexCount, mVertexCount )
 	
 	//----------------------------------------------------------------//

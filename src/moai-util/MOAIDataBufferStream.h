@@ -16,10 +16,10 @@ class MOAIDataBuffer;
 			reading and writing.
 */
 class MOAIDataBufferStream :
+	public virtual ZLByteStream,
 	public virtual MOAIStream {
 private:
 	
-	ZLByteStream mByteStream;
 	MOAILuaSharedPtr < MOAIDataBuffer > mDataBuffer;
 	
 	//----------------------------------------------------------------//

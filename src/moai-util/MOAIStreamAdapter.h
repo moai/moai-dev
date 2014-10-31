@@ -16,11 +16,17 @@
 			or 'deflate'). 
 */
 class MOAIStreamAdapter :
+	public ZLStreamProxy,
 	public virtual MOAIStream {
 protected:
 	
-	MOAILuaSharedPtr < MOAIStream > mStream;
-	ZLStreamAdapter* mAdapter;
+	// to save ourselves the trouble of having to create a unique class for each supported adapter
+	// type, we resort to some trickery. we subclass from ZLStreamProxy, which wraps a stream. the
+	// stream we wrap is the instance of ZLStreamAdapter. it, in turn, adapts the stream held in the
+	// MOAIStream the user gives us. So we have ZLStreamProxy => ZLStreamAdapter => MOAIStream.
+	
+	ZLStreamAdapter* mAdapter; // this is the adapter that does the work
+	MOAILuaSharedPtr < MOAIStream > mAdaptedStream; // this is the inner stream
 	
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
@@ -30,34 +36,21 @@ protected:
 	static int		_openDeflateWriter		( lua_State* L );
 	static int		_openHex				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	int				Open					( MOAILuaState& state, int idx, ZLStreamAdapter* adapter );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStreamAdapter )
 
 	//----------------------------------------------------------------//
-	void			Close					();
+	void			Clear					(); // closes *and* clears the adapter
+	void			Close					(); // clears the stream and closes the adapter, but *doesn't* also clear the adapter
 					MOAIStreamAdapter		();
 					~MOAIStreamAdapter		();
-	bool			Open					( MOAIStream* stream, ZLStreamAdapter* reader );
+	bool			Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	int Open ( MOAILuaState& state, int idx ) {
-	
-		this->Close ();
-		
-		MOAIStream* stream = state.GetLuaObject < MOAIStream >( idx, true );
-		if ( !stream ) return 0;
-		
-		ZLStreamAdapter* adapter = new TYPE ();
-		
-		bool result = this->Open ( stream, adapter );
-		
-		state.Push ( result );
-		return 1;
-	}
 };
 
 #endif

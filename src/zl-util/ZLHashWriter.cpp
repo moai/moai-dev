@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 u32 ZLHashWriter::GetCaps () {
 
-	return this->mStream ? CAN_WRITE : 0;
+	return this->mProxiedStream ? CAN_WRITE : 0;
 }
 
 //----------------------------------------------------------------//
@@ -77,8 +77,8 @@ bool ZLHashWriter::OnOpen () {
 size_t ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
 	
 	// Pass the write through to stream
-	if ( this->mStream ) {
-		size = this->mStream->WriteBytes( buffer, size );
+	if ( this->mProxiedStream ) {
+		size = this->mProxiedStream->WriteBytes( buffer, size );
 	}
 	
 	// Update the hash

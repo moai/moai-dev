@@ -10,7 +10,7 @@
 // ZLFileStream
 //================================================================//
 class ZLFileStream :
-	public ZLStream {
+	public virtual ZLStream {
 protected:
 
 	ZLFILE*			mFile;
