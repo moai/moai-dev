@@ -206,7 +206,7 @@ void ZLMemStream::SetChunkSize ( size_t chunkSize ) {
 //----------------------------------------------------------------//
 int ZLMemStream::SetCursor ( long offset ) {
 
-	this->mCursor = offset;
+	this->mCursor = offset > 0 ? offset : 0;
 	return 0;
 }
 

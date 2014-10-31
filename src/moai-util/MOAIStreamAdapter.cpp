@@ -139,8 +139,6 @@ int MOAIStreamAdapter::_openHex ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::Clear () {
 	
-	this->Close ();
-	
 	if ( this->mAdapter ) {
 		delete this->mAdapter;
 		this->mAdapter = 0;

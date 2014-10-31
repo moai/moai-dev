@@ -26,6 +26,7 @@ protected:
 	// MOAIStream the user gives us. So we have ZLStreamProxy => ZLStreamAdapter => MOAIStream.
 	
 	ZLStreamAdapter* mAdapter; // this is the adapter that does the work
+	
 	MOAILuaSharedPtr < MOAIStream > mAdaptedStream; // this is the inner stream
 	
 	//----------------------------------------------------------------//
