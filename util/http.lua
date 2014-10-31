@@ -61,7 +61,7 @@ encodeParams = function ( t )
 
 	local s = ''
 	for k, v in pairs ( t ) do
-		s = s .. '&' .. escapeUrl ( k ) .. '=' .. escape ( v )
+		s = s .. '&' .. escapeUrl ( k ) .. '=' .. escapeUrl ( v )
 	end
 
 	if #s > 0 then
@@ -107,7 +107,6 @@ end
 perform = function ( verb, url, params, body, headers, timeout )
 
 	url = params and url .. encodeParams ( params ) or url
-
 
 
 	local httptask = MOAIHttpTask.new ()
