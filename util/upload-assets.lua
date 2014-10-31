@@ -6,39 +6,27 @@ local status, result = http.get ( 'https://api.github.com/repos/ConghuZhao/testR
 print ( status )
 json = http.is200 ( status ) and result and MOAIJsonParser.decode ( result )
 
+util.printTable ( json or {})
 
+config = {}
 
---https://uploads.github.com/repos/ConghuZhao/testRelease/releases/652472/assets{?name
-
+util.dofileWithEnvironment ( './upload-info.lua', config )
 
 
 http_headers = {
-	Authorization='',
+	Authorization=config['RELEASE_AUTHORIZATION'],
 	['Content-Type']="application/zip"
 }
 
 
-local file = MOAIFileStream.new ()
-file:open ("./foo.zip")
-local data = file:read ()
-file:close ()
-print(data)
-status, result = http.post ( 'https://uploads.github.com/repos/ConghuZhao/testRelease/releases/652472/assets?name=foo.zip',nil ,data,http_headers)
-
-print ( status )
-json = http.is200 ( status ) and result and MOAIJsonParser.decode ( result )
-
-util.printTable ( json or {})
-
-
-
+assets_url = string.format("%s/%s/assets",config['UPLOAD_REPO'],json["id"])
 
 local file = MOAIFileStream.new ()
 file:open ("./boo.zip")
 local data = file:read ()
 file:close ()
 print(data)
-status, result = http.post ( 'https://uploads.github.com/repos/ConghuZhao/testRelease/releases/652472/assets?name=boo.zip',nil ,data,http_headers)
+status, result = http.post ( assets_url,nil ,data,http_headers)
 
 print ( status )
 json = http.is200 ( status ) and result and MOAIJsonParser.decode ( result )
