@@ -13,7 +13,7 @@ json = http.is200 ( status ) and result and MOAIJsonParser.decode ( result )
 
 
 http_headers = {
-	Authorization='token 5d2e2ef780dc8e3452bb11518ca2d7b85d9b6ad6',
+	Authorization='',
 	['Content-Type']="application/zip"
 }
 
