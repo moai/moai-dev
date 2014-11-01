@@ -6,6 +6,7 @@
 
 #include <moai-util/pch.h>
 
+#include <moai-util/MOAIByteStream.h>
 #include <moai-util/MOAIDataBuffer.h>
 #include <moai-util/MOAIDataBufferStream.h>
 #include <moai-util/MOAIDataIOTask.h>

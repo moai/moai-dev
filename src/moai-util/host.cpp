@@ -25,6 +25,7 @@ void AKUUtilContextInitialize () {
 	MOAIMath::Affirm ();
 	
 	// MOAI
+	REGISTER_LUA_CLASS ( MOAIByteStream )
 	REGISTER_LUA_CLASS ( MOAIDataBuffer )
 	REGISTER_LUA_CLASS ( MOAIDataBufferStream )
 	REGISTER_LUA_CLASS ( MOAIDataIOTask )
