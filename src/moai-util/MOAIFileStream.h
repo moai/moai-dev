@@ -19,10 +19,9 @@
 	@const	WRITE
 */
 class MOAIFileStream :
+	public virtual ZLFileStream,
 	public virtual MOAIStream {
 private:
-	
-	ZLFileStream mFileStream;
 	
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
@@ -33,10 +32,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIFileStream )
 
 	//----------------------------------------------------------------//
-	void			Close					();
 					MOAIFileStream			();
 					~MOAIFileStream			();
-	bool			Open					( cc8* filename, u32 mode );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

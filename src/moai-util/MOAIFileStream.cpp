@@ -49,13 +49,6 @@ int MOAIFileStream::_open ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFileStream::Close () {
-
-	this->mFileStream.Close ();
-	this->SetZLStream ( 0 );
-}
-
-//----------------------------------------------------------------//
 MOAIFileStream::MOAIFileStream () {
 	
 	RTTI_BEGIN
@@ -66,15 +59,6 @@ MOAIFileStream::MOAIFileStream () {
 //----------------------------------------------------------------//
 MOAIFileStream::~MOAIFileStream () {
 	this->Close ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIFileStream::Open ( cc8* filename, u32 mode ) {
-
-	this->Close ();
-	bool result = this->mFileStream.Open ( filename, mode );
-	this->SetZLStream ( &this->mFileStream );
-	return result;
 }
 
 //----------------------------------------------------------------//

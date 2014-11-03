@@ -511,12 +511,15 @@ MOAIXmlParser.extend (
 -- renames
 --============================================================--
 
-MOAIHashWriter	= MOAIHashWriterCrypto or MOAIHashWriter
-MOAITextBox		= MOAITextLabel
-MOAIThread		= MOAICoroutine
+MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
+MOAITextBox			= MOAITextLabel
+MOAIThread			= MOAICoroutine
 
-MOAIProp		= MOAIGraphicsProp
-MOAIProp2D		= MOAIGraphicsProp2D
+MOAIProp			= MOAIGraphicsProp
+MOAIProp2D			= MOAIGraphicsProp2D
+
+MOAIStreamReader	= MOAIStreamAdapter
+MOAIStreamWriter	= MOAIStreamAdapter
 
 --============================================================--
 -- Cross Platform

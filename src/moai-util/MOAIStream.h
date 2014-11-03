@@ -15,6 +15,7 @@
 	@const	SEEK_SET
 */
 class MOAIStream :
+	public virtual ZLStream,
 	public virtual MOAILuaObject {
 private:
 	
@@ -31,8 +32,6 @@ private:
 		UINT_16,
 		UINT_32,
 	};
-	
-	ZLStream* mStream;
 	
 	//----------------------------------------------------------------//
 	static int		_flush				( lua_State* L );
@@ -70,21 +69,16 @@ private:
 	template < typename TYPE >
 	size_t ReadValue ( MOAILuaState& state ) {
 		
-		if ( this->mStream ) {
-			TYPE value;
-			size_t size = sizeof ( TYPE );
-			size_t bytes = this->mStream->ReadBytes ( &value, size );
-			if ( bytes == size ) {
-				state.Push ( value );
-			}
-			else {
-				state.Push ();
-			}
-			return bytes;
+		TYPE value;
+		size_t size = sizeof ( TYPE );
+		size_t bytes = this->ReadBytes ( &value, size );
+		if ( bytes == size ) {
+			state.Push ( value );
 		}
-		
-		state.Push ();
-		return 0;
+		else {
+			state.Push ();
+		}
+		return bytes;
 	}
 
 	//----------------------------------------------------------------//
@@ -95,28 +89,20 @@ private:
 		size_t size = sizeof ( TYPE );
 		size_t bytes = 0;
 		
-		if ( this->mStream ) {
-		
-			for ( u32 i = 0; i < total; ++i ) {
-				TYPE value;
-				size_t result = this->mStream->ReadBytes ( &value, size );
-				bytes += result;
-				if ( result == size ) {
-					state.Push ( value );
+		for ( u32 i = 0; i < total; ++i ) {
+			TYPE value;
+			size_t result = this->ReadBytes ( &value, size );
+			bytes += result;
+			if ( result == size ) {
+				state.Push ( value );
+			}
+			else {
+				// TODO: report errors
+				for ( u32 j = i; j < total; ++j ) {
+					state.Push ();
 				}
-				else {
-					// TODO: report errors
-					for ( u32 j = i; j < total; ++j ) {
-						state.Push ();
-					}
-					break;
-				} 
-			}
-		}
-		else {
-			for ( u32 i = 0; i < total; ++i ) {
-				state.Push ();
-			}
+				break;
+			} 
 		}
 		state.Push (( u32 )bytes ); // TODO: overflow?
 		return total + 1;
@@ -131,28 +117,20 @@ private:
 		size_t size = sizeof ( TYPE );
 		size_t bytes = 0;
 		
-		if ( this->mStream ) {
-			for ( u32 i = 0; i < total; ++i ) {
-				TYPE value = state.GetValue < TYPE >( idx + i, 0 );
-				size_t result = this->mStream->WriteBytes ( &value, size );
-				bytes += result;
-				if ( result != size ) {
-					// TODO: report errors
-					break;
-				}
+		for ( u32 i = 0; i < total; ++i ) {
+			TYPE value = state.GetValue < TYPE >( idx + i, 0 );
+			size_t result = this->WriteBytes ( &value, size );
+			bytes += result;
+			if ( result != size ) {
+				// TODO: report errors
+				break;
 			}
 		}
 		state.Push (( u32 )bytes ); // TODO: overflow?
 		return 1;
 	}
 
-protected:
-
-	SET ( ZLStream*, ZLStream, mStream )
-
 public:
-
-	GET ( ZLStream*, ZLStream, mStream )
 
 	//----------------------------------------------------------------//
 					MOAIStream			();

@@ -31,6 +31,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearSurface			();
+	bool			IsOpaque				() const;
 					MOAIClearableView		();
 					~MOAIClearableView		();
 	void			RegisterLuaClass		( MOAILuaState& state );

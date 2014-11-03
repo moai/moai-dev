@@ -185,7 +185,7 @@ int MOAIGrid::_streamTilesIn ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push (( u32 )self->StreamTilesIn ( stream->GetZLStream ())); // TODO: overflow?
+		state.Push (( u32 )self->StreamTilesIn ( stream )); // TODO: overflow?
 		return 1;
 	}
 	return 0;
@@ -205,7 +205,7 @@ int MOAIGrid::_streamTilesOut ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push (( u32 )self->StreamTilesOut ( stream->GetZLStream ())); // TODO: overflow?
+		state.Push (( u32 )self->StreamTilesOut ( stream )); // TODO: overflow?
 		return 1;
 	}
 	return 0;

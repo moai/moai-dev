@@ -17,7 +17,10 @@
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openMD5 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterMD5 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterMD5 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //----------------------------------------------------------------//
@@ -30,7 +33,10 @@ int MOAIHashWriterCrypto::_openMD5 ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openSHA1 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterSHA1 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterSHA1 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //----------------------------------------------------------------//
@@ -43,7 +49,10 @@ int MOAIHashWriterCrypto::_openSHA1 ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openSHA224 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterSHA224 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterSHA224 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //----------------------------------------------------------------//
@@ -56,7 +65,10 @@ int MOAIHashWriterCrypto::_openSHA224 ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openSHA256 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterSHA256 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterSHA256 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //----------------------------------------------------------------//
@@ -69,7 +81,10 @@ int MOAIHashWriterCrypto::_openSHA256 ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openSHA384 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterSHA384 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterSHA384 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //----------------------------------------------------------------//
@@ -82,7 +97,10 @@ int MOAIHashWriterCrypto::_openSHA384 ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIHashWriterCrypto::_openSHA512 ( lua_State* L ) {
-	return MOAIHashWriter::ImplementLuaHash ( L, new ZLHashWriterSHA512 ());
+	MOAI_LUA_SETUP ( MOAIHashWriterCrypto, "U" );
+	
+	self->mHashWriter = new ZLHashWriterSHA512 ();
+	return self->Open ( state, 2, self->mHashWriter );
 }
 
 //================================================================//

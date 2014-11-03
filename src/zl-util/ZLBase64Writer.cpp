@@ -18,13 +18,13 @@ size_t ZLBase64Writer::EstimateEncodedLength ( size_t plainLength ) {
 //----------------------------------------------------------------//
 u32 ZLBase64Writer::GetCaps () {
 
-	return this->mStream ? CAN_WRITE : 0;
+	return this->mProxiedStream ? CAN_WRITE : 0;
 }
 
 //----------------------------------------------------------------//
 void ZLBase64Writer::OnClose () {
 	
-	if ( this->mStream ) {
+	if ( this->mProxiedStream ) {
 		
 		// space remaining in current block
 		u32 blockCursor = this->mCursor % ZLBase64Encoder::PLAIN_BLOCK_SIZE;
@@ -32,7 +32,7 @@ void ZLBase64Writer::OnClose () {
 		if ( blockCursor ) {
 			u8 crypt [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 			this->mEncoder.Encode ( crypt, this->mPlainBlock, blockCursor );
-			size_t write = this->mStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+			size_t write = this->mProxiedStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
 			if ( write != ZLBase64Encoder::CRYPT_BLOCK_SIZE ) {
 				// TODO: report errors
 			}
@@ -70,7 +70,7 @@ size_t ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 		if ( ZLBase64Encoder::PLAIN_BLOCK_SIZE <= blockCursor ) {
 			// encode and write
 			this->mEncoder.Encode ( crypt, this->mPlainBlock, ZLBase64Encoder::PLAIN_BLOCK_SIZE );
-			size_t write = this->mStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+			size_t write = this->mProxiedStream->WriteBytes ( crypt, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
 			this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
 			
 			if ( write != ZLBase64Encoder::CRYPT_BLOCK_SIZE ) {

@@ -23,7 +23,7 @@ size_t ZLHexAdapter::EstimateEncodedLength ( size_t plainLength ) {
 //----------------------------------------------------------------//
 u32 ZLHexAdapter::GetCaps () {
 
-	return this->mStream ? ( CAN_READ | CAN_WRITE ) : 0;
+	return this->mProxiedStream ? ( CAN_READ | CAN_WRITE ) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -39,14 +39,14 @@ u8 ZLHexAdapter::HexToByte ( u32 c ) {
 //----------------------------------------------------------------//
 size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 	
-	if ( !this->mStream ) return 0;
+	if ( !this->mProxiedStream ) return 0;
 	
 	char hexByte [ 2 ];
 	
 	u8* bytes = ( u8* )buffer;
 	for ( u32 i = 0; i < size; ++i, ++this->mCursor ) {
 		
-		size_t result = this->mStream->ReadBytes ( hexByte, 2 );
+		size_t result = this->mProxiedStream->ReadBytes ( hexByte, 2 );
 		if ( result != 2 ) {
 			return i;
 		}
@@ -62,7 +62,7 @@ size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 //----------------------------------------------------------------//
 size_t ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
 	
-	if ( !this->mStream ) return 0;
+	if ( !this->mProxiedStream ) return 0;
 	
 	const char* hexTable = "0123456789abcdef";
 	char hexByte [ 2 ];
@@ -75,7 +75,7 @@ size_t ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
 		hexByte [ 0 ] = hexTable [( byte >> 4 ) & 0x0f ];
 		hexByte [ 1 ] = hexTable [ byte & 0x0f ];
 		
-		size_t result = this->mStream->WriteBytes ( hexByte, 2 );
+		size_t result = this->mProxiedStream->WriteBytes ( hexByte, 2 );
 		if ( result != 2 ) {
 			return i;
 		}

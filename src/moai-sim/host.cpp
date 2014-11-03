@@ -235,6 +235,12 @@ double AKUGetSimStep () {
 }
 
 //----------------------------------------------------------------//
+int AKUIsGfxBufferOpaque () {
+
+	return MOAIGfxDevice::Get ().IsOpaque ();
+}
+
+//----------------------------------------------------------------//
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {

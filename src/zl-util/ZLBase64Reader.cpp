@@ -18,7 +18,7 @@ size_t ZLBase64Reader::EstimateDecodedLength ( size_t encodedLength ) {
 //----------------------------------------------------------------//
 u32 ZLBase64Reader::GetCaps () {
 
-	return this->mStream ? CAN_READ | CAN_SEEK : 0;
+	return this->mProxiedStream ? CAN_READ | CAN_SEEK : 0;
 }
 
 //----------------------------------------------------------------//
@@ -81,11 +81,11 @@ void ZLBase64Reader::SyncBlock () {
 		this->mBlockID = blockID;
 		
 		size_t cryptBlockAddr = ( blockID * ZLBase64Encoder::CRYPT_BLOCK_SIZE ) + this->mBase;
-		this->mStream->Seek ( cryptBlockAddr, SEEK_SET );
+		this->mProxiedStream->Seek ( cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 		this->mEncoder.FormatCryptBlock ( cryptBlock );
-		this->mStream->ReadBytes ( cryptBlock, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
+		this->mProxiedStream->ReadBytes ( cryptBlock, ZLBase64Encoder::CRYPT_BLOCK_SIZE );
 		
 		this->mBlockTop = this->mEncoder.Decode ( this->mPlainBlock, cryptBlock );
 	}

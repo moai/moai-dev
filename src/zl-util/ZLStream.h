@@ -23,6 +23,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	bool				CheckCaps				( u32 flags );
 	virtual void		Flush					();
 	virtual u32			GetCaps					() = 0;
 	virtual size_t		GetCursor				() = 0;

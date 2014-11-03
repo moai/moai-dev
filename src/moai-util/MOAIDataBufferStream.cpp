@@ -54,11 +54,9 @@ int MOAIDataBufferStream::_open ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIDataBufferStream::Close () {
 
+	this->Clear ();
+
 	if ( this->mDataBuffer ) {
-		
-		this->mByteStream.Clear ();
-		
-		this->SetZLStream ( 0 );
 		this->mDataBuffer->Unlock ();
 		this->mDataBuffer.Set ( *this, 0 );
 	}
@@ -74,8 +72,6 @@ MOAIDataBufferStream::MOAIDataBufferStream () {
 
 //----------------------------------------------------------------//
 MOAIDataBufferStream::~MOAIDataBufferStream () {
-
-	this->Close ();
 }
 
 //----------------------------------------------------------------//
@@ -92,10 +88,8 @@ bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
 	
 	buffer->Lock ( &bytes, &size );
 	
-	this->mByteStream.SetBuffer ( buffer, size );
-	this->mByteStream.SetLength ( size );
-	
-	this->SetZLStream ( &this->mByteStream );
+	this->SetBuffer ( buffer, size );
+	this->SetLength ( size );
 	
 	return true;
 }

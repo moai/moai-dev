@@ -141,7 +141,7 @@ int MOAIXmlParser::_setStream ( lua_State* L ) {
 	self->mStream.Set ( *self, state.GetLuaObject< MOAIStream >( 2, false ));
 	
 	if ( self->mStream ) {
-		self->mReader.SetStream ( *self->mStream->GetZLStream ());
+		self->mReader.SetStream ( *self->mStream );
 	}
 	return 0;
 }

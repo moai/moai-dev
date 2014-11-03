@@ -1037,9 +1037,15 @@ float ZLColorVec::GetLuma () const {
 }
 
 //----------------------------------------------------------------//
-bool ZLColorVec::IsClear () {
+bool ZLColorVec::IsClear () const {
 
 	return (( this->mR == 0.0f ) && ( this->mG == 0.0f ) && ( this->mB == 0.0f ) && ( this->mA == 0.0f ));
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::IsOpaque () const {
+
+	return ( this->mA >= 1.0f );
 }
 
 //----------------------------------------------------------------//

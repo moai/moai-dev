@@ -117,8 +117,13 @@ NSURLRequest* MOAIHttpTaskNSURL::Prepare () {
 	
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
-	// USMemStream which will grow dynamically
-	this->mStream = this->mUserStream ? this->mUserStream->GetZLStream () : &this->mMemStream;
+	// ZLMemStream which will grow dynamically
+	if ( this->mUserStream ) {
+		this->mStream = this->mUserStream;
+	}
+	else {
+		this->mStream = &this->mMemStream;
+	}
 	
 	NSString* requestString = [ NSString stringWithCString:mUrl encoding:NSUTF8StringEncoding ];
 	NSURL* myURL = [ NSURL URLWithString:requestString ];

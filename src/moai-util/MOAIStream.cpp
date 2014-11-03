@@ -19,9 +19,7 @@
 */
 int MOAIStream::_flush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
-	if ( self->mStream ) {
-		self->mStream->Flush ();
-	}
+	self->Flush ();
 	return 0;
 }
 
@@ -34,8 +32,7 @@ int MOAIStream::_flush ( lua_State* L ) {
 */
 int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
-	if ( !self->mStream ) return 0;
-	size_t cursor = self->mStream->GetCursor ();
+	size_t cursor = self->GetCursor ();
 	state.Push (( u32 )cursor ); // TODO: overflow?
 	return 1;
 }
@@ -49,8 +46,7 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 */
 int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
-	if ( !self->mStream ) return 0;
-	size_t length = self->mStream->GetLength ();
+	size_t length = self->GetLength ();
 	state.Push (( u32 )length ); // TODO: overflow?
 	return 1;
 }
@@ -67,12 +63,7 @@ int MOAIStream::_getLength ( lua_State* L ) {
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
-	size_t len = 0;
-	
-	if ( self->mStream ) {
-		// TODO: 64-bit
-		len = state.GetValue < u32 >( 2, ( u32 )self->mStream->GetLength ());
-	}
+	size_t len = state.GetValue < u32 >( 2, ( u32 )self->GetLength ());
 	
 	if ( !len ) {
 		lua_pushstring ( state, "" );
@@ -89,7 +80,7 @@ int MOAIStream::_read ( lua_State* L ) {
 		buffer = ( char* )alloca ( len );
 	}
 	
-	len = self->mStream->ReadBytes ( buffer, len );
+	len = self->ReadBytes ( buffer, len );
 	
 	if ( len ) {
 		lua_pushlstring ( state, buffer, len );
@@ -242,9 +233,7 @@ int MOAIStream::_seek ( lua_State* L ) {
 	u32 offset	= state.GetValue < u32 >( 2, 0 );
 	u32 mode	= state.GetValue < u32 >( 3, SEEK_SET );
 	
-	if ( self->mStream ) {
-		self->mStream->Seek ( offset, mode );
-	}
+	self->Seek ( offset, mode );
 	return 0;
 }
 
@@ -260,8 +249,6 @@ int MOAIStream::_seek ( lua_State* L ) {
 int MOAIStream::_write ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "US" );
 
-	if ( !self->mStream ) return 0;
-
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
@@ -271,7 +258,7 @@ int MOAIStream::_write ( lua_State* L ) {
 		writeLen = len;
 	}
 	
-	writeLen = self->mStream->WriteBytes ( str, writeLen );
+	writeLen = self->WriteBytes ( str, writeLen );
 	
 	state.Push (( u32 )writeLen ); // TODO: overflow?
 	return 1;
@@ -374,8 +361,8 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 	
 	if ( stream ) {
 		
-		ZLStream* inStream = stream->GetZLStream ();
-		ZLStream* outStream = self->GetZLStream ();
+		ZLStream* inStream = stream;
+		ZLStream* outStream = self;
 		
 		if ( inStream && outStream ) {
 		
@@ -439,8 +426,7 @@ int MOAIStream::_writeU32 ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIStream::MOAIStream () :
-	mStream ( 0 ) {
+MOAIStream::MOAIStream () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -638,11 +624,6 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 
-	if ( !this->mStream ) {
-		state.Push ( 0 );
-		return 1;
-	}
-
 	idx = state.AbsIndex ( idx );
 	cc8* format = state.GetValue < cc8* >( idx++, "" );
 	
@@ -655,46 +636,46 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 	
 		size = 0;
 		format = MOAIStream::ParseTypeToken ( format, type );	
-		result = this->mStream->GetCursor ();
+		result = this->GetCursor ();
 		
 		switch ( type ) {
 			case INT_8:
 				size = sizeof ( s8 );
-				this->mStream->Write < s8 >( state.GetValue < s8 >( idx++, 0 ));
+				this->Write < s8 >( state.GetValue < s8 >( idx++, 0 ));
 				break;
 			case INT_16:
 				size = sizeof ( s16 );
-				this->mStream->Write < s16 >( state.GetValue < s16 >( idx++, 0 ));
+				this->Write < s16 >( state.GetValue < s16 >( idx++, 0 ));
 				break;
 			case INT_32:
 				size = sizeof ( s32 );
-				this->mStream->Write < s32 >( state.GetValue < s32 >( idx++, 0 ));
+				this->Write < s32 >( state.GetValue < s32 >( idx++, 0 ));
 				break;
 			case DOUBLE:
 				size = sizeof ( double );
-				this->mStream->Write < double >( state.GetValue < double >( idx++, 0 ));
+				this->Write < double >( state.GetValue < double >( idx++, 0 ));
 				break;
 			case FLOAT:
 				size = sizeof ( float );
-				this->mStream->Write < float >( state.GetValue < float >( idx++, 0 ));
+				this->Write < float >( state.GetValue < float >( idx++, 0 ));
 				break;
 			case UINT_8:
 				size = sizeof ( u8 );
-				this->mStream->Write < u8 >( state.GetValue < u8 >( idx++, 0 ));
+				this->Write < u8 >( state.GetValue < u8 >( idx++, 0 ));
 				break;
 			case UINT_16:
 				size = sizeof ( u16 );
-				this->mStream->Write < u16 >( state.GetValue < u16 >( idx++, 0 ));
+				this->Write < u16 >( state.GetValue < u16 >( idx++, 0 ));
 				break;
 			case UINT_32:
 				size = sizeof ( u32 );
-				this->mStream->Write < u32 >( state.GetValue < u32 >( idx++, 0 ));
+				this->Write < u32 >( state.GetValue < u32 >( idx++, 0 ));
 				break;
 			default:
 				format = 0;
 		}
 		
-		result = this->mStream->GetCursor () - result;
+		result = this->GetCursor () - result;
 		bytes += result;
 		if ( result != size ) {
 			break;

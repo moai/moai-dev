@@ -12,7 +12,7 @@
 // ZLMemStream
 //================================================================//
 class ZLMemStream :
-	public ZLStream {
+	public virtual ZLStream {
 private:
 
 	// guest buffer is an optimization; handle case where we want to use some locally

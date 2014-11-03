@@ -554,6 +554,13 @@ void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::IsOpaque () const {
+	
+	assert ( this->mDefaultBuffer );
+	return this->mDefaultBuffer->IsOpaque ();
+}
+
+//----------------------------------------------------------------//
 u32 MOAIGfxDevice::LogErrors () {
 
 	u32 count = 0;
