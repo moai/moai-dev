@@ -5,13 +5,12 @@
 //----------------------------------------------------------------//
 
 #import <UIKit/UIKit.h>
-#import "PZMoaiAppDelegate.h"
 
-int main (int argc, char* argv[]) {
-
-	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([PZMoaiAppDelegate class]));
-    [pool release];
-
+int main ( int argc, char* argv []) {
+	
+	NSAutoreleasePool* pool = [[ NSAutoreleasePool alloc ] init ];
+    int retVal = UIApplicationMain ( argc, argv, nil, @"MoaiAppDelegate" );
+    [ pool release ];
+	
     return retVal;
 }
