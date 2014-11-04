@@ -320,9 +320,8 @@
 					DARWIN_NO_CARBON,
 				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/patrick/git/moai-dev/bin/osx/Release",
-					"/Users/patrick/git/moai-dev/bin/osx",
+					"$(inherited)../../bin/osx/Release",
+					"../../moai-dev/bin/osx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -345,8 +344,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/patrick/git/moai-dev/bin/osx/Release",
-					"/Users/patrick/git/moai-dev/bin/osx",
+					../../bin/osx/Release,
+					../../bin/osx,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
