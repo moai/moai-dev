@@ -16,17 +16,14 @@ int MOAIVectorCombo::AddFillContours ( SafeTesselator* tess ) {
 
 	SafeTesselator outline;
 	int error = 0;
-	//assert ( outline );
 
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
 		MOAIVectorShape& shape = *this->mShapes [ i ];
-		//if ( shape.IsClosed ()) {
 		error = shape.AddFillContours ( &outline );
 		if ( error ) return error;
-		//}
 	}
 	
-	error = outline.Tesselate ( ( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0, ( const TESSreal* )&sNormal );
+	error = outline.Tesselate (( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	
 	this->CopyBoundaries ( tess, &outline );
