@@ -19681,7 +19681,6 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -21606,7 +21605,6 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -25474,7 +25472,6 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -25897,7 +25894,6 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-					"\"../../3rdparty/LiveRail-iOS-SDK-v2.3.1/SDK\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;

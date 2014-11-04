@@ -1,15 +1,15 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
-// All Rights Reserved. 
-// http://getmoai.com
+// Copyright (c) 2014 Plumzi, Inc.
+// All Rights Reserved.
 //----------------------------------------------------------------//
 
 #import <UIKit/UIKit.h>
 
 //================================================================//
-// MoaiVC
+// MOAIViewController
 //================================================================//
-@interface MoaiVC : UIViewController {
+@interface MOAIViewController : UIViewController {
+@private
 }
 
 @end
