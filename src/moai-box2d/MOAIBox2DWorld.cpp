@@ -1177,17 +1177,17 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
         @in		number p1y
         @in		number p2x
         @in		number p2y
-        @out	boolean hit					true if hit, false otherwise
+		@out	boolean hit					true if hit, false otherwise
+		@out	number hitpointX
+		@out	number hitpointY
 		@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
-        @out	number hitpointX
-        @out	number hitpointY
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 );
-	float p1y=state.GetValue < float >( 3, 0 );
-	float p2x=state.GetValue < float >( 4, 0 );
-	float p2y=state.GetValue < float >( 5, 0 );
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
  
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
