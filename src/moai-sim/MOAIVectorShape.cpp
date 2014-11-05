@@ -28,7 +28,6 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess ) {
 	
 	this->AddFillContours ( &outline );
 	error = outline.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
-	
 	if ( error ) return error;
 	
 	SafeTesselator exterior;
@@ -67,6 +66,8 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess ) {
 	error = stroke.Tesselate ( TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	this->CopyBoundaries ( tess, &stroke );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
