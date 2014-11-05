@@ -48,6 +48,7 @@ private:
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
+	static int	_getAvailableStorage		( lua_State* L );
 	static int	_getDirectoryInDomain		( lua_State* L );
 	static int	_getInterfaceOrientation	( lua_State* L );
 	static int	_getIPAddress				( lua_State* L );

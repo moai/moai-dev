@@ -20,6 +20,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getAvailableStorage
+	@text	Get the available storage size in mb on the system
+ 
+	@out	long size
+ */
+int MOAIAppIOS::_getAvailableStorage ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	NSDictionary *atDict = [[ NSFileManager defaultManager ] attributesOfFileSystemForPath:NSHomeDirectory () error:NULL ];
+	unsigned long long freeSize = [[ atDict objectForKey:NSFileSystemFreeSize ] unsignedLongLongValue ] / 1024;
+	lua_pushnumber ( state, freeSize);
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getDirectoryInDomain
 	@text	Search the platform's internal directory structure for 
 			a special directory as defined by the platform.
@@ -79,6 +95,7 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -343,6 +360,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_RIGHT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_RIGHT );
 
 	luaL_Reg regTable [] = {
+		{ "getAvailableStorage",		_getAvailableStorage },
 		{ "getDirectoryInDomain",		_getDirectoryInDomain },
 		{ "getInterfaceOrientation",	_getInterfaceOrientation },
 		{ "getIPAddress",				_getIPAddress },
