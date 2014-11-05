@@ -84,7 +84,9 @@ int MOAIVectorTesselator::_drawingToWorldVec ( lua_State* L ) {
 int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	int error = self->Finish ();
+	bool generateMask = state.GetValue < bool >( 2, false );
+	
+	int error = self->Finish ( generateMask );
 	
 	bool hasContent = self->mVtxStream.GetLength () > 0;
 	
@@ -579,7 +581,10 @@ u32 MOAIVectorTesselator::CountVertices () {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Finish () {
+int MOAIVectorTesselator::Finish ( bool generateMask ) {
+
+	this->mGenerateMask = generateMask;
+	this->mMaskTesselator.Reset ();
 
 	u32 vertsTop = this->mVertexStack.GetTop ();
 	u32 shapesTop = this->mShapeStack.GetTop ();
@@ -621,6 +626,12 @@ int MOAIVectorTesselator::Finish () {
 	}
 	
 	return error;
+}
+
+//----------------------------------------------------------------//
+SafeTesselator* MOAIVectorTesselator::GetMaskTesselator () {
+
+	return this->mGenerateMask ? &this->mMaskTesselator : 0;
 }
 
 //----------------------------------------------------------------//
@@ -930,10 +941,14 @@ int MOAIVectorTesselator::Tesselate () {
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this );
-		
 		if ( error ) return error;
 	}
 	
+	SafeTesselator* maskTesselator = this->GetMaskTesselator ();
+	if ( maskTesselator ) {
+		error = maskTesselator->Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
+		if ( error ) return error;
+	}
 	return error;
 }
 

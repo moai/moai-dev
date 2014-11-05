@@ -542,3 +542,19 @@ MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
 --os.execute ( string.format("cp -r -p %s %s ", HTML_PATH, OUTPUT_DIR))
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
+
+str = util.loadFileAsString ( SRC_PATH..'config/moai_version_major.h' )
+str2 = util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' )
+
+type="MOAI_SDK_VERSION_MAJOR %d"
+major = string.match(string.sub(str, string.find(str, type)),"%d+")
+
+type="MOAI_SDK_VERSION_MINOR %d"
+minor= string.match(string.sub(str2, string.find(str2, type)),"%d+")
+
+type="MOAI_SDK_VERSION_REVISION %d"
+revision= string.match(string.sub(str2, string.find(str2, type)),"%d+")
+
+util.replaceInFile (  OUTPUT_DIR.. 'index.html', {
+	[ '@@VERSION@@' ]				= string.format("v%i.%i.%i",major,minor,revision),
+})

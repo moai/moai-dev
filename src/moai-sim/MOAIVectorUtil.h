@@ -14,16 +14,17 @@ typedef float TESSreal;
 // SafeTesselator
 //================================================================//
 class SafeTesselator {
-private:
-
 public:
 
-	struct TESStesselator* mTess;
+	static const ZLVec3D	sNormal;
+
+	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
+	void	Reset					();
 			SafeTesselator			();
 			~SafeTesselator			();
-	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal );
+	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
 };
 
 //================================================================//

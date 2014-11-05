@@ -1,0 +1,5 @@
+build/
+MoaiSample.xcodeproj/project.xcworkspace
+MoaiSample.xcodeproj/xcuserdata/
+*.pbxuser
+*.perspectivev3

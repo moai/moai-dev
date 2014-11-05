@@ -27,6 +27,7 @@ local		exec						= nil
 			listFiles					= nil
 local		makeDlcResourceSig			= nil
 			makeStoreEntryFunc			= nil
+			mergeTables					= nil
 			move						= nil
 			onEntryCompile				= nil
 			onEntryCopy					= nil
@@ -418,6 +419,18 @@ makeStoreEntryFunc = function ( packingList )
 	end
 
 	return func
+end
+
+----------------------------------------------------------------
+mergeTables = function ( t1, t2 )
+
+	t1 = t1 or {}
+	if t2 then
+		for k, v in pairs ( t2 ) do
+			t1 [ k ] = v
+		end
+	end
+	return t1
 end
 
 ----------------------------------------------------------------

@@ -5,12 +5,9 @@
 //----------------------------------------------------------------//
 
 #import <UIKit/UIKit.h>
+#import "MOAIAppDelegate.h"
 
-int main ( int argc, char* argv []) {
-	
-	NSAutoreleasePool* pool = [[ NSAutoreleasePool alloc ] init ];
-    int retVal = UIApplicationMain ( argc, argv, nil, @"MoaiAppDelegate" );
-    [ pool release ];
-	
-    return retVal;
+int main (int argc, char* argv[]) {
+
+    return UIApplicationMain(argc, argv, nil, NSStringFromClass ([ MOAIAppDelegate class ]));
 }

@@ -168,6 +168,7 @@ void MOAINotificationsIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
 //----------------------------------------------------------------//
 void MOAINotificationsIOS::NotifyLocalNotificationReceived ( UILocalNotification* notification ) {
  

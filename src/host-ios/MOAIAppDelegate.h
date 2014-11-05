@@ -7,20 +7,20 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "RefPtr.h"
-
-@class MoaiVC;
-@class MoaiView;
+@class MOAIView;
+@class MOAIViewController;
 
 //================================================================//
-// MoaiAppDelegate
+// MOAIAppDelegate
 //================================================================//
-@interface MoaiAppDelegate : NSObject < UIApplicationDelegate > {
+@interface MOAIAppDelegate : NSObject < UIApplicationDelegate > {
 @private
 
-	MoaiView*	mMoaiView;
-	UIWindow*	mWindow;	
-	MoaiVC*		mMoaiVC;
+	MOAIView*               mMoaiView;
+	UIWindow*               mWindow;
+    UIImageView*            mSplashView;
+	MOAIViewController*		mMoaiVC;
+    BOOL                    mResumed;
 }
 
 @property ( nonatomic, retain ) UIWindow* window;

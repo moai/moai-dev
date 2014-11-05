@@ -7,10 +7,10 @@
 #include <zl-util/ZLMatrix3x3.h>
 
 //================================================================//
-// USMetaPolygon2D
+// ZLMetaPolygon2D
 //================================================================//
 template < typename TYPE >
-class USMetaPolygon2D {
+class ZLMetaPolygon2D {
 private:
 	
 	ZLMetaRect < TYPE >	mBounds;
@@ -117,15 +117,15 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	USMetaPolygon2D () {
+	ZLMetaPolygon2D () {
 	}
 
 	//----------------------------------------------------------------//
-	~USMetaPolygon2D () {
+	~ZLMetaPolygon2D () {
 	}
 };
 
-typedef USMetaPolygon2D < float > USPolygon2D;
-typedef USMetaPolygon2D < double > USPolygon2D64;
+typedef ZLMetaPolygon2D < float > ZLPolygon2D;
+typedef ZLMetaPolygon2D < double > ZLPolygon2D64;
 
 #endif
