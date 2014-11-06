@@ -19,6 +19,12 @@ file ( GLOB_RECURSE EXPAT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c" )
 file ( GLOB_RECURSE EXPAT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_library ( expat STATIC ${EXPAT_SOURCES} ${EXPAT_HEADERS} )
+<<<<<<< HEAD
 target_include_directories (expat PUBLIC ${EXPAT_INCLUDES})
 target_compile_definitions (expat PUBLIC "XML_STATIC")
 set_target_properties( expat PROPERTIES FOLDER Third-Party )
+=======
+target_include_directories (expat PUBLIC "$<BUILD_INTERFACE:${EXPAT_INCLUDES}>")
+set_target_properties( expat PROPERTIES FOLDER Third-Party )
+install(TARGETS expat EXPORT libmoai ARCHIVE DESTINATION lib)
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484

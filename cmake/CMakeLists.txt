@@ -175,9 +175,11 @@ option ( MOAI_HTTP_CLIENT    FALSE )
 
 macro(SETUP_MODULE module_name flag_name)
   if (${module_name})
+    set ( ${flag_name} 1)
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=1" )
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=1" )
   else ()
+    set ( ${flag_name} 0)
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${flag_name}=0" )
     set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${flag_name}=0" )
   endif(${module_name})
@@ -236,7 +238,10 @@ FOREACH(DISABLED ${DISABLED_EXT} )
 ENDFOREACH()
 
 
-
+# are we skipping the host and just installing the libs
+OPTION( LIB_ONLY  FALSE)
+#default our install to not put it into the system
+set (CMAKE_INSTALL_PREFIX "./lib")
 # Not sure about this one
 #set ( MOAI_OPENGLES1      FALSE CACHE STRING "Build Moai SDK with OpenGL ES 1.0 Support" FORCE )
 
@@ -291,45 +296,61 @@ endif (MOAI_PLUGINS)
 add_subdirectory ( host-modules )
 
 
-
-if (CUSTOM_HOST)
-#
-# Build an out of source host
-#
-   add_subdirectory( "${CUSTOM_HOST}" "${CMAKE_CURRENT_BINARY_DIR}/host-custom" )
-
-else (CUSTOM_HOST)
-
-#
-#  Built In Hosts
-#
-
-if ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS )
-    if ( SDL_HOST )
-      add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
-    endif (SDL_HOST)
-endif ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
-
-if ( BUILD_HTML ) 
-    add_subdirectory ( host-html )
-endif ( BUILD_HTML )
-
-if ( BUILD_ANDROID )
-  add_subdirectory ( moai-android )
-    add_subdirectory ( host-android )
-endif ( BUILD_ANDROID )
-
+#platform specific libs
 if ( BUILD_IOS )
   add_subdirectory ( moai-iphone )
   add_subdirectory ( moai-audiosampler )
-     add_subdirectory ( host-ios )
 endif ( BUILD_IOS )
 
-if ( BUILD_SERVER )
-  add_subdirectory ( moaiext-server )
-  add_subdirectory ( http-host )
-endif ( BUILD_SERVER )
+if ( BUILD_ANDROID )
+    add_subdirectory ( moai-android )
+endif (BUILD_ANDROID)
 
-endif (CUSTOM_HOST)
+
+
+
+if (NOT LIB_ONLY)
+
+  if (CUSTOM_HOST)
+  #
+  # Build an out of source host
+  #
+
+
+     add_subdirectory( "${CUSTOM_HOST}" "${CMAKE_CURRENT_BINARY_DIR}/host-custom" )
+
+  else (CUSTOM_HOST)
+
+  #
+  #  Built In Hosts
+  #
+
+  if ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS )
+      if ( SDL_HOST )
+        add_subdirectory ( host-sdl )
+      else ( SDL_HOST ) 
+        add_subdirectory ( host-glut )
+      endif (SDL_HOST)
+  endif ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
+
+  if ( BUILD_HTML ) 
+      add_subdirectory ( host-html )
+  endif ( BUILD_HTML )
+
+  if ( BUILD_ANDROID )
+      add_subdirectory ( host-android )
+  endif ( BUILD_ANDROID )
+
+  if ( BUILD_IOS )
+        add_subdirectory ( host-ios )
+  endif ( BUILD_IOS )
+
+  if ( BUILD_SERVER )
+    add_subdirectory ( moaiext-server )
+    add_subdirectory ( http-host )
+  endif ( BUILD_SERVER )
+
+  endif (CUSTOM_HOST)
+endif (NOT LIB_ONLY)
+
+install(EXPORT libmoai DESTINATION cmake)

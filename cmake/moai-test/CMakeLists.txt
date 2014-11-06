@@ -23,4 +23,13 @@ if (NOT MOAI_TINYXML)
 endif (NOT MOAI_TINYXML)
 
 target_link_libraries ( moai-test moai-sim moai-util moai-core zlcore tinyxml)
+
+target_include_directories (moai-test PUBLIC 
+    "$<BUILD_INTERFACE:${MOAI_CORE_INCLUDES} ${MOAI_TEST_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-test>"
+)
+
+
 set_target_properties(moai-test PROPERTIES FOLDER Modules)  
+install(TARGETS moai-test EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/host.h DESTINATION include/moai-test)

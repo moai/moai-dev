@@ -34,8 +34,10 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-glut" )
 # Use all cpp files in directory as source code
 file ( GLOB HOST_GLUT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Glut*.cpp" )
 file ( GLOB HOST_GLUT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Glut*.h" )
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 
 add_executable ( moai ${HOST_GLUT_SOURCES} ${HOST_GLUT_HEADERS} )
+
 
 target_link_libraries ( moai 
   host-modules
@@ -47,7 +49,7 @@ target_link_libraries ( moai
 
 if ( BUILD_WINDOWS )
   target_link_libraries ( moai 
-    freeglutstatic
+    freeglut_static
     winmm
   )
 endif (BUILD_WINDOWS)
@@ -56,7 +58,7 @@ if ( BUILD_LINUX )
   target_link_libraries ( moai 
     pthread 
     rt
-    freeglutstatic
+    freeglut_static
     Xi
     Xxf86vm
   )

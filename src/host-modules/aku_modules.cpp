@@ -239,7 +239,65 @@ void AKUModulesContextInitialize () {
 }
 
 //----------------------------------------------------------------//
+<<<<<<< HEAD
 void AKUModulesPause ( bool pause ) {
+=======
+void AKUModulesParseArgs ( int argc, char** argv ) {
+
+	#ifndef NDEBUG
+		//just setting a traceback handler causes moai to dump stack trace on error
+	    //the traceback handler doesnt have to do anything.
+		AKURunString ( "MOAISim.setTraceback(function() end)" );
+	#endif
+
+	#if AKU_WITH_TEST
+
+		int total = argc - 1;
+		int i = 1;
+
+		for ( ; i < total; ++i ) {
+		
+			char* arg = argv [ i ];
+		
+			if ( arg [ 0 ] != '-' ) break;
+		
+			// filter file
+			if ( strcmp ( arg, "-f" ) == 0 ) {
+				AKUTestSetFilterFile ( argv [ ++i ]);
+			}
+		
+			// filter
+			if ( strcmp ( arg, "-F" ) == 0 ) {
+				AKUTestSetFilter ( argv [ ++i ]);
+			}
+		
+			// results
+			if ( strcmp ( arg, "-r" ) == 0 ) {
+				AKUTestSetResultsFile ( argv [ ++i ]);
+			}
+		
+			// staging
+			if ( strcmp ( arg, "-s" ) == 0 ) {
+				AKUTestSetStaging ();
+			}
+		
+			// test
+			if ( strcmp ( arg, "-t" ) == 0 ) {
+				AKUTestRunTest ( argv [ ++i ]);
+			}
+
+			// xml results
+			if ( strcmp ( arg, "-x" ) == 0 ) {
+				AKUTestSetXmlResultsFile ( argv [ ++i ]);
+			}
+		}
+
+		for ( ; i < argc; ++i ) {
+			AKUTestRunScript ( argv [ i ]);
+		}
+		
+	#else
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484
 	
 	#if AKU_WITH_SIM
 		AKUPause ( pause );

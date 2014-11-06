@@ -14,5 +14,6 @@ file ( GLOB_RECURSE CHIPMUNK_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" "${CHIPMU
 add_library (chipmunk STATIC ${CHIPMUNK_SOURCES} ${CHIPMUNK_HEADERS} )
 set_target_properties ( chipmunk PROPERTIES LINKER_LANGUAGE CXX )
 SET_SOURCE_FILES_PROPERTIES ( ${CHIPMUNK_SOURCES} PROPERTIES LANGUAGE CXX )
-target_include_directories (chipmunk PUBLIC ${CHIPMUNK_INCLUDES})
+target_include_directories (chipmunk PUBLIC "$<BUILD_INTERFACE:${CHIPMUNK_INCLUDES}>")
 set_target_properties( chipmunk PROPERTIES FOLDER Third-Party )
+install(TARGETS chipmunk EXPORT libmoai ARCHIVE DESTINATION lib)

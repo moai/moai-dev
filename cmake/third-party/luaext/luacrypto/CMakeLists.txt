@@ -6,7 +6,15 @@ set ( LUAEXT_SOURCES
 
 
 add_library (luacrypto STATIC ${LUAEXT_SOURCES})
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 target_link_libraries ( luacrypto crypto ${LUA_LIB} )
+<<<<<<< HEAD
 add_dependencies ( luacrypto lualib-static)
 target_include_directories ( luacrypto PUBLIC ${LUA_HEADERS})
 set_target_properties( luacrypto PROPERTIES FOLDER Third-Party )
+=======
+add_dependencies ( luacrypto liblua-static)
+target_include_directories ( luacrypto PUBLIC "$<BUILD_INTERFACE:${LUA_HEADERS}>")
+set_target_properties( luacrypto PROPERTIES FOLDER Third-Party )
+install(TARGETS luacrypto EXPORT libmoai ARCHIVE DESTINATION lib)
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484

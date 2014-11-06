@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <lua.h>
-#include <host-glut/GlutHost.h>
+//#include <lua.h>
+#include "GlutHost.h"
 #include <moai-core/host.h>
 
 #include <string.h>

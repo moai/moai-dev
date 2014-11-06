@@ -18,6 +18,7 @@ set ( INCLUDES_MOAIHOSTSDL
 
 include_directories ( ${INCLUDES_MOAIHOSTSDL} )
 
+LINK_DIRECTORIES("${LUA_LIB_DIR}")
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/host-sdl" )
 
 # Use all cpp files in directory as source code

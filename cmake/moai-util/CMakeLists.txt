@@ -24,6 +24,13 @@ include_directories ( ${MOAI_UTIL_INCLUDES} )
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
 target_link_libraries ( moai-util moai-core zlcore  )
+
+
+target_include_directories (moai-util PUBLIC 
+    "$<BUILD_INTERFACE:${MOAI_UTIL_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/moai-util>"
+)
+
 set_target_properties( moai-util PROPERTIES FOLDER Core)
 
 if (MOAI_SFMT)
@@ -37,3 +44,10 @@ endif (MOAI_JSON )
 if ( MOAI_TINYXML )
    target_link_libraries( moai-util tinyxml )
 endif ( MOAI_TINYXML )
+
+install(TARGETS moai-util EXPORT libmoai ARCHIVE DESTINATION lib)
+
+install(FILES 
+              ${CMAKE_CURRENT_SOURCE_DIR}/host.h 
+          DESTINATION include/moai-util)
+

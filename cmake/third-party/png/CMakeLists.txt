@@ -12,6 +12,12 @@ file ( GLOB PNG_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 include_directories (${PNG_INCLUDES})
 add_library(png STATIC ${PNG_SOURCES})
 target_link_libraries ( png zlib )
+<<<<<<< HEAD
 target_compile_definitions (png PUBLIC "PNG_SKIP_SETJMP_CHECK=1")
 target_include_directories(png PUBLIC ${PNG_INCLUDES})
 set_target_properties( png PROPERTIES FOLDER Third-Party )
+=======
+target_include_directories(png PUBLIC "$<BUILD_INTERFACE:${PNG_INCLUDES}>")
+set_target_properties( png PROPERTIES FOLDER Third-Party )
+ install(TARGETS png EXPORT libmoai ARCHIVE DESTINATION lib)
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484

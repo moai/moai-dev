@@ -6,40 +6,90 @@
     <title>MoaiJS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/style.css" rel="stylesheet">
+     <link rel='stylesheet' href="vendor/font-awesome-4.0.3/css/font-awesome.min.css" />
 </head>
 <body>
-<style>
-    html {
-        height: 100%;
-    }
-    body {
-        color: rgb(51, 51, 51);
-        font-size: 14px;
-        height:100%;
-        margin:0;
-        padding:0;
-    }
 
-    #moaiplayer {
-        width: 100%;
-        height: 100%;
-        margin:auto;
-    }
-</style>
 
-<div id="moaiplayer" class="moai-player" data-url="moaiapp.rom" data-title="MOAI Player" data-ram="64"></div>
+<div id="moaiplayer" class="moai-player" data-url="moaiapp.rom" data-title="My Moai App" data-ram="64">
+    <h1>My Moai App</h1>
+    <div id="runMe"><i class="fa fa-play"></i></div>
+    <div class="moai-cpal">
+        <img src="moailogo-white.svg">
+        <a href="http://www.getmoai.com">www.getmoai.com</a>
+    </div>
+</div>
 
 <!-- we need these -->
 <script type="text/javascript" src="howler.js"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="vendor/jquery-1.10.2.js"></script>
+
 <!-- the app -->
-<script type="text/javascript" src="moaijs.js"></script>   
 <script type="text/javascript" src="moaihost.js"></script>
 
 <script>
 
+    $.cachedScript = function( url, options ) {
+
+        // Allow user to set any option except for dataType, cache, and url
+        options = $.extend( options || {}, {
+            dataType: "script",
+            cache: true,
+            url: url
+        });
+
+        // Use $.ajax() since it is more flexible than $.getScript
+        // Return the jqXHR object so we can chain callbacks
+        return $.ajax( options );
+    };
+
     var player = new MoaiPlayer($("#moaiplayer"));
-    player.run();
+
+    var moaiJSAjax;
+
+    function getMoaiJs(callback) {
+        if (window.CreateMoaiRuntime) {
+            callback();
+        } else {
+            if (!moaiJSAjax) {
+                moaiJSAjax = $.cachedScript('moaijs.js');
+            }
+            moaiJSAjax.done(callback);
+        }
+    }
+
+    if (! player.isSupported()) {
+        $("#moai-play")[0].style.color = 'darkred';
+        $("#moai-play")[0].style.opacity = 0.2;
+    }
+
+    function doRun () {
+        if (player.isSupported()) {
+            $(".moai-window").removeClass("code");
+            $(".moai-canvas-wrapper")[0].style.display = "table-row";
+            $(".moai-info")[0].style.display = "none";
+            $("#moai-play")[0].style.display = "none";
+            getMoaiJs(function() {
+                $("#moai-stop")[0].style.display = "inline-block";
+                player.run();
+            });
+        } else {
+           alert("WebGL 1.0 is required but isn't supported by your current browser.\n Try the latest firefox or chrome");
+        }
+    }
+
+
+    $("#runMe").on("click",doRun);
+    $("#moai-play").on("click",doRun);
+    $("#moai-stop").on("click", function() {
+        player.stop();
+        $(".moai-canvas-wrapper")[0].style.display = "none";
+        $(".moai-info")[0].style.display = "table-row";
+        $("#moai-play")[0].style.display = "inline-block";
+        $("#moai-stop")[0].style.display = "none";
+    })
+   
+
 
 </script>
 

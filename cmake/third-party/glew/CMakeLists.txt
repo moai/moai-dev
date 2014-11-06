@@ -18,6 +18,7 @@ set ( GLEW_SOURCES
  )
 
 add_library ( glew STATIC ${GLEW_SOURCES} )
-target_include_directories ( glew PUBLIC ${GLEW_INCLUDES} )
+target_include_directories ( glew PUBLIC "$<BUILD_INTERFACE:${GLEW_INCLUDES}>" )
 target_link_libraries ( glew  ${OPENGL_LIBRARIES})
 set_target_properties( glew PROPERTIES FOLDER Third-Party )
+install(TARGETS glew EXPORT libmoai ARCHIVE DESTINATION lib)

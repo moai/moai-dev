@@ -15,6 +15,7 @@
 
 @setlocal
 @set LJCOMPILE=cl /nologo /c /O2 /W3 /D_CRT_SECURE_NO_DEPRECATE
+<<<<<<< HEAD
 @if "%1" neq "debug" goto :LINKMD
 @set LJCOMPILE=%LJCOMPILE% /MDd
 @echo using Debug CRT /MDd
@@ -23,6 +24,8 @@ goto :LINKMDD
 @set LJCOMPILE=%LJCOMPILE% /MD
 :LINKMDD
 
+=======
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484
 @set LJLINK=link /nologo
 @set LJMT=mt /nologo
 @set LJLIB=lib /nologo /nodefaultlib
@@ -80,7 +83,11 @@ buildvm -m folddef -o lj_folddef.h lj_opt_fold.c
 @set LJCOMPILE=%LJCOMPILE% %~2
 @if "%1"=="amalg" goto :AMALGDLL
 @if "%1"=="static" goto :STATIC
+<<<<<<< HEAD
 %LJCOMPILE% /DLUA_BUILD_AS_DLL lj_*.c lib_*.c
+=======
+%LJCOMPILE% /MD /DLUA_BUILD_AS_DLL lj_*.c lib_*.c
+>>>>>>> 4efbcafb9d67277eee050b1b244a48bb7075f484
 @if errorlevel 1 goto :BAD
 %LJLINK% /DLL /out:%LJDLLNAME% lj_*.obj lib_*.obj
 @if errorlevel 1 goto :BAD

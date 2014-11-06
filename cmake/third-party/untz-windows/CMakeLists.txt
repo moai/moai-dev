@@ -36,7 +36,7 @@ if (MOAI_VORBIS)
   target_link_libraries (untz vorbis)
 endif (MOAI_VORBIS)
 
-target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES})
+target_include_directories ( untz PUBLIC "$<BUILD_INTERFACE:${UNTZ_INCLUDES}>")
 
 target_link_libraries ( untz 
   winmm
@@ -47,3 +47,4 @@ target_link_libraries ( untz
   oleaut32
 )
 set_target_properties( untz PROPERTIES FOLDER Third-Party )
+install(TARGETS untz EXPORT libmoai ARCHIVE DESTINATION lib)

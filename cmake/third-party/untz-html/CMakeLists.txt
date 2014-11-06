@@ -14,4 +14,5 @@ set( UNTZ_SOURCES
 )
 
 add_library ( untz STATIC ${UNTZ_SOURCES} )
-target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES} )	
+target_include_directories ( untz PUBLIC "$<BUILD_INTERFACE:${UNTZ_INCLUDES}>" )	
+ install(TARGETS untz EXPORT libmoai ARCHIVE DESTINATION lib)
