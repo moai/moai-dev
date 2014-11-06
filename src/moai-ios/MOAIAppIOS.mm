@@ -199,21 +199,6 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAppIOS::_setListener ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-	
-	if ( idx < TOTAL ) {
-		
-		MOAIAppIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
-	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /** @lua _takeCamera
 	@text Allows to pick a photo from the CameraRoll or from the Camera
 	@in function	callback
@@ -222,9 +207,7 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	@in int			if device is an ipad y coordinate of Popover
 	@in int			if device is an ipad width coordinate of Popover
 	@in int			if device is an ipad height coordinate of Popover
-
  */
- 
 int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	
 	int x, y, width, height = 0;
@@ -277,43 +260,23 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::DidBecomeActive () {
-
-	this->UpdateReachability ();
-
-	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::DidEnterBackground () {
-
-	MOAILuaRef& callback = this->mListeners [ DID_ENTER_BACKGROUND ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
 	this->mReachabilityListener = [ MOAIReachabilityListener alloc ];
 	[ this->mReachabilityListener startListener ];
 
 	//this->mMailDelegate = [ MoaiMailComposeDelegate alloc ];
-	this->mTakeCameraListener = [MOAITakeCameraListener alloc];
+	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
+	
+	this->RegisterNotificationListeners ();
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::~MOAIAppIOS () {
+
+	RemoveNotificationListeners ();
 
 	//[ this->mMailDelegate release ];
 	[ this->mTakeCameraListener release];
@@ -330,10 +293,8 @@ void MOAIAppIOS::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
-	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( OPEN_URL, state )) {
 		[[ url absoluteString ] toLua:state ];
 		[ sourceApplication toLua:state ];
 		state.DebugCall ( 2, 0 );
@@ -343,16 +304,17 @@ void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "DID_BECOME_ACTIVE",		( u32 )DID_BECOME_ACTIVE );
-	state.SetField ( -1, "DID_ENTER_BACKGROUND",	( u32 )DID_ENTER_BACKGROUND );
-	state.SetField ( -1, "OPEN_URL",				( u32 )OPEN_URL );
-	state.SetField ( -1, "WILL_ENTER_FOREGROUND",	( u32 )WILL_ENTER_FOREGROUND );
-	state.SetField ( -1, "WILL_RESIGN_ACTIVE",		( u32 )WILL_RESIGN_ACTIVE );
-	state.SetField ( -1, "WILL_TERMINATE",			( u32 )WILL_TERMINATE );
+	state.SetField ( -1, "DID_BECOME_ACTIVE",			( u32 )DID_BECOME_ACTIVE );
+	state.SetField ( -1, "DID_ENTER_BACKGROUND",		( u32 )DID_ENTER_BACKGROUND );
+	state.SetField ( -1, "DID_RECIEVE_MEMORY_WARNING",	( u32 )DID_RECIEVE_MEMORY_WARNING );
+	state.SetField ( -1, "OPEN_URL",					( u32 )OPEN_URL );
+	state.SetField ( -1, "WILL_ENTER_FOREGROUND",		( u32 )WILL_ENTER_FOREGROUND );
+	state.SetField ( -1, "WILL_RESIGN_ACTIVE",			( u32 )WILL_RESIGN_ACTIVE );
+	state.SetField ( -1, "WILL_TERMINATE",				( u32 )WILL_TERMINATE );
 	
-	state.SetField ( -1, "DOMAIN_DOCUMENTS",		( u32 )DOMAIN_DOCUMENTS );
-	state.SetField ( -1, "DOMAIN_APP_SUPPORT",		( u32 )DOMAIN_APP_SUPPORT );
-	state.SetField ( -1, "DOMAIN_CACHES",			( u32 )DOMAIN_CACHES );
+	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
+	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
+	state.SetField ( -1, "DOMAIN_CACHES",				( u32 )DOMAIN_CACHES );
 	
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT",				( u32 )INTERFACE_ORIENTATION_PORTRAIT );
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN",	( u32 )INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN );
@@ -364,9 +326,10 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getDirectoryInDomain",		_getDirectoryInDomain },
 		{ "getInterfaceOrientation",	_getInterfaceOrientation },
 		{ "getIPAddress",				_getIPAddress },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIAppIOS > },
 		{ "getUTCTime",					_getUTCTime },
 		{ "sendMail",					_sendMail },
-		{ "setListener",				_setListener },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAppIOS > },
 		{ "takeCamera",					_takeCamera },
 		{ NULL, NULL }
 	};
@@ -375,42 +338,55 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIAppIOS::RegisterNotificationListeners () {
+
+	this->mNotificationListenerMap [ "UIApplicationDidBecomeActiveNotification" ] = DID_BECOME_ACTIVE;
+	this->mNotificationListenerMap [ "UIApplicationDidEnterBackgroundNotification" ] = DID_ENTER_BACKGROUND;
+	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECIEVE_MEMORY_WARNING;
+	this->mNotificationListenerMap [ "UIApplicationWillEnterForegroundNotification" ] = WILL_ENTER_FOREGROUND;
+	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
+	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
+
+	NotificationListenerMapIt notification = this->mNotificationListenerMap.begin ();
+	for ( ; notification != this->mNotificationListenerMap.end (); ++notification ) {
+		NSString* observerName = [ NSString stringWithUTF8String:notification->first ];
+		u32 eventID = notification->second;
+	
+		[[ NSNotificationCenter defaultCenter ]
+			addObserverForName:observerName
+			object:[ UIApplication sharedApplication ]
+			queue:nil
+			usingBlock:^( NSNotification* notification ) {
+				NSLog ( notification.name );
+				this->InvokeListener ( eventID );
+				
+				if ( eventID == WILL_TERMINATE ) {
+					AKUAppFinalize ();
+				}
+			}
+		];
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::RemoveNotificationListeners () {
+
+	NotificationListenerMapIt notification = this->mNotificationListenerMap.begin ();
+	for ( ; notification != this->mNotificationListenerMap.end (); ++notification ) {
+		NSString* observerName = [ NSString stringWithUTF8String:notification->first ];
+	
+		[[ NSNotificationCenter defaultCenter ]
+			removeObserverForName:observerName
+			object:[ UIApplication sharedApplication ]
+			queue:nil
+		];
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIAppIOS::UpdateReachability () {
 
 	[ this->mReachabilityListener updateMoaiEnvironment ];
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::WillEnterForeground () {
-
-	MOAILuaRef& callback = this->mListeners [ WILL_ENTER_FOREGROUND ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::WillResignActive () {
-
-	MOAILuaRef& callback = this->mListeners [ WILL_RESIGN_ACTIVE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::WillTerminate () {
-
-	MOAILuaRef& callback = this->mListeners [ WILL_TERMINATE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
 }
 
 //================================================================//
