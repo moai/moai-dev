@@ -4,6 +4,8 @@
 #ifndef MOAISENSOR_H
 #define MOAISENSOR_H
 
+class MOAIInputQueue;
+
 //================================================================//
 // MOAISensor
 //================================================================//
@@ -21,24 +23,14 @@ protected:
 	//----------------------------------------------------------------//
 	static int	_getTimestamp			( lua_State* L );
 
+	SET ( u32, Type, mType );
+
 public:
 
 	friend class MOAIInputContext;
 	friend class MOAIInputDevice;
 	friend class MOAIInputMgr;
-
-	enum {
-		UNKNOWN,
-		BUTTON,
-		COMPASS,
-		JOYSTICK,
-		KEYBOARD,
-		LEVEL,
-		LOCATION,
-		POINTER,
-		TOUCH,
-		WHEEL,
-	};
+	friend class MOAIInputQueue;
 
 	//----------------------------------------------------------------//
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;

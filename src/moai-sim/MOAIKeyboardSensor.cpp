@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIKeyboardSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // MOAIKeyboardEvent
@@ -191,6 +192,15 @@ int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
+
+	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		queue.Write < u32 >( keyID );
+		queue.Write < bool >( down );
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIKeyboardSensor::KeyDown ( u32 keyID ) {
 
 	return (( this->mState [ keyID ] & DOWN ) == DOWN );
@@ -292,11 +302,4 @@ void MOAIKeyboardSensor::Reset () {
 		this->mState [ keyCode ] &= ~( DOWN | UP );	
 	}
 	this->mClearCount = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardSensor::WriteEvent ( ZLStream& eventStream, u32 key, bool down ) {
-
-	eventStream.Write < u32 >( key );
-	eventStream.Write < bool >( down );
 }

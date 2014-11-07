@@ -98,54 +98,10 @@ void MOAIInputDevice::SetHardwareInfo ( cc8* hardwareInfo ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
+void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, MOAISensor* sensor ) {
 
-	if ( !( sensorID < this->mSensors.Size ())) return;
-
-	MOAISensor* sensor = 0;
-
-	switch ( type ) {
-		case MOAISensor::BUTTON: {
-			sensor = new MOAIButtonSensor ();
-			break;
-		}
-		case MOAISensor::COMPASS: {
-			sensor = new MOAICompassSensor ();
-			break;
-		}
-		case MOAISensor::JOYSTICK: {
-			sensor = new MOAIJoystickSensor ();
-			break;
-		}
-		case MOAISensor::KEYBOARD: {
-			sensor = new MOAIKeyboardSensor ();
-			break;
-		}
-		case MOAISensor::WHEEL: {
-			sensor = new MOAIWheelSensor ();
-			break;
-		}
-		case MOAISensor::LEVEL: {
-			sensor = new MOAIMotionSensor ();
-			break;
-		}
-		case MOAISensor::LOCATION: {
-			sensor = new MOAILocationSensor ();
-			break;
-		}
-		case MOAISensor::POINTER: {
-			sensor = new MOAIPointerSensor ();
-			break;
-		}
-		case MOAISensor::TOUCH: {
-			sensor = new MOAITouchSensor ();
-			break;
-		}
-	}
+	assert ( sensor );
 	
-	if ( !sensor ) return;
-	
-	sensor->mType = type;
 	sensor->mName = name;
 	
 	this->LuaRelease ( this->mSensors [ sensorID ]);

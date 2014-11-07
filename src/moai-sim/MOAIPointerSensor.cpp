@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIPointerSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // lua
@@ -44,6 +45,15 @@ int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 // MOAIPointerSensor
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPointerSensor::EnqueuePointerEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, int x, int y ) {
+
+	if ( queue.WriteEventHeader < MOAIPointerSensor >( deviceID, sensorID )) {
+		queue.Write < int >( x );
+		queue.Write < int >( y );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIPointerSensor::MOAIPointerSensor () {
@@ -90,11 +100,4 @@ void MOAIPointerSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIPointerSensor::WriteEvent ( ZLStream& eventStream, int x, int y ) {
-
-	eventStream.Write < int >( x );
-	eventStream.Write < int >( y );
 }

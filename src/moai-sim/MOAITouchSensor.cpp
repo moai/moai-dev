@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAITouchSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 const float MOAITouchSensor::DEFAULT_TAPTIME = 0.6f;
 const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
@@ -235,6 +236,31 @@ int MOAITouchSensor::_up ( lua_State* L ) {
 //================================================================//
 // MOAITouchSensor
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::EnqueueTouchEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
+
+	if ( queue.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+	
+		float time = ( float )ZLDeviceTime::GetTimeInSeconds ();
+		
+		u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
+
+		queue.Write < u32 >( eventType );
+		queue.Write < u32 >( touchID );
+		queue.Write < float >( x );
+		queue.Write < float >( y );
+		queue.Write < float >( time );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::EnqueueTouchEventCancel ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID ) {
+
+	if ( queue.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+		queue.Write < u32 >( TOUCH_CANCEL );
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAITouchSensor::AddLingerTouch ( MOAITouchLinger& touch ) {
@@ -527,26 +553,4 @@ void MOAITouchSensor::Reset () {
 	if ( this->mTop == 0 && this->mLingerTop == 0 ) {
 		this->Clear ();
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down, float x, float y, float time ) {
-
-	//printf ( "TOUCH EVENT: %s %d %f %f\n", down ? "down" : "up", touchID, x, y );
-
-	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
-
-	eventStream.Write < u32 >( eventType );
-	eventStream.Write < u32 >( touchID );
-	eventStream.Write < float >( x );
-	eventStream.Write < float >( y );
-	eventStream.Write < float >( time );
-}
-
-//----------------------------------------------------------------//
-void MOAITouchSensor::WriteEventCancel ( ZLStream& eventStream ) {
-
-	//printf ( "TOUCH EVENT: cancel\n" );
-
-	eventStream.Write < u32 >( TOUCH_CANCEL );
 }
