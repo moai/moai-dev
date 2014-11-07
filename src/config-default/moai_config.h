@@ -73,7 +73,7 @@
 	#endif
 	
 	#ifndef MOAI_WITH_LIBWEBP
-		#define MOAI_WITH_LIBWEBP 1
+		#define MOAI_WITH_LIBWEBP 0
 	#endif
 	
 	#ifndef MOAI_WITH_LUAEXT
