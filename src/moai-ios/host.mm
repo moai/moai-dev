@@ -36,11 +36,12 @@ void AKUIosContextInitialize () {
 			
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
+	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
-	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
+	REGISTER_LUA_CLASS ( MOAIMotionMgrIOS )
 	REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();

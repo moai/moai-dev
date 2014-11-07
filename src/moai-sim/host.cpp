@@ -223,6 +223,12 @@ void AKUEnqueueTouchEventCancel ( int deviceID, int sensorID ) {
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueVectorEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y, float z ) {
+
+	MOAIVectorSensor::EnqueueVectorEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
 
 	MOAIWheelSensor::EnqueueWheelEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, value );
@@ -375,6 +381,12 @@ void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor < MOAITouchSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputDeviceVector ( int deviceID, int sensorID, char const* name ) {
+
+	MOAIInputMgr::Get ().SetSensor < MOAIVectorSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//

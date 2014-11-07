@@ -119,6 +119,7 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
+#include <moai-sim/MOAIVectorSensor.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVectorTesselator.h>
