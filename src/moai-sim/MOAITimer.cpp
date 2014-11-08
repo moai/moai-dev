@@ -513,9 +513,9 @@ void MOAITimer::OnStart () {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::OnUpdate ( float step ) {
+void MOAITimer::OnUpdate ( double step ) {
 
-	this->DoStep ( step );
+	this->DoStep (( float )step ); // TODO: change everything to doubles
 }
 
 //----------------------------------------------------------------//

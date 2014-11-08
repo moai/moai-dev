@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionMgr.h>
+#include <moai-sim/MOAIActionTree.h>
 
 //================================================================//
 // lua
@@ -15,11 +15,10 @@
 
 	@out	MOAIAction root
 */
-int MOAIActionMgr::_getRoot ( lua_State* L ) {
+int MOAIActionTree::_getRoot ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIActionTree, "U" )
 	
-	MOAILuaState state ( L );
-	
-	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
+	MOAIAction* root = self->AffirmRoot ();
 	root->PushLuaUserdata ( state );
 
 	return 1;
@@ -32,11 +31,11 @@ int MOAIActionMgr::_getRoot ( lua_State* L ) {
 	@opt	boolean enable		Default value is false.
 	@out	nil
 */
-int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
+int MOAIActionTree::_setProfilingEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIActionTree, "U" )
 	
-	MOAILuaState state ( L );
-	bool enable = state.GetValue < bool >( -1, false );
-	MOAIActionMgr::Get ().SetProfilingEnabled ( enable );
+	bool enable = state.GetValue < bool >( 2, false );
+	self->SetProfilingEnabled ( enable );
 
 	return 0;
 }
@@ -48,12 +47,11 @@ int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
 	@opt	MOAIAction root		Default value is nil.
 	@out	nil
 */
-int MOAIActionMgr::_setRoot ( lua_State* L ) {
+int MOAIActionTree::_setRoot ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIActionTree, "U" )
 	
-	MOAILuaState state ( L );
-	
-	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1, true );
-	MOAIActionMgr::Get ().SetRoot ( root );
+	MOAIAction* root = state.GetLuaObject < MOAIAction >( 2, true );
+	self->SetRoot ( root );
 
 	return 0;
 }
@@ -65,21 +63,21 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 	@opt	boolean enable		Default value is false.
 	@out	nil
 */
-int MOAIActionMgr::_setThreadInfoEnabled ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	bool enable = state.GetValue < bool >( -1, false );
-	MOAIActionMgr::Get ().SetThreadInfoEnabled ( enable );
+int MOAIActionTree::_setThreadInfoEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIActionTree, "U" )
+
+	bool enable = state.GetValue < bool >( 2, false );
+	self->SetThreadInfoEnabled ( enable );
 
 	return 0;
 }
 
 //================================================================//
-// MOAIActionMgr
+// MOAIActionTree
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAction* MOAIActionMgr::AffirmRoot () {
+MOAIAction* MOAIActionTree::AffirmRoot () {
 
 	if ( !this->mRoot ) {
 		this->mRoot.Set ( *this, new MOAIAction ());
@@ -88,7 +86,7 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 }
 
 //----------------------------------------------------------------//
-MOAIAction* MOAIActionMgr::GetDefaultParent () {
+MOAIAction* MOAIActionTree::GetDefaultParent () {
 
 	MOAIAction* cursor = this->mCurrentAction;
 	for ( ; cursor; cursor = cursor->mParent ) {
@@ -100,31 +98,40 @@ MOAIAction* MOAIActionMgr::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIActionMgr::GetNextPass () {
-
-	this->mTotalPasses = this->mPass + 2;
-	return this->mPass + 1;
+bool MOAIActionTree::IsDone () {
+	return false;
 }
 
 //----------------------------------------------------------------//
-MOAIActionMgr::MOAIActionMgr () :
+MOAIActionTree::MOAIActionTree () :
 	mPass ( RESET_PASS ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
 	mCurrentAction ( 0 ),
 	mDefaultParent ( 0 ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIAction )
 }
 
 //----------------------------------------------------------------//
-MOAIActionMgr::~MOAIActionMgr () {
+MOAIActionTree::~MOAIActionTree () {
 
 	this->mRoot.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIActionTree::OnUpdate ( double step ) {
+
+	this->Update ( step );
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getRoot",				_getRoot },
@@ -138,42 +145,45 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::SetDefaultParent () {
+void MOAIActionTree::SetDefaultParent () {
 
 	this->mDefaultParent = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::SetDefaultParent ( MOAIAction* defaultParent ) {
+void MOAIActionTree::SetDefaultParent ( MOAIAction* defaultParent ) {
 
 	this->mDefaultParent = defaultParent;
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::SetRoot ( MOAIAction* root ) {
+void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 
 	this->mRoot.Set ( *this, root );
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::Update ( float step ) {
+void MOAIActionTree::Update ( double step ) {
 
 	MOAIAction* root = this->mRoot;	
 
 	if ( root ) {
 
-		this->GetNextPass ();
+		this->mPass++; // on to the next pass
+		
+		// handles the case when Moai has been running continuously
+		// for approx. 136 years at 60 fps
+		if ( this->mPass == 0xffffffff ) {
+			root->ResetPass ();
+		}
 		
 		root->Retain ();
 		
-		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
-			this->mDefaultParent = 0;
-			root->Update ( step, this->mPass, true );
-		}
+		this->mDefaultParent = 0;
+		root->Update ( step );
 
 		root->Release ();
 
-		this->mPass = RESET_PASS;
 		this->mDefaultParent = 0;
 		this->mCurrentAction = 0;
 	}

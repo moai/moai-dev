@@ -188,7 +188,7 @@ MOAIAnim::~MOAIAnim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::OnUpdate ( float step ) {
+void MOAIAnim::OnUpdate ( double step ) {
 
 	float t0 = this->GetTime ();
 	this->DoStep ( step );

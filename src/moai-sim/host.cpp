@@ -23,8 +23,6 @@ void AKUSimContextInitialize () {
 	//MOAIProfiler::Affirm ();
 	MOAIGfxDevice::Affirm ();
 	
-	MOAIActionMgr::Affirm ();
-	MOAIInputMgr::Affirm ();
 	MOAINodeMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
@@ -36,7 +34,7 @@ void AKUSimContextInitialize () {
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAction )
-	REGISTER_LUA_CLASS ( MOAIActionMgr )
+	REGISTER_LUA_CLASS ( MOAIActionTree )
 	REGISTER_LUA_CLASS ( MOAIAnim )
 	REGISTER_LUA_CLASS ( MOAIAnimCurve )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
@@ -73,7 +71,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
-	REGISTER_LUA_CLASS ( MOAIInputMgr )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
@@ -153,85 +150,85 @@ void AKUDetectGfxContext () {
 //----------------------------------------------------------------//
 void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
 
-	MOAIButtonSensor::EnqueueButtonEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, down );
+	MOAIButtonSensor::EnqueueButtonEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueCompassEvent ( int deviceID, int sensorID, float heading ) {
 
-	MOAICompassSensor::EnqueueCompassEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, heading );
+	MOAICompassSensor::EnqueueCompassEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, heading );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
 
-	MOAIJoystickSensor::EnqueueJoystickEvent( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, x, y );
+	MOAIJoystickSensor::EnqueueJoystickEvent( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardAltEvent ( int deviceID, int sensorID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::ALT, down );
+	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::ALT, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardControlEvent ( int deviceID, int sensorID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::CONTROL, down );
+	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::CONTROL, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardEvent ( int deviceID, int sensorID, int keyID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
+	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardShiftEvent ( int deviceID, int sensorID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::SHIFT, down );
+	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::SHIFT, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueLevelEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
-	MOAIMotionSensor::EnqueueLevelEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
+	MOAIMotionSensor::EnqueueLevelEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueLocationEvent ( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
-	MOAILocationSensor::EnqueueLocationEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+	MOAILocationSensor::EnqueueLocationEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueuePointerEvent ( int deviceID, int sensorID, int x, int y ) {
 
-	MOAIPointerSensor::EnqueuePointerEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, x, y );
+	MOAIPointerSensor::EnqueuePointerEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueTouchEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y ) {
 
-	MOAITouchSensor::EnqueueTouchEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, ( u32 )touchID, down, x, y );
+	MOAITouchSensor::EnqueueTouchEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, ( u32 )touchID, down, x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueTouchEventCancel ( int deviceID, int sensorID ) {
 
-	MOAITouchSensor::EnqueueTouchEventCancel ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID );
+	MOAITouchSensor::EnqueueTouchEventCancel ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueVectorEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y, float z ) {
 
-	MOAIVectorSensor::EnqueueVectorEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
+	MOAIVectorSensor::EnqueueVectorEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
 
-	MOAIWheelSensor::EnqueueWheelEvent ( MOAIInputMgr::Get (), ( u8 )deviceID, ( u8 )sensorID, value );
+	MOAIWheelSensor::EnqueueWheelEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, value );
 }
 
 //----------------------------------------------------------------//
@@ -278,13 +275,13 @@ void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
 //----------------------------------------------------------------//
 void AKUReserveInputDevices ( int total ) {
 
-	MOAIInputMgr::Get ().ReserveDevices (( u8 )total );
+	MOAISim::Get ().GetInputMgr ().ReserveDevices (( u8 )total );
 }
 
 //----------------------------------------------------------------//
 void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 
-	MOAIInputMgr::Get ().ReserveSensors (( u8 )deviceID, ( u8 )total );
+	MOAISim::Get ().GetInputMgr ().ReserveSensors (( u8 )deviceID, ( u8 )total );
 }
 
 //----------------------------------------------------------------//
@@ -314,97 +311,97 @@ void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func ) {
 //----------------------------------------------------------------//
 void AKUSetInputConfigurationName ( char const* name ) {
 
-	MOAIInputMgr::Get ().SetConfigurationName ( name );
+	MOAISim::Get ().GetInputMgr ().SetConfigurationName ( name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDevice ( int deviceID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetDevice (( u8 )deviceID, name );
+	MOAISim::Get ().GetInputMgr ().SetDevice (( u8 )deviceID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
 
-	MOAIInputMgr::Get ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
+	MOAISim::Get ().GetInputMgr ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceActive ( int deviceID, bool active ) {
 
-	MOAIInputMgr::Get ().SetDeviceActive (( u8 )deviceID, active );
+	MOAISim::Get ().GetInputMgr ().SetDeviceActive (( u8 )deviceID, active );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceButton ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIButtonSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIButtonSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceCompass ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAICompassSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAICompassSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceKeyboard ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIKeyboardSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIKeyboardSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceJoystick ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIJoystickSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIJoystickSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceLevel ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIMotionSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIMotionSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceLocation ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAILocationSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAILocationSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIPointerSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIPointerSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAITouchSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAITouchSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceVector ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIVectorSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIVectorSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIWheelSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIWheelSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputTimebase ( double timebase ) {
 
-	MOAIInputMgr::Get ().SetTimebase ( timebase );
+	MOAISim::Get ().GetInputMgr ().SetTimebase ( timebase );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputTimestamp ( double timestamp ) {
 
-	MOAIInputMgr::Get ().SetTimestamp ( timestamp );
+	MOAISim::Get ().GetInputMgr ().SetTimestamp ( timestamp );
 }
 
 //----------------------------------------------------------------//

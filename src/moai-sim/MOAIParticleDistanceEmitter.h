@@ -32,7 +32,7 @@ private:
 	//----------------------------------------------------------------//
 	float			GetRandomDistance		();
 	void			OnDepNodeUpdate			();
-	void			OnUpdate				( float step );
+	void			OnUpdate				( double step );
 
 public:
 	

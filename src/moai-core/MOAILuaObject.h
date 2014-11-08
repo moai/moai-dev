@@ -4,6 +4,7 @@
 #ifndef	MOAILUAOBJECT_H
 #define	MOAILUAOBJECT_H
 
+#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAIObject.h>
 
@@ -43,12 +44,13 @@ protected:
 	static int				_unpin				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MakeLuaBinding		( MOAILuaState& state );
-	void					OnRelease			( u32 refCount );
-	bool					PushMemberTable		( MOAILuaState& state );
-	bool					PushRefTable		( MOAILuaState& state );
-	void					SetInterfaceTable	( MOAILuaState& state, int idx );
-	void					SetMemberTable		( MOAILuaState& state, int idx );
+	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
+	void					MakeLuaBinding			( MOAILuaState& state );
+	void					OnRelease				( u32 refCount );
+	bool					PushMemberTable			( MOAILuaState& state );
+	bool					PushRefTable			( MOAILuaState& state );
+	void					SetInterfaceTable		( MOAILuaState& state, int idx );
+	void					SetMemberTable			( MOAILuaState& state, int idx );
 
 public:
 
@@ -80,6 +82,15 @@ public:
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	bool					WasCollected				();
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE, lua_CFunction FUNC >
+	static int WrapInstanceFuncAsGlobal ( lua_State* L ) {
+	
+		TYPE* type = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		assert ( type );
+		return InjectAndCall ( FUNC, type, L );
+	}
 };
 
 #endif

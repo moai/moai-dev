@@ -67,7 +67,7 @@ private:
 	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
 	u32						OnGetModelBounds		( ZLBox& bounds );
-	void					OnUpdate				( float step );
+	void					OnUpdate				( double step );
 
 public:
 	

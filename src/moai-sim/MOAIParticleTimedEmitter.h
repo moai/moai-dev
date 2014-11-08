@@ -27,7 +27,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	float			GetRandomFrequency		();
-	void			OnUpdate				( float step );
+	void			OnUpdate				( double step );
 
 public:
 	

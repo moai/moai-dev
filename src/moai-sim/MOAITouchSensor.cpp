@@ -391,14 +391,12 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 				touch.mState = IS_DOWN | DOWN;
 			}
 			else {
-			
-				if ( idx == UNKNOWN_TOUCH ) return;
 				touch.mState = this->mTouches [ idx ].mState | IS_DOWN;
 				touch.mTapCount = this->mTouches [ idx ].mTapCount;
 				eventType = TOUCH_MOVE;
 			}
 		}
-		else {
+		else if ( idx != UNKNOWN_TOUCH ) {
 			
 			MOAITouchLinger linger;
 			linger.mX = this->mTouches [ idx ].mX;

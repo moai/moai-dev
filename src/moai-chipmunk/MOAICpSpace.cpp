@@ -842,7 +842,7 @@ MOAICpSpace::~MOAICpSpace () {
 }
 
 //----------------------------------------------------------------//
-void MOAICpSpace::OnUpdate ( float step ) {
+void MOAICpSpace::OnUpdate ( double step ) {
 	
 	ZLLeanList < MOAICpPrim* > removeList;
 	

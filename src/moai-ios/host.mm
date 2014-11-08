@@ -110,3 +110,4 @@ void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID ( frameBuffer );
 }
+

@@ -195,7 +195,7 @@ protected:
 	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );
-	void				OnUpdate				( float step );
+	void				OnUpdate				( double step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();

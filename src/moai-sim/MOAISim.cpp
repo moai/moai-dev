@@ -2,10 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIActionMgr.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIInputMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
@@ -129,6 +127,24 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 	MOAISim& device = MOAISim::Get ();
 	lua_pushnumber ( state, frames * device.mStep );
 	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getActionMgr ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAISim::Get ().GetActionMgr ().PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getInputMgr ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAISim::Get ().GetInputMgr ().PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -649,6 +665,18 @@ MOAISim::MOAISim () :
 	}
 	
 	this->mFrameTime = ZLDeviceTime::GetTimeInSeconds ();
+	
+	MOAIInputQueue* inputMgr = new MOAIInputQueue ();
+	this->mInputMgr.Set ( *this, inputMgr );
+	
+	MOAIActionTree* actionMgr = new MOAIActionTree ();
+	this->mActionMgr.Set ( *this, actionMgr );
+	
+	MOAIActionTree* actionTree = new MOAIActionTree ();
+	this->mActionTree.Set ( *this, actionTree );
+	
+	inputMgr->Start ( *actionTree );
+	actionMgr->Start ( *actionTree );
 }
 
 //----------------------------------------------------------------//
@@ -736,6 +764,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
+		{ "getActionMgr",				_getActionMgr },
+		{ "getInputMgr",				_getInputMgr },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
@@ -779,7 +809,7 @@ void MOAISim::Resume () {
 	if ( this->mLoopState == PAUSED ) {
 	
 		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
-		MOAIInputMgr::Get ().FlushEvents ( skip );
+		MOAISim::Get ().GetInputMgr ().FlushEvents ( skip );
 	
 		this->SendResumeEvent();
 		this->mLoopState = START;
@@ -836,8 +866,7 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
-		MOAIInputMgr::Get ().Update ( step );
-		MOAIActionMgr::Get ().Update (( float )step );		
+		this->mActionTree->Update ( step );
 		MOAINodeMgr::Get ().Update ();
 		
 		this->mSimTime += step;

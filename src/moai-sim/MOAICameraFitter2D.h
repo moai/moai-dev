@@ -73,7 +73,7 @@ private:
 	ZLRect			GetAnchorRect			();
 	void			GetCamera				( ZLAffine3D& camera );
 	void			OnDepNodeUpdate			();
-	void			OnUpdate				( float step );
+	void			OnUpdate				( double step );
 	void			SetTarget				( const ZLAffine3D& camera, const ZLRect& screenRect );
 	void			SnapToTargetLoc			( MOAITransform& camera );
 	void			SnapToTargetScale		( MOAITransform& camera );

@@ -19,6 +19,20 @@
 #define LUAVAR_CONFIGURATION	"configuration"
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+int MOAIInputQueue::_deferEvents ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+
+	bool defer = state.GetValue < bool >( 2, false );
+	self->DeferEvents ( defer );
+
+	return 0;
+}
+
+//================================================================//
 // MOAIInputQueue
 //================================================================//
 
@@ -66,12 +80,17 @@ MOAISensor* MOAIInputQueue::GetSensor ( u8 deviceID, u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIInputQueue::IsDone () {
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIInputQueue::MOAIInputQueue () :
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ),
 	mDefer ( false ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIAction )
 	
 	this->SetChunkSize ( CHUNK_SIZE );
 }
@@ -82,6 +101,68 @@ MOAIInputQueue::~MOAIInputQueue () {
 	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
 		this->LuaRelease ( this->mDevices [ i ]);
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputQueue::OnUpdate ( double timestep ) {
+
+	// reset the input sensors
+	this->ResetSensors ();
+
+	size_t cursor = 0;
+
+	if ( !this->mDefer ) {
+		
+		// rewind the event queue
+		this->Seek ( 0, SEEK_SET );
+		
+		bool first = true;
+		double timebase = 0;
+		
+		// parse events until we run out or hit an event after the current sim time
+		while ( this->GetCursor () < this->GetLength ()) {
+			
+			u8 deviceID			= this->Read < u8 >( 0 );
+			u8 sensorID			= this->Read < u8 >( 0 );
+			double timestamp	= this->Read < double >( 0 );
+			
+			if ( first ) {
+				timebase = timestamp;
+				first = false;
+			}
+			
+			if ( timestep < ( timestamp - timebase )) break;
+			
+			MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
+			assert ( sensor );
+			sensor->mTimestamp = timestamp;
+			sensor->ParseEvent ( *this );
+			
+			cursor = this->GetCursor ();
+		}
+		
+		// discard processed events
+		this->DiscardFront ( cursor );
+		
+		// back to the end of the queue
+		this->Seek ( this->GetLength (), SEEK_SET );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputQueue::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "deferEvents",		_deferEvents },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -134,7 +215,7 @@ void MOAIInputQueue::SetDevice ( u8 deviceID, cc8* name ) {
 	this->LuaRetain ( device );
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLuaClassTable ( state );
+	this->PushLuaUserdata ( state );
 	
 	device->PushLuaUserdata ( state );
 	lua_setfield ( state, -2, name );
@@ -155,52 +236,6 @@ void MOAIInputQueue::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
 		device->SetHardwareInfo ( hardwareInfo );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIInputQueue::Update ( double timestep ) {
-
-	// reset the input sensors
-	this->ResetSensors ();
-
-	size_t cursor = 0;
-
-	if ( !this->mDefer ) {
-		
-		// rewind the event queue
-		this->Seek ( 0, SEEK_SET );
-		
-		bool first = true;
-		double timebase = 0;
-		
-		// parse events until we run out or hit an event after the current sim time
-		while ( this->GetCursor () < this->GetLength ()) {
-			
-			u8 deviceID			= this->Read < u8 >( 0 );
-			u8 sensorID			= this->Read < u8 >( 0 );
-			double timestamp	= this->Read < double >( 0 );
-			
-			if ( first ) {
-				timebase = timestamp;
-				first = false;
-			}
-			
-			if ( timestep < ( timestamp - timebase )) break;
-			
-			MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
-			assert ( sensor );
-			sensor->mTimestamp = timestamp;
-			sensor->ParseEvent ( *this );
-			
-			cursor = this->GetCursor ();
-		}
-		
-		// discard processed events
-		this->DiscardFront ( cursor );
-		
-		// back to the end of the queue
-		this->Seek ( this->GetLength (), SEEK_SET );
 	}
 }
 

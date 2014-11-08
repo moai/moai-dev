@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIBlocker.h>
 #include <moai-sim/MOAINode.h>
 
+class MOAIActionTree;
+
 //================================================================//
 // MOAIAction
 //================================================================//
@@ -21,11 +23,11 @@ class MOAIAction :
 	public virtual MOAIInstanceEventSource {
 private:
 	
-	bool	mNew;
-	u32		mPass;
+	u32		mBasePass; // this is the first pass to begin execution of this node
 	bool	mIsDefaultParent;
 	
-	MOAIAction* mParent;
+	MOAIAction*			mParent;
+	MOAIActionTree*		mTree;
 	
 	typedef ZLLeanList < MOAIAction* >::Iterator ChildIt;
 	ZLLeanList < MOAIAction* > mChildren;
@@ -55,22 +57,23 @@ private:
 
 	//----------------------------------------------------------------//
 	void				OnUnblock				();
-	void				Update					( float step, u32 pass, bool checkPass );
+	void				ResetPass				();
+	void				SetTree					( MOAIActionTree* tree = 0 );
+	void				Update					( double step );
 
 protected:
 
 	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )
 
 	//----------------------------------------------------------------//
+	virtual STLString	GetDebugInfo			() const;
 	virtual void		OnStart					();
 	virtual void		OnStop					();
-	virtual void		OnUpdate				( float step );
-
-	virtual STLString	GetDebugInfo			() const;
+	virtual void		OnUpdate				( double step );
 	
 public:
 	
-	friend class MOAIActionMgr;
+	friend class MOAIActionTree;
 	
 	DECL_LUA_FACTORY ( MOAIAction )
 	
@@ -94,7 +97,7 @@ public:
 						~MOAIAction				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Start					();
+	void				Start					( MOAIActionTree& tree );
 	void				Stop					();
 };
 

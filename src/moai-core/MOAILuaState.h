@@ -68,6 +68,9 @@ public:
 	bool			IsType					( int idx, int type );
 	bool			IsType					( int idx, cc8* name, int type );
 	void			LoadLibs				();
+					MOAILuaState			();
+					MOAILuaState			( lua_State* state );
+	virtual			~MOAILuaState			();
 	void			MoveToTop				( int idx );
 	void			Pop						( int n );
 	bool			PrepMemberFunc			( int idx, cc8* name );
@@ -99,9 +102,6 @@ public:
 	void			SetPath					( cc8* path );
 	void			SetTop					( int top );
 	bool			TableItrNext			( int itr );
-					MOAILuaState			();
-					MOAILuaState			( lua_State* state );
-	virtual			~MOAILuaState			();
 	int				YieldThread				( int nResults );
 	
 	//----------------------------------------------------------------//

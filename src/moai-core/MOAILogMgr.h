@@ -87,7 +87,7 @@ public:
 	template < typename TYPE >
 	TYPE* LuaSetup ( MOAILuaState& state, cc8* typeStr ) {
 	
-		if ( this->mTypeCheckLuaParams ) {
+		if ( this->mTypeCheckLuaParams && typeStr ) {
 			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
 		}
 		TYPE* self = state.GetLuaObject < TYPE >( 1, true );

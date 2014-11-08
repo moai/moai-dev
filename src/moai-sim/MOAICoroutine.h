@@ -53,7 +53,7 @@ public:
 	bool				IsDone					();
 						MOAICoroutine			();
 						~MOAICoroutine			();
-	void				OnUpdate				( float step );
+	void				OnUpdate				( double step );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };

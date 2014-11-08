@@ -4,6 +4,7 @@
 #ifndef MOAIINPUTQUEUE_H
 #define MOAIINPUTQUEUE_H
 
+#include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAISensor.h>
 
@@ -14,7 +15,7 @@
 	@text	Base class for input streams and device sets.
 */
 class MOAIInputQueue :
-	public virtual MOAILuaObject,
+	public virtual MOAIAction,
 	public virtual ZLMemStream {
 private:
 
@@ -28,23 +29,11 @@ private:
 	bool	mDefer;
 
 	//----------------------------------------------------------------//
-	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
-	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
-
-protected:
+	static int			_deferEvents				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	static int _deferEvents ( lua_State* L ) {
-		
-		MOAILuaState state ( L );
-		bool defer = state.GetValue < bool >( 1, false );
-		
-		TYPE& global = TYPE::Get ();
-		global.DeferEvents ( defer );
-
-		return 0;
-	}
+	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
+	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
 
 public:
 
@@ -56,8 +45,12 @@ public:
 	void				FlushEvents					( double skip );
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
+	bool				IsDone						();
 						MOAIInputQueue				();
 						~MOAIInputQueue				();
+	void				OnUpdate					( double timestep );
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveDevices				( u8 total );
 	void				ReserveSensors				( u8 deviceID, u8 total );
 	void				ResetSensors				();
@@ -65,7 +58,6 @@ public:
 	void				SetDevice					( u8 deviceID, cc8* name );
 	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetDeviceHardwareInfo		( u8 deviceID, cc8* hardwareInfo );
-	void				Update						( double timestep );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

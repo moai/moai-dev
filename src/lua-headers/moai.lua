@@ -580,3 +580,24 @@ if MOAITwitterIOS then
     end
 end
 
+--============================================================--
+-- Managers
+--============================================================--
+
+local wrapGlobal = function ( obj, func )
+	return function ( ... ) return func ( obj, ... ) end
+end
+
+MOAIActionMgr = MOAISim.getActionMgr ()
+
+MOAIActionMgr.getRoot					= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.getRoot )
+MOAIActionMgr.setProfilingEnabled		= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.setProfilingEnabled )
+MOAIActionMgr.setRoot					= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.setRoot )
+MOAIActionMgr.setThreadInfoEnabled		= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.setThreadInfoEnabled )
+
+MOAIInputMgr = MOAISim.getInputMgr ()
+
+print ( 'INPUT MANAGER', MOAIInputMgr )
+print ( 'device', MOAIInputMgr.device )
+
+MOAIActionMgr.deferEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.deferEvents )

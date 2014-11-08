@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIActionMgr.h>
 #include <moai-sim/MOAICoroutine.h>
+#include <moai-sim/MOAISim.h>
 
 //----------------------------------------------------------------//
 /**	@lua	blockOnAction
@@ -18,7 +18,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 
-	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
+	MOAIAction* current = MOAISim::Get ().GetActionMgr ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
 	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
@@ -38,7 +38,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 int MOAICoroutine::_currentThread ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
+	MOAIAction* current = MOAISim::Get ().GetActionMgr ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
 	current->PushLuaUserdata ( state );
@@ -97,9 +97,9 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 int MOAICoroutine::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "UF" )
 
-	if ( !MOAIActionMgr::IsValid ()) return 0;
+	if ( !MOAISim::IsValid ()) return 0;
 
-	if ( MOAIActionMgr::Get ().GetThreadInfoEnabled ()) {
+	if ( MOAISim::Get ().GetActionMgr ().GetThreadInfoEnabled ()) {
 
 		// Get a copy of the function's debug info and store it so we can
 		// refer to it in any debugging info regarding this thread.
@@ -138,7 +138,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
 	
-	self->Start ();
+	self->Start ( MOAISim::Get ().GetActionMgr ());
 
 	return 0;
 }
@@ -160,7 +160,7 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 	
 	self->mTrackingGroup = state.GetValue < cc8* >( 2, "" );
 	
-	if (  MOAIActionMgr::Get ().GetCurrentAction () == self ) {
+	if (  MOAISim::Get ().GetActionMgr ().GetCurrentAction () == self ) {
 		MOAILuaRuntime::Get ().SetTrackingGroup ( self->mTrackingGroup );
 	}
 	return 0;
@@ -226,7 +226,7 @@ void MOAICoroutine::OnStop () {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::OnUpdate ( float step ) {
+void MOAICoroutine::OnUpdate ( double step ) {
 	this->Resume ( step );
 }
 
