@@ -11,8 +11,6 @@
 
 #include <SDL.h>
 
-#define UNUSED(p) (( void )p)
-
 namespace InputDeviceID {
 	enum {
 		DEVICE,
@@ -41,24 +39,40 @@ static SDL_Window* sWindow = 0;
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
+void    _AKUShowCursor ();
+void    _AKUHideCursor ();
+
+
+//----------------------------------------------------------------//
+void _AKUShowCursor () {
+    SDL_ShowCursor(1);
+}
+
+//----------------------------------------------------------------//
+void _AKUHideCursor () {
+    SDL_ShowCursor(0);
+}
+
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 
-	printf ( "UNSUPPORTED\n" );
+    //videomode change
+    SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN);
 }
 
 //----------------------------------------------------------------//
 void _AKUExitFullscreenModeFunc () {
 
-	printf ( "UNSUPPORTED\n" );
+    //videomode change
+    SDL_SetWindowFullscreen(sWindow, 0);
 }
 
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	if ( !sWindow ) {
-		sWindow = SDL_CreateWindow ( title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+		sWindow = SDL_CreateWindow ( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
 		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
@@ -115,12 +129,30 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
+
+	AKUSetFunc_ShowCursor ( _AKUShowCursor );
+	AKUSetFunc_HideCursor ( _AKUHideCursor );
+
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
 	AKUModulesParseArgs ( argc, argv );
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
+
+// based on host-glut 
+void _onMultiButton( int touch_id, float x, float y, int state ) {
+
+	AKUEnqueueTouchEvent (
+		InputDeviceID::DEVICE,
+		InputSensorID::TOUCH,
+		touch_id,
+		state == SDL_FINGERDOWN,
+		( float )x,
+		( float )y
+	);
+}
+
 
 //----------------------------------------------------------------//
 void MainLoop () {
@@ -173,8 +205,20 @@ void MainLoop () {
 				
 					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
 					break;
-			}
-		}
+
+                case SDL_FINGERDOWN:
+                case SDL_FINGERUP:
+                case SDL_FINGERMOTION:
+                    const int id    = sdlEvent.tfinger.fingerId;
+                    const float x   = sdlEvent.tfinger.x;
+                    const float y   = sdlEvent.tfinger.y;
+                    const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+
+                    _onMultiButton(id, x, y, state);
+
+                    break;
+			} //end_switch
+		}//end_while
 		
 		AKUModulesUpdate ();
 		
