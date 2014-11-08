@@ -101,6 +101,7 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 
 		if ( argc < 2 ) {
 			AKULoadFuncFromFile ( "main.lua" );
+		    AKUCallFunc ();
 		}
 		else {
 		

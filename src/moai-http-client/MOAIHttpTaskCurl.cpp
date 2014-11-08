@@ -237,7 +237,7 @@ void MOAIHttpTaskCurl::Prepare () {
 	// ZLMemStream which will grow dynamically
 	if ( this->mUserStream ) {
 		
-		this->mStream = this->mUserStream->GetZLStream();
+		this->mStream = this->mUserStream;
 	}
 	else {
 		

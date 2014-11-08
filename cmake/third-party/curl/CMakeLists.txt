@@ -185,7 +185,7 @@ project ( curl )
  
   add_library(curl STATIC ${CURL_SOURCES} ${CURL_HEADERS})
   target_include_directories (curl PUBLIC ${CURL_INCLUDES})
-  target_link_libraries( curl zlib )
+  target_link_libraries( curl zlib ssh2 )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 
   if (USE_ARES)  
