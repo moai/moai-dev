@@ -72,7 +72,7 @@ project ( curl )
                        COMMAND "/bin/sh"
                        "${MOAI_ROOT}/3rdparty/curl-7.19.7/configure"
                        "--no-create" "--disable-shared" "--disable-optimize" ${SSL_PARAMS} "--disable-ldap"
-                       "--without-libidn" 
+                       "--without-libidn" "--without-libssh2" 
                        "CC=${CMAKE_C_COMPILER}"
                        "CFLAGS=${CMAKE_C_FLAGS} -DZL_REPLACE_H"
                        DEPENDS ssl
@@ -185,7 +185,7 @@ project ( curl )
  
   add_library(curl STATIC ${CURL_SOURCES} ${CURL_HEADERS})
   target_include_directories (curl PUBLIC ${CURL_INCLUDES})
-  target_link_libraries( curl zlib ssh2 )
+  target_link_libraries( curl zlib )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 
   if (USE_ARES)  
