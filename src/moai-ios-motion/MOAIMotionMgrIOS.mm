@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIVectorSensor.h>
-#include <moai-ios/MOAIMotionMgrIOS.h>
+#include <moai-ios-motion/MOAIMotionMgrIOS.h>
 
 #import <CoreMotion/CoreMotion.h>
 

@@ -597,7 +597,4 @@ MOAIActionMgr.setThreadInfoEnabled		= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.
 
 MOAIInputMgr = MOAISim.getInputMgr ()
 
-print ( 'INPUT MANAGER', MOAIInputMgr )
-print ( 'device', MOAIInputMgr.device )
-
-MOAIActionMgr.deferEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.deferEvents )
+MOAIInputMgr.deferEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.deferEvents )

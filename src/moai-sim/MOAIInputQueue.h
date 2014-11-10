@@ -37,6 +37,8 @@ private:
 
 public:
 
+	DECL_LUA_FACTORY ( MOAIInputQueue )
+
 	SET ( double, Timebase, mTimebase )
 	SET ( double, Timestamp, mTimestamp )
 

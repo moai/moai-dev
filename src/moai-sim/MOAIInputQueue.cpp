@@ -151,11 +151,14 @@ void MOAIInputQueue::OnUpdate ( double timestep ) {
 
 //----------------------------------------------------------------//
 void MOAIInputQueue::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIInputQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "deferEvents",		_deferEvents },
