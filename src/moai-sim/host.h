@@ -33,13 +33,11 @@ AKU_API void			AKUDetectGfxContext				();
 AKU_API double			AKUGetSimStep					();
 AKU_API int				AKUIsGfxBufferOpaque			();
 AKU_API void			AKUPause						( bool pause );
-AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();
 AKU_API void			AKUSetOrientation				( int orientation );
 AKU_API void			AKUSetScreenDpi					( int dpi );
 AKU_API void			AKUSetScreenSize				( int width, int height );
 AKU_API void			AKUSetViewSize					( int width, int height );
-AKU_API void			AKUSoftReleaseGfxResources		( int age );
 AKU_API void			AKUUpdate						();
 
 // callback management

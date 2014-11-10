@@ -355,7 +355,6 @@ void MOAIFrameBuffer::Render () {
 	}
 
 	gfxDevice.Flush ();
-	gfxDevice.ProcessDeleters ();
 
 	if ( this->mGrabNextFrame ) {
 

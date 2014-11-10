@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIAction.h>
 
+class MOAICoroutine;
+
 //================================================================//
 // MOAICoroutine
 //================================================================//
@@ -24,6 +26,7 @@ private:
 	
 	bool				mIsUpdating;
 	bool				mIsActive;
+	bool				mIsDefaultParent;
 	
 	//----------------------------------------------------------------//
 	static int			_blockOnAction			( lua_State* L );
@@ -49,7 +52,8 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAICoroutine )
 	
-	//----------------------------------------------------------------//						
+	//----------------------------------------------------------------//
+	MOAIAction*			GetDefaultParent		();
 	bool				IsDone					();
 						MOAICoroutine			();
 						~MOAICoroutine			();

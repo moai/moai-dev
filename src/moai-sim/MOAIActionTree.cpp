@@ -80,7 +80,7 @@ int MOAIActionTree::_setThreadInfoEnabled ( lua_State* L ) {
 MOAIAction* MOAIActionTree::AffirmRoot () {
 
 	if ( !this->mRoot ) {
-		this->mRoot.Set ( *this, new MOAIAction ());
+		this->SetRoot ( new MOAIAction ());
 	}
 	return this->mRoot;
 }
@@ -88,12 +88,6 @@ MOAIAction* MOAIActionTree::AffirmRoot () {
 //----------------------------------------------------------------//
 MOAIAction* MOAIActionTree::GetDefaultParent () {
 
-	MOAIAction* cursor = this->mCurrentAction;
-	for ( ; cursor; cursor = cursor->mParent ) {
-		if ( cursor->mIsDefaultParent ) {
-			return cursor;
-		}
-	}
 	return this->AffirmRoot ();
 }
 
@@ -104,25 +98,27 @@ bool MOAIActionTree::IsDone () {
 
 //----------------------------------------------------------------//
 MOAIActionTree::MOAIActionTree () :
-	mPass ( RESET_PASS ),
+	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
-	mThreadInfoEnabled ( false ),
-	mCurrentAction ( 0 ),
-	mDefaultParent ( 0 ) {
+	mThreadInfoEnabled ( false ) {
 	
 	RTTI_SINGLE ( MOAIAction )
 }
 
 //----------------------------------------------------------------//
 MOAIActionTree::~MOAIActionTree () {
+}
 
-	this->mRoot.Set ( *this, 0 );
+//----------------------------------------------------------------//
+void MOAIActionTree::OnLostChild ( MOAIAction* child ) {
+	if ( this->mRoot == child ) {
+		this->mRoot = 0;
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIActionTree::OnUpdate ( double step ) {
-
-	this->Update ( step );
+	UNUSED ( step );
 }
 
 //----------------------------------------------------------------//
@@ -145,46 +141,21 @@ void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionTree::SetDefaultParent () {
-
-	this->mDefaultParent = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::SetDefaultParent ( MOAIAction* defaultParent ) {
-
-	this->mDefaultParent = defaultParent;
-}
-
-//----------------------------------------------------------------//
 void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 
-	this->mRoot.Set ( *this, root );
+	if ( this->mRoot ) {
+		this->mRoot->Attach ();
+	}
+
+	this->mRoot = root;
+
+	if ( this->mRoot ) {
+		this->mRoot->Attach ( this );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIActionTree::Update ( double step ) {
 
-	MOAIAction* root = this->mRoot;	
-
-	if ( root ) {
-
-		this->mPass++; // on to the next pass
-		
-		// handles the case when Moai has been running continuously
-		// for approx. 136 years at 60 fps
-		if ( this->mPass == 0xffffffff ) {
-			root->ResetPass ();
-		}
-		
-		root->Retain ();
-		
-		this->mDefaultParent = 0;
-		root->Update ( step );
-
-		root->Release ();
-
-		this->mDefaultParent = 0;
-		this->mCurrentAction = 0;
-	}
+	this->MOAIAction::Update ( *this, step );
 }

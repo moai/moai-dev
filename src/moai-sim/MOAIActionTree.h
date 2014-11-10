@@ -16,17 +16,14 @@ private:
 
 	static const u32 RESET_PASS	= 0xffffffff;
 
-	u32 mPass;
-
 	bool mProfilingEnabled;
 	bool mThreadInfoEnabled;
 
-	MOAILuaSharedPtr < MOAIAction > mRoot;
-	MOAIAction* mCurrentAction;
-	MOAIAction* mDefaultParent;
+	MOAIAction* mRoot;
 
 	//----------------------------------------------------------------//
 	MOAIAction*			AffirmRoot				();
+	void				OnLostChild				( MOAIAction* child );
 	void				OnUpdate				( double step );
 	void				SetRoot					( MOAIAction* root );
 
@@ -43,8 +40,6 @@ public:
 	friend class MOAIAction;
 
 	DECL_LUA_FACTORY ( MOAIActionTree )
-
-	GET_SET ( MOAIAction*, CurrentAction, mCurrentAction )
 	
 	GET_SET ( bool, ProfilingEnabled, mProfilingEnabled )
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )

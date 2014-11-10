@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -16,41 +17,6 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
-
-//================================================================//
-// MOAIGfxDeleter
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxDeleter::Delete () {
-
-	switch ( this->mType ) {
-		
-		case DELETE_BUFFER:
-			zglDeleteBuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_FRAMEBUFFER:
-			zglDeleteFramebuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_PROGRAM:
-			zglDeleteProgram ( this->mResourceID );
-			break;
-		
-		case DELETE_SHADER:
-			zglDeleteShader ( this->mResourceID );
-			break;
-		
-		case DELETE_TEXTURE:
-			zglDeleteTexture ( this->mResourceID );
-			break;
-		
-		case DELETE_RENDERBUFFER:
-			zglDeleteRenderbuffer ( this->mResourceID );
-			break;
-	}
-}
 
 //================================================================//
 // local
@@ -188,11 +154,19 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
-
 	MOAILuaState state ( L );
 
 	float size = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxDevice::_setResourceLoadingPolicy ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	MOAIGfxDevice::Get ().mResourceLoadingPolicy = state.GetValue < u32 >( 1, MOAIGfxResource::DEFAULT_LOADING_POLICY );
 	return 0;
 }
 
@@ -204,11 +178,7 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
  */
 // TODO: rename this to something more descriptive?
 int MOAIGfxDevice::_release ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	MOAIGfxDevice::Get ().ProcessDeleters ();
-	zglFlush ();
+	UNUSED ( L );
 	return 0;
 }
 
@@ -290,8 +260,7 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mMaxTextureSize = zglGetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
-	this->mDeleterStack.Reset ();
-	this->ResetResources ();
+	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
 	
@@ -548,12 +517,6 @@ void MOAIGfxDevice::GpuMultMatrix ( const ZLMatrix4x4& mtx ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
-
-	this->mResources.PushBack ( resource.mLink );
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxDevice::IsOpaque () const {
 	
 	assert ( this->mDefaultBuffer );
@@ -613,7 +576,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mVertexFormatBuffer ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
-	mVertexMtxOutput ( VTX_STAGE_MODEL ) {
+	mVertexMtxOutput ( VTX_STAGE_MODEL ),
+	mResourceLoadingPolicy ( MOAIGfxResource::DEFAULT_LOADING_POLICY ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -654,33 +618,11 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ProcessDeleters () {
-
-	zglBegin ();
-	
-	u32 top = this->mDeleterStack.GetTop ();
-	for ( u32 i = 0; i < top; ++i ) {
-		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
-		deleter.Delete ();
-	}
-	this->mDeleterStack.Reset ();
-	
-	zglEnd ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
-
-	MOAIGfxDeleter deleter;
-	deleter.mType = type;
-	deleter.mResourceID = id;
-	
-	this->mDeleterStack.Push ( deleter );
-	//this->ProcessDeleters ();
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
@@ -695,39 +637,12 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
+		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
 		{ "release",					_release },
 		{ NULL, NULL }
 	};
 
 	luaL_register( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::ReleaseResources () {
-	
-	zglBegin ();
-	
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Destroy ();
-	}
-	
-	zglEnd ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::RemoveGfxResource ( MOAIGfxResource& resource ) {
-
-	this->mResources.Remove ( resource.mLink );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::RenewResources () {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Load ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -757,16 +672,6 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ResetDrawCount () {
 	this->mDrawCount = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::ResetResources () {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Invalidate ();
-		resourceIt->Data ()->Load ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1219,10 +1124,6 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 		return false;
 	}
 	
-	if ( texture->mState == MOAIGfxResource::STATE_PRELOAD ) {
-		return this->SetTexture ( textureUnit, this->mDefaultTexture );
-	}
-	
 	if ( this->mTextureUnits [ textureUnit ] == texture ) return true;
 	
 	this->Flush ();
@@ -1235,8 +1136,12 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 		}
 	#endif
 	
+	if ( !texture->Bind ()) {
+		return this->SetTexture ( textureUnit, this->mDefaultTexture );
+	}
+	
 	this->mTextureUnits [ textureUnit ] = texture;
-	return texture->Bind ();
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1401,19 +1306,6 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	
 	this->mViewRect = rect;
 	this->mShaderDirty = true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->SoftRelease ( age );
-	}
-	
-	// Horrible to call this, but generally soft release is only used
-	// in response to a low memory warning and we want to free as soon as possible.
-	zglFlush ();
 }
 
 //----------------------------------------------------------------//

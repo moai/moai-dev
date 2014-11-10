@@ -1928,6 +1928,8 @@ void MOAIImage::Init ( u32 width, u32 height, ZLColor::Format colorFmt, ZLPixel:
 	
 	this->Alloc ();
 	this->ClearBitmap ();
+	
+	this->OnImageStatusChanged ( this->IsOK ());
 }
 
 //----------------------------------------------------------------//
@@ -1957,6 +1959,8 @@ void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::Format colo
 	else {
 		this->mBitmap = ( void* )bitmap;
 	}
+	
+	this->OnImageStatusChanged ( this->IsOK ());
 }
 
 //----------------------------------------------------------------//
@@ -1980,7 +1984,9 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 	if ( stream.OpenRead ( filename )) {
 		this->Load ( stream, transform );
 		stream.Close ();
-	} else {
+		this->OnImageStatusChanged ( this->IsOK ());
+	}
+	else {
 		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
 	}
 }
@@ -1995,6 +2001,7 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	#if MOAI_WITH_LIBPNG
 		if ( MOAIImage::IsPng ( stream ) ) {
 			this->LoadPng ( stream, transform );
+			this->OnImageStatusChanged ( this->IsOK ());
 			return;
 		}
 	#endif
@@ -2002,6 +2009,7 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	#if MOAI_WITH_LIBJPG
 		if ( MOAIImage::IsJpg ( stream ) ) {
 			this->LoadJpg ( stream, transform );
+			this->OnImageStatusChanged ( this->IsOK ());
 			return;
 		}
 	#endif
@@ -2009,6 +2017,7 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	#if MOAI_WITH_LIBWEBP
 		if ( MOAIImage::IsWebP ( stream ) ) {
 			this->LoadWebP ( stream, transform );
+			this->OnImageStatusChanged ( this->IsOK ());
 			return;
 		}
 	#endif
@@ -2098,6 +2107,11 @@ MOAIImage::MOAIImage () :
 MOAIImage::~MOAIImage () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::OnImageStatusChanged ( bool isOK ) {
+	UNUSED ( isOK );
 }
 
 //----------------------------------------------------------------//

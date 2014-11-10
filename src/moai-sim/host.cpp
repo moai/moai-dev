@@ -21,8 +21,10 @@ void AKUSimAppInitialize () {
 void AKUSimContextInitialize () {
 
 	//MOAIProfiler::Affirm ();
+	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
 	
+	MOAIActionStackMgr::Affirm ();
 	MOAINodeMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
@@ -255,12 +257,6 @@ void AKUPause ( bool pause ) {
 }
 
 //----------------------------------------------------------------//
-void AKUReleaseGfxContext () {
-
-	MOAIGfxDevice::Get ().ReleaseResources ();
-}
-
-//----------------------------------------------------------------//
 void AKURender () {
 
 	MOAIRenderMgr::Get ().Render ();
@@ -448,12 +444,6 @@ void AKUSetViewSize ( int width, int height ) {
 void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
 
 	MOAISim::Get ().SetShowCursorFunc ( func );
-}
-
-//----------------------------------------------------------------//
-void AKUSoftReleaseGfxResources ( int age ) {
-
-	MOAIGfxDevice::Get ().SoftReleaseResources ( age );
 }
 
 //----------------------------------------------------------------//

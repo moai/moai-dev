@@ -28,7 +28,6 @@ private:
 	static int		_setTexture				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Clear					();
 	bool			LoadGfxState			();
 
 public:

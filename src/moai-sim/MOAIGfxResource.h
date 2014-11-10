@@ -42,55 +42,70 @@ class MOAIGfxResource :
 private:
 
 	enum {
-		STATE_READY,
+		STATE_NEW, // we use this state to ensure we call DoCPUAffirm after init
+		STATE_NEEDS_CPU_CREATE,
+		STATE_NEEDS_GPU_CREATE,
+		STATE_READY_TO_BIND,
 		STATE_ERROR,
-		STATE_PRECREATE,
-		STATE_PRELOAD,
 	};
 
-	u32				mState;
-	u32				mLastRenderCount;
-	
-	MOAILuaMemberRef	mOnRenew;
+	u32					mState;
+	u32					mLastRenderCount;
+	u32					mLoadingPolicy;
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
 
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
-	static int		_softRelease				( lua_State* L );
+	static int		_purge						( lua_State* L );
+	static int		_setLoadingPolicy			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			Renew						(); // lose (but not *delete*) the GPU resource
 
 protected:
 
 	//----------------------------------------------------------------//
-	bool			Affirm						();
-	bool			HasLoadScript				();
-	virtual bool	IsRenewable					() = 0; // return 'true' if resource has sufficient information to create GPU-side resource - MAIN THREAD
-	virtual void	OnBind						() = 0; // select GPU-side resource on device for use - GRAPHICS THREAD
-	virtual void	OnClear						() = 0; // clear any CPU-side resources used by class - MAIN THREAD
-	virtual void	OnCreate					() = 0; // create GPU-side resource - GRAPHICS THREAD
-	virtual void	OnDestroy					() = 0; // destroy GPU-side resource - MAIN THREAD
-	virtual void	OnInvalidate				() = 0; // clear any handles or references to GPU-side resource - MAIN THREAD
-	virtual void	OnLoad						() = 0; // load or initialize any CPU-side resources required to create device resource - MAIN THREAD
-	virtual void	OnUnbind					() = 0; // unbind GPU-side resource - GRAPHICS THREAD
+	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
+	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
+	
+	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
+	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
+	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
+	virtual void	OnGPULost					() = 0; // clear any handles or references to GPU-side (called by 'Abandon')
+	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
 
 public:
 
 	friend class MOAIGfxDevice;
+	friend class MOAIGfxResourceMgr;
 
 	GET ( u32, State, mState );
+	
+	enum {
+		LOADING_POLICY_NONE,				// don't care and/or use global policy
+		LOADING_POLICY_CPU_GPU_ASAP,		// load everything asap
+		LOADING_POLICY_CPU_ASAP_GPU_BIND,	// load the cpu part asap, load the gpu part on bind (during render)
+		LOADING_POLICY_CPU_GPU_BIND,		// load the cpu and gpu part on bind (during render)
+	};
+
+	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_GPU_ASAP;
+
+	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only affects
+	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time
+	// we render.
 
 	//----------------------------------------------------------------//
-	bool			Bind						();
-	void			Clear						();
-	void			Destroy						();
-	void			Invalidate					();
-	virtual bool	IsValid						() = 0; // return 'true' if the handle to the GPU-side resource is valid (or initialized) - GRAPHICS THREAD
-	void			Load						();
+	bool			Bind						(); // bind for drawing; go to STATE_READY
+	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
+	bool			DoCPUAffirm					(); // gets ready to bind;
+	bool			DoGPUAffirm					(); // gets ready to bind;
+	virtual u32		GetLoadingPolicy			();
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	bool			SoftRelease					( u32 age );
+	bool			Purge						( u32 age );
 	void			Unbind						();
 };
 

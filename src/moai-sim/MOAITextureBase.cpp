@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAISim.h>
@@ -44,7 +45,7 @@ int MOAITextureBase::_getSize ( lua_State* L ) {
 int MOAITextureBase::_release ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
 	
-	self->MOAITextureBase::Clear ();
+	self->Destroy ();
 	
 	return 0;
 }
@@ -93,13 +94,25 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
+void MOAITextureBase::CleanupOnError () {
 
-	bool error = false;
-	if ( !image.IsOK ()) return;
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
+	this->mTextureSize = 0;
+	zglDeleteTexture ( this->mGLTexID );
+	this->mGLTexID = 0;
+	this->mWidth = 0;
+	this->mHeight = 0;
+	this->mTextureSize = 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
+
+	if ( !image.IsOK ()) return false;
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 
 	MOAIGfxDevice::Get ().ClearErrors ();
+	this->mGLTexID = zglCreateTexture ();
+	if ( !this->mGLTexID ) return false;
 
 	// get the dimensions before trying to get the OpenGL texture ID
 	this->mWidth = image.GetWidth ();
@@ -110,18 +123,15 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
 	}
 
-	this->mGLTexID = zglCreateTexture ();
-	if ( !this->mGLTexID ) return;
-
 	zglBindTexture ( this->mGLTexID );
 
 	ZLPixel::Format pixelFormat = image.GetPixelFormat ();
 	ZLColor::Format colorFormat = image.GetColorFormat ();
 
-	if ( pixelFormat != ZLPixel::TRUECOLOR ) return; // only support truecolor textures
+	if ( pixelFormat != ZLPixel::TRUECOLOR ) return false; // only support truecolor textures
 
 	// generate mipmaps if set up to use them
-	bool genMipMaps = this->GenerateMipmaps ();
+	bool genMipMaps = this->ShouldGenerateMipmaps ();
 
 	// GL_ALPHA
 	// GL_RGB
@@ -161,7 +171,9 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 			
-		default: return;
+		default:
+			this->CleanupOnError ();
+			return false;
 	}
 
 	zglTexImage2D (
@@ -177,7 +189,8 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 	this->mTextureSize = image.GetBitmapSize ();
 	
 	if ( MOAIGfxDevice::Get ().LogErrors ()) {
-		error = true;
+		this->CleanupOnError ();
+		return false;
 	}
 	else if ( genMipMaps ) {
 	
@@ -199,39 +212,30 @@ void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 			);
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {
-				error = true;
-				break;
+				this->CleanupOnError ();
+				return false;
 			}
 			this->mTextureSize += mipmap.GetBitmapSize ();
 		}
 	}
 	
-	if ( error ) {
-		this->mTextureSize = 0;
-		zglDeleteTexture ( this->mGLTexID );
-		this->mGLTexID = 0;
-		this->Clear ();
-		return;
-	}
-	
-	if ( this->mGLTexID ) {
-		MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-		this->mIsDirty = true;
-	}
+	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	this->mIsDirty = true;
+	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
+bool MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 	UNUSED ( data );
 	UNUSED ( size );
 
-	#ifdef MOAI_OS_IPHONE
+	#ifdef MOAI_OS_IPHONE // TODO: MOAI_WITH_PVR
 
-		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
+		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 		MOAIGfxDevice::Get ().ClearErrors ();
 
 		MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
-		if ( !header ) return;
+		if ( !header ) return false;
 		
 		bool compressed = false;
 		bool hasAlpha = header->mAlphaBitMask ? true : false;
@@ -310,65 +314,66 @@ void MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
 				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 		}
-		
-		
+	
 		this->mGLTexID = zglCreateTexture ();
-		if ( !this->mGLTexID ) return;
+		if ( this->mGLTexID ) {
 
-		zglBindTexture ( this->mGLTexID );
-		
-		this->mTextureSize = 0;
-		
-		int width = header->mWidth;
-		int height = header->mHeight;
-		char* imageData = (char*)(header->GetFileData ( data, size));
-		if ( header->mMipMapCount == 0 ) {
+			zglBindTexture ( this->mGLTexID );
 			
-			u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
-			this->mTextureSize += currentSize;
+			this->mTextureSize = 0;
 			
-			if ( compressed ) {
-				zglCompressedTexImage2D ( 0, this->mGLInternalFormat, width, height, currentSize, imageData );
-			}
-			else {
-				zglTexImage2D( 0, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
-			}
-			
-			if ( zglGetError () != ZGL_ERROR_NONE ) {
-				this->Clear ();
-				return;
-			}
-		}
-		else {
-			for ( int level = 0; width > 0 && height > 0; ++level ) {
+			int width = header->mWidth;
+			int height = header->mHeight;
+			char* imageData = (char*)(header->GetFileData ( data, size));
+			if ( header->mMipMapCount == 0 ) {
+				
 				u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
-			
+				this->mTextureSize += currentSize;
+				
 				if ( compressed ) {
-					zglCompressedTexImage2D ( level, this->mGLInternalFormat, width, height, currentSize, imageData );
+					zglCompressedTexImage2D ( 0, this->mGLInternalFormat, width, height, currentSize, imageData );
 				}
 				else {
-					zglTexImage2D( level, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
+					zglTexImage2D ( 0, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
 				}
 				
 				if ( zglGetError () != ZGL_ERROR_NONE ) {
-					this->Clear ();
-					return;
+					this->CleanupOnError ();
+					return false;
 				}
+			}
+			else {
+				for ( int level = 0; width > 0 && height > 0; ++level ) {
+					u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
 				
-				imageData += currentSize;
-				this->mTextureSize += currentSize;
-				
-				width >>= 1;
-				height >>= 1;
-			}	
-		}			
-
-		if ( this->mGLTexID ) {
+					if ( compressed ) {
+						zglCompressedTexImage2D ( level, this->mGLInternalFormat, width, height, currentSize, imageData );
+					}
+					else {
+						zglTexImage2D( level, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
+					}
+					
+					if ( zglGetError () != ZGL_ERROR_NONE ) {
+						this->CleanupOnError ();
+						return false;
+					}
+					
+					imageData += currentSize;
+					this->mTextureSize += currentSize;
+					
+					width >>= 1;
+					height >>= 1;
+				}	
+			}
+	
 			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 			this->mIsDirty = true;
+			return true;
 		}
 
 	#endif
+	
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -379,29 +384,6 @@ u32 MOAITextureBase::GetHeight () {
 //----------------------------------------------------------------//
 u32 MOAITextureBase::GetWidth () {
 	return this->mWidth;
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureBase::GenerateMipmaps () {
-
-	return (
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
-	);
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureBase::IsRenewable () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureBase::IsValid () {
-
-	return ( this->mGLTexID != 0 );
 }
 
 //----------------------------------------------------------------//
@@ -430,13 +412,21 @@ MOAITextureBase::MOAITextureBase () :
 //----------------------------------------------------------------//
 MOAITextureBase::~MOAITextureBase () {
 
-	this->Clear ();
+	this->OnGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnBind () {
+bool MOAITextureBase::OnCPUCreate () {
 
-	if ( !this->mGLTexID ) return;
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAITextureBase::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAITextureBase::OnGPUBind () {
 
 	zglBindTexture ( this->mGLTexID );
 	
@@ -459,26 +449,19 @@ void MOAITextureBase::OnBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnClear () {
-	
-	this->mWidth = 0;
-	this->mHeight = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureBase::OnDestroy () {
+void MOAITextureBase::OnGPUDestroy () {
 
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxDevice::IsValid ()) {
 			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-			MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
 		}
 	}
 	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnInvalidate () {
+void MOAITextureBase::OnGPULost () {
 
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxDevice::IsValid ()) {
@@ -489,7 +472,7 @@ void MOAITextureBase::OnInvalidate () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnUnbind () {
+void MOAITextureBase::OnGPUUnbind () {
 
 	zglBindTexture ( 0 );
 }
@@ -575,13 +558,24 @@ void MOAITextureBase::SetWrap ( int wrap ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextureBase::ShouldGenerateMipmaps () {
+
+	return (
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
+	);
+}
+
+//----------------------------------------------------------------//
 void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
 	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
-	if ( this->GenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
 		this->mGLTexID = 0;	
 	}
 	

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
 //================================================================//
@@ -51,7 +52,7 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat ) {
 
-	this->Clear ();
+	this->Destroy ();
 
 	if ( MOAIGfxDevice::Get ().IsFramebufferSupported ()) {
 
@@ -61,23 +62,11 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 		this->mDepthFormat		= depthFormat;
 		this->mStencilFormat	= stencilFormat;
 		
-		this->Load ();
+		this->DoCPUAffirm ();
 	}
 	else {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIFrameBufferTexture::IsRenewable () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIFrameBufferTexture::IsValid () {
-
-	return ( this->mGLFrameBufferID != 0 );
 }
 
 //----------------------------------------------------------------//
@@ -98,14 +87,14 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 
-	this->Clear ();
+	this->OnGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnCreate () {
+bool MOAIFrameBufferTexture::OnGPUCreate () {
 	
 	if ( !( this->mWidth && this->mHeight && ( this->mColorFormat || this->mDepthFormat || this->mStencilFormat ))) {
-		return;
+		return false;
 	}
 	
 	this->mBufferWidth = this->mWidth;
@@ -113,7 +102,7 @@ void MOAIFrameBufferTexture::OnCreate () {
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
 	this->mGLFrameBufferID = zglCreateFramebuffer ();
-	if ( !this->mGLFrameBufferID ) return;
+	if ( !this->mGLFrameBufferID ) return false;
 	
 	if ( this->mColorFormat ) {
 		this->mGLColorBufferID = zglCreateRenderbuffer ();
@@ -163,51 +152,45 @@ void MOAIFrameBufferTexture::OnCreate () {
         // clearing framebuffer because it might contain garbage
         zglClearColor ( 0, 0, 0, 0 );
         zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
+		
+		return true;
 	}
-	else {
-		this->Clear ();
-	}
+	
+	zglDeleteFramebuffer ( this->mGLFrameBufferID );
+	zglDeleteRenderbuffer ( this->mGLColorBufferID );
+	zglDeleteRenderbuffer ( this->mGLDepthBufferID );
+	zglDeleteRenderbuffer ( this->mGLStencilBufferID );
+	
+	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnDestroy () {
+void MOAIFrameBufferTexture::OnGPUDestroy () {
 
-	if ( this->mGLFrameBufferID ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
-		this->mGLFrameBufferID = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
+	this->mGLFrameBufferID = 0;
+
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLColorBufferID );
+	this->mGLColorBufferID = 0;
+
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLDepthBufferID );
+	this->mGLDepthBufferID = 0;
 	
-	if ( this->mGLColorBufferID ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLColorBufferID );
-		this->mGLColorBufferID = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
+	this->mGLStencilBufferID = 0;
 	
-	if ( this->mGLDepthBufferID ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLDepthBufferID );
-		this->mGLDepthBufferID = 0;
-	}
-	
-	if ( this->mGLStencilBufferID ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
-		this->mGLStencilBufferID = 0;
-	}
-	
-	this->MOAITextureBase::OnDestroy ();
+	this->MOAITextureBase::OnGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnInvalidate () {
+void MOAIFrameBufferTexture::OnGPULost () {
 
 	this->mGLFrameBufferID = 0;
 	this->mGLColorBufferID = 0;
 	this->mGLDepthBufferID = 0;
 	this->mGLStencilBufferID = 0;
 
-	this->MOAITextureBase::OnInvalidate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnLoad () {
+	this->MOAITextureBase::OnGPULost ();
 }
 
 //----------------------------------------------------------------//
@@ -234,7 +217,7 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::Render () {
 
-	if ( this->Affirm ()) {
+	if ( this->DoGPUAffirm ()) {
 		MOAIFrameBuffer::Render ();
 	}
 }

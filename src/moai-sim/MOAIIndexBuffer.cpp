@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 
 //================================================================//
 // local
@@ -64,15 +65,16 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIIndexBuffer::IsRenewable () {
+void MOAIIndexBuffer::Clear () {
 
-	return true;
+	this->mIndices.Clear ();
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIIndexBuffer::IsValid () {
+u32 MOAIIndexBuffer::GetLoadingPolicy () {
 
-	return ( this->mGLBufferID != 0 );
+	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
 }
 
 //----------------------------------------------------------------//
@@ -90,7 +92,17 @@ MOAIIndexBuffer::~MOAIIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnBind () {
+bool MOAIIndexBuffer::OnCPUCreate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnGPUBind () {
 
 	if ( this->mGLBufferID ) {
 		zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
@@ -98,13 +110,7 @@ void MOAIIndexBuffer::OnBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnClear () {
-	
-	this->mIndices.Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::OnCreate () {
+bool MOAIIndexBuffer::OnGPUCreate () {
 
 	if ( this->mIndices.Size ()) {
 		
@@ -113,31 +119,28 @@ void MOAIIndexBuffer::OnCreate () {
 		
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
 			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndices.BufferSize (), this->mIndices.Data (), this->mHint );
+		
+			return true;
 		}
 	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnDestroy () {
+void MOAIIndexBuffer::OnGPUDestroy () {
 
-	if ( this->mGLBufferID ) {
-		zglDeleteBuffer ( this->mGLBufferID );
-		this->mGLBufferID = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mGLBufferID );
+	this->mGLBufferID = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnInvalidate () {
+void MOAIIndexBuffer::OnGPULost () {
 
 	this->mGLBufferID = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::OnUnbind () {
+void MOAIIndexBuffer::OnGPUUnbind () {
 
 	zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, 0 );
 }
@@ -166,7 +169,8 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 	this->Clear ();
 	this->mIndices.Init ( indexCount );
 	this->mStream.SetBuffer ( this->mIndices.Data (), this->mIndices.BufferSize ());
-	this->Load ();
+	
+	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//

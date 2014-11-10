@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -178,6 +179,8 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIRenderMgr::Render () {
 
 	zglBegin ();
+
+	MOAIGfxResourceMgr::Get ().Update ();
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();

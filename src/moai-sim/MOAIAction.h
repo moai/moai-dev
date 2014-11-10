@@ -7,7 +7,34 @@
 #include <moai-sim/MOAIBlocker.h>
 #include <moai-sim/MOAINode.h>
 
+class MOAIAction;
 class MOAIActionTree;
+
+//================================================================//
+// MOAIActionStackMgr
+//================================================================//
+class MOAIActionStackMgr :
+	public MOAIGlobalClass < MOAIActionStackMgr > {
+private:
+	
+	ZLLeanStack < MOAIAction* > mStack;
+	
+	//----------------------------------------------------------------//
+	MOAIAction*			GetCurrent				();
+	MOAIAction*			GetDefaultParent		();
+	void				Pop						();
+	void				Push					( MOAIAction& action );
+	
+public:
+	
+	friend class MOAIAction;
+	friend class MOAIActionTree;
+	friend class MOAICoroutine;
+	
+	//----------------------------------------------------------------//
+						MOAIActionStackMgr		();
+						~MOAIActionStackMgr		();
+};
 
 //================================================================//
 // MOAIAction
@@ -23,11 +50,9 @@ class MOAIAction :
 	public virtual MOAIInstanceEventSource {
 private:
 	
-	u32		mBasePass; // this is the first pass to begin execution of this node
-	bool	mIsDefaultParent;
+	u32 mPass; // total number of times the node has been updated
 	
-	MOAIAction*			mParent;
-	MOAIActionTree*		mTree;
+	MOAIAction*	mParent;
 	
 	typedef ZLLeanList < MOAIAction* >::Iterator ChildIt;
 	ZLLeanList < MOAIAction* > mChildren;
@@ -56,24 +81,23 @@ private:
 	static int			_throttle				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	virtual void		OnLostChild				( MOAIAction* child );
 	void				OnUnblock				();
 	void				ResetPass				();
-	void				SetTree					( MOAIActionTree* tree = 0 );
-	void				Update					( double step );
+	void				Update					( MOAIActionTree& tree, double step );
 
 protected:
 
-	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )
-
 	//----------------------------------------------------------------//
-	virtual STLString	GetDebugInfo			() const;
-	virtual void		OnStart					();
-	virtual void		OnStop					();
-	virtual void		OnUpdate				( double step );
+	virtual STLString		GetDebugInfo			() const;
+	virtual void			OnStart					();
+	virtual void			OnStop					();
+	virtual void			OnUpdate				( double step );
 	
 public:
 	
 	friend class MOAIActionTree;
+	friend class MOAIActionStackMgr;
 	
 	DECL_LUA_FACTORY ( MOAIAction )
 	
@@ -86,19 +110,19 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void				Attach					( MOAIAction* parent = 0 );
-	void				ClearChildren			();
-	bool				IsActive				();
-	bool				IsBusy					();
-	bool				IsCurrent				();
-	virtual bool		IsDone					();
-	bool				IsPaused				();
-						MOAIAction				();
-						~MOAIAction				();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Start					( MOAIActionTree& tree );
-	void				Stop					();
+	void					Attach					( MOAIAction* parent = 0 );
+	void					ClearChildren			();
+	virtual MOAIAction*		GetDefaultParent		();
+	bool					IsActive				();
+	bool					IsBusy					();
+	virtual bool			IsDone					();
+	bool					IsPaused				();
+							MOAIAction				();
+							~MOAIAction				();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					Start					( MOAIActionTree& tree );
+	void					Stop					();
 };
 
 #endif
