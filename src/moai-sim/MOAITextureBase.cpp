@@ -219,8 +219,6 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		}
 	}
 	
-	printf ( "CREATED TEXTURE: %d\n", this->mGLTexID );
-	
 	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	this->mIsDirty = true;
 	return true;
@@ -457,7 +455,6 @@ void MOAITextureBase::OnGPUDestroy () {
 		if ( MOAIGfxDevice::IsValid ()) {
 			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
-			printf ( "PUSHED DELETER: %d\n", this->mGLTexID );
 		}
 	}
 	this->mGLTexID = 0;
