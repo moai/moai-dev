@@ -340,12 +340,6 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUReleaseGfxContext ( JNIEnv* env, jclass obj ) {
-
-		AKUReleaseGfxContext ();
-	}
-
-	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKURender ( JNIEnv* env, jclass obj ) {
 
 		AKURender ();

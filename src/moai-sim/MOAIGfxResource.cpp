@@ -123,7 +123,7 @@ bool MOAIGfxResource::DoCPUAffirm () {
 	u32 loadingPolicy = this->GetLoadingPolicy ();
 	
 	// if we're deferring both CPU and GPU, bail
-	if ( loadingPolicy == LOADING_POLICY_CPU_GPU_BIND ) return;
+	if ( loadingPolicy == LOADING_POLICY_CPU_GPU_BIND ) return true;
 
 	// whether or not GPU is deferred, do the CPU part
 	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
