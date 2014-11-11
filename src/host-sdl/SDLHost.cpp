@@ -38,11 +38,25 @@ namespace InputSensorID {
 static SDL_Window* sWindow = 0;
 
 //================================================================//
+// helpers
+//================================================================//
+
+static void	Finalize			();
+static void	Init				( int argc, char** argv );
+static void	MainLoop			();
+static void	PrintMoaiVersion	();
+static void Reshape(const int w, const int h);
+
+
+
+//================================================================//
 // aku callbacks
 //================================================================//
 
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
+void	_AKUEnterMaximizeModeFunc		();
+void	_AKUExitMaximizeModeFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
 void    _AKUShowCursor ();
 void    _AKUHideCursor ();
@@ -69,8 +83,16 @@ void _AKUEnterFullscreenModeFunc () {
 //----------------------------------------------------------------//
 void _AKUExitFullscreenModeFunc () {
 
-    //videomode change
+    //videomode change or restore maximize window
     SDL_SetWindowFullscreen(sWindow, 0);
+}
+
+void _AKUEnterMaximizeModeFunc() {
+    SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+}
+
+void _AKUExitMaximizeModeFunc		() {
+    _AKUExitFullscreenModeFunc();
 }
 
 //----------------------------------------------------------------//
@@ -81,18 +103,11 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
-		AKUSetScreenSize ( width, height );
+        Reshape(width, height);
 	}
 }
 
-//================================================================//
-// helpers
-//================================================================//
 
-static void	Finalize			();
-static void	Init				( int argc, char** argv );
-static void	MainLoop			();
-static void	PrintMoaiVersion	();
 
 //----------------------------------------------------------------//
 void Finalize () {
@@ -136,6 +151,9 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
+
+	AKUSetFunc_EnterMaximizeMode( _AKUEnterMaximizeModeFunc );
+	AKUSetFunc_ExitMaximizeMode ( _AKUExitMaximizeModeFunc );
 
 	AKUSetFunc_ShowCursor ( _AKUShowCursor );
 	AKUSetFunc_HideCursor ( _AKUHideCursor );
@@ -222,6 +240,7 @@ void MainLoop () {
 						case SDL_BUTTON_RIGHT:
 							AKUEnqueueButtonEvent ( InputDeviceID::DEVICE, InputSensorID::MOUSE_RIGHT, ( sdlEvent.type == SDL_MOUSEBUTTONDOWN ));
 							break;
+                            
 					}
 
 					break;
@@ -265,14 +284,34 @@ void MainLoop () {
                 case SDL_FINGERDOWN:
                 case SDL_FINGERUP:
                 case SDL_FINGERMOTION:
-                    const int id    = sdlEvent.tfinger.fingerId;
-                    const float x   = sdlEvent.tfinger.x;
-                    const float y   = sdlEvent.tfinger.y;
-                    const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+                    {
+                        const int id    = sdlEvent.tfinger.fingerId;
+                        const float x   = sdlEvent.tfinger.x;
+                        const float y   = sdlEvent.tfinger.y;
+                        const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
 
-                    _onMultiButton(id, x, y, state);
-
+                        _onMultiButton(id, x, y, state);
+                    }
                     break;
+
+                case SDL_WINDOWEVENT:
+                    {
+                        switch(sdlEvent.window.event)
+                        {
+                            case SDL_WINDOWEVENT_RESIZED:
+                                Reshape(sdlEvent.window.data1, sdlEvent.window.data2);
+                                break;
+
+                            case SDL_WINDOWEVENT_FOCUS_LOST:
+                                AKUPause(true);
+                                break;
+
+                            case SDL_WINDOWEVENT_FOCUS_GAINED:
+                                AKUPause(false);
+                                break;
+                        }
+                    }// SDL_WINDOWEVENT
+
 			} //end_switch
 		}//end_while
 		
@@ -291,6 +330,15 @@ void MainLoop () {
 		lastFrame = SDL_GetTicks();
 	}
 }
+
+
+// based for host-glut
+void Reshape(const int w, const int h) {
+
+	AKUSetScreenSize ( w, h );
+	AKUSetViewSize ( w, h );
+}
+
 
 //----------------------------------------------------------------//
 void PrintMoaiVersion () {
