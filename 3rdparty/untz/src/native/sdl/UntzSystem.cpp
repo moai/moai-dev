@@ -56,20 +56,20 @@ static inline SInt16 limit_float_conv_SInt16(float inValue)
 }
 
 void SDL_callback (void *unused, Uint8 *_stream, int _length) {
-	SDLSystemData* alsd = (SDLSystemData*) System::get ()->getData ();
-	float volume = alsd->mMixer.getVolume();
 
-	int length = _length / CHANNELS;
+    SDLSystemData* alsd = (SDLSystemData*) System::get ()->getData ();
 
+	const int length = _length / CHANNELS;
+	const int length_by_channels = length / CHANNELS;
+	const float volume = alsd->mMixer.getVolume();
 	float float_buffer[ length ];
-	alsd->mMixer.process ( 0, NULL, CHANNELS, float_buffer, length / CHANNELS );
 
+	alsd->mMixer.process ( 0, NULL, CHANNELS, float_buffer, length_by_channels);
 
 	// Convert left-right buffers to short samples and interleave.
 	SInt16 intBuffer[ length ];
 //	SInt16 *outbuf = &intBuffer[0];
 	SInt16 *outbuf= (SInt16*) _stream;
-	int length_by_channels = length / CHANNELS;
 
     for(int i=0; i<length_by_channels; i++)
     {
@@ -79,6 +79,7 @@ void SDL_callback (void *unused, Uint8 *_stream, int _length) {
         }
     }
 
+
 //    SDL_MixAudio(_stream, (UInt8*)&intBuffer[0], length, SDL_MIX_MAXVOLUME);
 }
 
@@ -86,7 +87,7 @@ void *audio_loop (void *ptr) {
 	if (SDL_Init(SDL_INIT_AUDIO) != 0) {
 		fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
 	}
-	fprintf(stdout, "Audio Thread running\n:");
+	fprintf(stdout, "Audio Thread running:\n");
 
 	SDLSystemData* alsd = (SDLSystemData*) System::get ()->getData ();
 
@@ -105,10 +106,9 @@ void *audio_loop (void *ptr) {
 	if ( SDL_OpenAudio(&fmt, NULL) < 0 ) {
 		fprintf(stderr, "Unable to open audio: %s\n", SDL_GetError());
 	}
-	SDL_PauseAudio(0);
-	while(true){
-		//SDL_Delay( 10 ) ;
-	}
+	
+    SDL_PauseAudio(0);
+
 	return 0;
 }
 

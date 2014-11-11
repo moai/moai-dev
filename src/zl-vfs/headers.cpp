@@ -754,7 +754,16 @@ ZLFILE* zl_tmpfile ( void ) {
 //----------------------------------------------------------------//
 char* zl_tmpnam ( char* str ) {
 
+#ifdef MOAI_OS_LINUX
+    // The last six characters of template must be "XXXXXX"
+    // Example:
+    //      char ss[200] = "/tmp/moaiXXXXXX";
+    //      zl_tmpnam(ss);
+    mkstemp(str);
+    return str;
+#else
 	return tmpnam ( str );
+#endif 
 }
 
 //----------------------------------------------------------------//
