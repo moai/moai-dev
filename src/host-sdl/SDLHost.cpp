@@ -54,7 +54,6 @@ void _AKUHideCursor () {
 }
 
 
-
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 
@@ -213,7 +212,7 @@ void MainLoop () {
                     const int id    = sdlEvent.tfinger.fingerId;
                     const float x   = sdlEvent.tfinger.x;
                     const float y   = sdlEvent.tfinger.y;
-                    const int state = (sdlEvent.type == (SDL_FINGERDOWN | SDL_FINGERMOTION ) ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+                    const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
 
                     _onMultiButton(id, x, y, state);
 

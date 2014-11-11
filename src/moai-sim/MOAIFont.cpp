@@ -126,7 +126,8 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "US" )
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	
+	self->Init ( filename );
+
 	// Check if there are preloaded textures
 	MOAITexture** preloadedTextures = 0;
 	u16 numPreloadedTextures = ( u16 )lua_objlen ( state, 3 );

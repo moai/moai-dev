@@ -39,10 +39,10 @@ cmake \
 -DMOAI_UNTZ=TRUE \
 -DMOAI_LUAJIT=TRUE \
 -DMOAI_HTTP_CLIENT=TRUE \
--DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_BUILD_TYPE=Debug \
 ../
 
-make -j2
+make 
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
