@@ -352,7 +352,7 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 		NSString* observerName = [ NSString stringWithUTF8String:notification->first ];
 		u32 eventID = notification->second;
 	
-		[[ NSNotificationCenter defaultCenter ]
+		id observer = [[ NSNotificationCenter defaultCenter ]
 			addObserverForName:observerName
 			object:[ UIApplication sharedApplication ]
 			queue:nil
@@ -365,22 +365,21 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 				}
 			}
 		];
+		
+		if ( observer ) {
+			this->mNotificationObservers.push_back ( observer );
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::RemoveNotificationListeners () {
 
-	NotificationListenerMapIt notification = this->mNotificationListenerMap.begin ();
-	for ( ; notification != this->mNotificationListenerMap.end (); ++notification ) {
-		NSString* observerName = [ NSString stringWithUTF8String:notification->first ];
-	
-		[[ NSNotificationCenter defaultCenter ]
-			removeObserverForName:observerName
-			object:[ UIApplication sharedApplication ]
-			queue:nil
-		];
+	NotificationObserverIt observerIt = this->mNotificationObservers.begin ();
+	for ( ; observerIt != this->mNotificationObservers.end (); ++observerIt ) {
+		[[ NSNotificationCenter defaultCenter ] removeObserver:*observerIt ];
 	}
+	this->mNotificationObservers.clear ();
 }
 
 //----------------------------------------------------------------//

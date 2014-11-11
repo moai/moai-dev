@@ -85,11 +85,12 @@ public:
 	enum {
 		LOADING_POLICY_NONE,				// don't care and/or use global policy
 		LOADING_POLICY_CPU_GPU_ASAP,		// load everything asap
+		LOADING_POLICY_CPU_ASAP_GPU_NEXT,	// load the cpu part asap; load the gpu part next render
 		LOADING_POLICY_CPU_ASAP_GPU_BIND,	// load the cpu part asap, load the gpu part on bind (during render)
 		LOADING_POLICY_CPU_GPU_BIND,		// load the cpu and gpu part on bind (during render)
 	};
 
-	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_GPU_ASAP;
+	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_ASAP_GPU_NEXT;
 
 	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only affects
 	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time

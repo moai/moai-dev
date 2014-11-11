@@ -681,6 +681,10 @@ MOAISim::MOAISim () :
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
+
+	this->mInputMgr.Set ( *this, 0 );
+	this->mActionMgr.Set ( *this, 0 );
+	this->mActionTree.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

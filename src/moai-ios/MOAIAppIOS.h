@@ -43,6 +43,9 @@ private:
 	typedef STLMap < STLString, u32 >::iterator NotificationListenerMapIt;
 	STLMap < STLString, u32 >	mNotificationListenerMap;
 	
+	typedef STLList < id >::iterator NotificationObserverIt;
+	STLList < id >	mNotificationObservers;
+	
 	MOAIReachabilityListener*	mReachabilityListener;
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;

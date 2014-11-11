@@ -230,9 +230,11 @@ void MOAICoroutine::OnStop () {
 	MOAIAction::OnStop ();
 	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
-	if ( MOAIActionStackMgr::Get ().GetCurrent () != this ) {
-		this->mRef.Clear ();
-		this->mState = 0;
+	if ( MOAIActionStackMgr::IsValid ()) {
+		if ( MOAIActionStackMgr::Get ().GetCurrent () != this ) {
+			this->mRef.Clear ();
+			this->mState = 0;
+		}
 	}
 }
 

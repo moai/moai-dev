@@ -131,22 +131,30 @@ bool MOAIGfxResource::DoCPUAffirm () {
 	}
 	
 	// turns out we want to do the GPU piece ASAP as well
-	if (( this->mState == STATE_NEEDS_GPU_CREATE ) && ( loadingPolicy == LOADING_POLICY_CPU_GPU_ASAP )) {
+	if ( this->mState == STATE_NEEDS_GPU_CREATE ) {
 	
-		#if MOAI_USE_GFX_THREAD
-		
+		if ( loadingPolicy == LOADING_POLICY_CPU_ASAP_GPU_NEXT ) {
+	
 			MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
+		}
+		else if ( loadingPolicy == LOADING_POLICY_CPU_GPU_ASAP ) {
 		
-		#else
+			#if MOAI_USE_GFX_THREAD
+			
+				MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
+			
+			#else
+			
+				zglBegin ();
+				this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
+				if ( this->mState == STATE_READY_TO_BIND ) {
+					this->OnCPUDestroy ();
+				}
+				zglEnd ();
+			
+			#endif
 		
-			zglBegin ();
-			this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
-			if ( this->mState == STATE_READY_TO_BIND ) {
-				this->OnCPUDestroy ();
-			}
-			zglEnd ();
-		
-		#endif
+		}
 	}
 	
 	return this->mState != STATE_ERROR;
@@ -210,6 +218,7 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "LOADING_POLICY_NONE",					( u32 )LOADING_POLICY_NONE );
 	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )LOADING_POLICY_CPU_GPU_ASAP );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )LOADING_POLICY_CPU_ASAP_GPU_NEXT );
 	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )LOADING_POLICY_CPU_ASAP_GPU_BIND );
 	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )LOADING_POLICY_CPU_GPU_BIND );
 }
