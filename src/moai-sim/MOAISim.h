@@ -44,6 +44,10 @@ public:
 
 	typedef void ( *EnterFullscreenModeFunc )		();
 	typedef void ( *ExitFullscreenModeFunc )		();
+#ifdef MOAI_WITH_SDL
+	typedef void ( *EnterMaximizeModeFunc )		();
+	typedef void ( *ExitMaximizeModeFunc )		();
+#endif
 	typedef void ( *ShowCursorFunc )				();
 	typedef void ( *HideCursorFunc )				();
 	typedef void ( *OpenWindowFunc )				( const char* title, int width, int height );
@@ -91,6 +95,8 @@ private:
 	
 	EnterFullscreenModeFunc		mEnterFullscreenModeFunc;
 	ExitFullscreenModeFunc		mExitFullscreenModeFunc;
+    EnterMaximizeModeFunc       mEnterMaximizeModeFunc;
+    ExitMaximizeModeFunc        mExitMaximizeModeFunc;
 	OpenWindowFunc				mOpenWindowFunc;
 	SetSimStepFunc				mSetSimStepFunc;
 	ShowCursorFunc				mShowCursorFunc;
@@ -107,6 +113,10 @@ private:
 	static int		_collectgarbage				( lua_State* L ); // replacement for Lua's collectgarbage
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
+#ifdef MOAI_WITH_SDL
+	static int		_enterMaximizeMode  		( lua_State* L );
+	static int		_exitMaximizeMode			( lua_State* L );
+#endif
 	static int		_forceGC					( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
@@ -175,6 +185,10 @@ public:
 	
 	GET_SET ( EnterFullscreenModeFunc, EnterFullscreenModeFunc, mEnterFullscreenModeFunc );
 	GET_SET ( ExitFullscreenModeFunc, ExitFullscreenModeFunc, mExitFullscreenModeFunc );
+#ifdef MOAI_WITH_SDL
+	GET_SET ( EnterMaximizeModeFunc, EnterMaximizeModeFunc, mEnterMaximizeModeFunc );
+	GET_SET ( ExitMaximizeModeFunc, ExitMaximizeModeFunc, mExitMaximizeModeFunc );
+#endif
 	GET_SET ( HideCursorFunc, HideCursorFunc, mHideCursorFunc );
 	GET_SET ( OpenWindowFunc, OpenWindowFunc, mOpenWindowFunc );
 	GET_SET ( SetSimStepFunc, SetSimStepFunc, mSetSimStepFunc );

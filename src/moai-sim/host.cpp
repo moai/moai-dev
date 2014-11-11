@@ -293,6 +293,21 @@ void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func ) {
 	MOAISim::Get ().SetExitFullscreenModeFunc ( func );
 }
 
+
+#ifdef MOAI_WITH_SDL
+
+void AKUSetFunc_EnterMaximizeMode( AKUEnterMaximizeModeFunc func ) {
+
+    MOAISim::Get().SetEnterMaximizeModeFunc( func );
+}
+
+void AKUSetFunc_ExitMaximizeMode ( AKUExitMaximizeModeFunc func ) {
+
+    MOAISim::Get().SetExitMaximizeModeFunc( func );
+}
+
+#endif // MOAI_WITH_SDL
+
 //----------------------------------------------------------------//
 void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func ) {
 

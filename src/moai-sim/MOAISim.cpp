@@ -104,6 +104,47 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 	return 0;
 }
 
+#ifdef MOAI_WITH_SDL
+
+//----------------------------------------------------------------//
+/**	@lua	enterMaximizeMode
+	@text	Maximize the window without changing the video mode.
+
+	@out	nil
+*/
+int MOAISim::_enterMaximizeMode ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	EnterMaximizeModeFunc func = MOAISim::Get ().GetEnterMaximizeModeFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	exitMaximizeMode
+	@text	Restore maximize window.
+
+	@out	nil
+*/
+int MOAISim::_exitMaximizeMode ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	ExitMaximizeModeFunc func = MOAISim::Get ().GetExitMaximizeModeFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+#endif // MOAI_WITH_SDL
+
+
 //----------------------------------------------------------------//
 // TODO: deprecate
 int MOAISim::_forceGC ( lua_State* L ) {
@@ -734,6 +775,10 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "crash",						_crash },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
+#ifdef MOAI_WITH_SDL
+		{ "enterMaximizeMode",	     	_enterMaximizeMode },
+		{ "exitMaximizeMode",			_exitMaximizeMode },
+#endif
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceTime",				_getDeviceTime },
