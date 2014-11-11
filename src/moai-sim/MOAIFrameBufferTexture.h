@@ -32,11 +32,9 @@ private:
 	static int			_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	virtual bool		IsRenewable				();
-	virtual void		OnCreate				();
-	virtual void		OnDestroy				();
-	virtual void		OnInvalidate			();
-	virtual void		OnLoad					();
+	bool				OnGPUCreate					();
+	void				OnGPUDestroy				();
+	void				OnGPULost					();
 
 public:
 	
@@ -47,7 +45,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Init						( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
-	bool				IsValid						();
 						MOAIFrameBufferTexture		();
 						~MOAIFrameBufferTexture		();
 	void				RegisterLuaClass			( MOAILuaState& state );

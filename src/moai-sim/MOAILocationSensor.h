@@ -36,12 +36,12 @@ public:
 	DECL_LUA_FACTORY ( MOAILocationSensor )
 
 	//----------------------------------------------------------------//
-					MOAILocationSensor		();
-					~MOAILocationSensor		();
-	void			ParseEvent				( ZLStream& eventStream );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	static void		WriteEvent				( ZLStream& eventStream, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
+	static void			EnqueueLocationEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
+						MOAILocationSensor		();
+						~MOAILocationSensor		();
+	void				ParseEvent				( ZLStream& eventStream );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

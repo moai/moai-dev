@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAILocationSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // lua
@@ -52,6 +53,19 @@ int MOAILocationSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 // MOAILocationSensor
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAILocationSensor::EnqueueLocationEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
+
+	if ( queue.WriteEventHeader < MOAILocationSensor >( deviceID, sensorID )) {
+		queue.Write < double >( longitude );
+		queue.Write < double >( latitude );
+		queue.Write < double >( altitude );
+		queue.Write < float >( hAccuracy );
+		queue.Write < float >( vAccuracy );
+		queue.Write < float >( speed );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAILocationSensor::MOAILocationSensor () :
@@ -109,15 +123,4 @@ void MOAILocationSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAILocationSensor::WriteEvent ( ZLStream& eventStream, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
-
-	eventStream.Write < double >( longitude );
-	eventStream.Write < double >( latitude );
-	eventStream.Write < double >( altitude );
-	eventStream.Write < float >( hAccuracy );
-	eventStream.Write < float >( vAccuracy );
-	eventStream.Write < float >( speed );
 }

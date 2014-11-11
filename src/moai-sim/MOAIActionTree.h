@@ -1,32 +1,33 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIACTIONMGR_H
-#define	MOAIACTIONMGR_H
+#ifndef	MOAIACTIONTREE_H
+#define	MOAIACTIONTREE_H
 
-class MOAIAction;
+#include <moai-sim/MOAIAction.h>
 
 //================================================================//
-// MOAIActionMgr
+// MOAIActionTree
 //================================================================//
-/**	@lua MOAIActionMgr
-	@text Manager class for MOAIActions.
-*/
-class MOAIActionMgr :
-	public MOAIGlobalClass < MOAIActionMgr, MOAILuaObject > {
+// TODO: doxygen
+class MOAIActionTree :
+	public virtual MOAIAction {
 private:
 
 	static const u32 RESET_PASS	= 0xffffffff;
 
-	u32 mPass;
-	u32 mTotalPasses;
-
 	bool mProfilingEnabled;
 	bool mThreadInfoEnabled;
 
-	MOAILuaSharedPtr < MOAIAction > mRoot;
-	MOAIAction* mCurrentAction;
-	MOAIAction* mDefaultParent;
+	MOAIAction* mRoot;
+
+	//----------------------------------------------------------------//
+	MOAIAction*			AffirmRoot				();
+	void				OnLostChild				( MOAIAction* child );
+	void				OnUpdate				( double step );
+	void				SetRoot					( MOAIAction* root );
+
+protected:
 
 	//----------------------------------------------------------------//
 	static int			_getRoot				( lua_State* L );
@@ -34,30 +35,25 @@ private:
 	static int			_setRoot				( lua_State* L );
 	static int			_setThreadInfoEnabled	( lua_State* L );
 
-	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot				();
-	u32					GetNextPass				();
-	void				SetRoot					( MOAIAction* root );
-
 public:
 
 	friend class MOAIAction;
 
-	DECL_LUA_SINGLETON ( MOAIActionMgr )
-
-	GET_SET ( MOAIAction*, CurrentAction, mCurrentAction )
+	DECL_LUA_FACTORY ( MOAIActionTree )
 	
 	GET_SET ( bool, ProfilingEnabled, mProfilingEnabled )
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
 	MOAIAction*			GetDefaultParent		();
-						MOAIActionMgr			();
-						~MOAIActionMgr			();
+	bool				IsDone					();
+						MOAIActionTree			();
+						~MOAIActionTree			();
 	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetDefaultParent		();
 	void				SetDefaultParent		( MOAIAction* defaultParent );
-	void				Update					( float step );
+	void				Update					( double step );
 };
 
 #endif

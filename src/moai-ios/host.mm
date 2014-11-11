@@ -33,14 +33,14 @@ void AKUIosAppInitialize () {
 void AKUIosContextInitialize () {
 
 	MOAIAppIOS::Affirm ();
-			
+	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
+	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
-	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 	REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -81,18 +81,6 @@ void AKUIosContextInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUIosDidBecomeActive () {
-
-	MOAIAppIOS::Get ().DidBecomeActive ();
-}
-
-//----------------------------------------------------------------//
-void AKUIosDidEnterBackground () {
-
-	MOAIAppIOS::Get ().DidEnterBackground ();
-}
-
-//----------------------------------------------------------------//
 void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
 
 	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
@@ -122,20 +110,3 @@ void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID ( frameBuffer );
 }
 
-//----------------------------------------------------------------//
-void AKUIosWillEnterForeground () {
-
-	MOAIAppIOS::Get ().WillEnterForeground ();
-}
-
-//----------------------------------------------------------------//
-void AKUIosWillResignActive () {
-
-	MOAIAppIOS::Get ().WillResignActive ();
-}
-
-//----------------------------------------------------------------//
-void AKUIosWillTerminate () {
-
-	MOAIAppIOS::Get ().WillTerminate ();
-}

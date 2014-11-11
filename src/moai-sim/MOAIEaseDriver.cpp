@@ -105,7 +105,7 @@ MOAIEaseDriver::~MOAIEaseDriver () {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::OnUpdate ( float step ) {
+void MOAIEaseDriver::OnUpdate ( double step ) {
 	
 	float c0 = this->GetCycle ();
 	float t0 = ZLFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );

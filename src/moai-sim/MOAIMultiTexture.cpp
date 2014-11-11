@@ -53,10 +53,6 @@ int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMultiTexture::Clear () {
-}
-
-//----------------------------------------------------------------//
 bool MOAIMultiTexture::LoadGfxState () {
 
 	return MOAIGfxDevice::Get ().SetTexture ( this );
@@ -104,7 +100,6 @@ void MOAIMultiTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMultiTexture::Reserve ( u32 total ) {
 
-	this->Clear ();
 	this->mTextures.Init ( total );
 	this->mTextures.Fill ( 0 );
 }

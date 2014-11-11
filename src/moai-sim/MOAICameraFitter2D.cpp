@@ -522,7 +522,7 @@ void MOAICameraFitter2D::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::OnUpdate ( float step ) {
+void MOAICameraFitter2D::OnUpdate ( double step ) {
 	UNUSED ( step );
 	
 	this->ScheduleUpdate ();

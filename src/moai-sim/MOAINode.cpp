@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAINode.h>
 #include <moai-sim/MOAINodeMgr.h>
+#include <moai-sim/MOAISim.h>
 
 // TODO: remove when setParent is removed
 #include <moai-sim/MOAIProp.h>
@@ -196,7 +197,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 		action->SetLink ( 0, self, attrID, value, mode );
 		action->SetSpan ( length );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -256,7 +257,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;

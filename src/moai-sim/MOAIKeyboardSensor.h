@@ -53,17 +53,17 @@ public:
 	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
-	bool			KeyDown					( u32 keyID );
-	bool			KeyIsDown				( u32 keyID );
-	bool			KeyIsUp					( u32 keyID );
-	bool			KeyUp					( u32 keyID );
-					MOAIKeyboardSensor		();
-					~MOAIKeyboardSensor		();
-	void			ParseEvent				( ZLStream& eventStream );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Reset					();
-	static void		WriteEvent				( ZLStream& eventStream, u32 key, bool down );
+	static void			EnqueueKeyboardEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
+	bool				KeyDown					( u32 keyID );
+	bool				KeyIsDown				( u32 keyID );
+	bool				KeyIsUp					( u32 keyID );
+	bool				KeyUp					( u32 keyID );
+						MOAIKeyboardSensor		();
+						~MOAIKeyboardSensor		();
+	void				ParseEvent				( ZLStream& eventStream );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Reset					();
 };
 
 #endif

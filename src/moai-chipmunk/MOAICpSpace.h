@@ -113,7 +113,7 @@ public:
 	bool			IsDone					();
 					MOAICpSpace				();
 					~MOAICpSpace			();
-	void			OnUpdate				( float step );
+	void			OnUpdate				( double step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemovePrim				( MOAICpPrim& prim );

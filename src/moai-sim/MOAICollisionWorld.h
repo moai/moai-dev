@@ -53,7 +53,7 @@ private:
 	void				OnPropInserted			( MOAIProp& prop );	
 	void				OnPropRemoved			( MOAIProp& prop );	
 	void				OnPropUpdated			( MOAIProp& prop );
-	void				OnUpdate				( float step );
+	void				OnUpdate				( double step );
 	void				ProcessOverlaps			();
 	void				PruneOverlaps			( MOAICollisionFacet& facet );
 	void				Render					();

@@ -83,11 +83,12 @@ private:
 	static int		_convertToGrayScale 		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Alloc				();
-	void			ComparePixel        ( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
-	void			CalculateSDF        ( ZLIntVec2D** grid, int width, int height );
-	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
-	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
+	void			Alloc					();
+	void			ComparePixel			( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
+	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
+	static u32		GetMinPowerOfTwo		( u32 size ); // gets the smallest power of two greater than size
+	void			Init					( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
+	virtual void	OnImageStatusChanged	( bool isOK );
 	
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBJPG

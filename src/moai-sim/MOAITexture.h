@@ -34,10 +34,9 @@ private:
 	static int			_load					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				IsRenewable				();
-	void				OnClear					();
-	void				OnCreate				();
-	void				OnLoad					();
+	bool				OnCPUCreate				();
+	void				OnCPUDestroy			();
+	bool				OnGPUCreate				();
 
 public:
 	
@@ -47,7 +46,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
-	
+	void					Clear					();
 	bool					Init					( MOAILuaState& state, int idx );
 	void					Init					( MOAIImage& image, cc8* debugname );
 	void					Init					( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname );

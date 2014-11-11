@@ -864,6 +864,20 @@ void MOAILuaState::LoadLibs () {
 }
 
 //----------------------------------------------------------------//
+MOAILuaState::MOAILuaState () :
+	mState ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaState::MOAILuaState ( lua_State* state ) :
+	mState ( state ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaState::~MOAILuaState () {
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::MoveToTop ( int idx ) {
 
 	// moves a stack element to the top (removing it from the previous location)
@@ -1150,20 +1164,6 @@ bool MOAILuaState::TableItrNext ( int itr ) {
 		return true;
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::MOAILuaState () :
-	mState ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::MOAILuaState ( lua_State* state ) :
-	mState ( state ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::~MOAILuaState () {
 }
 
 //----------------------------------------------------------------//

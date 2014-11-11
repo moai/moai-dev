@@ -152,7 +152,7 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::OnUpdate ( float step ) {
+void MOAIParticleDistanceEmitter::OnUpdate ( double step ) {
 	UNUSED ( step );
 	
 	this->ScheduleUpdate ();

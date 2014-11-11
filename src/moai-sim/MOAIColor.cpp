@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
+#include <moai-sim/MOAISim.h>
 
 //================================================================//
 // local
@@ -65,7 +66,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -117,7 +118,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;

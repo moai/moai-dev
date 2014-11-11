@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIButtonSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // MOAIButtonEvent
@@ -118,6 +119,14 @@ bool MOAIButtonSensor::ButtonUp () {
 }
 
 //----------------------------------------------------------------//
+void MOAIButtonSensor::EnqueueButtonEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, bool down ) {
+
+	if ( queue.WriteEventHeader < MOAIButtonSensor >( deviceID, sensorID )) {
+		queue.Write < bool >( down );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIButtonSensor::MOAIButtonSensor () :
 	mState ( 0 ) {
 
@@ -176,10 +185,4 @@ void MOAIButtonSensor::Reset () {
 
 	// clear out the old events
 	this->mState &= ~( DOWN | UP );	
-}
-
-//----------------------------------------------------------------//
-void MOAIButtonSensor::WriteEvent ( ZLStream& eventStream, bool down ) {
-
-	eventStream.Write < bool >( down );
 }

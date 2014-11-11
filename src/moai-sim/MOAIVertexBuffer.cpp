@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -168,6 +169,8 @@ void MOAIVertexBuffer::Clear () {
 	this->Reserve ( 0 );
 	this->ReserveVBOs ( 0 );
 	this->mFormat.Set ( *this, 0 );
+	
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
@@ -179,15 +182,9 @@ const MOAIVertexFormat* MOAIVertexBuffer::GetFormat () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexBuffer::IsRenewable () {
+u32 MOAIVertexBuffer::GetLoadingPolicy () {
 
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIVertexBuffer::IsValid () {
-
-	return this->mIsValid;
+	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
 }
 
 //----------------------------------------------------------------//
@@ -197,7 +194,6 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 	mCurrentVBO ( 0 ),
 	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ),
 	mIsDirty ( false ),
-	mIsValid ( false ),
 	mUseVBOs ( false ) {
 	
 	RTTI_BEGIN
@@ -215,7 +211,16 @@ MOAIVertexBuffer::~MOAIVertexBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnBind () {
+bool MOAIVertexBuffer::OnCPUCreate () {
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::OnGPUBind () {
 
 	if ( this->mUseVBOs ) {
 		
@@ -250,13 +255,9 @@ void MOAIVertexBuffer::OnBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnClear () {
+bool MOAIVertexBuffer::OnGPUCreate () {
 
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::OnCreate () {
+	bool isValid = false;
 
 	if ( this->mUseVBOs ) {
 
@@ -284,46 +285,37 @@ void MOAIVertexBuffer::OnCreate () {
 				format->Unbind ();
 			}
 		}
-		
-		this->mIsValid = count == this->mVBOs.Size ();
+		isValid = count == this->mVBOs.Size ();
 	}
 	else {
 		const MOAIVertexFormat* format = this->GetFormat ();
-		this->mIsValid = ( format && this->GetLength ());
+		isValid = ( format && this->GetLength ());
 	}
+	
+	return isValid;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnDestroy () {
+void MOAIVertexBuffer::OnGPUDestroy () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		MOAIVbo& vbo = this->mVBOs [ i ];
-
-		if ( vbo.mVBO ) {
-			zglDeleteBuffer ( vbo.mVBO );
-			vbo.mVBO = 0;
-		}
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, vbo.mVBO );
+		vbo.mVBO = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnInvalidate () {
+void MOAIVertexBuffer::OnGPULost () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		MOAIVbo& vbo = this->mVBOs [ i ];
-
-		if ( vbo.mVBO ) {
-			vbo.mVBO = 0;
-		}
+		vbo.mVBO = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::OnUnbind () {
+void MOAIVertexBuffer::OnGPUUnbind () {
 
 	if ( this->mUseVBOs ) {
 		zglBindVertexArray ( 0 );
@@ -366,8 +358,7 @@ void MOAIVertexBuffer::Reserve ( u32 size ) {
 
 	this->mBuffer.Init ( size );
 	this->SetBuffer ( this->mBuffer, size );
-	
-	this->Load ();
+	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//

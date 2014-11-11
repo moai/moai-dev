@@ -37,8 +37,14 @@
 	@const	INTERFACE_ORIENTATION_LANDSCAPE_RIGHT		Interface orientation UIInterfaceOrientationLandscapeRight.
 */
 class MOAIAppIOS :
-	public MOAIGlobalClass < MOAIAppIOS, MOAILuaObject > {
+	public MOAIGlobalClass < MOAIAppIOS, MOAIGlobalEventSource > {
 private:
+	
+	typedef STLMap < STLString, u32 >::iterator NotificationListenerMapIt;
+	STLMap < STLString, u32 >	mNotificationListenerMap;
+	
+	typedef STLList < id >::iterator NotificationObserverIt;
+	STLList < id >	mNotificationObservers;
 	
 	MOAIReachabilityListener*	mReachabilityListener;
 
@@ -48,14 +54,18 @@ private:
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
-	static int	_getDirectoryInDomain		( lua_State* L );
-	static int	_getInterfaceOrientation	( lua_State* L );
-	static int	_getIPAddress				( lua_State* L );
-	static int	_getUTCTime					( lua_State* L );
-	static int	_sendMail					( lua_State* L );
-	static int	_setListener				( lua_State* L );
-	static int	_takeCamera					( lua_State* L );
-		
+	static int	_getAvailableStorage			( lua_State* L );
+	static int	_getDirectoryInDomain			( lua_State* L );
+	static int	_getInterfaceOrientation		( lua_State* L );
+	static int	_getIPAddress					( lua_State* L );
+	static int	_getUTCTime						( lua_State* L );
+	static int	_sendMail						( lua_State* L );
+	static int	_takeCamera						( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void		RegisterNotificationListeners	();
+	void		RemoveNotificationListeners		();
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIAppIOS )
@@ -63,6 +73,7 @@ public:
 	enum {
 		DID_BECOME_ACTIVE,
 		DID_ENTER_BACKGROUND,
+		DID_RECIEVE_MEMORY_WARNING,
 		OPEN_URL,
 		WILL_ENTER_FOREGROUND,
 		WILL_RESIGN_ACTIVE,
@@ -77,26 +88,19 @@ public:
 	};
 
 	enum {
-		INTERFACE_ORIENTATION_PORTRAIT             = UIInterfaceOrientationPortrait,
-		INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN = UIInterfaceOrientationPortraitUpsideDown,
-		INTERFACE_ORIENTATION_LANDSCAPE_LEFT       = UIInterfaceOrientationLandscapeLeft,
-		INTERFACE_ORIENTATION_LANDSCAPE_RIGHT      = UIInterfaceOrientationLandscapeRight,
+		INTERFACE_ORIENTATION_PORTRAIT					= UIInterfaceOrientationPortrait,
+		INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN		= UIInterfaceOrientationPortraitUpsideDown,
+		INTERFACE_ORIENTATION_LANDSCAPE_LEFT			= UIInterfaceOrientationLandscapeLeft,
+		INTERFACE_ORIENTATION_LANDSCAPE_RIGHT			= UIInterfaceOrientationLandscapeRight,
 	};
 
-	MOAILuaStrongRef			mListeners [ TOTAL ]; // TODO: rewrite to use moai event source
-
 	//----------------------------------------------------------------//
-	void			DidBecomeActive			();
-	void			DidEnterBackground		();
-					MOAIAppIOS				();
-					~MOAIAppIOS				();
-	void			OnGlobalsFinalize		();
-	void			OpenUrl					( NSURL* url, NSString* sourceApplication );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			UpdateReachability		();
-	void			WillEnterForeground		();
-	void			WillResignActive		();
-	void			WillTerminate			();
+					MOAIAppIOS					();
+					~MOAIAppIOS					();
+	void			OnGlobalsFinalize			();
+	void			OpenUrl						( NSURL* url, NSString* sourceApplication );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			UpdateReachability			();
 
 	static void		callTakeCameraLuaCallback									(NSString* imagePath);
 };

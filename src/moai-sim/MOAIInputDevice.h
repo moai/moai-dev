@@ -27,11 +27,13 @@ private:
 
 	//----------------------------------------------------------------//
 	MOAISensor*		GetSensor				( u8 sensorID );
+	void			SetSensor				( u8 sensorID, cc8* name, MOAISensor* sensor );
 
 public:
 
 	friend class MOAIInputContext;
 	friend class MOAIInputMgr;
+	friend class MOAIInputQueue;
 
 	DECL_LUA_FACTORY ( MOAIInputDevice )
 
@@ -46,7 +48,6 @@ public:
 	void			ReserveSensors			( u8 total );
 	void			ResetSensors			();
 	void			SetHardwareInfo			( cc8* hardwareInfo );
-	void			SetSensor				( u8 sensorID, cc8* name, u32 type );
 };
 
 #endif

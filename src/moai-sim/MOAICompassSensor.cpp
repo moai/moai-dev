@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICompassSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // lua
@@ -42,6 +43,14 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 // MOAICompassSensor
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAICompassSensor::EnqueueCompassEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float heading ) {
+
+	if ( queue.WriteEventHeader < MOAICompassSensor >( deviceID, sensorID )) {
+		queue.Write < float >( heading );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAICompassSensor::MOAICompassSensor () :
@@ -84,10 +93,4 @@ void MOAICompassSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICompassSensor::WriteEvent ( ZLStream& eventStream, float heading ) {
-
-	eventStream.Write < float >( heading );
 }

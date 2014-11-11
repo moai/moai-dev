@@ -110,7 +110,7 @@ public:
 					~MOAITimer			();
 	void			OnDepNodeUpdate		();
 	void			OnStart				();
-	void			OnUpdate			( float step );
+	void			OnUpdate			( double step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetSpan				( float span );
