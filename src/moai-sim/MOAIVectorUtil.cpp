@@ -14,6 +14,45 @@
 
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
+//----------------------------------------------------------------//
+void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+
+	ZLMemStream idxStream;
+	ZLMemStream vtxStream;
+
+	const int* elems = tessGetElements ( this->mTess );
+	const int nelems = tessGetElementCount ( this->mTess );
+	
+	for ( int i = 0; i < nelems; ++i ) {
+		const int* tri = &elems [ i * 3 ];
+		
+		idxStream.Write < u32 >( tri [ 0 ]);
+		idxStream.Write < u32 >( tri [ 1 ]);
+		idxStream.Write < u32 >( tri [ 2 ]);
+	}
+
+	const float* verts = tessGetVertices ( this->mTess );
+	const int nverts = tessGetVertexCount ( this->mTess );
+	
+	for ( int i = 0; i < nverts; ++i ) {
+		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
+		
+		vtxStream.Write < float >( vert.mX );
+		vtxStream.Write < float >( vert.mY );
+		vtxStream.Write < float >( 0.0f );
+		vtxStream.Write < u32 >( 0xffffffff );
+	}
+	
+	idxBuffer.Clear ();
+	vtxBuffer.Clear ();
+	
+	idxBuffer.ReserveIndices ( idxStream.GetLength () >> 2 );
+	idxBuffer.GetStream ().WriteStream ( idxStream );
+	
+	vtxBuffer.Reserve ( vtxStream.GetLength ());
+	vtxBuffer.WriteStream ( vtxStream );
+}
+
 //------------------------------------------------------------------//
 void SafeTesselator::Reset () {
 	tessDeleteTess ( this->mTess );

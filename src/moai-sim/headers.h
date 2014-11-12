@@ -91,6 +91,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAIQuadBrush.h>
+#include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>

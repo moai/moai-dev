@@ -37,14 +37,12 @@ public:
 	enum {
 		XYZWC_POSITION,
 		XYZWC_COLOR,
-		XYZWC_SIZE,
 	};
 	
 	enum {
 		XYZWUVC_POSITION,
 		XYZWUVC_TEXCOORD,
 		XYZWUVC_COLOR,
-		XYZWUVC_SIZE,
 	};
 	
 	DECL_LUA_SINGLETON ( MOAIVertexFormatMgr )

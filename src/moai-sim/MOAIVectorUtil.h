@@ -4,7 +4,9 @@
 #ifndef	MOAIVECTORUTIL_H
 #define	MOAIVECTORUTIL_H
 
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorStyle.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAIVectorShape;
 struct TESStesselator;
@@ -21,6 +23,7 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
+	void	GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
 	void	Reset					();
 			SafeTesselator			();
 			~SafeTesselator			();

@@ -4,21 +4,22 @@
 #ifndef ZLPOLYGON2D_H
 #define	ZLPOLYGON2D_H
 
+#include <zl-util/ZLRect.h>
 #include <zl-util/ZLMatrix3x3.h>
 
 //================================================================//
 // ZLMetaPolygon2D
 //================================================================//
 template < typename TYPE >
-class ZLMetaPolygon2D {
+class ZLMetaPolygon2D :
+	public ZLLeanArray < ZLMetaVec2D < TYPE > > {
 private:
 	
 	ZLMetaRect < TYPE >	mBounds;
-	ZLLeanArray < ZLMetaVec2D < TYPE > > mVerts;
-	
-	//----------------------------------------------------------------//
 	
 public:
+
+	GET ( const ZLMetaRect < TYPE >&, Bounds, mBounds )
 
 	//----------------------------------------------------------------//
 	void Bless () {
@@ -29,35 +30,29 @@ public:
 			return;
 		}
 		
-		this->mBounds.Init ( this->mVerts [ 0 ]);
+		this->mBounds.Init ( this [ 0 ]);
 		
 		for ( u32 i = 1; i < totalVerts; ++i ) {
-			this->mBounds.Grow ( this->mVerts [ i ]);
+			this->mBounds.Grow ( this [ i ]);
 		}
-	}
-
-	//----------------------------------------------------------------//
-	void Init ( u32 totalVerts ) {
-
-		this->mVerts.Init ( totalVerts );
 	}
 	
 	//----------------------------------------------------------------//
-	void Init ( const ZLMetaRect < TYPE >& rect ) {
+	void InitAsRect ( const ZLMetaRect < TYPE >& rect ) {
 	
 		this->Init ( 4 );
 		
-		this->mVerts [ 0 ].mX = rect.mXMin;
-		this->mVerts [ 0 ].mY = rect.mYMin;
+		this [ 0 ].mX = rect.mXMin;
+		this [ 0 ].mY = rect.mYMin;
 		
-		this->mVerts [ 1 ].mX = rect.mXMax;
-		this->mVerts [ 1 ].mY = rect.mYMin;
+		this [ 1 ].mX = rect.mXMax;
+		this [ 1 ].mY = rect.mYMin;
 		
-		this->mVerts [ 2 ].mX = rect.mXMax;
-		this->mVerts [ 2 ].mY = rect.mYMax;
+		this [ 2 ].mX = rect.mXMax;
+		this [ 2 ].mY = rect.mYMax;
 		
-		this->mVerts [ 3 ].mX = rect.mXMin;
-		this->mVerts [ 3 ].mY = rect.mYMax;
+		this [ 3 ].mX = rect.mXMin;
+		this [ 3 ].mY = rect.mYMax;
 	}
 
 	//----------------------------------------------------------------//
@@ -70,11 +65,11 @@ public:
 		TYPE x = p.mX;
 		TYPE y = p.mY;
 		
-		u32 totalVerts = this->mVerts.Size ();
+		u32 totalVerts = this->Size ();
 		for ( u32 i = 0; i < totalVerts; i++ ) {
 
-			ZLMetaVec2D < TYPE >& p1 = this->mVerts [ i ];
-			ZLMetaVec2D < TYPE >& p2 = this->mVerts [( i + 1 ) % totalVerts ];
+			ZLMetaVec2D < TYPE >& p1 = ( *this )[ i ];
+			ZLMetaVec2D < TYPE >& p2 = ( *this )[( i + 1 ) % totalVerts ];
 			
 			// Components of points
 			TYPE p1X = p1.mX;
@@ -104,15 +99,15 @@ public:
 	//----------------------------------------------------------------//
 	void SetVert ( u32 id, const ZLMetaVec2D < TYPE >& v ) {
 
-		this->mVerts [ id ] = v;
+		this [ id ] = v;
 	}
 	
 	//----------------------------------------------------------------//
 	void Transform ( const ZLMetaMatrix3x3 < TYPE >& matrix ) {
 	
-		u32 totalVerts = this->mVerts.Size ();
+		u32 totalVerts = this->Size ();
 		for ( u32 i = 0; i < totalVerts; i++ ) {
-			matrix.Transform ( this->mVerts [ i ]);
+			matrix.Transform ( this [ i ]);
 		}
 	}
 	
