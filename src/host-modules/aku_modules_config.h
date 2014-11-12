@@ -6,7 +6,7 @@
 	#endif
 
 	#ifndef AKU_WITH_CHIPMUNK
-		#define AKU_WITH_CHIPMUNK 1
+		#define AKU_WITH_CHIPMUNK 0
 	#endif
 
 	#ifndef AKU_WITH_CRYPTO

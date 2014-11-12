@@ -1,33 +1,33 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2014 Plumzi, Inc.
-// All Rights Reserved.
+// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// All Rights Reserved. 
+// http://getmoai.com
 //----------------------------------------------------------------//
 
-#import "MOAIOpenGLView.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 //================================================================//
-// PZMoaiView
+// MOAIView
 //================================================================//
-@interface MOAIView : MOAIOpenGLView <UIAccelerometerDelegate> {
+@interface MOAIView : UIView {
 @private
 }
+    @property ( readonly, nonatomic ) int multisample;
+    @property ( readonly, nonatomic ) BOOL multisampleEnabled;
 
     //----------------------------------------------------------------//
-    +( void )       appFinalize;
     +( void )       appInitialize;
 	-( void )       application                             :( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error;
 	-( void )       application                             :( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle;
 	-( void )       application                             :( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken;
-	-( void )       applicationDidBecomeActive              :( UIApplication* )application;
-	-( void )       applicationDidEnterBackground           :( UIApplication* )application;
-	-( void )       applicationWillEnterForeground          :( UIApplication* )application;
-	-( void )       applicationWillResignActive             :( UIApplication* )application;
-	-( void )       applicationWillTerminate                :( UIApplication* )application;
     -( BOOL )       application                             :( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation;
     +( CGRect )     getScreenBoundsFromCurrentOrientation   :( CGRect )bounds;
     +( BOOL )       isSystemVersionLessThan                 :( NSString* )version;
-    -( void )       moaiInit                                :( UIApplication* )application;
+    -( void )       moaiInit;
+    -( void )       moaiInitWithMultisample                 :( int )multisample; // pass 1 or 4 for multisample
     -( void )       pause                                   :( BOOL )paused;
     -( void )       run                                     :( NSString* )filename;
+    -( void )       setWorkingDirectory                     :( NSString* )path;
 
 @end

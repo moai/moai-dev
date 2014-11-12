@@ -52,8 +52,6 @@ MOAIImageTexture::MOAIImageTexture () :
 
 //----------------------------------------------------------------//
 MOAIImageTexture::~MOAIImageTexture () {
-
-	printf ( "~MOAIImageTexture\n" );
 }
 
 //----------------------------------------------------------------//

@@ -65,7 +65,9 @@
         mWindow.rootViewController = mMoaiVC;
         [ mWindow makeKeyAndVisible ];
         
-        [ mMoaiView moaiInit:application ];
+        [ mMoaiView moaiInit ];
+        [ mMoaiView setWorkingDirectory:[[ NSBundle mainBundle ] resourcePath ]];
+        [ mMoaiView run:@"main.lua" ];
         
         // check to see if the app was lanuched from a remote notification
         // these keeps the old behavior, in which we 'fall back' on remote notifications
@@ -113,32 +115,13 @@
 	//----------------------------------------------------------------//
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
 
-        [ mMoaiView applicationDidBecomeActive:application ];
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationDidEnterBackground:( UIApplication* )application {
-
-        [ mMoaiView applicationDidEnterBackground:application ];
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationWillEnterForeground:( UIApplication* )application {
-
-        [ mMoaiView applicationWillEnterForeground:application ];
+        [ mMoaiView pause:NO ];
 	}
 
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
 
-        [ mMoaiView applicationWillResignActive:application ];
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) applicationWillTerminate :( UIApplication* )application {
-
-        [ mMoaiView applicationWillTerminate:application ];
-        [ MOAIView appFinalize ];
+        [ mMoaiView pause:YES ];
 	}
 	
     //----------------------------------------------------------------//
