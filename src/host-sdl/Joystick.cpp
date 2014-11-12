@@ -49,25 +49,39 @@ const char* Joystick::getName() const {
 
 
 
-const Joystick::AXIS_MOTION Joystick::HandleAxisMotion(const SDL_Event & event) {
+const Joystick::AXIS_MOTION & Joystick::HandleAxisMotion(const SDL_Event & event) {
 
-    int x = 0;
-    int y = 0;
-    
     if( event.jaxis.axis == 0 ) { //X axis
+
         if( event.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
-            x = -1;
+            
+            axis_motion.x = -1;
+        
         } else if( event.jaxis.value > JOYSTICK_DEAD_ZONE ) {
-            x =  1;
+            
+            axis_motion.x =  1;
+        
+        } else { 
+            
+            axis_motion.x = 0;
         }
+
     } else if ( event.jaxis.axis == 1 ) { // Y axis
+        
         if( event.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
-            y = -1;
+            
+            axis_motion.y = -1;
+
         } else if( event.jaxis.value > JOYSTICK_DEAD_ZONE ) {
-            y =  1;
+            
+            axis_motion.y =  1;
+
+        } else {
+            
+            axis_motion.y = 0;
         }
     }
 
-    return std::make_pair(x, y);
+    return axis_motion;
 }
 
