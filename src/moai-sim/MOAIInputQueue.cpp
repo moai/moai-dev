@@ -28,13 +28,52 @@ int MOAIInputQueue::_deferEvents ( lua_State* L ) {
 
 	bool defer = state.GetValue < bool >( 2, false );
 	self->DeferEvents ( defer );
+	
+	return 0;
+}
 
+//----------------------------------------------------------------//
+int MOAIInputQueue::_discardEvents ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->DiscardAll ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIInputQueue::_setAutosuspend ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->mAutosuspend = state.GetValue < double >( 2, 0 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIInputQueue::_suspendEvents ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->SuspendEvents ( state.GetValue ( 2, false ));
+	
 	return 0;
 }
 
 //================================================================//
 // MOAIInputQueue
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIInputQueue::CanWrite () {
+
+	double time = ZLDeviceTime::GetTimeInSeconds ();
+
+	if (( this->mAutosuspend > 0 ) && ( this->mAutosuspend <= ( ZLDeviceTime::GetTimeInSeconds () - this->mLastUpdate ))) {
+		this->DiscardAll ();
+		this->mAutosuspended = true;
+	}
+	return !( this->mSuspended || this->mAutosuspended );
+}
 
 //----------------------------------------------------------------//
 bool MOAIInputQueue::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
@@ -88,7 +127,11 @@ bool MOAIInputQueue::IsDone () {
 MOAIInputQueue::MOAIInputQueue () :
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ),
-	mDefer ( false ) {
+	mDefer ( false ),
+	mSuspended ( false ),
+	mAutosuspend ( 0 ),
+	mAutosuspended ( false ),
+	mLastUpdate ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIAction )
 	
@@ -105,6 +148,9 @@ MOAIInputQueue::~MOAIInputQueue () {
 
 //----------------------------------------------------------------//
 void MOAIInputQueue::OnUpdate ( double timestep ) {
+
+	this->mLastUpdate = ZLDeviceTime::GetTimeInSeconds ();
+	this->mAutosuspended = false;
 
 	// reset the input sensors
 	this->ResetSensors ();
@@ -162,6 +208,9 @@ void MOAIInputQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "deferEvents",		_deferEvents },
+		{ "discardEvents",		_discardEvents },
+		{ "setAutosuspend",		_setAutosuspend },
+		{ "suspendEvents",		_suspendEvents },
 		{ NULL, NULL }
 	};
 
@@ -193,6 +242,12 @@ void MOAIInputQueue::ResetSensors () {
 			device->ResetSensors ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputQueue::SetAutosuspend ( double autosuspend ) {
+
+	this->mAutosuspend = autosuspend >= 0 ? autosuspend : 0;
 }
 
 //----------------------------------------------------------------//
@@ -243,9 +298,18 @@ void MOAIInputQueue::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputQueue::SuspendEvents ( bool suspend ) {
+
+	if ( suspend ) {
+		this->DiscardAll ();
+	}
+	this->mSuspended = suspend;
+}
+
+//----------------------------------------------------------------//
 bool MOAIInputQueue::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
 
-	if ( this->CheckSensor ( deviceID, sensorID, type )) {
+	if ( this->CanWrite () && this->CheckSensor ( deviceID, sensorID, type )) {
 		this->Write < u8 >(( u8 )deviceID );
 		this->Write < u8 >(( u8 )sensorID );
 		this->Write < double >( this->mTimestamp - this->mTimebase );

@@ -27,11 +27,21 @@ private:
 	double	mTimestamp;		// timestamp for next event
 	
 	bool	mDefer;
+	bool	mSuspended;
+	
+	double	mAutosuspend;	// if > 0, use as a timeout to susped input
+	bool	mAutosuspended;
+
+	double	mLastUpdate;	// last update in *device* time
 
 	//----------------------------------------------------------------//
 	static int			_deferEvents				( lua_State* L );
+	static int			_discardEvents				( lua_State* L );
+	static int			_setAutosuspend				( lua_State* L );
+	static int			_suspendEvents				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool				CanWrite					();
 	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
 	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
 
@@ -56,10 +66,12 @@ public:
 	void				ReserveDevices				( u8 total );
 	void				ReserveSensors				( u8 deviceID, u8 total );
 	void				ResetSensors				();
+	void				SetAutosuspend				( double autosuspend );
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name );
 	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetDeviceHardwareInfo		( u8 deviceID, cc8* hardwareInfo );
+	void				SuspendEvents				( bool suspend );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

@@ -598,3 +598,6 @@ MOAIActionMgr.setThreadInfoEnabled		= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.
 MOAIInputMgr = MOAISim.getInputMgr ()
 
 MOAIInputMgr.deferEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.deferEvents )
+MOAIInputMgr.discardEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.discardEvents )
+MOAIInputMgr.setAutosuspend				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.setAutosuspend )
+MOAIInputMgr.suspendEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.suspendEvents )

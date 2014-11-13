@@ -291,7 +291,7 @@ s32 MOAITouchSensor::CheckLingerList ( float x, float y, float time ) {
 
 	u32 top = this->mLingerTop;
 	float margin = this->mTapMargin;
-	float testTime = time - mTapTime;
+	float testTime = time - this->mTapTime;
 	
 	s32 maxTapCount = 0;
 	for ( u32 i = 0; i < top; ++i ) {
@@ -355,9 +355,13 @@ MOAITouchSensor::~MOAITouchSensor () {
 void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	u32 eventType = eventStream.Read < u32 >( 0 );
+	
+	// we only get TOUCH_DOWN, TOUCH_UP and TOUCH_CANCEL events
+	// so we have to infer TOUCH_MOVE
 
 	if ( eventType == TOUCH_CANCEL ) {
 		
+		// for now, TOUCH_CANCEL clobbers all touches
 		this->Clear ();
 		
 		if ( this->mCallback && this->mAcceptCancel ) {
@@ -377,20 +381,27 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		touch.mTime			= eventStream.Read < float >( 0.0f );
 		touch.mTapCount     = 0;
 		
+		// see if there's already a record for this touch event
 		u32 idx = this->FindTouch ( touch.mTouchID );
 		
-		if ( eventType == TOUCH_DOWN ) {
-
+		if ( eventType == TOUCH_DOWN ) { // TOUCH_DOWN or TOUCH_MOVE
+			
+			// if it's a new touch, this is really a TOUCH_DOWN
 			if ( idx == UNKNOWN_TOUCH ) {
 				
+				// if we're maxed out on touches, this touch will be ignored until something
+				// frees up. after that it will be counted as a TOUCH_DOWN
 				idx = this->AddTouch ();
 				if ( idx == UNKNOWN_TOUCH ) return;
 				
+				// see if we touched down in a linger
 				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime ) + 1;
 
 				touch.mState = IS_DOWN | DOWN;
 			}
 			else {
+			
+				// we already knew about this touch, so it's a move
 				touch.mState = this->mTouches [ idx ].mState | IS_DOWN;
 				touch.mTapCount = this->mTouches [ idx ].mTapCount;
 				eventType = TOUCH_MOVE;
@@ -398,6 +409,9 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		}
 		else if ( idx != UNKNOWN_TOUCH ) {
 			
+			// we know about the touch and it's not a TOUCH_DOWN, so it must be a TOUCH_UP
+			
+			// create a little cloud of linger to remember where the touch lifted up
 			MOAITouchLinger linger;
 			linger.mX = this->mTouches [ idx ].mX;
 			linger.mY = this->mTouches [ idx ].mY;
@@ -413,6 +427,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		}
 		
 		if ( idx != UNKNOWN_TOUCH ) {
+			
+			// if we have a valid touch, invoke the callback
 			
 			this->mTouches [ idx ] = touch;
 			
