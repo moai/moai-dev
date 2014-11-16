@@ -4,7 +4,7 @@
 #import "pch.h"
 #import "host.h"
 
-#import <moai-ios/MOAIMotionMgrIOS.h>
+#import <moai-ios-motion/MOAIMotionMgrIOS.h>
 
 //================================================================//
 // aku
