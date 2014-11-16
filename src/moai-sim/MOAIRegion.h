@@ -4,6 +4,9 @@
 #ifndef MOAIREGION_H
 #define MOAIREGION_H
 
+class MOAIIndexBuffer;
+class MOAIVertexBuffer;
+
 //================================================================//
 // MOAIRegion
 //================================================================//
@@ -14,6 +17,7 @@ class MOAIRegion :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_getTriangles		( lua_State* L );
 	static int		_pointInside		( lua_State* L );
 
 public:
@@ -21,6 +25,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIRegion )
 
 	//----------------------------------------------------------------//
+	void			GetTriangles		( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
 					MOAIRegion			();
 					~MOAIRegion			();
 	bool			PointInside			( const ZLVec2D& p );
