@@ -9,6 +9,10 @@
 #include <host-modules/aku_modules.h>
 #include <host-sdl/SDLHost.h>
 
+#ifdef MOAI_OS_WINDOWS
+	#include <windows.h>
+#endif
+
 #include <SDL.h>
 
 #include "Joystick.h"
@@ -81,7 +85,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
-		AKUSetScreenSize ( width, height );
+		AKUSetViewSize ( width, height );
 	}
 }
 
@@ -121,6 +125,19 @@ void Init ( int argc, char** argv ) {
 	AKUModulesRunLuaAPIWrapper ();
 
 	AKUSetInputConfigurationName ( "SDL" );
+
+	SDL_DisplayMode dm;
+	if ( SDL_GetDesktopDisplayMode( 0, &dm ) == 0 ) {
+		AKUSetScreenSize(dm.w, dm.h);
+	}
+
+	#ifdef MOAI_OS_WINDOWS
+		HDC hDC = GetWindowDC(NULL);
+		int widthInMm = GetDeviceCaps(hDC, HORZSIZE);
+		double widthInInches = widthInMm / 25.4;
+		int widthInPixels = GetDeviceCaps(hDC, HORZRES);
+		AKUSetScreenDpi(( int )( widthInPixels / widthInInches ));
+	#endif
 
 	AKUReserveInputDevices			( InputDeviceID::TOTAL );
 	AKUSetInputDevice				( InputDeviceID::DEVICE, "device" );
