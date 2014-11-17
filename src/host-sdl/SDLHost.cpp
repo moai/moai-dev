@@ -10,7 +10,12 @@
 #include <host-sdl/SDLHost.h>
 
 #ifdef MOAI_OS_WINDOWS
-	#include <windows.h>
+    #include <windows.h>
+#elif defined(MOAI_OS_LINUX)
+    #include <X11/Xlib.h>      //XOpenDisplay,etc
+    #include <xcb/xcb.h>
+    #include <xcb/xcb_aux.h> 
+    #include <xcb/randr.h>
 #endif
 
 #include <SDL.h>
@@ -97,6 +102,7 @@ static void	Finalize			();
 static void	Init				( int argc, char** argv );
 static void	MainLoop			();
 static void	PrintMoaiVersion	();
+static void SetScreenDpi        ();
 
 //----------------------------------------------------------------//
 void Finalize () {
@@ -126,18 +132,13 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetInputConfigurationName ( "SDL" );
 
-	SDL_DisplayMode dm;
-	if ( SDL_GetDesktopDisplayMode( 0, &dm ) == 0 ) {
-		AKUSetScreenSize(dm.w, dm.h);
-	}
+    SDL_DisplayMode dm;
 
-	#ifdef MOAI_OS_WINDOWS
-		HDC hDC = GetWindowDC(NULL);
-		int widthInMm = GetDeviceCaps(hDC, HORZSIZE);
-		double widthInInches = widthInMm / 25.4;
-		int widthInPixels = GetDeviceCaps(hDC, HORZRES);
-		AKUSetScreenDpi(( int )( widthInPixels / widthInInches ));
-	#endif
+    if ( SDL_GetDesktopDisplayMode( 0, &dm ) == 0 ) {
+    	AKUSetScreenSize(dm.w, dm.h);
+    }
+
+    SetScreenDpi();
 
 	AKUReserveInputDevices			( InputDeviceID::TOTAL );
 	AKUSetInputDevice				( InputDeviceID::DEVICE, "device" );
@@ -177,6 +178,65 @@ void _onMultiButton( int touch_id, float x, float y, int state ) {
 	);
 }
 
+
+
+//----------------------------------------------------------------//
+void SetScreenDpi() {
+
+#ifdef MOAI_OS_WINDOWS
+
+    HDC hDC = GetWindowDC(NULL);
+    int widthInMm = GetDeviceCaps(hDC, HORZSIZE);
+    double widthInInches = widthInMm / 25.4;
+    int widthInPixels = GetDeviceCaps(hDC, HORZRES);
+    AKUSetScreenDpi(( int )( widthInPixels / widthInInches ));
+
+#elif defined(MOAI_OS_LINUX)
+
+    auto PrintErrorScreenDpi = [](const char* msg) {
+        std::cerr << "SetScreenDpi : " << msg << std::endl;
+    };
+
+    char* display_name = getenv("DISPLAY");
+    
+    if( not display_name ) {
+        PrintErrorScreenDpi("Fail open display");
+        return;
+    }
+
+    xcb_connection_t* conn = nullptr;
+    int nscreen = 0;
+
+    if( not (conn = xcb_connect(display_name,&nscreen) ) ) {
+        PrintErrorScreenDpi("Error xcb_connect");
+        return;
+    }
+
+    xcb_screen_t* screen = xcb_aux_get_screen(conn,nscreen);
+
+    xcb_randr_query_version_reply_t* version = nullptr;
+    
+    version = xcb_randr_query_version_reply(conn,
+            xcb_randr_query_version(conn,1,1),NULL);
+
+    if ( version == nullptr ) {
+        PrintErrorScreenDpi("Fail query verion");
+        free(version);
+        return;
+    }
+    
+    free(version);
+   
+    const double widthInInches = screen->width_in_millimeters / 25.4;
+    const uint16_t w = screen->width_in_pixels;
+    
+    AKUSetScreenDpi( (int) w / widthInInches);
+
+    xcb_disconnect(conn);
+
+#endif
+
+}
 
 //----------------------------------------------------------------//
 void MainLoop () {
