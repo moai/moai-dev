@@ -102,3 +102,40 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+//----------------------------------------------------------------//
+void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	size_t nPolys = lua_objlen ( state, -1 );
+	this->Init ( nPolys );
+	
+	for ( size_t i = 0; i < nPolys; ++i ) {
+		ZLPolygon2D& poly = ( *this )[ i ];
+	
+		state.GetField ( -1, i + 1 );
+	
+		size_t len = 0;
+		const void* vertices = lua_tolstring ( state, -1, &len );
+		
+		poly.Init ( len / sizeof ( ZLVec2D ));
+		memcpy ( poly.Data (), vertices, len );
+		poly.Bless ();
+		
+		state.Pop ( 1 );
+	};
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+	
+	size_t nPolys = this->Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
+		const ZLPolygon2D& poly = ( *this )[ i ];
+
+		state.Push (( u32 )i + 1 );
+		lua_pushlstring ( state, ( cc8* )poly.Data (), poly.Size () * sizeof ( ZLVec2D ));
+		lua_settable ( state, -3 );
+	}
+}

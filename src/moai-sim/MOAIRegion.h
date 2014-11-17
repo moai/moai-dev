@@ -31,6 +31,8 @@ public:
 	bool			PointInside			( const ZLVec2D& p );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif
