@@ -28,5 +28,5 @@ class Joystick
 
         int index;
         SDL_Joystick* sdl_joystick;
-        static constexpr int JOYSTICK_DEAD_ZONE = 8000;
+        const int JOYSTICK_DEAD_ZONE = 8000;
 };
