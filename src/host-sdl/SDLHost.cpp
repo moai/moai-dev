@@ -28,8 +28,8 @@ namespace InputSensorID {
 		MOUSE_LEFT,
 		MOUSE_MIDDLE,
 		MOUSE_RIGHT,
-        MOUSE_WHEEL,
-        JOYSTICK,
+		MOUSE_WHEEL,
+		JOYSTICK,
 		TOUCH,
 		TOTAL,
 	};
@@ -50,27 +50,27 @@ void    _AKUHideCursor ();
 
 //----------------------------------------------------------------//
 void _AKUShowCursor () {
-    SDL_ShowCursor(1);
+	SDL_ShowCursor(1);
 }
 
 //----------------------------------------------------------------//
 void _AKUHideCursor () {
-    SDL_ShowCursor(0);
+	SDL_ShowCursor(0);
 }
 
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 
-    //videomode change
-    SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN);
+	//videomode change
+	SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN);
 }
 
 //----------------------------------------------------------------//
 void _AKUExitFullscreenModeFunc () {
 
-    //videomode change
-    SDL_SetWindowFullscreen(sWindow, 0);
+	//videomode change
+	SDL_SetWindowFullscreen(sWindow, 0);
 }
 
 //----------------------------------------------------------------//
@@ -164,23 +164,23 @@ void _onMultiButton( int touch_id, float x, float y, int state ) {
 //----------------------------------------------------------------//
 void MainLoop () {
 
-    // TODO: array's of Joysticks
-    Joystick * joystick0 = nullptr;
+	// TODO: array's of Joysticks
+	Joystick * joystick0 = nullptr;
 
-    if ( SDL_NumJoysticks() < 1 ) {
-        
-        std::cerr << "No Joysticks connected." << std::endl;
+	if ( SDL_NumJoysticks() < 1 ) {
+		
+		std::cerr << "No Joysticks connected." << std::endl;
 
-    } else {
-        
-        joystick0 = new Joystick(0); // 0 == first joystick of system.
+	} else {
+		
+		joystick0 = new Joystick(0); // 0 == first joystick of system.
 
-        if ( true == joystick0->isOpen() or false == joystick0->Open() )
-        {
-            delete joystick0;
-            joystick0 = nullptr;
-        }
-    }
+		if ( joystick0->isOpen() || !joystick0->Open() )
+		{
+			delete joystick0;
+			joystick0 = nullptr;
+		}
+	}
 
 	Uint32 lastFrame = SDL_GetTicks();
 	
@@ -226,53 +226,53 @@ void MainLoop () {
 
 					break;
 
-                case SDL_MOUSEWHEEL: 
+				case SDL_MOUSEWHEEL: 
 
-                        if ( sdlEvent.wheel.which != SDL_TOUCH_MOUSEID ) {
-                            const int32_t x = sdlEvent.wheel.x; 
-                            const int32_t y = sdlEvent.wheel.y; 
+						if ( sdlEvent.wheel.which != SDL_TOUCH_MOUSEID ) {
+							const int32_t x = sdlEvent.wheel.x; 
+							const int32_t y = sdlEvent.wheel.y; 
 
-                            //XXX: x or y ?
-                            AKUEnqueueWheelEvent ( InputDeviceID::DEVICE, InputSensorID::MOUSE_WHEEL, y );
-                        }
-                    break;
+							//XXX: x or y ?
+							AKUEnqueueWheelEvent ( InputDeviceID::DEVICE, InputSensorID::MOUSE_WHEEL, y );
+						}
+					break;
 
-                    /*
-                     * TODO:
-                     * SDL_JOYBALLMOTION joystick trackball motion
-                     * SDL_JOYHATMOTION	 joystick hat position change
-                     * SDL_JOYBUTTONDOWN joystick button pressed
-                     * SDL_JOYBUTTONUP	 joystick button released
-                     * SDL_JOYDEVICEADDED	joystick connected
-                     * SDL_JOYDEVICEREMOVED	joystick disconnected
-                     * */
-                case SDL_JOYAXISMOTION:
-                        
-                        //TODO: array's of Joysticks
+					/*
+					 * TODO:
+					 * SDL_JOYBALLMOTION joystick trackball motion
+					 * SDL_JOYHATMOTION	 joystick hat position change
+					 * SDL_JOYBUTTONDOWN joystick button pressed
+					 * SDL_JOYBUTTONUP	 joystick button released
+					 * SDL_JOYDEVICEADDED	joystick connected
+					 * SDL_JOYDEVICEREMOVED	joystick disconnected
+					 * */
+				case SDL_JOYAXISMOTION:
+						
+						//TODO: array's of Joysticks
 
-                        if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != nullptr ) {
+						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != nullptr ) {
 
-                            const Joystick::AXIS_MOTION axis = joystick0->HandleAxisMotion(sdlEvent);
-					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.first, axis.second );
-                        }
-                    break;
+							const Joystick::AXIS_MOTION axis = joystick0->HandleAxisMotion(sdlEvent);
+							AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.first, axis.second );
+						}
+					break;
 
 				case SDL_MOUSEMOTION:
 				
 					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
 					break;
 
-                case SDL_FINGERDOWN:
-                case SDL_FINGERUP:
-                case SDL_FINGERMOTION:
-                    const int id    = sdlEvent.tfinger.fingerId;
-                    const float x   = sdlEvent.tfinger.x;
-                    const float y   = sdlEvent.tfinger.y;
-                    const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+				case SDL_FINGERDOWN:
+				case SDL_FINGERUP:
+				case SDL_FINGERMOTION:
+					const int id    = sdlEvent.tfinger.fingerId;
+					const float x   = sdlEvent.tfinger.x;
+					const float y   = sdlEvent.tfinger.y;
+					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
 
-                    _onMultiButton(id, x, y, state);
+					_onMultiButton(id, x, y, state);
 
-                    break;
+					break;
 			} //end_switch
 		}//end_while
 		
