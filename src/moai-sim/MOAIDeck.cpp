@@ -220,6 +220,15 @@ void MOAIDeck::GetGfxState ( MOAIDeckGfxState& gfxState ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIDeck::Inside ( ZLVec3D vec, float pad ) {
+	UNUSED ( vec );
+	UNUSED ( pad );
+	
+	// we've passed the trivial reject; if we don't have a more finely grained test, return 'true'
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
 	mContentMask ( 0xffffffff ),
 	mDefaultShaderID ( MOAIShaderMgr::DECK2D_SHADER ),

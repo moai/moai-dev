@@ -1195,6 +1195,8 @@
 		CD1756381A161FB3009C430A /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD781CD1A11635F00AD133E /* host.mm */; };
 		CD1756391A161FB3009C430A /* MOAIMotionMgrIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD781CE1A11635F00AD133E /* MOAIMotionMgrIOS.h */; };
 		CD17563A1A161FB3009C430A /* MOAIMotionMgrIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD781CF1A11635F00AD133E /* MOAIMotionMgrIOS.mm */; };
+		CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
+		CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1AEB461A0F785C005512C8 /* MOAIGfxResourceMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */; };
 		CD1AEB471A0F785C005512C8 /* MOAIGfxResourceMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */; };
 		CD1AEB481A0F785C005512C8 /* MOAIGfxResourceMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1AEB451A0F785C005512C8 /* MOAIGfxResourceMgr.h */; };
@@ -6540,6 +6542,7 @@
 		CD14013E1A0C5F660065AEE7 /* MOAIInputQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputQueue.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
 		CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorSensor.h; sourceTree = "<group>"; };
+		CD1756441A199B24009C430A /* ZLBarycentric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBarycentric.h; sourceTree = "<group>"; };
 		CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxResourceMgr.cpp; sourceTree = "<group>"; };
 		CD1AEB451A0F785C005512C8 /* MOAIGfxResourceMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxResourceMgr.h; sourceTree = "<group>"; };
 		CD1BF783194050510066877A /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2D.h; path = "../../3rdparty/box2d-2.3.0/Box2D/Box2D.h"; sourceTree = "<group>"; };
@@ -9148,100 +9151,28 @@
 		89BE6891173974FC00DFE837 /* zl-util */ = {
 			isa = PBXGroup;
 			children = (
+				CD17563F1A199914009C430A /* containers */,
+				CD17563D1A199905009C430A /* math */,
+				CD1756411A1999E8009C430A /* os */,
+				CD1756401A19998D009C430A /* parser */,
+				CD17563E1A19990B009C430A /* stl */,
 				CDF0D37B19FCCC7C001C64C5 /* stream */,
+				CD1756421A199A3D009C430A /* zip */,
 				89BE6893173974FC00DFE837 /* headers.h */,
 				89BE6894173974FC00DFE837 /* pch.cpp */,
 				89BE6895173974FC00DFE837 /* pch.h */,
-				89BE6896173974FC00DFE837 /* STLArray.h */,
-				89BE6897173974FC00DFE837 /* STLIteration.h */,
-				89BE6898173974FC00DFE837 /* STLList.h */,
-				89BE6899173974FC00DFE837 /* STLMap.h */,
-				89BE689A173974FC00DFE837 /* STLSet.h */,
-				89BE689B173974FC00DFE837 /* STLString.cpp */,
-				89BE689C173974FC00DFE837 /* STLString.h */,
 				89BE689D173974FC00DFE837 /* ZLAccessors.h */,
-				89BE689E173974FC00DFE837 /* ZLAdapterInfo.h */,
-				89BE689F173974FC00DFE837 /* ZLAdapterInfo_posix.cpp */,
-				89BE68A0173974FC00DFE837 /* ZLAdapterInfo_win32.cpp */,
-				89BE68A1173974FC00DFE837 /* ZLAffine2D.h */,
-				89BE68A2173974FC00DFE837 /* ZLAffine3D.h */,
 				89BE68A9173974FC00DFE837 /* ZLBinarySearch.h */,
-				89BE68AA173974FC00DFE837 /* ZLBox.cpp */,
-				89BE68AB173974FC00DFE837 /* ZLBox.h */,
-				89BE68AE173974FC00DFE837 /* ZLCgt.cpp */,
-				89BE68AF173974FC00DFE837 /* ZLCgt.h */,
 				89BE68B0173974FC00DFE837 /* ZLColor.cpp */,
 				89BE68B1173974FC00DFE837 /* ZLColor.h */,
-				89BE68B2173974FC00DFE837 /* ZLCurve.cpp */,
-				89BE68B3173974FC00DFE837 /* ZLCurve.h */,
 				89BE68B8173974FC00DFE837 /* ZLDelegate.h */,
-				89BE68B9173974FC00DFE837 /* ZLDeviceTime.h */,
-				89BE68BA173974FC00DFE837 /* ZLDeviceTime_apple.cpp */,
-				89BE68BB173974FC00DFE837 /* ZLDeviceTime_nacl.cpp */,
-				89BE68BC173974FC00DFE837 /* ZLDeviceTime_posix.cpp */,
-				89BE68BD173974FC00DFE837 /* ZLDeviceTime_win32.cpp */,
-				89BE68BE173974FC00DFE837 /* ZLDirectoryItr.cpp */,
-				89BE68BF173974FC00DFE837 /* ZLDirectoryItr.h */,
-				89BE68C0173974FC00DFE837 /* ZLDistance.cpp */,
-				89BE68C1173974FC00DFE837 /* ZLDistance.h */,
 				89BE68C2173974FC00DFE837 /* ZLFactory.h */,
-				89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */,
-				89BE68C6173974FC00DFE837 /* ZLFileSys.h */,
-				89BE68C7173974FC00DFE837 /* ZLFloat.h */,
-				89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */,
-				89BE68C9173974FC00DFE837 /* ZLFrustum.h */,
 				89BE68CA173974FC00DFE837 /* ZLHashedString.cpp */,
 				89BE68CB173974FC00DFE837 /* ZLHashedString.h */,
 				89BE68E0173974FC00DFE837 /* ZLHexDump.cpp */,
 				89BE68E1173974FC00DFE837 /* ZLHexDump.h */,
-				89BE68E6173974FC00DFE837 /* ZLInterpolate.cpp */,
-				89BE68E7173974FC00DFE837 /* ZLInterpolate.h */,
-				89BE68E8173974FC00DFE837 /* ZLIntersect.cpp */,
-				89BE68E9173974FC00DFE837 /* ZLIntersect.h */,
-				89BE68EA173974FC00DFE837 /* ZLLeanArray.h */,
-				89BE68EB173974FC00DFE837 /* ZLLeanList.h */,
-				89BE68EC173974FC00DFE837 /* ZLLeanPool.h */,
-				89BE68ED173974FC00DFE837 /* ZLLeanStack.h */,
-				89BE68EE173974FC00DFE837 /* ZLLexStream.cpp */,
-				89BE68EF173974FC00DFE837 /* ZLLexStream.h */,
-				89BE68F0173974FC00DFE837 /* ZLList.h */,
-				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
-				89BE68F2173974FC00DFE837 /* ZLLog.h */,
-				89BE68F3173974FC00DFE837 /* ZLMathConsts.h */,
-				89BE68F4173974FC00DFE837 /* ZLMatrix.h */,
-				89BE68F5173974FC00DFE837 /* ZLMatrix3x3.h */,
-				89BE68F6173974FC00DFE837 /* ZLMatrix4x4.h */,
-				89BE68F9173974FC00DFE837 /* ZLMercator.cpp */,
-				89BE68FA173974FC00DFE837 /* ZLMercator.h */,
-				89BE68FB173974FC00DFE837 /* ZLParser.cpp */,
-				89BE68FC173974FC00DFE837 /* ZLParser.h */,
-				89BE68FD173974FC00DFE837 /* ZLPlane.cpp */,
-				89BE68FE173974FC00DFE837 /* ZLPlane.h */,
-				89BE68FF173974FC00DFE837 /* ZLPolar.cpp */,
-				89BE6900173974FC00DFE837 /* ZLPolar.h */,
-				89BE6901173974FC00DFE837 /* ZLPolygon2D.h */,
-				89BE6902173974FC00DFE837 /* ZLPolyScanner.h */,
-				89BE6903173974FC00DFE837 /* ZLPrism.cpp */,
-				89BE6904173974FC00DFE837 /* ZLPrism.h */,
-				89BE6905173974FC00DFE837 /* ZLQuad.cpp */,
-				89BE6906173974FC00DFE837 /* ZLQuad.h */,
-				89BE6907173974FC00DFE837 /* ZLQuadCoord.cpp */,
-				89BE6908173974FC00DFE837 /* ZLQuadCoord.h */,
-				89BE6909173974FC00DFE837 /* ZLQuaternion.cpp */,
-				89BE690A173974FC00DFE837 /* ZLQuaternion.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
-				89BE690D173974FC00DFE837 /* ZLRect.h */,
-				89BE690E173974FC00DFE837 /* ZLRhombus.cpp */,
-				89BE690F173974FC00DFE837 /* ZLRhombus.h */,
-				89BE6916173974FC00DFE837 /* ZLSurface2D.cpp */,
-				89BE6917173974FC00DFE837 /* ZLSurface2D.h */,
-				89BE6918173974FD00DFE837 /* ZLSyntaxNode.cpp */,
-				89BE6919173974FD00DFE837 /* ZLSyntaxNode.h */,
-				89BE691A173974FD00DFE837 /* ZLSyntaxScanner.cpp */,
-				89BE691B173974FD00DFE837 /* ZLSyntaxScanner.h */,
-				89BE691C173974FD00DFE837 /* ZLTrig.cpp */,
-				89BE691D173974FD00DFE837 /* ZLTrig.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
 				89BE691F173974FD00DFE837 /* ZLTypedPtr.h */,
 				89BE6920173974FD00DFE837 /* ZLTypeID.h */,
@@ -9249,15 +9180,8 @@
 				89BE6922173974FD00DFE837 /* ZLUnique.h */,
 				89BE6923173974FD00DFE837 /* ZLUnique_linux.cpp */,
 				89BE6924173974FD00DFE837 /* ZLUnique_win32.cpp */,
-				89BE6925173974FD00DFE837 /* ZLVec2D.h */,
-				89BE6926173974FD00DFE837 /* ZLVec3D.h */,
-				89BE6927173974FD00DFE837 /* ZLVec4D.h */,
 				89BE6928173974FD00DFE837 /* ZLXmlReader.cpp */,
 				89BE6929173974FD00DFE837 /* ZLXmlReader.h */,
-				89BE692A173974FD00DFE837 /* ZLZip.cpp */,
-				89BE692B173974FD00DFE837 /* ZLZip.h */,
-				89BE692C173974FD00DFE837 /* ZLZipFile.cpp */,
-				89BE692D173974FD00DFE837 /* ZLZipFile.h */,
 			);
 			path = "zl-util";
 			sourceTree = "<group>";
@@ -10030,6 +9954,134 @@
 				89BE701F173AD0CB00DFE837 /* MOAIViewport.h */,
 			);
 			name = graphics;
+			sourceTree = "<group>";
+		};
+		CD17563D1A199905009C430A /* math */ = {
+			isa = PBXGroup;
+			children = (
+				89BE68A1173974FC00DFE837 /* ZLAffine2D.h */,
+				89BE68A2173974FC00DFE837 /* ZLAffine3D.h */,
+				CD1756441A199B24009C430A /* ZLBarycentric.h */,
+				89BE68AA173974FC00DFE837 /* ZLBox.cpp */,
+				89BE68AB173974FC00DFE837 /* ZLBox.h */,
+				89BE68B2173974FC00DFE837 /* ZLCurve.cpp */,
+				89BE68B3173974FC00DFE837 /* ZLCurve.h */,
+				89BE68C0173974FC00DFE837 /* ZLDistance.cpp */,
+				89BE68C1173974FC00DFE837 /* ZLDistance.h */,
+				89BE68C7173974FC00DFE837 /* ZLFloat.h */,
+				89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */,
+				89BE68C9173974FC00DFE837 /* ZLFrustum.h */,
+				89BE68E6173974FC00DFE837 /* ZLInterpolate.cpp */,
+				89BE68E7173974FC00DFE837 /* ZLInterpolate.h */,
+				89BE68E8173974FC00DFE837 /* ZLIntersect.cpp */,
+				89BE68E9173974FC00DFE837 /* ZLIntersect.h */,
+				89BE68F3173974FC00DFE837 /* ZLMathConsts.h */,
+				89BE68F4173974FC00DFE837 /* ZLMatrix.h */,
+				89BE68F5173974FC00DFE837 /* ZLMatrix3x3.h */,
+				89BE68F6173974FC00DFE837 /* ZLMatrix4x4.h */,
+				89BE68F9173974FC00DFE837 /* ZLMercator.cpp */,
+				89BE68FA173974FC00DFE837 /* ZLMercator.h */,
+				89BE68FD173974FC00DFE837 /* ZLPlane.cpp */,
+				89BE68FE173974FC00DFE837 /* ZLPlane.h */,
+				89BE68FF173974FC00DFE837 /* ZLPolar.cpp */,
+				89BE6900173974FC00DFE837 /* ZLPolar.h */,
+				89BE6901173974FC00DFE837 /* ZLPolygon2D.h */,
+				89BE6902173974FC00DFE837 /* ZLPolyScanner.h */,
+				89BE6903173974FC00DFE837 /* ZLPrism.cpp */,
+				89BE6904173974FC00DFE837 /* ZLPrism.h */,
+				89BE6905173974FC00DFE837 /* ZLQuad.cpp */,
+				89BE6906173974FC00DFE837 /* ZLQuad.h */,
+				89BE6907173974FC00DFE837 /* ZLQuadCoord.cpp */,
+				89BE6908173974FC00DFE837 /* ZLQuadCoord.h */,
+				89BE6909173974FC00DFE837 /* ZLQuaternion.cpp */,
+				89BE690A173974FC00DFE837 /* ZLQuaternion.h */,
+				89BE690D173974FC00DFE837 /* ZLRect.h */,
+				89BE690E173974FC00DFE837 /* ZLRhombus.cpp */,
+				89BE690F173974FC00DFE837 /* ZLRhombus.h */,
+				89BE6916173974FC00DFE837 /* ZLSurface2D.cpp */,
+				89BE6917173974FC00DFE837 /* ZLSurface2D.h */,
+				89BE691C173974FD00DFE837 /* ZLTrig.cpp */,
+				89BE691D173974FD00DFE837 /* ZLTrig.h */,
+				89BE6925173974FD00DFE837 /* ZLVec2D.h */,
+				89BE6926173974FD00DFE837 /* ZLVec3D.h */,
+				89BE6927173974FD00DFE837 /* ZLVec4D.h */,
+			);
+			name = math;
+			sourceTree = "<group>";
+		};
+		CD17563E1A19990B009C430A /* stl */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6896173974FC00DFE837 /* STLArray.h */,
+				89BE6897173974FC00DFE837 /* STLIteration.h */,
+				89BE6898173974FC00DFE837 /* STLList.h */,
+				89BE6899173974FC00DFE837 /* STLMap.h */,
+				89BE689A173974FC00DFE837 /* STLSet.h */,
+				89BE689B173974FC00DFE837 /* STLString.cpp */,
+				89BE689C173974FC00DFE837 /* STLString.h */,
+			);
+			name = stl;
+			sourceTree = "<group>";
+		};
+		CD17563F1A199914009C430A /* containers */ = {
+			isa = PBXGroup;
+			children = (
+				89BE68EA173974FC00DFE837 /* ZLLeanArray.h */,
+				89BE68EB173974FC00DFE837 /* ZLLeanList.h */,
+				89BE68EC173974FC00DFE837 /* ZLLeanPool.h */,
+				89BE68ED173974FC00DFE837 /* ZLLeanStack.h */,
+				89BE68F0173974FC00DFE837 /* ZLList.h */,
+			);
+			name = containers;
+			sourceTree = "<group>";
+		};
+		CD1756401A19998D009C430A /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				89BE68AE173974FC00DFE837 /* ZLCgt.cpp */,
+				89BE68AF173974FC00DFE837 /* ZLCgt.h */,
+				89BE68EE173974FC00DFE837 /* ZLLexStream.cpp */,
+				89BE68EF173974FC00DFE837 /* ZLLexStream.h */,
+				89BE68FB173974FC00DFE837 /* ZLParser.cpp */,
+				89BE68FC173974FC00DFE837 /* ZLParser.h */,
+				89BE6918173974FD00DFE837 /* ZLSyntaxNode.cpp */,
+				89BE6919173974FD00DFE837 /* ZLSyntaxNode.h */,
+				89BE691A173974FD00DFE837 /* ZLSyntaxScanner.cpp */,
+				89BE691B173974FD00DFE837 /* ZLSyntaxScanner.h */,
+			);
+			name = parser;
+			sourceTree = "<group>";
+		};
+		CD1756411A1999E8009C430A /* os */ = {
+			isa = PBXGroup;
+			children = (
+				89BE689E173974FC00DFE837 /* ZLAdapterInfo.h */,
+				89BE689F173974FC00DFE837 /* ZLAdapterInfo_posix.cpp */,
+				89BE68A0173974FC00DFE837 /* ZLAdapterInfo_win32.cpp */,
+				89BE68B9173974FC00DFE837 /* ZLDeviceTime.h */,
+				89BE68BA173974FC00DFE837 /* ZLDeviceTime_apple.cpp */,
+				89BE68BB173974FC00DFE837 /* ZLDeviceTime_nacl.cpp */,
+				89BE68BC173974FC00DFE837 /* ZLDeviceTime_posix.cpp */,
+				89BE68BD173974FC00DFE837 /* ZLDeviceTime_win32.cpp */,
+				89BE68BE173974FC00DFE837 /* ZLDirectoryItr.cpp */,
+				89BE68BF173974FC00DFE837 /* ZLDirectoryItr.h */,
+				89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */,
+				89BE68C6173974FC00DFE837 /* ZLFileSys.h */,
+				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
+				89BE68F2173974FC00DFE837 /* ZLLog.h */,
+			);
+			name = os;
+			sourceTree = "<group>";
+		};
+		CD1756421A199A3D009C430A /* zip */ = {
+			isa = PBXGroup;
+			children = (
+				89BE692A173974FD00DFE837 /* ZLZip.cpp */,
+				89BE692B173974FD00DFE837 /* ZLZip.h */,
+				89BE692C173974FD00DFE837 /* ZLZipFile.cpp */,
+				89BE692D173974FD00DFE837 /* ZLZipFile.h */,
+			);
+			name = zip;
 			sourceTree = "<group>";
 		};
 		CD1BF784194050510066877A /* Collision */ = {
@@ -14000,6 +14052,7 @@
 				89BE6A1F173974FD00DFE837 /* ZLMatrix4x4.h in Headers */,
 				89BE6A23173974FD00DFE837 /* ZLMemStream.h in Headers */,
 				89BE6A27173974FD00DFE837 /* ZLMercator.h in Headers */,
+				CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */,
 				89BE6A2B173974FD00DFE837 /* ZLParser.h in Headers */,
 				89BE6A2F173974FD00DFE837 /* ZLPlane.h in Headers */,
 				89BE6A33173974FD00DFE837 /* ZLPolar.h in Headers */,
@@ -14050,6 +14103,7 @@
 				89BE696C173974FD00DFE837 /* STLString.h in Headers */,
 				89BE696E173974FD00DFE837 /* ZLAccessors.h in Headers */,
 				89BE6970173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
+				CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */,
 				89BE6976173974FD00DFE837 /* ZLAffine2D.h in Headers */,
 				89BE6978173974FD00DFE837 /* ZLAffine3D.h in Headers */,
 				89BE697C173974FD00DFE837 /* ZLBase64Encoder.h in Headers */,

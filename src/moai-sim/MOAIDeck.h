@@ -86,6 +86,7 @@ public:
 	ZLBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 	virtual void			GetCollisionShape		( MOAICollisionShape& shape );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
+	virtual bool			Inside					( ZLVec3D vec, float pad );
 							MOAIDeck				();
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );

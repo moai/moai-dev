@@ -197,6 +197,13 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxQuad2D::Inside ( ZLVec3D vec, float pad ) {
+
+	ZLVec2D ( uv );
+	return ( this->mQuad.GetUVForCartesian ( 0, vec.mX, vec.mY, uv ) || this->mQuad.GetUVForCartesian ( 1, vec.mX, vec.mY, uv ));
+}
+
+//----------------------------------------------------------------//
 ZLBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	ZLBox bounds;
