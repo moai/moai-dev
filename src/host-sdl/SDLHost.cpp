@@ -193,47 +193,22 @@ void SetScreenDpi() {
 
 #elif defined(MOAI_OS_LINUX)
 
-    auto PrintErrorScreenDpi = [](const char* msg) {
-        std::cerr << "SetScreenDpi : " << msg << std::endl;
-    };
+	char* display_name = getenv( "DISPLAY" );
+	if ( !display_name ) return;
 
-    char* display_name = getenv("DISPLAY");
-    
-    if( not display_name ) {
-        PrintErrorScreenDpi("Fail open display");
-        return;
-    }
+	int nscreen = 0;
+	xcb_connection_t* conn = xcb_connect( display_name, &nscreen );
+	if ( !conn ) return;
 
-    xcb_connection_t* conn = nullptr;
-    int nscreen = 0;
+	xcb_screen_t* screen = xcb_aux_get_screen( conn, nscreen );
 
-    if( not (conn = xcb_connect(display_name,&nscreen) ) ) {
-        PrintErrorScreenDpi("Error xcb_connect");
-        return;
-    }
+	double widthInInches = screen->width_in_millimeters / 25.4;
+	int widthInPixels = screen->width_in_pixels;
 
-    xcb_screen_t* screen = xcb_aux_get_screen(conn,nscreen);
+	AKUSetScreenDpi(( int )widthInPixels / widthInInches );
 
-    xcb_randr_query_version_reply_t* version = nullptr;
-    
-    version = xcb_randr_query_version_reply(conn,
-            xcb_randr_query_version(conn,1,1),NULL);
-
-    if ( version == nullptr ) {
-        PrintErrorScreenDpi("Fail query verion");
-        free(version);
-        return;
-    }
-    
-    free(version);
-   
-    const double widthInInches = screen->width_in_millimeters / 25.4;
-    const uint16_t w = screen->width_in_pixels;
-    
-    AKUSetScreenDpi( (int) w / widthInInches);
-
-    xcb_disconnect(conn);
-
+	xcb_disconnect( conn );
+  
 #endif
 
 }
