@@ -123,7 +123,7 @@ void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer
 		poly.Bless ();
 		
 		state.Pop ( 1 );
-	};
+	}
 }
 
 //----------------------------------------------------------------//
