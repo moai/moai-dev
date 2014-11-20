@@ -19,6 +19,11 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
+gfxQuad:setHitMask ( "moai.png" )
+gfxQuad:setHitMaskScalar ( 1, 1, 1, 1 )
+gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 )
+gfxQuad:setHitGranularity ( MOAIGfxQuad2D.HIT_TEST_FINE )
+
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )

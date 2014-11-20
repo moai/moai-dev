@@ -146,6 +146,7 @@ public:
 	void			ToHSV				( float& h, float& s, float& v );
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();
+					ZLColorVec			( u32 rgba );
 					ZLColorVec			( float r, float g, float b, float a );
 	
 	//----------------------------------------------------------------//

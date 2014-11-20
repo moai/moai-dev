@@ -1082,6 +1082,11 @@ void ZLColorVec::SetRGBA ( u32 color ) {
 }
 
 //----------------------------------------------------------------//
+ZLColorVec::ZLColorVec ( u32 rgba ) {
+	this->SetRGBA ( rgba );
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::Set ( float r, float g, float b, float a ) {
 
 	this->mR = r;
