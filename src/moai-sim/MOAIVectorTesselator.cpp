@@ -983,6 +983,7 @@ int MOAIVectorTesselator::Tesselate () {
 				poly.Init ( n );
 				
 				memcpy ( poly.Data (), &verts [ b * 2 ], sizeof ( ZLVec2D ) * n );
+				poly.Bless ();
 			}
 		}
 	}

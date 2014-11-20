@@ -31,7 +31,8 @@ public:
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	ZLRect				GetUVBounds			();
-	ZLRect				GetVtxBounds		();	
+	bool				GetUVForCartesian	( u32 triangleID, float x, float y, ZLVec2D& uv );
+	ZLRect				GetVtxBounds		();
 	void				ScaleUVs			( float xScale, float yScale );
 	void				ScaleVerts			( float xScale, float yScale );
 	void				SetUVs				( const ZLRect& rect );

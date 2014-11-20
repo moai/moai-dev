@@ -685,6 +685,31 @@ int MOAIImage::_convertToGrayScale ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
+
+	MOAIImage* image = 0;
+	
+	if ( state.IsType ( idx, LUA_TUSERDATA )) {
+		image = state.GetLuaObject < MOAIImage >( idx, false );
+	}
+	
+	if ( state.IsType ( idx, LUA_TSTRING )) {
+	
+		cc8* filename = state.GetValue < cc8* >( idx, "" );
+		if ( ZLFileSys::CheckFileExists ( filename )) {
+	
+			image = new MOAIImage ();
+			if ( !image->Load ( filename )) {
+				// TODO: report error
+				delete image;
+				image = 0;
+			}
+		}
+	}
+	return image;
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Alloc () {
 
 	if ( this->mData ) {
@@ -1976,7 +2001,7 @@ bool MOAIImage::IsPow2 ( u32 n ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Load ( cc8* filename, u32 transform ) {
+bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 	this->Clear ();
 	
@@ -1989,10 +2014,11 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 	else {
 		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
 	}
+	return this->IsOK ();
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
+bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	UNUSED ( stream );
 	UNUSED ( transform );
 
@@ -2002,7 +2028,7 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 		if ( MOAIImage::IsPng ( stream ) ) {
 			this->LoadPng ( stream, transform );
 			this->OnImageStatusChanged ( this->IsOK ());
-			return;
+			return this->IsOK ();
 		}
 	#endif
 	
@@ -2010,7 +2036,7 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 		if ( MOAIImage::IsJpg ( stream ) ) {
 			this->LoadJpg ( stream, transform );
 			this->OnImageStatusChanged ( this->IsOK ());
-			return;
+			return this->IsOK ();
 		}
 	#endif
 	
@@ -2018,9 +2044,11 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 		if ( MOAIImage::IsWebP ( stream ) ) {
 			this->LoadWebP ( stream, transform );
 			this->OnImageStatusChanged ( this->IsOK ());
-			return;
+			return this->IsOK ();
 		}
 	#endif
+	
+	return false;
 }
 
 //----------------------------------------------------------------//

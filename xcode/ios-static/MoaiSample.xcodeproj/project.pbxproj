@@ -145,36 +145,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD4DF2BE1A12E35B00E9A523 /* libmoai-ios-zl-core.a in Frameworks */,
-				CD4DF2B51A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a in Frameworks */,
 				CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */,
-				CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */,
-				CD4DF2BB1A12E35B00E9A523 /* libmoai-ios-luaext.a in Frameworks */,
-				CD4DF2BD1A12E35B00E9A523 /* libmoai-ios-untz.a in Frameworks */,
+				CD4DF2B51A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a in Frameworks */,
+				CD4DF2B61A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
+				CD4DF2B71A12E35B00E9A523 /* libmoai-ios-billing.a in Frameworks */,
 				CD4DF2B81A12E35B00E9A523 /* libmoai-ios-box2d.a in Frameworks */,
-				CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */,
+				CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */,
+				CD4DF2BA1A12E35B00E9A523 /* libmoai-ios-http-client.a in Frameworks */,
+				CD4DF2BB1A12E35B00E9A523 /* libmoai-ios-luaext.a in Frameworks */,
 				CD4DF2BC1A12E35B00E9A523 /* libmoai-ios-sim.a in Frameworks */,
-				CD236691180A5D77006A7236 /* CoreMotion.framework in Frameworks */,
-				CD23668D180A5D40006A7236 /* CoreMedia.framework in Frameworks */,
-				CD236689180A5CFC006A7236 /* AVFoundation.framework in Frameworks */,
+				CD4DF2BD1A12E35B00E9A523 /* libmoai-ios-untz.a in Frameworks */,
+				CD4DF2BE1A12E35B00E9A523 /* libmoai-ios-zl-core.a in Frameworks */,
+				CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */,
+				CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */,
 				CD9F769E1808DEDC0001EF0C /* AdSupport.framework in Frameworks */,
 				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
+				CD236689180A5CFC006A7236 /* AVFoundation.framework in Frameworks */,
 				43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */,
-				CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */,
 				03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */,
-				CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */,
-				CD4DF2BA1A12E35B00E9A523 /* libmoai-ios-http-client.a in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */,
-				CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */,
-				CD4DF2B71A12E35B00E9A523 /* libmoai-ios-billing.a in Frameworks */,
+				CD23668D180A5D40006A7236 /* CoreMedia.framework in Frameworks */,
+				CD236691180A5D77006A7236 /* CoreMotion.framework in Frameworks */,
 				0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */,
+				CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */,
 				665383F7160A8466003D5529 /* MessageUI.framework in Frameworks */,
+				CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */,
 				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
 				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
-				CD4DF2B61A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */,
 				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
 				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
@@ -414,6 +414,10 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/bin/ios",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
 			};
@@ -422,6 +426,10 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/patrick/git/moai-dev/bin/ios",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
 			};

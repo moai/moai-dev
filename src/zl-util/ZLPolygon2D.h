@@ -24,16 +24,17 @@ public:
 	//----------------------------------------------------------------//
 	void Bless () {
 
-		u32 totalVerts = this->mVerts.Size ();
+		u32 totalVerts = this->Size ();
 		
 		if ( totalVerts < 3 ) {
 			return;
 		}
 		
-		this->mBounds.Init ( this [ 0 ]);
+		this->mBounds.Init (( *this )[ 0 ]);
 		
 		for ( u32 i = 1; i < totalVerts; ++i ) {
-			this->mBounds.Grow ( this [ i ]);
+			ZLMetaVec2D < TYPE >& point = ( *this )[ i ];
+			this->mBounds.Grow ( point );
 		}
 	}
 	
@@ -99,7 +100,7 @@ public:
 	//----------------------------------------------------------------//
 	void SetVert ( u32 id, const ZLMetaVec2D < TYPE >& v ) {
 
-		this [ id ] = v;
+		( *this )[ id ] = v;
 	}
 	
 	//----------------------------------------------------------------//
@@ -107,7 +108,7 @@ public:
 	
 		u32 totalVerts = this->Size ();
 		for ( u32 i = 0; i < totalVerts; i++ ) {
-			matrix.Transform ( this [ i ]);
+			matrix.Transform (( *this )[ i ]);
 		}
 	}
 	
