@@ -12,6 +12,7 @@ class MOAIColor;
 class MOAIGfxState;
 class MOAIGrid;
 class MOAIImage;
+class MOAIQuadBrush;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 
@@ -87,7 +88,8 @@ protected:
 	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	virtual ZLBox			GetItemBounds			( u32 idx ) = 0;
 	void					SetBoundsDirty			();
-	bool					TestHit					( float x, float y ); // in local space of the mask
+	bool					TestHit					( float x, float y ); // in local (uv) space of the mask
+	bool					TestHit					( MOAIQuadBrush& quad, float x, float y ); // in local (model) space of the quad
 
 public:
 	

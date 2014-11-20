@@ -198,22 +198,9 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 
 //----------------------------------------------------------------//
 bool MOAIGfxQuad2D::Inside ( ZLVec3D vec, float pad ) {
+	UNUSED ( pad );
 
-	u32 granularity = this->GetHitGranularity ();
-
-	if ( granularity == HIT_TEST_COARSE ) return true;
-
-	ZLVec2D uv;
-
-	if ( this->mQuad.GetUVForCartesian ( 0, vec.mX, vec.mY, uv )) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-	
-	if ( this->mQuad.GetUVForCartesian ( 1, vec.mX, vec.mY, uv )) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-
-	return false;
+	return this->TestHit ( this->mQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//

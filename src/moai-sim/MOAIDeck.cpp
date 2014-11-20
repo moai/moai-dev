@@ -380,3 +380,23 @@ bool MOAIDeck::TestHit ( float x, float y ) {
 	}
 	return true;
 }
+
+//----------------------------------------------------------------//
+bool MOAIDeck::TestHit ( MOAIQuadBrush& quad, float x, float y ) {
+
+	u32 granularity = this->GetHitGranularity ();
+
+	if ( granularity == HIT_TEST_COARSE ) return true;
+
+	ZLVec2D uv;
+
+	if ( quad.GetUVForCartesian ( 0, x, y, uv )) {
+		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
+	}
+	
+	if ( quad.GetUVForCartesian ( 1, x, y, uv )) {
+		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
+	}
+
+	return false;
+}
