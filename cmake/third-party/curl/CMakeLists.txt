@@ -56,44 +56,46 @@ project ( curl )
        )
   endif (BUILD_IOS)
 
-
+  set (CURL_HEADERS "")
   if (RUN_CURL_CONFIGURE)
 
-    if (NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/config.status")
-      message (STATUS "Running cURL configure script")
-      execute_process (COMMAND "/bin/sh"
+      
+      set (SSL_PARAMS "--without-ssl")
+
+      if (MOAI_OPENSSL)
+         get_target_property(SSLDIR ssl ARCHIVE_OUTPUT_DIRECTORY )
+         
+         set(SSL_PARAMS "--with-ssl=$<TARGET_FILE_DIR:ssl> --with-ca-path=/etc/ssl/certs/")
+      endif (MOAI_OPENSSL)
+
+      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       COMMAND "/bin/sh"
                        "${MOAI_ROOT}/3rdparty/curl-7.19.7/configure"
-                       "--no-create" "--disable-shared" "--disable-optimize"
-		       "--with-ca-path=/etc/ssl/certs/" "--disable-ldap"
-                       "--without-libidn" 
+                       "--no-create" "--disable-shared" "--disable-optimize" ${SSL_PARAMS} "--disable-ldap"
+                       "--without-libidn" "--without-libssh2" 
                        "CC=${CMAKE_C_COMPILER}"
                        "CFLAGS=${CMAKE_C_FLAGS} -DZL_REPLACE_H"
+                       DEPENDS ssl
                        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-                       OUTPUT_QUIET RESULT_VARIABLE CONFIGURE_RESULT)
-      if (NOT ${CONFIGURE_RESULT} EQUAL 0)
-        message( FATAL_ERROR "Configure script failed")
-      endif ()
-    endif ()
+                      )
+      
 
-    if (("${CMAKE_CURRENT_BINARY_DIR}/config.status" IS_NEWER_THAN
-         "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h") OR
-        ("${CMAKE_CURRENT_BINARY_DIR}/config.status" IS_NEWER_THAN
-         "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"))
-      message (STATUS "Running cURL config.status")
-      execute_process (COMMAND "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h"
+                                "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
+                        COMMAND "${CMAKE_CURRENT_BINARY_DIR}/config.status"
                        "--header=include/curl/curlbuild.h"
                        "--header=include/curl/curl_config.h:lib/curl_config.h.in"
-                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-                       OUTPUT_QUIET RESULT_VARIABLE CONFIG_STATUS_RESULT)
-      if (NOT ${CONFIG_STATUS_RESULT} EQUAL 0)
-        message( FATAL_ERROR "config.status script failed")
-      endif ()
-    endif()
+                       DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+
+    
 
     set ( CURL_INCLUDES
           "${CMAKE_CURRENT_BINARY_DIR}/include/curl"
           "${CMAKE_CURRENT_BINARY_DIR}/include" ${CURL_INCLUDES} )
 
+    set ( CURL_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
+                       "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h")
   endif (RUN_CURL_CONFIGURE)
 
 
@@ -181,7 +183,7 @@ project ( curl )
 
 
  
-  add_library(curl STATIC ${CURL_SOURCES})
+  add_library(curl STATIC ${CURL_SOURCES} ${CURL_HEADERS})
   target_include_directories (curl PUBLIC ${CURL_INCLUDES})
   target_link_libraries( curl zlib )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
