@@ -46,6 +46,7 @@ if ( BUILD_LINUX )
   target_link_libraries ( moai 
     pthread 
     rt
+    Xxf86vm
   )
 endif ( BUILD_LINUX )
 
