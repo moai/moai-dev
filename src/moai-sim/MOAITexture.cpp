@@ -151,7 +151,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 	
 	if ( image.IsOK ()) {
 		this->mImage.Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
-		this->mImage.CopyBits ( image, srcX, srcY, 0, 0, width, height );
+		this->mImage.Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->DoCPUAffirm ();
 	}

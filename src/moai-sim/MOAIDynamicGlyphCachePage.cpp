@@ -20,7 +20,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
-		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, owner.mColorFormat, ZLPixel::TRUECOLOR );
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();

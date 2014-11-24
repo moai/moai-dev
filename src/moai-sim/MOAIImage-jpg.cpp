@@ -216,7 +216,7 @@ void MOAIImage::LoadJpg ( void* jpgInfoParam, u32 transform ) {
 		this->mHeight = height;
 	}
 	
-	ZLColor::Format jpgColorFormat;
+	ZLColor::ColorFormat jpgColorFormat;
 	
 	switch ( cinfo->out_color_space ) {
 		
@@ -232,10 +232,10 @@ void MOAIImage::LoadJpg ( void* jpgInfoParam, u32 transform ) {
 	}
 	
 	// override the image settings
-	this->mPixelFormat = ZLPixel::TRUECOLOR;
+	this->mPixelFormat = TRUECOLOR;
 	this->mColorFormat = jpgColorFormat;
 	
-	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepth ( jpgColorFormat ) > 16 )) {
+	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( jpgColorFormat ) > 16 )) {
 		this->mColorFormat = ZLColor::RGB_565;
 	}
 		

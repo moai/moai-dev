@@ -59,6 +59,7 @@ void MOAIImageTexture::OnGPUBind () {
 
 	if ( this->mStatus == INVALID ) {
 		this->UpdateTextureFromImage ( *this, this->mRegion );
+		this->mStatus = VALID;
 	}
 	MOAITextureBase::OnGPUBind ();
 }

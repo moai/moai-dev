@@ -31,7 +31,7 @@ protected:
 
 	friend class MOAIFont;
 	
-	ZLColor::Format mColorFormat;
+	ZLColor::ColorFormat mColorFormat;
 
 	//----------------------------------------------------------------//
 	static int					_setColorFormat			( lua_State* L );

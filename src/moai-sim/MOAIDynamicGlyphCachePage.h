@@ -33,7 +33,7 @@ private:
 
 	MOAIImageTexture* mImageTexture;
 	
-	//ZLColor::Format mColorFormat;
+	//ZLColor::ColorFormat mColorFormat;
 
 	float mThreshold;
 

@@ -105,10 +105,25 @@ void MOAITextureBase::CleanupOnError () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
+bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
-	if ( !image.IsOK ()) return false;
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
+
+	MOAIImage altImage;
+
+	ZLColor::ColorFormat colorFormat = srcImage.GetColorFormat ();
+	if ( colorFormat == ZLColor::CLR_FMT_UNKNOWN ) return false;
+
+	if (( colorFormat == ZLColor::A_1 ) || ( colorFormat == ZLColor::A_4 )) {
+		colorFormat = ZLColor::A_8;
+	}
+	
+	if (( colorFormat != srcImage.GetColorFormat ()) || ( srcImage.GetPixelFormat () != MOAIImage::TRUECOLOR )) {
+		if ( !altImage.Convert ( srcImage, colorFormat, MOAIImage::TRUECOLOR ));
+	}
+	
+	MOAIImage& image = altImage.IsOK () ? altImage : srcImage;
+	if ( !image.IsOK ()) return false;
 
 	MOAIGfxDevice::Get ().ClearErrors ();
 	this->mGLTexID = zglCreateTexture ();
@@ -122,16 +137,6 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 	if ( !image.IsPow2 ()) {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
 	}
-
-	zglBindTexture ( this->mGLTexID );
-
-	ZLPixel::Format pixelFormat = image.GetPixelFormat ();
-	ZLColor::Format colorFormat = image.GetColorFormat ();
-
-	if ( pixelFormat != ZLPixel::TRUECOLOR ) return false; // only support truecolor textures
-
-	// generate mipmaps if set up to use them
-	bool genMipMaps = this->ShouldGenerateMipmaps ();
 
 	// GL_ALPHA
 	// GL_RGB
@@ -176,6 +181,8 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 			return false;
 	}
 
+	zglBindTexture ( this->mGLTexID );
+
 	zglTexImage2D (
 		0,
 		this->mGLInternalFormat,
@@ -192,7 +199,7 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 		this->CleanupOnError ();
 		return false;
 	}
-	else if ( genMipMaps ) {
+	else if ( this->ShouldGenerateMipmaps ()) {
 	
 		u32 mipLevel = 1;
 		
@@ -571,13 +578,15 @@ bool MOAITextureBase::ShouldGenerateMipmaps () {
 //----------------------------------------------------------------//
 void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
+	// TODO: what happens when image is an unsupported format?
+
 	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
-	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	//if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
 		this->mGLTexID = 0;	
-	}
+	//}
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image
@@ -594,7 +603,7 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
 			u32 size = image.GetSubImageSize ( rect );
 			buffer = alloca ( size );
-			image.GetSubImage ( rect, buffer );
+			image.GetSubImage ( rect, buffer ); // TODO: need to convert to correct format for texture
 		}
 
 		zglTexSubImage2D (

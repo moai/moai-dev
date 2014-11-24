@@ -287,7 +287,6 @@ void STLString::zl_encode ( ZLStreamAdapter& writer, const void* buffer, size_t 
 }
 
 //----------------------------------------------------------------//
-
 STLString::STLString ( int value, int radix ) {
 
 	const char *format;

@@ -67,21 +67,21 @@ protected:
 	static int		_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			CleanupOnError			();
+	void				CleanupOnError			();
 	
-	bool			CreateTextureFromImage	( MOAIImage& image );
-	bool			CreateTextureFromPVR	( void* data, size_t size );
+	bool				CreateTextureFromImage	( MOAIImage& srcImage );
+	bool				CreateTextureFromPVR	( void* data, size_t size );
 
-	bool			OnCPUCreate				();
-	void			OnCPUDestroy			();
-	void			OnGPUBind				();
-	void			OnGPUDestroy			();
-	void			OnGPULost				();
-	void			OnGPUUnbind				();
+	bool				OnCPUCreate				();
+	void				OnCPUDestroy			();
+	void				OnGPUBind				();
+	void				OnGPUDestroy			();
+	void				OnGPULost				();
+	void				OnGPUUnbind				();
 	
-	bool			ShouldGenerateMipmaps	();
+	bool				ShouldGenerateMipmaps	();
 	
-	void			UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
+	void				UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
 
 public:
 	

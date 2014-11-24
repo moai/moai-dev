@@ -20,6 +20,8 @@ void AKUSimAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSimContextInitialize () {
 
+	ZLBitBuffer::Test ();
+
 	//MOAIProfiler::Affirm ();
 	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();

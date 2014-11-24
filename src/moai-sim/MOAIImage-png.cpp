@@ -115,28 +115,28 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 	}
 	
 	// now guess the format and color type, according to the png
-	ZLPixel::Format pngPixelFormat;
-	ZLColor::Format pngColorFormat;
+	MOAIImage::PixelFormat pngPixelFormat;
+	ZLColor::ColorFormat pngColorFormat;
 	
 	switch ( pngColorType ) {
 		
 		case PNG_COLOR_TYPE_GRAY:
-			pngPixelFormat = ZLPixel::TRUECOLOR;
+			pngPixelFormat = MOAIImage::TRUECOLOR;
 			pngColorFormat = ZLColor::A_8;
 			break;
 		
 		case PNG_COLOR_TYPE_PALETTE:
-			pngPixelFormat = ( paletteSize > 16 ) ? ZLPixel::INDEX_8 : ZLPixel::INDEX_4;
+			pngPixelFormat = ( paletteSize > 16 ) ? MOAIImage::INDEX_8 : MOAIImage::INDEX_4;
 			pngColorFormat = ( transSize ) ? ZLColor::RGBA_8888 : ZLColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB:
-			pngPixelFormat = ZLPixel::TRUECOLOR;
+			pngPixelFormat = MOAIImage::TRUECOLOR;
 			pngColorFormat = ZLColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			pngPixelFormat = ZLPixel::TRUECOLOR;
+			pngPixelFormat = MOAIImage::TRUECOLOR;
 			pngColorFormat = ZLColor::RGBA_8888;
 			break;
 		
@@ -144,10 +144,10 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 	}
 	
 	// override the image settings
-	this->mPixelFormat = ( transform & MOAIImageTransform::TRUECOLOR ) ? ZLPixel::TRUECOLOR : pngPixelFormat;
+	this->mPixelFormat = ( transform & MOAIImageTransform::TRUECOLOR ) ? MOAIImage::TRUECOLOR : pngPixelFormat;
 	this->mColorFormat = pngColorFormat;
 	
-	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepth ( pngColorFormat ) > 16 )) {
+	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( pngColorFormat ) > 16 )) {
 		
 		switch ( pngColorFormat ) {
 			case ZLColor::RGB_888:
@@ -161,7 +161,7 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 		}
 	}
 	
-	if ( this->mPixelFormat == ZLPixel::TRUECOLOR ) {
+	if ( this->mPixelFormat == MOAIImage::TRUECOLOR ) {
 		
 		// expand lower bit depths to 8 bits per pixel
 		if ( bitDepth < 8 ) {

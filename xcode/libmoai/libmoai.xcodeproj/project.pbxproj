@@ -1977,6 +1977,10 @@
 		CD32B5D519F9EF2E0059D019 /* SDL_log.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC017F08459006AEB47 /* SDL_log.c */; };
 		CD32B5D619F9EF2E0059D019 /* SDL.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC117F08459006AEB47 /* SDL.c */; };
 		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
+		CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
+		CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
+		CD41F3011A20115E008E3420 /* ZLBitBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */; };
+		CD41F3021A20115E008E3420 /* ZLBitBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */; };
 		CD4283611A0476D20069392E /* MOAIByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42835F1A0476D20069392E /* MOAIByteStream.cpp */; };
 		CD4283621A0476D20069392E /* MOAIByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42835F1A0476D20069392E /* MOAIByteStream.cpp */; };
 		CD4283631A0476D20069392E /* MOAIByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4283601A0476D20069392E /* MOAIByteStream.h */; };
@@ -6708,6 +6712,8 @@
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
+		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
+		CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBitBuffer.h; sourceTree = "<group>"; };
 		CD42835F1A0476D20069392E /* MOAIByteStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIByteStream.cpp; sourceTree = "<group>"; };
 		CD4283601A0476D20069392E /* MOAIByteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIByteStream.h; sourceTree = "<group>"; };
 		CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRegion.cpp; sourceTree = "<group>"; };
@@ -9163,6 +9169,8 @@
 				89BE6895173974FC00DFE837 /* pch.h */,
 				89BE689D173974FC00DFE837 /* ZLAccessors.h */,
 				89BE68A9173974FC00DFE837 /* ZLBinarySearch.h */,
+				CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */,
+				CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */,
 				89BE68B0173974FC00DFE837 /* ZLColor.cpp */,
 				89BE68B1173974FC00DFE837 /* ZLColor.h */,
 				89BE68B8173974FC00DFE837 /* ZLDelegate.h */,
@@ -14053,6 +14061,7 @@
 				89BE6A23173974FD00DFE837 /* ZLMemStream.h in Headers */,
 				89BE6A27173974FD00DFE837 /* ZLMercator.h in Headers */,
 				CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */,
+				CD41F3011A20115E008E3420 /* ZLBitBuffer.h in Headers */,
 				89BE6A2B173974FD00DFE837 /* ZLParser.h in Headers */,
 				89BE6A2F173974FD00DFE837 /* ZLPlane.h in Headers */,
 				89BE6A33173974FD00DFE837 /* ZLPolar.h in Headers */,
@@ -14150,6 +14159,7 @@
 				89BE6A28173974FD00DFE837 /* ZLMercator.h in Headers */,
 				89BE6A2C173974FD00DFE837 /* ZLParser.h in Headers */,
 				89BE6A30173974FD00DFE837 /* ZLPlane.h in Headers */,
+				CD41F3021A20115E008E3420 /* ZLBitBuffer.h in Headers */,
 				89BE6A34173974FD00DFE837 /* ZLPolar.h in Headers */,
 				89BE6A36173974FD00DFE837 /* ZLPolygon2D.h in Headers */,
 				89BE6A38173974FD00DFE837 /* ZLPolyScanner.h in Headers */,
@@ -17560,6 +17570,7 @@
 				89BE6A25173974FD00DFE837 /* ZLMercator.cpp in Sources */,
 				89BE6A29173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2D173974FD00DFE837 /* ZLPlane.cpp in Sources */,
+				CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
 				89BE6A31173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A39173974FD00DFE837 /* ZLPrism.cpp in Sources */,
 				89BE6A3D173974FD00DFE837 /* ZLQuad.cpp in Sources */,
@@ -17627,6 +17638,7 @@
 				89BE6A26173974FD00DFE837 /* ZLMercator.cpp in Sources */,
 				89BE6A2A173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2E173974FD00DFE837 /* ZLPlane.cpp in Sources */,
+				CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
 				89BE6A32173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A3A173974FD00DFE837 /* ZLPrism.cpp in Sources */,
 				89BE6A3E173974FD00DFE837 /* ZLQuad.cpp in Sources */,
@@ -19796,6 +19808,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_KEEP_ASSERT=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19828,6 +19844,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_KEEP_ASSERT=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25873,6 +25893,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_KEEP_ASSERT=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26289,6 +26313,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MOAI_KEEP_ASSERT=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;

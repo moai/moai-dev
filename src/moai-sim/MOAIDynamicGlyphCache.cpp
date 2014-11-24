@@ -29,7 +29,7 @@
 int MOAIDynamicGlyphCache::_setColorFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDynamicGlyphCache, "UN" )
 
-	self->mColorFormat = ( ZLColor::Format )state.GetValue < u32 >( 2, ( u32 )ZLColor::A_8 );
+	self->mColorFormat = ( ZLColor::ColorFormat )state.GetValue < u32 >( 2, ( u32 )ZLColor::A_8 );
 
 	return 0;
 }
@@ -123,7 +123,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		u32 copyHeight = srcImage.GetHeight ();
-		image->CopyBits ( srcImage, 0, 0, 0, y, width, copyHeight );
+		image->Blit ( srcImage, 0, 0, 0, y, width, copyHeight );
 		y += copyHeight;
 	}
 	

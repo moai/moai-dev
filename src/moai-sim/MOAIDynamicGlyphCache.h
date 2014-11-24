@@ -44,7 +44,7 @@ protected:
 	MOAIFont* mFont;
 	ZLLeanArray < MOAIDynamicGlyphCachePage* > mPages;
 
-	ZLColor::Format mColorFormat;
+	ZLColor::ColorFormat mColorFormat;
 	
 	ZLRect mPadding;
 	

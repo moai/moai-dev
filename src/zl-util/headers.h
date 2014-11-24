@@ -21,6 +21,7 @@
 #include <zl-util/ZLBase64Reader.h>
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLBinarySearch.h>
+#include <zl-util/ZLBitBuffer.h>
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
