@@ -116,25 +116,6 @@
 		031BBBB013B18A0C0005ECE0 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C19F13A16CED00C9386C /* window.c */; };
 		03240C2913564CB0000ADC60 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
 		03240C2A13564CB0000ADC60 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
-		03240CC213564CB0000ADC60 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
-		03240CC313564CB0000ADC60 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
-		03240CC413564CB0000ADC60 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
-		03240CC513564CB0000ADC60 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1713564CB0000ADC60 /* expat_external.h */; };
-		03240CC613564CB0000ADC60 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1813564CB0000ADC60 /* iasciitab.h */; };
-		03240CC713564CB0000ADC60 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1913564CB0000ADC60 /* internal.h */; };
-		03240CC813564CB0000ADC60 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1A13564CB0000ADC60 /* latin1tab.h */; };
-		03240CC913564CB0000ADC60 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1B13564CB0000ADC60 /* macconfig.h */; };
-		03240CCA13564CB0000ADC60 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1C13564CB0000ADC60 /* nametab.h */; };
-		03240CCB13564CB0000ADC60 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1D13564CB0000ADC60 /* utf8tab.h */; };
-		03240CCC13564CB0000ADC60 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1E13564CB0000ADC60 /* winconfig.h */; };
-		03240CCD13564CB0000ADC60 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1F13564CB0000ADC60 /* xmlparse.c */; };
-		03240CCE13564CB0000ADC60 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2013564CB0000ADC60 /* xmlrole.c */; };
-		03240CCF13564CB0000ADC60 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2113564CB0000ADC60 /* xmlrole.h */; };
-		03240CD013564CB0000ADC60 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2213564CB0000ADC60 /* xmltok.c */; };
-		03240CD113564CB0000ADC60 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2313564CB0000ADC60 /* xmltok.h */; };
-		03240CD213564CB0000ADC60 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2413564CB0000ADC60 /* xmltok_impl.c */; };
-		03240CD313564CB0000ADC60 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2513564CB0000ADC60 /* xmltok_impl.h */; };
-		03240CD413564CB0000ADC60 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2613564CB0000ADC60 /* xmltok_ns.c */; };
 		03240CD513564CB0000ADC60 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
 		03240CD613564CB0000ADC60 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
 		03240CD713564CB0000ADC60 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
@@ -204,25 +185,6 @@
 		03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
 		03240DCF13564CB0000ADC60 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
 		03240DD013564CB0000ADC60 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
-		03240E6813564CB0000ADC60 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
-		03240E6913564CB0000ADC60 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
-		03240E6A13564CB0000ADC60 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
-		03240E6B13564CB0000ADC60 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1713564CB0000ADC60 /* expat_external.h */; };
-		03240E6C13564CB0000ADC60 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1813564CB0000ADC60 /* iasciitab.h */; };
-		03240E6D13564CB0000ADC60 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1913564CB0000ADC60 /* internal.h */; };
-		03240E6E13564CB0000ADC60 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1A13564CB0000ADC60 /* latin1tab.h */; };
-		03240E6F13564CB0000ADC60 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1B13564CB0000ADC60 /* macconfig.h */; };
-		03240E7013564CB0000ADC60 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1C13564CB0000ADC60 /* nametab.h */; };
-		03240E7113564CB0000ADC60 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1D13564CB0000ADC60 /* utf8tab.h */; };
-		03240E7213564CB0000ADC60 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1E13564CB0000ADC60 /* winconfig.h */; };
-		03240E7313564CB0000ADC60 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1F13564CB0000ADC60 /* xmlparse.c */; };
-		03240E7413564CB0000ADC60 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2013564CB0000ADC60 /* xmlrole.c */; };
-		03240E7513564CB0000ADC60 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2113564CB0000ADC60 /* xmlrole.h */; };
-		03240E7613564CB0000ADC60 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2213564CB0000ADC60 /* xmltok.c */; };
-		03240E7713564CB0000ADC60 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2313564CB0000ADC60 /* xmltok.h */; };
-		03240E7813564CB0000ADC60 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2413564CB0000ADC60 /* xmltok_impl.c */; };
-		03240E7913564CB0000ADC60 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2513564CB0000ADC60 /* xmltok_impl.h */; };
-		03240E7A13564CB0000ADC60 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2613564CB0000ADC60 /* xmltok_ns.c */; };
 		03240E7B13564CB0000ADC60 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
 		03240E7C13564CB0000ADC60 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
 		03240E7D13564CB0000ADC60 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
@@ -1465,20 +1427,6 @@
 		CD32B3C819F9EDD10059D019 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
 		CD32B3C919F9EDD10059D019 /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; };
 		CD32B3CA19F9EDD10059D019 /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; };
-		CD32B3CB19F9EDD10059D019 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
-		CD32B3CC19F9EDD10059D019 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
-		CD32B3CD19F9EDD10059D019 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
-		CD32B3CE19F9EDD10059D019 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1713564CB0000ADC60 /* expat_external.h */; };
-		CD32B3CF19F9EDD10059D019 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1813564CB0000ADC60 /* iasciitab.h */; };
-		CD32B3D019F9EDD10059D019 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1913564CB0000ADC60 /* internal.h */; };
-		CD32B3D119F9EDD10059D019 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1A13564CB0000ADC60 /* latin1tab.h */; };
-		CD32B3D219F9EDD10059D019 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1B13564CB0000ADC60 /* macconfig.h */; };
-		CD32B3D319F9EDD10059D019 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1C13564CB0000ADC60 /* nametab.h */; };
-		CD32B3D419F9EDD10059D019 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1D13564CB0000ADC60 /* utf8tab.h */; };
-		CD32B3D519F9EDD10059D019 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1E13564CB0000ADC60 /* winconfig.h */; };
-		CD32B3D619F9EDD10059D019 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2113564CB0000ADC60 /* xmlrole.h */; };
-		CD32B3D719F9EDD10059D019 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2313564CB0000ADC60 /* xmltok.h */; };
-		CD32B3D819F9EDD10059D019 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2513564CB0000ADC60 /* xmltok_impl.h */; };
 		CD32B3D919F9EDD10059D019 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
 		CD32B3DA19F9EDD10059D019 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
 		CD32B3DB19F9EDD10059D019 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
@@ -1557,11 +1505,6 @@
 		CD32B42419F9EDD10059D019 /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; };
 		CD32B42519F9EDD10059D019 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
 		CD32B42719F9EDD10059D019 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
-		CD32B42819F9EDD10059D019 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B1F13564CB0000ADC60 /* xmlparse.c */; };
-		CD32B42919F9EDD10059D019 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2013564CB0000ADC60 /* xmlrole.c */; };
-		CD32B42A19F9EDD10059D019 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2213564CB0000ADC60 /* xmltok.c */; };
-		CD32B42B19F9EDD10059D019 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2413564CB0000ADC60 /* xmltok_impl.c */; };
-		CD32B42C19F9EDD10059D019 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B2613564CB0000ADC60 /* xmltok_ns.c */; };
 		CD32B42D19F9EDD10059D019 /* ftbbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3113564CB0000ADC60 /* ftbbox.c */; };
 		CD32B42E19F9EDD10059D019 /* ftgxval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3213564CB0000ADC60 /* ftgxval.c */; };
 		CD32B42F19F9EDD10059D019 /* ftlcdfil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3313564CB0000ADC60 /* ftlcdfil.c */; };
@@ -2743,20 +2686,6 @@
 		CD8078CA1831C3B500E658D9 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
 		CD8078DB1831C3B500E658D9 /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; };
 		CD8078E61831C3B500E658D9 /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; };
-		CD8078F51831C3B500E658D9 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1413564CB0000ADC60 /* ascii.h */; };
-		CD8078F61831C3B500E658D9 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1513564CB0000ADC60 /* asciitab.h */; };
-		CD8078F71831C3B500E658D9 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1613564CB0000ADC60 /* expat.h */; };
-		CD8078F81831C3B500E658D9 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1713564CB0000ADC60 /* expat_external.h */; };
-		CD8078F91831C3B500E658D9 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1813564CB0000ADC60 /* iasciitab.h */; };
-		CD8078FA1831C3B500E658D9 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1913564CB0000ADC60 /* internal.h */; };
-		CD8078FB1831C3B500E658D9 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1A13564CB0000ADC60 /* latin1tab.h */; };
-		CD8078FC1831C3B500E658D9 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1B13564CB0000ADC60 /* macconfig.h */; };
-		CD8078FD1831C3B500E658D9 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1C13564CB0000ADC60 /* nametab.h */; };
-		CD8078FE1831C3B500E658D9 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1D13564CB0000ADC60 /* utf8tab.h */; };
-		CD8078FF1831C3B500E658D9 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B1E13564CB0000ADC60 /* winconfig.h */; };
-		CD8079001831C3B500E658D9 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2113564CB0000ADC60 /* xmlrole.h */; };
-		CD8079011831C3B500E658D9 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2313564CB0000ADC60 /* xmltok.h */; };
-		CD8079021831C3B500E658D9 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2513564CB0000ADC60 /* xmltok_impl.h */; };
 		CD8079031831C3B500E658D9 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
 		CD8079041831C3B500E658D9 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
 		CD8079051831C3B500E658D9 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
@@ -3818,6 +3747,46 @@
 		CDC5203F18A17EB700BCC12F /* MOAIVectorTesselator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC5203418A17EB700BCC12F /* MOAIVectorTesselator.cpp */; };
 		CDC5204018A17EB700BCC12F /* MOAIVectorTesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC5203518A17EB700BCC12F /* MOAIVectorTesselator.h */; };
 		CDC5204118A17EB700BCC12F /* MOAIVectorTesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC5203518A17EB700BCC12F /* MOAIVectorTesselator.h */; };
+		CDCDD00B1A23F233008779B5 /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF71A23F233008779B5 /* amigaconfig.h */; };
+		CDCDD00C1A23F233008779B5 /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF71A23F233008779B5 /* amigaconfig.h */; };
+		CDCDD00D1A23F233008779B5 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF81A23F233008779B5 /* ascii.h */; };
+		CDCDD00E1A23F233008779B5 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF81A23F233008779B5 /* ascii.h */; };
+		CDCDD00F1A23F233008779B5 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF91A23F233008779B5 /* asciitab.h */; };
+		CDCDD0101A23F233008779B5 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF91A23F233008779B5 /* asciitab.h */; };
+		CDCDD0111A23F233008779B5 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFA1A23F233008779B5 /* expat_external.h */; };
+		CDCDD0121A23F233008779B5 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFA1A23F233008779B5 /* expat_external.h */; };
+		CDCDD0131A23F233008779B5 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFB1A23F233008779B5 /* expat.h */; };
+		CDCDD0141A23F233008779B5 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFB1A23F233008779B5 /* expat.h */; };
+		CDCDD0151A23F233008779B5 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFC1A23F233008779B5 /* iasciitab.h */; };
+		CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFC1A23F233008779B5 /* iasciitab.h */; };
+		CDCDD0171A23F233008779B5 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFD1A23F233008779B5 /* internal.h */; };
+		CDCDD0181A23F233008779B5 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFD1A23F233008779B5 /* internal.h */; };
+		CDCDD0191A23F233008779B5 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFE1A23F233008779B5 /* latin1tab.h */; };
+		CDCDD01A1A23F233008779B5 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFE1A23F233008779B5 /* latin1tab.h */; };
+		CDCDD01B1A23F233008779B5 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFF1A23F233008779B5 /* macconfig.h */; };
+		CDCDD01C1A23F233008779B5 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFF1A23F233008779B5 /* macconfig.h */; };
+		CDCDD01D1A23F233008779B5 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0001A23F233008779B5 /* nametab.h */; };
+		CDCDD01E1A23F233008779B5 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0001A23F233008779B5 /* nametab.h */; };
+		CDCDD01F1A23F233008779B5 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0011A23F233008779B5 /* utf8tab.h */; };
+		CDCDD0201A23F233008779B5 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0011A23F233008779B5 /* utf8tab.h */; };
+		CDCDD0211A23F233008779B5 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0021A23F233008779B5 /* winconfig.h */; };
+		CDCDD0221A23F233008779B5 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0021A23F233008779B5 /* winconfig.h */; };
+		CDCDD0231A23F233008779B5 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0031A23F233008779B5 /* xmlparse.c */; };
+		CDCDD0241A23F233008779B5 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0031A23F233008779B5 /* xmlparse.c */; };
+		CDCDD0251A23F233008779B5 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0041A23F233008779B5 /* xmlrole.c */; };
+		CDCDD0261A23F233008779B5 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0041A23F233008779B5 /* xmlrole.c */; };
+		CDCDD0271A23F233008779B5 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0051A23F233008779B5 /* xmlrole.h */; };
+		CDCDD0281A23F233008779B5 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0051A23F233008779B5 /* xmlrole.h */; };
+		CDCDD0291A23F233008779B5 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0061A23F233008779B5 /* xmltok_impl.c */; };
+		CDCDD02A1A23F233008779B5 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0061A23F233008779B5 /* xmltok_impl.c */; };
+		CDCDD02B1A23F233008779B5 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0071A23F233008779B5 /* xmltok_impl.h */; };
+		CDCDD02C1A23F233008779B5 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0071A23F233008779B5 /* xmltok_impl.h */; };
+		CDCDD02D1A23F233008779B5 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0081A23F233008779B5 /* xmltok_ns.c */; };
+		CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0081A23F233008779B5 /* xmltok_ns.c */; };
+		CDCDD02F1A23F233008779B5 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0091A23F233008779B5 /* xmltok.c */; };
+		CDCDD0301A23F233008779B5 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0091A23F233008779B5 /* xmltok.c */; };
+		CDCDD0311A23F233008779B5 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD00A1A23F233008779B5 /* xmltok.h */; };
+		CDCDD0321A23F233008779B5 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD00A1A23F233008779B5 /* xmltok.h */; };
 		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
 		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
 		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
@@ -5482,25 +5451,6 @@
 		03240B1013564CB0000ADC60 /* url.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = url.h; path = "../../3rdparty/curl-7.19.7/lib/url.h"; sourceTree = SOURCE_ROOT; };
 		03240B1113564CB0000ADC60 /* urldata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = urldata.h; path = "../../3rdparty/curl-7.19.7/lib/urldata.h"; sourceTree = SOURCE_ROOT; };
 		03240B1213564CB0000ADC60 /* version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = version.c; path = "../../3rdparty/curl-7.19.7/lib/version.c"; sourceTree = SOURCE_ROOT; };
-		03240B1413564CB0000ADC60 /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ascii.h; path = "../../3rdparty/expat-2.0.1/lib/ascii.h"; sourceTree = SOURCE_ROOT; };
-		03240B1513564CB0000ADC60 /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asciitab.h; path = "../../3rdparty/expat-2.0.1/lib/asciitab.h"; sourceTree = SOURCE_ROOT; };
-		03240B1613564CB0000ADC60 /* expat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expat.h; path = "../../3rdparty/expat-2.0.1/lib/expat.h"; sourceTree = SOURCE_ROOT; };
-		03240B1713564CB0000ADC60 /* expat_external.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expat_external.h; path = "../../3rdparty/expat-2.0.1/lib/expat_external.h"; sourceTree = SOURCE_ROOT; };
-		03240B1813564CB0000ADC60 /* iasciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iasciitab.h; path = "../../3rdparty/expat-2.0.1/lib/iasciitab.h"; sourceTree = SOURCE_ROOT; };
-		03240B1913564CB0000ADC60 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internal.h; path = "../../3rdparty/expat-2.0.1/lib/internal.h"; sourceTree = SOURCE_ROOT; };
-		03240B1A13564CB0000ADC60 /* latin1tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = latin1tab.h; path = "../../3rdparty/expat-2.0.1/lib/latin1tab.h"; sourceTree = SOURCE_ROOT; };
-		03240B1B13564CB0000ADC60 /* macconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = macconfig.h; path = "../../3rdparty/expat-2.0.1/lib/macconfig.h"; sourceTree = SOURCE_ROOT; };
-		03240B1C13564CB0000ADC60 /* nametab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nametab.h; path = "../../3rdparty/expat-2.0.1/lib/nametab.h"; sourceTree = SOURCE_ROOT; };
-		03240B1D13564CB0000ADC60 /* utf8tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8tab.h; path = "../../3rdparty/expat-2.0.1/lib/utf8tab.h"; sourceTree = SOURCE_ROOT; };
-		03240B1E13564CB0000ADC60 /* winconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = winconfig.h; path = "../../3rdparty/expat-2.0.1/lib/winconfig.h"; sourceTree = SOURCE_ROOT; };
-		03240B1F13564CB0000ADC60 /* xmlparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmlparse.c; path = "../../3rdparty/expat-2.0.1/lib/xmlparse.c"; sourceTree = SOURCE_ROOT; };
-		03240B2013564CB0000ADC60 /* xmlrole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmlrole.c; path = "../../3rdparty/expat-2.0.1/lib/xmlrole.c"; sourceTree = SOURCE_ROOT; };
-		03240B2113564CB0000ADC60 /* xmlrole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlrole.h; path = "../../3rdparty/expat-2.0.1/lib/xmlrole.h"; sourceTree = SOURCE_ROOT; };
-		03240B2213564CB0000ADC60 /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok.c; path = "../../3rdparty/expat-2.0.1/lib/xmltok.c"; sourceTree = SOURCE_ROOT; };
-		03240B2313564CB0000ADC60 /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok.h; path = "../../3rdparty/expat-2.0.1/lib/xmltok.h"; sourceTree = SOURCE_ROOT; };
-		03240B2413564CB0000ADC60 /* xmltok_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_impl.c; path = "../../3rdparty/expat-2.0.1/lib/xmltok_impl.c"; sourceTree = SOURCE_ROOT; };
-		03240B2513564CB0000ADC60 /* xmltok_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok_impl.h; path = "../../3rdparty/expat-2.0.1/lib/xmltok_impl.h"; sourceTree = SOURCE_ROOT; };
-		03240B2613564CB0000ADC60 /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_ns.c; path = "../../3rdparty/expat-2.0.1/lib/xmltok_ns.c"; sourceTree = SOURCE_ROOT; };
 		03240B2913564CB0000ADC60 /* ft2build.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ft2build.h; path = "../../3rdparty/freetype-2.4.4/include/ft2build.h"; sourceTree = SOURCE_ROOT; };
 		03240B2A13564CB0000ADC60 /* ftconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftconfig.h; path = "../../3rdparty/freetype-2.4.4/include/freetype/config/ftconfig.h"; sourceTree = SOURCE_ROOT; };
 		03240B2B13564CB0000ADC60 /* ftheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ftheader.h; path = "../../3rdparty/freetype-2.4.4/include/freetype/config/ftheader.h"; sourceTree = SOURCE_ROOT; };
@@ -7980,6 +7930,26 @@
 		CDC5203318A17EB700BCC12F /* MOAIShaderUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderUniform.h; sourceTree = "<group>"; };
 		CDC5203418A17EB700BCC12F /* MOAIVectorTesselator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorTesselator.cpp; sourceTree = "<group>"; };
 		CDC5203518A17EB700BCC12F /* MOAIVectorTesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorTesselator.h; sourceTree = "<group>"; };
+		CDCDCFF71A23F233008779B5 /* amigaconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amigaconfig.h; path = "../../3rdparty/expat-2.1.0/lib/amigaconfig.h"; sourceTree = "<group>"; };
+		CDCDCFF81A23F233008779B5 /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ascii.h; path = "../../3rdparty/expat-2.1.0/lib/ascii.h"; sourceTree = "<group>"; };
+		CDCDCFF91A23F233008779B5 /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asciitab.h; path = "../../3rdparty/expat-2.1.0/lib/asciitab.h"; sourceTree = "<group>"; };
+		CDCDCFFA1A23F233008779B5 /* expat_external.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expat_external.h; path = "../../3rdparty/expat-2.1.0/lib/expat_external.h"; sourceTree = "<group>"; };
+		CDCDCFFB1A23F233008779B5 /* expat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expat.h; path = "../../3rdparty/expat-2.1.0/lib/expat.h"; sourceTree = "<group>"; };
+		CDCDCFFC1A23F233008779B5 /* iasciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iasciitab.h; path = "../../3rdparty/expat-2.1.0/lib/iasciitab.h"; sourceTree = "<group>"; };
+		CDCDCFFD1A23F233008779B5 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = internal.h; path = "../../3rdparty/expat-2.1.0/lib/internal.h"; sourceTree = "<group>"; };
+		CDCDCFFE1A23F233008779B5 /* latin1tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = latin1tab.h; path = "../../3rdparty/expat-2.1.0/lib/latin1tab.h"; sourceTree = "<group>"; };
+		CDCDCFFF1A23F233008779B5 /* macconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = macconfig.h; path = "../../3rdparty/expat-2.1.0/lib/macconfig.h"; sourceTree = "<group>"; };
+		CDCDD0001A23F233008779B5 /* nametab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nametab.h; path = "../../3rdparty/expat-2.1.0/lib/nametab.h"; sourceTree = "<group>"; };
+		CDCDD0011A23F233008779B5 /* utf8tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8tab.h; path = "../../3rdparty/expat-2.1.0/lib/utf8tab.h"; sourceTree = "<group>"; };
+		CDCDD0021A23F233008779B5 /* winconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = winconfig.h; path = "../../3rdparty/expat-2.1.0/lib/winconfig.h"; sourceTree = "<group>"; };
+		CDCDD0031A23F233008779B5 /* xmlparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmlparse.c; path = "../../3rdparty/expat-2.1.0/lib/xmlparse.c"; sourceTree = "<group>"; };
+		CDCDD0041A23F233008779B5 /* xmlrole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmlrole.c; path = "../../3rdparty/expat-2.1.0/lib/xmlrole.c"; sourceTree = "<group>"; };
+		CDCDD0051A23F233008779B5 /* xmlrole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmlrole.h; path = "../../3rdparty/expat-2.1.0/lib/xmlrole.h"; sourceTree = "<group>"; };
+		CDCDD0061A23F233008779B5 /* xmltok_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_impl.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok_impl.c"; sourceTree = "<group>"; };
+		CDCDD0071A23F233008779B5 /* xmltok_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok_impl.h; path = "../../3rdparty/expat-2.1.0/lib/xmltok_impl.h"; sourceTree = "<group>"; };
+		CDCDD0081A23F233008779B5 /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_ns.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok_ns.c"; sourceTree = "<group>"; };
+		CDCDD0091A23F233008779B5 /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok.c"; sourceTree = "<group>"; };
+		CDCDD00A1A23F233008779B5 /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok.h; path = "../../3rdparty/expat-2.1.0/lib/xmltok.h"; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
@@ -8710,25 +8680,26 @@
 		03240B1313564CB0000ADC60 /* expat */ = {
 			isa = PBXGroup;
 			children = (
-				03240B1413564CB0000ADC60 /* ascii.h */,
-				03240B1513564CB0000ADC60 /* asciitab.h */,
-				03240B1613564CB0000ADC60 /* expat.h */,
-				03240B1713564CB0000ADC60 /* expat_external.h */,
-				03240B1813564CB0000ADC60 /* iasciitab.h */,
-				03240B1913564CB0000ADC60 /* internal.h */,
-				03240B1A13564CB0000ADC60 /* latin1tab.h */,
-				03240B1B13564CB0000ADC60 /* macconfig.h */,
-				03240B1C13564CB0000ADC60 /* nametab.h */,
-				03240B1D13564CB0000ADC60 /* utf8tab.h */,
-				03240B1E13564CB0000ADC60 /* winconfig.h */,
-				03240B1F13564CB0000ADC60 /* xmlparse.c */,
-				03240B2013564CB0000ADC60 /* xmlrole.c */,
-				03240B2113564CB0000ADC60 /* xmlrole.h */,
-				03240B2213564CB0000ADC60 /* xmltok.c */,
-				03240B2313564CB0000ADC60 /* xmltok.h */,
-				03240B2413564CB0000ADC60 /* xmltok_impl.c */,
-				03240B2513564CB0000ADC60 /* xmltok_impl.h */,
-				03240B2613564CB0000ADC60 /* xmltok_ns.c */,
+				CDCDCFF71A23F233008779B5 /* amigaconfig.h */,
+				CDCDCFF81A23F233008779B5 /* ascii.h */,
+				CDCDCFF91A23F233008779B5 /* asciitab.h */,
+				CDCDCFFA1A23F233008779B5 /* expat_external.h */,
+				CDCDCFFB1A23F233008779B5 /* expat.h */,
+				CDCDCFFC1A23F233008779B5 /* iasciitab.h */,
+				CDCDCFFD1A23F233008779B5 /* internal.h */,
+				CDCDCFFE1A23F233008779B5 /* latin1tab.h */,
+				CDCDCFFF1A23F233008779B5 /* macconfig.h */,
+				CDCDD0001A23F233008779B5 /* nametab.h */,
+				CDCDD0011A23F233008779B5 /* utf8tab.h */,
+				CDCDD0021A23F233008779B5 /* winconfig.h */,
+				CDCDD0031A23F233008779B5 /* xmlparse.c */,
+				CDCDD0041A23F233008779B5 /* xmlrole.c */,
+				CDCDD0051A23F233008779B5 /* xmlrole.h */,
+				CDCDD0061A23F233008779B5 /* xmltok_impl.c */,
+				CDCDD0071A23F233008779B5 /* xmltok_impl.h */,
+				CDCDD0081A23F233008779B5 /* xmltok_ns.c */,
+				CDCDD0091A23F233008779B5 /* xmltok.c */,
+				CDCDD00A1A23F233008779B5 /* xmltok.h */,
 			);
 			name = expat;
 			sourceTree = "<group>";
@@ -12899,27 +12870,16 @@
 				CD881FF619FF6743004498E8 /* encode.h in Headers */,
 				CD881F8919FF671C004498E8 /* vp8enci.h in Headers */,
 				CDD48B5917FA794B00525B77 /* SFMT-params132049.h in Headers */,
+				CDCDD00C1A23F233008779B5 /* amigaconfig.h in Headers */,
 				CD881FFA19FF6743004498E8 /* mux_types.h in Headers */,
 				CDD48B5417FA794B00525B77 /* SFMT-params4253.h in Headers */,
-				03240CC213564CB0000ADC60 /* ascii.h in Headers */,
-				03240CC313564CB0000ADC60 /* asciitab.h in Headers */,
-				03240CC413564CB0000ADC60 /* expat.h in Headers */,
-				03240CC513564CB0000ADC60 /* expat_external.h in Headers */,
-				03240CC613564CB0000ADC60 /* iasciitab.h in Headers */,
-				03240CC713564CB0000ADC60 /* internal.h in Headers */,
-				03240CC813564CB0000ADC60 /* latin1tab.h in Headers */,
-				03240CC913564CB0000ADC60 /* macconfig.h in Headers */,
-				03240CCA13564CB0000ADC60 /* nametab.h in Headers */,
 				CD881F6519FF671C004498E8 /* backward_references.h in Headers */,
-				03240CCB13564CB0000ADC60 /* utf8tab.h in Headers */,
-				03240CCC13564CB0000ADC60 /* winconfig.h in Headers */,
+				CDCDD0281A23F233008779B5 /* xmlrole.h in Headers */,
 				CD881FE519FF6736004498E8 /* thread.h in Headers */,
 				CD881EE819FF66E5004498E8 /* vp8i.h in Headers */,
-				03240CCF13564CB0000ADC60 /* xmlrole.h in Headers */,
-				03240CD113564CB0000ADC60 /* xmltok.h in Headers */,
-				03240CD313564CB0000ADC60 /* xmltok_impl.h in Headers */,
 				03240CD513564CB0000ADC60 /* ft2build.h in Headers */,
 				03240CD613564CB0000ADC60 /* ftconfig.h in Headers */,
+				CDCDD0121A23F233008779B5 /* expat_external.h in Headers */,
 				03240CD713564CB0000ADC60 /* ftheader.h in Headers */,
 				03240CD813564CB0000ADC60 /* ftmodule.h in Headers */,
 				03240CD913564CB0000ADC60 /* ftoption.h in Headers */,
@@ -12939,16 +12899,19 @@
 				CD881FFC19FF6743004498E8 /* mux.h in Headers */,
 				CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */,
 				CD218FB513A7FDBA008337E7 /* jansson.h in Headers */,
+				CDCDD0141A23F233008779B5 /* expat.h in Headers */,
 				CD69AB3A17FA6CF90053E028 /* bucketalloc.h in Headers */,
 				CD881FBF19FF6736004498E8 /* bit_writer.h in Headers */,
 				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
+				CDCDD0201A23F233008779B5 /* utf8tab.h in Headers */,
 				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD4900AD141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD4900B0141AB6EC00913D80 /* lcode.h in Headers */,
 				CD4900B3141AB6EC00913D80 /* ldebug.h in Headers */,
 				CD4900B5141AB6EC00913D80 /* ldo.h in Headers */,
+				CDCDD01C1A23F233008779B5 /* macconfig.h in Headers */,
 				CD881FD119FF6736004498E8 /* huffman.h in Headers */,
 				CD4900B8141AB6EC00913D80 /* lfunc.h in Headers */,
 				CD4900BA141AB6EC00913D80 /* lgc.h in Headers */,
@@ -12961,6 +12924,7 @@
 				CD881F8D19FF671C004498E8 /* vp8li.h in Headers */,
 				CDD48B5617FA794B00525B77 /* SFMT-params19937.h in Headers */,
 				CD4900CC141AB6EC00913D80 /* lstate.h in Headers */,
+				CDCDD0181A23F233008779B5 /* internal.h in Headers */,
 				CD4900CE141AB6EC00913D80 /* lstring.h in Headers */,
 				CD4900D1141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881F9719FF6728004498E8 /* muxi.h in Headers */,
@@ -12976,9 +12940,11 @@
 				CD881FC519FF6736004498E8 /* endian_inl.h in Headers */,
 				CD4900DD141AB6EC00913D80 /* lzio.h in Headers */,
 				07952A401447907100143A72 /* jconfig.h in Headers */,
+				CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */,
 				07952A4C1447907100143A72 /* jdct.h in Headers */,
 				07952A591447907100143A72 /* jerror.h in Headers */,
 				CD881FD519FF6736004498E8 /* quant_levels_dec.h in Headers */,
+				CDCDD01A1A23F233008779B5 /* latin1tab.h in Headers */,
 				07952A601447907100143A72 /* jinclude.h in Headers */,
 				07952A681447907100143A72 /* jmemsys.h in Headers */,
 				07952A691447907100143A72 /* jmorecfg.h in Headers */,
@@ -12991,22 +12957,28 @@
 				07952A701447907100143A72 /* jversion.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
 				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
+				CDCDD01E1A23F233008779B5 /* nametab.h in Headers */,
 				CD69AB4617FA6CF90053E028 /* mesh.h in Headers */,
 				CDD48B5317FA794B00525B77 /* SFMT-params2281.h in Headers */,
 				CD69AB5217FA6CF90053E028 /* tess.h in Headers */,
 				CD04AED814725714009C20E5 /* crc32.h in Headers */,
+				CDCDD0221A23F233008779B5 /* winconfig.h in Headers */,
 				CDD48B4F17FA794B00525B77 /* SFMT-common.h in Headers */,
 				CD881EF019FF66E5004498E8 /* webpi.h in Headers */,
 				CD04AEDE14725714009C20E5 /* deflate.h in Headers */,
+				CDCDD0101A23F233008779B5 /* asciitab.h in Headers */,
 				CD04AEEA14725714009C20E5 /* inffast.h in Headers */,
 				CD04AEED14725714009C20E5 /* inffixed.h in Headers */,
+				CDCDD00E1A23F233008779B5 /* ascii.h in Headers */,
 				CD04AEF314725714009C20E5 /* inflate.h in Headers */,
 				CD04AEF914725714009C20E5 /* inftrees.h in Headers */,
 				CD881FCD19FF6736004498E8 /* huffman_encode.h in Headers */,
 				CD04AEFF14725714009C20E5 /* trees.h in Headers */,
+				CDCDD0321A23F233008779B5 /* xmltok.h in Headers */,
 				CD04AF0514725714009C20E5 /* zconf.h in Headers */,
 				CD881F3419FF670D004498E8 /* neon.h in Headers */,
 				CD881EDA19FF66E5004498E8 /* decode_vp8.h in Headers */,
+				CDCDD02C1A23F233008779B5 /* xmltok_impl.h in Headers */,
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* moai_whirlpool.h in Headers */,
@@ -13101,25 +13073,13 @@
 				CD881FFD19FF6743004498E8 /* types.h in Headers */,
 				CD881FB619FF6736004498E8 /* bit_reader_inl.h in Headers */,
 				03240DD013564CB0000ADC60 /* moai_utf8.h in Headers */,
-				03240E6813564CB0000ADC60 /* ascii.h in Headers */,
-				03240E6913564CB0000ADC60 /* asciitab.h in Headers */,
-				03240E6A13564CB0000ADC60 /* expat.h in Headers */,
-				03240E6B13564CB0000ADC60 /* expat_external.h in Headers */,
 				CD881FF519FF6743004498E8 /* encode.h in Headers */,
 				CD881F8819FF671C004498E8 /* vp8enci.h in Headers */,
-				03240E6C13564CB0000ADC60 /* iasciitab.h in Headers */,
+				CDCDD00B1A23F233008779B5 /* amigaconfig.h in Headers */,
 				CD881FF919FF6743004498E8 /* mux_types.h in Headers */,
-				03240E6D13564CB0000ADC60 /* internal.h in Headers */,
-				03240E6E13564CB0000ADC60 /* latin1tab.h in Headers */,
 				CDD48B7317FA794E00525B77 /* SFMT-params4253.h in Headers */,
-				03240E6F13564CB0000ADC60 /* macconfig.h in Headers */,
-				03240E7013564CB0000ADC60 /* nametab.h in Headers */,
-				03240E7113564CB0000ADC60 /* utf8tab.h in Headers */,
-				03240E7213564CB0000ADC60 /* winconfig.h in Headers */,
-				03240E7513564CB0000ADC60 /* xmlrole.h in Headers */,
-				03240E7713564CB0000ADC60 /* xmltok.h in Headers */,
-				03240E7913564CB0000ADC60 /* xmltok_impl.h in Headers */,
 				CD881F6419FF671C004498E8 /* backward_references.h in Headers */,
+				CDCDD0271A23F233008779B5 /* xmlrole.h in Headers */,
 				03240E7B13564CB0000ADC60 /* ft2build.h in Headers */,
 				03240E7C13564CB0000ADC60 /* ftconfig.h in Headers */,
 				CD881FE419FF6736004498E8 /* thread.h in Headers */,
@@ -13129,6 +13089,7 @@
 				03240E7F13564CB0000ADC60 /* ftoption.h in Headers */,
 				03240E8013564CB0000ADC60 /* ftstdlib.h in Headers */,
 				03240EA913564CB0000ADC60 /* png.h in Headers */,
+				CDCDD0111A23F233008779B5 /* expat_external.h in Headers */,
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
@@ -13148,16 +13109,19 @@
 				CD881FFB19FF6743004498E8 /* mux.h in Headers */,
 				CD69AB4D17FA6CF90053E028 /* sweep.h in Headers */,
 				CDD48B7217FA794E00525B77 /* SFMT-params2281.h in Headers */,
+				CDCDD0131A23F233008779B5 /* expat.h in Headers */,
 				CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */,
 				CD881FBE19FF6736004498E8 /* bit_writer.h in Headers */,
 				CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */,
 				CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */,
 				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
+				CDCDD01F1A23F233008779B5 /* utf8tab.h in Headers */,
 				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
 				CD490076141AB6EC00913D80 /* lapi.h in Headers */,
 				CD490078141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD49007B141AB6EC00913D80 /* lcode.h in Headers */,
+				CDCDD01B1A23F233008779B5 /* macconfig.h in Headers */,
 				CD881FD019FF6736004498E8 /* huffman.h in Headers */,
 				CD49007E141AB6EC00913D80 /* ldebug.h in Headers */,
 				CD490080141AB6EC00913D80 /* ldo.h in Headers */,
@@ -13170,6 +13134,7 @@
 				CD881F8C19FF671C004498E8 /* vp8li.h in Headers */,
 				CD490092141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD490095141AB6EC00913D80 /* lparser.h in Headers */,
+				CDCDD0171A23F233008779B5 /* internal.h in Headers */,
 				CD490097141AB6EC00913D80 /* lstate.h in Headers */,
 				CDD48B6E17FA794E00525B77 /* SFMT-common.h in Headers */,
 				CD881F9619FF6728004498E8 /* muxi.h in Headers */,
@@ -13185,9 +13150,11 @@
 				CD881FC419FF6736004498E8 /* endian_inl.h in Headers */,
 				CDD48B7617FA794E00525B77 /* SFMT-params44497.h in Headers */,
 				CD4900A2141AB6EC00913D80 /* lualib.h in Headers */,
+				CDCDD0151A23F233008779B5 /* iasciitab.h in Headers */,
 				CD4900A4141AB6EC00913D80 /* lundump.h in Headers */,
 				CD4900A6141AB6EC00913D80 /* lvm.h in Headers */,
 				CD881FD419FF6736004498E8 /* quant_levels_dec.h in Headers */,
+				CDCDD0191A23F233008779B5 /* latin1tab.h in Headers */,
 				CD4900A8141AB6EC00913D80 /* lzio.h in Headers */,
 				079529EA1447907100143A72 /* jconfig.h in Headers */,
 				079529F61447907100143A72 /* jdct.h in Headers */,
@@ -13200,22 +13167,28 @@
 				07952A131447907100143A72 /* jmorecfg.h in Headers */,
 				07952A141447907100143A72 /* jpegint.h in Headers */,
 				07952A151447907100143A72 /* jpeglib.h in Headers */,
+				CDCDD01D1A23F233008779B5 /* nametab.h in Headers */,
 				07952A1A1447907100143A72 /* jversion.h in Headers */,
 				07658750145CD06900723A7D /* tlsf.h in Headers */,
 				07658752145CD06900723A7D /* tlsfbits.h in Headers */,
 				CDD48B7A17FA794E00525B77 /* SFMT-sse2.h in Headers */,
+				CDCDD0211A23F233008779B5 /* winconfig.h in Headers */,
 				CDD48B7817FA794E00525B77 /* SFMT-params132049.h in Headers */,
 				CD881EEF19FF66E5004498E8 /* webpi.h in Headers */,
 				CDD48B7C17FA794E00525B77 /* SFMT.h in Headers */,
+				CDCDD00F1A23F233008779B5 /* asciitab.h in Headers */,
 				CD04AED614725714009C20E5 /* crc32.h in Headers */,
 				CD04AEDC14725714009C20E5 /* deflate.h in Headers */,
+				CDCDD00D1A23F233008779B5 /* ascii.h in Headers */,
 				CD04AEE814725714009C20E5 /* inffast.h in Headers */,
 				CD04AEEB14725714009C20E5 /* inffixed.h in Headers */,
 				CD881FCC19FF6736004498E8 /* huffman_encode.h in Headers */,
 				CD04AEF114725714009C20E5 /* inflate.h in Headers */,
+				CDCDD0311A23F233008779B5 /* xmltok.h in Headers */,
 				CD04AEF714725714009C20E5 /* inftrees.h in Headers */,
 				CD881F3319FF670D004498E8 /* neon.h in Headers */,
 				CD881ED919FF66E5004498E8 /* decode_vp8.h in Headers */,
+				CDCDD02B1A23F233008779B5 /* xmltok_impl.h in Headers */,
 				CD04AEFD14725714009C20E5 /* trees.h in Headers */,
 				CD04AF0314725714009C20E5 /* zconf.h in Headers */,
 				CDD48B6F17FA794E00525B77 /* SFMT-params.h in Headers */,
@@ -14387,37 +14360,23 @@
 				CD32B3C919F9EDD10059D019 /* SFMT-params132049.h in Headers */,
 				CD32B4DE19F9EE180059D019 /* SDL_audio.h in Headers */,
 				CD32B3CA19F9EDD10059D019 /* SFMT-params4253.h in Headers */,
-				CD32B3CB19F9EDD10059D019 /* ascii.h in Headers */,
 				CD32B50519F9EE180059D019 /* SDL_surface.h in Headers */,
-				CD32B3CC19F9EDD10059D019 /* asciitab.h in Headers */,
-				CD32B3CD19F9EDD10059D019 /* expat.h in Headers */,
-				CD32B3CE19F9EDD10059D019 /* expat_external.h in Headers */,
 				CD32B50019F9EE180059D019 /* SDL_revision.h in Headers */,
 				CD32B58819F9EF140059D019 /* SDL_cocoaopengl.h in Headers */,
 				CD32B4E919F9EE180059D019 /* SDL_gamecontroller.h in Headers */,
 				CD32B57E19F9EF140059D019 /* SDL_cocoakeyboard.h in Headers */,
 				CD32B4FE19F9EE180059D019 /* SDL_rect.h in Headers */,
 				CD32B51B19F9EE340059D019 /* SDL_audiomem.h in Headers */,
-				CD32B3CF19F9EDD10059D019 /* iasciitab.h in Headers */,
 				CD32B4D919F9EE180059D019 /* begin_code.h in Headers */,
 				CD32B52619F9EE3F0059D019 /* scancodes_xfree86.h in Headers */,
 				CD32B4F419F9EE180059D019 /* SDL_mouse.h in Headers */,
 				CD32B5B119F9EF200059D019 /* SDL_x11video.h in Headers */,
-				CD32B3D019F9EDD10059D019 /* internal.h in Headers */,
 				CD32B50C19F9EE180059D019 /* SDL_version.h in Headers */,
-				CD32B3D119F9EDD10059D019 /* latin1tab.h in Headers */,
 				CD32B4E419F9EE180059D019 /* SDL_copying.h in Headers */,
 				CD32B4F519F9EE180059D019 /* SDL_mutex.h in Headers */,
-				CD32B3D219F9EDD10059D019 /* macconfig.h in Headers */,
 				CD32B4EB19F9EE180059D019 /* SDL_haptic.h in Headers */,
-				CD32B3D319F9EDD10059D019 /* nametab.h in Headers */,
 				CD32B4E119F9EE180059D019 /* SDL_clipboard.h in Headers */,
-				CD32B3D419F9EDD10059D019 /* utf8tab.h in Headers */,
-				CD32B3D519F9EDD10059D019 /* winconfig.h in Headers */,
 				CD32B51719F9EE340059D019 /* SDL_audio_c.h in Headers */,
-				CD32B3D619F9EDD10059D019 /* xmlrole.h in Headers */,
-				CD32B3D719F9EDD10059D019 /* xmltok.h in Headers */,
-				CD32B3D819F9EDD10059D019 /* xmltok_impl.h in Headers */,
 				CD32B4EF19F9EE180059D019 /* SDL_keycode.h in Headers */,
 				CD32B58419F9EF140059D019 /* SDL_cocoamouse.h in Headers */,
 				CD32B3D919F9EDD10059D019 /* ft2build.h in Headers */,
@@ -14730,24 +14689,10 @@
 				CD807FC21831C61C00E658D9 /* cast_s.h in Headers */,
 				CD8080971831C68500E658D9 /* evp_locl.h in Headers */,
 				CD80813C1831C6D300E658D9 /* rpc_des.h in Headers */,
-				CD8078F51831C3B500E658D9 /* ascii.h in Headers */,
 				CD80807A1831C67D00E658D9 /* err.h in Headers */,
-				CD8078F61831C3B500E658D9 /* asciitab.h in Headers */,
-				CD8078F71831C3B500E658D9 /* expat.h in Headers */,
-				CD8078F81831C3B500E658D9 /* expat_external.h in Headers */,
 				CD80801D1831C64D00E658D9 /* engine.h in Headers */,
 				CD807F7A1831C5FB00E658D9 /* ext_dat.h in Headers */,
 				CD807F031831C5CA00E658D9 /* asn1_locl.h in Headers */,
-				CD8078F91831C3B500E658D9 /* iasciitab.h in Headers */,
-				CD8078FA1831C3B500E658D9 /* internal.h in Headers */,
-				CD8078FB1831C3B500E658D9 /* latin1tab.h in Headers */,
-				CD8078FC1831C3B500E658D9 /* macconfig.h in Headers */,
-				CD8078FD1831C3B500E658D9 /* nametab.h in Headers */,
-				CD8078FE1831C3B500E658D9 /* utf8tab.h in Headers */,
-				CD8078FF1831C3B500E658D9 /* winconfig.h in Headers */,
-				CD8079001831C3B500E658D9 /* xmlrole.h in Headers */,
-				CD8079011831C3B500E658D9 /* xmltok.h in Headers */,
-				CD8079021831C3B500E658D9 /* xmltok_impl.h in Headers */,
 				CD807F381831C5D000E658D9 /* camellia.h in Headers */,
 				CD8079031831C3B500E658D9 /* ft2build.h in Headers */,
 				CD8079041831C3B500E658D9 /* ftconfig.h in Headers */,
@@ -16278,12 +16223,8 @@
 				CD881EE219FF66E5004498E8 /* quant.c in Sources */,
 				CD881F2019FF670D004498E8 /* enc_avx2.c in Sources */,
 				03240C2913564CB0000ADC60 /* moai_utf8.c in Sources */,
-				03240CCD13564CB0000ADC60 /* xmlparse.c in Sources */,
 				CD881FBD19FF6736004498E8 /* bit_writer.c in Sources */,
-				03240CCE13564CB0000ADC60 /* xmlrole.c in Sources */,
-				03240CD013564CB0000ADC60 /* xmltok.c in Sources */,
-				03240CD213564CB0000ADC60 /* xmltok_impl.c in Sources */,
-				03240CD413564CB0000ADC60 /* xmltok_ns.c in Sources */,
+				CDCDD0241A23F233008779B5 /* xmlparse.c in Sources */,
 				03240CDB13564CB0000ADC60 /* ftbbox.c in Sources */,
 				03240CDC13564CB0000ADC60 /* ftgxval.c in Sources */,
 				03240CDD13564CB0000ADC60 /* ftlcdfil.c in Sources */,
@@ -16307,6 +16248,7 @@
 				CD881F1A19FF670D004498E8 /* dec_sse2.c in Sources */,
 				03240CE913564CB0000ADC60 /* pshinter.c in Sources */,
 				03240CEA13564CB0000ADC60 /* psmodule.c in Sources */,
+				CDCDD02A1A23F233008779B5 /* xmltok_impl.c in Sources */,
 				03240CEB13564CB0000ADC60 /* raster.c in Sources */,
 				03240CEC13564CB0000ADC60 /* sfnt.c in Sources */,
 				03240CED13564CB0000ADC60 /* truetype.c in Sources */,
@@ -16345,6 +16287,7 @@
 				CD881F2219FF670D004498E8 /* enc_mips32.c in Sources */,
 				03240D0213564CB0000ADC60 /* png.c in Sources */,
 				CD881F6719FF671C004498E8 /* config.c in Sources */,
+				CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */,
 				03240D0513564CB0000ADC60 /* pngerror.c in Sources */,
 				03240D0613564CB0000ADC60 /* pngget.c in Sources */,
 				CD881F7F19FF671C004498E8 /* picture.c in Sources */,
@@ -16403,6 +16346,7 @@
 				CD4900BB141AB6EC00913D80 /* linit.c in Sources */,
 				CD4900BC141AB6EC00913D80 /* liolib.c in Sources */,
 				CD881ED419FF66E5004498E8 /* alpha.c in Sources */,
+				CDCDD0301A23F233008779B5 /* xmltok.c in Sources */,
 				CD4900BD141AB6EC00913D80 /* llex.c in Sources */,
 				CD4900C0141AB6EC00913D80 /* lmathlib.c in Sources */,
 				CD881F3619FF670D004498E8 /* upsampling_neon.c in Sources */,
@@ -16490,6 +16434,7 @@
 				07952A6D1447907100143A72 /* jquant1.c in Sources */,
 				07952A6E1447907100143A72 /* jquant2.c in Sources */,
 				07952A6F1447907100143A72 /* jutils.c in Sources */,
+				CDCDD0261A23F233008779B5 /* xmlrole.c in Sources */,
 				0765874F145CD06900723A7D /* tlsf.c in Sources */,
 				CD69AB4417FA6CF90053E028 /* mesh.c in Sources */,
 				CD69AB4817FA6CF90053E028 /* priorityq.c in Sources */,
@@ -16580,13 +16525,8 @@
 			files = (
 				03240DCF13564CB0000ADC60 /* moai_utf8.c in Sources */,
 				CDD4911F17FA7A8600525B77 /* ftgzip.c in Sources */,
-				03240E7313564CB0000ADC60 /* xmlparse.c in Sources */,
-				03240E7413564CB0000ADC60 /* xmlrole.c in Sources */,
-				03240E7613564CB0000ADC60 /* xmltok.c in Sources */,
 				CD69AB4F17FA6CF90053E028 /* tess.c in Sources */,
 				CD881EF219FF66FF004498E8 /* demux.c in Sources */,
-				03240E7813564CB0000ADC60 /* xmltok_impl.c in Sources */,
-				03240E7A13564CB0000ADC60 /* xmltok_ns.c in Sources */,
 				CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */,
 				CD881FDA19FF6736004498E8 /* random.c in Sources */,
 				CD69AB3B17FA6CF90053E028 /* dict.c in Sources */,
@@ -16685,6 +16625,7 @@
 				CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD881FE619FF6736004498E8 /* utils.c in Sources */,
 				CD218FAC13A7FDBA008337E7 /* utf.c in Sources */,
+				CDCDD02D1A23F233008779B5 /* xmltok_ns.c in Sources */,
 				CD218FAE13A7FDBA008337E7 /* value.c in Sources */,
 				CD490075141AB6EC00913D80 /* lapi.c in Sources */,
 				CD490077141AB6EC00913D80 /* lauxlib.c in Sources */,
@@ -16757,6 +16698,7 @@
 				CD881F8E19FF671C004498E8 /* webpenc.c in Sources */,
 				CD881F7019FF671C004498E8 /* histogram.c in Sources */,
 				CD881EE519FF66E5004498E8 /* vp8.c in Sources */,
+				CDCDD0251A23F233008779B5 /* xmlrole.c in Sources */,
 				079529F01447907100143A72 /* jdapistd.c in Sources */,
 				079529F11447907100143A72 /* jdarith.c in Sources */,
 				079529F21447907100143A72 /* jdatadst.c in Sources */,
@@ -16779,6 +16721,7 @@
 				079529FE1447907100143A72 /* jdpostct.c in Sources */,
 				CD881F7C19FF671C004498E8 /* picture_tools.c in Sources */,
 				079529FF1447907100143A72 /* jdsample.c in Sources */,
+				CDCDD0291A23F233008779B5 /* xmltok_impl.c in Sources */,
 				CD881F2919FF670D004498E8 /* lossless_mips32.c in Sources */,
 				07952A001447907100143A72 /* jdtrans.c in Sources */,
 				07952A011447907100143A72 /* jerror-moai.c in Sources */,
@@ -16806,6 +16749,8 @@
 				CD04AED314725714009C20E5 /* crc32.c in Sources */,
 				CD04AED914725714009C20E5 /* deflate.c in Sources */,
 				CD881F1319FF670D004498E8 /* dec_clip_tables.c in Sources */,
+				CDCDD0231A23F233008779B5 /* xmlparse.c in Sources */,
+				CDCDD02F1A23F233008779B5 /* xmltok.c in Sources */,
 				CD04AEDF14725714009C20E5 /* gzio.c in Sources */,
 				CD04AEE214725714009C20E5 /* infback.c in Sources */,
 				CD881F6219FF671C004498E8 /* backward_references.c in Sources */,
@@ -17770,13 +17715,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD32B42719F9EDD10059D019 /* moai_utf8.c in Sources */,
-				CD32B42819F9EDD10059D019 /* xmlparse.c in Sources */,
-				CD32B42919F9EDD10059D019 /* xmlrole.c in Sources */,
-				CD32B42A19F9EDD10059D019 /* xmltok.c in Sources */,
 				CD32B57319F9EF000059D019 /* SDL_systls.c in Sources */,
 				CD32B51619F9EE340059D019 /* SDL_audio.c in Sources */,
-				CD32B42B19F9EDD10059D019 /* xmltok_impl.c in Sources */,
-				CD32B42C19F9EDD10059D019 /* xmltok_ns.c in Sources */,
 				CD32B42D19F9EDD10059D019 /* ftbbox.c in Sources */,
 				CD32B42E19F9EDD10059D019 /* ftgxval.c in Sources */,
 				CD32B42F19F9EDD10059D019 /* ftlcdfil.c in Sources */,
@@ -19964,7 +19904,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/expat-2.1.0/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",
@@ -21855,7 +21795,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/expat-2.1.0/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",
@@ -25808,7 +25748,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/expat-2.1.0/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",
@@ -26228,7 +26168,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/expat-2.1.0/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",

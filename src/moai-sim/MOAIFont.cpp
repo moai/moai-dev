@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <contrib/moai_utf8.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
 #include <moai-sim/MOAIGfxDevice.h>

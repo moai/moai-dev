@@ -1824,8 +1824,7 @@ u32 MOAIImage::GetPaletteSize () const {
 //----------------------------------------------------------------//
 u32 MOAIImage::GetPixel ( u32 x, u32 y ) const {
 	
-	if ( y >= this->mHeight ) return 0;
-	if ( x >= this->mWidth ) return 0;
+	if (( x >= this->mWidth ) || ( y >= this->mHeight )) return 0;
 	
 	return ZLBitBuffer::GetValue ( this->GetRowAddr ( y ), x, this->GetPixelDepthInBits ());
 }
@@ -2323,8 +2322,7 @@ void MOAIImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 //----------------------------------------------------------------//
 void MOAIImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 
-	if ( y >= this->mHeight ) return 0;
-	if ( x >= this->mWidth ) return 0;
+	if (( x >= this->mWidth ) || ( y >= this->mHeight )) return;
 	
 	ZLBitBuffer::SetValue ( this->GetRowAddr ( y ), pixel, x, this->GetPixelDepthInBits ());
 }
