@@ -47,6 +47,9 @@ if ( BUILD_LINUX )
     pthread 
     rt
     Xxf86vm
+    xcb
+    xcb-randr
+    xcb-util
   )
 endif ( BUILD_LINUX )
 

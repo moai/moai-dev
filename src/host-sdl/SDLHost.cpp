@@ -9,6 +9,15 @@
 #include <host-modules/aku_modules.h>
 #include <host-sdl/SDLHost.h>
 
+#ifdef MOAI_OS_WINDOWS
+    #include <windows.h>
+#elif defined(MOAI_OS_LINUX)
+    #include <X11/Xlib.h>      //XOpenDisplay,etc
+    #include <xcb/xcb.h>
+    #include <xcb/xcb_aux.h> 
+    #include <xcb/randr.h>
+#endif
+
 #include <SDL.h>
 
 #include "Joystick.h"
@@ -80,7 +89,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
-		AKUSetScreenSize ( width, height );
+		AKUSetViewSize ( width, height );
 	}
 }
 
@@ -92,6 +101,7 @@ static void	Finalize			();
 static void	Init				( int argc, char** argv );
 static void	MainLoop			();
 static void	PrintMoaiVersion	();
+static void SetScreenDpi        ();
 
 //----------------------------------------------------------------//
 void Finalize () {
@@ -120,6 +130,14 @@ void Init ( int argc, char** argv ) {
 	AKUModulesRunLuaAPIWrapper ();
 
 	AKUSetInputConfigurationName ( "SDL" );
+
+    SDL_DisplayMode dm;
+
+    if ( SDL_GetDesktopDisplayMode( 0, &dm ) == 0 ) {
+    	AKUSetScreenSize(dm.w, dm.h);
+    }
+
+    SetScreenDpi();
 
 	AKUReserveInputDevices			( InputDeviceID::TOTAL );
 	AKUSetInputDevice				( InputDeviceID::DEVICE, "device" );
@@ -160,6 +178,40 @@ void _onMultiButton( int touch_id, float x, float y, int state ) {
 	);
 }
 
+
+
+//----------------------------------------------------------------//
+void SetScreenDpi() {
+
+#ifdef MOAI_OS_WINDOWS
+
+    HDC hDC = GetWindowDC(NULL);
+    int widthInMm = GetDeviceCaps(hDC, HORZSIZE);
+    double widthInInches = widthInMm / 25.4;
+    int widthInPixels = GetDeviceCaps(hDC, HORZRES);
+    AKUSetScreenDpi(( int )( widthInPixels / widthInInches ));
+
+#elif defined(MOAI_OS_LINUX)
+
+	char* display_name = getenv( "DISPLAY" );
+	if ( !display_name ) return;
+
+	int nscreen = 0;
+	xcb_connection_t* conn = xcb_connect( display_name, &nscreen );
+	if ( !conn ) return;
+
+	xcb_screen_t* screen = xcb_aux_get_screen( conn, nscreen );
+
+	double widthInInches = screen->width_in_millimeters / 25.4;
+	int widthInPixels = screen->width_in_pixels;
+
+	AKUSetScreenDpi(( int )widthInPixels / widthInInches );
+
+	xcb_disconnect( conn );
+  
+#endif
+
+}
 
 //----------------------------------------------------------------//
 void MainLoop () {
