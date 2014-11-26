@@ -98,13 +98,10 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 	STLString absDirPath = ZLFileSys::TruncateFilename ( absFilePath );
 
 	u32 len = stream.GetLength ();
-	char* buf = ( char* )malloc ( len + 1 );
+	char* buf = ( char* )alloca ( len + 1 );
 	stream.ReadBytes ( buf, len );
 	buf [ len ] = '\0';
 	stream.Close ();
-
-	char* p = buf;
-	char* endp = p + len;
 
 	MOAIGlyphSet* glyphSet = 0;
 	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
@@ -112,7 +109,9 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 	this->mCache.Set ( *this, glyphCache );
 	this->mReader.Set ( *this, 0 );
 
-	p = buf;
+	char* p = buf;
+	char* endp = p + len;
+
 	while ( p < endp ) {
 	
 		// Parse each line.

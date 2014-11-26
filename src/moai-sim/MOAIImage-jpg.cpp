@@ -264,7 +264,7 @@ void MOAIImage::LoadJpg ( void* jpgInfoParam, u32 transform ) {
 	}
 	else {
 		
-		void* rowBuffer = malloc ( srcRowSize );
+		void* rowBuffer = alloca ( srcRowSize );
 		JSAMPROW samprow = ( JSAMPROW )rowBuffer;
 		
 		for ( u32 y = 0; y < height; ++y ) {
