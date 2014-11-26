@@ -78,6 +78,8 @@ MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAITexture::Clear () {
 
+	this->Destroy ();
+
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
 	this->mImage.Clear ();
