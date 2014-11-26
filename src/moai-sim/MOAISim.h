@@ -4,7 +4,9 @@
 #ifndef	MOAISIM_H
 #define	MOAISIM_H
 
+#include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIEaseDriver.h>
+#include <moai-sim/MOAIInputQueue.h>
 #include <moai-util/MOAITaskSubscriber.h>
 #include <moai-util/MOAITaskThread.h>
 
@@ -101,6 +103,10 @@ private:
 	
 	MOAILuaMemberRef	mLuaGCFunc;
 	
+	MOAILuaSharedPtr < MOAIInputQueue >		mInputMgr;
+	MOAILuaSharedPtr < MOAIActionTree >		mActionMgr; // this is a sub-tree
+	MOAILuaSharedPtr < MOAIActionTree >		mActionTree; // the sim's main action tree
+	
 	//----------------------------------------------------------------//
 	static int		_clearLoopFlags				( lua_State* L );
 	static int		_crash						( lua_State* L );
@@ -109,8 +115,10 @@ private:
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_forceGC					( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
+	static int		_getActionMgr				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
+	static int		_getInputMgr				( lua_State* L );
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
@@ -172,6 +180,10 @@ public:
 	GET ( double, SimTime, mSimTime )
 	GET ( u32, StepCount, mStepCount )
 	GET ( float, FrameRate, mFrameRate )
+	
+	GET ( MOAIInputQueue&, InputMgr, *mInputMgr );
+	GET ( MOAIActionTree&, ActionMgr, *mActionMgr );
+	GET ( MOAIActionTree&, ActionTree, *mActionTree );
 	
 	GET_SET ( EnterFullscreenModeFunc, EnterFullscreenModeFunc, mEnterFullscreenModeFunc );
 	GET_SET ( ExitFullscreenModeFunc, ExitFullscreenModeFunc, mExitFullscreenModeFunc );

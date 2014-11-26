@@ -33,12 +33,9 @@ private:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			IsRenewable				();
-	bool			IsValid					();
-	void			OnBind					();
-	void			OnClear					();
-	void			OnCreate				();
-	void			OnLoad					();
+	void			OnGPUBind				();
+	bool			OnGPUCreate				();
+	void			OnImageStatusChanged	( bool isOK );
 
 public:
 	

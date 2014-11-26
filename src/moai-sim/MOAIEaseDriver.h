@@ -48,7 +48,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIEaseDriver		();
 					~MOAIEaseDriver		();
-	void			OnUpdate			( float step );
+	void			OnUpdate			( double step );
 	u32				ParseForMove		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
 	u32				ParseForSeek		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
 	void			RegisterLuaClass	( MOAILuaState& state );

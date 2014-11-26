@@ -5,6 +5,7 @@
 
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -46,7 +47,7 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	softRelease
+/**	@lua	purge
 	@text	Attempt to release the resource. Generally this is used when
 			responding to a memory warning from the system. A resource
 			will only be released if it is renewable (i.e. has a renew
@@ -61,13 +62,22 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 	@opt	number age				Release only if the texture hasn't been used in X frames.
 	@out	boolean released		True if the texture was actually released.
 */
-int MOAIGfxResource::_softRelease ( lua_State* L ) {
+int MOAIGfxResource::_purge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
 	int age = state.GetValue < int >( 2, 0 );
-	lua_pushboolean ( L, self->SoftRelease ( age ));
+	lua_pushboolean ( L, self->Purge ( age ));
 
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResource::_setLoadingPolicy ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
+
+	self->mLoadingPolicy = state.GetValue < u32 >( 1, LOADING_POLICY_NONE );
+	return 0;
 }
 
 //================================================================//
@@ -75,113 +85,142 @@ int MOAIGfxResource::_softRelease ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::Affirm () {
-	
-	if ( this->mState == STATE_PRECREATE ) {
-		this->OnCreate ();
-		this->mState = this->IsValid () ? STATE_READY : STATE_ERROR;
-	}
-	return this->mState == STATE_READY;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
+
+	if ( this->mState == STATE_NEW ) return false;
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
 		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
 		return false;
 	}
 
-	if ( this->Affirm ()) {
-		this->OnBind ();
-		
+	if ( this->DoGPUAffirm ()) {
 		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
-		
+		this->OnGPUBind ();
 		return true;
 	}
 	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Clear () {
-
-	if ( MOAIGfxDevice::IsValid ()) {
-		this->OnDestroy ();
-	}
-	this->OnInvalidate ();
-	this->OnClear ();
-	this->mState = STATE_PRELOAD;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResource::Destroy () {
 
-	if ( this->mState == STATE_READY ) {
-
-		this->OnDestroy ();
-		this->OnInvalidate ();
-
-		this->mState = STATE_PRELOAD;
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		this->OnGPUDestroy ();
 	}
-	else if ( this->mState == STATE_PRECREATE ) {
-
-		this->mState = STATE_PRELOAD;
-	}
+	this->OnGPULost ();
+	this->OnCPUDestroy ();
+	this->mState = STATE_NEW;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Invalidate () {
+bool MOAIGfxResource::DoCPUAffirm () {
 
-	if ( this->mState == STATE_READY ) {
-
-		this->OnInvalidate ();
-		this->mState = STATE_PRELOAD;
+	if ( this->mState == STATE_NEW ) {
+		this->mState = STATE_NEEDS_CPU_CREATE;
 	}
-	else if ( this->mState == STATE_PRECREATE ) {
 
-		this->mState = STATE_PRELOAD;
+	u32 loadingPolicy = this->GetLoadingPolicy ();
+	
+	// if we're deferring both CPU and GPU, bail
+	if ( loadingPolicy == LOADING_POLICY_CPU_GPU_BIND ) return true;
+
+	// whether or not GPU is deferred, do the CPU part
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->mState = this->OnCPUCreate () ? STATE_NEEDS_GPU_CREATE : STATE_ERROR;
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::Load () {
-
-	if ( this->mState != STATE_ERROR ) {
-
-		if ( this->mState == STATE_READY ) {
-		
-			this->OnDestroy ();
-			this->OnInvalidate ();
+	
+	// turns out we want to do the GPU piece ASAP as well
+	if ( this->mState == STATE_NEEDS_GPU_CREATE ) {
+	
+		if ( loadingPolicy == LOADING_POLICY_CPU_ASAP_GPU_NEXT ) {
+	
+			MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
 		}
-
-		this->OnLoad ();
-		this->mState = STATE_PRECREATE;
+		else if ( loadingPolicy == LOADING_POLICY_CPU_GPU_ASAP ) {
+		
+			#if MOAI_USE_GFX_THREAD
+			
+				MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
+			
+			#else
+			
+				zglBegin ();
+				this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
+				if ( this->mState == STATE_READY_TO_BIND ) {
+					this->OnCPUDestroy ();
+				}
+				zglEnd ();
+			
+			#endif
+		
+		}
 	}
+	
+	return this->mState != STATE_ERROR;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::DoGPUAffirm () {
+
+	if ( this->mState == STATE_READY_TO_BIND ) return true;
+	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_NEW )) return false;
+
+	// if we get here, load both CPU and GPU parts
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->mState = this->OnCPUCreate () ? STATE_NEEDS_GPU_CREATE : STATE_ERROR;
+	}
+
+	if ( this->mState == STATE_NEEDS_GPU_CREATE ) {
+		this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
+		if ( this->mState == STATE_READY_TO_BIND ) {
+			this->OnCPUDestroy ();
+		}
+	}
+	return this->mState == STATE_READY_TO_BIND;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGfxResource::GetLoadingPolicy () {
+
+	if ( this->mLoadingPolicy == LOADING_POLICY_NONE ) {
+		u32 globalLoadingPolicy = MOAIGfxDevice::Get ().mResourceLoadingPolicy;
+		return globalLoadingPolicy == LOADING_POLICY_NONE ? DEFAULT_LOADING_POLICY : globalLoadingPolicy;
+	}
+	return this->mLoadingPolicy;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () :
-	mState ( STATE_PRELOAD ),
-	mLastRenderCount ( 0 ) {
+	mState ( STATE_NEW ),
+	mLastRenderCount ( 0 ),
+	mLoadingPolicy ( LOADING_POLICY_NONE ) {
 
 	RTTI_SINGLE ( MOAIGfxState )
 
 	this->mLink.Data ( this );
 	
-	MOAIGfxDevice::Get ().InsertGfxResource ( *this );
+	MOAIGfxResourceMgr::Get ().InsertGfxResource ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResource::~MOAIGfxResource () {
 
-	if ( MOAIGfxDevice::IsValid ()) {
-		MOAIGfxDevice::Get ().RemoveGfxResource ( *this );
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
+	
+	state.SetField ( -1, "LOADING_POLICY_NONE",					( u32 )LOADING_POLICY_NONE );
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )LOADING_POLICY_CPU_GPU_ASAP );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )LOADING_POLICY_CPU_ASAP_GPU_NEXT );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )LOADING_POLICY_CPU_ASAP_GPU_BIND );
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )LOADING_POLICY_CPU_GPU_BIND );
 }
 
 //----------------------------------------------------------------//
@@ -189,30 +228,43 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },
-		{ "softRelease",			_softRelease },
+		{ "purge",					_purge },
+		{ "softRelease",			_purge }, // back compat
+		{ "setLoadingPolicy",		_setLoadingPolicy },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::SoftRelease ( u32 age ) {
+bool MOAIGfxResource::Purge ( u32 age ) {
 
-	if ( this->mState != STATE_READY ) return false;
+	if ( this->mState == STATE_ERROR ) return false;
 
 	age = MOAIRenderMgr::Get ().GetRenderCounter () - age;
 
 	if ( this->mLastRenderCount <= age ) {
-		if ( this->IsRenewable ()) {
-			this->Load ();
-			return true;
-		}
+		this->OnCPUDestroy ();
+		this->OnGPUDestroy ();
+		this->mState = STATE_NEEDS_CPU_CREATE;
+		return true;
 	}
 	return false;
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::Renew () {
+
+	// any state other than error we go back to square zero
+	if ( this->mState != STATE_ERROR ) {
+		this->OnGPULost (); // clear out the resource id (if any)
+		this->mState = STATE_NEEDS_CPU_CREATE;
+		this->DoGPUAffirm ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::Unbind () {
 
-	this->OnUnbind ();
+	this->OnGPUUnbind ();
 }

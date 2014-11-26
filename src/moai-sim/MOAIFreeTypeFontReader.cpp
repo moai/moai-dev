@@ -35,7 +35,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 	int offset = render->mPenX;
 
 	MOAIImage* image = render->mImage;
-	ZLColor::Format colorFormat = image->GetColorFormat ();
+	ZLColor::ColorFormat colorFormat = image->GetColorFormat ();
 	ZLColorBlendFunc blendFunc = render->mBlendFunc;
 
 	u32 penColor = render->mPenColor.PackRGBA ();
@@ -221,7 +221,7 @@ void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
 
-	if ( image.GetPixelFormat () != ZLPixel::TRUECOLOR ) return FONT_ERROR;
+	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
 
 	if ( !this->mFace ) return FONT_ERROR;
 	if ( this->mGlyphCode == GLYPH_CODE_NULL ) return FONT_ERROR;

@@ -30,12 +30,12 @@ public:
 	DECL_LUA_FACTORY ( MOAIPointerSensor )
 
 	//----------------------------------------------------------------//
-					MOAIPointerSensor		();
-					~MOAIPointerSensor		();
-	void			ParseEvent				( ZLStream& eventStream );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	static void		WriteEvent				( ZLStream& eventStream, int x, int y );
+	static void			EnqueuePointerEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, int x, int y );
+						MOAIPointerSensor		();
+						~MOAIPointerSensor		();
+	void				ParseEvent				( ZLStream& eventStream );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

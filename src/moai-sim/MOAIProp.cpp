@@ -726,14 +726,21 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 
 	u32 status = this->GetModelBounds ( bounds );
 	
-	if ( status == BOUNDS_GLOBAL ) return true;
 	if ( status == BOUNDS_EMPTY ) return false;
 	
-	bounds.Bless ();
-	bounds.Inflate ( pad );
-    if ( pad != 0 ) bounds.Bless ();
-    
-	return bounds.Contains ( vec );
+	bool passTrivial = false;
+	
+	if ( status == BOUNDS_GLOBAL ) {
+		passTrivial = true;
+	}
+	else {
+		bounds.Bless ();
+		bounds.Inflate ( pad );
+		if ( pad != 0 ) bounds.Bless ();
+		passTrivial = bounds.Contains ( vec );
+	}
+	
+	return ( passTrivial && this->mDeck ) ? this->mDeck->Inside ( vec, pad ) : passTrivial;
 }
 
 //----------------------------------------------------------------//

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIJoystickSensor.h>
+#include <moai-sim/MOAIInputQueue.h>
 
 //================================================================//
 // MOAIJoystickEvent
@@ -55,6 +56,15 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIJoystickSensor::EnqueueJoystickEvent( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float x, float y ) {
+
+	if ( queue.WriteEventHeader < MOAIJoystickSensor >( deviceID, sensorID )) {
+		queue.Write < float >( x );
+		queue.Write < float >( y );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIJoystickSensor::MOAIJoystickSensor () {
 
 	RTTI_SINGLE ( MOAISensor )
@@ -96,11 +106,4 @@ void MOAIJoystickSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIJoystickSensor::WriteEvent ( ZLStream& eventStream, float x, float y ) {
-
-	eventStream.Write < float >( x );
-	eventStream.Write < float >( y );
 }

@@ -4,7 +4,9 @@
 #ifndef	MOAIVECTORUTIL_H
 #define	MOAIVECTORUTIL_H
 
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorStyle.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAIVectorShape;
 struct TESStesselator;
@@ -14,16 +16,18 @@ typedef float TESSreal;
 // SafeTesselator
 //================================================================//
 class SafeTesselator {
-private:
-
 public:
 
-	struct TESStesselator* mTess;
+	static const ZLVec3D	sNormal;
+
+	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
+	void	GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
+	void	Reset					();
 			SafeTesselator			();
 			~SafeTesselator			();
-	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal );
+	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
 };
 
 //================================================================//

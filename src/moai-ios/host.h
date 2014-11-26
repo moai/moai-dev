@@ -19,15 +19,10 @@ AKU_API void	AKUIosAppFinalize									();
 AKU_API void	AKUIosAppInitialize									();
 AKU_API void	AKUIosContextInitialize								();
 
-AKU_API void	AKUIosDidBecomeActive								();
-AKU_API void	AKUIosDidEnterBackground							();
 AKU_API void	AKUIosNotifyLocalNotificationReceived				( UILocalNotification* notification );
 AKU_API void	AKUIosNotifyRemoteNotificationReceived				( NSDictionary* notification );
 AKU_API void	AKUIosNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken, NSError* error );
 AKU_API void	AKUIosOpenUrl										( NSURL* url, NSString* sourceApplication );
 AKU_API void	AKUIosSetFrameBuffer								( GLuint frameBuffer );
-AKU_API void	AKUIosWillEnterForeground							();
-AKU_API void	AKUIosWillResignActive								();
-AKU_API void	AKUIosWillTerminate									();
 
 #endif

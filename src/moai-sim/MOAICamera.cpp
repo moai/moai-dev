@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
+#include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAIViewport.h>
 
 #define DEFAULT_HFOV 60.0f
@@ -124,7 +125,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -154,7 +155,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;

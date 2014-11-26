@@ -301,7 +301,7 @@ void MOAICollisionWorld::OnPropUpdated ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::OnUpdate ( float step ) {
+void MOAICollisionWorld::OnUpdate ( double step ) {
 	UNUSED ( step );
 
 	this->ProcessOverlaps ();

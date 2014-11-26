@@ -23,28 +23,6 @@ class MOAIVertexFormat;
 class MOAIViewport;
 
 //================================================================//
-// MOAIGfxDeleter
-//================================================================//
-class MOAIGfxDeleter {
-public:
-
-	enum {
-		DELETE_BUFFER,
-		DELETE_FRAMEBUFFER,
-		DELETE_PROGRAM,
-		DELETE_SHADER,
-		DELETE_TEXTURE,
-		DELETE_RENDERBUFFER,
-	};
-
-	u32		mResourceID;
-	u32		mType;
-
-	//----------------------------------------------------------------//
-	void		Delete			();
-};
-
-//================================================================//
 // MOAIGfxDevice
 //================================================================//
 /**	@lua	MOAIGfxDevice
@@ -124,9 +102,6 @@ private:
 	u32				mPrimSize;
 	u32				mPrimTop;
 	u32				mPrimType;
-	
-	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
-	ZLLeanList < MOAIGfxResource* > mResources;
 
 	ZLRect					mScissorRect;
 	MOAIShaderProgram*		mShaderProgram;
@@ -152,24 +127,25 @@ private:
 
 	ZLRect			mViewRect;
 	ZLFrustum		mViewVolume;
-	
-	ZLLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
 
 	MOAILuaSharedPtr < MOAITexture > mDefaultTexture;
 
 	MOAILuaSharedPtr < MOAIFrameBuffer > mDefaultBuffer;
 	MOAIFrameBuffer* mFrameBuffer;
+	
+	u32				mResourceLoadingPolicy;
 
 	//----------------------------------------------------------------//
-	static int				_getFrameBuffer			( lua_State* L );
-	static int				_getMaxTextureUnits		( lua_State* L );
-	static int				_getViewSize			( lua_State* L );
-	static int				_isProgrammable			( lua_State* L );
-	static int				_setDefaultTexture		( lua_State* L );
-	static int				_setPenColor			( lua_State* L );
-	static int				_setPenWidth			( lua_State* L );
-	static int				_setPointSize			( lua_State* L );
-	static int				_release				( lua_State* L );
+	static int				_getFrameBuffer				( lua_State* L );
+	static int				_getMaxTextureUnits			( lua_State* L );
+	static int				_getViewSize				( lua_State* L );
+	static int				_isProgrammable				( lua_State* L );
+	static int				_setDefaultTexture			( lua_State* L );
+	static int				_setPenColor				( lua_State* L );
+	static int				_setPenWidth				( lua_State* L );
+	static int				_setPointSize				( lua_State* L );
+	static int				_setResourceLoadingPolicy	( lua_State* L );
+	static int				_release					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
@@ -177,8 +153,6 @@ private:
 	void					DrawPrims				();
 	void					GpuLoadMatrix			( const ZLMatrix4x4& mtx ) const;
 	void					GpuMultMatrix			( const ZLMatrix4x4& mtx ) const;
-	void					InsertGfxResource		( MOAIGfxResource& resource );
-	void					RemoveGfxResource		( MOAIGfxResource& resource );
 	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
 	void					TransformAndWriteQuad	( ZLVec4D* vtx, ZLVec2D* uv );
 	void					UpdateFinalColor		();
@@ -254,13 +228,8 @@ public:
 							~MOAIGfxDevice			();
 	
 	void					OnGlobalsFinalize		();
-	
-	void					ProcessDeleters			();
-	void					PushDeleter				( u32 type, u32 id );
 
 	void					RegisterLuaClass		( MOAILuaState& state );
-	void					ReleaseResources		();
-	void					RenewResources			();
 	
 	void					ReportTextureAlloc		( cc8* name, size_t size );
 	void					ReportTextureFree		( cc8* name, size_t size );
@@ -321,9 +290,7 @@ public:
 	
 	void					SetViewRect				();
 	void					SetViewRect				( ZLRect rect );
-	
-	void					SoftReleaseResources	( u32 age );
-	
+		
 	void					UpdateShaderGlobals		();
 	void					UpdateViewVolume		();
 	

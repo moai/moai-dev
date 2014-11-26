@@ -471,7 +471,7 @@ u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::OnUpdate ( float step ) {
+void MOAIParticleSystem::OnUpdate ( double step ) {
 
 	// clear out the sprites
 	this->mSpriteTop = 0;

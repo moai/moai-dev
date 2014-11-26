@@ -7,6 +7,14 @@
 class ZLColorVec;
 class ZLColorBlendFunc;
 
+#define LUMA_601_R 0.299
+#define LUMA_601_G 0.587
+#define LUMA_601_B 0.114
+
+#define LUMA_709_R 0.2126
+#define LUMA_709_G 0.7152
+#define LUMA_709_B 0.0722
+
 //================================================================//
 // ZLColor
 //================================================================//
@@ -20,7 +28,9 @@ namespace ZLColor {
 		A_BYTE,
 	};
 
-	enum Format {
+	enum ColorFormat {
+		A_1,
+		A_4,
 		A_8,
 		RGB_888,
 		RGB_565,
@@ -60,28 +70,25 @@ namespace ZLColor {
 	u32				BlendFactorAlpha			( u32 color32 );
 	u32				BlendFactorOneMinusAlpha	( u32 color32 );
 	u32				BlendFactorOneMinusColor	( u32 color32 );
-	void			Convert						( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors );
-	u32				ConvertFromRGBA				( u32 color, Format format );
-	u32				ConvertToRGBA				( u32 color, Format format );
-	void			Desaturate					( void* colors, Format format, u32 nColors, float K );
-	void			GammaCorrection				( void* colors, Format format, u32 nColors, float gamma );
+	void			Convert						( void* dest, ColorFormat destFmt, const void* src, ColorFormat srcFmt, u32 nColors );
+	u32				ConvertFromRGBA				( u32 color, ColorFormat format );
+	u32				ConvertToRGBA				( u32 color, ColorFormat format );
+	void			Desaturate					( void* colors, ColorFormat format, u32 nColors, float rY, float gY, float bY, float K );
+	void			GammaCorrection				( void* colors, ColorFormat format, u32 nColors, float gamma );
 	u32				GetBlendFactor				( u32 src32, u32 dst32, BlendFactor factor );
-	u32				GetDepth					( Format format );
-	u32				GetMask						( Format format );
-	u32				GetSize						( Format format );
+	u32				GetDepthInBits				( ColorFormat format );
+	u32				GetMask						( ColorFormat format );
 	u32				LerpFixed					( u32 c0, u32 c1, u8 t );
 	u32				Mul							( u32 c0, u32 c1 );
 	u32				NearestNeighbor				( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	u32				PackRGBA					( int r, int g, int b, int a );
 	u32				PackRGBA					( float r, float g, float b, float a );
-	void			PremultiplyAlpha			( void* colors, Format format, u32 nColors );
-	u32				ReadRGBA					( const void* stream, Format format );
+	void			PremultiplyAlpha			( void* colors, ColorFormat format, u32 nColors );
 	u32				Scale						( u32 c0, u8 s ); // scale all components by s and normalize back to 255
 	ZLColorVec		Set							( u32 c0 );
 	u32				Set							( u32 c0, u8 b, u8 v ); // c0 [ b ] = v
 	u32				Sub							( u32 c0, u32 c1 );
 	u32				Swizzle						( u32 c0, u32 sw );
-	void			WriteRGBA					( void* stream, u32 color, Format format );
 };
 
 //================================================================//
@@ -93,29 +100,6 @@ public:
 	ZLColor::BlendFactor		mSrcFactor;
 	ZLColor::BlendFactor		mDstFactor;
 	ZLColor::BlendEquation		mEquation;
-};
-
-//================================================================//
-// ZLPixel
-//================================================================//
-namespace ZLPixel {
-
-	enum Format {
-		TRUECOLOR,
-		INDEX_4,
-		INDEX_8,
-		PXL_FMT_UNKNOWN,
-	};
-
-	//----------------------------------------------------------------//
-	u32				GetDepth			( Format format, ZLColor::Format colorFormat );
-	u32				GetMask				( Format format, ZLColor::Format colorFormat );
-	u32				GetPaletteCount		( Format format );
-	u32				GetPaletteSize		( Format format, ZLColor::Format colorFormat );
-	float			GetSize				( Format format, ZLColor::Format colorFormat );
-	u32				ReadPixel			( const void* stream, u32 nBytes );
-	void			ToTrueColor			( void* destColors, const void* srcColors, const void* palette, u32 nColors, ZLColor::Format colorFormat, Format pixelFormat );
-	void			WritePixel			( void* stream, u32 pixel, u32 nBytes );
 };
 
 //================================================================//
@@ -146,6 +130,7 @@ public:
 	void			ToHSV				( float& h, float& s, float& v );
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();
+					ZLColorVec			( u32 rgba );
 					ZLColorVec			( float r, float g, float b, float a );
 	
 	//----------------------------------------------------------------//

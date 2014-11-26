@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
@@ -84,13 +85,24 @@ int MOAIVectorTesselator::_drawingToWorldVec ( lua_State* L ) {
 int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	int error = self->Finish ();
+	bool generateMask = state.GetValue < bool >( 2, false );
+	
+	int error = self->Finish ( generateMask );
 	
 	bool hasContent = self->mVtxStream.GetLength () > 0;
 	
 	state.Push ( error );
 	state.Push ( hasContent );
 	return 2;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::_getMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	state.Push (( MOAILuaObject* )self->mMask );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -545,6 +557,8 @@ int MOAIVectorTesselator::_worldToDrawingVec ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVectorTesselator::Clear () {
 
+	this->mMask.Set ( *this, 0 );
+
 	for ( u32 i = 0; i < this->mDirectory.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mDirectory [ i ];
 		if ( shape ) {
@@ -579,7 +593,7 @@ u32 MOAIVectorTesselator::CountVertices () {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Finish () {
+int MOAIVectorTesselator::Finish ( bool generateMask ) {
 
 	u32 vertsTop = this->mVertexStack.GetTop ();
 	u32 shapesTop = this->mShapeStack.GetTop ();
@@ -614,6 +628,10 @@ int MOAIVectorTesselator::Finish () {
 		
 		if ( this->mShapeStack.GetTop () == shapesTop ) {
 			this->mVertexStack.Clear ();
+			
+			this->mGenerateMask = generateMask;
+			this->mMaskTesselator.Reset ();
+			
 			error = this->Tesselate ();
 			
 			if ( error ) return error;
@@ -624,13 +642,19 @@ int MOAIVectorTesselator::Finish () {
 }
 
 //----------------------------------------------------------------//
+SafeTesselator* MOAIVectorTesselator::GetMaskTesselator () {
+
+	return this->mGenerateMask ? &this->mMaskTesselator : 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+
+	this->mIdxStream.Seek ( 0, SEEK_SET );
+	this->mVtxStream.Seek ( 0, SEEK_SET );
 
 	idxBuffer.Clear ();
 	vtxBuffer.Clear ();
-	
-	this->mIdxStream.Seek ( 0, SEEK_SET );
-	this->mVtxStream.Seek ( 0, SEEK_SET );
 	
 	idxBuffer.ReserveIndices ( this->mIdxStream.GetLength () >> 2 );
 	idxBuffer.GetStream ().WriteStream ( this->mIdxStream );
@@ -850,6 +874,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "drawingToWorld",			_drawingToWorld },
 		{ "drawingToWorldVec",		_drawingToWorldVec },
 		{ "finish",					_finish },
+		{ "getMask",				_getMask },
 		{ "getTransform",			_getTransform },
 		{ "getTriangles",			_getTriangles },
 		{ "pushBezierVertices",		_pushBezierVertices },
@@ -930,10 +955,40 @@ int MOAIVectorTesselator::Tesselate () {
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this );
-		
 		if ( error ) return error;
 	}
 	
+	SafeTesselator* maskTesselator = this->GetMaskTesselator ();
+	if ( maskTesselator ) {
+		error = maskTesselator->Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
+		if ( !error ) {
+		
+			MOAIRegion* region = new MOAIRegion ();
+			this->mMask.Set ( *this, region );
+			
+			const int* elems = tessGetElements ( maskTesselator->mTess );
+			int nelems = tessGetElementCount ( maskTesselator->mTess );
+			const float* verts = tessGetVertices ( maskTesselator->mTess );
+
+			// each elem is an edge loop
+			region->Init ( nelems );
+			
+			for ( int i = 0; i < nelems; ++i ) {
+			
+				ZLPolygon2D& poly = ( *region )[ i ];
+			
+				int b = elems [( i * 2 )];
+				int n = elems [( i * 2 ) + 1 ];
+				
+				poly.Init ( n );
+				
+				memcpy ( poly.Data (), &verts [ b * 2 ], sizeof ( ZLVec2D ) * n );
+				poly.Bless ();
+			}
+		}
+	}
+	
+	this->mMaskTesselator.Reset ();
 	return error;
 }
 

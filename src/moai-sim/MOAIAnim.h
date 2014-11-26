@@ -53,7 +53,7 @@ public:
 	void			ClearLinks			();
 					MOAIAnim			();
 					~MOAIAnim			();
-	void			OnUpdate			( float step );
+	void			OnUpdate			( double step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );

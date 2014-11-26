@@ -613,42 +613,54 @@ void zglCullFace ( u32 mode ) {
 void zglDeleteBuffer ( u32 buffer ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteBuffers ( 1, &buffer );
+	if ( buffer ) {
+		glDeleteBuffers ( 1, &buffer );
+	}
 }
 
 //----------------------------------------------------------------//
 void zglDeleteFramebuffer ( u32 buffer ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteFramebuffers ( 1, &buffer );
+	if ( buffer ) {
+		glDeleteFramebuffers ( 1, &buffer );
+	}
 }
 
 //----------------------------------------------------------------//
 void zglDeleteProgram ( u32 program ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteProgram ( program );
+	if ( program ) {
+		glDeleteProgram ( program );
+	}
 }
 
 //----------------------------------------------------------------//
 void zglDeleteRenderbuffer ( u32 buffer ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteRenderbuffers ( 1, &buffer );
+	if ( buffer ) {
+		glDeleteRenderbuffers ( 1, &buffer );
+	}
 }
 
 //----------------------------------------------------------------//
 void zglDeleteShader ( u32 shader ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteShader ( shader );
+	if ( shader ) {
+		glDeleteShader ( shader );
+	}
 }
 
 //----------------------------------------------------------------//
 void zglDeleteTexture ( u32 texture ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glDeleteTextures ( 1, &texture );
+	if ( texture ) {
+		glDeleteTextures ( 1, &texture );
+	}
 }
 
 //----------------------------------------------------------------//

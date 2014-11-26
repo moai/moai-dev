@@ -80,16 +80,16 @@ protected:
 
 	//----------------------------------------------------------------//
 	u32				CompileShader				( u32 type, cc8* source );
-	bool			IsRenewable					();
+	u32				GetLoadingPolicy			();
 	void			PrintProgramLog				( u32 program );
 	void			PrintShaderLog				( u32 shader );
-	void			OnBind						();
-	void			OnClear						();
-	void			OnCreate					();
-	void			OnDestroy					();
-	void			OnInvalidate				();
-	void			OnLoad						();
-	void			OnUnbind					();
+	bool			OnCPUCreate					();
+	void			OnCPUDestroy				();
+	void			OnGPUBind					();
+	bool			OnGPUCreate					();
+	void			OnGPUDestroy				();
+	void			OnGPULost					();
+	void			OnGPUUnbind					();
 	bool			Validate					();
 
 public:
@@ -111,6 +111,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	void			Clear						();
 	void			ClearUniform				( u32 idx );
 	void			ClearUniforms				();
 	void			DeleteShaders				();

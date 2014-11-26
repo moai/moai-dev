@@ -24,7 +24,7 @@ int MOAISensor::_getTimestamp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAISensor::MOAISensor () :
-	mType ( UNKNOWN ),
+	mType ( 0 ),
 	mTimestamp ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )

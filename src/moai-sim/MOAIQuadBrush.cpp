@@ -58,6 +58,27 @@ ZLRect MOAIQuadBrush::GetUVBounds () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIQuadBrush::GetUVForCartesian ( u32 triangleID, float x, float y, ZLVec2D& uv ) {
+
+	ZLVec3D bary;
+	ZLVec2D cart ( x, y );
+	
+	u32 i0 = 0;
+	u32 i1 = 1;
+	u32 i2 = 2;
+	
+	if ( triangleID ) {
+		i0 = 0;
+		i1 = 2;
+		i2 = 3;
+	}
+	
+	bary = ZLBarycentric::CartesianToBarycentric ( this->mVtx [ i0 ], this->mVtx [ i1 ], this->mVtx [ i2 ], cart );
+	uv = ZLBarycentric::BarycentricToCartesian ( this->mUV [ i0 ], this->mUV [ i1 ], this->mUV [ i2 ], bary );
+	return ZLBarycentric::BarycentricIsInside ( bary );
+}
+
+//----------------------------------------------------------------//
 ZLRect MOAIQuadBrush::GetVtxBounds () {
 
 	ZLRect rect;

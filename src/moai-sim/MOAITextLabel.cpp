@@ -13,6 +13,7 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -624,7 +625,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
 
-	self->Start ();
+	self->Start ( MOAISim::Get ().GetActionMgr ());
 
 	return 1;
 }
@@ -888,7 +889,7 @@ u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::OnUpdate ( float step ) {
+void MOAITextLabel::OnUpdate ( double step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;

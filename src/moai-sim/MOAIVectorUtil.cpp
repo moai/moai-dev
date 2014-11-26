@@ -12,24 +12,72 @@
 // SafeTesselator
 //================================================================//
 
-//------------------------------------------------------------------//
-SafeTesselator::SafeTesselator()
-{
-	mTess = tessNewTess ( 0 );
+const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
+
+//----------------------------------------------------------------//
+void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+
+	ZLMemStream idxStream;
+	ZLMemStream vtxStream;
+
+	const int* elems = tessGetElements ( this->mTess );
+	const int nelems = tessGetElementCount ( this->mTess );
+	
+	for ( int i = 0; i < nelems; ++i ) {
+		const int* tri = &elems [ i * 3 ];
+		
+		idxStream.Write < u32 >( tri [ 0 ]);
+		idxStream.Write < u32 >( tri [ 1 ]);
+		idxStream.Write < u32 >( tri [ 2 ]);
+	}
+
+	const float* verts = tessGetVertices ( this->mTess );
+	const int nverts = tessGetVertexCount ( this->mTess );
+	
+	for ( int i = 0; i < nverts; ++i ) {
+		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
+		
+		vtxStream.Write < float >( vert.mX );
+		vtxStream.Write < float >( vert.mY );
+		vtxStream.Write < float >( 0.0f );
+		vtxStream.Write < u32 >( 0xffffffff );
+	}
+	
+	idxStream.Seek ( 0, SEEK_SET );
+	vtxStream.Seek ( 0, SEEK_SET );
+	
+	idxBuffer.Clear ();
+	vtxBuffer.Clear ();
+	
+	idxBuffer.ReserveIndices ( idxStream.GetLength () >> 2 );
+	idxBuffer.GetStream ().WriteStream ( idxStream );
+	
+	vtxBuffer.Reserve ( vtxStream.GetLength ());
+	vtxBuffer.WriteStream ( vtxStream );
 }
 
 //------------------------------------------------------------------//
-SafeTesselator::~SafeTesselator()
-{
-	tessDeleteTess ( mTess );
+void SafeTesselator::Reset () {
+	tessDeleteTess ( this->mTess );
+	this->mTess = tessNewTess ( 0 );
 }
 
 //------------------------------------------------------------------//
-int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
+SafeTesselator::SafeTesselator () {
+	this->mTess = tessNewTess ( 0 );
+}
+
+//------------------------------------------------------------------//
+SafeTesselator::~SafeTesselator () {
+	tessDeleteTess ( this->mTess );
+}
+
+//------------------------------------------------------------------//
+int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal ) {
 
 	int err = zl_begin_assert_env ();
 	if ( err == 0 ) {
-		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
+		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal ? normal : ( const TESSreal* )&sNormal );
 	}
 	zl_end_assert_env ();
 	return err;

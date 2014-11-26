@@ -1,4 +1,5 @@
-#pragma once 
+#ifndef	SDLJOYSTICK_H
+#define	SDLJOYSTICK_H
 
 #include <SDL.h>
 
@@ -28,5 +29,7 @@ class Joystick
 
         int index;
         SDL_Joystick* sdl_joystick;
-        static constexpr int JOYSTICK_DEAD_ZONE = 8000;
+        static const int JOYSTICK_DEAD_ZONE = 8000;
 };
+
+#endif

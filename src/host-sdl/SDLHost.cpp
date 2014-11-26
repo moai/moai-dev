@@ -13,7 +13,6 @@
 
 #include "Joystick.h"
 
-
 namespace InputDeviceID {
 	enum {
 		DEVICE,
@@ -147,7 +146,8 @@ void Init ( int argc, char** argv ) {
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
 
-// based on host-glut 
+// based on host-glut
+void _onMultiButton( int touch_id, float x, float y, int state );
 void _onMultiButton( int touch_id, float x, float y, int state ) {
 
 	AKUEnqueueTouchEvent (
@@ -229,7 +229,7 @@ void MainLoop () {
                 case SDL_MOUSEWHEEL: 
 
                         if ( sdlEvent.wheel.which != SDL_TOUCH_MOUSEID ) {
-                            const int32_t x = sdlEvent.wheel.x; 
+                            //const int32_t x = sdlEvent.wheel.x;
                             const int32_t y = sdlEvent.wheel.y; 
 
                             //XXX: x or y ?
@@ -265,7 +265,7 @@ void MainLoop () {
                 case SDL_FINGERDOWN:
                 case SDL_FINGERUP:
                 case SDL_FINGERMOTION:
-                    const int id    = sdlEvent.tfinger.fingerId;
+                    const int id    = ( int )sdlEvent.tfinger.fingerId;
                     const float x   = sdlEvent.tfinger.x;
                     const float y   = sdlEvent.tfinger.y;
                     const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;

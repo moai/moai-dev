@@ -1,12 +1,10 @@
 
 #include "Joystick.h"
 
-Joystick::Joystick(const int index) : 
-    index(index), 
+Joystick::Joystick(const int idx) :
+    index(idx),
     sdl_joystick(nullptr)
 { }
-
-
 
 Joystick::~Joystick() {
 

@@ -1130,7 +1130,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::OnUpdate ( float step ) {
+void MOAIBox2DWorld::OnUpdate ( double step ) {
 	
 	this->mLock = true;
 	this->mWorld->Step ( step, this->mVelocityIterations, this->mPositionIterations );

@@ -15,7 +15,6 @@ class MOAIVectorShape {
 protected:
 
 	static const int		NVP			= 3;
-	static const ZLVec3D	sNormal;
 
 	MOAIVectorStyle			mStyle;
 	bool					mCanGroup;

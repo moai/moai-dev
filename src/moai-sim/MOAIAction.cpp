@@ -3,7 +3,54 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionMgr.h>
+#include <moai-sim/MOAIActionTree.h>
+#include <moai-sim/MOAISim.h>
+
+//================================================================//
+// MOAIActionStackMgr
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIAction* MOAIActionStackMgr::GetCurrent () {
+
+	size_t top = this->mStack.GetTop ();
+	return top > 0 ? this->mStack [ top - 1 ] : 0;
+}
+
+//----------------------------------------------------------------//
+MOAIAction* MOAIActionStackMgr::GetDefaultParent () {
+
+	MOAIAction* defaultParent = 0;
+
+	MOAIAction* cursor = this->GetCurrent ();
+	for ( ; cursor; cursor = cursor->mParent ) {
+		defaultParent = cursor->GetDefaultParent ();
+		if ( defaultParent ) {
+			return defaultParent;
+		}
+	}
+	return MOAISim::Get ().GetActionMgr ().GetDefaultParent ();
+}
+
+//----------------------------------------------------------------//
+MOAIActionStackMgr::MOAIActionStackMgr () {
+}
+
+//----------------------------------------------------------------//
+MOAIActionStackMgr::~MOAIActionStackMgr () {
+}
+
+//----------------------------------------------------------------//
+void MOAIActionStackMgr::Pop () {
+
+	this->mStack.Pop ();
+}
+
+//----------------------------------------------------------------//
+void MOAIActionStackMgr::Push ( MOAIAction& action ) {
+
+	this->mStack.Push ( &action );
+}
 
 //================================================================//
 // lua
@@ -178,7 +225,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( !action ) {
-		action = MOAIActionMgr::Get ().GetDefaultParent ();
+		action = MOAISim::Get ().GetActionMgr ().GetDefaultParent ();
 	}
 
 	self->Attach ( action );
@@ -241,7 +288,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	}
 	
 	if ( oldParent ) {
-		
+	
 		// if we're detaching the action while the parent action is updating
 		// then we need to handle the edge case where the action is referenced
 		// by mChildIt
@@ -254,7 +301,9 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 		}
 		
 		oldParent->mChildren.Remove ( this->mLink );
+		oldParent->OnLostChild ( this );
 		
+		// TODO: hmmm...
 		this->UnblockSelf ();
 		this->UnblockAll ();
 		this->mParent = 0;
@@ -267,22 +316,17 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	}
 	
 	if ( parent ) {
-		// TODO: there are some edge cases that may lead to the action
-		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this. the TODO is
-		// to investigate the edge cases and (possibly) provide a fix.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
+		this->mPass = parent->mPass + 1;
 	}
 	
 	if (( !oldParent ) && parent ) {
-		this->mNew = true;
-		this->mPass = MOAIActionMgr::Get ().GetNextPass ();
 		if ( !this->mIsPaused ) {
 			this->OnStart ();
 		}
 	}
-	
+
 	this->Release ();
 }
 
@@ -295,6 +339,12 @@ void MOAIAction::ClearChildren () {
 }
 
 //----------------------------------------------------------------//
+MOAIAction* MOAIAction::GetDefaultParent () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 bool MOAIAction::IsActive () {
 
 	return ( this->mParent != 0 );
@@ -304,15 +354,6 @@ bool MOAIAction::IsActive () {
 bool MOAIAction::IsBusy () {
 
 	return ( this->IsActive () && ( !this->IsDone ()));
-}
-
-//----------------------------------------------------------------//
-bool MOAIAction::IsCurrent () {
-
-	if ( MOAIActionMgr::IsValid ()) {
-		return ( MOAIActionMgr::Get ().GetCurrentAction () == this );
-	}
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -334,9 +375,7 @@ STLString MOAIAction::GetDebugInfo() const {
 
 //----------------------------------------------------------------//
 MOAIAction::MOAIAction () :
-	mNew ( true ),
 	mPass ( 0 ),
-	mIsDefaultParent ( 0 ),
 	mParent ( 0 ),
 	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
@@ -358,6 +397,11 @@ MOAIAction::~MOAIAction () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAction::OnLostChild ( MOAIAction* child ) {
+	UNUSED ( child );
+}
+
+//----------------------------------------------------------------//
 void MOAIAction::OnStart () {
 
 	this->InvokeListenerWithSelf ( EVENT_START );
@@ -372,14 +416,12 @@ void MOAIAction::OnStop () {
 //----------------------------------------------------------------//
 void MOAIAction::OnUnblock () {
 
-	if ( MOAIActionMgr::IsValid ()) {
-		this->mNew = true;
-		this->mPass = MOAIActionMgr::Get ().GetNextPass ();
-	}
+	// TODO: does this make sense?
+	this->mPass = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::OnUpdate ( float step ) {
+void MOAIAction::OnUpdate ( double step ) {
 	UNUSED ( step );
 }
 
@@ -421,42 +463,43 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
+void MOAIAction::ResetPass () {
 
-	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+	this->mPass = 0;
 
-	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
-
-	if ( this->IsPaused () || this->IsBlocked ()) {
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
-			step = 0.0f;
-			checkPass = false;
-			this->mPass = 0;
-			this->mNew = false;
-		}
-		return;
+	ChildIt childIt = this->mChildren.Head ();
+	for ( ; childIt; childIt = this->mChildIt->Next ()) {
+		this->mChildIt->Data ()->ResetPass ();
 	}
-	if (( checkPass ) && ( pass < this->mPass )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
+
+	if ( this->IsPaused () || this->IsBlocked ()) return;
+
+	MOAIActionStackMgr::Get ().Push ( *this );
 
 	double t0 = 0.0;
+	bool profilingEnabled = false;
+
+	profilingEnabled = tree.GetProfilingEnabled ();
 	if ( profilingEnabled ) {
 		t0 = ZLDeviceTime::GetTimeInSeconds ();
 	}
-
+	
+	this->mPass = this->mParent ? this->mParent->mPass : this->mPass + 1;
+	
+	// handles the case when Moai has been running continuously for approx. 136 years at 60 fps
+	if ( this->mPass == 0xffffffff ) {
+		this->ResetPass ();
+	}
+	
 	step *= this->mThrottle;
 	
-	if ( this->mNew ) {
-		step = 0.0f;
-		checkPass = false;
-	}
-	
-	if (( checkPass == false ) || ( pass == this->mPass )) {
-		actionMgr.SetCurrentAction ( this );
-		actionMgr.SetDefaultParent ( 0 );
-		this->InvokeListenerWithSelf ( EVENT_ACTION_PRE_UPDATE );
-		this->OnUpdate ( step );
-		this->InvokeListenerWithSelf ( EVENT_ACTION_POST_UPDATE );
-	}
+	this->InvokeListenerWithSelf ( EVENT_ACTION_PRE_UPDATE );
+	this->OnUpdate ( step );
+	this->InvokeListenerWithSelf ( EVENT_ACTION_POST_UPDATE );
 
 	if ( profilingEnabled ) {
 		double elapsed = ZLDeviceTime::GetTimeInSeconds () - t0;
@@ -465,9 +508,6 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
-
-	this->mPass = 0;
-	this->mNew = false;
 	
 	// the trick below is to alway retain the current child plus the
 	// *next* child in the list. each child is processed once and 
@@ -493,8 +533,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 			this->mChildIt->Data ()->Retain ();
 		}
 		
-		if ( child->mParent ) {
-			child->Update ( step, pass, checkPass );
+		if ( child->mParent && ( child->mPass <= this->mPass )) {
+			child->Update ( tree, step );
 		}
 		
 		// release the *current* child
@@ -506,12 +546,14 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	if ( this->IsDone ()) {
 		this->Attach ();
 	}
+	
+	MOAIActionStackMgr::Get ().Pop ();
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::Start () {
+void MOAIAction::Start ( MOAIActionTree& tree ) {
 
-	MOAIAction* defaultParent = MOAIActionMgr::Get ().GetDefaultParent ();
+	MOAIAction* defaultParent = tree.GetDefaultParent ();
 	this->Attach ( defaultParent );
 	this->mIsPaused = false;
 }

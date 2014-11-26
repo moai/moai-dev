@@ -13,11 +13,11 @@
 	LOCAL_CFLAGS		+= -fvisibility=hidden
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib/xmlparse.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib/xmlrole.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib/xmltok.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib/xmltok_impl.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib/xmltok_ns.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib/xmlparse.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib/xmlrole.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib/xmltok.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib/xmltok_impl.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib/xmltok_ns.c
 
 	include $(BUILD_STATIC_LIBRARY)
 	

@@ -56,14 +56,15 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	ZLColorVec		GetColorTrait		();
-	bool			IsClear				();
-					MOAIColor			();
-					~MOAIColor			();
-	void			OnDepNodeUpdate		();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
+	bool				ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	ZLColorVec			GetColorTrait		();
+	bool				IsClear				();
+						MOAIColor			();
+						~MOAIColor			();
+	void				OnDepNodeUpdate		();
+	void				RegisterLuaClass	( MOAILuaState& state );
+	void				RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

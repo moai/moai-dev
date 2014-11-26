@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
+#include <moai-sim/MOAISim.h>
 
 //================================================================//
 // local
@@ -65,7 +66,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -117,7 +118,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -180,6 +181,28 @@ int MOAIColor::_setParent ( lua_State* L ) {
 //================================================================//
 // MOAIColor
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIColor* MOAIColor::AffirmColor ( MOAILuaState& state, int idx ) {
+
+	MOAIColor* color = 0;
+	
+	if ( state.IsType ( idx, LUA_TUSERDATA )) {
+		color = state.GetLuaObject < MOAIColor >( idx, false );
+	}
+	else {
+	
+		float r = state.GetValue < float >( 2, 0.0f );
+		float g = state.GetValue < float >( 3, 0.0f );
+		float b = state.GetValue < float >( 4, 0.0f );
+		float a = state.GetValue < float >( 5, 1.0f );
+
+		color = new MOAIColor ();
+		color->Set ( r, g, b, a );
+		color->ScheduleUpdate ();
+	}
+	return color;
+}
 
 //----------------------------------------------------------------//
 bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {

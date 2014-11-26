@@ -29,12 +29,12 @@ public:
 	DECL_LUA_FACTORY ( MOAICompassSensor )
 
 	//----------------------------------------------------------------//
-					MOAICompassSensor		();
-					~MOAICompassSensor		();
-	void			ParseEvent				( ZLStream& eventStream );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	static void		WriteEvent				( ZLStream& eventStream, float heading );
+	static void			EnqueueCompassEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float heading );
+						MOAICompassSensor		();
+						~MOAICompassSensor		();
+	void				ParseEvent				( ZLStream& eventStream );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -201,19 +201,28 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	MOAILuaClass* type = this->GetLuaClass ();
 	assert ( type );
 	
-	assert ( !type->IsSingleton ());
-	
+	// both singletons and instances may be bound to a userdata
 	state.PushPtrUserData ( this ); // userdata
 	
-	lua_newtable ( state ); // ref table
-	lua_newtable ( state ); // member table
-	type->PushInterfaceTable ( state ); // interface table
-	
-	this->MakeLuaBinding ( state );
+	// for now, singletons are just userdata with no add'l metatables
+	// so only build the metatable stack if we're *not* a singleton
+	if ( !type->IsSingleton ()) {
+		// instances get the 'full stack' of metatables
+		lua_newtable ( state ); // ref table
+		lua_newtable ( state ); // member table
+		type->PushInterfaceTable ( state ); // interface table
+		this->MakeLuaBinding ( state );
+	}
 	
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
 	assert ( !lua_isnil ( state, -1 ));
+	
+	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
+	// which in turn calls BindToLua if there is no mUserdata...
+	if ( type->IsSingleton ()) {
+		this->LuaRetain ( this ); // create a circular reference to 'pin' the userdata
+	}
 }
 
 //----------------------------------------------------------------//
@@ -257,6 +266,15 @@ void MOAILuaObject::GetRef ( MOAILuaRef& ref ) {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	ref.SetRef ( state, -1 );
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::InjectAndCall ( lua_CFunction func, MOAILuaObject* self, lua_State* L ) {
+
+	MOAILuaState state ( L );
+	self->PushLuaUserdata ( state );
+	lua_insert ( L, 1 );
+	return func ( L );
 }
 
 //----------------------------------------------------------------//
