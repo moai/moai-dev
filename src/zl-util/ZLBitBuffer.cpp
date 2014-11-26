@@ -251,7 +251,7 @@ void ZLBitBuffer::Clear ( void* buffer, u32 bitDepth, size_t x, size_t n ) {
 //----------------------------------------------------------------//
 u32 ZLBitBuffer::GetMask ( u32 bitDepth ) {
 
-	return ( u32 )( 1L << bitDepth ) - 1;
+	return ( u32 )(( u64 )1 << bitDepth ) - 1;
 }
 
 //----------------------------------------------------------------//
