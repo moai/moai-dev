@@ -310,7 +310,7 @@ iterateFiles = function ( path, fileFilter, recurse )
 		local files = MOAIFileSystem.listFiles ( path .. dirname ) or {}
 		for i, filename in ipairs ( files ) do
 			if match ( filename ) then
-				coroutine.yield ( string.format ( '%s%s', dirname, filename ))
+				coroutine.yield ( string.format ( '%s%s%s', path, dirname, filename ))
 			end
 		end
 		

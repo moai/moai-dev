@@ -57,7 +57,8 @@ MODULES = {
 		MODULE_DEFINE = 'AKU_WITH_CRYPTO',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0d/include-android'
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
 		},
 		
 		INCLUDES = {
@@ -99,7 +100,7 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5',
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0d/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
 		},
 		
 		INCLUDES = {
