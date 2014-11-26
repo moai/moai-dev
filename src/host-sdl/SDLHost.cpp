@@ -252,8 +252,8 @@ void MainLoop () {
 
                         if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != nullptr ) {
 
-                            const Joystick::AXIS_MOTION axis = joystick0->HandleAxisMotion(sdlEvent);
-					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.first, axis.second );
+                            const Joystick::AXIS_MOTION & axis = joystick0->HandleAxisMotion(sdlEvent);
+					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.x, axis.y );
                         }
                     break;
 
