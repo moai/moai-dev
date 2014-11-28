@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( expat )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/expat-2.1.0/lib/" )
 
 if ( BUILD_WINDOWS )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_MEMMOVE=1 -DXML_DTD" )
@@ -13,7 +13,7 @@ if ( BUILD_ANDROID )
 endif (BUILD_ANDROID )
 
 
-set ( EXPAT_INCLUDES "${MOAI_ROOT}/3rdparty/expat-2.0.1/lib/" )
+set ( EXPAT_INCLUDES "${MOAI_ROOT}/3rdparty/expat-2.1.0/lib/" )
 
 file ( GLOB_RECURSE EXPAT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c" )
 file ( GLOB_RECURSE EXPAT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
