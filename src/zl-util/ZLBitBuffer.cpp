@@ -33,7 +33,7 @@ bool check_bin ( const void* buffer, cc8* str ) {
 		}
 		bin.append ( byteStr );
 	}
-	return ( strcmp ( bin.c_str (), str ) == 0 );
+	return ( bin.compare( str ) == 0 );
 }
 
 //----------------------------------------------------------------//
@@ -53,7 +53,7 @@ bool check_hex ( const void* buffer, cc8* str ) {
 		hex.push_back ( encode [ byte & 0x0f ]);
 		hex.push_back ( encode [( byte >> 4 ) & 0x0f ]);
 	}
-	return ( strcmp ( hex.c_str (), str ) == 0 );
+	return ( hex.compare( str ) == 0 );
 }
 
 //----------------------------------------------------------------//
