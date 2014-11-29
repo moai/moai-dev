@@ -414,11 +414,11 @@ void ZLBitBuffer::Test () {
 	
 	memset ( buffer, 0, BUFF_SIZE );
 	Blit ( buffer, 3, srcBuffer, 8, 23, 1 );
-	assert ( check_bin ( buffer, "00010011001110011000000111000000" ));
+	assert ( check_bin ( buffer, "00010011001110010000000111000000" ));
 	
 	memset ( buffer, -1L, BUFF_SIZE );
 	Blit ( buffer, 3, srcBuffer, 8, 23, 1 );
-	assert ( check_bin ( buffer, "11110011001110011000000111111111" ));
+	assert ( check_bin ( buffer, "11110011001110011110000111111111" ));
 	
 	decode_bin ( srcBuffer, "00000101000000001111111110100000" );
 	
@@ -428,11 +428,11 @@ void ZLBitBuffer::Test () {
 	
 	memset ( buffer, -1L, BUFF_SIZE );
 	Blit ( buffer, 7, srcBuffer, 5, 22, 1 );
-	assert ( check_bin ( buffer, "11111111010000000011111111101111" ));
+	assert ( check_bin ( buffer, "11111111010000001111111111101111" ));
 	
 	memset ( buffer, 0, BUFF_SIZE );
 	Blit ( buffer, 7, srcBuffer, 5, 17, 1 );
-	assert ( check_bin ( buffer, "00000001010000000011111100000000" ));
+	assert ( check_bin ( buffer, "00000001010000000000000100000000" ));
 	
 	decode_bin ( srcBuffer, "00001111000011110000111100001111" );
 	
