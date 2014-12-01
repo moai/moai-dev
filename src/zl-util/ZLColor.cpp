@@ -433,14 +433,14 @@ u32 ZLColor::ConvertToRGBA ( u32 color, ColorFormat format ) {
 			return	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 					((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
 					((( color >> 0x0B ) & 0x1F ) << 0x03 ) +
-					0xff000000;
+					0xFF000000;
 					
 		case RGBA_5551: 
 			
 			return	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 					((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
 					((( color >> 0x0A ) & 0x1F ) << 0x13 ) +
-					(((( color >> 0x0F ) & 0xff ) ? 0xFF : 0x00 ) << 0x18 );
+					(((( color >> 0x0F ) & 0xFF ) ? 0xFF : 0x00 ) << 0x18 );
 
 		case RGBA_4444:
 		
@@ -809,6 +809,65 @@ u32 ZLColor::Set ( u32 c0, u8 b, u8 v ) {
 	u8* rb32 = ( u8* )&r32;
 	
 	return r32;
+}
+
+//----------------------------------------------------------------//
+void ZLColor::SimpleThreshold ( void* colors, ColorFormat format, u32 nColors, u32 color ) {
+	
+	switch ( format ) {
+		
+		case A_1:
+		case A_4:
+		case A_8:
+			break;
+		
+		case RGB_888: {
+		
+			u8* bytes = ( u8* )colors;
+		
+			u8 rT = ( u8 )(( color >> 0x00 ) & 0xFF );
+			u8 gT = ( u8 )(( color >> 0x08 ) & 0xFF );
+			u8 bT = ( u8 )(( color >> 0x10 ) & 0xFF );
+		
+			for ( u32 i = 0; i < nColors; ++i ) {
+				
+				bytes [ 0 ] = bytes [ 0 ] > rT ? 0xFF : 0x00;
+				bytes [ 1 ] = bytes [ 1 ] > gT ? 0xFF : 0x00;
+				bytes [ 2 ] = bytes [ 2 ] > bT ? 0xFF : 0x00;
+				
+				bytes = ( u8* )(( size_t )bytes + 3 );
+			}
+			break;
+		}
+		
+		case RGB_565:
+		case RGBA_5551:
+		case RGBA_4444:
+			break;
+
+		case RGBA_8888: {
+		
+			u8* bytes = ( u8* )colors;
+		
+			u32 rT = ( color >> 0x00 ) & 0xFF;
+			u32 gT = ( color >> 0x08 ) & 0xFF;
+			u32 bT = ( color >> 0x10 ) & 0xFF;
+			u32 aT = ( color >> 0x18 ) & 0xFF;
+		
+			for ( u32 i = 0; i < nColors; ++i ) {
+
+				bytes [ 0 ] = bytes [ 0 ] > rT ? 0xFF : 0x00;
+				bytes [ 1 ] = bytes [ 1 ] > gT ? 0xFF : 0x00;
+				bytes [ 2 ] = bytes [ 2 ] > bT ? 0xFF : 0x00;
+				bytes [ 3 ] = bytes [ 3 ] > aT ? 0xFF : 0x00;
+
+				bytes = ( u8* )(( size_t )bytes + 4 );
+			}
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 //----------------------------------------------------------------//

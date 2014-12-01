@@ -162,15 +162,6 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxDevice::_setResourceLoadingPolicy ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	MOAIGfxDevice::Get ().mResourceLoadingPolicy = state.GetValue < u32 >( 1, MOAIGfxResource::DEFAULT_LOADING_POLICY );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	release
 
 	@in		release textures scheduled to be released
@@ -576,8 +567,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mVertexFormatBuffer ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
-	mVertexMtxOutput ( VTX_STAGE_MODEL ),
-	mResourceLoadingPolicy ( MOAIGfxResource::DEFAULT_LOADING_POLICY ) {
+	mVertexMtxOutput ( VTX_STAGE_MODEL ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -638,7 +628,6 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
-		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
 		{ "release",					_release },
 		{ NULL, NULL }
 	};

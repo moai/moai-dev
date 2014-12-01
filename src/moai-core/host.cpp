@@ -361,6 +361,8 @@ void AKULoadFuncFromFile ( const char* filename ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
+	//int top = state.GetTop ();
+	
 	lua_getglobal ( state, "loadfile" );
 	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "Missing global Lua function 'loadfile'\n" );
@@ -368,9 +370,15 @@ void AKULoadFuncFromFile ( const char* filename ) {
 	
 	state.Push ( filename );
 	
-	int status = state.DebugCall ( 1, 1 );
+	int status = state.DebugCall ( 1, 2 );
 	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
-		sContext->mLuaFunc.SetRef ( state, -1 );
+		if ( state.IsNil ( -2 )) {
+			cc8* msg = state.GetValue < cc8* >( -1, "loafile returned 'nil'" );
+			printf ( "%s\n", msg );
+		}
+		else {
+			sContext->mLuaFunc.SetRef ( state, -2 );
+		}
 	}
 }
 

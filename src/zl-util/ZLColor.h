@@ -87,6 +87,7 @@ namespace ZLColor {
 	u32				Scale						( u32 c0, u8 s ); // scale all components by s and normalize back to 255
 	ZLColorVec		Set							( u32 c0 );
 	u32				Set							( u32 c0, u8 b, u8 v ); // c0 [ b ] = v
+	void			SimpleThreshold				( void* colors, ColorFormat format, u32 nColors, u32 color );
 	u32				Sub							( u32 c0, u32 c1 );
 	u32				Swizzle						( u32 c0, u32 sw );
 };

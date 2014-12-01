@@ -53,6 +53,45 @@ void MOAIGfxDeleter::Delete () {
 }
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u32 age = state.GetValue < u32 >( 1, 0 );
+
+	zglBegin ();
+	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
+	zglEnd ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	zglBegin ();
+	MOAIGfxResourceMgr::Get ().RenewResources ();
+	zglEnd ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResourceMgr::_setResourceLoadingPolicy ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	MOAIGfxResourceMgr::Get ().mResourceLoadingPolicy = state.GetValue < u32 >( 1, MOAIGfxResource::DEFAULT_LOADING_POLICY );
+	return 0;
+}
+
+//================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
 
@@ -63,7 +102,10 @@ void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceMgr::MOAIGfxResourceMgr () {
+MOAIGfxResourceMgr::MOAIGfxResourceMgr () :
+	mResourceLoadingPolicy ( MOAIGfxResource::DEFAULT_LOADING_POLICY ) {
+	
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -87,6 +129,24 @@ void MOAIGfxResourceMgr::PushDeleter ( u32 type, u32 id ) {
 	deleter.mResourceID = id;
 	
 	this->mDeleterStack.Push ( deleter );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_NEXT );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
+
+	luaL_Reg regTable [] = {
+		{ "purgeResources",				_purgeResources },
+		{ "renewResources",				_renewResources },
+		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

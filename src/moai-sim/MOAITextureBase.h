@@ -61,10 +61,10 @@ protected:
 	bool				mIsDirty;
 
 	//----------------------------------------------------------------//
-	static int		_getSize				( lua_State* L );
-	static int		_release				( lua_State* L );
-	static int		_setFilter				( lua_State* L );
-	static int		_setWrap				( lua_State* L );
+	static int			_getSize				( lua_State* L );
+	static int			_release				( lua_State* L );
+	static int			_setFilter				( lua_State* L );
+	static int			_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				CleanupOnError			();

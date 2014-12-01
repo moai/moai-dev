@@ -68,8 +68,9 @@ int MOAIImage::_compare ( lua_State* L ) {
 			the original.
 
 	@in		MOAIImage self
-	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
-								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
+	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_1, MOAIImage.COLOR_FMT_A_4, MOAIImage.COLOR_FMT_A_8,
+								MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565, MOAIImage.COLOR_FMT_RGBA_5551,
+								MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
 	@opt	number pixelFmt		One of MOAIImage.PIXEL_FMT_TRUECOLOR, MOAIImage.PIXEL_FMT_INDEX_4, MOAIImage.PIXEL_FMT_INDEX_8
 	@out	MOAIImage image		Copy of the image initialized with given format.
 */
@@ -446,20 +447,28 @@ int MOAIImage::_getSize ( lua_State* L ) {
 	@in		MOAIImage self
 	@in		number width
 	@in		number height
-	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
-								MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
+	@opt	number colorFmt		One of MOAIImage.COLOR_FMT_A_1, MOAIImage.COLOR_FMT_A_4, MOAIImage.COLOR_FMT_A_8,
+								MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565, MOAIImage.COLOR_FMT_RGBA_5551,
+								MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888.
 								Default value is MOAIImage.COLOR_FMT_RGBA_8888.
 	@out	nil
 */
 int MOAIImage::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
 
-	u32 width		= state.GetValue < u32 >( 2, 0 );
-	u32 height		= state.GetValue < u32 >( 3, 0 );
-	u32 colorFmt	= state.GetValue < u32 >( 4, ZLColor::RGBA_8888 );
+	MOAIImage* srcImage	= state.GetLuaObject < MOAIImage >( 2, false );
+	if  ( srcImage ) {
+	
+		self->Init ( *srcImage );
+	}
+	else {
 
-	self->Init ( width, height, ( ZLColor::ColorFormat )colorFmt, TRUECOLOR );
+		u32 width		= state.GetValue < u32 >( 2, 0 );
+		u32 height		= state.GetValue < u32 >( 3, 0 );
+		u32 colorFmt	= state.GetValue < u32 >( 4, ZLColor::RGBA_8888 );
 
+		self->Init ( width, height, ( ZLColor::ColorFormat )colorFmt, TRUECOLOR );
+	}
 	return 0;
 }
 
@@ -519,6 +528,37 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIImage::_mix ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+
+	ZLMatrix4x4 mtx;
+
+	mtx.m [ ZLMatrix4x4::C0_R0 ]		= state.GetValue < float >( 2, 1.0f );
+	mtx.m [ ZLMatrix4x4::C1_R0 ]		= state.GetValue < float >( 3, 0.0f );
+	mtx.m [ ZLMatrix4x4::C2_R0 ]		= state.GetValue < float >( 4, 0.0f );
+	mtx.m [ ZLMatrix4x4::C3_R0 ]		= state.GetValue < float >( 5, 0.0f );
+	
+	mtx.m [ ZLMatrix4x4::C0_R1 ]		= state.GetValue < float >( 6, 0.0f );
+	mtx.m [ ZLMatrix4x4::C1_R1 ]		= state.GetValue < float >( 7, 1.0f );
+	mtx.m [ ZLMatrix4x4::C2_R1 ]		= state.GetValue < float >( 8, 0.0f );
+	mtx.m [ ZLMatrix4x4::C3_R1 ]		= state.GetValue < float >( 9, 0.0f );
+	
+	mtx.m [ ZLMatrix4x4::C0_R2 ]		= state.GetValue < float >( 10, 0.0f );
+	mtx.m [ ZLMatrix4x4::C1_R2 ]		= state.GetValue < float >( 11, 0.0f );
+	mtx.m [ ZLMatrix4x4::C2_R2 ]		= state.GetValue < float >( 12, 1.0f );
+	mtx.m [ ZLMatrix4x4::C3_R2 ]		= state.GetValue < float >( 13, 0.0f );
+	
+	mtx.m [ ZLMatrix4x4::C0_R3 ]		= state.GetValue < float >( 14, 0.0f );
+	mtx.m [ ZLMatrix4x4::C1_R3 ]		= state.GetValue < float >( 15, 0.0f );
+	mtx.m [ ZLMatrix4x4::C2_R3 ]		= state.GetValue < float >( 16, 0.0f );
+	mtx.m [ ZLMatrix4x4::C3_R3 ]		= state.GetValue < float >( 17, 1.0f );
+	
+	self->Mix ( mtx );
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	padToPow2
@@ -674,6 +714,21 @@ int MOAIImage::_setRGBA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIImage::_simpleThreshold ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+
+	float r		= state.GetValue < float >( 2, 0.0f );
+	float g		= state.GetValue < float >( 3, 0.0f );
+	float b		= state.GetValue < float >( 4, 0.0f );
+	float a		= state.GetValue < float >( 5, 1.0f );
+
+	self->SimpleThreshold ( *self, r, g, b, a );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	writePNG
 	@text	Write image to a PNG file.
 
@@ -727,9 +782,9 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAIImage::Alloc () {
 
-	if ( this->mData ) {
-		free ( this->mData );
-		this->mData = 0;
+	if ( this->mBitmap ) {
+		free ( this->mBitmap );
+		this->mBitmap = 0;
 	}
 
 	if ( this->mPalette ) {
@@ -738,9 +793,9 @@ void MOAIImage::Alloc () {
 	}
 	
 	u32 bitmapSize = this->GetBitmapSize ();
-
-	this->mData = malloc ( bitmapSize );
-	this->mBitmap = this->mData;
+	if ( bitmapSize ) {
+		this->mBitmap = malloc ( bitmapSize );
+	}
 	
 	u32 paletteSize = this->GetPaletteSize ();
 	if ( paletteSize ) {
@@ -875,7 +930,7 @@ void MOAIImage::Blit ( const MOAIImage& image, int srcX, int srcY, int destX, in
 		const void* srcRow = image.GetRowAddr ( y + srcY );
 		void* destRow = this->GetRowAddr ( y + destY );
 		
-		ZLBitBuffer::Blit ( destRow, destX, image.mBitmap, srcX, width, pixelDepth );
+		ZLBitBuffer::Blit ( destRow, destX, srcRow, srcX, width, pixelDepth );
 	}
 }
 
@@ -946,8 +1001,8 @@ void MOAIImage::CalculateSDF( ZLIntVec2D** grid, int width, int height ) {
 //----------------------------------------------------------------//
 void MOAIImage::Clear () {
 
-	if ( this->mData ) {
-		free ( this->mData );
+	if ( this->mBitmap ) {
+		free ( this->mBitmap );
 	}
 	
 	if ( this->mPalette ) {
@@ -960,7 +1015,6 @@ void MOAIImage::Clear () {
 	this->mWidth		= 0;
 	this->mHeight		= 0;
 	
-	this->mData			= 0;
 	this->mBitmap		= 0;
 	this->mPalette		= 0;
 }
@@ -1012,18 +1066,17 @@ bool MOAIImage::Convert ( const MOAIImage& image, ZLColor::ColorFormat colorFmt,
 	}
 
 	MOAIImage newImage;
-	newImage.Init ( image.mWidth, image.mHeight, image.mColorFormat, pixelFmt );
+	newImage.Init ( image.mWidth, image.mHeight, colorFmt, pixelFmt );
 	
 	if ( pixelFmt == TRUECOLOR ) {
 	
 		// we want this in truecolor
-		
 		if ( image.mPixelFormat != TRUECOLOR ) {
 		
 			// we're converting from indexed color, so read and set every pixel
 			for ( u32 y = 0; y < image.mHeight; ++y ) {
-				for ( u32 x = 0; x < image.mHeight; ++x ) {
-					newImage.SetColor ( x, y, this->GetColor ( x, y ));
+				for ( u32 x = 0; x < image.mWidth; ++x ) {
+					newImage.SetColor ( x, y, image.GetColor ( x, y ));
 				}
 			}
 		}
@@ -1034,15 +1087,15 @@ bool MOAIImage::Convert ( const MOAIImage& image, ZLColor::ColorFormat colorFmt,
 			for ( u32 y = 0; y < this->mHeight; ++y ) {
 				const void* srcRow = image.GetRowAddr ( y );
 				void* destRow = this->GetRowAddr ( y );
-				ZLColor::Convert ( destRow, this->mColorFormat, srcRow, image.mColorFormat, this->mWidth );
+				ZLColor::Convert ( destRow, newImage.mColorFormat, srcRow, image.mColorFormat, image.mWidth );
 			}
 		}
 	}
 	else {
 	
 		// pixel format is indexed color, so just convert the palette
-		u32 total = this->GetPaletteCount ();
-		ZLColor::Convert ( this->mPalette, this->mColorFormat, image.mPalette, image.mColorFormat, total );
+		u32 total = image.GetPaletteCount ();
+		ZLColor::Convert ( newImage.mPalette, newImage.mColorFormat, image.mPalette, image.mColorFormat, total );
 	}
 	
 	this->Take ( newImage );
@@ -1109,7 +1162,15 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 
 	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
 	
-	memcpy ( this->mData, image.mData, this->GetBitmapSize () + this->GetPaletteSize ());
+	size_t bitmapSize = this->GetBitmapSize ();
+	if ( bitmapSize ) {
+		memcpy ( this->mBitmap, image.mBitmap, bitmapSize );
+	}
+	
+	size_t paletteSize = this->GetPaletteSize ();
+	if ( paletteSize ) {
+		memcpy ( this->mPalette, image.mPalette, paletteSize );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1123,6 +1184,8 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 //----------------------------------------------------------------//
 void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc ) {
 
+	if (( this->mPixelFormat != TRUECOLOR ) && ( this->mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
+
 	float scale;
 
 	bool xFlip = srcRect.IsXFlipped () != destRect.IsXFlipped ();
@@ -1131,7 +1194,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	srcRect.Bless ();
 	destRect.Bless ();
 
-	// if everything's the same size and formal, we can do a simple blit
+	// if everything's the same size and format, we can do a simple blit
 	if ( !( xFlip || yFlip )) {
 		if (( blendFunc.mEquation == ZLColor::BLEND_EQ_NONE ) && ( this->mPixelFormat == image.mPixelFormat ) && ( this->mColorFormat == image.mColorFormat )) {
 			if (( srcRect.Width () == destRect.Width ()) && ( srcRect.Height () == destRect.Height ())) {
@@ -1233,6 +1296,24 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	destRect = destClipA;
 	if ( !destRect.Intersect ( destClipB, destRect )) return;
 
+	// TODO: if *image == this *and* srcRect, destRect overlap, we need to copy srcRect out of image
+	bool useCopyImage = false;
+	MOAIImage copyImage;
+	
+	if (( this == &image ) && srcRect.OverlapExcludeEdge ( destRect )) {
+		
+		ZLIntRect newSrcRect = srcRect;
+		newSrcRect.Offset ( -newSrcRect.mXMin, -newSrcRect.mYMin );
+		
+		copyImage.Init ( newSrcRect.mXMax, newSrcRect.mYMax, image.mColorFormat, image.mPixelFormat );
+		copyImage.Blit ( image, srcRect.mXMin, srcRect.mYMin, newSrcRect.mXMin, newSrcRect.mYMin, newSrcRect.mXMax, newSrcRect.mYMax );
+		
+		srcRect = newSrcRect;
+		useCopyImage = true;
+	}
+
+	const MOAIImage& srcImage = useCopyImage ? copyImage : image;
+
 	// now set up the copy
 	int srcWidth = srcRect.Width ();
 	int srcHeight = srcRect.Height ();
@@ -1243,59 +1324,93 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	float xSrcStep = ( float )srcWidth / ( float )destWidth;
 	float ySrcStep = ( float )srcHeight / ( float )destHeight;
 	
+	int xSrcSampleSteps = ( int )ceilf ( xSrcStep );
+	int ySrcSampleSteps = ( int )ceilf ( ySrcStep );
+	
+	float sampleAverage = 1.0f / ( float )( xSrcSampleSteps * ySrcSampleSteps );
+	
+	float xSampleStep = xSrcStep / ( float )xSrcSampleSteps;
+	float ySampleStep = ySrcStep / ( float )ySrcSampleSteps;
+	
 	float xSrcOrigin = ( float )srcRect.mXMin;
 	float ySrcOrigin = ( float )srcRect.mYMin;
 	
 	if ( xFlip ) {
 		xSrcOrigin = ( float )srcRect.mXMax;
+		xSampleStep = -xSampleStep;
 		xSrcStep = -xSrcStep;
 	}
 	
 	if ( yFlip ) {
 		ySrcOrigin = ( float )srcRect.mYMax;
+		ySampleStep = -ySampleStep;
 		ySrcStep = -ySrcStep;
 	}
 	
-	int yDest = destRect.mYMin;
-	float ySample = ySrcOrigin;
-	for ( int i = 0; i < destHeight; ++i, ySample += ySrcStep, yDest++ ) {
+	if ( this->mPixelFormat != TRUECOLOR ) {
+	
+		// TODO: warn about this case
+	
+		assert ( this->mColorFormat == srcImage.mColorFormat );
 		
-		int xDest = destRect.mXMin;
-		float xSample = xSrcOrigin;
-		for ( int j = 0; j < destWidth; ++j, xSample += xSrcStep, xDest++ ) {
-			
-			u32 x0 = ( u32 )floorf ( xSample );
-			u32 y0 = ( u32 )floorf ( ySample );
-			
-			u32 x1 = x0 + 1;
-			u32 y1 = y0 + 1;
-			
-			if ( x1 >= this->mWidth ) {
-				x1 = this->mWidth - 1;
+		for ( int y = 0; y < destHeight; ++y ) {
+			for ( int x = 0; x < destWidth; ++x ) {
+				
+				float xPixel = floorf ( xSrcOrigin + (( float )x * xSrcStep ) + 0.5f );
+				float yPixel = floorf ( ySrcOrigin + (( float )y * ySrcStep ) + 0.5f );
+				
+				u32 pixel = srcImage.GetPixel ( xPixel, yPixel );
+				this->SetPixel ( xPixel, yPixel, pixel );
 			}
-			
-			if ( y1 >= this->mHeight ) {
-				y1 = this->mHeight - 1;
+		}
+	}
+	else if (( filter == FILTER_NEAREST ) || (( xSrcSampleSteps == 1 ) && ( ySrcSampleSteps == 1 ))) {
+	
+		for ( int y = 0; y < destHeight; ++y ) {
+			for ( int x = 0; x < destWidth; ++x ) {
+				
+				float xSample = xSrcOrigin + (( float )x * xSrcStep );
+				float ySample = ySrcOrigin + (( float )y * ySrcStep );
+				
+				u32 color = srcImage.SampleColor ( xSample, ySample, filter );
+				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, color, blendFunc );
 			}
-			
-			u32 c0 = image.GetColor ( x0, y0 );
-			u32 c1 = image.GetColor ( x1, y0 );
-			u32 c2 = image.GetColor ( x0, y1 );
-			u32 c3 = image.GetColor ( x1, y1 );
-
-			u8 xt = ( u8 )(( xSample - ( float )x0 ) * 255.0f );
-			u8 yt = ( u8 )(( ySample - ( float )y0 ) * 255.0f );
-			
-			u32 result;
-			
-			if ( filter == FILTER_LINEAR ) {
-				result = ZLColor::BilerpFixed ( c0, c1, c2, c3, xt, yt );
+		}
+	}
+	else {
+	
+		for ( int y = 0; y < destHeight; ++y ) {
+			for ( int x = 0; x < destWidth; ++x ) {
+				
+				float r = 0.0f;
+				float g = 0.0f;
+				float b = 0.0f;
+				float a = 0.0f;
+				
+				float xSample = xSrcOrigin + (( float )x * xSrcStep );
+				float ySample = ySrcOrigin + (( float )y * ySrcStep );
+				
+				for ( int ys = 0; ys < ySrcSampleSteps; ++ys ) {
+					for ( int xs = 0; xs < xSrcSampleSteps; ++xs ) {
+					
+						u32 color = srcImage.SampleColor ( xSample + (( float )xs * xSampleStep ), ySample + (( float )ys * ySampleStep ), filter );
+						
+						ZLColorVec vec ( color );
+						
+						r += vec.mR;
+						g += vec.mG;
+						b += vec.mB;
+						a += vec.mA;
+					}
+				}
+				
+				r *= sampleAverage;
+				g *= sampleAverage;
+				b *= sampleAverage;
+				a *= sampleAverage;
+				
+				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, ZLColor::PackRGBA ( r, g, b, a ), blendFunc );
 			}
-			else {
-				result = ZLColor::NearestNeighbor ( c0, c1, c2, c3, xt, yt );
-			}
-			
-			this->SetColor ( xDest, yDest, result, blendFunc );
 		}
 	}
 }
@@ -1885,7 +2000,15 @@ size_t MOAIImage::GetSubImageSize ( ZLIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::Init ( const MOAIImage& image ) {
+
+	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Init ( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt ) {
+
+	this->Clear ();
 
 	this->mColorFormat = colorFmt;
 	this->mPixelFormat = pixelFmt;
@@ -1921,7 +2044,7 @@ void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat
 	if ( copy ) {
 		this->Alloc ();
 		u32 size = this->GetBitmapSize ();
-		memcpy ( this->mData, bitmap, size );
+		memcpy ( this->mBitmap, bitmap, size );
 	}
 	else {
 		this->mBitmap = ( void* )bitmap;
@@ -2061,14 +2184,30 @@ bool MOAIImage::MipReduce () {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::Mix ( ZLMatrix4x4 mtx ) {
+
+	if ( this->mPixelFormat != TRUECOLOR ) return; // TODO: log error
+	
+	for ( u32 y = 0; y < this->mHeight; ++y ) {
+		for ( u32 x = 0; x < this->mWidth; ++x ) {
+			
+			ZLColorVec color ( this->GetColor ( x, y ));
+			ZLVec4D vec ( color.mR, color.mG, color.mB, color.mA );
+			mtx.Transform ( vec );
+			
+			this->SetColor ( x, y, ZLColor::PackRGBA ( vec.mX, vec.mY, vec.mZ, vec.mW ));
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIImage::MOAIImage () :
 	mPixelFormat ( PXL_FMT_UNKNOWN ),
 	mColorFormat ( ZLColor::CLR_FMT_UNKNOWN ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mData ( 0 ),
-	mPalette ( 0 ),
-	mBitmap ( 0 ) {
+	mBitmap ( 0 ),
+	mPalette ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -2116,24 +2255,26 @@ void MOAIImage::PremultiplyAlpha ( const MOAIImage& image ) {
 //----------------------------------------------------------------//
 void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "FILTER_LINEAR", ( u32 )MOAIImage::FILTER_LINEAR );
-	state.SetField ( -1, "FILTER_NEAREST", ( u32 )MOAIImage::FILTER_NEAREST );
+	state.SetField ( -1, "FILTER_LINEAR",				( u32 )MOAIImage::FILTER_LINEAR );
+	state.SetField ( -1, "FILTER_NEAREST",				( u32 )MOAIImage::FILTER_NEAREST );
 	
-	state.SetField ( -1, "POW_TWO", ( u32 )MOAIImageTransform::POW_TWO );
-	state.SetField ( -1, "QUANTIZE", ( u32 )MOAIImageTransform::QUANTIZE );
-	state.SetField ( -1, "TRUECOLOR", ( u32 )MOAIImageTransform::TRUECOLOR );
-	state.SetField ( -1, "PREMULTIPLY_ALPHA", ( u32 )MOAIImageTransform::PREMULTIPLY_ALPHA );
+	state.SetField ( -1, "POW_TWO",						( u32 )MOAIImageTransform::POW_TWO );
+	state.SetField ( -1, "QUANTIZE",					( u32 )MOAIImageTransform::QUANTIZE );
+	state.SetField ( -1, "TRUECOLOR",					( u32 )MOAIImageTransform::TRUECOLOR );
+	state.SetField ( -1, "PREMULTIPLY_ALPHA",			( u32 )MOAIImageTransform::PREMULTIPLY_ALPHA );
 	
-	state.SetField ( -1, "PIXEL_FMT_TRUECOLOR",		( u32 )TRUECOLOR );
-	state.SetField ( -1, "PIXEL_FMT_INDEX_4",		( u32 )INDEX_4 );
-	state.SetField ( -1, "PIXEL_FMT_INDEX_8",		( u32 )INDEX_8 );
+	state.SetField ( -1, "PIXEL_FMT_TRUECOLOR",			( u32 )TRUECOLOR );
+	state.SetField ( -1, "PIXEL_FMT_INDEX_4",			( u32 )INDEX_4 );
+	state.SetField ( -1, "PIXEL_FMT_INDEX_8",			( u32 )INDEX_8 );
 	
-	state.SetField ( -1, "COLOR_FMT_A_8", ( u32 )ZLColor::A_8 );
-	state.SetField ( -1, "COLOR_FMT_RGB_888", ( u32 )ZLColor::RGB_888 );
-	state.SetField ( -1, "COLOR_FMT_RGB_565", ( u32 )ZLColor::RGB_565 );
-	state.SetField ( -1, "COLOR_FMT_RGBA_5551", ( u32 )ZLColor::RGBA_5551 );
-	state.SetField ( -1, "COLOR_FMT_RGBA_4444", ( u32 )ZLColor::RGBA_4444 );
-	state.SetField ( -1, "COLOR_FMT_RGBA_8888", ( u32 )ZLColor::RGBA_8888 );
+	state.SetField ( -1, "COLOR_FMT_A_1",				( u32 )ZLColor::A_1 );
+	state.SetField ( -1, "COLOR_FMT_A_4",				( u32 )ZLColor::A_4 );
+	state.SetField ( -1, "COLOR_FMT_A_8",				( u32 )ZLColor::A_8 );
+	state.SetField ( -1, "COLOR_FMT_RGB_888",			( u32 )ZLColor::RGB_888 );
+	state.SetField ( -1, "COLOR_FMT_RGB_565",			( u32 )ZLColor::RGB_565 );
+	state.SetField ( -1, "COLOR_FMT_RGBA_5551",			( u32 )ZLColor::RGBA_5551 );
+	state.SetField ( -1, "COLOR_FMT_RGBA_4444",			( u32 )ZLColor::RGBA_4444 );
+	state.SetField ( -1, "COLOR_FMT_RGBA_8888",			( u32 )ZLColor::RGBA_8888 );
 	
 	state.SetField ( -1, "BLEND_EQ_ADD",						( u32 )ZLColor::BLEND_EQ_ADD );
 	state.SetField ( -1, "BLEND_EQ_NONE",						( u32 )ZLColor::BLEND_EQ_NONE );
@@ -2177,11 +2318,13 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "init",						_init },
 		{ "load",						_load },
 		{ "loadFromBuffer",				_loadFromBuffer },
+		{ "mix",						_mix },
 		{ "padToPow2",					_padToPow2 },
 		{ "resize",						_resize },
 		{ "resizeCanvas",				_resizeCanvas },
 		{ "setColor32",					_setColor32 },
 		{ "setRGBA",					_setRGBA },
+		{ "simpleThreshold",			_simpleThreshold },
 		{ "writePNG",					_writePNG },
 		{ NULL, NULL }
 	};
@@ -2267,6 +2410,37 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, ZLIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIImage::SampleColor ( float x, float y, u32 filter ) const {
+
+	u32 x0 = ( u32 )floorf ( x );
+	u32 y0 = ( u32 )floorf ( y );
+	
+	u32 x1 = x0 + 1;
+	u32 y1 = y0 + 1;
+	
+	if ( x1 >= this->mWidth ) {
+		x1 = this->mWidth - 1;
+	}
+	
+	if ( y1 >= this->mHeight ) {
+		y1 = this->mHeight - 1;
+	}
+	
+	u32 c0 = this->GetColor ( x0, y0 );
+	u32 c1 = this->GetColor ( x1, y0 );
+	u32 c2 = this->GetColor ( x0, y1 );
+	u32 c3 = this->GetColor ( x1, y1 );
+
+	u8 xt = ( u8 )(( x - ( float )x0 ) * 255.0f );
+	u8 yt = ( u8 )(( y - ( float )y0 ) * 255.0f );
+	
+	if ( filter == FILTER_LINEAR ) {
+		return ZLColor::BilerpFixed ( c0, c1, c2, c3, xt, yt );
+	}
+	return ZLColor::NearestNeighbor ( c0, c1, c2, c3, xt, yt );
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
@@ -2328,6 +2502,25 @@ void MOAIImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::SimpleThreshold ( const MOAIImage& image, float rT, float gT, float bT, float aT ) {
+
+	if ( this != &image ) {
+		this->Copy ( image );
+	}
+
+	u32 threshold = ZLColor::ConvertFromRGBA ( ZLColor::PackRGBA ( rT, gT, bT, aT ), this->mColorFormat );
+	
+	if ( this->mPixelFormat == TRUECOLOR ) {
+		for ( u32 y = 0; y < this->mHeight; ++y ) {
+			ZLColor::SimpleThreshold ( this->GetRowAddr ( y ), this->mColorFormat, this->mWidth, threshold );
+		}
+	}
+	else {
+		ZLColor::SimpleThreshold ( this->mPalette, this->mColorFormat, this->GetPaletteCount (), threshold );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Take ( MOAIImage& image ) {
 
 	this->Clear ();
@@ -2338,12 +2531,12 @@ void MOAIImage::Take ( MOAIImage& image ) {
 	this->mWidth		= image.mWidth;
 	this->mHeight		= image.mHeight;
 	
-	this->mData			= image.mData;
 	this->mBitmap		= image.mBitmap;
 	this->mPalette		= image.mPalette;
 
 	// kill the data before clear
-	image.mData = 0;
+	image.mBitmap = 0;
+	image.mPalette = 0;
 	image.Clear ();
 }
 

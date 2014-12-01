@@ -24,7 +24,7 @@ private:
 	u32					mTransform;
 	
 	// for loading from image
-	MOAIImage			mImage;
+	MOAILuaSharedPtr < MOAIImage> mImage;
 	
 	// for loading compressed data
 	void*				mData;

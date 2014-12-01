@@ -60,9 +60,8 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	void*	mData;
-	void*	mPalette;
 	void*	mBitmap;
+	void*	mPalette;
 
 	//----------------------------------------------------------------//
 	static int		_bleedRect					( lua_State* L );
@@ -84,11 +83,13 @@ private:
 	static int		_init						( lua_State* L );
 	static int		_load						( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
+	static int		_mix						( lua_State* L );
 	static int		_padToPow2					( lua_State* L );
 	static int		_resize						( lua_State* L );
 	static int		_resizeCanvas				( lua_State* L );
 	static int		_setColor32					( lua_State* L );
 	static int		_setRGBA					( lua_State* L );
+	static int		_simpleThreshold			( lua_State* L );
 	static int		_writePNG					( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -108,6 +109,7 @@ private:
 
 	void			Init					( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt, bool copy );
 	virtual void	OnImageStatusChanged	( bool isOK );
+	u32				SampleColor				( float x, float y, u32 filter ) const;
 	void			ToTrueColor				( const MOAIImage& image );
 	void			ToTrueColor				( void* destColors, const void* srcColors, const void* palette, u32 nColors, ZLColor::ColorFormat colorFormat, PixelFormat pixelFormat );
 	
@@ -142,9 +144,8 @@ public:
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
 
-	GET ( void*, Data, mData )
-	GET ( void*, Palette, mPalette )
 	GET ( void*, Bitmap, mBitmap )
+	GET ( void*, Palette, mPalette )
 	
 	enum {
 		FILTER_LINEAR,
@@ -178,6 +179,7 @@ public:
 	ZLIntRect				GetRect						();
 	void					GetSubImage					( ZLIntRect rect, void* buffer );
 	size_t					GetSubImageSize				( ZLIntRect rect );
+	void					Init						( const MOAIImage& image );
 	void					Init						( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
 	void					Init						( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
 	bool					IsPow2						();
@@ -186,6 +188,7 @@ public:
 	bool					Load						( ZLStream& stream, u32 transform = 0 );
 	bool					IsOK						();
 	bool					MipReduce					();
+	void					Mix							( ZLMatrix4x4 mtx );
 							MOAIImage					();
 							~MOAIImage					();
 	void					PadToPow2					( const MOAIImage& image );
@@ -199,6 +202,7 @@ public:
 	void					SetColor					( u32 x, u32 y, u32 color, const ZLColorBlendFunc& blendFunc );
 	void					SetPaletteColor				( u32 idx, u32 rgba );
 	void					SetPixel					( u32 x, u32 y, u32 pixel );
+	void					SimpleThreshold				( const MOAIImage& image, float rT, float gT, float bT, float aT );
 	void					Take						( MOAIImage& image );
 	void					Transform					( u32 transform );
 	
