@@ -273,6 +273,24 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	gammaCorrection
+	@text	Apply gamma correction.
+
+	@in		MOAIImage self
+	@opt	gamma			Default value is 1.
+	@out	nil
+*/
+int MOAIImage::_gammaCorrection ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	float gamma = state.GetValue < float >( 2, 1 );
+	
+	self->GammaCorrection ( *self, gamma );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	generateOutlineFromSDF
 	@text	Given a rect, and min and max distance values, transform
 			to a binary image where 0 means not on the outline and
@@ -529,7 +547,26 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	mix
+	@text	Transforms each color by a 4x4 matrix. The default value is a
+			4x4 identity matrix. The transformation 'remixes' the image's
+			channels: each new channel value is given by the sum of channels
+			as weighted by the corresponding row of the matrix. For example,
+			to remix the blue channel: b = r*b1 + g*b2 + b*b3 + a*b4. A row value
+			for b of (0, 0, 1, 0) would be the identity: b = b. A row value for
+			b of (1, 0, 0, 0) would replace b with r: b=r. A row value for
+			b of (0.5, 0.5, 0, 0) would replace b with an even blend of r and g:
+			b = r*05 + b*0.5. In this fashion, all channels of the image
+			may be rearranged or blended.
+	
+	@in		MOAIImage self
+	@opt	r1, r2, r3, r4
+	@opt	g1, g2, g3, g4
+	@opt	b1, b2, b3, b4
+	@opt	a1, a2, a3, a4
+	@opt	K					Default value is 1.
+	@out	nil
+*/
 int MOAIImage::_mix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 
@@ -555,7 +592,9 @@ int MOAIImage::_mix ( lua_State* L ) {
 	mtx.m [ ZLMatrix4x4::C2_R3 ]		= state.GetValue < float >( 16, 0.0f );
 	mtx.m [ ZLMatrix4x4::C3_R3 ]		= state.GetValue < float >( 17, 1.0f );
 	
-	self->Mix ( mtx );
+	float K								= state.GetValue < float >( 18, 1.0f );
+	
+	self->Mix ( *self, mtx, K );
 	
 	return 0;
 }
@@ -714,14 +753,26 @@ int MOAIImage::_setRGBA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	simpleThreshold
+	@text	This is a 'naive' threshold implementation that forces image color channels
+			to 0 or 1 based on a per-channel threshold value. The channel value must be
+			entirely greater that the threshold to be promoted to a value of 1. This means
+			a threshold value of 1 will always result in a channel value of 0.
+
+	@in		MOAIImage self
+	@opt	number r	Default value is 0.
+	@opt	number g	Default value is 0.
+	@opt	number b	Default value is 0.
+	@opt	number a	Default value is 0.
+	@out	nil
+*/
 int MOAIImage::_simpleThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 
 	float r		= state.GetValue < float >( 2, 0.0f );
 	float g		= state.GetValue < float >( 3, 0.0f );
 	float b		= state.GetValue < float >( 4, 0.0f );
-	float a		= state.GetValue < float >( 5, 1.0f );
+	float a		= state.GetValue < float >( 5, 0.0f );
 
 	self->SimpleThreshold ( *self, r, g, b, a );
 
@@ -1084,9 +1135,9 @@ bool MOAIImage::Convert ( const MOAIImage& image, ZLColor::ColorFormat colorFmt,
 		
 			// it's already truecolor, so we're just converting the color format
 			// we'll use the helper method in ZLColor which is a little more efficient
-			for ( u32 y = 0; y < this->mHeight; ++y ) {
+			for ( u32 y = 0; y < image.mHeight; ++y ) {
 				const void* srcRow = image.GetRowAddr ( y );
-				void* destRow = this->GetRowAddr ( y );
+				void* destRow = newImage.GetRowAddr ( y );
 				ZLColor::Convert ( destRow, newImage.mColorFormat, srcRow, image.mColorFormat, image.mWidth );
 			}
 		}
@@ -1422,8 +1473,13 @@ void MOAIImage::Desaturate ( const MOAIImage& image, float rY, float gY, float b
 		this->Copy ( image );
 	}
 
-	for ( u32 y = 0; y < this->mHeight; y++ ) {
-		ZLColor::Desaturate ( this->GetRowAddr ( y ), this->mColorFormat, this->mWidth, rY, gY, bY, K );
+	if ( this->mPixelFormat == TRUECOLOR ) {
+		for ( u32 y = 0; y < this->mHeight; y++ ) {
+			ZLColor::Desaturate ( this->GetRowAddr ( y ), this->mColorFormat, this->mWidth, rY, gY, bY, K );
+		}
+	}
+	else {
+		ZLColor::Desaturate ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), rY, gY, bY, K );
 	}
 }
 
@@ -1615,6 +1671,23 @@ void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 	
 	for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
 		this->DrawLine ( rect.mXMin, y, rect.mXMax, y, color );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::GammaCorrection ( const MOAIImage& image, float gamma ) {
+
+	if ( this != &image ) {
+		this->Copy ( image );
+	}
+
+	if ( this->mPixelFormat == TRUECOLOR ) {
+		for ( u32 y = 0; y < this->mHeight; y++ ) {
+			ZLColor::GammaCorrection ( this->GetRowAddr ( y ), this->mColorFormat, this->mWidth, gamma );
+		}
+	}
+	else {
+		ZLColor::GammaCorrection ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), gamma );
 	}
 }
 
@@ -2184,19 +2257,19 @@ bool MOAIImage::MipReduce () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Mix ( ZLMatrix4x4 mtx ) {
-
-	if ( this->mPixelFormat != TRUECOLOR ) return; // TODO: log error
+void MOAIImage::Mix ( const MOAIImage& image, const ZLMatrix4x4& mtx, float K ) {
 	
-	for ( u32 y = 0; y < this->mHeight; ++y ) {
-		for ( u32 x = 0; x < this->mWidth; ++x ) {
-			
-			ZLColorVec color ( this->GetColor ( x, y ));
-			ZLVec4D vec ( color.mR, color.mG, color.mB, color.mA );
-			mtx.Transform ( vec );
-			
-			this->SetColor ( x, y, ZLColor::PackRGBA ( vec.mX, vec.mY, vec.mZ, vec.mW ));
+	if ( this != &image ) {
+		this->Copy ( image );
+	}
+
+	if ( this->mPixelFormat == TRUECOLOR ) {
+		for ( u32 y = 0; y < this->mHeight; y++ ) {
+			ZLColor::Mix ( this->GetRowAddr ( y ), this->mColorFormat, this->mWidth, mtx, K );
 		}
+	}
+	else {
+		ZLColor::Mix ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), mtx, K );
 	}
 }
 
