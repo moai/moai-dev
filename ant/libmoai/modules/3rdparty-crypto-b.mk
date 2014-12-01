@@ -12,7 +12,9 @@
 	LOCAL_CFLAGS		+= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
 	LOCAL_CFLAGS		+= -fvisibility=hidden
 
-	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
+	LOCAL_C_INCLUDES 	+= $(MY_HEADER_SEARCH_PATHS)
+	LOCAL_C_INCLUDES 	+= '$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/asn1'
+	LOCAL_C_INCLUDES 	+= '$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/evp'
 
 	#Name="bn"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bn/bn_add.c
@@ -44,23 +46,23 @@
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bn/bn_word.c
 
 	#Name="ec"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec2_mult.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec2_smpl.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_ameth.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_asn1.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_check.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_curve.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_cvt.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_err.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_key.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_lib.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_mult.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_pmeth.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_print.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/eck_prn.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_mont.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_nist.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_smpl.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec2_mult.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec2_smpl.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_ameth.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_asn1.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_check.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_curve.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_cvt.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_err.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_key.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_lib.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_mult.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_pmeth.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ec_print.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/eck_prn.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_mont.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_nist.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ec/ecp_smpl.c
 
 	#Name="hmac"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/hmac/hm_ameth.c
@@ -108,30 +110,30 @@
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/dh/dh_prn.c
 
 	#Name="bf"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_cfb64.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_ecb.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_enc.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_ofb64.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_skey.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_cfb64.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_ecb.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_enc.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_ofb64.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/bf/bf_skey.c
 
 	#Name="cast"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_cfb64.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_ecb.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_enc.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_ofb64.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_skey.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_cfb64.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_ecb.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_enc.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_ofb64.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/cast/c_skey.c
 
 	#Name="mdc2"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/mdc2/mdc2_one.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/mdc2/mdc2dgst.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/mdc2/mdc2_one.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/mdc2/mdc2dgst.c
 
 	#Name="ripemd"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ripemd/rmd_dgst.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ripemd/rmd_one.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ripemd/rmd_dgst.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ripemd/rmd_one.c
 
 	#Name="whirlpool"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/whrlpool/wp_block.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/whrlpool/wp_dgst.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/whrlpool/wp_block.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/whrlpool/wp_dgst.c
 
 	#Name="modes"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/modes/cbc128.c
@@ -141,10 +143,10 @@
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/modes/ofb128.c
 
 	#Name="ecdh"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_err.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_key.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_lib.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_ossl.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_err.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_key.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_lib.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/ecdh/ech_ossl.c
 
 	#Name="pkcs7"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/pkcs7/bio_pk7.c
