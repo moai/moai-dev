@@ -18,7 +18,7 @@ int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** a
 	int mode = AKU_AS_ARGS;
 	char* args = 0;
 
-	if ( i < argc ) {
+	if ( i < ( argc - 1 )) {
 	
 		char* arg = argv [ i + 1 ];
 	
@@ -128,6 +128,7 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 					
 					AKULoadFuncFromFile ( arg );
 					AKUCallFuncWithArgArray ( argv [ 0 ], argv [ i ], argc2, argv2, AKU_AS_ARGS );
+					break;
 				}
 			}
 		}
