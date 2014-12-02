@@ -22,12 +22,12 @@ void AKUSimContextInitialize () {
 
 	ZLBitBuffer::Test ();
 
+	MOAINodeMgr::Affirm ();
+	MOAIActionStackMgr::Affirm ();
+
 	//MOAIProfiler::Affirm ();
 	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	
-	MOAIActionStackMgr::Affirm ();
-	MOAINodeMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIDraw::Affirm ();
