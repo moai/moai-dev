@@ -128,7 +128,6 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 					
 					AKULoadFuncFromFile ( arg );
 					AKUCallFuncWithArgArray ( argv [ 0 ], argv [ i ], argc2, argv2, AKU_AS_ARGS );
-					break;
 				}
 			}
 		}

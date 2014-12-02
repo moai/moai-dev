@@ -113,6 +113,8 @@
 	MY_LOCAL_CFLAGS += -DAKU_WITH_CRYPTO=1
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-a.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-b.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk
@@ -166,6 +168,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-c-ares.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-curl.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-ssl.mk
