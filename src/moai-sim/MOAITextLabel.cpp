@@ -727,6 +727,8 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
 
+	MOAIGraphicsProp::DrawDebug ( subPrimID, lod );
+
 	if ( !this->IsVisible ( lod )) return;
 	if ( this->IsClear ()) return;
 
