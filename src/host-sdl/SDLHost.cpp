@@ -76,6 +76,7 @@ void _AKUEnterFullscreenModeFunc () {
 
     //videomode change
     SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN);
+	SetScreenSize( SDL_GetCurrentDisplayMode );
 }
 
 //----------------------------------------------------------------//
@@ -83,6 +84,7 @@ void _AKUExitFullscreenModeFunc () {
 
     //videomode change
     SDL_SetWindowFullscreen(sWindow, 0);
+	SetScreenSize( SDL_GetDesktopDisplayMode );
 }
 
 //----------------------------------------------------------------//
@@ -326,14 +328,13 @@ void MainLoop () {
 					break;
 
 				case SDL_WINDOWEVENT:
-
-					if ( sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED || sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED ) {
+					// Note: this only support fullscreen videomode change.
+					// Not for the event "resize", by default SDL main window is not resizable(at least Linux)
+					if ( sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED ||
+							sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED ) {
 						
-						//AKUSetViewSize(sdlEvent.window.data1, sdlEvent.window.data2);
-
-						( SDL_GetWindowFlags(sWindow) == SDL_WINDOW_FULLSCREEN ) ? SetScreenSize( SDL_GetDesktopDisplayMode ) : SetScreenSize( SDL_GetCurrentDisplayMode );
+						AKUSetViewSize(sdlEvent.window.data1, sdlEvent.window.data2);
 					}
-
 					break;
 
                 case SDL_FINGERDOWN:
