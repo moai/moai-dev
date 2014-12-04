@@ -454,6 +454,10 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 	self->mDesigner.SetLimitWidth ( true );
 	self->mDesigner.SetLimitHeight ( true );
 
+	self->mBoundsOverride.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
+	self->mBoundsOverride.Bless ();
+	self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
+
 	self->ScheduleLayout ();
 
 	return 0;
@@ -879,6 +883,8 @@ void MOAITextLabel::OnDepNodeUpdate () {
 
 //----------------------------------------------------------------//
 u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
+
+	this->Refresh ();
 
 	ZLRect frame;
 	if ( this->mLayout.GetBounds ( frame )) {
