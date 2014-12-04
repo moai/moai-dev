@@ -4,7 +4,6 @@ curl 7.19.7
 expat 2.0.1
 freetype 2.4.4
 glew 1.5.6
-glut 3.7.6
 jansson 2.1
 ISO8601DateFormatter.m, .h
 libogg 1.2.2

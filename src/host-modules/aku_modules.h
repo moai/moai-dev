@@ -17,10 +17,6 @@
 	#include <moai-box2d/host.h>
 #endif
 
-#if AKU_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
-#endif
-
 #if AKU_WITH_CRYPTO
 	#include <moai-crypto/host.h>
 #endif

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-osx-all
-xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-ios-all -sdk iphonesimulator
-xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-ios-all -sdk iphoneos
+xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-osx-all || exit 1
+xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-ios-all -sdk iphonesimulator || exit 1
+xcodebuild -configuration Release -project libmoai.xcodeproj -target libmoai-ios-all -sdk iphoneos || exit 1
 
 pushd ./build/Release-iphoneos/ > /dev/null
 rm -rf "../Release-universal" # clean out the old dir (if any)

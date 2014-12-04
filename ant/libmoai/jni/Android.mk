@@ -84,45 +84,6 @@
 #================================================================#
 
 	#--------------------------------------------------------------#
-	# CHIPMUNK
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_CHIPMUNK=0
-
-	#--------------------------------------------------------------#
-	# SIM
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_SIM=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype2
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/builds
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libtess2/Include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-freetype.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-jpg.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-png.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-tess.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-sim.mk
-
-	#--------------------------------------------------------------#
-	# CRYPTO
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_CRYPTO=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-a.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-b.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/zl-crypto.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-crypto.mk
-
-	#--------------------------------------------------------------#
 	# BOX2D
 
 	MY_LOCAL_CFLAGS += -DAKU_WITH_BOX2D=1
@@ -144,9 +105,38 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-util.mk
 
 	#--------------------------------------------------------------#
-	# FMOD_EX
+	# CRYPTO
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
+	MY_LOCAL_CFLAGS += -DAKU_WITH_CRYPTO=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-a.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-b.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-d.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/zl-crypto.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-crypto.mk
+
+	#--------------------------------------------------------------#
+	# SIM
+
+	MY_LOCAL_CFLAGS += -DAKU_WITH_SIM=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype2
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/builds
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libtess2/Include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-freetype.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-jpg.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-png.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-tess.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-sim.mk
 
 	#--------------------------------------------------------------#
 	# LUAEXT
@@ -159,6 +149,11 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-luaext.mk
+
+	#--------------------------------------------------------------#
+	# FMOD_EX
+
+	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
 
 	#--------------------------------------------------------------#
 	# HTTP_CLIENT

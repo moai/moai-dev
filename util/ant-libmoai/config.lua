@@ -33,25 +33,6 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
-	CHIPMUNK = {
-		
-		MODULE_DEFINE = 'AKU_WITH_CHIPMUNK',
-		
-		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints',
-		},
-	
-		INCLUDES = {
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-chipmunk.mk',
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chipmunk.mk',
-		},
-		
-		STATIC_LIBRARIES = 'libchipmunk libmoai-chipmunk',
-	},
-	
-	----------------------------------------------------------------
 	CRYPTO = {
 		
 		MODULE_DEFINE = 'AKU_WITH_CRYPTO',

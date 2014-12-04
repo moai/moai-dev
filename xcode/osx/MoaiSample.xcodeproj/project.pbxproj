@@ -32,7 +32,6 @@
 		CD2FD04C1832EA48000C3674 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD00B1832EA10000C3674 /* libmoai-osx-3rdparty-core.a */; };
 		CD2FD04D1832EA48000C3674 /* libmoai-osx-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD00D1832EA10000C3674 /* libmoai-osx-3rdparty-crypto.a */; };
 		CD2FD04F1832EA48000C3674 /* libmoai-osx-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD0111832EA10000C3674 /* libmoai-osx-box2d.a */; };
-		CD2FD0501832EA48000C3674 /* libmoai-osx-chipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD0131832EA10000C3674 /* libmoai-osx-chipmunk.a */; };
 		CD2FD0511832EA48000C3674 /* libmoai-osx-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD0151832EA10000C3674 /* libmoai-osx-crypto.a */; };
 		CD2FD0521832EA48000C3674 /* libmoai-osx-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD01D1832EA10000C3674 /* libmoai-osx-http-client.a */; };
 		CD2FD0531832EA48000C3674 /* libmoai-osx-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD01F1832EA10000C3674 /* libmoai-osx-http-server.a */; };
@@ -163,13 +162,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = CDA4B8241808AC6E000129F9;
 			remoteInfo = "libmoai-ios-chartboost";
-		};
-		CD2FCFE01832EA10000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7547173C116400DFE837;
-			remoteInfo = "libmoai-ios-chipmunk";
 		};
 		CD2FCFE21832EA10000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -332,13 +324,6 @@
 			remoteGlobalIDString = 89BE737B173AD29200DFE837;
 			remoteInfo = "libmoai-osx-box2d";
 		};
-		CD2FD0121832EA10000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7576173C119600DFE837;
-			remoteInfo = "libmoai-osx-chipmunk";
-		};
 		CD2FD0141832EA10000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -457,13 +442,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 89BE725E173AD29200DFE837;
 			remoteInfo = "libmoai-osx-box2d";
-		};
-		CD2FD0381832EA39000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 89BE7548173C119600DFE837;
-			remoteInfo = "libmoai-osx-chipmunk";
 		};
 		CD2FD03A1832EA39000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -641,7 +619,6 @@
 				CD2FD04D1832EA48000C3674 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				CD2CB51A19FCD14500C42260 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
 				CD2FD04F1832EA48000C3674 /* libmoai-osx-box2d.a in Frameworks */,
-				CD2FD0501832EA48000C3674 /* libmoai-osx-chipmunk.a in Frameworks */,
 				CD2FD0511832EA48000C3674 /* libmoai-osx-crypto.a in Frameworks */,
 				CD2FD0521832EA48000C3674 /* libmoai-osx-http-client.a in Frameworks */,
 				CD2FD0531832EA48000C3674 /* libmoai-osx-http-server.a in Frameworks */,
@@ -782,7 +759,6 @@
 				CD2FCFDB1832EA10000C3674 /* libmoai-ios-billing.a */,
 				CD2FCFDD1832EA10000C3674 /* libmoai-ios-box2d.a */,
 				CD2FCFDF1832EA10000C3674 /* libmoai-ios-chartboost.a */,
-				CD2FCFE11832EA10000C3674 /* libmoai-ios-chipmunk.a */,
 				CD2FCFE31832EA10000C3674 /* libmoai-ios-crittercism.a */,
 				CD2FCFE51832EA10000C3674 /* libmoai-ios-crypto.a */,
 				CD2FCFE71832EA10000C3674 /* libmoai-ios-facebook.a */,
@@ -811,7 +787,6 @@
 				CD2CB51719FCD06200C42260 /* libmoai-osx-3rdparty-sdl.a */,
 				CD48CF511A12FDA40029F932 /* libmoai-osx-audio-sampler.a */,
 				CD2FD0111832EA10000C3674 /* libmoai-osx-box2d.a */,
-				CD2FD0131832EA10000C3674 /* libmoai-osx-chipmunk.a */,
 				CD2FD0151832EA10000C3674 /* libmoai-osx-crypto.a */,
 				CD2FD0171832EA10000C3674 /* libmoai-osx-fmod-designer.a */,
 				CD2FD0191832EA10000C3674 /* libmoai-osx-fmod-ex.a */,
@@ -871,7 +846,6 @@
 				CD2FD0331832EA39000C3674 /* PBXTargetDependency */,
 				CD2CB51919FCD0E600C42260 /* PBXTargetDependency */,
 				CD2FD0371832EA39000C3674 /* PBXTargetDependency */,
-				CD2FD0391832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD03B1832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD03D1832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD03F1832EA39000C3674 /* PBXTargetDependency */,
@@ -1049,13 +1023,6 @@
 			remoteRef = CD2FCFDE1832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD2FCFE11832EA10000C3674 /* libmoai-ios-chipmunk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-ios-chipmunk.a";
-			remoteRef = CD2FCFE01832EA10000C3674 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD2FCFE31832EA10000C3674 /* libmoai-ios-crittercism.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1215,13 +1182,6 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-box2d.a";
 			remoteRef = CD2FD0101832EA10000C3674 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CD2FD0131832EA10000C3674 /* libmoai-osx-chipmunk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-osx-chipmunk.a";
-			remoteRef = CD2FD0121832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD2FD0151832EA10000C3674 /* libmoai-osx-crypto.a */ = {
@@ -1418,11 +1378,6 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-box2d";
 			targetProxy = CD2FD0361832EA39000C3674 /* PBXContainerItemProxy */;
-		};
-		CD2FD0391832EA39000C3674 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libmoai-osx-chipmunk";
-			targetProxy = CD2FD0381832EA39000C3674 /* PBXContainerItemProxy */;
 		};
 		CD2FD03B1832EA39000C3674 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
