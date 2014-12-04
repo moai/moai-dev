@@ -132,8 +132,6 @@ private:
 
 	MOAILuaSharedPtr < MOAIFrameBuffer > mDefaultBuffer;
 	MOAIFrameBuffer* mFrameBuffer;
-	
-	u32				mResourceLoadingPolicy;
 
 	//----------------------------------------------------------------//
 	static int				_getFrameBuffer				( lua_State* L );
@@ -144,7 +142,6 @@ private:
 	static int				_setPenColor				( lua_State* L );
 	static int				_setPenWidth				( lua_State* L );
 	static int				_setPointSize				( lua_State* L );
-	static int				_setResourceLoadingPolicy	( lua_State* L );
 	static int				_release					( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -236,7 +233,6 @@ public:
 	
 	void					Reserve					( u32 size );
 	void					ResetDrawCount			();
-	void					ResetResources			();
 	void					ResetState				();
 	
 	void					SetAmbientColor			( u32 color );

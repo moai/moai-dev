@@ -551,7 +551,7 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 				ZLVec3D loc;
 				loc.Init ( grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER ));
 				
-				ZLBox bounds = this->mDeck->GetBounds ( idx, this->mRemapper );
+				ZLBox bounds = this->mDeck->GetBounds ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
 				bounds.Offset ( loc );
 				
 				mtx.Transform ( loc );
@@ -617,7 +617,7 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
 	//}
 	//else {
-	//	//this->mDeck->GatherSurfaces ( this->mIndex, this->mRemapper, sampler );
+	//	//this->mDeck->GatherSurfaces ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), sampler );
 	//}
 }
 
@@ -740,7 +740,8 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 		passTrivial = bounds.Contains ( vec );
 	}
 	
-	return ( passTrivial && this->mDeck ) ? this->mDeck->Inside ( vec, pad ) : passTrivial;
+	// TODO: handle grids
+	return ( passTrivial && this->mDeck ) ? this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), vec, pad ) : passTrivial;
 }
 
 //----------------------------------------------------------------//
@@ -752,7 +753,7 @@ MOAIProp::MOAIProp () :
 	mMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mFlags ( 0 ),
-	mIndex( 1 ),
+	mIndex ( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
 	mBoundsPad ( 0.0f, 0.0f, 0.0f ) {
 	
@@ -808,7 +809,7 @@ u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
 	}
 	else if ( this->mDeck ) {
 	
-		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
+		bounds = this->mDeck->GetBounds ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
 		return BOUNDS_OK;
 	}
 	

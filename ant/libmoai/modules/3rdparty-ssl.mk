@@ -13,8 +13,6 @@
 	LOCAL_CFLAGS		+= -fvisibility=hidden
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_C_INCLUDES	+= $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
-
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/ssl/bio_ssl.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/ssl/d1_both.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/ssl/d1_clnt.c

@@ -3,7 +3,7 @@
 
 #include <Foundation/Foundation.h>
 #include <string.h>
-#include <moai-core/headers.h>
+#include <zl-common/zl_platform.h>
 #include <host-modules/aku_modules_ios.h>
 
 //================================================================//

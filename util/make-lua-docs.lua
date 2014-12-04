@@ -45,6 +45,7 @@ end
 parseFile					= nil
 parseParam					= nil
 parseTag					= nil
+prepareDoxyfile				= nil
 removeFormatting			= nil
 writeDefGroup				= nil
 writeDoxygenBlock			= nil
@@ -121,6 +122,9 @@ parseParam = function ( v )
 		v.paramText = v.paramText .. " " .. s
 		s = func ()
 	end
+
+	v.paramName = v.paramName and v.paramName or ''
+	v.paramType = v.paramType and v.paramType or ''
 end
 
 ----------------------------------------------------------------
@@ -135,6 +139,31 @@ parseTag = function ( v )
 	while s do
 		v.tagText = v.tagText .. " " .. s
 		s = func ()
+	end
+end
+
+----------------------------------------------------------------
+prepareDoxyfile = function ( filename, tmpFilename )
+
+	MOAIFileSystem.copy ( filename, tmpFilename )
+
+	local str1 = MOAIFileSystem.checkFileExists ( SRC_PATH..'config/moai_version_major.h' ) and
+		util.loadFileAsString ( SRC_PATH..'config/moai_version_major.h' ) or
+		util.loadFileAsString ( SRC_PATH..'config-default/moai_version_major.h' )
+
+	local str2 = util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' ) and
+		util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' ) or
+		util.loadFileAsString ( SRC_PATH..'config-default/moai_version_minor.h' )
+
+	if str1 and str2 then
+
+		major		= string.match ( string.sub ( str1, string.find ( str1, 'MOAI_SDK_VERSION_MAJOR %d' )),"%d+" )
+		minor		= string.match ( string.sub ( str2, string.find ( str2, 'MOAI_SDK_VERSION_MINOR %d' )),"%d+" )
+		revision	= string.match ( string.sub ( str2, string.find ( str2, 'MOAI_SDK_VERSION_REVISION %d' )),"%d+" )
+
+		util.replaceInFile (  tmpFilename, {
+			[ '@@VERSION@@' ] = string.format ( 'v%i.%i.%i', major, minor, revision ),
+		})
 	end
 end
 
@@ -338,8 +367,7 @@ writeDoxygenFuncBlock = function ( out, doxygenBlock )
 			
 		elseif v.tag == '@out' then
 
-			parseParam ( v )
-			if v.paramName == nil then v.paramName = '' end			
+			parseParam ( v )		
 			table.insert ( curDef.outParams, v )
 		
 		elseif v.tag == '@opt' then
@@ -369,7 +397,7 @@ writeDoxygenFuncBlock = function ( out, doxygenBlock )
 		end
 
 		local argList = ''
-		for i,v in ipairs ( def.inParams ) do
+		for i, v in ipairs ( def.inParams ) do
 			if i ~= 1 then argList = argList .. ', ' end
 
 			if not v.paramType then v.paramType = '' end
@@ -386,7 +414,7 @@ writeDoxygenFuncBlock = function ( out, doxygenBlock )
 				argList = argList .. ' [, '
 			end
 		
-			for i,v in ipairs ( def.optParams ) do
+			for i, v in ipairs ( def.optParams ) do
 				if i ~= 1 then argList = argList .. ', ' end
 				argList = argList .. v.paramType .. ' ' .. v.paramName
 			end
@@ -484,7 +512,12 @@ for filename in util.iterateFiles ( SRC_PATH, { '.c$', '.cpp$', '.h$', '.m$', '.
 	parseFile ( src, dst )
 end
 
-os.execute ( 'doxygen doxyfile' )
+local DOXYFILE = 'doxyfile'
+local DOXYFILE_TMP = 'doxyfile-tmp'
+
+prepareDoxyfile ( DOXYFILE, DOXYFILE_TMP )
+os.execute ( 'doxygen ' .. DOXYFILE_TMP )
+MOAIFileSystem.deleteFile ( DOXYFILE_TMP )
 
 local concat = function ( ... )
 	return table.concat ( arg )
@@ -539,22 +572,6 @@ for filename in util.iterateFiles ( TEMPLATE_PATH ) do
 end
 
 MOAIFileSystem.copy ( HTML_PATH, OUTPUT_DIR )
---os.execute ( string.format("cp -r -p %s %s ", HTML_PATH, OUTPUT_DIR))
+
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
-
-str = util.loadFileAsString ( SRC_PATH..'config/moai_version_major.h' )
-str2 = util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' )
-
-type="MOAI_SDK_VERSION_MAJOR %d"
-major = string.match(string.sub(str, string.find(str, type)),"%d+")
-
-type="MOAI_SDK_VERSION_MINOR %d"
-minor= string.match(string.sub(str2, string.find(str2, type)),"%d+")
-
-type="MOAI_SDK_VERSION_REVISION %d"
-revision= string.match(string.sub(str2, string.find(str2, type)),"%d+")
-
-util.replaceInFile (  OUTPUT_DIR.. 'index.html', {
-	[ '@@VERSION@@' ]				= string.format("v%i.%i.%i",major,minor,revision),
-})

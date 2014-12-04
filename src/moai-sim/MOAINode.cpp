@@ -552,7 +552,7 @@ MOAINode::~MOAINode () {
 		delete link;
 	}
 
-	if ( this->mState != STATE_IDLE ) {
+	if (( this->mState != STATE_IDLE ) && ( MOAINodeMgr::IsValid ())) {
 		MOAINodeMgr::Get ().Remove ( *this );
 	}
 }

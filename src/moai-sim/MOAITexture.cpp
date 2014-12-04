@@ -82,7 +82,7 @@ void MOAITexture::Clear () {
 
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
-	this->mImage.Clear ();
+	this->mImage.Set ( *this, 0 );
 	
 	if ( this->mData ) {
 		free ( this->mData );
@@ -94,17 +94,33 @@ void MOAITexture::Clear () {
 //----------------------------------------------------------------//
 bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
-	u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
-	cc8* debugName = state.GetValue < cc8* >( idx + 2, 0 );
+	u32 transform = MOAITexture::DEFAULT_TRANSFORM;
+	cc8* debugName = "";
+	int debugNameIdx = 1;
+	
+	if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
+		transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
+		debugNameIdx++;
+	}
+	debugName = state.GetValue < cc8* >( debugNameIdx, "" );
+		
+	bool done = false;
 
+	if ( state.IsType ( idx, LUA_TSTRING )) {
+		cc8* filename = lua_tostring ( state, idx );
+		u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
+		this->Init ( filename, transform );
+		done = true;
+	}
+	
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		
-		bool done = false;
-		
-		MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
-		if ( image ) {
-			this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)" );
-			done = true;
+	
+		if ( !done ) {
+			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
+			if ( image ) {
+				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)" );
+				done = true;
+			}
 		}
 		
 		if ( !done ) {
@@ -122,16 +138,8 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 				done = true;
 			}
 		}
-		
-		return done;
 	}
-	else if ( state.IsType ( idx, LUA_TSTRING )) {
-		
-		cc8* filename = lua_tostring ( state, idx );
-		this->Init ( filename, transform );
-		return true;
-	}
-	return false;
+	return done;
 }
 
 //----------------------------------------------------------------//
@@ -140,7 +148,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
-		this->mImage.Copy ( image );
+		this->mImage.Set ( *this, &image );
 		this->mDebugName = debugname;
 		this->DoCPUAffirm ();
 	}
@@ -152,8 +160,9 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
-		this->mImage.Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
-		this->mImage.Blit ( image, srcX, srcY, 0, 0, width, height );
+		this->mImage.Set ( *this, new MOAIImage ());
+		this->mImage->Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
+		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->DoCPUAffirm ();
 	}
@@ -175,7 +184,9 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->DoCPUAffirm ();
-	} else {
+	}
+	else {
+	
 		STLString expand = ZLFileSys::GetAbsoluteFilePath ( filename );
 		MOAILog ( NULL, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
 	}
@@ -186,34 +197,35 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
 	
-	this->mImage.Load ( stream, transform );
+	MOAIPvrHeader header;
+	header.Load ( stream );
 	
-	// if no image, check to see if the file is a PVR
-	if ( !this->mImage.IsOK ()) {
+	if ( header.IsValid ()) {
+	
+		u32 size = header.GetTotalSize ();
+			
+		this->mData = malloc ( size );
+		this->mDataSize = size;		
 		
-		MOAIPvrHeader header;
-		header.Load ( stream );
+		size = stream.ReadBytes ( this->mData, size );
 		
-		// get file data, check if PVR		
-		if ( header.IsValid ()) {
-			
-			u32 size = header.GetTotalSize ();
-			
-			this->mData = malloc ( size );
-			this->mDataSize = size;		
-			
-			size = stream.ReadBytes ( this->mData, size );
-			
-			if ( size != this->mDataSize ) {
-				free ( this->mData );
-				this->mData = 0;
-				this->mDataSize = 0;
-			}
+		if ( size != this->mDataSize ) {
+			free ( this->mData );
+			this->mData = 0;
+			this->mDataSize = 0;
+		}
+	}
+	else {
+	
+		this->mImage.Set ( *this, new MOAIImage ());
+		this->mImage->Load ( stream, transform );
+		if ( !this->mImage->IsOK ()) {
+			this->mImage.Set ( *this, 0 );
 		}
 	}
 	
 	// if we're OK, store the debugname and load
-	if ( this->mImage.IsOK () || this->mData ) {
+	if ( this->mData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->DoCPUAffirm ();
 	}
@@ -259,9 +271,12 @@ bool MOAITexture::OnCPUCreate () {
 
 	if ( this->mFilename.size ()) {
 	
-		this->mImage.Load ( this->mFilename, this->mTransform );
+		this->mImage.Set ( *this, new MOAIImage ());
+		this->mImage->Load ( this->mFilename, this->mTransform );
 		
-		if ( !this->mImage.IsOK ()) {
+		if ( !this->mImage->IsOK ()) {
+			
+			this->mImage.Set ( *this, 0 );
 			
 			// if no image, check to see if the file is a PVR
 			ZLFileStream stream;
@@ -284,10 +299,10 @@ bool MOAITexture::OnCPUCreate () {
 		}
 	}
 	
-	if ( this->mImage.IsOK ()) {
+	if ( this->mImage && this->mImage->IsOK ()) {
 		
-		this->mWidth = this->mImage.GetWidth ();
-		this->mHeight = this->mImage.GetHeight ();
+		this->mWidth = this->mImage->GetWidth ();
+		this->mHeight = this->mImage->GetHeight ();
 		return true;
 	}
 	else if ( this->mData ) {
@@ -307,15 +322,19 @@ void MOAITexture::OnCPUDestroy () {
 
 	// if we know the filename it is safe to clear out
 	// the image and/or buffer
-	if ( this->mFilename.size ()) {
+	if ( this->HasReloader () || this->mFilename.size ()) {
 		
-		this->mImage.Clear ();
+		this->mImage.Set ( *this, 0 );
 		
 		if ( this->mData ) {
 			free ( this->mData );
 			this->mData = NULL;
 		}
 		this->mDataSize = 0;
+	}
+	
+	if ( this->HasReloader ()) {
+		this->mFilename.clear ();
 	}
 }
 
@@ -324,8 +343,8 @@ bool MOAITexture::OnGPUCreate () {
 	
 	bool success = false;
 	
-	if ( this->mImage.IsOK ()) {
-		success =  this->CreateTextureFromImage ( this->mImage );
+	if ( this->mImage && this->mImage->IsOK ()) {
+		success =  this->CreateTextureFromImage ( *this->mImage );
 	}
 	else if ( this->mData ) {
 		success = this->CreateTextureFromPVR ( this->mData, this->mDataSize );
@@ -350,6 +369,7 @@ void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
+
 		{ NULL, NULL }
 	};
 

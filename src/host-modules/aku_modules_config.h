@@ -5,10 +5,6 @@
 		#define AKU_WITH_BOX2D 1
 	#endif
 
-	#ifndef AKU_WITH_CHIPMUNK
-		#define AKU_WITH_CHIPMUNK 0
-	#endif
-
 	#ifndef AKU_WITH_CRYPTO
 		#define AKU_WITH_CRYPTO 1
 	#endif

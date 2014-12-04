@@ -166,6 +166,11 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
 			break;
 		
+		case ZLColor::RGBA_5551:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
+			break;
+		
 		case ZLColor::RGBA_4444:
 			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
@@ -581,12 +586,12 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 	// TODO: what happens when image is an unsupported format?
 
 	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
-	//if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
 		this->mGLTexID = 0;	
-	//}
+	}
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image
@@ -600,10 +605,10 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 		
 		void* buffer = image.GetBitmap ();
 		
+		MOAIImage subImage;
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
-			u32 size = image.GetSubImageSize ( rect );
-			buffer = alloca ( size );
-			image.GetSubImage ( rect, buffer ); // TODO: need to convert to correct format for texture
+			subImage.GetSubImage ( image, rect ); // TODO: need to convert to correct format for texture
+			buffer = subImage.GetBitmap ();
 		}
 
 		zglTexSubImage2D (

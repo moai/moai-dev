@@ -5,7 +5,6 @@
 #define	MOAIDECK_H
 
 class MOAIBoundsDeck;
-class MOAIDeckRemapper;
 class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIColor;
@@ -89,7 +88,7 @@ protected:
 	virtual ZLBox			GetItemBounds			( u32 idx ) = 0;
 	void					SetBoundsDirty			();
 	bool					TestHit					( float x, float y ); // in local (uv) space of the mask
-	bool					TestHit					( MOAIQuadBrush& quad, float x, float y ); // in local (model) space of the quad
+	bool					TestHit					( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
 
 public:
 	
@@ -103,14 +102,14 @@ public:
 	GET ( u32, HitGranularity, mHitGranularity )
 	
 	//----------------------------------------------------------------//
-	virtual bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec );
-	void					Draw					( u32 idx, MOAIDeckRemapper* remapper );
-	void					Draw					( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	virtual bool			Contains				( u32 idx, const ZLVec2D& vec );
+	void					Draw					( u32 idx );
+	void					Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	ZLBox					GetBounds				();
-	ZLBox					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	ZLBox					GetBounds				( u32 idx );
 	virtual void			GetCollisionShape		( MOAICollisionShape& shape );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
-	virtual bool			Inside					( ZLVec3D vec, float pad );
+	virtual bool			Inside					( u32 idx, ZLVec3D vec, float pad );
 							MOAIDeck				();
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );

@@ -54,6 +54,8 @@ public:
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	static void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
+	static void			DrawBoxAxis				( const ZLBox& box );
+	static void			DrawBoxDiagonals		( const ZLBox& box );
 	static void			DrawBoxOutline			( const ZLBox& box );
 	static void			DrawEllipseFill			( const ZLRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );

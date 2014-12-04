@@ -80,6 +80,16 @@ int MOAIGfxResource::_setLoadingPolicy ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResource::_setReloader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
+
+	self->mReloader.SetRef ( *self, state, 2 );
+	self->InvokeLoader ();
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxResource
 //================================================================//
@@ -87,11 +97,15 @@ int MOAIGfxResource::_setLoadingPolicy ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
 
-	if ( this->mState == STATE_NEW ) return false;
+	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
 		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
 		return false;
+	}
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->InvokeLoader ();
 	}
 
 	if ( this->DoGPUAffirm ()) {
@@ -185,10 +199,27 @@ bool MOAIGfxResource::DoGPUAffirm () {
 u32 MOAIGfxResource::GetLoadingPolicy () {
 
 	if ( this->mLoadingPolicy == LOADING_POLICY_NONE ) {
-		u32 globalLoadingPolicy = MOAIGfxDevice::Get ().mResourceLoadingPolicy;
+		u32 globalLoadingPolicy = MOAIGfxResourceMgr::Get ().mResourceLoadingPolicy;
 		return globalLoadingPolicy == LOADING_POLICY_NONE ? DEFAULT_LOADING_POLICY : globalLoadingPolicy;
 	}
 	return this->mLoadingPolicy;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::HasReloader () {
+
+	return ( bool )this->mReloader;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::InvokeLoader () {
+
+	if ( this->mReloader ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mReloader.PushRef ( state )) {
+			state.DebugCall ( 0, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -210,6 +241,7 @@ MOAIGfxResource::~MOAIGfxResource () {
 	if ( MOAIGfxResourceMgr::IsValid ()) {
 		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
 	}
+	this->mReloader.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -231,6 +263,7 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "purge",					_purge },
 		{ "softRelease",			_purge }, // back compat
 		{ "setLoadingPolicy",		_setLoadingPolicy },
+		{ "setReloader",			_setReloader },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
@@ -259,6 +292,7 @@ void MOAIGfxResource::Renew () {
 	if ( this->mState != STATE_ERROR ) {
 		this->OnGPULost (); // clear out the resource id (if any)
 		this->mState = STATE_NEEDS_CPU_CREATE;
+		this->InvokeLoader ();
 		this->DoGPUAffirm ();
 	}
 }

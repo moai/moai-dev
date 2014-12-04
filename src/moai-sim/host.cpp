@@ -22,12 +22,12 @@ void AKUSimContextInitialize () {
 
 	ZLBitBuffer::Test ();
 
+	MOAINodeMgr::Affirm ();
+	MOAIActionStackMgr::Affirm ();
+
 	//MOAIProfiler::Affirm ();
 	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	
-	MOAIActionStackMgr::Affirm ();
-	MOAINodeMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIDraw::Affirm ();
@@ -65,6 +65,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
+	REGISTER_LUA_CLASS ( MOAIGfxResourceMgr )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
@@ -96,6 +97,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
+	REGISTER_LUA_CLASS ( MOAIRegion )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )

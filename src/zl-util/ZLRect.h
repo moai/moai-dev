@@ -620,7 +620,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	bool OverlapWithoutEdges ( const ZLMetaRect < TYPE >& rect ) const {
+	bool OverlapExcludeEdge ( const ZLMetaRect < TYPE >& rect ) const {
 		
 		if ( this->mXMin >= rect.mXMax ) return false;
 		if ( this->mXMax <= rect.mXMin ) return false;

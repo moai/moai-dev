@@ -33,25 +33,6 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
-	CHIPMUNK = {
-		
-		MODULE_DEFINE = 'AKU_WITH_CHIPMUNK',
-		
-		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints',
-		},
-	
-		INCLUDES = {
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-chipmunk.mk',
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chipmunk.mk',
-		},
-		
-		STATIC_LIBRARIES = 'libchipmunk libmoai-chipmunk',
-	},
-	
-	----------------------------------------------------------------
 	CRYPTO = {
 		
 		MODULE_DEFINE = 'AKU_WITH_CRYPTO',
@@ -59,6 +40,8 @@ MODULES = {
 		HEADER_SEARCH_PATHS = {
 			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto',
 		},
 		
 		INCLUDES = {
@@ -101,6 +84,7 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
 		},
 		
 		INCLUDES = {

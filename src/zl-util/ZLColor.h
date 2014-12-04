@@ -4,6 +4,8 @@
 #ifndef ZLCOLOR_H
 #define ZLCOLOR_H
 
+#include <zl-util/ZLMatrix4x4.h>
+
 class ZLColorVec;
 class ZLColorBlendFunc;
 
@@ -79,6 +81,7 @@ namespace ZLColor {
 	u32				GetDepthInBits				( ColorFormat format );
 	u32				GetMask						( ColorFormat format );
 	u32				LerpFixed					( u32 c0, u32 c1, u8 t );
+	void			Mix							( void* colors, ColorFormat format, u32 nColors, const ZLMatrix4x4& mtx, float K );
 	u32				Mul							( u32 c0, u32 c1 );
 	u32				NearestNeighbor				( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	u32				PackRGBA					( int r, int g, int b, int a );
@@ -87,6 +90,7 @@ namespace ZLColor {
 	u32				Scale						( u32 c0, u8 s ); // scale all components by s and normalize back to 255
 	ZLColorVec		Set							( u32 c0 );
 	u32				Set							( u32 c0, u8 b, u8 v ); // c0 [ b ] = v
+	void			SimpleThreshold				( void* colors, ColorFormat format, u32 nColors, u32 color );
 	u32				Sub							( u32 c0, u32 c1 );
 	u32				Swizzle						( u32 c0, u32 sw );
 };

@@ -12,8 +12,9 @@
 	LOCAL_CFLAGS		+= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
 	LOCAL_CFLAGS		+= -fvisibility=hidden
 
-	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	
+	LOCAL_C_INCLUDES 	+= $(MY_HEADER_SEARCH_PATHS)
+	LOCAL_C_INCLUDES 	+= '$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/asn1'
+
 	#Name="asn1"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/asn1/a_bitstr.c
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/asn1/a_bool.c
@@ -103,30 +104,30 @@
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/conf/conf_sap.c
 
 	#Name="engine"
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_all.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_cnf.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_cryptodev.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_ctrl.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_dyn.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_err.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_fat.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_init.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_lib.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_list.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_openssl.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_pkey.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_table.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_asnmth.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_cipher.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_dh.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_digest.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_dsa.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_ecdh.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_ecdsa.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_pkmeth.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_rand.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_rsa.c
-	#LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_store.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_all.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_cnf.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_cryptodev.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_ctrl.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_dyn.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_err.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_fat.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_init.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_lib.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_list.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_openssl.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_pkey.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/eng_table.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_asnmth.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_cipher.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_dh.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_digest.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_dsa.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_ecdh.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_ecdsa.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_pkmeth.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_rand.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_rsa.c
+	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/engine/tb_store.c
 
 	#Name="evp"
 	LOCAL_SRC_FILES += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto/evp/bio_b64.c

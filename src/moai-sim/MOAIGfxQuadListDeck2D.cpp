@@ -339,12 +339,11 @@ ZLBox MOAIGfxQuadListDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec ) {
+bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 	
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 		
-		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
 		USSprite& brush = this->mSprites [ idx ];
 		
@@ -424,12 +423,30 @@ ZLBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 			bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
 			return bounds;
 		}
-		
-		
 	}
 
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );	
 	return bounds;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( pad );
+
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+	
+		idx = ( idx - 1 ) % size;
+		
+		ZLRect rect;
+		USSprite& sprite = this->mSprites [ idx ];
+		
+		for ( u32 i	 = 0; i < sprite.mTotalPairs; ++i ) {
+			USSpritePair& prim = this->mPairs [ sprite.mBasePair + i ];
+			if ( this->TestHit ( this->mQuads [ prim.mQuadID ], this->mUVQuads [ prim.mUVQuadID ], vec.mX, vec.mY )) return true;
+		}
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

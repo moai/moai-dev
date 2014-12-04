@@ -408,7 +408,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 		this->DrawGrid ( subPrimID );
 	}
 	else {
-		this->mDeck->Draw ( this->mIndex, this->mRemapper );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
 	}
 }
 
@@ -428,6 +428,24 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	this->LoadVertexTransform ();
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_AXIS )) {
+		
+		ZLBox bounds;
+		u32 status = this->OnGetModelBounds ( bounds );
+		if ( status == BOUNDS_OK ) {
+			draw.DrawBoxAxis ( bounds );
+		}
+	}
+	
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_DIAGONALS )) {
+		
+		ZLBox bounds;
+		u32 status = this->OnGetModelBounds ( bounds );
+		if ( status == BOUNDS_OK ) {
+			draw.DrawBoxDiagonals ( bounds );
+		}
+	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
 		

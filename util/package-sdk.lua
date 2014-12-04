@@ -61,6 +61,16 @@ end
 -- main
 --==============================================================
 
+
+local moaiexec = function ( cmd, ... )
+	local result = os.execute ( string.format ( cmd, params ))
+	if not result == 0 then os.exit ( result ) end
+	return result
+end
+
+moaiexec ( 'package-sdk/prepare-sdk-osx.sh' )
+
+--[[
 processConfigFile ( MOAI_SDK_HOME .. 'util/package-sdk/config.lua' )
 
 MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
@@ -71,3 +81,5 @@ for k, v in pairs ( COPY_FILES ) do
 	print ( 'COPYING:', k, v )
 	MOAIFileSystem.copy ( MOAI_SDK_HOME .. k, OUTPUT_DIR .. v )
 end
+]]--
+

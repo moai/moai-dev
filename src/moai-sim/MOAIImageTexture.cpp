@@ -68,6 +68,7 @@ void MOAIImageTexture::OnGPUBind () {
 bool MOAIImageTexture::OnGPUCreate () {
 
 	if ( !this->IsOK ()) return false;
+	this->mStatus = VALID;
 	return this->CreateTextureFromImage ( *this );
 }
 

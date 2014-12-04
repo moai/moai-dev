@@ -19,7 +19,6 @@
 				CDFD7C2D1A0857EF00A94E6B /* PBXTargetDependency */,
 				CDFD7C2F1A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC16F419F6DD37007A7775 /* PBXTargetDependency */,
-				3EDC16F619F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC16F819F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC16FC19F6DD37007A7775 /* PBXTargetDependency */,
 				CDFD7C311A0857EF00A94E6B /* PBXTargetDependency */,
@@ -47,7 +46,6 @@
 				3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9BC19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */,
@@ -1005,44 +1003,6 @@
 		89BE750F173AD2FA00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74C6173AD2FA00DFE837 /* pch.cpp */; };
 		89BE7510173AD2FA00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C7173AD2FA00DFE837 /* pch.h */; };
 		89BE7511173AD2FA00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C7173AD2FA00DFE837 /* pch.h */; };
-		89BE758B173C11D200DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7578173C11D200DFE837 /* headers.h */; };
-		89BE758C173C11D200DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7578173C11D200DFE837 /* headers.h */; };
-		89BE758D173C11D200DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7579173C11D200DFE837 /* host.cpp */; };
-		89BE758E173C11D200DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7579173C11D200DFE837 /* host.cpp */; };
-		89BE758F173C11D200DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757A173C11D200DFE837 /* host.h */; };
-		89BE7590173C11D200DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757A173C11D200DFE837 /* host.h */; };
-		89BE7591173C11D200DFE837 /* MOAICp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757B173C11D200DFE837 /* MOAICp.cpp */; };
-		89BE7592173C11D200DFE837 /* MOAICp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757B173C11D200DFE837 /* MOAICp.cpp */; };
-		89BE7593173C11D200DFE837 /* MOAICp.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757C173C11D200DFE837 /* MOAICp.h */; };
-		89BE7594173C11D200DFE837 /* MOAICp.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757C173C11D200DFE837 /* MOAICp.h */; };
-		89BE7595173C11D200DFE837 /* MOAICpArbiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757D173C11D200DFE837 /* MOAICpArbiter.cpp */; };
-		89BE7596173C11D200DFE837 /* MOAICpArbiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757D173C11D200DFE837 /* MOAICpArbiter.cpp */; };
-		89BE7597173C11D200DFE837 /* MOAICpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757E173C11D200DFE837 /* MOAICpArbiter.h */; };
-		89BE7598173C11D200DFE837 /* MOAICpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE757E173C11D200DFE837 /* MOAICpArbiter.h */; };
-		89BE7599173C11D200DFE837 /* MOAICpBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757F173C11D200DFE837 /* MOAICpBody.cpp */; };
-		89BE759A173C11D200DFE837 /* MOAICpBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE757F173C11D200DFE837 /* MOAICpBody.cpp */; };
-		89BE759B173C11D200DFE837 /* MOAICpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7580173C11D200DFE837 /* MOAICpBody.h */; };
-		89BE759C173C11D200DFE837 /* MOAICpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7580173C11D200DFE837 /* MOAICpBody.h */; };
-		89BE759D173C11D200DFE837 /* MOAICpConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7581173C11D200DFE837 /* MOAICpConstraint.cpp */; };
-		89BE759E173C11D200DFE837 /* MOAICpConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7581173C11D200DFE837 /* MOAICpConstraint.cpp */; };
-		89BE759F173C11D200DFE837 /* MOAICpConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7582173C11D200DFE837 /* MOAICpConstraint.h */; };
-		89BE75A0173C11D200DFE837 /* MOAICpConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7582173C11D200DFE837 /* MOAICpConstraint.h */; };
-		89BE75A1173C11D200DFE837 /* MOAICpDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7583173C11D200DFE837 /* MOAICpDebugDraw.cpp */; };
-		89BE75A2173C11D200DFE837 /* MOAICpDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7583173C11D200DFE837 /* MOAICpDebugDraw.cpp */; };
-		89BE75A3173C11D200DFE837 /* MOAICpDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7584173C11D200DFE837 /* MOAICpDebugDraw.h */; };
-		89BE75A4173C11D200DFE837 /* MOAICpDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7584173C11D200DFE837 /* MOAICpDebugDraw.h */; };
-		89BE75A5173C11D200DFE837 /* MOAICpShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7585173C11D200DFE837 /* MOAICpShape.cpp */; };
-		89BE75A6173C11D200DFE837 /* MOAICpShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7585173C11D200DFE837 /* MOAICpShape.cpp */; };
-		89BE75A7173C11D200DFE837 /* MOAICpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7586173C11D200DFE837 /* MOAICpShape.h */; };
-		89BE75A8173C11D200DFE837 /* MOAICpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7586173C11D200DFE837 /* MOAICpShape.h */; };
-		89BE75A9173C11D200DFE837 /* MOAICpSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7587173C11D200DFE837 /* MOAICpSpace.cpp */; };
-		89BE75AA173C11D200DFE837 /* MOAICpSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7587173C11D200DFE837 /* MOAICpSpace.cpp */; };
-		89BE75AB173C11D200DFE837 /* MOAICpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7588173C11D200DFE837 /* MOAICpSpace.h */; };
-		89BE75AC173C11D200DFE837 /* MOAICpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7588173C11D200DFE837 /* MOAICpSpace.h */; };
-		89BE75AD173C11D200DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7589173C11D200DFE837 /* pch.cpp */; };
-		89BE75AE173C11D200DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7589173C11D200DFE837 /* pch.cpp */; };
-		89BE75AF173C11D200DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE758A173C11D200DFE837 /* pch.h */; };
-		89BE75B0173C11D200DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE758A173C11D200DFE837 /* pch.h */; };
 		89BE7608173C12CE00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75F9173C12CE00DFE837 /* headers.h */; };
 		89BE7609173C12CE00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE75F9173C12CE00DFE837 /* headers.h */; };
 		89BE760B173C12CE00DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE75FA173C12CE00DFE837 /* host.cpp */; };
@@ -4518,116 +4478,6 @@
 		CDD48B7A17FA794E00525B77 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
 		CDD48B7B17FA794E00525B77 /* SFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = 8942AFFE1731BB90009E233E /* SFMT.c */; };
 		CDD48B7C17FA794E00525B77 /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
-		CDD48C5317FA79E900525B77 /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5613564CAF000ADC60 /* chipmunk_ffi.h */; };
-		CDD48C5417FA79E900525B77 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5713564CAF000ADC60 /* chipmunk_private.h */; };
-		CDD48C5517FA79E900525B77 /* chipmunk_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5813564CAF000ADC60 /* chipmunk_types.h */; };
-		CDD48C5617FA79E900525B77 /* chipmunk_unsafe.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5913564CAF000ADC60 /* chipmunk_unsafe.h */; };
-		CDD48C5717FA79E900525B77 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5A13564CAF000ADC60 /* chipmunk.c */; };
-		CDD48C5817FA79E900525B77 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5B13564CAF000ADC60 /* chipmunk.h */; };
-		CDD48C5917FA79E900525B77 /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5C13564CAF000ADC60 /* cpArbiter.c */; };
-		CDD48C5A17FA79E900525B77 /* cpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5D13564CAF000ADC60 /* cpArbiter.h */; };
-		CDD48C5B17FA79E900525B77 /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5E13564CAF000ADC60 /* cpArray.c */; };
-		CDD48C5C17FA79E900525B77 /* cpArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5F13564CAF000ADC60 /* cpArray.h */; };
-		CDD48C5D17FA79E900525B77 /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6013564CAF000ADC60 /* cpBB.c */; };
-		CDD48C5E17FA79E900525B77 /* cpBB.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6113564CAF000ADC60 /* cpBB.h */; };
-		CDD48C5F17FA79E900525B77 /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6213564CAF000ADC60 /* cpBody.c */; };
-		CDD48C6017FA79E900525B77 /* cpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6313564CAF000ADC60 /* cpBody.h */; };
-		CDD48C6117FA79E900525B77 /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6413564CAF000ADC60 /* cpCollision.c */; };
-		CDD48C6217FA79E900525B77 /* cpCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6513564CAF000ADC60 /* cpCollision.h */; };
-		CDD48C6317FA79E900525B77 /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6613564CAF000ADC60 /* cpHashSet.c */; };
-		CDD48C6417FA79E900525B77 /* cpHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6713564CAF000ADC60 /* cpHashSet.h */; };
-		CDD48C6517FA79E900525B77 /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6813564CAF000ADC60 /* cpPolyShape.c */; };
-		CDD48C6617FA79E900525B77 /* cpPolyShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6913564CAF000ADC60 /* cpPolyShape.h */; };
-		CDD48C6717FA79E900525B77 /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6A13564CAF000ADC60 /* cpShape.c */; };
-		CDD48C6817FA79E900525B77 /* cpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6B13564CAF000ADC60 /* cpShape.h */; };
-		CDD48C6917FA79E900525B77 /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6C13564CAF000ADC60 /* cpSpace.c */; };
-		CDD48C6A17FA79E900525B77 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6D13564CAF000ADC60 /* cpSpace.h */; };
-		CDD48C6B17FA79E900525B77 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6E13564CAF000ADC60 /* cpSpaceComponent.c */; };
-		CDD48C6C17FA79E900525B77 /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6F13564CAF000ADC60 /* cpSpaceHash.c */; };
-		CDD48C6D17FA79E900525B77 /* cpSpaceHash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7013564CAF000ADC60 /* cpSpaceHash.h */; };
-		CDD48C6E17FA79E900525B77 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7113564CAF000ADC60 /* cpSpaceQuery.c */; };
-		CDD48C6F17FA79E900525B77 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7213564CAF000ADC60 /* cpSpaceStep.c */; };
-		CDD48C7017FA79E900525B77 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7313564CAF000ADC60 /* cpVect.c */; };
-		CDD48C7117FA79E900525B77 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7413564CAF000ADC60 /* cpVect.h */; };
-		CDD48C7217FA79E900525B77 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7513564CAF000ADC60 /* prime.h */; };
-		CDD48C7317FA79E900525B77 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A3F13564CAF000ADC60 /* cpConstraint.c */; };
-		CDD48C7417FA79E900525B77 /* cpConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4013564CAF000ADC60 /* cpConstraint.h */; };
-		CDD48C7517FA79E900525B77 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4113564CAF000ADC60 /* cpDampedRotarySpring.c */; };
-		CDD48C7617FA79E900525B77 /* cpDampedRotarySpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4213564CAF000ADC60 /* cpDampedRotarySpring.h */; };
-		CDD48C7717FA79E900525B77 /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4313564CAF000ADC60 /* cpDampedSpring.c */; };
-		CDD48C7817FA79E900525B77 /* cpDampedSpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4413564CAF000ADC60 /* cpDampedSpring.h */; };
-		CDD48C7917FA79E900525B77 /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4513564CAF000ADC60 /* cpGearJoint.c */; };
-		CDD48C7A17FA79E900525B77 /* cpGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4613564CAF000ADC60 /* cpGearJoint.h */; };
-		CDD48C7B17FA79E900525B77 /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4713564CAF000ADC60 /* cpGrooveJoint.c */; };
-		CDD48C7C17FA79E900525B77 /* cpGrooveJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4813564CAF000ADC60 /* cpGrooveJoint.h */; };
-		CDD48C7D17FA79E900525B77 /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4913564CAF000ADC60 /* cpPinJoint.c */; };
-		CDD48C7E17FA79E900525B77 /* cpPinJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4A13564CAF000ADC60 /* cpPinJoint.h */; };
-		CDD48C7F17FA79E900525B77 /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4B13564CAF000ADC60 /* cpPivotJoint.c */; };
-		CDD48C8017FA79E900525B77 /* cpPivotJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4C13564CAF000ADC60 /* cpPivotJoint.h */; };
-		CDD48C8117FA79E900525B77 /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4D13564CAF000ADC60 /* cpRatchetJoint.c */; };
-		CDD48C8217FA79E900525B77 /* cpRatchetJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4E13564CAF000ADC60 /* cpRatchetJoint.h */; };
-		CDD48C8317FA79E900525B77 /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4F13564CAF000ADC60 /* cpRotaryLimitJoint.c */; };
-		CDD48C8417FA79E900525B77 /* cpRotaryLimitJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5013564CAF000ADC60 /* cpRotaryLimitJoint.h */; };
-		CDD48C8517FA79E900525B77 /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5113564CAF000ADC60 /* cpSimpleMotor.c */; };
-		CDD48C8617FA79E900525B77 /* cpSimpleMotor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5213564CAF000ADC60 /* cpSimpleMotor.h */; };
-		CDD48C8717FA79E900525B77 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5313564CAF000ADC60 /* cpSlideJoint.c */; };
-		CDD48C8817FA79E900525B77 /* cpSlideJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5413564CAF000ADC60 /* cpSlideJoint.h */; };
-		CDD48C8917FA79E900525B77 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5513564CAF000ADC60 /* util.h */; };
-		CDD48C8A17FA79ED00525B77 /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5613564CAF000ADC60 /* chipmunk_ffi.h */; };
-		CDD48C8B17FA79ED00525B77 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5713564CAF000ADC60 /* chipmunk_private.h */; };
-		CDD48C8C17FA79ED00525B77 /* chipmunk_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5813564CAF000ADC60 /* chipmunk_types.h */; };
-		CDD48C8D17FA79ED00525B77 /* chipmunk_unsafe.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5913564CAF000ADC60 /* chipmunk_unsafe.h */; };
-		CDD48C8E17FA79ED00525B77 /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5A13564CAF000ADC60 /* chipmunk.c */; };
-		CDD48C8F17FA79ED00525B77 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5B13564CAF000ADC60 /* chipmunk.h */; };
-		CDD48C9017FA79ED00525B77 /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5C13564CAF000ADC60 /* cpArbiter.c */; };
-		CDD48C9117FA79ED00525B77 /* cpArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5D13564CAF000ADC60 /* cpArbiter.h */; };
-		CDD48C9217FA79ED00525B77 /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5E13564CAF000ADC60 /* cpArray.c */; };
-		CDD48C9317FA79ED00525B77 /* cpArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5F13564CAF000ADC60 /* cpArray.h */; };
-		CDD48C9417FA79ED00525B77 /* cpBB.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6013564CAF000ADC60 /* cpBB.c */; };
-		CDD48C9517FA79ED00525B77 /* cpBB.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6113564CAF000ADC60 /* cpBB.h */; };
-		CDD48C9617FA79ED00525B77 /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6213564CAF000ADC60 /* cpBody.c */; };
-		CDD48C9717FA79ED00525B77 /* cpBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6313564CAF000ADC60 /* cpBody.h */; };
-		CDD48C9817FA79ED00525B77 /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6413564CAF000ADC60 /* cpCollision.c */; };
-		CDD48C9917FA79ED00525B77 /* cpCollision.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6513564CAF000ADC60 /* cpCollision.h */; };
-		CDD48C9A17FA79ED00525B77 /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6613564CAF000ADC60 /* cpHashSet.c */; };
-		CDD48C9B17FA79ED00525B77 /* cpHashSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6713564CAF000ADC60 /* cpHashSet.h */; };
-		CDD48C9C17FA79ED00525B77 /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6813564CAF000ADC60 /* cpPolyShape.c */; };
-		CDD48C9D17FA79ED00525B77 /* cpPolyShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6913564CAF000ADC60 /* cpPolyShape.h */; };
-		CDD48C9E17FA79ED00525B77 /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6A13564CAF000ADC60 /* cpShape.c */; };
-		CDD48C9F17FA79ED00525B77 /* cpShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6B13564CAF000ADC60 /* cpShape.h */; };
-		CDD48CA017FA79ED00525B77 /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6C13564CAF000ADC60 /* cpSpace.c */; };
-		CDD48CA117FA79ED00525B77 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A6D13564CAF000ADC60 /* cpSpace.h */; };
-		CDD48CA217FA79ED00525B77 /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6E13564CAF000ADC60 /* cpSpaceComponent.c */; };
-		CDD48CA317FA79ED00525B77 /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A6F13564CAF000ADC60 /* cpSpaceHash.c */; };
-		CDD48CA417FA79ED00525B77 /* cpSpaceHash.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7013564CAF000ADC60 /* cpSpaceHash.h */; };
-		CDD48CA517FA79ED00525B77 /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7113564CAF000ADC60 /* cpSpaceQuery.c */; };
-		CDD48CA617FA79ED00525B77 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7213564CAF000ADC60 /* cpSpaceStep.c */; };
-		CDD48CA717FA79ED00525B77 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7313564CAF000ADC60 /* cpVect.c */; };
-		CDD48CA817FA79ED00525B77 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7413564CAF000ADC60 /* cpVect.h */; };
-		CDD48CA917FA79ED00525B77 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7513564CAF000ADC60 /* prime.h */; };
-		CDD48CAA17FA79ED00525B77 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A3F13564CAF000ADC60 /* cpConstraint.c */; };
-		CDD48CAB17FA79ED00525B77 /* cpConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4013564CAF000ADC60 /* cpConstraint.h */; };
-		CDD48CAC17FA79ED00525B77 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4113564CAF000ADC60 /* cpDampedRotarySpring.c */; };
-		CDD48CAD17FA79ED00525B77 /* cpDampedRotarySpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4213564CAF000ADC60 /* cpDampedRotarySpring.h */; };
-		CDD48CAE17FA79ED00525B77 /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4313564CAF000ADC60 /* cpDampedSpring.c */; };
-		CDD48CAF17FA79ED00525B77 /* cpDampedSpring.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4413564CAF000ADC60 /* cpDampedSpring.h */; };
-		CDD48CB017FA79ED00525B77 /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4513564CAF000ADC60 /* cpGearJoint.c */; };
-		CDD48CB117FA79ED00525B77 /* cpGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4613564CAF000ADC60 /* cpGearJoint.h */; };
-		CDD48CB217FA79ED00525B77 /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4713564CAF000ADC60 /* cpGrooveJoint.c */; };
-		CDD48CB317FA79ED00525B77 /* cpGrooveJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4813564CAF000ADC60 /* cpGrooveJoint.h */; };
-		CDD48CB417FA79ED00525B77 /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4913564CAF000ADC60 /* cpPinJoint.c */; };
-		CDD48CB517FA79ED00525B77 /* cpPinJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4A13564CAF000ADC60 /* cpPinJoint.h */; };
-		CDD48CB617FA79ED00525B77 /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4B13564CAF000ADC60 /* cpPivotJoint.c */; };
-		CDD48CB717FA79ED00525B77 /* cpPivotJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4C13564CAF000ADC60 /* cpPivotJoint.h */; };
-		CDD48CB817FA79ED00525B77 /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4D13564CAF000ADC60 /* cpRatchetJoint.c */; };
-		CDD48CB917FA79ED00525B77 /* cpRatchetJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A4E13564CAF000ADC60 /* cpRatchetJoint.h */; };
-		CDD48CBA17FA79ED00525B77 /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A4F13564CAF000ADC60 /* cpRotaryLimitJoint.c */; };
-		CDD48CBB17FA79ED00525B77 /* cpRotaryLimitJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5013564CAF000ADC60 /* cpRotaryLimitJoint.h */; };
-		CDD48CBC17FA79ED00525B77 /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5113564CAF000ADC60 /* cpSimpleMotor.c */; };
-		CDD48CBD17FA79ED00525B77 /* cpSimpleMotor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5213564CAF000ADC60 /* cpSimpleMotor.h */; };
-		CDD48CBE17FA79ED00525B77 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A5313564CAF000ADC60 /* cpSlideJoint.c */; };
-		CDD48CBF17FA79ED00525B77 /* cpSlideJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5413564CAF000ADC60 /* cpSlideJoint.h */; };
-		CDD48CC017FA79ED00525B77 /* util.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A5513564CAF000ADC60 /* util.h */; };
 		CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CDD490FE17FA7A8000525B77 /* ftbbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3113564CB0000ADC60 /* ftbbox.c */; };
@@ -5009,13 +4859,6 @@
 			remoteGlobalIDString = CDA4B7AF1808AC6D000129F9;
 			remoteInfo = "libmoai-ios-chartboost";
 		};
-		3E72B9BB19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 89BE7519173C116400DFE837;
-			remoteInfo = "libmoai-ios-chipmunk";
-		};
 		3E72B9BD19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5106,13 +4949,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 89BE725E173AD29200DFE837;
 			remoteInfo = "libmoai-osx-box2d";
-		};
-		3EDC16F519F6DD37007A7775 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 89BE7548173C119600DFE837;
-			remoteInfo = "libmoai-osx-chipmunk";
 		};
 		3EDC16F719F6DD37007A7775 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6299,27 +6135,6 @@
 		89BE74C5173AD2FA00DFE837 /* MOAIBox2DWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBox2DWorld.h; sourceTree = "<group>"; };
 		89BE74C6173AD2FA00DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		89BE74C7173AD2FA00DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
-		89BE7547173C116400DFE837 /* libmoai-ios-chipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89BE7576173C119600DFE837 /* libmoai-osx-chipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-chipmunk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89BE7578173C11D200DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
-		89BE7579173C11D200DFE837 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
-		89BE757A173C11D200DFE837 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
-		89BE757B173C11D200DFE837 /* MOAICp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICp.cpp; sourceTree = "<group>"; };
-		89BE757C173C11D200DFE837 /* MOAICp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICp.h; sourceTree = "<group>"; };
-		89BE757D173C11D200DFE837 /* MOAICpArbiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpArbiter.cpp; sourceTree = "<group>"; };
-		89BE757E173C11D200DFE837 /* MOAICpArbiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpArbiter.h; sourceTree = "<group>"; };
-		89BE757F173C11D200DFE837 /* MOAICpBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpBody.cpp; sourceTree = "<group>"; };
-		89BE7580173C11D200DFE837 /* MOAICpBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpBody.h; sourceTree = "<group>"; };
-		89BE7581173C11D200DFE837 /* MOAICpConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpConstraint.cpp; sourceTree = "<group>"; };
-		89BE7582173C11D200DFE837 /* MOAICpConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpConstraint.h; sourceTree = "<group>"; };
-		89BE7583173C11D200DFE837 /* MOAICpDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpDebugDraw.cpp; sourceTree = "<group>"; };
-		89BE7584173C11D200DFE837 /* MOAICpDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpDebugDraw.h; sourceTree = "<group>"; };
-		89BE7585173C11D200DFE837 /* MOAICpShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpShape.cpp; sourceTree = "<group>"; };
-		89BE7586173C11D200DFE837 /* MOAICpShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpShape.h; sourceTree = "<group>"; };
-		89BE7587173C11D200DFE837 /* MOAICpSpace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICpSpace.cpp; sourceTree = "<group>"; };
-		89BE7588173C11D200DFE837 /* MOAICpSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICpSpace.h; sourceTree = "<group>"; };
-		89BE7589173C11D200DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
-		89BE758A173C11D200DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		89BE75DA173C121800DFE837 /* libmoai-osx-http-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-http-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE75F7173C126100DFE837 /* libmoai-ios-http-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-http-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE75F9173C12CE00DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
@@ -7903,6 +7718,11 @@
 		CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIHttpTaskNSURL.mm; sourceTree = "<group>"; };
 		CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridFancy.cpp; sourceTree = "<group>"; };
 		CDB0CA2F193E6D3B00C54DB7 /* MOAIGridFancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridFancy.h; sourceTree = "<group>"; };
+		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
+		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
+		CDBA13141A305641007503F3 /* moai_version_major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_major.h; path = "config-default/moai_version_major.h"; sourceTree = "<group>"; };
+		CDBA13151A305641007503F3 /* moai_version_minor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_minor.h; path = "config-default/moai_version_minor.h"; sourceTree = "<group>"; };
+		CDBA13161A30564B007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
 		CDC1238317FA804C00FB64BB /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDC1238417FA808A00FB64BB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "zl-crypto/headers.h"; sourceTree = "<group>"; };
 		CDC1238517FA808A00FB64BB /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "zl-crypto/pch.cpp"; sourceTree = "<group>"; };
@@ -8058,20 +7878,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		89BE749B173AD2B600DFE837 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7541173C116400DFE837 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7570173C119600DFE837 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8829,9 +8635,10 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CDBA13101A30561B007503F3 /* config */,
+				CDBA13111A305622007503F3 /* config-default */,
 				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
 				89BE74A2173AD2FA00DFE837 /* moai-box2d */,
-				89BE7577173C11D200DFE837 /* moai-chipmunk */,
 				89BE6ACA173975E500DFE837 /* moai-core */,
 				CDC123A217FA816C00FB64BB /* moai-crypto */,
 				89BE6C571739A3D000DFE837 /* moai-fmod-designer */,
@@ -8889,8 +8696,6 @@
 				89BE6F18173AD07100DFE837 /* libmoai-osx-sim.a */,
 				89BE737B173AD29200DFE837 /* libmoai-osx-box2d.a */,
 				89BE74A1173AD2B600DFE837 /* libmoai-ios-box2d.a */,
-				89BE7547173C116400DFE837 /* libmoai-ios-chipmunk.a */,
-				89BE7576173C119600DFE837 /* libmoai-osx-chipmunk.a */,
 				89BE75DA173C121800DFE837 /* libmoai-osx-http-client.a */,
 				89BE75F7173C126100DFE837 /* libmoai-ios-http-client.a */,
 				89BE7647173C138100DFE837 /* libmoai-ios-harness.a */,
@@ -9515,32 +9320,6 @@
 				89BE74C7173AD2FA00DFE837 /* pch.h */,
 			);
 			path = "moai-box2d";
-			sourceTree = "<group>";
-		};
-		89BE7577173C11D200DFE837 /* moai-chipmunk */ = {
-			isa = PBXGroup;
-			children = (
-				89BE7578173C11D200DFE837 /* headers.h */,
-				89BE7579173C11D200DFE837 /* host.cpp */,
-				89BE757A173C11D200DFE837 /* host.h */,
-				89BE757B173C11D200DFE837 /* MOAICp.cpp */,
-				89BE757C173C11D200DFE837 /* MOAICp.h */,
-				89BE757D173C11D200DFE837 /* MOAICpArbiter.cpp */,
-				89BE757E173C11D200DFE837 /* MOAICpArbiter.h */,
-				89BE757F173C11D200DFE837 /* MOAICpBody.cpp */,
-				89BE7580173C11D200DFE837 /* MOAICpBody.h */,
-				89BE7581173C11D200DFE837 /* MOAICpConstraint.cpp */,
-				89BE7582173C11D200DFE837 /* MOAICpConstraint.h */,
-				89BE7583173C11D200DFE837 /* MOAICpDebugDraw.cpp */,
-				89BE7584173C11D200DFE837 /* MOAICpDebugDraw.h */,
-				89BE7585173C11D200DFE837 /* MOAICpShape.cpp */,
-				89BE7586173C11D200DFE837 /* MOAICpShape.h */,
-				89BE7587173C11D200DFE837 /* MOAICpSpace.cpp */,
-				89BE7588173C11D200DFE837 /* MOAICpSpace.h */,
-				89BE7589173C11D200DFE837 /* pch.cpp */,
-				89BE758A173C11D200DFE837 /* pch.h */,
-			);
-			path = "moai-chipmunk";
 			sourceTree = "<group>";
 		};
 		89BE75F8173C12CE00DFE837 /* moai-http-client */ = {
@@ -12566,6 +12345,25 @@
 			name = "moai-ios-gamecenter";
 			sourceTree = "<group>";
 		};
+		CDBA13101A30561B007503F3 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				CDBA13161A30564B007503F3 /* moai_version_author.h */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		CDBA13111A305622007503F3 /* config-default */ = {
+			isa = PBXGroup;
+			children = (
+				CDBA13121A305641007503F3 /* moai_config.h */,
+				CDBA13131A305641007503F3 /* moai_version_author.h */,
+				CDBA13141A305641007503F3 /* moai_version_major.h */,
+				CDBA13151A305641007503F3 /* moai_version_minor.h */,
+			);
+			name = "config-default";
+			sourceTree = "<group>";
+		};
 		CDC122D317FA802700FB64BB /* zl-crypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -13797,98 +13595,6 @@
 				CD1BF7F9194050530066877A /* b2Distance.h in Headers */,
 				CD1BF843194050530066877A /* b2World.h in Headers */,
 				CD1BF88F194050530066877A /* b2RevoluteJoint.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE751A173C116400DFE837 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CDD48C8917FA79E900525B77 /* util.h in Headers */,
-				CDD48C7217FA79E900525B77 /* prime.h in Headers */,
-				89BE758B173C11D200DFE837 /* headers.h in Headers */,
-				CDD48C7117FA79E900525B77 /* cpVect.h in Headers */,
-				CDD48C6017FA79E900525B77 /* cpBody.h in Headers */,
-				CDD48C6217FA79E900525B77 /* cpCollision.h in Headers */,
-				CDD48C5317FA79E900525B77 /* chipmunk_ffi.h in Headers */,
-				CDD48C8617FA79E900525B77 /* cpSimpleMotor.h in Headers */,
-				89BE758F173C11D200DFE837 /* host.h in Headers */,
-				89BE7593173C11D200DFE837 /* MOAICp.h in Headers */,
-				CDD48C6A17FA79E900525B77 /* cpSpace.h in Headers */,
-				89BE7597173C11D200DFE837 /* MOAICpArbiter.h in Headers */,
-				89BE759B173C11D200DFE837 /* MOAICpBody.h in Headers */,
-				CDD48C8217FA79E900525B77 /* cpRatchetJoint.h in Headers */,
-				CDD48C7E17FA79E900525B77 /* cpPinJoint.h in Headers */,
-				CDD48C5517FA79E900525B77 /* chipmunk_types.h in Headers */,
-				CDD48C6D17FA79E900525B77 /* cpSpaceHash.h in Headers */,
-				CDD48C5E17FA79E900525B77 /* cpBB.h in Headers */,
-				CDD48C7C17FA79E900525B77 /* cpGrooveJoint.h in Headers */,
-				89BE759F173C11D200DFE837 /* MOAICpConstraint.h in Headers */,
-				CDD48C7817FA79E900525B77 /* cpDampedSpring.h in Headers */,
-				CDD48C7617FA79E900525B77 /* cpDampedRotarySpring.h in Headers */,
-				89BE75A3173C11D200DFE837 /* MOAICpDebugDraw.h in Headers */,
-				CDD48C8417FA79E900525B77 /* cpRotaryLimitJoint.h in Headers */,
-				CDD48C6417FA79E900525B77 /* cpHashSet.h in Headers */,
-				CDD48C8817FA79E900525B77 /* cpSlideJoint.h in Headers */,
-				CDD48C5817FA79E900525B77 /* chipmunk.h in Headers */,
-				CDD48C5617FA79E900525B77 /* chipmunk_unsafe.h in Headers */,
-				CDD48C6817FA79E900525B77 /* cpShape.h in Headers */,
-				CDD48C7417FA79E900525B77 /* cpConstraint.h in Headers */,
-				CDD48C8017FA79E900525B77 /* cpPivotJoint.h in Headers */,
-				89BE75A7173C11D200DFE837 /* MOAICpShape.h in Headers */,
-				CDD48C5417FA79E900525B77 /* chipmunk_private.h in Headers */,
-				CDD48C5A17FA79E900525B77 /* cpArbiter.h in Headers */,
-				89BE75AB173C11D200DFE837 /* MOAICpSpace.h in Headers */,
-				CDD48C6617FA79E900525B77 /* cpPolyShape.h in Headers */,
-				CDD48C7A17FA79E900525B77 /* cpGearJoint.h in Headers */,
-				CDD48C5C17FA79E900525B77 /* cpArray.h in Headers */,
-				89BE75AF173C11D200DFE837 /* pch.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7549173C119600DFE837 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CDD48CC017FA79ED00525B77 /* util.h in Headers */,
-				CDD48CA917FA79ED00525B77 /* prime.h in Headers */,
-				89BE758C173C11D200DFE837 /* headers.h in Headers */,
-				CDD48CA817FA79ED00525B77 /* cpVect.h in Headers */,
-				CDD48C9717FA79ED00525B77 /* cpBody.h in Headers */,
-				CDD48C9917FA79ED00525B77 /* cpCollision.h in Headers */,
-				CDD48C8A17FA79ED00525B77 /* chipmunk_ffi.h in Headers */,
-				CDD48CBD17FA79ED00525B77 /* cpSimpleMotor.h in Headers */,
-				89BE7590173C11D200DFE837 /* host.h in Headers */,
-				89BE7594173C11D200DFE837 /* MOAICp.h in Headers */,
-				CDD48CA117FA79ED00525B77 /* cpSpace.h in Headers */,
-				89BE7598173C11D200DFE837 /* MOAICpArbiter.h in Headers */,
-				89BE759C173C11D200DFE837 /* MOAICpBody.h in Headers */,
-				CDD48CB917FA79ED00525B77 /* cpRatchetJoint.h in Headers */,
-				CDD48CB517FA79ED00525B77 /* cpPinJoint.h in Headers */,
-				CDD48C8C17FA79ED00525B77 /* chipmunk_types.h in Headers */,
-				CDD48CA417FA79ED00525B77 /* cpSpaceHash.h in Headers */,
-				CDD48C9517FA79ED00525B77 /* cpBB.h in Headers */,
-				CDD48CB317FA79ED00525B77 /* cpGrooveJoint.h in Headers */,
-				89BE75A0173C11D200DFE837 /* MOAICpConstraint.h in Headers */,
-				CDD48CAF17FA79ED00525B77 /* cpDampedSpring.h in Headers */,
-				CDD48CAD17FA79ED00525B77 /* cpDampedRotarySpring.h in Headers */,
-				89BE75A4173C11D200DFE837 /* MOAICpDebugDraw.h in Headers */,
-				CDD48CBB17FA79ED00525B77 /* cpRotaryLimitJoint.h in Headers */,
-				CDD48C9B17FA79ED00525B77 /* cpHashSet.h in Headers */,
-				CDD48CBF17FA79ED00525B77 /* cpSlideJoint.h in Headers */,
-				CDD48C8F17FA79ED00525B77 /* chipmunk.h in Headers */,
-				CDD48C8D17FA79ED00525B77 /* chipmunk_unsafe.h in Headers */,
-				CDD48C9F17FA79ED00525B77 /* cpShape.h in Headers */,
-				CDD48CAB17FA79ED00525B77 /* cpConstraint.h in Headers */,
-				CDD48CB717FA79ED00525B77 /* cpPivotJoint.h in Headers */,
-				89BE75A8173C11D200DFE837 /* MOAICpShape.h in Headers */,
-				CDD48C8B17FA79ED00525B77 /* chipmunk_private.h in Headers */,
-				CDD48C9117FA79ED00525B77 /* cpArbiter.h in Headers */,
-				89BE75AC173C11D200DFE837 /* MOAICpSpace.h in Headers */,
-				CDD48C9D17FA79ED00525B77 /* cpPolyShape.h in Headers */,
-				CDD48CB117FA79ED00525B77 /* cpGearJoint.h in Headers */,
-				CDD48C9317FA79ED00525B77 /* cpArray.h in Headers */,
-				89BE75B0173C11D200DFE837 /* pch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15393,40 +15099,6 @@
 			productReference = 89BE74A1173AD2B600DFE837 /* libmoai-ios-box2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		89BE7519173C116400DFE837 /* libmoai-ios-chipmunk */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89BE7542173C116400DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-chipmunk" */;
-			buildPhases = (
-				89BE751A173C116400DFE837 /* Headers */,
-				89BE752E173C116400DFE837 /* Sources */,
-				89BE7541173C116400DFE837 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-chipmunk";
-			productName = OpenUSLS;
-			productReference = 89BE7547173C116400DFE837 /* libmoai-ios-chipmunk.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89BE7571173C119600DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-chipmunk" */;
-			buildPhases = (
-				89BE7549173C119600DFE837 /* Headers */,
-				89BE755D173C119600DFE837 /* Sources */,
-				89BE7570173C119600DFE837 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-osx-chipmunk";
-			productName = OpenUSLS;
-			productReference = 89BE7576173C119600DFE837 /* libmoai-osx-chipmunk.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		89BE75BE173C121800DFE837 /* libmoai-osx-http-client */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89BE75D5173C121800DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-http-client" */;
@@ -16165,7 +15837,6 @@
 				CDA4B7391808AC61000129F9 /* libmoai-ios-billing */,
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
 				CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */,
-				89BE7519173C116400DFE837 /* libmoai-ios-chipmunk */,
 				CD5232471808ADF400B81720 /* libmoai-ios-crittercism */,
 				CD4C3A69180A623200C02381 /* libmoai-ios-crypto */,
 				CDA4B8251808AC82000129F9 /* libmoai-ios-facebook */,
@@ -16194,7 +15865,6 @@
 				CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */,
 				CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
-				89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
 				CDDD30941574AE0F00C410A0 /* libmoai-osx-fmod-designer */,
 				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */,
@@ -17308,90 +16978,6 @@
 				CD1BF869194050530066877A /* b2PolygonContact.cpp in Sources */,
 				CD1BF879194050530066877A /* b2Joint.cpp in Sources */,
 				CD1BF889194050530066877A /* b2PulleyJoint.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE752E173C116400DFE837 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CDD48C6717FA79E900525B77 /* cpShape.c in Sources */,
-				CDD48C6B17FA79E900525B77 /* cpSpaceComponent.c in Sources */,
-				CDD48C5F17FA79E900525B77 /* cpBody.c in Sources */,
-				CDD48C8117FA79E900525B77 /* cpRatchetJoint.c in Sources */,
-				CDD48C7B17FA79E900525B77 /* cpGrooveJoint.c in Sources */,
-				CDD48C6C17FA79E900525B77 /* cpSpaceHash.c in Sources */,
-				CDD48C7917FA79E900525B77 /* cpGearJoint.c in Sources */,
-				CDD48C5D17FA79E900525B77 /* cpBB.c in Sources */,
-				CDD48C5B17FA79E900525B77 /* cpArray.c in Sources */,
-				CDD48C7017FA79E900525B77 /* cpVect.c in Sources */,
-				89BE758D173C11D200DFE837 /* host.cpp in Sources */,
-				89BE7591173C11D200DFE837 /* MOAICp.cpp in Sources */,
-				CDD48C8517FA79E900525B77 /* cpSimpleMotor.c in Sources */,
-				CDD48C7517FA79E900525B77 /* cpDampedRotarySpring.c in Sources */,
-				CDD48C6517FA79E900525B77 /* cpPolyShape.c in Sources */,
-				CDD48C7D17FA79E900525B77 /* cpPinJoint.c in Sources */,
-				CDD48C5917FA79E900525B77 /* cpArbiter.c in Sources */,
-				89BE7595173C11D200DFE837 /* MOAICpArbiter.cpp in Sources */,
-				89BE7599173C11D200DFE837 /* MOAICpBody.cpp in Sources */,
-				CDD48C6917FA79E900525B77 /* cpSpace.c in Sources */,
-				CDD48C5717FA79E900525B77 /* chipmunk.c in Sources */,
-				CDD48C6E17FA79E900525B77 /* cpSpaceQuery.c in Sources */,
-				89BE759D173C11D200DFE837 /* MOAICpConstraint.cpp in Sources */,
-				89BE75A1173C11D200DFE837 /* MOAICpDebugDraw.cpp in Sources */,
-				89BE75A5173C11D200DFE837 /* MOAICpShape.cpp in Sources */,
-				CDD48C7F17FA79E900525B77 /* cpPivotJoint.c in Sources */,
-				CDD48C7717FA79E900525B77 /* cpDampedSpring.c in Sources */,
-				CDD48C6117FA79E900525B77 /* cpCollision.c in Sources */,
-				89BE75A9173C11D200DFE837 /* MOAICpSpace.cpp in Sources */,
-				CDD48C8717FA79E900525B77 /* cpSlideJoint.c in Sources */,
-				89BE75AD173C11D200DFE837 /* pch.cpp in Sources */,
-				CDD48C8317FA79E900525B77 /* cpRotaryLimitJoint.c in Sources */,
-				CDD48C6F17FA79E900525B77 /* cpSpaceStep.c in Sources */,
-				CDD48C6317FA79E900525B77 /* cpHashSet.c in Sources */,
-				CDD48C7317FA79E900525B77 /* cpConstraint.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE755D173C119600DFE837 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CDD48C9E17FA79ED00525B77 /* cpShape.c in Sources */,
-				CDD48CA217FA79ED00525B77 /* cpSpaceComponent.c in Sources */,
-				CDD48C9617FA79ED00525B77 /* cpBody.c in Sources */,
-				CDD48CB817FA79ED00525B77 /* cpRatchetJoint.c in Sources */,
-				CDD48CB217FA79ED00525B77 /* cpGrooveJoint.c in Sources */,
-				CDD48CA317FA79ED00525B77 /* cpSpaceHash.c in Sources */,
-				CDD48CB017FA79ED00525B77 /* cpGearJoint.c in Sources */,
-				CDD48C9417FA79ED00525B77 /* cpBB.c in Sources */,
-				CDD48C9217FA79ED00525B77 /* cpArray.c in Sources */,
-				CDD48CA717FA79ED00525B77 /* cpVect.c in Sources */,
-				89BE758E173C11D200DFE837 /* host.cpp in Sources */,
-				89BE7592173C11D200DFE837 /* MOAICp.cpp in Sources */,
-				CDD48CBC17FA79ED00525B77 /* cpSimpleMotor.c in Sources */,
-				CDD48CAC17FA79ED00525B77 /* cpDampedRotarySpring.c in Sources */,
-				CDD48C9C17FA79ED00525B77 /* cpPolyShape.c in Sources */,
-				CDD48CB417FA79ED00525B77 /* cpPinJoint.c in Sources */,
-				CDD48C9017FA79ED00525B77 /* cpArbiter.c in Sources */,
-				89BE7596173C11D200DFE837 /* MOAICpArbiter.cpp in Sources */,
-				89BE759A173C11D200DFE837 /* MOAICpBody.cpp in Sources */,
-				CDD48CA017FA79ED00525B77 /* cpSpace.c in Sources */,
-				CDD48C8E17FA79ED00525B77 /* chipmunk.c in Sources */,
-				CDD48CA517FA79ED00525B77 /* cpSpaceQuery.c in Sources */,
-				89BE759E173C11D200DFE837 /* MOAICpConstraint.cpp in Sources */,
-				89BE75A2173C11D200DFE837 /* MOAICpDebugDraw.cpp in Sources */,
-				89BE75A6173C11D200DFE837 /* MOAICpShape.cpp in Sources */,
-				CDD48CB617FA79ED00525B77 /* cpPivotJoint.c in Sources */,
-				CDD48CAE17FA79ED00525B77 /* cpDampedSpring.c in Sources */,
-				CDD48C9817FA79ED00525B77 /* cpCollision.c in Sources */,
-				89BE75AA173C11D200DFE837 /* MOAICpSpace.cpp in Sources */,
-				CDD48CBE17FA79ED00525B77 /* cpSlideJoint.c in Sources */,
-				89BE75AE173C11D200DFE837 /* pch.cpp in Sources */,
-				CDD48CBA17FA79ED00525B77 /* cpRotaryLimitJoint.c in Sources */,
-				CDD48CA617FA79ED00525B77 /* cpSpaceStep.c in Sources */,
-				CDD48C9A17FA79ED00525B77 /* cpHashSet.c in Sources */,
-				CDD48CAA17FA79ED00525B77 /* cpConstraint.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19460,11 +19046,6 @@
 			target = CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */;
 			targetProxy = 3E72B9B919F703FA00A9DE30 /* PBXContainerItemProxy */;
 		};
-		3E72B9BC19F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 89BE7519173C116400DFE837 /* libmoai-ios-chipmunk */;
-			targetProxy = 3E72B9BB19F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
 		3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CD5232471808ADF400B81720 /* libmoai-ios-crittercism */;
@@ -19529,11 +19110,6 @@
 			isa = PBXTargetDependency;
 			target = 89BE725E173AD29200DFE837 /* libmoai-osx-box2d */;
 			targetProxy = 3EDC16F319F6DD37007A7775 /* PBXContainerItemProxy */;
-		};
-		3EDC16F619F6DD37007A7775 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 89BE7548173C119600DFE837 /* libmoai-osx-chipmunk */;
-			targetProxy = 3EDC16F519F6DD37007A7775 /* PBXContainerItemProxy */;
 		};
 		3EDC16F819F6DD37007A7775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -19631,6 +19207,7 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -19674,6 +19251,7 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -19719,6 +19297,7 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19733,6 +19312,7 @@
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20199,6 +19779,7 @@
 		89BE6F14173AD07100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20234,6 +19815,7 @@
 		89BE6F15173AD07100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20269,6 +19851,7 @@
 		89BE6F16173AD07100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20304,6 +19887,7 @@
 		89BE6F17173AD07100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20339,6 +19923,7 @@
 		89BE7377173AD29200DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20376,6 +19961,7 @@
 		89BE7378173AD29200DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20413,6 +19999,7 @@
 		89BE7379173AD29200DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20450,6 +20037,7 @@
 		89BE737A173AD29200DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20604,277 +20192,10 @@
 			};
 			name = Distribution;
 		};
-		89BE7543173C116400DFE837 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		89BE7544173C116400DFE837 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		89BE7545173C116400DFE837 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		89BE7546173C116400DFE837 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-chipmunk";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		89BE7572173C119600DFE837 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-chipmunk";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		89BE7573173C119600DFE837 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-chipmunk";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		89BE7574173C119600DFE837 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-chipmunk";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		89BE7575173C119600DFE837 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-chipmunk";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		89BE75D6173C121800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20910,6 +20231,7 @@
 		89BE75D7173C121800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20945,6 +20267,7 @@
 		89BE75D8173C121800DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20980,6 +20303,7 @@
 		89BE75D9173C121800DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21255,6 +20579,7 @@
 		89BE765C173C13EB00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21290,6 +20615,7 @@
 		89BE765D173C13EB00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21325,6 +20651,7 @@
 		89BE765E173C13EB00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21360,6 +20687,7 @@
 		89BE765F173C13EB00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21515,6 +20843,7 @@
 		89BE769B173C160E00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21550,6 +20879,7 @@
 		89BE769C173C160E00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21585,6 +20915,7 @@
 		89BE769D173C160E00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21620,6 +20951,7 @@
 		89BE769E173C160E00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21655,6 +20987,7 @@
 		89E9D87B174BD4F100033CDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21669,6 +21002,7 @@
 		89E9D87C174BD4F100033CDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21683,6 +21017,7 @@
 		89E9D87D174BD4F100033CDD /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21697,6 +21032,7 @@
 		89E9D87E174BD4F100033CDD /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21867,6 +21203,7 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21882,6 +21219,7 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21957,6 +21295,7 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21993,6 +21332,7 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22158,6 +21498,7 @@
 		CD32B4D419F9EDD10059D019 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22201,6 +21542,7 @@
 		CD32B4D519F9EDD10059D019 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22246,6 +21588,7 @@
 		CD32B4D619F9EDD10059D019 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22291,6 +21634,7 @@
 		CD32B4D719F9EDD10059D019 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22979,6 +22323,7 @@
 		CD6D752117EE415D00964415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22995,6 +22340,7 @@
 		CD6D752217EE415D00964415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23011,6 +22357,7 @@
 		CD6D752317EE415D00964415 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23027,6 +22374,7 @@
 		CD6D752417EE415D00964415 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23301,6 +22649,7 @@
 		CD807B461831C3B500E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -23344,6 +22693,7 @@
 		CD807B471831C3B500E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -23389,6 +22739,7 @@
 		CD807B481831C3B500E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -23434,6 +22785,7 @@
 		CD807B491831C3B500E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -23479,6 +22831,7 @@
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23494,6 +22847,7 @@
 		CD807E951831C42100E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23509,6 +22863,7 @@
 		CD807E961831C42100E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23524,6 +22879,7 @@
 		CD807E971831C42100E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23539,6 +22895,7 @@
 		CD95D4A11831D4E20080C34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23576,6 +22933,7 @@
 		CD95D4A21831D4E20080C34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23613,6 +22971,7 @@
 		CD95D4A31831D4E20080C34E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23650,6 +23009,7 @@
 		CD95D4A41831D4E20080C34E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23816,6 +23176,7 @@
 		CDA0DC9F1A01B184002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23853,6 +23214,7 @@
 		CDA0DCA01A01B184002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23890,6 +23252,7 @@
 		CDA0DCA11A01B184002B71B6 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23927,6 +23290,7 @@
 		CDA0DCA21A01B184002B71B6 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24850,6 +24214,7 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24886,6 +24251,7 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25311,6 +24677,7 @@
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25349,6 +24716,7 @@
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25387,6 +24755,7 @@
 		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25425,6 +24794,7 @@
 		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25463,6 +24833,7 @@
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25503,6 +24874,7 @@
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25543,6 +24915,7 @@
 		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25583,6 +24956,7 @@
 		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25937,6 +25311,7 @@
 		E90D02C614D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25951,6 +25326,7 @@
 		E90D02C714D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -25996,6 +25372,7 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26032,6 +25409,7 @@
 		E90D02C914D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26068,6 +25446,7 @@
 		E90D02CA14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26357,6 +25736,7 @@
 		E9C405CE150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26371,6 +25751,7 @@
 		E9C405CF150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -26416,6 +25797,7 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26452,6 +25834,7 @@
 		E9C405D1150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26488,6 +25871,7 @@
 		E9C405D2150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26609,28 +25993,6 @@
 				89BE749E173AD2B600DFE837 /* Release */,
 				89BE749F173AD2B600DFE837 /* AdHoc */,
 				89BE74A0173AD2B600DFE837 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89BE7542173C116400DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-chipmunk" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89BE7543173C116400DFE837 /* Debug */,
-				89BE7544173C116400DFE837 /* Release */,
-				89BE7545173C116400DFE837 /* AdHoc */,
-				89BE7546173C116400DFE837 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89BE7571173C119600DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-chipmunk" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89BE7572173C119600DFE837 /* Debug */,
-				89BE7573173C119600DFE837 /* Release */,
-				89BE7574173C119600DFE837 /* AdHoc */,
-				89BE7575173C119600DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

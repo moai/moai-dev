@@ -55,17 +55,24 @@ private:
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
 
+	// for custom loading function
+	MOAILuaMemberRef	mReloader;
+
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
 	static int		_purge						( lua_State* L );
 	static int		_setLoadingPolicy			( lua_State* L );
+	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 
 protected:
 
 	//----------------------------------------------------------------//
+	bool			HasReloader					();
+	
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
 	
