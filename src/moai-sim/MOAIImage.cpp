@@ -2056,20 +2056,13 @@ size_t MOAIImage::GetRowSize () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::GetSubImage ( ZLIntRect rect, void* buffer ) {
+void MOAIImage::GetSubImage ( const MOAIImage& image, ZLIntRect rect ) {
 
 	int width = rect.Width ();
 	int height = rect.Height ();
 	
-	MOAIImage temp;
-	temp.Init ( buffer, width, height, this->mColorFormat, false );
-	temp.Blit ( *this, rect.mXMin, rect.mYMin, 0, 0, width, height );
-}
-
-//----------------------------------------------------------------//
-size_t MOAIImage::GetSubImageSize ( ZLIntRect rect ) {
-
-	return ZLBitBuffer::CalculateSize ( this->GetPixelDepthInBits (), rect.Width () * rect.Height ());
+	this->Init ( width, height, image.mColorFormat, image.mPixelFormat );
+	this->Blit ( image, rect.mXMin, rect.mYMin, 0, 0, width, height );
 }
 
 //----------------------------------------------------------------//
@@ -2098,12 +2091,6 @@ void MOAIImage::Init ( u32 width, u32 height, ZLColor::ColorFormat colorFmt, Pix
 //----------------------------------------------------------------//
 void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt ) {
 
-	this->Init ( bitmap, width, height, colorFmt, true );
-}
-
-//----------------------------------------------------------------//
-void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt, bool copy ) {
-
 	this->Clear ();
 
 	if ( !bitmap ) return;
@@ -2114,14 +2101,9 @@ void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat
 	this->mWidth = width;
 	this->mHeight = height;
 	
-	if ( copy ) {
-		this->Alloc ();
-		u32 size = this->GetBitmapSize ();
-		memcpy ( this->mBitmap, bitmap, size );
-	}
-	else {
-		this->mBitmap = ( void* )bitmap;
-	}
+	this->Alloc ();
+	u32 size = this->GetBitmapSize ();
+	memcpy ( this->mBitmap, bitmap, size );
 	
 	this->OnImageStatusChanged ( this->IsOK ());
 }

@@ -168,6 +168,7 @@ protected:
 	static int			_reserveCurves			( lua_State* L );
 	static int			_setAlignment			( lua_State* L );
 	static int			_setAutoFlip			( lua_State* L );
+	static int			_setBounds				( lua_State* L );
 	static int			_setCurve				( lua_State* L );
 	static int			_setGlyphScale			( lua_State* L );
 	static int			_setHighlight			( lua_State* L );

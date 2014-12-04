@@ -108,7 +108,6 @@ private:
 	const void*		GetRowAddr				( u32 y ) const;
 	size_t			GetRowSize				() const;
 
-	void			Init					( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt, bool copy );
 	virtual void	OnImageStatusChanged	( bool isOK );
 	u32				SampleColor				( float x, float y, u32 filter ) const;
 	void			ToTrueColor				( const MOAIImage& image );
@@ -179,8 +178,7 @@ public:
 	u32						GetDataSize					() const;
 	u32						GetPaletteColor				( u32 idx ) const;
 	ZLIntRect				GetRect						();
-	void					GetSubImage					( ZLIntRect rect, void* buffer );
-	size_t					GetSubImageSize				( ZLIntRect rect );
+	void					GetSubImage					( const MOAIImage& image, ZLIntRect rect );
 	void					Init						( const MOAIImage& image );
 	void					Init						( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
 	void					Init						( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
