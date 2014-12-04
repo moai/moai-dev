@@ -64,7 +64,7 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 	}
 
 	// Set pixel and color format
-	this->mPixelFormat = ZLPixel::TRUECOLOR;
+	this->mPixelFormat = TRUECOLOR;
 	bool quantize = (transform & MOAIImageTransform::QUANTIZE) != 0;
 	if ( hasAlpha ) {
 		this->mColorFormat = quantize ? ZLColor::RGBA_4444 : ZLColor::RGBA_8888;
