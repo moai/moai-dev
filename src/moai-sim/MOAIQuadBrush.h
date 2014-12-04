@@ -10,9 +10,6 @@
 //================================================================//
 class MOAIQuadBrush {
 private:
-
-	ZLVec2D mVtx [ 4 ];
-	ZLVec2D mUV [ 4 ];
 	
 	//----------------------------------------------------------------//
 	static inline void WriteVertex ( MOAIGfxDevice& gfxDevice, const ZLVec2D& vtx, const ZLVec2D& uv ) {
@@ -23,6 +20,9 @@ private:
 	}
 
 public:
+
+	ZLQuad	mModelQuad;
+	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
 	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );

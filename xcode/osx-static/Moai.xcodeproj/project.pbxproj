@@ -85,22 +85,22 @@
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
 		CD95D4891831D4430080C34E /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../host-modules/aku_modules_util.cpp"; sourceTree = "<group>"; };
 		CD95D48A1831D4430080C34E /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../host-modules/aku_modules_util.h"; sourceTree = "<group>"; };
-		CDFD7C571A0859CB00A94E6B /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-core.a"; path = "../../bin/osx/libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
-		CDFD7C581A0859CB00A94E6B /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-crypto.a"; path = "../../bin/osx/libmoai-osx-3rdparty-crypto.a"; sourceTree = "<group>"; };
-		CDFD7C591A0859CB00A94E6B /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-sdl.a"; path = "../../bin/osx/libmoai-osx-3rdparty-sdl.a"; sourceTree = "<group>"; };
-		CDFD7C5A1A0859CB00A94E6B /* libmoai-osx-audio-sampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-audio-sampler.a"; path = "../../bin/osx/libmoai-osx-audio-sampler.a"; sourceTree = "<group>"; };
-		CDFD7C5B1A0859CB00A94E6B /* libmoai-osx-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-box2d.a"; path = "../../bin/osx/libmoai-osx-box2d.a"; sourceTree = "<group>"; };
-		CDFD7C5D1A0859CB00A94E6B /* libmoai-osx-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-crypto.a"; path = "../../bin/osx/libmoai-osx-crypto.a"; sourceTree = "<group>"; };
-		CDFD7C5E1A0859CB00A94E6B /* libmoai-osx-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-http-client.a"; path = "../../bin/osx/libmoai-osx-http-client.a"; sourceTree = "<group>"; };
-		CDFD7C5F1A0859CB00A94E6B /* libmoai-osx-http-server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-http-server.a"; path = "../../bin/osx/libmoai-osx-http-server.a"; sourceTree = "<group>"; };
-		CDFD7C601A0859CB00A94E6B /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-luaext.a"; path = "../../bin/osx/libmoai-osx-luaext.a"; sourceTree = "<group>"; };
-		CDFD7C611A0859CB00A94E6B /* libmoai-osx-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-sim.a"; path = "../../bin/osx/libmoai-osx-sim.a"; sourceTree = "<group>"; };
-		CDFD7C621A0859CB00A94E6B /* libmoai-osx-test.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-test.a"; path = "../../bin/osx/libmoai-osx-test.a"; sourceTree = "<group>"; };
-		CDFD7C631A0859CB00A94E6B /* libmoai-osx-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-untz.a"; path = "../../bin/osx/libmoai-osx-untz.a"; sourceTree = "<group>"; };
-		CDFD7C641A0859CB00A94E6B /* libmoai-osx-zl-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-core.a"; path = "../../bin/osx/libmoai-osx-zl-core.a"; sourceTree = "<group>"; };
-		CDFD7C651A0859CB00A94E6B /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-crypto.a"; path = "../../bin/osx/libmoai-osx-zl-crypto.a"; sourceTree = "<group>"; };
-		CDFD7C661A0859CB00A94E6B /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-vfs.a"; path = "../../bin/osx/libmoai-osx-zl-vfs.a"; sourceTree = "<group>"; };
-		CDFD7C671A0859CB00A94E6B /* libmoai-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx.a"; path = "../../bin/osx/libmoai-osx.a"; sourceTree = "<group>"; };
+		CDFD7C571A0859CB00A94E6B /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-core.a"; path = "../../lib/osx/libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
+		CDFD7C581A0859CB00A94E6B /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-crypto.a"; path = "../../lib/osx/libmoai-osx-3rdparty-crypto.a"; sourceTree = "<group>"; };
+		CDFD7C591A0859CB00A94E6B /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-sdl.a"; path = "../../lib/osx/libmoai-osx-3rdparty-sdl.a"; sourceTree = "<group>"; };
+		CDFD7C5A1A0859CB00A94E6B /* libmoai-osx-audio-sampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-audio-sampler.a"; path = "../../lib/osx/libmoai-osx-audio-sampler.a"; sourceTree = "<group>"; };
+		CDFD7C5B1A0859CB00A94E6B /* libmoai-osx-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-box2d.a"; path = "../../lib/osx/libmoai-osx-box2d.a"; sourceTree = "<group>"; };
+		CDFD7C5D1A0859CB00A94E6B /* libmoai-osx-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-crypto.a"; path = "../../lib/osx/libmoai-osx-crypto.a"; sourceTree = "<group>"; };
+		CDFD7C5E1A0859CB00A94E6B /* libmoai-osx-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-http-client.a"; path = "../../lib/osx/libmoai-osx-http-client.a"; sourceTree = "<group>"; };
+		CDFD7C5F1A0859CB00A94E6B /* libmoai-osx-http-server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-http-server.a"; path = "../../lib/osx/libmoai-osx-http-server.a"; sourceTree = "<group>"; };
+		CDFD7C601A0859CB00A94E6B /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-luaext.a"; path = "../../lib/osx/libmoai-osx-luaext.a"; sourceTree = "<group>"; };
+		CDFD7C611A0859CB00A94E6B /* libmoai-osx-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-sim.a"; path = "../../lib/osx/libmoai-osx-sim.a"; sourceTree = "<group>"; };
+		CDFD7C621A0859CB00A94E6B /* libmoai-osx-test.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-test.a"; path = "../../lib/osx/libmoai-osx-test.a"; sourceTree = "<group>"; };
+		CDFD7C631A0859CB00A94E6B /* libmoai-osx-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-untz.a"; path = "../../lib/osx/libmoai-osx-untz.a"; sourceTree = "<group>"; };
+		CDFD7C641A0859CB00A94E6B /* libmoai-osx-zl-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-core.a"; path = "../../lib/osx/libmoai-osx-zl-core.a"; sourceTree = "<group>"; };
+		CDFD7C651A0859CB00A94E6B /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-crypto.a"; path = "../../lib/osx/libmoai-osx-zl-crypto.a"; sourceTree = "<group>"; };
+		CDFD7C661A0859CB00A94E6B /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-zl-vfs.a"; path = "../../lib/osx/libmoai-osx-zl-vfs.a"; sourceTree = "<group>"; };
+		CDFD7C671A0859CB00A94E6B /* libmoai-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx.a"; path = "../../lib/osx/libmoai-osx.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,12 +383,13 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(MOAI_SDK)/src\"",
-					"\"$(MOAI_SDK)/src/config\"",
-					"\"$(MOAI_SDK)/src/config-default\"",
-					"\"$(MOAI_SDK)/3rdparty/sdl2-2.0.0/include\"",
+					"\"./\"",
+					"\"../../src/config\"",
+					"\"../../src/config-default\"",
+					"\"../../src\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 				);
-				LIBRARY_SEARCH_PATHS = ../../bin/osx;
+				LIBRARY_SEARCH_PATHS = ../../lib/osx;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -440,12 +441,13 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"$(MOAI_SDK)/src\"",
-					"\"$(MOAI_SDK)/src/config\"",
-					"\"$(MOAI_SDK)/src/config-default\"",
-					"\"$(MOAI_SDK)/3rdparty/sdl2-2.0.0/include\"",
+					"\"./\"",
+					"\"../../src/config\"",
+					"\"../../src/config-default\"",
+					"\"../../src\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 				);
-				LIBRARY_SEARCH_PATHS = ../../bin/osx;
+				LIBRARY_SEARCH_PATHS = ../../lib/osx;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;

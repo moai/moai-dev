@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLQuad.h>
 
 //----------------------------------------------------------------//
@@ -266,6 +267,27 @@ void ZLQuad::Scale ( float xScale, float yScale ) {
 	this->mV [ 1 ].Scale ( xScale, yScale );
 	this->mV [ 2 ].Scale ( xScale, yScale );
 	this->mV [ 3 ].Scale ( xScale, yScale );
+}
+
+//----------------------------------------------------------------//
+bool ZLQuad::RemapCoord ( const ZLQuad& src, const ZLQuad& dest, u32 triangleID, float x, float y, ZLVec2D& result ) {
+
+	ZLVec3D bary;
+	ZLVec2D cart ( x, y );
+	
+	u32 i0 = 0;
+	u32 i1 = 1;
+	u32 i2 = 2;
+	
+	if ( triangleID & 0x01 ) {
+		i0 = 0;
+		i1 = 2;
+		i2 = 3;
+	}
+	
+	bary = ZLBarycentric::CartesianToBarycentric ( src.mV [ i0 ], src.mV [ i1 ], src.mV [ i2 ], cart );
+	result = ZLBarycentric::BarycentricToCartesian ( dest.mV [ i0 ], dest.mV [ i1 ], dest.mV [ i2 ], bary );
+	return ZLBarycentric::BarycentricIsInside ( bary );
 }
 
 //----------------------------------------------------------------//

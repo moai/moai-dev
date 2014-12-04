@@ -91,19 +91,19 @@
 		CD236698180A5DC3006A7236 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		CD3007891A12D87400C9CD1D /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		CD4DF2A81A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-core.a"; path = "../../bin/ios/libmoai-ios-3rdparty-core.a"; sourceTree = "<group>"; };
-		CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-crypto.a"; path = "../../bin/ios/libmoai-ios-3rdparty-crypto.a"; sourceTree = "<group>"; };
-		CD4DF2AA1A12E35B00E9A523 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-billing.a"; path = "../../bin/ios/libmoai-ios-billing.a"; sourceTree = "<group>"; };
-		CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-box2d.a"; path = "../../bin/ios/libmoai-ios-box2d.a"; sourceTree = "<group>"; };
-		CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-crypto.a"; path = "../../bin/ios/libmoai-ios-crypto.a"; sourceTree = "<group>"; };
-		CD4DF2AD1A12E35B00E9A523 /* libmoai-ios-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-http-client.a"; path = "../../bin/ios/libmoai-ios-http-client.a"; sourceTree = "<group>"; };
-		CD4DF2AE1A12E35B00E9A523 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-luaext.a"; path = "../../bin/ios/libmoai-ios-luaext.a"; sourceTree = "<group>"; };
-		CD4DF2AF1A12E35B00E9A523 /* libmoai-ios-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-sim.a"; path = "../../bin/ios/libmoai-ios-sim.a"; sourceTree = "<group>"; };
-		CD4DF2B01A12E35B00E9A523 /* libmoai-ios-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-untz.a"; path = "../../bin/ios/libmoai-ios-untz.a"; sourceTree = "<group>"; };
-		CD4DF2B11A12E35B00E9A523 /* libmoai-ios-zl-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-core.a"; path = "../../bin/ios/libmoai-ios-zl-core.a"; sourceTree = "<group>"; };
-		CD4DF2B21A12E35B00E9A523 /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-crypto.a"; path = "../../bin/ios/libmoai-ios-zl-crypto.a"; sourceTree = "<group>"; };
-		CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-vfs.a"; path = "../../bin/ios/libmoai-ios-zl-vfs.a"; sourceTree = "<group>"; };
-		CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "../../bin/ios/libmoai-ios.a"; sourceTree = "<group>"; };
+		CD4DF2A81A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-core.a"; path = "../../lib/ios/libmoai-ios-3rdparty-core.a"; sourceTree = "<group>"; };
+		CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-crypto.a"; path = "../../lib/ios/libmoai-ios-3rdparty-crypto.a"; sourceTree = "<group>"; };
+		CD4DF2AA1A12E35B00E9A523 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-billing.a"; path = "../../lib/ios/libmoai-ios-billing.a"; sourceTree = "<group>"; };
+		CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-box2d.a"; path = "../../lib/ios/libmoai-ios-box2d.a"; sourceTree = "<group>"; };
+		CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-crypto.a"; path = "../../lib/ios/libmoai-ios-crypto.a"; sourceTree = "<group>"; };
+		CD4DF2AD1A12E35B00E9A523 /* libmoai-ios-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-http-client.a"; path = "../../lib/ios/libmoai-ios-http-client.a"; sourceTree = "<group>"; };
+		CD4DF2AE1A12E35B00E9A523 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-luaext.a"; path = "../../lib/ios/libmoai-ios-luaext.a"; sourceTree = "<group>"; };
+		CD4DF2AF1A12E35B00E9A523 /* libmoai-ios-sim.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-sim.a"; path = "../../lib/ios/libmoai-ios-sim.a"; sourceTree = "<group>"; };
+		CD4DF2B01A12E35B00E9A523 /* libmoai-ios-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-untz.a"; path = "../../lib/ios/libmoai-ios-untz.a"; sourceTree = "<group>"; };
+		CD4DF2B11A12E35B00E9A523 /* libmoai-ios-zl-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-core.a"; path = "../../lib/ios/libmoai-ios-zl-core.a"; sourceTree = "<group>"; };
+		CD4DF2B21A12E35B00E9A523 /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-crypto.a"; path = "../../lib/ios/libmoai-ios-zl-crypto.a"; sourceTree = "<group>"; };
+		CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zl-vfs.a"; path = "../../lib/ios/libmoai-ios-zl-vfs.a"; sourceTree = "<group>"; };
+		CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "../../lib/ios/libmoai-ios.a"; sourceTree = "<group>"; };
 		CD4DF2C51A12E62900E9A523 /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CD4DF2C61A12E62900E9A523 /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -448,48 +448,10 @@
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = ../../bin/ios;
+				LIBRARY_SEARCH_PATHS = ../../lib/ios;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -513,48 +475,10 @@
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.0.1/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.2.1\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.0.7/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-3.2.2\"",
-					"\"../../3rdparty/facebook-ios-sdk-3.8/src\"",
-					"\"../../3rdparty/vungle-1.5.0/lib\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = ../../bin/ios;
+				LIBRARY_SEARCH_PATHS = ../../lib/ios;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zlcore/zl_replace.h\"",

@@ -347,7 +347,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			} else {
 				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
 			}
-			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f);
+			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f);
 		}
 	}
 	

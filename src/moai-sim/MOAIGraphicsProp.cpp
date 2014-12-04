@@ -408,7 +408,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 		this->DrawGrid ( subPrimID );
 	}
 	else {
-		this->mDeck->Draw ( this->mIndex, this->mRemapper );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
 	}
 }
 

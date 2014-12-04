@@ -270,6 +270,13 @@ ZLBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITileDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( pad );
+
+	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+}
+
+//----------------------------------------------------------------//
 MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN

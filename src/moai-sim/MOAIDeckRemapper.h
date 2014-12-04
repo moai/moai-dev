@@ -39,7 +39,8 @@ public:
 					~MOAIDeckRemapper		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	u32				Remap					( u32 idx );
+	u32				Remap					( u32 idx ) const;
+	static u32		Remap					( const MOAIDeckRemapper* remapper, u32 idx );
 };
 
 #endif

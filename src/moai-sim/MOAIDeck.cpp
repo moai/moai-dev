@@ -193,22 +193,20 @@ int MOAIDeck::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const ZLVec2D& vec ) {
+bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 	
-	ZLRect bounds = this->GetBounds ( idx, remapper ).GetRect ( ZLBox::PLANE_XY );
+	ZLRect bounds = this->GetBounds ( idx ).GetRect ( ZLBox::PLANE_XY );
 	return bounds.Contains ( vec );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck::Draw ( u32 idx ) {
 
-	this->Draw ( idx, remapper, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	this->Draw ( idx, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	
-	idx = remapper ? remapper->Remap ( idx ) : idx;
+void MOAIDeck::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
 	
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
@@ -247,9 +245,7 @@ ZLBox MOAIDeck::GetBounds () {
 }
 
 //----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
-
-	idx = remapper ? remapper->Remap ( idx ) : idx;
+ZLBox MOAIDeck::GetBounds ( u32 idx ) {
 	
 	ZLBox bounds;
 	
@@ -292,7 +288,8 @@ void MOAIDeck::GetGfxState ( MOAIDeckGfxState& gfxState ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Inside ( ZLVec3D vec, float pad ) {
+bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( pad );
 	
@@ -382,7 +379,7 @@ bool MOAIDeck::TestHit ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::TestHit ( MOAIQuadBrush& quad, float x, float y ) {
+bool MOAIDeck::TestHit ( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
 	u32 granularity = this->GetHitGranularity ();
 
@@ -390,11 +387,11 @@ bool MOAIDeck::TestHit ( MOAIQuadBrush& quad, float x, float y ) {
 
 	ZLVec2D uv;
 
-	if ( quad.GetUVForCartesian ( 0, x, y, uv )) {
+	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 0, x, y, uv)) {
 		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
 	}
 	
-	if ( quad.GetUVForCartesian ( 1, x, y, uv )) {
+	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 1, x, y, uv)) {
 		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
 	}
 

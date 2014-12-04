@@ -197,10 +197,11 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( ZLVec3D vec, float pad ) {
+bool MOAIGfxQuad2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( idx );
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad, vec.mX, vec.mY );
+	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//

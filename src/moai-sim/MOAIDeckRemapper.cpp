@@ -119,7 +119,7 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIDeckRemapper::Remap ( u32 idx ) {
+u32 MOAIDeckRemapper::Remap ( u32 idx ) const {
 
 	u32 code = ( idx & MOAITileFlags::CODE_MASK ) - 1;
 
@@ -130,3 +130,10 @@ u32 MOAIDeckRemapper::Remap ( u32 idx ) {
 	}
 	return idx;
 }
+
+//----------------------------------------------------------------//
+u32 MOAIDeckRemapper::Remap ( const MOAIDeckRemapper* remapper, u32 idx ) {
+
+	return remapper ? remapper->Remap ( idx ) : idx;
+}
+
