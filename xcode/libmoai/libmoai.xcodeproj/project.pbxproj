@@ -7718,6 +7718,11 @@
 		CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIHttpTaskNSURL.mm; sourceTree = "<group>"; };
 		CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridFancy.cpp; sourceTree = "<group>"; };
 		CDB0CA2F193E6D3B00C54DB7 /* MOAIGridFancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridFancy.h; sourceTree = "<group>"; };
+		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
+		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
+		CDBA13141A305641007503F3 /* moai_version_major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_major.h; path = "config-default/moai_version_major.h"; sourceTree = "<group>"; };
+		CDBA13151A305641007503F3 /* moai_version_minor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_minor.h; path = "config-default/moai_version_minor.h"; sourceTree = "<group>"; };
+		CDBA13161A30564B007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
 		CDC1238317FA804C00FB64BB /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDC1238417FA808A00FB64BB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "zl-crypto/headers.h"; sourceTree = "<group>"; };
 		CDC1238517FA808A00FB64BB /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "zl-crypto/pch.cpp"; sourceTree = "<group>"; };
@@ -8630,6 +8635,8 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CDBA13101A30561B007503F3 /* config */,
+				CDBA13111A305622007503F3 /* config-default */,
 				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
 				89BE74A2173AD2FA00DFE837 /* moai-box2d */,
 				89BE6ACA173975E500DFE837 /* moai-core */,
@@ -12336,6 +12343,25 @@
 				CD9F75AF1808AE6A0001EF0C /* MOAIGameCenterIOS.mm */,
 			);
 			name = "moai-ios-gamecenter";
+			sourceTree = "<group>";
+		};
+		CDBA13101A30561B007503F3 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				CDBA13161A30564B007503F3 /* moai_version_author.h */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		CDBA13111A305622007503F3 /* config-default */ = {
+			isa = PBXGroup;
+			children = (
+				CDBA13121A305641007503F3 /* moai_config.h */,
+				CDBA13131A305641007503F3 /* moai_version_author.h */,
+				CDBA13141A305641007503F3 /* moai_version_major.h */,
+				CDBA13151A305641007503F3 /* moai_version_minor.h */,
+			);
+			name = "config-default";
 			sourceTree = "<group>";
 		};
 		CDC122D317FA802700FB64BB /* zl-crypto */ = {

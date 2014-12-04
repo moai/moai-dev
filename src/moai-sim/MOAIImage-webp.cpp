@@ -97,7 +97,7 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 		config.output.colorspace = MODE_RGB_565;
 		break;
 	}
-	config.output.u.RGBA.rgba = ( u8* ) this->mData;
+	config.output.u.RGBA.rgba = ( u8* )this->mBitmap;
 	config.output.u.RGBA.stride = this->GetRowSize ();
 	config.output.u.RGBA.size = this->GetBitmapSize ();
 	config.output.is_external_memory = true;
