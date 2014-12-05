@@ -9,6 +9,8 @@ COMMON = {
 	[ 'src/moai-sim/host.h' ]				= true,
 	[ 'src/moai-untz/host.h' ]				= true,
 	[ 'src/moai-util/host.h' ]				= true,
+
+	[ 'samples' ]							= true,
 }
 
 MAC = {
