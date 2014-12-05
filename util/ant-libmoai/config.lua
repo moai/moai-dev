@@ -220,7 +220,6 @@ EXTERNAL_LIBRARIES = {
 STATIC_LIBRARIES = {
 
 	-- moai
-	'libmoai-chipmunk',
 	'libmoai-box2d',
 	'libmoai-http-client',
 	'libmoai-fmod-ex',
@@ -238,7 +237,6 @@ STATIC_LIBRARIES = {
 	
 	-- 3rd party
 	'libbox2d',
-	'libchipmunk',
 	
 	'libuntz',
 	'libvorbis',

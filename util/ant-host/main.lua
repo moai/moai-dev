@@ -1,16 +1,4 @@
 --==============================================================
--- setup
---==============================================================
-
-MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
-SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
-INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
-
-MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
-
-require ( 'util' )
-
---==============================================================
 -- args
 --==============================================================
 
@@ -190,7 +178,7 @@ COPY = {
 }
 ]]--
 
-processConfigFile ( MOAI_SDK_HOME .. 'util/ant-host/config.lua' )
+processConfigFile ( 'config.lua' )
 
 for i, config in ipairs ( CONFIGS ) do
 	print ( 'config', config )
@@ -200,7 +188,7 @@ end
 MOAIFileSystem.deleteDirectory ( ANT_DIR, true )
 MOAIFileSystem.affirmPath ( ANT_DIR )
 
-MOAIFileSystem.copy ( 'ant-host/project', MOAI_PROJECT_PATH )
+MOAIFileSystem.copy ( 'project', MOAI_PROJECT_PATH )
 
 if config.KEYSTORE_PATH and config.KEYSTORE_NAME then
 	MOAIFileSystem.copy ( config.KEYSTORE_PATH .. config.KEYSTORE_NAME, MOAI_PROJECT_PATH .. config.KEYSTORE_NAME )
@@ -255,7 +243,7 @@ util.replaceInFiles ({
 		[ '@KEY_ALIAS_PASSWORD@' ]				= config.KEYSTORE_ALIAS_PASSWORD,
 	},
 	
-	[ util.wrap ( util.iterateFiles, MOAI_PROJECT_PATH, '^local.properties$' )] = {
+	[ util.wrap ( util.iterateFilesAbsPath, MOAI_PROJECT_PATH, '^local.properties$' )] = {
 		[ '@SDK_ROOT@' ]						= '$ANDROID_HOME',
 	},
 	
@@ -263,7 +251,7 @@ util.replaceInFiles ({
 		[ '@EXTERNAL_PROJECT_INCLUDES@' ] 		= MODULE_PROJECT_INCLUDES,
 	},
 
-	[ util.wrap ( util.iterateFiles, MOAI_PROJECT_PATH .. 'src', '.java$' )] = {
+	[ util.wrap ( util.iterateFilesAbsPath, MOAI_PROJECT_PATH .. 'src', '.java$' )] = {
 		[ '@PACKAGE@' ]							= config.PACKAGE_NAME,
 		[ '@PLATFORM_NAME@' ]					= string.upper ( config.PLATFORM_NAME ),
 		[ '@RUN_SCRIPTS@' ]						= config.LUA_MAIN,

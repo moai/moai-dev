@@ -1,16 +1,4 @@
 --==============================================================
--- setup
---==============================================================
-
-MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
-SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
-INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
-
-MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
-
-require ( 'util' )
-
---==============================================================
 -- args
 --==============================================================
 
@@ -320,12 +308,12 @@ end
 
 MOAIFileSystem.affirmPath ( JNI_DIR )
 
-MOAIFileSystem.copy ( 'ant-libmoai/Android.mk', JNI_DIR .. 'Android.mk' )
-MOAIFileSystem.copy ( 'ant-libmoai/Application.mk', JNI_DIR .. 'Application.mk' )
-MOAIFileSystem.copy ( 'ant-libmoai/src/', JNI_DIR .. 'src/' )
+MOAIFileSystem.copy ( 'Android.mk', JNI_DIR .. 'Android.mk' )
+MOAIFileSystem.copy ( 'Application.mk', JNI_DIR .. 'Application.mk' )
+MOAIFileSystem.copy ( 'src/', JNI_DIR .. 'src/' )
 MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
 
-processConfigFile ( MOAI_SDK_HOME .. 'util/ant-libmoai/config.lua' )
+processConfigFile ( 'config.lua' )
 
 for i, config in ipairs ( CONFIGS ) do
 	print ( 'config', config )

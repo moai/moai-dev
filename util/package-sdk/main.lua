@@ -1,22 +1,11 @@
 --==============================================================
--- setup
---==============================================================
-
-MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
-SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
-INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
-
-MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
-
-require ( 'util' )
-
---==============================================================
 -- args
 --==============================================================
 
 OUTPUT_DIR			= INVOKE_DIR .. 'moai-sdk/'
 
 COPY_FILES			= {}
+CLEAN_DIRS			= {}
 DEV_PLATFORM		= nil
 
 ----------------------------------------------------------------
@@ -29,7 +18,7 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 		end
 
 		if escape == 'o' or escape == 'out' then
-			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
+			if not util.isAbsPath ( param ) then
 				param = INVOKE_DIR .. param
 			end 
 			
@@ -54,32 +43,36 @@ processConfigFile = function ( filename )
 	util.dofileWithEnvironment ( filename, config )
 
 	util.mergeTables ( COPY_FILES, config.COMMON )
-	util.mergeTables ( COPY_FILES, ( DEV_PLATFORM == 'mac' ) and config.MAC )
+	util.mergeTables ( COPY_FILES, config.MAC )
+	util.mergeTables ( CLEAN_DIRS, config.CLEAN_DIRS )
 end
 
 --==============================================================
 -- main
 --==============================================================
 
-
 local moaiexec = function ( cmd, ... )
-	local result = os.execute ( string.format ( cmd, params ))
+	local result = os.execute ( string.format ( cmd, ... ))
 	if not result == 0 then os.exit ( result ) end
 	return result
 end
 
-moaiexec ( 'package-sdk/prepare-sdk-osx.sh' )
-
---[[
-processConfigFile ( MOAI_SDK_HOME .. 'util/package-sdk/config.lua' )
+processConfigFile ( 'config.lua' )
 
 MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
-MOAIFileSystem.affirmPath ( OUTPUT_DIR )
+MOAIFileSystem.copy ( 'moai-sdk', OUTPUT_DIR )
+
+moaiexec ( './prepare-sdk-osx.sh' )
 
 for k, v in pairs ( COPY_FILES ) do
 	v = v == true and k or v
 	print ( 'COPYING:', k, v )
 	MOAIFileSystem.copy ( MOAI_SDK_HOME .. k, OUTPUT_DIR .. v )
 end
-]]--
 
+for i, v in ipairs ( CLEAN_DIRS ) do
+	print ( 'CLEANING:', v )
+	MOAIFileSystem.deleteDirectory ( OUTPUT_DIR .. v, true )
+end
+
+moaiexec ( 'moaiutil make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )

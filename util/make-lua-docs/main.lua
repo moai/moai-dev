@@ -1,21 +1,8 @@
 --==============================================================
--- setup
---==============================================================
-
-MOAI_SDK_HOME	= MOAIFileSystem.getAbsoluteDirectoryPath ( '../' ) -- default path to Moai SDK relative to script dir
-SCRIPT_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
-INVOKE_DIR		= MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
-
-MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
-
-require ( 'util' )
-
---==============================================================
 -- args
 --==============================================================
 
 SRC_PATH		= MOAI_SDK_HOME .. 'src/'
-WORK_PATH		= 'make-lua-docs'
 DST_PATH		= 'src-doxy-lua/'
 HTML_PATH		= 'html/'
 TEMPLATE_PATH	= 'template-lua/'
@@ -29,14 +16,15 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	if param then
 
 		if escape == 'o' or escape == 'out' then
-			if ( param [ 1 ] ~= '/' ) and ( param [ 1 ] ~= '\\' ) then
+			if not util.isAbsPath ( param ) then
 				param = INVOKE_DIR .. param
 			end 
-			
 			OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
 		end
 	end
 end
+
+print ( 'OUTPUT_DIR', OUTPUT_DIR )
 
 --==============================================================
 -- util
@@ -203,7 +191,7 @@ end
 writeDefGroup = function ( filename, module, name, parent )
 	
 	if not MOAIFileSystem.checkFileExists ( filename ) then
-	
+
 		local out = io.open ( filename, 'w' )
 		out:write ( string.format ( '/** @defgroup %s %s\n', module, name ))
 
@@ -500,8 +488,6 @@ end
 --==============================================================
 -- here's where the magic happens
 --==============================================================
-
-MOAIFileSystem.setWorkingDirectory ( WORK_PATH )
 
 MOAIFileSystem.deleteDirectory ( DST_PATH, true )
 MOAIFileSystem.deleteDirectory ( HTML_PATH, true )
