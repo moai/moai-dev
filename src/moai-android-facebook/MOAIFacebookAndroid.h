@@ -4,7 +4,7 @@
 #ifndef	MOAIFACEBOOKANDROID_H
 #define	MOAIFACEBOOKANDROID_H
 
-#ifndef DISABLE_FACEBOOK
+#if AKU_WITH_ANDROID_FACEBOOK
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
