@@ -305,8 +305,6 @@ else (CUSTOM_HOST)
 if ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS )
     if ( SDL_HOST )
       add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
     endif (SDL_HOST)
 endif ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 
