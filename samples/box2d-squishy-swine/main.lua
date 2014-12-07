@@ -12,7 +12,7 @@ INNER_FREQUENCY		= 6
 CORE_FREQUENCY		= 18
 RESET_FREQUENCY		= 10 --if this is too low then the model can implode from too much impact
 
-SHOW_SPRITES = false
+SHOW_SPRITES = true
 
 CORE_FILTER		= { CATEGORY = 0x01,	MASK = 0x19,	INDEX = 0 }	-- 00001 11001
 FOOT_FILTER		= { CATEGORY = 0x02,	MASK = 0x18,	INDEX = 0 } -- 00010 11000
