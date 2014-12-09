@@ -27,7 +27,7 @@ protected:
 	ZLLeanArray < u8 > mBuffer;
 
 	union {
-		float	mFloat;
+		real	mReal;
 		int		mInt;
 	};
 
@@ -39,12 +39,12 @@ public:
 
 	enum {
 		UNIFORM_NONE,
-		UNIFORM_FLOAT,
+		UNIFORM_REAL,
 		UNIFORM_INDEX,
 		UNIFORM_INT,
-		UNIFORM_MATRIX_F3,
-		UNIFORM_MATRIX_F4,
-		UNIFORM_VECTOR_F4,
+		UNIFORM_MATRIX_R3,
+		UNIFORM_MATRIX_R4,
+		UNIFORM_VECTOR_R4,
 	};
 
 	GET ( u32, Type, mType )
@@ -54,7 +54,7 @@ public:
 	void		GetFlags			( MOAIAttrOp& attrOp );
 	void        GetValue			( MOAIAttrOp& attrOp );
 	void		SetType				( u32 type );
-	bool		SetValue			( float value );
+	bool		SetValue			( real value );
 	bool		SetValue			( int value );
 	bool		SetValue			( const MOAIAttrOp& attrOp, bool check );
 	bool		SetValue			( const ZLColorVec& value, bool check );

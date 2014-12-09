@@ -504,7 +504,7 @@ void MOAICameraFitter2D::OnDepNodeUpdate () {
 	
 	if ( this->mCamera ) {
 		
-		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
+		float d = 1.0f - ZLReal::Clamp ( this->mDamper, 0.0f, 1.0f );
 		
 		ZLVec3D loc = this->mCamera->GetLoc ();
 		float scale = this->mCamera->GetScl ().mX;

@@ -1171,15 +1171,15 @@ bool MOAIImage::Compare ( const MOAIImage& image ) {
 			color1.SetRGBA ( this->GetColor ( j, i ));
 			color2.SetRGBA ( image.GetColor ( j, i ));
 
-			r [ 0 ][ u32 ( ZLFloat::Max ( color1.mR * 4 - 1, 0 ))]++;
-			g [ 0 ][ u32 ( ZLFloat::Max ( color1.mG * 4 - 1, 0 ))]++;
-			b [ 0 ][ u32 ( ZLFloat::Max ( color1.mB * 4 - 1, 0 ))]++;
-			a [ 0 ][ u32 ( ZLFloat::Max ( color1.mA * 4 - 1, 0 ))]++;
+			r [ 0 ][ u32 ( ZLReal::Max ( color1.mR * 4 - 1, 0 ))]++;
+			g [ 0 ][ u32 ( ZLReal::Max ( color1.mG * 4 - 1, 0 ))]++;
+			b [ 0 ][ u32 ( ZLReal::Max ( color1.mB * 4 - 1, 0 ))]++;
+			a [ 0 ][ u32 ( ZLReal::Max ( color1.mA * 4 - 1, 0 ))]++;
 
-			r [ 1 ][ u32 ( ZLFloat::Max ( color2.mR * 4 - 1, 0 ))]++;
-			g [ 1 ][ u32 ( ZLFloat::Max ( color2.mG * 4 - 1, 0 ))]++;
-			b [ 1 ][ u32 ( ZLFloat::Max ( color2.mB * 4 - 1, 0 ))]++;
-			a [ 1 ][ u32 ( ZLFloat::Max ( color2.mA * 4 - 1, 0 ))]++;
+			r [ 1 ][ u32 ( ZLReal::Max ( color2.mR * 4 - 1, 0 ))]++;
+			g [ 1 ][ u32 ( ZLReal::Max ( color2.mG * 4 - 1, 0 ))]++;
+			b [ 1 ][ u32 ( ZLReal::Max ( color2.mB * 4 - 1, 0 ))]++;
+			a [ 1 ][ u32 ( ZLReal::Max ( color2.mA * 4 - 1, 0 ))]++;
 		}
 	}
 
@@ -1193,10 +1193,10 @@ bool MOAIImage::Compare ( const MOAIImage& image ) {
 	}
 
 	for ( u32 i = 0; i < 4; i++ ) {
-		r [ 0 ][ i ] = ZLFloat::Abs ( r [ 0 ][ i ] - r [ 1 ][ i ]);
-		g [ 0 ][ i ] = ZLFloat::Abs ( g [ 0 ][ i ] - g [ 1 ][ i ]);
-		b [ 0 ][ i ] = ZLFloat::Abs ( b [ 0 ][ i ] - b [ 1 ][ i ]);
-		a [ 0 ][ i ] = ZLFloat::Abs ( a [ 0 ][ i ] - a [ 1 ][ i ]);
+		r [ 0 ][ i ] = ZLReal::Abs ( r [ 0 ][ i ] - r [ 1 ][ i ]);
+		g [ 0 ][ i ] = ZLReal::Abs ( g [ 0 ][ i ] - g [ 1 ][ i ]);
+		b [ 0 ][ i ] = ZLReal::Abs ( b [ 0 ][ i ] - b [ 1 ][ i ]);
+		a [ 0 ][ i ] = ZLReal::Abs ( a [ 0 ][ i ] - a [ 1 ][ i ]);
 	}
 
 	float similar = 0;

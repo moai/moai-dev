@@ -110,7 +110,7 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
-	self->mRect = state.GetRect < float >( 2 );
+	self->mRect = state.GetRect < real >( 2 );
 	self->SetBoundsDirty ();
 	
 	return 0;
@@ -159,7 +159,7 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mUVRects.Size (), L )) {
-		self->mUVRects [ idx ] = state.GetRect < float >( 3 );
+		self->mUVRects [ idx ] = state.GetRect < real >( 3 );
 	}
 	return 0;
 }

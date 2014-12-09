@@ -54,8 +54,8 @@ int MOAIVectorTesselator::_drawingToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "UNN" )
 	
 	ZLVec2D vec;
-	vec.mX = state.GetValue ( 2, 0.0f );
-	vec.mY = state.GetValue ( 3, 0.0f );
+	vec.mX = state.GetValue < real >( 2, 0.0 );
+	vec.mY = state.GetValue < real >( 3, 0.0 );
 
 	self->mStyle.mDrawingToWorld.Transform ( vec );
 	
@@ -70,8 +70,8 @@ int MOAIVectorTesselator::_drawingToWorldVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "UNN" )
 	
 	ZLVec2D vec;
-	vec.mX = state.GetValue ( 2, 0.0f );
-	vec.mY = state.GetValue ( 3, 0.0f );
+	vec.mX = state.GetValue < real >( 2, 0.0 );
+	vec.mY = state.GetValue < real >( 3, 0.0 );
 
 	self->mStyle.mDrawingToWorld.TransformVec ( vec );
 	
@@ -145,17 +145,17 @@ int MOAIVectorTesselator::_pushBezierVertices ( lua_State* L ) {
 	ZLVec2D p2;
 	ZLVec2D p3;
 	
-	p0.mX			= state.GetValue < float >( 2, 0.0f );
-	p0.mY			= state.GetValue < float >( 3, 0.0f );
+	p0.mX			= state.GetValue < real >( 2, 0.0 );
+	p0.mY			= state.GetValue < real >( 3, 0.0 );
 	
-	p1.mX			= state.GetValue < float >( 4, 0.0f );
-	p1.mY			= state.GetValue < float >( 5, 0.0f );
+	p1.mX			= state.GetValue < real >( 4, 0.0 );
+	p1.mY			= state.GetValue < real >( 5, 0.0 );
 	
-	p2.mX			= state.GetValue < float >( 6, 0.0f );
-	p2.mY			= state.GetValue < float >( 7, 0.0f );
+	p2.mX			= state.GetValue < real >( 6, 0.0 );
+	p2.mY			= state.GetValue < real >( 7, 0.0 );
 	
-	p3.mX			= state.GetValue < float >( 8, 0.0f );
-	p3.mY			= state.GetValue < float >( 9, 0.0f );
+	p3.mX			= state.GetValue < real >( 8, 0.0 );
+	p3.mY			= state.GetValue < real >( 9, 0.0 );
 	
 	self->PushBezierVertices ( p0, p1, p2, p3 );
 	return 0;
@@ -173,10 +173,10 @@ int MOAIVectorTesselator::_pushCombo ( lua_State* L ) {
 int MOAIVectorTesselator::_pushEllipse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float x			= state.GetValue < float >( 2, 0.0f );
-	float y			= state.GetValue < float >( 3, 0.0f );
-	float xRad		= state.GetValue < float >( 4, 0.0f );
-	float yRad		= state.GetValue < float >( 5, xRad );
+	real x			= state.GetValue < real >( 2, 0.0 );
+	real y			= state.GetValue < real >( 3, 0.0 );
+	real xRad		= state.GetValue < real >( 4, 0.0 );
+	real yRad		= state.GetValue < real >( 5, xRad );
 	
 	self->PushEllipse ( x, y, xRad, yRad );
 	return 0;
@@ -194,8 +194,8 @@ int MOAIVectorTesselator::_pushPoly ( lua_State* L ) {
 		vertices = ( ZLVec2D* )alloca ( total * sizeof ( ZLVec2D ));
 		
 		for ( u32 i = 0; i < total; ++i ) {
-			vertices [ i ].mX = state.GetValue < float >(( i << 1 ) + 2, 0 );
-			vertices [ i ].mY = state.GetValue < float >(( i << 1 ) + 3, 0 );
+			vertices [ i ].mX = state.GetValue < real >(( i << 1 ) + 2, 0 );
+			vertices [ i ].mY = state.GetValue < real >(( i << 1 ) + 3, 0 );
 		}
 	}
 	
@@ -207,7 +207,7 @@ int MOAIVectorTesselator::_pushPoly ( lua_State* L ) {
 int MOAIVectorTesselator::_pushRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	ZLRect rect = state.GetRect < float >( 2 );
+	ZLRect rect = state.GetRect < real >( 2 );
 	self->PushRect ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 	return 0;
 }
@@ -216,11 +216,11 @@ int MOAIVectorTesselator::_pushRect ( lua_State* L ) {
 int MOAIVectorTesselator::_pushRotate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float x		= state.GetValue < float >( 2, 0.0f );
-	float y		= state.GetValue < float >( 3, 0.0f );
-	float r		= state.GetValue < float >( 4, 0.0f );
+	real x		= state.GetValue < real >( 2, 0.0 );
+	real y		= state.GetValue < real >( 3, 0.0 );
+	real r		= state.GetValue < real >( 4, 0.0 );
 
-	self->PushRotate ( x, y, r * ( float )D2R );
+	self->PushRotate ( x, y, r * ( real )D2R );
 	
 	return 0;
 }
@@ -229,8 +229,8 @@ int MOAIVectorTesselator::_pushRotate ( lua_State* L ) {
 int MOAIVectorTesselator::_pushScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float x			= state.GetValue < float >( 2, 1.0f );
-	float y			= state.GetValue < float >( 3, 1.0f );
+	real x			= state.GetValue < real >( 2, 1.0 );
+	real y			= state.GetValue < real >( 3, 1.0 );
 	
 	self->PushScale ( x, y );
 	
@@ -241,8 +241,8 @@ int MOAIVectorTesselator::_pushScale ( lua_State* L ) {
 int MOAIVectorTesselator::_pushSkew ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float yx		= state.GetValue < float >( 2, 0.0f );
-	float xy		= state.GetValue < float >( 3, 0.0f );
+	real yx			= state.GetValue < real >( 2, 0.0 );
+	real xy			= state.GetValue < real >( 3, 0.0 );
 	
 	self->PushSkew ( yx, xy );
 	
@@ -253,13 +253,13 @@ int MOAIVectorTesselator::_pushSkew ( lua_State* L ) {
 int MOAIVectorTesselator::_pushTransform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float a			= state.GetValue < float >( 2, 1.0f );
-	float b			= state.GetValue < float >( 3, 0.0f );
-	float c			= state.GetValue < float >( 4, 0.0f );
-	float d			= state.GetValue < float >( 5, 1.0f );
+	real a			= state.GetValue < real >( 2, 1.0 );
+	real b			= state.GetValue < real >( 3, 0.0 );
+	real c			= state.GetValue < real >( 4, 0.0 );
+	real d			= state.GetValue < real >( 5, 1.0 );
 	
-	float tx		= state.GetValue < float >( 6, 0.0f );
-	float ty		= state.GetValue < float >( 7, 0.0f );
+	real tx			= state.GetValue < real >( 6, 0.0 );
+	real ty			= state.GetValue < real >( 7, 0.0 );
 	
 	self->PushTransform ( a, b, c, d, tx, ty );
 	
@@ -270,8 +270,8 @@ int MOAIVectorTesselator::_pushTransform ( lua_State* L ) {
 int MOAIVectorTesselator::_pushTranslate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float x			= state.GetValue < float >( 2, 1.0f );
-	float y			= state.GetValue < float >( 3, 0.0f );
+	real x			= state.GetValue < real >( 2, 1.0 );
+	real y			= state.GetValue < real >( 3, 0.0 );
 	
 	self->PushTranslate ( x, y );
 	
@@ -282,8 +282,8 @@ int MOAIVectorTesselator::_pushTranslate ( lua_State* L ) {
 int MOAIVectorTesselator::_pushVertex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	float x		= state.GetValue < float >( 2, 0.0f );
-	float y		= state.GetValue < float >( 3, 0.0f );
+	real x		= state.GetValue < real >( 2, 0.0 );
+	real y		= state.GetValue < real >( 3, 0.0 );
 	
 	self->PushVertex ( x, y );
 	
@@ -321,7 +321,7 @@ int MOAIVectorTesselator::_setCircleResolution ( lua_State* L ) {
 int MOAIVectorTesselator::_setDepthBias ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mDepthBias = state.GetValue < float >( 2, 0.0f );
+	self->mDepthBias = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -329,7 +329,7 @@ int MOAIVectorTesselator::_setDepthBias ( lua_State* L ) {
 int MOAIVectorTesselator::_setExtrude ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mExtrude = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mExtrude = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -337,7 +337,7 @@ int MOAIVectorTesselator::_setExtrude ( lua_State* L ) {
 int MOAIVectorTesselator::_setFillColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mFillColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mFillColor = state.GetColor ( 2, 1.0, 1.0, 1.0, 1.0 );
 	return 0;
 }
 
@@ -369,7 +369,7 @@ int MOAIVectorTesselator::_setJoinStyle ( lua_State* L ) {
 int MOAIVectorTesselator::_setLightColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mLightColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mLightColor = state.GetColor ( 2, 1.0, 1.0, 1.0, 1.0 );
 	return 0;
 }
 
@@ -385,9 +385,9 @@ int MOAIVectorTesselator::_setLightCurve ( lua_State* L ) {
 int MOAIVectorTesselator::_setLightVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mLightVec.mX = state.GetValue < float >( 2, 0.0f );
-	self->mStyle.mLightVec.mY = state.GetValue < float >( 3, 0.0f );
-	self->mStyle.mLightVec.mZ = state.GetValue < float >( 4, 0.0f );
+	self->mStyle.mLightVec.mX = state.GetValue < real >( 2, 0.0 );
+	self->mStyle.mLightVec.mY = state.GetValue < real >( 3, 0.0 );
+	self->mStyle.mLightVec.mZ = state.GetValue < real >( 4, 0.0 );
 	
 	return 0;
 }
@@ -396,7 +396,7 @@ int MOAIVectorTesselator::_setLightVec ( lua_State* L ) {
 int MOAIVectorTesselator::_setLineColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mLineColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mLineColor = state.GetColor ( 2, 1.0, 1.0, 1.0, 1.0 );
 	return 0;
 }
 
@@ -412,7 +412,7 @@ int MOAIVectorTesselator::_setLineStyle ( lua_State* L ) {
 int MOAIVectorTesselator::_setLineWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mLineWidth = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mLineWidth = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -420,7 +420,7 @@ int MOAIVectorTesselator::_setLineWidth ( lua_State* L ) {
 int MOAIVectorTesselator::_setMiterLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mMiterLimit = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mMiterLimit = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -436,7 +436,7 @@ int MOAIVectorTesselator::_setPolyClosed ( lua_State* L ) {
 int MOAIVectorTesselator::_setShadowColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mShadowColor = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
+	self->mStyle.mShadowColor = state.GetColor ( 2, 0.0, 0.0, 0.0, 1.0 );
 	return 0;
 }
 
@@ -452,7 +452,7 @@ int MOAIVectorTesselator::_setShadowCurve ( lua_State* L ) {
 int MOAIVectorTesselator::_setStrokeColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mStrokeColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
+	self->mStyle.mStrokeColor = state.GetColor ( 2, 1.0, 1.0, 1.0, 1.0 );
 	return 0;
 }
 
@@ -460,7 +460,7 @@ int MOAIVectorTesselator::_setStrokeColor ( lua_State* L ) {
 int MOAIVectorTesselator::_setStrokeDepthBias ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mStrokeDepthBias = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mStrokeDepthBias = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -484,7 +484,7 @@ int MOAIVectorTesselator::_setStrokeStyle ( lua_State* L ) {
 int MOAIVectorTesselator::_setStrokeWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mStrokeWidth = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mStrokeWidth = state.GetValue < real >( 2, 0.0 );
 	return 0;
 }
 
@@ -523,8 +523,8 @@ int MOAIVectorTesselator::_worldToDrawing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "UNN" )
 	
 	ZLVec2D vec;
-	vec.mX = state.GetValue ( 2, 0.0f );
-	vec.mY = state.GetValue ( 3, 0.0f );
+	vec.mX = state.GetValue ( 2, 0.0 );
+	vec.mY = state.GetValue ( 3, 0.0 );
 
 	self->mStyle.mWorldToDrawing.Transform ( vec );
 	
@@ -539,8 +539,8 @@ int MOAIVectorTesselator::_worldToDrawingVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "UNN" )
 	
 	ZLVec2D vec;
-	vec.mX = state.GetValue ( 2, 0.0f );
-	vec.mY = state.GetValue ( 3, 0.0f );
+	vec.mX = state.GetValue ( 2, 0.0 );
+	vec.mY = state.GetValue ( 3, 0.0 );
 
 	self->mStyle.mWorldToDrawing.TransformVec ( vec );
 	
@@ -670,6 +670,8 @@ MOAIVectorTesselator::MOAIVectorTesselator () :
 	mVerbose ( false ),
 	mVtxExtraSize ( 0 ) {
 	
+	assert ( sizeof ( real ) == sizeof ( TESSreal ));
+	
 	this->mStyle.Default ();
 	
 	RTTI_BEGIN
@@ -717,7 +719,7 @@ void MOAIVectorTesselator::PushCombo () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushEllipse ( float x, float y, float xRad, float yRad ) {
+void MOAIVectorTesselator::PushEllipse ( real x, real y, real xRad, real yRad ) {
 
 	MOAIVectorEllipse* ellipse = new MOAIVectorEllipse ();
 	this->PushShape ( ellipse );
@@ -735,7 +737,7 @@ void MOAIVectorTesselator::PushPoly ( ZLVec2D* vertices, u32 total, bool closed 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushRect ( float xMin, float yMin, float xMax, float yMax ) {
+void MOAIVectorTesselator::PushRect ( real xMin, real yMin, real xMax, real yMax ) {
 
 	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
 	this->PushShape ( vectorRect );
@@ -743,7 +745,7 @@ void MOAIVectorTesselator::PushRect ( float xMin, float yMin, float xMax, float 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushRotate ( float x, float y, float r ) {
+void MOAIVectorTesselator::PushRotate ( real x, real y, real r ) {
 
 	ZLAffine2D transform;
 
@@ -768,7 +770,7 @@ void MOAIVectorTesselator::PushRotate ( float x, float y, float r ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushScale ( float x, float y ) {
+void MOAIVectorTesselator::PushScale ( real x, real y ) {
 	
 	ZLAffine2D transform;
 	transform.Scale ( x, y );
@@ -789,7 +791,7 @@ u32 MOAIVectorTesselator::PushShape ( MOAIVectorShape* shape ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushSkew ( float yx, float xy ) {
+void MOAIVectorTesselator::PushSkew ( real yx, real xy ) {
 
 	ZLAffine2D transform;
 	transform.Shear ( Tan ( yx ), Tan ( xy ));
@@ -805,7 +807,7 @@ void MOAIVectorTesselator::PushTransform ( const ZLAffine2D& transform ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushTransform ( float a, float b, float c, float d, float tx, float ty ) {
+void MOAIVectorTesselator::PushTransform ( real a, real b, real c, real d, real tx, real ty ) {
 
 	ZLAffine2D transform;
 	
@@ -822,7 +824,7 @@ void MOAIVectorTesselator::PushTransform ( float a, float b, float c, float d, f
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushTranslate ( float x, float y ) {
+void MOAIVectorTesselator::PushTranslate ( real x, real y ) {
 
 	ZLAffine2D transform;
 	transform.Translate ( x, y );
@@ -830,7 +832,7 @@ void MOAIVectorTesselator::PushTranslate ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushVertex ( float x, float y ) {
+void MOAIVectorTesselator::PushVertex ( real x, real y ) {
 
 	ZLVec2D vertex ( x, y );
 	this->mVertexStack.Push ( vertex );
@@ -968,7 +970,7 @@ int MOAIVectorTesselator::Tesselate () {
 			
 			const int* elems = tessGetElements ( maskTesselator->mTess );
 			int nelems = tessGetElementCount ( maskTesselator->mTess );
-			const float* verts = tessGetVertices ( maskTesselator->mTess );
+			const TESSreal* verts = tessGetVertices ( maskTesselator->mTess );
 
 			// each elem is an edge loop
 			region->Init ( nelems );
@@ -982,7 +984,7 @@ int MOAIVectorTesselator::Tesselate () {
 				
 				poly.Init ( n );
 				
-				memcpy ( poly.Data (), &verts [ b * 2 ], sizeof ( ZLVec2D ) * n );
+				memcpy ( poly.Data (), &verts [ b * 2 ], n * sizeof ( ZLVec2D ));
 				poly.Bless ();
 			}
 		}
@@ -1012,27 +1014,27 @@ void MOAIVectorTesselator::WriteContourIndices ( SafeTesselator* tess, u32 base 
 void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
 
 	u32 base = this->CountVertices ();
-	float z = style.GetExtrude ();
+	real z = style.GetExtrude ();
 
 	ZLVec3D lightVec = style.GetLightVec ();
-	float lightLen = lightVec.Norm ();
+	real lightLen = lightVec.Norm ();
 	bool doLighting = lightLen != 0.0f ? true : false;
 	
 	ZLColorVec lightColor = style.mLightColor;
 	u32 lightCurve = style.mLightCurve;
-	float lightAlpha = lightColor.mA;
+	real lightAlpha = lightColor.mA;
 	lightColor.mA = 1.0f;
 
 	ZLColorVec shadowColor = style.mShadowColor;
 	u32 shadowCurve = style.mShadowCurve;
-	float shadowAlpha = shadowColor.mA;
+	real shadowAlpha = shadowColor.mA;
 	shadowColor.mA = 1.0f;
 
 	u32 color32 = fillColor.PackRGBA ();
 
 	const int* elems = tessGetElements ( tess->mTess );
 	const int nelems = tessGetElementCount ( tess->mTess );
-	const float* verts = tessGetVertices ( tess->mTess );
+	const TESSreal* verts = tessGetVertices ( tess->mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
@@ -1136,7 +1138,7 @@ void MOAIVectorTesselator::WriteVertices ( SafeTesselator* tess, float z, u32 co
 		log.write ( "WRITING VERTICES:\n" );
 	}
 
-	const float* verts = tessGetVertices ( tess->mTess );
+	const TESSreal* verts = tessGetVertices ( tess->mTess );
 	const int nverts = tessGetVertexCount ( tess->mTess );
 	
 	for ( int i = 0; i < nverts; ++i ) {

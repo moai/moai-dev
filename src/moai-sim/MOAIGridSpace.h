@@ -70,14 +70,14 @@ class MOAIGridSpace :
 	public virtual MOAILuaObject {
 protected:
 
-	float		mXOff;
-	float		mYOff;
+	real		mXOff;
+	real		mYOff;
 
-	float		mCellWidth;
-	float		mCellHeight;
+	real		mCellWidth;
+	real		mCellHeight;
 	
-	float		mTileWidth;
-	float		mTileHeight;
+	real		mTileWidth;
+	real		mTileHeight;
 
 	int			mWidth;
 	int			mHeight;
@@ -106,10 +106,10 @@ protected:
 	static int		_wrapCoord			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAICellCoord	GetAxialHexCellCoord		( float x, float y ) const;
-	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
-	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
-	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
+	MOAICellCoord	GetAxialHexCellCoord		( real x, real y ) const;
+	MOAICellCoord	GetHexCellCoord			( real x, real y, real a, real b ) const;
+	MOAICellCoord	GetObliqueCellCoord		( real x, real y ) const;
+	ZLVec2D			GetRectPoint			( real x, real y, real width, real height, u32 position ) const;
 	virtual void	OnResize				();
 
 public:
@@ -143,14 +143,14 @@ public:
 	static const u32 HEX_SHAPE			= 0x00000003 | STAGGER_FLAG;
 	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
 	
-	GET_SET ( float, XOff, mXOff )
-	GET_SET ( float, YOff, mYOff )
+	GET_SET ( real, XOff, mXOff )
+	GET_SET ( real, YOff, mYOff )
 	
-	GET_SET ( float, CellWidth, mCellWidth )
-	GET_SET ( float, CellHeight, mCellHeight )
+	GET_SET ( real, CellWidth, mCellWidth )
+	GET_SET ( real, CellHeight, mCellHeight )
 	
-	GET_SET ( float, TileWidth, mTileWidth )
-	GET_SET ( float, TileHeight, mTileHeight )
+	GET_SET ( real, TileWidth, mTileWidth )
+	GET_SET ( real, TileHeight, mTileHeight )
 	
 	GET_SET ( int, Width, mWidth )
 	GET_SET ( int, Height, mHeight )
@@ -173,7 +173,7 @@ public:
 	int					GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
 	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
-	MOAICellCoord		GetCellCoord			( float x, float y ) const;
+	MOAICellCoord		GetCellCoord			( real x, real y ) const;
 	MOAICellCoord		GetCellCoord			( int xCell, int yCell ) const;
 	
 	ZLVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
@@ -185,7 +185,7 @@ public:
 	int					GetTotalCells			() const;
 	
 	ZLVec2D				GridToWorld				( ZLVec2D loc ) const;
-	void				Init					( int width, int height, float tileWidth, float tileHeight );
+	void				Init					( int width, int height, real tileWidth, real tileHeight );
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
 						MOAIGridSpace			();
 						~MOAIGridSpace			();

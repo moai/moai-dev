@@ -447,7 +447,7 @@ int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 int MOAITextLabel::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UNNNN" )
 
-	ZLRect rect = state.GetRect < float >( 2 );
+	ZLRect rect = state.GetRect < real >( 2 );
 	rect.Bless ();
 	self->mDesigner.SetFrame ( rect );
 

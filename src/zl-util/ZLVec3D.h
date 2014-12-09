@@ -205,8 +205,8 @@ public:
 
 	//----------------------------------------------------------------//
 	// |V|
-	float Length () {
-		return sqrtf (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
+	TYPE Length () {
+		return ( TYPE )sqrt (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
 	}
 
 	//----------------------------------------------------------------//
@@ -427,9 +427,10 @@ public:
 	}
 };
 
+typedef ZLMetaVec3D < real > ZLVec3D;
 typedef ZLMetaVec3D < int > ZLIntVec3D;
-typedef ZLMetaVec3D < float > ZLVec3D;
-typedef ZLMetaVec3D < double > ZLVec3D64;
+typedef ZLMetaVec3D < float > ZLFloatVec3D;
+typedef ZLMetaVec3D < double > ZLDoubleVec3D;
 
 
 #endif

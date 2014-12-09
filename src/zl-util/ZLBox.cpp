@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float ZLBox::Area () const {
+real ZLBox::Area () const {
 
 	return ( this->mMax.mX - this->mMin.mX ) * ( this->mMax.mY - this->mMin.mY ) * ( this->mMax.mZ - this->mMin.mZ );
 }
@@ -20,19 +20,19 @@ float ZLBox::Area () const {
 void ZLBox::Bless () {
 
 	if ( this->mMin.mX > this->mMax.mX ) {
-		float temp = this->mMin.mX;
+		real temp = this->mMin.mX;
 		this->mMin.mX = this->mMax.mX;
 		this->mMax.mX = temp;
 	}
 	
 	if ( this->mMin.mY > this->mMax.mY ) {
-		float temp = this->mMin.mY;
+		real temp = this->mMin.mY;
 		this->mMin.mY = this->mMax.mY;
 		this->mMax.mY = temp;
 	}
 	
 	if ( this->mMin.mZ > this->mMax.mZ ) {
-		float temp = this->mMin.mZ;
+		real temp = this->mMin.mZ;
 		this->mMin.mZ = this->mMax.mZ;
 		this->mMax.mZ = temp;
 	}
@@ -114,17 +114,17 @@ void ZLBox::GetCenter ( ZLVec3D& center ) const {
 //----------------------------------------------------------------//
 void ZLBox::GetFitting ( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) const {
 
-	float w = this->Width ();
-	float h = this->Height ();
-	float d = this->Depth ();
+	real w = this->Width ();
+	real h = this->Height ();
+	real d = this->Depth ();
 
-	float tw = target.Width ();
-	float th = target.Height ();
-	float td = target.Depth ();
+	real tw = target.Width ();
+	real th = target.Height ();
+	real td = target.Depth ();
 
-	scale.mX = ( w != 0.0f ) && ( tw != 0.0f ) ? tw / w : 1.0f;
-	scale.mY = ( h != 0.0f ) && ( th != 0.0f ) ? th / h : 1.0f;
-	scale.mZ = ( d != 0.0f ) && ( td != 0.0f ) ? td / d : 1.0f;
+	scale.mX = ( w != 0.0 ) && ( tw != 0.0 ) ? tw / w : 1.0;
+	scale.mY = ( h != 0.0 ) && ( th != 0.0 ) ? th / h : 1.0;
+	scale.mZ = ( d != 0.0 ) && ( td != 0.0 ) ? td / d : 1.0;
 	
 	offset.mX = target.mMin.mX - ( this->mMin.mX * scale.mX );
 	offset.mY = target.mMin.mY - ( this->mMin.mY * scale.mY );
@@ -132,10 +132,10 @@ void ZLBox::GetFitting ( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) 
 }
 
 //----------------------------------------------------------------//
-float ZLBox::GetMaxExtent () const {
+real ZLBox::GetMaxExtent () const {
 
-	float max = 0.0f;
-	float comp;
+	real max = 0.0;
+	real comp;
 	
 	comp = ABS ( this->mMin.mX );
 	if ( max < comp ) max = comp;
@@ -159,7 +159,7 @@ float ZLBox::GetMaxExtent () const {
 }
 
 //----------------------------------------------------------------//
-float ZLBox::GetRadius () const {
+real ZLBox::GetRadius () const {
 
 	ZLVec3D spans = mMax;
 	spans.Sub ( mMin );
@@ -227,7 +227,7 @@ void ZLBox::Grow ( const ZLVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Inflate ( float size ) {
+void ZLBox::Inflate ( real size ) {
 
 	this->mMin.mX -= size;
 	this->mMin.mY -= size;
@@ -251,33 +251,33 @@ void ZLBox::Init ( const ZLPrism& prism ) {
 	this->mMax = prism.mLoc;
 	
 	// X Axis
-	if ( prism.mXAxis.mX < 0.0f )	this->mMin.mX += prism.mXAxis.mX;
+	if ( prism.mXAxis.mX < 0.0 )	this->mMin.mX += prism.mXAxis.mX;
 	else							this->mMax.mX += prism.mXAxis.mX;
 	
-	if ( prism.mYAxis.mX < 0.0f )	this->mMin.mX += prism.mYAxis.mX;
+	if ( prism.mYAxis.mX < 0.0 )	this->mMin.mX += prism.mYAxis.mX;
 	else							this->mMax.mX += prism.mYAxis.mX;
 	
-	if ( prism.mZAxis.mX < 0.0f )	this->mMin.mX += prism.mZAxis.mX;
+	if ( prism.mZAxis.mX < 0.0 )	this->mMin.mX += prism.mZAxis.mX;
 	else							this->mMax.mX += prism.mZAxis.mX;
 	
 	// Y Axis
-	if ( prism.mXAxis.mY < 0.0f )	this->mMin.mY += prism.mXAxis.mY;
+	if ( prism.mXAxis.mY < 0.0 )	this->mMin.mY += prism.mXAxis.mY;
 	else							this->mMax.mY += prism.mXAxis.mY;
 	
-	if ( prism.mYAxis.mY < 0.0f )	this->mMin.mY += prism.mYAxis.mY;
+	if ( prism.mYAxis.mY < 0.0 )	this->mMin.mY += prism.mYAxis.mY;
 	else							this->mMax.mY += prism.mYAxis.mY;
 	
-	if ( prism.mZAxis.mY < 0.0f )	this->mMin.mY += prism.mZAxis.mY;
+	if ( prism.mZAxis.mY < 0.0 )	this->mMin.mY += prism.mZAxis.mY;
 	else							this->mMax.mY += prism.mZAxis.mY;
 	
 	// Z Axis
-	if ( prism.mXAxis.mZ < 0.0f )	this->mMin.mZ += prism.mXAxis.mZ;
+	if ( prism.mXAxis.mZ < 0.0 )	this->mMin.mZ += prism.mXAxis.mZ;
 	else							this->mMax.mZ += prism.mXAxis.mZ;
 	
-	if ( prism.mYAxis.mZ < 0.0f )	this->mMin.mZ += prism.mYAxis.mZ;
+	if ( prism.mYAxis.mZ < 0.0 )	this->mMin.mZ += prism.mYAxis.mZ;
 	else							this->mMax.mZ += prism.mYAxis.mZ;
 	
-	if ( prism.mZAxis.mZ < 0.0f )	this->mMin.mZ += prism.mZAxis.mZ;
+	if ( prism.mZAxis.mZ < 0.0 )	this->mMin.mZ += prism.mZAxis.mZ;
 	else							this->mMax.mZ += prism.mZAxis.mZ;
 }
 
@@ -290,7 +290,7 @@ void ZLBox::Init ( const ZLVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Init ( const ZLRect& rect, u32 plane, float back, float front ) {
+void ZLBox::Init ( const ZLRect& rect, u32 plane, real back, real front ) {
 
 	switch ( plane ) {
 		
@@ -325,7 +325,7 @@ void ZLBox::Init ( const ZLRect& rect, u32 plane, float back, float front ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Init ( float left, float top, float right, float bottom, float back, float front ) {
+void ZLBox::Init ( real left, real top, real right, real bottom, real back, real front ) {
 
 	this->mMin.mX = left;
 	this->mMax.mX = right;
@@ -402,13 +402,13 @@ bool ZLBox::Overlap ( const ZLBox& box, u32 plane ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Pad ( float pad ) {
+void ZLBox::Pad ( real pad ) {
 
 	this->Pad ( pad, pad, pad );
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Pad ( float xPad, float yPad, float zPad ) {
+void ZLBox::Pad ( real xPad, real yPad, real zPad ) {
 
 	this->mMin.mX -= xPad;
 	this->mMin.mY -= yPad;
@@ -420,7 +420,7 @@ void ZLBox::Pad ( float xPad, float yPad, float zPad ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Scale ( float scale ) {
+void ZLBox::Scale ( real scale ) {
 
 	mMin.mX *= scale;
 	mMax.mX *= scale;

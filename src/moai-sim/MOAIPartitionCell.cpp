@@ -50,7 +50,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		float t;
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
 			if ( !ZLSect::RayToBox( prop->mWorldBounds, point, orientation, t )) {
-				prop->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
+				prop->AddToSortBuffer ( results, ZLReal::FloatToIntKey ( t ));
 			}
 		}
 	}

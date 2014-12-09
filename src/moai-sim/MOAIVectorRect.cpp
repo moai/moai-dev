@@ -45,7 +45,7 @@ int MOAIVectorRect::AddStrokeContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
+void MOAIVectorRect::Init ( real xMin, real yMin, real xMax, real yMax ) {
 
 	this->mRect.Init ( xMin, yMin, xMax, yMax );
 }

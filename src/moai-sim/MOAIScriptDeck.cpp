@@ -47,7 +47,7 @@ int MOAIScriptDeck::_setDrawCallback ( lua_State* L ) {
 int MOAIScriptDeck::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UNNNN" )
 	
-	self->mRect = state.GetRect < float >( 2 );
+	self->mRect = state.GetRect < real >( 2 );
 
 	return 0;
 }

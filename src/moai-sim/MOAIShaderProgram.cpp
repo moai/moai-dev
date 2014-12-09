@@ -70,9 +70,9 @@ int MOAIShaderProgram::_declareUniformFloat ( lua_State* L ) {
 
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
-	float value			= state.GetValue < float >( 4, 0.0f );
+	real value			= state.GetValue < real >( 4, 0.0 );
 
-	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_FLOAT, value );
+	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_REAL, value );
 
 	return 0;
 }
@@ -278,7 +278,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, float value ) {
+void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, real value ) {
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
@@ -461,12 +461,12 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGfxResource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "UNIFORM_FLOAT",						( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
+	state.SetField ( -1, "UNIFORM_FLOAT",						( u32 )MOAIShaderUniform::UNIFORM_REAL );
 	state.SetField ( -1, "UNIFORM_INDEX",						( u32 )MOAIShaderUniform::UNIFORM_INDEX );
 	state.SetField ( -1, "UNIFORM_INT",							( u32 )MOAIShaderUniform::UNIFORM_INT );
-	state.SetField ( -1, "UNIFORM_MATRIX_F3",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F3 );
-	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+	state.SetField ( -1, "UNIFORM_MATRIX_F3",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_R3 );
+	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_R4 );
+	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_R4 );
 	
 	state.SetField ( -1, "GLOBAL_NONE",							( u32 )GLOBAL_NONE );
 	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )GLOBAL_PEN_COLOR );
@@ -573,25 +573,25 @@ void MOAIShaderProgram::UpdateGlobals () {
 				break;
 			}
 			case GLOBAL_VIEW_WIDTH: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Width ())) {
+				if ( uniform.SetValue (( real )gfxDevice.mViewRect.Width ())) {
 					uniform.Bind ();
 				}
 				break;
 			}
 			case GLOBAL_VIEW_HEIGHT: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Height ())) {
+				if ( uniform.SetValue (( real )gfxDevice.mViewRect.Height ())) {
 					uniform.Bind ();
 				}
 				break;
 			}
 			case GLOBAL_VIEW_HALF_WIDTH: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f )) {
+				if ( uniform.SetValue (( real )( gfxDevice.mViewRect.Width () * 0.5 ))) {
 					uniform.Bind ();
 				}
 				break;
 			}
 			case GLOBAL_VIEW_HALF_HEIGHT: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f )) {
+				if ( uniform.SetValue (( real )( gfxDevice.mViewRect.Height () * 0.5 ))) {
 					uniform.Bind ();
 				}
 				break;

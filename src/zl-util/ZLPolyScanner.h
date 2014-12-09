@@ -12,15 +12,15 @@
 class ZLRenderEdge {
 public:
 
-	float	mX0;
-	float	mY0;
-	float	mY1;
+	real	mX0;
+	real	mY0;
+	real	mY1;
 	
-	float	mInvSlope;
-	float	mXIntercept;
+	real	mInvSlope;
+	real	mXIntercept;
 	
 	//----------------------------------------------------------------//
-	inline float GetX ( float y ) {
+	inline real GetX ( real y ) {
 	
 		return ( mInvSlope * y ) + this->mXIntercept;
 	}
@@ -44,8 +44,8 @@ template < u32 TOTAL_EDGES >
 class ZLEdgeList {
 public:
 
-	float		mLeft;
-	float		mRight;
+	real		mLeft;
+	real		mRight;
 	
 	u32				mEdgeID;
 	u32				mTotalEdges;
@@ -54,7 +54,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void AddEdge ( ZLVec2D& p0, ZLVec2D& p1 ) {
 	
-		float diff = p1.mY - p0.mY;
+		real diff = p1.mY - p0.mY;
 		if ( diff < 0.0f ) diff = -diff;
 		if ( diff < 0.0001f ) return;
 	
@@ -70,7 +70,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void FindExtents ( float y0, float y1 ) {
+	inline void FindExtents ( real y0, real y1 ) {
 	
 		ZLRenderEdge* renderEdge = &this->mEdges [ this->mEdgeID ];
 		
@@ -83,14 +83,14 @@ public:
 			this->mEdgeID = i;
 			renderEdge = &this->mEdges [ i ];
 			
-			float comp = renderEdge->mX0;
+			real comp = renderEdge->mX0;
 			if ( comp < this->mLeft ) this->mLeft = comp;
 			if ( comp > this->mRight ) this->mRight = comp;
 			
 			i++;
 		}
 
-		float comp = renderEdge->GetX ( y1 );
+		real comp = renderEdge->GetX ( y1 );
 		if ( comp < this->mLeft ) this->mLeft = comp;
 		if ( comp > this->mRight ) this->mRight = comp;
 	}
@@ -131,16 +131,16 @@ public:
 		// Find the top (i.e. starting) vert
 		u32 top = 0;
 		
-		float yMin = poly [ 0 ].mY;
-		float yMax = poly [ 0 ].mY;
+		real yMin = poly [ 0 ].mY;
+		real yMax = poly [ 0 ].mY;
 		
-		float xMin = poly [ 0 ].mX;
-		float xMax = poly [ 0 ].mX;
+		real xMin = poly [ 0 ].mX;
+		real xMax = poly [ 0 ].mX;
 		
 		// get the extents
 		for ( u32 i = 1; i < TOTAL_SIDES; ++i ) {
 			
-			float y = poly [ i ].mY;
+			real y = poly [ i ].mY;
 			
 			if ( y < this->mYMin ) {
 				yMin = y;
@@ -151,7 +151,7 @@ public:
 				yMax = y;
 			}
 			
-			float x = poly [ i ].mX;
+			real x = poly [ i ].mX;
 			if ( x < xMin ) xMin = x;
 			if ( x > xMax ) xMax = x;
 		}
@@ -179,11 +179,11 @@ public:
 		assert ( this->mLeftEdges.mTotalEdges );
 		assert ( this->mRightEdges.mTotalEdges );
 		
-		this->mXMin = ( s32 )ZLFloat::ToInt ( xMin );
-		this->mXMax = ( s32 )ZLFloat::ToInt ( xMax );
+		this->mXMin = ( s32 )ZLReal::ToInt ( xMin );
+		this->mXMax = ( s32 )ZLReal::ToInt ( xMax );
 		
-		this->mYMin = ( s32 )ZLFloat::ToInt ( yMin );
-		this->mYMax = ( s32 )ZLFloat::ToInt ( yMax ) + 1;
+		this->mYMin = ( s32 )ZLReal::ToInt ( yMin );
+		this->mYMax = ( s32 )ZLReal::ToInt ( yMax ) + 1;
 	}
 	
 	//----------------------------------------------------------------//
@@ -204,10 +204,10 @@ public:
 	
 		scan.mRow = scan.mNextRow;
 	
-		float y0;
-		float y1;
+		real y0;
+		real y1;
 		
-		y0 = ( float )scan.mRow;
+		y0 = ( real )scan.mRow;
 		y1 = y0 + 1.0f;
 		
 		if ( y0 < this->mYMin ) y0 = this->mYMin;
@@ -217,17 +217,17 @@ public:
 		this->mRightEdges.FindExtents ( y0, y1 );
 		
 		if ( this->mLeftEdges.mLeft < this->mRightEdges.mLeft ) {
-			scan.mLeftCol = ( s32 )ZLFloat::ToInt ( this->mLeftEdges.mLeft );
+			scan.mLeftCol = ( s32 )ZLReal::ToInt ( this->mLeftEdges.mLeft );
 		}
 		else {
-			scan.mLeftCol = ( s32 )ZLFloat::ToInt ( this->mRightEdges.mLeft );
+			scan.mLeftCol = ( s32 )ZLReal::ToInt ( this->mRightEdges.mLeft );
 		}
 		
 		if ( this->mLeftEdges.mRight > this->mRightEdges.mRight ) {
-			scan.mRightCol = ( s32 )ZLFloat::ToInt ( this->mLeftEdges.mRight );
+			scan.mRightCol = ( s32 )ZLReal::ToInt ( this->mLeftEdges.mRight );
 		}
 		else {
-			scan.mRightCol = ( s32 )ZLFloat::ToInt ( this->mRightEdges.mRight );
+			scan.mRightCol = ( s32 )ZLReal::ToInt ( this->mRightEdges.mRight );
 		}
 		
 		if ( scan.mLeftCol < this->mXMin ) {

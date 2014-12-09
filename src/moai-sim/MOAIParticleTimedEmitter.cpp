@@ -35,7 +35,7 @@ int MOAIParticleTimedEmitter::_setFrequency ( lua_State* L ) {
 //----------------------------------------------------------------//
 float MOAIParticleTimedEmitter::GetRandomFrequency () {
 
-	return ZLFloat::Rand ( this->mMinFrequency, this->mMaxFrequency );
+	return ZLReal::Rand ( this->mMinFrequency, this->mMaxFrequency );
 }
 
 //----------------------------------------------------------------//

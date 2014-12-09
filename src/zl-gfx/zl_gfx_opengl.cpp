@@ -4,6 +4,7 @@
 #include <zl-vfs/assert.h>
 #include "pch.h"
 #include <zl-gfx/headers.h>
+#include <zl-util/headers.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 
@@ -586,19 +587,19 @@ void zglClear ( u32 mask ) {
 }
 
 //----------------------------------------------------------------//
-void zglClearColor ( float r, float g, float b, float a ) {
+void zglClearColor ( real r, real g, real b, real a ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glClearColor ( r, g, b, a );
+	glClearColor (( GLfloat )r, ( GLfloat )g, ( GLfloat )b, ( GLfloat )a );
 }
 
 //----------------------------------------------------------------//
-void zglColor ( float r, float g, float b, float a ) {
+void zglColor ( real r, real g, real b, real a ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
 	#if !MOAI_OS_NACL
-		glColor4f ( r, g, b, a );
+		glColor4f (( GLfloat )r, ( GLfloat )g, ( GLfloat )b, ( GLfloat )a );
 	#endif
 }
 
@@ -780,7 +781,7 @@ extern cc8* zglGetString ( u32 stringID ) {
 }
 
 //----------------------------------------------------------------//
-void zglLineWidth ( float width ) {
+void zglLineWidth ( real width ) {
 
 	ASSERT_OPERATION_DEPTH ();
 	glLineWidth (( GLfloat )width );
@@ -797,12 +798,18 @@ void zglLoadIdentity () {
 }
 
 //----------------------------------------------------------------//
-void zglLoadMatrix ( const float* matrix ) {
+void zglLoadMatrix ( const real* matrix ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
 	#if !MOAI_OS_NACL
-		glLoadMatrixf ( matrix );
+		#if ZL_SIZEOF_REAL == 8
+			float buffer [ 16 ];
+			ZLReal::CopyRealsToFloats ( buffer, matrix, 16 );
+			glLoadMatrixf (( GLfloat* )matrix );
+		#else
+			glLoadMatrixf (( GLfloat* )matrix );
+		#endif
 	#endif
 }
 
@@ -817,17 +824,23 @@ void zglMatrixMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void zglMultMatrix ( const float* matrix ) {
+void zglMultMatrix ( const real* matrix ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
 	#if !MOAI_OS_NACL
-		glMultMatrixf ( matrix );
+		#if ZL_SIZEOF_REAL == 8
+			float buffer [ 16 ];
+			ZLReal::CopyRealsToFloats ( buffer, matrix, 16 );
+			glMultMatrixf (( GLfloat* )matrix );
+		#else
+			glMultMatrixf (( GLfloat* )matrix );
+		#endif
 	#endif
 }
 
 //----------------------------------------------------------------//
-void zglPointSize ( float size ) {
+void zglPointSize ( real size ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
@@ -1049,7 +1062,7 @@ void zglValidateProgram ( u32 program ) {
 }
 
 //----------------------------------------------------------------//
-void zglUniform1f ( u32 location, float v0 ) {
+void zglUniform1f ( u32 location, real v0 ) {
 
 	ASSERT_OPERATION_DEPTH ();
 	glUniform1f (( GLint )location, ( GLfloat )v0 );
@@ -1063,24 +1076,45 @@ void zglUniform1i ( u32 location, s32 v0 ) {
 }
 
 //----------------------------------------------------------------//
-void zglUniform4fv ( u32 location, u32 count, const float* value ) {
+void zglUniform4fv ( u32 location, u32 count, const real* value ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )value );
+	
+	#if ZL_SIZEOF_REAL == 8
+		float* buffer = ( float* )alloca ( count * 4 * sizeof ( float ));
+		ZLReal::CopyRealsToFloats ( buffer, value, count * 4 );
+		glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )buffer );
+	#else
+		glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )value );
+	#endif
 }
 
 //----------------------------------------------------------------//
-void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const real* value ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
+	
+	#if ZL_SIZEOF_REAL == 8
+		float* buffer = ( float* )alloca ( count * 9 * sizeof ( float ));
+		ZLReal::CopyRealsToFloats ( buffer, value, count * 9 );
+		glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )buffer );
+	#else
+		glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
+	#endif
 }
 
 //----------------------------------------------------------------//
-void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* value ) {
+void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const real* value ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
+	
+	#if ZL_SIZEOF_REAL == 8
+		float* buffer = ( float* )alloca ( count * 16 * sizeof ( float ));
+		ZLReal::CopyRealsToFloats ( buffer, value, count * 16 );
+		glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )buffer );
+	#else
+		glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )value );
+	#endif
 }
 
 //----------------------------------------------------------------//

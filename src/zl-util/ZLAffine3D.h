@@ -885,7 +885,8 @@ public:
 	}
 };
 
-typedef ZLMetaAffine3D < float > ZLAffine3D;
-typedef ZLMetaAffine3D < double > ZLAffine3D64;
+typedef ZLMetaAffine3D < real > ZLAffine3D;
+typedef ZLMetaAffine3D < float > ZLFloatAffine3D;
+typedef ZLMetaAffine3D < double > ZLDoubleAffine3D;
 
 #endif

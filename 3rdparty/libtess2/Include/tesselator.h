@@ -63,7 +63,14 @@ enum TessElementType
 	TESS_BOUNDARY_CONTOURS,
 };
 
-typedef float TESSreal;
+#if ZL_SIZEOF_REAL == 4
+    typedef float TESSreal;
+#elif ZL_SIZEOF_REAL == 8
+    typedef double TESSreal;
+#else
+    #error "ZL_SIZEOF_REAL must be 4 or 8"
+#endif
+
 typedef int TESSindex;
 typedef struct TESStesselator TESStesselator;
 typedef struct TESSalloc TESSalloc;

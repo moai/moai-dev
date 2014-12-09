@@ -70,6 +70,8 @@ private:
 	bool			mBlendEnabled;
 
 	void*			mBuffer;
+	ZLByteStream	mBufferStream;
+	u32				mBufferSize;
 
 	bool			mCpuVertexTransform;
 	ZLMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
@@ -95,8 +97,8 @@ private:
 	ZLColorVec		mFinalColor;
 	u32				mFinalColor32;
 	
-	float			mPenWidth;
-	float			mPointSize;
+	real			mPenWidth;
+	real			mPointSize;
 	
 	u32				mPrimCount;
 	u32				mPrimSize;
@@ -106,13 +108,11 @@ private:
 	ZLRect					mScissorRect;
 	MOAIShaderProgram*		mShaderProgram;
 	bool					mShaderDirty;
-	u32						mSize;
 	
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
 	u32				mMaxTextureSize;
-	size_t			mTop;
 	
 	u32				mUVMtxInput;
 	u32				mUVMtxOutput;
@@ -195,7 +195,7 @@ public:
 	void					EndPrim					();
 	void					Flush					();
 	
-	float					GetDeviceScale			();
+	real					GetDeviceScale			();
 	u32						GetDrawCount			() const { return mDrawCount; }
 	
 	u32						GetHeight				() const;
@@ -237,13 +237,13 @@ public:
 	
 	void					SetAmbientColor			( u32 color );
 	void					SetAmbientColor			( const ZLColorVec& colorVec );
-	void					SetAmbientColor			( float r, float g, float b, float a );
+	void					SetAmbientColor			( real r, real g, real b, real a );
 	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
-	void					SetBufferScale			( float scale );
+	void					SetBufferScale			( real scale );
 	void					SetBufferSize			( u32 width, u32 height );
 	
 	void					SetCullFunc				();
@@ -256,9 +256,9 @@ public:
 	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const ZLColorVec& colorVec );
-	void					SetPenColor				( float r, float g, float b, float a );
-	void					SetPenWidth				( float penWidth );
-	void					SetPointSize			( float pointSize );
+	void					SetPenColor				( real r, real g, real b, real a );
+	void					SetPenWidth				( real penWidth );
+	void					SetPointSize			( real pointSize );
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
 	void					SetScissorRect			( ZLRect rect );
@@ -291,43 +291,24 @@ public:
 	void					UpdateViewVolume		();
 	
 	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv );
-	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
-	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
-	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	inline void Write ( const TYPE& type ) {
-		
-		size_t top = this->mTop + sizeof ( TYPE );
-		if ( top < this->mSize ) {
-			*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-			this->mTop = top;
-		}
-	}
-	
-	//----------------------------------------------------------------//
-	inline void WriteColor ( float r, float g, float b, float a ) {
-		UNUSED ( r );
-		UNUSED ( g );
-		UNUSED ( b );
-		UNUSED ( a );
-	}
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff, real xScale, real yScale );
+	void					WriteQuad				( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff, real xScale, real yScale, real uOff, real vOff, real uScale, real vScale );
 	
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4b () {
 		
-		this->Write < u32 >( this->mFinalColor32 );
+		this->mBufferStream.Write < u32 >( this->mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4f () {
 		
-		this->Write < ZLColorVec >( this->mFinalColor );
+		this->mBufferStream.WriteRealsAsFloats (( const real* )&this->mFinalColor, 4 );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteUV ( float u, float v ) {
+	inline void WriteUV ( real u, real v ) {
 	
 		ZLVec2D uv;
 		uv.mX = u;
@@ -336,7 +317,7 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->Write ( uv );
+		this->mBufferStream.WriteRealsAsFloats (( const real* )&uv, 2 );
 	}
 	
 	//----------------------------------------------------------------//
@@ -345,34 +326,34 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->Write ( uv );
+		this->mBufferStream.WriteRealsAsFloats (( const real* )&uv, 2 );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteVtx ( float x, float y ) {
+	inline void WriteVtx ( real x, real y ) {
 		
-		this->WriteVtx ( x, y, 0.0f );
+		this->WriteVtx ( x, y, 0.0 );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteVtx ( float x, float y, float z ) {
+	inline void WriteVtx ( real x, real y, real z ) {
 		
 		ZLVec4D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
 		vtx.mZ = z;
-		vtx.mW = 1.0f;
+		vtx.mW = 1.0;
 		
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );	
 		}
-		this->Write ( vtx );
+		this->mBufferStream.WriteRealsAsFloats (( const real* )&vtx, 4 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( ZLVec2D vtx ) {
 		
-		this->WriteVtx ( vtx.mX, vtx.mY, 0.0f );
+		this->WriteVtx ( vtx.mX, vtx.mY, 0.0 );
 	}
 	
 	//----------------------------------------------------------------//

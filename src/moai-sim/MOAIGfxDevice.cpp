@@ -123,10 +123,10 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	float r = state.GetValue < float >( 1, 1.0f );
-	float g = state.GetValue < float >( 2, 1.0f );
-	float b = state.GetValue < float >( 3, 1.0f );
-	float a = state.GetValue < float >( 4, 1.0f );
+	real r = state.GetValue < real >( 1, 1.0f );
+	real g = state.GetValue < real >( 2, 1.0f );
+	real b = state.GetValue < real >( 3, 1.0f );
+	real a = state.GetValue < real >( 4, 1.0f );
 
 	MOAIGfxDevice::Get ().SetPenColor ( r, g, b, a );
 	return 0;
@@ -142,7 +142,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	float width = state.GetValue < float >( 1, 1.0f );
+	real width = state.GetValue < real >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPenWidth ( width );
 	return 0;
 }
@@ -156,7 +156,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	float size = state.GetValue < float >( 1, 1.0f );
+	real size = state.GetValue < real >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
 	return 0;
 }
@@ -184,8 +184,8 @@ void MOAIGfxDevice::BeginPrim () {
 
 		u32 primBytes = this->mPrimSize * this->mVertexFormat->GetVertexSize ();
 
-		this->mMaxPrims = ( u32 )( this->mSize / primBytes );
-		this->mPrimTop = this->mTop + primBytes;
+		this->mMaxPrims = ( u32 )( this->mBufferSize / primBytes );
+		this->mPrimTop = this->mBufferStream.GetCursor () + primBytes;
 	}
 }
 
@@ -203,9 +203,9 @@ void MOAIGfxDevice::Clear () {
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
+		this->mBufferStream.Clear ();
+		this->mBufferSize = 0;
 		this->mBuffer = 0;
-		this->mSize = 0;
-		this->mTop = 0;
 	}
 }
 
@@ -299,7 +299,7 @@ void MOAIGfxDevice::DrawPrims () {
 		u32 vertexSize = this->mVertexFormat->GetVertexSize ();
 
 		if ( vertexSize ) {
-			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
+			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mBufferStream.GetCursor () / vertexSize );
 			if ( count > 0 ) {
 				this->UpdateShaderGlobals ();
 				zglDrawArrays ( this->mPrimType, 0, count );
@@ -336,7 +336,7 @@ void MOAIGfxDevice::DrawPrims () {
 void MOAIGfxDevice::EndPrim () {
 
 	if ( this->mPrimSize ) {
-		this->mTop = this->mPrimTop;
+		this->mBufferStream.Seek ( this->mPrimTop, SEEK_SET );
 	}
 	++this->mPrimCount;
 	
@@ -349,14 +349,15 @@ void MOAIGfxDevice::EndPrim () {
 void MOAIGfxDevice::Flush () {
 
 	this->DrawPrims ();
+	
+	this->mBufferStream.Seek ( 0, SEEK_SET );
 
-	this->mTop = 0;
 	this->mPrimTop = 0;
 	this->mPrimCount = 0;
 }
 
 //----------------------------------------------------------------//
-float MOAIGfxDevice::GetDeviceScale () {
+real MOAIGfxDevice::GetDeviceScale () {
 
 	return this->mFrameBuffer->mBufferScale;
 }
@@ -372,8 +373,8 @@ ZLMatrix4x4 MOAIGfxDevice::GetNormToWndMtx () const {
 
 	ZLRect rect = this->mViewRect;
 
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
+	real hWidth = rect.Width () * 0.5f;
+	real hHeight = rect.Height () * 0.5f;
 
 	// Wnd
 	ZLMatrix4x4 normToWnd;
@@ -463,8 +464,8 @@ ZLMatrix4x4 MOAIGfxDevice::GetWndToNormMtx () const {
 
 	ZLRect rect = this->mViewRect;
 
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
+	real hWidth = rect.Width () * 0.5f;
+	real hHeight = rect.Height () * 0.5f;
 
 	// Inv Wnd
 	ZLMatrix4x4 wndToNorm;
@@ -535,6 +536,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mBuffer ( 0 ),
+	mBufferSize ( 0 ),
 	mCpuVertexTransform ( false ),
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
@@ -557,11 +559,9 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimType ( 0xffffffff ),
 	mShaderProgram ( 0 ),
 	mShaderDirty ( false ),
-	mSize ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
 	mMaxTextureSize ( 0 ),
-	mTop ( 0 ),
 	mUVMtxInput ( UV_STAGE_MODEL ),
 	mUVMtxOutput ( UV_STAGE_MODEL ),
 	mVertexFormat ( 0 ),
@@ -639,7 +639,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage += size;
-	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	real mb = ( real )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
 	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "+", size, mb, name );
 }
 
@@ -647,16 +647,16 @@ void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
 void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage -= size;
-	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	real mb = ( real )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
 	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "-", size, mb, name );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::Reserve ( u32 size ) {
 
-	this->mSize = size;
-	this->mTop = 0;
+	this->mBufferSize = size;
 	this->mBuffer = malloc ( size );
+	this->mBufferStream.SetBuffer ( this->mBuffer, size, size );
 }
 
 //----------------------------------------------------------------//
@@ -676,7 +676,7 @@ void MOAIGfxDevice::ResetState () {
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
 
-	this->mTop = 0;
+	this->mBufferStream.Seek ( 0, SEEK_SET );
 	this->mPrimCount = 0;
 
 	// turn off texture
@@ -760,7 +760,7 @@ void MOAIGfxDevice::SetAmbientColor ( const ZLColorVec& colorVec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
+void MOAIGfxDevice::SetAmbientColor ( real r, real g, real b, real a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
@@ -803,7 +803,7 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBufferScale ( float scale ) {
+void MOAIGfxDevice::SetBufferScale ( real scale ) {
 
 	this->mDefaultBuffer->SetBufferScale ( scale );
 }
@@ -913,14 +913,14 @@ void MOAIGfxDevice::SetPenColor ( const ZLColorVec& colorVec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetPenColor ( float r, float g, float b, float a ) {
+void MOAIGfxDevice::SetPenColor ( real r, real g, real b, real a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
+void MOAIGfxDevice::SetPenWidth ( real penWidth ) {
 
 	if ( this->mPenWidth != penWidth ) {
 		this->Flush ();
@@ -930,7 +930,7 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetPointSize ( float pointSize ) {
+void MOAIGfxDevice::SetPointSize ( real pointSize ) {
 	UNUSED ( pointSize );
 
 	#if USE_OPENGLES1
@@ -1270,8 +1270,8 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetViewRect () {
 
-	float width = ( float )this->mFrameBuffer->mBufferWidth;
-	float height = ( float )this->mFrameBuffer->mBufferHeight;
+	real width = ( real )this->mFrameBuffer->mBufferWidth;
+	real height = ( real )this->mFrameBuffer->mBufferHeight;
 
 	MOAIViewport rect;
 	rect.Init ( 0.0f, 0.0f, width, height );
@@ -1312,18 +1312,18 @@ void MOAIGfxDevice::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 	this->BeginPrim ();
 	
 		// left top
-		this->Write ( vtx [ 0 ]);
-		this->Write ( uv [ 0 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 0 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 0 ], 2 );
 		this->WriteFinalColor4b ();
 		
 		// left bottom
-		this->Write ( vtx [ 3 ]);
-		this->Write ( uv [ 3 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 3 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 3 ], 2 );
 		this->WriteFinalColor4b ();	
 	
 		// right bottom
-		this->Write ( vtx[ 2 ]);
-		this->Write ( uv [ 2 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 2 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 2 ], 2 );
 		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
@@ -1331,18 +1331,18 @@ void MOAIGfxDevice::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 	this->BeginPrim ();
 	
 		// left top
-		this->Write ( vtx [ 0 ]);
-		this->Write ( uv [ 0 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 0 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 0 ], 2 );
 		this->WriteFinalColor4b ();	
 	
 		// right bottom
-		this->Write ( vtx [ 2 ]);
-		this->Write ( uv [ 2 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 2 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 2 ], 2 );
 		this->WriteFinalColor4b ();	
 	
 		// right top
-		this->Write ( vtx [ 1 ]);
-		this->Write ( uv [ 1 ]);
+		this->mBufferStream.WriteRealsAsFloats (( real* )&vtx [ 1 ], 4 );
+		this->mBufferStream.WriteRealsAsFloats (( real* )&uv [ 1 ], 2 );
 		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
@@ -1530,7 +1530,7 @@ void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -1561,7 +1561,7 @@ void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOf
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff, real xScale, real yScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -1592,7 +1592,7 @@ void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOf
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, real xOff, real yOff, real zOff, real xScale, real yScale, real uOff, real vOff, real uScale, real vScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	

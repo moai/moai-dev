@@ -38,6 +38,8 @@ public:
 	int					Seek					( long offset, int origin );
 	virtual int			SetCursor				( long offset );
 	virtual size_t		WriteBytes				( const void* buffer, size_t size );
+	size_t				WriteRealsAsDoubles		( const real* reals, size_t count );
+	size_t				WriteRealsAsFloats		( const real* reals, size_t count );
 	size_t				WriteStream				( ZLStream& source );
 	size_t				WriteStream				( ZLStream& source, size_t size );
 						ZLStream				();

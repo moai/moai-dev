@@ -266,6 +266,62 @@ size_t ZLStream::WriteBytes ( const void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+size_t ZLStream::WriteRealsAsDoubles ( const real* reals, size_t count ) {
+
+	#if ZL_SIZEOF_REAL == 4
+	
+		size_t total;
+		for ( size_t i = 0; i < count; ++i ) {
+			double value = ( double )reals [ i ];
+			size_t written = this->WriteBytes ( &value, 8 );
+			if ( written < 8 ) {
+				return total + written;
+			}
+			total += written;
+		}
+		return total;
+	
+	#elif ZL_SIZEOF_REAL == 8
+	
+		return this->WriteBytes ( reals, count * 8 );
+	
+	#else
+	
+		#error "ZL_SIZEOF_REAL must be 4 or 8"
+		return 0;
+	
+	#endif
+}
+
+//----------------------------------------------------------------//
+size_t ZLStream::WriteRealsAsFloats ( const real* reals, size_t count ) {
+
+	#if ZL_SIZEOF_REAL == 4
+		
+		return this->WriteBytes ( reals, count * 4 );
+	
+	#elif ZL_SIZEOF_REAL == 8
+	
+		size_t total;
+		for ( size_t i = 0; i < count; ++i ) {
+			float value = ( float )reals [ i ];
+			size_t written = this->WriteBytes ( &value, 4 );
+			if ( written < 8 ) {
+				return total + written;
+			}
+			total += written;
+		}
+		return total;
+	
+	#else
+	
+		#error "ZL_SIZEOF_REAL must be 4 or 8"
+		return 0;
+	
+	#endif
+}
+
+//----------------------------------------------------------------//
 size_t ZLStream::WriteStream ( ZLStream& source ) {
 
 	if ( !( source.GetCaps () & CAN_READ )) return 0;

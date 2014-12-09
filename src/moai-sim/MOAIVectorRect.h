@@ -20,7 +20,7 @@ public:
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator* tess );
 	int				AddStrokeContours		( SafeTesselator* tess );
-	void			Init					( float xMin, float yMin, float xMax, float yMax );
+	void			Init					( real xMin, real yMin, real xMax, real yMax );
 	bool			IsClosed				();
 					MOAIVectorRect			();
 					~MOAIVectorRect			();

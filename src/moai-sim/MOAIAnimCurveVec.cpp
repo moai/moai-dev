@@ -23,7 +23,7 @@
 int MOAIAnimCurveVec::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveVec, "UN" );
 
-	float time = state.GetValue < float >( 2, 0 );
+	real time = state.GetValue < real >( 2, 0 );
 	ZLVec3D value = self->GetValue ( time );
 	state.Push ( value.mX );
 	state.Push ( value.mY );
@@ -52,10 +52,10 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveVec, "UNNNN" );
 
 	u32 index		= state.GetValue < u32 >( 2, 1 ) - 1;
-	float time		= state.GetValue < float >( 3, 0.0f );
-	ZLVec3D value	= state.GetVec3D < float >( 4 );
+	real time		= state.GetValue < real >( 3, 0.0f );
+	ZLVec3D value	= state.GetVec3D < real >( 4 );
 	u32 mode		= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
-	float weight	= state.GetValue < float >( 8, 1.0f );
+	real weight	= state.GetValue < real >( 8, 1.0f );
 	
 	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 		
@@ -103,7 +103,7 @@ void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& spa
 }
 
 //----------------------------------------------------------------//
-ZLVec3D MOAIAnimCurveVec::GetValue ( float time ) const {
+ZLVec3D MOAIAnimCurveVec::GetValue ( real time ) const {
 
 	MOAIAnimKeySpan span = this->GetSpan ( time );
 	return this->GetValue ( span );

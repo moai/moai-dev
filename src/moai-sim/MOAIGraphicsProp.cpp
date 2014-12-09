@@ -378,10 +378,10 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
 				return true;
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT )));
+				this->SetVisible ( ZLReal::ToBoolean ( attrOp.ApplyNoAdd ( ZLReal::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL )));
 				return true;
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				attrOp.ApplyNoAdd ( ZLReal::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_REAL );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -716,7 +716,7 @@ void MOAIGraphicsProp::OnDepNodeUpdate () {
 	MOAIColor::OnDepNodeUpdate ();
 	MOAIProp::OnDepNodeUpdate ();
 	
-	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
+	bool visible = ZLReal::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
 }
 

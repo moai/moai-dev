@@ -24,23 +24,23 @@ public:
 	ZLVec2D mV [ 4 ];
 
 	//----------------------------------------------------------------//
-	bool			Contains			( float x, float y ) const;
+	bool			Contains			( real x, real y ) const;
 	ZLRect			GetBounds			() const;
 	ZLPlane2D		GetPlane			( u32 id );
 	ZLVec2D			GetVert				( u32 id );
 	void			Init				( const ZLRect& rect );
-	void			Init				( float x0, float y0, float x1, float y1 );
+	void			Init				( real x0, real y0, real x1, real y1 );
 	bool			Intersect			( const ZLQuad& quad, ZLRect& result ) const;
 	bool			Intersect			( const ZLRect& rect, ZLRect& result ) const;
 	bool			Overlap				( const ZLQuad& quad ) const;
 	bool			Overlap				( const ZLRect& rect ) const;
-	static bool		RemapCoord			( const ZLQuad& src, const ZLQuad& dest, u32 triangleID, float x, float y, ZLVec2D& result );
+	static bool		RemapCoord			( const ZLQuad& src, const ZLQuad& dest, u32 triangleID, real x, real y, ZLVec2D& result );
 	void			ReverseWinding		();
-	void			Scale				( float xScale, float yScale );
+	void			Scale				( real xScale, real yScale );
 	void			Transform			( const ZLAffine2D& transform );
 	void			Transform			( const ZLAffine3D& transform );
 	void			Transform			( const ZLMatrix3x3& transform );
-	void			Translate			( float xOff, float yOff );
+	void			Translate			( real xOff, real yOff );
 };
 
 #endif

@@ -181,7 +181,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_REAL );
 			return true;
 		}
 	}
@@ -579,35 +579,35 @@ void MOAITimer::SetSpan ( float startTime, float endTime ) {
 //----------------------------------------------------------------//
 void MOAITimer::SetTime ( float time ) {
 
-	float length = ZLFloat::Abs ( this->mEndTime - this->mStartTime );
+	float length = ZLReal::Abs ( this->mEndTime - this->mStartTime );
 
 	float transformedTime = ( time - this->mStartTime ) / length;
 
 	switch ( this->mMode ) {
 		case NORMAL: 
 		case REVERSE: {
-			time = ZLFloat::Clamp ( time, this->mStartTime, this->mEndTime );
+			time = ZLReal::Clamp ( time, this->mStartTime, this->mEndTime );
 			this->mTime = time;
 			break;
 		}
 		case CONTINUE:
 		case CONTINUE_REVERSE: {
-			float wrappedT = transformedTime - ZLFloat::Floor ( transformedTime );
+			float wrappedT = transformedTime - ZLReal::Floor ( transformedTime );
 			this->mTime = wrappedT * length + this->mStartTime;
-			this->mCycle = ZLFloat::Floor ( transformedTime );
+			this->mCycle = ZLReal::Floor ( transformedTime );
 			break;
 		}
 		case LOOP:
 		case LOOP_REVERSE: {
-			float wrappedT = transformedTime - ZLFloat::Floor ( transformedTime );
+			float wrappedT = transformedTime - ZLReal::Floor ( transformedTime );
 			this->mTime = wrappedT * length + this->mStartTime;
 			this->mCycle = 0.0f;
 			break;
 		}
 		case PING_PONG: {
-			float wrappedT = transformedTime - ZLFloat::Floor ( transformedTime );
+			float wrappedT = transformedTime - ZLReal::Floor ( transformedTime );
 			this->mTime = wrappedT * length + this->mStartTime;
-			if ( ( u32 ) ZLFloat::Floor ( transformedTime ) % 2 ) { //switch direction if odd
+			if ( ( u32 ) ZLReal::Floor ( transformedTime ) % 2 ) { //switch direction if odd
 				this->mDirection = -1.0f;
 			}
 			else {

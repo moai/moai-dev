@@ -25,4 +25,14 @@ typedef signed short			s16;
 typedef signed int				s32;
 typedef signed long long		s64;
 
+#if ZL_SIZEOF_REAL == 4
+	typedef float				real;
+	typedef double				real_alt;
+#elif ZL_SIZEOF_REAL == 8
+	typedef double				real;
+	typedef float				real_alt;
+#else
+	#error "ZL_SIZEOF_REAL must be 4 or 8"
+#endif
+
 #endif

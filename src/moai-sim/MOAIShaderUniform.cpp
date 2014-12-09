@@ -14,12 +14,12 @@ void MOAIShaderUniformBuffer::AddValue ( const MOAIAttrOp& attrOp ) {
 
 	switch ( attrOp.GetTypeHint ()) {
 
-		case MOAIAttrOp::ATTR_TYPE_FLOAT: {
+		case MOAIAttrOp::ATTR_TYPE_REAL: {
 
-			float value = attrOp.GetValue ( 0.0f );
+			real value = ( real )attrOp.GetValue ( 0.0 );
 
-			if ( value != 0.0f ) {
-				this->mFloat += value;
+			if ( value != 0.0 ) {
+				this->mReal += value;
 			}
 			break;
 		}
@@ -47,7 +47,7 @@ void MOAIShaderUniformBuffer::GetFlags ( MOAIAttrOp& attrOp ) {
     
 	switch ( this->mType ) {
 			
-		case UNIFORM_FLOAT:
+		case UNIFORM_REAL:
 		case UNIFORM_INT:
 			
 			attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
@@ -67,9 +67,9 @@ void MOAIShaderUniformBuffer::GetValue ( MOAIAttrOp& attrOp ) {
 
 	switch ( this->mType ) {
 			
-		case UNIFORM_FLOAT: {
+		case UNIFORM_REAL: {
 			
-			attrOp.Apply ( this->mFloat, MOAIAttrOp::GET, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+			attrOp.Apply ( this->mReal, MOAIAttrOp::GET, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL );
 			break;
 		}
 		case UNIFORM_INDEX:
@@ -78,11 +78,11 @@ void MOAIShaderUniformBuffer::GetValue ( MOAIAttrOp& attrOp ) {
 			attrOp.Apply ( this->mInt, MOAIAttrOp::GET, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_INT );
 			break;
 		}
-		case UNIFORM_MATRIX_F3:
-		case UNIFORM_MATRIX_F4: {
+		case UNIFORM_MATRIX_R3:
+		case UNIFORM_MATRIX_R4: {
 			// TODO:
 		}
-		case UNIFORM_VECTOR_F4: {
+		case UNIFORM_VECTOR_R4: {
 			// TODO:
 		}
 	}
@@ -109,31 +109,31 @@ void MOAIShaderUniformBuffer::SetType ( u32 type ) {
 
 	switch ( type ) {
 		
-		case UNIFORM_MATRIX_F3: {
+		case UNIFORM_MATRIX_R3: {
 		
-			this->mBuffer.Resize ( 12 * sizeof ( float ), 0 );
+			this->mBuffer.Resize ( 12 * sizeof ( real ), 0 );
 			break;
 		}
 		
-		case UNIFORM_MATRIX_F4: {
+		case UNIFORM_MATRIX_R4: {
 		
-			this->mBuffer.Resize ( 16 * sizeof ( float ), 0 );
+			this->mBuffer.Resize ( 16 * sizeof ( real ), 0 );
 			break;
 		}
 		
-		case UNIFORM_VECTOR_F4: {
+		case UNIFORM_VECTOR_R4: {
 		
-			this->mBuffer.Resize ( 4 * sizeof ( float ), 0 );
+			this->mBuffer.Resize ( 4 * sizeof ( real ), 0 );
 			break;
 		}
 	};
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( float value ) {
+bool MOAIShaderUniformBuffer::SetValue ( real value ) {
 
-	bool check = this->mFloat != value;
-	this->mFloat = value;
+	bool check = this->mReal != value;
+	this->mReal = value;
 	return check;
 }
 
@@ -157,8 +157,8 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) 
 			}
 			break;
 		}
-		case MOAIAttrOp::ATTR_TYPE_FLOAT: {
-			return this->SetValue (( float )attrOp.GetValue ( 0.0f ));
+		case MOAIAttrOp::ATTR_TYPE_REAL: {
+			return this->SetValue (( real )attrOp.GetValue ( 0.0 ));
 			break;
 		}
 		case MOAIAttrOp::ATTR_TYPE_INT: {
@@ -182,7 +182,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) 
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value, bool check ) {
 
-	float m [ 4 ];
+	real m [ 4 ];
 
 	m [ 0 ]		= value.mR;
 	m [ 1 ]		= value.mG;
@@ -195,7 +195,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value, bool check ) {
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 
-	float m [ 16 ];
+	real m [ 16 ];
 	
 	m [ 0 ]		= value.m [ AffineElem3D::C0_R0 ];
 	m [ 1 ]		= value.m [ AffineElem3D::C1_R0 ];
@@ -223,27 +223,27 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) {
 
-	float m [ 16 ];
+	real m [ 16 ];
 
-	m [ 0 ]		= value.m [ ZLMatrix4x4::C0_R0 ];
-	m [ 1 ]		= value.m [ ZLMatrix4x4::C1_R0 ];
-	m [ 2 ]		= value.m [ ZLMatrix4x4::C2_R0 ];
-	m [ 3 ]		= value.m [ ZLMatrix4x4::C3_R0 ];
+	m [ 0 ]		= ( real )value.m [ ZLMatrix4x4::C0_R0 ];
+	m [ 1 ]		= ( real )value.m [ ZLMatrix4x4::C1_R0 ];
+	m [ 2 ]		= ( real )value.m [ ZLMatrix4x4::C2_R0 ];
+	m [ 3 ]		= ( real )value.m [ ZLMatrix4x4::C3_R0 ];
 
-	m [ 4 ]		= value.m [ ZLMatrix4x4::C0_R1 ];
-	m [ 5 ]		= value.m [ ZLMatrix4x4::C1_R1 ];
-	m [ 6 ]		= value.m [ ZLMatrix4x4::C2_R1 ];
-	m [ 7 ]		= value.m [ ZLMatrix4x4::C3_R1 ];
+	m [ 4 ]		= ( real )value.m [ ZLMatrix4x4::C0_R1 ];
+	m [ 5 ]		= ( real )value.m [ ZLMatrix4x4::C1_R1 ];
+	m [ 6 ]		= ( real )value.m [ ZLMatrix4x4::C2_R1 ];
+	m [ 7 ]		= ( real )value.m [ ZLMatrix4x4::C3_R1 ];
 
-	m [ 8 ]		= value.m [ ZLMatrix4x4::C0_R2 ];
-	m [ 9 ]		= value.m [ ZLMatrix4x4::C1_R2 ];
-	m [ 10 ]	= value.m [ ZLMatrix4x4::C2_R2 ];
-	m [ 11 ]	= value.m [ ZLMatrix4x4::C3_R2 ];
+	m [ 8 ]		= ( real )value.m [ ZLMatrix4x4::C0_R2 ];
+	m [ 9 ]		= ( real )value.m [ ZLMatrix4x4::C1_R2 ];
+	m [ 10 ]	= ( real )value.m [ ZLMatrix4x4::C2_R2 ];
+	m [ 11 ]	= ( real )value.m [ ZLMatrix4x4::C3_R2 ];
 
-	m [ 12 ]	= value.m [ ZLMatrix4x4::C0_R3 ];
-	m [ 13 ]	= value.m [ ZLMatrix4x4::C1_R3 ];
-	m [ 14 ]	= value.m [ ZLMatrix4x4::C2_R3 ];
-	m [ 15 ]	= value.m [ ZLMatrix4x4::C3_R3 ];
+	m [ 12 ]	= ( real )value.m [ ZLMatrix4x4::C0_R3 ];
+	m [ 13 ]	= ( real )value.m [ ZLMatrix4x4::C1_R3 ];
+	m [ 14 ]	= ( real )value.m [ ZLMatrix4x4::C2_R3 ];
+	m [ 15 ]	= ( real )value.m [ ZLMatrix4x4::C3_R3 ];
 
 	return this->SetBuffer ( m, sizeof ( m ), check );
 }
@@ -251,19 +251,19 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) 
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) {
 
-	float m [ 9 ];
+	real m [ 9 ];
 
-	m [ 0 ]    = value.m [ ZLMatrix3x3::C0_R0 ];
-	m [ 1 ]    = value.m [ ZLMatrix3x3::C1_R0 ];
-	m [ 2 ]    = value.m [ ZLMatrix3x3::C2_R0 ];
+	m [ 0 ]    = ( real )value.m [ ZLMatrix3x3::C0_R0 ];
+	m [ 1 ]    = ( real )value.m [ ZLMatrix3x3::C1_R0 ];
+	m [ 2 ]    = ( real )value.m [ ZLMatrix3x3::C2_R0 ];
 
-	m [ 3 ]    = value.m [ ZLMatrix3x3::C0_R1 ];
-	m [ 4 ]    = value.m [ ZLMatrix3x3::C1_R1 ];
-	m [ 5 ]    = value.m [ ZLMatrix3x3::C2_R1 ];
+	m [ 3 ]    = ( real )value.m [ ZLMatrix3x3::C0_R1 ];
+	m [ 4 ]    = ( real )value.m [ ZLMatrix3x3::C1_R1 ];
+	m [ 5 ]    = ( real )value.m [ ZLMatrix3x3::C2_R1 ];
 
-	m [ 6 ]    = value.m [ ZLMatrix3x3::C0_R2 ];
-	m [ 7 ]    = value.m [ ZLMatrix3x3::C1_R2 ];
-	m [ 8 ]    = value.m [ ZLMatrix3x3::C2_R2 ];
+	m [ 6 ]    = ( real )value.m [ ZLMatrix3x3::C0_R2 ];
+	m [ 7 ]    = ( real )value.m [ ZLMatrix3x3::C1_R2 ];
+	m [ 8 ]    = ( real )value.m [ ZLMatrix3x3::C2_R2 ];
 
 	return this->SetBuffer ( m, sizeof ( m ), check );
 }
@@ -271,7 +271,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) 
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const MOAIShaderUniformBuffer& uniformBuffer, bool check ) {
 
-	if ( this->mType == UNIFORM_FLOAT ) return this->SetValue ( uniformBuffer.mFloat );
+	if ( this->mType == UNIFORM_REAL ) return this->SetValue ( uniformBuffer.mReal );
 	if (( this->mType == UNIFORM_INDEX ) || ( this->mType == UNIFORM_INT )) return this->SetValue ( uniformBuffer.mInt );
 	return this->SetBuffer ( uniformBuffer.mBuffer, this->mBuffer.Size (), check );
 }
@@ -285,8 +285,8 @@ void MOAIShaderUniform::Bind () {
 
 	switch ( this->mType ) {
 
-		case UNIFORM_FLOAT:
-			zglUniform1f ( this->mAddr, this->mFloat );
+		case UNIFORM_REAL:
+			zglUniform1f ( this->mAddr, this->mReal );
 			break;
 
 		case UNIFORM_INDEX:
@@ -297,16 +297,16 @@ void MOAIShaderUniform::Bind () {
 			zglUniform1i ( this->mAddr, this->mInt );
 			break;
 
-		case UNIFORM_MATRIX_F3:
-    		zglUniformMatrix3fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+		case UNIFORM_MATRIX_R3:
+    		zglUniformMatrix3fv ( this->mAddr, 1, false, ( real* )this->mBuffer.Data ());
     		break;
 
-		case UNIFORM_MATRIX_F4:
-			zglUniformMatrix4fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+		case UNIFORM_MATRIX_R4:
+			zglUniformMatrix4fv ( this->mAddr, 1, false, ( real* )this->mBuffer.Data ());
 			break;
 
-		case UNIFORM_VECTOR_F4:
-			zglUniform4fv ( this->mAddr, 1, ( float* )this->mBuffer.Data ());
+		case UNIFORM_VECTOR_R4:
+			zglUniform4fv ( this->mAddr, 1, ( real* )this->mBuffer.Data ());
 			break;
 	}
 }

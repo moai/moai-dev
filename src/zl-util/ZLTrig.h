@@ -5,22 +5,22 @@
 #define	ZLTRIG_H
 
 //----------------------------------------------------------------//
-float	ACos	( float t );
-float	ASin	( float t );
-float	ATan	( float t );
-float	ATan2	( float x, float y );
-float	Cos		( float radians );
-float	Cot		( float radians );
-float	Log		( float x );
-float	Log2	( float x );
-float	Log10	( float x );
-float	Sin		( float radians );
-float	Tan		( float radians );
+real	ACos	( real t );
+real	ASin	( real t );
+real	ATan	( real t );
+real	ATan2	( real x, real y );
+real	Cos		( real radians );
+real	Cot		( real radians );
+real	Log		( real x );
+real	Log2	( real x );
+real	Log10	( real x );
+real	Sin		( real radians );
+real	Tan		( real radians );
 
 //----------------------------------------------------------------//
-float	Rand	();
+real	Rand	();
 int		Rand	( int lower, int upper );
-float	Sqrt	( float n );
+real	Sqrt	( real n );
 
 //----------------------------------------------------------------//
 template < typename TYPE >

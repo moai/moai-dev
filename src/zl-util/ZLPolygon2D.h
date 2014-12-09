@@ -121,7 +121,8 @@ public:
 	}
 };
 
-typedef ZLMetaPolygon2D < float > ZLPolygon2D;
-typedef ZLMetaPolygon2D < double > ZLPolygon2D64;
+typedef ZLMetaPolygon2D < real > ZLPolygon2D;
+typedef ZLMetaPolygon2D < float > ZLFloatPolygon2D;
+typedef ZLMetaPolygon2D < double > ZLDoublePolygon2D;
 
 #endif

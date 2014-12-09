@@ -18,8 +18,8 @@ int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * steps );
 
-	float step = ( float )TWOPI / ( float )steps;
-	float angle = ( float )PI;
+	real step = ( real )TWOPI / ( real )steps;
+	real angle = ( real )PI;
 	
 	for ( u32 i = 0; i < steps; ++i, angle += step ) {
 		verts [ i ].mX = this->mLoc.mX + ( Cos ( angle ) * this->mXRad );
@@ -38,7 +38,7 @@ int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorEllipse::Init ( float x, float y, float xRad, float yRad ) {
+void MOAIVectorEllipse::Init ( real x, real y, real xRad, real yRad ) {
 
 	this->mLoc.Init ( x, y );
 	this->mXRad = xRad;

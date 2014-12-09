@@ -21,17 +21,17 @@ bool _intersect ( ZLVec2D& p0, ZLVec2D& p1, ZLVec2D& q0, ZLVec2D& q1, ZLVec2D& r
 	w.mX = p0.mX - q0.mX;
 	w.mY = p0.mY - q0.mY;
 	
-	float sN = ( v.mY * w.mX ) - ( v.mX * w.mY );
-	float sD = ( v.mX * u.mY ) - ( v.mY * u.mX );
+	real sN = ( v.mY * w.mX ) - ( v.mX * w.mY );
+	real sD = ( v.mX * u.mY ) - ( v.mY * u.mX );
 	
 	if ( sD == 0.0f ) return false;
 	
-	float s = sN / sD;
+	real s = sN / sD;
 	
 	if (( s < 0.0f ) || ( s > 1.0f )) return false;
 	
-	float tN = ( u.mX * w.mY ) - ( u.mY * w.mX );
-	float t = tN / -sD;
+	real tN = ( u.mX * w.mY ) - ( u.mY * w.mX );
+	real t = tN / -sD;
 	
 	if (( t < 0.0f ) || ( t > 1.0f )) return false;
 	
@@ -52,10 +52,10 @@ bool ZLQuad::IsSeparatingAxis ( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVe
 	axis.mX = e1.mY - e0.mY;
 	axis.mY = -( e1.mX - e0.mX );
 	
-	float min = 0.0f;
-	float max = ( axis.mY * axis.mX ) + ( axis.mY * axis.mY );
+	real min = 0.0f;
+	real max = ( axis.mY * axis.mX ) + ( axis.mY * axis.mY );
 	
-	float dot;
+	real dot;
 	
 	dot = ( axis.mX * ( e2.mX - e0.mX )) + ( axis.mY * ( e2.mY - e0.mY ));
 	if ( dot < min ) min = dot;
@@ -81,9 +81,9 @@ bool ZLQuad::IsSeparatingAxis ( const ZLVec2D& e0, const ZLVec2D& e1, const ZLVe
 }
 
 //----------------------------------------------------------------//
-bool ZLQuad::Contains ( float x, float y ) const {
+bool ZLQuad::Contains ( real x, real y ) const {
 	
-	ZLMetaVec2D < float > vec;
+	ZLMetaVec2D < real > vec;
 	vec.Init ( x, y );
 	
 	ZLVec2D v0 = this->mV [ 0 ];
@@ -147,7 +147,7 @@ void ZLQuad::Init ( const ZLRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuad::Init ( float x0, float y0, float x1, float y1 ) {
+void ZLQuad::Init ( real x0, real y0, real x1, real y1 ) {
 
 	// left top
 	this->mV [ 0 ].mX = x0;
@@ -261,7 +261,7 @@ bool ZLQuad::Overlap ( const ZLRect& rect ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuad::Scale ( float xScale, float yScale ) {
+void ZLQuad::Scale ( real xScale, real yScale ) {
 
 	this->mV [ 0 ].Scale ( xScale, yScale );
 	this->mV [ 1 ].Scale ( xScale, yScale );
@@ -270,7 +270,7 @@ void ZLQuad::Scale ( float xScale, float yScale ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLQuad::RemapCoord ( const ZLQuad& src, const ZLQuad& dest, u32 triangleID, float x, float y, ZLVec2D& result ) {
+bool ZLQuad::RemapCoord ( const ZLQuad& src, const ZLQuad& dest, u32 triangleID, real x, real y, ZLVec2D& result ) {
 
 	ZLVec3D bary;
 	ZLVec2D cart ( x, y );
@@ -306,10 +306,10 @@ void ZLQuad::ReverseWinding () {
 //----------------------------------------------------------------//
 void ZLQuad::Transform ( const ZLAffine2D& transform ) {
 	
-	float x;
-	float y;
+	real x;
+	real y;
 	
-	const float* m = transform.m;
+	const real* m = transform.m;
 	
 	x =	( m[ ZLAffine2D::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ ZLAffine2D::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ ZLAffine2D::C2_R0 ]);
 	y =	( m[ ZLAffine2D::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ ZLAffine2D::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ ZLAffine2D::C2_R1 ]);
@@ -339,10 +339,10 @@ void ZLQuad::Transform ( const ZLAffine2D& transform ) {
 //----------------------------------------------------------------//
 void ZLQuad::Transform ( const ZLAffine3D& transform ) {
 	
-	float x;
-	float y;
+	real x;
+	real y;
 	
-	const float* m = transform.m;
+	const real* m = transform.m;
 	
 	x =	( m[ ZLAffine3D::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ ZLAffine3D::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ ZLAffine3D::C3_R0 ]);
 	y =	( m[ ZLAffine3D::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ ZLAffine3D::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ ZLAffine3D::C3_R1 ]);
@@ -372,10 +372,10 @@ void ZLQuad::Transform ( const ZLAffine3D& transform ) {
 //----------------------------------------------------------------//
 void ZLQuad::Transform ( const ZLMatrix3x3& transform ) {
 	
-	float x;
-	float y;
+	real x;
+	real y;
 	
-	const float* m = transform.m;
+	const real* m = transform.m;
 	
 	x =	( m[ ZLMatrix3x3::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ ZLMatrix3x3::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ ZLMatrix3x3::C2_R0 ]);
 	y =	( m[ ZLMatrix3x3::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ ZLMatrix3x3::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ ZLMatrix3x3::C2_R1 ]);
@@ -403,7 +403,7 @@ void ZLQuad::Transform ( const ZLMatrix3x3& transform ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuad::Translate ( float xOff, float yOff ) {
+void ZLQuad::Translate ( real xOff, real yOff ) {
 
 	ZLVec2D offset ( xOff, yOff );
 

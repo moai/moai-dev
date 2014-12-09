@@ -451,8 +451,8 @@
 		89BE69BE173974FD00DFE837 /* ZLFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */; };
 		89BE69BF173974FD00DFE837 /* ZLFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C6173974FC00DFE837 /* ZLFileSys.h */; };
 		89BE69C0173974FD00DFE837 /* ZLFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C6173974FC00DFE837 /* ZLFileSys.h */; };
-		89BE69C1173974FD00DFE837 /* ZLFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C7173974FC00DFE837 /* ZLFloat.h */; };
-		89BE69C2173974FD00DFE837 /* ZLFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C7173974FC00DFE837 /* ZLFloat.h */; };
+		89BE69C1173974FD00DFE837 /* ZLReal.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C7173974FC00DFE837 /* ZLReal.h */; };
+		89BE69C2173974FD00DFE837 /* ZLReal.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C7173974FC00DFE837 /* ZLReal.h */; };
 		89BE69C3173974FD00DFE837 /* ZLFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */; };
 		89BE69C4173974FD00DFE837 /* ZLFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */; };
 		89BE69C5173974FD00DFE837 /* ZLFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE68C9173974FC00DFE837 /* ZLFrustum.h */; };
@@ -2552,6 +2552,43 @@
 		CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
 		CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
+		CD678D3F1A36DC2400521910 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
+		CD678D401A36DC2400521910 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C9217FA573B00EBA2DB /* host.mm */; };
+		CD678D411A36DC2400521910 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9317FA573B00EBA2DB /* host.h */; };
+		CD678D421A36DC2400521910 /* MOAIAppIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */; };
+		CD678D431A36DC2400521910 /* MOAIAppIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */; };
+		CD678D441A36DC2400521910 /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */; };
+		CD678D451A36DC2400521910 /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */; };
+		CD678D461A36DC2400521910 /* MOAIDialogIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */; };
+		CD678D471A36DC2400521910 /* MOAIDialogIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */; };
+		CD678D481A36DC2400521910 /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */; };
+		CD678D491A36DC2400521910 /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */; };
+		CD678D4A1A36DC2400521910 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */; };
+		CD678D4B1A36DC2400521910 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */; };
+		CD678D4C1A36DC2400521910 /* MOAIReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5C17FA56A100EBA2DB /* MOAIReachability.h */; };
+		CD678D4D1A36DC2400521910 /* MOAIReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */; };
+		CD678D4E1A36DC2400521910 /* MOAIReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */; };
+		CD678D4F1A36DC2400521910 /* MOAIReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */; };
+		CD678D501A36DC2400521910 /* MOAIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */; };
+		CD678D511A36DC2400521910 /* MOAIWebViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */; };
+		CD678D521A36DC2400521910 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */; };
+		CD678D531A36DC2400521910 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */; };
+		CD678D541A36DC2400521910 /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4C17FA56A100EBA2DB /* NSArray+MOAILib.h */; };
+		CD678D551A36DC2400521910 /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4D17FA56A100EBA2DB /* NSArray+MOAILib.mm */; };
+		CD678D561A36DC2400521910 /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4E17FA56A100EBA2DB /* NSData+MOAILib.h */; };
+		CD678D571A36DC2400521910 /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4F17FA56A100EBA2DB /* NSData+MOAILib.mm */; };
+		CD678D581A36DC2400521910 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5017FA56A100EBA2DB /* NSDate+MOAILib.h */; };
+		CD678D591A36DC2400521910 /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5117FA56A100EBA2DB /* NSDate+MOAILib.mm */; };
+		CD678D5A1A36DC2400521910 /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5217FA56A100EBA2DB /* NSDictionary+MOAILib.h */; };
+		CD678D5B1A36DC2400521910 /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5317FA56A100EBA2DB /* NSDictionary+MOAILib.mm */; };
+		CD678D5C1A36DC2400521910 /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5417FA56A100EBA2DB /* NSError+MOAILib.h */; };
+		CD678D5D1A36DC2400521910 /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5517FA56A100EBA2DB /* NSError+MOAILib.mm */; };
+		CD678D5E1A36DC2400521910 /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5617FA56A100EBA2DB /* NSNumber+MOAILib.h */; };
+		CD678D5F1A36DC2400521910 /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5717FA56A100EBA2DB /* NSNumber+MOAILib.mm */; };
+		CD678D601A36DC2400521910 /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5817FA56A100EBA2DB /* NSObject+MOAILib.h */; };
+		CD678D611A36DC2400521910 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5917FA56A100EBA2DB /* NSObject+MOAILib.mm */; };
+		CD678D621A36DC2400521910 /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5A17FA56A100EBA2DB /* NSString+MOAILib.h */; };
+		CD678D631A36DC2400521910 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */; };
 		CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -3631,42 +3668,6 @@
 		CD9F75D11808B1B80001EF0C /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD9F75CF1808B1B80001EF0C /* host.mm */; };
 		CD9F761F1808CC5A0001EF0C /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */; };
 		CD9F76201808CC5A0001EF0C /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
-		CD9F76461808CE9D0001EF0C /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
-		CD9F76471808CE9D0001EF0C /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C9217FA573B00EBA2DB /* host.mm */; };
-		CD9F76491808CE9D0001EF0C /* MOAIAppIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */; };
-		CD9F764A1808CE9D0001EF0C /* MOAIAppIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */; };
-		CD9F764B1808CE9D0001EF0C /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */; };
-		CD9F764C1808CE9D0001EF0C /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */; };
-		CD9F764D1808CE9D0001EF0C /* MOAIDialogIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */; };
-		CD9F764E1808CE9D0001EF0C /* MOAIDialogIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */; };
-		CD9F764F1808CE9D0001EF0C /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */; };
-		CD9F76501808CE9D0001EF0C /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */; };
-		CD9F76511808CE9D0001EF0C /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */; };
-		CD9F76521808CE9D0001EF0C /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */; };
-		CD9F76531808CE9D0001EF0C /* MOAIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */; };
-		CD9F76541808CE9D0001EF0C /* MOAIWebViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */; };
-		CD9F76551808CE9D0001EF0C /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */; };
-		CD9F76561808CE9D0001EF0C /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */; };
-		CD9F76571808CE9D0001EF0C /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4C17FA56A100EBA2DB /* NSArray+MOAILib.h */; };
-		CD9F76581808CE9D0001EF0C /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4D17FA56A100EBA2DB /* NSArray+MOAILib.mm */; };
-		CD9F76591808CE9D0001EF0C /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4E17FA56A100EBA2DB /* NSData+MOAILib.h */; };
-		CD9F765A1808CE9D0001EF0C /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4F17FA56A100EBA2DB /* NSData+MOAILib.mm */; };
-		CD9F765B1808CE9D0001EF0C /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5017FA56A100EBA2DB /* NSDate+MOAILib.h */; };
-		CD9F765C1808CE9D0001EF0C /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5117FA56A100EBA2DB /* NSDate+MOAILib.mm */; };
-		CD9F765D1808CE9D0001EF0C /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5217FA56A100EBA2DB /* NSDictionary+MOAILib.h */; };
-		CD9F765E1808CE9D0001EF0C /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5317FA56A100EBA2DB /* NSDictionary+MOAILib.mm */; };
-		CD9F765F1808CE9D0001EF0C /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5417FA56A100EBA2DB /* NSError+MOAILib.h */; };
-		CD9F76601808CE9D0001EF0C /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5517FA56A100EBA2DB /* NSError+MOAILib.mm */; };
-		CD9F76611808CE9D0001EF0C /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5617FA56A100EBA2DB /* NSNumber+MOAILib.h */; };
-		CD9F76621808CE9D0001EF0C /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5717FA56A100EBA2DB /* NSNumber+MOAILib.mm */; };
-		CD9F76631808CE9D0001EF0C /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5817FA56A100EBA2DB /* NSObject+MOAILib.h */; };
-		CD9F76641808CE9D0001EF0C /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5917FA56A100EBA2DB /* NSObject+MOAILib.mm */; };
-		CD9F76651808CE9D0001EF0C /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5A17FA56A100EBA2DB /* NSString+MOAILib.h */; };
-		CD9F76661808CE9D0001EF0C /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */; };
-		CD9F76671808CE9D0001EF0C /* MOAIReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5C17FA56A100EBA2DB /* MOAIReachability.h */; };
-		CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5D17FA56A100EBA2DB /* MOAIReachability.m */; };
-		CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C5E17FA56A100EBA2DB /* MOAIReachabilityListener.h */; };
-		CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C5F17FA56A100EBA2DB /* MOAIReachabilityListener.mm */; };
 		CDA0DCC61A01B6F4002B71B6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC21A01B6F4002B71B6 /* host.cpp */; };
 		CDA0DCC71A01B6F4002B71B6 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC21A01B6F4002B71B6 /* host.cpp */; };
 		CDA0DCC81A01B6F4002B71B6 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC31A01B6F4002B71B6 /* host.h */; };
@@ -4701,7 +4702,6 @@
 		CDD781521A11631E00AD133E /* MOAIDeserializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AD1173975E500DFE837 /* MOAIDeserializer.h */; };
 		CDD781531A11631E00AD133E /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AD3173975E500DFE837 /* MOAIEventSource.h */; };
 		CDD781541A11631E00AD133E /* MOAIFoo.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AD5173975E500DFE837 /* MOAIFoo.h */; };
-		CDD781551A11631E00AD133E /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CDD781561A11631E00AD133E /* MOAIFooMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AD7173975E500DFE837 /* MOAIFooMgr.h */; };
 		CDD781571A11631E00AD133E /* MOAIGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6AD9173975E500DFE837 /* MOAIGlobals.h */; };
 		CDD781581A11631E00AD133E /* MOAILogMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6ADB173975E500DFE837 /* MOAILogMessages.h */; };
@@ -5567,7 +5567,7 @@
 		89BE68C4173974FC00DFE837 /* ZLFileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFileStream.h; sourceTree = "<group>"; };
 		89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFileSys.cpp; sourceTree = "<group>"; };
 		89BE68C6173974FC00DFE837 /* ZLFileSys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFileSys.h; sourceTree = "<group>"; };
-		89BE68C7173974FC00DFE837 /* ZLFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFloat.h; sourceTree = "<group>"; };
+		89BE68C7173974FC00DFE837 /* ZLReal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLReal.h; sourceTree = "<group>"; };
 		89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustum.cpp; sourceTree = "<group>"; };
 		89BE68C9173974FC00DFE837 /* ZLFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustum.h; sourceTree = "<group>"; };
 		89BE68CA173974FC00DFE837 /* ZLHashedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLHashedString.cpp; sourceTree = "<group>"; };
@@ -9719,7 +9719,6 @@
 				89BE68B3173974FC00DFE837 /* ZLCurve.h */,
 				89BE68C0173974FC00DFE837 /* ZLDistance.cpp */,
 				89BE68C1173974FC00DFE837 /* ZLDistance.h */,
-				89BE68C7173974FC00DFE837 /* ZLFloat.h */,
 				89BE68C8173974FC00DFE837 /* ZLFrustum.cpp */,
 				89BE68C9173974FC00DFE837 /* ZLFrustum.h */,
 				89BE68E6173974FC00DFE837 /* ZLInterpolate.cpp */,
@@ -9746,6 +9745,7 @@
 				89BE6908173974FC00DFE837 /* ZLQuadCoord.h */,
 				89BE6909173974FC00DFE837 /* ZLQuaternion.cpp */,
 				89BE690A173974FC00DFE837 /* ZLQuaternion.h */,
+				89BE68C7173974FC00DFE837 /* ZLReal.h */,
 				89BE690D173974FC00DFE837 /* ZLRect.h */,
 				89BE690E173974FC00DFE837 /* ZLRhombus.cpp */,
 				89BE690F173974FC00DFE837 /* ZLRhombus.h */,
@@ -12988,31 +12988,42 @@
 				89BE6AFC173975E500DFE837 /* host.h in Headers */,
 				89BE6B00173975E500DFE837 /* MOAICanary.h in Headers */,
 				89BE6B04173975E500DFE837 /* MOAIDeserializer.h in Headers */,
+				CD678D421A36DC2400521910 /* MOAIAppIOS.h in Headers */,
 				89BE6B08173975E500DFE837 /* MOAIEventSource.h in Headers */,
 				89BE6B0C173975E500DFE837 /* MOAIFoo.h in Headers */,
 				CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */,
+				CD678D601A36DC2400521910 /* NSObject+MOAILib.h in Headers */,
 				89BE6B10173975E500DFE837 /* MOAIFooMgr.h in Headers */,
 				89BE6B14173975E500DFE837 /* MOAIGlobals.h in Headers */,
 				89BE6B18173975E500DFE837 /* MOAILogMessages.h in Headers */,
 				89BE6B1C173975E500DFE837 /* MOAILogMgr.h in Headers */,
 				89BE6B1E173975E500DFE837 /* MOAILua.h in Headers */,
+				CD678D581A36DC2400521910 /* NSDate+MOAILib.h in Headers */,
 				89BE6B24173975E500DFE837 /* MOAILuaObject.h in Headers */,
 				89BE6B28173975E500DFE837 /* MOAILuaRef.h in Headers */,
+				CD678D4A1A36DC2400521910 /* MOAINotificationsIOS.h in Headers */,
+				CD678D441A36DC2400521910 /* MOAIBrowserIOS.h in Headers */,
 				89BE6B2C173975E500DFE837 /* MOAILuaRuntime.h in Headers */,
 				078EA4071983314C00880938 /* MOAIFontEffectsShader-vsh.h in Headers */,
 				89BE6B2E173975E500DFE837 /* MOAILuaSharedPtr.h in Headers */,
 				89BE6B30173975E500DFE837 /* MOAILuaState-impl.h in Headers */,
 				078EA4061983314C00880938 /* MOAIFontEffectsShader-fsh.h in Headers */,
 				89BE6B34173975E500DFE837 /* MOAILuaState.h in Headers */,
+				CD678D5E1A36DC2400521910 /* NSNumber+MOAILib.h in Headers */,
 				89BE6B3C173975E500DFE837 /* MOAIObject.h in Headers */,
 				89BE6B40173975E500DFE837 /* MOAIRtti.h in Headers */,
+				CD678D621A36DC2400521910 /* NSString+MOAILib.h in Headers */,
 				89BE6B44173975E500DFE837 /* MOAISerializer.h in Headers */,
+				CD678D561A36DC2400521910 /* NSData+MOAILib.h in Headers */,
 				89BE6B48173975E500DFE837 /* MOAISerializerBase.h in Headers */,
 				89BE6B4A173975E500DFE837 /* MOAISharedPtr.h in Headers */,
 				89BE6B4C173975E500DFE837 /* MOAIWeakPtr.h in Headers */,
+				CD678D501A36DC2400521910 /* MOAIWebViewDelegate.h in Headers */,
+				CD678D411A36DC2400521910 /* host.h in Headers */,
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
 				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
+				CD678D461A36DC2400521910 /* MOAIDialogIOS.h in Headers */,
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
@@ -13021,6 +13032,8 @@
 				89BE6D161739A42500DFE837 /* MOAIHashWriter.h in Headers */,
 				89BE6D1A1739A42500DFE837 /* MOAIJsonParser.h in Headers */,
 				89BE6D1E1739A42500DFE837 /* MOAIMath.h in Headers */,
+				CD678D481A36DC2400521910 /* MOAIKeyboardIOS.h in Headers */,
+				CD678D4C1A36DC2400521910 /* MOAIReachability.h in Headers */,
 				89BE6D221739A42500DFE837 /* MOAIMemStream.h in Headers */,
 				89BE6D261739A42500DFE837 /* MOAIMutex.h in Headers */,
 				89BE6D2A1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
@@ -13030,6 +13043,7 @@
 				89BE6D3A1739A42500DFE837 /* MOAIStreamReader.h in Headers */,
 				89BE6D3E1739A42500DFE837 /* MOAIStreamWriter.h in Headers */,
 				89BE6D421739A42500DFE837 /* MOAITask.h in Headers */,
+				CD678D5C1A36DC2400521910 /* NSError+MOAILib.h in Headers */,
 				89BE6D461739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				89BE6D4A1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */,
 				89BE6D4E1739A42500DFE837 /* MOAITaskThread.h in Headers */,
@@ -13038,10 +13052,15 @@
 				89BE6D5A1739A42500DFE837 /* MOAIThread_win32.h in Headers */,
 				89BE6D5E1739A42500DFE837 /* MOAIXmlParser.h in Headers */,
 				89BE6D621739A42500DFE837 /* MOAIXmlWriter.h in Headers */,
+				CD678D521A36DC2400521910 /* MOAIWebViewIOS.h in Headers */,
+				CD678D4E1A36DC2400521910 /* MOAIReachabilityListener.h in Headers */,
 				CD4283631A0476D20069392E /* MOAIByteStream.h in Headers */,
+				CD678D3F1A36DC2400521910 /* headers.h in Headers */,
+				CD678D5A1A36DC2400521910 /* NSDictionary+MOAILib.h in Headers */,
 				89BE6D661739A42500DFE837 /* pch.h in Headers */,
 				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
+				CD678D541A36DC2400521910 /* NSArray+MOAILib.h in Headers */,
 				CD93078417EC473A00AED686 /* MOAILuaClass.h in Headers */,
 				CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */,
 				CD93078817EC473A00AED686 /* MOAILuaRefTable.h in Headers */,
@@ -13057,21 +13076,17 @@
 				CD4C3E41180A63BB00C02381 /* MOAIGrid.h in Headers */,
 				CD4C3E31180A63BB00C02381 /* MOAIGfxQuadDeck2D.h in Headers */,
 				CD4C3EB3180A63BB00C02381 /* MOAIScriptDeck.h in Headers */,
-				CD9F76511808CE9D0001EF0C /* MOAINotificationsIOS.h in Headers */,
 				CD4C3EB7180A63BB00C02381 /* MOAISensor.h in Headers */,
 				CD4C3ED2180A63BB00C02381 /* MOAITexture.h in Headers */,
-				CD9F76551808CE9D0001EF0C /* MOAIWebViewIOS.h in Headers */,
 				CD4C3EE0180A63BB00C02381 /* MOAITransform2D.h in Headers */,
 				CD4C3EEC180A63BB00C02381 /* MOAIVectorPoly.h in Headers */,
 				CD9140971A0D6022002CC335 /* MOAIActionTree.h in Headers */,
 				CD4C3E98180A63BB00C02381 /* MOAIProfilerContext.h in Headers */,
 				CD4C3E37180A63BB00C02381 /* MOAIGlyph.h in Headers */,
-				CD9F764B1808CE9D0001EF0C /* MOAIBrowserIOS.h in Headers */,
 				CD4C3EDE180A63BB00C02381 /* MOAITransform.h in Headers */,
 				CD4C3E3F180A63BB00C02381 /* MOAIGlyphSet.h in Headers */,
 				CD4C3E7C180A63BB00C02381 /* MOAIParticleSystem.h in Headers */,
 				CD4C3E76180A63BB00C02381 /* MOAIParticlePlugin.h in Headers */,
-				CD9F76531808CE9D0001EF0C /* MOAIWebViewDelegate.h in Headers */,
 				CD4C3ED8180A63BB00C02381 /* MOAITileFlags.h in Headers */,
 				CD4C3EA0180A63BB00C02381 /* MOAIProfilerReportBase.h in Headers */,
 				CD9613781905ED2D00156BEF /* MOAIFontSnappingShader-vsh.h in Headers */,
@@ -13081,7 +13096,6 @@
 				CD4C3EC4180A63BB00C02381 /* MOAISurfaceDeck2D.h in Headers */,
 				CD4C3E72180A63BB00C02381 /* MOAIParticleForce.h in Headers */,
 				CD4C3EFD180A63BB00C02381 /* pch.h in Headers */,
-				CD9F765F1808CE9D0001EF0C /* NSError+MOAILib.h in Headers */,
 				CD4C3E00180A63BB00C02381 /* MOAIBoundsDeck.h in Headers */,
 				CD4C3E59180A63BB00C02381 /* MOAILayer.h in Headers */,
 				CD4C3EC2180A63BB00C02381 /* MOAIStretchPatch2D.h in Headers */,
@@ -13090,8 +13104,6 @@
 				CD4C3ECA180A63BB00C02381 /* MOAITextBundle.h in Headers */,
 				CD4C3E45180A63BB00C02381 /* MOAIGridPathGraph.h in Headers */,
 				CD4C3EFB180A63BB00C02381 /* MOAIWheelSensor.h in Headers */,
-				CD9F76591808CE9D0001EF0C /* NSData+MOAILib.h in Headers */,
-				CD9F764F1808CE9D0001EF0C /* MOAIKeyboardIOS.h in Headers */,
 				CD4C3E7E180A63BB00C02381 /* MOAIParticleTimedEmitter.h in Headers */,
 				CD73A60A188F0AEC00DFACDB /* MOAIGraphicsProp.h in Headers */,
 				CD4C3E6E180A63BB00C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
@@ -13120,7 +13132,6 @@
 				CDC5204018A17EB700BCC12F /* MOAIVectorTesselator.h in Headers */,
 				CD4C3E10180A63BB00C02381 /* MOAICompassSensor.h in Headers */,
 				CDEFD568181ECB3E0058D772 /* MOAITextDesignParser.h in Headers */,
-				CD9F765B1808CE9D0001EF0C /* NSDate+MOAILib.h in Headers */,
 				CD4C3E82180A63BB00C02381 /* MOAIPartitionCell.h in Headers */,
 				CD4C3E4B180A63BB00C02381 /* MOAIImage.h in Headers */,
 				CD4C3ECE180A63BB00C02381 /* MOAITextStyle.h in Headers */,
@@ -13130,11 +13141,9 @@
 				CD4C3E3B180A63BB00C02381 /* MOAIGlyphCache.h in Headers */,
 				CDEFD578181ECB3E0058D772 /* MOAIVectorEllipse.h in Headers */,
 				CD4C3EAB180A63BB00C02381 /* MOAIQuadBrush.h in Headers */,
-				CD9F765D1808CE9D0001EF0C /* NSDictionary+MOAILib.h in Headers */,
 				CD4C3EF9180A63BB00C02381 /* MOAIViewport.h in Headers */,
 				CD4C3E55180A63BB00C02381 /* MOAIJoystickSensor.h in Headers */,
 				CD73A5FE188F0AD200DFACDB /* MOAICollisionFacet.h in Headers */,
-				CD9F76651808CE9D0001EF0C /* NSString+MOAILib.h in Headers */,
 				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */,
 				CD4C3E2B180A63BB00C02381 /* MOAIFreeTypeFontReader.h in Headers */,
@@ -13143,15 +13152,12 @@
 				CD4C3E74180A63BB00C02381 /* MOAIParticlePexPlugin.h in Headers */,
 				CD4C3E3D180A63BB00C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
 				CD4C3E8A180A63BB00C02381 /* MOAIPathFinder.h in Headers */,
-				CD9F76491808CE9D0001EF0C /* MOAIAppIOS.h in Headers */,
-				CD9F76611808CE9D0001EF0C /* NSNumber+MOAILib.h in Headers */,
 				CD4C3DF7180A63BB00C02381 /* MOAIAnimCurveVec.h in Headers */,
 				CD4C3E70180A63BB00C02381 /* MOAIParticleEmitter.h in Headers */,
 				CD4C3EA4180A63BB00C02381 /* MOAIProfilerScope.h in Headers */,
 				CDB0CA32193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */,
 				CD1AEB481A0F785C005512C8 /* MOAIGfxResourceMgr.h in Headers */,
 				CD9613741905ED2D00156BEF /* MOAIDeck2DSnappingShader-vsh.h in Headers */,
-				CD9F76571808CE9D0001EF0C /* NSArray+MOAILib.h in Headers */,
 				CD4C3EBD180A63BB00C02381 /* MOAISim.h in Headers */,
 				CD4C3ED6180A63BB00C02381 /* MOAITileDeck2D.h in Headers */,
 				CD4C3EF1180A63BB00C02381 /* MOAIVectorStyle.h in Headers */,
@@ -13175,13 +13181,10 @@
 				CD4C3E6C180A63BB00C02381 /* MOAIParticleCallbackPlugin.h in Headers */,
 				CD4C3EA9180A63BB00C02381 /* MOAIPvrHeader.h in Headers */,
 				CD4C3E43180A63BB00C02381 /* MOAIGridDeck2D.h in Headers */,
-				CD9F764D1808CE9D0001EF0C /* MOAIDialogIOS.h in Headers */,
 				CD48CF241A12F8F70029F932 /* MOAIRegion.h in Headers */,
-				CD9F76691808CE9D0001EF0C /* MOAIReachabilityListener.h in Headers */,
 				CD4C3E84180A63BB00C02381 /* MOAIPartitionLevel.h in Headers */,
 				CD4C3ED4180A63BB00C02381 /* MOAITextureBase.h in Headers */,
 				CD4C3E8E180A63BB00C02381 /* MOAIPathTerrainDeck.h in Headers */,
-				CD9F76671808CE9D0001EF0C /* MOAIReachability.h in Headers */,
 				CD4C3E06180A63BB00C02381 /* MOAICamera2D.h in Headers */,
 				89BE7243173AD0CB00DFE837 /* MOAIDeck2DShader-fsh.h in Headers */,
 				CDEFD56C181ECB3E0058D772 /* MOAITextLabel.h in Headers */,
@@ -13193,7 +13196,6 @@
 				CD4C3EC6180A63BB00C02381 /* MOAISurfaceSampler2D.h in Headers */,
 				CD4C3E61180A63BB00C02381 /* MOAIMesh.h in Headers */,
 				CD4C3E2D180A63BB00C02381 /* MOAIGfxDevice.h in Headers */,
-				CD9F76461808CE9D0001EF0C /* headers.h in Headers */,
 				CD4C3DF8180A63BB00C02381 /* MOAIAttrOp.h in Headers */,
 				CD4C3EB5180A63BB00C02381 /* MOAIScriptNode.h in Headers */,
 				CD4C3DE5180A63BB00C02381 /* headers.h in Headers */,
@@ -13217,7 +13219,6 @@
 				CD4C3DFE180A63BB00C02381 /* MOAIBlocker.h in Headers */,
 				CD4C3E94180A63BB00C02381 /* MOAIProfiler.h in Headers */,
 				CD4C3E90180A63BB00C02381 /* MOAIPinTransform.h in Headers */,
-				CD9F76631808CE9D0001EF0C /* NSObject+MOAILib.h in Headers */,
 				CD4C3E4D180A63BB00C02381 /* MOAIImageTexture.h in Headers */,
 				CDC5203C18A17EB700BCC12F /* MOAIShaderUniform.h in Headers */,
 				CD4C3E1A180A63BB00C02381 /* MOAIDraw.h in Headers */,
@@ -13689,7 +13690,7 @@
 				89BE69B7173974FD00DFE837 /* ZLFactory.h in Headers */,
 				89BE69BB173974FD00DFE837 /* ZLFileStream.h in Headers */,
 				89BE69BF173974FD00DFE837 /* ZLFileSys.h in Headers */,
-				89BE69C1173974FD00DFE837 /* ZLFloat.h in Headers */,
+				89BE69C1173974FD00DFE837 /* ZLReal.h in Headers */,
 				89BE69C5173974FD00DFE837 /* ZLFrustum.h in Headers */,
 				89BE69C9173974FD00DFE837 /* ZLHashedString.h in Headers */,
 				89BE69CD173974FD00DFE837 /* ZLHashWriter.h in Headers */,
@@ -13786,7 +13787,7 @@
 				89BE69B8173974FD00DFE837 /* ZLFactory.h in Headers */,
 				89BE69BC173974FD00DFE837 /* ZLFileStream.h in Headers */,
 				89BE69C0173974FD00DFE837 /* ZLFileSys.h in Headers */,
-				89BE69C2173974FD00DFE837 /* ZLFloat.h in Headers */,
+				89BE69C2173974FD00DFE837 /* ZLReal.h in Headers */,
 				89BE69C6173974FD00DFE837 /* ZLFrustum.h in Headers */,
 				89BE69CA173974FD00DFE837 /* ZLHashedString.h in Headers */,
 				89BE69CE173974FD00DFE837 /* ZLHashWriter.h in Headers */,
@@ -14789,7 +14790,6 @@
 				CDD781521A11631E00AD133E /* MOAIDeserializer.h in Headers */,
 				CDD781531A11631E00AD133E /* MOAIEventSource.h in Headers */,
 				CDD781541A11631E00AD133E /* MOAIFoo.h in Headers */,
-				CDD781551A11631E00AD133E /* MOAITakeCameraListener.h in Headers */,
 				CDD781561A11631E00AD133E /* MOAIFooMgr.h in Headers */,
 				CDD781571A11631E00AD133E /* MOAIGlobals.h in Headers */,
 				CDD781581A11631E00AD133E /* MOAILogMessages.h in Headers */,
@@ -16415,10 +16415,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE6AFA173975E500DFE837 /* host.cpp in Sources */,
+				CD678D471A36DC2400521910 /* MOAIDialogIOS.mm in Sources */,
 				CD4283611A0476D20069392E /* MOAIByteStream.cpp in Sources */,
 				89BE6AFE173975E500DFE837 /* MOAICanary.cpp in Sources */,
 				89BE6B02173975E500DFE837 /* MOAIDeserializer.cpp in Sources */,
 				89BE6B06173975E500DFE837 /* MOAIEventSource.cpp in Sources */,
+				CD678D551A36DC2400521910 /* NSArray+MOAILib.mm in Sources */,
 				89BE6B0A173975E500DFE837 /* MOAIFoo.cpp in Sources */,
 				89BE6B0E173975E500DFE837 /* MOAIFooMgr.cpp in Sources */,
 				89BE6B12173975E500DFE837 /* MOAIGlobals.cpp in Sources */,
@@ -16427,15 +16429,20 @@
 				89BE6B22173975E500DFE837 /* MOAILuaObject.cpp in Sources */,
 				89BE6B26173975E500DFE837 /* MOAILuaRef.cpp in Sources */,
 				89BE6B2A173975E500DFE837 /* MOAILuaRuntime.cpp in Sources */,
+				CD678D401A36DC2400521910 /* host.mm in Sources */,
 				89BE6B32173975E500DFE837 /* MOAILuaState.cpp in Sources */,
+				CD678D4B1A36DC2400521910 /* MOAINotificationsIOS.mm in Sources */,
 				89BE6B3A173975E500DFE837 /* MOAIObject.cpp in Sources */,
 				89BE6B3E173975E500DFE837 /* MOAIRtti.cpp in Sources */,
 				89BE6B42173975E500DFE837 /* MOAISerializer.cpp in Sources */,
 				89BE6B46173975E500DFE837 /* MOAISerializerBase.cpp in Sources */,
 				89BE6B4E173975E500DFE837 /* pch.cpp in Sources */,
 				89BE6CFC1739A42500DFE837 /* host.cpp in Sources */,
+				CD678D491A36DC2400521910 /* MOAIKeyboardIOS.mm in Sources */,
 				89BE6D001739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
+				CD678D451A36DC2400521910 /* MOAIBrowserIOS.mm in Sources */,
 				89BE6D041739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
+				CD678D571A36DC2400521910 /* NSData+MOAILib.mm in Sources */,
 				89BE6D081739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
 				89BE6D0C1739A42500DFE837 /* MOAIFileStream.cpp in Sources */,
 				89BE6D101739A42500DFE837 /* MOAIFileSystem.cpp in Sources */,
@@ -16444,10 +16451,14 @@
 				89BE6D1C1739A42500DFE837 /* MOAIMath.cpp in Sources */,
 				89BE6D201739A42500DFE837 /* MOAIMemStream.cpp in Sources */,
 				89BE6D241739A42500DFE837 /* MOAIMutex.cpp in Sources */,
+				CD678D531A36DC2400521910 /* MOAIWebViewIOS.mm in Sources */,
 				89BE6D281739A42500DFE837 /* MOAIMutex_posix.cpp in Sources */,
 				CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */,
 				89BE6D2C1739A42500DFE837 /* MOAIMutex_win32.cpp in Sources */,
+				CD678D5D1A36DC2400521910 /* NSError+MOAILib.mm in Sources */,
 				CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */,
+				CD678D631A36DC2400521910 /* NSString+MOAILib.mm in Sources */,
+				CD678D431A36DC2400521910 /* MOAIAppIOS.mm in Sources */,
 				89BE6D301739A42500DFE837 /* MOAIParser.cpp in Sources */,
 				89BE6D341739A42500DFE837 /* MOAIStream.cpp in Sources */,
 				89BE6D381739A42500DFE837 /* MOAIStreamReader.cpp in Sources */,
@@ -16455,16 +16466,23 @@
 				89BE6D401739A42500DFE837 /* MOAITask.cpp in Sources */,
 				89BE6D441739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
+				CD678D511A36DC2400521910 /* MOAIWebViewDelegate.mm in Sources */,
 				89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
 				89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */,
+				CD678D591A36DC2400521910 /* NSDate+MOAILib.mm in Sources */,
 				89BE6D541739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
 				89BE6D581739A42500DFE837 /* MOAIThread_win32.cpp in Sources */,
+				CD678D611A36DC2400521910 /* NSObject+MOAILib.mm in Sources */,
+				CD678D4D1A36DC2400521910 /* MOAIReachability.m in Sources */,
+				CD678D4F1A36DC2400521910 /* MOAIReachabilityListener.mm in Sources */,
 				89BE6D5C1739A42500DFE837 /* MOAIXmlParser.cpp in Sources */,
 				89BE6D601739A42500DFE837 /* MOAIXmlWriter.cpp in Sources */,
 				89BE6D641739A42500DFE837 /* pch.cpp in Sources */,
 				89E9D7861743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A61745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
 				CD93078217EC473A00AED686 /* MOAILuaClass.cpp in Sources */,
+				CD678D5F1A36DC2400521910 /* NSNumber+MOAILib.mm in Sources */,
+				CD678D5B1A36DC2400521910 /* NSDictionary+MOAILib.mm in Sources */,
 				CD93078617EC473A00AED686 /* MOAILuaRefTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -16473,7 +16491,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD9F76621808CE9D0001EF0C /* NSNumber+MOAILib.mm in Sources */,
 				CD4C3EF4180A63BB00C02381 /* MOAIVertexFormat.cpp in Sources */,
 				CD4C3E8B180A63BB00C02381 /* MOAIPathGraph.cpp in Sources */,
 				CDC5203618A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */,
@@ -16483,9 +16500,7 @@
 				CD4C3EB2180A63BB00C02381 /* MOAIScriptDeck.cpp in Sources */,
 				CD4C3E2A180A63BB00C02381 /* MOAIFreeTypeFontReader.cpp in Sources */,
 				CD4C3E01180A63BB00C02381 /* MOAIButtonSensor.cpp in Sources */,
-				CD9F76541808CE9D0001EF0C /* MOAIWebViewDelegate.mm in Sources */,
 				CD4C3E3C180A63BB00C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */,
-				CD9F76661808CE9D0001EF0C /* NSString+MOAILib.mm in Sources */,
 				CD4C3EB6180A63BB00C02381 /* MOAISensor.cpp in Sources */,
 				CD4C3EE5180A63BB00C02381 /* MOAIVectorCombo.cpp in Sources */,
 				CD73A608188F0AEC00DFACDB /* MOAIGraphicsProp.cpp in Sources */,
@@ -16497,7 +16512,6 @@
 				CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */,
 				CD4C3E68180A63BB00C02381 /* MOAINodeMgr.cpp in Sources */,
 				CD73A60C188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp in Sources */,
-				CD9F765A1808CE9D0001EF0C /* NSData+MOAILib.mm in Sources */,
 				CD4C3EA1180A63BB00C02381 /* MOAIProfilerReportBox.cpp in Sources */,
 				CD4C3E26180A63BB00C02381 /* MOAIFrameBuffer.cpp in Sources */,
 				CD4C3E07180A63BB00C02381 /* MOAICameraAnchor2D.cpp in Sources */,
@@ -16506,7 +16520,6 @@
 				CD4C3EB4180A63BB00C02381 /* MOAIScriptNode.cpp in Sources */,
 				CD14014D1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp in Sources */,
 				CD4C3E11180A63BB00C02381 /* MOAICoroutine.cpp in Sources */,
-				CD9F76601808CE9D0001EF0C /* NSError+MOAILib.mm in Sources */,
 				CD4C3EA3180A63BB00C02381 /* MOAIProfilerScope.cpp in Sources */,
 				CD4C3E93180A63BB00C02381 /* MOAIProfiler.cpp in Sources */,
 				CD4C3EFC180A63BB00C02381 /* pch.cpp in Sources */,
@@ -16518,7 +16531,6 @@
 				CD4C3E0F180A63BB00C02381 /* MOAICompassSensor.cpp in Sources */,
 				CD4C3E4C180A63BB00C02381 /* MOAIImageTexture.cpp in Sources */,
 				CD4C3EBF180A63BB00C02381 /* MOAIStaticGlyphCache.cpp in Sources */,
-				CD9F76561808CE9D0001EF0C /* MOAIWebViewIOS.mm in Sources */,
 				CD4C3EDF180A63BB00C02381 /* MOAITransform2D.cpp in Sources */,
 				CD4C3ECB180A63BB00C02381 /* MOAITextDesigner.cpp in Sources */,
 				CD4C3E1F180A63BB00C02381 /* MOAIEnvironment.cpp in Sources */,
@@ -16527,15 +16539,12 @@
 				CD4C3E81180A63BB00C02381 /* MOAIPartitionCell.cpp in Sources */,
 				CDEFD576181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
 				CDEFD56E181ECB3E0058D772 /* MOAITextLayout.cpp in Sources */,
-				CD9F766A1808CE9D0001EF0C /* MOAIReachabilityListener.mm in Sources */,
 				CD4C3DE8180A63BB00C02381 /* host_particles.cpp in Sources */,
 				CD4C3E46180A63BB00C02381 /* MOAIGridSpace.cpp in Sources */,
 				CD4C3E5C180A63BB00C02381 /* MOAILayoutFrame.cpp in Sources */,
 				CDEFD57A181ECB3E0058D772 /* MOAIVectorRect.cpp in Sources */,
 				CD4C3DF6180A63BB00C02381 /* MOAIAnimCurveVec.cpp in Sources */,
 				CD4C3E1D180A63BB00C02381 /* MOAIEaseType.cpp in Sources */,
-				CD9F76641808CE9D0001EF0C /* NSObject+MOAILib.mm in Sources */,
-				CD9F76681808CE9D0001EF0C /* MOAIReachability.m in Sources */,
 				CD4C3E87180A63BB00C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD4C3E5E180A63BB00C02381 /* MOAILocationSensor.cpp in Sources */,
 				CD4C3E49180A63BB00C02381 /* MOAIImage-png.cpp in Sources */,
@@ -16544,7 +16553,6 @@
 				CDEFD56A181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */,
 				CD4C3E7D180A63BB00C02381 /* MOAIParticleTimedEmitter.cpp in Sources */,
 				CD4C3EBA180A63BB00C02381 /* MOAIShaderMgr.cpp in Sources */,
-				CD9F76581808CE9D0001EF0C /* NSArray+MOAILib.mm in Sources */,
 				CD4C3E4A180A63BB00C02381 /* MOAIImage.cpp in Sources */,
 				CD4C3E66180A63BB00C02381 /* MOAINode.cpp in Sources */,
 				CD73A5FC188F0AD200DFACDB /* MOAICollisionFacet.cpp in Sources */,
@@ -16557,16 +16565,13 @@
 				CD4C3E36180A63BB00C02381 /* MOAIGlyph.cpp in Sources */,
 				CD4C3E23180A63BB00C02381 /* MOAIFont_bmfont.cpp in Sources */,
 				CD4C3DEA180A63BB00C02381 /* MOAIAction.cpp in Sources */,
-				CD9F764E1808CE9D0001EF0C /* MOAIDialogIOS.mm in Sources */,
 				CD4C3E09180A63BB00C02381 /* MOAICameraFitter2D.cpp in Sources */,
 				CD4C3DFD180A63BB00C02381 /* MOAIBlocker.cpp in Sources */,
-				CD9F764C1808CE9D0001EF0C /* MOAIBrowserIOS.mm in Sources */,
 				CD4C3ED5180A63BB00C02381 /* MOAITileDeck2D.cpp in Sources */,
 				CD4C3E42180A63BB00C02381 /* MOAIGridDeck2D.cpp in Sources */,
 				CD4C3E54180A63BB00C02381 /* MOAIJoystickSensor.cpp in Sources */,
 				CD4C3EC5180A63BB00C02381 /* MOAISurfaceSampler2D.cpp in Sources */,
 				CD4C3EF8180A63BB00C02381 /* MOAIViewport.cpp in Sources */,
-				CD9F765C1808CE9D0001EF0C /* NSDate+MOAILib.mm in Sources */,
 				CD4C3EBC180A63BB00C02381 /* MOAISim.cpp in Sources */,
 				CD4C3E4E180A63BB00C02381 /* MOAIIndexBuffer.cpp in Sources */,
 				CD4C3DE6180A63BB00C02381 /* host.cpp in Sources */,
@@ -16614,13 +16619,10 @@
 				CD4C3ED1180A63BB00C02381 /* MOAITexture.cpp in Sources */,
 				CD4C3EAC180A63BB00C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */,
-				CD9F76521808CE9D0001EF0C /* MOAINotificationsIOS.mm in Sources */,
 				CD4C3ED3180A63BB00C02381 /* MOAITextureBase.cpp in Sources */,
 				CD4C3E05180A63BB00C02381 /* MOAICamera2D.cpp in Sources */,
 				CD4C3E28180A63BB00C02381 /* MOAIFrameBufferTexture.cpp in Sources */,
 				CD4C3E8F180A63BB00C02381 /* MOAIPinTransform.cpp in Sources */,
-				CD9F76471808CE9D0001EF0C /* host.mm in Sources */,
-				CD9F765E1808CE9D0001EF0C /* NSDictionary+MOAILib.mm in Sources */,
 				CD48CF221A12F8F70029F932 /* MOAIRegion.cpp in Sources */,
 				CD4C3E21180A63BB00C02381 /* MOAIFont.cpp in Sources */,
 				CD4C3EC1180A63BB00C02381 /* MOAIStretchPatch2D.cpp in Sources */,
@@ -16631,7 +16633,6 @@
 				CD4C3EE1180A63BB00C02381 /* MOAITransformBase.cpp in Sources */,
 				CD4C3EF6180A63BB00C02381 /* MOAIVertexFormatMgr.cpp in Sources */,
 				CD4C3E5A180A63BB00C02381 /* MOAILayer2D.cpp in Sources */,
-				CD9F76501808CE9D0001EF0C /* MOAIKeyboardIOS.mm in Sources */,
 				CD4C3EDB180A63BB00C02381 /* MOAITouchSensor.cpp in Sources */,
 				CD4C3DFF180A63BB00C02381 /* MOAIBoundsDeck.cpp in Sources */,
 				CD4C051018500C18005B0520 /* MOAIVectorUtil.cpp in Sources */,
@@ -16643,7 +16644,6 @@
 				CD4C3E2E180A63BB00C02381 /* MOAIGfxQuad2D.cpp in Sources */,
 				CD4C3E19180A63BB00C02381 /* MOAIDraw.cpp in Sources */,
 				CD4C3E15180A63BB00C02381 /* MOAIDeck.cpp in Sources */,
-				CD9F764A1808CE9D0001EF0C /* MOAIAppIOS.mm in Sources */,
 				CD4C3E2C180A63BB00C02381 /* MOAIGfxDevice.cpp in Sources */,
 				CD88200019FF6840004498E8 /* MOAIImage-webp.cpp in Sources */,
 			);
@@ -19393,6 +19393,7 @@
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
+					"ZL_SIZEOF_REAL=4",
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -19512,33 +19513,6 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -19547,28 +19521,6 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -21041,6 +20993,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_OPENSSL,
+					"ZL_SIZEOF_REAL=4",
 					USE_SSLEAY,
 					USE_SSL,
 					USE_UNTZ,
@@ -21343,33 +21296,6 @@
 		CD27BE09191D9F44000A7770 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21379,28 +21305,6 @@
 		CD27BE0A191D9F44000A7770 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21410,28 +21314,6 @@
 		CD27BE0B191D9F44000A7770 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21441,28 +21323,6 @@
 		CD27BE0C191D9F44000A7770 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21774,33 +21634,6 @@
 		CD4C413B180A667300C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -21810,28 +21643,6 @@
 		CD4C413C180A667300C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -21841,28 +21652,6 @@
 		CD4C413D180A667300C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -21872,28 +21661,6 @@
 		CD4C413E180A667300C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -21903,33 +21670,6 @@
 		CD4C4170180A9AEA00C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -21939,28 +21679,6 @@
 		CD4C4171180A9AEA00C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -21970,28 +21688,6 @@
 		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22001,28 +21697,6 @@
 		CD4C4173180A9AEA00C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22168,33 +21842,6 @@
 		CD5232B81808ADF400B81720 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22204,28 +21851,6 @@
 		CD5232B91808ADF400B81720 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22235,28 +21860,6 @@
 		CD5232BA1808ADF400B81720 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22266,28 +21869,6 @@
 		CD5232BB1808ADF400B81720 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22365,33 +21946,6 @@
 		CD70C11818441DD0005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22401,28 +21955,6 @@
 		CD70C11918441DD0005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22432,28 +21964,6 @@
 		CD70C11A18441DD0005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22463,28 +21973,6 @@
 		CD70C11B18441DD0005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22494,33 +21982,6 @@
 		CD70C20A18449935005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22530,28 +21991,6 @@
 		CD70C20B18449935005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22561,28 +22000,6 @@
 		CD70C20C18449935005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22592,28 +22009,6 @@
 		CD70C20D18449935005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -23021,33 +22416,6 @@
 		CDA0DA001A01B111002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23057,28 +22425,6 @@
 		CDA0DA011A01B111002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23088,28 +22434,6 @@
 		CDA0DA021A01B111002B71B6 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23119,28 +22443,6 @@
 		CDA0DA031A01B111002B71B6 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23302,33 +22604,6 @@
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23338,28 +22613,6 @@
 		CDA4B7AB1808AC61000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23369,28 +22622,6 @@
 		CDA4B7AC1808AC61000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23400,28 +22631,6 @@
 		CDA4B7AD1808AC61000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23431,33 +22640,6 @@
 		CDA4B8201808AC6E000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -23467,28 +22649,6 @@
 		CDA4B8211808AC6E000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -23498,28 +22658,6 @@
 		CDA4B8221808AC6E000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -23529,28 +22667,6 @@
 		CDA4B8231808AC6E000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -23563,33 +22679,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
@@ -23604,28 +22693,6 @@
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
@@ -23638,28 +22705,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
@@ -23674,28 +22719,6 @@
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
@@ -23705,33 +22728,6 @@
 		CDA4B90C1808AC8F000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -23741,28 +22737,6 @@
 		CDA4B90D1808AC8F000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -23772,28 +22746,6 @@
 		CDA4B90E1808AC8F000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -23803,28 +22755,6 @@
 		CDA4B90F1808AC8F000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -23834,33 +22764,6 @@
 		CDA4B9821808AC9D000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -23870,28 +22773,6 @@
 		CDA4B9831808AC9D000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -23901,28 +22782,6 @@
 		CDA4B9841808AC9D000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -23932,28 +22791,6 @@
 		CDA4B9851808AC9D000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -23963,33 +22800,6 @@
 		CDA4B9F81808ACA6000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -23999,28 +22809,6 @@
 		CDA4B9F91808ACA6000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24030,28 +22818,6 @@
 		CDA4B9FA1808ACA6000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24061,28 +22827,6 @@
 		CDA4B9FB1808ACA6000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24390,33 +23134,6 @@
 		CDD781C61A11631E00AD133E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -24425,28 +23142,6 @@
 		CDD781C71A11631E00AD133E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -24455,28 +23150,6 @@
 		CDD781C81A11631E00AD133E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -24485,28 +23158,6 @@
 		CDD781C91A11631E00AD133E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -25031,6 +23682,7 @@
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
+					"ZL_SIZEOF_REAL=4",
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -25150,28 +23802,6 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -25456,6 +24086,7 @@
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
+					"ZL_SIZEOF_REAL=4",
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -25575,28 +24206,6 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};

@@ -35,7 +35,7 @@ public:
 	//----------------------------------------------------------------//
 	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
 	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	ZLVec3D			GetValue				( float time ) const;
+	ZLVec3D			GetValue				( real time ) const;
 	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
 	void			GetZero					( MOAIAttrOp& attrOp ) const;
 					MOAIAnimCurveVec		();

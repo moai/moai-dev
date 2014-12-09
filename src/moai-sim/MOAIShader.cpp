@@ -129,13 +129,13 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 					uniformBuffer.SetValue ( 1 );
 					break;
 				}
-				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F3: {
+				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_R3: {
 					ZLMatrix3x3 mtx;
 					mtx.Ident ();
 					uniformBuffer.SetValue ( mtx, false );
 					break;
 				}
-				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F4: {
+				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_R4: {
 					ZLMatrix4x4 mtx;
 					mtx.Ident ();
 					uniformBuffer.SetValue ( mtx, false );

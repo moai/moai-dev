@@ -14,7 +14,7 @@ class ZLQuaternion {
 private:
 	friend class MOAITest_USQuaternion;
 
-	float		mS;
+	real		mS;
 	ZLVec3D		mV;
 
 public:
@@ -35,24 +35,24 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Add					( const ZLQuaternion& rhs );
-	float			Dot					( const ZLQuaternion& rhs ) const;
+	real			Dot					( const ZLQuaternion& rhs ) const;
 	void			Get					( ZLAffine3D& m ) const;
 	void			Get					( ZLMatrix4x4& m ) const;
-	void			Get					( ZLVec3D& axis, float& angle ) const;
-	void			Get					( float& x, float& y, float& z ) const;
+	void			Get					( ZLVec3D& axis, real& angle ) const;
+	void			Get					( real& x, real& y, real& z ) const;
 	void			Identity			();
 	void			Inverse				();
-	float			Length				() const;
-	float			LengthSquared		() const;
+	real			Length				() const;
+	real			LengthSquared		() const;
 	void			Multiply			( const ZLQuaternion& rhs );
 	void			Normalize			();
-	void			Scale				( float rhs );
+	void			Scale				( real rhs );
 	void			Set					( const ZLAffine3D& m );
 	void			Set					( const ZLMatrix4x4& m );
-	void			Set					( const ZLVec3D& axis, float angle );
-	void			Set					( float x, float y, float z ); // set from Euler angles
-	void			Set					( float s, float x, float y, float z ); // set from quat
-	void			Slerp				( ZLQuaternion q0, ZLQuaternion q1, float t );
+	void			Set					( const ZLVec3D& axis, real angle );
+	void			Set					( real x, real y, real z ); // set from Euler angles
+	void			Set					( real s, real x, real y, real z ); // set from quat
+	void			Slerp				( ZLQuaternion q0, ZLQuaternion q1, real t );
 	void			Sub					( const ZLQuaternion& rhs );
 	ZLVec3D			Transform			( ZLVec3D loc ) const;
 };

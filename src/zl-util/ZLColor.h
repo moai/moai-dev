@@ -75,17 +75,17 @@ namespace ZLColor {
 	void			Convert						( void* dest, ColorFormat destFmt, const void* src, ColorFormat srcFmt, u32 nColors );
 	u32				ConvertFromRGBA				( u32 color, ColorFormat format );
 	u32				ConvertToRGBA				( u32 color, ColorFormat format );
-	void			Desaturate					( void* colors, ColorFormat format, u32 nColors, float rY, float gY, float bY, float K );
-	void			GammaCorrection				( void* colors, ColorFormat format, u32 nColors, float gamma );
+	void			Desaturate					( void* colors, ColorFormat format, u32 nColors, real rY, real gY, real bY, real K );
+	void			GammaCorrection				( void* colors, ColorFormat format, u32 nColors, real gamma );
 	u32				GetBlendFactor				( u32 src32, u32 dst32, BlendFactor factor );
 	u32				GetDepthInBits				( ColorFormat format );
 	u32				GetMask						( ColorFormat format );
 	u32				LerpFixed					( u32 c0, u32 c1, u8 t );
-	void			Mix							( void* colors, ColorFormat format, u32 nColors, const ZLMatrix4x4& mtx, float K );
+	void			Mix							( void* colors, ColorFormat format, u32 nColors, const ZLMatrix4x4& mtx, real K );
 	u32				Mul							( u32 c0, u32 c1 );
 	u32				NearestNeighbor				( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	u32				PackRGBA					( int r, int g, int b, int a );
-	u32				PackRGBA					( float r, float g, float b, float a );
+	u32				PackRGBA					( real r, real g, real b, real a );
 	void			PremultiplyAlpha			( void* colors, ColorFormat format, u32 nColors );
 	u32				Scale						( u32 c0, u8 s ); // scale all components by s and normalize back to 255
 	ZLColorVec		Set							( u32 c0 );
@@ -112,30 +112,30 @@ public:
 class ZLColorVec {
 public:
 
-	float	mR;
-	float	mG;
-	float	mB;
-	float	mA;
+	real	mR;
+	real	mG;
+	real	mB;
+	real	mA;
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
-	void			FromHSV				( float h, float s, float v );
-	void			FromYUV				( float y, float u, float v);
-	float			GetLuma				() const;
+	void			FromHSV				( real h, real s, real v );
+	void			FromYUV				( real y, real u, real v);
+	real			GetLuma				() const;
 	bool			IsClear				() const;
 	bool			IsOpaque			() const;
-	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
+	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, real t );
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;
 	void			SetRGBA				( u32 color );
-	void			Set					( float r, float g, float b, float a );
+	void			Set					( real r, real g, real b, real a );
 	void			SetBlack			();
 	void			SetWhite			();
-	void			ToHSV				( float& h, float& s, float& v );
-	void			ToYUV				( float& y, float& u, float& v );
+	void			ToHSV				( real& h, real& s, real& v );
+	void			ToYUV				( real& y, real& u, real& v );
 					ZLColorVec			();
 					ZLColorVec			( u32 rgba );
-					ZLColorVec			( float r, float g, float b, float a );
+					ZLColorVec			( real r, real g, real b, real a );
 	
 	//----------------------------------------------------------------//
 	bool operator!=(const ZLColorVec &other) const {
@@ -154,7 +154,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLColorVec ScaleColor(const float other) const {
+	ZLColorVec ScaleColor(const real other) const {
 		return ZLColorVec(this->mR * other,
 		        	  this->mG * other,
 		        	  this->mB * other,
@@ -162,7 +162,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLColorVec ScaleAlpha(const float other) const {
+	ZLColorVec ScaleAlpha(const real other) const {
 		return ZLColorVec(this->mR,
 		        	  this->mG,
 		        	  this->mB,
@@ -170,7 +170,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLColorVec operator*(const float other) const {
+	ZLColorVec operator*(const real other) const {
 		return ZLColorVec(this->mR * other,
 		        	  this->mG * other,
 		        	  this->mB * other,

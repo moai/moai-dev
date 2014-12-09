@@ -47,20 +47,20 @@ public:
 	
 	u32					mLineStyle;
 	ZLColorVec			mLineColor;
-	float				mLineWidth;
+	real				mLineWidth;
 	
 	u32					mStrokeStyle;
 	ZLColorVec			mStrokeColor;
-	float				mStrokeWidth;
-	float				mStrokeDepthBias;
+	real				mStrokeWidth;
+	real				mStrokeDepthBias;
 	u32					mJoinStyle;
 	u32					mCapStyle;
-	float				mMiterLimit;
+	real				mMiterLimit;
 	
 	u32					mWindingRule;
 	u32					mCircleResolution;
 	
-	float				mExtrude;
+	real				mExtrude;
 	
 	ZLVec3D				mLightVec;
 	
@@ -81,20 +81,20 @@ public:
 	
 	GET_SET_CONST ( u32, LineStyle, mLineStyle )
 	GET_SET_CONST ( ZLColorVec&, LineColor, mLineColor )
-	GET_SET_CONST ( float, LineWidth, mLineWidth )
+	GET_SET_CONST ( real, LineWidth, mLineWidth )
 	
 	GET_SET_CONST ( u32, StrokeStyle, mStrokeStyle )
 	GET_SET_CONST ( ZLColorVec&, StrokeColor, mStrokeColor )
-	GET_SET_CONST ( float, StrokeWidth, mStrokeWidth )
-	GET_SET_CONST ( float, StrokeDepthBias, mStrokeDepthBias )
+	GET_SET_CONST ( real, StrokeWidth, mStrokeWidth )
+	GET_SET_CONST ( real, StrokeDepthBias, mStrokeDepthBias )
 	GET_SET_CONST ( u32, JoinStyle, mJoinStyle )
 	GET_SET_CONST ( u32, CapStyle, mCapStyle )
-	GET_SET_CONST ( float, MiterLimit, mMiterLimit )
+	GET_SET_CONST ( real, MiterLimit, mMiterLimit )
 	
 	GET_SET_CONST ( u32, WindingRule, mWindingRule )
 	GET_SET_CONST ( u32, CircleResolution, mCircleResolution )
 	
-	GET_SET_CONST ( float, Extrude, mExtrude )
+	GET_SET_CONST ( real, Extrude, mExtrude )
 	
 	GET_SET_CONST ( ZLVec3D&, LightVec, mLightVec )
 	
@@ -112,7 +112,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		Default						();
-	u32			GetResolutionForWedge		( float radians ) const;
+	u32			GetResolutionForWedge		( real radians ) const;
 };
 
 #endif

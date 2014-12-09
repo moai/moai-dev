@@ -356,8 +356,8 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 			addObserverForName:observerName
 			object:[ UIApplication sharedApplication ]
 			queue:nil
-			usingBlock:^( NSNotification* notification ) {
-				NSLog ( notification.name );
+			usingBlock:^( NSNotification* note ) {
+				NSLog ( @"%@", note.name );
 				this->InvokeListener ( eventID );
 				
 				if ( eventID == WILL_TERMINATE ) {

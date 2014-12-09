@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <zl-util/ZLBitBuffer.h>
 #include <zl-util/ZLColor.h>
-#include <zl-util/ZLFloat.h>
+#include <zl-util/ZLReal.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLVec4D.h>
 
@@ -491,21 +491,21 @@ u32 ZLColor::ConvertToRGBA ( u32 color, ColorFormat format ) {
 }
 
 //----------------------------------------------------------------//
-void ZLColor::Desaturate ( void *colors, ZLColor::ColorFormat format, u32 nColors, float rY, float gY, float bY, float K ) {
+void ZLColor::Desaturate ( void *colors, ZLColor::ColorFormat format, u32 nColors, real rY, real gY, real bY, real K ) {
 
-	if ( K == 0.0f ) return;
+	if ( K == 0.0 ) return;
 
 	u32 bitDepth = ZLColor::GetDepthInBits ( format );
 	
-	if ( K < 1.0f ) {
+	if ( K < 1.0 ) {
 	
-		float oneMinusK = 1.0f - K;
+		real oneMinusK = 1.0 - K;
 
 		for ( u32 x = 0; x < nColors; ++x ) {
 			
 			ZLColorVec color ( ZLColor::ConvertToRGBA ( ZLBitBuffer::GetValue ( colors, x, bitDepth ), format ));
 			
-			float grayTimesK = (( color.mR * rY ) + ( color.mG * gY ) + ( color.mB * bY )) * K;
+			real grayTimesK = (( color.mR * rY ) + ( color.mG * gY ) + ( color.mB * bY )) * K;
 					
 			color.mR = ( u8 )(( color.mR * oneMinusK ) + grayTimesK );
 			color.mG = ( u8 )(( color.mG * oneMinusK ) + grayTimesK );
@@ -520,7 +520,7 @@ void ZLColor::Desaturate ( void *colors, ZLColor::ColorFormat format, u32 nColor
 			
 			ZLColorVec color ( ZLColor::ConvertToRGBA ( ZLBitBuffer::GetValue ( colors, x, bitDepth ), format ));
 			
-			float gray = ( color.mR * rY ) + ( color.mG * gY ) + ( color.mB * bY );
+			real gray = ( color.mR * rY ) + ( color.mG * gY ) + ( color.mB * bY );
 					
 			color.mR = gray;
 			color.mG = gray;
@@ -532,12 +532,12 @@ void ZLColor::Desaturate ( void *colors, ZLColor::ColorFormat format, u32 nColor
 }
 
 //----------------------------------------------------------------//
-void ZLColor::GammaCorrection ( void* colors, ColorFormat format, u32 nColors, float gamma ) {
+void ZLColor::GammaCorrection ( void* colors, ColorFormat format, u32 nColors, real gamma ) {
 
-	if ( gamma == 1.0f ) return;
+	if ( gamma == 1.0 ) return;
 
 	u32 bitDepth = ZLColor::GetDepthInBits ( format );
-	float invGamma = 1.0f / gamma;
+	real invGamma = 1.0 / gamma;
 	
 	for ( u32 x = 0; x < nColors; ++x ) {
 			
@@ -646,15 +646,15 @@ u32 ZLColor::LerpFixed ( u32 c0, u32 c1, u8 t ) {
 }
 
 //----------------------------------------------------------------//
-void ZLColor::Mix ( void *colors, ZLColor::ColorFormat format, u32 nColors, const ZLMatrix4x4& mtx, float K ) {
+void ZLColor::Mix ( void *colors, ZLColor::ColorFormat format, u32 nColors, const ZLMatrix4x4& mtx, real K ) {
 
-	if ( K == 0.0f ) return;
+	if ( K == 0.0 ) return;
 
 	u32 bitDepth = ZLColor::GetDepthInBits ( format );
 
-	if ( K < 1.0f ) {
+	if ( K < 1.0 ) {
 
-		float oneMinusK = 1.0f - K;
+		real oneMinusK = 1.0 - K;
 
 		for ( u32 x = 0; x < nColors; ++x ) {
 			
@@ -726,12 +726,12 @@ u32 ZLColor::PackRGBA ( int r, int g, int b, int a ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLColor::PackRGBA ( float r, float g, float b, float a ) {
+u32 ZLColor::PackRGBA ( real r, real g, real b, real a ) {
 
-	return	(( u8 )( r * 255.0f ) << 0x00) +
-			(( u8 )( g * 255.0f ) << 0x08 ) +
-			(( u8 )( b * 255.0f ) << 0x10 ) +
-			(( u8 )( a * 255.0f ) << 0x18 );
+	return	(( u8 )( r * 255 ) << 0x00) +
+			(( u8 )( g * 255 ) << 0x08 ) +
+			(( u8 )( b * 255 ) << 0x10 ) +
+			(( u8 )( a * 255 ) << 0x18 );
 }
 
 //----------------------------------------------------------------//
@@ -813,10 +813,10 @@ u32 ZLColor::Scale ( u32 c0, u8 s ) {
 ZLColorVec ZLColor::Set ( u32 c0 ) {
 	
 	ZLColorVec color (
-		(( c0 & ( 255 << 0x00 )) >> 0x00 ) / 255.0f,
-		(( c0 & ( 255 << 0x08 )) >> 0x08 ) / 255.0f,
-		(( c0 & ( 255 << 0x10 )) >> 0x10 ) / 255.0f,
-		(( c0 & ( 255 << 0x18 )) >> 0x18 ) / 255.0f );
+		(( c0 & ( 255 << 0x00 )) >> 0x00 ) / 255.0,
+		(( c0 & ( 255 << 0x08 )) >> 0x08 ) / 255.0,
+		(( c0 & ( 255 << 0x10 )) >> 0x10 ) / 255.0,
+		(( c0 & ( 255 << 0x18 )) >> 0x18 ) / 255.0 );
 	
 	return color;
 }
@@ -937,23 +937,23 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::FromHSV ( float h, float s, float v ) {
+void ZLColorVec::FromHSV ( real h, real s, real v ) {
 	
-	if( s == 0.0f ) {
+	if( s == 0.0 ) {
 		this->mR = v;
 		this->mG = v;
 		this->mB = v;
 		return;
 	}
 	
-	h /= 60.0f;
+	h /= 60.0;
 	
 	int i = ( int )floor ( h );
-	float f = h - ( float )i;
+	real f = h - ( real )i;
 	
-	float p = v * ( 1.0f - s );
-	float q = v * ( 1.0f - s * f );
-	float t = v * ( 1.0f - s * ( 1.0f - f ) );
+	real p = v * ( 1.0 - s );
+	real q = v * ( 1.0 - s * f );
+	real t = v * ( 1.0 - s * ( 1.0 - f ) );
 	
 	switch ( i ) {
 	
@@ -997,15 +997,15 @@ void ZLColorVec::FromHSV ( float h, float s, float v ) {
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::FromYUV ( float y, float u, float v ) {
+void ZLColorVec::FromYUV ( real y, real u, real v ) {
 
-	this->mR = y + ( v * (( 1.0f - WR ) / V_MAX ));
-	this->mG = y - ( u * (( WB * ( 1.0f - WB )) / ( U_MAX * WG ))) - ( v * (( WR * ( 1.0f - WR )) / ( V_MAX * WG )));
-	this->mB = y + ( u * (( 1.0f - WB ) / U_MAX ));
+	this->mR = y + ( v * (( 1.0 - WR ) / V_MAX ));
+	this->mG = y - ( u * (( WB * ( 1.0 - WB )) / ( U_MAX * WG ))) - ( v * (( WR * ( 1.0 - WR )) / ( V_MAX * WG )));
+	this->mB = y + ( u * (( 1.0 - WB ) / U_MAX ));
 }
 
 //----------------------------------------------------------------//
-float ZLColorVec::GetLuma () const {
+real ZLColorVec::GetLuma () const {
 
 	return ( WR * this->mR ) + ( WG * this->mG ) + ( WB * this->mB );
 }
@@ -1013,17 +1013,17 @@ float ZLColorVec::GetLuma () const {
 //----------------------------------------------------------------//
 bool ZLColorVec::IsClear () const {
 
-	return (( this->mR == 0.0f ) && ( this->mG == 0.0f ) && ( this->mB == 0.0f ) && ( this->mA == 0.0f ));
+	return (( this->mR == 0.0 ) && ( this->mG == 0.0 ) && ( this->mB == 0.0 ) && ( this->mA == 0.0 ));
 }
 
 //----------------------------------------------------------------//
 bool ZLColorVec::IsOpaque () const {
 
-	return ( this->mA >= 1.0f );
+	return ( this->mA >= 1.0 );
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
+void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, real t ) {
 
 	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );
 	this->mG = ZLInterpolate::Interpolate ( mode, v0.mG, v1.mG, t );
@@ -1049,10 +1049,10 @@ u32 ZLColorVec::PackRGBA () const {
 //----------------------------------------------------------------//
 void ZLColorVec::SetRGBA ( u32 color ) {
 
-	this->mR = ( float )(( color ) & 0xff ) / 255.0f;
-	this->mG = ( float )(( color >> 8 ) & 0xff ) / 255.0f;
-	this->mB = ( float )(( color >> 16 ) & 0xff ) / 255.0f;
-	this->mA = ( float )(( color >> 24 ) & 0xff ) / 255.0f;
+	this->mR = ( real )(( color ) & 0xff ) / 255.0;
+	this->mG = ( real )(( color >> 8 ) & 0xff ) / 255.0;
+	this->mB = ( real )(( color >> 16 ) & 0xff ) / 255.0;
+	this->mA = ( real )(( color >> 24 ) & 0xff ) / 255.0;
 }
 
 //----------------------------------------------------------------//
@@ -1061,7 +1061,7 @@ ZLColorVec::ZLColorVec ( u32 rgba ) {
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::Set ( float r, float g, float b, float a ) {
+void ZLColorVec::Set ( real r, real g, real b, real a ) {
 
 	this->mR = r;
 	this->mG = g;
@@ -1072,36 +1072,36 @@ void ZLColorVec::Set ( float r, float g, float b, float a ) {
 //----------------------------------------------------------------//
 void ZLColorVec::SetBlack () {
 
-	this->Set ( 0.0f, 0.0f, 0.0f, 1.0f );
+	this->Set ( 0.0, 0.0, 0.0, 1.0 );
 }
 
 //----------------------------------------------------------------//
 void ZLColorVec::SetWhite () {
 
-	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->Set ( 1.0, 1.0, 1.0, 1.0 );
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::ToHSV ( float& h, float& s, float& v ) {
+void ZLColorVec::ToHSV ( real& h, real& s, real& v ) {
 
-	float r = this->mR;
-	float g = this->mG;
-	float b = this->mB;
+	real r = this->mR;
+	real g = this->mG;
+	real b = this->mB;
 
-	float min = ZLFloat::Min ( r, g, b );
-	float max = ZLFloat::Min ( r, g, b );
-	float delta = max - min;
+	real min = ZLReal::Min ( r, g, b );
+	real max = ZLReal::Min ( r, g, b );
+	real delta = max - min;
 	
 	v = max;
 	
-	if ( max != 0.0f ) {
+	if ( max != 0.0 ) {
 		s = delta / max;
 	}
 	else {
 		// r = g = b = 0
 		// s = 0, v is undefined
-		s = 0.0f;
-		h = -1.0f;
+		s = 0.0;
+		h = -1.0;
 		return;
 	}
 	
@@ -1109,25 +1109,25 @@ void ZLColorVec::ToHSV ( float& h, float& s, float& v ) {
 		h = ( g - b ) / delta; // between yellow & magenta
 	}
 	else if ( g == max ) {
-		h = 2.0f + ( b - r ) / delta; // between cyan & yellow
+		h = 2.0 + ( b - r ) / delta; // between cyan & yellow
 	}
 	else {
-		h = 4.0f + ( r - g ) / delta; // between magenta & cyan
+		h = 4.0 + ( r - g ) / delta; // between magenta & cyan
 	}
 
-	h *= 60.0f; // degrees
+	h *= 60.0; // degrees
 	
-	if ( h < 0.0f ) {
-		h += 360.0f;
+	if ( h < 0.0 ) {
+		h += 360.0;
 	}
 }
 
 //----------------------------------------------------------------//
-void ZLColorVec::ToYUV ( float& y, float& u, float& v ) {
+void ZLColorVec::ToYUV ( real& y, real& u, real& v ) {
 	
 	y = ( WR * this->mR ) + ( WG * this->mG ) + ( WB * this->mB );
-	u = U_MAX * (( this->mB - y ) / ( 1.0f - WB ));
-	v = V_MAX * (( this->mR - y ) / ( 1.0f - WR ));
+	u = U_MAX * (( this->mB - y ) / ( 1.0 - WB ));
+	v = V_MAX * (( this->mR - y ) / ( 1.0 - WR ));
 }
 
 //----------------------------------------------------------------//
@@ -1135,7 +1135,7 @@ ZLColorVec::ZLColorVec () {
 }
 
 //----------------------------------------------------------------//
-ZLColorVec::ZLColorVec ( float r, float g, float b, float a ) {
+ZLColorVec::ZLColorVec ( real r, real g, real b, real a ) {
 
 	this->mR = r;
 	this->mG = g;

@@ -39,14 +39,14 @@ class MOAITransform :
 	public MOAITransformBase {
 protected:
 
-	float			mShearYX;
-	float			mShearZX;
+	real			mShearYX;
+	real			mShearZX;
 
-	float			mShearXY;
-	float			mShearZY;
+	real			mShearXY;
+	real			mShearZY;
 	
-	float			mShearXZ;
-	float			mShearYZ;
+	real			mShearXZ;
+	real			mShearYZ;
 
 	ZLVec3D			mPiv;
 	ZLVec3D			mLoc;
@@ -83,7 +83,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
-	static float	ClampEuler				( float r );
+	static real	ClampEuler				( real r );
 	void			OnDepNodeUpdate			();
 
 public:
@@ -122,9 +122,9 @@ public:
 	GET_SET ( ZLVec3D, Scl, mScale )
 	GET_SET ( ZLVec3D, Rot, mRot )
 	
-	GET_SET ( float, XLoc, mLoc.mX )
-	GET_SET ( float, YLoc, mLoc.mY )
-	GET_SET ( float, ZLoc, mLoc.mZ )
+	GET_SET ( real, XLoc, mLoc.mX )
+	GET_SET ( real, YLoc, mLoc.mY )
+	GET_SET ( real, ZLoc, mLoc.mZ )
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
@@ -137,10 +137,10 @@ public:
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void					SetLoc						( float x, float y, float z );
-	void					SetPiv						( float x, float y, float z );
-	void					SetRot						( float x, float y, float z );
-	void					SetScl						( float x, float y, float z );
+	void					SetLoc						( real x, real y, real z );
+	void					SetPiv						( real x, real y, real z );
+	void					SetRot						( real x, real y, real z );
+	void					SetScl						( real x, real y, real z );
 };
 
 #endif

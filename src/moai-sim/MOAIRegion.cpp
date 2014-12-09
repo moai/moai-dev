@@ -31,8 +31,8 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 int MOAIRegion::_pointInside ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UNN" )
 	
-	float x = state.GetValue < float >( 2, 0.0f );
-	float y = state.GetValue < float >( 3, 0.0f );
+	real x = state.GetValue < real >( 2, 0.0f );
+	real y = state.GetValue < real >( 3, 0.0f );
 
 	state.Push ( self->PointInside ( ZLVec2D ( x, y )));
 	

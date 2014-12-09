@@ -16,41 +16,41 @@ void ZLQuaternion::Add ( const ZLQuaternion& rhs ) {
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::Dot ( const ZLQuaternion& rhs ) const {
+real ZLQuaternion::Dot ( const ZLQuaternion& rhs ) const {
 	return ( mS * rhs.mS ) + mV.Dot ( rhs.mV );
 }
 
 //----------------------------------------------------------------//
 void ZLQuaternion::Get ( ZLAffine3D& m ) const {
 	
-	float x2 = mV.mX + mV.mX;
-	float y2 = mV.mY + mV.mY;
-	float z2 = mV.mZ + mV.mZ;
-	float xx = mV.mX * x2;
-	float xy = mV.mX * y2;
-	float xz = mV.mX * z2;
-	float yy = mV.mY * y2;
-	float yz = mV.mY * z2;
-	float zz = mV.mZ * z2;
-	float wx = mS * x2;
-	float wy = mS * y2;
-	float wz = mS * z2;
+	real x2 = mV.mX + mV.mX;
+	real y2 = mV.mY + mV.mY;
+	real z2 = mV.mZ + mV.mZ;
+	real xx = mV.mX * x2;
+	real xy = mV.mX * y2;
+	real xz = mV.mX * z2;
+	real yy = mV.mY * y2;
+	real yz = mV.mY * z2;
+	real zz = mV.mZ * z2;
+	real wx = mS * x2;
+	real wy = mS * y2;
+	real wz = mS * z2;
 
-	m.m [ ZLAffine3D::C0_R0 ] = 1.0f - ( yy + zz );
+	m.m [ ZLAffine3D::C0_R0 ] = 1.0 - ( yy + zz );
 	m.m [ ZLAffine3D::C0_R1 ] = xy - wz;
 	m.m [ ZLAffine3D::C0_R2 ] = xz + wy;
 
 	m.m [ ZLAffine3D::C1_R0 ] = xy + wz;
-	m.m [ ZLAffine3D::C1_R1 ] = 1.0f - ( xx + zz );
+	m.m [ ZLAffine3D::C1_R1 ] = 1.0 - ( xx + zz );
 	m.m [ ZLAffine3D::C1_R2 ] = yz - wx;
 
 	m.m [ ZLAffine3D::C2_R0 ] = xz - wy;
 	m.m [ ZLAffine3D::C2_R1 ] = yz + wx;
-	m.m [ ZLAffine3D::C2_R2 ] = 1.0f - ( xx + yy );
+	m.m [ ZLAffine3D::C2_R2 ] = 1.0 - ( xx + yy );
 
-	m.m [ ZLAffine3D::C3_R0 ] = 0.0f;
-	m.m [ ZLAffine3D::C3_R1 ] = 0.0f;
-	m.m [ ZLAffine3D::C3_R2 ] = 0.0f;
+	m.m [ ZLAffine3D::C3_R0 ] = 0.0;
+	m.m [ ZLAffine3D::C3_R1 ] = 0.0;
+	m.m [ ZLAffine3D::C3_R2 ] = 0.0;
 }
 
 //----------------------------------------------------------------//
@@ -62,76 +62,76 @@ void ZLQuaternion::Get ( ZLMatrix4x4& m ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( ZLVec3D& axis, float& angle ) const {
+void ZLQuaternion::Get ( ZLVec3D& axis, real& angle ) const {
 
-	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
+	real sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 
-	if ( sqrLen > 0.0f ) {
-		angle = 2.0f * ( float )( acos ( mS ) * R2D );
-		sqrLen = 1.0f / ( float )sqrt ( sqrLen );
+	if ( sqrLen > 0.0 ) {
+		angle = 2.0 * ( real )( acos ( mS ) * R2D );
+		sqrLen = 1.0 / ( real )sqrt ( sqrLen );
 		axis.mX = mV.mX * sqrLen;
 		axis.mY = mV.mY * sqrLen;
 		axis.mZ = mV.mZ * sqrLen;
 	}
 	else {
-		angle = 0.0f;
-		axis.mX = 0.0f;
-		axis.mY = 1.0f;
-		axis.mZ = 0.0f;
+		angle = 0.0;
+		axis.mX = 0.0;
+		axis.mY = 1.0;
+		axis.mZ = 0.0;
 	}
 }
 
-void ZLQuaternion::Get ( float& x, float& y, float& z ) const {
+void ZLQuaternion::Get ( real& x, real& y, real& z ) const {
 
-	float sz_xy = 2.0f * ( mS * mV.mZ + mV.mX * mV.mY );
+	real sz_xy = 2.0 * ( mS * mV.mZ + mV.mX * mV.mY );
 
-	if ( sz_xy > 1.0f ) {
-		sz_xy = 1.0f;
+	if ( sz_xy > 1.0 ) {
+		sz_xy = 1.0;
 	}
-	else if ( sz_xy < -1.0f ) {
-		sz_xy = -1.0f;
+	else if ( sz_xy < -1.0 ) {
+		sz_xy = -1.0;
 	}
 
-	float sx_yz = 2.0f * ( mS * mV.mX - mV.mY * mV.mZ );
-	float xx_zz = 1.0f - 2.0f * ( mV.mX * mV.mX + mV.mZ * mV.mZ );
+	real sx_yz = 2.0 * ( mS * mV.mX - mV.mY * mV.mZ );
+	real xx_zz = 1.0 - 2.0 * ( mV.mX * mV.mX + mV.mZ * mV.mZ );
 
-	float sy_xz = 2.0f * ( mS * mV.mY - mV.mX * mV.mZ );
-	float yy_zz = 1.0f - 2.0f * ( mV.mY * mV.mY + mV.mZ * mV.mZ );
+	real sy_xz = 2.0 * ( mS * mV.mY - mV.mX * mV.mZ );
+	real yy_zz = 1.0 - 2.0 * ( mV.mY * mV.mY + mV.mZ * mV.mZ );
 
-	//round values to prevent floating errors affecting results
+	//round values to prevent realing errors affecting results
 	if ( sx_yz < EPSILON && sx_yz > - EPSILON ) {
-		sx_yz = 0.0f;
+		sx_yz = 0.0;
 	}
 	if ( xx_zz < EPSILON && xx_zz > - EPSILON ) {
-		xx_zz = 0.0f;
+		xx_zz = 0.0;
 	}
 
 	if ( sy_xz < EPSILON && sy_xz > - EPSILON ) {
-		sy_xz = 0.0f;
+		sy_xz = 0.0;
 	}
 	if ( yy_zz < EPSILON && yy_zz > - EPSILON ) {
-		yy_zz = 0.0f;
+		yy_zz = 0.0;
 	}
 
-	x = ( float )( atan2 ( sy_xz, yy_zz ) * R2D );
-	y = ( float )( asin ( sz_xy ) * R2D );
-	z = ( float )( atan2 ( sx_yz, xx_zz ) * R2D );
+	x = ( real )( atan2 ( sy_xz, yy_zz ) * R2D );
+	y = ( real )( asin ( sz_xy ) * R2D );
+	z = ( real )( atan2 ( sx_yz, xx_zz ) * R2D );
 
 }
 
 //----------------------------------------------------------------//
 void ZLQuaternion::Identity() {
 	
-	mS = 1.0f;
-	mV.mX = 0.0f;
-	mV.mY = 0.0f;
-	mV.mZ = 0.0f;
+	mS = 1.0;
+	mV.mX = 0.0;
+	mV.mY = 0.0;
+	mV.mZ = 0.0;
 }
 
 //----------------------------------------------------------------//
 void ZLQuaternion::Inverse () {
 	
-	float length = Length ();
+	real length = Length ();
 	
 	mS = mS / length;
 	mV.mX = mV.mX / length;
@@ -140,12 +140,12 @@ void ZLQuaternion::Inverse () {
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::Length () const {
+real ZLQuaternion::Length () const {
 	return sqrtf ( LengthSquared ());
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::LengthSquared () const {
+real ZLQuaternion::LengthSquared () const {
 	return  ( mS * mS ) + ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 }
 
@@ -174,7 +174,7 @@ void ZLQuaternion::Multiply ( const ZLQuaternion& rhs ) {
 //----------------------------------------------------------------//
 void ZLQuaternion::Normalize() {
 	
-	float length = Length ();
+	real length = Length ();
 	mS /= length;
 	mV.mX /= length;
 	mV.mY /= length;
@@ -182,7 +182,7 @@ void ZLQuaternion::Normalize() {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Scale ( float rhs ) {
+void ZLQuaternion::Scale ( real rhs ) {
 	
 	mV.mX *= rhs;
 	mV.mY *= rhs;
@@ -193,11 +193,11 @@ void ZLQuaternion::Scale ( float rhs ) {
 //----------------------------------------------------------------//
 void ZLQuaternion::Set ( const ZLAffine3D& m ) {
 
-	float trace = m.m [ ZLAffine3D::C0_R0 ] + m.m [ ZLAffine3D::C1_R1 ] + m.m [ ZLAffine3D::C2_R2 ] + 1.0f;
+	real trace = m.m [ ZLAffine3D::C0_R0 ] + m.m [ ZLAffine3D::C1_R1 ] + m.m [ ZLAffine3D::C2_R2 ] + 1.0;
 
 	if ( trace > 1.001f ) {
 		
-		float sqr = 2.0f * sqrtf ( trace );
+		real sqr = 2.0 * sqrtf ( trace );
 		mS = 0.25f * sqr;
 		mV.mX = ( m.m [ ZLAffine3D::C2_R1 ] - m.m [ ZLAffine3D::C1_R2 ] ) / sqr;
 		mV.mY = ( m.m [ ZLAffine3D::C0_R1 ] - m.m [ ZLAffine3D::C2_R1 ] ) / sqr;
@@ -207,7 +207,7 @@ void ZLQuaternion::Set ( const ZLAffine3D& m ) {
 		
 		if (( m.m [ ZLAffine3D::C0_R0 ] > m.m [ ZLAffine3D::C1_R1 ] ) && ( m.m [ ZLAffine3D::C0_R0 ] > m.m [ ZLAffine3D::C2_R2 ] )) {
 	  
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qx
+			real sqr = ( real ) sqrt( 1.0 + m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qx
 			mS = ( m.m [ ZLAffine3D::C2_R1 ] - m.m [ ZLAffine3D::C1_R2 ] ) / sqr;
 			mV.mX = 0.25f * sqr;
 			mV.mY = ( m.m [ ZLAffine3D::C0_R1 ] + m.m [ ZLAffine3D::C1_R0 ] ) / sqr; 
@@ -215,7 +215,7 @@ void ZLQuaternion::Set ( const ZLAffine3D& m ) {
 		}
 		else if ( m.m [ ZLAffine3D::C1_R1 ] > m.m [ ZLAffine3D::C2_R2 ] ) {
 	
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qy
+			real sqr = ( real ) sqrt( 1.0 + m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qy
 			mS = ( m.m [ ZLAffine3D::C0_R2 ] - m.m [ ZLAffine3D::C2_R0 ] ) / sqr;
 			mV.mX = ( m.m [ ZLAffine3D::C0_R1 ] + m.m [ ZLAffine3D::C1_R0 ] ) / sqr;
 			mV.mY = 0.25f * sqr;
@@ -223,7 +223,7 @@ void ZLQuaternion::Set ( const ZLAffine3D& m ) {
 		}
 		else {
 			
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C2_R2 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] ) * 2; // S=4*qz
+			real sqr = ( real ) sqrt( 1.0 + m.m [ ZLAffine3D::C2_R2 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] ) * 2; // S=4*qz
 			mS = ( m.m [ ZLAffine3D::C1_R0 ] - m.m [ ZLAffine3D::C0_R1 ] ) / sqr;
 			mV.mX = ( m.m [ ZLAffine3D::C0_R2 ] + m.m [ ZLAffine3D::C2_R0 ] ) / sqr;
 			mV.mY = ( m.m [ ZLAffine3D::C1_R2 ] + m.m [ ZLAffine3D::C2_R1 ] ) / sqr;
@@ -243,37 +243,37 @@ void ZLQuaternion::Set ( const ZLMatrix4x4& m ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Set ( const ZLVec3D& axis, float angle ) {
+void ZLQuaternion::Set ( const ZLVec3D& axis, real angle ) {
 
-	angle *= ( float )D2R;
+	angle *= ( real )D2R;
 
-	float s = ( float ) sin ( angle / 2.0f );
+	real s = ( real ) sin ( angle / 2.0 );
 
-	mS = ( float ) cos ( angle / 2.0f );
+	mS = ( real ) cos ( angle / 2.0 );
 	mV.mX = axis.mX * s;
 	mV.mY = axis.mY * s;
 	mV.mZ = axis.mZ * s;
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Set ( float x, float y, float z ) {
+void ZLQuaternion::Set ( real x, real y, real z ) {
 	
-	x *= ( float )D2R;
-	y *= ( float )D2R;
-	z *= ( float )D2R;
+	x *= ( real )D2R;
+	y *= ( real )D2R;
+	z *= ( real )D2R;
 	
-	float cx = Cos ( x / 2.0f );
-	float cy = Cos ( y / 2.0f );
-	float cz = Cos ( z / 2.0f );
+	real cx = Cos ( x / 2.0 );
+	real cy = Cos ( y / 2.0 );
+	real cz = Cos ( z / 2.0 );
 	
-	float sx = Sin ( x / 2.0f );
-	float sy = Sin ( y / 2.0f );
-	float sz = Sin ( z / 2.0f );
+	real sx = Sin ( x / 2.0 );
+	real sy = Sin ( y / 2.0 );
+	real sz = Sin ( z / 2.0 );
 	
-	float cycz = cy * cz;
-	float sysz = sy * sz;
-	float sycz = sy * cz;
-	float cysz = cy * sz;
+	real cycz = cy * cz;
+	real sysz = sy * sz;
+	real sycz = sy * cz;
+	real cysz = cy * sz;
 
 	mS		= ( cx * cycz ) - ( sx * sysz );
 	mV.mX	= ( sx * sycz ) + ( cx * cysz );
@@ -282,7 +282,7 @@ void ZLQuaternion::Set ( float x, float y, float z ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Set ( float s, float x, float y, float z ) {
+void ZLQuaternion::Set ( real s, real x, real y, real z ) {
 
 	mS = s;
 	mV.mX = x;
@@ -291,24 +291,24 @@ void ZLQuaternion::Set ( float s, float x, float y, float z ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Slerp ( ZLQuaternion q0, ZLQuaternion q1, float t ) {
+void ZLQuaternion::Slerp ( ZLQuaternion q0, ZLQuaternion q1, real t ) {
 	
-	float floatRound = q0.Dot ( q1 );
+	real realRound = q0.Dot ( q1 );
 	
-	if ( floatRound > 1.0f ) {
-		floatRound = 1.0f;
+	if ( realRound > 1.0 ) {
+		realRound = 1.0;
 	}
 	
-	float angle = ( float )acos ( floatRound );
+	real angle = ( real )acos ( realRound );
 	
 	if ( !( angle < 0.001 && angle > -0.001 )) {
 		
-		q0.Scale (( float )sin ( angle * ( 1 - t )));
-		q1.Scale (( float )sin ( angle * t ));
+		q0.Scale (( real )sin ( angle * ( 1 - t )));
+		q1.Scale (( real )sin ( angle * t ));
 	
 		q0.Add ( q1 );
 		
-		q0.Scale ( 1.0f / ( float )sin ( angle ));
+		q0.Scale ( 1.0 / ( real )sin ( angle ));
 	}
 	
 	*this = q0;
@@ -327,7 +327,7 @@ void ZLQuaternion::Sub ( const ZLQuaternion& rhs ) {
 ZLVec3D ZLQuaternion::Transform ( ZLVec3D loc ) const {
 
 	ZLQuaternion r;
-	r.Set ( 0.0f, loc.mX, loc.mY, loc.mZ );
+	r.Set ( 0.0, loc.mX, loc.mY, loc.mZ );
 	
 	ZLQuaternion inv;
 	inv = *this;

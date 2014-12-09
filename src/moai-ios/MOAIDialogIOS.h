@@ -46,9 +46,9 @@ public:
 
 @interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {
 @public
-	int						positiveButtonIndex;
-	int						neutralButtonIndex;
-	int						negativeButtonIndex;
+	NSInteger				positiveButtonIndex;
+	NSInteger				neutralButtonIndex;
+	NSInteger				negativeButtonIndex;
 	MOAILuaStrongRef		callback;
 };
 

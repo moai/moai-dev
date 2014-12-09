@@ -75,7 +75,7 @@ bool MOAIAnimCurveBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_TIME:
-				this->mTime = attrOp.Apply ( this->mTime, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mTime = attrOp.Apply ( this->mTime, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL );
 				return true;
 			case ATTR_VALUE:
 				this->ApplyValueAttrOp ( attrOp, op );
@@ -261,17 +261,17 @@ float MOAIAnimCurveBase::WrapTime ( float t, float &repeat ) const {
 
 	switch ( mWrapMode ) {
 		case CLAMP: {
-			wrappedT = ZLFloat::Clamp ( time, 0.0f, 1.0f );
+			wrappedT = ZLReal::Clamp ( time, 0.0f, 1.0f );
 		}
 		break;
 
 		case WRAP: {
-			wrappedT = time - ZLFloat::Floor ( time );
+			wrappedT = time - ZLReal::Floor ( time );
 		}
 		break;
 
 		case MIRROR: {
-			u32 tFloor = ( u32 ) ZLFloat::Floor ( time );
+			u32 tFloor = ( u32 ) ZLReal::Floor ( time );
 			if ( tFloor % 2 ) {
 				wrappedT = 1.0f - ( time - tFloor );
 			}
@@ -282,8 +282,8 @@ float MOAIAnimCurveBase::WrapTime ( float t, float &repeat ) const {
 		break;
 
 		case APPEND: {
-			wrappedT = time - ZLFloat::Floor ( time );
-			repeat = ZLFloat::Floor ( time );
+			wrappedT = time - ZLReal::Floor ( time );
+			repeat = ZLReal::Floor ( time );
 		}
 		break;
 	}

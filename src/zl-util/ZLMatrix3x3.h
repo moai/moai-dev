@@ -474,6 +474,8 @@ public:
 	}
 };
 
-typedef ZLMetaMatrix3x3 < float > ZLMatrix3x3;
+typedef ZLMetaMatrix3x3 < real > ZLMatrix3x3;
+typedef ZLMetaMatrix3x3 < float > ZLFLoatMatrix3x3;
+typedef ZLMetaMatrix3x3 < double > ZLDoubleMatrix3x3;
 
 #endif

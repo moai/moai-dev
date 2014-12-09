@@ -146,7 +146,7 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 					(( result.mLoc.mY * result.mLoc.mY ) - ( yScale * yScale )) +
 					(( result.mLoc.mZ * result.mLoc.mZ ) - ( zScale * zScale ));
 				
-				result.mKey = ZLFloat::FloatToIntKey ( dist * floatSign );
+				result.mKey = ZLReal::FloatToIntKey ( dist * floatSign );
 			}
 			break;
 		
@@ -166,21 +166,21 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 		case SORT_X_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				float x = this->mResults [ i ].mLoc.mX;
-				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( x * floatSign );
+				this->mResults [ i ].mKey = ZLReal::FloatToIntKey ( x * floatSign );
 			}
 			break;
 		
 		case SORT_Y_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				float y = this->mResults [ i ].mLoc.mY;
-				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( y * floatSign );
+				this->mResults [ i ].mKey = ZLReal::FloatToIntKey ( y * floatSign );
 			}
 			break;
 		
 		case SORT_Z_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				float z = this->mResults [ i ].mLoc.mZ;
-				this->mResults [ i ].mKey = ZLFloat::FloatToIntKey ( z * floatSign );
+				this->mResults [ i ].mKey = ZLReal::FloatToIntKey ( z * floatSign );
 			}
 			break;
 		
@@ -188,7 +188,7 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				MOAIPartitionResult& result = this->mResults [ i ];
 				float axis = ( result.mLoc.mX * xScale ) + ( result.mLoc.mY * yScale ) + ( result.mLoc.mZ * zScale ) + (( float )result.mPriority * priority );
-				result.mKey = ZLFloat::FloatToIntKey ( axis * floatSign );
+				result.mKey = ZLReal::FloatToIntKey ( axis * floatSign );
 			}
 			break;
 		

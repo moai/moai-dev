@@ -242,7 +242,7 @@ bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FOV:
-				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL );
 				return true;
 		}
 	}

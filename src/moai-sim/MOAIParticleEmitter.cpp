@@ -168,7 +168,7 @@ int MOAIParticleEmitter::_surge ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIParticleEmitter::GetRandomEmission () {
 
-	return ( u32 )ZLFloat::Rand (( float )this->mMinEmission, ( float )this->mMaxEmission );
+	return ( u32 )ZLReal::Rand (( float )this->mMinEmission, ( float )this->mMaxEmission );
 }
 
 //----------------------------------------------------------------//
@@ -190,8 +190,8 @@ void MOAIParticleEmitter::GetRandomParticle ( ZLVec3D& loc, ZLVec3D& vec ) {
 
 		case RECT:
 		
-			loc.mX = ZLFloat::Rand ( this->mRect.mXMin, this->mRect.mXMax );
-			loc.mY = ZLFloat::Rand ( this->mRect.mYMin, this->mRect.mYMax );
+			loc.mX = ZLReal::Rand ( this->mRect.mXMin, this->mRect.mXMax );
+			loc.mY = ZLReal::Rand ( this->mRect.mYMin, this->mRect.mYMax );
 			loc.mZ = 0.0f;
 			break;
 	}
@@ -202,8 +202,8 @@ void MOAIParticleEmitter::GetRandomParticle ( ZLVec3D& loc, ZLVec3D& vec ) {
 //----------------------------------------------------------------//
 ZLVec3D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, float min, float max ) {
 
-	float r = ZLFloat::Rand ( minAngle, maxAngle ) * ( float )D2R;
-	float m = ZLFloat::Rand ( min, max );
+	float r = ZLReal::Rand ( minAngle, maxAngle ) * ( float )D2R;
+	float m = ZLReal::Rand ( min, max );
 	
 	ZLVec3D vec;
 	vec.mX = Cos ( r ) * m;

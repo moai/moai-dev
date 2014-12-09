@@ -336,14 +336,14 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 		if (mStartColorRegister[i] > -1 )
 		{
 			float minVal = mStartColor[i] - mStartColorVariance[i] < 0 ? 0 : mStartColor[i] - mStartColorVariance[i];	
-			registers[mStartColorRegister[i]] = ZLFloat::Rand (minVal,  mStartColor[i] + mStartColorVariance[i] );
+			registers[mStartColorRegister[i]] = ZLReal::Rand (minVal,  mStartColor[i] + mStartColorVariance[i] );
 		}	
 
 			
 		if(mFinishColorRegister[i]  > -1 )
 		{
 			float minVal = mFinishColor[i] - mFinishColorVariance[i] < 0 ? 0 : mFinishColor[i] - mFinishColorVariance[i];	
-			registers[mFinishColorRegister[i]] =ZLFloat::Rand (minVal,  mFinishColor[i] + mFinishColorVariance[i] );
+			registers[mFinishColorRegister[i]] =ZLReal::Rand (minVal,  mFinishColor[i] + mFinishColorVariance[i] );
 		}
 			
 	}
@@ -351,22 +351,22 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 	if(mStartSizeRegister > -1)
 	{
 		float minVal = mStartSize - mStartSizeVariance < 0 ? 0 :  mStartSize - mStartSizeVariance;
-		registers[mStartSizeRegister] = ZLFloat::Rand (minVal,  mStartSize + mStartSizeVariance);
+		registers[mStartSizeRegister] = ZLReal::Rand (minVal,  mStartSize + mStartSizeVariance);
 	}
 
 			
 	if(mFinishSizeRegister > -1)
 	{
 		float minVal = mFinishSize - mFinishSizeVariance < 0 ? 0 :  mFinishSize - mFinishSizeVariance;
-		registers[mFinishSizeRegister] = ZLFloat::Rand (minVal,  mFinishSize + mFinishSizeVariance);
+		registers[mFinishSizeRegister] = ZLReal::Rand (minVal,  mFinishSize + mFinishSizeVariance);
 	}
 
 	if(mRotStartRegister > -1 )
-		registers[mRotStartRegister] = ZLFloat::Rand (mRotStart-mRotStartVariance, mRotStart+mRotStartVariance);
+		registers[mRotStartRegister] = ZLReal::Rand (mRotStart-mRotStartVariance, mRotStart+mRotStartVariance);
 	
 
 	if(mRotEndRegister > -1)
-		registers[mRotStartRegister] = ZLFloat::Rand (mRotEnd-mRotEndVariance, mRotEnd+mRotEndVariance);
+		registers[mRotStartRegister] = ZLReal::Rand (mRotEnd-mRotEndVariance, mRotEnd+mRotEndVariance);
 
 	float angleStartDeg;
 	// have to compute the angle first, because the computed DX and DY may be used by later calculations.
@@ -382,7 +382,7 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 
 	if (mAngleRegister > -1)
 	{
-		angleStartDeg += ZLFloat::Rand (- mAngleVariance, + mAngleVariance );
+		angleStartDeg += ZLReal::Rand (- mAngleVariance, + mAngleVariance );
 	}
 	particle[MOAIParticle::PARTICLE_DX] = Cos(angleStartDeg * (float)D2R);                  
 	particle[MOAIParticle::PARTICLE_DY] = Sin(angleStartDeg * (float)D2R);
@@ -392,7 +392,7 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 		// Set initial speed
 		if (mSpeedRegister > -1)
 		{
-			registers[mSpeedRegister] = ZLFloat::Rand(mSpeed - mSpeedVariance, mSpeed + mSpeedVariance);
+			registers[mSpeedRegister] = ZLReal::Rand(mSpeed - mSpeedVariance, mSpeed + mSpeedVariance);
 			registers[mDirectionXRegister] = particle[MOAIParticle::PARTICLE_DX] * registers[mSpeedRegister];
 			registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * registers[mSpeedRegister];
 		}
@@ -402,17 +402,17 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 			registers[mDirectionYRegister] = particle[MOAIParticle::PARTICLE_DY] * mSpeed;
 		}
 		if (mRadialAccelRegister > -1)
-			registers[mRadialAccelRegister] = ZLFloat::Rand(mRadialAcceleration - mRadialAccelVariance, mRadialAcceleration + mRadialAccelVariance);
+			registers[mRadialAccelRegister] = ZLReal::Rand(mRadialAcceleration - mRadialAccelVariance, mRadialAcceleration + mRadialAccelVariance);
 
 
 		if (mTanAccelRegister > -1)
-			registers[mTanAccelRegister] = ZLFloat::Rand(mTanAccel - mTanAccelVariance, mTanAccel + mTanAccelVariance);
+			registers[mTanAccelRegister] = ZLReal::Rand(mTanAccel - mTanAccelVariance, mTanAccel + mTanAccelVariance);
 	}
 	else
 	{
 		if (mRotPerSecondVariance != 0)
 		{
-			float randVal =  ZLFloat::Rand (mRotPerSecond - mRotPerSecondVariance, mRotPerSecond + mRotPerSecondVariance);
+			float randVal =  ZLReal::Rand (mRotPerSecond - mRotPerSecondVariance, mRotPerSecond + mRotPerSecondVariance);
 			registers[mRotPerSecondRegister] = randVal;		
 		} else {
 			registers[mRotPerSecondRegister] = mRotPerSecond;
@@ -420,7 +420,7 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 		
 		if (mMaxRadiusRegister > -1 )
 		{
-			registers[mMaxRadiusRegister] = ZLFloat::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
+			registers[mMaxRadiusRegister] = ZLReal::Rand (mMaxRadius - mMaxRadiusVariance, mMaxRadius + mMaxRadiusVariance);
 			particle[MOAIParticle::PARTICLE_X] += Cos(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
 			particle[MOAIParticle::PARTICLE_Y] += Sin(angleStartDeg * (float)D2R) * registers[mMaxRadiusRegister];
 		}
@@ -434,8 +434,8 @@ void  MOAIParticlePexPlugin::OnInit ( float* particle, float* registers)
 	}
 
 	// pick a slightly different source position, based on mSourcePos
-	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X] + mSourcePos[0] + ZLFloat::Rand(- mSourcePosVariance[0], + mSourcePosVariance[0]);
-	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y] + mSourcePos[1] + ZLFloat::Rand(- mSourcePosVariance[1], + mSourcePosVariance[1]);
+	registers[mStartXRegister] = particle[MOAIParticle::PARTICLE_X] + mSourcePos[0] + ZLReal::Rand(- mSourcePosVariance[0], + mSourcePosVariance[0]);
+	registers[mStartYRegister] = particle[MOAIParticle::PARTICLE_Y] + mSourcePos[1] + ZLReal::Rand(- mSourcePosVariance[1], + mSourcePosVariance[1]);
 
 	particle[MOAIParticle::PARTICLE_X] = registers[mStartXRegister];
 	particle[MOAIParticle::PARTICLE_Y] = registers[mStartYRegister];

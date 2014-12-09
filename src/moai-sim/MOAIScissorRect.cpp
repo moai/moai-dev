@@ -39,7 +39,7 @@ int MOAIScissorRect::_getRect ( lua_State* L ) {
 int MOAIScissorRect::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScissorRect, "U" )
 	
-	self->mRect = state.GetRect < float >( 2 );
+	self->mRect = state.GetRect < real >( 2 );
 	
 	return 0;
 }

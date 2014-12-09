@@ -53,7 +53,7 @@ void zglClear ( u32 mask ) {
 }
 
 //----------------------------------------------------------------//
-void zglClearColor ( float r, float g, float b, float a ) {
+void zglClearColor ( real r, real g, real b, real a ) {
 	UNUSED ( r );
 	UNUSED ( g );
 	UNUSED ( b );
@@ -61,7 +61,7 @@ void zglClearColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void zglColor ( float r, float g, float b, float a ) {
+void zglColor ( real r, real g, real b, real a ) {
 	UNUSED ( r );
 	UNUSED ( g );
 	UNUSED ( b );
@@ -166,7 +166,7 @@ extern cc8* zglGetString ( u32 stringID ) {
 }
 
 //----------------------------------------------------------------//
-void zglLineWidth ( float width ) {
+void zglLineWidth ( real width ) {
 	UNUSED ( width );
 }
 
@@ -175,7 +175,7 @@ void zglLoadIdentity () {
 }
 
 //----------------------------------------------------------------//
-void zglLoadMatrix ( const float* matrix ) {
+void zglLoadMatrix ( const real* matrix ) {
 	UNUSED ( matrix );
 }
 
@@ -185,12 +185,12 @@ void zglMatrixMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void zglMultMatrix ( const float* matrix ) {
+void zglMultMatrix ( const real* matrix ) {
 	UNUSED ( matrix );
 }
 
 //----------------------------------------------------------------//
-void zglPointSize ( float size ) {
+void zglPointSize ( real size ) {
 	UNUSED ( size );
 }
 
@@ -373,7 +373,7 @@ void zglValidateProgram ( u32 program ) {
 }
 
 //----------------------------------------------------------------//
-void zglUniform1f ( u32 location, float v0 ) {
+void zglUniform1f ( u32 location, real v0 ) {
 	UNUSED ( location );
 	UNUSED ( v0 );
 }
@@ -385,14 +385,14 @@ void zglUniform1i ( u32 location, s32 v0 ) {
 }
 
 //----------------------------------------------------------------//
-void zglUniform4fv ( u32 location, u32 count, const float* value ) {
+void zglUniform4fv ( u32 location, u32 count, const real* value ) {
 	UNUSED ( location );
 	UNUSED ( count );
 	UNUSED ( value );
 }
 
 //----------------------------------------------------------------//
-void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* value ) {
+void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const real* value ) {
 	UNUSED ( location );
 	UNUSED ( count );
 	UNUSED ( transpose );
@@ -400,7 +400,7 @@ void zglUniformMatrix3fv ( u32 location, u32 count, bool transpose, const float*
 }
 
 //----------------------------------------------------------------//
-void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* value ) {
+void zglUniformMatrix4fv ( u32 location, u32 count, bool transpose, const real* value ) {
 	UNUSED ( location );
 	UNUSED ( count );
 	UNUSED ( transpose );

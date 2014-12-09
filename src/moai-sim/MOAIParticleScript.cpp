@@ -689,7 +689,7 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 	sprite.mBlue		= registers [ SPRITE_BLUE ] * opacity;
 	sprite.mAlpha		= opacity * glow;
 	
-	sprite.mGfxID		= ZLFloat::ToInt ( registers [ SPRITE_IDX ]);
+	sprite.mGfxID		= ZLReal::ToInt ( registers [ SPRITE_IDX ]);
 	
 	system.PushSprite ( sprite );
 }
@@ -861,7 +861,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					v3 = ( v3 < 0.0f ) ? -v3 : v3;
 					
 					float cycle = ( v0 - v1 ) / v3;
-					int cycleIdx = ZLFloat::ToInt ( ZLFloat::Floor ( cycle ));
+					int cycleIdx = ZLReal::ToInt ( ZLReal::Floor ( cycle ));
 					float cycleDec = cycle - ( float )cycleIdx;
 					
 					if ( cycleIdx & 0x01 ) {
@@ -951,7 +951,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				READ_VALUE	( v1, bytecode );
 				
 				if ( r0 ) {
-					*r0 = ZLFloat::Rand ( v0, v1 );
+					*r0 = ZLReal::Rand ( v0, v1 );
 				}
 				break;
 				
@@ -962,8 +962,8 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				READ_VALUE	( v0, bytecode );
 				READ_VALUE	( v1, bytecode );
 				
-				v2 = ZLFloat::Rand ( 360.0f ) * ( float )D2R;
-				v3 = ZLFloat::Rand ( v0,  v1 );
+				v2 = ZLReal::Rand ( 360.0f ) * ( float )D2R;
+				v3 = ZLReal::Rand ( v0,  v1 );
 				
 				if ( r0 ) {
 					*r0 = Cos ( v2 ) * v3;

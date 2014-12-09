@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <math.h>
-#include <zl-util/ZLFloat.h>
+#include <zl-util/ZLReal.h>
 #include <zl-util/ZLMathConsts.h>
 #include <zl-util/ZLPolar.h>
 #include <zl-util/ZLTrig.h>
@@ -141,7 +141,7 @@ double USPolar::GetMinutes ( double polar ) {
 
 	polar = USPolar::NormalizeAngle360 ( polar );
 
-	return ZLFloat::Floor ( ZLFloat::Decimal ( polar ) * 60.0 );
+	return ZLReal::Floor ( ZLReal::Decimal ( polar ) * 60.0 );
 }
 
 //----------------------------------------------------------------//
@@ -149,8 +149,8 @@ double USPolar::GetSeconds ( double polar ) {
 
 	polar = USPolar::NormalizeAngle360 ( polar );
 	
-	double minutes = ZLFloat::Decimal ( polar ) * 60.0;
-	return ZLFloat::Floor ( ZLFloat::Decimal ( minutes ) * 60.0 );
+	double minutes = ZLReal::Decimal ( polar ) * 60.0;
+	return ZLReal::Floor ( ZLReal::Decimal ( minutes ) * 60.0 );
 }
 
 //----------------------------------------------------------------//

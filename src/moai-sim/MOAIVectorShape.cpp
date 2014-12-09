@@ -33,21 +33,21 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess ) {
 	SafeTesselator exterior;
 	SafeTesselator interior;
 	
-	float width = this->mStyle.GetStrokeWidth ();
+	real width = this->mStyle.GetStrokeWidth ();
 	
-	float interiorWidth;
-	float exteriorWidth;
+	real interiorWidth;
+	real exteriorWidth;
 	
 	if ( this->mStyle.mStrokeStyle == MOAIVectorStyle::STROKE_EXTERIOR ) {
-		interiorWidth = 0.0f;
+		interiorWidth = 0.0;
 		exteriorWidth = width;
 	}
 	else if ( this->mStyle.mStrokeStyle == MOAIVectorStyle::STROKE_INTERIOR ) {
 		interiorWidth = width;
-		exteriorWidth = 0.0f;
+		exteriorWidth = 0.0;
 	}
 	else {
-		interiorWidth = width * 0.5f;
+		interiorWidth = width * 0.5;
 		exteriorWidth = interiorWidth;
 	}
 	
@@ -88,14 +88,14 @@ void MOAIVectorShape::CopyAndTransformVertices ( ZLVec2D* vertices, const ZLAffi
 //----------------------------------------------------------------//
 void MOAIVectorShape::CopyBoundaries ( SafeTesselator* dest, SafeTesselator* src ) {
 
-	const float* verts = tessGetVertices ( src->mTess );
+	const TESSreal* verts = tessGetVertices ( src->mTess );
 	const int* elems = tessGetElements ( src->mTess );
 	int nelems = tessGetElementCount ( src->mTess );
 
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
 		int n = elems [( i * 2 ) + 1 ];
-		tessAddContour ( dest->mTess, 2, &verts [ b * 2 ], sizeof ( float ) * 2, n );
+		tessAddContour ( dest->mTess, 2, &verts [ b * 2 ], sizeof ( TESSreal ) * 2, n );
 	}
 }
 
@@ -124,7 +124,7 @@ bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total, bool clo
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::Stroke ( SafeTesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior ) {
+void MOAIVectorShape::Stroke ( SafeTesselator* tess, const ZLVec2D* verts, int nVerts, real width, bool forward, bool interior ) {
 
 	MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nVerts );
 	MOAIVectorUtil::ComputeLineJoins ( joins, verts, nVerts, false, forward, interior );
@@ -140,9 +140,9 @@ void MOAIVectorShape::Stroke ( SafeTesselator* tess, const ZLVec2D* verts, int n
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::StrokeBoundaries ( SafeTesselator* tess, SafeTesselator* outline, float width, bool forward, bool interior ) {
+void MOAIVectorShape::StrokeBoundaries ( SafeTesselator* tess, SafeTesselator* outline, real width, bool forward, bool interior ) {
 
-	const float* verts = tessGetVertices ( outline->mTess );
+	const TESSreal* verts = tessGetVertices ( outline->mTess );
 	const int* elems = tessGetElements ( outline->mTess );
 	int nelems = tessGetElementCount ( outline->mTess );
 

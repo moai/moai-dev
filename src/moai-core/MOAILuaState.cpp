@@ -632,7 +632,7 @@ STLString MOAILuaState::GetValue ( int idx, cc8* value ) {
 
 //----------------------------------------------------------------//
 template <>
-double MOAILuaState::GetValue < double >( int idx, double value ) {
+real MOAILuaState::GetValue < real >( int idx, real value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return lua_tonumber ( this->mState, idx );
@@ -642,7 +642,7 @@ double MOAILuaState::GetValue < double >( int idx, double value ) {
 
 //----------------------------------------------------------------//
 template <>
-float MOAILuaState::GetValue < float >( int idx, float value ) {
+real_alt MOAILuaState::GetValue < real_alt >( int idx, real_alt value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( float )lua_tonumber ( this->mState, idx );

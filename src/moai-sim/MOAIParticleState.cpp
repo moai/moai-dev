@@ -216,7 +216,7 @@ void MOAIParticleState::GatherForces ( ZLVec3D& loc, ZLVec3D& velocity, float ma
 	velocity.mX += acceleration.mX * step;
 	velocity.mY += acceleration.mY * step;
 	
-	velocity.Scale ( ZLFloat::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
+	velocity.Scale ( ZLReal::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
 	
 	loc.mX += ( velocity.mX + offset.mX ) * step;
 	loc.mY += ( velocity.mY + offset.mY ) * step;
@@ -235,8 +235,8 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 	}
 	
 	particle.mAge = 0.0f;
-	particle.mTerm = ZLFloat::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
-	particle.mMass = ZLFloat::Rand ( this->mMassRange [ 0 ], this->mMassRange [ 1 ]);
+	particle.mTerm = ZLReal::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
+	particle.mMass = ZLReal::Rand ( this->mMassRange [ 0 ], this->mMassRange [ 1 ]);
 	particle.mState = this;
 }
 

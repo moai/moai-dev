@@ -211,16 +211,16 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
+				this->mR = ZLReal::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ), 0.0f, 1.0f );
 				return true;
 			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
+				this->mG = ZLReal::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ), 0.0f, 1.0f );
 				return true;
 			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
+				this->mB = ZLReal::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ), 0.0f, 1.0f );
 				return true;
 			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
+				this->mA = ZLReal::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ), 0.0f, 1.0f );
 				return true;
 			case COLOR_TRAIT:
 				attrOp.ApplyNoAdd < ZLColorVec* >( &this->mColor, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_COLOR );

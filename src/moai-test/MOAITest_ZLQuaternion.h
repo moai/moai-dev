@@ -52,10 +52,10 @@ public:
 
 		quat.Set ( testX, testY, testZ );
 
-		if ( ZLFloat::IsClose ( quat.mS, quatS, EPSILON ) &&
-			 ZLFloat::IsClose ( quat.mV.mX, quatX, EPSILON ) &&
-			 ZLFloat::IsClose ( quat.mV.mY, quatY, EPSILON ) &&
-			 ZLFloat::IsClose ( quat.mV.mZ, quatZ, EPSILON )) {
+		if ( ZLReal::IsClose ( quat.mS, quatS, EPSILON ) &&
+			 ZLReal::IsClose ( quat.mV.mX, quatX, EPSILON ) &&
+			 ZLReal::IsClose ( quat.mV.mY, quatY, EPSILON ) &&
+			 ZLReal::IsClose ( quat.mV.mZ, quatZ, EPSILON )) {
 			
 			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );
@@ -83,9 +83,9 @@ public:
 
 		quat.Get ( x, y, z );
 
-		if ( ZLFloat::IsClose ( x, testX, EPSILON ) &&
-			 ZLFloat::IsClose ( y, testY, EPSILON ) &&
-			 ZLFloat::IsClose ( z, testZ, EPSILON )) {
+		if ( ZLReal::IsClose ( x, testX, EPSILON ) &&
+			 ZLReal::IsClose ( y, testY, EPSILON ) &&
+			 ZLReal::IsClose ( z, testZ, EPSILON )) {
 			
 			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );
@@ -118,10 +118,10 @@ public:
 
 		result.Slerp ( quat, quat2, 0.45f );
 		
-		if ( ZLFloat::IsClose ( result.mS, testS, EPSILON ) &&
-			 ZLFloat::IsClose ( result.mV.mX, testX, EPSILON ) &&
-			 ZLFloat::IsClose ( result.mV.mY, testY, EPSILON ) &&
-			 ZLFloat::IsClose ( result.mV.mZ, testZ, EPSILON )) {
+		if ( ZLReal::IsClose ( result.mS, testS, EPSILON ) &&
+			 ZLReal::IsClose ( result.mV.mX, testX, EPSILON ) &&
+			 ZLReal::IsClose ( result.mV.mY, testY, EPSILON ) &&
+			 ZLReal::IsClose ( result.mV.mZ, testZ, EPSILON )) {
 			
 			testMgr.Success ( "Passed" );
 			testMgr.EndTest ( true );

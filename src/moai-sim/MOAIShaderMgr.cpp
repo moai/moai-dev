@@ -112,8 +112,8 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				
 				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_REAL );
+				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_REAL );
 				
 				program->ReserveGlobals ( 2 );
 				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
@@ -145,8 +145,8 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				
 				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_REAL );
+				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_REAL );
 				
 				program->ReserveGlobals ( 2 );
 				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
@@ -185,8 +185,8 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetVertexAttribute ( 1, "color" );
 				
 				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_R4 );
+				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_R4 );
 				
 				program->ReserveGlobals ( 2 );
 				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
@@ -202,8 +202,8 @@ MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_R4 );
+				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_R4 );
 				
 				program->ReserveGlobals ( 2 );
 				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );

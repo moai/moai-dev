@@ -35,7 +35,7 @@ public:
 	//----------------------------------------------------------------//
 	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
 	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	ZLQuaternion	GetValue				( float time ) const;
+	ZLQuaternion	GetValue				( real time ) const;
 	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
 	void			GetZero					( MOAIAttrOp& attrOp ) const;
 					MOAIAnimCurveQuat		();
@@ -44,7 +44,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveSamples			( u32 total );
-	void			SetSample				( u32 id, float x, float y, float z );
+	void			SetSample				( u32 id, real x, real y, real z );
 };
 
 #endif

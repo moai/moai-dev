@@ -108,13 +108,13 @@ MOAIEaseDriver::~MOAIEaseDriver () {
 void MOAIEaseDriver::OnUpdate ( double step ) {
 	
 	float c0 = this->GetCycle ();
-	float t0 = ZLFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
+	float t0 = ZLReal::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
 	
 	MOAITimer::OnUpdate ( step );
 	if ( step == 0.0f ) return;
 	
 	float c1 = this->GetCycle ();
-	float t1 = ZLFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
+	float t1 = ZLReal::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
 
 	MOAIAttrOp adder;
 
@@ -153,7 +153,7 @@ void MOAIEaseDriver::OnUpdate ( double step ) {
 			}
 			
 			if ( delta != 0.0f ) {
-				adder.SetValue ( delta, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				adder.SetValue ( delta, MOAIAttrOp::ATTR_TYPE_REAL );
 				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttrOp::ADD );
 				link.mDest->ScheduleUpdate ();
 			}

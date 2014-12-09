@@ -36,7 +36,6 @@
 #include <zl-util/ZLFactory.h>
 #include <zl-util/ZLFileStream.h>
 #include <zl-util/ZLFileSys.h>
-#include <zl-util/ZLFloat.h>
 #include <zl-util/ZLFrustum.h>
 #include <zl-util/ZLHashedString.h>
 #include <zl-util/ZLHashWriter.h>
@@ -71,6 +70,7 @@
 #include <zl-util/ZLQuaternion.h>
 #include <zl-util/ZLRadixSort16.h>
 #include <zl-util/ZLRadixSort32.h>
+#include <zl-util/ZLReal.h>
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLStream.h>

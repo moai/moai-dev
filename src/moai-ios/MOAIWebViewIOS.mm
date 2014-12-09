@@ -248,10 +248,10 @@ int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
 	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	int left = lua_tointeger ( state, 2 );
-	int top = lua_tointeger ( state, 3 );
-	int width = lua_tointeger ( state, 4 );
-	int height = lua_tointeger ( state, 5 );
+	int left = state.GetValue < int >( 2, 0 );
+	int top = state.GetValue < int >( 3, 0 );
+	int width = state.GetValue < int >( 4, 0 );
+	int height = state.GetValue < int >( 5, 0 );
 	bool hidden = lua_toboolean ( state, 6 );
 			
 	if ( self->mWebView ) {
@@ -594,14 +594,13 @@ void MOAIWebViewIOS::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* request, UIWebViewNavigationType navType ) {
 
 	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];
-	int nav = navType;
 	bool result = true;
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
 		
 		lua_pushstring ( state, urlString );
-		lua_pushinteger ( state, nav );			
+		lua_pushinteger ( state, ( lua_Integer )navType );
 		state.DebugCall ( 3, 1 );
 		result = lua_toboolean ( state, -1 );
 	}

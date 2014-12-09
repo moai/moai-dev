@@ -77,6 +77,8 @@ public:
 	}
 };
 
-typedef ZLMetaBarycentric < float > ZLBarycentric;
+typedef ZLMetaBarycentric < real > ZLBarycentric;
+typedef ZLMetaBarycentric < float > ZLFloatBarycentric;
+typedef ZLMetaBarycentric < double > ZLDoubleBarycentric;
 
 #endif

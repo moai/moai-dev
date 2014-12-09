@@ -47,7 +47,7 @@ bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	if ( MOAIPinTransformAttr::Check ( attrID )) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FRONT:
-				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_REAL );
 				return true;
 		}
 	}

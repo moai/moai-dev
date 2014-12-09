@@ -215,7 +215,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 		return 0;
 	}
 	
-	ZLRect rect = state.GetRect < float >( 2 );
+	ZLRect rect = state.GetRect < real >( 2 );
 	rect.Bless ();
 	
 	float angle = state.GetValue < float >( 6, 0.0f );
@@ -1109,19 +1109,19 @@ bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case MOAITransform::ATTR_X_LOC: {
-				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ) * this->GetUnitsToMeters ();
 				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
 				return true;
 			}
 
 			case MOAITransform::ATTR_Y_LOC: {
-				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL ) * this->GetUnitsToMeters ();
 				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
 				return true;	
 			}
 
 			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );				
+				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_REAL );				
 				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
 				return true;	
 			}

@@ -4,7 +4,7 @@
 #ifndef ZLRECT_H
 #define	ZLRECT_H
 
-#include <zl-util/ZLFloat.h>
+#include <zl-util/ZLReal.h>
 #include <zl-util/ZLVec2D.h>
 #include <zl-util/ZLVec3D.h>
 
@@ -469,8 +469,8 @@ public:
 	
 		ZLMetaVec2D < TYPE > result;
 		
-		result.mX = ZLFloat::Clamp ( point.mX, this->mXMin, this->mXMax );
-		result.mY = ZLFloat::Clamp ( point.mY, this->mYMin, this->mYMax );
+		result.mX = ZLReal::Clamp ( point.mX, this->mXMin, this->mXMax );
+		result.mY = ZLReal::Clamp ( point.mY, this->mYMin, this->mYMax );
 		
 		return result;
 	}
@@ -705,8 +705,9 @@ public:
 	}
 };
 
-typedef ZLMetaRect < float >	ZLRect;
-typedef ZLMetaRect < double >	ZLDoubleRect;
+typedef ZLMetaRect < real >		ZLRect;
 typedef ZLMetaRect < int >		ZLIntRect;
+typedef ZLMetaRect < float >	ZLFloatRect;
+typedef ZLMetaRect < double >	ZLDoubleRect;
 
 #endif

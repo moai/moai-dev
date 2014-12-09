@@ -193,11 +193,11 @@ int MOAIGridSpace::_initAxialHexGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float tileWidth		= state.GetValue < float >( 4, 1.0f );
-	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	real tileWidth		= state.GetValue < real >( 4, 1.0 );
+	real tileHeight	= state.GetValue < real >( 5, 1.0 );
 
-	float xGutter		= state.GetValue < float >( 6, 0.0f );
-	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	real xGutter		= state.GetValue < real >( 6, 0.0 );
+	real yGutter		= state.GetValue < real >( 7, 0.0 );
 
 	self->mShape = AXIAL_HEX_SHAPE;
 
@@ -207,8 +207,8 @@ int MOAIGridSpace::_initAxialHexGrid ( lua_State* L ) {
 	self->mCellWidth = tileWidth;
 	self->mCellHeight = tileHeight;
 	
-	self->mXOff = xGutter * 0.5f;
-	self->mYOff = yGutter * 0.5f;
+	self->mXOff = xGutter * 0.5;
+	self->mYOff = yGutter * 0.5;
 	
 	self->mTileWidth = tileWidth - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
@@ -237,11 +237,11 @@ int MOAIGridSpace::_initDiamondGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float tileWidth		= state.GetValue < float >( 4, 1.0f );
-	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	real tileWidth		= state.GetValue < real >( 4, 1.0 );
+	real tileHeight	= state.GetValue < real >( 5, 1.0 );
 
-	float xGutter		= state.GetValue < float >( 6, 0.0f );
-	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	real xGutter		= state.GetValue < real >( 6, 0.0 );
+	real yGutter		= state.GetValue < real >( 7, 0.0 );
 
 	self->mShape = DIAMOND_SHAPE;
 
@@ -249,10 +249,10 @@ int MOAIGridSpace::_initDiamondGrid ( lua_State* L ) {
 	self->mHeight = height;
 	
 	self->mCellWidth = tileWidth;
-	self->mCellHeight = tileHeight * 0.5f;
+	self->mCellHeight = tileHeight * 0.5;
 	
-	self->mXOff = xGutter * 0.5f;
-	self->mYOff = ( yGutter * 0.5f ) - ( tileHeight * 0.25f );
+	self->mXOff = xGutter * 0.5;
+	self->mYOff = ( yGutter * 0.5 ) - ( tileHeight * 0.25f );
 	
 	self->mTileWidth = tileWidth - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
@@ -280,13 +280,13 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float hRad			= state.GetValue < float >( 4, 1.0f ) * 0.5f;
+	real hRad			= state.GetValue < real >( 4, 1.0 ) * 0.5;
 
-	float xGutter		= state.GetValue < float >( 5, 0.0f );
-	float yGutter		= state.GetValue < float >( 6, 0.0f );
+	real xGutter		= state.GetValue < real >( 5, 0.0 );
+	real yGutter		= state.GetValue < real >( 6, 0.0 );
 
-	float tileWidth = hRad * 6.0f;
-	float tileHeight = hRad * ( float )( M_SQRT3 * 2.0 );
+	real tileWidth = hRad * 6.0;
+	real tileHeight = hRad * ( real )( M_SQRT3 * 2.0 );
 
 	self->mShape = HEX_SHAPE;
 
@@ -294,12 +294,12 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 	self->mHeight = height;
 	
 	self->mCellWidth = tileWidth;
-	self->mCellHeight = tileHeight * 0.5f;
+	self->mCellHeight = tileHeight * 0.5;
 	
-	self->mXOff = hRad + ( xGutter * 0.5f );
-	self->mYOff = ( yGutter * 0.5f ) - ( tileHeight * 0.25f );
+	self->mXOff = hRad + ( xGutter * 0.5 );
+	self->mYOff = ( yGutter * 0.5 ) - ( tileHeight * 0.25f );
 	
-	self->mTileWidth = ( hRad * 4.0f ) - xGutter;
+	self->mTileWidth = ( hRad * 4.0 ) - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
 	
 	self->OnResize ();
@@ -326,11 +326,11 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float tileWidth		= state.GetValue < float >( 4, 1.0f );
-	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	real tileWidth		= state.GetValue < real >( 4, 1.0 );
+	real tileHeight	= state.GetValue < real >( 5, 1.0 );
 
-	float xGutter		= state.GetValue < float >( 6, 0.0f );
-	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	real xGutter		= state.GetValue < real >( 6, 0.0 );
+	real yGutter		= state.GetValue < real >( 7, 0.0 );
 	
 	self->mShape = OBLIQUE_SHAPE;
 
@@ -340,10 +340,10 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 	self->mCellWidth = tileWidth;
 	self->mCellHeight = tileHeight;
 	
-	self->mXOff = xGutter * 0.5f;
-	self->mYOff = yGutter * 0.5f;
+	self->mXOff = xGutter * 0.5;
+	self->mYOff = yGutter * 0.5;
 	
-	self->mTileWidth = ( tileWidth * 2.0f ) - xGutter;
+	self->mTileWidth = ( tileWidth * 2.0 ) - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
 	
 	self->OnResize ();
@@ -370,11 +370,11 @@ int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float tileWidth		= state.GetValue < float >( 4, 1.0f );
-	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	real tileWidth		= state.GetValue < real >( 4, 1.0 );
+	real tileHeight	= state.GetValue < real >( 5, 1.0 );
 
-	float xGutter		= state.GetValue < float >( 6, 0.0f );
-	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	real xGutter		= state.GetValue < real >( 6, 0.0 );
+	real yGutter		= state.GetValue < real >( 7, 0.0 );
 	
 	self->mShape = RECT_SHAPE;
 
@@ -384,8 +384,8 @@ int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
 	self->mCellWidth = tileWidth;
 	self->mCellHeight = tileHeight;
 	
-	self->mXOff = xGutter * 0.5f;
-	self->mYOff = yGutter * 0.5f;
+	self->mXOff = xGutter * 0.5;
+	self->mYOff = yGutter * 0.5;
 	
 	self->mTileWidth = tileWidth - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
@@ -408,8 +408,8 @@ int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
 
 	ZLVec2D loc;
-	loc.mX = state.GetValue < float >( 2, 0 );
-	loc.mY = state.GetValue < float >( 3, 0 );
+	loc.mX = state.GetValue < real >( 2, 0 );
+	loc.mY = state.GetValue < real >( 3, 0 );
 	
 	MOAICellCoord coord;
 	coord = self->GetCellCoord ( loc );
@@ -432,8 +432,8 @@ int MOAIGridSpace::_locToCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
 
 	ZLVec2D loc;
-	loc.mX = state.GetValue < float >( 2, 0 );
-	loc.mY = state.GetValue < float >( 3, 0 );
+	loc.mX = state.GetValue < real >( 2, 0 );
+	loc.mY = state.GetValue < real >( 3, 0 );
 	
 	MOAICellCoord coord;
 	coord = self->GetCellCoord ( loc );
@@ -505,14 +505,14 @@ int MOAIGridSpace::_setSize ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float cellWidth		= state.GetValue < float >( 4, 1.0f );
-	float cellHeight	= state.GetValue < float >( 5, 1.0f );
+	real cellWidth		= state.GetValue < real >( 4, 1.0 );
+	real cellHeight	= state.GetValue < real >( 5, 1.0 );
 
-	float xOff			= state.GetValue < float >( 6, 0.0f );
-	float yOff			= state.GetValue < float >( 7, 0.0f );
+	real xOff			= state.GetValue < real >( 6, 0.0 );
+	real yOff			= state.GetValue < real >( 7, 0.0 );
 	
-	float tileWidth		= state.GetValue < float >( 8, cellWidth );
-	float tileHeight	= state.GetValue < float >( 9, cellHeight );
+	real tileWidth		= state.GetValue < real >( 8, cellWidth );
+	real tileHeight	= state.GetValue < real >( 9, cellHeight );
 	
 	self->SetWidth ( width );
 	self->SetHeight ( height );
@@ -563,8 +563,8 @@ int MOAIGridSpace::_wrapCoord ( lua_State* L ) {
 ZLVec2D MOAIGridSpace::CellToWorld ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
 
 	ZLVec2D result;
-	result.mX = ( loc.mX + ( float )cellCoord.mX ) * this->mCellWidth;
-	result.mY = ( loc.mY + ( float )cellCoord.mY ) * this->mCellHeight;
+	result.mX = ( loc.mX + ( real )cellCoord.mX ) * this->mCellWidth;
+	result.mY = ( loc.mY + ( real )cellCoord.mY ) * this->mCellHeight;
 	
 	return result;
 }
@@ -617,11 +617,11 @@ MOAICellCoord MOAIGridSpace::ClampY ( MOAICellCoord cellCoord ) const {
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
-	float t1, t2, q, r;
+MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( real x, real y ) const {
+	real t1, t2, q, r;
 
 	/* normalize to units of hex dimensions */
-	x = ( x / this->mCellWidth ) - 0.5f;
+	x = ( x / this->mCellWidth ) - 0.5;
 	y = ( y / this->mCellHeight );
 
 	/*
@@ -641,8 +641,8 @@ MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
 	 */
 	t1 = ( y * 2 );
 	t2 = floorf ( x + t1 );
-	r = floorf (( floorf ( t1 - x ) + t2 ) / 3.0f );
-	q = floorf (( floorf ( 2.0f * x + 1.0f ) + t2) / 3.0f );
+	r = floorf (( floorf ( t1 - x ) + t2 ) / 3.0 );
+	q = floorf (( floorf ( 2.0 * x + 1.0 ) + t2) / 3.0 );
 
 	return MOAICellCoord ( q, r );
 }
@@ -652,19 +652,19 @@ ZLRect MOAIGridSpace::GetBounds () const {
 
 	ZLRect rect;
 
-	rect.mXMin = 0.0f;
-	rect.mYMin = 0.0f;
+	rect.mXMin = 0.0;
+	rect.mYMin = 0.0;
 	
 	rect.mXMax = this->mWidth * this->mCellWidth;
 	rect.mYMax = this->mHeight * this->mCellHeight;
 	
 	if ( this->mShape & STAGGER_FLAG ) {
-		rect.mXMax += this->mCellWidth * 0.5f;
-		rect.mYMin -= this->mCellHeight * 0.5f;
-		rect.mYMax += this->mCellHeight * 0.5f;
+		rect.mXMax += this->mCellWidth * 0.5;
+		rect.mYMin -= this->mCellHeight * 0.5;
+		rect.mYMax += this->mCellHeight * 0.5;
 	}
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		rect.mXMin -= this->mCellWidth * 0.5f * (this->mHeight - 1);
+		rect.mXMin -= this->mCellWidth * 0.5 * (this->mHeight - 1);
 		rect.mYMax -= this->mCellHeight * 0.25f * (this->mHeight - 1);
 	}
 	
@@ -680,13 +680,13 @@ ZLRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
 	rect0.Grow ( rect1 );
 	
 	if ( this->mShape & STAGGER_FLAG ) {
-		rect0.mXMax += this->mCellWidth * 0.5f;
-		rect0.mYMin -= this->mCellHeight * 0.5f;
-		rect0.mYMax += this->mCellHeight * 0.5f;
+		rect0.mXMax += this->mCellWidth * 0.5;
+		rect0.mYMin -= this->mCellHeight * 0.5;
+		rect0.mYMax += this->mCellHeight * 0.5;
 	}
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		float rectHeight = rect0.mYMax - rect0.mYMin;
-		rect0.mXMin -= this->mCellWidth * 0.5f * rectHeight;
+		real rectHeight = rect0.mYMax - rect0.mYMin;
+		rect0.mXMin -= this->mCellWidth * 0.5 * rectHeight;
 		rect0.mYMax -= this->mCellHeight * 0.25f * rectHeight;
 	}
 	
@@ -700,18 +700,18 @@ void MOAIGridSpace::GetBoundsInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCo
 	maxSize.Bless ();
 
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		float rectHeight;
+		real rectHeight;
 		c0 = this->GetAxialHexCellCoord ( rect.mXMin, rect.mYMin );
 		c1 = this->GetAxialHexCellCoord ( rect.mXMax, rect.mYMax );
 		rectHeight = c1.mY - c0.mY;
 		/* you need an extra column per two rows */
 		c1.mX = c1.mX + (rectHeight / 2);
 	} else {
-		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
-		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
+		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5 - 1.0 ) );
+		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5 - 1.0 ) );
 
-		c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
-		c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
+		c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5 - 1.0 ) );
+		c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5 - 1.0 ) );
 	}
 	
 	if ( this->mShape & STAGGER_FLAG ) {
@@ -774,7 +774,7 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( ZLVec2D loc ) const {
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
+MOAICellCoord MOAIGridSpace::GetCellCoord ( real x, real y ) const {
 	
 	MOAICellCoord cellCoord ( 0, 0 );
 	
@@ -784,10 +784,10 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
 			return this->GetAxialHexCellCoord ( x, y );
 
 		case DIAMOND_SHAPE:
-			return this->GetHexCellCoord ( x, y, 0.0f, 4.0f );
+			return this->GetHexCellCoord ( x, y, 0.0, 4.0 );
 		
 		case HEX_SHAPE:
-			return this->GetHexCellCoord ( x, y, 2.0f, 10.0f );
+			return this->GetHexCellCoord ( x, y, 2.0, 10.0 );
 			
 		case OBLIQUE_SHAPE:
 			return this->GetObliqueCellCoord ( x, y );
@@ -813,28 +813,28 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( int xCell, int yCell ) const {
 //----------------------------------------------------------------//
 ZLVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) const {
 			
-	float xOff = 0.0f;
+	real xOff = 0.0;
 	
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
-		xOff = this->mCellWidth * 0.5f;
+		xOff = this->mCellWidth * 0.5;
 	}
 	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		xOff = this->mCellWidth * -0.5 * cellCoord.mY;
 		return this->GetRectPoint (
 			( cellCoord.mX * this->mCellWidth ) + xOff,
-			( cellCoord.mY * this->mCellHeight * 3 / 4 ) - ( this->mCellHeight * 0.5f ),
+			( cellCoord.mY * this->mCellHeight * 3 / 4 ) - ( this->mCellHeight * 0.5 ),
 			this->mCellWidth,
-			this->mCellHeight * 2.0f,
+			this->mCellHeight * 2.0,
 			position
 		);
 	}
 	
 	return this->GetRectPoint (
 		( cellCoord.mX * this->mCellWidth ) + xOff,
-		( cellCoord.mY * this->mCellHeight ) - ( this->mCellHeight* 0.5f ),
+		( cellCoord.mY * this->mCellHeight ) - ( this->mCellHeight* 0.5 ),
 		this->mCellWidth,
-		this->mCellHeight * 2.0f,
+		this->mCellHeight * 2.0,
 		position
 	);
 }
@@ -842,14 +842,14 @@ ZLVec2D MOAIGridSpace::GetCellPoint ( MOAICellCoord cellCoord, u32 position ) co
 //----------------------------------------------------------------//
 ZLRect MOAIGridSpace::GetCellRect ( MOAICellCoord cellCoord ) const {
 			
-	float xOff = 0.0f;
-	float yOff = 0.0f;
+	real xOff = 0.0;
+	real yOff = 0.0;
 
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
-		xOff = this->mCellWidth * 0.5f;
+		xOff = this->mCellWidth * 0.5;
 	}
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		xOff = this->mCellWidth * -0.5 * cellCoord.mY;
 		yOff = (cellCoord.mY - 1) * this->mCellHeight * 0.25f;
 	}
 	
@@ -865,11 +865,11 @@ ZLRect MOAIGridSpace::GetCellRect ( MOAICellCoord cellCoord ) const {
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float b ) const {
+MOAICellCoord MOAIGridSpace::GetHexCellCoord ( real x, real y, real a, real b ) const {
 
 	// get the coord in tiles
-	float xUnit = ( x / this->mCellWidth );
-	float yUnit = ( y / this->mCellHeight );
+	real xUnit = ( x / this->mCellWidth );
+	real yUnit = ( y / this->mCellHeight );
 	
 	// get the y tile index
 	int yTile = ( int )floorf ( yUnit );
@@ -879,7 +879,7 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 	
 	// need to offset x into the previous tile if y is odd
 	if ( yTile & 0x01 ) {
-		xUnit -= 0.5f;
+		xUnit -= 0.5;
 		
 		stepRight = 1;
 		stepLeft = 0;
@@ -889,14 +889,14 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 	int xTile = ( int )floorf ( xUnit );
 	
 	// now get the local coord
-	float xLocal = ( xUnit - ( float )xTile ) * ( a + b );
-	float yLocal = (( yUnit - ( float )yTile ) * 2.0f ) - 1.0f;
+	real xLocal = ( xUnit - ( real )xTile ) * ( a + b );
+	real yLocal = (( yUnit - ( real )yTile ) * 2.0 ) - 1.0;
 
 	// check the position of the coord depending on tile quadrant
 	// offset the tile index if out of bounds on any corner
-	if ( xLocal < ( a + 1.0f )) {
+	if ( xLocal < ( a + 1.0 )) {
 	
-		if ( yLocal < 0.0f ) {
+		if ( yLocal < 0.0 ) {
 			if ( yLocal < ( a - xLocal )) {
 				xTile = xTile + stepLeft;
 				yTile = yTile - 1;
@@ -907,9 +907,9 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 			yTile = yTile + 1;
 		}
 	}
-	else if ( xLocal > ( b - 1.0f )) {
+	else if ( xLocal > ( b - 1.0 )) {
 		
-		if ( yLocal < 0.0f ) {
+		if ( yLocal < 0.0 ) {
 			if ( yLocal < ( xLocal - b )) {
 				xTile = xTile + stepRight;
 				yTile = yTile - 1;
@@ -926,19 +926,19 @@ MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float 
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
+MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( real x, real y ) const {
 
 	// get the coord in tiles
-	float xUnit = ( x / this->mCellWidth );
-	float yUnit = ( y / this->mCellHeight );
+	real xUnit = ( x / this->mCellWidth );
+	real yUnit = ( y / this->mCellHeight );
 	
 	// get the tile index
 	int xTile = ( int )floorf ( xUnit );
 	int yTile = ( int )floorf ( yUnit );
 	
 	// now get the local coord
-	float xLocal = ( xUnit - ( float )xTile );
-	float yLocal = ( yUnit - ( float )yTile );
+	real xLocal = ( xUnit - ( real )xTile );
+	real yLocal = ( yUnit - ( real )yTile );
 	
 	if ( yLocal > xLocal ) {
 		xTile = xTile - 1;
@@ -949,7 +949,7 @@ MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 }
 
 //----------------------------------------------------------------//
-ZLVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float height, u32 position ) const {
+ZLVec2D MOAIGridSpace::GetRectPoint ( real x, real y, real width, real height, u32 position ) const {
 
 	ZLVec2D origin;
 
@@ -974,27 +974,27 @@ ZLVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float heigh
 			break;
 		}
 		case TILE_LEFT_CENTER: {
-			origin.mY = origin.mY + ( height * 0.5f );
+			origin.mY = origin.mY + ( height * 0.5 );
 			break;
 		}
 		case TILE_RIGHT_CENTER: {
 			origin.mX = origin.mX + width;
-			origin.mY = origin.mY + ( height * 0.5f );
+			origin.mY = origin.mY + ( height * 0.5 );
 			break;
 		}
 		case TILE_TOP_CENTER: {
-			origin.mX = origin.mX + ( width * 0.5f );
+			origin.mX = origin.mX + ( width * 0.5 );
 			break;
 		}
 		case TILE_BOTTOM_CENTER: {
-			origin.mX = origin.mX + ( width * 0.5f );
+			origin.mX = origin.mX + ( width * 0.5 );
 			origin.mY = origin.mY + height;
 			break;
 		}
 		case TILE_CENTER:
 		default: {
-			origin.mX = origin.mX + ( width * 0.5f );
-			origin.mY = origin.mY + ( height * 0.5f );
+			origin.mX = origin.mX + ( width * 0.5 );
+			origin.mY = origin.mY + ( height * 0.5 );
 		}
 	};
 	
@@ -1004,14 +1004,14 @@ ZLVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float heigh
 //----------------------------------------------------------------//
 ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) const {
 	
-	float xOff = 0.0f;
+	real xOff = 0.0;
 
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
-		xOff = this->mCellWidth * 0.5f;
+		xOff = this->mCellWidth * 0.5;
 	}
 	
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		xOff = this->mCellWidth * -0.5f * cellCoord.mY;
+		xOff = this->mCellWidth * -0.5 * cellCoord.mY;
 		return this->GetRectPoint (
 			( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
 			( cellCoord.mY * this->mCellHeight * 3 / 4 ) + this->mYOff,
@@ -1033,10 +1033,10 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 //----------------------------------------------------------------//
 ZLRect MOAIGridSpace::GetTileRect ( MOAICellCoord cellCoord ) const {
 
-	float xOff = 0.0f;
+	real xOff = 0.0;
 
 	if (( this->mShape & STAGGER_FLAG ) && ( cellCoord.mY & 0x01 )) {
-		xOff = this->mCellWidth * 0.5f;
+		xOff = this->mCellWidth * 0.5;
 	}
 
 	ZLRect rect;
@@ -1057,10 +1057,10 @@ int MOAIGridSpace::GetTotalCells () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::Init ( int width, int height, float tileWidth, float tileHeight ) {
+void MOAIGridSpace::Init ( int width, int height, real tileWidth, real tileHeight ) {
 
-	this->mXOff = 0.0f;
-	this->mYOff = 0.0f;
+	this->mXOff = 0.0;
+	this->mYOff = 0.0;
 	
 	this->mWidth = width;
 	this->mHeight = height;
@@ -1086,12 +1086,12 @@ bool MOAIGridSpace::IsValidCoord ( MOAICellCoord cellCoord ) const {
 
 //----------------------------------------------------------------//
 MOAIGridSpace::MOAIGridSpace () :
-	mXOff ( 0.0f ),
-	mYOff ( 0.0f ),
-	mCellWidth ( 1.0f ),
-	mCellHeight ( 1.0f ),
-	mTileWidth ( 0.0f ),
-	mTileHeight ( 0.0f ),
+	mXOff ( 0.0 ),
+	mYOff ( 0.0 ),
+	mCellWidth ( 1.0 ),
+	mCellHeight ( 1.0 ),
+	mTileWidth ( 0.0 ),
+	mTileHeight ( 0.0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
 	mShape ( RECT_SHAPE ),
@@ -1221,8 +1221,8 @@ MOAICellCoord MOAIGridSpace::WrapCellCoord ( int xCell, int yCell ) const {
 ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
 	
 	ZLVec2D result = loc;
-	result.mX = ( loc.mX / this->mCellWidth ) - ( float )cellCoord.mX;
-	result.mY = ( loc.mY / this->mCellHeight ) - ( float )cellCoord.mY;
+	result.mX = ( loc.mX / this->mCellWidth ) - ( real )cellCoord.mX;
+	result.mY = ( loc.mY / this->mCellHeight ) - ( real )cellCoord.mY;
 	
 	return result;
 }

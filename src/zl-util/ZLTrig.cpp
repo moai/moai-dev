@@ -14,85 +14,85 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float ACos ( float t ) {
-	return acosf ( t );
+real ACos ( real t ) {
+	return ( real )acos ( t );
 }
 
 //----------------------------------------------------------------//
-float ASin ( float t ) {
-	return asinf ( t );
+real ASin ( real t ) {
+	return ( real )asin ( t );
 }
 
 //----------------------------------------------------------------//
-float ATan ( float t ) {
-	return atanf ( t );
+real ATan ( real t ) {
+	return ( real )atan ( t );
 }
 
 //----------------------------------------------------------------//
-float ATan2 ( float x, float y ) {
-	return atan2f ( x, y );
+real ATan2 ( real x, real y ) {
+	return ( real )atan2 ( x, y );
 }
 
 //----------------------------------------------------------------//
-float Cos ( float radians ) {
+real Cos ( real radians ) {
 
 	// use local sin wrapper to account for range bug (see comment on Sin ())
-	return Sin ( radians + (( float )PI / 2.0f ));
+	return Sin ( radians + (( real )PI / 2.0f ));
 }
 
 //----------------------------------------------------------------//
-float Cot ( float radians ) {
-	return 1.0f / tanf ( radians );
+real Cot ( real radians ) {
+	return ( real )( 1.0 / tan ( radians ));
 }
 
 //----------------------------------------------------------------//
-float Log ( float x ) {
+real Log ( real x ) {
 
-	return logf ( x );
+	return ( real )log ( x );
 }
 
 //----------------------------------------------------------------//
-float Log2 ( float x ) {
+real Log2 ( real x ) {
 
-	return ( float )( log ( x ) * LOG2E );
+	return ( real )( log ( x ) * LOG2E );
 }
 
 //----------------------------------------------------------------//
-float Log10 ( float x ) {
+real Log10 ( real x ) {
 
-	return ( float )( log ( x ) * LOG10E );
+	return ( real )( log ( x ) * LOG10E );
 }
 
 //----------------------------------------------------------------//
-float Sin ( float radians ) {
+real Sin ( real radians ) {
 
 	// fixes quirk on legacy platform dealing with safe range for sinf
 	// TODO: investigate if fix still required on current platforms
 	if ( radians < PI )		return sinf ( radians );
-	else					return -sinf ( radians - ( float )PI );
+	else					return -sinf ( radians - ( real )PI );
 }
 
 //----------------------------------------------------------------//
-float Tan ( float radians ) {
+real Tan ( real radians ) {
 	return tanf ( radians );
 }
 
 //----------------------------------------------------------------//
-float Rand () {
+real Rand () {
 
-	return ( float )rand () / ( float )RAND_MAX;
+	return ( real )rand () / ( real )RAND_MAX;
 }
 
 //----------------------------------------------------------------//
 int Rand ( int lower, int upper ) {
 
-	int value = lower + ( int )(( float )(( upper + 1 ) - lower ) * Rand ());
+	int value = lower + ( int )(( real )(( upper + 1 ) - lower ) * Rand ());
 	if ( value > upper ) value = upper;
 	
 	return value;
 }
 
 //----------------------------------------------------------------//
-float Sqrt ( float n ) {
+real Sqrt ( real n ) {
 	return sqrtf ( n );
 }

@@ -12,9 +12,9 @@
 namespace ZLMercator {
 
 	//----------------------------------------------------------------//
-	ZLVec2D64	Project					( double lon, double lat );
-	ZLVec2D64	ProjectInv				( double x, double y );
-	ZLVec2D		ProjectLonLatToWorld	( double lon, double lat );
+	ZLDoubleVec2D		Project					( double lon, double lat );
+	ZLDoubleVec2D		ProjectInv				( double x, double y );
+	ZLDoubleVec2D		ProjectLonLatToWorld	( double lon, double lat );
 };
 
 #endif

@@ -145,8 +145,8 @@ public:
 //----------------------------------------------------------------//
 template <> bool		MOAILuaState::GetValue < bool >			( int idx, bool value );
 template <> cc8*		MOAILuaState::GetValue < cc8* >			( int idx, cc8* value );
-template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
-template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
+template <> real		MOAILuaState::GetValue < real >			( int idx, real value );
+template <> real_alt	MOAILuaState::GetValue < real_alt >		( int idx, real_alt value );
 template <> s8			MOAILuaState::GetValue < s8 >			( int idx, s8 value );
 template <> s16			MOAILuaState::GetValue < s16 >			( int idx, s16 value );
 template <> s32			MOAILuaState::GetValue < s32 >			( int idx, s32 value );

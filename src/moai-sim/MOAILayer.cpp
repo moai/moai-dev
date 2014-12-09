@@ -506,12 +506,17 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		origin.mY = cameraLoc.mY;
 		origin.mZ = cameraLoc.mZ;
 		
-//		ZLMetaMatrix4x4 < double > foo;
-//		foo.Init ( wndToWorld );
+//		ZLMatrix4x4 projMtx = self->GetProjectionMtx ();
+//		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
 //		
-//		ZLMetaVec4D < double > comp;
+//		ZLVec4D test = origin;
+//		test.mW = 1.0f;
+//		viewMtx.Transform ( test );
+//		projMtx.Project ( test );
+//		
+//		ZLVec4D comp;
 //		comp.Init ( 0.0, 0.0, -1.0, 1.0 );
-//		foo.Project ( comp );
+//		wndToWorld.Project ( comp );
 //		printf ( "%f %f %f\n", comp.mX, comp.mY, comp.mZ );
 	}
 	else {

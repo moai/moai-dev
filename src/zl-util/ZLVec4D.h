@@ -59,9 +59,9 @@ public:
 	}
 };
 
+typedef ZLMetaVec4D < real > ZLVec4D;
 typedef ZLMetaVec4D < int > ZLIntVec4D;
-typedef ZLMetaVec4D < float > ZLVec4D;
-typedef ZLMetaVec4D < double > ZLVec4D64;
-
+typedef ZLMetaVec4D < float > ZLFloatVec4D;
+typedef ZLMetaVec4D < double > ZLDoubleVec4D;
 
 #endif

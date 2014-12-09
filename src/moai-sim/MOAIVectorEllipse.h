@@ -16,15 +16,15 @@ class MOAIVectorEllipse :
 private:
 
 	ZLVec2D			mLoc;
-	float			mXRad;
-	float			mYRad;
+	real			mXRad;
+	real			mYRad;
 
 public:
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator* tess );
 	int				AddStrokeContours		( SafeTesselator* tess );
-	void			Init					( float x, float y, float xRad, float yRad );
+	void			Init					( real x, real y, real xRad, real yRad );
 	bool			IsClosed				();
 					MOAIVectorEllipse		();
 					~MOAIVectorEllipse		();

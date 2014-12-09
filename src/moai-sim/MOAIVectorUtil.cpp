@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <signal.h>
 #include <setjmp.h>
 #include <zl-vfs/assert.h>
@@ -12,7 +12,7 @@
 // SafeTesselator
 //================================================================//
 
-const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
+const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0, 0.0, 1.0 );
 
 //----------------------------------------------------------------//
 void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
@@ -31,7 +31,7 @@ void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer
 		idxStream.Write < u32 >( tri [ 2 ]);
 	}
 
-	const float* verts = tessGetVertices ( this->mTess );
+	const TESSreal* verts = tessGetVertices ( this->mTess );
 	const int nverts = tessGetVertexCount ( this->mTess );
 	
 	for ( int i = 0; i < nverts; ++i ) {
@@ -39,7 +39,7 @@ void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer
 		
 		vtxStream.Write < float >( vert.mX );
 		vtxStream.Write < float >( vert.mY );
-		vtxStream.Write < float >( 0.0f );
+		vtxStream.Write < float >( 0.0 );
 		vtxStream.Write < u32 >( 0xffffffff );
 	}
 	
@@ -73,7 +73,7 @@ SafeTesselator::~SafeTesselator () {
 }
 
 //------------------------------------------------------------------//
-int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal ) {
+int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const real* normal ) {
 
 	int err = zl_begin_assert_env ();
 	if ( err == 0 ) {
@@ -151,7 +151,7 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact ) {
+int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, real width, bool exact ) {
 
 	if ( exact ) {
 		if ( verts ) {
@@ -170,8 +170,8 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 		
 		const MOAIVectorLineJoin& join = joins [ j1 ];
 		
-		float d = join.mEdgeNorm.Dot ( join.mJointNorm );
-		float miter = width / d;
+		real d = join.mEdgeNorm.Dot ( join.mJointNorm );
+		real miter = width / d;
 		
 		u32 joinStyle = style.mJoinStyle;
 		u32 capStyle = style.mCapStyle;
@@ -319,7 +319,7 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, float width ) {
+int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, real width ) {
 	
 	float wedge = n0.Radians ( n1 ); // angle between two normals
 	
@@ -327,8 +327,8 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 	
 	if ( verts ) {
 		
-		float angle = n0.Radians (); // angle of first normal against x axis
-		float angleStep = wedge / ( float )steps;
+		real angle = n0.Radians (); // angle of first normal against x axis
+		real angleStep = wedge / ( real )steps;
 		
 		for ( u32 i = 0; i <= steps; ++i, angle += angleStep ) {
 			ZLVec2D v;
@@ -339,5 +339,3 @@ int MOAIVectorUtil::StrokeWedge ( const MOAIVectorStyle& style, ZLVec2D*& verts,
 	}
 	return ( int )( steps + 1 );
 }
-
-

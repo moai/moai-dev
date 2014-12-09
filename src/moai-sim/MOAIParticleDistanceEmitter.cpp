@@ -50,7 +50,7 @@ int MOAIParticleDistanceEmitter::_setDistance ( lua_State* L ) {
 //----------------------------------------------------------------//
 float MOAIParticleDistanceEmitter::GetRandomDistance () {
 
-	return ZLFloat::Rand ( this->mMinDistance, this->mMaxDistance );
+	return ZLReal::Rand ( this->mMinDistance, this->mMaxDistance );
 }
 
 //----------------------------------------------------------------//

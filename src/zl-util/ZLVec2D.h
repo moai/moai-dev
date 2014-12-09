@@ -116,12 +116,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	float Dist ( const ZLMetaVec2D < TYPE >& point ) {
+	TYPE Dist ( const ZLMetaVec2D < TYPE >& point ) {
 		
 		TYPE x = this->mX - point.mX;
 		TYPE y = this->mY - point.mY;
 
-		return sqrtf (( x * x ) + ( y * y ));
+		return ( TYPE )sqrt (( x * x ) + ( y * y ));
 	}
 	
 	//----------------------------------------------------------------//
@@ -423,8 +423,9 @@ public:
 	DECLARE_UNARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Scale )
 };
 
+typedef ZLMetaVec2D < real > ZLVec2D;
 typedef ZLMetaVec2D < int > ZLIntVec2D;
-typedef ZLMetaVec2D < float > ZLVec2D;
-typedef ZLMetaVec2D < double > ZLVec2D64;
+typedef ZLMetaVec2D < float > ZLFloatVec2D;
+typedef ZLMetaVec2D < double > ZLDoubleVec2D;
 
 #endif

@@ -10,7 +10,6 @@
 
 class MOAIVectorShape;
 struct TESStesselator;
-typedef float TESSreal;
 
 //================================================================//
 // SafeTesselator
@@ -27,7 +26,7 @@ public:
 	void	Reset					();
 			SafeTesselator			();
 			~SafeTesselator			();
-	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
+	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const real* normal = 0 );
 };
 
 //================================================================//
@@ -50,13 +49,13 @@ class MOAIVectorUtil {
 private:
 
 	//----------------------------------------------------------------//
-	static int		StrokeWedge				( const MOAIVectorStyle& style, ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, float width );
+	static int		StrokeWedge				( const MOAIVectorStyle& style, ZLVec2D*& verts, const ZLVec2D& origin, const ZLVec2D& n0, const ZLVec2D& n1, real width );
 	
 public:
 	
 	//----------------------------------------------------------------//
 	static void		ComputeLineJoins		( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
-	static int		StrokeLine				( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
+	static int		StrokeLine				( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, real width, bool exact );
 };
 
 #endif
