@@ -2,7 +2,7 @@ CONFIG_NAME = 'MOAI_MODULES'
 
 SETTINGS = {
 	MY_ARM_MODE = 'arm',
-	MY_ARM_ARCH = 'armeabi-v7a',
+	MY_ARM_ARCH = 'armeabi-v7a x86',
 	MY_APP_PLATFORM = 'android-10',
 }
 
