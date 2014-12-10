@@ -45,6 +45,10 @@ namespace InputSensorID {
 
 static SDL_Window* sWindow = 0;
 
+typedef int ( *DisplayModeFunc ) (int, SDL_DisplayMode *);
+
+static void SetScreenSize ( DisplayModeFunc func);
+
 //================================================================//
 // aku callbacks
 //================================================================//
@@ -72,6 +76,7 @@ void _AKUEnterFullscreenModeFunc () {
 
     //videomode change
     SDL_SetWindowFullscreen(sWindow, SDL_WINDOW_FULLSCREEN);
+	SetScreenSize( SDL_GetCurrentDisplayMode );
 }
 
 //----------------------------------------------------------------//
@@ -79,6 +84,7 @@ void _AKUExitFullscreenModeFunc () {
 
     //videomode change
     SDL_SetWindowFullscreen(sWindow, 0);
+	SetScreenSize( SDL_GetDesktopDisplayMode );
 }
 
 //----------------------------------------------------------------//
@@ -131,11 +137,7 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetInputConfigurationName ( "SDL" );
 
-    SDL_DisplayMode dm;
-
-    if ( SDL_GetDesktopDisplayMode( 0, &dm ) == 0 ) {
-    	AKUSetScreenSize(dm.w, dm.h);
-    }
+	SetScreenSize( SDL_GetDesktopDisplayMode );
 
     SetScreenDpi();
 
@@ -178,6 +180,17 @@ void _onMultiButton( int touch_id, float x, float y, int state ) {
 	);
 }
 
+
+
+//----------------------------------------------------------------//
+void SetScreenSize(DisplayModeFunc func ) {
+
+    SDL_DisplayMode dm;
+
+    if ( func != NULL && func( 0, &dm ) == 0 ) {
+    	AKUSetScreenSize(dm.w, dm.h);
+    }
+}
 
 
 //----------------------------------------------------------------//
@@ -307,11 +320,21 @@ void MainLoop () {
                             const Joystick::AXIS_MOTION & axis = joystick0->HandleAxisMotion(sdlEvent);
 					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.x, axis.y );
                         }
-                    break;
+						break;
 
 				case SDL_MOUSEMOTION:
 				
 					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
+					break;
+
+				case SDL_WINDOWEVENT:
+					// Note: this only support fullscreen videomode change.
+					// Not for the event "resize", by default SDL main window is not resizable(at least Linux)
+					if ( sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED ||
+							sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED ) {
+						
+						AKUSetViewSize(sdlEvent.window.data1, sdlEvent.window.data2);
+					}
 					break;
 
                 case SDL_FINGERDOWN:
