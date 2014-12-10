@@ -69,8 +69,11 @@ int MOAIIndexBuffer::_setIndexSizeInBytes ( lua_State* L ) {
 	
 	u32 indexSizeInBytes = state.GetValue < u32 >( 2, DEFAULT_INDEX_SIZE_IN_BYTES );
 	assert ( self->IsValidIndexSize ( indexSizeInBytes ));
-	self->mIndexSizeInBytes = indexSizeInBytes;
 	
+	if ( self->mIndexSizeInBytes != indexSizeInBytes ) {
+		self->Clear (); // TODO: convert buffer or print warning instead
+		self->mIndexSizeInBytes = indexSizeInBytes;
+	}
 	return 0;
 }
 
@@ -217,9 +220,10 @@ void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "release",			_release },
-		{ "reserve",			_reserve },
-		{ "setIndex",			_setIndex },
+		{ "release",				_release },
+		{ "reserve",				_reserve },
+		{ "setIndex",				_setIndex },
+		{ "setIndexSizeInBytes",	_setIndexSizeInBytes },
 		{ NULL, NULL }
 	};
 
