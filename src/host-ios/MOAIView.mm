@@ -359,7 +359,7 @@ enum {
 			AKUEnqueueTouchEvent (
 				MOAI_INPUT_DEVICE,
 				MOAI_TOUCH_SENSOR,
-				( int ) (long) touch, // use the address of the touch as a unique id
+				( int )( long ) touch, // use the address of the touch as a unique id
 				down,
 				p.x * [[ UIScreen mainScreen ] scale ],
 				p.y * [[ UIScreen mainScreen ] scale ]
@@ -480,7 +480,7 @@ enum {
 		[ self endDrawing ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run
-        [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
+        [ self performSelector:@selector( dummyFunc ) withObject:self afterDelay: 0 ];
 	}
 	
 	//----------------------------------------------------------------//
