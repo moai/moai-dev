@@ -1,12 +1,10 @@
-SCRIPT_DIR=$(dirname "${0}")
 INVOKE_DIR=$(pwd)
-
-SCRIPT="${SCRIPT_DIR}/${1}.lua"
+MOAI_SDK_HOME=$(dirname "${0}")/../
+MOAI_CMD=${1}
 
 shift
-set $SCRIPT_DIR $INVOKE_DIR $@
+set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
 
-pushd $SCRIPT_DIR > /dev/null
-moai $SCRIPT $@
+pushd $MOAI_SDK_HOME/util > /dev/null
+moai moaiutil.lua $@
 popd > /dev/null
-

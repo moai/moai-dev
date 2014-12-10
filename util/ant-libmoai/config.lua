@@ -2,7 +2,7 @@ CONFIG_NAME = 'MOAI_MODULES'
 
 SETTINGS = {
 	MY_ARM_MODE = 'arm',
-	MY_ARM_ARCH = 'armeabi-v7a',
+	MY_ARM_ARCH = 'armeabi-v7a x86',
 	MY_APP_PLATFORM = 'android-10',
 }
 
@@ -220,7 +220,6 @@ EXTERNAL_LIBRARIES = {
 STATIC_LIBRARIES = {
 
 	-- moai
-	'libmoai-chipmunk',
 	'libmoai-box2d',
 	'libmoai-http-client',
 	'libmoai-fmod-ex',
@@ -238,7 +237,6 @@ STATIC_LIBRARIES = {
 	
 	-- 3rd party
 	'libbox2d',
-	'libchipmunk',
 	
 	'libuntz',
 	'libvorbis',

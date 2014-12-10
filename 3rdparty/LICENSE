@@ -1,5 +1,4 @@
 box2D 2.1.2
-chipmunk 5.3.4
 curl 7.19.7
 expat 2.0.1
 freetype 2.4.4
@@ -27,15 +26,13 @@ LICENSING NOTES:
 
 Box2D, Chipmunk
 
-	If you use Box2D or Chipmunk to make a physics based game or application,
-	please include an attribution to Erin Catto (Box2D) or Scott Lembcke (Chipmunk)
-	respectively. This isn't required by the license of either library. It's just
-	good form.
+	If you use Box2D to make a physics based game or application,
+	please include an attribution to Erin Catto (Box2D). This isn't required
+	by the license of Box2D. It's just good form.
 	
 	Physics engines are hardly commoditized and there probably isn't a 'native'
 	alternative baked into your OS or platform SDK, so if physics is the main
-	reason your game/app/whatever is fun, you should give these gentlemen
-	their due.
+	reason your game/app/whatever is fun, you should give Mr. Catto his due.
 	
 Freetype
 

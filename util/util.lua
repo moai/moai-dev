@@ -5,49 +5,52 @@ require ( 'string' )
 
 local osx = MOAIEnvironment.osBrand == 'OSX'
 
-			arrayToSet					= nil
-			compile						= nil
-			copy						= nil
-			copyFiles					= nil
-			dofileWithEnvironment		= nil
-			escape						= nil
-local		exec						= nil
-			getFilenameFromPath			= nil
-			getFilenameExt				= nil
-			getFolderFromPath			= nil
-			hash						= nil
-			hashDirectory				= nil
-			hashFile					= nil
-			isMember					= nil
-			isSysPath					= nil
-			iterateCommandLine			= nil
-			iterateFiles				= nil
-			joinTables					= nil
-			listDirectories				= nil
-			listFiles					= nil
-local		makeDlcResourceSig			= nil
-			makeStoreEntryFunc			= nil
-			mergeTables					= nil
-			move						= nil
-			onEntryCompile				= nil
-			onEntryCopy					= nil
-			onEntryStore				= nil
-			pack						= nil
-			package						= nil
-			powerIter					= nil
-			printTable					= nil
-			pruneEmptyDirs				= nil
-			quantize					= nil
-			readFileAll					= nil
-			replaceInFile				= nil
-			replaceInFiles				= nil
-			saveTable					= nil
-			scanFiles					= nil
-			tokens						= nil
-			tokenize					= nil
-			trim						= nil
-			wrap						= nil
-			zip							= nil
+			arrayToSet						= nil
+			compile							= nil
+			copy							= nil
+			copyFiles						= nil
+			dofileWithEnvironment			= nil
+			escape							= nil
+local		exec							= nil
+			getFilenameFromPath				= nil
+			getFilenameExt					= nil
+			getFolderFromPath				= nil
+			hash							= nil
+			hashDirectory					= nil
+			hashFile						= nil
+			isAbsPath						= nil
+			isMember						= nil
+			isSysPath						= nil
+			iterateCommandLine				= nil
+			iterateFiles					= nil
+			iterateFilesAbsPath				= nil
+local  		iterateFilesImplementation		= nil
+			joinTables						= nil
+			listDirectories					= nil
+			listFiles						= nil
+local		makeDlcResourceSig				= nil
+			makeStoreEntryFunc				= nil
+			mergeTables						= nil
+			move							= nil
+			onEntryCompile					= nil
+			onEntryCopy						= nil
+			onEntryStore					= nil
+			pack							= nil
+			package							= nil
+			powerIter						= nil
+			printTable						= nil
+			pruneEmptyDirs					= nil
+			quantize						= nil
+			readFileAll						= nil
+			replaceInFile					= nil
+			replaceInFiles					= nil
+			saveTable						= nil
+			scanFiles						= nil
+			tokens							= nil
+			tokenize						= nil
+			trim							= nil
+			wrap							= nil
+			zip								= nil
 
 ----------------------------------------------------------------
 arrayToSet = function ( array )
@@ -213,6 +216,12 @@ hashFile = function ( filename )
 end
 
 ----------------------------------------------------------------
+isAbsPath = function ( path )
+
+	return ( path [ 1 ] ~= 0x5C ) or ( path [ 1 ] ~= 0x2F ) -- hex codes for '/' and '\'
+end
+
+----------------------------------------------------------------
 isMember = function ( array, str )
 
 	if array then
@@ -286,9 +295,22 @@ end
 ----------------------------------------------------------------
 iterateFiles = function ( path, fileFilter, recurse )
 
+	return iterateFilesImplementation ( path, fileFilter, false, recurse )
+end
+
+----------------------------------------------------------------
+iterateFilesAbsPath = function ( path, fileFilter )
+
+	return iterateFilesImplementation ( path, fileFilter, true, recurse )
+end
+
+----------------------------------------------------------------
+iterateFilesImplementation = function ( path, fileFilter, absPath, recurse )
+
 	recurse = recurse or true
-	
+
 	path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+	local prefix = absPath and path or ''
 	
 	local match = function () return true end
 	
@@ -306,11 +328,11 @@ iterateFiles = function ( path, fileFilter, recurse )
 	
 	local doRecurse
 	doRecurse = function ( dirname )
-		
+
 		local files = MOAIFileSystem.listFiles ( path .. dirname ) or {}
 		for i, filename in ipairs ( files ) do
 			if match ( filename ) then
-				coroutine.yield ( string.format ( '%s%s', dirname, filename ))
+				coroutine.yield ( string.format ( '%s%s%s', prefix, dirname, filename ))
 			end
 		end
 		
