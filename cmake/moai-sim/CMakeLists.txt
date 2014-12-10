@@ -53,10 +53,6 @@ if (MOAI_BOX2D)
  target_link_libraries ( moai-sim moai-box2d)
 endif (MOAI_BOX2D)
 
-if (MOAI_CHIPMUNK)
-	target_link_libraries ( moai-sim moai-chipmunk)
-endif (MOAI_CHIPMUNK)
-
 if (BUILD_WINDOWS)
  target_link_libraries ( moai-sim  psapi rpcrt4 ) #GetProcessMemoryInfo and UuidCreateSequential
 endif (BUILD_WINDOWS)

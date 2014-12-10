@@ -180,8 +180,8 @@
 				CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */,
 			);
 			name = Sources;
-			path = "src/host-glut";
-			sourceTree = MOAI_SDK;
+			path = "../../src/host-sdl";
+			sourceTree = SOURCE_ROOT;
 		};
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;

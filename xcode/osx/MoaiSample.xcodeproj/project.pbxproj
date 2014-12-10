@@ -42,10 +42,6 @@
 		CD2FD0581832EA48000C3674 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD02B1832EA10000C3674 /* libmoai-osx-zl-crypto.a */; };
 		CD2FD0591832EA48000C3674 /* libmoai-osx-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD02D1832EA10000C3674 /* libmoai-osx-zl-vfs.a */; };
 		CD2FD05A1832EA48000C3674 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD0091832EA10000C3674 /* libmoai-osx.a */; };
-		CD48CF541A1301CB0029F932 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF521A1301CB0029F932 /* Joystick.cpp */; };
-		CD48CF551A1301CB0029F932 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF521A1301CB0029F932 /* Joystick.cpp */; };
-		CD48CF561A1301CB0029F932 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF521A1301CB0029F932 /* Joystick.cpp */; };
-		CD48CF571A1301CB0029F932 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF521A1301CB0029F932 /* Joystick.cpp */; };
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
@@ -57,18 +53,6 @@
 		CD6DC27C1574B378008C3996 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CD6DC27D1574B378008C3996 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		CD6DC27F1574B378008C3996 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
-		CD795EE217F08C0B006AEB47 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */; };
-		CD795EE317F08C0B006AEB47 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */; };
-		CD795EE417F08C0B006AEB47 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */; };
-		CD795EE517F08C0B006AEB47 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */; };
-		CD795EE617F08C0B006AEB47 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */; };
-		CD795EE717F08C0B006AEB47 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */; };
-		CD795EE817F08C0B006AEB47 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */; };
-		CD795EE917F08C0B006AEB47 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */; };
-		CD795EED17F08C21006AEB47 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EEB17F08C21006AEB47 /* aku_modules.cpp */; };
-		CD795EEE17F08C21006AEB47 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EEB17F08C21006AEB47 /* aku_modules.cpp */; };
-		CD795EEF17F08C21006AEB47 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EEB17F08C21006AEB47 /* aku_modules.cpp */; };
-		CD795EF017F08C21006AEB47 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EEB17F08C21006AEB47 /* aku_modules.cpp */; };
 		CD795EF217F08E4B006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795EF417F08F4E006AEB47 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF317F08F4E006AEB47 /* CoreAudio.framework */; };
 		CD795EF617F08F86006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
@@ -79,7 +63,11 @@
 		CD795F9917F093CD006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9A17F093DE006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9B17F093E5006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
-		CD95D48C1831D4430080C34E /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD95D4891831D4430080C34E /* aku_modules_util.cpp */; };
+		CDA633131A390CE000F3995F /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6330E1A390CE000F3995F /* Joystick.cpp */; };
+		CDA633141A390CE000F3995F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633101A390CE000F3995F /* SDLHost.cpp */; };
+		CDA633151A390CE000F3995F /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
+		CDA6331C1A390CFB00F3995F /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
+		CDA6331D1A390CFB00F3995F /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
 		CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CDE8A816155E435800C2DFF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		CDE8A817155E435800C2DFF5 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
@@ -589,23 +577,23 @@
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
 		89E9D7DD174BD2A800033CDD /* moai-test-runner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-test-runner"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		CD48CF521A1301CB0029F932 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Joystick.cpp; path = "../host-sdl/Joystick.cpp"; sourceTree = "<group>"; };
-		CD48CF531A1301CB0029F932 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = "../host-sdl/Joystick.h"; sourceTree = "<group>"; };
 		CD6600651831CB5400D9862B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CD6DC2851574B378008C3996 /* moai-fmod-designer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-designer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
-		CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHost.cpp; path = "../host-sdl/SDLHost.cpp"; sourceTree = "<group>"; };
-		CD795EE017F08C0B006AEB47 /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHost.h; path = "../host-sdl/SDLHost.h"; sourceTree = "<group>"; };
-		CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostMain.cpp; path = "../host-sdl/SDLHostMain.cpp"; sourceTree = "<group>"; };
-		CD795EEA17F08C21006AEB47 /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
-		CD795EEB17F08C21006AEB47 /* aku_modules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules.cpp; path = "../host-modules/aku_modules.cpp"; sourceTree = "<group>"; };
-		CD795EEC17F08C21006AEB47 /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../host-modules/aku_modules.h"; sourceTree = "<group>"; };
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
-		CD95D4891831D4430080C34E /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../host-modules/aku_modules_util.cpp"; sourceTree = "<group>"; };
-		CD95D48A1831D4430080C34E /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../host-modules/aku_modules_util.h"; sourceTree = "<group>"; };
+		CDA6330E1A390CE000F3995F /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Joystick.cpp; path = "../../src/host-sdl/Joystick.cpp"; sourceTree = "<group>"; };
+		CDA6330F1A390CE000F3995F /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = "../../src/host-sdl/Joystick.h"; sourceTree = "<group>"; };
+		CDA633101A390CE000F3995F /* SDLHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHost.cpp; path = "../../src/host-sdl/SDLHost.cpp"; sourceTree = "<group>"; };
+		CDA633111A390CE000F3995F /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHost.h; path = "../../src/host-sdl/SDLHost.h"; sourceTree = "<group>"; };
+		CDA633121A390CE000F3995F /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostMain.cpp; path = "../../src/host-sdl/SDLHostMain.cpp"; sourceTree = "<group>"; };
+		CDA633161A390CFB00F3995F /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
+		CDA633181A390CFB00F3995F /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../../src/host-modules/aku_modules_util.cpp"; sourceTree = "<group>"; };
+		CDA633191A390CFB00F3995F /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../../src/host-modules/aku_modules_util.h"; sourceTree = "<group>"; };
+		CDA6331A1A390CFB00F3995F /* aku_modules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules.cpp; path = "../../src/host-modules/aku_modules.cpp"; sourceTree = "<group>"; };
+		CDA6331B1A390CFB00F3995F /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../../src/host-modules/aku_modules.h"; sourceTree = "<group>"; };
 		CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-fmod-ex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -722,31 +710,13 @@
 			isa = PBXGroup;
 			children = (
 				0324CC6913564429000ADC60 /* libmoai.xcodeproj */,
-				89BE6C241739A2AE00DFE837 /* host-sdl */,
+				CDA6330D1A390CBC00F3995F /* host-sdl */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
-		};
-		89BE6C241739A2AE00DFE837 /* host-sdl */ = {
-			isa = PBXGroup;
-			children = (
-				CD795EEB17F08C21006AEB47 /* aku_modules.cpp */,
-				CD795EEC17F08C21006AEB47 /* aku_modules.h */,
-				CD795EEA17F08C21006AEB47 /* aku_modules_config.h */,
-				CD95D4891831D4430080C34E /* aku_modules_util.cpp */,
-				CD95D48A1831D4430080C34E /* aku_modules_util.h */,
-				CD48CF521A1301CB0029F932 /* Joystick.cpp */,
-				CD48CF531A1301CB0029F932 /* Joystick.h */,
-				CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */,
-				CD795EE017F08C0B006AEB47 /* SDLHost.h */,
-				CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */,
-			);
-			name = "host-sdl";
-			path = "src/host-glut";
-			sourceTree = MOAI_SDK;
 		};
 		CD2FCFA21832EA10000C3674 /* Products */ = {
 			isa = PBXGroup;
@@ -825,6 +795,23 @@
 				CD6600651831CB5400D9862B /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CDA6330D1A390CBC00F3995F /* host-sdl */ = {
+			isa = PBXGroup;
+			children = (
+				CDA633161A390CFB00F3995F /* aku_modules_config.h */,
+				CDA633181A390CFB00F3995F /* aku_modules_util.cpp */,
+				CDA633191A390CFB00F3995F /* aku_modules_util.h */,
+				CDA6331A1A390CFB00F3995F /* aku_modules.cpp */,
+				CDA6331B1A390CFB00F3995F /* aku_modules.h */,
+				CDA6330E1A390CE000F3995F /* Joystick.cpp */,
+				CDA6330F1A390CE000F3995F /* Joystick.h */,
+				CDA633101A390CE000F3995F /* SDLHost.cpp */,
+				CDA633111A390CE000F3995F /* SDLHost.h */,
+				CDA633121A390CE000F3995F /* SDLHostMain.cpp */,
+			);
+			name = "host-sdl";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1310,11 +1297,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD795EE217F08C0B006AEB47 /* SDLHost.cpp in Sources */,
-				CD48CF541A1301CB0029F932 /* Joystick.cpp in Sources */,
-				CD795EE617F08C0B006AEB47 /* SDLHostMain.cpp in Sources */,
-				CD95D48C1831D4430080C34E /* aku_modules_util.cpp in Sources */,
-				CD795EED17F08C21006AEB47 /* aku_modules.cpp in Sources */,
+				CDA633131A390CE000F3995F /* Joystick.cpp in Sources */,
+				CDA633151A390CE000F3995F /* SDLHostMain.cpp in Sources */,
+				CDA6331D1A390CFB00F3995F /* aku_modules.cpp in Sources */,
+				CDA633141A390CE000F3995F /* SDLHost.cpp in Sources */,
+				CDA6331C1A390CFB00F3995F /* aku_modules_util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1322,10 +1309,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD795EE517F08C0B006AEB47 /* SDLHost.cpp in Sources */,
-				CD48CF571A1301CB0029F932 /* Joystick.cpp in Sources */,
-				CD795EE917F08C0B006AEB47 /* SDLHostMain.cpp in Sources */,
-				CD795EF017F08C21006AEB47 /* aku_modules.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1333,10 +1316,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD795EE317F08C0B006AEB47 /* SDLHost.cpp in Sources */,
-				CD48CF551A1301CB0029F932 /* Joystick.cpp in Sources */,
-				CD795EE717F08C0B006AEB47 /* SDLHostMain.cpp in Sources */,
-				CD795EEE17F08C21006AEB47 /* aku_modules.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1344,10 +1323,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD795EE417F08C0B006AEB47 /* SDLHost.cpp in Sources */,
-				CD48CF561A1301CB0029F932 /* Joystick.cpp in Sources */,
-				CD795EE817F08C0B006AEB47 /* SDLHostMain.cpp in Sources */,
-				CD795EEF17F08C21006AEB47 /* aku_modules.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
