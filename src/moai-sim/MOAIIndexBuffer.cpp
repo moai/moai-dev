@@ -34,8 +34,10 @@ int	MOAIIndexBuffer::_release ( lua_State* L ) {
 int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UN" )
 	
-	u32 indexCount = state.GetValue < u32 >( 2, 0 );
-	self->ReserveIndices ( indexCount );
+	u32 capacity = state.GetValue < u32 >( 2, 0 );
+	u32 indexSizeInBytes = state.GetValue < u32 >( 3, self->mIndexSizeInBytes );
+	
+	self->ReserveIndices ( capacity, indexSizeInBytes );
 	
 	return 0;
 }
@@ -60,6 +62,18 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIIndexBuffer::_setIndexSizeInBytes ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
+	
+	u32 indexSizeInBytes = state.GetValue < u32 >( 2, DEFAULT_INDEX_SIZE_IN_BYTES );
+	assert ( self->IsValidIndexSize ( indexSizeInBytes ));
+	self->mIndexSizeInBytes = indexSizeInBytes;
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxQuadListDeck2D
 //================================================================//
@@ -67,8 +81,48 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::Clear () {
 
-	this->mIndices.Clear ();
+	if ( this->mIndexBuffer ) {
+		free ( this->mIndexBuffer );
+		this->mIndexBuffer = 0;
+		this->mCapacity = 0;
+	}
 	this->Destroy ();
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, u32 streamIndexSizeInBytes ) {
+
+	this->Clear ();
+	u32 count = ( u32 )stream.GetLength () / streamIndexSizeInBytes;
+	
+	this->ReserveIndices ( count );
+
+	ZLByteStream indexStream;
+	indexStream.SetBuffer ( this->mIndexBuffer, this->mCapacity * this->mIndexSizeInBytes );
+	
+	if ( this->mIndexSizeInBytes == streamIndexSizeInBytes ) {
+		indexStream.WriteStream ( stream );
+	}
+	else {
+		assert ( this->IsValidIndexSize ( streamIndexSizeInBytes ));
+		
+		if ( this->mIndexSizeInBytes == 2 ) {
+			for ( u32 i = 0; i < count; ++i ) {
+				indexStream.Write < u16 >(( u16 )stream.Read < u32 >( 0 ));
+			}
+		}
+		else {
+			for ( u32 i = 0; i < count; ++i ) {
+				indexStream.Write < u32 >(( u32 )stream.Read < u16 >( 0 ));
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::Draw ( u32 zglPrimType ) {
+
+	zglDrawElements ( zglPrimType, this->mCapacity, this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +132,16 @@ u32 MOAIIndexBuffer::GetLoadingPolicy () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIIndexBuffer::IsValidIndexSize ( u32 indexSizeInBytes ) {
+
+	return (( indexSizeInBytes == 2 ) || ( indexSizeInBytes == 4 ));
+}
+
+//----------------------------------------------------------------//
 MOAIIndexBuffer::MOAIIndexBuffer () :
+	mIndexSizeInBytes ( DEFAULT_INDEX_SIZE_IN_BYTES ),
+	mIndexBuffer ( 0 ),
+	mCapacity ( 0 ),
 	mGLBufferID ( 0 ),
 	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ) {
 	
@@ -112,13 +175,13 @@ void MOAIIndexBuffer::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIIndexBuffer::OnGPUCreate () {
 
-	if ( this->mIndices.Size ()) {
+	if ( this->mCapacity ) {
 		
 		this->mGLBufferID = zglCreateBuffer ();
 		if ( this->mGLBufferID ) {
 		
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mGLBufferID );
-			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mIndices.BufferSize (), this->mIndices.Data (), this->mHint );
+			zglBufferData ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY, this->mCapacity * this->mIndexSizeInBytes, this->mIndexBuffer, this->mHint );
 		
 			return true;
 		}
@@ -164,11 +227,23 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
+void MOAIIndexBuffer::ReserveIndices ( u32 capacity ) {
+
+	this->ReserveIndices ( capacity, this->mIndexSizeInBytes );
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::ReserveIndices ( u32 capacity, u32 indexSizeInBytes ) {
 
 	this->Clear ();
-	this->mIndices.Init ( indexCount );
-	this->mStream.SetBuffer ( this->mIndices.Data (), this->mIndices.BufferSize ());
+	
+	assert ( this->IsValidIndexSize ( indexSizeInBytes ));
+	
+	this->mCapacity = capacity;
+	this->mIndexSizeInBytes = indexSizeInBytes;
+	
+	size_t bufferSize = capacity * indexSizeInBytes;
+	this->mIndexBuffer = malloc ( bufferSize );
 	
 	this->DoCPUAffirm ();
 }
@@ -177,18 +252,21 @@ void MOAIIndexBuffer::ReserveIndices ( u32 indexCount ) {
 void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 indexCount		= state.GetField < u32 >( -1, "mTotalIndices", 0 );
-	this->mHint			= state.GetField < u32 >( -1, "mHint", 0 );
+	u32 indexCount			= state.GetField < u32 >( -1, "mTotalIndices", 0 );
+	u32 indexSizeInBytes	= state.GetField < u32 >( -1, "mIndexSizeInBytes", LEGACY_INDEX_SIZE_IN_BYTES ); // default is 4 bytes
+	this->mHint				= state.GetField < u32 >( -1, "mHint", 0 );
 
-	this->ReserveIndices ( indexCount );
+	this->ReserveIndices ( indexCount, indexSizeInBytes );
 
 	state.GetField ( -1, "mIndices" );
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
+		size_t bufferSize = this->mCapacity * this->mIndexSizeInBytes;
+		
 		STLString zipString = lua_tostring ( state, -1 );
-		size_t unzipLen = zipString.zip_inflate ( this->mIndices.Data (), this->mIndices.BufferSize ());
-		assert ( unzipLen == this->mIndices.BufferSize ()); // TODO: fail gracefully
+		size_t unzipLen = zipString.zip_inflate ( this->mIndexBuffer, bufferSize );
+		assert ( unzipLen == bufferSize ); // TODO: fail gracefully
 	}
 	lua_pop ( state, 1 );
 }
@@ -197,11 +275,12 @@ void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seria
 void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	state.SetField ( -1, "mTotalIndices", ( u32 )this->mIndices.Size ()); // TODO: overflow
+	state.SetField ( -1, "mTotalIndices", this->mCapacity );
+	state.SetField ( -1, "mIndexSizeInBytes", this->mIndexSizeInBytes );
 	state.SetField ( -1, "mHint", this->mHint );
 	
 	STLString zipString;
-	zipString.zip_deflate ( this->mIndices.Data (), this->mIndices.BufferSize ());
+	zipString.zip_deflate ( this->mIndexBuffer, this->mCapacity * this->mIndexSizeInBytes );
 	
 	lua_pushstring ( state, zipString.str ());
 	lua_setfield ( state, -2, "mIndices" );
@@ -210,7 +289,13 @@ void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serial
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SetIndex ( u32 idx, u32 value ) {
 
-	if ( idx < this->mIndices.Size ()) {
-		this->mIndices [ idx ] = value;
+	if ( idx < this->mCapacity) {
+	
+		if ( this->mIndexSizeInBytes == 2 ) {
+			(( u16* )this->mIndexBuffer )[ idx ] = ( u16 )value;
+		}
+		else {
+			(( u32* )this->mIndexBuffer )[ idx ] = value;
+		}
 	}
 }
