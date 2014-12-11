@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 u32 ZLHashWriter::GetCaps () {
 
-	return this->mProxiedStream ? CAN_WRITE : 0;
+	return this->mProxiedStream ? this->mProxiedStream->GetCaps () | CAN_WRITE : CAN_WRITE;
 }
 
 //----------------------------------------------------------------//
