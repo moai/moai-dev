@@ -14,7 +14,6 @@ endif(BUILD_ANDROID)
 
 
 add_subdirectory ( box2d )
-add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
 add_subdirectory ( crypto )
 add_subdirectory ( curl )
@@ -62,9 +61,6 @@ if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set(X11_SHARED OFF CACHE BOOL "X11 Shared disable")
   
   add_subdirectory(sdl2)
-  if (BUILD_LINUX OR BUILD_WINDOWS)
-  add_subdirectory ( freeglut )
-  endif (BUILD_LINUX OR BUILD_WINDOWS)
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 

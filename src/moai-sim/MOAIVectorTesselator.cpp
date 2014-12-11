@@ -653,12 +653,9 @@ void MOAIVectorTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndex
 	this->mIdxStream.Seek ( 0, SEEK_SET );
 	this->mVtxStream.Seek ( 0, SEEK_SET );
 
-	idxBuffer.Clear ();
+	idxBuffer.CopyFromStream ( this->mIdxStream, 4 );
+	
 	vtxBuffer.Clear ();
-	
-	idxBuffer.ReserveIndices ( this->mIdxStream.GetLength () >> 2 );
-	idxBuffer.GetStream ().WriteStream ( this->mIdxStream );
-	
 	vtxBuffer.Reserve ( this->mVtxStream.GetLength ());
 	vtxBuffer.WriteStream ( this->mVtxStream );
 }

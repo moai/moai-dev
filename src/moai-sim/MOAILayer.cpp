@@ -505,9 +505,18 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		origin.mX = cameraLoc.mX;
 		origin.mY = cameraLoc.mY;
 		origin.mZ = cameraLoc.mZ;
+		
+//		ZLMetaMatrix4x4 < double > foo;
+//		foo.Init ( wndToWorld );
+//		
+//		ZLMetaVec4D < double > comp;
+//		comp.Init ( 0.0, 0.0, -1.0, 1.0 );
+//		foo.Project ( comp );
+//		printf ( "%f %f %f\n", comp.mX, comp.mY, comp.mZ );
 	}
 	else {
 		origin = loc;
+		//origin.Init ( loc.mX, loc.mY, -1.0f, 1.0f );
 		wndToWorld.Project ( origin );
 	}
 	
@@ -518,7 +527,7 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 	ZLVec3D norm;
 
 	if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
-		
+	
 		wndToWorld.Project ( loc );
 	
 		norm.mX = loc.mX - origin.mX;
@@ -532,7 +541,7 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		norm.mY = 0.0f;
 		norm.mZ = -1.0f;
 	}
-	
+
 	float ns = 1.0f;
 	
 	if ( d != 0.0f ) {

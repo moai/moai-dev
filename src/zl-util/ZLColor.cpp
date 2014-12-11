@@ -556,6 +556,12 @@ u32 ZLColor::GetBlendFactor ( u32 src32, u32 dst32, BlendFactor factor ) {
 
 	switch ( factor ) {
 	
+		case BLEND_FACTOR_0001:
+			return 0xff000000;
+		
+		case BLEND_FACTOR_1110:
+			return 0x00ffffff;
+	
 		case BLEND_FACTOR_ONE:
 			return 0xffffffff;
 			

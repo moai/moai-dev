@@ -1149,5 +1149,6 @@ public:
 };
 
 typedef ZLMetaMatrix4x4 < float > ZLMatrix4x4;
+typedef ZLMetaMatrix4x4 < double > ZLDoubleMatrix4x4;
 
 #endif

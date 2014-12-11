@@ -49,6 +49,8 @@ namespace ZLColor {
 	};
 	
 	enum BlendFactor {
+		BLEND_FACTOR_0001,
+		BLEND_FACTOR_1110,
 		BLEND_FACTOR_ONE,
 		BLEND_FACTOR_ZERO,
 		BLEND_FACTOR_DST_ALPHA,

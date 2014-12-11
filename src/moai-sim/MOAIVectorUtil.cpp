@@ -46,12 +46,9 @@ void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer
 	idxStream.Seek ( 0, SEEK_SET );
 	vtxStream.Seek ( 0, SEEK_SET );
 	
-	idxBuffer.Clear ();
+	idxBuffer.CopyFromStream ( idxStream, 4 );
+	
 	vtxBuffer.Clear ();
-	
-	idxBuffer.ReserveIndices ( idxStream.GetLength () >> 2 );
-	idxBuffer.GetStream ().WriteStream ( idxStream );
-	
 	vtxBuffer.Reserve ( vtxStream.GetLength ());
 	vtxBuffer.WriteStream ( vtxStream );
 }
