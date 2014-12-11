@@ -56,6 +56,7 @@ function stamp ( x, y, source )
 	local x2 = x1 + w
 	local y2 = y1 + h
 
+	-- copy only the RGB channels from the source image
 	brush:copyRect ( source, x1, y1, x2, y2, 0, 0, w, h,
 		MOAIImage.FILTER_LINEAR,
 		MOAIImage.BLEND_FACTOR_1110,
@@ -63,6 +64,7 @@ function stamp ( x, y, source )
 		MOAIImage.BLEND_EQ_ADD
 	)
 
+	-- blend the brush with the dest image using the brush's alpha channel
 	canvas:copyRect ( brush, 0, 0, w, h, x1, y1, x2, y2,
 		MOAIImage.FILTER_LINEAR,
 		MOAIImage.BLEND_FACTOR_SRC_ALPHA,
@@ -75,8 +77,6 @@ end
 function onMouse ()
 
 	local x, y = getPointerLocInProp ()
-
-	--x, y = 16, 0
 
 	if MOAIInputMgr.device.mouseLeft:isDown () then
 		stamp ( x, y, draw )
