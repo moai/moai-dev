@@ -65,7 +65,7 @@ int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIIndexBuffer::_setIndexSizeInBytes ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
+	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UN" )
 	
 	u32 indexSizeInBytes = state.GetValue < u32 >( 2, DEFAULT_INDEX_SIZE_IN_BYTES );
 	assert ( self->IsValidIndexSize ( indexSizeInBytes ));
