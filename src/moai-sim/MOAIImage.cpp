@@ -186,7 +186,7 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 	ZLColorBlendFunc blendFunc;
 	blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
 	
-	if ( state.CheckParams ( 12, "NN", false )) {
+	if ( state.CheckParams ( 12, "NNN", false )) {
 		blendFunc.mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 12, ( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
 		blendFunc.mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 13, ( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 		blendFunc.mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( 14, ( u32 )ZLColor::BLEND_EQ_ADD );
@@ -503,13 +503,20 @@ int MOAIImage::_init ( lua_State* L ) {
 	@out	nil
 */
 int MOAIImage::_load ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "US" )
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
 
-	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	u32 transform	= state.GetValue < u32 >( 3, 0 );
+	MOAIImage* srcImage	= state.GetLuaObject < MOAIImage >( 2, false );
+	if  ( srcImage ) {
+	
+		self->Copy ( *srcImage );
+	}
+	else {
 
-	self->Load ( filename, transform );
+		cc8* filename	= state.GetValue < cc8* >( 2, "" );
+		u32 transform	= state.GetValue < u32 >( 3, 0 );
 
+		self->Load ( filename, transform );
+	}
 	return 0;
 }
 
@@ -1265,6 +1272,9 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	if ( !srcRect.Overlap ( srcBounds )) return;
 	if ( !destRect.Overlap ( destBounds )) return;
 	
+	ZLVec2D srcToDest ( srcRect.Width () / destRect.Width (), srcRect.Height () / destRect.Height ());
+	ZLVec2D destToSrc ( 1.0 / srcToDest.mX, 1.0 / srcToDest.mY );
+	
 	ZLIntRect srcClipA = srcRect;
 	ZLIntRect srcClipB = srcRect;
 	
@@ -1276,12 +1286,12 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	destBounds.Clip ( destClipA );
 	
 	// now we need to get each rect's subrect adjusted for the *other* rect's clip
-	scale = ( float )srcClipA.Width () / ( float )srcRect.Width ();
-	if ( scale < 1.0f ) {
-		
-		int offset = ( int )floor (( srcClipA.mXMin - srcRect.mXMin ) / scale );
-		int width = ( int )floor ( destClipB.Width () * scale );
-		
+
+	if ( srcClipA.Width () < srcRect.Width ()) {
+	
+		int offset = ( int )floorf (( srcClipA.mXMin - srcRect.mXMin ) * srcToDest.mX );
+		int width = ( int )floorf ( srcClipA.Width () * srcToDest.mX );
+	
 		if ( xFlip ) {
 			destClipB.mXMax -= offset;
 			destClipB.mXMin = destClipB.mXMax - width;
@@ -1292,11 +1302,10 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 		}
 	}
 	
-	scale = ( float )srcClipA.Height () / ( float )srcRect.Height ();
-	if ( scale < 1.0f ) {
+	if ( srcClipA.Height () < srcRect.Height ()) {
 	
-		int offset = ( int )floor (( srcClipA.mYMin - srcRect.mYMin ) / scale );
-		int height = ( int )floor ( destClipB.Height () * scale );
+		int offset = ( int )floorf (( srcClipA.mYMin - srcRect.mYMin ) * srcToDest.mY );
+		int height = ( int )floorf ( srcClipA.Height () * srcToDest.mY );
 	
 		if ( yFlip ) {
 			destClipB.mYMax -= offset;
@@ -1308,11 +1317,10 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 		}
 	}
 	
-	scale = ( float )destClipA.Width () / ( float )destRect.Width ();
-	if ( scale < 1.0f ) {
+	if ( destClipA.Width () < destRect.Width ()) {
 	
-		int offset = ( int )floor (( destClipA.mXMin - destRect.mXMin ) / scale );
-		int width = ( int )floor ( srcClipB.Width () * scale );
+		int offset = ( int )floorf (( destClipA.mXMin - destRect.mXMin ) * destToSrc.mX );
+		int width = ( int )floorf ( destClipA.Width () * destToSrc.mX );
 	
 		if ( xFlip ) {
 			srcClipB.mXMax -= offset;
@@ -1324,11 +1332,10 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 		}
 	}
 	
-	scale = ( float )destClipA.Height () / ( float )destRect.Height ();
-	if ( scale < 1.0f ) {
+	if ( destClipA.Height () < destRect.Height ()) {
 	
-		int offset = ( int )floor (( destClipA.mYMin - destRect.mYMin ) / scale );
-		int height = ( int )floor ( srcClipB.Height () * scale );
+		int offset = ( int )floorf (( destClipA.mYMin - destRect.mYMin ) * destToSrc.mY );
+		int height = ( int )floorf ( destClipA.Height () * destToSrc.mY );
 	
 		if ( yFlip ) {
 			srcClipB.mYMax -= offset;
@@ -2335,7 +2342,9 @@ void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BLEND_EQ_NONE",						( u32 )ZLColor::BLEND_EQ_NONE );
 	state.SetField ( -1, "BLEND_EQ_SUBTRACT",					( u32 )ZLColor::BLEND_EQ_SUBTRACT );
 	
-	state.SetField ( -1, "BLEND_FACTOR_ONE",					( u32 )ZLColor::BLEND_FACTOR_ONE);
+	state.SetField ( -1, "BLEND_FACTOR_0001",					( u32 )ZLColor::BLEND_FACTOR_0001 );
+	state.SetField ( -1, "BLEND_FACTOR_1110",					( u32 )ZLColor::BLEND_FACTOR_1110 );
+	state.SetField ( -1, "BLEND_FACTOR_ONE",					( u32 )ZLColor::BLEND_FACTOR_ONE );
 	state.SetField ( -1, "BLEND_FACTOR_ZERO",					( u32 )ZLColor::BLEND_FACTOR_ZERO );
 	state.SetField ( -1, "BLEND_FACTOR_DST_ALPHA",				( u32 )ZLColor::BLEND_FACTOR_DST_ALPHA );
 	state.SetField ( -1, "BLEND_FACTOR_DST_COLOR",				( u32 )ZLColor::BLEND_FACTOR_DST_COLOR);
