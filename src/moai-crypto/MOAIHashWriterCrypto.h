@@ -10,7 +10,7 @@
 /**	@lua	MOAIHashWriterCrypto
 	@text	MOAIHashWriterCrypto may be attached to another stream for the
 			purpose of computing a hash while writing data to the other
-			stream. Currently only MD5 and SHA256 are available. 
+			stream. Currently only MD5 and SHA are available. 
 */
 class MOAIHashWriterCrypto :
 	public MOAIHashWriter {
