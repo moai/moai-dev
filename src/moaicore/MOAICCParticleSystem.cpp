@@ -1539,8 +1539,18 @@ void MOAICCParticleSystem::Draw	( int subPrimID ) {
 		MOAICCParticle *particle = &(this->mParticles[ idx ]);
 		
 		// set pen color
-		gfxDevice.SetPenColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
-		
+		if ( MOAIGfxDevice::Get().GetColorPremultiply() && this->GetPremultiply() ){
+			USColorVec penColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
+			
+			USColorVec modulator(particle->mColor[3], particle->mColor[3], particle->mColor[3], 1.0);
+			penColor.Modulate(modulator);
+			
+			gfxDevice.SetPenColor(penColor);
+		}
+		else{
+			
+			gfxDevice.SetPenColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
+		}
 		// set transforms
 		spriteMtx.ScRoTr(particle->mParticleSize, particle->mParticleSize, 1.0f,
 						 0.0f, 0.0f, particle->mParticleRotation,
