@@ -240,6 +240,7 @@ private:
 	static int		_load								( lua_State* L );
 	static int		_startSystem						( lua_State* L );
 	static int		_stopSystem       					( lua_State* L );
+	static int      _surge								( lua_State* L );
 	static int		_reset								( lua_State* L );
 	
 	
@@ -269,6 +270,7 @@ public:
 	void			ResetSystem				( bool activate );
 	void			StartSystem				();
 	void			StopSystem				();
+	void			Surge					( u32 numberOfParticles );
 	
 };
 

@@ -1475,6 +1475,20 @@ int MOAICCParticleSystem::_stopSystem ( lua_State *L ) {
 	return 0;
 }
 //----------------------------------------------------------------//
+/** @name	surge
+	@text	Generate the given number of particles at one time.
+	@in		MOAICCParticleSystem	self
+	@in		number					numberOfParticles
+	@out	nil
+ */
+
+int MOAICCParticleSystem::_surge ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
+	u32 numberOfParticles = state.GetValue < u32 >(2, 1.0);
+	self->Surge( numberOfParticles );
+	return 0;
+}
+//----------------------------------------------------------------//
 /** @name	reset
 	@text	Make all particles get cleared out at the next frame.
  
@@ -2261,6 +2275,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "setTotalParticles",						_setTotalParticles },
 		{ "startSystem",							_startSystem },
 		{ "stopSystem",								_stopSystem },
+		{ "surge",									_surge },
 		{ NULL, NULL }
 	};
 	
@@ -2313,4 +2328,13 @@ void MOAICCParticleSystem::StopSystem () {
 	this->mActive = false;
 	this->mElapsed = this->mDuration;
 	this->mEmitCounter = 0.0f;
+}
+
+void MOAICCParticleSystem::Surge ( u32 numberOfParticles ) {
+	u32 particlesRemaining = numberOfParticles;
+	
+	while (particlesRemaining > 0 && this->AddParticle()) {
+		--particlesRemaining;
+	}
+	
 }
