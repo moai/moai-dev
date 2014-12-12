@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
 		0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
 		0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
@@ -27,7 +26,6 @@
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
 		CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
 		CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
@@ -48,7 +46,6 @@
 		CD6DC2801574B378008C3996 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		CD6DC2881574B4B0008C3996 /* libfmodevent.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6DC2871574B4B0008C3996 /* libfmodevent.dylib */; };
 		CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
-		CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
 		CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
 		CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E99C2A77152E27E500DD8423 /* FolderWatcher-mac.mm */; };
 		CDE8A815155E435800C2DFF5 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
@@ -598,7 +595,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0300CF59140DC53C00ABCC5B /* GlutHost.cpp in Sources */,
-				0300CF5A140DC53C00ABCC5B /* ParticlePresets.cpp in Sources */,
 				0300CF5B140DC53C00ABCC5B /* GlutHostMain.cpp in Sources */,
 				E99C2A78152E27E500DD8423 /* FolderWatcher-mac.mm in Sources */,
 			);
@@ -609,7 +605,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD6DC26A1574B378008C3996 /* GlutHost.cpp in Sources */,
-				CD6DC26B1574B378008C3996 /* ParticlePresets.cpp in Sources */,
 				CD6DC26C1574B378008C3996 /* GlutHostMain.cpp in Sources */,
 				CD6DC26D1574B378008C3996 /* FolderWatcher-mac.mm in Sources */,
 			);
@@ -620,7 +615,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDE8A810155E435800C2DFF5 /* GlutHost.cpp in Sources */,
-				CDE8A811155E435800C2DFF5 /* ParticlePresets.cpp in Sources */,
 				CDE8A812155E435800C2DFF5 /* GlutHostMain.cpp in Sources */,
 				CDE8A813155E435800C2DFF5 /* FolderWatcher-mac.mm in Sources */,
 			);
