@@ -80,5 +80,5 @@ function onKeyboardEvent ( key, down )
 	end
 end
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 

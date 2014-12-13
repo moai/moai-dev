@@ -45,11 +45,11 @@ function setStyleTests ()
 end
 
 function onKeyboardEvent ( key, down )
-	if down and key == 32 then
+	if down and key == MOAIKeyCode.SPACE then
 		continue = true
 	end
 end
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 thread = MOAIThread.new ()
 thread:run ( setStyleTests )
