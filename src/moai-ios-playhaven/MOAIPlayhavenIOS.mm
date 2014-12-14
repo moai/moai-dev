@@ -1,6 +1,6 @@
 #ifndef DISABLE_PLAYHAVEN
 
-#import <moai-iphone/MOAIPlayhavenIOS.h>
+#import "MOAIPlayhavenIOS.h"
 
 //================================================================//
 // lua

@@ -7,7 +7,7 @@
 
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
-#include <host-sdl/SDLHost.h>
+#include "SDLHost.h"
 
 #ifdef MOAI_OS_WINDOWS
     #include <windows.h>
@@ -21,6 +21,13 @@
 #include <SDL.h>
 
 #include "Joystick.h"
+
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <limits.h>
+#endif
+
+#define UNUSED(p) (( void )p)
 
 namespace InputDeviceID {
 	enum {
@@ -161,7 +168,30 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
-	AKUModulesParseArgs ( argc, argv );
+	#ifdef __APPLE__
+			//are we a bundle?
+			CFBundleRef bref = CFBundleGetMainBundle();
+			if (bref == NULL || CFBundleGetIdentifier(bref) == NULL) {
+					AKUModulesParseArgs(argc, argv);
+					
+			} else {
+			
+					CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL(bref);
+					assert(bundleurl != NULL);
+					
+					UInt8 buf[PATH_MAX];
+					CFURLGetFileSystemRepresentation(bundleurl, true, buf, PATH_MAX);
+
+					AKUSetWorkingDirectory((const char *)buf);
+					AKULoadFuncFromFile("bootstrap.lua");
+					AKUCallFunc();
+			}
+	#else
+			
+			
+		AKUModulesParseArgs ( argc, argv );
+	#endif
+
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
