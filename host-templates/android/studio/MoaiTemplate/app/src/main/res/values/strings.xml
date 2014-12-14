@@ -1,0 +1,13 @@
+<resources>
+    <!--The name displayed in the app drawer or home screens-->
+    <string name="app_name">Moai Template</string>
+
+    <!--value for com.google.android.gms.games.APP_ID-->
+    <string name="app_id">0</string>
+
+    <!--url scheme name for launching app -->
+    <string name="scheme_name">moaischeme</string>
+
+    <!--screen orientation see http://developer.android.com/guide/topics/manifest/activity-element.html#screen -->
+    <string name="orientation">portrait</string>
+</resources>
