@@ -4,6 +4,7 @@
 
 OUTPUT_DIR			= INVOKE_DIR .. 'libmoai/'
 
+LIB_NAME			= 'moai'
 MY_ARM_MODE			= 'arm'
 MY_ARM_ARCH			= 'armeabi-v7a'
 MY_APP_PLATFORM		= 'android-10'
@@ -222,6 +223,7 @@ processConfigFile = function ( filename )
 	end
 
 	if config.SETTINGS then
+		LIB_NAME = config.SETTINGS.LIB_NAME or LIB_NAME
 		MY_ARM_MODE = config.SETTINGS.MY_ARM_MODE or MY_ARM_MODE
 		MY_ARM_ARCH = config.SETTINGS.MY_ARM_ARCH or MY_ARM_ARCH
 		MY_APP_PLATFORM = config.SETTINGS.MY_APP_PLATFORM or MY_APP_PLATFORM
@@ -322,6 +324,7 @@ end
 
 util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
+	[ '@LIB_NAME@' ]					= LIB_NAME,	
 	[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
 	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
 	[ '@GLOBALS@' ] 					= getGlobalsString (),
