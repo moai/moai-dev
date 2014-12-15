@@ -1020,14 +1020,6 @@
 		89BE7623173C12CE00DFE837 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7606173C12CE00DFE837 /* pch.cpp */; };
 		89BE7624173C12CE00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7607173C12CE00DFE837 /* pch.h */; };
 		89BE7625173C12CE00DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7607173C12CE00DFE837 /* pch.h */; };
-		89BE7666173C144000DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7662173C144000DFE837 /* host.cpp */; };
-		89BE7667173C144000DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7662173C144000DFE837 /* host.cpp */; };
-		89BE7668173C144000DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7663173C144000DFE837 /* host.h */; };
-		89BE7669173C144000DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7663173C144000DFE837 /* host.h */; };
-		89BE766A173C144000DFE837 /* MOAIHarness.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7664173C144000DFE837 /* MOAIHarness.cpp */; };
-		89BE766B173C144000DFE837 /* MOAIHarness.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7664173C144000DFE837 /* MOAIHarness.cpp */; };
-		89BE766C173C144000DFE837 /* MOAIHarness.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7665173C144000DFE837 /* MOAIHarness.h */; };
-		89BE766D173C144000DFE837 /* MOAIHarness.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7665173C144000DFE837 /* MOAIHarness.h */; };
 		89BE76A8173C168400DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE76A1173C168400DFE837 /* headers.h */; };
 		89BE76A9173C168400DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE76A1173C168400DFE837 /* headers.h */; };
 		89BE76AA173C168400DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE76A2173C168400DFE837 /* host.cpp */; };
@@ -6158,12 +6150,6 @@
 		89BE7605173C12CE00DFE837 /* MOAIUrlMgrNaCl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUrlMgrNaCl.h; sourceTree = "<group>"; };
 		89BE7606173C12CE00DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		89BE7607173C12CE00DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
-		89BE7647173C138100DFE837 /* libmoai-ios-harness.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-harness.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89BE7660173C13EB00DFE837 /* libmoai-osx-harness.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-harness.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89BE7662173C144000DFE837 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
-		89BE7663173C144000DFE837 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
-		89BE7664173C144000DFE837 /* MOAIHarness.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHarness.cpp; sourceTree = "<group>"; };
-		89BE7665173C144000DFE837 /* MOAIHarness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHarness.h; sourceTree = "<group>"; };
 		89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-http-server.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-http-server.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE76A1173C168400DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
@@ -7907,20 +7893,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		89BE7641173C138100DFE837 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE765A173C13EB00DFE837 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		89BE7680173C15F100DFE837 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8652,7 +8624,6 @@
 				CDC123A217FA816C00FB64BB /* moai-crypto */,
 				89BE6C571739A3D000DFE837 /* moai-fmod-designer */,
 				89BE6B781739A02200DFE837 /* moai-fmod-ex */,
-				89BE7661173C144000DFE837 /* moai-harness */,
 				89BE75F8173C12CE00DFE837 /* moai-http-client */,
 				89BE76A0173C168400DFE837 /* moai-http-server */,
 				CD2B7C2E17FA564B00EBA2DB /* moai-ios */,
@@ -8707,8 +8678,6 @@
 				89BE74A1173AD2B600DFE837 /* libmoai-ios-box2d.a */,
 				89BE75DA173C121800DFE837 /* libmoai-osx-http-client.a */,
 				89BE75F7173C126100DFE837 /* libmoai-ios-http-client.a */,
-				89BE7647173C138100DFE837 /* libmoai-ios-harness.a */,
-				89BE7660173C13EB00DFE837 /* libmoai-osx-harness.a */,
 				89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */,
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
@@ -9355,17 +9324,6 @@
 				89BE7607173C12CE00DFE837 /* pch.h */,
 			);
 			path = "moai-http-client";
-			sourceTree = "<group>";
-		};
-		89BE7661173C144000DFE837 /* moai-harness */ = {
-			isa = PBXGroup;
-			children = (
-				89BE7662173C144000DFE837 /* host.cpp */,
-				89BE7663173C144000DFE837 /* host.h */,
-				89BE7664173C144000DFE837 /* MOAIHarness.cpp */,
-				89BE7665173C144000DFE837 /* MOAIHarness.h */,
-			);
-			path = "moai-harness";
 			sourceTree = "<group>";
 		};
 		89BE76A0173C168400DFE837 /* moai-http-server */ = {
@@ -13638,24 +13596,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		89BE7630173C138100DFE837 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89BE7668173C144000DFE837 /* host.h in Headers */,
-				89BE766C173C144000DFE837 /* MOAIHarness.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7649173C13EB00DFE837 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89BE7669173C144000DFE837 /* host.h in Headers */,
-				89BE766D173C144000DFE837 /* MOAIHarness.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		89BE766F173C15F100DFE837 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15149,40 +15089,6 @@
 			productReference = 89BE75F7173C126100DFE837 /* libmoai-ios-http-client.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		89BE762F173C138100DFE837 /* libmoai-ios-harness */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89BE7642173C138100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-harness" */;
-			buildPhases = (
-				89BE7630173C138100DFE837 /* Headers */,
-				89BE7639173C138100DFE837 /* Sources */,
-				89BE7641173C138100DFE837 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-harness";
-			productName = OpenUSLS;
-			productReference = 89BE7647173C138100DFE837 /* libmoai-ios-harness.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		89BE7648173C13EB00DFE837 /* libmoai-osx-harness */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89BE765B173C13EB00DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-harness" */;
-			buildPhases = (
-				89BE7649173C13EB00DFE837 /* Headers */,
-				89BE7652173C13EB00DFE837 /* Sources */,
-				89BE765A173C13EB00DFE837 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-osx-harness";
-			productName = OpenUSLS;
-			productReference = 89BE7660173C13EB00DFE837 /* libmoai-osx-harness.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		89BE766E173C15F100DFE837 /* libmoai-ios-http-server */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89BE7681173C15F100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-http-server" */;
@@ -15860,7 +15766,6 @@
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */,
-				89BE762F173C138100DFE837 /* libmoai-ios-harness */,
 				89BE75DB173C126100DFE837 /* libmoai-ios-http-client */,
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				CD70C20118449935005CEBC0 /* libmoai-ios-kontagent */,
@@ -15884,7 +15789,6 @@
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
 				CDDD30941574AE0F00C410A0 /* libmoai-osx-fmod-designer */,
 				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */,
-				89BE7648173C13EB00DFE837 /* libmoai-osx-harness */,
 				89BE75BE173C121800DFE837 /* libmoai-osx-http-client */,
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
@@ -17020,24 +16924,6 @@
 				CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */,
 				89BE7622173C12CE00DFE837 /* pch.cpp in Sources */,
 				CDAE1D3217E9145400DF28C6 /* host.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7639173C138100DFE837 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89BE7666173C144000DFE837 /* host.cpp in Sources */,
-				89BE766A173C144000DFE837 /* MOAIHarness.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89BE7652173C13EB00DFE837 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89BE7667173C144000DFE837 /* host.cpp in Sources */,
-				89BE766B173C144000DFE837 /* MOAIHarness.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20470,270 +20356,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		89BE7643173C138100DFE837 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		89BE7644173C138100DFE837 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		89BE7645173C138100DFE837 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		89BE7646173C138100DFE837 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-harness";
-				SDKROOT = iphoneos;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
-		89BE765C173C13EB00DFE837 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-harness";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		89BE765D173C13EB00DFE837 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-harness";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		89BE765E173C13EB00DFE837 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-harness";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = AdHoc;
-		};
-		89BE765F173C13EB00DFE837 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "moai-osx-harness";
-				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26033,28 +25655,6 @@
 				89BE75F4173C126100DFE837 /* Release */,
 				89BE75F5173C126100DFE837 /* AdHoc */,
 				89BE75F6173C126100DFE837 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89BE7642173C138100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-harness" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89BE7643173C138100DFE837 /* Debug */,
-				89BE7644173C138100DFE837 /* Release */,
-				89BE7645173C138100DFE837 /* AdHoc */,
-				89BE7646173C138100DFE837 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89BE765B173C13EB00DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-harness" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89BE765C173C13EB00DFE837 /* Debug */,
-				89BE765D173C13EB00DFE837 /* Release */,
-				89BE765E173C13EB00DFE837 /* AdHoc */,
-				89BE765F173C13EB00DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
