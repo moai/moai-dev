@@ -45,13 +45,13 @@ mach_timebase_info_data_t _getTimerInfo () {
 //================================================================//
 
 	//----------------------------------------------------------------//
-	const u32 ZLDeviceTime::GetDurationInMicroSeconds (const TimeStamp& duration) {
+	const u32 ZLDeviceTime::GetDurationInMicroSeconds ( const TimeStamp& duration ) {
 		
-		return (u32)GetTimeInMicroSeconds(duration);
+		return ( u32 )GetTimeInMicroSeconds ( duration );
 	}
 
 	//----------------------------------------------------------------//
-	const u64 ZLDeviceTime::GetTimeInMicroSeconds (const TimeStamp& timeStamp) {
+	const u64 ZLDeviceTime::GetTimeInMicroSeconds ( const TimeStamp& timeStamp ) {
 		
 		static mach_timebase_info_data_t sInfo = _getTimerInfo (); // frequency in nanoseconds
 		return (( timeStamp * sInfo.numer ) / sInfo.denom ) * ( 1e-3 );
@@ -71,7 +71,7 @@ mach_timebase_info_data_t _getTimerInfo () {
 	}
 	
 	//----------------------------------------------------------------//
-	void ZLDeviceTime::GetTimeStamp (ZLDeviceTime::TimeStamp& timeStamp) {
+	void ZLDeviceTime::GetTimeStamp ( ZLDeviceTime::TimeStamp& timeStamp ) {
 		
 		timeStamp = mach_absolute_time ();
 	}

@@ -45,7 +45,7 @@ MOAIGlobals::~MOAIGlobals () {
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
 			global->OnGlobalsFinalize ();
@@ -60,7 +60,7 @@ MOAIGlobals::~MOAIGlobals () {
 	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
 			delete global;
@@ -74,7 +74,7 @@ void MOAIGlobals::Restore () {
 	size_t total = this->mGlobals.Size ();
 	for ( size_t i = 0; i < total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
 		if ( global ) {
 			global->OnGlobalsRestore ();
 		}
@@ -87,7 +87,7 @@ void MOAIGlobals::Retire () {
 	size_t total = this->mGlobals.Size ();
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
 		if ( global ) {
 			global->OnGlobalsRetire ();
 		}

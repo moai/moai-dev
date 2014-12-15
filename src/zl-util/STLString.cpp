@@ -19,6 +19,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+STLString& STLString::assign ( cc8* str ) {
+
+	if ( str ) {
+		this->string::assign ( str );
+	}
+	else {
+		this->clear ();
+	}
+	return *this;
+}
+
+//----------------------------------------------------------------//
 void STLString::base_64_decode ( void* buffer, size_t len ) {
 
 	ZLBase64Reader base64;

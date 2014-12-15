@@ -529,6 +529,8 @@ if MOAISim.forceGC then
     MOAISim.forceGarbageCollection = MOAISim.forceGC
 end
 
+MOAITrace = MOAIDebugger or MOAITrace
+
 MOAIApp = MOAIApp or MOAIAppAndroid or MOAIAppIOS
 MOAIAudioSampler = MOAIAudioSampler or MOAIAudioSamplerCocoa or MOAIAudioSamplerAndroid
 MOAIBrowser = MOAIBrowser or MOAIBrowserAndroid or MOAIBrowserIOS

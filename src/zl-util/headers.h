@@ -11,6 +11,7 @@
 #include <zl-util/STLList.h>
 #include <zl-util/STLMap.h>
 #include <zl-util/STLSet.h>
+#include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
 #include <zl-util/ZLAdapterInfo.h>
