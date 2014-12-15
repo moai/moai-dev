@@ -270,8 +270,6 @@ add_subdirectory ( moai-sim )
 
 
 add_subdirectory ( moai-box2d )
-add_subdirectory ( moai-chipmunk )
-
 
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
@@ -307,8 +305,6 @@ else (CUSTOM_HOST)
 if ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS )
     if ( SDL_HOST )
       add_subdirectory ( host-sdl )
-    else ( SDL_HOST ) 
-      add_subdirectory ( host-glut )
     endif (SDL_HOST)
 endif ( BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 

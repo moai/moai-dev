@@ -34,10 +34,10 @@ namespace ZLDeviceTime {
 	#endif
 
 	//----------------------------------------------------------------//
-	const u32	GetDurationInMicroSeconds	(const TimeStamp& duration);
-	const u64	GetTimeInMicroSeconds		(const TimeStamp& timeStamp);
+	const u32	GetDurationInMicroSeconds	( const TimeStamp& duration );
+	const u64	GetTimeInMicroSeconds		( const TimeStamp& timeStamp );
 	double		GetTimeInSeconds			();
-	void		GetTimeStamp				(TimeStamp& timeStamp);
+	void		GetTimeStamp				( TimeStamp& timeStamp );
 }
 
 #endif
