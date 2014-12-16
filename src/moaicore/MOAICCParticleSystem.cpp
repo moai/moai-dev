@@ -770,7 +770,6 @@ int MOAICCParticleSystem::_getSourcePosition ( lua_State *L ) {
 	return 2;
 }
 
-
 //----------------------------------------------------------------//
 /** @name	setSourcePosition
 	@text	Set the x and y components of system attribute sourcePosition.
@@ -780,13 +779,67 @@ int MOAICCParticleSystem::_getSourcePosition ( lua_State *L ) {
 	@in		number					sourcePositionY
 	@out	nil
  */
-
 int MOAICCParticleSystem::_setSourcePosition ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UNN" )
 	self->mSourcePos[0] = state.GetValue < float >( 2, 0 );
 	self->mSourcePos[1] = state.GetValue < float >( 3, 0 );
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/** @name	getSourcePositionX
+	@text	Returns the x component of system attribute sourcePosition.  This attribute can be interpreted several ways depending on the particle position type.  With the default particle positon type PARTICLE_POSITION_GROUPED, the location of the particle system is affected by changes to the position property.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					sourcePositionX
+ */
+int MOAICCParticleSystem::_getSourcePositionX ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSourcePos[0] );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/** @name	setSourcePositionX
+	@text	Set the x component of system attribute sourcePosition.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					sourcePositionX
+	@out	nil
+ */
+int MOAICCParticleSystem::_setSourcePositionX ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mSourcePos[0] = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	getSourcePositionY
+	@text	Returns the y component of system attribute sourcePosition.  This attribute can be interpreted several ways depending on the particle position type.  With the default particle positon type PARTICLE_POSITION_GROUPED, the location of the particle system is affected by changes to the position property.
+ 
+	@in		MOAICCParticleSystem	self
+	@out	number					sourcePositionY
+ */
+int MOAICCParticleSystem::_getSourcePositionY ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
+	lua_pushnumber ( state, self->mSourcePos[1] );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/** @name	setSourcePositionY
+	@text	Set the y component of system attribute sourcePosition.
+ 
+	@in		MOAICCParticleSystem	self
+	@in		number					sourcePositionY
+	@out	nil
+ */
+int MOAICCParticleSystem::_setSourcePositionY ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
+	self->mSourcePos[1] = state.GetValue < float >( 2, 0 );
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /** @name	getSourcePositionVariance
@@ -804,7 +857,7 @@ int MOAICCParticleSystem::_getSourcePositionVariance ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	getSourcePositionVariance
+/** @name	setSourcePositionVariance
 	@text	Set the x and y components of system attribute sourcePositionVariance.
  
 	@in		MOAICCParticleSystem	self
@@ -2223,6 +2276,10 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 		{ "setRotationStartVariance",				_setRotationStartVariance },
 		{ "getSourcePosition",						_getSourcePosition },
 		{ "setSourcePosition",						_setSourcePosition },
+		{ "getSourcePositionX",						_getSourcePositionX },
+		{ "setSourcePositionX",						_setSourcePositionX },
+		{ "getSourcePositionY",						_getSourcePositionY },
+		{ "setSourcePositionY",						_setSourcePositionY },
 		{ "getSourcePositionVariance",				_getSourcePositionVariance },
 		{ "setSourcePositionVariance",				_setSourcePositionVariance },
 		{ "getSpeed",								_getSpeed },

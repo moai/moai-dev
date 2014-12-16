@@ -189,6 +189,10 @@ private:
 	static int		_setRotationStartVariance			( lua_State* L );
 	static int		_getSourcePosition					( lua_State* L );
 	static int		_setSourcePosition					( lua_State* L );
+	static int		_getSourcePositionX					( lua_State* L );
+	static int		_setSourcePositionX					( lua_State* L );
+	static int		_getSourcePositionY					( lua_State* L );
+	static int		_setSourcePositionY					( lua_State* L );
 	static int		_getSourcePositionVariance			( lua_State* L );
 	static int		_setSourcePositionVariance			( lua_State* L );
 	static int		_getSpeed							( lua_State* L );
