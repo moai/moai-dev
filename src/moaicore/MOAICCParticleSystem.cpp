@@ -2318,9 +2318,6 @@ void MOAICCParticleSystem::SetVisibility ( bool visible ) {
 
 void MOAICCParticleSystem::StartSystem () {
 	this->mActive = true;
-	
-	//MOAIAction::Start();
-	
 }
 
 
