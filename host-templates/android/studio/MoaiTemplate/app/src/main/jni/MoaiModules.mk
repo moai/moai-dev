@@ -15,12 +15,6 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-core.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := chipmunk 
-LOCAL_SRC_FILES := $(MOAI_LIBS)/libchipmunk.a
-
-include $(PREBUILT_STATIC_LIBRARY)
-include $(CLEAR_VARS)
-
 LOCAL_MODULE    := curl 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libcurl.a
 
@@ -66,12 +60,6 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := tinyxml 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libtinyxml.a
-
-include $(PREBUILT_STATIC_LIBRARY)
-include $(CLEAR_VARS)
-
-LOCAL_MODULE    := moai-chipmunk 
-LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-chipmunk.a
 
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)

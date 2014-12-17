@@ -9,10 +9,10 @@ include $(MOAI_MODULES)
 
 MOAI_ANDROID_MODULES := $(MOAI_LIB_DIR)/modules/jni/moaiandroid.mk
 MOAI_JNI_MODULES :=
+MOAI_STATIC_LIBRARIES :=
 
 include $(MOAI_ANDROID_MODULES)
 
-MOAI_STATIC_LIBRARIES := moai-android-twitter
 
 
 include $(CLEAR_VARS)

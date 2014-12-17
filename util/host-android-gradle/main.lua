@@ -50,8 +50,6 @@ copyhostfiles = function()
 	local output = config.OUTPUT_DIR
 	print("Creating ",output)
     MOAIFileSystem.affirmPath(output)
-
-
    
 	for entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/android/studio/MoaiTemplate', false, true) do
 			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/android/studio/MoaiTemplate' , entry )
@@ -71,26 +69,38 @@ copyhostfiles = function()
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios.mm')
 
     --java classes
-    files = util.listFiles( MOAI_SDK_HOME..'src/moai-android', ".java")
-    for k, entry in pairs ( files ) do
-    	local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'src/moai-android' , entry )
-		print( string.format( '%s -> %s', fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry ))
-		MOAIFileSystem.copy(fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry)
-    end
-    MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiActivity.java')
-    MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiView.java')
+  --  files = util.listFiles( MOAI_SDK_HOME..'src/moai-android', ".java")
+  --  for k, entry in pairs ( files ) do
+  --  	local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'src/moai-android' , entry )
+--		print( string.format( '%s -> %s', fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry ))
+	--	MOAIFileSystem.copy(fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry)
+--    end
+  --  MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiActivity.java')
+--    MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiView.java')
 
     --lua
+    local hostsourcedir = output..'app/src/main/java/com/getmoai/androidhost/'
+    MOAIFileSystem.affirmPath(hostsourcedir)
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiActivity.java', hostsourcedir..'MoaiActivity.java')
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiView.java', hostsourcedir..'MoaiView.java')
     
 	for entry in util.iterateFiles(MOAI_SDK_HOME..'samples/hello-moai', false, true) do
 			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'samples/hello-moai' , entry )
 			print( string.format( '%s -> %s', fullpath, output..'lua/'..entry ))
 			MOAIFileSystem.copy(fullpath, output..'lua/'..entry)
 	end
+    
+    local hostfiles = {
+            [ hostsourcedir..'MoaiActivity.java' ] = true,
+            [ hostsourcedir..'MoaiView.java' ] = true
+          }
 
     --libroot
-    util.replaceInFiles ({
-	
+  util.replaceInFiles ({
+	  [ util.wrap(pairs, hostfiles) ]  = {
+      ['@PACKAGE@'] = 'com.getmoai.androidhost',
+      ['@WORKING_DIR@'] = 'bundle/assets'
+    },
 		[ output .. 'gradle.properties' ] = {
 			[ 'moaiLibRoot=[^\n]+' ]= "moaiLibRoot=./lib",
 			[ 'moaiLuaRoot=[^\n]+' ]= "moaiLuaRoot=./lua"

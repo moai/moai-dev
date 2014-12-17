@@ -3,7 +3,7 @@
 <manifest
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:installLocation="auto"
-package="com.getmoai.samples">
+package="com.getmoai.androidhost">
 
     <supports-screens
         android:smallScreens="false"
@@ -30,7 +30,7 @@ package="com.getmoai.samples">
 
     <!-- Moai -->
     <activity
-        android:name="com.getmoai.samples.MoaiActivity"
+        android:name="com.getmoai.androidhost.MoaiActivity"
         android:label="@string/app_name"
         android:screenOrientation="@string/orientation"
         android:launchMode="singleTask"

@@ -3,7 +3,7 @@ project ( moai-android )
 
 set ( MOAI_ANDROID_MODULES "" )
 
-add_subdirectory(moai-android-twitter)
+#add_subdirectory(moai-android-twitter)
 
 
 set ( MOAI_ANDROID_INCLUDES 
@@ -36,7 +36,14 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include/moai-android
 
 #java
 FILE(GLOB JAVA_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.java")
-install(FILES ${JAVA_FILES} DESTINATION ../modules/moai/android)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
+  DESTINATION ../modules/moai/android
+  PATTERN "*.java"
+  PATTERN "*.cpp" EXCLUDE
+  PATTERN "*.h" EXCLUDE
+  PATTERN "MoaiActivity.java" EXCLUDE
+  PATTERN "MoaiView.java" EXCLUDE
+)
 
 #dump our modules for the host project
 
