@@ -23,6 +23,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIInputQueue::_autoTimestamp ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->mAutoTimestamp = state.GetValue < bool >( 2, true );
+	if ( self->mAutoTimestamp ) {
+		self->mTimebase = ZLDeviceTime::GetTimeInSeconds ();
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIInputQueue::_deferEvents ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
 
@@ -42,12 +54,31 @@ int MOAIInputQueue::_discardEvents ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIInputQueue::_playback ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->mPlayback = state.GetValue < bool >( 2, true );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIInputQueue::_setAutosuspend ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
 	
 	self->mAutosuspend = state.GetValue < double >( 2, 0 );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIInputQueue::_setRecorder ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputQueue, "U" )
+	
+	self->mRecorder.Set ( *self, state.GetLuaObject < MOAIStream >( 2, true ));
+	
+	return 0;
+
 }
 
 //----------------------------------------------------------------//
@@ -72,7 +103,7 @@ bool MOAIInputQueue::CanWrite () {
 		this->DiscardAll ();
 		this->mAutosuspended = true;
 	}
-	return !( this->mSuspended || this->mAutosuspended );
+	return !( this->mPlayback || this->mSuspended || this->mAutosuspended );
 }
 
 //----------------------------------------------------------------//
@@ -127,11 +158,13 @@ bool MOAIInputQueue::IsDone () {
 MOAIInputQueue::MOAIInputQueue () :
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ),
+	mAutoTimestamp ( false ),
 	mDefer ( false ),
 	mSuspended ( false ),
 	mAutosuspend ( 0 ),
 	mAutosuspended ( false ),
-	mLastUpdate ( 0 ) {
+	mLastUpdate ( 0 ),
+	mPlayback ( false ) {
 	
 	RTTI_SINGLE ( MOAIAction )
 	
@@ -144,54 +177,85 @@ MOAIInputQueue::~MOAIInputQueue () {
 	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
 		this->LuaRelease ( this->mDevices [ i ]);
 	}
+	this->mRecorder.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIInputQueue::OnUpdate ( double timestep ) {
 
-	this->mLastUpdate = ZLDeviceTime::GetTimeInSeconds ();
-	this->mAutosuspended = false;
+	ZLStream* eventStream = this;
 
-	// reset the input sensors
-	this->ResetSensors ();
+	if ( this->mPlayback ) {
+		if ( this->mRecorder ) {
+			size_t cursor = this->ParseEvents ( *this->mRecorder, timestep );
+			this->mRecorder->Seek ( cursor, SEEK_SET );
+		}
+	}
+	else {
 
-	size_t cursor = 0;
+		this->mLastUpdate = ZLDeviceTime::GetTimeInSeconds ();
+		this->mAutosuspended = false;
 
-	if ( !this->mDefer ) {
+		// reset the input sensors
+		this->ResetSensors ();
+
+		if ( !this->mDefer ) {
+			
+			// rewind the event queue
+			this->Seek ( 0, SEEK_SET );
+			
+			size_t cursor = this->ParseEvents ( *this, timestep );
+			
+			// record the processed events
+			this->Record ( cursor );
+			
+			// discard processed events
+			this->DiscardFront ( cursor );
+			
+			// back to the end of the queue
+			this->Seek ( this->GetLength (), SEEK_SET );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+size_t MOAIInputQueue::ParseEvents ( ZLStream& stream, double timestep ) {
+
+	bool first = true;
+	double timebase = 0;
+	size_t cursor = stream.GetCursor ();
+	
+	// parse events until we run out or hit an event after the current sim time
+	while ( stream.GetCursor () < stream.GetLength ()) {
 		
-		// rewind the event queue
-		this->Seek ( 0, SEEK_SET );
+		u8 deviceID			= stream.Read < u8 >( 0 );
+		u8 sensorID			= stream.Read < u8 >( 0 );
+		double timestamp	= stream.Read < double >( 0 );
 		
-		bool first = true;
-		double timebase = 0;
-		
-		// parse events until we run out or hit an event after the current sim time
-		while ( this->GetCursor () < this->GetLength ()) {
-			
-			u8 deviceID			= this->Read < u8 >( 0 );
-			u8 sensorID			= this->Read < u8 >( 0 );
-			double timestamp	= this->Read < double >( 0 );
-			
-			if ( first ) {
-				timebase = timestamp;
-				first = false;
-			}
-			
-			if ( timestep < ( timestamp - timebase )) break;
-			
-			MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
-			assert ( sensor );
-			sensor->mTimestamp = timestamp;
-			sensor->ParseEvent ( *this );
-			
-			cursor = this->GetCursor ();
+		if ( first ) {
+			timebase = timestamp;
+			first = false;
 		}
 		
-		// discard processed events
-		this->DiscardFront ( cursor );
+		if ( timestep < ( timestamp - timebase )) break;
 		
-		// back to the end of the queue
-		this->Seek ( this->GetLength (), SEEK_SET );
+		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
+		assert ( sensor );
+		sensor->mTimestamp = timestamp;
+		sensor->ParseEvent ( stream );
+		
+		cursor = stream.GetCursor ();
+	}
+	return cursor;
+}
+
+//----------------------------------------------------------------//
+void MOAIInputQueue::Record ( size_t size ) {
+
+	if ( this->mRecorder && size ) {
+		this->Seek ( 0, SEEK_SET );
+		this->mRecorder->WriteStream ( *this, size );
+		this->Seek ( size, SEEK_SET );
 	}
 }
 
@@ -207,9 +271,12 @@ void MOAIInputQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "autoTimestamp",		_autoTimestamp },
 		{ "deferEvents",		_deferEvents },
 		{ "discardEvents",		_discardEvents },
+		{ "playback",			_playback },
 		{ "setAutosuspend",		_setAutosuspend },
+		{ "setRecorder",		_setRecorder },
 		{ "suspendEvents",		_suspendEvents },
 		{ NULL, NULL }
 	};
@@ -310,9 +377,13 @@ void MOAIInputQueue::SuspendEvents ( bool suspend ) {
 bool MOAIInputQueue::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
 
 	if ( this->CanWrite () && this->CheckSensor ( deviceID, sensorID, type )) {
+
 		this->Write < u8 >(( u8 )deviceID );
 		this->Write < u8 >(( u8 )sensorID );
-		this->Write < double >( this->mTimestamp - this->mTimebase );
+		
+		double timestamp = this->mAutoTimestamp ? ZLDeviceTime::GetTimeInSeconds () : this->mTimestamp;
+		this->Write < double >( timestamp - this->mTimebase );
+		
 		return true;
 	}
 	return false;
