@@ -218,6 +218,21 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDrawOrder
+	@text	Set draw order of sprites in particle system
+ 
+	@in		MOAIParticleSystem self
+	@in     number  order		MOAIParticleSystem.ORDER_NORMAL or MOAIParticleSystem.ORDER_REVERSE
+	@out	nil
+*/
+int MOAIParticleSystem::_setDrawOrder ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mDrawOrder = state.GetValue < u32 >( 2, ORDER_NORMAL );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setComputeBounds
 	@text	Set the a flag controlling whether the particle system
 			re-computes its bounds every frame.
@@ -376,9 +391,15 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	}
 	
 	for ( u32 i = 0; i < total; ++i ) {
-		
-		u32 idx = ( base + i ) % maxSprites;
-		
+
+		u32 idx;
+		if ( this->mDrawOrder == ORDER_NORMAL ) {
+			idx = ( base + i ) % maxSprites;
+		}
+		else {
+			idx = ( base + ( total - 1 - i )) % maxSprites;
+		}
+				
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
@@ -441,6 +462,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mTail ( 0 ),
 	mFree ( 0 ),
 	mSpriteTop ( 0 ),
+	mDrawOrder ( ORDER_NORMAL ),
 	mComputeBounds ( false ) {
 	
 	RTTI_BEGIN
@@ -623,6 +645,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveParticles",	_reserveParticles },
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
+		{ "setDrawOrder",		_setDrawOrder },
 		{ "setComputeBounds",	_setComputeBounds },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
