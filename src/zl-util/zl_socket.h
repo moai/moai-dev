@@ -54,12 +54,17 @@ enum {
 	IO_UNKNOWN = -3
 };
 
+typedef struct in_addr zl_inaddr;
 typedef struct sockaddr zl_sockaddr;
+
+int		zl_inet_aton				( cc8* cp, zl_inaddr* inp );
+int		zl_inet_bind				( zl_socket* ps, const char* address, u16 port );
+int		zl_inet_connect				( zl_socket* ps, const char* address, u16 port, double tm );
 
 cc8*	zl_io_strerror				( int err );
 int		zl_socket_accept			( zl_socket* ps, zl_socket* pa, zl_sockaddr *addr, socklen_t *addr_len, double tm );
-int		zl_socket_bind				( zl_socket* ps, zl_sockaddr *addr, socklen_t addr_len );
-int		zl_socket_connect			( zl_socket* ps, zl_sockaddr *addr, socklen_t addr_len, double tm );
+int		zl_socket_bind				( zl_socket* ps, zl_sockaddr* addr, socklen_t addr_len );
+int		zl_socket_connect			( zl_socket* ps, zl_sockaddr* addr, socklen_t addr_len, double tm );
 int		zl_socket_create			( zl_socket* ps, int domain, int type, int protocol );
 void	zl_socket_destroy			( zl_socket* ps );
 int		zl_socket_disable_sigpipe	();

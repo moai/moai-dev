@@ -7723,6 +7723,14 @@
 		CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_usocket.h; sourceTree = "<group>"; };
 		CDB718AC1A44E7FE003DFFBA /* zl_wsocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zl_wsocket.cpp; sourceTree = "<group>"; };
 		CDB718AD1A44E7FE003DFFBA /* zl_wsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_wsocket.h; sourceTree = "<group>"; };
+		CDB718C81A451C4C003DFFBA /* ftp.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = ftp.lua; path = "../../3rdparty/luasocket-2.0.2/src/ftp.lua"; sourceTree = "<group>"; };
+		CDB718C91A451C4D003DFFBA /* http.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = http.lua; path = "../../3rdparty/luasocket-2.0.2/src/http.lua"; sourceTree = "<group>"; };
+		CDB718CA1A451C4D003DFFBA /* ltn12.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = ltn12.lua; path = "../../3rdparty/luasocket-2.0.2/src/ltn12.lua"; sourceTree = "<group>"; };
+		CDB718CB1A451C4D003DFFBA /* mime.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = mime.lua; path = "../../3rdparty/luasocket-2.0.2/src/mime.lua"; sourceTree = "<group>"; };
+		CDB718CC1A451C4D003DFFBA /* smtp.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = smtp.lua; path = "../../3rdparty/luasocket-2.0.2/src/smtp.lua"; sourceTree = "<group>"; };
+		CDB718CD1A451C4D003DFFBA /* socket.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = socket.lua; path = "../../3rdparty/luasocket-2.0.2/src/socket.lua"; sourceTree = "<group>"; };
+		CDB718CE1A451C4D003DFFBA /* tp.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = tp.lua; path = "../../3rdparty/luasocket-2.0.2/src/tp.lua"; sourceTree = "<group>"; };
+		CDB718CF1A451C4D003DFFBA /* url.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = url.lua; path = "../../3rdparty/luasocket-2.0.2/src/url.lua"; sourceTree = "<group>"; };
 		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
 		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
 		CDBA13141A305641007503F3 /* moai_version_major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_major.h; path = "config-default/moai_version_major.h"; sourceTree = "<group>"; };
@@ -8188,9 +8196,9 @@
 				CD881EBC19FF64F3004498E8 /* libwebp */,
 				CDD06BD21398824F00AB0420 /* luacrypto */,
 				CD218F8213A7FD18008337E7 /* luacurl */,
-				669C0566155DB5D500A5CE7F /* luasocket-embed */,
 				E9940D6414B7A217006465CC /* luafilesystem */,
 				CDD06BD11398824600AB0420 /* luasocket */,
+				669C0566155DB5D500A5CE7F /* luasocket-embed */,
 				CD218F8313A7FD34008337E7 /* luasql */,
 				CD795EFD17F08FED006AEB47 /* mongoose */,
 				43BA2E5717733124007DCDF0 /* playhaven */,
@@ -12339,6 +12347,21 @@
 			name = socket;
 			sourceTree = "<group>";
 		};
+		CDB718C71A451C31003DFFBA /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				CDB718C81A451C4C003DFFBA /* ftp.lua */,
+				CDB718C91A451C4D003DFFBA /* http.lua */,
+				CDB718CA1A451C4D003DFFBA /* ltn12.lua */,
+				CDB718CB1A451C4D003DFFBA /* mime.lua */,
+				CDB718CC1A451C4D003DFFBA /* smtp.lua */,
+				CDB718CD1A451C4D003DFFBA /* socket.lua */,
+				CDB718CE1A451C4D003DFFBA /* tp.lua */,
+				CDB718CF1A451C4D003DFFBA /* url.lua */,
+			);
+			name = lua;
+			sourceTree = "<group>";
+		};
 		CDBA13101A30561B007503F3 /* config */ = {
 			isa = PBXGroup;
 			children = (
@@ -12395,6 +12418,7 @@
 		CDD06BD11398824600AB0420 /* luasocket */ = {
 			isa = PBXGroup;
 			children = (
+				CDB718C71A451C31003DFFBA /* lua */,
 				CDD06D8E1398838D00AB0420 /* auxiliar.c */,
 				CDD06D8F1398838D00AB0420 /* auxiliar.h */,
 				CDD06D901398838D00AB0420 /* buffer.c */,

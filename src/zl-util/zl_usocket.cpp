@@ -44,6 +44,91 @@
 
 #endif
 
+typedef struct hostent zl_hostent;
+
+//----------------------------------------------------------------//
+int zl_inet_aton ( cc8* cp, zl_inaddr* inp ) {
+
+	#ifndef inet_aton
+	
+		unsigned int a = 0, b = 0, c = 0, d = 0;
+		int n = 0, r;
+		unsigned long int addr = 0;
+		r = sscanf(cp, "%u.%u.%u.%u%n", &a, &b, &c, &d, &n);
+		if (r == 0 || n == 0) return 0;
+		cp += n;
+		if (*cp) return 0;
+		if (a > 255 || b > 255 || c > 255 || d > 255) return 0;
+		if (inp) {
+			addr += a; addr <<= 8;
+			addr += b; addr <<= 8;
+			addr += c; addr <<= 8;
+			addr += d;
+			inp->s_addr = htonl(addr);
+		}
+		return 1;
+	#else
+	
+		return inet_aton ( cp, inp );
+	#endif
+}
+
+//----------------------------------------------------------------//
+int zl_inet_bind ( zl_socket* ps, cc8* address, unsigned short port ) {
+
+    struct sockaddr_in local;
+    int err;
+    memset(&local, 0, sizeof(local));
+	
+    /* address is either wildcard or a valid ip address */
+    local.sin_addr.s_addr = htonl ( INADDR_ANY );
+    local.sin_port = htons ( port );
+    local.sin_family = AF_INET;
+	
+    if ( strcmp ( address, "*" ) && !inet_aton ( address, &local.sin_addr )) {
+        struct hostent *hp = NULL;
+        struct in_addr **addr;
+        err = zl_socket_gethostbyname ( address, &hp );
+        if ( err != IO_DONE) return err;
+        addr = ( struct in_addr ** ) hp->h_addr_list;
+        memcpy ( &local.sin_addr, *addr, sizeof ( struct in_addr ));
+    }
+    err = zl_socket_bind(ps, ( zl_sockaddr* )&local, sizeof ( local ));
+    if ( err != IO_DONE ) {
+		zl_socket_destroy ( ps );
+	}
+    return err;
+}
+
+//----------------------------------------------------------------//
+int zl_inet_connect ( zl_socket* ps, cc8* address, unsigned short port, double tm ) {
+
+    struct sockaddr_in remote;
+    int err;
+    memset ( &remote, 0, sizeof ( remote ));
+    remote.sin_family = AF_INET;
+    remote.sin_port = htons ( port );
+	if ( strcmp ( address, "*" )) {
+        if ( !inet_aton ( address, &remote.sin_addr )) {
+            zl_hostent* hp = NULL;
+            zl_inaddr** addr;
+            err = zl_socket_gethostbyname ( address, &hp );
+            if (err != IO_DONE) return err;
+            addr = ( struct in_addr** ) hp->h_addr_list;
+            memcpy ( &remote.sin_addr, *addr, sizeof ( struct in_addr ));
+        }
+    }
+	else {
+		remote.sin_family = AF_UNSPEC;
+	}
+    return zl_socket_connect ( ps, ( zl_sockaddr* )&remote, sizeof ( remote ), tm );
+}
+
+//----------------------------------------------------------------//
+//int zl_inet_create ( zl_socket* ps, int type ) {
+//    return zl_socket_create ( ps, AF_INET, type, 0 );
+//}
+
 //----------------------------------------------------------------//
 cc8* zl_io_strerror( int err ) {
     switch (err) {
