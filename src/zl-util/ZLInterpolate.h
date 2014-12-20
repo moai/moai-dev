@@ -28,6 +28,21 @@ namespace ZLInterpolate {
 		kSoftEaseOut,
 		kSoftSmooth,
 		kSoftSmoothEaseOut,
+		kSineEaseIn,
+		kSineEaseOut,
+		kSineSmooth,
+		kCircEaseIn,
+		kCircEaseOut,
+		kCircSmooth,
+		kBounceIn,
+		kBounceOut,
+		kBounceSmooth,
+		kElasticIn,
+		kElasticOut,
+		kElasticSmooth,
+		kBackEaseIn,
+		kBackEaseOut,
+		kBackSmooth,
 	};
 	
 	//----------------------------------------------------------------//
