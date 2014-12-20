@@ -91,4 +91,6 @@
 #include <zl-util/ZLZip.h>
 #include <zl-util/ZLZipFile.h>
 
+#include <zl-util/zl_socket.h>
+
 #endif

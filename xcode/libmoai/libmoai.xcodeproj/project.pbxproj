@@ -3676,6 +3676,12 @@
 		CDB0CA31193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */; };
 		CDB0CA32193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB0CA2F193E6D3B00C54DB7 /* MOAIGridFancy.h */; };
 		CDB0CA33193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB0CA2F193E6D3B00C54DB7 /* MOAIGridFancy.h */; };
+		CDB718AE1A44E7FE003DFFBA /* zl_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718A91A44E7FE003DFFBA /* zl_socket.h */; };
+		CDB718AF1A44E7FE003DFFBA /* zl_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718A91A44E7FE003DFFBA /* zl_socket.h */; };
+		CDB718B01A44E7FE003DFFBA /* zl_usocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB718AA1A44E7FE003DFFBA /* zl_usocket.cpp */; };
+		CDB718B11A44E7FE003DFFBA /* zl_usocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB718AA1A44E7FE003DFFBA /* zl_usocket.cpp */; };
+		CDB718B21A44E7FE003DFFBA /* zl_usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */; };
+		CDB718B31A44E7FE003DFFBA /* zl_usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */; };
 		CDC1239317FA808A00FB64BB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238417FA808A00FB64BB /* headers.h */; };
 		CDC1239417FA808A00FB64BB /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1238517FA808A00FB64BB /* pch.cpp */; };
 		CDC1239517FA808A00FB64BB /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238617FA808A00FB64BB /* pch.h */; };
@@ -7712,6 +7718,11 @@
 		CDADCCF71A3576A10029FEDA /* MOAITrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITrace.h; sourceTree = "<group>"; };
 		CDB0CA2E193E6D3B00C54DB7 /* MOAIGridFancy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGridFancy.cpp; sourceTree = "<group>"; };
 		CDB0CA2F193E6D3B00C54DB7 /* MOAIGridFancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGridFancy.h; sourceTree = "<group>"; };
+		CDB718A91A44E7FE003DFFBA /* zl_socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_socket.h; sourceTree = "<group>"; };
+		CDB718AA1A44E7FE003DFFBA /* zl_usocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zl_usocket.cpp; sourceTree = "<group>"; };
+		CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_usocket.h; sourceTree = "<group>"; };
+		CDB718AC1A44E7FE003DFFBA /* zl_wsocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zl_wsocket.cpp; sourceTree = "<group>"; };
+		CDB718AD1A44E7FE003DFFBA /* zl_wsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_wsocket.h; sourceTree = "<group>"; };
 		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
 		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
 		CDBA13141A305641007503F3 /* moai_version_major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_major.h; path = "config-default/moai_version_major.h"; sourceTree = "<group>"; };
@@ -8915,6 +8926,7 @@
 				CD17563D1A199905009C430A /* math */,
 				CD1756411A1999E8009C430A /* os */,
 				CD1756401A19998D009C430A /* parser */,
+				CDB718A81A44E71D003DFFBA /* socket */,
 				CD17563E1A19990B009C430A /* stl */,
 				CDF0D37B19FCCC7C001C64C5 /* stream */,
 				CD1756421A199A3D009C430A /* zip */,
@@ -12315,6 +12327,18 @@
 			name = "moai-ios-gamecenter";
 			sourceTree = "<group>";
 		};
+		CDB718A81A44E71D003DFFBA /* socket */ = {
+			isa = PBXGroup;
+			children = (
+				CDB718A91A44E7FE003DFFBA /* zl_socket.h */,
+				CDB718AA1A44E7FE003DFFBA /* zl_usocket.cpp */,
+				CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */,
+				CDB718AC1A44E7FE003DFFBA /* zl_wsocket.cpp */,
+				CDB718AD1A44E7FE003DFFBA /* zl_wsocket.h */,
+			);
+			name = socket;
+			sourceTree = "<group>";
+		};
 		CDBA13101A30561B007503F3 /* config */ = {
 			isa = PBXGroup;
 			children = (
@@ -13645,6 +13669,7 @@
 				89BE6961173974FD00DFE837 /* STLIteration.h in Headers */,
 				89BE6963173974FD00DFE837 /* STLList.h in Headers */,
 				89BE6965173974FD00DFE837 /* STLMap.h in Headers */,
+				CDB718AE1A44E7FE003DFFBA /* zl_socket.h in Headers */,
 				89BE6967173974FD00DFE837 /* STLSet.h in Headers */,
 				89BE696B173974FD00DFE837 /* STLString.h in Headers */,
 				89BE696D173974FD00DFE837 /* ZLAccessors.h in Headers */,
@@ -13693,6 +13718,7 @@
 				89BE6A1F173974FD00DFE837 /* ZLMatrix4x4.h in Headers */,
 				89BE6A23173974FD00DFE837 /* ZLMemStream.h in Headers */,
 				89BE6A27173974FD00DFE837 /* ZLMercator.h in Headers */,
+				CDB718B21A44E7FE003DFFBA /* zl_usocket.h in Headers */,
 				CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */,
 				CD41F3011A20115E008E3420 /* ZLBitBuffer.h in Headers */,
 				CDFB27511A3C27F800853B1D /* STLSort.h in Headers */,
@@ -13732,6 +13758,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDB718AF1A44E7FE003DFFBA /* zl_socket.h in Headers */,
 				89BE694A173974FD00DFE837 /* zl_platform.h in Headers */,
 				89BE694C173974FD00DFE837 /* zl_types.h in Headers */,
 				89BE694E173974FD00DFE837 /* headers.h in Headers */,
@@ -13776,6 +13803,7 @@
 				89BE69D6173974FD00DFE837 /* ZLHashWriterCRC32.h in Headers */,
 				89BE69F2173974FD00DFE837 /* ZLHashWriterWhirlpool.h in Headers */,
 				89BE69F6173974FD00DFE837 /* ZLHexDump.h in Headers */,
+				CDB718B31A44E7FE003DFFBA /* zl_usocket.h in Headers */,
 				89BE69FA173974FD00DFE837 /* ZLHexAdapter.h in Headers */,
 				89BE6A02173974FD00DFE837 /* ZLInterpolate.h in Headers */,
 				89BE6A06173974FD00DFE837 /* ZLIntersect.h in Headers */,
@@ -16985,6 +17013,7 @@
 				89BE69A9173974FD00DFE837 /* ZLDeviceTime_nacl.cpp in Sources */,
 				89BE69AB173974FD00DFE837 /* ZLDeviceTime_posix.cpp in Sources */,
 				89BE69AD173974FD00DFE837 /* ZLDeviceTime_win32.cpp in Sources */,
+				CDB718B01A44E7FE003DFFBA /* zl_usocket.cpp in Sources */,
 				89BE69AF173974FD00DFE837 /* ZLDirectoryItr.cpp in Sources */,
 				89BE69B3173974FD00DFE837 /* ZLDistance.cpp in Sources */,
 				89BE69B9173974FD00DFE837 /* ZLFileStream.cpp in Sources */,
@@ -17053,6 +17082,7 @@
 				89BE69AA173974FD00DFE837 /* ZLDeviceTime_nacl.cpp in Sources */,
 				89BE69AC173974FD00DFE837 /* ZLDeviceTime_posix.cpp in Sources */,
 				89BE69AE173974FD00DFE837 /* ZLDeviceTime_win32.cpp in Sources */,
+				CDB718B11A44E7FE003DFFBA /* zl_usocket.cpp in Sources */,
 				89BE69B0173974FD00DFE837 /* ZLDirectoryItr.cpp in Sources */,
 				89BE69B4173974FD00DFE837 /* ZLDistance.cpp in Sources */,
 				89BE69BA173974FD00DFE837 /* ZLFileStream.cpp in Sources */,

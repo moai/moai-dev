@@ -29,22 +29,18 @@ int MOAITrace::_run ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAITrace::_setVerbose ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	MOAITrace::Get ().SetVerbose ( state.GetValue < bool >( 1, true ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAITrace::_start ( lua_State* L ) {
+	UNUSED ( L );
 
-	MOAITrace::Get ().Start ( L );
-
-//	// Read the message off of the top of the stack
-//	json_t* message = MOAITrace::ConvertStackIndexToJSON ( L, lua_gettop ( L ));
-//
-//	// Send the message back to the IDE.
-//	json_t* msg = json_object ();
-//	json_object_set_new ( msg, "ID", json_string ( "message" ));
-//	json_object_set_new ( msg, "Value", message );
-//	char* data = json_dumps ( msg, 0 );
-//	MOAITrace::SendData ( std::string ( data ));
-//	free ( data );
-
-	// Done!
+	MOAITrace::Get ().Start ();
 	return 0;
 }
 
@@ -58,7 +54,28 @@ void MOAITrace::Callback ( lua_State* L, lua_Debug *ar ) {
 	double currentTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mElapsedRunTime += currentTime - this->mLastRunAt;
 
-	this->OnHook ( L, ar );
+	if ( this->mVerbose ) {
+		switch ( ar->event ) {
+		
+			case LUA_HOOKCALL:
+				printf ( "CALL <%p>: %d\n", L, ar->currentline );
+				break;
+				
+			case LUA_HOOKLINE:
+				printf ( "LINE <%p>: %d\n", L, ar->currentline );
+				break;
+				
+			case LUA_HOOKRET:
+			case LUA_HOOKTAILRET:
+				printf ( "RTRN <%p>: %d\n", L, ar->currentline );
+				break;
+		}
+	}
+
+	if ( this->mListener ) {
+		this->mListener->OnHook ( L, ar );
+	}
+	
 	this->HandleTrace ( L, ar );
 	
 	this->mLastRunAt = ZLDeviceTime::GetTimeInSeconds ();
@@ -177,12 +194,13 @@ void MOAITrace::HandleTrace ( lua_State* L, lua_Debug *ar ) {
 
 //----------------------------------------------------------------//
 MOAITrace::MOAITrace () :
-	mEnginePaused ( false ),
+	mIsActive ( false ),
 	mEnableTrace ( false ),
 	mElapsedRunTime ( 0 ),
 	mLastRunAt ( 0 ),
 	mCurrentThread ( 0 ),
-	mCurrentThreadTrace ( 0 ) {
+	mCurrentThreadTrace ( 0 ),
+	mVerbose ( false ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -192,21 +210,12 @@ MOAITrace::~MOAITrace () {
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::OnHook ( lua_State* L, lua_Debug* ar ) {
-	UNUSED ( L );
-	UNUSED ( ar );
-}
-
-//----------------------------------------------------------------//
-void MOAITrace::OnStart () {
-}
-
-//----------------------------------------------------------------//
 void MOAITrace::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "reportTrace",		_reportTrace },
 		{ "run",				_run },
+		{ "setVerbose",			_setVerbose },
 		{ "start",				_start },
 		{ NULL, NULL }
 	};
@@ -265,14 +274,20 @@ void MOAITrace::ReportTrace () {
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::Start ( lua_State* L ) {
+void MOAITrace::Start () {
 
-	MOAITrace::mEnginePaused = false;
-	lua_sethook ( L, MOAITrace::_callback, LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE, 0 );
-	
-	this->mEnableTrace = true;
-	
-	this->OnStart ();
+	if ( this->mIsActive ) return;
+	this->mIsActive = true;
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	lua_sethook ( state, MOAITrace::_callback, LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE, 0 );
 	
 	this->mLastRunAt = ZLDeviceTime::GetTimeInSeconds ();
+}
+
+//----------------------------------------------------------------//
+void MOAITrace::Start ( MOAILuaHookListener* listener ) {
+
+	this->Start ();
+	this->mListener = listener;
 }

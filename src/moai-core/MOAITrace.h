@@ -70,6 +70,18 @@ public:
 };
 
 //================================================================//
+// MOAILuaHookListener
+//================================================================//
+class MOAILuaHookListener {
+public:
+
+	//----------------------------------------------------------------//
+						MOAILuaHookListener		() {}
+	virtual				~MOAILuaHookListener	() {}
+	virtual void		OnHook					( lua_State* L, lua_Debug* ar ) = 0;
+};
+
+//================================================================//
 // MOAITrace
 //================================================================//
 /**	@lua	MOAITrace
@@ -84,31 +96,38 @@ protected:
 
 	STLMap < const void*, MOAIThreadTrace >	mThreadTrace;
 
-	bool			mEnginePaused;
-	bool			mEnableTrace;
+	bool					mIsActive;
+	bool					mEnableTrace;
 	
-	double			mElapsedRunTime; // total elapsed time *not* doing debugger stuff
-	double			mLastRunAt; // timestamp for resuming run
+	double					mElapsedRunTime; // total elapsed time *not* doing debugger stuff
+	double					mLastRunAt; // timestamp for resuming run
 	
-	lua_State*			mCurrentThread;
-	MOAIThreadTrace*	mCurrentThreadTrace;
+	lua_State*				mCurrentThread;
+	MOAIThreadTrace*		mCurrentThreadTrace;
+	
+	bool					mVerbose;
+	
+	MOAILuaHookListener*	mListener;
 	
 	//----------------------------------------------------------------//
 	static void			_callback				( lua_State* L, lua_Debug* ar );
+	
+	//----------------------------------------------------------------//
 	static int			_reportTrace			( lua_State* L );
 	static int			_run					( lua_State* L );
+	static int			_setVerbose				( lua_State* L );
 	static int			_start					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				Callback				( lua_State* L, lua_Debug* ar );
 	void				HandleTrace				( lua_State* L, lua_Debug* ar );
-	virtual void		OnHook					( lua_State* L, lua_Debug* ar );
-	virtual void		OnStart					();
-	void				Start					( lua_State* L );
 
 public:
 
 	DECL_LUA_SINGLETON ( MOAITrace )
+
+	GET_SET ( MOAILuaHookListener*, Listener, mListener )
+	GET_SET ( bool, Verbose, mVerbose )
 
 	//----------------------------------------------------------------//
 						MOAITrace				();
@@ -116,6 +135,8 @@ public:
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ReportTrace				();
+	void				Start					();
+	void				Start					( MOAILuaHookListener* listener );
 };
 
 #endif
