@@ -17,6 +17,7 @@ android {
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir 'src/main/libs'
+        assets.srcDir 'bootstrap'
     }
 
     buildTypes {

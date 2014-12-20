@@ -37,7 +37,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include/moai-android
 #java
 FILE(GLOB JAVA_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.java")
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
-  DESTINATION ../modules/moai/android
+  DESTINATION ../modules/moai/com/ziplinegames/moai
   PATTERN "*.java"
   PATTERN "*.cpp" EXCLUDE
   PATTERN "*.h" EXCLUDE

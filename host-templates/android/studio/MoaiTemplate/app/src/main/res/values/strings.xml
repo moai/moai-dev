@@ -8,6 +8,5 @@
     <!--url scheme name for launching app -->
     <string name="scheme_name">moaischeme</string>
 
-    <!--screen orientation see http://developer.android.com/guide/topics/manifest/activity-element.html#screen -->
-    <string name="orientation">portrait</string>
+    
 </resources>
