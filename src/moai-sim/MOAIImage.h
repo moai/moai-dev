@@ -76,6 +76,7 @@ private:
 	static int		_gammaCorrection			( lua_State* L );
 	static int		_generateOutlineFromSDF		( lua_State* L );
 	static int		_generateSDF				( lua_State* L );
+	static int		_generateSDFAA				( lua_State* L );
 	static int		_generateSDFDeadReckoning	( lua_State* L );
 	static int		_getColor32					( lua_State* L );
 	static int		_getFormat					( lua_State* L );
@@ -171,6 +172,7 @@ public:
 	void					GammaCorrection				( const MOAIImage& image, float gamma );
 	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
 	void					GenerateSDF					( ZLIntRect rect );
+	void					GenerateSDFAA				( ZLIntRect rect, float threshold );
 	void					GenerateSDFDeadReckoning	( ZLIntRect rect, int threshold );
 	u32						GetBitmapSize				() const;
 	ZLIntRect				GetBounds					();
