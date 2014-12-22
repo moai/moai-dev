@@ -13,7 +13,7 @@ Edit the bin\env-win.bat file and change the CMAKE_PATH to point to your cmake i
 
 From the SDK folder, run `bin\env-win.bat` to set the paths
 
-From the SDK folder, run `bin\build-windows.bat`. This will create a `lib\windows\vs2013\Distribute` folder inside your SDK folder which contains the includes and the libs needed to use libmoai in a custom host. It also includes a bin folder with the compiled bundled SDL host. This can be used to run any of the samples. This also adds moai.exe to the SDK_PATH/util folder in order for moaiutil scripts to run.
+From the SDK folder, run `bin\build-windows.bat vs2013`. This will create a `lib\windows\vs2013\Distribute` folder inside your SDK folder which contains the includes and the libs needed to use libmoai in a custom host. It also includes a bin folder with the compiled bundled SDL host. This can be used to run any of the samples. This also adds moai.exe to the SDK_PATH/util folder in order for moaiutil scripts to run.
 
 ## Building Android Lib (using cmake)
 
