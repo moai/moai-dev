@@ -21,11 +21,13 @@ file ( GLOB ZLGFX_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.cpp" )
 file ( GLOB ZLGFX_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-gfx/*.h" )
 file ( GLOB ZLCOMMON_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/zl-common/*.h")
 
-# Linux build: remove all references to wsocket
-if ( BUILD_LINUX )
-	list ( REMOVE_ITEM ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/zl_wsocket.cpp" )
-	list ( REMOVE_ITEM ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/zl_wsocket.h" )
-endif ( BUILD_LINUX )
+
+if (BUILD_WINDOWS)   
+  list(REMOVE_ITEM ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/zl_usocket.cpp")
+else (BUILD_WINDOWS)
+ list(REMOVE_ITEM ZLUTIL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/zl-util/zl_wsocket.cpp")
+endif (BUILD_WINDOWS)
+ 
 
 
 include_directories ( ${ZLCORE_INCLUDES} )
