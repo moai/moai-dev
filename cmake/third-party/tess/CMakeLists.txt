@@ -10,6 +10,11 @@ file ( GLOB MOD_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Source/*.h"  "${CMAKE_CURRE
 
 add_library ( tess STATIC ${MOD_SOURCES} ${MOD_HEADERS} )
 
-target_include_directories ( tess PUBLIC ${MOD_INCLUDES} )
+target_include_directories ( tess PUBLIC "$<BUILD_INTERFACE:${MOD_INCLUDES}>" )
 
 set_target_properties( tess PROPERTIES FOLDER Third-Party )
+
+install(TARGETS tess EXPORT libmoai ARCHIVE DESTINATION lib)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Include/
+        DESTINATION include/libtess2 )

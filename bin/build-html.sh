@@ -15,56 +15,45 @@
 #
 # Thanks!
 
-: ${EMSCRIPTEN_HOME?"EMSCRIPTEN_HOME is not defined. Please set to the location of your emscripten install (path)"}
+: ${EMSCRIPTEN?"EMSCRIPTEN is not defined. Please set to the location of your emscripten install (path)"}
 
 cd `dirname $0`/..
-cd cmake
-rm -rf build
-mkdir build
-cd build
+MOAIROOT=$(pwd)
+
+mkdir -p build/build-html
+cd build/build-html
+
 cmake \
--DEMSCRIPTEN_ROOT_PATH=${EMSCRIPTEN_HOME} \
--DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN_HOME}/cmake/Platform/Emscripten.cmake \
+-DEMSCRIPTEN_ROOT_PATH=${EMSCRIPTEN} \
+-DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN}/cmake/Modules/Platform/Emscripten.cmake \
 -DBUILD_HTML=TRUE \
--DMOAI_BOX2D=TRUE \
+-DCMAKE_BUILD_TYPE=Release \
 -DMOAI_CHIPMUNK=FALSE \
 -DMOAI_CURL=FALSE \
 -DMOAI_CRYPTO=FALSE \
+-DMOAI_LIBCRYPTO=FALSE \
 -DMOAI_EXPAT=FALSE \
--DMOAI_FREETYPE=TRUE \
--DMOAI_JSON=TRUE \
--DMOAI_JPG=FALSE \
 -DMOAI_MONGOOSE=FALSE \
 -DMOAI_OGG=FALSE \
 -DMOAI_OPENSSL=FALSE \
 -DMOAI_SQLITE3=FALSE \
--DMOAI_TINYXML=TRUE \
--DMOAI_PNG=TRUE \
 -DMOAI_SFMT=FALSE \
 -DMOAI_VORBIS=FALSE \
--DMOAI_WEBP=TRUE \
+-DMOAI_WEBP=FALSE \
 -DMOAI_HTTP_CLIENT=FALSE \
--DMOAI_UNTZ=TRUE \
-../
+-DMOAI_LUAJIT=FALSE \
+$MOAIROOT/cmake/hosts/host-html
+
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-make host-html-template
+make moaijs
+
 if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-#
-# Copy libs to lib/blackberry
-#
-#rm -rf ../../lib/blackberry
-#mkdir -p ../../lib/blackberry
-#for i in * ; do
-#  if [ -d "$i" ]; then
-#    if [ -f $i/lib$i.a ]; then
-#      echo "Copying $i/lib$i.a to lib/blackberry/"
-#      cp $i/lib$i.a ../../lib/blackberry
-#    fi
-#  fi
-#done
+mkdir -p $MOAIROOT/lib/html
+cp moaijs.js $MOAIROOT/lib/html/moaijs.js
+

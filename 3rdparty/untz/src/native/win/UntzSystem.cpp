@@ -92,7 +92,7 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 	catch(RtError& error)
 	{
 		wsd->setError(true);
-		printf("!!!AudioIO Error: %s\n", error.getMessage());
+		printf("!!!AudioIO Error: %s\n", error.getMessage().c_str());
 	}
 }
 

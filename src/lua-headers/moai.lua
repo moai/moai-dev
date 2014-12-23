@@ -473,6 +473,7 @@ MOAIGfxDevice.extend (
 --============================================================--
 -- MOAIXmlParser
 --============================================================--
+if MOAIXmlParser then
 MOAIXmlParser.extend (
 
 	'MOAIXmlParser',
@@ -506,6 +507,7 @@ MOAIXmlParser.extend (
 		end
 	end
 )
+end
 
 --============================================================--
 -- renames

@@ -1,3 +1,0 @@
-Add debug true
-Add testing true
-Add Flascc

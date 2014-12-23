@@ -45,9 +45,9 @@
 
 #ifdef _MSC_VER
 	#define MOAI_COMPILER_MSVC
-    #ifndef va_copy
-    	#define va_copy(d,s) ((d) = (s))
-	#endif
+  //  #ifndef va_copy
+  //  	#define va_copy(d,s) ((d) = (s))
+	//  #endif
 	#define __func__ __FUNCTION__
 #else
 	#define MOAI_COMPILER_GCC

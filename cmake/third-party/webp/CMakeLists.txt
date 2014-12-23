@@ -50,7 +50,6 @@ if (ARMEABI_V7A)
   string(REGEX REPLACE "-mfpu=[a-zA-Z0-9\\-]*" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
 endif (ARMEABI_V7A)
 
-include_directories ( ${WEBP_INCLUDES} )
 
 add_library ( webp STATIC
   ${WEBP_SOURCE} ${WEBP_DSP_C} ${NEON_FILES}
@@ -61,9 +60,22 @@ if (ARMEABI_V7A)
    set_source_files_properties(${NEON_FILES} PROPERTIES COMPILE_FLAGS "-mfpu=neon")
 endif (ARMEABI_V7A)
 
-target_include_directories ( webp PUBLIC ${WEBP_INCLUDES} )
+
 set_target_properties( webp PROPERTIES FOLDER Third-Party )
 
 if (BUILD_ANDROID)
 	target_link_libraries ( webp cpufeatures)
 endif ( BUILD_ANDROID )
+
+target_include_directories ( webp PUBLIC 
+  "$<BUILD_INTERFACE:${WEBP_INCLUDES}>"
+  $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/webp>
+)
+
+set_target_properties( webp PROPERTIES FOLDER Third-Party )
+
+install(TARGETS webp EXPORT libmoai ARCHIVE DESTINATION lib)
+file( GLOB WEBP_PUBLIC_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/webp/*.h")
+install(FILES ${WEBP_PUBLIC_HEADERS} DESTINATION include/webp)
+    
+ 
