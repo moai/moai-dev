@@ -38,7 +38,7 @@
 #include <winsock.h>
 
 typedef int socklen_t;
-typedef SOCKET t_socket;
+typedef SOCKET zl_socket;
 
 #define SOCKET_INVALID (INVALID_SOCKET)
 
