@@ -235,6 +235,7 @@ AKUContextID AKUCreateContext () {
 	MOAIGlobalsMgr::Set ( sContext->mGlobals  );
 
 	MOAILuaRuntime::Affirm ();
+	MOAITrace::Affirm ();
 	MOAILogMgr::Affirm ();
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
@@ -247,6 +248,7 @@ AKUContextID AKUCreateContext () {
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAISerializer )
+	REGISTER_LUA_CLASS ( MOAITrace )
 
 	return sContextIDCounter;
 }

@@ -36,6 +36,7 @@ class STLString :
 public:
 
 	//----------------------------------------------------------------//
+	STLString&			assign				( cc8* str );
 	void				base_64_decode		( void* buffer, size_t len );
 	size_t				base_64_decode_len	(); // calc the *approx* len of a plain str; safe to use for buffer allocation
 	void				base_64_encode		( const void* buffer, size_t len );
@@ -67,6 +68,11 @@ public:
 
 	void				zip_deflate			( const void* buffer, size_t len ); // deflate then base64 encode
 	size_t				zip_inflate			( void* buffer, size_t len ); // base64 decode then inflate
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( cc8* rhs ) {
+		return this->assign ( rhs );
+	}
 
 	//----------------------------------------------------------------//
 	inline operator const char* () const {

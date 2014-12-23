@@ -18,6 +18,7 @@
 #include <moai-core/MOAIObject.h>
 #include <moai-core/MOAIRtti.h>
 #include <moai-core/MOAISharedPtr.h>
+#include <moai-core/MOAITrace.h>
 #include <moai-core/MOAIVersion.h>
 #include <moai-core/MOAIWeakPtr.h>
 

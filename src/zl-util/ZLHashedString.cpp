@@ -9,6 +9,21 @@
 // String hashing
 //================================================================//
 
+//uint MOAIPathDictionary::GetHash ( const char path[], size_t* pathLength ) {
+//
+//	// Using djb2 (see http://www.cse.yorku.ca/~oz/hash.html)
+//	
+//	size_t i = 0;
+//	int c;
+//	unsigned long hash = 5381;
+//	
+//	for (; ( c = path [ i ]); ++i ) {
+//		hash = (( hash << 5 ) + hash) + c; // hash * 33 + c
+//	}
+//	*pathLength = i;
+//	return ( uint )hash;
+//}
+
 #define FNV_seed 2166136261u
 #define FNV_prime 16777619u
 

@@ -11,6 +11,7 @@
 #include <zl-util/STLList.h>
 #include <zl-util/STLMap.h>
 #include <zl-util/STLSet.h>
+#include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
 #include <zl-util/ZLAdapterInfo.h>
@@ -89,5 +90,7 @@
 #include <zl-util/ZLXmlReader.h>
 #include <zl-util/ZLZip.h>
 #include <zl-util/ZLZipFile.h>
+
+#include <zl-util/zl_socket.h>
 
 #endif

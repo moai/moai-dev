@@ -19,7 +19,7 @@
 
 	rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)$(filter $(subst *,%,$2),$d))
 
-	LOCAL_MODULE 		:= moai
+	LOCAL_MODULE 		:= @LIB_NAME@
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 	LOCAL_LDLIBS 		:= -llog -lGLESv1_CM -lGLESv2
 	LOCAL_CFLAGS		:=

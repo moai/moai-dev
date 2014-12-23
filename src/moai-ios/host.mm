@@ -51,6 +51,7 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_appVersion,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_buildVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,			[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_devName,				[[ UIDevice currentDevice ].name UTF8String ] );
 	environment.SetValue ( MOAI_ENV_devModel,				[[ UIDevice currentDevice ].model UTF8String ] );
 	environment.SetValue ( MOAI_ENV_horizontalResolution,	[[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );	
 	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,		[[ UIScreen mainScreen ] scale ] == 2.0 );

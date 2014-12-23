@@ -23,8 +23,10 @@ private:
 
 	ZLLeanArray < MOAIInputDevice* > mDevices;
 
-	double	mTimebase;		// used to position timestamps against sim timeline
-	double	mTimestamp;		// timestamp for next event
+	double	mTimebase;				// used to position timestamps against sim timeline
+	double	mTimestamp;				// timestamp for next event
+	
+	bool	mAutoTimestamp;
 	
 	bool	mDefer;
 	bool	mSuspended;
@@ -34,15 +36,23 @@ private:
 
 	double	mLastUpdate;	// last update in *device* time
 
+	MOAILuaSharedPtr < MOAIStream > mRecorder;
+	bool mPlayback;
+
 	//----------------------------------------------------------------//
+	static int			_autoTimestamp				( lua_State* L );
 	static int			_deferEvents				( lua_State* L );
 	static int			_discardEvents				( lua_State* L );
+	static int			_playback					( lua_State* L );
 	static int			_setAutosuspend				( lua_State* L );
+	static int			_setRecorder				( lua_State* L );
 	static int			_suspendEvents				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool				CanWrite					();
 	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
+	size_t				ParseEvents					( ZLStream& stream, double timestep );
+	void				Record						( size_t size );
 	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
 
 public:
