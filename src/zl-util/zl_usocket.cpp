@@ -299,19 +299,32 @@ int zl_socket_recvfrom(zl_socket* ps, char *data, size_t count, size_t *got,
 //----------------------------------------------------------------//
 int zl_socket_select ( zl_socket n, fd_set *rfds, fd_set *wfds, fd_set *efds, double tm ) {
 
+	int ret;
+
+	if ( tm < 0.0 ) {
+		do {
+			ret = select ( n, rfds, wfds, efds, NULL );
+		}
+		while ( ret < 0 && errno == EINTR );
+		return ret;
+	}
+
 	tm += ZLDeviceTime::GetTimeInSeconds ();
 
-    int ret;
     do {
         struct timeval tv;
         double t = tm - ZLDeviceTime::GetTimeInSeconds ();
-        tv.tv_sec = ( int )t;
-        tv.tv_usec = ( int )(( t - tv.tv_sec ) * 1.0e6 );
-        /* timeout = 0 means no wait */
-        ret = select ( n, rfds, wfds, efds, t >= 0.0 ? &tv: NULL );
+		if ( t > 0.0 ) {
+			tv.tv_sec = ( int )t;
+			tv.tv_usec = ( int )(( t - tv.tv_sec ) * 1.0e6 );
+		}
+		else {
+			tv.tv_sec = 0;
+			tv.tv_usec = 0;
+		}
+        ret = select ( n, rfds, wfds, efds, &tv );
     }
 	while ( ret < 0 && errno == EINTR );
-
     return ret;
 }
 
