@@ -24,28 +24,32 @@ file = assert ( io.open ( 'shader.fsh', mode ))
 fsh = file:read ( '*all' )
 file:close ()
 
+program = MOAIShaderProgram.new ()
+
+program:setVertexAttribute ( 1, 'position' )
+program:setVertexAttribute ( 2, 'uv' )
+program:setVertexAttribute ( 3, 'color' )
+
+program:reserveUniforms ( 2 )
+program:declareUniformSampler ( 1, 'sampler0', 1 )
+program:declareUniformSampler ( 2, 'sampler1', 2 )
+
+program:load ( vsh, fsh )
+
 shader = MOAIShader.new ()
-
-shader:reserveUniforms ( 2 )
-shader:declareUniformSampler ( 1, 'sampler0', 1 )
-shader:declareUniformSampler ( 2, 'sampler1', 2 )
-
-shader:setVertexAttribute ( 1, 'position' )
-shader:setVertexAttribute ( 2, 'uv' )
-shader:setVertexAttribute ( 3, 'color' )
-shader:load ( vsh, fsh )
+shader:setProgram ( program )
 
 multitexture = MOAIMultiTexture.new ()
 multitexture:reserve ( 2 )
 
-cathead = MOAITexture.new ()
-cathead:load ( "moai.png" )
-multitexture:setTexture ( 1, cathead )
+texture1 = MOAITexture.new ()
+texture1:load ( "moai.png" )
+multitexture:setTexture ( 1, texture1 )
 
-numbers = MOAITexture.new ()
-numbers:load ( "numbers.png" )
-numbers:setWrap ( true )
-multitexture:setTexture ( 2, numbers )
+texture2 = MOAITexture.new ()
+texture2:load ( "numbers.png" )
+texture2:setWrap ( true )
+multitexture:setTexture ( 2, texture2 )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( multitexture )
@@ -61,9 +65,7 @@ layer:insertProp ( prop )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
-prop:setTexture ( cathead )
+prop:setTexture ( texture1 )
 prop:moveLoc ( 0, -128, 1.5 )
 prop:moveRot ( 360, 1.5 )
 layer:insertProp ( prop )
-
-

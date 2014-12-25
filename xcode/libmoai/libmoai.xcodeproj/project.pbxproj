@@ -9217,6 +9217,7 @@
 				CD8DD76619195FBB0088EA60 /* partition */,
 				CD8DD76A191960A20088EA60 /* pathfinding */,
 				CD8DD76719195FDD0088EA60 /* profiler */,
+				CDB718F51A4BA785003DFFBA /* shader */,
 				CDE9851A18975ABD001827F9 /* text */,
 				CD67857D189830DB007C7D2B /* texture */,
 				CD8DD769191960830088EA60 /* transform */,
@@ -9683,14 +9684,6 @@
 				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
 				89BE6FE5173AD0CA00DFE837 /* MOAIScissorRect.cpp */,
 				89BE6FE6173AD0CA00DFE837 /* MOAIScissorRect.h */,
-				89BE6FED173AD0CA00DFE837 /* MOAIShader.cpp */,
-				89BE6FEE173AD0CA00DFE837 /* MOAIShader.h */,
-				89BE6FEF173AD0CA00DFE837 /* MOAIShaderMgr.cpp */,
-				89BE6FF0173AD0CA00DFE837 /* MOAIShaderMgr.h */,
-				CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */,
-				CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */,
-				CDC5203218A17EB700BCC12F /* MOAIShaderUniform.cpp */,
-				CDC5203318A17EB700BCC12F /* MOAIShaderUniform.h */,
 				89BE7018173AD0CB00DFE837 /* MOAIVertexBuffer.cpp */,
 				89BE7019173AD0CB00DFE837 /* MOAIVertexBuffer.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
@@ -12360,6 +12353,21 @@
 				CDB718CF1A451C4D003DFFBA /* url.lua */,
 			);
 			name = lua;
+			sourceTree = "<group>";
+		};
+		CDB718F51A4BA785003DFFBA /* shader */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6FED173AD0CA00DFE837 /* MOAIShader.cpp */,
+				89BE6FEE173AD0CA00DFE837 /* MOAIShader.h */,
+				89BE6FEF173AD0CA00DFE837 /* MOAIShaderMgr.cpp */,
+				89BE6FF0173AD0CA00DFE837 /* MOAIShaderMgr.h */,
+				CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */,
+				CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */,
+				CDC5203218A17EB700BCC12F /* MOAIShaderUniform.cpp */,
+				CDC5203318A17EB700BCC12F /* MOAIShaderUniform.h */,
+			);
+			name = shader;
 			sourceTree = "<group>";
 		};
 		CDBA13101A30561B007503F3 /* config */ = {

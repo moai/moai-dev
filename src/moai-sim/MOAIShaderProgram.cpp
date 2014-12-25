@@ -274,6 +274,8 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
 		uniform.SetType ( type );
+		
+		this->mUniformDefaults [ idx ].Default ();
 	}
 }
 
@@ -282,7 +284,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, float val
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -291,7 +293,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -510,6 +512,7 @@ void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
+	this->mUniformDefaults.Init ( nUniforms );
 }
 
 //----------------------------------------------------------------//

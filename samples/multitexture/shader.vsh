@@ -11,5 +11,5 @@ varying vec2 uvVarying1;
 void main () {
     gl_Position = position; 
 	uvVarying0 = uv;
-	uvVarying1 = position * vec2 ( 0.5, -0.5 );
+	uvVarying1 = vec2 ( position.x, position.y ) * vec2 ( 0.5, -0.5 );
 }
