@@ -16,6 +16,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIImage::_average ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	ZLColorVec average = self->Average ();
+	
+	lua_pushnumber ( state, average.mR );
+	lua_pushnumber ( state, average.mG );
+	lua_pushnumber ( state, average.mB );
+	lua_pushnumber ( state, average.mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	bleedRect
 	@text	'Bleeds' the interior of the rectangle out by one pixel.
 
@@ -860,6 +875,26 @@ void MOAIImage::Alloc () {
 		this->mPalette = malloc ( paletteSize );
 		memset ( this->mPalette, 0, paletteSize );
 	}
+}
+
+//----------------------------------------------------------------//
+ZLColorVec MOAIImage::Average () const {
+
+	ZLColorVec average;
+	average.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	u32 width = this->mWidth;
+	u32 height = this->mHeight;
+	
+	for ( u32 y = 0; y < height; ++y ) {
+		for ( u32 x = 0; x < width; ++x ) {
+			average.Add ( ZLColorVec ( this->GetColor ( x, y )));
+		}
+	}
+	
+	float scale = 1.0f / ( float )( width * height );
+	average.Scale ( scale );
+	return average;
 }
 
 //----------------------------------------------------------------//
@@ -2340,7 +2375,8 @@ void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "BLEND_EQ_ADD",						( u32 )ZLColor::BLEND_EQ_ADD );
 	state.SetField ( -1, "BLEND_EQ_NONE",						( u32 )ZLColor::BLEND_EQ_NONE );
-	state.SetField ( -1, "BLEND_EQ_SUBTRACT",					( u32 )ZLColor::BLEND_EQ_SUBTRACT );
+	state.SetField ( -1, "BLEND_EQ_SUB",						( u32 )ZLColor::BLEND_EQ_SUB );
+	state.SetField ( -1, "BLEND_EQ_SUB_INV",					( u32 )ZLColor::BLEND_EQ_SUB_INV );
 	
 	state.SetField ( -1, "BLEND_FACTOR_0001",					( u32 )ZLColor::BLEND_FACTOR_0001 );
 	state.SetField ( -1, "BLEND_FACTOR_1110",					( u32 )ZLColor::BLEND_FACTOR_1110 );
@@ -2361,6 +2397,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
+		{ "average",					_average },
 		{ "bleedRect",					_bleedRect },
 		{ "compare",					_compare },
 		{ "convert",					_convert },
