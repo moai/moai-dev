@@ -297,7 +297,7 @@ ZLBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 
 //----------------------------------------------------------------//

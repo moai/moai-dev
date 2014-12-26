@@ -123,11 +123,12 @@ protected:
 	float									mLODMax;
 
 	//----------------------------------------------------------------//
-	virtual ZLMatrix4x4		GetWorldDrawingMtx		(); // factors in billboard flags
-	MOAIGraphicsProp*		GetGraphicsProp			();
-	void					LoadGfxState			();
-	void					LoadUVTransform			();
-	void					LoadVertexTransform		();
+	u32						AffirmInterfaceMask			( MOAIPartition& partition );
+	virtual ZLMatrix4x4		GetWorldDrawingMtx			(); // factors in billboard flags
+	MOAIGraphicsProp*		GetGraphicsProp				();
+	void					LoadGfxState				();
+	void					LoadUVTransform				();
+	void					LoadVertexTransform			();
 
 public:
 

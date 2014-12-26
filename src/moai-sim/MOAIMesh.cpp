@@ -175,7 +175,6 @@ MOAIMesh::MOAIMesh () :
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 }
 

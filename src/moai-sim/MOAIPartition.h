@@ -22,6 +22,8 @@ class MOAIPartition :
 	public virtual MOAILuaObject {
 private:
 
+	static const u32 INTERFACE_MASK_BITS = 32;
+
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLevel;
 	friend class MOAIProp;
@@ -30,6 +32,8 @@ private:
 	MOAIPartitionCell					mEmpties;
 	MOAIPartitionCell					mGlobals;
 	MOAIPartitionCell					mBiggies;
+
+	ZLLeanArray < u32 >					mInterfaceIDs; // array if ZLTypeIDs for supported interfaces
 
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
@@ -51,7 +55,9 @@ private:
 	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	u32				AffirmInterfaceMask		( u32 typeID );
 	void			AffirmPriority			( MOAIProp& prop );
+	u32				GetInterfaceMask		( u32 typeID ) const;
 	virtual void	OnPropInserted			( MOAIProp& prop );	
 	virtual void	OnPropRemoved			( MOAIProp& prop );	
 	virtual void	OnPropUpdated			( MOAIProp& prop );
@@ -65,11 +71,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 interfaceMask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
 	bool			IsEmpty					( MOAIProp& prop );
 	bool			IsGlobal				( MOAIProp& prop );
@@ -81,6 +87,18 @@ public:
 	void			ReserveLevels			( int totalLevels );
 	void			SetLevel				( int levelID, float cellSize, int width, int height );
 	void			SetPlane				( u32 planeID );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	u32 AffirmInterfaceMask () {
+		return this->AffirmInterfaceMask ( ZLTypeID < TYPE >::GetID ());
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	u32 GetInterfaceMask () const {
+		return this->GetInterfaceMask ( ZLTypeID < TYPE >::GetID ());
+	}
 };
 
 #endif

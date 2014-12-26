@@ -9217,7 +9217,6 @@
 				CD8DD76619195FBB0088EA60 /* partition */,
 				CD8DD76A191960A20088EA60 /* pathfinding */,
 				CD8DD76719195FDD0088EA60 /* profiler */,
-				CDB718F61A4CD93A003DFFBA /* prop */,
 				CDB718F51A4BA785003DFFBA /* shader */,
 				CDE9851A18975ABD001827F9 /* text */,
 				CD67857D189830DB007C7D2B /* texture */,
@@ -12125,6 +12124,8 @@
 				89BE6FBD173AD0CA00DFE837 /* MOAIPartitionResultBuffer.h */,
 				89BE6FBE173AD0CA00DFE837 /* MOAIPartitionResultMgr.cpp */,
 				89BE6FBF173AD0CA00DFE837 /* MOAIPartitionResultMgr.h */,
+				89BE6FDA173AD0CA00DFE837 /* MOAIProp.cpp */,
+				89BE6FDB173AD0CA00DFE837 /* MOAIProp.h */,
 			);
 			name = partition;
 			sourceTree = "<group>";
@@ -12367,15 +12368,6 @@
 				CDC5203318A17EB700BCC12F /* MOAIShaderUniform.h */,
 			);
 			name = shader;
-			sourceTree = "<group>";
-		};
-		CDB718F61A4CD93A003DFFBA /* prop */ = {
-			isa = PBXGroup;
-			children = (
-				89BE6FDA173AD0CA00DFE837 /* MOAIProp.cpp */,
-				89BE6FDB173AD0CA00DFE837 /* MOAIProp.h */,
-			);
-			name = prop;
 			sourceTree = "<group>";
 		};
 		CDBA13101A30561B007503F3 /* config */ = {

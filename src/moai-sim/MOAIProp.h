@@ -89,7 +89,7 @@ private:
 	ZLLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
 
-	u32							mMask;
+	u32							mInterfaceMask;
 	s32							mPriority;
 	ZLBox						mWorldBounds;
 	
@@ -134,11 +134,12 @@ protected:
 	MOAIFacet*								mFacets [ TOTAL_FACETS ];
 
 	//----------------------------------------------------------------//
-	virtual u32			OnGetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
-	MOAIFacet*			ReplaceFacet			( MOAIFacet* oldFacet, MOAIFacet* newFacet );
-	u32					ResolveModelBounds		( ZLBox& bounds );
-	void				UpdateWorldBounds		( u32 status );
-	void				UpdateWorldBounds		( const ZLBox& bounds, u32 status ); // update bounds in world space
+	virtual u32			AffirmInterfaceMask			( MOAIPartition& partition ) = 0;
+	virtual u32			OnGetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
+	MOAIFacet*			ReplaceFacet				( MOAIFacet* oldFacet, MOAIFacet* newFacet );
+	u32					ResolveModelBounds			( ZLBox& bounds );
+	void				UpdateWorldBounds			( u32 status );
+	void				UpdateWorldBounds			( const ZLBox& bounds, u32 status ); // update bounds in world space
 
 public:
 
@@ -153,12 +154,12 @@ public:
 		BOUNDS_OK,
 	};
 
-	enum {
-		CAN_DRAW					= 0x01,
-		CAN_DRAW_DEBUG				= 0x02,
-		CAN_GATHER_SURFACES			= 0x04,
-		CAN_OVERLAP					= 0x08,
-	};
+//	enum {
+//		CAN_DRAW					= 0x01,
+//		CAN_DRAW_DEBUG				= 0x02,
+//		CAN_GATHER_SURFACES			= 0x04,
+//		CAN_OVERLAP					= 0x08,
+//	};
 
 	enum {
 		ATTR_INDEX,
@@ -173,7 +174,6 @@ public:
 	};
 
 	GET_SET ( u32, Index, mIndex )
-	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
 	GET ( MOAIPartition*, Partition, mPartition )
 	

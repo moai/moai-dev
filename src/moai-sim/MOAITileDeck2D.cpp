@@ -284,7 +284,7 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 	this->mQuad.SetUVs ( -0.5f, -0.5f, 0.5f, 0.5f );
 }

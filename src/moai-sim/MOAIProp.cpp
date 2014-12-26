@@ -342,13 +342,13 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
-
-	if ( self->mDeck ) {
-		self->SetMask ( self->mDeck->GetContentMask ());
-	}
-	else {
-		self->SetMask ( 0 );
-	}
+//
+//	if ( self->mDeck ) {
+//		self->SetMask ( self->mDeck->GetContentMask ());
+//	}
+//	else {
+//		self->SetMask ( 0 );
+//	}
 	
 	return 0;
 }
@@ -750,7 +750,7 @@ MOAIProp::MOAIProp () :
 	mCell ( 0 ),
 	mLevel ( 0 ),
 	mNextResult ( 0 ),
-	mMask ( 0xffffffff ),
+	mInterfaceMask ( 0 ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mFlags ( 0 ),
 	mIndex ( 1 ),

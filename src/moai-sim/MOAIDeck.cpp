@@ -301,7 +301,7 @@ bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 MOAIDeck::MOAIDeck () :
 	mHitColorScalar ( 0xffffffff ),
 	mHitColorThreshold ( 0x00000000 ),
-	mContentMask ( 0xffffffff ),
+	//mContentMask ( 0xffffffff ),
 	mDefaultShaderID ( MOAIShaderMgr::DECK2D_SHADER ),
 	mBoundsDirty ( true ),
 	mHitGranularity ( HIT_TEST_COARSE ) {

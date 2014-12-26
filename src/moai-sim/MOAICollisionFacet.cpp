@@ -124,13 +124,13 @@ MOAICollisionFacet::~MOAICollisionFacet () {
 //----------------------------------------------------------------//
 void MOAICollisionFacet::OnAttach ( MOAIProp& prop ) {
 
-	prop.SetMask ( prop.GetMask () | MOAIProp::CAN_OVERLAP );
+	//prop.SetMask ( prop.GetMask () | MOAIProp::CAN_OVERLAP );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionFacet::OnDetach ( MOAIProp& prop ) {
 
-	prop.SetMask ( prop.GetMask () & ~MOAIProp::CAN_OVERLAP );
+	//prop.SetMask ( prop.GetMask () & ~MOAIProp::CAN_OVERLAP );
 }
 
 //----------------------------------------------------------------//

@@ -24,8 +24,7 @@ Design Notes:
 .. toctree::
 	:maxdepth: 2
 
-	design-notes/props
-	design-notes/facets-and-forms
+	design-notes/props-facets-and-forms
 
 ----------------------------------------------------------------
 Indices and tables
