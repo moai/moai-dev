@@ -737,15 +737,15 @@ void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer, float lod ) 
 	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIProp* prop = result->mProp;
-			prop->DrawDebug ( result->mSubPrimID, result->mLoc.mZ );
+			MOAIGraphicsProp* graphicsProp = result->mProp->AsType < MOAIGraphicsProp >();
+			graphicsProp->DrawDebug ( result->mSubPrimID, result->mLoc.mZ );
 		}
 	}
 	else {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIProp* prop = result->mProp;
-			prop->DrawDebug ( result->mSubPrimID, lod );
+			MOAIGraphicsProp* graphicsProp = result->mProp->AsType < MOAIGraphicsProp >();
+			graphicsProp->DrawDebug ( result->mSubPrimID, lod );
 		}
 	}
 }

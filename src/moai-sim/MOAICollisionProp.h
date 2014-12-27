@@ -11,7 +11,7 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAICollisionShape;
-class MOAICollisionFacet;
+class MOAICollisionProp;
 class MOAIPropOverlap;
 
 //================================================================//
@@ -20,10 +20,10 @@ class MOAIPropOverlap;
 class MOAIPropOverlapLink {
 private:
 
-	friend class MOAICollisionFacet;
+	friend class MOAICollisionProp;
 	friend class MOAICollisionWorld;
 
-	MOAICollisionFacet*		mOther;
+	MOAICollisionProp*		mOther;
 	MOAIPropOverlap*		mOverlap;
 	MOAIPropOverlapLink*	mNext;
 };
@@ -34,7 +34,7 @@ private:
 class MOAIPropOverlap {
 private:
 
-	friend class MOAICollisionFacet;
+	friend class MOAICollisionProp;
 	friend class MOAICollisionWorld;
 
 	MOAIPropOverlapLink		mLeft;
@@ -51,7 +51,7 @@ private:
 class MOAIOverlapInfo {
 private:
 
-	friend class MOAICollisionFacet;
+	friend class MOAICollisionProp;
 	friend class MOAICollisionWorld;
 
 	ZLVec3D		mCenter;
@@ -60,11 +60,11 @@ private:
 };
 
 //================================================================//
-// MOAICollisionFacet
+// MOAICollisionProp
 //================================================================//
 // TODO: doxygen
-class MOAICollisionFacet:
-	public MOAIFacet {
+class MOAICollisionProp:
+	public MOAIProp {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -74,10 +74,10 @@ private:
 	u32									mOverlapPass;		// used to identify if prop has been processed in current cycle
 	MOAIPropOverlapLink*				mOverlapLinks;		// singly-linked list of links to overlaps with this prop (if caching)
 	
-	ZLLeanLink < MOAICollisionFacet* >	mActiveListLink;	// link in collision world's list of props with overlaps or in need of update
+	ZLLeanLink < MOAICollisionProp* >	mActiveListLink;	// link in collision world's list of props with overlaps or in need of update
 	
 	bool								mInDrawList;
-	MOAICollisionFacet*					mNextInDrawList;
+	MOAICollisionProp*					mNextInDrawList;
 	
 	bool								mStayActive;
 	u32									mTouched;
@@ -89,15 +89,13 @@ private:
 	static int				_setOverlapFlags		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					ClearOverlapLink		( MOAICollisionFacet& other );
-	MOAICollisionFacet*		GetCollisionProp		();
+	u32						AffirmInterfaceMask		( MOAIPartition& partition );
+	void					ClearOverlapLink		( MOAICollisionProp& other );
 	bool					IsActive				();
-	void					OnAttach				( MOAIProp& prop );
-	void					OnDetach				( MOAIProp& prop );
 	
 public:
 
-	DECL_LUA_FACTORY ( MOAICollisionFacet )
+	DECL_LUA_FACTORY ( MOAICollisionProp )
 
 	enum {
 		OVERLAP_EVENTS_ON_UPDATE		= 0x01,		// will send overlap update events
@@ -114,9 +112,9 @@ public:
 	static const u32 DEFAULT_OVERLAP_FLAGS	= 0;
 
 	//----------------------------------------------------------------//
-							MOAICollisionFacet		();
-	virtual					~MOAICollisionFacet		();
-	bool					RefineOverlap			( const MOAICollisionFacet& other, MOAIOverlapInfo& info ) const;
+							MOAICollisionProp		();
+	virtual					~MOAICollisionProp		();
+	bool					RefineOverlap			( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const;
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

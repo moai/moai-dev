@@ -14,7 +14,7 @@
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAICollisionFacet.h>
+#include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -29,29 +29,29 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAICollisionFacet::_getOverlaps ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionFacet, "U" )
+int MOAICollisionProp::_getOverlaps ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 
 	u32 total = 0;
 	MOAIPropOverlapLink* link = self->mOverlapLinks;
 	for ( ; link; link = link->mNext, ++total ) {
-		state.Push ( &link->mOther->GetProp ());
+		state.Push ( link->mOther );
 	}
 	return total;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAICollisionFacet::_hasOverlaps ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionFacet, "U" )
+int MOAICollisionProp::_hasOverlaps ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 
 	return self->mOverlapLinks != 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAICollisionFacet::_setGroupMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionFacet, "U" )
+int MOAICollisionProp::_setGroupMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 	
 	self->mGroupMask = state.GetValue < u32 >( 2, 0 );
 	return 0;
@@ -59,19 +59,25 @@ int MOAICollisionFacet::_setGroupMask ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAICollisionFacet::_setOverlapFlags ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionFacet, "U" )
+int MOAICollisionProp::_setOverlapFlags ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 	
 	self->mOverlapFlags = state.GetValue < u32 >( 2, 0 );
 	return 0;
 }
 
 //================================================================//
-// MOAICollisionFacet
+// MOAICollisionProp
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::ClearOverlapLink ( MOAICollisionFacet& other ) {
+u32 MOAICollisionProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAICollisionProp >();
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::ClearOverlapLink ( MOAICollisionProp& other ) {
 
 	MOAIPropOverlapLink* cursor = this->mOverlapLinks;
 	this->mOverlapLinks = 0;
@@ -88,19 +94,13 @@ void MOAICollisionFacet::ClearOverlapLink ( MOAICollisionFacet& other ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionFacet* MOAICollisionFacet::GetCollisionProp () {
-
-	return this;
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionFacet::IsActive () {
+bool MOAICollisionProp::IsActive () {
 
 	return this->mActiveListLink.List () != 0;
 }
 
 //----------------------------------------------------------------//
-MOAICollisionFacet::MOAICollisionFacet () :
+MOAICollisionProp::MOAICollisionProp () :
 	mGroupMask ( GROUP_MASK_ALL ),
 	mOverlapFlags ( DEFAULT_OVERLAP_FLAGS ),
 	mOverlapPass ( MOAICollisionWorld::OVERLAP_PASS_INIT ),
@@ -111,30 +111,18 @@ MOAICollisionFacet::MOAICollisionFacet () :
 	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIFacet )
+		RTTI_EXTEND ( MOAIProp )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
 }
 
 //----------------------------------------------------------------//
-MOAICollisionFacet::~MOAICollisionFacet () {
+MOAICollisionProp::~MOAICollisionProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::OnAttach ( MOAIProp& prop ) {
-
-	//prop.SetMask ( prop.GetMask () | MOAIProp::CAN_OVERLAP );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionFacet::OnDetach ( MOAIProp& prop ) {
-
-	//prop.SetMask ( prop.GetMask () & ~MOAIProp::CAN_OVERLAP );
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionFacet::RefineOverlap ( const MOAICollisionFacet& other, MOAIOverlapInfo& info ) const {
+bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const {
 
 	// TODO: actually pay attention to OVERLAP_GRANULARITY_FINE and OVERLAP_CALCULATE_BOUNDS
 	info.mHasBounds = false;
@@ -144,9 +132,9 @@ bool MOAICollisionFacet::RefineOverlap ( const MOAICollisionFacet& other, MOAIOv
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIFacet::RegisterLuaClass ( state );
+	MOAIProp::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
@@ -158,9 +146,9 @@ void MOAICollisionFacet::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIFacet::RegisterLuaFuncs ( state );
+	MOAIProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getOverlaps",		_getOverlaps },
@@ -174,13 +162,13 @@ void MOAICollisionFacet::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIFacet::SerializeIn ( state, serializer );
+	MOAIProp::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionFacet::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIFacet::SerializeOut ( state, serializer );
+	MOAIProp::SerializeOut ( state, serializer );
 }

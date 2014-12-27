@@ -611,12 +611,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 }
 
 //----------------------------------------------------------------//
-MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
-
-	return this;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::IsVisible () {
 	return (( this->mFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mFlags & FLAGS_VISIBLE ));
 }

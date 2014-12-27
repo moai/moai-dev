@@ -125,7 +125,6 @@ protected:
 	//----------------------------------------------------------------//
 	u32						AffirmInterfaceMask			( MOAIPartition& partition );
 	virtual ZLMatrix4x4		GetWorldDrawingMtx			(); // factors in billboard flags
-	MOAIGraphicsProp*		GetGraphicsProp				();
 	void					LoadGfxState				();
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
@@ -177,8 +176,8 @@ public:
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void				Draw					( int subPrimID, float lod );
-	void				DrawDebug				( int subPrimID, float lod );
+	virtual void		Draw					( int subPrimID, float lod );
+	virtual void		DrawDebug				( int subPrimID, float lod );
 	bool				IsVisible				(); // just check the visibility flags
 	bool				IsVisible				( float lod ); // check the visibility flags *and* the LOD
 						MOAIGraphicsProp		();

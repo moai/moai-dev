@@ -49,19 +49,19 @@ font = MOAIFont.new ()
 font:loadFromTTF ( 'arial-rounded.TTF' )
 
 ready = function ( prop, x, y, group )
-	
+
 	layer:insertProp ( prop )
 	prop:setLoc ( x, y )
-	world:insertProp ( prop )
-
-	local coll = MOAICollisionFacet.new ()
-	--coll:setOverlapFlags ( MOAICollisionFacet.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionFacet.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setOverlapFlags ( MOAICollisionFacet.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setGroupMask ( group or MOAICollisionFacet.GROUP_MASK_ALL )
-	prop:setFacet ( MOAIProp.COLLISION_FACET, coll )
-	prop.coll = coll
 	
-	return prop
+	local coll = MOAICollisionProp.new ()
+	coll:setBounds ( prop:getBounds ())
+	coll:setParent ( prop )
+	--coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
+	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
+	coll:setGroupMask ( group or MOAICollisionProp.GROUP_MASK_ALL )
+	world:insertProp ( coll )
+	
+	return prop, coll
 end
 
 makePropWithColl = function ( x, y, group )

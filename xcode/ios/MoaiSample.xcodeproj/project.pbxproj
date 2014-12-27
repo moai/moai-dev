@@ -369,13 +369,6 @@
 			remoteGlobalIDString = CDA4B9101808AC8F000129F9;
 			remoteInfo = "libmoai-ios-gamecenter";
 		};
-		CD9ADCA41832EAC800CA2411 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7647173C138100DFE837;
-			remoteInfo = "libmoai-ios-harness";
-		};
 		CD9ADCA61832EAC800CA2411 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -508,13 +501,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = CDE8A802155E42EF00C2DFF5;
 			remoteInfo = "libmoai-osx-fmod-ex";
-		};
-		CD9ADCD01832EAC800CA2411 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7660173C13EB00DFE837;
-			remoteInfo = "libmoai-osx-harness";
 		};
 		CD9ADCD21832EAC800CA2411 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -907,7 +893,6 @@
 				CD9ADC9F1832EAC800CA2411 /* libmoai-ios-fmod-designer.a */,
 				CD9ADCA11832EAC800CA2411 /* libmoai-ios-fmod-ex.a */,
 				CD9ADCA31832EAC800CA2411 /* libmoai-ios-gamecenter.a */,
-				CD9ADCA51832EAC800CA2411 /* libmoai-ios-harness.a */,
 				CD9ADCA71832EAC800CA2411 /* libmoai-ios-http-client.a */,
 				CD9ADCA91832EAC800CA2411 /* libmoai-ios-http-server.a */,
 				CD164831189756B10098CDC2 /* libmoai-ios-kontagent.a */,
@@ -931,7 +916,6 @@
 				CD9ADCCB1832EAC800CA2411 /* libmoai-osx-crypto.a */,
 				CD9ADCCD1832EAC800CA2411 /* libmoai-osx-fmod-designer.a */,
 				CD9ADCCF1832EAC800CA2411 /* libmoai-osx-fmod-ex.a */,
-				CD9ADCD11832EAC800CA2411 /* libmoai-osx-harness.a */,
 				CD9ADCD31832EAC800CA2411 /* libmoai-osx-http-client.a */,
 				CD9ADCD51832EAC800CA2411 /* libmoai-osx-http-server.a */,
 				CD9ADCD71832EAC800CA2411 /* libmoai-osx-luaext.a */,
@@ -1176,13 +1160,6 @@
 			remoteRef = CD9ADCA21832EAC800CA2411 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9ADCA51832EAC800CA2411 /* libmoai-ios-harness.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-ios-harness.a";
-			remoteRef = CD9ADCA41832EAC800CA2411 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD9ADCA71832EAC800CA2411 /* libmoai-ios-http-client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1314,13 +1291,6 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-fmod-ex.a";
 			remoteRef = CD9ADCCE1832EAC800CA2411 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CD9ADCD11832EAC800CA2411 /* libmoai-osx-harness.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-osx-harness.a";
-			remoteRef = CD9ADCD01832EAC800CA2411 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD9ADCD31832EAC800CA2411 /* libmoai-osx-http-client.a */ = {
@@ -1677,7 +1647,6 @@
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"\"./\"",
@@ -1753,7 +1722,6 @@
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
 				HEADER_SEARCH_PATHS = (
 					"\"./\"",
 					"\"../../src/config\"",
