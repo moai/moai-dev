@@ -23,8 +23,16 @@ class MoaiSettings implements Plugin<Settings> {
                 def modulename = dir.name
                 dir.eachDirMatch(~/project/) { projectDir ->
                     if (modules.contains(modulename)) {
-                        settings.include(":modules:moaiexternal_${modulename}")
-                        settings.project(":modules:moaiexternal_${modulename}").projectDir = new File(projectDir.path)
+                        //some projects are nested, find our build.gradle
+                        def dirs = projectDir.listFiles().findAll() { d -> d.isDirectory() }
+                        dirs.add(0,projectDir)
+                        for (subdir in dirs) {
+                            if (subdir.listFiles().find { f -> f.name.equals('build.gradle') } != null) {
+                                settings.include(":modules:moaiexternal_${modulename}")
+                                settings.project(":modules:moaiexternal_${modulename}").projectDir = new File(subdir.path)
+                                break
+                            }
+                        }
                     }
                 }
             }
