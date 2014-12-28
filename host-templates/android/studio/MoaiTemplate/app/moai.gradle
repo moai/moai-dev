@@ -23,14 +23,19 @@ class MoaiPlugin implements Plugin<Project> {
             workingDir project.file('src/main/jni')
             def ndkDir = project.plugins.findPlugin('com.android.application').getNdkFolder()
 
+            def my_modules = project.moaiModules.replaceAll(',',' ')
+            def my_flags = project.moaiModules.split(',')
+            my_flags = my_flags.collect {
+                i -> i.trim().toUpperCase().replaceAll('-','_').replaceFirst('^MOAI_','-DAKU_WITH_') + "=1"
+            }
+            def flags = my_flags.join(' ')
 
             if (System.properties['os.name'].toLowerCase().contains('windows')) {
                def winLibRoot = libRoot.getCanonicalPath().replace('\\','/')
-
-               commandLine "$ndkDir/ndk-build.cmd", "MOAI_LIB_DIR=$winLibRoot"
+               commandLine "$ndkDir/ndk-build.cmd", "MOAI_LIB_DIR=$winLibRoot", "MOAI_STATIC_LIBRARIES=$my_modules", "MOAI_AKU_FLAGS=$flags"
             }
             else {
-                commandLine "$ndkDir/ndk-build", "MOAI_LIB_DIR=$libRoot"
+                commandLine "$ndkDir/ndk-build", "MOAI_LIB_DIR=$libRoot", "MOAI_STATIC_LIBRARIES=$my_modules", "MOAI_AKU_FLAGS=$flags"
             }
         }
 
@@ -50,6 +55,10 @@ class MoaiPlugin implements Plugin<Project> {
         project.task('createCombinedManifest') << {
             println(project.android.defaultConfig.applicationId)
 
+            def uniquePermissions = manifestPermissions.unique(false) {
+                a -> a.trim()
+            }
+
 
             def template = project.file('src/main/AndroidManifest.xml.in')
             if (!template.exists()) {
@@ -60,7 +69,7 @@ class MoaiPlugin implements Plugin<Project> {
             templateLines.add(1, ManifestWarning)
 
             def permissionStart = templateLines.findIndexOf { l -> l =~ /EXTERNAL PERMISSIONS/ }
-            templateLines.addAll(permissionStart, manifestPermissions)
+            templateLines.addAll(permissionStart, uniquePermissions)
 
             def declareStart = templateLines.findIndexOf { l -> l =~ /EXTERNAL DECLARATIONS/ }
             templateLines.addAll(declareStart, manifestDeclarations)
@@ -91,11 +100,17 @@ class MoaiPlugin implements Plugin<Project> {
         }
 
 
+        //add moai-android items
+        project.android.sourceSets.main {
+            java.srcDir new File("${libRoot}/modules/moai/moai-android")
+        }
 
         //add module items
         def modules = project.moaiModules.split(',')
 
         modules.each { module ->
+
+                if (module == "") return
 
                 def externalPath = "${libRoot}/modules/external/${module}"
 

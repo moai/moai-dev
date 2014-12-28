@@ -3,8 +3,22 @@ project ( moai-android )
 
 set ( MOAI_ANDROID_MODULES "" )
 
-#add_subdirectory(moai-android-twitter)
+#import our android module macro
+include("./android-module.cmake")
 
+add_subdirectory(moai-android-adcolony)
+add_subdirectory(moai-android-amazon-billing)
+add_subdirectory(moai-android-chartboost)
+add_subdirectory(moai-android-crittercism)
+add_subdirectory(moai-android-facebook)
+add_subdirectory(moai-android-flurry)
+add_subdirectory(moai-android-fortumo)
+add_subdirectory(moai-android-google-billing)
+add_subdirectory(moai-android-google-play-services)
+add_subdirectory(moai-android-google-push)
+add_subdirectory(moai-android-tapjoy)
+add_subdirectory(moai-android-twitter)
+add_subdirectory(moai-android-vungle)
 
 set ( MOAI_ANDROID_INCLUDES 
   "${MOAI_ROOT}/src/"
@@ -37,7 +51,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include/moai-android
 #java
 FILE(GLOB JAVA_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.java")
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
-  DESTINATION ../modules/moai/com/ziplinegames/moai
+  DESTINATION ../modules/moai/moai-android/com/ziplinegames/moai
   PATTERN "*.java"
   PATTERN "*.cpp" EXCLUDE
   PATTERN "*.h" EXCLUDE
@@ -55,7 +69,6 @@ foreach(MOD IN LISTS MOAI_ANDROID_MODULES )
    FILE(APPEND ${DEST} "include $(CLEAR_VARS)\n\n")
    FILE(APPEND ${DEST} "LOCAL_MODULE := ${MOD}\n")
    FILE(APPEND ${DEST} "LOCAL_SRC_FILES := $(MOAI_LIBS)/lib${MOD}.a\n")
-   FILE(APPEND ${DEST} "MOAI_JNI_MODULES += $(MOAI_LIBS)/../../modules/jni/${MOD}/host-jni.cpp\n\n")
    FILE(APPEND ${DEST} "include $(PREBUILT_STATIC_LIBRARY)\n\n")
 endforeach(MOD)
 

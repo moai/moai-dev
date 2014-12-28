@@ -2,7 +2,8 @@
 <!-- Required -->
 <service android:name="com.fortumo.android.FortumoService" />
 <service android:name="com.fortumo.android.StatusUpdateService" />
-<activity android:name="com.fortumo.android.FortumoActivity"
+<activity android:configChanges="orientation|keyboardHidden|screenSize"
+     android:name="com.fortumo.android.FortumoActivity"
     android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
 <!-- Implement a BroadcastReceiver to track payment status -->
@@ -14,7 +15,4 @@
     </intent-filter>
 </receiver>
 
-<activity android:configChanges="orientation|keyboardHidden|screenSize"
-    android:name="com.fortumo.android.FortumoActivity"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
