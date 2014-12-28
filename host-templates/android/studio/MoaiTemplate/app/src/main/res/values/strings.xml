@@ -10,4 +10,7 @@
 
     <!-- needed for facebook module -->
     <string name="fb_app_id">0</string>
+
+    <!-- needed for google play services -->
+    <string name="gms_app_id">0</string>
 </resources>

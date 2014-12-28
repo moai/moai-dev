@@ -11,7 +11,14 @@ add_subdirectory(moai-android-amazon-billing)
 add_subdirectory(moai-android-chartboost)
 add_subdirectory(moai-android-crittercism)
 add_subdirectory(moai-android-facebook)
+add_subdirectory(moai-android-flurry)
+add_subdirectory(moai-android-fortumo)
+add_subdirectory(moai-android-google-billing)
+add_subdirectory(moai-android-google-play-services)
+add_subdirectory(moai-android-google-push)
+add_subdirectory(moai-android-tapjoy)
 add_subdirectory(moai-android-twitter)
+add_subdirectory(moai-android-vungle)
 
 set ( MOAI_ANDROID_INCLUDES 
   "${MOAI_ROOT}/src/"
