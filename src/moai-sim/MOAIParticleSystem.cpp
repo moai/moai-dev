@@ -626,6 +626,9 @@ void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
+	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
 }
 
 //----------------------------------------------------------------//
