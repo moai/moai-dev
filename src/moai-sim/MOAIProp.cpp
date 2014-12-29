@@ -24,33 +24,6 @@
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
-// MOAIFacet
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIProp& MOAIFacet::GetProp () {
-	assert ( this->mProp );
-	return *this->mProp;
-}
-
-//----------------------------------------------------------------//
-MOAIFacet::MOAIFacet () :
-	mProp ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAIFacet::~MOAIFacet () {
-}
-
-//----------------------------------------------------------------//
-void MOAIFacet::OnAttach ( MOAIProp& prop ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIFacet::OnDetach ( MOAIProp& prop ) {
-}
-
-//================================================================//
 // local
 //================================================================//
 
@@ -756,14 +729,26 @@ u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIProp::OnBoundsChanged () {
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::OnRemoved () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIProp::PrepareForInsertion ( const MOAIPartition& partition ) {
+	UNUSED ( partition );
+	return true;
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
 	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
-	
-	state.SetField ( -1, "COLLISION_FACET",				( u32 )COLLISION_FACET );
 }
 
 //----------------------------------------------------------------//
@@ -858,7 +843,7 @@ void MOAIProp::UpdateWorldBounds ( const ZLBox& bounds, u32 status ) {
 		this->mPartition->UpdateProp ( *this, status );
 		
 		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds ))) {
-			this->mPartition->OnPropUpdated ( *this );
+			this->OnBoundsChanged ();
 		}
 	}
 }

@@ -27,29 +27,6 @@ class MOAISurfaceSampler2D;
 class MOAIProp;
 
 //================================================================//
-// MOAIFacet
-//================================================================//
-class MOAIFacet :
-	public virtual MOAILuaObject {
-protected:
-
-	friend class MOAIProp;
-	
-	MOAIProp* mProp;
-
-	//----------------------------------------------------------------//
-	virtual void	OnAttach		( MOAIProp& prop );
-	virtual void	OnDetach		( MOAIProp& prop );
-
-public:
-
-	//----------------------------------------------------------------//
-	MOAIProp&		GetProp			();
-					MOAIFacet		();
-					~MOAIFacet		();
-};
-
-//================================================================//
 // MOAIProp
 //================================================================//
 /**	@lua	MOAIProp
@@ -60,15 +37,6 @@ public:
 */
 class MOAIProp :
 	public MOAITransform {
-public:
-
-	static const u32 UNKNOWN_FACET = 0xffffffff;
-
-	enum {
-		COLLISION_FACET,
-		TOTAL_FACETS,
-	};
-
 private:
 
 	friend class MOAIPartition;
@@ -127,6 +95,9 @@ protected:
 	//----------------------------------------------------------------//
 	virtual u32			AffirmInterfaceMask			( MOAIPartition& partition ) = 0;
 	virtual u32			OnGetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
+	virtual void		OnBoundsChanged				();
+	virtual void		OnRemoved					();
+	virtual bool		PrepareForInsertion			( const MOAIPartition& partition );
 	u32					ResolveModelBounds			( ZLBox& bounds );
 	void				UpdateWorldBounds			( u32 status );
 	void				UpdateWorldBounds			( const ZLBox& bounds, u32 status ); // update bounds in world space

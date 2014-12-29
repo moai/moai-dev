@@ -4,14 +4,12 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
-#include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIProp.h>
-#include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
 
 class MOAICollisionShape;
 class MOAICollisionProp;
+class MOAICollisionWorld;
 class MOAIPropOverlap;
 
 //================================================================//
@@ -82,6 +80,8 @@ private:
 	bool								mStayActive;
 	u32									mTouched;
 	
+	MOAICollisionWorld*					mCollisionWorld;
+	
 	//----------------------------------------------------------------//
 	static int				_getOverlaps			( lua_State* L );
 	static int				_hasOverlaps			( lua_State* L );
@@ -92,6 +92,9 @@ private:
 	u32						AffirmInterfaceMask		( MOAIPartition& partition );
 	void					ClearOverlapLink		( MOAICollisionProp& other );
 	bool					IsActive				();
+	void					OnBoundsChanged			();
+	void					OnRemoved				();
+	bool					PrepareForInsertion		( const MOAIPartition& partition );
 	
 public:
 

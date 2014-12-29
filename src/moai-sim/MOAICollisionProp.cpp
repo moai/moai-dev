@@ -108,7 +108,8 @@ MOAICollisionProp::MOAICollisionProp () :
 	mInDrawList ( false ),
 	mNextInDrawList ( 0 ),
 	mStayActive ( false ),
-	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ) {
+	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ),
+	mCollisionWorld ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -119,6 +120,24 @@ MOAICollisionProp::MOAICollisionProp () :
 
 //----------------------------------------------------------------//
 MOAICollisionProp::~MOAICollisionProp () {
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::OnBoundsChanged () {
+	
+	if ( this->mCollisionWorld && this->mOverlapFlags ) {
+		this->mCollisionWorld->MakeActive ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::OnRemoved () {
+
+	this->mCollisionWorld = 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAICollisionProp::PrepareForInsertion ( const MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//

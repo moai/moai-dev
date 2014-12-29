@@ -6,21 +6,22 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
-#include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIRenderable.h>
 
 class MOAICollisionProp;
 class MOAIOverlapInfo;
+class MOAIPartition;
 class MOAIProp;
 
 //================================================================//
 // MOAICollisionWorld
 //================================================================//
 class MOAICollisionWorld :
-	public MOAIPartition,
 	public MOAIAction,
 	public MOAIRenderable {
 private:
+
+	friend class MOAICollisionProp;
 
 	bool	mUpdated;
 	u32		mOverlapPass;
@@ -33,11 +34,15 @@ private:
 	
 	ZLLeanPool < MOAIPropOverlap > mOverlapPool;
 
+	MOAILuaSharedPtr < MOAIPartition > mPartition;
+
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
+	static int			_insertProp				( lua_State* L );
 	static int			_processOverlaps		( lua_State* L );
 	static int			_setCallback			( lua_State* L );
+	static int			_setPartition			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				AffirmOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
@@ -46,6 +51,7 @@ private:
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
 	void				DrawCollisionProp		( MOAICollisionProp& prop );
+	void				InsertProp				( MOAICollisionProp& prop );
 	bool				IsDone					();
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
 	void				MakeActive				( MOAICollisionProp& prop0 );
@@ -57,6 +63,7 @@ private:
 	void				ProcessOverlaps			();
 	void				PruneOverlaps			( MOAICollisionProp& prop );
 	void				Render					();
+	void				RemoveProp				( MOAICollisionProp& prop );
 
 public:
 	
