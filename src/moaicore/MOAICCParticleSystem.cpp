@@ -1983,11 +1983,6 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 					this->mParticles[i] = this->mParticles[this->mParticleCount - 1];
 				}
 				this->mParticleCount--;
-				
-				if ( this->mParticleCount == 0 ){
-					
-				}
-				
 			}
 		}
 	}
