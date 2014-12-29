@@ -4,13 +4,35 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( 'hello, moai!' )
+VIEW_WIDTH = 256
+VIEW_HEIGHT = 256
 
-MOAISim.openWindow ( "test", 320, 480 )
+if MOAIAppIOS then
+	VIEW_WIDTH, VIEW_HEIGHT = MOAIGfxDevice.getViewSize ()
+end
+
+minPow2 = function ( num )
+	local n = 1
+	while n < num do n = n * 2 end
+	return n
+end
+
+VIEW_WIDTH = minPow2 ( VIEW_WIDTH )
+VIEW_HEIGHT = minPow2 ( VIEW_HEIGHT )
+
+CANVAS_WIDTH = 512
+CANVAS_HEIGHT = 512
+
+MASK_WIDTH = 128
+MASK_HEIGHT = 128
+
+BRUSH_SIZE = 16
+
+MOAISim.openWindow ( "test", VIEW_WIDTH, VIEW_HEIGHT )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, -480 )
+viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
+viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -40,11 +62,27 @@ program:load ( vsh, fsh )
 shader = MOAIShader.new ()
 shader:setProgram ( program )
 
+draw = MOAIImage.new ()
+draw:load ( 'moai.png' )
+draw = draw:resize ( CANVAS_WIDTH, CANVAS_HEIGHT )
+
+erase = MOAIImage.new ()
+erase:load ( 'numbers.png' )
+erase = erase:resize ( CANVAS_WIDTH, CANVAS_HEIGHT )
+
+brush = MOAIImage.new ()
+brush:init ( 16, 16, MOAIImage.COLOR_FMT_A_8 )
+brush:fillCircle ( 8, 8, 7, 0, 0, 0, 0.25 )
+brush:fillCircle ( 8, 8, 6, 0, 0, 0, 0.5 )
+brush:fillCircle ( 8, 8, 5, 0, 0, 0, 0.75 )
+brush:fillCircle ( 8, 8, 4, 0, 0, 0, 1 )
+brush = brush:resize ( BRUSH_SIZE )
+
 multitexture = MOAIMultiTexture.new ()
 multitexture:reserve ( 3 )
 
 mask = MOAIImageTexture.new ()
-mask:init ( 64, 64, MOAIImage.COLOR_FMT_A_8 )
+mask:init ( MASK_WIDTH, MASK_HEIGHT, MOAIImage.COLOR_FMT_A_8 )
 mask:setFilter ( MOAITexture.GL_LINEAR )
 multitexture:setTexture ( 1, mask )
 
@@ -60,27 +98,19 @@ multitexture:setTexture ( 3, texture2 )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( multitexture )
-gfxQuad:setRect ( 0, 0, 256, 256 )
+gfxQuad:setRect ( 0, 0, VIEW_WIDTH, VIEW_HEIGHT )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
-prop:setPiv ( 128, 128 )
+prop:setPiv ( VIEW_WIDTH / 2, VIEW_HEIGHT / 2 )	
 prop:setShader ( shader )
 layer:insertProp ( prop )
 
-brush = MOAIImage.new ()
-brush:init ( 16, 16, MOAIImage.COLOR_FMT_A_8 )
-brush:fillCircle ( 8, 8, 7, 0, 0, 0, 0.25 )
-brush:fillCircle ( 8, 8, 6, 0, 0, 0, 0.5 )
-brush:fillCircle ( 8, 8, 5, 0, 0, 0, 0.75 )
-brush:fillCircle ( 8, 8, 4, 0, 0, 0, 1 )
-
 function stamp ( x, y, erase )
 
-	local w, h = brush:getSize ()
-	
-	x, y = x / 4, y / 4
+	local w, h = BRUSH_SIZE, BRUSH_SIZE
+	x, y = x * ( MASK_WIDTH / VIEW_WIDTH ), y *  ( MASK_HEIGHT / VIEW_HEIGHT )
 
 	local x1 = x - ( w * 0.5 )
 	local y1 = y - ( h * 0.5 )
@@ -113,6 +143,18 @@ function onMouse ()
 	end
 end
 
-MOAIInputMgr.device.pointer:setCallback ( onMouse )
-MOAIInputMgr.device.mouseLeft:setCallback ( onMouse )
-MOAIInputMgr.device.mouseRight:setCallback ( onMouse )
+if MOAIInputMgr.device.pointer then
+	MOAIInputMgr.device.pointer:setCallback ( onMouse )
+	MOAIInputMgr.device.mouseLeft:setCallback ( onMouse )
+	MOAIInputMgr.device.mouseRight:setCallback ( onMouse )
+end
+
+function onTouch ()
+	local touch = MOAIInputMgr.device.touch
+	local x, y = prop:worldToModel ( layer:wndToWorld ( touch:getCenterLoc ()))
+	stamp ( x, y, touch:countTouches () > 1 )
+end
+
+if MOAIInputMgr.device.touch then
+	MOAIInputMgr.device.touch:setCallback ( onTouch )
+end

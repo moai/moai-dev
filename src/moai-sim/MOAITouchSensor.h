@@ -86,6 +86,7 @@ private:
 	float				mTapTime;
 
 	//----------------------------------------------------------------//
+	static int		_countTouches			( lua_State* L );
 	static int		_down					( lua_State* L );
 	static int		_getActiveTouches		( lua_State* L );
 	static int		_getCenterLoc			( lua_State* L );

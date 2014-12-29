@@ -497,7 +497,7 @@ int MOAIImage::_init ( lua_State* L ) {
 	else {
 
 		u32 width		= state.GetValue < u32 >( 2, 0 );
-		u32 height		= state.GetValue < u32 >( 3, 0 );
+		u32 height		= state.GetValue < u32 >( 3, width );
 		u32 colorFmt	= state.GetValue < u32 >( 4, ZLColor::RGBA_8888 );
 
 		self->Init ( width, height, ( ZLColor::ColorFormat )colorFmt, TRUECOLOR );
@@ -653,10 +653,10 @@ int MOAIImage::_padToPow2 ( lua_State* L ) {
 	@out	MOAIImage image
 */
 int MOAIImage::_resize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	MOAI_LUA_SETUP ( MOAIImage, "UN" )
 	
 	u32 width	= state.GetValue < u32 >( 2, 0 );
-	u32 height	= state.GetValue < u32 >( 3, 0 );
+	u32 height	= state.GetValue < u32 >( 3, width );
 	u32 filter	= state.GetValue < u32 >( 4, MOAIImage::FILTER_LINEAR );
 	
 	ZLIntRect srcRect;
