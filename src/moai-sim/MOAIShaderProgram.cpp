@@ -275,7 +275,9 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		uniform.mName = name;
 		uniform.SetType ( type );
 		
-		this->mUniformDefaults [ idx ].Default ();
+		MOAIShaderUniformBuffer& uniformDefault = this->mUniformDefaults [ idx ];
+		uniformDefault.SetType ( type );
+		uniformDefault.Default ();
 	}
 }
 
