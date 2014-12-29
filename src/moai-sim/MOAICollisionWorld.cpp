@@ -311,6 +311,7 @@ MOAICollisionWorld::~MOAICollisionWorld () {
 		this->mOverlapList.Remove ( overlap->mOverlapListLink );
 		this->mOverlapPool.Free ( overlap );
 	}
+	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
