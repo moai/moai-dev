@@ -4,8 +4,6 @@
 #ifndef MOAIADCOLONYANDROID_H
 #define MOAIADCOLONYANDROID_H
 
-#ifndef DISABLE_ADCOLONY
-
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
 
@@ -41,7 +39,5 @@ public:
 			~MOAIAdColonyAndroid	();
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
-
-#endif  //DISABLE_ADCOLONY
 
 #endif  //MOAIADCOLONY_H
