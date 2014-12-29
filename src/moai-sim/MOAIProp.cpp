@@ -444,6 +444,15 @@ int MOAIProp::_setPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setQueryMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	self->mQueryMask = state.GetValue < u32 >( 2, 0 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setRemapper
 	@text	Set a remapper for this prop to use when drawing deck members.
 	
@@ -667,6 +676,7 @@ MOAIProp::MOAIProp () :
 	mLevel ( 0 ),
 	mNextResult ( 0 ),
 	mInterfaceMask ( 0 ),
+	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mFlags ( 0 ),
 	mIndex ( 1 ),
@@ -776,6 +786,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLayer",				_setLayer },
 		{ "setPartition",			_setPartition },
 		{ "setPriority",			_setPriority },
+		{ "setQueryMask",			_setQueryMask },
 		{ "setRemapper",			_setRemapper },
 		{ NULL, NULL }
 	};

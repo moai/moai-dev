@@ -79,23 +79,20 @@ bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRef::SetRef ( MOAILuaObject* object, bool weak ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	state.Push ( object );
+	this->SetRef ( state, -1, weak );
+	state.Pop ( 1 );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 
 	this->Clear ();
 	this->mRef = MOAILuaRuntime::Get ().GetRef ( state, idx, weak );
 	this->mOwnsRef = ( this->mRef != LUA_NOREF );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRef::SetStrongRef ( MOAILuaState& state, int idx ) {
-
-	this->SetRef ( state, idx, false );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRef::SetWeakRef ( MOAILuaState& state, int idx ) {
-
-	this->SetRef ( state, idx, true );
 }
 
 //----------------------------------------------------------------//
@@ -115,6 +112,20 @@ void MOAILuaRef::Take ( const MOAILuaRef& assign ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAILuaStrongRef::MOAILuaStrongRef () {
+}
+
+//----------------------------------------------------------------//
+MOAILuaStrongRef::MOAILuaStrongRef ( MOAILuaObject* object ) {
+	this->SetRef ( object );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaStrongRef::SetRef ( MOAILuaObject* object ) {
+	MOAILuaRef::SetRef ( object, false );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaStrongRef::SetRef ( MOAILuaState& state, int idx ) {
 	MOAILuaRef::SetRef ( state, idx, false );
 }
@@ -122,6 +133,20 @@ void MOAILuaStrongRef::SetRef ( MOAILuaState& state, int idx ) {
 //================================================================//
 // MOAILuaWeakRef
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAILuaWeakRef::MOAILuaWeakRef () {
+}
+
+//----------------------------------------------------------------//
+MOAILuaWeakRef::MOAILuaWeakRef ( MOAILuaObject* object ) {
+	this->SetRef ( object );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaWeakRef::SetRef ( MOAILuaObject* object ) {
+	MOAILuaRef::SetRef ( object, true );
+}
 
 //----------------------------------------------------------------//
 void MOAILuaWeakRef::SetRef ( MOAILuaState& state, int idx ) {

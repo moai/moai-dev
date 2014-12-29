@@ -23,6 +23,7 @@ class MOAIPartition :
 private:
 
 	static const u32 INTERFACE_MASK_BITS = 32;
+	static const u32 MASK_ANY = 0xffffffff;
 
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLevel;
@@ -42,6 +43,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
+	static int		_getInterfaceMask		( lua_State* L );
 	static int		_insertProp				( lua_State* L );
 	static int		_propForPoint			( lua_State* L );
 	static int		_propForRay				( lua_State* L );
@@ -71,11 +73,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 interfaceMask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	void			InsertProp				( MOAIProp& prop );
 	bool			IsEmpty					( MOAIProp& prop );
 	bool			IsGlobal				( MOAIProp& prop );

@@ -53,6 +53,7 @@ private:
 	MOAIProp*					mNextResult;
 
 	u32							mInterfaceMask;
+	u32							mQueryMask;
 	s32							mPriority;
 	ZLBox						mWorldBounds;
 	
@@ -76,6 +77,7 @@ private:
 	static int			_setLayer					( lua_State* L );
 	static int			_setPartition				( lua_State* L );
 	static int			_setPriority				( lua_State* L );
+	static int			_setQueryMask				( lua_State* L );
 	static int			_setRemapper				( lua_State* L );
 
 protected:
