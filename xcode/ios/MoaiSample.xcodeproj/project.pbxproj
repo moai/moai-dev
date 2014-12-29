@@ -1972,6 +1972,7 @@
 				CDF389EA1A51CEC800BDEB4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

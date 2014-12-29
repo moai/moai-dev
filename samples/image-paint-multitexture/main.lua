@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-VIEW_WIDTH = 256
-VIEW_HEIGHT = 256
+VIEW_WIDTH = 512
+VIEW_HEIGHT = 512
 
 if MOAIAppIOS then
 	VIEW_WIDTH, VIEW_HEIGHT = MOAIGfxDevice.getViewSize ()
@@ -20,8 +20,8 @@ end
 VIEW_WIDTH = minPow2 ( VIEW_WIDTH )
 VIEW_HEIGHT = minPow2 ( VIEW_HEIGHT )
 
-CANVAS_WIDTH = 512
-CANVAS_HEIGHT = 512
+CANVAS_WIDTH = 2048
+CANVAS_HEIGHT = 2048
 
 MASK_WIDTH = 128
 MASK_HEIGHT = 128
