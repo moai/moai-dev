@@ -173,9 +173,15 @@ void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardEvent ( int deviceID, int sensorID, int keyID, bool down ) {
+void AKUEnqueueKeyboardCharEvent ( int deviceID, int sensorID, int unicodeChar ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
+	MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, unicodeChar );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool down ) {
+
+	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
 }
 
 //----------------------------------------------------------------//

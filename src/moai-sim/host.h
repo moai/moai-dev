@@ -72,7 +72,8 @@ AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets ti
 AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );
 AKU_API void			AKUEnqueueCompassEvent			( int deviceID, int sensorID, float heading );
 AKU_API void			AKUEnqueueJoystickEvent			( int deviceID, int sensorID, float x, float y );
-AKU_API void			AKUEnqueueKeyboardEvent			( int deviceID, int sensorID, int keyID, bool down );
+AKU_API void			AKUEnqueueKeyboardCharEvent		( int deviceID, int sensorID, int unicodeChar );
+AKU_API void			AKUEnqueueKeyboardKeyEvent		( int deviceID, int sensorID, int keyID, bool down );
 AKU_API void			AKUEnqueueLevelEvent			( int deviceID, int sensorID, float x, float y, float z );
 AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 AKU_API void			AKUEnqueuePointerEvent			( int deviceID, int sensorID, int x, int y );
