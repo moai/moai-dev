@@ -456,7 +456,7 @@ MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

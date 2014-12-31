@@ -21,6 +21,7 @@ private:
 	int						mRef;
 
 	//----------------------------------------------------------------//
+	void					SetRef			( MOAILuaObject* object, bool weak );
 	void					SetRef			( MOAILuaState& state, int idx, bool weak );
 
 public:
@@ -37,9 +38,8 @@ public:
 							MOAILuaRef		( const MOAILuaRef& assign );
 	virtual					~MOAILuaRef		();
 	bool					PushRef			( MOAILuaState& state );
-	virtual void			SetRef			( MOAILuaState& state, int idx ) = 0; // TODO
-	void					SetStrongRef	( MOAILuaState& state, int idx );
-	void					SetWeakRef		( MOAILuaState& state, int idx );
+	virtual void			SetRef			( MOAILuaObject* object ) = 0;
+	virtual void			SetRef			( MOAILuaState& state, int idx ) = 0;
 	void					Take			( const MOAILuaRef& assign );
 
 	//----------------------------------------------------------------//
@@ -66,7 +66,10 @@ class MOAILuaStrongRef :
 public:
 
 	//----------------------------------------------------------------//
-	void			SetRef			( MOAILuaState& state, int idx );
+					MOAILuaStrongRef	();
+					MOAILuaStrongRef	( MOAILuaObject* object );
+	void			SetRef				( MOAILuaObject* object );
+	void			SetRef				( MOAILuaState& state, int idx );
 };
 
 //================================================================//
@@ -77,7 +80,10 @@ class MOAILuaWeakRef :
 public:
 
 	//----------------------------------------------------------------//
-	void			SetRef			( MOAILuaState& state, int idx );
+					MOAILuaWeakRef		();
+					MOAILuaWeakRef		( MOAILuaObject* object );
+	void			SetRef				( MOAILuaObject* object );
+	void			SetRef				( MOAILuaState& state, int idx );
 };
 
 //================================================================//

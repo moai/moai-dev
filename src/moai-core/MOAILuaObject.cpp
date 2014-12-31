@@ -62,6 +62,20 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_getClassName ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAILuaObject* object = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+
+	if ( object ) {
+		lua_pushstring ( L, object->TypeName ());
+		return 1;
+	}
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_getMemberTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 	
@@ -75,19 +89,6 @@ int MOAILuaObject::_getRefTable ( lua_State* L ) {
 
 	self->PushRefTable ( state );
 	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAILuaObject::_getClassName ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAILuaObject* object = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
-
-	if ( object ) {
-		lua_pushstring ( L, object->TypeName ());
-		return 1;
-	}
-	return 0;
 }
 
 //----------------------------------------------------------------//

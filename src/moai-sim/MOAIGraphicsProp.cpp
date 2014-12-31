@@ -366,6 +366,12 @@ int MOAIGraphicsProp::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAIGraphicsProp >();
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
@@ -605,12 +611,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 }
 
 //----------------------------------------------------------------//
-MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
-
-	return this;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::IsVisible () {
 	return (( this->mFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mFlags & FLAGS_VISIBLE ));
 }
@@ -698,7 +698,7 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 	RTTI_END
 	
 	this->mFlags = DEFAULT_FLAGS;
-	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	//this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

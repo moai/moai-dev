@@ -40,15 +40,13 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	PropIt propIt = this->mProps.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIProp* prop = propIt->Data ();
 		
-		if ( prop == ignore ) continue;
-		
 		float t;
-		if (( mask == 0 ) || ( prop->mMask & mask )) {
+		if (( prop != ignore ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
 			if ( !ZLSect::RayToBox( prop->mWorldBounds, point, orientation, t )) {
 				prop->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
 			}
@@ -57,30 +55,26 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 interfaceMask, u32 queryMask ) {
 	
 	PropIt propIt = this->mProps.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIProp* prop = propIt->Data ();
 		
-		if ( prop == ignore ) continue;
-		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {
+		if (( prop != ignore ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
 			prop->AddToSortBuffer ( results );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLVec3D& point, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
 
 	PropIt propIt = this->mProps.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIProp* prop = propIt->Data ();
 		
-		if ( prop == ignore ) continue;
-		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {
+		if (( prop != ignore ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
 			if ( prop->mWorldBounds.Contains ( point )) {
 				if ( prop->Inside ( point, 0.0f )) {
 					prop->AddToSortBuffer ( results );
@@ -91,15 +85,13 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLBox& box, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLBox& box, u32 interfaceMask, u32 queryMask ) {
 
 	PropIt propIt = this->mProps.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIProp* prop = propIt->Data ();
 		
-		if ( prop == ignore ) continue;
-		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {	
+		if (( prop != ignore ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
 			if ( prop->mWorldBounds.Overlap ( box )) {
 				prop->AddToSortBuffer ( results );
 			}
@@ -108,15 +100,13 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLFrustum& frustum, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
 
 	PropIt propIt = this->mProps.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIProp* prop = propIt->Data ();
 		
-		if ( prop == ignore ) continue;
-		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {	
+		if (( prop != ignore ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
 			if ( !frustum.Cull ( prop->mWorldBounds )) {
 				prop->AddToSortBuffer ( results );
 			}
