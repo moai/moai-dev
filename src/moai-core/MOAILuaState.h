@@ -72,7 +72,7 @@ public:
 					MOAILuaState			( lua_State* state );
 	virtual			~MOAILuaState			();
 	void			MoveToTop				( int idx );
-	void			Pop						( int n );
+	void			Pop						( int n = 1 );
 	bool			PrepMemberFunc			( int idx, cc8* name );
 	bool			PrintErrors				( FILE* file, int status );
 	void			PrintStackDump			();

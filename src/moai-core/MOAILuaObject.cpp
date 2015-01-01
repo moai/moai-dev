@@ -223,6 +223,10 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// which in turn calls BindToLua if there is no mUserdata...
 	if ( type->IsSingleton ()) {
 		this->LuaRetain ( this ); // create a circular reference to 'pin' the userdata
+		
+		// in the case of a singleton, the ref table is kept in the class record, which is a strong
+		// ref (as opposed to the metatable version attached to the weak userdata for regular instance
+		// classes).
 	}
 }
 
@@ -233,25 +237,6 @@ MOAILuaClass* MOAILuaObject::GetLuaClass () {
 	assert ( false );
 	return 0;
 }
-
-//----------------------------------------------------------------//
-//cc8* MOAILuaObject::GetLuaClassName () {
-//
-//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//	cc8* classname = this->TypeName ();
-//	
-//	if ( this->mMemberTable ) {
-//		state.Push ( this );
-//		lua_getfield ( state, -1, "getClassName" );
-//		
-//		if ( state.IsType ( -1, LUA_TFUNCTION )) {
-//			lua_pushvalue ( state, -2 );
-//			state.DebugCall ( 1, 1 );
-//			classname = state.GetValue < cc8* >( -1, "" );
-//		}
-//	}
-//	return classname;
-//}
 
 //----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaObject::GetSelf () {
@@ -343,13 +328,28 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
+	// PCM: pretty sure this is the only time this edge case happens - if the
+	// containing class has not been bound, an ad hoc binding will be created
+	// just to retain the member class. because mUserdata is weak and does not
+	// persist in Lua after this call, it may be tagged for gc leading to
+	// plenty of trouble later.
+	if ( !this->IsBound ()) {
+		this->BindToLua ( state );
+		MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
+	}
+	
 	if ( this->PushRefTable ( state )) {
 		if ( object->PushLuaUserdata ( state )) {
 		
+			// look up the old count using the object as a key
+			
 			lua_pushvalue ( state, -1 ); // copy the userdata
 			lua_gettable ( state, -3 ); // get the count (or nil)
 			u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
 			lua_pop ( state, 1 ); // pop the old count
+			
+			// store the new count in the ref table
+			
 			lua_pushnumber ( state, count + 1 ); // push the new count
 			lua_settable ( state, -3 ); // save it in the table
 		}
@@ -379,6 +379,9 @@ MOAILuaObject::~MOAILuaObject () {
 			
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
+			
+			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
 				lua_setfield ( state, -2, "__gc" );

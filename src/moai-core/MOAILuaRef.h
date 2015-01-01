@@ -18,13 +18,14 @@ class MOAILuaRef {
 private:
 
 	bool					mOwnsRef;
-	int						mRef;
-
-	//----------------------------------------------------------------//
-	void					SetRef			( MOAILuaObject* object, bool weak );
-	void					SetRef			( MOAILuaState& state, int idx, bool weak );
+	int						mRefID;
 
 public:
+
+	enum {
+		MAKE_STRONG,
+		MAKE_WEAK,
+	};
 
 	friend class MOAILuaStrongRef;
 	friend class MOAILuaWeakRef;
@@ -34,12 +35,16 @@ public:
 	bool					IsNil			();
 	u32						GetID			();
 	MOAIScopedLuaState		GetSelf			();
+	void					MakeStrong		();
+	void					MakeWeak		();
 							MOAILuaRef		();
 							MOAILuaRef		( const MOAILuaRef& assign );
 	virtual					~MOAILuaRef		();
 	bool					PushRef			( MOAILuaState& state );
-	virtual void			SetRef			( MOAILuaObject* object ) = 0;
-	virtual void			SetRef			( MOAILuaState& state, int idx ) = 0;
+	virtual void			SetRef			( MOAILuaObject* object );
+	void					SetRef			( MOAILuaObject* object, u32 type );
+	virtual void			SetRef			( MOAILuaState& state, int idx );
+	void					SetRef			( MOAILuaState& state, int idx, u32 type );
 	void					Take			( const MOAILuaRef& assign );
 
 	//----------------------------------------------------------------//
@@ -49,12 +54,12 @@ public:
 
 	//----------------------------------------------------------------//
 	inline bool operator < ( const MOAILuaRef& compare ) const {
-		return ( this->mRef < compare.mRef );
+		return ( this->mRefID < compare.mRefID );
 	}
 
 	//----------------------------------------------------------------//
 	inline operator bool () {
-		return ( this->mRef != LUA_NOREF );
+		return ( this->mRefID != LUA_NOREF );
 	}
 };
 
@@ -92,7 +97,7 @@ public:
 class MOAILuaMemberRef {
 private:
 
-	int					mRef;
+	int					mRefID;
 	MOAILuaObject*		mOwner;
 
 public:
@@ -106,7 +111,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline operator bool () {
-		return this->mRef != LUA_NOREF;
+		return this->mRefID != LUA_NOREF;
 	}
 };
 

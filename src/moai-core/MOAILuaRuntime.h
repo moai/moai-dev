@@ -88,6 +88,14 @@ private:
 	MOAILuaRefTable		mStrongRefs;
 	MOAILuaRefTable		mWeakRefs;
 
+	// this is to handle the edge case where an object gets created and bound to Lua, but is not
+	// passed back to Lua immediately. the binding's mUserdata is a weak ref, so if additional
+	// work is done in Lua, there is a slight chance it may get tagged for garbage collection
+	// in an indeterminate way.
+	
+	// the cache gets thrown out every update by MOAISim.
+	MOAILuaStrongRef	mUserdataCache;
+
 	TracebackFunc		mTracebackFunc;			// Custom traceback func
 	MOAILuaStrongRef	mTracebackRef;			// Custom traceback ref
 	MOAILuaState		mState;
@@ -117,14 +125,19 @@ private:
 
 	//----------------------------------------------------------------//
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
+	void					CacheUserdata			( MOAILuaState& state, int idx );
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindLuaRefs				( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
+	int						GetRef					( MOAILuaState& state, int idx, u32 type );
 	static bool				IsLuaIdentifier			( const char *str );
+	int						MakeStrong				( int refID );
+	int						MakeWeak				( int refID );
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();
 	void					OnGlobalsRetire			();
+	void					PurgeUserdata			( MOAILuaState& state, int idx );
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
@@ -151,19 +164,19 @@ public:
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
 	//----------------------------------------------------------------//
-	void					ClearRef					( int ref );
+	void					ClearRef					( int refID );
 	void					Close						();
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
-	int						GetRef						( MOAILuaState& state, int idx, bool weak );
 	bool					IsOpen						();
 	void					LoadLibs					();
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
+	void					PurgeUserdataCache			();
 	void					PushHistogram				( MOAILuaState& state, cc8* trackingGroup );
-	bool					PushRef						( MOAILuaState& state, int ref );
+	bool					PushRef						( MOAILuaState& state, int refID );
 	void					PushTraceback				( MOAILuaState& state );
 	void					PrintTracking				( MOAILuaObject& object );
 	void					RegisterLuaClass			( MOAILuaState& state );

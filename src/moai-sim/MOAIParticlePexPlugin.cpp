@@ -122,7 +122,7 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 			doc.LoadFile ( xml );
 			MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
 			MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
-			particle->PushLuaUserdata( state );
+			particle->PushLuaUserdata ( state );
 			return 1;
 		}
 	#endif	

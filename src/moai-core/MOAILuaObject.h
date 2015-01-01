@@ -64,7 +64,6 @@ public:
 	//----------------------------------------------------------------//
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
-	//cc8*					GetLuaClassName				();
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();

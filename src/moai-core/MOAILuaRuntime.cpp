@@ -287,8 +287,8 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	bool weak = state.GetValue < bool >( 2, false );
-	state.Push ( MOAILuaRuntime::Get ().GetRef ( state, 1, weak ));
+	u32 type = state.GetValue < bool >( 2, false ) ? MOAILuaRef::MAKE_WEAK : MOAILuaRef::MAKE_STRONG;
+	state.Push ( MOAILuaRuntime::Get ().GetRef ( state, 1, type ));
 
 	return 1;
 }
@@ -467,14 +467,37 @@ void MOAILuaRuntime::BuildHistogram ( HistMap& histogram, cc8* trackingGroup ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::ClearRef ( int ref ) {
+void MOAILuaRuntime::CacheUserdata ( MOAILuaState& state, int idx ) {
 
-	if ( ref != LUA_NOREF ) {
-		if ( ref & WEAK_REF_BIT ) {
-			this->mWeakRefs.Unref ( ref & REF_MASK );
+	idx = state.AbsIndex ( idx );
+
+	if ( this->mUserdataCache ) {
+		if ( !this->mUserdataCache.PushRef ( state )) {
+			state.Pop ();
+		}
+	}
+	
+	if ( !this->mUserdataCache ) {
+		lua_newtable ( state );
+		this->mUserdataCache.SetRef ( state, -1 );
+	}
+	
+	lua_pushvalue ( state, idx );
+	lua_pushvalue ( state, idx );
+	lua_settable ( state, -3 );
+	
+	state.Pop ();
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::ClearRef ( int refID ) {
+
+	if ( refID != LUA_NOREF ) {
+		if ( refID & WEAK_REF_BIT ) {
+			this->mWeakRefs.Unref ( refID & REF_MASK );
 		}
 		else {
-			this->mStrongRefs.Unref ( ref & REF_MASK );
+			this->mStrongRefs.Unref ( refID & REF_MASK );
 		}
 	}
 }
@@ -755,10 +778,10 @@ MOAILuaState& MOAILuaRuntime::GetMainState () {
 }
 
 //----------------------------------------------------------------//
-int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, bool isWeak ) {
+int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, u32 type ) {
 	
 	if ( lua_isnil ( state, idx )) return LUA_NOREF;
-	return isWeak ? ( this->mWeakRefs.Ref ( state, idx ) | WEAK_REF_BIT ) : this->mStrongRefs.Ref ( state, idx );
+	return ( type == MOAILuaRef::MAKE_WEAK ) ? ( this->mWeakRefs.Ref ( state, idx ) | WEAK_REF_BIT ) : this->mStrongRefs.Ref ( state, idx );
 }
 
 //----------------------------------------------------------------//
@@ -781,6 +804,36 @@ void MOAILuaRuntime::LoadLibs () {
 
 	// Load the standard Lua libs
 	luaL_openlibs ( this->mState );
+}
+
+//----------------------------------------------------------------//
+int MOAILuaRuntime::MakeStrong ( int refID ) {
+
+	if ( refID == LUA_NOREF ) return LUA_NOREF;
+	if ( !( refID & WEAK_REF_BIT )) return refID;
+	
+	this->mWeakRefs.PushRef ( this->mState, refID );
+	this->mWeakRefs.Unref ( refID & REF_MASK );
+	
+	refID = this->GetRef ( this->mState, refID, false );
+	this->mState.Pop ();
+	
+	return refID;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaRuntime::MakeWeak ( int refID ) {
+
+	if ( refID == LUA_NOREF ) return LUA_NOREF;
+	if ( refID & WEAK_REF_BIT ) return refID;
+	
+	this->mStrongRefs.PushRef ( this->mState, refID );
+	this->mStrongRefs.Unref ( refID & REF_MASK );
+	
+	refID = this->GetRef ( this->mState, refID, true );
+	this->mState.Pop ();
+	
+	return refID;
 }
 
 //----------------------------------------------------------------//
@@ -836,6 +889,26 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::PurgeUserdata ( MOAILuaState& state, int idx ) {
+
+	idx = state.AbsIndex ( idx );
+
+	if ( this->mUserdataCache.PushRef ( state )) {
+		
+		lua_pushvalue ( state, idx );
+		lua_pushnil ( state );
+		lua_settable ( state, -3 );
+		state.Pop ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::PurgeUserdataCache () {
+
+	this->mUserdataCache.Clear ();
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::PushHistogram ( MOAILuaState& state, cc8* trackingGroup  ) {
 	
 	lua_newtable ( state );
@@ -856,18 +929,18 @@ void MOAILuaRuntime::PushHistogram ( MOAILuaState& state, cc8* trackingGroup  ) 
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaRuntime::PushRef ( MOAILuaState& state, int ref ) {
+bool MOAILuaRuntime::PushRef ( MOAILuaState& state, int refID ) {
 
-	if ( ref == LUA_NOREF ) {
+	if ( refID == LUA_NOREF ) {
 		lua_pushnil ( state );
 		return false;
 	}
 
-	if ( ref & WEAK_REF_BIT ) {
-		this->mWeakRefs.PushRef ( state, ref & REF_MASK );
+	if ( refID & WEAK_REF_BIT ) {
+		this->mWeakRefs.PushRef ( state, refID & REF_MASK );
 	}
 	else {
-		this->mStrongRefs.PushRef ( state, ref & REF_MASK );
+		this->mStrongRefs.PushRef ( state, refID & REF_MASK );
 	}
 	return !lua_isnil ( state, -1 );
 }

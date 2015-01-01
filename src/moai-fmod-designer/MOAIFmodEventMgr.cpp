@@ -842,7 +842,7 @@ int MOAIFmodEventMgr::_getEventDuration ( lua_State* L ) {
 int MOAIFmodEventMgr::_getMicrophone ( lua_State* L ) {
     MOAILuaState state ( L );
 
-    MOAIFmodMicrophone* pMic = MOAIFmodEventMgr::Get().AffirmMic();
+    MOAIFmodMicrophone* pMic = MOAIFmodEventMgr::Get().AffirmMic ();
     pMic->PushLuaUserdata ( state );
 
     return 1;

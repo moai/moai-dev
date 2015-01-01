@@ -666,17 +666,12 @@ MOAISim::MOAISim () :
 	
 	this->mFrameTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	MOAIInputQueue* inputMgr = new MOAIInputQueue ();
-	this->mInputMgr.Set ( *this, inputMgr );
+	this->mInputMgr.Set ( *this, new MOAIInputQueue ());
+	this->mActionMgr.Set ( *this, new MOAIActionTree ());
+	this->mActionTree.Set ( *this, new MOAIActionTree ());
 	
-	MOAIActionTree* actionMgr = new MOAIActionTree ();
-	this->mActionMgr.Set ( *this, actionMgr );
-	
-	MOAIActionTree* actionTree = new MOAIActionTree ();
-	this->mActionTree.Set ( *this, actionTree );
-	
-	inputMgr->Start ( *actionTree );
-	actionMgr->Start ( *actionTree );
+	this->mInputMgr->Start ( *this->mActionTree );
+	this->mActionMgr->Start ( *this->mActionTree );
 }
 
 //----------------------------------------------------------------//
@@ -877,9 +872,14 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
+		
+			// empty the userdata cache
+			MOAILuaRuntime::Get ().PurgeUserdataCache ();
+		
 			// crank the garbage collector
 			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
 		}
+		
 	}
 
 	return ZLDeviceTime::GetTimeInSeconds () - time;
