@@ -443,7 +443,7 @@ cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 		case LUA_TTABLE:			return "table";
 		case LUA_TFUNCTION:			return "function";
 		case LUA_TUSERDATA:			return "userdata";
-		case LUA_TTHREAD:			return "coroutine";
+		case LUA_TTHREAD:			return "thread";
 	}
 	return "unknown";
 }

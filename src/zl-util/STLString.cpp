@@ -140,7 +140,7 @@ void STLString::replace_char ( cc8 match, cc8 sub ) {
 }
 
 //----------------------------------------------------------------//
-void STLString::tokenize ( STLArray < STLString > & tokens, const STLString& delimiters ) {
+void STLString::tokenize ( STLArray < STLString > & tokens, const STLString& delimiters ) const {
 
 	STLString::size_type lastPos = this->find_first_not_of ( delimiters, 0 );
 	STLString::size_type pos = this->find_first_of ( delimiters, lastPos );
@@ -150,6 +150,12 @@ void STLString::tokenize ( STLArray < STLString > & tokens, const STLString& del
 		lastPos = this->find_first_not_of ( delimiters, pos );
 		pos = this->find_first_of ( delimiters, lastPos );
 	}
+}
+
+//----------------------------------------------------------------//
+void STLString::tokenize ( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters ) {
+
+	str.tokenize ( tokens, delimiters );
 }
 
 //----------------------------------------------------------------//
