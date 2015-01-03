@@ -47,6 +47,7 @@ local copyhostfiles
 local copylib
 local linklib
 
+-- Copies all files from the HTML host template to the output directory
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
 	print("Creating ",output)
@@ -58,10 +59,12 @@ copyhostfiles = function()
 	end
 end
 
+-- Copies the generated moaijs.js file to the output directory
 copylib = function() 
 	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'/www/lib' )
 end
 
+-- Creates a symbolic link that makes the generated moaijs.js file show up in the output directory
 linklib = function() 
 	local isWindows = MOAIEnvironment.osBrand == 'Windows'
 	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'/www/lib" "'..config.LIB_SOURCE..'"' 
