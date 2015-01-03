@@ -57,8 +57,8 @@ public:
 	static u8			hex_to_byte			( u32 c );
 	
 	void				replace_char		( cc8 match, cc8 sub );
-	void				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " ) const;
-	static void			tokenize			( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters = " " );
+	size_t				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " ) const;
+	static size_t		tokenize			( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters = " " );
 	double				to_double			();
 	float				to_float			();
 	int					to_int				();
