@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply from: 'moai.gradle'
+
 
 
 android {
@@ -31,7 +31,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
     }
 }
-
+apply from: 'moai.gradle' //leave after android config block, it needs applicationId
 
 
 dependencies {

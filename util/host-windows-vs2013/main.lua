@@ -15,6 +15,12 @@ end
 --==============================================================
 -- args
 --==============================================================
+local hostconfig = {
+    AppName = "Moai Template",
+    CompanyName = "Zipline Games",
+    ExeDescription = ""
+}
+
 
 local config = {}
 
@@ -22,6 +28,9 @@ config.OUTPUT_DIR                      = INVOKE_DIR..'hosts/vs2013/'
 config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/windows/vs2013/Distribute/'
 config.USE_SYMLINK                     = false
 
+MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
+
+local configFile = false
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 
 	if escape == 's' or escape == 'use-symlink' then
@@ -32,9 +41,14 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 			config.OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
 
-	    if escape == 'l' or escape == 'lib-source' then
+    if escape == 'l' or escape == 'lib-source' then
 			config.LIB_SOURCE = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
+    
+    if escape == 'c' or escape == 'config' then
+      configFile = MOAIFileSystem.getAbsoluteFilePath(param)
+    end
+    
 	end
 end
 
@@ -45,6 +59,8 @@ end
 local copyhostfiles 
 local copylib
 local linklib
+local applyConfigFile
+local configureHost
 
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
@@ -71,6 +87,66 @@ copyhostfiles = function()
 
 end
 
+configureHost = function()
+  print("\n\nApplying config from "..configFile..":")
+  for k,v in pairs(hostconfig) do
+    print (k..": ", v)
+  end
+  
+  local asUTF16Pattern = function(str)
+      local newstr = ""
+      for i = 1, #str do
+        local c = str:sub(i,i)
+        newstr = newstr.."."..c
+      end
+      return newstr
+  end
+
+  local asUTF16 = function(str)
+      local newstr = ""
+      for i = 1, #str do
+        local c = str:sub(i,i)
+        newstr = newstr.."\0"..c
+      end
+      return newstr
+  end
+  
+  local utfReplace = function(source, target, replace)
+    return source:gsub(asUTF16Pattern(target),asUTF16(replace))
+  end
+  
+  
+  --get our resource file contents
+  local rcfile = io.open(config.OUTPUT_DIR.."moai.rc","rb")
+  if (not rcfile) then error("failed to open moai.rc") end
+  local contents = rcfile:read("*all")
+  rcfile:close()
+
+  --apply substitutions
+  contents = utfReplace(contents, '<Product name>', hostconfig.AppName)
+  contents = utfReplace(contents, '<Company name>', hostconfig.CompanyName)
+  contents = utfReplace(contents, '<File description>', hostconfig.ExeDescription)
+
+  --dump back to file
+  rcfile = io.open(config.OUTPUT_DIR.."moai.rc","wb")
+  rcfile:write(contents)
+  io.close(rcfile)
+  
+  
+  --app icon
+  if (hostconfig.Icon) then
+    local icon = MOAIFileSystem.getAbsoluteFilePath(hostconfig.Icon)
+    if (MOAIFileSystem.checkFileExists(icon)) then
+      MOAIFileSystem.copy(icon, config.OUTPUT_DIR.."appicon.ico")
+    else
+      error("Could not find specified icon :"..icon.." - skipping")
+    end
+  end
+ 
+end
+
+
+
 copylib = function() 
 	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'lib' )
 end
@@ -85,7 +161,29 @@ linklib = function()
 
 end
 
+applyConfigFile = function(configFile)
+  util.dofileWithEnvironment(configFile, hostconfig)
+ 
+  
+  --copy host specific settings to main config
+  if (hostconfig["HostSettings"] and hostconfig["HostSettings"]["windows"]) then
+    for k,v in pairs(hostconfig["HostSettings"]["windows"]) do
+      hostconfig[k] = v
+    end
+  end
+  
+  hostconfig["HostSettings"] = nil
+  
+end
+
+
+applyConfigFile(configFile)
+
 copyhostfiles()
+
+configureHost()
+
+
 if (config.USE_SYMLINK) then
 	linklib()
 else
