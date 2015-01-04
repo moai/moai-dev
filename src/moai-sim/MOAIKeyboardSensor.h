@@ -5,39 +5,30 @@
 #define MOAIKEYBOARDSENSOR_H
 
 #include <moai-sim/MOAISensor.h>
-
-//================================================================//
-// MOAIKeyCodes
-//================================================================//
-namespace MOAIKeyCodes {
-	enum {
-		SHIFT	= 256,
-		CONTROL,
-		ALT,
-		TOTAL   = 512,
-	};
-};
+#include <moai-sim/MOAIKeyCode.h>
 
 //================================================================//
 // MOAIKeyboardSensor
 //================================================================//
 /**	@lua	MOAIKeyboardSensor
 	@text	Hardware keyboard sensor.
+
+
 */
 class MOAIKeyboardSensor :
 	public MOAISensor {
 private:
 
 	enum {
-		IS_DOWN		= 1 << 0x00,
-		DOWN		= 1 << 0x01,
-		UP			= 1 << 0x02,
+		IS_DOWN		= 1 << 0x00,	// The key is currently pressed
+		DOWN		= 1 << 0x01,	// The key was pressed during the last iteration
+		UP			= 1 << 0x02,	// The key was released during the last iteration
 	};
 
 	u32 mState [ MOAIKeyCodes::TOTAL ];
 
 	u32 mClearCount;
-	u32 mClearQueue [ MOAIKeyCodes::TOTAL ];
+	u32 mClearQueue [ MOAIKeyCodes::TOTAL ];	// The keys whose DOWN or UP flags are set
 	
 	MOAILuaStrongRef		mOnKey;
 
@@ -54,6 +45,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			EnqueueKeyboardEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
+	static int			CheckKeys				( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown					( u32 keyID );
 	bool				KeyIsDown				( u32 keyID );
 	bool				KeyIsUp					( u32 keyID );

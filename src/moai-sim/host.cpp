@@ -77,6 +77,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
+	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
@@ -172,27 +173,9 @@ void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardAltEvent ( int deviceID, int sensorID, bool down ) {
-
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::ALT, down );
-}
-
-//----------------------------------------------------------------//
-void AKUEnqueueKeyboardControlEvent ( int deviceID, int sensorID, bool down ) {
-
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::CONTROL, down );
-}
-
-//----------------------------------------------------------------//
 void AKUEnqueueKeyboardEvent ( int deviceID, int sensorID, int keyID, bool down ) {
 
 	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
-}
-
-//----------------------------------------------------------------//
-void AKUEnqueueKeyboardShiftEvent ( int deviceID, int sensorID, bool down ) {
-
-	MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, MOAIKeyCodes::SHIFT, down );
 }
 
 //----------------------------------------------------------------//
