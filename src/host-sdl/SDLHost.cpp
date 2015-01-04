@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include "moai-sim/pch.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +10,9 @@
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
 #include "SDLHost.h"
+#include <moai-sim/MOAIKeyboardSensor.h>
+#include <host-sdl/KeyCodeMapping.h>
+#include <contrib/moai_utf8.h>
 
 #ifdef MOAI_OS_WINDOWS
     #include <windows.h>
@@ -103,6 +108,11 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
 		AKUSetViewSize ( width, height );
+
+		// Enable keyboard text input.
+		// According to the SDL documentation, this will open an on-screen keyboard on some platforms.
+		// Currently we're using the SDL host for desktop platforms only, so this should not be a problem.
+		SDL_StartTextInput ();
 	}
 }
 
@@ -110,6 +120,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 // helpers
 //================================================================//
 
+u32			GetMoaiKeyCode		( SDL_Event sdlEvent );
 static void	Finalize			();
 static void	Init				( int argc, char** argv );
 static void	MainLoop			();
@@ -172,8 +183,8 @@ void Init ( int argc, char** argv ) {
 			//are we a bundle?
 			CFBundleRef bref = CFBundleGetMainBundle();
 			if (bref == NULL || CFBundleGetIdentifier(bref) == NULL) {
-					AKUModulesParseArgs(argc, argv);
-					
+	AKUModulesParseArgs ( argc, argv );
+	
 			} else {
 			
 					CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL(bref);
@@ -295,10 +306,20 @@ void MainLoop () {
 				
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:	{
-					int key = sdlEvent.key.keysym.sym;
-					if (key & 0x40000000) key = (key & 0x3FFFFFFF) + 256;
-					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, key, sdlEvent.key.type == SDL_KEYDOWN );
+					if ( sdlEvent.key.repeat ) break;
+					u32 moaiKeyCode = GetMoaiKeyCode ( sdlEvent );
+					AKUEnqueueKeyboardKeyEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, moaiKeyCode, sdlEvent.key.type == SDL_KEYDOWN );
 					break;
+				}
+				
+				case SDL_TEXTINPUT: {
+					// Convert UTF-8 encoded string to Unicode characters
+					char* utf8String = sdlEvent.text.text;
+					u_int32_t unicodeString [ SDL_TEXTINPUTEVENT_TEXT_SIZE ];
+					int charCount = moai_u8_toucs ( unicodeString, SDL_TEXTINPUTEVENT_TEXT_SIZE, utf8String, -1 );
+					for ( int i = 0; i < charCount; ++i ) {
+						AKUEnqueueKeyboardCharEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, unicodeString [ i ] );
+					}
 				}
 				
 				case SDL_MOUSEBUTTONDOWN:
