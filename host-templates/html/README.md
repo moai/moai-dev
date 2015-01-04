@@ -1,18 +1,33 @@
 # HTML5 Host Template
 
-To run your Moai game using HTML5, you can use this template. It includes the required initialization code and libraries. It also includes a simple Node.js server app to serve your project during testing.
+To run your Moai game using HTML5, you need the following things: the host template, `moaijs.js`, and the ROM containing your assets.
+
+- The *host template* in this folder (`host-templates/html`) includes the required initialization code and libraries. It also comes with a simple Node.js server app to serve your project during testing.
+- *`moaijs.js`* contains the core Moai SDK in JavaScript. You can build it from the C++ Moai sources.
+- *The ROM* is a binary blob that contains all your scripts and assets. You can build it from a `src` directory.
 
 ## Building the Moai SDK
 
-The HTML5 host requires a JavaScript version of the Moai SDK. You can build it from the C++ source files via Emscripten. See the `README.md` file in `src/host-html` for details. Once you have built `moaijs.js`, copy it to `host-templates/html/www/lib` (you'll have to create the `lib` directory manually) Alternatively, create a symbolic link. This way, you won't have to repeat the copy step when you re-build the SDK.
+The HTML5 host requires a JavaScript version of the Moai SDK. You can build it from the C++ source files via Emscripten. See the `README.md` file in `src/host-html` for details. The result is a file `moaijs.js` in the newly-created directory `lib/html`. 
+
+## Setting Up Your Output Directory
+
+Now, create a directory that you want to use as output directory. This is where the host template files, `moaijs.js`, and the ROM files will all end up in.
+
+Now navigate into the `util` directory and execute the following command:
+
+`moaiutil.bat host-html -use-symlink -o <output directory>` (Replace `<output directory>` with your output directory.)
+
+This will copy the host template from `host-templates/html` to your output directory. It will also create a symbolic link on your hard-disk that makes the generated `moaijs.js` file show up in the `www/lib` sub-folder of your output directory. The advantage of the symbolic link is that any time you re-compile Moai, your output directory automatically contains the current version without any copying. If you leave off the `-use-symlink` option, the file will be copied instead.
 
 ## Creating the ROM
+
 Before you can do much, your assets and source files will need to be packaged into a single ROM file. To do this you will need Python 2.7+ installed. Make sure your Python `bin` directory is on the path.
 
-To create the ROM, place your sources and assets (in the folder layout they expect) into the `host-templates/html/src` folder (again, create the folder manually or just symlink it). The HTML5 host automatically will run `main.lua` from the `src/` folder when it loads and will treat the `src/` folder as root of the virtual filesystem.
+To create the ROM, place your sources and assets (in the folder layout they expect) into the `<output dir>/html/src` folder (again, create the folder manually or symlink it). The HTML5 host automatically will run `main.lua` from the `src/` folder when it loads and will treat the `src/` folder as root of the virtual filesystem.
 
-Then run the `buildrom.sh` or buildrom.bat (for Windows) file. This will package up your src folder into a file called `moaiapp.rom` and create a metadata file called `moaiapp.rom.json`.
-These files will automatically be placed into the `host-templates/html/www` folder which is what you will need to deploy or serve to test your app.
+Then run the `buildrom.sh` or `buildrom.bat` (for Windows) file. This will package up your src folder into a file called `moaiapp.rom` and create a metadata file called `moaiapp.rom.json`.
+These files will automatically be placed into the `<output dir>/html/www` folder which is what you will need to deploy or serve to test your app.
 
 Your host should now be ready to run!
 

@@ -61,11 +61,13 @@ end
 
 -- Copies the generated moaijs.js file to the output directory
 copylib = function() 
+	print( string.format( 'Copying %s -> %s', config.LIB_SOURCE, config.OUTPUT_DIR..'/www/lib' ))
 	MOAIFileSystem.copy(config.LIB_SOURCE, config.OUTPUT_DIR..'/www/lib' )
 end
 
 -- Creates a symbolic link that makes the generated moaijs.js file show up in the output directory
 linklib = function() 
+	print( string.format( 'Sym-linking %s -> %s', config.LIB_SOURCE, config.OUTPUT_DIR..'/www/lib' ))
 	local isWindows = MOAIEnvironment.osBrand == 'Windows'
 	local cmd = isWindows and 'mklink /D "'..config.OUTPUT_DIR..'/www/lib" "'..config.LIB_SOURCE..'"' 
 	                      or 'ln -s "'..config.LIB_SOURCE..'" "'..config.OUTPUT_DIR..'/www/lib"'
