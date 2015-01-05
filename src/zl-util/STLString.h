@@ -57,7 +57,8 @@ public:
 	static u8			hex_to_byte			( u32 c );
 	
 	void				replace_char		( cc8 match, cc8 sub );
-	void				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
+	size_t				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " ) const;
+	static size_t		tokenize			( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters = " " );
 	double				to_double			();
 	float				to_float			();
 	int					to_int				();
@@ -72,6 +73,18 @@ public:
 	//----------------------------------------------------------------//
 	inline STLString& operator= ( cc8* rhs ) {
 		return this->assign ( rhs );
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( const string& rhs ) {
+		this->string::assign ( rhs );
+		return *this;
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( const STLString& rhs ) {
+		this->string::assign ( rhs );
+		return *this;
 	}
 
 	//----------------------------------------------------------------//
@@ -99,6 +112,11 @@ public:
 
 	//----------------------------------------------------------------//
 	inline STLString ( const string& s2 ) :
+		string ( s2 ) {
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString ( const STLString& s2 ) :
 		string ( s2 ) {
 	}
 

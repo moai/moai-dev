@@ -47,7 +47,6 @@ protected:
 	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
 	void					MakeLuaBinding			( MOAILuaState& state );
 	void					OnRelease				( u32 refCount );
-	bool					PushMemberTable			( MOAILuaState& state );
 	bool					PushRefTable			( MOAILuaState& state );
 	void					SetInterfaceTable		( MOAILuaState& state, int idx );
 	void					SetMemberTable			( MOAILuaState& state, int idx );
@@ -76,6 +75,7 @@ public:
 	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
+	bool					PushMemberTable			( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
