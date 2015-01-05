@@ -444,7 +444,7 @@ MoaiJS.prototype.keydown = function(e) {
 		this.onKeyDown(moaiKeyCode);
 	}
 	
-	// If we prevent further event handling, keyup() will not be called either.
+	// If we prevent further event handling, keypress() will not be called either.
 	// So let's do that only for keys that don't represent a character.
 	// That's not perfect (Ctrl+D will still be handled by the brower),
 	// but it's the best I could come up with.
