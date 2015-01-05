@@ -259,7 +259,7 @@ iterateCommandLine = function ( arg )
 
 		for i, v in iter do
 		
-			local escape = string.match ( v, '^%-%-(%w+)' )
+			local escape = string.match ( v, '^%-%-([%w-]+)' )
 		
 			if escape then
 				currentEscape = escape
