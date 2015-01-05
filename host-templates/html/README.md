@@ -24,10 +24,10 @@ This will copy the host template from `host-templates/html` to your output direc
 
 Before you can do much, your assets and source files will need to be packaged into a single ROM file. To do this you will need Python 2.7+ installed. Make sure your Python `bin` directory is on the path.
 
-To create the ROM, place your sources and assets (in the folder layout they expect) into the `<output dir>/html/src` folder (again, create the folder manually or symlink it). The HTML5 host automatically will run `main.lua` from the `src/` folder when it loads and will treat the `src/` folder as root of the virtual filesystem.
+To create the ROM, place your sources and assets (in the folder layout they expect) into the `<output dir>/src` folder (again, create the folder manually or symlink it). The HTML5 host automatically will run `main.lua` from the `src/` folder when it loads and will treat the `src/` folder as root of the virtual filesystem.
 
 Then run the `buildrom.sh` or `buildrom.bat` (for Windows) file. This will package up your src folder into a file called `moaiapp.rom` and create a metadata file called `moaiapp.rom.json`.
-These files will automatically be placed into the `<output dir>/html/www` folder which is what you will need to deploy or serve to test your app.
+These files will automatically be placed into the `<output dir>/www` folder which is what you will need to deploy or serve to test your app.
 
 Your host should now be ready to run!
 
