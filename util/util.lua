@@ -263,7 +263,7 @@ iterateCommandLine = function ( arg )
 		
 			if escape then
 				currentEscape = escape
-				coroutine.yield ( lastEscape, nil, iter )
+				coroutine.yield ( currentEscape, nil, iter )
 			else
 				local escapeStr = string.match ( v, '^%-(%a+)' )
 		
