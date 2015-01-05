@@ -21,6 +21,8 @@ config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/html/'
 config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/html'
 config.USE_SYMLINK                      = false
 
+MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
+
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 
 	if escape == 's' or escape == 'use-symlink' then
