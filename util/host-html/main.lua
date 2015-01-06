@@ -15,6 +15,12 @@ end
 -- args
 --==============================================================
 
+local hostconfig = {
+    AppName = "Moai Template",
+    Ram = 128
+}
+
+local configFile = false
 local config = {}
 
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/html/'
@@ -33,9 +39,13 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 			config.OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
 
-	    if escape == 'l' or escape == 'lib-source' then
+	  if escape == 'l' or escape == 'lib-source' then
 			config.LIB_SOURCE = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
+    
+    if escape == 'c' or escape == 'config' then
+      configFile = MOAIFileSystem.getAbsoluteFilePath(param)
+    end
 	end
 end
 
@@ -46,6 +56,9 @@ end
 local copyhostfiles 
 local copylib
 local linklib
+local applyConfigFile
+local configureHost
+
 
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
@@ -72,7 +85,84 @@ linklib = function()
 
 end
 
+applyConfigFile = function(configFile)
+  util.dofileWithEnvironment(configFile, hostconfig)
+  
+  --copy host specific settings to main config
+  if (hostconfig["HostSettings"] and hostconfig["HostSettings"]["html"]) then
+    for k,v in pairs(hostconfig["HostSettings"]["html"]) do
+      hostconfig[k] = v
+    end
+  end
+  
+  --don't need the rest
+  hostconfig["HostSettings"] = nil
+end
+
+configureHost = function()
+  local output = config.OUTPUT_DIR
+  print("\n\nApplying config from "..configFile..":")
+  for k,v in pairs(hostconfig) do
+    print (k..": ", v)
+  end
+  
+  local oldworkingdir = MOAIFileSystem.getWorkingDirectory()
+  --get lua path relative to config file as absolute
+  MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
+  
+  local luasrc = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['LuaSrc'])
+  --change to host output folder
+
+  MOAIFileSystem.setWorkingDirectory(output)
+  --now get lua path (currently absolute) as relative to buildrom.bat
+  luasrc = MOAIFileSystem.getRelativePath(luasrc, MOAIFileSystem.getWorkingDirectory() )
+  
+  if (not luasrc) then
+    error("Error configuring lua source folder "..hostconfig['LuaSrc'])
+  end
+  --restore working dir
+  MOAIFileSystem.setWorkingDirectory(oldworkingdir)
+  
+  local buildromfiles = { 
+     [output..'buildrom.bat'] = true,
+     [output..'buildrom.sh'] = true
+  }
+    --libroot
+  util.replaceInFiles ({
+    [ util.wrap(pairs, buildromfiles) ]  = {
+      ['%-%-preload .-@/'] = "--preload "..luasrc.."@/",
+    },
+    [ output..'www/moai.html'] = {
+      ['data%-title%=".-"'] = 'data-title="'..hostconfig.AppName..'"',
+      ['data%-ram%=".-"'] = 'data-ram="'..hostconfig.Ram..'"'
+    }
+  })
+  
+  
+  
+    
+  if (hostconfig['Background']) then
+    print("copying background")
+    local background = hostconfig['Background']
+    --icons
+    MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
+  
+    if MOAIFileSystem.checkFileExists(background) then
+      MOAIFileSystem.copy(background, config.OUTPUT_DIR.."www/background.jpg")
+    else
+      error("Background specified in config not found : "..background)
+    end
+  
+  end
+end
+
+
+
+applyConfigFile(configFile)
 copyhostfiles()
+configureHost()
+
+
 if (config.USE_SYMLINK) then
 	linklib()
 else

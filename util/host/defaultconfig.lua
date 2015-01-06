@@ -35,5 +35,13 @@
         ----The executable file description 
         --ExeDescription = "Another Great Moai Game"
         
+    },
+    
+    ["html"] = {
+        --you can configure a background image for the player, a splash or title screen like those seen on youtube
+        --Background = "hostconfig/html/background.png"
+        
+        --you can also set the ram in MB to be allocated
+        --Ram = 256
     }
   }
