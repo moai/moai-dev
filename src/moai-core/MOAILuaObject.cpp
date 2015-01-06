@@ -208,6 +208,11 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// for now, singletons are just userdata with no add'l metatables
 	// so only build the metatable stack if we're *not* a singleton
 	if ( !type->IsSingleton ()) {
+	
+		// hang on to the userdata in case this object was created on the stack
+		// shouldn't need to do this for singletons
+		MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
+	
 		// instances get the 'full stack' of metatables
 		lua_newtable ( state ); // ref table
 		lua_newtable ( state ); // member table
@@ -328,16 +333,6 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-	// PCM: pretty sure this is the only time this edge case happens - if the
-	// containing class has not been bound, an ad hoc binding will be created
-	// just to retain the member class. because mUserdata is weak and does not
-	// persist in Lua after this call, it may be tagged for gc leading to
-	// plenty of trouble later.
-	if ( !this->IsBound ()) {
-		this->BindToLua ( state );
-		MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
-	}
-	
 	if ( this->PushRefTable ( state )) {
 		if ( object->PushLuaUserdata ( state )) {
 		
@@ -380,13 +375,22 @@ MOAILuaObject::~MOAILuaObject () {
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
 			
+			u32 top = state.GetTop ();
+			bool isUserdata = state.IsType ( top, LUA_TUSERDATA );
+			
 			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+			
+			top = state.GetTop ();
+			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
 				lua_setfield ( state, -2, "__gc" );
 				state.Pop ( 1 );
 			}
+			
+			top = state.GetTop ();
+			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			// and the ref table
 			lua_pushnil ( state );

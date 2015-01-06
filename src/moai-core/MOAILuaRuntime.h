@@ -125,7 +125,6 @@ private:
 
 	//----------------------------------------------------------------//
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
-	void					CacheUserdata			( MOAILuaState& state, int idx );
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindLuaRefs				( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	void					FindLuaRefs				( lua_State* L, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
@@ -137,7 +136,6 @@ private:
 	void					OnGlobalsFinalize		();
 	void					OnGlobalsRestore		();
 	void					OnGlobalsRetire			();
-	void					PurgeUserdata			( MOAILuaState& state, int idx );
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
@@ -164,6 +162,7 @@ public:
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
 	//----------------------------------------------------------------//
+	void					CacheUserdata				( MOAILuaState& state, int idx );
 	void					ClearRef					( int refID );
 	void					Close						();
 	void					ForceGarbageCollection		();
@@ -174,6 +173,7 @@ public:
 							MOAILuaRuntime				();
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
+	void					PurgeUserdata				( MOAILuaState& state, int idx );
 	void					PurgeUserdataCache			();
 	void					PushHistogram				( MOAILuaState& state, cc8* trackingGroup );
 	bool					PushRef						( MOAILuaState& state, int refID );

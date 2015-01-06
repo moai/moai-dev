@@ -838,7 +838,7 @@ int MOAILuaRuntime::MakeWeak ( int refID ) {
 
 //----------------------------------------------------------------//
 MOAILuaRuntime::MOAILuaRuntime () :
-	mTrackingFlags ( false ),
+	mTrackingFlags ( 0 ),
 	mTracebackFunc ( 0 ),
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
@@ -894,12 +894,12 @@ void MOAILuaRuntime::PurgeUserdata ( MOAILuaState& state, int idx ) {
 	idx = state.AbsIndex ( idx );
 
 	if ( this->mUserdataCache.PushRef ( state )) {
-		
+	
 		lua_pushvalue ( state, idx );
 		lua_pushnil ( state );
 		lua_settable ( state, -3 );
-		state.Pop ();
 	}
+	state.Pop ();
 }
 
 //----------------------------------------------------------------//

@@ -36,6 +36,11 @@ int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAILuaObject* data = new TYPE ();
 	data->PushLuaUserdata ( state );
+	
+	// since we're creating this just to hand to Lua, we can safely
+	// remove it from the runtime's global cache
+	MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+	
 	return 1;
 }
 
