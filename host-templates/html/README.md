@@ -16,7 +16,9 @@ Now, create a directory that you want to use as output directory. This is where 
 
 Now navigate into the `util` directory and execute the following command:
 
-`moaiutil.bat host-html -use-symlink -o <output directory>` (Replace `<output directory>` with your output directory.)
+`moaiutil.bat host-html --use-symlink --output-dir <output directory>`
+
+Replace `<output directory>` with your output directory. Note that you can shorten `--use-symlink` to `-s` and `--output-dir` to -`o`.
 
 This will copy the host template from `host-templates/html` to your output directory. It will also create a symbolic link on your hard-disk that makes the generated `moaijs.js` file show up in the `www/lib` sub-folder of your output directory. The advantage of the symbolic link is that any time you re-compile Moai, your output directory automatically contains the current version without any copying. If you leave off the `-use-symlink` option, the file will be copied instead.
 
@@ -45,7 +47,7 @@ There is a simple Node.js express server `app.js` in this folder which can be ru
 You can then see the host by visiting `http://localhost:3000/index.html` this is an example of the host in an iframe, the fullscreen
 version of the host (which is used in the iframe) is located at `/moai.html`.
 
-Alternatively, you can download the [Mongoose server](http://cesanta.com/mongoose.shtml). Simply place the executable into your `www` directory and execute it.
+Alternatively, you can download the [Mongoose server](http://cesanta.com/mongoose.shtml). Simply place the executable into your `www` directory and execute it. Note that Mongoose doesn't seem to like it if `joaijs.js` is symbolically linked.
 
 To refresh your code while developing you do not need to restart the server. Just rerun `buildrom.sh` and
 refresh your browser.
