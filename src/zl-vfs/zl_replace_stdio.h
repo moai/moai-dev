@@ -63,6 +63,9 @@
 #undef fopen
 #define fopen zl_fopen
 
+#undef _wfopen
+#define	_wfopen zl_wfopen
+
 #undef fopen_s
 #define fopen_s zl_fopen_s
 
