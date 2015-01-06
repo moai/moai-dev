@@ -40,6 +40,7 @@ set -e
 cmake \
 -DBUILD_LINUX=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
+-DMOAI_HTTP_SERVER=true \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
 $moai_root/cmake/hosts/host-linux-sdl
 
