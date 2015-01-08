@@ -168,6 +168,7 @@ public:
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
+	bool					IsMainThread				( lua_State* L );
 	bool					IsOpen						();
 	void					LoadLibs					();
 							MOAILuaRuntime				();

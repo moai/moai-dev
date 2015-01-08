@@ -13,6 +13,8 @@ class MOAILuaObject;
 class MOAILuaState {
 private:
 
+	friend class MOAIScopedLuaState;
+
 	lua_State*	mState;
 
 	//----------------------------------------------------------------//
@@ -22,87 +24,99 @@ private:
 
 public:
 
-	friend class MOAIScopedLuaState;
+	enum {
+		THREAD_UNKNOWN		= 0x00,
+		THREAD_DEAD			= 0x01,
+		THREAD_ERROR		= 0x02,
+		THREAD_NORMAL		= 0x04,
+		THREAD_RUNNING		= 0x08,
+		THREAD_SUSPENDED	= 0x10,
+	};
+	
+	static const int THREAD_VALID_MASK = THREAD_SUSPENDED | THREAD_NORMAL | THREAD_RUNNING;
 
 	//----------------------------------------------------------------//
-	int				AbsIndex				( int idx );
-	bool			Base64Decode			( int idx );
-	bool			Base64Encode			( int idx );
-	bool			CheckParams				( int idx, cc8* format, bool verbose = true ); // "BCFLNSTU"
-	void			ClearField				( int idx, cc8* key );
-	void			CloneTable				( int idx );
-	void			CopyToTop				( int idx );
-	int				DebugCall				( int nArgs, int nResults );
-	bool			Deflate					( int idx, int level, int windowBits );
-	ZLBox			GetBox					( int idx );
-	ZLColorVec		GetColor				( int idx, float r, float g, float b, float a );
-	u32				GetColor32				( int idx, float r, float g, float b, float a );
-	void			GetField				( int idx, cc8* name );
-	void			GetField				( int idx, int key );
-	STLString		GetField				( int idx, cc8* key, cc8* value );
-	STLString		GetField				( int idx, int key, cc8* value );
-	STLString		GetField				( int idx, cc8* key, const STLString& value );
-	STLString		GetField				( int idx, int key, const STLString& value );
-	bool			GetFieldWithType		( int idx, cc8* name, int type );
-	bool			GetFieldWithType		( int idx, int key, int type );
-	bool			GetSubfieldWithType		( int idx, cc8* format, int type, ... );
-	static cc8*		GetLuaTypeName			( int type );
-	void*			GetPtrUserData			( int idx );
-	STLString		GetStackDump			();
-	STLString		GetStackTrace			( cc8* title, int level );
-	int				GetTop					();
-	void*			GetUserData				( int idx, void* value );
-	void*			GetUserData				( int idx, cc8* name, void* value );
-	STLString		GetValue				( int idx, cc8* value );
-	bool			HasField				( int idx, cc8* name );
-	bool			HasField				( int idx, int key );
-	bool			HasField				( int idx, cc8* name, int type );
-	bool			HasField				( int idx, int name, int type );
-	bool			HasKeys					( int idx );
-	bool			HexDecode				( int idx );
-	bool			HexEncode				( int idx );
-	bool			Inflate					( int idx, int windowBits );
-	bool			IsNil					();
-	bool			IsNil					( int idx );
-	bool			IsTableOrUserdata		( int idx );
-	bool			IsType					( int idx, int type );
-	bool			IsType					( int idx, cc8* name, int type );
-	void			LoadLibs				();
-					MOAILuaState			();
-					MOAILuaState			( lua_State* state );
-	virtual			~MOAILuaState			();
-	void			MoveToTop				( int idx );
-	void			Pop						( int n = 1 );
-	bool			PrepMemberFunc			( int idx, cc8* name );
-	bool			PrintErrors				( FILE* file, int status );
-	void			PrintStackDump			();
-	void			PrintStackDump			( FILE* file );
-	void			PrintStackTrace			( FILE* file, cc8* title, int level );
-	void			Push					();
-	void			Push					( bool value );
-	void			Push					( cc8* value );
-	void			Push					( double value );
-	void			Push					( float value );
-	void			Push					( int value );
-	void			Push					( u16 value );
-	void			Push					( u32 value );
-	void			Push					( u64 value );
-	void			Push					( lua_CFunction value );
-	void			Push					( MOAILuaObject* luaObject );
-	void			Push					( MOAILuaRef& ref );
-	void			Push					( const void* value );
-	void			Push					( void* data, size_t size );
-	void			PushPtrUserData			( void* ptr );
-	int				PushTableItr			( int idx );
-	void			RegisterModule			( int idx, cc8* name, bool autoLoad );
-	void			RegisterModule			( lua_CFunction loader, cc8* name, bool autoload );
-	void			RegisterModule			( void* data, size_t size, cc8* name, bool autoload );
-	int				RelIndex				( int idx );
-	int				Run						( void* data, size_t size, int nArgs, int nResults );
-	void			SetPath					( cc8* path );
-	void			SetTop					( int top );
-	bool			TableItrNext			( int itr );
-	int				YieldThread				( int nResults );
+	int				AbsIndex					( int idx );
+	bool			Base64Decode				( int idx );
+	bool			Base64Encode				( int idx );
+	bool			CheckParams					( int idx, cc8* format, bool verbose = true ); // "BCFLNSTU"
+	void			ClearField					( int idx, cc8* key );
+	void			CloneTable					( int idx );
+	void			CopyToTop					( int idx );
+	int				DebugCall					( int nArgs, int nResults );
+	bool			Deflate						( int idx, int level, int windowBits );
+	ZLBox			GetBox						( int idx );
+	ZLColorVec		GetColor					( int idx, float r, float g, float b, float a );
+	u32				GetColor32					( int idx, float r, float g, float b, float a );
+	void			GetField					( int idx, cc8* name );
+	void			GetField					( int idx, int key );
+	STLString		GetField					( int idx, cc8* key, cc8* value );
+	STLString		GetField					( int idx, int key, cc8* value );
+	STLString		GetField					( int idx, cc8* key, const STLString& value );
+	STLString		GetField					( int idx, int key, const STLString& value );
+	bool			GetFieldWithType			( int idx, cc8* name, int type );
+	bool			GetFieldWithType			( int idx, int key, int type );
+	bool			GetSubfieldWithType			( int idx, cc8* format, int type, ... );
+	static cc8*		GetLuaTypeName				( int type );
+	void*			GetPtrUserData				( int idx );
+	STLString		GetStackDump				();
+	STLString		GetStackTrace				( cc8* title, int level );
+	int				GetLuaThreadStatus			( int idx );
+	int				GetLuaThreadStatus			( lua_State* thread );
+	cc8*			GetLuaThreadStatusName		( int status );
+	int				GetTop						();
+	void*			GetUserData					( int idx, void* value );
+	void*			GetUserData					( int idx, cc8* name, void* value );
+	STLString		GetValue					( int idx, cc8* value );
+	bool			HasField					( int idx, cc8* name );
+	bool			HasField					( int idx, int key );
+	bool			HasField					( int idx, cc8* name, int type );
+	bool			HasField					( int idx, int name, int type );
+	bool			HasKeys						( int idx );
+	bool			HexDecode					( int idx );
+	bool			HexEncode					( int idx );
+	bool			Inflate						( int idx, int windowBits );
+	bool			IsNil						();
+	bool			IsNil						( int idx );
+	bool			IsTableOrUserdata			( int idx );
+	bool			IsType						( int idx, int type );
+	bool			IsType						( int idx, cc8* name, int type );
+	void			LoadLibs					();
+					MOAILuaState				();
+					MOAILuaState				( lua_State* state );
+	virtual			~MOAILuaState				();
+	void			MoveToTop					( int idx );
+	void			Pop							( int n = 1 );
+	bool			PrepMemberFunc				( int idx, cc8* name );
+	bool			PrintErrors					( FILE* file, int status );
+	void			PrintStackDump				();
+	void			PrintStackDump				( FILE* file );
+	void			PrintStackTrace				( FILE* file, cc8* title, int level );
+	void			Push						();
+	void			Push						( bool value );
+	void			Push						( cc8* value );
+	void			Push						( double value );
+	void			Push						( float value );
+	void			Push						( int value );
+	void			Push						( u16 value );
+	void			Push						( u32 value );
+	void			Push						( u64 value );
+	void			Push						( lua_CFunction value );
+	void			Push						( MOAILuaObject* luaObject );
+	void			Push						( MOAILuaRef& ref );
+	void			Push						( const void* value );
+	void			Push						( void* data, size_t size );
+	void			PushPtrUserData				( void* ptr );
+	int				PushTableItr				( int idx );
+	void			RegisterModule				( int idx, cc8* name, bool autoLoad );
+	void			RegisterModule				( lua_CFunction loader, cc8* name, bool autoload );
+	void			RegisterModule				( void* data, size_t size, cc8* name, bool autoload );
+	int				RelIndex					( int idx );
+	int				Run							( void* data, size_t size, int nArgs, int nResults );
+	void			SetPath						( cc8* path );
+	void			SetTop						( int top );
+	bool			TableItrNext				( int itr );
+	int				YieldThread					( int nResults );
 	
 	//----------------------------------------------------------------//
 	inline lua_State* operator -> () const {

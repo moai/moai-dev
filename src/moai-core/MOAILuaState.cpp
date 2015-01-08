@@ -430,6 +430,59 @@ bool MOAILuaState::GetSubfieldWithType ( int idx, cc8* format, int type, ... ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaState::GetLuaThreadStatus ( int idx ) {
+
+	if ( lua_type ( this->mState, idx ) != LUA_TTHREAD ) return THREAD_UNKNOWN;
+	return this->GetLuaThreadStatus ( lua_tothread ( this->mState, idx ));
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::GetLuaThreadStatus ( lua_State* thread ) {
+
+	lua_pushthread ( this->mState );
+	lua_State* running = lua_tothread ( this->mState, -1 );
+	lua_pop ( this->mState, 1 );
+
+	if ( thread == running ) return THREAD_RUNNING;
+
+	switch ( lua_status ( thread )) {
+	
+		case LUA_YIELD:
+			return THREAD_SUSPENDED;
+
+		case 0: {
+			lua_Debug ar;
+			if ( lua_getstack ( thread, 0, &ar ) > 0 ) {
+				return THREAD_NORMAL;
+			}
+			else if ( lua_gettop ( thread ) == 0 ) {
+				return THREAD_DEAD;
+			}
+			else {
+				return THREAD_SUSPENDED;
+			}
+		}
+		default:  // some error occured
+			return THREAD_ERROR;
+	}
+	
+	return THREAD_UNKNOWN;
+}
+
+//----------------------------------------------------------------//
+cc8* MOAILuaState::GetLuaThreadStatusName ( int status ) {
+
+	switch ( status ) {
+		case THREAD_DEAD:		return "dead";
+		case THREAD_ERROR:		return "error";
+		case THREAD_NORMAL:		return "normal";
+		case THREAD_RUNNING:	return "running";
+		case THREAD_SUSPENDED:	return "suspended";
+	}
+	return "unknown";
+}
+
+//----------------------------------------------------------------//
 cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 
 	switch ( type ) {

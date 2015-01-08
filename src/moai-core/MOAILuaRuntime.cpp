@@ -773,6 +773,12 @@ size_t MOAILuaRuntime::GetMemoryUsage() {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaRuntime::IsMainThread ( lua_State* L ) {
+
+	return ( this->mState == L );
+}
+
+//----------------------------------------------------------------//
 MOAILuaState& MOAILuaRuntime::GetMainState () {
 	return this->mState;
 }
