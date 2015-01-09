@@ -112,7 +112,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 	UNUSED ( data );
 	UNUSED ( size );
 
-	#ifdef MOAI_OS_IPHONE // TODO: MOAI_WITH_PVR_TEXTURE
+	#if ZGL_DEVCAPS_PVR_TEXTURE
 
 		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 		MOAIGfxDevice::Get ().ClearErrors ();
@@ -153,8 +153,9 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 				break;
 			
 			// NO IMAGE FOR THIS
-//			case MOAIPvrHeader::OGL_RGB_555:
-//				break;
+			case MOAIPvrHeader::OGL_RGB_555:
+				return false;
+				break;
 			
 			case MOAIPvrHeader::OGL_RGB_888:
 				compressed = false;
@@ -276,7 +277,7 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& inf
 	if ( header.Load ( stream )) {
 		info.mWidth = header.mWidth;
 		info.mHeight = header.mHeight;
-		info.mSize = header.mDataSize;
+		info.mSize = header.mHeaderSize + header.mDataSize;
 		return true;
 	}
 	return false;
@@ -285,7 +286,7 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& inf
 //----------------------------------------------------------------//
 bool MOAIImageFormatPvr::IsTextureFormat () {
 
-	#ifdef MOAI_OS_IPHONE // TODO: MOAI_WITH_PVR_TEXTURE
+	#if ZGL_DEVCAPS_PVR_TEXTURE // TODO: MOAI_WITH_PVR_TEXTURE
 		return true;
 	#else
 		return false;
@@ -306,8 +307,6 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 	UNUSED ( stream );
 	UNUSED ( transform );
 	
-	// MOAI_WITH_LIBPVR
-	
 	return false;
 }
 
@@ -315,8 +314,6 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 bool MOAIImageFormatPvr::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
-	
-	// MOAI_WITH_LIBPVR
 	
 	return false;
 }

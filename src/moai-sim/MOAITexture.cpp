@@ -90,6 +90,7 @@ void MOAITexture::Clear () {
 		this->mTextureData = 0;
 	}
 	this->mTextureDataSize = 0;
+	this->mTextureDataFormat = 0;
 }
 
 //----------------------------------------------------------------//
@@ -243,6 +244,7 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 			
 				this->mTextureData = data;
 				this->mTextureDataSize = size;
+				this->mTextureDataFormat = format;
 				
 				this->mWidth = textureInfo.mWidth;
 				this->mHeight = textureInfo.mHeight;
@@ -272,7 +274,8 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ),
 	mTextureData ( 0 ),
-	mTextureDataSize ( 0 ) {
+	mTextureDataSize ( 0 ),
+	mTextureDataFormat ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )
@@ -311,6 +314,7 @@ void MOAITexture::OnCPUDestroy () {
 			this->mTextureData = 0;
 		}
 		this->mTextureDataSize = 0;
+		this->mTextureDataFormat = 0;
 	}
 	
 	if ( this->HasReloader ()) {
@@ -326,15 +330,9 @@ bool MOAITexture::OnGPUCreate () {
 	if ( this->mImage && this->mImage->IsOK ()) {
 		success =  this->CreateTextureFromImage ( *this->mImage );
 	}
-	else if ( this->mTextureData ) {
-	
-		MOAIByteStream stream;
-		stream.Open ( this->mTextureData, this->mTextureDataSize );
-		
-		MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
-		success = format && format->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
+	else if ( this->mTextureDataFormat && this->mTextureData ) {
+		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
 	}
-	
 	if ( success ) return true;
 	
 	this->Clear ();

@@ -6,6 +6,13 @@
 
 #include <zl-gfx/pch.h>
 
+// hardware PVR support is based on device
+#ifdef MOAI_OS_IPHONE
+	#define ZGL_DEVCAPS_PVR_TEXTURE 1
+#else
+	#define ZGL_DEVCAPS_PVR_TEXTURE 0
+#endif
+
 //================================================================//
 // gfx
 //================================================================//
