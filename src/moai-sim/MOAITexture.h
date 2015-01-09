@@ -27,16 +27,17 @@ private:
 	MOAILuaSharedPtr < MOAIImage> mImage;
 	
 	// for loading compressed data
-	void*				mData;
-	size_t				mDataSize;
+	void*				mTextureData;
+	size_t				mTextureDataSize;
 
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				OnCPUCreate				();
-	void				OnCPUDestroy			();
-	bool				OnGPUCreate				();
+	bool				LoadFromStream				( ZLStream& stream, u32 transform );
+	bool				OnCPUCreate					();
+	void				OnCPUDestroy				();
+	bool				OnGPUCreate					();
 
 public:
 	
@@ -54,7 +55,6 @@ public:
 	void					Init					( ZLStream& stream, u32 transform, cc8* debugname );
 	void					Init					( MOAIDataBuffer& data, u32 transform, cc8* debugname );
 	void					Init					( const void* data, u32 size, u32 transform, cc8* debugname );
-	
 							MOAITexture				();
 							~MOAITexture			();
 	void					RegisterLuaClass		( MOAILuaState& state );

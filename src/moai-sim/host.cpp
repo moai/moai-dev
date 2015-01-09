@@ -28,6 +28,7 @@ void AKUSimContextInitialize () {
 	//MOAIProfiler::Affirm ();
 	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
+	MOAIImageFormatMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIDraw::Affirm ();

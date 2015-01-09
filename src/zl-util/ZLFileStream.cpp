@@ -49,6 +49,12 @@ size_t ZLFileStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
+bool ZLFileStream::IsOpen () {
+
+	return this->mFile != NULL;
+}
+
+//----------------------------------------------------------------//
 bool ZLFileStream::Open ( cc8* filename, u32 mode ) {
 
 	this->Close ();

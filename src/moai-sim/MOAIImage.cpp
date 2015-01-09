@@ -8,6 +8,7 @@
 #endif
 
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <float.h>
 
@@ -802,25 +803,26 @@ int MOAIImage::_simpleThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	writePNG
-	@text	Write image to a PNG file.
+/**	@lua	write
+	@text	Write image to a file.
 
 	@in		MOAIImage self
 	@in		string filename
-	@out	nil
+	@opt	string format
+	@out	boolean
 */
-int MOAIImage::_writePNG ( lua_State* L ) {
+int MOAIImage::_write ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "US" )
 	
-	#if MOAI_WITH_LIBPNG
-		cc8* filename = state.GetValue < cc8* >( 2, "" );
-		
-		ZLFileStream stream;
-		stream.OpenWrite ( filename );
-		self->WritePNG ( stream );
-	#endif
+	cc8* filename = state.GetValue < cc8* >( 2, "" );
+	cc8* format = state.GetValue < cc8* >( 2, "png" );
 	
-	return 0;
+	ZLFileStream stream;
+	stream.OpenWrite ( filename );
+	bool result = self->Write ( stream, format );
+	
+	state.Push ( result );
+	return 1;
 }
 
 //================================================================//
@@ -1521,7 +1523,7 @@ void MOAIImage::Desaturate ( const MOAIImage& image, float rY, float gY, float b
 		}
 	}
 	else {
-		ZLColor::Desaturate ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), rY, gY, bY, K );
+		ZLColor::Desaturate ( this->mPalette, this->mColorFormat, this->GetPaletteCount (), rY, gY, bY, K );
 	}
 }
 
@@ -1729,7 +1731,7 @@ void MOAIImage::GammaCorrection ( const MOAIImage& image, float gamma ) {
 		}
 	}
 	else {
-		ZLColor::GammaCorrection ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), gamma );
+		ZLColor::GammaCorrection ( this->mPalette, this->mColorFormat, this->GetPaletteCount (), gamma );
 	}
 }
 
@@ -2186,29 +2188,12 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 
 	this->Clear ();
 	
-	#if MOAI_WITH_LIBPNG
-		if ( MOAIImage::IsPng ( stream )) {
-			this->LoadPng ( stream, transform );
-			this->OnImageStatusChanged ( this->IsOK ());
-			return this->IsOK ();
-		}
-	#endif
-	
-	#if MOAI_WITH_LIBJPG
-		if ( MOAIImage::IsJpg ( stream )) {
-			this->LoadJpg ( stream, transform );
-			this->OnImageStatusChanged ( this->IsOK ());
-			return this->IsOK ();
-		}
-	#endif
-	
-	#if MOAI_WITH_LIBWEBP
-		if ( MOAIImage::IsWebP ( stream )) {
-			this->LoadWebP ( stream, transform );
-			this->OnImageStatusChanged ( this->IsOK ());
-			return this->IsOK ();
-		}
-	#endif
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
+	if ( format ) {
+		format->ReadImage ( *this, stream, transform );
+		this->OnImageStatusChanged ( this->IsOK ());
+		return this->IsOK ();
+	}
 	
 	return false;
 }
@@ -2293,7 +2278,7 @@ void MOAIImage::Mix ( const MOAIImage& image, const ZLMatrix4x4& mtx, float K ) 
 		}
 	}
 	else {
-		ZLColor::Mix ( this->GetPalette (), this->mColorFormat, this->GetPaletteCount (), mtx, K );
+		ZLColor::Mix ( this->mPalette, this->mColorFormat, this->GetPaletteCount (), mtx, K );
 	}
 }
 
@@ -2426,7 +2411,8 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setColor32",					_setColor32 },
 		{ "setRGBA",					_setRGBA },
 		{ "simpleThreshold",			_simpleThreshold },
-		{ "writePNG",					_writePNG },
+		{ "write",						_write },
+		{ "writePNG",					_write }, // back compat
 		{ NULL, NULL }
 	};
 
@@ -2673,4 +2659,11 @@ void MOAIImage::Transform ( u32 transform ) {
 	if ( transform & MOAIImageTransform::POW_TWO ) {
 		this->PadToPow2 ( *this );
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::Write ( ZLStream& stream, cc8* formatName ) {
+
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( formatName );
+	return format && format->WriteImage ( *this, stream );
 }

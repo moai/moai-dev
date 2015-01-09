@@ -67,25 +67,22 @@ protected:
 	static int			_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				CleanupOnError			();
+	void				CleanupOnError				();
+	bool				CreateTextureFromImage		( MOAIImage& srcImage );
+	bool				OnCPUCreate					();
+	void				OnCPUDestroy				();
+	void				OnGPUBind					();
+	void				OnGPUDestroy				();
+	void				OnGPULost					();
+	void				OnGPUUnbind					();
+	void				SetTextureID				( u32 glTexID, int internalFormat, int pixelType, size_t textureSize );
+	bool				ShouldGenerateMipmaps		();
+	void				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
 	
-	bool				CreateTextureFromImage	( MOAIImage& srcImage );
-	bool				CreateTextureFromPVR	( void* data, size_t size );
-
-	bool				OnCPUCreate				();
-	void				OnCPUDestroy			();
-	void				OnGPUBind				();
-	void				OnGPUDestroy			();
-	void				OnGPULost				();
-	void				OnGPUUnbind				();
-	
-	bool				ShouldGenerateMipmaps	();
-	
-	void				UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
-
 public:
 	
 	friend class MOAIGfxDevice;
+	friend class MOAIImageFormat;
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
 	GET ( u32, TextureID, mGLTexID );

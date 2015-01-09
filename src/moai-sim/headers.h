@@ -47,6 +47,8 @@
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/MOAIImageFormat.h>
+#include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIInputDevice.h>
@@ -89,7 +91,6 @@
 //#include <moai-sim/MOAIProfilerReportBox.h>
 //#include <moai-sim/MOAIProfilerScope.h>
 #include <moai-sim/MOAIProp.h>
-#include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIRenderable.h>
