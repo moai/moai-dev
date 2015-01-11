@@ -18,15 +18,6 @@ void AKUIosAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUIosAppInitialize () {
-
-	loadMoaiLib_NSArray ();
-	loadMoaiLib_NSData ();
-	loadMoaiLib_NSDate ();
-	loadMoaiLib_NSDictionary ();
-	loadMoaiLib_NSError ();
-	loadMoaiLib_NSNumber ();
-	loadMoaiLib_NSObject ();
-	loadMoaiLib_NSString ();
 }
 
 //----------------------------------------------------------------//
@@ -77,8 +68,6 @@ void AKUIosContextInitialize () {
 			environment.SetValue ( MOAI_ENV_iosIFA, [[[ sharedManager advertisingIdentifier ] UUIDString ] UTF8String ]);
 		}
     }
-	
-	MOAIAppIOS::Get ().UpdateReachability ();
 }
 
 //----------------------------------------------------------------//

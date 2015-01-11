@@ -1,19 +1,19 @@
-#import <moai-ios/NSError+MOAILib.h>
+#import <moai-apple/NSData+MOAILib.h>
 
 //----------------------------------------------------------------//
-void loadMoaiLib_NSError () {
+void loadMoaiLib_NSData () {
 	// do nothing; force linker to load obj-c categories w/o needing linker flags
 }
 
 //================================================================//
-// NSError ( MOAILib )
+// NSData ( MOAILib )
 //================================================================//
-@implementation NSError ( MOAILib )
+@implementation NSData ( MOAILib )
 
 	//----------------------------------------------------------------//
 	-( void	) toLua:( lua_State* )state {
 
-		lua_pushstring ( state, [[ self localizedDescription ] UTF8String ]);
+		lua_pushlstring ( state, ( cc8* )[ self bytes ], [ self length ]);
 	}
 	
 @end

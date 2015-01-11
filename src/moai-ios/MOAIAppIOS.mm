@@ -3,13 +3,13 @@
 
 #include "pch.h"
 
-#import <moai-ios/MOAIAppIOS.h>
-#import <moai-ios/NSData+MOAILib.h>
-#import <moai-ios/NSDate+MOAILib.h>
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSError+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
+#import <moai-apple/NSData+MOAILib.h>
+#import <moai-apple/NSDate+MOAILib.h>
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSError+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 
+#import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAITakeCameraListener.h>
 
 #import <ifaddrs.h>
@@ -263,9 +263,6 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
-	
-	this->mReachabilityListener = [ MOAIReachabilityListener alloc ];
-	[ this->mReachabilityListener startListener ];
 
 	//this->mMailDelegate = [ MoaiMailComposeDelegate alloc ];
 	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
@@ -284,10 +281,6 @@ MOAIAppIOS::~MOAIAppIOS () {
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::OnGlobalsFinalize () {
-
-	[ this->mReachabilityListener stopListener ];
-	[ this->mReachabilityListener release ];
-	this->mReachabilityListener = nil;
 }
 
 //----------------------------------------------------------------//
@@ -380,12 +373,6 @@ void MOAIAppIOS::RemoveNotificationListeners () {
 		[[ NSNotificationCenter defaultCenter ] removeObserver:*observerIt ];
 	}
 	this->mNotificationObservers.clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::UpdateReachability () {
-
-	[ this->mReachabilityListener updateMoaiEnvironment ];
 }
 
 //================================================================//

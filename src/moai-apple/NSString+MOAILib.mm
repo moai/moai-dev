@@ -1,5 +1,5 @@
-#import <moai-ios/NSString+MOAILib.h>
-#import <moai-ios/NSObject+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
+#import <moai-apple/NSObject+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSString () {

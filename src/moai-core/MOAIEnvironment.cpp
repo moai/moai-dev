@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIEnvironment.h>
+#include <moai-core/MOAIEnvironment.h>
 
 #ifdef _WIN32
 	#include <shlobj.h>
@@ -67,8 +67,6 @@ int MOAIEnvironment::_setValue ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIEnvironment::DetectEnvironment () {
-
-	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
 	#if defined( MOAI_OS_WINDOWS )
 	
@@ -175,6 +173,8 @@ void MOAIEnvironment::DetectEnvironment () {
 
 //----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () {
+
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 }
 
 //----------------------------------------------------------------//

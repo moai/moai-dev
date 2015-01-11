@@ -1,6 +1,10 @@
 #ifndef AKU_MODULES_CONFIG_H
 #define AKU_MODULES_CONFIG_H
 
+    #ifndef AKU_WITH_APPLE
+		#define AKU_WITH_APPLE 0
+	#endif
+
 	#ifndef AKU_WITH_BOX2D
 		#define AKU_WITH_BOX2D 1
 	#endif

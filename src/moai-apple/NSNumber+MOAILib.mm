@@ -1,4 +1,4 @@
-#import <moai-ios/NSNumber+MOAILib.h>
+#import <moai-apple/NSNumber+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSNumber () {

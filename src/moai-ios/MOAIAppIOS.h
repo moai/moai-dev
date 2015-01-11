@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import <moai-core/headers.h>
-#import <moai-ios/MOAIReachabilityListener.h>
 
 // TODO: rename to MOAIMailComposeDelegate
 @class MoaiMailComposeDelegate;
@@ -45,8 +44,6 @@ private:
 	
 	typedef STLList < id >::iterator NotificationObserverIt;
 	STLList < id >	mNotificationObservers;
-	
-	MOAIReachabilityListener*	mReachabilityListener;
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
 	MOAITakeCameraListener*		mTakeCameraListener;
@@ -100,7 +97,6 @@ public:
 	void			OnGlobalsFinalize			();
 	void			OpenUrl						( NSURL* url, NSString* sourceApplication );
 	void			RegisterLuaClass			( MOAILuaState& state );
-	void			UpdateReachability			();
 
 	static void		callTakeCameraLuaCallback									(NSString* imagePath);
 };

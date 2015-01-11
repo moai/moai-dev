@@ -103,10 +103,17 @@ public:
 			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
 		
-		MOAIGlobalPair& pair = this->mGlobals [ id ];
+		if ( !this->mGlobals [ id ].mGlobal ) {
 		
-		if ( !pair.mGlobal ) {
+			// NOTE: other (new) globals may be accessed in the constructor, particularly
+			// if a Lua binding is created via LuaRetain. this may trigger a reallocation
+			// of the globals array, which will invalidate pointers and references. for this
+			// reason, we need to get 'pair' *after* the constructor.
+		
 			TYPE* global = new TYPE;
+			
+			MOAIGlobalPair& pair = this->mGlobals [ id ];
+			
 			pair.mGlobalBase	= global;
 			pair.mGlobal		= global;
 			pair.mProxy			= 0;

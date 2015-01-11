@@ -37,6 +37,10 @@
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
 
+    #if AKU_WITH_APPLE
+		AKUAppleAppFinalize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppFinalize ();
 	#endif
@@ -105,6 +109,10 @@ void AKUModulesAppFinalize () {
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
 
+    #if AKU_WITH_APPLE
+		AKUAppleAppInitialize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppInitialize ();
 	#endif
@@ -172,6 +180,10 @@ void AKUModulesAppInitialize () {
 
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
+
+    #if AKU_WITH_APPLE
+		AKUAppleContextInitialize ();
+	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerContextInitialize ();

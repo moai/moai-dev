@@ -1,7 +1,7 @@
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSNumber+MOAILib.h>
-#import <moai-ios/NSObject+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSNumber+MOAILib.h>
+#import <moai-apple/NSObject+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 
 #import <objc/runtime.h>
 

@@ -63,7 +63,11 @@
 //#if kShouldPrintReachabilityFlags
 //	
 //    NSLog(@"MOAIReachability Flag Status: %c%c %c%c%c%c%c%c%c %s\n",
-//			(flags & kSCNetworkReachabilityFlagsIsWWAN)				  ? 'W' : '-',
+//			#if TARGET_OS_IPHONE
+//				  (flags & kSCNetworkReachabilityFlagsIsWWAN)               ? 'W' : '-',
+//			#else
+//				  0,
+//			#endif
 //			(flags & kSCNetworkReachabilityFlagsReachable)            ? 'R' : '-',
 //			
 //			(flags & kSCNetworkReachabilityFlagsTransientConnection)  ? 't' : '-',
@@ -232,12 +236,15 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 			}
 		}
 	
-	if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)
-	{
-		// ... but WWAN connections are OK if the calling application
-		//     is using the CFNetwork (CFSocketStream?) APIs.
-		retVal = ReachableViaWWAN;
-	}
+	#if TARGET_OS_IPHONE
+		if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)
+		{
+			// ... but WWAN connections are OK if the calling application
+			//     is using the CFNetwork (CFSocketStream?) APIs.
+			retVal = ReachableViaWWAN;
+		}
+	#endif
+
 	return retVal;
 }
 

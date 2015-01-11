@@ -9,6 +9,10 @@
 
 #include <moai-core/host.h>
 
+#if AKU_WITH_APPLE
+	#include <moai-apple/host.h>
+#endif
+
 #if AKU_WITH_AUDIO_SAMPLER
 	#include <moai-audio-sampler/host.h>
 #endif

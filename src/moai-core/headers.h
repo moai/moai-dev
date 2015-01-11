@@ -13,6 +13,7 @@
 #include <moai-core/MOAISerializer.h>
 
 #include <moai-core/MOAICanary.h>
+#include <moai-core/MOAIEnvironment.h>
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAIObject.h>

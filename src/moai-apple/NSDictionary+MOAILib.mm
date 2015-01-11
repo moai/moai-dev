@@ -1,5 +1,5 @@
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSObject+MOAILib.h>
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSObject+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSDictionary () {
@@ -96,7 +96,6 @@ void loadMoaiLib_NSDictionary () {
 			// removes 'value'; keeps 'key' for next iteration
 			lua_pop ( state, 1 );
 		}
-		
 		return self;
 	}
 

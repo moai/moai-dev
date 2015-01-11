@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#import <moai-apple/NSError+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 #import <moai-ios/MOAIWebViewIOS.h>
 #import <moai-ios/MOAIWebViewDelegate.h>
-#import <moai-ios/NSError+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
 
 #define TOOL_BAR_HEIGHT 44
 

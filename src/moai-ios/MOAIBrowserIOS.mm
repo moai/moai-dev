@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 #import <moai-ios/MOAIBrowserIOS.h>
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
 
 //================================================================//
 // lua
