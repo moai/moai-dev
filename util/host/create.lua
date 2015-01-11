@@ -11,7 +11,7 @@ if (hostAlreadyCreated(hostname)) then
     os.exit(0)
   else
     print("\nRemoving old host")
-    MOAIFileSystem.deleteDirectory(hostsFolder..hostname)
+    MOAIFileSystem.deleteDirectory(hostsFolder..hostname, true)
   end
 end
 
