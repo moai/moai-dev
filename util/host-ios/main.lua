@@ -16,6 +16,12 @@ end
 --==============================================================
 
 local config = {}
+local hostconfig = {
+  AppName = "Moai Template",
+  CompanyName = "Zipline Games"
+}
+
+local configFile = false
 
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/ios/'
 config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/ios'
@@ -33,9 +39,13 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 			config.OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
 
-	    if escape == 'l' or escape == 'lib-source' then
+	  if escape == 'l' or escape == 'lib-source' then
 			config.LIB_SOURCE = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
+    
+    if escape == 'c' or escape == 'config' then
+      configFile = MOAIFileSystem.getAbsoluteFilePath(param)
+    end
 	end
 end
 
@@ -46,6 +56,9 @@ end
 local copyhostfiles 
 local copylib
 local linklib
+local applyConfigFile
+local configureHost
+
 
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
@@ -84,7 +97,90 @@ linklib = function()
 
 end
 
+applyConfigFile = function(configFile)
+  util.dofileWithEnvironment(configFile, hostconfig)
+  
+  
+  --copy host specific settings to main config
+  if (hostconfig["HostSettings"] and hostconfig["HostSettings"]["ios"]) then
+    for k,v in pairs(hostconfig["HostSettings"]["ios"]) do
+      hostconfig[k] = v
+    end
+  end
+  
+  hostconfig["HostSettings"] = nil
+  
+end
+
+configureHost = function()
+  local output = config.OUTPUT_DIR
+  
+  print("\n\nApplying config from "..configFile..":")
+  for k,v in pairs(hostconfig) do
+    print (k..": ", v)
+  end
+  
+  --get lua folder path (relative to xcode project)
+  local fullLua = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['LuaSrc'])
+  local relativeLua = MOAIFileSystem.getRelativePath( fullLua, output )
+  local relativeLua = string.match(relativeLua, "(.*)/$") --strip trailing slash
+  
+  local luafolder = string.match(fullLua, ".*/([^/]-)/$") --ensure to ignore trailing slash
+  
+  local projectfiles = {
+    [ output..'MoaiTemplate.xcodeproj/project.xcworkspace/contents.xcworkspacedata' ] = true,
+    [ output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme' ] = true,
+    [ output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/xcschememanagement.plist' ] = true
+  }
+  
+  util.replaceInFiles ({
+    [ output..'MoaiTemplate.xcodeproj/project.pbxproj' ] = {
+        --our lua path
+        ['(63D01EC01A38659C0097C3E8.-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..'"'..luafolder..'"'.."%3"..'"'..relativeLua..'"'.."%5",
+        --our app name
+        ['Moai Template'] = hostconfig['AppName'],
+        ['MoaiTemplate.app'] = '"'..hostconfig['AppName']..'.app"',
+        ['MoaiTemplate'] = '"'..hostconfig['AppName']..'"'
+      },
+      [ util.wrap(pairs, projectfiles) ] = {
+        ['Moai Template'] = hostconfig['AppName'],
+        ['MoaiTemplate'] = hostconfig['AppName']
+      },
+      [ output..'main.lua'] = {
+        ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
+      }
+    })
+        
+    if (hostconfig['AppName'] ~= 'MoaiTemplate' ) then
+      
+      
+      --rename the scheme
+      MOAIFileSystem.copy(output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme', 
+      output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
+      MOAIFileSystem.deleteFile(output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme')
+      
+      --rename the project file too````
+      MOAIFileSystem.copy(output..'MoaiTemplate.xcodeproj', output..hostconfig['AppName']..'.xcodeproj')
+      MOAIFileSystem.deleteDirectory(output..'MoaiTemplate.xcodeproj', true)
+    end 
+    
+    --icon
+    if (hostconfig['Images.xcassets']) then
+      local icons = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['Images.xcassets'])
+      if (MOAIFileSystem.checkPathExists(icons)) then
+        MOAIFileSystem.deleteDirectory(config.OUTPUT_DIR.."res/Images.xcassets")
+        MOAIFileSystem.copy(icons, config.OUTPUT_DIR.."res/Images.xcassets")
+      else
+        error("Could not find specified icon assets:"..icons.." - skipping")
+      end
+    end
+        
+  end
+
+applyConfigFile(configFile)
 copyhostfiles()
+configureHost()
+
 if (config.USE_SYMLINK) then
 	linklib()
 else
