@@ -43,5 +43,11 @@
         
         --you can also set the ram in MB to be allocated
         --Ram = 256
+    },
+    
+    ["osx"] = {
+      --configure custom icon with path relative to this config file
+      --Icon = "hostconfig/osx/app.png"
     }
+    
   }

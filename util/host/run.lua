@@ -9,7 +9,7 @@ local isWindows = MOAIEnvironment.osBrand == 'Windows'
 if (isWindows) then
   os.execute("run.bat")
 else
-  os.execute("run.sh")
+  os.execute("bash run.sh")
 end
 
 

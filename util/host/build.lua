@@ -23,7 +23,8 @@ else
     command_error("Could not build host '"..hostname.."'. Could not find build.sh")
   end
   print("Building host: "..hostname)
-  os.execute("build.sh")
+  os.execute("bash build.sh")
 end
 
+print("Build complete")
 

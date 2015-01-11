@@ -60,6 +60,8 @@ local applyConfigFile
 local configureHost
 
 
+
+
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
 	print("Creating ",output)
@@ -69,6 +71,11 @@ copyhostfiles = function()
 			print( string.format( '%s -> %s', fullpath, output..entry ))
 			MOAIFileSystem.copy(fullpath, output..entry)
 	end
+  
+  --make our executables executable again
+  util.makeExecutable(output..'run.sh')
+  util.makeExecutable(output..'build.sh')
+  util.makeExecutable(output..'buildrom.sh')
 end
 
 copylib = function() 
