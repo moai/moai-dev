@@ -96,6 +96,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
 		AKUSetViewSize ( width, height );
+		
+		AKUSdlSetWindow ( sWindow );
 	}
 }
 

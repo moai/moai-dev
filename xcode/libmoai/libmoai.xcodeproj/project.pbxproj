@@ -1880,6 +1880,11 @@
 		CD4283621A0476D20069392E /* MOAIByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42835F1A0476D20069392E /* MOAIByteStream.cpp */; };
 		CD4283631A0476D20069392E /* MOAIByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4283601A0476D20069392E /* MOAIByteStream.h */; };
 		CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4283601A0476D20069392E /* MOAIByteStream.h */; };
+		CD42F3691A60A873001B6D72 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD42F3641A60A873001B6D72 /* headers.h */; };
+		CD42F36A1A60A873001B6D72 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42F3651A60A873001B6D72 /* host.cpp */; };
+		CD42F36B1A60A873001B6D72 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD42F3661A60A873001B6D72 /* host.h */; };
+		CD42F36C1A60A873001B6D72 /* MOAIDialogSDL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD42F3671A60A873001B6D72 /* MOAIDialogSDL.h */; };
+		CD42F36D1A60A873001B6D72 /* MOAIDialogSDL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42F3681A60A873001B6D72 /* MOAIDialogSDL.cpp */; };
 		CD48CF221A12F8F70029F932 /* MOAIRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */; };
 		CD48CF231A12F8F70029F932 /* MOAIRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */; };
 		CD48CF241A12F8F70029F932 /* MOAIRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD48CF211A12F8F70029F932 /* MOAIRegion.h */; };
@@ -6492,6 +6497,12 @@
 		CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBitBuffer.h; sourceTree = "<group>"; };
 		CD42835F1A0476D20069392E /* MOAIByteStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIByteStream.cpp; sourceTree = "<group>"; };
 		CD4283601A0476D20069392E /* MOAIByteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIByteStream.h; sourceTree = "<group>"; };
+		CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD42F3641A60A873001B6D72 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-sdl/headers.h"; sourceTree = "<group>"; };
+		CD42F3651A60A873001B6D72 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-sdl/host.cpp"; sourceTree = "<group>"; };
+		CD42F3661A60A873001B6D72 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-sdl/host.h"; sourceTree = "<group>"; };
+		CD42F3671A60A873001B6D72 /* MOAIDialogSDL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDialogSDL.h; path = "moai-sdl/MOAIDialogSDL.h"; sourceTree = "<group>"; };
+		CD42F3681A60A873001B6D72 /* MOAIDialogSDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDialogSDL.cpp; path = "moai-sdl/MOAIDialogSDL.cpp"; sourceTree = "<group>"; };
 		CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRegion.cpp; sourceTree = "<group>"; };
 		CD48CF211A12F8F70029F932 /* MOAIRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRegion.h; sourceTree = "<group>"; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
@@ -7999,6 +8010,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD42F35D1A60A7CC001B6D72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD4C3A7B180A623200C02381 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8684,6 +8702,7 @@
 				CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */,
 				CDA4B7361808AB4A000129F9 /* moai-ios-vungle */,
 				89BE6AC31739759100DFE837 /* moai-luaext */,
+				CD42F2D51A60A795001B6D72 /* moai-sdl */,
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
 				89E9D880174BD51100033CDD /* moai-test */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
@@ -8748,6 +8767,7 @@
 				CDA0DA041A01B111002B71B6 /* libmoai-ios-audio-sampler.a */,
 				CDA0DCA31A01B184002B71B6 /* libmoai-osx-audio-sampler.a */,
 				CDD781CA1A11631E00AD133E /* libmoai-ios-motion.a */,
+				CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10085,6 +10105,18 @@
 				CD2B7C5B17FA56A100EBA2DB /* NSString+MOAILib.mm */,
 			);
 			name = "moai-ios";
+			sourceTree = "<group>";
+		};
+		CD42F2D51A60A795001B6D72 /* moai-sdl */ = {
+			isa = PBXGroup;
+			children = (
+				CD42F3641A60A873001B6D72 /* headers.h */,
+				CD42F3651A60A873001B6D72 /* host.cpp */,
+				CD42F3661A60A873001B6D72 /* host.h */,
+				CD42F3671A60A873001B6D72 /* MOAIDialogSDL.h */,
+				CD42F3681A60A873001B6D72 /* MOAIDialogSDL.cpp */,
+			);
+			name = "moai-sdl";
 			sourceTree = "<group>";
 		};
 		CD49003E141AB67700913D80 /* liblua */ = {
@@ -14331,6 +14363,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD42F2D71A60A7CC001B6D72 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD42F36B1A60A873001B6D72 /* host.h in Headers */,
+				CD42F36C1A60A873001B6D72 /* MOAIDialogSDL.h in Headers */,
+				CD42F3691A60A873001B6D72 /* headers.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD4C3A6A180A623200C02381 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15352,6 +15394,23 @@
 			productReference = CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD42F35E1A60A7CC001B6D72 /* Build configuration list for PBXNativeTarget "libmoai-osx-sdl" */;
+			buildPhases = (
+				CD42F2D71A60A7CC001B6D72 /* Headers */,
+				CD42F31B1A60A7CC001B6D72 /* Sources */,
+				CD42F35D1A60A7CC001B6D72 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-sdl";
+			productName = OpenUSLS;
+			productReference = CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD4C3A69180A623200C02381 /* libmoai-ios-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD4C3A7C180A623200C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-crypto" */;
@@ -15902,6 +15961,7 @@
 				89BE75BE173C121800DFE837 /* libmoai-osx-http-client */,
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
+				CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */,
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
 				89E9D7F7174BD4F100033CDD /* libmoai-osx-test */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
@@ -17598,6 +17658,15 @@
 				CD32B4D019F9EDD10059D019 /* tess.c in Sources */,
 				CD32B52B19F9EE3F0059D019 /* SDL_events.c in Sources */,
 				CD32B4D119F9EDD10059D019 /* sweep.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD42F31B1A60A7CC001B6D72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD42F36A1A60A873001B6D72 /* host.cpp in Sources */,
+				CD42F36D1A60A873001B6D72 /* MOAIDialogSDL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19532,7 +19601,7 @@
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
@@ -20917,7 +20986,7 @@
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
@@ -21436,6 +21505,154 @@
 				PRODUCT_NAME = "moai-osx-3rdparty-sdl";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		CD42F35F1A60A7CC001B6D72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-sdl";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CD42F3601A60A7CC001B6D72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-sdl";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CD42F3611A60A7CC001B6D72 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-sdl";
+				SDKROOT = macosx;
+			};
+			name = AdHoc;
+		};
+		CD42F3621A60A7CC001B6D72 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-sdl";
+				SDKROOT = macosx;
 			};
 			name = Distribution;
 		};
@@ -24910,7 +25127,7 @@
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
@@ -25337,7 +25554,7 @@
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0\"",
+					"\"../../3rdparty/sdl2-2.0.0/include\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
@@ -25891,6 +26108,17 @@
 				CD32B4D519F9EDD10059D019 /* Release */,
 				CD32B4D619F9EDD10059D019 /* AdHoc */,
 				CD32B4D719F9EDD10059D019 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD42F35E1A60A7CC001B6D72 /* Build configuration list for PBXNativeTarget "libmoai-osx-sdl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD42F35F1A60A7CC001B6D72 /* Debug */,
+				CD42F3601A60A7CC001B6D72 /* Release */,
+				CD42F3611A60A7CC001B6D72 /* AdHoc */,
+				CD42F3621A60A7CC001B6D72 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

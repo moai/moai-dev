@@ -50,6 +50,7 @@ public:
 	void*			GetPtrUserData			( int idx );
 	STLString		GetStackDump			();
 	STLString		GetStackTrace			( cc8* title, int level );
+	size_t			GetTableSize			( int idx );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
 	void*			GetUserData				( int idx, cc8* name, void* value );

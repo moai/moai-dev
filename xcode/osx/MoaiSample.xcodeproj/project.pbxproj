@@ -42,6 +42,7 @@
 		CD2FD0581832EA48000C3674 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD02B1832EA10000C3674 /* libmoai-osx-zl-crypto.a */; };
 		CD2FD0591832EA48000C3674 /* libmoai-osx-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD02D1832EA10000C3674 /* libmoai-osx-zl-vfs.a */; };
 		CD2FD05A1832EA48000C3674 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FD0091832EA10000C3674 /* libmoai-osx.a */; };
+		CD42F3941A60B0F5001B6D72 /* libmoai-osx-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD42F3931A60AFC8001B6D72 /* libmoai-osx-sdl.a */; };
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
@@ -193,13 +194,6 @@
 			remoteGlobalIDString = CDA4B9101808AC8F000129F9;
 			remoteInfo = "libmoai-ios-gamecenter";
 		};
-		CD2FCFEE1832EA10000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7647173C138100DFE837;
-			remoteInfo = "libmoai-ios-harness";
-		};
 		CD2FCFF01832EA10000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -332,13 +326,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = CDE8A802155E42EF00C2DFF5;
 			remoteInfo = "libmoai-osx-fmod-ex";
-		};
-		CD2FD01A1832EA10000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89BE7660173C13EB00DFE837;
-			remoteInfo = "libmoai-osx-harness";
 		};
 		CD2FD01C1832EA10000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -494,6 +481,20 @@
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
 		};
+		CD42F3921A60AFC8001B6D72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD42F3631A60A7CC001B6D72;
+			remoteInfo = "libmoai-osx-sdl";
+		};
+		CD42F3951A60B105001B6D72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD42F2D61A60A7CC001B6D72;
+			remoteInfo = "libmoai-osx-sdl";
+		};
 		CD48CF4C1A12FDA40029F932 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -611,6 +612,7 @@
 				CD2FD0521832EA48000C3674 /* libmoai-osx-http-client.a in Frameworks */,
 				CD2FD0531832EA48000C3674 /* libmoai-osx-http-server.a in Frameworks */,
 				CD2FD0541832EA48000C3674 /* libmoai-osx-luaext.a in Frameworks */,
+				CD42F3941A60B0F5001B6D72 /* libmoai-osx-sdl.a in Frameworks */,
 				CD2FD0551832EA48000C3674 /* libmoai-osx-sim.a in Frameworks */,
 				CD2FD0561832EA48000C3674 /* libmoai-osx-untz.a in Frameworks */,
 				CD2FD0571832EA48000C3674 /* libmoai-osx-zl-core.a in Frameworks */,
@@ -736,7 +738,6 @@
 				CD2FCFE91832EA10000C3674 /* libmoai-ios-fmod-designer.a */,
 				CD2FCFEB1832EA10000C3674 /* libmoai-ios-fmod-ex.a */,
 				CD2FCFED1832EA10000C3674 /* libmoai-ios-gamecenter.a */,
-				CD2FCFEF1832EA10000C3674 /* libmoai-ios-harness.a */,
 				CD2FCFF11832EA10000C3674 /* libmoai-ios-http-client.a */,
 				CD2FCFF31832EA10000C3674 /* libmoai-ios-http-server.a */,
 				CD096FC818E0E55700A36EDD /* libmoai-ios-kontagent.a */,
@@ -760,10 +761,10 @@
 				CD2FD0151832EA10000C3674 /* libmoai-osx-crypto.a */,
 				CD2FD0171832EA10000C3674 /* libmoai-osx-fmod-designer.a */,
 				CD2FD0191832EA10000C3674 /* libmoai-osx-fmod-ex.a */,
-				CD2FD01B1832EA10000C3674 /* libmoai-osx-harness.a */,
 				CD2FD01D1832EA10000C3674 /* libmoai-osx-http-client.a */,
 				CD2FD01F1832EA10000C3674 /* libmoai-osx-http-server.a */,
 				CD2FD0211832EA10000C3674 /* libmoai-osx-luaext.a */,
+				CD42F3931A60AFC8001B6D72 /* libmoai-osx-sdl.a */,
 				CD2FD0231832EA10000C3674 /* libmoai-osx-sim.a */,
 				CD2FD0251832EA10000C3674 /* libmoai-osx-test.a */,
 				CD2FD0271832EA10000C3674 /* libmoai-osx-untz.a */,
@@ -837,6 +838,7 @@
 				CD2FD03D1832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD03F1832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD0411832EA39000C3674 /* PBXTargetDependency */,
+				CD42F3961A60B105001B6D72 /* PBXTargetDependency */,
 				CD2FD0431832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD0451832EA39000C3674 /* PBXTargetDependency */,
 				CD2FD0471832EA39000C3674 /* PBXTargetDependency */,
@@ -1052,13 +1054,6 @@
 			remoteRef = CD2FCFEC1832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD2FCFEF1832EA10000C3674 /* libmoai-ios-harness.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-ios-harness.a";
-			remoteRef = CD2FCFEE1832EA10000C3674 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD2FCFF11832EA10000C3674 /* libmoai-ios-http-client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1192,13 +1187,6 @@
 			remoteRef = CD2FD0181832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD2FD01B1832EA10000C3674 /* libmoai-osx-harness.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-osx-harness.a";
-			remoteRef = CD2FD01A1832EA10000C3674 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD2FD01D1832EA10000C3674 /* libmoai-osx-http-client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1260,6 +1248,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-zl-vfs.a";
 			remoteRef = CD2FD02C1832EA10000C3674 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD42F3931A60AFC8001B6D72 /* libmoai-osx-sdl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-sdl.a";
+			remoteRef = CD42F3921A60AFC8001B6D72 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD48CF4D1A12FDA40029F932 /* libmoai-ios-audio-sampler.a */ = {
@@ -1399,6 +1394,11 @@
 			name = "libmoai-osx-zl-vfs";
 			targetProxy = CD2FD04A1832EA39000C3674 /* PBXContainerItemProxy */;
 		};
+		CD42F3961A60B105001B6D72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sdl";
+			targetProxy = CD42F3951A60B105001B6D72 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1408,18 +1408,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					DEBUG_POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1429,16 +1417,6 @@
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1460,6 +1438,7 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
+					"AKU_WITH_SDL=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1500,19 +1479,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					DEBUG_POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					"AKU_WITH_TEST=1",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "moai-test-runner";
 			};
@@ -1523,17 +1489,6 @@
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					"AKU_WITH_TEST=1",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "moai-test-runner";
 			};
@@ -1561,6 +1516,7 @@
 					FT_DEBUG_LEVEL_TRACE,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
+					"AKU_WITH_SDL=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1602,20 +1558,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					DEBUG_POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD_DESIGNER,
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
@@ -1629,18 +1571,6 @@
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD_DESIGNER,
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/lib\"",
@@ -1655,20 +1585,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					DEBUG_POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD_EX,
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",
@@ -1682,18 +1598,6 @@
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					ENABLE_CUSTOM_WEBVIEW,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					GLUTHOST_USE_LUAEXT,
-					GLUTHOST_USE_FMOD_EX,
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_OSX_SDK_ROOT)/api/lib\"",

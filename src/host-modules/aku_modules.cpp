@@ -73,6 +73,10 @@ void AKUModulesAppFinalize () {
 		AKULuaExtAppFinalize ();
 	#endif
 
+	#if AKU_WITH_SDL
+		AKUSdlAppFinalize ();
+	#endif
+
 	#if AKU_WITH_SIM
 		AKUSimAppFinalize ();
 	#endif
@@ -137,6 +141,10 @@ void AKUModulesAppInitialize () {
 		AKULuaExtAppInitialize ();
 	#endif
 
+	#if AKU_WITH_SDL
+		AKUSdlAppInitialize ();
+	#endif
+
 	#if AKU_WITH_SIM
 		AKUSimAppInitialize ();
 	#endif
@@ -199,6 +207,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_LUAEXT
 		AKULuaExtContextInitialize ();
+	#endif
+
+	#if AKU_WITH_SDL
+		AKUSdlContextInitialize ();
 	#endif
 
 	#if AKU_WITH_SIM

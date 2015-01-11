@@ -45,6 +45,10 @@
 	#include <moai-luaext/host.h>
 #endif
 
+#if AKU_WITH_SDL
+	#include <moai-sdl/host.h>
+#endif
+
 #if AKU_WITH_SIM
 	#include <moai-sim/host.h>
 #endif

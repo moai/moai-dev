@@ -573,6 +573,12 @@ STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 }
 
 //----------------------------------------------------------------//
+size_t MOAILuaState::GetTableSize ( int idx ) {
+
+	return lua_objlen ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
 int MOAILuaState::GetTop () {
 
 	return lua_gettop ( this->mState );
