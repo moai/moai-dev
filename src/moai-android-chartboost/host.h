@@ -8,7 +8,6 @@
 #define AKU_ANDROID_CHARTBOOST_HOST_H
 
 #include <moai-core/host.h>
-#include <moai-android/JniUtils.h>
 
 AKU_API void	AKUAndroidChartBoostAppFinalize			();
 AKU_API void	AKUAndroidChartBoostAppInitialize		();
