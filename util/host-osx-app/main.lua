@@ -137,7 +137,7 @@ configureHost = function()
   util.replaceInFiles ({
     [ output..'Moai Template.xcodeproj/project.pbxproj' ] = {
         --our lua path
-        ['(63157D5E19FCB4F0009018A3.-name = ")([^"]-)(".-path = ")([^"]-)(".*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
+        ['(63157D5E19FCB4F0009018A3%C-name = ")([^"]-)(".-path = ")([^"]-)(".*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
         --our app name
         ['Moai Template'] = hostconfig['AppName']
     },

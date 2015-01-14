@@ -128,40 +128,37 @@ configureHost = function()
   local luafolder = string.match(fullLua, ".*/([^/]-)/$") --ensure to ignore trailing slash
   
   local projectfiles = {
-    [ output..'MoaiTemplate.xcodeproj/project.xcworkspace/contents.xcworkspacedata' ] = true,
-    [ output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme' ] = true,
-    [ output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/xcschememanagement.plist' ] = true
+    [ output..'Moai Template.xcodeproj/project.xcworkspace/contents.xcworkspacedata' ] = true,
+    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme' ] = true,
+    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/xcschememanagement.plist' ] = true
   }
   
   util.replaceInFiles ({
-    [ output..'MoaiTemplate.xcodeproj/project.pbxproj' ] = {
+    [ output..'Moai Template.xcodeproj/project.pbxproj' ] = {
         --our lua path
-        ['(63D01EC01A38659C0097C3E8.-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..'"'..luafolder..'"'.."%3"..'"'..relativeLua..'"'.."%5",
+        ['(63D01EC01A38659C0097C3E8%C-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..'"'..luafolder..'"'.."%3"..'"'..relativeLua..'"'.."%5",
         --our app name
         ['Moai Template'] = hostconfig['AppName'],
-        ['MoaiTemplate.app'] = '"'..hostconfig['AppName']..'.app"',
-        ['MoaiTemplate'] = '"'..hostconfig['AppName']..'"'
       },
       [ util.wrap(pairs, projectfiles) ] = {
         ['Moai Template'] = hostconfig['AppName'],
-        ['MoaiTemplate'] = hostconfig['AppName']
       },
       [ output..'main.lua'] = {
         ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
       }
     })
         
-    if (hostconfig['AppName'] ~= 'MoaiTemplate' ) then
+    if (hostconfig['AppName'] ~= 'Moai Template' ) then
       
       
       --rename the scheme
-      MOAIFileSystem.copy(output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme', 
-      output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
-      MOAIFileSystem.deleteFile(output..'MoaiTemplate.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme')
+      MOAIFileSystem.copy(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme', 
+      output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
+      MOAIFileSystem.deleteFile(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme')
       
       --rename the project file too````
-      MOAIFileSystem.copy(output..'MoaiTemplate.xcodeproj', output..hostconfig['AppName']..'.xcodeproj')
-      MOAIFileSystem.deleteDirectory(output..'MoaiTemplate.xcodeproj', true)
+      MOAIFileSystem.copy(output..'Moai Template.xcodeproj', output..hostconfig['AppName']..'.xcodeproj')
+      MOAIFileSystem.deleteDirectory(output..'Moai Template.xcodeproj', true)
     end 
     
     --icon
@@ -177,9 +174,15 @@ configureHost = function()
         
   end
 
-applyConfigFile(configFile)
+if (configFile) then
+  applyConfigFile(configFile)
+end
+
 copyhostfiles()
-configureHost()
+
+if (configFile) then
+  configureHost()
+end
 
 if (config.USE_SYMLINK) then
 	linklib()
