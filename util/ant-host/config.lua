@@ -8,7 +8,7 @@ MODULES = {
 	},
 
 	chartboosst = {
-		lib		= MOAI_SDK_HOME .. '3rdparty-android/chartboost-3.4.0',
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/chartboost',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-chartboost',
 	},
 

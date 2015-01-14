@@ -9,13 +9,14 @@ package com.ziplinegames.moai;
 import android.app.Activity;
 import android.view.View;
 
+import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
-import com.chartboost.sdk.ChartboostDefaultDelegate;
+import com.chartboost.sdk.ChartboostDelegate;
 
 //================================================================//
 // MoaiChartBoost
 //================================================================//
-public class MoaiChartBoost extends ChartboostDefaultDelegate {
+public class MoaiChartBoost extends ChartboostDelegate {
 
 	public enum ListenerEvent {
 		INTERSTITIAL_LOAD_FAILED,
@@ -27,34 +28,52 @@ public class MoaiChartBoost extends ChartboostDefaultDelegate {
 	protected static native void AKUInvokeListener ( int eventID );
 	
 	//----------------------------------------------------------------//
-	public static boolean onBackPressed ( Activity activity ) {
-		MoaiLog.i ( "MoaiChartBoost: onBackPressed" );
-		return Chartboost.sharedChartboost ().onBackPressed ();
-	}
+	public static void onBackPressed ( Activity activity ) {
+		
+        MoaiLog.i ( "MoaiChartBoost: onBackPressed" );
+		Chartboost.onBackPressed ();
+    }
 	
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
+	
 		MoaiLog.i ( "MoaiChartBoost: onCreate" );
 		sActivity = activity;
 	}
 
 	//----------------------------------------------------------------//
 	public static void onDestroy ( Activity activity ) {
+ 
 		MoaiLog.i ( "MoaiChartBoost: onDestroy" );
-		Chartboost.sharedChartboost ().onDestroy ( sActivity );
+    	Chartboost.onDestroy ( activity );
 	}
-	
+
 	//----------------------------------------------------------------//
-	public static void onStart () {
+	public static void onPause ( Activity activity ) {
+ 
+		MoaiLog.i ( "MoaiChartBoost: onPause" );
+    	Chartboost.onPause ( activity );
+	}
+
+	//----------------------------------------------------------------//
+	public static void onResume ( Activity activity ) {
+ 
+		MoaiLog.i ( "MoaiChartBoost: onResume" );
+    	Chartboost.onResume ( activity );
+	}
+		
+	//----------------------------------------------------------------//
+	public static void onStart ( Activity activity ) {
+		
 		MoaiLog.i ( "MoaiChartBoost: onStart" );
-		Chartboost.sharedChartboost ().onStart ( sActivity );
-		Chartboost.sharedChartboost ().startSession ();
+    	Chartboost.onStart ( activity );
 	}
 	
 	//----------------------------------------------------------------//
-	public static void onStop () {
+	public static void onStop ( Activity activity ) {
+
 		MoaiLog.i ( "MoaiChartBoost: onStop" );
-		Chartboost.sharedChartboost ().onStop ( sActivity );
+    	Chartboost.onStop ( activity );
 	}
 
 	//================================================================//
@@ -67,10 +86,10 @@ public class MoaiChartBoost extends ChartboostDefaultDelegate {
 		MoaiLog.i ( "MoaiChartBoost: cacheInterstitial" );
 		
 		if ( location != null ) {
-		 	Chartboost.sharedChartboost ().cacheInterstitial ( location );
+		 	Chartboost.cacheInterstitial ( location );
 		}
 		else {
-			Chartboost.sharedChartboost ().cacheInterstitial ();
+			Chartboost.cacheInterstitial ( CBLocation.LOCATION_DEFAULT );
 		}
 	}
 
@@ -80,17 +99,19 @@ public class MoaiChartBoost extends ChartboostDefaultDelegate {
 		MoaiLog.i ( "MoaiChartBoost: hasCachedInterstitial" );
 		
 		if ( location != null ) {
-		 	return Chartboost.sharedChartboost ().hasCachedInterstitial ( location );
+		 	return Chartboost.hasInterstitial ( location );
 		}
-		return Chartboost.sharedChartboost ().hasCachedInterstitial ();
+		return Chartboost.hasInterstitial ( CBLocation.LOCATION_DEFAULT );
 	}
 
 	//----------------------------------------------------------------//
 	public static void init ( String appId, String appSignature ) {
 		
 		MoaiLog.i ( "MoaiChartBoost: init" );
-	
-		Chartboost.sharedChartboost ().onCreate ( sActivity, appId, appSignature, new MoaiChartBoost ());
+
+		Chartboost.startWithAppId ( sActivity, appId, appSignature );
+    	Chartboost.setDelegate ( new MoaiChartBoost () );
+    	Chartboost.onCreate ( sActivity );	
 	}
 
 	//----------------------------------------------------------------//
@@ -98,10 +119,10 @@ public class MoaiChartBoost extends ChartboostDefaultDelegate {
 				
 		MoaiLog.i ( "MoaiChartBoost: showInterstitial" );
 		if ( location != null ) {
-		 	Chartboost.sharedChartboost ().showInterstitial ( location );
+		 	Chartboost.showInterstitial ( location );
 		}
 		else {
-			Chartboost.sharedChartboost ().showInterstitial ();
+			Chartboost.showInterstitial ( CBLocation.LOCATION_DEFAULT );
 		}
 	}
 

@@ -4,7 +4,7 @@
 #ifndef MOAIADCOLONYANDROID_H
 #define MOAIADCOLONYANDROID_H
 
-#ifndef DISABLE_ADCOLONY
+#if AKU_WITH_ANDROID_ADCOLONY
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>

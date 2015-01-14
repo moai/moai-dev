@@ -4,7 +4,7 @@
 #ifndef MOAIFLURRYANDROID_H
 #define MOAIFLURRYANDROID_H
 
-#ifndef DISABLE_FLURRY
+#if AKU_WITH_ANDROID_FLURRY
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>

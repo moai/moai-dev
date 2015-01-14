@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include <host-modules/aku_modules.h>
+#include <host-modules/aku_modules_android.h>
 
 #include <moai-android/moaiext-android.h>
 #include <moai-android/moaiext-jni.h>
@@ -130,9 +131,10 @@
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
 
-		AKUAppInitialize();
-		AKUModulesAppInitialize();
-	}	
+		AKUAppInitialize ();
+		AKUModulesAppInitialize ();
+        AKUModulesAndroidAppInitialize ();
+	}
 
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT jint JNICALL Java_com_ziplinegames_moai_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
@@ -224,6 +226,8 @@
 
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
+        
+        AKUModulesAndroidAppFinalize ();
         AKUModulesAppFinalize();
         AKUAppFinalize ();
 	}
@@ -246,78 +250,19 @@
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
-		/*
-		#ifndef DISABLE_ADCOLONY
-			MOAIAdColonyAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
-		#endif
-
-		#ifndef DISABLE_BILLING
-			MOAIBillingAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIBillingAndroid );
-		#endif
-
-		#ifndef DISABLE_CHARTBOOST
-			MOAIChartBoostAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIChartBoostAndroid );
-		#endif
-
-		#ifndef DISABLE_CRITTERCISM
-			MOAICrittercismAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
-		#endif
-
-		#ifndef DISABLE_FACEBOOK
-			MOAIFacebookAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
-		#endif
-
-		#ifndef DISABLE_FLURRY
-			MOAIFlurryAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIFlurryAndroid );
-		#endif
-
-		#ifndef DISABLE_NOTIFICATIONS
-			MOAINotificationsAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
-		#endif
-
-		#ifndef DISABLE_TAPJOY
-			MOAITapjoyAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
-		#endif
-
-		#ifndef DISABLE_TWITTER
-			MOAITwitterAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAITwitterAndroid );
-		#endif
-
-		#ifndef DISABLE_TSTOREWALL
-			MOAITstoreWallAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAITstoreWallAndroid );
-		#endif
-
-		#ifndef DISABLE_TSTOREGAMECENTER
-			MOAITstoreWallAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAITstoreGamecenterAndroid );
-		#endif
-	
-		#ifndef DISABLE_PLAYSERVICES
-			MOAIGooglePlayServicesAndroid::Affirm ();
-			REGISTER_LUA_CLASS ( MOAIGooglePlayServicesAndroid );
-		#endif
-		*/
-
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
 	
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesContextInitialize ( JNIEnv* env, jclass obj ) {
+
         AKUModulesContextInitialize ();
+        AKUModulesAndroidContextInitialize ();
     }
 
     //----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesRunLuaAPIWrapper ( JNIEnv* env, jclass obj ) {
+        
         AKUModulesRunLuaAPIWrapper ();
     }
 
