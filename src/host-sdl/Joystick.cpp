@@ -3,14 +3,14 @@
 
 Joystick::Joystick(const int idx) :
     index(idx),
-    sdl_joystick(nullptr)
+    sdl_joystick(NULL)
 { }
 
 Joystick::~Joystick() {
 
     if ( isOpen() ) {
         SDL_JoystickClose(sdl_joystick);
-        sdl_joystick = nullptr;
+        sdl_joystick = NULL;
     }
 }
 
@@ -20,7 +20,7 @@ bool Joystick::Open() {
         
     sdl_joystick = SDL_JoystickOpen(index);
 
-    if ( sdl_joystick == nullptr ) {
+    if ( sdl_joystick == NULL ) {
         std::cerr << "Unable to open joystick" << std::endl;
         return false;
     }
@@ -32,7 +32,7 @@ bool Joystick::Open() {
 
 bool Joystick::isOpen() const {
 
-    if ( nullptr != sdl_joystick ) {
+    if ( NULL != sdl_joystick ) {
         std::cerr << "Joystick already open! " << std::endl;
         return true;
     }

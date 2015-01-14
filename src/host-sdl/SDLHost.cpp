@@ -232,7 +232,7 @@ void SetScreenDpi() {
 void MainLoop () {
 
 	// TODO: array's of Joysticks
-	Joystick * joystick0 = nullptr;
+	Joystick * joystick0 = NULL;
 
 	if ( SDL_NumJoysticks() < 1 ) {
 		
@@ -245,7 +245,7 @@ void MainLoop () {
 		if ( joystick0->isOpen() || !joystick0->Open() )
 		{
 			delete joystick0;
-			joystick0 = nullptr;
+			joystick0 = NULL;
 		}
 	}
 
@@ -317,7 +317,7 @@ void MainLoop () {
 						
 						//TODO: array's of Joysticks
 
-						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != nullptr ) {
+						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != NULL ) {
 
                             const Joystick::AXIS_MOTION & axis = joystick0->HandleAxisMotion(sdlEvent);
 					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.x, axis.y );
