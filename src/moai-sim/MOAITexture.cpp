@@ -238,7 +238,7 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 		if ( format->GetTextureInfo ( stream, textureInfo )) {
 			
 			void* data = malloc ( textureInfo.mSize );
-			size_t size = stream.ReadBytes ( data, size );
+			size_t size = stream.ReadBytes ( data, textureInfo.mSize );
 			
 			if ( size == textureInfo.mSize ) {
 			
