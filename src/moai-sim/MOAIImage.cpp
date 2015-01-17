@@ -1255,6 +1255,8 @@ bool MOAIImage::Compare ( const MOAIImage& image ) {
 //----------------------------------------------------------------//
 void MOAIImage::Copy ( const MOAIImage& image ) {
 
+	if ( this == &image ) return;
+
 	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
 	
 	size_t bitmapSize = this->GetBitmapSize ();

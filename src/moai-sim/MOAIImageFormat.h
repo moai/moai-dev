@@ -42,7 +42,6 @@ public:
 	virtual bool		CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	virtual size_t		GetHeaderSize				() = 0;
 	virtual bool		GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
-	virtual bool		IsTextureFormat				();
 						MOAIImageFormat				();
 	virtual				~MOAIImageFormat			();
 	virtual bool		ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );

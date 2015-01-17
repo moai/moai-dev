@@ -25,7 +25,6 @@
 				3EDC170219F6DD37007A7775 /* PBXTargetDependency */,
 				CDFD7C331A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC170619F6DD37007A7775 /* PBXTargetDependency */,
-				3EDC170819F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC170A19F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC170C19F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC170E19F6DD37007A7775 /* PBXTargetDependency */,
@@ -1042,15 +1041,6 @@
 		89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D7A41745223E00033CDD /* MOAIScopedLuaState.cpp */; };
 		89E9D7A81745223E00033CDD /* MOAIScopedLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */; };
 		89E9D7A91745223E00033CDD /* MOAIScopedLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */; };
-		89E9D88A174BD51100033CDD /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D881174BD51100033CDD /* host.cpp */; };
-		89E9D88B174BD51100033CDD /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D882174BD51100033CDD /* host.h */; };
-		89E9D88C174BD51100033CDD /* MOAITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D883174BD51100033CDD /* MOAITest.cpp */; };
-		89E9D88D174BD51100033CDD /* MOAITest.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D884174BD51100033CDD /* MOAITest.h */; };
-		89E9D88E174BD51100033CDD /* MOAITest_sample.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D885174BD51100033CDD /* MOAITest_sample.h */; };
-		89E9D88F174BD51100033CDD /* MOAITest_ZLQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D886174BD51100033CDD /* MOAITest_ZLQuaternion.h */; };
-		89E9D890174BD51100033CDD /* MOAITestKeywords.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D887174BD51100033CDD /* MOAITestKeywords.h */; };
-		89E9D891174BD51100033CDD /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D888174BD51100033CDD /* MOAITestMgr.cpp */; };
-		89E9D892174BD51100033CDD /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D889174BD51100033CDD /* MOAITestMgr.h */; };
 		CD04AECD14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AECF14725714009C20E5 /* adler32.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB714725714009C20E5 /* adler32.c */; };
 		CD04AED014725714009C20E5 /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AEB814725714009C20E5 /* compress.c */; };
@@ -1552,6 +1542,28 @@
 		CD2CB51E19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
 		CD2CB52019FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
+		CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */; };
+		CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */; };
+		CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
+		CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
+		CD3024CD1A68F34E00CCEE32 /* PVRTArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C41A68F34E00CCEE32 /* PVRTArray.h */; };
+		CD3024CE1A68F34E00CCEE32 /* PVRTArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C41A68F34E00CCEE32 /* PVRTArray.h */; };
+		CD3024CF1A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */; };
+		CD3024D01A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */; };
+		CD3024D11A68F34E00CCEE32 /* PVRTDecompress.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */; };
+		CD3024D21A68F34E00CCEE32 /* PVRTDecompress.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */; };
+		CD3024D31A68F34E00CCEE32 /* PVRTError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C71A68F34E00CCEE32 /* PVRTError.cpp */; };
+		CD3024D41A68F34E00CCEE32 /* PVRTError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C71A68F34E00CCEE32 /* PVRTError.cpp */; };
+		CD3024D51A68F34E00CCEE32 /* PVRTError.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C81A68F34E00CCEE32 /* PVRTError.h */; };
+		CD3024D61A68F34E00CCEE32 /* PVRTError.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C81A68F34E00CCEE32 /* PVRTError.h */; };
+		CD3024D71A68F34E00CCEE32 /* PVRTGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C91A68F34E00CCEE32 /* PVRTGlobal.h */; };
+		CD3024D81A68F34E00CCEE32 /* PVRTGlobal.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C91A68F34E00CCEE32 /* PVRTGlobal.h */; };
+		CD3024D91A68F34E00CCEE32 /* PVRTMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */; };
+		CD3024DA1A68F34E00CCEE32 /* PVRTMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */; };
+		CD3024DB1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */; };
+		CD3024DC1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */; };
+		CD3024DD1A68F34E00CCEE32 /* PVRTTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */; };
+		CD3024DE1A68F34E00CCEE32 /* PVRTTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */; };
 		CD32B3C319F9EDD10059D019 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD32B3C419F9EDD10059D019 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD32B3C519F9EDD10059D019 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
@@ -5143,13 +5155,6 @@
 			remoteGlobalIDString = 89BE6F07173AD07100DFE837;
 			remoteInfo = "libmoai-osx-sim";
 		};
-		3EDC170719F6DD37007A7775 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 89E9D7F7174BD4F100033CDD;
-			remoteInfo = "libmoai-osx-test";
-		};
 		3EDC170919F6DD37007A7775 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -6325,7 +6330,6 @@
 		89E9D7851743F7EE00033CDD /* MOAIVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVersion.h; sourceTree = "<group>"; };
 		89E9D7A41745223E00033CDD /* MOAIScopedLuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScopedLuaState.cpp; sourceTree = "<group>"; };
 		89E9D7A51745223E00033CDD /* MOAIScopedLuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScopedLuaState.h; sourceTree = "<group>"; };
-		89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89E9D881174BD51100033CDD /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
 		89E9D882174BD51100033CDD /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
 		89E9D883174BD51100033CDD /* MOAITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITest.cpp; sourceTree = "<group>"; };
@@ -6636,6 +6640,17 @@
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
+		CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITestMgr.cpp; sourceTree = "<group>"; };
+		CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestMgr.h; sourceTree = "<group>"; };
+		CD3024C41A68F34E00CCEE32 /* PVRTArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTArray.h; path = "../../3rdparty/libpvr-3.4/PVRTArray.h"; sourceTree = "<group>"; };
+		CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTDecompress.cpp; path = "../../3rdparty/libpvr-3.4/PVRTDecompress.cpp"; sourceTree = "<group>"; };
+		CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTDecompress.h; path = "../../3rdparty/libpvr-3.4/PVRTDecompress.h"; sourceTree = "<group>"; };
+		CD3024C71A68F34E00CCEE32 /* PVRTError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTError.cpp; path = "../../3rdparty/libpvr-3.4/PVRTError.cpp"; sourceTree = "<group>"; };
+		CD3024C81A68F34E00CCEE32 /* PVRTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTError.h; path = "../../3rdparty/libpvr-3.4/PVRTError.h"; sourceTree = "<group>"; };
+		CD3024C91A68F34E00CCEE32 /* PVRTGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTGlobal.h; path = "../../3rdparty/libpvr-3.4/PVRTGlobal.h"; sourceTree = "<group>"; };
+		CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTMap.h; path = "../../3rdparty/libpvr-3.4/PVRTMap.h"; sourceTree = "<group>"; };
+		CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTTexture.cpp; path = "../../3rdparty/libpvr-3.4/PVRTTexture.cpp"; sourceTree = "<group>"; };
+		CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTTexture.h; path = "../../3rdparty/libpvr-3.4/PVRTTexture.h"; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
@@ -8106,13 +8121,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		89E9D879174BD4F100033CDD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD04ACB014725568009C20E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8391,6 +8399,7 @@
 				CD49003E141AB67700913D80 /* liblua */,
 				CD07C0FE13A14B2900C9386C /* libogg */,
 				03240B5813564CB0000ADC60 /* libpng */,
+				CD30249A1A689CC400CCEE32 /* libpvr */,
 				CD74E44A1377D6780093EE68 /* libssl */,
 				CD69AB2817FA6CBE0053E028 /* libtess */,
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
@@ -8902,7 +8911,6 @@
 				89BE75F7173C126100DFE837 /* libmoai-ios-http-client.a */,
 				89BE7686173C15F100DFE837 /* libmoai-ios-http-server.a */,
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
-				89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */,
 				CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */,
 				CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */,
 				CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */,
@@ -9269,6 +9277,8 @@
 				89BE6AF2173975E500DFE837 /* MOAISerializerBase.cpp */,
 				89BE6AF3173975E500DFE837 /* MOAISerializerBase.h */,
 				89BE6AF4173975E500DFE837 /* MOAISharedPtr.h */,
+				CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */,
+				CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */,
 				CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */,
 				CDADCCF71A3576A10029FEDA /* MOAITrace.h */,
 				89BE6AF5173975E500DFE837 /* MOAIWeakPtr.h */,
@@ -10277,6 +10287,22 @@
 				CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */,
 			);
 			name = "moai-ios";
+			sourceTree = "<group>";
+		};
+		CD30249A1A689CC400CCEE32 /* libpvr */ = {
+			isa = PBXGroup;
+			children = (
+				CD3024C41A68F34E00CCEE32 /* PVRTArray.h */,
+				CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */,
+				CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */,
+				CD3024C71A68F34E00CCEE32 /* PVRTError.cpp */,
+				CD3024C81A68F34E00CCEE32 /* PVRTError.h */,
+				CD3024C91A68F34E00CCEE32 /* PVRTGlobal.h */,
+				CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */,
+				CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */,
+				CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */,
+			);
+			name = libpvr;
 			sourceTree = "<group>";
 		};
 		CD42F2D51A60A795001B6D72 /* moai-sdl */ = {
@@ -12981,6 +13007,7 @@
 				CD4900B5141AB6EC00913D80 /* ldo.h in Headers */,
 				CDCDD01C1A23F233008779B5 /* macconfig.h in Headers */,
 				CD881FD119FF6736004498E8 /* huffman.h in Headers */,
+				CD3024D21A68F34E00CCEE32 /* PVRTDecompress.h in Headers */,
 				CD4900B8141AB6EC00913D80 /* lfunc.h in Headers */,
 				CD4900BA141AB6EC00913D80 /* lgc.h in Headers */,
 				CD4900BE141AB6EC00913D80 /* llex.h in Headers */,
@@ -13000,6 +13027,7 @@
 				CD4900D5141AB6EC00913D80 /* lua.h in Headers */,
 				CD881FD919FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3219FF670D004498E8 /* lossless.h in Headers */,
+				CD3024CE1A68F34E00CCEE32 /* PVRTArray.h in Headers */,
 				CD881FE119FF6736004498E8 /* rescaler.h in Headers */,
 				CD4900D6141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD4900D7141AB6EC00913D80 /* lualib.h in Headers */,
@@ -13010,6 +13038,7 @@
 				07952A401447907100143A72 /* jconfig.h in Headers */,
 				CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */,
 				07952A4C1447907100143A72 /* jdct.h in Headers */,
+				CD3024DE1A68F34E00CCEE32 /* PVRTTexture.h in Headers */,
 				07952A591447907100143A72 /* jerror.h in Headers */,
 				CD881FD519FF6736004498E8 /* quant_levels_dec.h in Headers */,
 				CDCDD01A1A23F233008779B5 /* latin1tab.h in Headers */,
@@ -13023,9 +13052,12 @@
 				CDD48B5D17FA794B00525B77 /* SFMT.h in Headers */,
 				07952A6B1447907100143A72 /* jpeglib.h in Headers */,
 				07952A701447907100143A72 /* jversion.h in Headers */,
+				CD3024D61A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
+				CD3024DA1A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
 				CDCDD01E1A23F233008779B5 /* nametab.h in Headers */,
+				CD3024D81A68F34E00CCEE32 /* PVRTGlobal.h in Headers */,
 				CD69AB4617FA6CF90053E028 /* mesh.h in Headers */,
 				CDD48B5317FA794B00525B77 /* SFMT-params2281.h in Headers */,
 				CD69AB5217FA6CF90053E028 /* tess.h in Headers */,
@@ -13081,6 +13113,7 @@
 				89BE6B19173975E500DFE837 /* MOAILogMessages.h in Headers */,
 				89BE6B1D173975E500DFE837 /* MOAILogMgr.h in Headers */,
 				89BE6B1F173975E500DFE837 /* MOAILua.h in Headers */,
+				CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				89BE6B25173975E500DFE837 /* MOAILuaObject.h in Headers */,
 				89BE6B29173975E500DFE837 /* MOAILuaRef.h in Headers */,
 				89BE6B2D173975E500DFE837 /* MOAILuaRuntime.h in Headers */,
@@ -13193,6 +13226,7 @@
 				CD49007B141AB6EC00913D80 /* lcode.h in Headers */,
 				CDCDD01B1A23F233008779B5 /* macconfig.h in Headers */,
 				CD881FD019FF6736004498E8 /* huffman.h in Headers */,
+				CD3024D11A68F34E00CCEE32 /* PVRTDecompress.h in Headers */,
 				CD49007E141AB6EC00913D80 /* ldebug.h in Headers */,
 				CD490080141AB6EC00913D80 /* ldo.h in Headers */,
 				CD490083141AB6EC00913D80 /* lfunc.h in Headers */,
@@ -13212,6 +13246,7 @@
 				CD49009C141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881FD819FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3119FF670D004498E8 /* lossless.h in Headers */,
+				CD3024CD1A68F34E00CCEE32 /* PVRTArray.h in Headers */,
 				CD881FE019FF6736004498E8 /* rescaler.h in Headers */,
 				CD49009F141AB6EC00913D80 /* ltm.h in Headers */,
 				CDD48B7117FA794E00525B77 /* SFMT-params1279.h in Headers */,
@@ -13222,6 +13257,7 @@
 				CD4900A2141AB6EC00913D80 /* lualib.h in Headers */,
 				CDCDD0151A23F233008779B5 /* iasciitab.h in Headers */,
 				CD4900A4141AB6EC00913D80 /* lundump.h in Headers */,
+				CD3024DD1A68F34E00CCEE32 /* PVRTTexture.h in Headers */,
 				CD4900A6141AB6EC00913D80 /* lvm.h in Headers */,
 				CD881FD419FF6736004498E8 /* quant_levels_dec.h in Headers */,
 				CDCDD0191A23F233008779B5 /* latin1tab.h in Headers */,
@@ -13235,9 +13271,12 @@
 				07952A0A1447907100143A72 /* jinclude.h in Headers */,
 				07952A121447907100143A72 /* jmemsys.h in Headers */,
 				07952A131447907100143A72 /* jmorecfg.h in Headers */,
+				CD3024D51A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07952A141447907100143A72 /* jpegint.h in Headers */,
+				CD3024D91A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07952A151447907100143A72 /* jpeglib.h in Headers */,
 				CDCDD01D1A23F233008779B5 /* nametab.h in Headers */,
+				CD3024D71A68F34E00CCEE32 /* PVRTGlobal.h in Headers */,
 				07952A1A1447907100143A72 /* jversion.h in Headers */,
 				07658750145CD06900723A7D /* tlsf.h in Headers */,
 				07658752145CD06900723A7D /* tlsfbits.h in Headers */,
@@ -13331,6 +13370,7 @@
 				89BE6D2E1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
 				CD1844D91A6269AB00FCCCE0 /* MOAIBrowserIOS.h in Headers */,
 				89BE6D321739A42500DFE837 /* MOAIParser.h in Headers */,
+				CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				89BE6D361739A42500DFE837 /* MOAIStream.h in Headers */,
 				CD1845C21A62751300FCCCE0 /* MOAIEnvironment.h in Headers */,
 				89BE6D3A1739A42500DFE837 /* MOAIStreamReader.h in Headers */,
@@ -13918,19 +13958,6 @@
 				CDECEE2518E0C88700546426 /* mongoose.h in Headers */,
 				89BE76B1173C168400DFE837 /* MOAIHttpServer.h in Headers */,
 				89BE76B5173C168400DFE837 /* pch.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89E9D7F8174BD4F100033CDD /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89E9D88B174BD51100033CDD /* host.h in Headers */,
-				89E9D88D174BD51100033CDD /* MOAITest.h in Headers */,
-				89E9D88E174BD51100033CDD /* MOAITest_sample.h in Headers */,
-				89E9D88F174BD51100033CDD /* MOAITest_ZLQuaternion.h in Headers */,
-				89E9D890174BD51100033CDD /* MOAITestKeywords.h in Headers */,
-				89E9D892174BD51100033CDD /* MOAITestMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15537,23 +15564,6 @@
 			productReference = 89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		89E9D7F7174BD4F100033CDD /* libmoai-osx-test */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89E9D87A174BD4F100033CDD /* Build configuration list for PBXNativeTarget "libmoai-osx-test" */;
-			buildPhases = (
-				89E9D7F8174BD4F100033CDD /* Headers */,
-				89E9D844174BD4F100033CDD /* Sources */,
-				89E9D879174BD4F100033CDD /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-osx-test";
-			productName = OpenUSLS;
-			productReference = 89E9D87F174BD4F100033CDD /* libmoai-osx-test.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-core" */;
@@ -16261,7 +16271,6 @@
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */,
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
-				89E9D7F7174BD4F100033CDD /* libmoai-osx-test */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */,
 				CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */,
@@ -16466,6 +16475,7 @@
 				CD881F7119FF671C004498E8 /* histogram.c in Sources */,
 				07952A4D1447907100143A72 /* jddctmgr.c in Sources */,
 				07952A4E1447907100143A72 /* jdhuff.c in Sources */,
+				CD3024DC1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */,
 				07952A4F1447907100143A72 /* jdinput.c in Sources */,
 				07952A501447907100143A72 /* jdmainct.c in Sources */,
 				07952A511447907100143A72 /* jdmarker.c in Sources */,
@@ -16473,6 +16483,7 @@
 				07952A531447907100143A72 /* jdmerge.c in Sources */,
 				07952A541447907100143A72 /* jdpostct.c in Sources */,
 				07952A551447907100143A72 /* jdsample.c in Sources */,
+				CD3024D01A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */,
 				07952A561447907100143A72 /* jdtrans.c in Sources */,
 				07952A571447907100143A72 /* jerror-moai.c in Sources */,
 				07952A5A1447907100143A72 /* jfdctflt.c in Sources */,
@@ -16510,6 +16521,7 @@
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
 				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
+				CD3024D41A68F34E00CCEE32 /* PVRTError.cpp in Sources */,
 				CD69AB3C17FA6CF90053E028 /* dict.c in Sources */,
 				CD69AB5017FA6CF90053E028 /* tess.c in Sources */,
 				CD69AB4C17FA6CF90053E028 /* sweep.c in Sources */,
@@ -16525,6 +16537,7 @@
 			files = (
 				89BE6AFB173975E500DFE837 /* host.cpp in Sources */,
 				89BE6AFF173975E500DFE837 /* MOAICanary.cpp in Sources */,
+				CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				89BE6B03173975E500DFE837 /* MOAIDeserializer.cpp in Sources */,
 				89BE6B07173975E500DFE837 /* MOAIEventSource.cpp in Sources */,
 				89BE6B0B173975E500DFE837 /* MOAIFoo.cpp in Sources */,
@@ -16637,6 +16650,7 @@
 				CDD4911017FA7A8000525B77 /* truetype.c in Sources */,
 				CDD4911617FA7A8600525B77 /* bdf.c in Sources */,
 				CDD4910117FA7A8000525B77 /* ftmm.c in Sources */,
+				CD3024DB1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */,
 				CDD4911717FA7A8600525B77 /* cff.c in Sources */,
 				CDD4911317FA7A8000525B77 /* type42.c in Sources */,
 				CDD4912317FA7A8600525B77 /* ftsystem.c in Sources */,
@@ -16669,6 +16683,7 @@
 				CDD4911417FA7A8000525B77 /* winfnt.c in Sources */,
 				CD881F6C19FF671C004498E8 /* filter.c in Sources */,
 				CDD4911117FA7A8000525B77 /* type1.c in Sources */,
+				CD3024CF1A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */,
 				CDD4910217FA7A8000525B77 /* ftotval.c in Sources */,
 				CDD4910517FA7A8000525B77 /* ftsynth.c in Sources */,
 				CD881F3919FF670D004498E8 /* upsampling.c in Sources */,
@@ -16694,6 +16709,7 @@
 				CD49007C141AB6EC00913D80 /* ldblib.c in Sources */,
 				CD49007D141AB6EC00913D80 /* ldebug.c in Sources */,
 				CD49007F141AB6EC00913D80 /* ldo.c in Sources */,
+				CD3024D31A68F34E00CCEE32 /* PVRTError.cpp in Sources */,
 				CD881F1F19FF670D004498E8 /* enc_avx2.c in Sources */,
 				CD881F1519FF670D004498E8 /* dec_mips32.c in Sources */,
 				CD490081141AB6EC00913D80 /* ldump.c in Sources */,
@@ -16841,6 +16857,7 @@
 				89BE6B12173975E500DFE837 /* MOAIGlobals.cpp in Sources */,
 				89BE6B16173975E500DFE837 /* MOAILogMessages.cpp in Sources */,
 				89BE6B1A173975E500DFE837 /* MOAILogMgr.cpp in Sources */,
+				CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				89BE6B22173975E500DFE837 /* MOAILuaObject.cpp in Sources */,
 				CD1844E21A6269AB00FCCCE0 /* MOAIWebViewDelegate.mm in Sources */,
 				CD1844DE1A6269AB00FCCCE0 /* MOAIKeyboardIOS.mm in Sources */,
@@ -17410,16 +17427,6 @@
 				89BE76AF173C168400DFE837 /* MOAIHttpServer.cpp in Sources */,
 				CDECEE2418E0C88700546426 /* mongoose.c in Sources */,
 				89BE76B3173C168400DFE837 /* pch.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89E9D844174BD4F100033CDD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				89E9D88A174BD51100033CDD /* host.cpp in Sources */,
-				89E9D88C174BD51100033CDD /* MOAITest.cpp in Sources */,
-				89E9D891174BD51100033CDD /* MOAITestMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19598,11 +19605,6 @@
 			target = 89BE6F07173AD07100DFE837 /* libmoai-osx-sim */;
 			targetProxy = 3EDC170519F6DD37007A7775 /* PBXContainerItemProxy */;
 		};
-		3EDC170819F6DD37007A7775 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 89E9D7F7174BD4F100033CDD /* libmoai-osx-test */;
-			targetProxy = 3EDC170719F6DD37007A7775 /* PBXContainerItemProxy */;
-		};
 		3EDC170A19F6DD37007A7775 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CD07C4B913A1918600C9386C /* libmoai-osx-untz */;
@@ -19946,6 +19948,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/libpvr-3.2\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -21190,66 +21193,6 @@
 			};
 			name = Distribution;
 		};
-		89E9D87B174BD4F100033CDD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				PRODUCT_NAME = "moai-osx-test";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		89E9D87C174BD4F100033CDD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				PRODUCT_NAME = "moai-osx-test";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		89E9D87D174BD4F100033CDD /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				PRODUCT_NAME = "moai-osx-test";
-				SDKROOT = macosx;
-			};
-			name = AdHoc;
-		};
-		89E9D87E174BD4F100033CDD /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				PRODUCT_NAME = "moai-osx-test";
-				SDKROOT = macosx;
-			};
-			name = Distribution;
-		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -21332,6 +21275,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/libpvr-3.2\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -25659,6 +25603,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/libpvr-3.2\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -26087,6 +26032,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/libpvr-3.2\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -26585,17 +26531,6 @@
 				89BE769C173C160E00DFE837 /* Release */,
 				89BE769D173C160E00DFE837 /* AdHoc */,
 				89BE769E173C160E00DFE837 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89E9D87A174BD4F100033CDD /* Build configuration list for PBXNativeTarget "libmoai-osx-test" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89E9D87B174BD4F100033CDD /* Debug */,
-				89E9D87C174BD4F100033CDD /* Release */,
-				89E9D87D174BD4F100033CDD /* AdHoc */,
-				89E9D87E174BD4F100033CDD /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

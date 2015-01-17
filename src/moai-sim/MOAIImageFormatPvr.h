@@ -4,9 +4,10 @@
 #ifndef	MOAIIMAGEFORMATPVR_H
 #define	MOAIIMAGEFORMATPVR_H
 
-#if MOAI_WITH_PVR
-
 #include <moai-sim/MOAIImageFormat.h>
+
+class MOAIPvrHeader;
+class MOAIPvrMipLevelInfo;
 
 //================================================================//
 // MOAIImageFormatPvr
@@ -14,6 +15,12 @@
 class MOAIImageFormatPvr :
 	public MOAIImageFormat {
 private:
+
+	//----------------------------------------------------------------//
+	bool			Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, MOAIImage& image, ZLStream& stream );
+	static bool		Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, void* buffer, size_t bufferSize, ZLStream& stream );
+	static bool		Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, void* buffer, size_t bufferSize, const void* srcBuffer, size_t srcBufferSize );
+
 public:
 
 	//----------------------------------------------------------------//
@@ -21,12 +28,10 @@ public:
 	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
 	bool			GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
-	bool			IsTextureFormat				();
 					MOAIImageFormatPvr			();
 					~MOAIImageFormatPvr			();
 	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
 	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
 };
 
-#endif
 #endif

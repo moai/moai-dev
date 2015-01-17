@@ -39,20 +39,6 @@ size_t MOAIImageFormatWebP::GetHeaderSize () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info ) {
-	UNUSED ( stream );
-	UNUSED ( info );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageFormatWebP::IsTextureFormat () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIImageFormatWebP::MOAIImageFormatWebP () {
 }
 

@@ -58,12 +58,6 @@ bool MOAIImageFormat::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info )
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::IsTextureFormat () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIImageFormat::MOAIImageFormat () {
 }
 

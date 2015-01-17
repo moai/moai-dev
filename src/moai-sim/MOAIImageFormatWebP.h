@@ -26,8 +26,6 @@ public:
 	bool			CheckHeader					( const void* buffer );
 	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
-	bool			GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
-	bool			IsTextureFormat				();
 					MOAIImageFormatWebP			();
 					~MOAIImageFormatWebP		();
 	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );

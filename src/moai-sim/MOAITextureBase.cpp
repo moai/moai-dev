@@ -166,7 +166,7 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			break;
 		
 		case ZLColor::RGBA_5551:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
 			break;
 		

@@ -17,16 +17,6 @@
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
-		89E9D7C8174BD2A800033CDD /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
-		89E9D7C9174BD2A800033CDD /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
-		89E9D7CA174BD2A800033CDD /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
-		89E9D7D0174BD2A800033CDD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
-		89E9D7D1174BD2A800033CDD /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
-		89E9D7D2174BD2A800033CDD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
-		89E9D7D3174BD2A800033CDD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
-		89E9D7D4174BD2A800033CDD /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
-		89E9D7D5174BD2A800033CDD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
-		89E9D7D7174BD2A800033CDD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845B91A626CD100FCCCE0 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845B81A626CC300FCCCE0 /* libmoai-osx-apple.a */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
@@ -61,9 +51,6 @@
 		CD795EF617F08F86006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
 		CD795F9517F091FC006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
 		CD795F9617F09202006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
-		CD795F9717F0920B006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
-		CD795F9817F09212006AEB47 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF317F08F4E006AEB47 /* CoreAudio.framework */; };
-		CD795F9917F093CD006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9A17F093DE006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795F9B17F093E5006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CDA633131A390CE000F3995F /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6330E1A390CE000F3995F /* Joystick.cpp */; };
@@ -378,13 +365,6 @@
 			remoteGlobalIDString = 89BE6F18173AD07100DFE837;
 			remoteInfo = "libmoai-osx-sim";
 		};
-		CD2FD0241832EA10000C3674 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 89E9D87F174BD4F100033CDD;
-			remoteInfo = "libmoai-osx-test";
-		};
 		CD2FD0261832EA10000C3674 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -558,15 +538,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		89E9D7D9174BD2A800033CDD /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		CD6DC2811574B378008C3996 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -599,7 +570,6 @@
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
-		89E9D7DD174BD2A800033CDD /* moai-test-runner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-test-runner"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CD6600651831CB5400D9862B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -662,26 +632,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		89E9D7C3174BD2A800033CDD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD795F9817F09212006AEB47 /* CoreAudio.framework in Frameworks */,
-				CD795F9717F0920B006AEB47 /* ForceFeedback.framework in Frameworks */,
-				89E9D7C8174BD2A800033CDD /* libSystem.dylib in Frameworks */,
-				89E9D7C9174BD2A800033CDD /* libcrypto.dylib in Frameworks */,
-				89E9D7CA174BD2A800033CDD /* libssl.dylib in Frameworks */,
-				89E9D7D0174BD2A800033CDD /* AudioToolbox.framework in Frameworks */,
-				89E9D7D1174BD2A800033CDD /* AudioUnit.framework in Frameworks */,
-				CD795F9917F093CD006AEB47 /* Cocoa.framework in Frameworks */,
-				89E9D7D2174BD2A800033CDD /* Carbon.framework in Frameworks */,
-				89E9D7D3174BD2A800033CDD /* CoreFoundation.framework in Frameworks */,
-				89E9D7D4174BD2A800033CDD /* CoreServices.framework in Frameworks */,
-				89E9D7D5174BD2A800033CDD /* Foundation.framework in Frameworks */,
-				89E9D7D7174BD2A800033CDD /* IOKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD6DC26E1574B378008C3996 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -729,7 +679,6 @@
 				0300CF70140DC56200ABCC5B /* moai */,
 				CDE8A82A155E435800C2DFF5 /* moai-fmod-ex */,
 				CD6DC2851574B378008C3996 /* moai-fmod-designer */,
-				89E9D7DD174BD2A800033CDD /* moai-test-runner */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -794,7 +743,6 @@
 				CD2FD0211832EA10000C3674 /* libmoai-osx-luaext.a */,
 				CD42F3931A60AFC8001B6D72 /* libmoai-osx-sdl.a */,
 				CD2FD0231832EA10000C3674 /* libmoai-osx-sim.a */,
-				CD2FD0251832EA10000C3674 /* libmoai-osx-test.a */,
 				CD2FD0271832EA10000C3674 /* libmoai-osx-untz.a */,
 				CD2FD0291832EA10000C3674 /* libmoai-osx-zl-core.a */,
 				CD2FD02B1832EA10000C3674 /* libmoai-osx-zl-crypto.a */,
@@ -880,23 +828,6 @@
 			productReference = 0300CF70140DC56200ABCC5B /* moai */;
 			productType = "com.apple.product-type.tool";
 		};
-		89E9D7AB174BD2A800033CDD /* moai-test-runner */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 89E9D7DA174BD2A800033CDD /* Build configuration list for PBXNativeTarget "moai-test-runner" */;
-			buildPhases = (
-				89E9D7BE174BD2A800033CDD /* Sources */,
-				89E9D7C3174BD2A800033CDD /* Frameworks */,
-				89E9D7D9174BD2A800033CDD /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "moai-test-runner";
-			productName = moai;
-			productReference = 89E9D7DD174BD2A800033CDD /* moai-test-runner */;
-			productType = "com.apple.product-type.tool";
-		};
 		CD6DC25E1574B378008C3996 /* moai-fmod-designer */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD6DC2821574B378008C3996 /* Build configuration list for PBXNativeTarget "moai-fmod-designer" */;
@@ -973,7 +904,6 @@
 				0300CF4F140DC53C00ABCC5B /* moai */,
 				CD6DC25E1574B378008C3996 /* moai-fmod-designer */,
 				CDE8A804155E435800C2DFF5 /* moai-fmod-ex */,
-				89E9D7AB174BD2A800033CDD /* moai-test-runner */,
 			);
 		};
 /* End PBXProject section */
@@ -996,7 +926,7 @@
 		CD1845201A626B9500FCCCE0 /* libmoai-apple.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-apple.a";
+			path = "libmoai-ios-apple.a";
 			remoteRef = CD18451F1A626B9500FCCCE0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1259,13 +1189,6 @@
 			remoteRef = CD2FD0221832EA10000C3674 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD2FD0251832EA10000C3674 /* libmoai-osx-test.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libmoai-osx-test.a";
-			remoteRef = CD2FD0241832EA10000C3674 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD2FD0271832EA10000C3674 /* libmoai-osx-untz.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1341,13 +1264,6 @@
 				CDA6331D1A390CFB00F3995F /* aku_modules.cpp in Sources */,
 				CDA633141A390CE000F3995F /* SDLHost.cpp in Sources */,
 				CDA6331C1A390CFB00F3995F /* aku_modules_util.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		89E9D7BE174BD2A800033CDD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,27 +1439,6 @@
 			};
 			name = Release;
 		};
-		89E9D7DB174BD2A800033CDD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = "moai-test-runner";
-			};
-			name = Debug;
-		};
-		89E9D7DC174BD2A800033CDD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				PRODUCT_NAME = "moai-test-runner";
-			};
-			name = Release;
-		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1665,15 +1560,6 @@
 			buildConfigurations = (
 				0300CF6C140DC53C00ABCC5B /* Debug */,
 				0300CF6D140DC53C00ABCC5B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		89E9D7DA174BD2A800033CDD /* Build configuration list for PBXNativeTarget "moai-test-runner" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				89E9D7DB174BD2A800033CDD /* Debug */,
-				89E9D7DC174BD2A800033CDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

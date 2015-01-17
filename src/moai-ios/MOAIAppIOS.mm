@@ -340,17 +340,17 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
 
-	NotificationListenerMapIt notification = this->mNotificationListenerMap.begin ();
-	for ( ; notification != this->mNotificationListenerMap.end (); ++notification ) {
-		NSString* observerName = [ NSString stringWithUTF8String:notification->first ];
-		u32 eventID = notification->second;
+	NotificationListenerMapIt notificationIt = this->mNotificationListenerMap.begin ();
+	for ( ; notificationIt != this->mNotificationListenerMap.end (); ++notificationIt ) {
+		NSString* observerName = [ NSString stringWithUTF8String:notificationIt->first ];
+		u32 eventID = notificationIt->second;
 	
 		id observer = [[ NSNotificationCenter defaultCenter ]
 			addObserverForName:observerName
 			object:[ UIApplication sharedApplication ]
 			queue:nil
 			usingBlock:^( NSNotification* notification ) {
-				NSLog ( notification.name );
+				NSLog ( @"%@", notification.name );
 				this->InvokeListener ( eventID );
 				
 				if ( eventID == WILL_TERMINATE ) {

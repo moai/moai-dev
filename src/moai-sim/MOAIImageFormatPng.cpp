@@ -68,20 +68,6 @@ size_t MOAIImageFormatPng::GetHeaderSize () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPng::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info ) {
-	UNUSED ( stream );
-	UNUSED ( info );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageFormatPng::IsTextureFormat () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIImageFormatPng::MOAIImageFormatPng () {
 }
 
