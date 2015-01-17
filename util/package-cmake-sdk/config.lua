@@ -1,6 +1,7 @@
 COMMON = {
 	['lib'] = true,
 	['util'] = true,
+	['samples'] = true,
 	['src/host-modules'] = true,
 	
 	

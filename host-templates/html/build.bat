@@ -1,2 +1,2 @@
 @echo off
-call buildrom.bat
+call buildrom.bat @SRC@
