@@ -85,10 +85,6 @@ void AKUModulesAppFinalize () {
 		AKUSimAppFinalize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppFinalize ();
-	#endif
-
 	#if AKU_WITH_UNTZ
 		AKUUntzAppFinalize ();
 	#endif
@@ -157,10 +153,6 @@ void AKUModulesAppInitialize () {
 		AKUSimAppInitialize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppInitialize ();
-	#endif
-
 	#if AKU_WITH_UNTZ
 		AKUUntzAppInitialize ();
 	#endif
@@ -227,10 +219,6 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_SIM
 		AKUSimContextInitialize ();
-	#endif
-
-	#if AKU_WITH_TEST
-		AKUTestContextInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ

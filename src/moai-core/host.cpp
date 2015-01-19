@@ -252,6 +252,7 @@ AKUContextID AKUCreateContext () {
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAITrace )
+	REGISTER_LUA_CLASS ( MOAITestMgr )
 
 	MOAIEnvironment::Get ().DetectEnvironment ();
 

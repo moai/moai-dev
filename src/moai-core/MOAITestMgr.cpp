@@ -1,116 +1,107 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moai-test/MOAITestKeywords.h>
-#include <moai-test/MOAITestMgr.h>
+#include "pch.h"
 
-#ifndef va_copy
-	#define va_copy(d,s) ((d) = (s))
-#endif
+#include <moai-core/MOAITestMgr.h>
+
+// run the test in each folder until the test ends OR TestMgr.finish () is called
+// optionally, tear down and rebuild the context between each run
+// run the test in each folder using a bootstrapper
+// bootstrappers
+//		run test or staging until done
+//		run test or staging in new context until done
+//		run test or staging in new process until done
 
 //================================================================//
 // local
 //================================================================//
 
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_beginTest ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	cc8* testName = state.GetValue < cc8* >( 1, 0 );
-//	if ( testName ) {
-//		MOAITestMgr::Get ().BeginTest ( testName );
-//	}
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_checkFilter ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//
-//	state.Push ( MOAITestMgr::Get ().CheckFilter ());
-//	return 1;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_comment ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	cc8* comment = state.GetValue < cc8* >( 1, 0 );
-//	if ( comment ) {
-//		MOAITestMgr::Get ().Comment ( comment );
-//	}
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_endTest ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	bool result = state.GetValue < bool >( 1, false );
-//	MOAITestMgr::Get ().EndTest ( result );
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_failure ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	cc8* type = state.GetValue < cc8* >( 1, "" );
-//	cc8* detail = state.GetValue < cc8* >( 2, "" );
-//
-//	MOAITestMgr::Get ().Failure ( type, detail );
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_getTestList ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	MOAITestMgr::Get ().PushTestList ( state );
-//	return 1;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_setFilter ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	MOAITestMgr::Get ().SetFilter ( state.GetValue < cc8* >( 1, "" ));
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	MOAITestMgr::Get ().mStagingFunc.SetRef ( state, 1 );
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_setTestFunc ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	MOAITestMgr::Get ().mTestFunc.SetRef ( state, 1 );
-//	return 0;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAITestMgr::_staging ( lua_State* L ) {
-//	MOAILuaState state ( L );
-//	
-//	state.Push ( true );
-//	return 1;
-//}
+//----------------------------------------------------------------//
+int MOAITestMgr::_assert ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	bool check = state.GetValue ( 1, false );
+	if ( !check ) {
+		state.CopyToTop ( 2 );
+		lua_error ( state );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_beginTest ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_comment ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_endTest ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_runTests ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->RunTests ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_setProjectDir ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->mProjectDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+
+	self->mStagingFunc.SetRef ( state, 1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_setStagingDir ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->mStagingDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_setTestingFunc ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+
+	self->mTestingFunc.SetRef ( state, 1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_setTestingDir ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->mTestingDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_test ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->Test ( L, 2 );
+	return 0;
+}
 
 //================================================================//
 // MOAITestMgr
@@ -128,30 +119,83 @@ MOAITestMgr::~MOAITestMgr () {
 
 //----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
 	
-//	state.SetField ( -1, "MATH",		MOAI_TEST_MATH );
-//	state.SetField ( -1, "SAMPLE",		MOAI_TEST_SAMPLE );
-//	state.SetField ( -1, "UTIL",		MOAI_TEST_UTIL );
-//	
-//	luaL_Reg regTable [] = {
-//		{ "beginTest",				_beginTest },
-//		{ "checkFilter",			_checkFilter },
-//		{ "comment",				_comment },
-//		{ "endTest",				_endTest },
-//		{ "failure",				_failure },
-//		{ "getTestList",			_getTestList },
-//		{ "setFilter",				_setFilter },
-//		{ "setStagingFunc",			_setStagingFunc },
-//		{ "setTestFunc",			_setTestFunc },
-//		{ "staging",				_staging },
-//		{ NULL, NULL }
-//	};
-//
-//	luaL_register ( state, 0, regTable );
+	luaL_Reg regTable [] = {
+		{ "assert",					_assert },
+		{ "beginTest",				_beginTest },
+		{ "comment",				_comment },
+		{ "endTest",				_endTest },
+		{ "runTests",				_runTests },
+		{ "setProjectDir",			_setProjectDir },
+		{ "setStagingFunc",			_setStagingFunc },
+		{ "setStagingDir",			_setStagingDir },
+		{ "setTestingFunc",			_setTestingFunc },
+		{ "setTestingDir",			_setTestingDir },
+		{ "test",				_test },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::RunTests () {
+
+	if ( !ZLFileSys::CheckPathExists ( this->mProjectDir )) return;
+
+	ZLFileSys::AffirmPath ( this->mStagingDir );
+	ZLFileSys::AffirmPath ( this->mTestingDir );
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
+	STLString oldPath = ZLFileSys::GetCurrentPath ();
+
+	ZLFileSys::SetCurrentPath ( this->mProjectDir );
+
+	ZLDirectoryItr dirItr;
+	dirItr.Start ();
+	
+	while ( dirItr.NextDirectory ()) {
+		
+		STLString projectPath = this->mProjectDir + dirItr.Current ();
+		STLString stagingPath = this->mStagingDir + dirItr.Current ();
+		STLString testingPath = this->mTestingDir + dirItr.Current ();
+		
+		if ( !ZLFileSys::CheckPathExists ( stagingPath )) {
+		
+			ZLFileSys::Copy ( projectPath, stagingPath );
+		
+			// execute staging
+			if ( this->mStagingFunc.PushRef ( state )) {
+				ZLFileSys::SetCurrentPath ( stagingPath );
+				state.DebugCall ( 0, 0 );
+			}
+		}
+
+		ZLFileSys::DeleteDirectory ( testingPath, true );
+		ZLFileSys::Copy ( stagingPath, testingPath );
+
+		// execute test
+		if ( this->mTestingFunc.PushRef ( state )) {
+			ZLFileSys::SetCurrentPath ( testingPath );
+			state.DebugCall ( 0, 0 );
+		}
+	}
+	
+	ZLFileSys::SetCurrentPath ( oldPath );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Test ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+	idx = state.AbsIndex ( idx );
+	
+	state.CopyToTop ( idx );
+	state.DebugCall ( 0, 0 );
 }

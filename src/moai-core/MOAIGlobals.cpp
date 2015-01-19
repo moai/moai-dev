@@ -14,14 +14,6 @@ void MOAIGlobalClassBase::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsRetire () {
-}
-
-//----------------------------------------------------------------//
 MOAIGlobalClassBase::MOAIGlobalClassBase () {
 }
 
@@ -64,32 +56,6 @@ MOAIGlobals::~MOAIGlobals () {
 
 		if ( global ) {
 			delete global;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobals::Restore () {
-
-	size_t total = this->mGlobals.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ i ];
-		MOAIGlobalClassBase* global = pair.mGlobalBase;
-		if ( global ) {
-			global->OnGlobalsRestore ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobals::Retire () {
-
-	size_t total = this->mGlobals.Size ();
-	for ( size_t i = 1; i <= total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobalBase;
-		if ( global ) {
-			global->OnGlobalsRetire ();
 		}
 	}
 }

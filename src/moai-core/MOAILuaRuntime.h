@@ -134,8 +134,6 @@ private:
 	int						MakeStrong				( int refID );
 	int						MakeWeak				( int refID );
 	void					OnGlobalsFinalize		();
-	void					OnGlobalsRestore		();
-	void					OnGlobalsRetire			();
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 

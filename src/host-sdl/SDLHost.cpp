@@ -70,7 +70,6 @@ void _AKUHideCursor () {
 	SDL_ShowCursor(0);
 }
 
-
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 

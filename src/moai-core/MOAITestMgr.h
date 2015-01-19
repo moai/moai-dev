@@ -15,20 +15,28 @@ class MOAITestMgr :
 	public MOAIGlobalClass < MOAITestMgr, MOAILuaObject > {
 private:
 
-	//----------------------------------------------------------------//
-//	static int		_beginTest			( lua_State* L );
-//	static int		_checkFilter		( lua_State* L );
-//	static int		_comment			( lua_State* L );
-//	static int		_endTest			( lua_State* L );
-//	static int		_failure			( lua_State* L );
-//	static int		_getTestList		( lua_State* L );
-//	static int		_setFilter			( lua_State* L );
-//	static int		_setStagingFunc		( lua_State* L );
-//	static int		_setTestFunc		( lua_State* L );
-//	static int		_staging			( lua_State* L );
-//	static int		_success			( lua_State* L );
+	MOAILuaStrongRef	mStagingFunc;
+	MOAILuaStrongRef	mTestingFunc;
+
+	STLString	mProjectDir;
+	STLString	mStagingDir;
+	STLString	mTestingDir;
 
 	//----------------------------------------------------------------//
+	static int		_assert					( lua_State* L );
+	static int		_beginTest				( lua_State* L );
+	static int		_comment				( lua_State* L );
+	static int		_endTest				( lua_State* L );
+	static int		_runTests				( lua_State* L );
+	static int		_setProjectDir			( lua_State* L );
+	static int		_setStagingFunc			( lua_State* L );
+	static int		_setStagingDir			( lua_State* L );
+	static int		_setTestingFunc			( lua_State* L );
+	static int		_setTestingDir			( lua_State* L );
+	static int		_test					( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			Test					( lua_State* L, int idx );
 
 public:
 
@@ -39,6 +47,7 @@ public:
 					~MOAITestMgr			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			RunTests				();
 };
 
 #endif

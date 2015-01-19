@@ -57,10 +57,6 @@
 	#include <moai-sim/host.h>
 #endif
 
-#if AKU_WITH_TEST
-	#include <moai-test/host.h>
-#endif
-
 #if AKU_WITH_UNTZ
 	#include <moai-untz/host.h>
 #endif

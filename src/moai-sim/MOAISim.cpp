@@ -712,14 +712,6 @@ void MOAISim::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnGlobalsRetire () {
-}
-
-//----------------------------------------------------------------//
 void MOAISim::Pause () {
 
 	if ( this->mLoopState != PAUSED ) {

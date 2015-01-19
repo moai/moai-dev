@@ -10,13 +10,13 @@
 -- Run in separate processes.
 -- Run with new context between tests.
 
+SDK_TEST_DIR = MOAI_SDK_HOME .. 'test/'
 
-PROJECT_DIR = util.getAbsoluteDirPath ( 'project', INVOKE_DIR )
-STAGING_DIR = util.getAbsoluteDirPath ( 'staging', INVOKE_DIR )
-TESTING_DIR = util.getAbsoluteDirPath ( 'testing', INVOKE_DIR )
+PROJECT_DIR = util.getAbsoluteDirPath ( 'project', SDK_TEST_DIR )
+STAGING_DIR = util.getAbsoluteDirPath ( 'staging', SDK_TEST_DIR )
+TESTING_DIR = util.getAbsoluteDirPath ( 'testing', SDK_TEST_DIR )
 
-EXEC_DIR		= nil
-EXEC_MODE		= nil
+BOOTSTRAP		= nil
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
@@ -27,9 +27,8 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	
 	if param then
 
-		if escape == 'stage' or escape == 'test' then
-			EXEC_DIR = util.getAbsoluteDirPath ( param, INVOKE_DIR )
-			EXEC_MODE = escape
+		if escape == 'b' then
+			BOOTSTRAP = param
 		end
 
 		if escape == 'p' or escape == 'project' then
@@ -50,38 +49,41 @@ end
 -- util
 --==============================================================
 
+local		bootstrap
 local		execute
 
 ----------------------------------------------------------------
-execute = function ( mode, path )
+bootstrap = function ( mode )
 
-	os.execute ( string.format ( 'moaiutil run-tests --%s %s', mode, path ))
+	local filename = 'main.lua'
+
+	if MOAIFileSystem.checkFileExists ( filename ) then
+
+		local chunk = loadfile ( filename )
+		local env = setmetatable ({}, { __index = _G })
+		setfenv ( chunk, env )
+		chunk ()
+
+		local func = env [ mode ]
+
+		if func then
+			func ()
+		end
+	end
+end
+
+----------------------------------------------------------------
+execute = function ( mode )
+
+	os.execute ( string.format ( 'moaiutil run-tests -b %s', mode ))
 end
 
 --==============================================================
 -- main
 --==============================================================
 
-if EXEC_DIR and EXEC_MODE then
-
-	local execFile = EXEC_DIR .. 'main.lua'
-
-	if MOAIFileSystem.checkFileExists ( execFile ) then
-
-		MOAIFileSystem.setWorkingDirectory ( EXEC_DIR )
-
-		local chunk = loadfile ( execFile )
-		local env = setmetatable ({}, { __index = _G })
-		setfenv ( chunk, env )
-		chunk ()
-
-		local func = env [ EXEC_MODE ]
-
-		if func then
-			func ()
-		end
-	end
-
+if BOOTSTRAP then
+	bootstap ( BOOTSTRAP )
 	os.exit ( 0 )
 end
 
@@ -89,27 +91,11 @@ print ( 'PROJECT_DIR', PROJECT_DIR )
 print ( 'STAGING_DIR', STAGING_DIR )
 print ( 'TESTING_DIR', TESTING_DIR )
 
-MOAIFileSystem.affirmPath ( STAGING_DIR )
-MOAIFileSystem.affirmPath ( TESTING_DIR )
+MOAITestMgr.setProjectDir ( PROJECT_DIR )
+MOAITestMgr.setStagingDir ( STAGING_DIR )
+MOAITestMgr.setTestingDir ( TESTING_DIR )
 
-if MOAIFileSystem.checkPathExists ( PROJECT_DIR ) then
+MOAITestMgr.setStagingFunc ( function () execute ( 'stage' ) end )
+MOAITestMgr.setTestingFunc ( function () execute ( 'test' ) end )
 
-	local dirs = MOAIFileSystem.listDirectories ( PROJECT_DIR ) or {}
-	for i, subdir in ipairs ( dirs ) do
-		print ( subdir )
-
-		local projectDir = PROJECT_DIR .. subdir
-		local stagingDir = STAGING_DIR .. subdir
-		local testingDir = TESTING_DIR .. subdir
-
-		if not MOAIFileSystem.checkFileExists ( stagingDir ) then
-			MOAIFileSystem.copy ( projectDir, stagingDir )
-			execute ( 'stage', stagingDir )
-		end
-
-		MOAIFileSystem.deleteDirectory ( testingDir, true )
-		MOAIFileSystem.copy ( stagingDir, testingDir )
-
-		execute ( 'test', testingDir )
-	end
-end
+MOAITestMgr.runTests ()

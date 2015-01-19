@@ -49,10 +49,6 @@
 		#define AKU_WITH_SIM 1
 	#endif
 
-	#ifndef AKU_WITH_TEST
-		#define AKU_WITH_TEST 0
-	#endif
-
 	#ifndef AKU_WITH_UNTZ
 		#define AKU_WITH_UNTZ 1
 	#endif

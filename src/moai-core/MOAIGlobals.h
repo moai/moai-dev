@@ -45,8 +45,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void			OnGlobalsFinalize			();
-	virtual void			OnGlobalsRestore			();
-	virtual void			OnGlobalsRetire				();
 							MOAIGlobalClassBase			();
 	virtual					~MOAIGlobalClassBase		();
 };
@@ -79,8 +77,6 @@ private:
 	ZLLeanArray < MOAIGlobalPair >	mGlobals;
 
 	//----------------------------------------------------------------//
-	void		Restore				();
-	void		Retire				();
 				MOAIGlobals			();
 				~MOAIGlobals		();
 
