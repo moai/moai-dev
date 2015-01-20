@@ -81,6 +81,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAILayer )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
+	REGISTER_LUA_CLASS ( MOAIMatrix )
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIMultiTexture )

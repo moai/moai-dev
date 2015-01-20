@@ -1000,6 +1000,40 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
+				return true;
+			}
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DBody::Destroy () {
 
 	b2World* world = this->mWorld->mWorld;
@@ -1099,37 +1133,6 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
-		const b2Transform & xform = mBody->GetTransform();
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-			case MOAITransform::ATTR_X_LOC: {
-				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
-				return true;
-			}
-
-			case MOAITransform::ATTR_Y_LOC: {
-				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
-				return true;	
-			}
-
-			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );				
-				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
-				return true;	
-			}
-
-
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//

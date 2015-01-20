@@ -699,7 +699,7 @@
 			isa = PBXGroup;
 			children = (
 				CD2FCFD31832EA10000C3674 /* libmoai-ios.a */,
-				CD1845201A626B9500FCCCE0 /* libmoai-apple.a */,
+				CD1845201A626B9500FCCCE0 /* libmoai-ios-apple.a */,
 				CD2FCFD51832EA10000C3674 /* libmoai-ios-3rdparty-core.a */,
 				CD2FCFD71832EA10000C3674 /* libmoai-ios-3rdparty-crypto.a */,
 				CDDF912219AD2DE800FE962C /* libmoai-ios-adcolony.a */,
@@ -923,7 +923,7 @@
 			remoteRef = CD096FC718E0E55700A36EDD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD1845201A626B9500FCCCE0 /* libmoai-apple.a */ = {
+		CD1845201A626B9500FCCCE0 /* libmoai-ios-apple.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-apple.a";

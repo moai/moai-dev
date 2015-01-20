@@ -124,8 +124,6 @@ public:
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
-	const ZLAffine3D&		GetLocalToWorldMtx			() const;
-	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransform				();
 							~MOAITransform				();
 	void					RegisterLuaClass			( MOAILuaState& state );

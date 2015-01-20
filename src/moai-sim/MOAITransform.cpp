@@ -1008,18 +1008,6 @@ ZLAffine3D MOAITransform::GetBillboardMtx ( const ZLAffine3D& faceCameraMtx ) co
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransform::GetLocalToWorldMtx () const {
-
-	return this->mLocalToWorldMtx;
-}
-
-//----------------------------------------------------------------//
-const ZLAffine3D& MOAITransform::GetWorldToLocalMtx () const {
-
-	return this->mWorldToLocalMtx;
-}
-
-//----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
 	mShearYX ( 0.0f ),
 	mShearZX ( 0.0f ),
