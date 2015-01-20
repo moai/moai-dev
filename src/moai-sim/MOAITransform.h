@@ -73,7 +73,6 @@ protected:
 	static int	_seekRot		( lua_State* L );
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
-	static int	_setParent		( lua_State* L );
 	static int	_setPiv			( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
@@ -84,7 +83,6 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	static float	ClampEuler				( float r );
-	void			OnDepNodeUpdate			();
 
 public:
 
@@ -110,9 +108,6 @@ public:
 		
 		ATTR_ROTATE_QUAT,
 		ATTR_TRANSLATE,
-		
-		INHERIT_LOC,
-		INHERIT_TRANSFORM,
 		
 		TOTAL_ATTR,
 	};

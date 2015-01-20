@@ -728,26 +728,6 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setParent
-	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
-	
-	@in		MOAITransform self
-	@opt	MOAINode parent		Default value is nil.
-	@out	nil
-*/
-int MOAITransform::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	
-	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
-	
-	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setPiv
 	@text	Sets the transform's pivot.
 	
@@ -968,24 +948,6 @@ void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
 	localToWorldMtx.Prepend ( shear );
 	
-	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ), 0 );
-	if ( inherit ) {
-		localToWorldMtx.Append ( *inherit );
-	}
-	else {
-	
-		inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformAttr::Pack ( INHERIT_LOC ), 0 );
-		if ( inherit ) {
-			
-			ZLVec3D loc = this->mLoc;
-			inherit->Transform ( loc );
-			
-			localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
-			localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
-			localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
-		}
-	}
-	
 	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
 		
 		ZLAffine3D pivot;
@@ -1080,13 +1042,6 @@ MOAITransform::~MOAITransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::OnDepNodeUpdate () {
-	
-	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-}
-
-//----------------------------------------------------------------//
 void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
@@ -1105,9 +1060,6 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ));
 	state.SetField ( -1, "ATTR_ROTATE_QUAT",	MOAITransformAttr::Pack ( ATTR_ROTATE_QUAT ));
 	state.SetField ( -1, "ATTR_TRANSLATE",		MOAITransformAttr::Pack ( ATTR_TRANSLATE ));
-	
-	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
-	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
 }
 
 //----------------------------------------------------------------//
@@ -1131,7 +1083,6 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "moveScl",			_moveScl },
 		{ "seek",				_seek },
 		{ "seekLoc",			_seekLoc },
-		{ "setParent",			_setParent },
 		{ "seekPiv",			_seekPiv },
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },
