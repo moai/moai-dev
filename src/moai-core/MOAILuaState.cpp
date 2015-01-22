@@ -102,6 +102,11 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 			case '.':
 				break;
 			
+			// any non-nil type
+			case '@':
+				if ( type == LUA_TNIL ) return false; // TODO: log a message
+				break;
+			
 			// nil
 			case '-':
 				if ( type != LUA_TNIL ) expected = LUA_TNIL;
@@ -179,7 +184,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 	if ( status ) {
-		this->PrintErrors( ZLLog::CONSOLE, status );
+		this->PrintErrors ( ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
