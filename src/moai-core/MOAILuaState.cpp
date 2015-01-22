@@ -101,6 +101,11 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 			case '*':
 			case '.':
 				break;
+			
+			// nil
+			case '-':
+				if ( type != LUA_TNIL ) expected = LUA_TNIL;
+				break;
 		}
 		
 		if ( expected != LUA_TNONE ) {

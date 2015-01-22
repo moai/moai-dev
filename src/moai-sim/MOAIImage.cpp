@@ -815,7 +815,7 @@ int MOAIImage::_write ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	cc8* format = state.GetValue < cc8* >( 2, "png" );
+	cc8* format = state.GetValue < cc8* >( 3, "png" );
 	
 	ZLFileStream stream;
 	stream.OpenWrite ( filename );
