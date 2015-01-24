@@ -421,6 +421,50 @@ MOAISim.extend (
 )
 
 --============================================================--
+-- MOAITestMgr
+--============================================================--
+MOAITestMgr.extend (
+
+	'MOAITestMgr',
+	
+	----------------------------------------------------------------
+	function ( class, superClass )
+
+		local superError		= superClass.error
+		local superPopTest		= superClass.pop_test
+		local superPushTest		= superClass.push_test
+
+		class.error				= function () assert ( false ) end
+		class.pop_test			= function () assert ( false ) end
+		class.push_test			= function () assert ( false ) end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		function class.test ( s, f  )
+			
+			superPushTest ( s )
+
+			local co = coroutine.create ( f )
+
+			while true do
+
+				local success, err = coroutine.resume ( co )
+
+				if not success then
+					superError ( err, co )
+				end
+
+				if coroutine.status ( co ) == 'dead' then break end
+				coroutine.yield ()
+			end
+
+			superPopTest ()
+		end
+
+	end
+)
+
+--============================================================--
 -- MOAITextLabel
 --============================================================--
 MOAITextLabel.extend (

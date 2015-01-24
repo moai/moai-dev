@@ -4,9 +4,11 @@ PROJECT_DIR = WORKING_DIR .. 'project'
 STAGING_DIR = WORKING_DIR .. 'staging'
 TESTING_DIR = WORKING_DIR .. 'testing'
 
-local log = {}
+MOAISim.openWindow ( "test", 640, 480 )
 
-local bootstrap = function ( mode, processResults )
+gLog = {}
+
+local bootstrap = function ( mode )
 
 	local filename = 'main.lua'
 
@@ -24,16 +26,13 @@ local bootstrap = function ( mode, processResults )
 
 			if func then
 
-				local suiteName = processResults and ( env.TEST_SUITE or MOAIFileSystem.getWorkingDirectory ())
+				if mode == 'stage' then
+					func ()
+				end
 
-				func ()
-
-				if suiteName then
-					local results = {
-						suite = suiteName,
-						log = MOAITestMgr.results (),
-					}
-					table.insert ( log, results )
+				if mode == 'test' then
+					MOAITestMgr.test ( env.TEST_SUITE, func )
+					table.insert ( gLog, MOAITestMgr.results ())
 				end
 			end
 		else
@@ -42,16 +41,54 @@ local bootstrap = function ( mode, processResults )
 	end
 end
 
-MOAITestMgr.setProjectDir ( PROJECT_DIR )
-MOAITestMgr.setStagingDir ( STAGING_DIR )
-MOAITestMgr.setTestingDir ( TESTING_DIR )
+local runTests = function ()
 
-MOAITestMgr.setStagingFunc ( function () bootstrap ( 'stage', false ) end )
-MOAITestMgr.setTestingFunc ( function () bootstrap ( 'test', true ) end )
+	if not MOAIFileSystem.checkPathExists ( PROJECT_DIR ) then return end
 
-MOAITestMgr.runTests ()
+	local oldPath = MOAIFileSystem.getWorkingDirectory ()
 
-local fileStream = MOAIFileStream.new ()
-fileStream:open ( 'log.json', MOAIFileStream.READ_WRITE_NEW )
-fileStream:write ( MOAIJsonParser.encode ( log, MOAIJsonParser.JSON_INDENT ))
-fileStream:close ()
+	local dirs = MOAIFileSystem.listDirectories ( PROJECT_DIR ) or {}
+	for i, subdir in ipairs ( dirs ) do
+
+		MOAITestMgr.suite ( subdir )
+
+		local projectDir = PROJECT_DIR .. subdir
+		local stagingDir = STAGING_DIR .. subdir
+		local testingDir = TESTING_DIR .. subdir
+
+		if not MOAIFileSystem.checkFileExists ( stagingDir ) then
+			MOAIFileSystem.copy ( projectDir, stagingDir )
+			MOAIFileSystem.setWorkingDirectory ( stagingDir )
+			bootstrap ( 'stage' )
+		end
+
+		MOAIFileSystem.deleteDirectory ( testingDir, true )
+		MOAIFileSystem.copy ( stagingDir, testingDir )
+
+		MOAIFileSystem.setWorkingDirectory ( testingDir )
+		bootstrap ( 'test' )
+	end
+
+	MOAIFileSystem.setWorkingDirectory ( oldPath )
+end
+
+--MOAITestMgr.setProjectDir ( PROJECT_DIR )
+--MOAITestMgr.setStagingDir ( STAGING_DIR )
+--MOAITestMgr.setTestingDir ( TESTING_DIR )
+
+--MOAITestMgr.setStagingFunc ( function () bootstrap ( 'stage' ) end )
+--MOAITestMgr.setTestingFunc ( function () bootstrap ( 'test' ) end )
+
+--MOAITestMgr.runTests ()
+
+local thread = MOAICoroutine.new ()
+thread:run ( function ()
+
+	runTests ()
+
+	local fileStream = MOAIFileStream.new ()
+	fileStream:open ( 'log.json', MOAIFileStream.READ_WRITE_NEW )
+	fileStream:write ( MOAIJsonParser.encode ( gLog, MOAIJsonParser.JSON_INDENT ))
+	fileStream:close ()
+
+end )

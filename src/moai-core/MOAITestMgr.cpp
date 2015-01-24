@@ -18,11 +18,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITestResults::Push ( lua_State* L ) {
+void MOAITestResult::Push ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
 	lua_newtable ( state );
+
+	state.Push ( this->mName );
+	lua_setfield ( state, -2, "name" );
+
+	state.Push ( this->mPassed );
+	lua_setfield ( state, -2, "passed" );
+
+	if ( !this->mPassed ) {
+		state.Push ( this->mErrorMsg );
+		lua_setfield ( state, -2, "error" );
+	}
 
 	lua_newtable ( state );
 	CommentsIt commentsIt = this->mComments.begin ();
@@ -33,13 +44,15 @@ void MOAITestResults::Push ( lua_State* L ) {
 	}
 	lua_setfield ( state, -2, "comments" );
 	
-	state.Push ( this->mPassed );
-	lua_setfield ( state, -2, "passed" );
-	
-	if ( !this->mPassed ) {
-		state.Push ( this->mErrorMsg );
-		lua_setfield ( state, -2, "error" );
+	lua_newtable ( L );
+	ChildrenIt childrenIt = this->mChildren.begin ();
+	for ( u32 i = 0; childrenIt != this->mChildren.end (); ++childrenIt, ++i ) {
+		MOAITestResult& child = *childrenIt;
+		lua_pushnumber ( L, i + 1 );
+		child.Push ( L );
+		lua_settable ( L, -3 );
 	}
+	lua_setfield ( L, -2, "children" );
 }
 
 //================================================================//
@@ -62,39 +75,77 @@ int MOAITestMgr::_assert ( lua_State* L ) {
 int MOAITestMgr::_comment ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "S" )
 	
-	assert ( self->mCurrentTestResults );
-	self->mCurrentTestResults->mComments.push_back ( state.GetValue < cc8* >( 1, "" ));
+	assert ( self->mCurrent );
+	self->mCurrent->mComments.push_back ( state.GetValue < cc8* >( 1, "" ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_handleError ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
+int MOAITestMgr::_error ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "SC" )
+
+	assert ( self->mCurrent );
+	MOAITestResult& testResult = *self->mCurrent;
+
 	STLString msg;
-	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
-		msg.write ( "%s\n", state.GetValue < cc8* >( 1, "" ));
-	}
-	msg.append ( state.GetStackTrace ( 0, 2 ));
+	msg.write ( "%s\n", state.GetValue < cc8* >( 1, "" ));
 	
-	state.Push ( msg );
-	return 1;
+	int depth = 0;
+	lua_Debug ar;
+	lua_State* co = lua_tothread ( state, 2 );
+	while ( lua_getstack ( co, depth++, &ar )) {
+		lua_getinfo ( co, "Snl", &ar );
+		if ( ar.currentline > 0 ) {
+			msg.write ( " - line %d in %s:%s ()\n", ar.currentline,  ar.short_src, ar.name ? ar.name : "<unknown>" );
+		}
+	}
+	
+	testResult.mPassed = false;
+	testResult.mErrorMsg = msg;
+	
+	ZLLog::LogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_pop_test ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+	
+	self->mCurrent = self->mCurrent ? self->mCurrent->mParent : 0;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITestMgr::_push_test ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
+
+	MOAITestResult* parent = self->mCurrent;
+
+	if ( !parent ) {
+		if ( self->mRoot ) {
+			delete self->mRoot;
+		}
+		self->mRoot = new MOAITestResult ();
+		self->mRoot->mName = self->mSuiteName;
+	}
+
+	self->mCurrent = parent ? &parent->mChildren.extend_back () : self->mRoot;
+	self->mCurrent->mParent = parent;
+
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+		self->mCurrent->mName = state.GetValue < cc8* >( 1, "" );
+	}
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAITestMgr::_results ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
-	self->PushResultsList ( L );
+	self->PushResults ( L );
 	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAITestMgr::_runTests ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
-	
-	self->RunTests ();
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -138,25 +189,16 @@ int MOAITestMgr::_setTestingFunc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_test ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "SF-" )
+int MOAITestMgr::_suite ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
-	MOAITestResults& testResults = self->mTestResultsList.extend_back ();
-	self->mCurrentTestResults = &testResults;
-
-	lua_pushcfunction ( state, MOAITestMgr::_handleError );
-
-	testResults.mTestName = state.GetValue < cc8* >( 1, "" );
-	state.CopyToTop ( 2 );
-	testResults.mPassed = lua_pcall ( state, 0, 0, 3 ) == 0;
-
-	if ( !testResults.mPassed ) {
-
-		cc8* msg = state.GetValue < cc8* >( -1, "" );
-		testResults.mErrorMsg = msg;
-		
-		ZLLog::LogF ( ZLLog::CONSOLE, "%s - TEST FAILED\n%s\n", testResults.mTestName.c_str (), msg );
+	if ( self->mRoot ) {
+		delete self->mRoot;
+		self->mRoot = 0;
+		self->mCurrent = 0;
 	}
+	
+	self->mSuiteName = state.GetValue < cc8* >( 1, ZLFileSys::GetCurrentPath ());
 	return 0;
 }
 
@@ -166,7 +208,8 @@ int MOAITestMgr::_test ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAITestMgr::MOAITestMgr () :
-	mCurrentTestResults ( 0 ) {
+	mRoot ( 0 ),
+	mCurrent ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -176,17 +219,13 @@ MOAITestMgr::~MOAITestMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::PushResultsList ( lua_State* L ) {
+void MOAITestMgr::PushResults ( lua_State* L ) {
 
-	// results list
-	lua_newtable ( L );
-
-	TestResultsListIt testResultsListIt = this->mTestResultsList.begin ();
-	for ( u32 i = 0; testResultsListIt != this->mTestResultsList.end (); ++testResultsListIt, ++i ) {
-		MOAITestResults& testResults = *testResultsListIt;
-		lua_pushnumber ( L, i + 1 );
-		testResults.Push ( L );
-		lua_settable ( L, -3 );
+	if ( this->mRoot ) {
+		this->mRoot->Push ( L );
+	}
+	else {
+		lua_pushnil ( L );
 	}
 }
 
@@ -196,14 +235,16 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "assert",					_assert },
 		{ "comment",				_comment },
+		{ "error",					_error },
+		{ "pop_test",				_pop_test },
+		{ "push_test",				_push_test },
 		{ "results",				_results },
-		{ "runTests",				_runTests },
 		{ "setProjectDir",			_setProjectDir },
 		{ "setStagingDir",			_setStagingDir },
 		{ "setStagingFunc",			_setStagingFunc },
 		{ "setTestingDir",			_setTestingDir },
 		{ "setTestingFunc",			_setTestingFunc },
-		{ "test",					_test },
+		{ "suite",					_suite },
 		{ NULL, NULL }
 	};
 
@@ -213,53 +254,4 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAITestMgr::RunTests () {
-
-	if ( !ZLFileSys::CheckPathExists ( this->mProjectDir )) return;
-
-	ZLFileSys::AffirmPath ( this->mStagingDir );
-	ZLFileSys::AffirmPath ( this->mTestingDir );
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-
-	STLString oldPath = ZLFileSys::GetCurrentPath ();
-
-	ZLFileSys::SetCurrentPath ( this->mProjectDir );
-
-	ZLDirectoryItr dirItr;
-	dirItr.Start ();
-	
-	while ( dirItr.NextDirectory ()) {
-		
-		this->mTestResultsList.clear ();
-		
-		STLString projectPath = this->mProjectDir + dirItr.Current ();
-		STLString stagingPath = this->mStagingDir + dirItr.Current ();
-		STLString testingPath = this->mTestingDir + dirItr.Current ();
-		
-		if ( !ZLFileSys::CheckPathExists ( stagingPath )) {
-		
-			ZLFileSys::Copy ( projectPath, stagingPath );
-		
-			// execute staging
-			if ( this->mStagingFunc.PushRef ( state )) {
-				ZLFileSys::SetCurrentPath ( stagingPath );
-				state.DebugCall ( 0, 0 );
-			}
-		}
-
-		ZLFileSys::DeleteDirectory ( testingPath, true );
-		ZLFileSys::Copy ( stagingPath, testingPath );
-
-		// execute test
-		if ( this->mTestingFunc.PushRef ( state )) {
-			ZLFileSys::SetCurrentPath ( testingPath );
-			state.DebugCall ( 0, 0 );
-		}
-	}
-	
-	ZLFileSys::SetCurrentPath ( oldPath );
 }
