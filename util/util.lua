@@ -259,11 +259,11 @@ iterateCommandLine = function ( arg )
 
 		for i, v in iter do
 		
-			local escape = string.match ( v, '^%-%-(%w+)' )
+			local escape = string.match ( v, '^%-%-([%w-]+)' )
 		
 			if escape then
 				currentEscape = escape
-				coroutine.yield ( lastEscape, nil, iter )
+				coroutine.yield ( currentEscape, nil, iter )
 			else
 				local escapeStr = string.match ( v, '^%-(%a+)' )
 		
