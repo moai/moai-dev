@@ -529,15 +529,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0300CF6A140DC53C00ABCC5B /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		CD6DC2811574B378008C3996 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -801,7 +792,7 @@
 			buildPhases = (
 				0300CF58140DC53C00ABCC5B /* Sources */,
 				0300CF5C140DC53C00ABCC5B /* Frameworks */,
-				0300CF6A140DC53C00ABCC5B /* CopyFiles */,
+				CD9E5BDF1A7700D500469462 /* Copy Binaries */,
 			);
 			buildRules = (
 			);
@@ -1253,6 +1244,23 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CD9E5BDF1A7700D500469462 /* Copy Binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0300CF58140DC53C00ABCC5B /* Sources */ = {
