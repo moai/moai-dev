@@ -112,7 +112,18 @@ int MOAITestMgr::_error ( lua_State* L ) {
 int MOAITestMgr::_pop_test ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
-	self->mCurrent = self->mCurrent ? self->mCurrent->mParent : 0;
+	if ( self->mCurrent  ) {
+	
+		MOAITestResult& testResult = *self->mCurrent;
+	
+		if (( testResult.mPassed == false ) && testResult.mParent ) {
+			testResult.mParent->mPassed = false;
+		}
+		self->mCurrent = testResult.mParent;
+	}
+	else {
+		self->mCurrent = 0;
+	}
 	return 0;
 }
 
@@ -132,6 +143,7 @@ int MOAITestMgr::_push_test ( lua_State* L ) {
 
 	self->mCurrent = parent ? &parent->mChildren.extend_back () : self->mRoot;
 	self->mCurrent->mParent = parent;
+	self->mCurrent->mPassed = true;
 
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		self->mCurrent->mName = state.GetValue < cc8* >( 1, "" );
@@ -197,7 +209,6 @@ int MOAITestMgr::_suite ( lua_State* L ) {
 		self->mRoot = 0;
 		self->mCurrent = 0;
 	}
-	
 	self->mSuiteName = state.GetValue < cc8* >( 1, ZLFileSys::GetCurrentPath ());
 	return 0;
 }
