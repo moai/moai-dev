@@ -4,6 +4,7 @@
 #ifndef	MOAIVERTEXBUFFER_H
 #define	MOAIVERTEXBUFFER_H
 
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxResource.h>
 
 class MOAIVertexFormat;
@@ -25,19 +26,16 @@ public:
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
-	public ZLByteStream,
-	public MOAIGfxResource,
-	public MOAIStream {
+	public MOAIGfxBufferBase,
+	public ZLByteStream {
 private:
 
 	static const u32 NULL_FORMAT = 0xffffffff;
 
 	u32										mDefaultFormat;
 	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
-	u32										mVertexCount;
 
 	ZLLeanArray < u8 >			mBuffer;
-	ZLBox						mBounds;
 	
 	ZLLeanArray < MOAIVbo >		mVBOs;
 	u32							mCurrentVBO;
@@ -71,12 +69,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
 	GET ( const ZLBox&, Bounds, mBounds )
-	GET ( u32, VertexCount, mVertexCount )
+	GET ( u32, VertexCount, mTotalElements )
 	
 	//----------------------------------------------------------------//
 	void						Bless					();
 	void						Clear					();
-	const MOAIVertexFormat*		GetFormat				();
+	size_t						GetSize					();
+	const MOAIVertexFormat*		GetVertexFormat			() const;
 								MOAIVertexBuffer		();
 								~MOAIVertexBuffer		();
 	void						RegisterLuaClass		( MOAILuaState& state );

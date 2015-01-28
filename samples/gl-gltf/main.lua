@@ -4,48 +4,113 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-ARRAY_BUFFER			= 34962
-ELEMENT_ARRAY_BUFFER	= 34963
-DATA_BUFFER				= 'DATA_BUFFER'
+MOAISim.openWindow ( "test", 320, 480 )
 
-MOAIFileSystem.setWorkingDirectory ( '../resources/gltf/duck' )
+viewport = MOAIViewport.new ()
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 
-local json
+layer = MOAILayer.new ()
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
-local fp = io.open ( 'duck.gltf', 'r' )
-if fp then
-	json = fp:read ( "*all" )
-	fp:close ()
-end
+camera = MOAICamera.new ()
+camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+layer:setCamera ( camera )
 
-local gltf = json and MOAIJsonParser.decode ( json )
-
-local gBuffers = {}
-
-for bufferViewName, bufferView in pairs ( gltf.bufferViews ) do
+function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	
-	local buffer = gBuffers [ bufferView.buffer ] or {}
-	gBuffers [ bufferView.buffer ] = buffer
-
-	local targets = buffer.targets or {}
-	buffer.targets = targets
-
-	local targetName = bufferView.target or DATA_BUFFER
-
-	local target = targets [ targetName ] or {}
-	targets [ targetName ] = target
-
-	target [ bufferViewName ] = bufferView
-end
-
-for bufferName, buffer in pairs ( gBuffers ) do
-
-	print ( 'buffer', bufferName )
-	for targetName, target in pairs ( buffer.targets ) do
-		print ( '\ttarget', targetName )
-
-		for bufferViewName, bufferView in pairs ( target ) do
-			print ( '\t\tbufferView', bufferViewName )
-		end
+	local function pushPoint ( points, x, y, z )
+	
+		local point = {}
+		point.x = x
+		point.y = y
+		point.z = z
+		
+		table.insert ( points, point )
 	end
+
+	local function writeTri ( vbo, p1, p2, p3, uv1, uv2, uv3 )
+		
+		vbo:writeFloat ( p1.x, p1.y, p1.z )
+		vbo:writeFloat ( uv1.x, uv1.y )
+		vbo:writeColor32 ( 1, 1, 1 )
+		
+		vbo:writeFloat ( p2.x, p2.y, p2.z )
+		vbo:writeFloat ( uv2.x, uv2.y )
+		vbo:writeColor32 ( 1, 1, 1 )
+
+		vbo:writeFloat ( p3.x, p3.y, p3.z )
+		vbo:writeFloat ( uv3.x, uv3.y  )
+		vbo:writeColor32 ( 1, 1, 1 )
+	end
+	
+	local function writeFace ( vbo, p1, p2, p3, p4, uv1, uv2, uv3, uv4 )
+
+		writeTri ( vbo, p1, p2, p4, uv1, uv2, uv4 )
+		writeTri ( vbo, p2, p3, p4, uv2, uv3, uv4 )
+	end
+	
+	local p = {}
+	
+	pushPoint ( p, xMin, yMax, zMax ) -- p1
+	pushPoint ( p, xMin, yMin, zMax ) -- p2
+	pushPoint ( p, xMax, yMin, zMax ) -- p3
+	pushPoint ( p, xMax, yMax, zMax ) -- p4
+	
+	pushPoint ( p, xMin, yMax, zMin ) -- p5
+	pushPoint ( p, xMin, yMin, zMin  ) -- p6
+	pushPoint ( p, xMax, yMin, zMin  ) -- p7
+	pushPoint ( p, xMax, yMax, zMin  ) -- p8
+
+	local uv = {}
+	
+	pushPoint ( uv, 0, 0, 0 )
+	pushPoint ( uv, 0, 1, 0 )
+	pushPoint ( uv, 1, 1, 0 )
+	pushPoint ( uv, 1, 0, 0 )
+	
+	local vertexFormat = MOAIVertexFormat.new ()
+	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
+	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
+	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+
+	--local vbo = MOAIVertexBuffer.new ()
+	--vbo:setFormat ( vertexFormat )
+	--vbo:reserveVerts ( 36 )
+	
+	local vbo = MOAIGfxBuffer.new ()
+	vbo:reserve ( vertexFormat:getVertexSize () * 36 )
+
+	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+	writeFace ( vbo, p [ 4 ], p [ 3 ], p [ 7 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+	writeFace ( vbo, p [ 8 ], p [ 7 ], p [ 6 ], p [ 5 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+	writeFace ( vbo, p [ 5 ], p [ 6 ], p [ 2 ], p [ 1 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
+
+	vbo:bless ( vertexFormat )
+
+	local mesh = MOAIMesh.new ()
+	mesh:setTexture ( texture )
+	mesh:setFormat ( vertexFormat )
+	mesh:setVertexBuffer ( vbo )
+	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+	
+	return mesh
 end
+
+function makeCube ( size, texture )
+
+	size = size * 0.5
+	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
+end
+
+local mesh = makeCube ( 128, '../resources/moai.png' )
+
+prop = MOAIProp.new ()
+prop:setDeck ( mesh )
+prop:moveRot ( 360, 360, 0, 6 )
+prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
+prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+layer:insertProp ( prop )

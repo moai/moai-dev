@@ -12,12 +12,12 @@ class MOAIVertexFormat;
 //================================================================//
 // MOAIVbo
 //================================================================//
-class MOAIVbo {
-public:
-
-	MOAILuaSharedPtr < MOAIGfxBuffer >		mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
-};
+//class MOAIVbo {
+//public:
+//
+//	MOAILuaSharedPtr < MOAIGfxBuffer >		mBuffer;
+//	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
+//};
 
 //================================================================//
 // MOAIGfxPrim
@@ -30,7 +30,7 @@ private:
 	ZLLeanArray < u32 >						mVAOs; // vertex array object to bind all the vbo state
 	u32										mCurrentVAO;
 
-	ZLLeanArray < MOAIVbo >					mVBOs;
+	//ZLLeanArray < MOAIVbo >					mVBOs;
 
 	MOAILuaSharedPtr < MOAIGfxBuffer >		mIndexBuffer;
 

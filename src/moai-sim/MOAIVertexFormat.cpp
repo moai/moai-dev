@@ -117,6 +117,15 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
+
+	state.Push ( self->mVertexSize );
+	return 1;
+}
+
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
@@ -186,7 +195,15 @@ void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) const {
+bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, void* buffer, size_t size ) const {
+
+	MOAIByteStream stream;
+	stream.Open ( buffer, size );
+	return this->ComputeBounds ( bounds, stream, size );
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return false;
@@ -198,20 +215,27 @@ bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, ZLBox& bounds ) c
 	if ( coordAttr.mType != ZGL_TYPE_FLOAT ) return false; // TODO: handle other types
 	if ( coordAttr.mSize < 2 ) return false;
 	
-	buffer = ( void* )(( size_t )buffer + coordAttr.mOffset );
+	return MOAIVertexFormat::ComputeBounds ( bounds, stream, size, coordAttr.mOffset, this->mVertexSize, coordAttr.mSize );
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t size, size_t offset, size_t stride, size_t components ) {
+
+	if ( components < 2 ) return false;
+
+	u32 total = stride ? ( size / stride ) : 0;
+	if ( !total ) return false;
 	
-	float* components = ( float* )buffer;
+	stream.Seek ( offset, SEEK_CUR );
 	
-	ZLVec3D coord ( components [ 0 ], components [ 1 ], (  coordAttr.mSize > 2 ? components [ 2 ] : 0.0f ));
+	ZLVec3D coord = MOAIVertexFormat::ReadCoord ( stream, stride, components );
 	
 	bounds.Init ( coord );
 	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	for ( u32 i = 1; i < total; ++i ) {
-		
-		buffer = ( void* )(( size_t )buffer + this->mVertexSize );
-		components = ( float* )buffer;
-		coord.Init ( components [ 0 ], components [ 1 ], (  coordAttr.mSize > 2 ? components [ 2 ] : 0.0f ));
+	
+		coord = MOAIVertexFormat::ReadCoord ( stream, stride, components );
 		bounds.Grow ( coord );
 	}
 	return true;
@@ -322,6 +346,21 @@ MOAIVertexFormat::~MOAIVertexFormat () {
 }
 
 //----------------------------------------------------------------//
+ZLVec3D MOAIVertexFormat::ReadCoord ( MOAIStream& stream, size_t stride, size_t components ) {
+
+	size_t next = stream.GetCursor () + stride;
+	
+	ZLVec3D coord (
+		stream.Read < float >( 0.0f ),
+		stream.Read < float >( 0.0f ),
+		components > 2 ? stream.Read < float >( 0.0f ) : 0.0f
+	);
+	
+	stream.Seek ( next, SEEK_SET );
+	return coord;
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GL_BYTE", ( u32 )ZGL_TYPE_BYTE );
@@ -341,6 +380,7 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "declareCoord",			_declareCoord },
 		{ "declareNormal",			_declareNormal },
 		{ "declareUV",				_declareUV },
+		{ "getVertexSize",			_getVertexSize },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );

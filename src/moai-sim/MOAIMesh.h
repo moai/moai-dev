@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAIDeck.h>
 
+class MOAIGfxBuffer;
 class MOAIIndexBuffer;
 class MOAITextureBase;
 class MOAIVertexBuffer;
@@ -30,7 +31,8 @@ class MOAIMesh :
 private:
 
 	MOAILuaSharedPtr < MOAIIndexBuffer >	mIndexBuffer;
-	MOAILuaSharedPtr < MOAIVertexBuffer >	mVertexBuffer;
+	MOAILuaSharedPtr < MOAIGfxBufferBase >	mVertexBuffer;
+	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
 
 	u32		mPrimType;
 	
@@ -38,6 +40,7 @@ private:
 	float	mPointSize;
 
 	//----------------------------------------------------------------//
+	static int		_setFormat			( lua_State* L );
 	static int		_setIndexBuffer		( lua_State* L );
 	static int		_setPenWidth		( lua_State* L );
 	static int		_setPointSize		( lua_State* L );

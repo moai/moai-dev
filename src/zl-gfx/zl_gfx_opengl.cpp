@@ -1307,7 +1307,7 @@ void* zglMapBuffer ( u32 target ) {
 	#ifdef MOAI_OS_IPHONE
 		return glMapBufferOES ( _remapEnum ( target ), 0x88B9 ); // TODO: what's wrong with Xcode?
 	#else
-		return 0;
+		return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
 	#endif
 }
 
@@ -1319,6 +1319,8 @@ void zglUnmapBuffer ( u32 target ) {
 
 	#ifdef MOAI_OS_IPHONE
 		glUnmapBufferOES ( _remapEnum ( target ));
+	#else
+		glUnmapBuffer ( _remapEnum ( target ));
 	#endif
 }
 

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
@@ -16,6 +17,22 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@lua	setFormat
+	@text	Sets the vertex format for the mesh.
+	
+	@in		MOAIMesh self
+	@in		MOAIVertexFormat format
+	@out	nil
+*/
+int MOAIMesh::_setFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2, true ));
+
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	setIndexBuffer
@@ -95,7 +112,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
-	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIVertexBuffer >( 2, true ));
+	self->mVertexBuffer.Set ( *self, state.GetLuaObject < MOAIGfxBufferBase >( 2, true ));
 	self->SetBoundsDirty ();
 
 	return 0;
@@ -121,13 +138,18 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 	UNUSED ( zScl );
 
 	// TODO: make use of offset and scale
-
+	
 	if ( !this->mVertexBuffer ) return;
+	
+	const MOAIVertexFormat* format = this->mFormat ? this->mFormat : this->mVertexBuffer->GetVertexFormat ();
+	if ( !format ) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.Flush ();
 
 	if ( this->mVertexBuffer->Bind ()) {
+
+		format->Bind ( 0 );
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
@@ -146,7 +168,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 			}
 		}
 		else {
-			zglDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetVertexCount ());
+			zglDrawArrays ( this->mPrimType, 0, this->mVertexBuffer->GetTotalElements ());
 		}
 		this->mVertexBuffer->Unbind ();
 	}
@@ -156,12 +178,14 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 ZLBox MOAIMesh::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	
-	if ( this->mVertexBuffer ) {
-		return this->mVertexBuffer->GetBounds ();
-	}
-	
 	ZLBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	if ( this->mVertexBuffer && this->mVertexBuffer->HasBounds ()) {
+		this->mVertexBuffer->GetBounds ( bounds );
+	}
+	else {
+		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	}
 	return bounds;
 }
 
@@ -206,6 +230,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "setFormat",				_setFormat },
 		{ "setIndexBuffer",			_setIndexBuffer },
 		{ "setPenWidth",			_setPenWidth },
 		{ "setPointSize",			_setPointSize },

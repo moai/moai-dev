@@ -9,8 +9,94 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
+// MOAIGfxBufferBase
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIGfxBufferBase::GetBounds ( ZLBox& bounds ) {
+
+	if ( this->mHasBounds ) {
+		bounds = this->mBounds;
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBufferBase::MOAIGfxBufferBase () :
+	mTotalElements ( 0 ),
+	mHasBounds ( false ) {
+
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIGfxResource )
+		RTTI_EXTEND ( MOAIStream )
+	RTTI_END
+
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBufferBase::~MOAIGfxBufferBase () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferBase::RegisterLuaClass ( MOAILuaState& state ) {
+
+	MOAIGfxResource::RegisterLuaClass ( state );
+	MOAIStream::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIGfxResource::RegisterLuaFuncs ( state );
+	MOAIStream::RegisterLuaFuncs ( state );
+}
+
+//================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxBuffer::_bless ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+
+	self->mTotalElements = 0;
+	self->mHasBounds = false;
+	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	// offset, stride, components
+	if ( state.CheckParams ( 2, "NNN", false )) {
+	
+		u32 offset			= state.GetValue < u32 >( 2, 0 );
+		u32 stride			= state.GetValue < u32 >( 3, 0 );
+		u32 components		= state.GetValue < u32 >( 4, 0 );
+	
+		self->mHasBounds = MOAIVertexFormat::ComputeBounds ( self->mBounds, *self, self->GetSize (), offset, stride, components );
+		self->mTotalElements = ( u32 )( self->GetSize () / stride );
+		
+		self->DoCPUAffirm ();
+		self->mIsDirty = true;
+	}
+	
+	// offset, stride, components
+	if ( state.CheckParams ( 2, "U", false )) {
+	
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, 0 );
+		if ( format ) {
+		
+			self->Seek ( 0, SEEK_SET );
+			self->mHasBounds = format->ComputeBounds ( self->mBounds, *self, self->GetSize ());
+			self->mTotalElements = ( u32 )( self->GetSize () / format->GetVertexSize ());
+			
+			self->DoCPUAffirm ();
+			self->mIsDirty = true;
+		}
+	}
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	release
@@ -106,9 +192,15 @@ void MOAIGfxBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxBuffer::IsDirty () {
+size_t MOAIGfxBuffer::GetSize () {
 
-	this->mHint;
+	return this->mStream ? this->mStream->GetLength () : 0;
+}
+
+//----------------------------------------------------------------//
+const MOAIVertexFormat* MOAIGfxBuffer::GetVertexFormat () const {
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -121,13 +213,11 @@ u32 MOAIGfxBuffer::GetLoadingPolicy () {
 MOAIGfxBuffer::MOAIGfxBuffer () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
-	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ),
 	mIsDirty ( false ),
 	mIsDynamic ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxResource )
-		RTTI_EXTEND ( MOAIStream )
+		RTTI_EXTEND ( MOAIGfxBufferBase )
 	RTTI_END
 }
 
@@ -148,29 +238,41 @@ void MOAIGfxBuffer::OnCPUDestroy () {
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUBind () {
-		
-	if ( this->mIsDirty ) {
+	
+	bool renew = this->mIsDirty && this->mStream && this->mStream->GetLength ();
+	
+	if ( renew ) {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 	}
 	
-	MOAIVbo& vbo = this->mVBOs [ this->mCurrentVBO ];
+	u32 vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( this->mIsDirty ) {
+	if ( vbo ) {
+	
+		zglBindBuffer ( this->mTarget, vbo );
 		
-		zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, vbo.mVBO );
-		void* buffer = zglMapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
-		memcpy ( buffer, this->mBuffer, this->GetLength ());
-		zglUnmapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
-		zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, 0 );
+		if ( renew ) {
 		
-		this->mIsDirty = false;
+			void* buffer = zglMapBuffer ( this->mTarget );
+			if ( buffer ) {
+				this->mStream->Seek ( 0, SEEK_SET );
+				this->mStream->ReadBytes ( buffer, this->GetLength ());
+			}
+			zglUnmapBuffer ( this->mTarget );
+			this->mIsDirty = false;
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxBuffer::OnGPUCreate () {
 
+	if ( !this->mVBOs.Size ()) {
+		this->mVBOs.Init ( 1 );
+	}
+
 	u32 count = 0;
+	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		
@@ -178,11 +280,11 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 		if ( vbo ) {
 		
 			zglBindBuffer ( this->mTarget, vbo );
-			zglBufferData ( this->mTarget, this->GetLength (), 0, this->mHint );
-			zglBindBuffer ( this->mTarget, 0 ); // OK?
+			zglBufferData ( this->mTarget, 1000, 0, hint );
+			zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, 0 ); // OK?
+			
 			count++;
 		}
-		
 		this->mVBOs [ i ] = vbo;
 	}
 	return count == this->mVBOs.Size ();
@@ -214,17 +316,16 @@ void MOAIGfxBuffer::OnGPUUnbind () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaClass ( state );
-	MOAIStream::RegisterLuaClass ( state );
+	MOAIGfxBufferBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaFuncs ( state );
-	MOAIStream::RegisterLuaFuncs ( state );
+	MOAIGfxBufferBase::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "bless",					_bless },
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },
@@ -238,12 +339,15 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Reserve ( u32 size ) {
-
-	this->mBuffer.Init ( size );
 	
-	MOAIByteStream* byteStream = new MOAIByteStream ();
-	byteStream->SetBuffer ( this->mBuffer, size );
+	MOAIByteStream* byteStream = 0;
+	
+	if ( size ) {
+		byteStream = new MOAIByteStream ();
+		byteStream->Open ( size );
+	}
 	this->SetProxiedStream ( byteStream );
+	this->mStream.Set ( *this, byteStream );
 }
 
 //----------------------------------------------------------------//

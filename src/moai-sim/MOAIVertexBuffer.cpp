@@ -151,13 +151,16 @@ int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::Bless () {
 
+	this->mTotalElements = 0;
+	this->mHasBounds = false;
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mVertexCount = 0;
 	
-	const MOAIVertexFormat* format = this->GetFormat ();
+	const MOAIVertexFormat* format = this->GetVertexFormat ();
 	if ( format ) {
-		format->ComputeBounds ( this->mBuffer, this->GetLength (), this->mBounds );
-		this->mVertexCount = ( u32 )( this->GetLength () / format->GetVertexSize ());
+		this->Seek ( 0, SEEK_SET );
+		this->mHasBounds = format->ComputeBounds ( this->mBounds, this->mBuffer, this->GetLength ());
+		this->mTotalElements = ( u32 )( this->GetLength () / format->GetVertexSize ());
+		this->DoCPUAffirm ();
 	}
 	
 	this->mIsDirty = this->mUseVBOs;
@@ -174,7 +177,13 @@ void MOAIVertexBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-const MOAIVertexFormat* MOAIVertexBuffer::GetFormat () {
+size_t MOAIVertexBuffer::GetSize () {
+
+	return this->GetLength ();
+}
+
+//----------------------------------------------------------------//
+const MOAIVertexFormat* MOAIVertexBuffer::GetVertexFormat () const {
 
 	if ( this->mFormat ) return this->mFormat;
 	if ( this->mDefaultFormat != NULL_FORMAT ) return &MOAIVertexFormatMgr::Get ().GetFormat ( this->mDefaultFormat );
@@ -190,18 +199,14 @@ u32 MOAIVertexBuffer::GetLoadingPolicy () {
 //----------------------------------------------------------------//
 MOAIVertexBuffer::MOAIVertexBuffer () :
 	mDefaultFormat ( NULL_FORMAT ),
-	mVertexCount ( 0 ),
 	mCurrentVBO ( 0 ),
 	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ),
 	mIsDirty ( false ),
 	mUseVBOs ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxResource )
-		RTTI_EXTEND ( MOAIStream )
+		RTTI_EXTEND ( MOAIGfxBufferBase )
 	RTTI_END
-	
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -247,7 +252,7 @@ void MOAIVertexBuffer::OnGPUBind () {
 	}
 	else {
 	
-		const MOAIVertexFormat* format = this->GetFormat ();
+		const MOAIVertexFormat* format = this->GetVertexFormat ();
 		if ( format && this->mBuffer ) {
 			MOAIGfxDevice::Get ().SetVertexFormat ( *format, this->mBuffer );
 		}
@@ -261,7 +266,7 @@ bool MOAIVertexBuffer::OnGPUCreate () {
 
 	if ( this->mUseVBOs ) {
 
-		const MOAIVertexFormat* format = this->GetFormat ();
+		const MOAIVertexFormat* format = this->GetVertexFormat ();
 		u32 count = 0;
 
 		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
@@ -288,7 +293,7 @@ bool MOAIVertexBuffer::OnGPUCreate () {
 		isValid = count == this->mVBOs.Size ();
 	}
 	else {
-		const MOAIVertexFormat* format = this->GetFormat ();
+		const MOAIVertexFormat* format = this->GetVertexFormat ();
 		isValid = ( format && this->GetLength ());
 	}
 	
@@ -320,7 +325,7 @@ void MOAIVertexBuffer::OnGPUUnbind () {
 	if ( this->mUseVBOs ) {
 		zglBindVertexArray ( 0 );
 	}
-	else if ( this->GetFormat ()) {
+	else if ( this->GetVertexFormat ()) {
 		MOAIGfxDevice::Get ().SetVertexFormat ();
 	}
 }
@@ -328,15 +333,13 @@ void MOAIVertexBuffer::OnGPUUnbind () {
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaClass ( state );
-	MOAIStream::RegisterLuaClass ( state );
+	MOAIGfxBufferBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaFuncs ( state );
-	MOAIStream::RegisterLuaFuncs ( state );
+	MOAIGfxBufferBase::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "bless",					_bless },
@@ -358,7 +361,6 @@ void MOAIVertexBuffer::Reserve ( u32 size ) {
 
 	this->mBuffer.Init ( size );
 	this->SetBuffer ( this->mBuffer, size );
-	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//

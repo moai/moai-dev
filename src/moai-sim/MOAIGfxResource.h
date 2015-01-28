@@ -75,7 +75,6 @@ protected:
 	
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
-	
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
 	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
