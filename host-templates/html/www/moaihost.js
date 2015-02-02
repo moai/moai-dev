@@ -338,7 +338,6 @@ MoaiJS.prototype.getEmscripten = function() {
 
 	this.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
 	this.AKUGetSimStep = Module.cwrap('AKUGetSimStep','number',null);
-	this.AKUEnqueueKeyboardShiftEvent = Module.cwrap('AKUEnqueueKeyboardShiftEvent','number',['number','number','number']);
 	this.onPaint = Module.cwrap('onPaint','number',null);
 	this.onReshape = Module.cwrap('onReshape','number',['number','number']);
 	this.onTimer = Module.cwrap('onTimer','number',null);
@@ -346,6 +345,7 @@ MoaiJS.prototype.getEmscripten = function() {
 	this.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
 	this.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
 	this.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
+	this.onChar = Module.cwrap('onChar','number',['number']);
 
 	//callbacks
 	this.emscripten.SetOpenWindowFunc(this.OpenWindowFunc.bind(this));
@@ -415,78 +415,67 @@ MoaiJS.prototype.mousemove = function(e) {
     this.onMouseMove(Math.floor(canX*this.canvasScale),Math.floor(canY*this.canvasScale));
 }
 
+var charLookup = {
+	0x20:' ',
+	0x30:'0', 0x31:'1', 0x32:'2', 0x33:'3', 0x34:'4', 0x35:'5', 0x36:'6', 0x37:'7', 0x38:'8', 0x39:'9',
+	0x41:'a', 0x42:'b', 0x43:'c', 0x44:'d', 0x45:'e', 0x46:'f', 0x47:'g', 0x48:'h', 0x49:'i', 0x4A:'j',
+	0x4B:'k', 0x4C:'l', 0x4D:'m', 0x4E:'n', 0x4F:'o', 0x50:'p', 0x51:'q', 0x52:'r', 0x53:'s', 0x54:'t',
+	0x55:'u', 0x56:'v', 0x57:'w', 0x58:'x', 0x59:'y', 0x5A:'z',
+	0xBA:';', 0xBB:'=', 0xBC:',', 0xBD:'-', 0xBE:'.', 0xBF:'/', 0xC0:'`', 0xDB:'[', 0xDC:'\\', 0xDD:']', 0xDE:"'" 
+}
 
-var getASCIIKey= function(event) {
-      if (event['ctrlKey'] || event['altKey'] || event['metaKey']) return null;
+function getMoaiKeyCode(keyCode) {
+	// Browsers send virtual key codes, see http://msdn.microsoft.com/library/windows/desktop/dd375731.
+	// Moai's key codes are based on virtual key codes, with two modifications:
+	// - Keys that produce a character on a US keyboard use that character's ASCII code instead
+	// - To avoid clashes, all regular key codes are offset by 256.
+	if (keyCode == 0) return;
+	if (keyCode in charLookup) return charLookup[keyCode].charCodeAt(0);
+	return keyCode + 256;
+};
 
-      var keycode = event['keyCode'];
-
-      /* The exact list is soooo hard to find in a canonical place! */
-
-      if (48 <= keycode && keycode <= 57)
-        return keycode; // numeric  TODO handle shift?
-      if (65 <= keycode && keycode <= 90)
-	return event['shiftKey'] ? keycode : keycode + 32;
-      if (106 <= keycode && keycode <= 111)
-	return keycode - 106 + 42; // *,+-./  TODO handle shift?
-
-      switch (keycode) {
-        case 27: // escape
-        case 32: // space
-        case 61: // equal
-          return keycode;
-      }
-
-      var s = event['shiftKey'];
-      switch (keycode) {
-        case 186: return s ? 58 : 59; // colon / semi-colon
-        case 187: return s ? 43 : 61; // add / equal (these two may be wrong)
-        case 188: return s ? 60 : 44; // less-than / comma
-        case 189: return s ? 95 : 45; // dash
-        case 190: return s ? 62 : 46; // greater-than / period
-        case 191: return s ? 63 : 47; // forward slash
-        case 219: return s ? 123 : 91; // open bracket
-        case 220: return s ? 124 : 47; // back slash
-        case 221: return s ? 125 : 93; // close braket
-        case 222: return s ? 34 : 39; // single quote
-      }
-
-      return null;
-    };
-
-
-
+function keyIsPrintable(keyCode) {
+	return keyCode in charLookup;
+}
 
 MoaiJS.prototype.keydown = function(e) {
-	if (e.keycode == 16) {
-		this.AKUEnqueueKeyboardShiftEvent(0,0,1); //device, keyboard, true
-	} else {
-		var key = getASCIIKey(e);
-		this.onKeyDown(key?key:e.keyCode);
+	var moaiKeyCode = getMoaiKeyCode(e.keyCode);
+	if (moaiKeyCode) {
+		this.onKeyDown(moaiKeyCode);
 	}
-	e.preventDefault();
-
+	
+	// If we prevent further event handling, keypress() will not be called either.
+	// So let's do that only for keys that don't represent a character.
+	// That's not perfect (Ctrl+D will still be handled by the brower),
+	// but it's the best I could come up with.
+	if (!keyIsPrintable(e.keyCode)) {
+		e.preventDefault();
+	}
+	
 	if (e.keyCode == 8) {
         return false; //eat backspace !
     }
 }
 
 MoaiJS.prototype.keyup = function(e) {
-	if (e.keyCode == 16) {
-		this.AKUEnqueueKeyboardShiftEvent(0,0,0); //device, keyboard, false
-	} else {
-		var key = getASCIIKey(e);
-		this.onKeyUp(key?key:e.keyCode);
+	var moaiKeyCode = getMoaiKeyCode(e.keyCode);
+	if (moaiKeyCode) {
+		this.onKeyUp(moaiKeyCode);
 	}
+
 	e.preventDefault();
 }
 
 MoaiJS.prototype.keypress = function(e) {
+	if (e.which) {
+		this.onChar(e.which);
+	}
+
+	e.preventDefault();
 	if (e.keyCode == 8) {
 		return false;
 	}
 }
-
 
 MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	var canvas = this.canvas;
@@ -518,11 +507,9 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.mouseup(); }).bind(this),false);
 
 	//grab keys
-	canvas.addEventListener("keydown",this.keydown.bind(this),false);
-	canvas.addEventListener("keyup",this.keyup.bind(this),false);
-
-	canvas.addEventListener("keypress",this.keypress.bind(this), false);
-
+	canvas.addEventListener("keydown", this.keydown.bind(this), false);
+	canvas.addEventListener("keyup", this.keyup.bind(this), false);
+	canvas.addEventListener("keypress", this.keypress.bind(this), false);
 
 	//now start rendering and updationg
 	this.startUpdates();

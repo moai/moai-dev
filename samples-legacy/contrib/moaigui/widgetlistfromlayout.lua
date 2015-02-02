@@ -85,7 +85,7 @@ function onKeyboardEvent(key, down)
 	end
 end
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 
 function onPointerEvent(x, y)
 	g:injectMouseMove(x, y)

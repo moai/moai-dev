@@ -58,13 +58,18 @@ static int sModifiers;
 //================================================================//
 
 //----------------------------------------------------------------//
-void onKeyDown ( unsigned char key) {
-	AKUEnqueueKeyboardEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, true );
+void onKeyDown ( int key) {
+	AKUEnqueueKeyboardKeyEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, true );
 }
 
 //----------------------------------------------------------------//
-void onKeyUp ( unsigned char key ) {
-	AKUEnqueueKeyboardEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, false );
+void onKeyUp ( int key ) {
+	AKUEnqueueKeyboardKeyEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, key, false );
+}
+
+//----------------------------------------------------------------//
+void onChar ( int unicodeChar ) {
+	AKUEnqueueKeyboardCharEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::KEYBOARD, unicodeChar );
 }
 
 
