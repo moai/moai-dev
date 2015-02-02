@@ -28,11 +28,11 @@ timer = MOAITimer.new()
 timer:setSpan(5)
 timer:setListener(MOAITimer.EVENT_STOP,
     function()
-        if MOAIBrowserIOS.canOpenURL("NG URL") then
+        if MOAIAppIOS.canOpenURL("NG URL") then
             error("NG!")
         end
-        if MOAIBrowserIOS.canOpenURL("https://www.google.co.jp/") then
-            MOAIBrowserIOS.openURL("https://www.google.co.jp/")
+        if MOAIAppIOS.canOpenURL("https://www.google.co.jp/") then
+            MOAIAppIOS.openURL("https://www.google.co.jp/")
         end
     end)
 timer:start()

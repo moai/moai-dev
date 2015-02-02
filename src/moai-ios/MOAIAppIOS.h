@@ -52,17 +52,20 @@ private:
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
-	static int	_getAvailableStorage			( lua_State* L );
-	static int	_getDirectoryInDomain			( lua_State* L );
-	static int	_getInterfaceOrientation		( lua_State* L );
-	static int	_getIPAddress					( lua_State* L );
-	static int	_getUTCTime						( lua_State* L );
-	static int	_sendMail						( lua_State* L );
-	static int	_takeCamera						( lua_State* L );
+	static int		_canOpenURL						( lua_State* L );
+	static int		_getAvailableStorage			( lua_State* L );
+	static int		_getDirectoryInDomain			( lua_State* L );
+	static int		_getInterfaceOrientation		( lua_State* L );
+	static int		_getIPAddress					( lua_State* L );
+	static int		_getUTCTime						( lua_State* L );
+	static int		_openURL						( lua_State* L );
+	static int		_openURLWithParams				( lua_State* L );
+	static int		_sendMail						( lua_State* L );
+	static int		_takeCamera						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void		RegisterNotificationListeners	();
-	void		RemoveNotificationListeners		();
+	void			RegisterNotificationListeners	();
+	void			RemoveNotificationListeners		();
 	
 public:
 	
@@ -93,13 +96,15 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-					MOAIAppIOS					();
-					~MOAIAppIOS					();
-	void			OnGlobalsFinalize			();
-	void			OpenUrl						( NSURL* url, NSString* sourceApplication );
-	void			RegisterLuaClass			( MOAILuaState& state );
+	static CGRect		GetScreenBoundsFromCurrentOrientation	( const CGRect& bounds ); // TODO: move to MOAIWebView or MOAIAppDelegate when those are added later
+	static BOOL			IsSystemVersionLessThan					( NSString* version ); // TODO: move to MOAIWebView or MOAIAppDelegate when those are added later
+						MOAIAppIOS								();
+						~MOAIAppIOS								();
+	void				OnGlobalsFinalize						();
+	void				OpenUrl									( NSURL* url, NSString* sourceApplication );
+	void				RegisterLuaClass						( MOAILuaState& state );
 
-	static void		callTakeCameraLuaCallback									(NSString* imagePath);
+	static void			callTakeCameraLuaCallback				( NSString* imagePath );
 };
 
 //================================================================//
