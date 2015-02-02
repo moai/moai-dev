@@ -212,6 +212,7 @@ void MOAIRenderMgr::Render () {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 
+	// TODO: rewrite this to remove the requirement of using a table as the root
 	idx = state.AbsIndex ( idx );
 
 	int n = 1;

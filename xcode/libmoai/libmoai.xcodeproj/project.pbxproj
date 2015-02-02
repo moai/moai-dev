@@ -1106,16 +1106,14 @@
 		CD1844D61A6269AB00FCCCE0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9317FA573B00EBA2DB /* host.h */; };
 		CD1844D71A6269AB00FCCCE0 /* MOAIAppIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */; };
 		CD1844D81A6269AB00FCCCE0 /* MOAIAppIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */; };
-		CD1844D91A6269AB00FCCCE0 /* MOAIBrowserIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */; };
-		CD1844DA1A6269AB00FCCCE0 /* MOAIBrowserIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */; };
 		CD1844DB1A6269AB00FCCCE0 /* MOAIDialogIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */; };
 		CD1844DC1A6269AB00FCCCE0 /* MOAIDialogIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */; };
 		CD1844DD1A6269AB00FCCCE0 /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */; };
 		CD1844DE1A6269AB00FCCCE0 /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */; };
 		CD1844DF1A6269AB00FCCCE0 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */; };
 		CD1844E01A6269AB00FCCCE0 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */; };
-		CD1844E11A6269AB00FCCCE0 /* MOAIWebViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */; };
-		CD1844E21A6269AB00FCCCE0 /* MOAIWebViewDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */; };
+		CD1844E11A6269AB00FCCCE0 /* MOAIWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4817FA56A100EBA2DB /* MOAIWebViewController.h */; };
+		CD1844E21A6269AB00FCCCE0 /* MOAIWebViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4917FA56A100EBA2DB /* MOAIWebViewController.mm */; };
 		CD1844E31A6269AB00FCCCE0 /* MOAIWebViewIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */; };
 		CD1844E41A6269AB00FCCCE0 /* MOAIWebViewIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */; };
 		CD18459D1A626C2B00FCCCE0 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD257BA31A6255D00057A53A /* headers.h */; };
@@ -6627,16 +6625,14 @@
 		CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moai-ios-adcolony/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAppIOS.h; path = "moai-ios/MOAIAppIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppIOS.mm; path = "moai-ios/MOAIAppIOS.mm"; sourceTree = "<group>"; };
-		CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBrowserIOS.h; path = "moai-ios/MOAIBrowserIOS.h"; sourceTree = "<group>"; };
-		CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIBrowserIOS.mm; path = "moai-ios/MOAIBrowserIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDialogIOS.h; path = "moai-ios/MOAIDialogIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIDialogIOS.mm; path = "moai-ios/MOAIDialogIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIKeyboardIOS.h; path = "moai-ios/MOAIKeyboardIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3D17FA56A100EBA2DB /* MOAIKeyboardIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIKeyboardIOS.mm; path = "moai-ios/MOAIKeyboardIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3E17FA56A100EBA2DB /* MOAINotificationsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAINotificationsIOS.h; path = "moai-ios/MOAINotificationsIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAINotificationsIOS.mm; path = "moai-ios/MOAINotificationsIOS.mm"; sourceTree = "<group>"; };
-		CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebViewDelegate.h; path = "moai-ios/MOAIWebViewDelegate.h"; sourceTree = "<group>"; };
-		CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewDelegate.mm; path = "moai-ios/MOAIWebViewDelegate.mm"; sourceTree = "<group>"; };
+		CD2B7C4817FA56A100EBA2DB /* MOAIWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebViewController.h; path = "moai-ios/MOAIWebViewController.h"; sourceTree = "<group>"; };
+		CD2B7C4917FA56A100EBA2DB /* MOAIWebViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewController.mm; path = "moai-ios/MOAIWebViewController.mm"; sourceTree = "<group>"; };
 		CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebViewIOS.h; path = "moai-ios/MOAIWebViewIOS.h"; sourceTree = "<group>"; };
 		CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebViewIOS.mm; path = "moai-ios/MOAIWebViewIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
@@ -10277,8 +10273,6 @@
 				CD2B7C9317FA573B00EBA2DB /* host.h */,
 				CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */,
 				CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */,
-				CD2B7C3517FA56A100EBA2DB /* MOAIBrowserIOS.h */,
-				CD2B7C3617FA56A100EBA2DB /* MOAIBrowserIOS.mm */,
 				CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */,
 				CD2B7C3817FA56A100EBA2DB /* MOAIDialogIOS.mm */,
 				CD2B7C3C17FA56A100EBA2DB /* MOAIKeyboardIOS.h */,
@@ -10287,8 +10281,8 @@
 				CD2B7C3F17FA56A100EBA2DB /* MOAINotificationsIOS.mm */,
 				CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */,
 				CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */,
-				CD2B7C4817FA56A100EBA2DB /* MOAIWebViewDelegate.h */,
-				CD2B7C4917FA56A100EBA2DB /* MOAIWebViewDelegate.mm */,
+				CD2B7C4817FA56A100EBA2DB /* MOAIWebViewController.h */,
+				CD2B7C4917FA56A100EBA2DB /* MOAIWebViewController.mm */,
 				CD2B7C4A17FA56A100EBA2DB /* MOAIWebViewIOS.h */,
 				CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */,
 			);
@@ -13372,11 +13366,10 @@
 				89BE6D1A1739A42500DFE837 /* MOAIJsonParser.h in Headers */,
 				89BE6D1E1739A42500DFE837 /* MOAIMath.h in Headers */,
 				89BE6D221739A42500DFE837 /* MOAIMemStream.h in Headers */,
-				CD1844E11A6269AB00FCCCE0 /* MOAIWebViewDelegate.h in Headers */,
+				CD1844E11A6269AB00FCCCE0 /* MOAIWebViewController.h in Headers */,
 				89BE6D261739A42500DFE837 /* MOAIMutex.h in Headers */,
 				89BE6D2A1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
 				89BE6D2E1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
-				CD1844D91A6269AB00FCCCE0 /* MOAIBrowserIOS.h in Headers */,
 				89BE6D321739A42500DFE837 /* MOAIParser.h in Headers */,
 				CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				89BE6D361739A42500DFE837 /* MOAIStream.h in Headers */,
@@ -16869,7 +16862,7 @@
 				89BE6B1A173975E500DFE837 /* MOAILogMgr.cpp in Sources */,
 				CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				89BE6B22173975E500DFE837 /* MOAILuaObject.cpp in Sources */,
-				CD1844E21A6269AB00FCCCE0 /* MOAIWebViewDelegate.mm in Sources */,
+				CD1844E21A6269AB00FCCCE0 /* MOAIWebViewController.mm in Sources */,
 				CD1844DE1A6269AB00FCCCE0 /* MOAIKeyboardIOS.mm in Sources */,
 				89BE6B26173975E500DFE837 /* MOAILuaRef.cpp in Sources */,
 				89BE6B2A173975E500DFE837 /* MOAILuaRuntime.cpp in Sources */,
@@ -16907,7 +16900,6 @@
 				89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
 				89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
 				89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */,
-				CD1844DA1A6269AB00FCCCE0 /* MOAIBrowserIOS.mm in Sources */,
 				CD1844E41A6269AB00FCCCE0 /* MOAIWebViewIOS.mm in Sources */,
 				89BE6D541739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
 				CD1844E01A6269AB00FCCCE0 /* MOAINotificationsIOS.mm in Sources */,
@@ -20000,7 +19992,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
@@ -21327,7 +21319,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -25655,7 +25647,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
@@ -26084,7 +26076,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",

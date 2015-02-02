@@ -3,10 +3,11 @@
 
 #import <moai-apple/NSError+MOAILib.h>
 #import <moai-apple/NSString+MOAILib.h>
+#import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAIWebViewIOS.h>
-#import <moai-ios/MOAIWebViewDelegate.h>
+#import <moai-ios/MOAIWebViewController.h>
 
-#define TOOL_BAR_HEIGHT 44
+#define TOOLBAR_HEIGHT 44
 
 //================================================================//
 // lua
@@ -20,10 +21,9 @@
 	@out	nil
 */
 int MOAIWebViewIOS::_canGoBack ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean ( state, self->mWebView.canGoBack );
+	//lua_pushboolean ( state, self->mWebView.canGoBack );
 	
 	return 1;	
 }
@@ -36,10 +36,9 @@ int MOAIWebViewIOS::_canGoBack ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_canGoForward ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 
-	lua_pushboolean ( state, self->mWebView.canGoForward );
+	//lua_pushboolean ( state, self->mWebView.canGoForward );
 	
 	return 1;	
 }
@@ -53,10 +52,9 @@ int MOAIWebViewIOS::_canGoForward ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_clickBack ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	[ self->mWebView goBack ];
+	//[ self->mWebView goBack ];
 	
 	return 0;
 }
@@ -70,10 +68,9 @@ int MOAIWebViewIOS::_clickBack ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_clickForward ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	[ self->mWebView goForward ];
+	//[ self->mWebView goForward ];
 	
 	return 0;
 }
@@ -87,10 +84,9 @@ int MOAIWebViewIOS::_clickForward ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_clickRefresh ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	[ self->mWebView reload ];
+	//[ self->mWebView reload ];
 	
 	return 0;
 }
@@ -104,10 +100,9 @@ int MOAIWebViewIOS::_clickRefresh ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_clickStop ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	[ self->mWebView stopLoading ];
+	//[ self->mWebView stopLoading ];
 	
 	return 0;
 }
@@ -120,15 +115,7 @@ int MOAIWebViewIOS::_clickStop ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_closeWebView ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
-		
-	if ( self->mWebView ) {
-		
-		self->mWebView.delegate = nil;
-		[ self->mWebView stopLoading ];
-		[ self->mWebView removeFromSuperview ];
-	}	
 	
 	return 0;
 }
@@ -142,10 +129,9 @@ int MOAIWebViewIOS::_closeWebView ( lua_State* L ) {
 	@out	bool allowsInlineMediaPlayback
 */
 int MOAIWebViewIOS::_getAllowsInlineMediaPlayback ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean( L, self->mWebView.allowsInlineMediaPlayback );
+	//lua_pushboolean( L, self->mWebView.allowsInlineMediaPlayback );
 	
 	return 1;
 }
@@ -158,12 +144,11 @@ int MOAIWebViewIOS::_getAllowsInlineMediaPlayback ( lua_State* L ) {
 	@out	string currentURL
 */
 int MOAIWebViewIOS::_getCurrentRequest ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	NSURLRequest* request = [ self->mWebView request ];
-	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];	
-	lua_pushstring( state, urlString );
+//	NSURLRequest* request = [ self->mWebView request ];
+//	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];	
+//	lua_pushstring( state, urlString );
 	
 	return 1;
 }
@@ -177,10 +162,9 @@ int MOAIWebViewIOS::_getCurrentRequest ( lua_State* L ) {
 	@out	bool mediaPlaybackRequiresUserAction
 */
 int MOAIWebViewIOS::_getMediaPlaybackRequiresAction ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean( L, self->mWebView.mediaPlaybackRequiresUserAction );
+	//lua_pushboolean( L, self->mWebView.mediaPlaybackRequiresUserAction );
 	
 	return 1;
 }
@@ -194,10 +178,9 @@ int MOAIWebViewIOS::_getMediaPlaybackRequiresAction ( lua_State* L ) {
 	@out	bool scalesPageToFit
 */
 int MOAIWebViewIOS::_getScalesPageToFit ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean( L, self->mWebView.scalesPageToFit );
+	//lua_pushboolean( L, self->mWebView.scalesPageToFit );
 	
 	return 1;
 }
@@ -211,10 +194,9 @@ int MOAIWebViewIOS::_getScalesPageToFit ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_hasToolBar ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 			
-	self->mHasToolBar = lua_toboolean ( state, 2 );
+	//self->mHasToolBar = lua_toboolean ( state, 2 );
 	
 	return 0;
 }
@@ -227,86 +209,42 @@ int MOAIWebViewIOS::_hasToolBar ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_hideWebView ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 			
-	self->mWebView.hidden = true;
-	self->mToolBar.hidden = true;
+	//self->Hide( false );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	initWebView
+/**	@lua	init
 	@text	Kills current UIWebView (if one exists) and creates a
 			new one with desired dimensions.
 			
 	@in		MOAIWebViewIOS self
 	@out	bool scalesPageToFit
 */
-int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
-	
+int MOAIWebViewIOS::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	int left = ( int )lua_tointeger ( state, 2 );
-	int top = ( int )lua_tointeger ( state, 3 );
-	int width = ( int )lua_tointeger ( state, 4 );
-	int height = ( int )lua_tointeger ( state, 5 );
-	bool hidden = lua_toboolean ( state, 6 );
-			
-	if ( self->mWebView ) {
-		
-		self->mWebView.delegate = nil;
-		[ self->mWebView stopLoading ];
-		[ self->mWebView removeFromSuperview ];
-	}	
+	CGRect frame = [[ UIApplication sharedApplication ] keyWindow ].frame;
 	
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	UIViewController* rootVC = [ window rootViewController ];		
+	if ( state.CheckParams ( 2, "NNNN", false )) {
 	
-	if ( self->mHasToolBar ) {
-				
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top + TOOL_BAR_HEIGHT , width, height - TOOL_BAR_HEIGHT )] autorelease ];					
-		self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( -M_PI / 2 )));
-				
-		self->mToolBar.frame = CGRectMake( left, top, width, TOOL_BAR_HEIGHT );	
-		if ( rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {
-			
-			self->mToolBar.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( M_PI / 2 )));				
-			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( M_PI / 2 )));
-		}
-		else {
-			
-			self->mToolBar.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));				
-			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( -M_PI / 2 )));
-		}
-		
-		self->mToolBar.hidden = hidden;		
-		[ rootVC.view addSubview:self->mToolBar ];	
-	}
-	else {
+		int left	= state.GetValue < int >( 2, 0 );
+		int top		= state.GetValue < int >( 3, 0 );
+		int width	= state.GetValue < int >( 4, 0 );
+		int height	= state.GetValue < int >( 5, 0 );
 	
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, width, height )] autorelease ];
-		if ( rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {					
-			
-			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));
-		}
-		else {
-			
-			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));
-		}			
+		frame = CGRectMake ( left, top, width, height );
 	}
-		
-	[ self->mWebView setDelegate:self->mWebViewDelegate ];
-	[ self->mWebView setScalesPageToFit:YES ];
-	[ self->mWebView setMultipleTouchEnabled:YES ];
-	[ rootVC.view addSubview:self->mWebView ];
-
-	if ( hidden ) {
-		
-		self->mWebView.hidden = true;
+	
+	bool hidden = state.GetValue < bool >( 6, false );
+	
+	self->mWebViewController = [[ MOAIWebViewController alloc ] init :frame :TOOLBAR_HEIGHT ];
+	if ( !hidden ) {
+		[ self->mWebViewController show:NO ];
 	}
-
 	return 0;
 }
 
@@ -318,10 +256,9 @@ int MOAIWebViewIOS::_initWebView ( lua_State* L ) {
 	@out	bool isHidden
 */
 int MOAIWebViewIOS::_isHidden ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean( L, self->mWebView.hidden );
+	//lua_pushboolean( L, self->mWebView.hidden );
 	
 	return 1;
 }
@@ -334,10 +271,9 @@ int MOAIWebViewIOS::_isHidden ( lua_State* L ) {
 	@out	bool isLoading
 */
 int MOAIWebViewIOS::_isLoading ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	lua_pushboolean( L, self->mWebView.loading );
+	//lua_pushboolean( L, self->mWebView.loading );
 	
 	return 1;
 }
@@ -345,7 +281,6 @@ int MOAIWebViewIOS::_isLoading ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO
 int MOAIWebViewIOS::_loadData ( lua_State* L ) {
-	
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
 	return 0;
@@ -360,26 +295,26 @@ int MOAIWebViewIOS::_loadData ( lua_State* L ) {
 	@in		string baseURL
 	@out	nil
 */
-int MOAIWebViewIOS::_loadHTML ( lua_State* L ) {	
-	
+int MOAIWebViewIOS::_loadHTML ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	cc8* st = lua_tostring ( state, 2 );
-	cc8* url = lua_tostring ( state, 3 );
-	
-	NSString* nsHtmlString = [[ NSString alloc ] initWithUTF8String:st ];
-	
-	if ( url != NULL ) {
-		
-		NSString* nsUrlString = [[ NSString alloc ] initWithUTF8String:url ];
-		NSURL* nsURL = [[ NSURL alloc ] initWithString:nsUrlString ];
-		[ self->mWebView loadHTMLString:nsHtmlString baseURL:nsURL ];
-	}
-	else {
-		
-		[ self->mWebView loadHTMLString:nsHtmlString baseURL:nil ];
-	}
-
+//	cc8* st		= state.GetValue < cc8* >( 2, "" );
+//	NSString* nsHtmlString = [ NSString stringWithGuessedEncoding:st ];
+//	
+//	if ( nsHtmlString != nil ) {
+//	
+//		cc8* url	= state.GetValue < cc8* >( 3, nil );
+//		if ( url != nil ) {
+//			
+//			NSString* nsUrlString = [ NSString stringWithUTF8String:url ];
+//			NSURL* nsURL = [ NSURL URLWithString:nsUrlString ];
+//			[ self->mWebView loadHTMLString:nsHtmlString baseURL:nsURL ];
+//		}
+//		else {
+//			
+//			[ self->mWebView loadHTMLString:nsHtmlString baseURL:nil ];
+//		}
+//	}
 	return 0;
 }
 
@@ -392,20 +327,13 @@ int MOAIWebViewIOS::_loadHTML ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_loadRequest ( lua_State* L ) {
-	
-	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
+	MOAI_LUA_SETUP ( MOAIWebViewIOS, "US" );
 		
 	cc8* urlStr = lua_tostring ( state, 2 );
-	NSString* urlString = [[ NSString alloc ] initWithCString:urlStr encoding:[NSString defaultCStringEncoding] ];
-	NSURL* url = [ NSURL URLWithString:urlString ];
+	NSURL* url = [ NSURL URLWithString:[ NSString stringWithUTF8String:urlStr ]];
 	NSURLRequest* request = [NSURLRequest requestWithURL:url ];
-	
-	if ( self->mWebView.delegate == nil ) {
 		
-		[ self->mWebView setDelegate:self->mWebViewDelegate ];
-	}
-		
-	[ self->mWebView loadRequest:request ];
+	[ self->mWebViewController.webView loadRequest:request ];
 	
 	return 0;
 }
@@ -415,24 +343,20 @@ int MOAIWebViewIOS::_loadRequest ( lua_State* L ) {
 	@text	Opens the URL in Safari.
 
 	@in		string url
-	@out	nil
+	@out	boolean true if successful
 */
-int MOAIWebViewIOS::_openUrlInSafari ( lua_State* L ) {
-	
+int MOAIWebViewIOS::_openUrlExternally ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	if ( !state.CheckParams ( 1, "S" )) {
+	cc8* url = state.GetValue < cc8* >( 1, "" );
 		
-		return 0;
+	BOOL result = NO;
+	if ( url && url [ 0 ] != '\0' ) {
+		result = [[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]];
 	}
 	
-	cc8* urlStr = lua_tostring ( state, 1 );
-	NSString* urlString = [[ NSString alloc ] initWithCString:urlStr encoding:[ NSString defaultCStringEncoding ]];
-	NSURL* url = [ NSURL URLWithString:urlString ];
-	
-	[[ UIApplication sharedApplication ] openURL:url ];
-	
-	return 0;
+	lua_pushboolean ( state, result );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -443,14 +367,13 @@ int MOAIWebViewIOS::_openUrlInSafari ( lua_State* L ) {
 	@in		string script
 	@out	string result   Result of the JavaScript or nil if script failed
 */
-int MOAIWebViewIOS::_runJavaScript ( lua_State* L ) {	
-	
+int MOAIWebViewIOS::_runJavaScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 		
-	cc8* script = lua_tostring ( state, 2 );
-	NSString* result = [ self->mWebView stringByEvaluatingJavaScriptFromString:[[ NSString alloc ] initWithUTF8String:script ]];
-	
-	lua_pushstring ( L, [result UTF8String] );
+//	cc8* script = lua_tostring ( state, 2 );
+//	NSString* result = [ self->mWebView stringByEvaluatingJavaScriptFromString:[ NSString stringWithUTF8String:script ]];
+//	
+//	lua_pushstring ( L, [result UTF8String] );
 	
 	return 1;
 }
@@ -465,11 +388,10 @@ int MOAIWebViewIOS::_runJavaScript ( lua_State* L ) {
 	@out	nil
 */
 int MOAIWebViewIOS::_setAllowsInlineMediaPlayback ( lua_State* L ) {
-		
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	BOOL allowsInlinePlayback = lua_toboolean ( state, 2 );
-	self->mWebView.allowsInlineMediaPlayback = allowsInlinePlayback;
+	//BOOL allowsInlinePlayback = lua_toboolean ( state, 2 );
+	//self->mWebView.allowsInlineMediaPlayback = allowsInlinePlayback;
 	
 	return 0;
 }
@@ -483,12 +405,11 @@ int MOAIWebViewIOS::_setAllowsInlineMediaPlayback ( lua_State* L ) {
 	@in		bool mediaPlaybackRequiresAction
 	@out	nil
 */
-int MOAIWebViewIOS::_setMediaPlaybackRequiresAction ( lua_State* L ) {	
-	
+int MOAIWebViewIOS::_setMediaPlaybackRequiresAction ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	BOOL mediaPlaybackRequiresAction = lua_toboolean ( state, 2 );
-	self->mWebView.mediaPlaybackRequiresUserAction = mediaPlaybackRequiresAction;
+	//BOOL mediaPlaybackRequiresAction = lua_toboolean ( state, 2 );
+	//self->mWebView.mediaPlaybackRequiresUserAction = mediaPlaybackRequiresAction;
 	
 	return 0;
 }
@@ -501,12 +422,11 @@ int MOAIWebViewIOS::_setMediaPlaybackRequiresAction ( lua_State* L ) {
 	@in		bool scalesPageToFit
 	@out	nil
 */
-int MOAIWebViewIOS::_setScalesPageToFit ( lua_State* L ) {	
-	
+int MOAIWebViewIOS::_setScalesPageToFit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	BOOL scalesPages = lua_toboolean ( state, 2 );
-	self->mWebView.scalesPageToFit = scalesPages;
+	//BOOL scalesPages = lua_toboolean ( state, 2 );
+	//self->mWebView.scalesPageToFit = scalesPages;
 	
 	return 0;
 }
@@ -518,15 +438,62 @@ int MOAIWebViewIOS::_setScalesPageToFit ( lua_State* L ) {
 	@in		MOAIWebViewIOS self
 	@out	nil
 */
-int MOAIWebViewIOS::_show ( lua_State* L ) {	
-	
+int MOAIWebViewIOS::_show ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
-			
-	self->mWebView.hidden = false;		
-	if ( self->mHasToolBar ) {
-		
-		self->mToolBar.hidden = false;
-	}
+	
+	[ self->mWebViewController show:NO ];
+	
+//	self->mAnimate = lua_toboolean ( state, 2 );
+//	
+//	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+//	UIViewController* rootVC = [ window rootViewController ];
+//	
+//	if ( self->mToolBar ) {
+//		
+//		[ rootVC.view addSubview:self->mToolBar ];
+//	}
+//	
+//	[ rootVC.view addSubview:self->mWebView ];
+//	
+//	if ( self->mAnimate ) {
+//		
+//		CGSize screenSize = MOAIAppIOS::GetScreenBoundsFromCurrentOrientation ([[ UIScreen mainScreen ] bounds ]).size;
+//		BOOL landscape = rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+//						 rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeRight;
+//		CGFloat offset = landscape?screenSize.width:screenSize.height;
+//		
+//		if ( self->mToolBar ) {
+//			
+//			self->mToolBar.transform = CGAffineTransformConcat (self->mToolBar.transform, CGAffineTransformMakeTranslation(0, offset));
+//			self->mToolBar.hidden = false;
+//		}
+//		
+//		self->mWebView.transform = CGAffineTransformConcat (self->mWebView.transform, CGAffineTransformMakeTranslation(0, offset));
+//		self->mWebView.hidden = false;
+//		
+//		[UIView animateWithDuration:0.25
+//							  delay:0.1
+//							options: UIViewAnimationCurveEaseOut
+//						 animations:^{
+//							 
+//							 if ( self->mToolBar ) {
+//								 
+//								 self->mToolBar.transform = CGAffineTransformConcat (self->mToolBar.transform, CGAffineTransformMakeTranslation(0, -offset));
+//							 }
+//							 
+//							 self->mWebView.transform = CGAffineTransformConcat (self->mWebView.transform, CGAffineTransformMakeTranslation(0, -offset));
+//						 }
+//						 completion:^(BOOL){
+//						 }];
+//	}
+//	else {
+//
+//		self->mWebView.hidden = false;		
+//		if ( self->mToolBar ) {
+//		
+//			self->mToolBar.hidden = false;
+//		}
+//	}
 	
 	return 0;
 }
@@ -535,59 +502,110 @@ int MOAIWebViewIOS::_show ( lua_State* L ) {
 // MOAIWebViewIOS
 //================================================================//
 
+
+//----------------------------------------------------------------//
+void MOAIWebViewIOS::Close () {
+	
+	Hide ( true );
+}
+
+//----------------------------------------------------------------//
+void MOAIWebViewIOS::Hide ( bool clean ) {
+
+//	if ( mAnimate ) {
+//		
+//		CGSize screenSize = MOAIAppIOS::GetScreenBoundsFromCurrentOrientation ([[ UIScreen mainScreen ] bounds ]).size;
+//		
+//		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+//		UIViewController* rootVC = [ window rootViewController ];
+//		
+//		BOOL landscape = rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+//		rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeRight;
+//		CGFloat offset = landscape?screenSize.width:screenSize.height;
+//		
+//		[UIView animateWithDuration:0.25
+//							  delay:0.1
+//							options: UIViewAnimationCurveEaseIn
+//						 animations:^{
+//							 
+//							 if ( mHasToolBar ) {
+//								 
+//								 mToolBar.transform = CGAffineTransformConcat (mToolBar.transform, CGAffineTransformMakeTranslation(0, offset));
+//							 }
+//							 
+//							 mWebView.transform = CGAffineTransformConcat (mWebView.transform, CGAffineTransformMakeTranslation(0, offset));
+//						 }
+//						 completion:^(BOOL finished){
+//							UNUSED ( finished );
+//							 
+//							mToolBar.hidden = true;
+//							mToolBar.transform = CGAffineTransformConcat (mToolBar.transform, CGAffineTransformMakeTranslation(0, -offset));
+//							[ mToolBar removeFromSuperview ];
+//
+//							mWebView.hidden = true;
+//							mWebView.delegate = nil;
+//							mWebView.transform = CGAffineTransformConcat (mWebView.transform, CGAffineTransformMakeTranslation(0, -offset));
+//							[ mWebView removeFromSuperview ];
+//							 
+//							if ( clean ) {
+//
+//								[ mWebView stopLoading ];
+//								[ mWebView release ];
+//								mWebView = nil;
+//
+//								[ mToolBar release ];
+//								mToolBar = nil;
+//							}
+//
+//							this->RaiseWebViewDidHideEvent ();
+//						 }];
+//	}
+//	else {
+//	
+//		mToolBar.hidden = true;
+//		[ mToolBar removeFromSuperview ];
+//		
+//		mWebView.hidden = true;
+//		mWebView.delegate = nil;
+//		[ mWebView removeFromSuperview ];
+//		
+//		if ( clean ) {
+//			
+//			[ mWebView stopLoading ];
+//			[ mWebView release ];
+//			mWebView = nil;
+//			
+//			[ mToolBar release ];
+//			mToolBar = nil;
+//		}
+//		
+//		this->RaiseWebViewDidHideEvent ();
+//	}
+}
+
 //----------------------------------------------------------------//
 MOAIWebViewIOS::MOAIWebViewIOS () :
-	mWebView ( 0 ) {
+	mWebViewController ( false ) {
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
-	
-	mWebViewDelegate = [[ MOAIWebViewDelegate alloc ] retain ];
-	mWebViewDelegate.mMOAIWebView = this;
-
-	//create toolbar using new
-	mToolBar = [ UIToolbar new ];
-	mToolBar.barStyle = UIBarStyleDefault;
-	mHasToolBar = true;
-	
-	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:mWebViewDelegate action:@selector ( doneButtonPressed: )];
-	
-	NSArray* items = [ NSArray arrayWithObjects: done, nil ];
-	[ done release ];
-	[ mToolBar setItems:items animated:NO ];
 }
 
 //----------------------------------------------------------------//
 MOAIWebViewIOS::~MOAIWebViewIOS () {
 
-	if ( mWebView ) {
-		
-		mWebView.delegate = nil;
-		[ mWebView stopLoading ];
-		[ mWebView removeFromSuperview ];
+	if ( this->mWebViewController ) {
+		[ this->mWebViewController release ];
 	}
-	
-	if ( mWebViewDelegate ) {
-		
-		[ mWebViewDelegate release ];
-		mWebViewDelegate = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIWebViewIOS::Hide () {
-
-	mWebView.hidden = true;
-	mToolBar.hidden = true;
 }
 
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( DID_FAIL_LOAD_WITH_ERROR, state )) {
-		[ error toLua:state ];
-		state.DebugCall ( 2, 0 );
-	}
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	if ( this->PushListenerAndSelf ( DID_FAIL_LOAD_WITH_ERROR, state )) {
+//		[ error toLua:state ];
+//		state.DebugCall ( 2, 0 );
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -597,14 +615,14 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 	int nav = ( int )navType;
 	bool result = true;
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
-		
-		lua_pushstring ( state, urlString );
-		lua_pushinteger ( state, nav );			
-		state.DebugCall ( 3, 1 );
-		result = lua_toboolean ( state, -1 );
-	}
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
+//		
+//		lua_pushstring ( state, urlString );
+//		lua_pushinteger ( state, nav );			
+//		state.DebugCall ( 3, 1 );
+//		result = lua_toboolean ( state, -1 );
+//	}
 	
 	return result;
 }
@@ -612,21 +630,28 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidFinishLoadEvent () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_FINISH_LOAD, state )) {
-
-			state.DebugCall ( 1, 0 );
-	}
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_FINISH_LOAD, state )) {
+//			state.DebugCall ( 1, 0 );
+//	}
 }
 
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidStartLoadEvent () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_START_LOAD, state )) {
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_START_LOAD, state )) {
+//			state.DebugCall ( 1, 0 );
+//	}
+}
 
-			state.DebugCall ( 1, 0 );
-	}
+//----------------------------------------------------------------//
+void MOAIWebViewIOS::RaiseWebViewDidHideEvent () {
+	
+//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_HIDE, state )) {
+//		state.DebugCall ( 1, 0 );
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -636,6 +661,7 @@ void MOAIWebViewIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SHOULD_START_LOAD_WITH_REQUEST",	( u32 )SHOULD_START_LOAD_WITH_REQUEST );
 	state.SetField ( -1, "WEB_VIEW_DID_FINISH_LOAD", 		( u32 )WEB_VIEW_DID_FINISH_LOAD );
 	state.SetField ( -1, "WEB_VIEW_DID_START_LOAD", 		( u32 )WEB_VIEW_DID_START_LOAD );
+	state.SetField ( -1, "WEB_VIEW_DID_HIDE",				( u32 )WEB_VIEW_DID_HIDE );
 	
 	state.SetField( -1, "NAVIGATION_LINK_CLICKED", 			( u32 )NAVIGATION_LINK_CLICKED );
 	state.SetField( -1, "NAVIGATION_FORM_SUBMIT", 			( u32 )NAVIGATION_FORM_SUBMIT );
@@ -645,7 +671,7 @@ void MOAIWebViewIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField( -1, "NAVIGATION_OTHER", 				( u32 )NAVIGATION_OTHER );
 	
 	luaL_Reg regTable [] = {
-		{ "openUrlInSafari",	_openUrlInSafari },
+		{ "openUrlExternally",	_openUrlExternally },
 		{ NULL, NULL }
 	};
 	
@@ -671,7 +697,8 @@ void MOAIWebViewIOS::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getScalesPageToFit",				_getScalesPageToFit },
 		{ "hasToolBar",						_hasToolBar },
 		{ "hideWebView",					_hideWebView },
-		{ "initWebView",					_initWebView },
+		{ "init",							_init },
+		{ "initWebView",					_init }, // bach compat
 		{ "isHidden",						_isHidden },
 		{ "isLoading",						_isLoading },
 		{ "loadData",						_loadData },
@@ -686,11 +713,4 @@ void MOAIWebViewIOS::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-STLString MOAIWebViewIOS::ToString () {
-
-	STLString repr;
-	return repr;
 }
