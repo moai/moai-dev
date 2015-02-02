@@ -344,13 +344,15 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 		if ( glyph.mWidth > 0.0f ) {
 
 			ZLRect glyphRect = glyph.GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
-		
+
 			// Update the glyphRect height with the size of the of the glyphset's height for
 			// the max possible line height.
 			float fontSize = sprite.mStyle->GetSize ();
 			MOAIGlyphSet* glyphSet = sprite.mStyle->GetFont ()->GetGlyphSet ( fontSize );
 			float deckHeight = glyphSet->GetHeight () * sprite.mScale.mY;
-			glyphRect.mYMax = glyphRect.mYMin + deckHeight;
+			float deckAscent = glyphSet->GetAscent () * sprite.mScale.mY;
+			glyphRect.mYMax = sprite.mPen.mY - deckAscent;
+			glyphRect.mYMin = glyphRect.mYMax - deckHeight;
 
 			if ( result ) {
 				rect.Grow ( glyphRect );
