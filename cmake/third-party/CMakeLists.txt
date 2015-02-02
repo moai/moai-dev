@@ -28,6 +28,7 @@ add_subdirectory ( jpg )
 
 set (LUA_HEADERS "")
 set (LUA_LIB "")
+set (LUA_LIB_DIR "")
 #Lua or LuaJit?
 if (MOAI_LUAJIT)
 #	if ( BUILD_IOS )#
@@ -39,6 +40,7 @@ else()
 endif (MOAI_LUAJIT)
 set (LUA_HEADERS ${LUA_HEADERS} PARENT_SCOPE)
 set (LUA_LIB ${LUA_LIB} PARENT_SCOPE)
+set (LUA_LIB_DIR ${LUA_LIB_DIR} PARENT_SCOPE)
 
 add_subdirectory ( luaext )
 add_subdirectory ( mongoose )
@@ -58,9 +60,10 @@ add_subdirectory ( zlib )
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set(DIRECTX OFF CACHE BOOL "SDL DirectX")
   set (SDL_SHARED OFF)
-  set(X11_SHARED OFF CACHE BOOL "X11 Shared disable")
-  
   add_subdirectory(sdl2)
+  if (BUILD_LINUX OR BUILD_WINDOWS)
+    set(X11_SHARED OFF CACHE BOOL "ENABLE X11_SHARED") 
+  endif (BUILD_LINUX OR BUILD_WINDOWS)
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
 

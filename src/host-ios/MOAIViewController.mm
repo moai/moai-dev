@@ -16,7 +16,7 @@
 @interface MOAIViewController ()
 
 	//----------------------------------------------------------------//	
-	-( void ) updateOrientation :( UIInterfaceOrientation )orientation;
+	//-( void ) updateOrientation :( UIInterfaceOrientation )orientation;
 
 @end
 
@@ -27,39 +27,40 @@
 
     //----------------------------------------------------------------//
 	-( BOOL ) shouldAutorotate {
-		return true;
+		return YES;
 	}
 
-	//----------------------------------------------------------------//
-	- ( BOOL ) shouldAutorotateToInterfaceOrientation :( UIInterfaceOrientation )interfaceOrientation {
-		( void )interfaceOrientation;
-        return true;
-	}
+//    //----------------------------------------------------------------//
+//    -( NSUInteger ) supportedInterfaceOrientations {
+//    
+//        return UIInterfaceOrientationMaskAll;
+//        //return UIInterfaceOrientationMaskLandscape;
+//    }
 
 	//----------------------------------------------------------------//
-	-( void ) updateOrientation :( UIInterfaceOrientation )orientation {
-		
-		MOAIView* view = ( MOAIView* )self.view;
-		
-		if (( orientation == UIInterfaceOrientationPortrait ) || ( orientation == UIInterfaceOrientationPortraitUpsideDown )) {
-            
-            //if ([ view akuInitialized ] != 0 ) {
-            //    AKUSetOrientation ( AKU_ORIENTATION_PORTRAIT );
-            //    AKUSetViewSize (( int )view.width, ( int )view.height );
-            //}
-		}
-		else if (( orientation == UIInterfaceOrientationLandscapeLeft ) || ( orientation == UIInterfaceOrientationLandscapeRight )) {
-            //if ([ view akuInitialized ] != 0 ) {
-            //    AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
-            //    AKUSetViewSize (( int )view.height, ( int )view.width);
-            //}
-		}
-	}
+//	-( void ) updateOrientation :( UIInterfaceOrientation )orientation {
+//		
+//		MOAIView* view = ( MOAIView* )self.view;
+//		
+//		if (( orientation == UIInterfaceOrientationPortrait ) || ( orientation == UIInterfaceOrientationPortraitUpsideDown )) {
+//            
+//            //if ([ view akuInitialized ] != 0 ) {
+//            //    AKUSetOrientation ( AKU_ORIENTATION_PORTRAIT );
+//            //    AKUSetViewSize (( int )view.width, ( int )view.height );
+//            //}
+//		}
+//		else if (( orientation == UIInterfaceOrientationLandscapeLeft ) || ( orientation == UIInterfaceOrientationLandscapeRight )) {
+//            //if ([ view akuInitialized ] != 0 ) {
+//            //    AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
+//            //    AKUSetViewSize (( int )view.height, ( int )view.width);
+//            //}
+//		}
+//	}
 
 	//----------------------------------------------------------------//
-	-( void ) willRotateToInterfaceOrientation :( UIInterfaceOrientation )toInterfaceOrientation duration:( NSTimeInterval )duration {
-		
-		[ self updateOrientation:toInterfaceOrientation ];
-	}
+//	-( void ) willRotateToInterfaceOrientation :( UIInterfaceOrientation )toInterfaceOrientation duration:( NSTimeInterval )duration {
+//		
+//		[ self updateOrientation:toInterfaceOrientation ];
+//	}
 
 @end

@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxResource.h>
-
+#include <moai-util/MOAIStream.h>
 class MOAIVertexFormat;
 
 //================================================================//

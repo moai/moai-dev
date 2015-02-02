@@ -20,6 +20,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	canOpenURL
+ @text	Return true if iOS will handle the passed URL.
+ 
+ @in	string url
+ @out	boolean
+ */
+int MOAIAppIOS::_canOpenURL ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+
+	if ( url && url [ 0 ] != '\0' ) {
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		lua_pushboolean (state, [[ UIApplication sharedApplication ]
+								 canOpenURL:myURL]);
+		[myURL release];
+		return 1;
+	}
+
+	lua_pushnil( state );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAvailableStorage
 	@text	Get the available storage size in mb on the system
  
@@ -87,7 +114,7 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+	UIInterfaceOrientation orientation = [ UIApplication sharedApplication ].statusBarOrientation;
 
 	lua_pushnumber ( state, orientation );
 
@@ -158,6 +185,67 @@ int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
 	lua_pushnumber ( state, [[ NSDate date ] timeIntervalSince1970 ]);
 
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	openURL
+	@text	Open the native device web browser at the specified URL.
+ 
+	@in		string url
+	@out	nil
+*/
+int MOAIAppIOS::_openURL ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+	
+	if ( url && url [ 0 ] != '\0' ) {
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[[ UIApplication sharedApplication ] openURL:myURL];
+		
+		[myURL release];
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	openURLWithParams
+	@text	Open the native device web browser at the specified URL
+			with the specified list of query string parameters.
+ 
+	@in		string url
+	@in		table params
+	@out	nil
+*/
+int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
+	[ params initWithLua: state stackIndex: 2 ];
+	
+	if ( baseURL == NULL || params == NULL ) return 0;
+	
+	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
+	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
+	
+	NSMutableArray* paramPairs = [ NSMutableArray array ];
+	for ( NSString* key in [ params keyEnumerator ] ) {
+		
+		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
+		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
+		[ escapedValue release ];
+	}
+	
+	NSString* urlQuery = [ paramPairs componentsJoinedByString: @"&" ];
+		
+	[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -259,6 +347,25 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 // MOAIAppIOS
 //================================================================//
 
+ //----------------------------------------------------------------//
+// Since iOS 8.0 both [[UIScreen mainScreen] bounds/applicationFrame] are interface oriented.
+// Before iOS 8.0, only the portrait "bounds" where returned.
+// The function below ensure Portrait bounds are returned.
+CGRect MOAIAppIOS::GetScreenBoundsFromCurrentOrientation ( const CGRect& bounds ) {
+
+	bool lessThaniOS8 = MOAIAppIOS::IsSystemVersionLessThan ( @"8.0" );
+	if ( lessThaniOS8 || UIInterfaceOrientationIsPortrait ([ UIApplication sharedApplication ].statusBarOrientation )) {
+		return bounds;
+	}
+	return CGRectMake ( bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width );
+}
+
+//----------------------------------------------------------------//
+BOOL MOAIAppIOS::IsSystemVersionLessThan ( NSString* version ) {
+
+	return ([[[ UIDevice currentDevice ] systemVersion ] compare:version options:NSNumericSearch ] == NSOrderedAscending );
+}
+
 //----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
 
@@ -315,12 +422,15 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_RIGHT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_RIGHT );
 
 	luaL_Reg regTable [] = {
+		{ "canOpenURL",					_canOpenURL },
 		{ "getAvailableStorage",		_getAvailableStorage },
 		{ "getDirectoryInDomain",		_getDirectoryInDomain },
 		{ "getInterfaceOrientation",	_getInterfaceOrientation },
 		{ "getIPAddress",				_getIPAddress },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIAppIOS > },
 		{ "getUTCTime",					_getUTCTime },
+		{ "openURL",					_openURL },
+		{ "openURLWithParams",			_openURLWithParams },
 		{ "sendMail",					_sendMail },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAppIOS > },
 		{ "takeCamera",					_takeCamera },

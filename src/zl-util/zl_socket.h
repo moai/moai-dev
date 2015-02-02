@@ -42,6 +42,7 @@
 * Platform specific compatibilization
 \*=========================================================================*/
 #ifdef _WIN32
+	#include <zl-common/zl_types.h>
 	#include <zl-util/zl_wsocket.h>
 #else
 	#include <zl-util/zl_usocket.h>

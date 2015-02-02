@@ -7,9 +7,10 @@
 @interface NSString ( MOAILib )
 
 	//----------------------------------------------------------------//
-	+( NSString* )		affirm			:( NSString* )str;
-	-( id )				initWithLua		:( lua_State* )state stackIndex:( int )idx;
-	-( void	)			toLua			:( lua_State* )state;
+	+( NSString* )		affirm						:( NSString* )str;
+	-( id )				initWithLua					:( lua_State* )state stackIndex:( int )idx;
+	-( void	)			toLua						:( lua_State* )state;
+	+( NSString* )		stringWithGuessedEncoding	:( const char* )bytes;
 
 @end
 

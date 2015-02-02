@@ -123,6 +123,7 @@ extern int					zl_vprintf				( const char* format, va_list arg );
 
 #ifdef MOAI_COMPILER_MSVC
 	extern errno_t	 		zl_fopen_s 				( ZLFILE** fp, const char* filename, const char* mode );
+	extern ZLFILE *			zl_wfopen				(const wchar_t *filename, const wchar_t *mode);
 	extern int				zl_fseeki64				( ZLFILE* fp, __int64 offset, int origin );
 #endif
 

@@ -66,9 +66,8 @@ protected:
 	u32					mGLFrameBufferID;
 
 	bool				mGrabNextFrame;
-	MOAIImage*			mFrameImage;
-
 	MOAILuaMemberRef	mOnFrameFinish;
+	MOAILuaSharedPtr < MOAIImage > mFrameImage;
 
 	u32					mRenderCounter;	// increments every render
 	u32					mLastDrawCount;

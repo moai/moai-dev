@@ -38,6 +38,7 @@ private:
 	
 	ZLLeanArray < AKUParticleSprite >	mSprites;
 	u32									mSpriteTop;
+	u32									mDrawOrder;
 	
 	bool								mComputeBounds;
 	ZLBox								mParticleBounds;
@@ -55,6 +56,7 @@ private:
 	static int		_reserveSprites			( lua_State* L );
 	static int		_reserveStates			( lua_State* L );
 	static int		_setComputeBounds		( lua_State* L );
+	static int		_setDrawOrder			( lua_State* L );
 	static int		_setSpriteColor			( lua_State* L );
 	static int		_setSpriteDeckIdx		( lua_State* L );
 	static int		_setState				( lua_State* L );
@@ -70,7 +72,12 @@ private:
 	void					OnUpdate				( double step );
 
 public:
-	
+
+	enum {
+		ORDER_NORMAL,
+		ORDER_REVERSE,
+	};
+
 	friend class MOAIParticleEngine;
 	friend class MOAIParticleScript;
 	friend class MOAIParticleState;

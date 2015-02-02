@@ -71,5 +71,6 @@ file ( GLOB_RECURSE JPG_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 include_directories ( ${JPG_INCLUDES} )
 add_library ( jpg STATIC ${JPG_SOURCES} ${JPG_HEADERS} )
-target_include_directories ( jpg PUBLIC ${JPG_INCLUDES} )
+target_include_directories ( jpg PUBLIC "$<BUILD_INTERFACE:${JPG_INCLUDES}>" )
 set_target_properties( jpg PROPERTIES FOLDER Third-Party )
+install(TARGETS jpg EXPORT libmoai ARCHIVE DESTINATION lib)

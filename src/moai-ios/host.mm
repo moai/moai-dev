@@ -7,7 +7,7 @@
 
 #import <contrib/MOAIOpenUDID.h>
 #import <AdSupport/ASIdentifierManager.h>
-
+#import <moai-sim/MOAIGfxDevice.h>
 //================================================================//
 // aku-util
 //================================================================//
@@ -27,7 +27,6 @@ void AKUIosContextInitialize () {
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
-	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
 	REGISTER_LUA_CLASS ( MOAINotificationsIOS )

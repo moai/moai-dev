@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <host-sdl/SDLHost.h>
+#include "SDLHost.h"
 
 #if _MSC_VER
 	#include <Crtdbg.h>

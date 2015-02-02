@@ -1,0 +1,16 @@
+<resources>
+    <!--The name displayed in the app drawer or home screens-->
+    <string name="app_name">Moai Template</string>
+
+    <!--value for com.google.android.gms.games.APP_ID-->
+    <string name="app_id">0</string>
+
+    <!--url scheme name for launching app -->
+    <string name="scheme_name">moaischeme</string>
+
+    <!-- needed for facebook module -->
+    <string name="fb_app_id">0</string>
+
+    <!-- needed for google play services -->
+    <string name="gms_app_id">0</string>
+</resources>

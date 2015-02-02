@@ -29,4 +29,19 @@ void MOAIEaseType::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SOFT_EASE_OUT",					( u32 )ZLInterpolate::kSoftEaseOut );
 	state.SetField ( -1, "SOFT_SMOOTH",						( u32 )ZLInterpolate::kSoftSmooth );
 	state.SetField ( -1, "SOFT_SMOOTH_EASE_OUT",			( u32 )ZLInterpolate::kSoftSmoothEaseOut );
+	state.SetField ( -1, "SINE_EASE_IN", 					( u32 )ZLInterpolate::kSineEaseIn );
+	state.SetField ( -1, "SINE_EASE_OUT", 					( u32 )ZLInterpolate::kSineEaseOut );
+	state.SetField ( -1, "SINE_SMOOTH", 					( u32 )ZLInterpolate::kSineSmooth );
+	state.SetField ( -1, "CIRC_EASE_IN", 					( u32 )ZLInterpolate::kCircEaseIn );
+	state.SetField ( -1, "CIRC_EASE_OUT", 					( u32 )ZLInterpolate::kCircEaseOut );
+	state.SetField ( -1, "CIRC_SMOOTH", 					( u32 )ZLInterpolate::kCircSmooth );
+	state.SetField ( -1, "BOUNCE_IN", 						( u32 )ZLInterpolate::kBounceIn );
+	state.SetField ( -1, "BOUNCE_OUT", 						( u32 )ZLInterpolate::kBounceOut );
+	state.SetField ( -1, "BOUNCE_SMOOTH", 					( u32 )ZLInterpolate::kBounceSmooth );
+	state.SetField ( -1, "ELASTIC_IN", 						( u32 )ZLInterpolate::kElasticIn );
+	state.SetField ( -1, "ELASTIC_OUT", 					( u32 )ZLInterpolate::kElasticOut );
+	state.SetField ( -1, "ELASTIC_SMOOTH", 					( u32 )ZLInterpolate::kElasticSmooth );
+	state.SetField ( -1, "BACK_EASE_IN", 					( u32 )ZLInterpolate::kBackEaseIn );
+	state.SetField ( -1, "BACK_EASE_OUT", 					( u32 )ZLInterpolate::kBackEaseOut );
+	state.SetField ( -1, "BACK_EASE_SMOOTH", 				( u32 )ZLInterpolate::kBackSmooth );
 }

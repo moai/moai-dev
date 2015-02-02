@@ -63,6 +63,7 @@ private:
 	
 	enum {
 		END = 0,
+		ABS,
 		ADD,
 		ANGLE_VEC,
 		COLOR,
@@ -78,6 +79,7 @@ private:
 		SET,
 		SIN,
 		SPRITE,
+		STEP,
 		SUB,
 		TAN,
 		TIME,
@@ -114,6 +116,7 @@ private:
 	float	mLiveRegisters [ LIVE_REG_COUNT ]; // TODO: OK to let user reserve these?
 
 	//----------------------------------------------------------------//
+	static int		_abs				( lua_State* L );
 	static int		_add				( lua_State* L );
 	static int		_angleVec			( lua_State* L );
 	static int		_color				( lua_State* L );
@@ -133,6 +136,7 @@ private:
 	static int		_setLiveReg			( lua_State* L );
 	static int		_sin				( lua_State* L );
 	static int		_sprite				( lua_State* L );
+	static int		_step				( lua_State* L );
 	static int		_sub				( lua_State* L );
 	static int		_tan				( lua_State* L );
 	static int		_time				( lua_State* L );

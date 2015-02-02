@@ -30,6 +30,7 @@ local  		iterateFilesImplementation		= nil
 			listDirectories					= nil
 			listFiles						= nil
 local		makeDlcResourceSig				= nil
+			makeExecutable = nil
 			makeStoreEntryFunc				= nil
 			mergeTables						= nil
 			move							= nil
@@ -270,7 +271,7 @@ iterateCommandLine = function ( arg )
 
 		for i, v in iter do
 		
-			local escape = string.match ( v, '^%-%-(%w+)' )
+			local escape = string.match ( v, '^%-%-([%w-]+)' )
 		
 			if escape then
 				currentEscape = escape
@@ -428,6 +429,13 @@ loadFileAsString = function ( filename )
 	
 	return str
 end
+----------------------------------------------------------------
+makeExecutable = function ( path )
+	if MOAIEnvironment.osBrand ~= 'Windows' then
+		os.execute("chmod a+x "..path)
+	end
+end 
+
 
 ----------------------------------------------------------------
 makeDlcResourceSig = function ( path, md5 )

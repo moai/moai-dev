@@ -11,5 +11,6 @@ file ( GLOB TLSF_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c" )
 file ( GLOB TLSF_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 add_library ( tlsf STATIC ${TLSF_SOURCES} ${TLSF_HEADERS} )
-target_include_directories ( tlsf PUBLIC ${TLSF_INCLUDES} )
+target_include_directories ( tlsf PUBLIC "$<BUILD_INTERFACE:${TLSF_INCLUDES}>" )
 set_target_properties( tlsf PROPERTIES FOLDER Third-Party )
+ install(TARGETS tlsf EXPORT libmoai ARCHIVE DESTINATION lib)

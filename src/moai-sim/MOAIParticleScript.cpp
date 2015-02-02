@@ -217,6 +217,19 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	abs
+    @text	r0 = abs(v0)
+ 
+    @in		MOAIParticleScript self
+    @in		number r0
+    @in		number v0
+    @out	nil
+*/
+int MOAIParticleScript::_abs ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( ABS, "RV" )
+}
+
+//----------------------------------------------------------------//
 /**	@lua	add
 	@text	r0 = v0 + v1
 	
@@ -519,6 +532,20 @@ int MOAIParticleScript::_sprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	step
+    @text	r0 = 0 if v0 < v1; 1 if v0 >= v1
+
+    @in		MOAIParticleScript self
+    @in		number r0
+    @in		number v0
+    @in		number v1
+    @out	nil
+*/
+int MOAIParticleScript::_step ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( STEP, "RVV" )
+}
+
+//----------------------------------------------------------------//
 /**	@lua	sub
 	@text	r0 = v0 - v1
 	
@@ -728,6 +755,7 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "abs",				_abs },
 		{ "add",				_add },
 		{ "angleVec",			_angleVec },
 		{ "color",				_color },
@@ -745,6 +773,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setReg",				_setLiveReg }, // TODO: mark as deprecated
 		{ "sin",				_sin },
 		{ "sprite",				_sprite },
+		{ "step",				_step },
 		{ "sub",				_sub },
 		{ "tan",				_tan },
 		{ "time",				_time },
@@ -799,6 +828,15 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	for ( u8 opcode = *( bytecode++ ); opcode != END; opcode = *( bytecode++ )) {
 		
 		switch ( opcode ) {
+
+			case ABS: // RV
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+
+				if ( r0 ) {
+					*r0 = fabsf ( v0 );
+				}
+				break;
 			
 			case ADD: // RVV
 				
@@ -1000,6 +1038,17 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				}
 				this->ResetRegisters ( spriteRegisters, particleRegisters, system );
 				push = true;
+				break;
+
+			case STEP: // RVV
+
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				
+				if ( r0 ) {
+					*r0 = v0 < v1 ? 0.0f : 1.0f;
+				}
 				break;
 			
 			case SUB: // RVV

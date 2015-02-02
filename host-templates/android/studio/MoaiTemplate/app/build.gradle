@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+
+    defaultConfig {
+        applicationId "com.moaiforge.moaitemplate"
+        minSdkVersion 10
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'src/main/libs'
+        assets.srcDir 'bootstrap'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+}
+apply from: 'moai.gradle' //leave after android config block, it needs applicationId
+
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:20.0.0'
+}

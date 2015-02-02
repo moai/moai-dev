@@ -10,10 +10,13 @@ extern "C" {
   void Cleanup();
 
 //----------------------------------------------------------------//
-void onKeyDown ( unsigned char key);
+void onKeyDown ( int key);
 
 //----------------------------------------------------------------//
-void onKeyUp ( unsigned char key );
+void onKeyUp ( int key );
+
+//----------------------------------------------------------------//
+void onChar ( int unicodeChar );
 
 //----------------------------------------------------------------//
 void onMouseButton ( int button, int state  );
