@@ -112,7 +112,7 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 			}
 			while(framesRead > 0 && totalFramesRead < numFrames);
             
-			if(framesRead == -1)
+			if(framesRead <= 0)
             {
                 if ( ! s->isLooping() )
                 {

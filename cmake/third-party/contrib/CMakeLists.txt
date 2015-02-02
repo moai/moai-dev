@@ -13,5 +13,9 @@ file ( GLOB_RECURSE CONTRIB_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
 include_directories(${CONTRIB_INCLUDES})
 add_library( contrib STATIC ${CONTRIB_SOURCES})
-target_include_directories (contrib PUBLIC ${CONTRIB_INCLUDES})
+target_include_directories (contrib PUBLIC 
+	"$<BUILD_INTERFACE:${CONTRIB_INCLUDES}>"
+	"$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/contrib>")
 set_target_properties( contrib PROPERTIES FOLDER Third-Party )
+install(TARGETS contrib EXPORT libmoai ARCHIVE DESTINATION lib)
+install(FILES ${CONTRIB_HEADERS} DESTINATION "include/contrib")

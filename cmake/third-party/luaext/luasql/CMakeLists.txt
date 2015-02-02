@@ -7,8 +7,10 @@
     )
 
  add_library (luasql STATIC ${LUAEXT_SOURCES})
- target_link_libraries ( luasql sqlite3 ${LUA_LIB} )
- add_dependencies ( luasql lualib-static)
+ LINK_DIRECTORIES("${LUA_LIB_DIR}")
+ target_link_libraries ( luasql sqlite3 ${LUA_LIB})
+ add_dependencies ( luasql liblua-static)
 set_target_properties( luasql PROPERTIES FOLDER Third-Party )
 
- target_include_directories ( luasql PUBLIC ${LUA_HEADERS})
+ target_include_directories ( luasql PUBLIC "$<BUILD_INTERFACE:${LUA_HEADERS}>")
+ install(TARGETS luasql EXPORT libmoai ARCHIVE DESTINATION lib)

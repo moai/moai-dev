@@ -13,5 +13,6 @@ set ( MONGOOSE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/mongoose.c )
 set ( MONGOOSE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/mongoose.h )
 
 add_library ( mongoose STATIC ${MONGOOSE_SOURCES} ${MONGOOSE_HEADERS} )
-target_include_directories ( mongoose PUBLIC ${MONGOOSE_INCLUDES} )
+target_include_directories ( mongoose PUBLIC "$<BUILD_INTERFACE:${MONGOOSE_INCLUDES}>" )
 set_target_properties ( mongoose PROPERTIES FOLDER Third-Party )
+ install(TARGETS mongoose EXPORT libmoai ARCHIVE DESTINATION lib)

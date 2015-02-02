@@ -7,7 +7,7 @@
 
 #import <contrib/MOAIOpenUDID.h>
 #import <AdSupport/ASIdentifierManager.h>
-
+#import <moai-sim/MOAIGfxDevice.h>
 //================================================================//
 // aku-util
 //================================================================//

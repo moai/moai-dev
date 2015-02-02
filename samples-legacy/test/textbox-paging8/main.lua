@@ -42,17 +42,12 @@ end
 
 -- tests
 function onKeyboardEvent ( key, down )
-	if down == true then
-		-- print ( key )
-		if key == 32 and not continue then -- continue
-			continue = true
-		else
-			return
-		end
+	if down and key == MOAIKeyCode.SPACE then
+		continue = true
 	end
 end
 
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 thread = MOAIThread.new ()
 thread:run ( revealTests )

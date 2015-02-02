@@ -24,42 +24,25 @@ function makeCurve ( ease )
 	return curve
 end
 
-local curves = {
-	makeCurve ( MOAIEaseType.EASE_IN ),
-	makeCurve ( MOAIEaseType.EASE_OUT ),
-	makeCurve ( MOAIEaseType.LINEAR ),
-	makeCurve ( MOAIEaseType.SHARP_EASE_IN ),
-	makeCurve ( MOAIEaseType.SHARP_EASE_OUT ),
-	makeCurve ( MOAIEaseType.SHARP_SMOOTH ),
-	makeCurve ( MOAIEaseType.SMOOTH ),
-	makeCurve ( MOAIEaseType.SOFT_EASE_IN ),
-	makeCurve ( MOAIEaseType.SOFT_EASE_OUT ),
-	makeCurve ( MOAIEaseType.SOFT_SMOOTH ),
-}
+-- Determine curve types via reflection
+local curveTypes = {}
+for name, value in pairs ( MOAIEaseType ) do
+	if type ( value ) == "number" then
+		table.insert ( curveTypes, { name = name, value = value })
+	end
+end
+table.sort ( curveTypes, function ( a, b ) return a.value < b.value end )
 
-local names = {
-	'EASE_IN',
-	'EASE_OUT',
-	'LINEAR',
-	'SHARP_EASE_IN',
-	'SHARP_EASE_OUT',
-	'SHARP_SMOOTH',
-	'SMOOTH',
-	'SOFT_EASE_IN',
-	'SOFT_EASE_OUT',
-	'SOFT_SMOOTH',
-}
-
-local prevID = 0
-local curveID = 1
+local prevIndex = 0
+local curveIndex = 1
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
 	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
-	MOAIDraw.drawAnimCurve ( curves [ curveID ], 100 )
-	if prevID ~= curveID then
-		print ( names [ curveID ])
-		prevID = curveID
+	MOAIDraw.drawAnimCurve ( makeCurve ( curveTypes [ curveIndex ].value ), 100 )
+	if curveIndex ~= prevIndex then
+		print ( string.format ( "%i of %i: %s", curveIndex, #curveTypes, curveTypes [ curveIndex ].name ))
+		prevIndex = curveIndex
 	end
 end
 
@@ -72,13 +55,20 @@ prop:setDeck ( scriptDeck )
 prop:setLoc ( -128, -128 )
 layer:insertProp ( prop )
 
+print ( "Press space to go to the next ease type, backspace to go back." )
+
 function onKeyboardEvent ( key, down )
 
 	if down == true then
-		curveID = curveID + 1
-		if #curves < curveID then curveID = 1 end
+		if key == 32 then -- space
+			curveIndex = curveIndex + 1
+			if curveIndex > #curveTypes then curveIndex = 1 end
+		elseif key == 8 then -- backspace
+			curveIndex = curveIndex - 1
+			if curveIndex == 0 then curveIndex = #curveTypes end
+		end
 	end
 end
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 

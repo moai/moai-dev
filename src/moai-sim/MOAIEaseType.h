@@ -28,6 +28,21 @@
 	@const	SOFT_EASE_OUT					t ^ 2
 	@const	SOFT_SMOOTH						t ^ 2
 	@const	SOFT_SMOOTH_EASE_OUT			t ^ 2
+	@const	SINE_EASE_IN	
+	@const	SINE_EASE_OUT		
+	@const	SINE_SMOOTH		
+	@const	CIRC_EASE_IN		
+	@const	CIRC_EASE_OUT		
+	@const	CIRC_SMOOTH		
+	@const	BOUNCE_IN		
+	@const	BOUNCE_OUT		
+	@const	BOUNCE_SMOOTH		
+	@const	ELASTIC_IN		
+	@const	ELASTIC_OUT		
+	@const	ELASTIC_SMOOTH		
+	@const	BACK_EASE_IN		
+	@const	BACK_EASE_OUT		
+	@const	BACK_SMOOTH		
 */
 class MOAIEaseType :
 	public MOAIGlobalClass < MOAIEaseType, MOAILuaObject > {

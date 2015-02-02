@@ -25,13 +25,15 @@ project ( luasocket )
     ${MOAI_ROOT}/3rdparty/luasocket-2.0.2/src/udp.c
     ${LUASOCKET_PLAT}
   )
-        
+  
+  LINK_DIRECTORIES("${LUA_LIB_DIR}")
   target_link_libraries ( luasocket ${LUA_LIB} )
 
-  target_include_directories ( luasocket PUBLIC ${LUA_HEADERS})
-  add_dependencies ( luasocket lualib-static)
+  target_include_directories ( luasocket PUBLIC "$<BUILD_INTERFACE:${LUA_HEADERS}>")
+  add_dependencies ( luasocket liblua-static)
   set_target_properties( luasocket PROPERTIES FOLDER Third-Party )
 
    if ( BUILD_WINDOWS )
      target_link_libraries( luasocket Ws2_32 )
    endif (BUILD_WINDOWS)
+install(TARGETS luasocket EXPORT libmoai ARCHIVE DESTINATION lib)

@@ -8,6 +8,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <UIKit/UIKit.h>
 
+#import <moai-core/host.h>
 #import <moai-core/headers.h>
 
 // TODO: rename to MOAIMailComposeDelegate

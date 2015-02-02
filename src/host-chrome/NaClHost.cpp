@@ -163,8 +163,11 @@ void NaClHandleInputEvent ( const pp::InputEvent & event ) {
 			}
 
 			int keycode = keyboard_event.GetKeyCode ();
-
-			AKUEnqueueKeyboardEvent ( NaClInputDeviceID::DEVICE, NaClInputDeviceSensorID::KEYBOARD, keycode, keyDown );
+			
+			// TODO: The following line sends incorrect key codes. They should be converted to Moai's key codes.
+			// I didn't implement that conversion because the Chrome host is currently all but dead and I couldn't get it to build.
+			// If at any time someone fixes the build, I (Daniel Wolf) will be glad to implement the mapping.
+			AKUEnqueueKeyboardKeyEvent ( NaClInputDeviceID::DEVICE, NaClInputDeviceSensorID::KEYBOARD, keycode, keyDown );
 
 			break;
 		}

@@ -35,8 +35,12 @@
     #include <sys/types.h>
 #endif
 
-#if defined( NACL ) || defined (__EMSCRIPTEN__)
+#if defined( NACL ) 
 		typedef unsigned long u_int32_t;
+#endif
+
+#if defined(EMSCRIPTEN)
+  #include <sys/types.h>
 #endif
 
 #ifdef __QNX__

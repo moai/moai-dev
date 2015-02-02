@@ -96,6 +96,12 @@ crossCompile "armv7"
 crossCompile "armv7s"
 compile
 
+CC_ARGS="IPHONEOS_DEPLOYMENT_TARGET='' xcrun -sdk macosx clang -arch i386"
+crossCompile "arm64"
+
+
+
+
 $LIPO -create "$DESTDIR"/libluajit-*.a -output "$DESTDIR"/$PRODUCT_NAME
 $STRIP -S "$DESTDIR"/$PRODUCT_NAME
 $LIPO -info "$DESTDIR"/$PRODUCT_NAME

@@ -40,29 +40,28 @@ layer:insertProp ( prop2 )
 
 function onKeyboardEvent ( key, down )
 	if down == true then
-		-- print ( key )
-		if key == 119 then -- move up
+		if key == MOAIKeyCode.W then -- move up
 			prop:moveLoc ( 0, 12 )
 			print ( prop:getLoc ())
-		elseif key == 115 then -- move down
+		elseif key == MOAIKeyCode.S then -- move down
 			prop:moveLoc ( 0, -12 )
 			print ( prop:getLoc ())
-		elseif key == 97 then -- move left
+		elseif key == MOAIKeyCode.A then -- move left
 			prop:moveLoc ( -12, 0 )
 			print ( prop:getLoc ())
-		elseif key == 100 then -- move right
+		elseif key == MOAIKeyCode.D then -- move right
 			prop:moveLoc ( 12, 0 )
 			print ( prop:getLoc ())
-		elseif key == 113 then -- rotate left
+		elseif key == MOAIKeyCode.Q then -- rotate left
 			prop:moveRot ( 15 )
 			print ( prop:getRot ())
-		elseif key == 101 then -- rotate right
+		elseif key == MOAIKeyCode.E then -- rotate right
 			prop:moveRot ( -15 )
 			print ( prop:getRot ())
-		elseif key == 114 then -- scale up
+		elseif key == MOAIKeyCode.R then -- scale up
 			prop:moveScl ( .2, .2 )
 			print ( prop:getScl ())
-		elseif key == 102 then -- scale down
+		elseif key == MOAIKeyCode.F then -- scale down
 			prop:moveScl ( -.2, -.2 )
 			print ( prop:getScl ())
 		end
@@ -87,7 +86,7 @@ end
 
 MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
 MOAIInputMgr.device.pointer:setCallback ( onPointerEvent )
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardEvent )
 
 prop:setLoc ( 0, -200 )
 prop:setScl ( 1.4, 1.4 )
