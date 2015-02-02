@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-apply from: 'moai.gradle'
+
 
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion '20.0.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.moaiforge.moaitemplate"
@@ -31,7 +31,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
     }
 }
-
+apply from: 'moai.gradle' //leave after android config block, it needs applicationId
 
 
 dependencies {

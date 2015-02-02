@@ -1,2 +1,2 @@
 #!/bin/bash
-xcodebuild build
+xcodebuild -configuration Debug -sdk iphonesimulator build

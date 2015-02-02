@@ -116,7 +116,7 @@
 /* Begin PBXFileReference section */
 		633667A61A3C4C100020E6BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = res/Images.xcassets; sourceTree = "<group>"; };
 		63C4D5B81A1075A2009DBA1D /* libliblua-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libliblua-static.a"; path = "libmoai/lib/libliblua-static.a"; sourceTree = "<group>"; };
-		63CF19C11A065B5400F731F1 /* MoaiTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		63CF19C11A065B5400F731F1 /* Moai Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moai Template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "res/Default-568h@2x.png"; sourceTree = "<group>"; };
 		63CF1A1C1A065D4900F731F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = res/Info.plist; sourceTree = "<group>"; };
 		63CF1A1E1A065DF300F731F1 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = libmoai/lib/AdColony.framework; sourceTree = "<group>"; };
@@ -353,7 +353,7 @@
 		63CF19C21A065B5400F731F1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				63CF19C11A065B5400F731F1 /* MoaiTemplate.app */,
+				63CF19C11A065B5400F731F1 /* Moai Template.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -498,9 +498,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		63CF19C01A065B5400F731F1 /* MoaiTemplate */ = {
+		63CF19C01A065B5400F731F1 /* Moai Template */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 63CF19E41A065B5500F731F1 /* Build configuration list for PBXNativeTarget "MoaiTemplate" */;
+			buildConfigurationList = 63CF19E41A065B5500F731F1 /* Build configuration list for PBXNativeTarget "Moai Template" */;
 			buildPhases = (
 				63CF19BD1A065B5400F731F1 /* Sources */,
 				63CF19BE1A065B5400F731F1 /* Frameworks */,
@@ -510,9 +510,9 @@
 			);
 			dependencies = (
 			);
-			name = MoaiTemplate;
+			name = "Moai Template";
 			productName = "Moai Template";
-			productReference = 63CF19C11A065B5400F731F1 /* MoaiTemplate.app */;
+			productReference = 63CF19C11A065B5400F731F1 /* Moai Template.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -529,7 +529,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 63CF19BC1A065B5400F731F1 /* Build configuration list for PBXProject "MoaiTemplate" */;
+			buildConfigurationList = 63CF19BC1A065B5400F731F1 /* Build configuration list for PBXProject "Moai Template" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -542,7 +542,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				63CF19C01A065B5400F731F1 /* MoaiTemplate */,
+				63CF19C01A065B5400F731F1 /* Moai Template */,
 			);
 		};
 /* End PBXProject section */
@@ -682,7 +682,7 @@
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
 				);
-				PRODUCT_NAME = MoaiTemplate;
+				PRODUCT_NAME = "Moai Template";
 			};
 			name = Debug;
 		};
@@ -710,14 +710,14 @@
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
 				);
-				PRODUCT_NAME = MoaiTemplate;
+				PRODUCT_NAME = "Moai Template";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		63CF19BC1A065B5400F731F1 /* Build configuration list for PBXProject "MoaiTemplate" */ = {
+		63CF19BC1A065B5400F731F1 /* Build configuration list for PBXProject "Moai Template" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63CF19E21A065B5500F731F1 /* Debug */,
@@ -726,7 +726,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		63CF19E41A065B5500F731F1 /* Build configuration list for PBXNativeTarget "MoaiTemplate" */ = {
+		63CF19E41A065B5500F731F1 /* Build configuration list for PBXNativeTarget "Moai Template" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63CF19E51A065B5500F731F1 /* Debug */,

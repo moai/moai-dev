@@ -1,2 +1,2 @@
 @echo off
-call gradlew assembleRelease
+call gradlew assembleDebug

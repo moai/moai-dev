@@ -17,6 +17,19 @@ class MoaiPlugin implements Plugin<Project> {
     '''
     void apply(Project project) {
 
+        project.task( type: Exec, 'runApp') {
+            println("APPID="+project.android.defaultConfig.applicationId)
+           def appId = project.android.defaultConfig.applicationId
+           if (System.properties['os.name'].toLowerCase().contains('windows')) {
+            
+              commandLine "cmd", "/c", "adb", "shell", "am","start","-n","$appId/com.getmoai.androidhost.MoaiActivity"
+           }
+           else {
+               commandLine  "adb", "shell", "am","start","-n","$appId/com.getmoai.androidhost.MoaiActivity"
+           }
+        }
+        project.tasks.getByName("runApp").dependsOn('installDebug')
+
         def libRoot = project.file("../"+project.moaiLibRoot) //gradle properties are one down
         //ndk build task
         project.task( type: Exec, 'libmoaiBuild' )  {
@@ -24,7 +37,7 @@ class MoaiPlugin implements Plugin<Project> {
             def ndkDir = project.plugins.findPlugin('com.android.application').getNdkFolder()
 
             def my_modules = project.moaiModules.replaceAll(',',' ')
-            def my_flags = project.moaiModules.split(',')
+            def my_flags = project.moaiModules.split(',').findAll { w -> w.trim() != ""}
             my_flags = my_flags.collect {
                 i -> i.trim().toUpperCase().replaceAll('-','_').replaceFirst('^MOAI_','-DAKU_WITH_') + "=1"
             }
