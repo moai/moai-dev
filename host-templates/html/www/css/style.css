@@ -119,15 +119,19 @@ body {
 }
 
 .moai-cpal {
-    width: 200px;
+    width: 150px;
     max-width:100%;
     margin: auto;
     font-size: 10px;
     position:absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -85px;
+    background-color: rgba(32,32,37,0.9);
+    padding: 10px;
+    border-radius: 4px;
 }
+
 .moai-cpal img {
     margin: 5px 0;
     width: 100%;
@@ -142,7 +146,7 @@ body {
     position: absolute;
     width: 150px; 
     height: 100px;
-    border: 1px;
+
 
     top: 45%;
     left: 50%;
@@ -151,8 +155,8 @@ body {
     border-radius: 10px;
     border: 1px solid #CCC;
     background-color: #CCC;
-    opacity: 0.1;
-    z-index:100;
+    opacity: 0.6;
+    z-index:1000;
     line-height: 100px;
     color: #777;
     font-size: 65px;
@@ -162,6 +166,14 @@ body {
     opacity: 1;
 }
 
+
+.moai-info {
+  background-image: url(../background.jpg);
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 
 

@@ -15,16 +15,30 @@ print ( MOAIInputMgr.configuration )
 ----------------------------------------------------------------
 -- keyboard events
 
-function onKeyboardEvent ( key, down )
-
-	if down == true then
-		printf ( "keyboard: %d down\n", key )
-	else
-		printf ( "keyboard: %d up\n", key )
+local keyNames = {}
+for name, value in pairs ( MOAIKeyCode ) do
+	if type( value ) == "number" then
+		keyNames [ value ] = name
 	end
 end
 
-MOAIInputMgr.device.keyboard:setCallback ( onKeyboardEvent )
+function onKeyboardKeyEvent ( key, down )
+	local keyInfo = keyNames [ key ] or tostring ( key )
+	if ( key < 256) then
+		keyInfo = keyInfo .. string.format( " ('%s')", string.char ( key ))
+	end
+	printf ( "keyboard: key %s %s\n", keyInfo, down and "down" or "up" )
+end
+
+function onKeyboardCharEvent ( c )
+	printf ( "keyboard: character '%s'\n", c )
+	if ( string.len ( c ) > 1 ) then
+		printf ( "This UTF-8 sequence might not print correctly on a console.\n" )
+	end
+end
+
+MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboardKeyEvent )
+MOAIInputMgr.device.keyboard:setCharCallback ( onKeyboardCharEvent )
 
 ----------------------------------------------------------------
 -- pointer events

@@ -31,7 +31,3 @@ set ( DEBUG OFF )
 set ( TESTING OFF )
 
 
-#missing cmake modules
-set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DAKU_WITH_HTTP_SERVER=0"  )
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DAKU_WITH_HTTP_SERVER=0"  )
-

@@ -130,7 +130,7 @@ function onMouseRightEvent(down)
 end
 
 -- Register the callbacks for input
-MOAIInputMgr.device.keyboard:setCallback(onKeyboardEvent)
+MOAIInputMgr.device.keyboard:setKeyCallback(onKeyboardEvent)
 MOAIInputMgr.device.pointer:setCallback(onPointerEvent)
 MOAIInputMgr.device.mouseLeft:setCallback(onMouseLeftEvent)
 MOAIInputMgr.device.mouseMiddle:setCallback(onMouseMiddleEvent)

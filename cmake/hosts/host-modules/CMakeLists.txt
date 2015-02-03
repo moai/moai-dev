@@ -39,6 +39,12 @@ if ( MOAI_HTTP_CLIENT OR LIB_PATH)
   target_link_libraries ( host-modules moai-http-client )
 endif ( MOAI_HTTP_CLIENT OR LIB_PATH)
 
+#Http Server
+if ( MOAI_HTTP_CLIENT OR LIB_PATH)
+  target_link_libraries ( host-modules moai-http-server )
+endif ( MOAI_HTTP_CLIENT OR LIB_PATH)
+
+
 #LuaExt
 if ( MOAI_LUAEXT OR LIB_PATH)
   target_link_libraries ( host-modules moai-luaext )

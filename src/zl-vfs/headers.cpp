@@ -13,6 +13,7 @@
 #ifdef _WIN32
 	#include <direct.h>
 	#include <io.h>
+	#include <windows.h>
 #else
 	#include <sys/types.h>
 	#include <dirent.h>
@@ -500,6 +501,27 @@ ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 		*fp = zl_fopen ( filename, mode );
 		return errno;
 	}
+
+	ZLFILE *zl_wfopen(const wchar_t *filename, const wchar_t *mode) {
+		ZLVfsFile* file = new ZLVfsFile();
+
+		//Convert to ansi for our zlvfsfile functions
+		char filenameA[260];
+		char modeA[20];
+		char DefChar = ' ';
+		WideCharToMultiByte(CP_ACP, 0, filename, -1, filenameA, 260, &DefChar, NULL);
+		WideCharToMultiByte(CP_ACP, 0, mode, -1, modeA, 260, &DefChar, NULL);
+
+
+
+		int result = file->Open(filenameA, modeA);
+
+		if (result) {
+			delete file;
+			return 0;
+		}
+		return (ZLFILE*)file;
+	}
 #endif
 
 //----------------------------------------------------------------//
@@ -583,7 +605,7 @@ int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	return -1;
 }
 
-#if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__)
+#if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__) || defined(MOAI_COMPILER_MSVC)
 	int zl_fseeko ( ZLFILE* fp, off_t offset, int origin ) {
 		// TODO:
 		return zl_fseek ( fp, ( long )offset, origin );

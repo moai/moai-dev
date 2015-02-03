@@ -18,6 +18,12 @@ end
 --==============================================================
 
 local config = {}
+local hostconfig = {
+  AppName = "Moai Template",
+  CompanyName = "Zipline Games"
+}
+
+local configFile = false
 
 config.OUTPUT_DIR                       = INVOKE_DIR..'hosts/osx/'
 config.LIB_SOURCE                      = MOAI_SDK_HOME..'lib/osx'
@@ -35,9 +41,13 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 			config.OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
 
-	    if escape == 'l' or escape == 'lib-source' then
+	  if escape == 'l' or escape == 'lib-source' then
 			config.LIB_SOURCE = MOAIFileSystem.getAbsoluteDirectoryPath(param)
 		end
+    
+    if escape == 'c' or escape == 'config' then
+      configFile = MOAIFileSystem.getAbsoluteFilePath(param)
+    end
 	end
 end
 
@@ -48,6 +58,9 @@ end
 local copyhostfiles 
 local copylib
 local linklib
+local applyConfigFile
+local configureHost
+
 
 copyhostfiles = function() 
 	local output = config.OUTPUT_DIR
@@ -91,7 +104,84 @@ linklib = function()
 
 end
 
+applyConfigFile = function(configFile)
+  util.dofileWithEnvironment(configFile, hostconfig)
+  
+  
+  --copy host specific settings to main config
+  if (hostconfig["HostSettings"] and hostconfig["HostSettings"]["osx"]) then
+    for k,v in pairs(hostconfig["HostSettings"]["osx"]) do
+      hostconfig[k] = v
+    end
+  end
+  
+  hostconfig["HostSettings"] = nil
+  
+end
+
+configureHost = function()
+  local output = config.OUTPUT_DIR
+  --get lua folder path (relative to xcode project)
+  local fullLua = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['LuaSrc'])
+  local relativeLua = MOAIFileSystem.getRelativePath( fullLua, output )
+  local relativeLua = string.match(relativeLua, "(.*)/$") --strip trailing slash
+  
+  local luafolder = string.match(fullLua, ".*/([^/]-)/$") --ensure to ignore trailing slash
+  
+  local projectfiles = {
+    [ output..'Moai Template.xcodeproj/project.xcworkspace/contents.xcworkspacedata' ] = true,
+    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme' ] = true,
+    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/xcschememanagement.plist' ] = true
+  }
+
+  util.replaceInFiles ({
+    [ output..'Moai Template.xcodeproj/project.pbxproj' ] = {
+        --our lua path
+        ['(63157D5E19FCB4F0009018A3%C-name = ")([^"]-)(".-path = ")([^"]-)(".*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
+        --our app name
+        ['Moai Template'] = hostconfig['AppName']
+    },
+    [ util.wrap(pairs, projectfiles) ] = {
+        ['Moai Template'] = hostconfig['AppName']
+    },
+    [ output..'bootstrap.lua'] = {
+        ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
+    }
+  })
+
+  if (hostconfig['AppName'] ~= 'Moai Template') then
+    --rename the info plist
+    MOAIFileSystem.copy(output..'app/Moai Template-Info.plist', output..'app/'..hostconfig['AppName']..'-Info.plist')
+    MOAIFileSystem.deleteFile(output..'app/Moai Template-Info.plist')
+    
+    --rename the scheme
+    MOAIFileSystem.copy(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme', 
+                        output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
+    MOAIFileSystem.deleteFile(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme')
+    
+    --rename the project file too````
+    MOAIFileSystem.copy(output..'Moai Template.xcodeproj', output..hostconfig['AppName']..'.xcodeproj')
+    MOAIFileSystem.deleteDirectory(output..'Moai Template.xcodeproj', true)
+  end 
+  
+  --icon
+  if (hostconfig['Icon']) then
+    local icon = MOAIFileSystem.getAbsoluteFilePath(hostconfig['Icon'])
+    if (MOAIFileSystem.checkFileExists(icon)) then
+      MOAIFileSystem.copy(icon, config.OUTPUT_DIR.."app/Icon-120.png")
+    else
+      error("Could not find specified icon :"..icon.." - skipping")
+    end
+  end
+
+end
+--63157D5E19FCB4F0009018A3
+
+applyConfigFile(configFile)
 copyhostfiles()
+configureHost()
+
+
 if (config.USE_SYMLINK) then
 	linklib()
 else

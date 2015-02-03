@@ -481,7 +481,7 @@ stickyThread:run ( function ()
 	repeat
 		coroutine.yield ()
 
-		if MOAIInputMgr.device.keyboard:keyDown (string.byte ( "s" )) then
+		if MOAIInputMgr.device.keyboard:keyDown ( "s" ) then
 			SHOW_SPRITES = not SHOW_SPRITES
 			for i = 1, #allPigs do
 				if SHOW_SPRITES then
