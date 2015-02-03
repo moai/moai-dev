@@ -185,6 +185,12 @@ void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool do
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueKeyboardTextEvent ( int deviceID, int sensorID, const char* text ) {
+
+	MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, text );
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueLevelEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
 	MOAIMotionSensor::EnqueueLevelEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, x, y, z );
