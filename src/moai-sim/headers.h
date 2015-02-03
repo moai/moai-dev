@@ -53,6 +53,8 @@
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAIInputQueue.h>
 #include <moai-sim/MOAIJoystickSensor.h>
+#include <moai-sim/MOAIKeyCode.h>
+#include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>

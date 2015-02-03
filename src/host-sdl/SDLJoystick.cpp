@@ -1,5 +1,5 @@
 
-#include "Joystick.h"
+#include "SDLJoystick.h"
 
 Joystick::Joystick(const int idx) :
     index(idx),
