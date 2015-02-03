@@ -6499,6 +6499,24 @@
 		CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTTexture.cpp; path = "../../3rdparty/libpvr-3.4/PVRTTexture.cpp"; sourceTree = "<group>"; };
 		CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTTexture.h; path = "../../3rdparty/libpvr-3.4/PVRTTexture.h"; sourceTree = "<group>"; };
 		CD323B091A80445400E2FEBB /* MOAIKeyCodeEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIKeyCodeEnum.h; sourceTree = "<group>"; };
+		CD323B0D1A80530000E2FEBB /* MOAIDeck2DShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-fsh.h"; path = "shaders/MOAIDeck2DShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B0E1A80530000E2FEBB /* MOAIDeck2DShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShader-vsh.h"; path = "shaders/MOAIDeck2DShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B0F1A80530000E2FEBB /* MOAIDeck2DSnappingShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DSnappingShader-fsh.h"; path = "shaders/MOAIDeck2DSnappingShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B101A80530000E2FEBB /* MOAIDeck2DSnappingShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DSnappingShader-vsh.h"; path = "shaders/MOAIDeck2DSnappingShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B111A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-fsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B121A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-vsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B131A80530000E2FEBB /* MOAIFontEffectsShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontEffectsShader-fsh.h"; path = "shaders/MOAIFontEffectsShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B141A80530000E2FEBB /* MOAIFontEffectsShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontEffectsShader-vsh.h"; path = "shaders/MOAIFontEffectsShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B151A80530000E2FEBB /* MOAIFontShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShader-fsh.h"; path = "shaders/MOAIFontShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B161A80530000E2FEBB /* MOAIFontShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShader-vsh.h"; path = "shaders/MOAIFontShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B171A80530000E2FEBB /* MOAIFontSnappingShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontSnappingShader-fsh.h"; path = "shaders/MOAIFontSnappingShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B181A80530000E2FEBB /* MOAIFontSnappingShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontSnappingShader-vsh.h"; path = "shaders/MOAIFontSnappingShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B191A80530000E2FEBB /* MOAILineShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-fsh.h"; path = "shaders/MOAILineShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B1A1A80530000E2FEBB /* MOAILineShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader-vsh.h"; path = "shaders/MOAILineShader-vsh.h"; sourceTree = "<group>"; };
+		CD323B1B1A80530000E2FEBB /* MOAILineShader3D-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader3D-fsh.h"; path = "shaders/MOAILineShader3D-fsh.h"; sourceTree = "<group>"; };
+		CD323B1C1A80530000E2FEBB /* MOAILineShader3D-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAILineShader3D-vsh.h"; path = "shaders/MOAILineShader3D-vsh.h"; sourceTree = "<group>"; };
+		CD323B1D1A80530000E2FEBB /* MOAIMeshShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-fsh.h"; path = "shaders/MOAIMeshShader-fsh.h"; sourceTree = "<group>"; };
+		CD323B1E1A80530000E2FEBB /* MOAIMeshShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-vsh.h"; path = "shaders/MOAIMeshShader-vsh.h"; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
@@ -10152,6 +10170,31 @@
 			name = libpvr;
 			sourceTree = "<group>";
 		};
+		CD323B0C1A8052C500E2FEBB /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				CD323B0D1A80530000E2FEBB /* MOAIDeck2DShader-fsh.h */,
+				CD323B0E1A80530000E2FEBB /* MOAIDeck2DShader-vsh.h */,
+				CD323B0F1A80530000E2FEBB /* MOAIDeck2DSnappingShader-fsh.h */,
+				CD323B101A80530000E2FEBB /* MOAIDeck2DSnappingShader-vsh.h */,
+				CD323B111A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-fsh.h */,
+				CD323B121A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-vsh.h */,
+				CD323B131A80530000E2FEBB /* MOAIFontEffectsShader-fsh.h */,
+				CD323B141A80530000E2FEBB /* MOAIFontEffectsShader-vsh.h */,
+				CD323B151A80530000E2FEBB /* MOAIFontShader-fsh.h */,
+				CD323B161A80530000E2FEBB /* MOAIFontShader-vsh.h */,
+				CD323B171A80530000E2FEBB /* MOAIFontSnappingShader-fsh.h */,
+				CD323B181A80530000E2FEBB /* MOAIFontSnappingShader-vsh.h */,
+				CD323B191A80530000E2FEBB /* MOAILineShader-fsh.h */,
+				CD323B1A1A80530000E2FEBB /* MOAILineShader-vsh.h */,
+				CD323B1B1A80530000E2FEBB /* MOAILineShader3D-fsh.h */,
+				CD323B1C1A80530000E2FEBB /* MOAILineShader3D-vsh.h */,
+				CD323B1D1A80530000E2FEBB /* MOAIMeshShader-fsh.h */,
+				CD323B1E1A80530000E2FEBB /* MOAIMeshShader-vsh.h */,
+			);
+			name = shaders;
+			sourceTree = "<group>";
+		};
 		CD42F2D51A60A795001B6D72 /* moai-sdl */ = {
 			isa = PBXGroup;
 			children = (
@@ -12480,6 +12523,7 @@
 		CDB718F51A4BA785003DFFBA /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				CD323B0C1A8052C500E2FEBB /* shaders */,
 				89BE6FED173AD0CA00DFE837 /* MOAIShader.cpp */,
 				89BE6FEE173AD0CA00DFE837 /* MOAIShader.h */,
 				89BE6FEF173AD0CA00DFE837 /* MOAIShaderMgr.cpp */,

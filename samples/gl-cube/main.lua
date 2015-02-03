@@ -92,6 +92,7 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	mesh:setTexture ( texture )
 	mesh:setVertexBuffer ( vbo )
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 	
 	return mesh
 end
@@ -107,6 +108,5 @@ local mesh = makeCube ( 128, 'moai.png' )
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:moveRot ( 360, 360, 0, 6 )
-prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 layer:insertProp ( prop )
