@@ -2,8 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -13,7 +14,6 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 
@@ -127,7 +127,7 @@ int MOAIVectorTesselator::_getTransform ( lua_State* L ) {
 int MOAIVectorTesselator::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
+	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
 	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
 
 	if ( vtxBuffer && idxBuffer ) {
@@ -648,7 +648,7 @@ SafeTesselator* MOAIVectorTesselator::GetMaskTesselator () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void MOAIVectorTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
 
 	this->mIdxStream.Seek ( 0, SEEK_SET );
 	this->mVtxStream.Seek ( 0, SEEK_SET );

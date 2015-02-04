@@ -98,7 +98,7 @@ public:
 
 	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_ASAP_GPU_NEXT;
 
-	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only affects
+	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only effects
 	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time
 	// we render.
 

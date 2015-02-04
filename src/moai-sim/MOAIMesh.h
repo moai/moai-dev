@@ -8,8 +8,29 @@
 
 class MOAIGfxBuffer;
 class MOAIIndexBuffer;
+class MOAIMesh;
 class MOAITextureBase;
-class MOAIVertexBuffer;
+
+//================================================================//
+// MOAIVertexBuffer
+//================================================================//
+class MOAIVertexBuffer {
+public:
+	
+	MOAILuaSharedPtr < MOAIGfxBuffer >		mBuffer;
+	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
+	
+	u32			mTotalElements;
+	bool		mHasBounds;
+	ZLBox		mBounds;
+	
+	//----------------------------------------------------------------//
+	void		ClearBounds				();
+				MOAIVertexBuffer		();
+				~MOAIVertexBuffer		();
+	void		Bind					();
+	void		SetBufferAndFormat		( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format );
+};
 
 //================================================================//
 // MOAIMesh
@@ -27,41 +48,62 @@ class MOAIVertexBuffer;
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIMesh :
-	public MOAIDeck {
+	public MOAIDeck,
+	public MOAIGfxResource {
 private:
 
+	ZLLeanArray < u32 >						mVAOs; // vertex array objects to bind all the vertex and buffer state
+	u32										mCurrentVAO;
+
+	ZLLeanArray < MOAIVertexBuffer >		mVertexBuffers;
 	MOAILuaSharedPtr < MOAIIndexBuffer >	mIndexBuffer;
-	MOAILuaSharedPtr < MOAIGfxBufferBase >	mVertexBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
 
-	u32		mPrimType;
+	u32			mTotalElements;
+	bool		mHasBounds;
+	ZLBox		mBounds;
+
+	u32			mPrimType;
 	
-	float	mPenWidth;
-	float	mPointSize;
+	float		mPenWidth;
+	float		mPointSize;
+
+	bool		mNeedsRefresh;
 
 	//----------------------------------------------------------------//
-	static int		_setFormat			( lua_State* L );
-	static int		_setIndexBuffer		( lua_State* L );
-	static int		_setPenWidth		( lua_State* L );
-	static int		_setPointSize		( lua_State* L );
-	static int		_setPrimType		( lua_State* L );
-	static int		_setVertexBuffer	( lua_State* L );
+	static int			_reserveVAOs				( lua_State* L );
+	static int			_reserveVertexBuffers		( lua_State* L );
+	static int			_setIndexBuffer				( lua_State* L );
+	static int			_setPenWidth				( lua_State* L );
+	static int			_setPointSize				( lua_State* L );
+	static int			_setPrimType				( lua_State* L );
+	static int			_setVertexBuffer			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBox			ComputeMaxBounds		();
-	ZLBox			GetItemBounds			( u32 idx );
+	ZLBox				ComputeMaxBounds			();
+	ZLBox				GetItemBounds				( u32 idx );
+	bool				OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
+	void				OnCPUDestroy				(); // clear any CPU-side memory used by class
+	void				OnGPUBind					(); // select GPU-side resource on device for use
+	bool				OnGPUCreate					(); // create GPU-side resource
+	void				OnGPUDestroy				(); // schedule GPU-side resource for destruction
+	void				OnGPULost					(); // clear any handles or references to GPU-side (called by 'Abandon')
+	void				OnGPUUnbind					(); // unbind GPU-side resource
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	MOAIGfxState*	GetShaderDefault		();
-					MOAIMesh				();
-					~MOAIMesh				();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void				DrawIndex					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	MOAIGfxState*		GetShaderDefault			();
+						MOAIMesh					();
+						~MOAIMesh					();
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				ReserveVAOs					( u32 total );
+	void				ReserveVertexBuffers		( u32 total );
+	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
+	void				SetVertexBuffer				( u32 idx, MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 };
 
 #endif

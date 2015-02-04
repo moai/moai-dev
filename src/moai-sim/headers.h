@@ -129,7 +129,6 @@
 #include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>

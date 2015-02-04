@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 #include <signal.h>
@@ -15,7 +17,7 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
 
 	ZLMemStream idxStream;
 	ZLMemStream vtxStream;

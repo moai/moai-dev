@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -17,7 +17,7 @@
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
-	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
+	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
 	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
 
 	if ( vtxBuffer && idxBuffer ) {
@@ -44,7 +44,7 @@ int MOAIRegion::_pointInside ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRegion::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
 
 	SafeTesselator tesselator;
 

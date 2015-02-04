@@ -75,9 +75,9 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	local vbo = MOAIVertexBuffer.new ()
-	vbo:setFormat ( vertexFormat )
-	vbo:reserveVerts ( 36 )
+	local vbo = MOAIGfxBuffer.new ()
+	--vbo:setFormat ( vertexFormat )
+	vbo:reserve ( 36 * vertexFormat:getVertexSize ())
 	
 	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 4 ], p [ 3 ], p [ 7 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
@@ -86,11 +86,15 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 
-	vbo:bless ()
+	--vbo:bless ()
 
 	local mesh = MOAIMesh.new ()
 	mesh:setTexture ( texture )
-	mesh:setVertexBuffer ( vbo )
+
+	mesh:reserveVAOs ( 1 )
+	mesh:reserveVertexBuffers ( 1 )
+	mesh:setVertexBuffer ( vbo, vertexFormat )
+
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 	

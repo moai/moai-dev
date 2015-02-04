@@ -7,9 +7,9 @@
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
 
+class MOAIGfxBuffer;
 class MOAIIndexBuffer;
 class MOAIVectorShape;
-class MOAIVertexBuffer;
 
 class SafeTesselator;
 
@@ -122,7 +122,7 @@ public:
 	u32					CountVertices				();
 	int					Finish						( bool generateMask );
 	SafeTesselator*		GetMaskTesselator			();
-	void				GetTriangles				( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
+	void				GetTriangles				( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
 	void				PopTransform				();

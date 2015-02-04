@@ -9,33 +9,6 @@
 class MOAIVertexFormat;
 
 //================================================================//
-// MOAIGfxBufferBase
-//================================================================//
-class MOAIGfxBufferBase :
-	public MOAIGfxResource,
-	public virtual MOAIStream {
-protected:
-	
-	u32			mTotalElements;
-	bool		mHasBounds;
-	ZLBox		mBounds;
-	
-public:
-
-	GET ( u32, TotalElements, mTotalElements )
-	HAS ( Bounds, mHasBounds, true )
-
-	//----------------------------------------------------------------//
-	bool								GetBounds						( ZLBox& bounds );
-	virtual size_t						GetSize							() = 0;
-	virtual const MOAIVertexFormat*		GetVertexFormat					() const = 0; // back compat
-										MOAIGfxBufferBase				();
-	virtual								~MOAIGfxBufferBase				();
-	void								RegisterLuaClass				( MOAILuaState& state );
-	void								RegisterLuaFuncs				( MOAILuaState& state );
-};
-
-//================================================================//
 // MOAIGfxBufferLoader
 //================================================================//
 class MOAIGfxBufferLoader {
@@ -53,7 +26,8 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBuffer :
-	public MOAIGfxBufferBase,
+	public MOAIGfxResource,
+	public MOAIStream,
 	public ZLStreamProxy {
 private:
 	
@@ -68,7 +42,6 @@ private:
 	MOAILuaSharedPtr < MOAIStream >		mStream;
 
 	//----------------------------------------------------------------//
-	static int				_bless					( lua_State* L );
 	static int				_load					( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
@@ -91,18 +64,21 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxBuffer )
 	
+	GET ( size_t, BufferCount, mVBOs.Size ())
+	IS ( Dirty, mIsDirty, true )
+	
 	//----------------------------------------------------------------//
-	void						Clear					();
-	size_t						GetSize					();
-	const MOAIVertexFormat*		GetVertexFormat			() const;
-								MOAIGfxBuffer			();
-								~MOAIGfxBuffer			();
-	void						RegisterLuaClass		( MOAILuaState& state );
-	void						RegisterLuaFuncs		( MOAILuaState& state );
-	void						Reserve					( u32 size );
-	void						ReserveVBOs				( u32 gpuBuffers );
-	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void					Clear					();
+	size_t					GetSize					();
+	void					MakeDirty				();
+							MOAIGfxBuffer			();
+							~MOAIGfxBuffer			();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					Reserve					( u32 size );
+	void					ReserveVBOs				( u32 gpuBuffers );
+	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif
