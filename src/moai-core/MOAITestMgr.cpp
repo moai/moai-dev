@@ -255,7 +255,6 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setTestingDir",			_setTestingDir },
 		{ "setTestingFunc",			_setTestingFunc },
 		{ "suite",					_suite },
-		{ "testBool",				_testBool },
 		{ NULL, NULL }
 	};
 
