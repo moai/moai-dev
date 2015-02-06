@@ -20,20 +20,21 @@ gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+--layer:insertProp ( prop )
 
-prop:moveRot ( 540, 2.0 )
+local action = prop:moveRot ( 540, 1.0 )
 
-timer = MOAITimer.new()
-timer:setSpan(5)
-timer:setListener(MOAITimer.EVENT_STOP,
-    function()
-        if MOAIAppIOS.canOpenURL("NG URL") then
-            error("NG!")
-        end
-        if MOAIAppIOS.canOpenURL("https://www.google.co.jp/") then
-            MOAIAppIOS.openURL("https://www.google.co.jp/")
-        end
-    end)
-timer:start()
+-- 320, 568
 
+onTouch = function ( eventType )
+
+	if eventType == MOAITouchSensor.TOUCH_DOWN then
+		
+		webView = MOAIWebViewIOS.new ()
+		webView:show ( true )
+		webView:loadRequest ( 'https://news.google.com' )
+		webView = nil
+	end
+end
+
+MOAIInputMgr.device.touch:setCallback ( onTouch )
