@@ -66,12 +66,12 @@
 	}
 
 	//----------------------------------------------------------------//
-	-( MOAIWebViewController* ) init :( CGRect )frame :( int )toolbarHeight {
+	-( MOAIWebViewController* ) init :( int )toolbarHeight {
 	
 		self = [ super init ];
 		if ( self ) {
 			
-			//CGRect frame = [[ UIApplication sharedApplication ] keyWindow ].frame;
+			CGRect frame = [[ UIApplication sharedApplication ] keyWindow ].frame;
 		
 			mContainer = [[ UIView alloc ] initWithFrame:frame ];
 			[ mContainer setBackgroundColor:[ UIColor blueColor ]];

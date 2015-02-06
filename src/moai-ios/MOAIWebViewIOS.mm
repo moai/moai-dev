@@ -227,21 +227,9 @@ int MOAIWebViewIOS::_hideWebView ( lua_State* L ) {
 int MOAIWebViewIOS::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebViewIOS, "U" );
 	
-	CGRect frame = [[ UIApplication sharedApplication ] keyWindow ].frame;
-	
-	if ( state.CheckParams ( 2, "NNNN", false )) {
-	
-		int left	= state.GetValue < int >( 2, 0 );
-		int top		= state.GetValue < int >( 3, 0 );
-		int width	= state.GetValue < int >( 4, 0 );
-		int height	= state.GetValue < int >( 5, 0 );
-	
-		frame = CGRectMake ( left, top, width, height );
-	}
-	
 	bool hidden = state.GetValue < bool >( 6, false );
 	
-	self->mWebViewController = [[ MOAIWebViewController alloc ] init :frame :TOOLBAR_HEIGHT ];
+	self->mWebViewController = [[ MOAIWebViewController alloc ] init :TOOLBAR_HEIGHT ];
 	if ( !hidden ) {
 		[ self->mWebViewController show:NO ];
 	}

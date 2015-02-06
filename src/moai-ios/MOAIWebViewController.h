@@ -19,7 +19,7 @@ class MOAIWebViewIOS;
 	@property ( readwrite, assign ) MOAIWebViewIOS*		moaiWebView;
 
 	//----------------------------------------------------------------//
-	-( MOAIWebViewController* )		init			:( CGRect )frame :( int )toolbarHeight;
+	-( MOAIWebViewController* )		init			:( int )toolbarHeight;
 	-( void )						show			:( BOOL )animated;
 
 @end
