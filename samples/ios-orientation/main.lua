@@ -19,7 +19,7 @@ MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setRect ( -640, -640, 640, 640 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
