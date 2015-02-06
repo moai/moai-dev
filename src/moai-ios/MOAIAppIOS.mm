@@ -445,7 +445,7 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 
 	this->mNotificationListenerMap [ "UIApplicationDidBecomeActiveNotification" ] = DID_BECOME_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationDidEnterBackgroundNotification" ] = DID_ENTER_BACKGROUND;
-	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECIEVE_MEMORY_WARNING;
+	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECEIVE_MEMORY_WARNING;
 	this->mNotificationListenerMap [ "UIApplicationWillEnterForegroundNotification" ] = WILL_ENTER_FOREGROUND;
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
