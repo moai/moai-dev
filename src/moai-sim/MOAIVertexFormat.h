@@ -92,6 +92,8 @@ public:
 	bool				ComputeBounds					( ZLBox& bounds, void* buffer, size_t size ) const;
 	bool				ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size ) const;
 	static bool			ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size, size_t offset, size_t stride, size_t components );
+	size_t				CountElements					( size_t size );
+	static size_t		CountElements					( size_t size, size_t offset, size_t stride );
 	void				DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 						MOAIVertexFormat				();
 						~MOAIVertexFormat				();

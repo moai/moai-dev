@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
@@ -76,7 +79,6 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 	local vbo = MOAIGfxBuffer.new ()
-	--vbo:setFormat ( vertexFormat )
 	vbo:reserve ( 36 * vertexFormat:getVertexSize ())
 	
 	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
@@ -86,15 +88,13 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 
-	--vbo:bless ()
-
 	local mesh = MOAIMesh.new ()
 	mesh:setTexture ( texture )
 
-	mesh:reserveVAOs ( 1 )
-	mesh:reserveVertexBuffers ( 1 )
 	mesh:setVertexBuffer ( vbo, vertexFormat )
-
+	mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
+	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
+	
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 	

@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIVectorStyle.h>
 
 class MOAIGfxBuffer;
-class MOAIIndexBuffer;
 class MOAIVectorShape;
 struct TESStesselator;
 typedef float TESSreal;
@@ -23,7 +22,7 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
-	void	GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
+	void	GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer );
 	void	Reset					();
 			SafeTesselator			();
 			~SafeTesselator			();

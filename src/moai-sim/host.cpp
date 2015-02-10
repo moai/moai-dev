@@ -75,7 +75,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGridFancy )
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
-	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )

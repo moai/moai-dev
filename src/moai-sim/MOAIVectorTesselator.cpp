@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
@@ -128,7 +127,7 @@ int MOAIVectorTesselator::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
 	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
-	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
+	MOAIGfxBuffer* idxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 3, true );
 
 	if ( vtxBuffer && idxBuffer ) {
 		self->GetTriangles ( *vtxBuffer, *idxBuffer );
@@ -648,12 +647,12 @@ SafeTesselator* MOAIVectorTesselator::GetMaskTesselator () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void MOAIVectorTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer ) {
 
 	this->mIdxStream.Seek ( 0, SEEK_SET );
 	this->mVtxStream.Seek ( 0, SEEK_SET );
 
-	idxBuffer.CopyFromStream ( this->mIdxStream, 4 );
+	idxBuffer.Write ( this->mIdxStream );
 	
 	vtxBuffer.Clear ();
 	vtxBuffer.Reserve ( this->mVtxStream.GetLength ());

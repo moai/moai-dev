@@ -223,7 +223,7 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t
 
 	if ( components < 2 ) return false;
 
-	u32 total = stride ? ( size / stride ) : 0;
+	u32 total = MOAIVertexFormat::CountElements ( size, offset, stride );
 	if ( !total ) return false;
 	
 	stream.Seek ( offset, SEEK_CUR );
@@ -239,6 +239,19 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t
 		bounds.Grow ( coord );
 	}
 	return true;
+}
+
+//----------------------------------------------------------------//
+size_t MOAIVertexFormat::CountElements ( size_t size ) {
+
+	return ( size_t )( size / this->mVertexSize );
+}
+
+
+//----------------------------------------------------------------//
+size_t MOAIVertexFormat::CountElements ( size_t size, size_t offset, size_t stride ) {
+
+	return stride ? ( size_t )(( size - offset ) / stride ) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -408,7 +421,7 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		attribute.mNormalized		= state.GetField < bool >( -1, "mNormalized", 0 );
 		attribute.mOffset			= state.GetField < u32 >( -1, "mOffset", 0 );
 		
-		state.Pop ( 1 );
+		state.Pop ();
 	}
 	lua_pop ( state, 1 );
 	
@@ -422,7 +435,7 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		attributeUse.mUse			= state.GetField < u32 >( -1, "mUse", 0 );
 		attributeUse.mAttrID		= state.GetField < u32 >( -1, "mAttrID", 0 );
 		
-		state.Pop ( 1 );
+		state.Pop ();
 	}
 	lua_pop ( state, 1 );
 }

@@ -5,7 +5,6 @@
 #define MOAIREGION_H
 
 class MOAIGfxBuffer;
-class MOAIIndexBuffer;
 
 //================================================================//
 // MOAIRegion
@@ -25,7 +24,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIRegion )
 
 	//----------------------------------------------------------------//
-	void			GetTriangles		( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
+	void			GetTriangles		( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer );
 					MOAIRegion			();
 					~MOAIRegion			();
 	bool			PointInside			( const ZLVec2D& p );

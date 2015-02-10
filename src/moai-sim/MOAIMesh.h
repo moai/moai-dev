@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIDeck.h>
 
 class MOAIGfxBuffer;
-class MOAIIndexBuffer;
 class MOAIMesh;
 class MOAITextureBase;
 
@@ -20,16 +19,12 @@ public:
 	MOAILuaSharedPtr < MOAIGfxBuffer >		mBuffer;
 	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
 	
-	u32			mTotalElements;
-	bool		mHasBounds;
-	ZLBox		mBounds;
-	
 	//----------------------------------------------------------------//
-	void		ClearBounds				();
+	void		Bind					();
 				MOAIVertexBuffer		();
 				~MOAIVertexBuffer		();
-	void		Bind					();
 	void		SetBufferAndFormat		( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format );
+	void		Unbind					();
 };
 
 //================================================================//
@@ -56,7 +51,9 @@ private:
 	u32										mCurrentVAO;
 
 	ZLLeanArray < MOAIVertexBuffer >		mVertexBuffers;
-	MOAILuaSharedPtr < MOAIIndexBuffer >	mIndexBuffer;
+	MOAILuaSharedPtr < MOAIGfxBuffer >		mIndexBuffer;
+
+	u32			mIndexSizeInBytes;
 
 	u32			mTotalElements;
 	bool		mHasBounds;
@@ -66,19 +63,22 @@ private:
 	
 	float		mPenWidth;
 	float		mPointSize;
-
+	
 	bool		mNeedsRefresh;
 
 	//----------------------------------------------------------------//
 	static int			_reserveVAOs				( lua_State* L );
 	static int			_reserveVertexBuffers		( lua_State* L );
+	static int			_setBounds					( lua_State* L );
 	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
 	static int			_setPointSize				( lua_State* L );
 	static int			_setPrimType				( lua_State* L );
+	static int			_setTotalElements			( lua_State* L );
 	static int			_setVertexBuffer			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool				AffirmVertexBuffers			( u32 idx );
 	ZLBox				ComputeMaxBounds			();
 	ZLBox				GetItemBounds				( u32 idx );
 	bool				OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
@@ -94,6 +94,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
+	void				ClearBounds					();
 	void				DrawIndex					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	MOAIGfxState*		GetShaderDefault			();
 						MOAIMesh					();
@@ -102,8 +103,11 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVAOs					( u32 total );
 	void				ReserveVertexBuffers		( u32 total );
-	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
+	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void				SetIndexBuffer				( MOAIGfxBuffer* indexBuffer );
 	void				SetVertexBuffer				( u32 idx, MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
+	void				SetVertexBufferBounds		( u32 idx, bool hasBounds, const ZLBox& bounds );
 };
 
 #endif

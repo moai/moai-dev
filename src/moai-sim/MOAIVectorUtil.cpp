@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 #include <signal.h>
@@ -17,7 +16,7 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer ) {
 
 	ZLMemStream idxStream;
 	ZLMemStream vtxStream;
@@ -48,7 +47,7 @@ void SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIIndexBuffer& i
 	idxStream.Seek ( 0, SEEK_SET );
 	vtxStream.Seek ( 0, SEEK_SET );
 	
-	idxBuffer.CopyFromStream ( idxStream, 4 );
+	idxBuffer.Write ( idxStream );
 	
 	vtxBuffer.Clear ();
 	vtxBuffer.Reserve ( vtxStream.GetLength ());

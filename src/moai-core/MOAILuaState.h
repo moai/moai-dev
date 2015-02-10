@@ -93,6 +93,7 @@ public:
 	void			PrintStackDump				();
 	void			PrintStackDump				( FILE* file );
 	void			PrintStackTrace				( FILE* file, cc8* title, int level );
+	
 	void			Push						();
 	void			Push						( bool value );
 	void			Push						( cc8* value );
@@ -102,11 +103,19 @@ public:
 	void			Push						( u16 value );
 	void			Push						( u32 value );
 	void			Push						( u64 value );
+	
+	void			Push						( const ZLBox& value );
+	void			Push						( const ZLColorVec& value );
+	void			Push						( const ZLRect& value );
+	void			Push						( const ZLVec2D& value );
+	void			Push						( const ZLVec3D& value );
+	
 	void			Push						( lua_CFunction value );
 	void			Push						( MOAILuaObject* luaObject );
 	void			Push						( MOAILuaRef& ref );
 	void			Push						( const void* value );
 	void			Push						( void* data, size_t size );
+	
 	void			PushPtrUserData				( void* ptr );
 	int				PushTableItr				( int idx );
 	void			RegisterModule				( int idx, cc8* name, bool autoLoad );
@@ -145,7 +154,7 @@ public:
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, bool verbose );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name, bool verbose );
 	template < typename TYPE > ZLMetaRect < TYPE >		GetRect				( int idx );
-	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
+	template < typename TYPE > TYPE						GetValue			( int idx, const TYPE value );
 	template < typename TYPE > ZLMetaVec2D < TYPE >		GetVec2D			( int idx );
 	template < typename TYPE > ZLMetaVec3D < TYPE >		GetVec3D			( int idx );
 	template < typename TYPE > TYPE						PopValue			( TYPE value );
@@ -158,18 +167,23 @@ public:
 };
 
 //----------------------------------------------------------------//
-template <> bool		MOAILuaState::GetValue < bool >			( int idx, bool value );
-template <> cc8*		MOAILuaState::GetValue < cc8* >			( int idx, cc8* value );
-template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
-template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
-template <> s8			MOAILuaState::GetValue < s8 >			( int idx, s8 value );
-template <> s16			MOAILuaState::GetValue < s16 >			( int idx, s16 value );
-template <> s32			MOAILuaState::GetValue < s32 >			( int idx, s32 value );
-template <> s64			MOAILuaState::GetValue < s64 >			( int idx, s64 value );
-template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
-template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
-template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
-template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
-template <> void*		MOAILuaState::GetValue < void* >		( int idx, void* value );
+template <> bool			MOAILuaState::GetValue < bool >				( int idx, const bool value );
+template <> cc8*			MOAILuaState::GetValue < cc8* >				( int idx, const cc8* value );
+template <> double			MOAILuaState::GetValue < double >			( int idx, const double value );
+template <> float			MOAILuaState::GetValue < float >			( int idx, const float value );
+template <> s8				MOAILuaState::GetValue < s8 >				( int idx, const s8 value );
+template <> s16				MOAILuaState::GetValue < s16 >				( int idx, const s16 value );
+template <> s32				MOAILuaState::GetValue < s32 >				( int idx, const s32 value );
+template <> s64				MOAILuaState::GetValue < s64 >				( int idx, const s64 value );
+template <> u8				MOAILuaState::GetValue < u8 >				( int idx, const u8 value );
+template <> u16				MOAILuaState::GetValue < u16 >				( int idx, const u16 value );
+template <> u32				MOAILuaState::GetValue < u32 >				( int idx, const u32 value );
+template <> u64				MOAILuaState::GetValue < u64 >				( int idx, const u64 value );
+template <> const void*		MOAILuaState::GetValue < const void* >		( int idx, const void* value );
+template <> ZLBox			MOAILuaState::GetValue < ZLBox >			( int idx, const ZLBox value );
+template <> ZLColorVec		MOAILuaState::GetValue < ZLColorVec >		( int idx, const ZLColorVec value );
+template <> ZLRect			MOAILuaState::GetValue < ZLRect >			( int idx, const ZLRect value );
+template <> ZLVec2D			MOAILuaState::GetValue < ZLVec2D >			( int idx, const ZLVec2D value );
+template <> ZLVec3D			MOAILuaState::GetValue < ZLVec3D >			( int idx, const ZLVec3D value );
 
 #endif

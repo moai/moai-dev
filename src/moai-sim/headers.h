@@ -50,7 +50,6 @@
 #include <moai-sim/MOAIImageFormat.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageTexture.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAIInputQueue.h>
 #include <moai-sim/MOAIJoystickSensor.h>

@@ -22,15 +22,41 @@ using namespace std;
 	//#include <GL/glew.h>
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glext.h>
+
+	#define glGenVertexArrays		glGenVertexArraysAPPLE
+	#define glBindVertexArray		glBindVertexArrayAPPLE
+	#define glDeleteVertexArrays	glDeleteVertexArraysAPPLE
+
 #endif
 
 #ifdef MOAI_OS_IPHONE
+
 	#include <OpenGLES/ES1/gl.h>
 	#include <OpenGLES/ES1/glext.h>
 	#include <OpenGLES/ES2/gl.h>
 	#include <OpenGLES/ES2/glext.h>
 
-	#define GL_RGBA8 GL_RGBA8_OES
+	#define GL_WRITE_ONLY			0x88B9
+	#define GL_RGBA8				GL_RGBA8_OES
+
+	// TODO: should not have to do this
+	// this is to suppress a false positive error in Xcode
+	extern GLvoid*		glMapBufferOES				( GLenum target, GLenum access );
+	extern GLboolean	glUnmapBufferOES			( GLenum target );
+
+	#define glMapBuffer				glMapBufferOES
+	#define glUnmapBuffer			glUnmapBufferOES
+
+	// TODO: should not have to do this
+	// this is to suppress a false positive error in Xcode
+	extern GLvoid		glBindVertexArrayOES		( GLuint array );
+	extern GLvoid		glGenVertexArraysOES		( GLsizei n, GLuint *arrays );
+	extern GLvoid		glDeleteVertexArraysOES		( GLsizei n, const GLuint *arrays );
+
+	#define glGenVertexArrays		glGenVertexArraysOES
+	#define glBindVertexArray		glBindVertexArrayOES
+	#define glDeleteVertexArrays	glDeleteVertexArraysOES
+
 #endif
 
 #ifdef MOAI_OS_ANDROID
@@ -1267,13 +1293,6 @@ void zglRenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
 // buffer
 //================================================================//
 
-// TODO: should not have to do this
-// this is to suppress a false positive error in Xcode
-#ifdef MOAI_OS_IPHONE
-	extern GLvoid* glMapBufferOES ( GLenum target, GLenum access );
-	extern GLboolean glUnmapBufferOES ( GLenum target );
-#endif
-
 //----------------------------------------------------------------//
 void zglBindBuffer ( u32 target, u32 buffer ) {
 
@@ -1300,51 +1319,28 @@ u32 zglCreateBuffer () {
 
 //----------------------------------------------------------------//
 void* zglMapBuffer ( u32 target ) {
-	UNUSED ( target );
 
 	ASSERT_OPERATION_DEPTH ();
-
-	#ifdef MOAI_OS_IPHONE
-		return glMapBufferOES ( _remapEnum ( target ), 0x88B9 ); // TODO: what's wrong with Xcode?
-	#else
-		return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
-	#endif
+	return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
 }
 
 //----------------------------------------------------------------//
 void zglUnmapBuffer ( u32 target ) {
-	UNUSED ( target );
 
 	ASSERT_OPERATION_DEPTH ();
-
-	#ifdef MOAI_OS_IPHONE
-		glUnmapBufferOES ( _remapEnum ( target ));
-	#else
-		glUnmapBuffer ( _remapEnum ( target ));
-	#endif
+	glUnmapBuffer ( _remapEnum ( target ));
 }
 
 //================================================================//
 // vertex array
 //================================================================//
 
-// TODO: should not have to do this
-// this is to suppress a false positive error in Xcode
-#ifdef MOAI_OS_IPHONE
-	extern GLvoid glBindVertexArrayOES ( GLuint array );
-	extern GLvoid glGenVertexArraysOES ( GLsizei n, GLuint *arrays );
-	extern GLvoid glDeleteVertexArraysOES ( GLsizei n, const GLuint *arrays );
-#endif
-
 //----------------------------------------------------------------//
 void zglBindVertexArray ( u32 vertexArrayID ) {
-	UNUSED ( vertexArrayID );
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_IPHONE
-		glBindVertexArrayOES ( vertexArrayID ); // TODO:
-	#endif
+	glBindVertexArray ( vertexArrayID );
 }
 
 //----------------------------------------------------------------//
@@ -1352,24 +1348,18 @@ u32 zglCreateVertexArray () {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_IPHONE
-		u32 vertexArrayID;
-		glGenVertexArraysOES ( 1, &vertexArrayID ); // TODO:
-		return vertexArrayID;
-	#else
-		return 0;
-	#endif
+	u32 vertexArrayID;
+	glGenVertexArrays ( 1, &vertexArrayID );
+	return vertexArrayID;
+
 }
 
 //----------------------------------------------------------------//
 void zglDeleteVertexArray ( u32 vertexArrayID ) {
-	UNUSED ( vertexArrayID );
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_IPHONE
-		glDeleteVertexArraysOES ( 1, &vertexArrayID ); // TODO:
-	#endif
+	glDeleteVertexArrays ( 1, &vertexArrayID );
 }
 
 #endif

@@ -28,25 +28,27 @@ public:
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
 	public MOAIStream,
-	public ZLStreamProxy {
+	public ZLByteStream {
 private:
 	
 	ZLLeanArray < u32 >					mVBOs;
 	u32									mCurrentVBO;
 	u32									mTarget;
 	bool								mIsDirty;
-	bool								mIsDynamic;
 
 	MOAIGfxBufferLoader*				mLoader;
-
-	MOAILuaSharedPtr < MOAIStream >		mStream;
+	void*								mData;
 
 	//----------------------------------------------------------------//
+	static int				_computeBounds			( lua_State* L );
+	static int				_countElements			( lua_State* L );
 	static int				_load					( lua_State* L );
+	static int				_makeDirty				( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
 	static int				_reset					( lua_State* L );
+	static int				_setTarget				( lua_State* L );
 	static int				_writeColor32			( lua_State* L );
 	
 	//----------------------------------------------------------------//
@@ -58,7 +60,6 @@ private:
 	void					OnGPUDestroy			();
 	void					OnGPULost				();
 	void					OnGPUUnbind				();
-	void					SetStream				( MOAIStream* stream );
 	
 public:
 	

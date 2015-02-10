@@ -668,7 +668,7 @@ void* MOAILuaState::GetUserData ( int idx, cc8* name, void* value ) {
 
 //----------------------------------------------------------------//
 template <>
-bool MOAILuaState::GetValue < bool >( int idx, bool value ) {
+bool MOAILuaState::GetValue < bool >( int idx, const bool value ) {
 
 	if ( this->IsType ( idx, LUA_TBOOLEAN )) {
 		return ( lua_toboolean ( this->mState, idx ) != 0 );
@@ -678,7 +678,7 @@ bool MOAILuaState::GetValue < bool >( int idx, bool value ) {
 
 //----------------------------------------------------------------//
 template <>
-cc8* MOAILuaState::GetValue < cc8* >( int idx, cc8* value ) {
+cc8* MOAILuaState::GetValue < cc8* >( int idx, const cc8* value ) {
 
 	if ( this->IsType ( idx, LUA_TSTRING )) {
 		return lua_tostring ( this->mState, idx );
@@ -687,7 +687,7 @@ cc8* MOAILuaState::GetValue < cc8* >( int idx, cc8* value ) {
 }
 
 //----------------------------------------------------------------//
-STLString MOAILuaState::GetValue ( int idx, cc8* value ) {
+STLString MOAILuaState::GetValue ( int idx, const cc8* value ) {
 
 	STLString str;
 	if ( lua_type ( this->mState, idx ) == LUA_TSTRING ) {
@@ -701,7 +701,7 @@ STLString MOAILuaState::GetValue ( int idx, cc8* value ) {
 
 //----------------------------------------------------------------//
 template <>
-double MOAILuaState::GetValue < double >( int idx, double value ) {
+double MOAILuaState::GetValue < double >( int idx, const double value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return lua_tonumber ( this->mState, idx );
@@ -711,7 +711,7 @@ double MOAILuaState::GetValue < double >( int idx, double value ) {
 
 //----------------------------------------------------------------//
 template <>
-float MOAILuaState::GetValue < float >( int idx, float value ) {
+float MOAILuaState::GetValue < float >( int idx, const float value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( float )lua_tonumber ( this->mState, idx );
@@ -721,7 +721,7 @@ float MOAILuaState::GetValue < float >( int idx, float value ) {
 
 //----------------------------------------------------------------//
 //template <>
-//int MOAILuaState::GetValue < int >( int idx, int value ) {
+//int MOAILuaState::GetValue < int >( int idx, const int value ) {
 //
 //	if ( this->IsType ( idx, LUA_TNUMBER )) {
 //		return ( int )lua_tonumber ( this->mState, idx );
@@ -731,7 +731,7 @@ float MOAILuaState::GetValue < float >( int idx, float value ) {
 
 //----------------------------------------------------------------//
 template <>
-s8 MOAILuaState::GetValue < s8 >( int idx, s8 value ) {
+s8 MOAILuaState::GetValue < s8 >( int idx, const s8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( s8 )lua_tonumber ( this->mState, idx );
@@ -741,7 +741,7 @@ s8 MOAILuaState::GetValue < s8 >( int idx, s8 value ) {
 
 //----------------------------------------------------------------//
 template <>
-s16 MOAILuaState::GetValue < s16 >( int idx, s16 value ) {
+s16 MOAILuaState::GetValue < s16 >( int idx, const s16 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( s16 )lua_tonumber ( this->mState, idx );
@@ -751,7 +751,7 @@ s16 MOAILuaState::GetValue < s16 >( int idx, s16 value ) {
 
 //----------------------------------------------------------------//
 template <>
-s32 MOAILuaState::GetValue < s32 >( int idx, s32 value ) {
+s32 MOAILuaState::GetValue < s32 >( int idx, const s32 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( s32 )lua_tonumber ( this->mState, idx );
@@ -761,7 +761,7 @@ s32 MOAILuaState::GetValue < s32 >( int idx, s32 value ) {
 
 //----------------------------------------------------------------//
 template <>
-s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
+s64 MOAILuaState::GetValue < s64 >( int idx, const s64 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( s64 )lua_tonumber ( this->mState, idx );
@@ -771,7 +771,7 @@ s64 MOAILuaState::GetValue < s64 >( int idx, s64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u8 MOAILuaState::GetValue < u8 >( int idx, u8 value ) {
+u8 MOAILuaState::GetValue < u8 >( int idx, const u8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u8 )lua_tonumber ( this->mState, idx );
@@ -781,7 +781,7 @@ u8 MOAILuaState::GetValue < u8 >( int idx, u8 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u16 MOAILuaState::GetValue < u16 >( int idx, u16 value ) {
+u16 MOAILuaState::GetValue < u16 >( int idx, const u16 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u16 )lua_tonumber ( this->mState, idx );
@@ -791,7 +791,7 @@ u16 MOAILuaState::GetValue < u16 >( int idx, u16 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u32 MOAILuaState::GetValue < u32 >( int idx, u32 value ) {
+u32 MOAILuaState::GetValue < u32 >( int idx, const u32 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u32 )lua_tonumber ( this->mState, idx );
@@ -801,7 +801,7 @@ u32 MOAILuaState::GetValue < u32 >( int idx, u32 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
+u64 MOAILuaState::GetValue < u64 >( int idx, const u64 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u64 )lua_tonumber ( this->mState, idx );
@@ -811,10 +811,100 @@ u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-void* MOAILuaState::GetValue < void* >( int idx, void* value ) {
+const void* MOAILuaState::GetValue < const void* >( int idx, const void* value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
 		return ( void* )lua_touserdata ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLBox MOAILuaState::GetValue < ZLBox >( int idx, const ZLBox value ) {
+
+	if ( this->CheckParams ( idx, "NNNNNN" )) {
+	
+		ZLBox box;
+		
+		box.mMin.mX		= lua_tonumber ( this->mState, idx + 0 );
+		box.mMin.mY		= lua_tonumber ( this->mState, idx + 1 );
+		box.mMin.mZ		= lua_tonumber ( this->mState, idx + 2 );
+		
+		box.mMax.mX		= lua_tonumber ( this->mState, idx + 3 );
+		box.mMax.mY		= lua_tonumber ( this->mState, idx + 4 );
+		box.mMax.mZ		= lua_tonumber ( this->mState, idx + 5 );
+		
+		return box;
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec value ) {
+
+	if ( this->CheckParams ( idx, "NNNN" )) {
+	
+		ZLColorVec color;
+		
+		color.mR		= lua_tonumber ( this->mState, idx + 0 );
+		color.mG		= lua_tonumber ( this->mState, idx + 1 );
+		color.mB		= lua_tonumber ( this->mState, idx + 2 );
+		color.mA		= lua_tonumber ( this->mState, idx + 3 );
+		
+		return color;
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
+
+	if ( this->CheckParams ( idx, "NNNN" )) {
+	
+		ZLRect color;
+		
+		color.mXMin		= lua_tonumber ( this->mState, idx + 0 );
+		color.mYMin		= lua_tonumber ( this->mState, idx + 1 );
+		color.mXMax		= lua_tonumber ( this->mState, idx + 2 );
+		color.mYMax		= lua_tonumber ( this->mState, idx + 3 );
+		
+		return color;
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
+
+	if ( this->CheckParams ( idx, "NN" )) {
+	
+		ZLVec2D vec;
+		
+		vec.mX			= lua_tonumber ( this->mState, idx + 0 );
+		vec.mY			= lua_tonumber ( this->mState, idx + 1 );
+		
+		return vec;
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLVec3D MOAILuaState::GetValue < ZLVec3D >( int idx, const ZLVec3D value ) {
+
+	if ( this->CheckParams ( idx, "NN" )) {
+	
+		ZLVec3D vec;
+		
+		vec.mX			= lua_tonumber ( this->mState, idx + 0 );
+		vec.mY			= lua_tonumber ( this->mState, idx + 1 );
+		vec.mZ			= lua_tonumber ( this->mState, idx + 2 );
+		
+		return vec;
 	}
 	return value;
 }
@@ -1059,6 +1149,51 @@ void MOAILuaState::Push ( u64 value ) {
 
 	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLBox& value ) {
+
+	lua_pushnumber ( this->mState, value.mMin.mX );
+	lua_pushnumber ( this->mState, value.mMin.mY );
+	lua_pushnumber ( this->mState, value.mMin.mZ );
+	
+	lua_pushnumber ( this->mState, value.mMax.mX );
+	lua_pushnumber ( this->mState, value.mMax.mY );
+	lua_pushnumber ( this->mState, value.mMax.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLColorVec& value ) {
+
+	lua_pushnumber ( this->mState, value.mR );
+	lua_pushnumber ( this->mState, value.mG );
+	lua_pushnumber ( this->mState, value.mB );
+	lua_pushnumber ( this->mState, value.mA );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLRect& value ) {
+
+	lua_pushnumber ( this->mState, value.mXMin );
+	lua_pushnumber ( this->mState, value.mYMin );
+	lua_pushnumber ( this->mState, value.mXMax );
+	lua_pushnumber ( this->mState, value.mYMax );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLVec2D& value ) {
+
+	lua_pushnumber ( this->mState, value.mX );
+	lua_pushnumber ( this->mState, value.mY );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLVec3D& value ) {
+
+	lua_pushnumber ( this->mState, value.mX );
+	lua_pushnumber ( this->mState, value.mY );
+	lua_pushnumber ( this->mState, value.mZ );
 }
 
 //----------------------------------------------------------------//
