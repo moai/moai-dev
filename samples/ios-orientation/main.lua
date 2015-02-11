@@ -30,6 +30,7 @@ prop:moveRot ( 360, 1.5 )
 function onResize ( width, height )
 	viewport:setSize ( width, height )
 	viewport:setScale ( width, height )
+	print ( 'RESIZED', width, height )
 end
 
 MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )

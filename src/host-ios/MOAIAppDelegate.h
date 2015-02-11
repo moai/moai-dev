@@ -19,7 +19,7 @@
 	MOAIView*               mMoaiView;
 	UIWindow*               mWindow;
     UIImageView*            mSplashView;
-	MOAIViewController*		mMoaiVC;
+	UIViewController*		mMoaiVC;
     BOOL                    mResumed;
 }
 
