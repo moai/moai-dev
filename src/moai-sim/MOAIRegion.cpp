@@ -19,10 +19,14 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
 	MOAIGfxBuffer* idxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 3, true );
 
+	u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
+
+	u32 totalElements = 0;
 	if ( vtxBuffer && idxBuffer ) {
-		self->GetTriangles ( *vtxBuffer, *idxBuffer );
+		totalElements = self->GetTriangles ( *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	}
-	return 0;
+	state.Push ( totalElements );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -43,7 +47,7 @@ int MOAIRegion::_pointInside ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer ) {
+u32 MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
 	SafeTesselator tesselator;
 
@@ -55,8 +59,9 @@ void MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuff
 	
 	int error = tesselator.Tesselate ( TESS_WINDING_ODD, TESS_POLYGONS, 3, 2 );
 	if ( !error ) {
-		tesselator.GetTriangles ( vtxBuffer, idxBuffer );
+		return tesselator.GetTriangles ( vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

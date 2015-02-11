@@ -161,7 +161,7 @@ int MOAIGfxBuffer::_reset ( lua_State* L ) {
 int MOAIGfxBuffer::_setTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 
-	self->mTarget = state.GetValue < u32 >( 2, ZGL_BUFFER_TARGET_ARRAY );
+	self->SetTarget ( state.GetValue < u32 >( 2, ZGL_BUFFER_TARGET_ARRAY ));
 	return 0;
 }
 

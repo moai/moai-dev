@@ -121,7 +121,6 @@ public:
 	u32					CountVertices				();
 	int					Finish						( bool generateMask );
 	SafeTesselator*		GetMaskTesselator			();
-	void				GetTriangles				( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer );
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
 	void				PopTransform				();

@@ -68,6 +68,8 @@ public:
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	IS ( Dirty, mIsDirty, true )
 	
+	GET_SET ( u32, Target, mTarget )
+	
 	//----------------------------------------------------------------//
 	void					Clear					();
 	size_t					GetSize					();

@@ -101,18 +101,17 @@ tess:finish ()
 
 -- yank a mesh out of the tess
 
-local vtxBuffer = MOAIVertexBuffer.new ()
-local idxBuffer = MOAIIndexBuffer.new ()
-
-tess:getTriangles ( vtxBuffer, idxBuffer );
-
-vtxBuffer:setFormat ( vtxFormat )
-vtxBuffer:bless ()
+local vtxBuffer = MOAIGfxBuffer.new ()
+local idxBuffer = MOAIGfxBuffer.new ()
+local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
-mesh:setVertexBuffer ( vtxBuffer )
+mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
 mesh:setIndexBuffer ( idxBuffer )
+mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( shader )
+mesh:setTotalElements ( totalElements )
+mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )

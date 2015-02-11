@@ -24,7 +24,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIRegion )
 
 	//----------------------------------------------------------------//
-	void			GetTriangles		( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer );
+	u32				GetTriangles		( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytex );
 					MOAIRegion			();
 					~MOAIRegion			();
 	bool			PointInside			( const ZLVec2D& p );

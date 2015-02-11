@@ -128,11 +128,15 @@ int MOAIVectorTesselator::_getTriangles ( lua_State* L ) {
 
 	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
 	MOAIGfxBuffer* idxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 3, true );
+	
+	u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
 
+	u32 totalElements = 0;
 	if ( vtxBuffer && idxBuffer ) {
-		self->GetTriangles ( *vtxBuffer, *idxBuffer );
+		totalElements = MOAIVectorUtil::GetTriangles ( self->mVtxStream, *vtxBuffer, self->mIdxStream, *idxBuffer, idxSizeInBytes );
 	}
-	return 0;
+	state.Push ( totalElements );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -644,19 +648,6 @@ int MOAIVectorTesselator::Finish ( bool generateMask ) {
 SafeTesselator* MOAIVectorTesselator::GetMaskTesselator () {
 
 	return this->mGenerateMask ? &this->mMaskTesselator : 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer ) {
-
-	this->mIdxStream.Seek ( 0, SEEK_SET );
-	this->mVtxStream.Seek ( 0, SEEK_SET );
-
-	idxBuffer.Write ( this->mIdxStream );
-	
-	vtxBuffer.Clear ();
-	vtxBuffer.Reserve ( this->mVtxStream.GetLength ());
-	vtxBuffer.WriteStream ( this->mVtxStream );
 }
 
 //----------------------------------------------------------------//
