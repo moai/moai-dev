@@ -51,11 +51,6 @@
 			[ mWebView release ];
 			mWebView = nil;
 		}
-		
-		if ( view ) {
-			[ view removeFromSuperview ];
-			[ view release ];
-		}
 	}
 
 	//----------------------------------------------------------------//
@@ -69,7 +64,7 @@
 
 		CGRect frame = [UIScreen mainScreen].bounds;
 	
-		UIView *mView = [[ UIView alloc ] initWithFrame:frame];
+		UIView *mView = [[[ UIView alloc ] initWithFrame:frame] autorelease];
 		[ mView setBackgroundColor:[ UIColor blueColor ]];
 		[ mView setContentMode:UIViewContentModeScaleToFill ];
 		[ mView setAutoresizingMask:( UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth )];
