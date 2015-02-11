@@ -8,9 +8,11 @@
 #import <moai-ios/MOAIWebViewController.h>
 #import <moai-ios/MOAIWebViewIOS.h>
 
+#import <UIKit/UIKit.h>
+
 #define TOOLBAR_HEIGHT	44
-#define ANIM_DURATION	0.5
-#define ANIM_DELAY		0.1
+//#define ANIM_DURATION	0.5
+//#define ANIM_DELAY		0.1
 
 //================================================================//
 // MOAIWebViewController ()
@@ -20,10 +22,7 @@
 
 	int					mToolbarHeight;
 	BOOL				mAnimated;
-
-	UIView*				mContainer;
 	UIWebView*			mWebView;
-	
 	MOAIWebViewIOS*		mMOAIWebView;
 }
 
@@ -53,9 +52,9 @@
 			mWebView = nil;
 		}
 		
-		if ( mContainer ) {
-			[ mContainer removeFromSuperview ];
-			[ mContainer release ];
+		if ( view ) {
+			[ view removeFromSuperview ];
+			[ view release ];
 		}
 	}
 
@@ -66,106 +65,61 @@
 	}
 
 	//----------------------------------------------------------------//
-	-( void ) hide :( BOOL )animated {
-	
-		mAnimated = animated;
-		
-		if ([ mContainer isHidden ]) return;
-		
-		if ( mAnimated ) {
-		
-			CGRect frame = [ mContainer frame ];
-		
-			[ UIView
-				animateWithDuration:ANIM_DURATION
-				delay:ANIM_DELAY
-				options: UIViewAnimationCurveEaseOut
-				animations:^() {
-					[ mContainer setFrame:CGRectMake ( frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height )];
-				}
-				completion:^( BOOL finished ) {
-					UNUSED ( finished );
-					[ mContainer setHidden:YES ];
-					
-					if ( mMOAIWebView ) {
-						mMOAIWebView->RaiseWebViewDidHideEvent ();
-					}
-					[ self release ];
-				}
-			];
-		}
-		else {
-			[ mContainer setHidden:YES ];
-			[ self release ];
-		}
-	}
+	-( void ) loadView {
 
-	//----------------------------------------------------------------//
-	-( MOAIWebViewController* ) init {
+		CGRect frame = [UIScreen mainScreen].bounds;
 	
-		self = [ super init ];
-		if ( self ) {
-			
-			UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-			CGRect frame = window.frame;
+		UIView *mView = [[ UIView alloc ] initWithFrame:frame];
+		[ mView setBackgroundColor:[ UIColor blueColor ]];
+		[ mView setContentMode:UIViewContentModeScaleToFill ];
+		[ mView setAutoresizingMask:( UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth )];
 		
-			mContainer = [[ UIView alloc ] initWithFrame:frame ];
-			[ mContainer setBackgroundColor:[ UIColor blueColor ]];
-			[ mContainer setContentMode:UIViewContentModeScaleToFill ];
-			[ mContainer setAutoresizingMask:( UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth )];
-			
-			UIToolbar* toolBar = [[[ UIToolbar alloc ] init ] autorelease ];
-			[ toolBar setBarStyle:UIBarStyleDefault ];
-			[ toolBar setFrame:CGRectMake ( 0, 0, frame.size.width, TOOLBAR_HEIGHT )];
-			[ toolBar setAutoresizingMask:( UIViewAutoresizingFlexibleWidth )];
-			
-			UIBarButtonItem *done = [[[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector ( doneButtonPressed )] autorelease ];
-			[ toolBar setItems:[ NSArray arrayWithObjects: done, nil ] animated:NO ];
-			
-			[ mContainer addSubview:toolBar ];
-			
-			mWebView = [[ UIWebView alloc ] initWithFrame:CGRectMake ( 0, TOOLBAR_HEIGHT, frame.size.width, frame.size.height - TOOLBAR_HEIGHT )];
-			
-			[ mWebView setDelegate:self ];
-			[ mWebView setScalesPageToFit:YES ];
-			[ mWebView setMultipleTouchEnabled:YES ];
-			[ mWebView setContentMode:UIViewContentModeScaleToFill ];
-			[ mWebView setDataDetectorTypes:UIDataDetectorTypeNone ];
-			[ mWebView setAutoresizingMask:( UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth )];
+		UIToolbar* toolBar = [[[ UIToolbar alloc ] init ] autorelease ];
+		[ toolBar setBarStyle:UIBarStyleDefault ];
+		[ toolBar setFrame:CGRectMake ( 0, 0, frame.size.width, TOOLBAR_HEIGHT )];
+		[ toolBar setAutoresizingMask:( UIViewAutoresizingFlexibleWidth )];
+		
+		UIBarButtonItem *done = [[[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector ( doneButtonPressed )] autorelease ];
+		[ toolBar setItems:[ NSArray arrayWithObjects: done, nil ] animated:NO ];
+		
+		[ mView addSubview:toolBar ];
+		
+		mWebView = [[ UIWebView alloc ] initWithFrame:CGRectMake ( 0, TOOLBAR_HEIGHT, frame.size.width, frame.size.height - TOOLBAR_HEIGHT )];
 
-			[ mContainer addSubview:mWebView ];
-			
-			[ window addSubview:mContainer ];
-			[ mContainer setHidden:YES ];
-		}
-		return self;
+		[ mWebView setDelegate:self ];
+		[ mWebView setScalesPageToFit:YES ];
+		[ mWebView setMultipleTouchEnabled:YES ];
+		[ mWebView setContentMode:UIViewContentModeScaleToFill ];
+		[ mWebView setDataDetectorTypes:UIDataDetectorTypeNone];
+		[ mWebView setAutoresizingMask:( UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth )];
+
+		[ mView addSubview:mWebView ];
+		self.view = mView;
 	}
 
 	//----------------------------------------------------------------//
 	-( void ) show :( BOOL )animated {
-		
+
+		UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+		[window.rootViewController presentViewController:self animated:animated completion:nil];
+
 		mAnimated = animated;
+	}
+
+	//----------------------------------------------------------------//
+	-( void ) hide :( BOOL )animated {
 		
-		if ( ![ mContainer isHidden ]) return;
-		
-		[ self retain ];
-		
-		if ( mAnimated ) {
-		
-			CGRect frame = [ mContainer frame ];
-			[ mContainer setFrame:CGRectMake ( frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height )];
-		
-			[ UIView
-				animateWithDuration:ANIM_DURATION
-				delay:ANIM_DELAY
-				options: UIViewAnimationCurveEaseOut
-				animations:^{
-					[ mContainer setFrame:frame ];
-				}
-				completion:NULL
-			];
-		}
-		[ mContainer setHidden:NO ];
+		[self dismissViewControllerAnimated:animated completion:^{
+			 if ( mMOAIWebView ) {
+				 mMOAIWebView->RaiseWebViewDidHideEvent ();
+			 }
+		}];
+
+		mAnimated = animated;
+	}
+
+	-( BOOL ) prefersStatusBarHidden {
+		return YES;
 	}
 
 	//================================================================//
