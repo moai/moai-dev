@@ -69,6 +69,7 @@ private:
 	static int			_addChild				( lua_State* L );
 	static int			_attach					( lua_State* L );
 	static int			_clear					( lua_State* L );
+	static int			_defer					( lua_State* L );
 	static int			_detach					( lua_State* L );
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
@@ -83,7 +84,7 @@ private:
 	//----------------------------------------------------------------//
 	virtual void		OnLostChild				( MOAIAction* child );
 	void				OnUnblock				();
-	void				ResetPass				();
+	void				ResetPass				( u32 pass = 0 );
 	void				Update					( MOAIActionTree& tree, double step );
 
 protected:
@@ -110,8 +111,9 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void					Attach					( MOAIAction* parent = 0 );
+	void					Attach					( MOAIAction* parent = 0, bool defer = true );
 	void					ClearChildren			();
+	void					Defer					( bool defer );
 	virtual MOAIAction*		GetDefaultParent		();
 	bool					IsActive				();
 	bool					IsBusy					();
@@ -121,7 +123,7 @@ public:
 							~MOAIAction				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					Start					( MOAIActionTree& tree );
+	void					Start					( MOAIActionTree& tree, bool defer = true );
 	void					Stop					();
 };
 
