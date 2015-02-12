@@ -9,11 +9,19 @@
 #include <setjmp.h>
 #include <zl-vfs/assert.h>
 
+#define TESS_PRECISION 10000
+
 //================================================================//
 // SafeTesselator
 //================================================================//
 
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
+
+//----------------------------------------------------------------//
+void SafeTesselator::AddContour ( int size, const void* vertices, int stride, int numVertices ) {
+	
+	tessAddContour ( this->mTess, size, vertices, sizeof ( TESSreal ) * size, numVertices );
+}
 
 //----------------------------------------------------------------//
 u32 SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
@@ -49,13 +57,17 @@ u32 SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxB
 
 //------------------------------------------------------------------//
 void SafeTesselator::Reset () {
-	tessDeleteTess ( this->mTess );
+	if ( this->mTess ) {
+		tessDeleteTess ( this->mTess );
+	}
 	this->mTess = tessNewTess ( 0 );
+	tessSetPrecision ( this->mTess, TESS_PRECISION );
 }
 
 //------------------------------------------------------------------//
-SafeTesselator::SafeTesselator () {
-	this->mTess = tessNewTess ( 0 );
+SafeTesselator::SafeTesselator () :
+	mTess ( 0 ) {
+	this->Reset ();
 }
 
 //------------------------------------------------------------------//
@@ -94,6 +106,13 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 			joins [ i ].mVertex = verts [ top - i ];
 		}
 	}
+	
+//	for ( int i = 0; i < nVerts; ++i ) {
+//		
+//		ZLVec2D& vertex = joins [ i ].mVertex;
+//		vertex.mX = floorf ( vertex.mX * 1000 ) / 1000;
+//		vertex.mY = floorf ( vertex.mY * 1000 ) / 1000;
+//	}
 	
 	for ( int i = 0; i < nVerts; ++i ) {
 		
@@ -179,6 +198,10 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 			}
 		}
 		return nJoins;
+	}
+
+	if ( verts ) {
+		printf ( "verts:\n" );
 	}
 
 	u32 count = 0;
@@ -320,6 +343,8 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 						v.Scale ( miter );
 						v.Add ( join.mVertex );
 						*( verts++ ) = v;
+						
+						printf ( "    x:%f, y:%f\n", v.mX, v.mY );
 					}
 					count = count + 1;
 					break;
@@ -332,6 +357,10 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 				}
 			}
 		}
+	}
+	
+	if ( verts ) {
+		printf ( "\n" );
 	}
 	
 	return count;

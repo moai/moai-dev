@@ -22,6 +22,7 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
+	void			AddContour				( int size, const void* vertices, int stride, int numVertices );
 	u32				GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes );
 	void			Reset					();
 					SafeTesselator			();

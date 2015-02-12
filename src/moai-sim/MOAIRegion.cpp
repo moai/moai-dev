@@ -54,7 +54,7 @@ u32 MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffe
 	u32 nPolys = this->Size ();
 	for ( u32 i = 0; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = ( *this )[ i ];
-		tessAddContour ( tesselator.mTess, 2, poly.Data (), sizeof ( ZLVec2D ), poly.Size ());
+		tesselator.AddContour ( 2, poly.Data (), sizeof ( ZLVec2D ), poly.Size ());
 	}
 	
 	int error = tesselator.Tesselate ( TESS_WINDING_ODD, TESS_POLYGONS, 3, 2 );
