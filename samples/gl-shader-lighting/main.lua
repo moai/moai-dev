@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
@@ -119,13 +122,12 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 
 	local vertexFormat = MOAIVertexFormat.new ()
 	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
-	vertexFormat:declareCoord ( 2, MOAIVertexFormat.GL_FLOAT, 3 )
+	vertexFormat:declareNormal ( 2, MOAIVertexFormat.GL_FLOAT, 3 )
 	vertexFormat:declareUV ( 3, MOAIVertexFormat.GL_FLOAT, 2 )
 	vertexFormat:declareColor ( 4, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	local vbo = MOAIVertexBuffer.new ()
-	vbo:setFormat ( vertexFormat )
-	vbo:reserveVerts ( 36 )
+	local vbo = MOAIGfxBuffer.new ()
+	vbo:reserve ( 36 * vertexFormat:getVertexSize ())
 
 	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 4 ], p [ 3 ], p [ 7 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
@@ -133,8 +135,6 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	writeFace ( vbo, p [ 5 ], p [ 6 ], p [ 2 ], p [ 1 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
-
-	vbo:bless ()
 
 	local file = assert ( io.open ( 'shader.vsh', mode ))
 	local vsh = file:read ( '*all' )
@@ -165,9 +165,13 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	shader:setProgram ( program )
 	
 	local mesh = MOAIMesh.new ()
+
+	mesh:setVertexBuffer ( vbo, vertexFormat )
+	mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
+	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
+
 	mesh:setShader ( shader )
 	mesh:setTexture ( texture )
-	mesh:setVertexBuffer ( vbo )
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 
 	return mesh
@@ -183,6 +187,6 @@ local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:moveRot ( 0, 360, 0, 15 )
+prop:moveRot ( 360, 360, 0, 12 )
 prop:setCullMode ( MOAIProp.CULL_BACK )
 layer:insertProp ( prop )

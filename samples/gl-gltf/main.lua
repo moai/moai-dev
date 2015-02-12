@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
@@ -75,13 +78,9 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	--local vbo = MOAIVertexBuffer.new ()
-	--vbo:setFormat ( vertexFormat )
-	--vbo:reserveVerts ( 36 )
-	
 	local vbo = MOAIGfxBuffer.new ()
-	vbo:reserve ( vertexFormat:getVertexSize () * 36 )
-
+	vbo:reserve ( 36 * vertexFormat:getVertexSize ())
+	
 	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 4 ], p [ 3 ], p [ 7 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 8 ], p [ 7 ], p [ 6 ], p [ 5 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
@@ -89,13 +88,15 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 
-	vbo:bless ( vertexFormat )
-
 	local mesh = MOAIMesh.new ()
 	mesh:setTexture ( texture )
-	mesh:setFormat ( vertexFormat )
-	mesh:setVertexBuffer ( vbo )
+
+	mesh:setVertexBuffer ( vbo, vertexFormat )
+	mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
+	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
+	
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 	
 	return mesh
 end
@@ -106,11 +107,10 @@ function makeCube ( size, texture )
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
 
-local mesh = makeCube ( 128, '../resources/moai.png' )
+local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:moveRot ( 360, 360, 0, 6 )
-prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 layer:insertProp ( prop )
