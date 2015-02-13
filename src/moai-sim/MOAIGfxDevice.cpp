@@ -783,21 +783,24 @@ void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 		this->Flush ();
 		zglEnable ( ZGL_PIPELINE_BLEND );
 		this->mBlendMode = blendMode;
+		zglBlendMode(this->mBlendMode.mEquation);
 		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 		this->mBlendEnabled = true;
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
 		this->Flush ();
 		this->mBlendMode = blendMode;
+		zglBlendMode(this->mBlendMode.mEquation);
 		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
+void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
 
 	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( srcFactor, dstFactor );
+	blendMode.SetBlendEquation( equation );
 	
 	this->SetBlendMode ( blendMode );
 }

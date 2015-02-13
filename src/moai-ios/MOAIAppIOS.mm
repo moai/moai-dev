@@ -406,7 +406,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "DID_BECOME_ACTIVE",			( u32 )DID_BECOME_ACTIVE );
 	state.SetField ( -1, "DID_ENTER_BACKGROUND",		( u32 )DID_ENTER_BACKGROUND );
-	state.SetField ( -1, "DID_RECIEVE_MEMORY_WARNING",	( u32 )DID_RECIEVE_MEMORY_WARNING );
+	state.SetField ( -1, "DID_RECEIVE_MEMORY_WARNING",	( u32 )DID_RECEIVE_MEMORY_WARNING );
 	state.SetField ( -1, "OPEN_URL",					( u32 )OPEN_URL );
 	state.SetField ( -1, "WILL_ENTER_FOREGROUND",		( u32 )WILL_ENTER_FOREGROUND );
 	state.SetField ( -1, "WILL_RESIGN_ACTIVE",			( u32 )WILL_RESIGN_ACTIVE );
@@ -445,7 +445,7 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 
 	this->mNotificationListenerMap [ "UIApplicationDidBecomeActiveNotification" ] = DID_BECOME_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationDidEnterBackgroundNotification" ] = DID_ENTER_BACKGROUND;
-	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECIEVE_MEMORY_WARNING;
+	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECEIVE_MEMORY_WARNING;
 	this->mNotificationListenerMap [ "UIApplicationWillEnterForegroundNotification" ] = WILL_ENTER_FOREGROUND;
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;

@@ -79,7 +79,7 @@ MOAIImageFormatPng::~MOAIImageFormatPng () {
 bool MOAIImageFormatPng::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
 
 	png_structp png = png_create_read_struct ( PNG_LIBPNG_VER_STRING, 0, _pngError, 0 );
-	if ( !png ) return;
+	if ( !png ) return false;
 
 	png_infop pngInfo = png_create_info_struct ( png );
 	if ( pngInfo ) {
@@ -88,6 +88,7 @@ bool MOAIImageFormatPng::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 	}
 
 	png_destroy_read_struct ( &png, &pngInfo, NULL );
+    return true;
 }
 
 //----------------------------------------------------------------//

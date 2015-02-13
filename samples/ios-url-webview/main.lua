@@ -32,9 +32,16 @@ end
 
 MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )
 
-function onTap ( eventType, idx, x, y, tapCount  )
-	
-	print ( x, y )
+onTouch = function ( eventType )
+
+	if eventType == MOAITouchSensor.TOUCH_DOWN then
+		
+		webView = MOAIWebViewIOS.new ()
+		webView:show ( true )
+		webView:loadRequest ( 'https://news.google.com' )
+		webView = nil
+	end
 end
 
-MOAIInputMgr.device.touch:setCallback ( onTap )
+MOAIInputMgr.device.touch:setCallback ( onTouch )
+

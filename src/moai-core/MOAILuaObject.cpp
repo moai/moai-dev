@@ -309,7 +309,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
 				lua_pop ( state, 1 ); // pop the old count
 				
-				if ( count == 0 ) return; // nothing to do
+				if ( count == 0 ) return; // do nothing
 				
 				if ( count > 1 ) {
 					lua_pushnumber ( state, count - 1 ); // push the new count
@@ -317,11 +317,15 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				else {
 					lua_pushnil ( state );
 				}
+				
+				// this should make the object eligible for garbage collection
 				lua_settable ( state, -3 ); // save it in the table
 			}
 		}
 	}
 	
+	// this will take the ref count to zero, but if the object hasn't been collected it *won't* get deleted
+	// thanks to the override of MOAIObject OnRelease ()
 	object->Release ();
 }
 
@@ -329,7 +333,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-	object->Retain ();
+	object->Retain (); // strong ref
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	

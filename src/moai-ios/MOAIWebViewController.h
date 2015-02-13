@@ -15,11 +15,12 @@ class MOAIWebViewIOS;
 @private
 }
 
+	@property ( readwrite, assign ) BOOL				animated;
 	@property ( readonly ) UIWebView*					webView;
 	@property ( readwrite, assign ) MOAIWebViewIOS*		moaiWebView;
 
 	//----------------------------------------------------------------//
-	-( MOAIWebViewController* )		init			:( CGRect )frame :( int )toolbarHeight;
+	-( void )						hide			:( BOOL )animated;
 	-( void )						show			:( BOOL )animated;
 
 @end
