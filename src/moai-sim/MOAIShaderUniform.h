@@ -33,6 +33,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void		Clear				();
+	void		ClearValue			();
 	bool		SetBuffer			( void* buffer, size_t size, bool check );
 
 public:
