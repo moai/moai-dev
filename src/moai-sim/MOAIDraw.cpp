@@ -469,6 +469,72 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	drawTexture
+	@text	Draw a filled rectangle.
+	
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		MOAITexture texture
+	@out	nil
+*/
+int MOAIDraw::_drawTexture ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+	MOAITexture* texture = (MOAITexture*)MOAITexture::AffirmTexture ( state, 5 );
+
+	MOAIDraw::DrawTexture ( x0, y0, x1, y1, texture );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	drawText
+	@text	Draws a string.
+	
+	@in		MOAIFont font
+	@in		number size		Font size
+	@in		string text
+	@in		number x		Left position
+	@in		number y		Top position
+	@in		number scale
+	@in		number shadowOffsetX
+	@in		number shadowOffsetY
+	@out	nil
+*/
+int MOAIDraw::_drawText ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	// TODO	
+	//cc8* text = lua_tostring ( state, 3 );
+	//if ( text ) {
+
+	//	float x = state.GetValue < float >( 4, 0.0f );
+	//	float y = state.GetValue < float >( 5, 0.0f );
+	//	float scale = state.GetValue < float >( 6, 1.0f );
+
+	//	float shadowOffsetX = state.GetValue < float >( 7, 0.0f );
+	//	float shadowOffsetY = state.GetValue < float >( 8, 0.0f );
+
+	//	MOAIFont* font = state.GetLuaObject < MOAIFont >( 1, true );
+	//	if ( font ) {
+
+	//		float fontSize = state.GetValue < float >( 2, font->GetDefaultSize () );
+
+	//		MOAIDraw::DrawText ( text, x, y, scale, *font, fontSize, shadowOffsetX, shadowOffsetY, 0, 0 );
+	//	}
+	//}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	fillCircle
 	@text	Draw a filled circle.
 	
@@ -559,68 +625,28 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	drawTexture
-	@text	Draw a filled rectangle.
-	
-	@in		number x0
-	@in		number y0
-	@in		number x1
-	@in		number y1
-	@in		MOAITexture texture
-	@out	nil
-*/
-int MOAIDraw::_drawTexture ( lua_State* L ) {
-
+// TODO: doxygen
+int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAILuaState state ( L );
-	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
-	MOAITexture* texture = (MOAITexture*)MOAITexture::AffirmTexture ( state, 5 );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	MOAIDraw::DrawTexture ( x0, y0, x1, y1, texture );
-	return 0;
-}
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+		if ( state.IsType ( 2, LUA_TNUMBER )) {
 
-//----------------------------------------------------------------//
-/**	@lua	drawText
-	@text	Draws a string.
-	
-	@in		MOAIFont font
-	@in		number size		Font size
-	@in		string text
-	@in		number x		Left position
-	@in		number y		Top position
-	@in		number scale
-	@in		number shadowOffsetX
-	@in		number shadowOffsetY
-	@out	nil
-*/
-int MOAIDraw::_drawText ( lua_State* L ) {
+			u32 srcFactor = state.GetValue < u32 >( 1, 0 );
+			u32 dstFactor = state.GetValue < u32 >( 2, 0 );
+			u32 equation = state.GetValue < u32 >( 3, 0 );
+			gfxDevice.SetBlendMode(srcFactor, dstFactor, equation);
+		}
+		else {
 
-	MOAILuaState state ( L );
-
-	// TODO	
-	//cc8* text = lua_tostring ( state, 3 );
-	//if ( text ) {
-
-	//	float x = state.GetValue < float >( 4, 0.0f );
-	//	float y = state.GetValue < float >( 5, 0.0f );
-	//	float scale = state.GetValue < float >( 6, 1.0f );
-
-	//	float shadowOffsetX = state.GetValue < float >( 7, 0.0f );
-	//	float shadowOffsetY = state.GetValue < float >( 8, 0.0f );
-
-	//	MOAIFont* font = state.GetLuaObject < MOAIFont >( 1, true );
-	//	if ( font ) {
-
-	//		float fontSize = state.GetValue < float >( 2, font->GetDefaultSize () );
-
-	//		MOAIDraw::DrawText ( text, x, y, scale, *font, fontSize, shadowOffsetX, shadowOffsetY, 0, 0 );
-	//	}
-	//}
-
+			u32 blendMode = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
+			gfxDevice.SetBlendMode((const MOAIBlendMode&)blendMode);
+		}
+	}
+	else {
+		gfxDevice.SetBlendMode();
+	}
 	return 0;
 }
 
@@ -1160,7 +1186,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		
 		gfxDevice.Flush ();
 
-		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
+//		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
 		gfxDevice.SetTexture ( texture );
 		gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
 
@@ -1176,7 +1202,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 
 		gfxDevice.Flush ();
 		
-		gfxDevice.SetBlendMode ();
+//		gfxDevice.SetBlendMode ();
 		gfxDevice.SetPenColor ( orgColor );
 		
 		MOAIDraw::Bind ();
@@ -1247,12 +1273,13 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawPoints",				_drawPoints },
 		{ "drawRay",				_drawRay },
 		{ "drawRect",				_drawRect },
+		{ "drawText",				_drawText },
+		{ "drawTexture",			_drawTexture },
 		{ "fillCircle",				_fillCircle },
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
-		{ "drawText",				_drawText },
-		{ "drawTexture",			_drawTexture },
+		{ "setBlendMode",			_setBlendMode },
 		{ NULL, NULL }
 	};
 

@@ -102,9 +102,6 @@
 		CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
 		CDC963D81A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
 		CDC963D91A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
-		CDC963DA1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */; };
-		CDC963DB1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */; };
-		CDC963DC1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */; };
 		CDDD306D1574AC7300C410A0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910B13B3C48400B2724C /* AudioToolbox.framework */; };
 		CDDD306E1574AC7300C410A0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910313B3C47600B2724C /* CoreAudio.framework */; };
 		CDDD306F1574AC7300C410A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -681,8 +678,6 @@
 		CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppDelegate.mm; path = "../../src/host-ios/MOAIAppDelegate.mm"; sourceTree = "<group>"; };
 		CDC963CD1A12C6B000F9CA22 /* MOAIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIView.h; path = "../../src/host-ios/MOAIView.h"; sourceTree = "<group>"; };
 		CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIView.mm; path = "../../src/host-ios/MOAIView.mm"; sourceTree = "<group>"; };
-		CDC963CF1A12C6B000F9CA22 /* MOAIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIViewController.h; path = "../../src/host-ios/MOAIViewController.h"; sourceTree = "<group>"; };
-		CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIViewController.mm; path = "../../src/host-ios/MOAIViewController.mm"; sourceTree = "<group>"; };
 		CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF389EE1A51D39000BDEB4D /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CDF389EF1A51D39000BDEB4D /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
@@ -988,8 +983,6 @@
 				CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */,
 				CDC963CD1A12C6B000F9CA22 /* MOAIView.h */,
 				CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */,
-				CDC963CF1A12C6B000F9CA22 /* MOAIViewController.h */,
-				CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */,
 			);
 			name = moai;
 			sourceTree = SOURCE_ROOT;
@@ -1613,7 +1606,6 @@
 			files = (
 				CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */,
-				CDC963DA1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */,
 				CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */,
 				CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
 				CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
@@ -1627,7 +1619,6 @@
 			files = (
 				CDC963D61A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E241A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
-				CDC963DC1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */,
 				CDFD7E211A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
 				CDC963D91A12C6B000F9CA22 /* MOAIView.mm in Sources */,
 				CDFD7E271A08B16C00A94E6B /* aku_modules.cpp in Sources */,
@@ -1641,7 +1632,6 @@
 			files = (
 				CDC963D51A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E231A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
-				CDC963DB1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */,
 				CDFD7E201A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
 				CDC963D81A12C6B000F9CA22 /* MOAIView.mm in Sources */,
 				CDFD7E261A08B16C00A94E6B /* aku_modules.cpp in Sources */,
@@ -1821,7 +1811,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
@@ -1900,7 +1890,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",

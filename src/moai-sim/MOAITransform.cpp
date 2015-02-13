@@ -233,7 +233,7 @@ int MOAITransform::_move ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 		
 		return 1;
@@ -289,7 +289,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -336,7 +336,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -383,7 +383,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -430,7 +430,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -490,7 +490,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -544,7 +544,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -592,7 +592,7 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -640,7 +640,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -688,7 +688,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;

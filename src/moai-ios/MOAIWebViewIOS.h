@@ -41,17 +41,13 @@ private:
 	static int	_clickForward					( lua_State* L );
 	static int	_clickRefresh					( lua_State* L );
 	static int	_clickStop						( lua_State* L );
-	static int	_closeWebView					( lua_State* L );
 	static int	_getAllowsInlineMediaPlayback	( lua_State* L );
 	static int	_getCurrentRequest				( lua_State* L );
 	static int	_getMediaPlaybackRequiresAction	( lua_State* L );
 	static int	_getScalesPageToFit				( lua_State* L );
-	static int	_hasToolBar						( lua_State* L );
-	static int	_hideWebView					( lua_State* L );
-	static int	_init							( lua_State* L );
+	static int	_hide							( lua_State* L );
 	static int	_isHidden						( lua_State* L );
 	static int	_isLoading						( lua_State* L );
-	static int	_loadData						( lua_State* L );
 	static int	_loadHTML						( lua_State* L );
 	static int	_loadRequest					( lua_State* L ); 
 	static int	_openUrlExternally				( lua_State* L );

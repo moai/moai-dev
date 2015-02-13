@@ -63,8 +63,7 @@ void MOAITestResult::Push ( lua_State* L ) {
 int MOAITestMgr::_assert ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
-	bool check = state.GetValue ( 1, false );
-	if ( !check ) {
+	if ( !state.IsTrueOrNotNil ( 1 )) {
 		state.CopyToTop ( 2 ); // message
 		lua_error ( state );
 	}

@@ -62,15 +62,17 @@ void MOAIActionStackMgr::Push ( MOAIAction& action ) {
 
 	@in		MOAIAction self
 	@in		MOAIAction child
+	@opt	boolean defer		Default value is 'true.'
 	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
-	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
+	MOAIAction* action		= state.GetLuaObject < MOAIAction >( 2, true );
+	bool defer				= state.GetValue < bool >( 3, false );
 	
 	if ( action ) {
-		action->Attach ( self );
+		action->Attach ( self, defer );
 	}
 	state.CopyToTop ( 1 );
 
@@ -84,13 +86,16 @@ int MOAIAction::_addChild ( lua_State* L ) {
 
 	@in		MOAIAction self
 	@opt	MOAIAction parent		Default value is nil; same effect as calling detach ().
+	@opt	boolean defer			Default value is 'true.'
 	@out	MOAIAction self
 */
 int MOAIAction::_attach ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
-	MOAIAction* parent = state.GetLuaObject < MOAIAction >( 2, true );
-	self->Attach ( parent );
+	MOAIAction* parent		= state.GetLuaObject < MOAIAction >( 2, true );
+	bool defer				= state.GetValue < bool >( 3, false );
+	
+	self->Attach ( parent, defer );
 	state.CopyToTop ( 1 );
 	
 	return 1;
@@ -113,6 +118,16 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_defer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+	
+	bool defer = state.GetValue < bool >( 2, true );
+	self->Defer ( defer );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	detach
 	@text	Detaches an action from its parent (if any) thereby removing
 			it from the action tree. Same effect as calling stop ().
@@ -123,7 +138,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 int MOAIAction::_detach ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
-	self->Attach ();
+	self->Detach ();
 	state.CopyToTop ( 1 );
 	
 	return 1;
@@ -217,18 +232,20 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 
 	@in		MOAIAction self
 	@opt	MOAIAction parent		Default value is MOAIActionMgr.getRoot ()
+	@opt	boolean defer			Action will first run during the next sim step, even if it visited during the current sim step. Default value is 'true.'
 	@out	MOAIAction self
 */
 int MOAIAction::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
+	MOAIAction* action		= state.GetLuaObject < MOAIAction >( 2, true );
+	bool defer				= state.GetValue < bool >( 3, true );
 	
 	if ( !action ) {
 		action = MOAISim::Get ().GetActionMgr ().GetDefaultParent ();
 	}
 
-	self->Attach ( action );
+	self->Attach ( action, defer );
 	state.CopyToTop ( 1 );
 	self->mIsPaused = false;
 
@@ -246,7 +263,7 @@ int MOAIAction::_start ( lua_State* L ) {
 int MOAIAction::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	self->Attach ();
+	self->Detach ();
 	state.CopyToTop ( 1 );
 	self->mIsPaused = false;
 
@@ -276,7 +293,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAction::Attach ( MOAIAction* parent ) {
+void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 
 	MOAIAction* oldParent = this->mParent;
 	if ( oldParent == parent ) return;
@@ -316,9 +333,14 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	}
 	
 	if ( parent ) {
-		parent->mChildren.PushBack ( this->mLink );
+	
 		this->mParent = parent;
-		this->mPass = parent->mPass + 1;
+		parent->mChildren.PushBack ( this->mLink );
+		this->ResetPass ( defer ? parent->mPass + 1 : parent->mPass );
+		
+		if ( !parent->mChildIt ) {
+			parent->mChildIt = &this->mLink;
+		}
 	}
 	
 	if (( !oldParent ) && parent ) {
@@ -334,8 +356,22 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 void MOAIAction::ClearChildren () {
 
 	while ( ChildIt actionIt = this->mChildren.Head ()) {
-		actionIt->Data ()->Attach ();
+		actionIt->Data ()->Detach ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Defer ( bool defer ) {
+
+	if ( this->mParent ) {
+		this->mPass = defer ? this->mParent->mPass + 1 : this->mParent->mPass;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Detach () {
+
+	this->Attach ( 0, false );
 }
 
 //----------------------------------------------------------------//
@@ -446,6 +482,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "addChild",				_addChild },
 		{ "attach",					_attach },
 		{ "clear",					_clear },
+		{ "defer",					_defer },
 		{ "detach",					_detach },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
@@ -463,14 +500,15 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::ResetPass () {
+void MOAIAction::ResetPass ( u32 pass ) {
 
-	this->mPass = 0;
-
-	ChildIt childIt = this->mChildren.Head ();
-	for ( ; childIt; childIt = this->mChildIt->Next ()) {
-		this->mChildIt->Data ()->ResetPass ();
+	if ( this->mPass > pass ) {
+		ChildIt childIt = this->mChildren.Head ();
+		for ( ; childIt; childIt = this->mChildIt->Next ()) {
+			this->mChildIt->Data ()->ResetPass ( pass );
+		}
 	}
+	this->mPass = pass;
 }
 
 //----------------------------------------------------------------//
@@ -544,23 +582,23 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
-		this->Attach ();
+		this->Detach ();
 	}
 	
 	MOAIActionStackMgr::Get ().Pop ();
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::Start ( MOAIActionTree& tree ) {
+void MOAIAction::Start ( MOAIActionTree& tree, bool defer ) {
 
 	MOAIAction* defaultParent = tree.GetDefaultParent ();
-	this->Attach ( defaultParent );
+	this->Attach ( defaultParent, defer );
 	this->mIsPaused = false;
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::Stop () {
 
-	this->Attach ( 0 );
+	this->Detach ();
 	this->mIsPaused = false;
 }

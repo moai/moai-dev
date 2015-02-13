@@ -6,7 +6,6 @@
 
 #import "MOAIAppDelegate.h"
 #import "MOAIView.h"
-#import "MOAIViewController.h"
 
 //================================================================//
 // AppDelegate
@@ -51,7 +50,7 @@
         mMoaiView.alpha = 1.0f;
         mMoaiView.opaque = YES;
         
-        mMoaiVC = [[ MOAIViewController alloc ] init ];
+        mMoaiVC = [[ UIViewController alloc ] init ];
         mMoaiVC.view = mMoaiView;
 
         mWindow = [[ UIWindow alloc ] init ];

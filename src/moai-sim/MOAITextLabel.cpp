@@ -653,7 +653,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
 
-	self->Start ( MOAISim::Get ().GetActionMgr ());
+	self->Start ( MOAISim::Get ().GetActionMgr (), false );
 
 	return 1;
 }

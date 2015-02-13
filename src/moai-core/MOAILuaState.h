@@ -80,6 +80,7 @@ public:
 	bool			IsNil						();
 	bool			IsNil						( int idx );
 	bool			IsTableOrUserdata			( int idx );
+	bool			IsTrueOrNotNil				( int idx );
 	bool			IsType						( int idx, int type );
 	bool			IsType						( int idx, cc8* name, int type );
 	void			LoadLibs					();

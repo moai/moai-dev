@@ -1005,6 +1005,15 @@ bool MOAILuaState::IsTableOrUserdata ( int idx ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::IsTrueOrNotNil ( int idx ) {
+
+	if ( lua_isboolean ( this->mState, idx )) {
+		return lua_toboolean ( this->mState, idx );
+	}
+	return !lua_isnil ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::IsType ( int idx, int type ) {
 
 	return ( lua_type ( this->mState, idx ) == type );

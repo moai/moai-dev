@@ -31,10 +31,10 @@ private:
 
 	float mDamping;
 
-	MOAILuaSharedPtr < MOAIParticleScript > mInit;
-	MOAILuaSharedPtr < MOAIParticleScript > mRender;
-	MOAILuaSharedPtr < MOAIParticlePlugin > mPlugin;
-	MOAILuaSharedPtr < MOAIParticleState > mNext;
+	MOAILuaSharedPtr < MOAIParticleScript >		mInit;
+	MOAILuaSharedPtr < MOAIParticleScript >		mRender;
+	MOAILuaSharedPtr < MOAIParticlePlugin >		mPlugin;
+	MOAILuaSharedPtr < MOAIParticleState >		mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );
