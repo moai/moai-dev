@@ -71,7 +71,7 @@ void wax_setup ( lua_State* L ) {
     //lua_State *L = wax_currentLuaState();
 	lua_atpanic(L, &wax_panic);
     
-    luaL_openlibs(L); 
+    //luaL_openlibs(L);
 
 	luaopen_wax_class(L);
     luaopen_wax_instance(L);
