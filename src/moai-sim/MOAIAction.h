@@ -62,8 +62,14 @@ private:
 	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
 	float	mThrottle;
-	bool	mIsPaused;
-	bool	mAutoStop;
+	
+	enum {
+		FLAGS_AUTO_STOP			= 1 << 0,
+		FLAGS_IS_PAUSED			= 1 << 1,
+		FLAGS_IS_UPDATING		= 1 << 2,
+	};
+	
+	u32 mActionFlags;
 	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );

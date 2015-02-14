@@ -214,7 +214,7 @@ int MOAIAction::_isPaused ( lua_State* L ) {
 int MOAIAction::_pause ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
 
-	self->mIsPaused = state.GetValue < bool >( 2, true );
+	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_IS_PAUSED : self->mActionFlags & FLAGS_IS_PAUSED;
 	return 0;
 }
 
@@ -222,7 +222,7 @@ int MOAIAction::_pause ( lua_State* L ) {
 // TODO: doxygen
 int MOAIAction::_setAutoStop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
-	self->mAutoStop = state.GetValue < bool >( 2, false );
+	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_AUTO_STOP : self->mActionFlags & ~FLAGS_AUTO_STOP;
 	return 0;
 }
 
@@ -247,7 +247,7 @@ int MOAIAction::_start ( lua_State* L ) {
 
 	self->Attach ( action, defer );
 	state.CopyToTop ( 1 );
-	self->mIsPaused = false;
+	self->mActionFlags &= ~FLAGS_IS_PAUSED;
 
 	return 1;
 }
@@ -265,7 +265,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 
 	self->Detach ();
 	state.CopyToTop ( 1 );
-	self->mIsPaused = false;
+	self->mActionFlags &= ~FLAGS_IS_PAUSED;
 
 	return 1;
 }
@@ -309,7 +309,7 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 		// if we're detaching the action while the parent action is updating
 		// then we need to handle the edge case where the action is referenced
 		// by mChildIt
-		if ( oldParent->mChildIt == &this->mLink ) {
+		if (( oldParent->mActionFlags & FLAGS_IS_UPDATING ) && ( oldParent->mChildIt == &this->mLink )) {
 			oldParent->mChildIt = oldParent->mChildIt->Next ();
 			if ( oldParent->mChildIt ) {
 				oldParent->mChildIt->Data ()->Retain ();
@@ -344,7 +344,7 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	}
 	
 	if (( !oldParent ) && parent ) {
-		if ( !this->mIsPaused ) {
+		if ( !( this->mActionFlags & FLAGS_IS_PAUSED )) {
 			this->OnStart ();
 		}
 	}
@@ -395,13 +395,13 @@ bool MOAIAction::IsBusy () {
 //----------------------------------------------------------------//
 bool MOAIAction::IsDone () {
 
-	return ( this->mAutoStop && ( this->mChildren.Count () == 0 ));
+	return (( this->mActionFlags & FLAGS_AUTO_STOP ) && ( this->mChildren.Count () == 0 ));
 }
 
 //----------------------------------------------------------------//
 bool MOAIAction::IsPaused () {
-	// TODO: better to do this with a state?
-	return this->mIsPaused || (this->mParent && this->mParent->IsPaused ());
+
+	return ( this->mActionFlags & FLAGS_IS_PAUSED ) || (this->mParent && this->mParent->IsPaused ());
 }
 
 //----------------------------------------------------------------//
@@ -415,8 +415,7 @@ MOAIAction::MOAIAction () :
 	mParent ( 0 ),
 	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
-	mIsPaused ( false ),
-	mAutoStop ( true ) {
+	mActionFlags ( FLAGS_AUTO_STOP ) {
 
 	this->mLink.Data ( this );
 
@@ -535,6 +534,8 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 	
 	step *= this->mThrottle;
 	
+	this->mActionFlags |= FLAGS_IS_UPDATING;
+	
 	this->InvokeListenerWithSelf ( EVENT_ACTION_PRE_UPDATE );
 	this->OnUpdate ( step );
 	this->InvokeListenerWithSelf ( EVENT_ACTION_POST_UPDATE );
@@ -579,6 +580,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		child->Release ();
 	}
 	
+	this->mActionFlags &= ~FLAGS_IS_UPDATING;
 	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
@@ -593,12 +595,12 @@ void MOAIAction::Start ( MOAIActionTree& tree, bool defer ) {
 
 	MOAIAction* defaultParent = tree.GetDefaultParent ();
 	this->Attach ( defaultParent, defer );
-	this->mIsPaused = false;
+	this->mActionFlags &= ~FLAGS_IS_PAUSED;
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::Stop () {
 
 	this->Detach ();
-	this->mIsPaused = false;
+	this->mActionFlags &= ~FLAGS_IS_PAUSED;
 }
