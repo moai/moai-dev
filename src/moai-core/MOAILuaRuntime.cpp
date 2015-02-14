@@ -17,6 +17,10 @@
 	#include <lstate.h>
 #endif
 
+#if MOAI_WITH_WAX
+	#include <wax/wax.h>
+#endif
+
 #define DUMP_FORMAT "%p <%s> %s"
 
 typedef STLSet < struct Table* > TableSet;
@@ -506,6 +510,11 @@ void MOAILuaRuntime::ClearRef ( int refID ) {
 void MOAILuaRuntime::Close () {
 
 	if ( this->mState ) {
+	
+		#ifdef MOAI_WITH_WAX
+			wax_end ();
+		#endif
+	
 		lua_close ( this->mState );
 		this->mState = 0;
 	}
@@ -872,9 +881,13 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 
 	// open the main state
 	#if (MOAI_WITH_LUAJIT && (defined(__x86_64 ) || defined(__amd64)) )
-		this->mState = luaL_newstate();  //luajit doesn't support custom allocs on 64bit
+		this->mState = luaL_newstate ();  //luajit doesn't support custom allocs on 64bit
 	#else
 		this->mState = lua_newstate ( _trackingAlloc, NULL );
+	#endif
+	
+	#if MOAI_WITH_WAX
+		wax_setup ( this->mState );
 	#endif
 	
 	lua_atpanic ( this->mState, &_panic );

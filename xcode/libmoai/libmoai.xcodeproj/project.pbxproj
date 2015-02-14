@@ -2658,6 +2658,32 @@
 		CD78109A187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */; };
 		CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
 		CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
+		CD7BA8BF1A8EA82E000A4E41 /* ProtocolLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8AF1A8EA82E000A4E41 /* ProtocolLoader.h */; };
+		CD7BA8C01A8EA82E000A4E41 /* ProtocolLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8AF1A8EA82E000A4E41 /* ProtocolLoader.h */; };
+		CD7BA8C11A8EA82E000A4E41 /* wax_class.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B01A8EA82E000A4E41 /* wax_class.h */; };
+		CD7BA8C21A8EA82E000A4E41 /* wax_class.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B01A8EA82E000A4E41 /* wax_class.h */; };
+		CD7BA8C31A8EA82E000A4E41 /* wax_class.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B11A8EA82E000A4E41 /* wax_class.m */; };
+		CD7BA8C41A8EA82E000A4E41 /* wax_class.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B11A8EA82E000A4E41 /* wax_class.m */; };
+		CD7BA8C51A8EA82E000A4E41 /* wax_gc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B21A8EA82E000A4E41 /* wax_gc.h */; };
+		CD7BA8C61A8EA82E000A4E41 /* wax_gc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B21A8EA82E000A4E41 /* wax_gc.h */; };
+		CD7BA8C71A8EA82E000A4E41 /* wax_gc.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B31A8EA82E000A4E41 /* wax_gc.m */; };
+		CD7BA8C81A8EA82E000A4E41 /* wax_gc.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B31A8EA82E000A4E41 /* wax_gc.m */; };
+		CD7BA8C91A8EA82E000A4E41 /* wax_helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B41A8EA82E000A4E41 /* wax_helpers.h */; };
+		CD7BA8CA1A8EA82E000A4E41 /* wax_helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B41A8EA82E000A4E41 /* wax_helpers.h */; };
+		CD7BA8CB1A8EA82E000A4E41 /* wax_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B51A8EA82E000A4E41 /* wax_helpers.m */; };
+		CD7BA8CC1A8EA82E000A4E41 /* wax_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B51A8EA82E000A4E41 /* wax_helpers.m */; };
+		CD7BA8CD1A8EA82E000A4E41 /* wax_instance.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B61A8EA82E000A4E41 /* wax_instance.h */; };
+		CD7BA8CE1A8EA82E000A4E41 /* wax_instance.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8B61A8EA82E000A4E41 /* wax_instance.h */; };
+		CD7BA8CF1A8EA82E000A4E41 /* wax_instance.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B71A8EA82E000A4E41 /* wax_instance.m */; };
+		CD7BA8D01A8EA82E000A4E41 /* wax_instance.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8B71A8EA82E000A4E41 /* wax_instance.m */; };
+		CD7BA8D71A8EA82E000A4E41 /* wax_struct.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8BB1A8EA82E000A4E41 /* wax_struct.h */; };
+		CD7BA8D81A8EA82E000A4E41 /* wax_struct.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8BB1A8EA82E000A4E41 /* wax_struct.h */; };
+		CD7BA8D91A8EA82E000A4E41 /* wax_struct.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8BC1A8EA82E000A4E41 /* wax_struct.m */; };
+		CD7BA8DA1A8EA82E000A4E41 /* wax_struct.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8BC1A8EA82E000A4E41 /* wax_struct.m */; };
+		CD7BA8DB1A8EA82E000A4E41 /* wax.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8BD1A8EA82E000A4E41 /* wax.h */; };
+		CD7BA8DC1A8EA82E000A4E41 /* wax.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7BA8BD1A8EA82E000A4E41 /* wax.h */; };
+		CD7BA8DD1A8EA82E000A4E41 /* wax.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8BE1A8EA82E000A4E41 /* wax.m */; };
+		CD7BA8DE1A8EA82E000A4E41 /* wax.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7BA8BE1A8EA82E000A4E41 /* wax.m */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD8078A21831C3B500E658D9 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
@@ -7583,6 +7609,21 @@
 		CD795E9617F08BB6006AEB47 /* SDL_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_video.h; path = "../../3rdparty/sdl2-2.0.0/include/SDL_video.h"; sourceTree = "<group>"; };
 		CD795EFE17F0901A006AEB47 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mongoose.c; path = ../../3rdparty/mongoose/mongoose.c; sourceTree = "<group>"; };
 		CD795EFF17F0901A006AEB47 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mongoose.h; path = ../../3rdparty/mongoose/mongoose.h; sourceTree = "<group>"; };
+		CD7BA8161A8EA3B6000A4E41 /* libmoai-ios-wax.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-wax.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7BA8371A8EA400000A4E41 /* libmoai-osx-wax.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-wax.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7BA8AF1A8EA82E000A4E41 /* ProtocolLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtocolLoader.h; path = ../../3rdparty/contrib/wax/ProtocolLoader.h; sourceTree = "<group>"; };
+		CD7BA8B01A8EA82E000A4E41 /* wax_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax_class.h; path = ../../3rdparty/contrib/wax/wax_class.h; sourceTree = "<group>"; };
+		CD7BA8B11A8EA82E000A4E41 /* wax_class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax_class.m; path = ../../3rdparty/contrib/wax/wax_class.m; sourceTree = "<group>"; };
+		CD7BA8B21A8EA82E000A4E41 /* wax_gc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax_gc.h; path = ../../3rdparty/contrib/wax/wax_gc.h; sourceTree = "<group>"; };
+		CD7BA8B31A8EA82E000A4E41 /* wax_gc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax_gc.m; path = ../../3rdparty/contrib/wax/wax_gc.m; sourceTree = "<group>"; };
+		CD7BA8B41A8EA82E000A4E41 /* wax_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax_helpers.h; path = ../../3rdparty/contrib/wax/wax_helpers.h; sourceTree = "<group>"; };
+		CD7BA8B51A8EA82E000A4E41 /* wax_helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax_helpers.m; path = ../../3rdparty/contrib/wax/wax_helpers.m; sourceTree = "<group>"; };
+		CD7BA8B61A8EA82E000A4E41 /* wax_instance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax_instance.h; path = ../../3rdparty/contrib/wax/wax_instance.h; sourceTree = "<group>"; };
+		CD7BA8B71A8EA82E000A4E41 /* wax_instance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax_instance.m; path = ../../3rdparty/contrib/wax/wax_instance.m; sourceTree = "<group>"; };
+		CD7BA8BB1A8EA82E000A4E41 /* wax_struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax_struct.h; path = ../../3rdparty/contrib/wax/wax_struct.h; sourceTree = "<group>"; };
+		CD7BA8BC1A8EA82E000A4E41 /* wax_struct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax_struct.m; path = ../../3rdparty/contrib/wax/wax_struct.m; sourceTree = "<group>"; };
+		CD7BA8BD1A8EA82E000A4E41 /* wax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wax.h; path = ../../3rdparty/contrib/wax/wax.h; sourceTree = "<group>"; };
+		CD7BA8BE1A8EA82E000A4E41 /* wax.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = wax.m; path = ../../3rdparty/contrib/wax/wax.m; sourceTree = "<group>"; };
 		CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIIso8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.h; sourceTree = "<group>"; };
@@ -8094,6 +8135,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD7BA8101A8EA3B6000A4E41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7BA8311A8EA400000A4E41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD807B441831C3B500E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8271,6 +8326,7 @@
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				07658749145CD04800723A7D /* tlsf */,
 				CD07C10013A14B5100C9386C /* untz */,
+				CD7BA8381A8EA50D000A4E41 /* wax */,
 				CD04AEB6147256B0009C20E5 /* zlib */,
 			);
 			name = "3rd party";
@@ -8794,6 +8850,8 @@
 				CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */,
 				CD257BA21A6255380057A53A /* libmoai-ios-apple.a */,
 				CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */,
+				CD7BA8161A8EA3B6000A4E41 /* libmoai-ios-wax.a */,
+				CD7BA8371A8EA400000A4E41 /* libmoai-osx-wax.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -11986,6 +12044,26 @@
 			name = mongoose;
 			sourceTree = "<group>";
 		};
+		CD7BA8381A8EA50D000A4E41 /* wax */ = {
+			isa = PBXGroup;
+			children = (
+				CD7BA8AF1A8EA82E000A4E41 /* ProtocolLoader.h */,
+				CD7BA8B01A8EA82E000A4E41 /* wax_class.h */,
+				CD7BA8B11A8EA82E000A4E41 /* wax_class.m */,
+				CD7BA8B21A8EA82E000A4E41 /* wax_gc.h */,
+				CD7BA8B31A8EA82E000A4E41 /* wax_gc.m */,
+				CD7BA8B41A8EA82E000A4E41 /* wax_helpers.h */,
+				CD7BA8B51A8EA82E000A4E41 /* wax_helpers.m */,
+				CD7BA8B61A8EA82E000A4E41 /* wax_instance.h */,
+				CD7BA8B71A8EA82E000A4E41 /* wax_instance.m */,
+				CD7BA8BB1A8EA82E000A4E41 /* wax_struct.h */,
+				CD7BA8BC1A8EA82E000A4E41 /* wax_struct.m */,
+				CD7BA8BD1A8EA82E000A4E41 /* wax.h */,
+				CD7BA8BE1A8EA82E000A4E41 /* wax.m */,
+			);
+			name = wax;
+			sourceTree = "<group>";
+		};
 		CD7F150318F5B13100BF74AE /* input */ = {
 			isa = PBXGroup;
 			children = (
@@ -14582,6 +14660,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD7BA7F71A8EA3B6000A4E41 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7BA8C11A8EA82E000A4E41 /* wax_class.h in Headers */,
+				CD7BA8C91A8EA82E000A4E41 /* wax_helpers.h in Headers */,
+				CD7BA8DB1A8EA82E000A4E41 /* wax.h in Headers */,
+				CD7BA8C51A8EA82E000A4E41 /* wax_gc.h in Headers */,
+				CD7BA8CD1A8EA82E000A4E41 /* wax_instance.h in Headers */,
+				CD7BA8D71A8EA82E000A4E41 /* wax_struct.h in Headers */,
+				CD7BA8BF1A8EA82E000A4E41 /* ProtocolLoader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7BA8181A8EA400000A4E41 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7BA8C21A8EA82E000A4E41 /* wax_class.h in Headers */,
+				CD7BA8CA1A8EA82E000A4E41 /* wax_helpers.h in Headers */,
+				CD7BA8DC1A8EA82E000A4E41 /* wax.h in Headers */,
+				CD7BA8C61A8EA82E000A4E41 /* wax_gc.h in Headers */,
+				CD7BA8CE1A8EA82E000A4E41 /* wax_instance.h in Headers */,
+				CD7BA8D81A8EA82E000A4E41 /* wax_struct.h in Headers */,
+				CD7BA8C01A8EA82E000A4E41 /* ProtocolLoader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD80789F1831C3B500E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15626,6 +15732,40 @@
 			productReference = CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD7BA7F61A8EA3B6000A4E41 /* libmoai-ios-wax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD7BA8111A8EA3B6000A4E41 /* Build configuration list for PBXNativeTarget "libmoai-ios-wax" */;
+			buildPhases = (
+				CD7BA7F71A8EA3B6000A4E41 /* Headers */,
+				CD7BA8041A8EA3B6000A4E41 /* Sources */,
+				CD7BA8101A8EA3B6000A4E41 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-wax";
+			productName = OpenUSLS;
+			productReference = CD7BA8161A8EA3B6000A4E41 /* libmoai-ios-wax.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CD7BA8171A8EA400000A4E41 /* libmoai-osx-wax */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD7BA8321A8EA400000A4E41 /* Build configuration list for PBXNativeTarget "libmoai-osx-wax" */;
+			buildPhases = (
+				CD7BA8181A8EA400000A4E41 /* Headers */,
+				CD7BA8251A8EA400000A4E41 /* Sources */,
+				CD7BA8311A8EA400000A4E41 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-wax";
+			productName = OpenUSLS;
+			productReference = CD7BA8371A8EA400000A4E41 /* libmoai-osx-wax.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */;
@@ -16026,6 +16166,7 @@
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */,
 				CDA4B9871808ACA6000129F9 /* libmoai-ios-vungle */,
+				CD7BA7F61A8EA3B6000A4E41 /* libmoai-ios-wax */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */,
 				CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */,
 				CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */,
@@ -16045,6 +16186,7 @@
 				CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */,
 				89BE6F07173AD07100DFE837 /* libmoai-osx-sim */,
 				CD07C4B913A1918600C9386C /* libmoai-osx-untz */,
+				CD7BA8171A8EA400000A4E41 /* libmoai-osx-wax */,
 				CD04ACB51472557F009C20E5 /* libmoai-osx-zl-core */,
 				CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */,
 				CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */,
@@ -17857,6 +17999,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD7BA8041A8EA3B6000A4E41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7BA8DD1A8EA82E000A4E41 /* wax.m in Sources */,
+				CD7BA8D91A8EA82E000A4E41 /* wax_struct.m in Sources */,
+				CD7BA8CB1A8EA82E000A4E41 /* wax_helpers.m in Sources */,
+				CD7BA8CF1A8EA82E000A4E41 /* wax_instance.m in Sources */,
+				CD7BA8C71A8EA82E000A4E41 /* wax_gc.m in Sources */,
+				CD7BA8C31A8EA82E000A4E41 /* wax_class.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7BA8251A8EA400000A4E41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7BA8DE1A8EA82E000A4E41 /* wax.m in Sources */,
+				CD7BA8DA1A8EA82E000A4E41 /* wax_struct.m in Sources */,
+				CD7BA8CC1A8EA82E000A4E41 /* wax_helpers.m in Sources */,
+				CD7BA8D01A8EA82E000A4E41 /* wax_instance.m in Sources */,
+				CD7BA8C81A8EA82E000A4E41 /* wax_gc.m in Sources */,
+				CD7BA8C41A8EA82E000A4E41 /* wax_class.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD8079DE1831C3B500E658D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -19639,6 +19807,7 @@
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
 					"MOAI_WITH_PVR=1",
+					"MOAI_WITH_WAX=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -20966,6 +21135,7 @@
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
 					"MOAI_WITH_PVR=1",
+					"MOAI_WITH_WAX=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -22853,6 +23023,191 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
+			};
+			name = Distribution;
+		};
+		CD7BA8121A8EA3B6000A4E41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				PRODUCT_NAME = "moai-ios-wax";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CD7BA8131A8EA3B6000A4E41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				PRODUCT_NAME = "moai-ios-wax";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		CD7BA8141A8EA3B6000A4E41 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				PRODUCT_NAME = "moai-ios-wax";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		CD7BA8151A8EA3B6000A4E41 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				PRODUCT_NAME = "moai-ios-wax";
+				SDKROOT = iphoneos;
+			};
+			name = Distribution;
+		};
+		CD7BA8331A8EA400000A4E41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				PRODUCT_NAME = "moai-osx-wax";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CD7BA8341A8EA400000A4E41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				PRODUCT_NAME = "moai-osx-wax";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CD7BA8351A8EA400000A4E41 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				PRODUCT_NAME = "moai-osx-wax";
+				SDKROOT = macosx;
+			};
+			name = AdHoc;
+		};
+		CD7BA8361A8EA400000A4E41 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				PRODUCT_NAME = "moai-osx-wax";
+				SDKROOT = macosx;
 			};
 			name = Distribution;
 		};
@@ -25294,6 +25649,7 @@
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
 					"MOAI_WITH_PVR=1",
+					"MOAI_WITH_WAX=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -25723,6 +26079,7 @@
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
 					"MOAI_WITH_PVR=1",
+					"MOAI_WITH_WAX=1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -26453,6 +26810,28 @@
 				CD70C20B18449935005CEBC0 /* Release */,
 				CD70C20C18449935005CEBC0 /* AdHoc */,
 				CD70C20D18449935005CEBC0 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD7BA8111A8EA3B6000A4E41 /* Build configuration list for PBXNativeTarget "libmoai-ios-wax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD7BA8121A8EA3B6000A4E41 /* Debug */,
+				CD7BA8131A8EA3B6000A4E41 /* Release */,
+				CD7BA8141A8EA3B6000A4E41 /* AdHoc */,
+				CD7BA8151A8EA3B6000A4E41 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD7BA8321A8EA400000A4E41 /* Build configuration list for PBXNativeTarget "libmoai-osx-wax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD7BA8331A8EA400000A4E41 /* Debug */,
+				CD7BA8341A8EA400000A4E41 /* Release */,
+				CD7BA8351A8EA400000A4E41 /* AdHoc */,
+				CD7BA8361A8EA400000A4E41 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
