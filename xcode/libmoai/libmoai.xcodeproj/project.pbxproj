@@ -19904,33 +19904,6 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -19939,28 +19912,6 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -21476,33 +21427,6 @@
 		CD257B9E1A6255380057A53A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 			};
@@ -21511,28 +21435,6 @@
 		CD257B9F1A6255380057A53A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 			};
@@ -21541,28 +21443,6 @@
 		CD257BA01A6255380057A53A /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 			};
@@ -21571,28 +21451,6 @@
 		CD257BA11A6255380057A53A /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 			};
@@ -21601,33 +21459,6 @@
 		CD27BE09191D9F44000A7770 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21637,28 +21468,6 @@
 		CD27BE0A191D9F44000A7770 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21668,28 +21477,6 @@
 		CD27BE0B191D9F44000A7770 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -21699,28 +21486,6 @@
 		CD27BE0C191D9F44000A7770 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
@@ -22180,33 +21945,6 @@
 		CD4C413B180A667300C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -22216,28 +21954,6 @@
 		CD4C413C180A667300C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -22247,28 +21963,6 @@
 		CD4C413D180A667300C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -22278,28 +21972,6 @@
 		CD4C413E180A667300C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
@@ -22309,33 +21981,6 @@
 		CD4C4170180A9AEA00C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22345,28 +21990,6 @@
 		CD4C4171180A9AEA00C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22376,28 +21999,6 @@
 		CD4C4172180A9AEA00C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22407,28 +22008,6 @@
 		CD4C4173180A9AEA00C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
@@ -22574,33 +22153,6 @@
 		CD5232B81808ADF400B81720 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22610,28 +22162,6 @@
 		CD5232B91808ADF400B81720 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22641,28 +22171,6 @@
 		CD5232BA1808ADF400B81720 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22672,28 +22180,6 @@
 		CD5232BB1808ADF400B81720 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
@@ -22771,33 +22257,6 @@
 		CD70C11818441DD0005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22807,28 +22266,6 @@
 		CD70C11918441DD0005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22838,28 +22275,6 @@
 		CD70C11A18441DD0005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22869,28 +22284,6 @@
 		CD70C11B18441DD0005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
@@ -22900,33 +22293,6 @@
 		CD70C20A18449935005CEBC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22936,28 +22302,6 @@
 		CD70C20B18449935005CEBC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22967,28 +22311,6 @@
 		CD70C20C18449935005CEBC0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -22998,28 +22320,6 @@
 		CD70C20D18449935005CEBC0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
@@ -23029,33 +22329,6 @@
 		CD7BA8121A8EA3B6000A4E41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-wax";
 				SDKROOT = iphoneos;
 			};
@@ -23064,28 +22337,6 @@
 		CD7BA8131A8EA3B6000A4E41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-wax";
 				SDKROOT = iphoneos;
 			};
@@ -23094,28 +22345,6 @@
 		CD7BA8141A8EA3B6000A4E41 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-wax";
 				SDKROOT = iphoneos;
 			};
@@ -23124,28 +22353,6 @@
 		CD7BA8151A8EA3B6000A4E41 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-wax";
 				SDKROOT = iphoneos;
 			};
@@ -23612,33 +22819,6 @@
 		CDA0DA001A01B111002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23648,28 +22828,6 @@
 		CDA0DA011A01B111002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23679,28 +22837,6 @@
 		CDA0DA021A01B111002B71B6 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23710,28 +22846,6 @@
 		CDA0DA031A01B111002B71B6 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
@@ -23893,33 +23007,6 @@
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23929,28 +23016,6 @@
 		CDA4B7AB1808AC61000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23960,28 +23025,6 @@
 		CDA4B7AC1808AC61000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -23991,28 +23034,6 @@
 		CDA4B7AD1808AC61000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
@@ -24022,33 +23043,6 @@
 		CDA4B8201808AC6E000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -24058,28 +23052,6 @@
 		CDA4B8211808AC6E000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -24089,28 +23061,6 @@
 		CDA4B8221808AC6E000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -24120,28 +23070,6 @@
 		CDA4B8231808AC6E000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
@@ -24154,33 +23082,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
@@ -24195,28 +23096,6 @@
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
@@ -24229,28 +23108,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
@@ -24265,28 +23122,6 @@
 					"$(inherited)",
 					"/Users/patrick/git/moai-dev/3rdparty/facebook-ios-sdk-3.14.1",
 				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
@@ -24296,33 +23131,6 @@
 		CDA4B90C1808AC8F000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -24332,28 +23140,6 @@
 		CDA4B90D1808AC8F000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -24363,28 +23149,6 @@
 		CDA4B90E1808AC8F000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -24394,28 +23158,6 @@
 		CDA4B90F1808AC8F000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
@@ -24425,33 +23167,6 @@
 		CDA4B9821808AC9D000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -24461,28 +23176,6 @@
 		CDA4B9831808AC9D000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -24492,28 +23185,6 @@
 		CDA4B9841808AC9D000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -24523,28 +23194,6 @@
 		CDA4B9851808AC9D000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
@@ -24554,33 +23203,6 @@
 		CDA4B9F81808ACA6000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24590,28 +23212,6 @@
 		CDA4B9F91808ACA6000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24621,28 +23221,6 @@
 		CDA4B9FA1808ACA6000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24652,28 +23230,6 @@
 		CDA4B9FB1808ACA6000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
@@ -24981,33 +23537,6 @@
 		CDD781C61A11631E00AD133E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					_DEBUG,
-					DEBUG,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -25016,28 +23545,6 @@
 		CDD781C71A11631E00AD133E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -25046,28 +23553,6 @@
 		CDD781C81A11631E00AD133E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -25076,28 +23561,6 @@
 		CDD781C91A11631E00AD133E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 			};
@@ -25746,28 +24209,6 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
@@ -26176,28 +24617,6 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					USE_ARES,
-					USE_OPENSSL,
-					USE_SSLEAY,
-					USE_SSL,
-					BUILDING_LIBCURL,
-					POSIX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 			};
