@@ -970,6 +970,28 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+bool ZLColorVec::Compare ( const ZLColorVec& c ) {
+
+	if ((( mR != c.mR ) || ( mR != c.mR )) ||
+		(( mG != c.mG ) || ( mG != c.mG )) ||
+		(( mB != c.mB ) || ( mB != c.mB )) ||
+		(( mA != c.mA ) || ( mA != c.mA ))) return false;
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::Compare ( const ZLColorVec& c, float res ) {
+
+	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
+		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
+		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
+		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
+
+	return true;
+}
+
+//----------------------------------------------------------------//
 void ZLColorVec::FromHSV ( float h, float s, float v ) {
 	
 	if( s == 0.0f ) {

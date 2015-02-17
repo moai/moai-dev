@@ -84,13 +84,22 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	bool Compare ( const ZLMetaVec2D < TYPE >& point ) {
+	
+		if ((( mX != point.mX ) || ( mX != point.mX )) ||
+			(( mY != point.mY ) || ( mY != point.mY ))) return false;
+
+		return true;
+	}
+	
+	//----------------------------------------------------------------//
 	// Is V within res of point?
 	bool Compare ( const ZLMetaVec2D < TYPE >& point, TYPE res ) {
 	
-		if ((( mX <= ( point.mX + res )) && ( mX >= ( point.mX - res ))) &&
-			(( mY <= ( point.mY + res )) && ( mY >= ( point.mY - res )))) return true;
+		if ((( mX < ( point.mX - res )) || ( mX > ( point.mX + res ))) ||
+			(( mY < ( point.mY - res )) || ( mY > ( point.mY + res )))) return false;
 
-		return false;
+		return true;
 	}
 	
 	//----------------------------------------------------------------//

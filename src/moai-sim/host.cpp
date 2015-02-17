@@ -33,6 +33,7 @@ void AKUSimContextInitialize () {
 	MOAIDraw::Affirm ();
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
+	MOAINodeMgr::Affirm ();
 	MOAISim::Affirm ();
 	MOAIRenderMgr::Affirm ();
 	
@@ -84,6 +85,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIMultiTexture )
+	REGISTER_LUA_CLASS ( MOAINode )
+	REGISTER_LUA_CLASS ( MOAINodeMgr )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )

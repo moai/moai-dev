@@ -113,25 +113,25 @@ TYPE MOAILuaState::GetValue ( int idx, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-ZLMetaVec2D < TYPE > MOAILuaState::GetVec2D ( int idx ) {
+ZLMetaVec2D < TYPE > MOAILuaState::GetVec2D ( int idx, TYPE value ) {
 
 	ZLMetaVec2D < TYPE > vec;
 	
-	vec.mX = this->GetValue < TYPE >( idx++, 0 );
-	vec.mY = this->GetValue < TYPE >( idx, 0 );
+	vec.mX = this->GetValue < TYPE >( idx++, value );
+	vec.mY = this->GetValue < TYPE >( idx, value );
 	
 	return vec;
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-ZLMetaVec3D < TYPE > MOAILuaState::GetVec3D ( int idx ) {
+ZLMetaVec3D < TYPE > MOAILuaState::GetVec3D ( int idx, TYPE value ) {
 
 	ZLMetaVec3D < TYPE > vec;
 	
-	vec.mX = this->GetValue < TYPE >( idx++, 0 );
-	vec.mY = this->GetValue < TYPE >( idx++, 0 );
-	vec.mZ = this->GetValue < TYPE >( idx, 0 );
+	vec.mX = this->GetValue < TYPE >( idx++, value );
+	vec.mY = this->GetValue < TYPE >( idx++, value );
+	vec.mZ = this->GetValue < TYPE >( idx, value );
 	
 	return vec;
 }

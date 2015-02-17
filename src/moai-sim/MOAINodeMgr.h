@@ -10,11 +10,15 @@ class MOAINode;
 // MOAINodeMgr
 //================================================================//
 class MOAINodeMgr :
-	public MOAIGlobalClass < MOAINodeMgr > {
+	public MOAIGlobalClass < MOAINodeMgr, MOAILuaObject > {
 private:
 
 	MOAINode* mUpdateListHead;
 	MOAINode* mUpdateListTail;
+
+	//----------------------------------------------------------------//
+	static int		_reset				( lua_State* L );
+	static int		_update				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			InsertAfter			( MOAINode& cursor, MOAINode& node );
@@ -27,10 +31,15 @@ public:
 
 	friend class MOAINode;
 
+	DECL_LUA_SINGLETON ( MOAINodeMgr )
+
 	//----------------------------------------------------------------//
-	void			Update				();
+	void			Reset				();
 					MOAINodeMgr			();
 					~MOAINodeMgr		();
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			Update				();
 };
 
 #endif

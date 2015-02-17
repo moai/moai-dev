@@ -866,7 +866,9 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
 		this->mActionTree->Update ( step );
+		
 		MOAINodeMgr::Get ().Update ();
+		MOAINodeMgr::Get ().Reset ();
 		
 		this->mSimTime += step;
 		this->mStepCount++;

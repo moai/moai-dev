@@ -120,6 +120,22 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::CheckVector ( int idx, u32 n, lua_Number match, lua_Number fallback ) {
+
+	return this->CheckVector ( idx, n, match, match, fallback );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::CheckVector ( int idx, u32 n, lua_Number min, lua_Number max, lua_Number fallback ) {
+
+	for ( u32 i = 0; i < n; ++i ) {
+		lua_Number element = lua_type ( this->mState, idx + i ) == LUA_TNUMBER ? lua_tonumber ( this->mState, idx + i ) : fallback;
+		if (( element < min ) || ( element > max )) return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::ClearField ( int idx, cc8* key ) {
 
 	if ( this->IsTableOrUserdata ( idx )) {

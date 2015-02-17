@@ -239,19 +239,22 @@ int MOAITransform::_move ( lua_State* L ) {
 		return 1;
 	}
 
-	self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
-	
-	self->mRot.mX += state.GetValue < float >( 5, 0.0f );
-	self->mRot.mY += state.GetValue < float >( 6, 0.0f );
-	self->mRot.mZ += state.GetValue < float >( 7, 0.0f );
-	
-	self->mScale.mX += state.GetValue < float >( 8, 0.0f );
-	self->mScale.mY += state.GetValue < float >( 9, 0.0f );
-	self->mScale.mZ += state.GetValue < float >( 10, 0.0f );
-	
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 9, 0, 0 )) { // TODO: epsilon?
+
+		self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
+		self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
+		self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
+		
+		self->mRot.mX += state.GetValue < float >( 5, 0.0f );
+		self->mRot.mY += state.GetValue < float >( 6, 0.0f );
+		self->mRot.mZ += state.GetValue < float >( 7, 0.0f );
+		
+		self->mScale.mX += state.GetValue < float >( 8, 0.0f );
+		self->mScale.mY += state.GetValue < float >( 9, 0.0f );
+		self->mScale.mZ += state.GetValue < float >( 10, 0.0f );
+		
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -295,11 +298,14 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
-
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
+		self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
+		self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
+	
 	return 0;
 }
 
@@ -342,10 +348,13 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mPiv.mX += state.GetValue < float >( 2, 0.0f );
-	self->mPiv.mY += state.GetValue < float >( 3, 0.0f );
-	self->mPiv.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mPiv.mX += state.GetValue < float >( 2, 0.0f );
+		self->mPiv.mY += state.GetValue < float >( 3, 0.0f );
+		self->mPiv.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -389,10 +398,13 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mRot.mX += state.GetValue < float >( 2, 0.0f );
-	self->mRot.mY += state.GetValue < float >( 3, 0.0f );
-	self->mRot.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mRot.mX += state.GetValue < float >( 2, 0.0f );
+		self->mRot.mY += state.GetValue < float >( 3, 0.0f );
+		self->mRot.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -436,10 +448,13 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mScale.mX += state.GetValue < float >( 2, 0.0f );
-	self->mScale.mY += state.GetValue < float >( 3, 0.0f );
-	self->mScale.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mScale.mX += state.GetValue < float >( 2, 0.0f );
+		self->mScale.mY += state.GetValue < float >( 3, 0.0f );
+		self->mScale.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -496,17 +511,16 @@ int MOAITransform::_seek ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mLoc.mX = state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY = state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ = state.GetValue < float >( 4, 0.0f );
-	self->mRot.mX = state.GetValue < float >( 5, 0.0f );
-	self->mRot.mY = state.GetValue < float >( 6, 0.0f );
-	self->mRot.mZ = state.GetValue < float >( 7, 0.0f );
-	self->mScale.mX = state.GetValue < float >( 8, 0.0f );
-	self->mScale.mY = state.GetValue < float >( 9, 0.0f );
-	self->mScale.mZ = state.GetValue < float >( 10, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
+	ZLVec3D rot = state.GetVec3D < float >( 5, 0.0f );
+	ZLVec3D scl = state.GetVec3D < float >( 8, 1.0f );
 	
+	if ( !loc.Compare( self->mLoc ) || !rot.Compare( self->mRot ) || !scl.Compare( self->mScale )) {
+		self->SetLoc ( loc );
+		self->SetRot ( rot );
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -550,10 +564,11 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mLoc.mX = state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY = state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
+	if ( !loc.Compare ( self->mLoc )) {
+		self->SetLoc ( loc );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -598,10 +613,11 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mPiv.mX = state.GetValue < float >( 2, 0.0f );
-	self->mPiv.mY = state.GetValue < float >( 3, 0.0f );
-	self->mPiv.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D piv = state.GetVec3D < float >( 2, 0.0f );
+	if ( !piv.Compare ( self->mPiv )) {
+		self->SetPiv ( piv );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -646,10 +662,11 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mRot.mX = state.GetValue < float >( 2, 0.0f );
-	self->mRot.mY = state.GetValue < float >( 3, 0.0f );
-	self->mRot.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D rot = state.GetVec3D < float >( 2, 0.0f );
+	if ( !rot.Compare ( self->mRot )) {
+		self->SetRot ( rot );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -694,10 +711,11 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mScale.mX = state.GetValue < float >( 2, 1.0f );
-	self->mScale.mY = state.GetValue < float >( 3, 1.0f );
-	self->mScale.mZ = state.GetValue < float >( 4, 1.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D scl = state.GetVec3D < float >( 2, 1.0f );
+	if ( !scl.Compare ( self->mScale )) {
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -715,15 +733,12 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 int MOAITransform::_setLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D loc;
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
 	
-	loc.mX = state.GetValue < float >( 2, 0.0f );
-	loc.mY = state.GetValue < float >( 3, 0.0f );
-	loc.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetLoc ( loc );
-	self->ScheduleUpdate ();
-	
+	if ( !loc.Compare ( self->mLoc )) {
+		self->SetLoc ( loc );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -760,15 +775,12 @@ int MOAITransform::_setParent ( lua_State* L ) {
 int MOAITransform::_setPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D piv;
+	ZLVec3D piv = state.GetVec3D < float >( 2, 0.0f );
 	
-	piv.mX = state.GetValue < float >( 2, 0.0f );
-	piv.mY = state.GetValue < float >( 3, 0.0f );
-	piv.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetPiv ( piv );
-	self->ScheduleUpdate ();
-	
+	if ( !piv.Compare ( self->mPiv )) {
+		self->SetPiv ( piv );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -785,15 +797,12 @@ int MOAITransform::_setPiv ( lua_State* L ) {
 int MOAITransform::_setRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D rot;
+	ZLVec3D rot = state.GetVec3D < float >( 2, 0.0f );
 	
-	rot.mX = state.GetValue < float >( 2, 0.0f );
-	rot.mY = state.GetValue < float >( 3, 0.0f );
-	rot.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetRot ( rot );
-	self->ScheduleUpdate ();
-	
+	if ( !rot.Compare ( self->mRot )) {
+		self->SetRot ( rot );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -816,9 +825,10 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	scl.mY = state.GetValue < float >( 3, scl.mX );
 	scl.mZ = state.GetValue < float >( 4, 1.0f );
 	
-	self->SetScl ( scl );
-	self->ScheduleUpdate ();
-	
+	if ( !scl.Compare ( self->mScale )) {
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
