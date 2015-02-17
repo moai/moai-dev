@@ -81,6 +81,13 @@ copyhostfiles = function()
     
     MOAIFileSystem.copy(classes, output..'host-ios')
     MOAIFileSystem.copy(hostmodules, output..'host-modules')
+    
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.cpp')
+    
+    
+    
 end
 
 copylib = function() 

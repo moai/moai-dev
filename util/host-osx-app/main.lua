@@ -84,10 +84,14 @@ copyhostfiles = function()
     MOAIFileSystem.copy(hostmodules, output..'app/host-modules')
 
     --don't want these ones
-    MOAIFileSystem.deleteFile(output..'Moai Template/host-modules/aku_modules_ios.h')
-    MOAIFileSystem.deleteFile(output..'Moai Template/host-modules/aku_modules_ios_config.h')
-    MOAIFileSystem.deleteFile(output..'Moai Template/host-modules/aku_modules_ios.mm')
-
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_ios.h')
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_ios_config.h')
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_ios.mm')
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_android.h')
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_android_config.h')
+    MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_android.cpp')
+    
+    
 end
 
 copylib = function() 
@@ -130,8 +134,8 @@ configureHost = function()
   
   local projectfiles = {
     [ output..'Moai Template.xcodeproj/project.xcworkspace/contents.xcworkspacedata' ] = true,
-    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme' ] = true,
-    [ output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/xcschememanagement.plist' ] = true
+    [ output..'Moai Template.xcodeproj/xcshareddata/xcschemes/Moai Template.xcscheme' ] = true
+    
   }
 
   util.replaceInFiles ({
@@ -155,9 +159,9 @@ configureHost = function()
     MOAIFileSystem.deleteFile(output..'app/Moai Template-Info.plist')
     
     --rename the scheme
-    MOAIFileSystem.copy(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme', 
-                        output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
-    MOAIFileSystem.deleteFile(output..'Moai Template.xcodeproj/xcuserdata/david.xcuserdatad/xcschemes/Moai Template.xcscheme')
+    MOAIFileSystem.copy(output..'Moai Template.xcodeproj/xcshareddata/xcschemes/Moai Template.xcscheme', 
+                        output..'Moai Template.xcodeproj/xcshareddata/xcschemes/'..hostconfig['AppName']..'.xcscheme')  
+    MOAIFileSystem.deleteFile(output..'Moai Template.xcodeproj/xcshareddata/xcschemes/Moai Template.xcscheme')
     
     --rename the project file too````
     MOAIFileSystem.copy(output..'Moai Template.xcodeproj', output..hostconfig['AppName']..'.xcodeproj')
