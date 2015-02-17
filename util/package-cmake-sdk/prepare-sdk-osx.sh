@@ -8,7 +8,7 @@ MOAI_SDK_ROOT=$(pwd)
 echo $MOAI_SDK_ROOT
 
 cd $MOAI_SDK_ROOT
-. ./bin/env-osx.sh
+source ./bin/env-osx.sh
 
 ./bin/build-all-osx.sh
 
