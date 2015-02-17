@@ -119,10 +119,6 @@ int ZLVfsFileSystem::ChangeDir ( const char* path ) {
 	int result = -1;
 	ZLVfsVirtualPath* mount = 0;
 
-	// reset mWorkingPath to fix growing directory bug
-	#ifdef ANDROID
-		this->mWorkingPath = this->NormalizeDirPath ( "/" );
-	#endif
 	string absDirpath = this->GetAbsoluteDirPath ( path );
 	path = absDirpath.c_str ();
 	
