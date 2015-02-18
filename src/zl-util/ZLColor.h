@@ -123,6 +123,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
+	bool			Compare				( const ZLColorVec& c );
+	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );
 	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;

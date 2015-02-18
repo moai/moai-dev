@@ -63,14 +63,24 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool Compare ( const ZLMetaVec3D < TYPE >& point ) {
+	
+		if ((( mX != point.mX ) || ( mX != point.mX )) ||
+			(( mY != point.mY ) || ( mY != point.mY )) ||
+			(( mZ != point.mZ ) || ( mZ != point.mZ ))) return false;
+
+		return true;
+	}
+
+	//----------------------------------------------------------------//
 	// Is V within res of vec?
 	bool Compare ( const ZLMetaVec3D < TYPE >& vec, TYPE res ) const {
 
-		if ((( mX <= ( vec.mX + res )) && ( mX >= ( vec.mX - res ))) &&
-			(( mY <= ( vec.mY + res )) && ( mY >= ( vec.mY - res ))) &&
-			(( mZ <= ( vec.mZ + res )) && ( mZ >= ( vec.mZ - res )))) return true;
+		if ((( mX < ( vec.mX - res )) || ( mX > ( vec.mX + res ))) ||
+			(( mY < ( vec.mY - res )) || ( mY > ( vec.mY + res ))) ||
+			(( mZ < ( vec.mZ - res )) || ( mZ > ( vec.mZ + res )))) return false;
 
-		return false;
+		return true;
 	}
 
 	//----------------------------------------------------------------//
@@ -207,6 +217,12 @@ public:
 	// |V|
 	float Length () {
 		return sqrtf (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
+	}
+	
+	//----------------------------------------------------------------//
+	// |V| * |V|
+	float LengthSqrd () {
+		return (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
 	}
 
 	//----------------------------------------------------------------//

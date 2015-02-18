@@ -40,6 +40,8 @@ public:
 	bool			Base64Decode				( int idx );
 	bool			Base64Encode				( int idx );
 	bool			CheckParams					( int idx, cc8* format, bool verbose = true ); // "BCFLNSTU"
+	bool			CheckVector				( int idx, u32 n, lua_Number match, lua_Number fallback );
+	bool			CheckVector				( int idx, u32 n, lua_Number min, lua_Number max, lua_Number fallback );
 	void			ClearField					( int idx, cc8* key );
 	void			CloneTable					( int idx );
 	void			CopyToTop					( int idx );
@@ -155,9 +157,9 @@ public:
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, bool verbose );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name, bool verbose );
 	template < typename TYPE > ZLMetaRect < TYPE >		GetRect				( int idx );
-	template < typename TYPE > TYPE						GetValue			( int idx, const TYPE value );
-	template < typename TYPE > ZLMetaVec2D < TYPE >		GetVec2D			( int idx );
-	template < typename TYPE > ZLMetaVec3D < TYPE >		GetVec3D			( int idx );
+	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
+	template < typename TYPE > ZLMetaVec2D < TYPE >		GetVec2D			( int idx, TYPE value = 0 );
+	template < typename TYPE > ZLMetaVec3D < TYPE >		GetVec3D			( int idx, TYPE value = 0 );
 	template < typename TYPE > TYPE						PopValue			( TYPE value );
 	template < typename TYPE > void						Push				( ZLMetaRect < TYPE >& rect );
 	template < typename TYPE > void						ReadArray			( int size, TYPE* values, TYPE value );

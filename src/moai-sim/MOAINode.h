@@ -53,6 +53,7 @@ private:
 	static int		_forceUpdate		( lua_State* L );
 	static int		_getAttr			( lua_State* L );
 	static int		_getAttrLink		( lua_State* L );
+	static int		_getNodeState		( lua_State* L );
 	static int		_moveAttr			( lua_State* L );
 	static int		_scheduleUpdate		( lua_State* L );
 	static int		_seekAttr			( lua_State* L );
@@ -62,7 +63,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			ActivateOnLink		( MOAINode& srcNode );
-	void			DepNodeUpdate		();
 	void			ExtendUpdate		();
 	MOAIDepLink*	FindAttrLink		( int attrID );
 	MOAIDepLink*	FindNodeLink		( MOAINode& srcNode );
@@ -124,6 +124,7 @@ public:
 	bool			CheckAttrExists			( u32 attrID );
 	void			ClearAttrLink			( int attrID );
 	void			ClearNodeLink			( MOAINode& srcNode );
+	void			DepNodeUpdate			();
 	void			ForceUpdate				();
 	u32				GetAttrFlags			( u32 attrID );
 					MOAINode				();
