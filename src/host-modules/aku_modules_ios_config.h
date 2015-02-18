@@ -40,7 +40,15 @@
 	#ifndef AKU_WITH_IOS_MOBILE_APP_TRACKER
 		#define AKU_WITH_IOS_MOBILE_APP_TRACKER 0
 	#endif
+	
+	#ifndef AKU_WITH_IOS_MOTION
+		#define AKU_WITH_IOS_MOTION 0
+	#endif
 
+  #ifndef AKU_WITH_IOS_MOVIE
+	  #define AKU_WITH_IOS_MOVIE 1
+	#endif
+	
 	#ifndef AKU_WITH_IOS_TAPJOY
 		#define AKU_WITH_IOS_TAPJOY 0
 	#endif

@@ -11,6 +11,8 @@ add_subdirectory(moai-ios-flurry)
 add_subdirectory(moai-ios-gamecenter)
 add_subdirectory(moai-ios-kontagent)
 add_subdirectory(moai-ios-mobile-app-tracker)
+#broken add_subdirectory(moai-ios-motion)
+add_subdirectory(moai-ios-movie)
 add_subdirectory(moai-ios-playhaven)
 add_subdirectory(moai-ios-tapjoy)
 add_subdirectory(moai-ios-twitter)
@@ -29,6 +31,8 @@ file ( GLOB MOAI_IPHONE_SRC
   "${MOAI_ROOT}/src/moai-ios/*.mm"
   "${MOAI_ROOT}/src/moai-ios/*.m"
   "${MOAI_ROOT}/src/moai-ios/*.h"
+  "${MOAI_ROOT}/src/moai-ios-camera/*.mm"
+  "${MOAI_ROOT}/src/moai-ios-camera/*.h"
   "${MOAI_ROOT}/3rdparty/contrib/MOAIIso8601DateFormatter.m"
   "${MOAI_ROOT}/3rdparty/contrib/MOAIOpenUDID.m"
 )
