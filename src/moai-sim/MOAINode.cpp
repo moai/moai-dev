@@ -99,15 +99,6 @@ int MOAINode::_clearNodeLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAINode::_depNodeUpdate ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAINode, "U" );
-
-	self->DepNodeUpdate ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	forceUpdate
 	@text	Evaluates the dependency graph for this node. Typically,
 			the entire active dependency graph is evaluated once per
@@ -631,7 +622,6 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
 		{ "clearNodeLink",			_clearNodeLink },
-		{ "depNodeUpdate",			_depNodeUpdate },
 		{ "forceUpdate",			_forceUpdate },
 		{ "getAttr",				_getAttr },
 		{ "getAttrLink",			_getAttrLink },

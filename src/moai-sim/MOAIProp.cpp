@@ -168,7 +168,7 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 int MOAIProp::_getWorldBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
-	self->DepNodeUpdate ();
+	self->ForceUpdate ();
 	
 	if ( self->mPartition->IsGlobal ( *self )) return 0;
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
@@ -191,7 +191,7 @@ int MOAIProp::_getWorldBounds ( lua_State* L ) {
 int MOAIProp::_getWorldBoundsCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
-	self->DepNodeUpdate ();
+	self->ForceUpdate ();
 	
 	if ( self->mPartition->IsGlobal ( *self )) return 0;
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
@@ -299,14 +299,6 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
-//
-//	if ( self->mDeck ) {
-//		self->SetMask ( self->mDeck->GetContentMask ());
-//	}
-//	else {
-//		self->SetMask ( 0 );
-//	}
-	
 	return 0;
 }
 
