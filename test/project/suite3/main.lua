@@ -61,7 +61,9 @@ test = function ()
 	    local action
 	 
 	    action = prop:moveRot ( -360, 3 )
-	    MOAIThread.blockOnAction ( action )
+		while action:isBusy () do
+	    	coroutine.yield ()
+	    end
 
 	end )
 

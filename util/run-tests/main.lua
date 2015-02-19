@@ -10,17 +10,17 @@
 -- Run in separate processes.
 -- Run with new context between tests.
 
-SDK_TEST_DIR = MOAI_SDK_HOME .. 'test/'
+local SDK_TEST_DIR = _G.MOAI_SDK_HOME .. 'test/'
 
-PROJECT_DIR = util.getAbsoluteDirPath ( 'project', SDK_TEST_DIR )
-STAGING_DIR = util.getAbsoluteDirPath ( 'staging', SDK_TEST_DIR )
-TESTING_DIR = util.getAbsoluteDirPath ( 'testing', SDK_TEST_DIR )
+local PROJECT_DIR = util.getAbsoluteDirPath ( 'project', SDK_TEST_DIR )
+local STAGING_DIR = util.getAbsoluteDirPath ( 'staging', SDK_TEST_DIR )
+local TESTING_DIR = util.getAbsoluteDirPath ( 'testing', SDK_TEST_DIR )
 
-MODE_TESTING			= 'test'
-MODE_STAGING			= 'stage'
-TEST_LOG_FILENAME		= 'log.lua'
+local MODE_TESTING			= 'test'
+local MODE_STAGING			= 'stage'
+local TEST_LOG_FILENAME		= 'log.lua'
 
-BOOTSTRAP		= nil
+local BOOTSTRAP		= nil
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
@@ -92,8 +92,8 @@ bootstrap = function ( mode )
 
 				if env.WIN_WIDTH and env.WIN_HEIGHT then
 					MOAISim.openWindow ( "test", env.WIN_WIDTH, env.WIN_HEIGHT )
-					local thread = MOAICoroutine.new ()
-					thread:run ( runTest )
+					local thread = coroutine.create ( runTest )
+					MOAISim.setListener ( MOAISim.EVENT_STEP, function () coroutine.resume ( thread ) end )
 					return
 				end
 
