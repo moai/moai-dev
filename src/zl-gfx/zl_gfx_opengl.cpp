@@ -60,10 +60,27 @@ using namespace std;
 #endif
 
 #ifdef MOAI_OS_ANDROID
+
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
+	#include <EGL/egl.h>
+
+	#define GL_WRITE_ONLY			0x88B9
+
+	typedef void*		( GL_APIENTRYP PFNGLMAPBUFFEROESPROC )			( GLenum target, GLenum access );
+	typedef GLboolean	( GL_APIENTRYP PFNGLUNMAPBUFFEROESPROC )		( GLenum target );
+	typedef void		( GL_APIENTRYP PFNGLGETBINDVERTEXARRAYPROC )	( GLuint array );
+	typedef void		( GL_APIENTRYP PFNGLGETGENVERTEXARRAYSPROC )	( GLsizei n, GLuint* arrays );
+	typedef void		( GL_APIENTRYP PFNGLDELETEVERTEXARRAYSPROC )	( GLsizei n, const GLuint* arrays );
+
+	static PFNGLMAPBUFFEROESPROC		glMapBuffer				= ( PFNGLMAPBUFFEROESPROC )eglGetProcAddress ( "glMapBufferOES" );
+	static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferEOS" );
+	static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysEOS" );
+	static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayEOS" );
+	static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysEOS" );
+
 #endif
 
 #ifdef MOAI_OS_LINUX
