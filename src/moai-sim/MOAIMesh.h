@@ -64,6 +64,7 @@ private:
 	float		mPenWidth;
 	float		mPointSize;
 	
+	bool		mUseVAOs;
 	bool		mNeedsRefresh;
 
 	//----------------------------------------------------------------//
@@ -79,6 +80,7 @@ private:
 
 	//----------------------------------------------------------------//
 	bool				AffirmVertexBuffers			( u32 idx );
+	void				BindVertex					();
 	ZLBox				ComputeMaxBounds			();
 	ZLBox				GetItemBounds				( u32 idx );
 	bool				OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
@@ -88,6 +90,7 @@ private:
 	void				OnGPUDestroy				(); // schedule GPU-side resource for destruction
 	void				OnGPULost					(); // clear any handles or references to GPU-side (called by 'Abandon')
 	void				OnGPUUnbind					(); // unbind GPU-side resource
+	void				UnbindVertex				();
 
 public:
 	

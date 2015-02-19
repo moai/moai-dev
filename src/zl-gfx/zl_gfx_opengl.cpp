@@ -76,10 +76,10 @@ using namespace std;
 	typedef void		( GL_APIENTRYP PFNGLDELETEVERTEXARRAYSPROC )	( GLsizei n, const GLuint* arrays );
 
 	static PFNGLMAPBUFFEROESPROC		glMapBuffer				= ( PFNGLMAPBUFFEROESPROC )eglGetProcAddress ( "glMapBufferOES" );
-	static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferEOS" );
-	static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysEOS" );
-	static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayEOS" );
-	static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysEOS" );
+	static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferOES" );
+	static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysOES" );
+	static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayOES" );
+	static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysOES" );
 
 #endif
 
@@ -1365,10 +1365,13 @@ u32 zglCreateVertexArray () {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	u32 vertexArrayID;
-	glGenVertexArrays ( 1, &vertexArrayID );
-	return vertexArrayID;
-
+	#ifdef MOAI_OS_ANDROID
+		return 0;
+	#else
+		u32 vertexArrayID;
+		glGenVertexArrays ( 1, &vertexArrayID );
+		return vertexArrayID;
+	#endif
 }
 
 //----------------------------------------------------------------//

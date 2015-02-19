@@ -200,6 +200,19 @@ bool MOAIMesh::AffirmVertexBuffers ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMesh::BindVertex () {
+
+	size_t totalVBOs = this->mVertexBuffers.Size ();
+	for ( size_t i = 0; i < totalVBOs; ++i ) {
+		this->mVertexBuffers [ i ].Bind ();
+	}
+
+	if ( this->mIndexBuffer ) {
+		this->mIndexBuffer->Bind ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIMesh::ClearBounds () {
 
 	this->mHasBounds = false;
@@ -271,6 +284,7 @@ MOAIMesh::MOAIMesh () :
 	mPrimType ( ZGL_PRIM_TRIANGLES ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
+	mUseVAOs ( false ),
 	mNeedsRefresh ( false ) {
 
 	RTTI_BEGIN
@@ -304,29 +318,31 @@ void MOAIMesh::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAIMesh::OnGPUBind () {
 
-	if ( !this->mVAOs.Size ()) return;
-	
-	if ( this->mNeedsRefresh ) {
-	
-		this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
-	
-		zglBindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
-	
-		size_t totalVBOs = this->mVertexBuffers.Size ();
-		for ( size_t i = 0; i < totalVBOs; ++i ) {
-			this->mVertexBuffers [ i ].Bind ();
-		}
+	u32 vao = 0;
 
-		if ( this->mIndexBuffer ) {
-			this->mIndexBuffer->Bind ();
+	if ( this->mUseVAOs && this->mNeedsRefresh ) {
+	
+		if ( !this->mVAOs.Size ()) return;
+	
+		if ( this->mNeedsRefresh ) {
+			this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
 		}
-		
-		this->Unbind ();
-		
-		this->mNeedsRefresh = false;
+		vao = this->mVAOs [ this->mCurrentVAO ];
 	}
 	
-	zglBindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
+	if ( vao ) {
+
+		zglBindVertexArray ( vao );
+
+		if ( this->mNeedsRefresh ) {
+			this->BindVertex ();
+			this->mNeedsRefresh = false;
+		}
+	}
+	else {
+	
+		this->BindVertex ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -339,11 +355,15 @@ bool MOAIMesh::OnGPUCreate () {
 		this->ReserveVAOs ( totalVAOs );
 	}
 	
+	this->mUseVAOs = false;
+	
 	for ( size_t i = 0; i < totalVAOs; ++i ) {
-		u32 vao = zglCreateVertexArray ();
-		if ( !vao ) return false;
+		u32 vao = zglCreateVertexArray (); // OK for this to return 0
+		if ( !vao ) return true;
 		this->mVAOs [ i ] = vao;
 	}
+	
+	this->mUseVAOs = true;
 	return true;
 }
 
@@ -360,19 +380,10 @@ void MOAIMesh::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIMesh::OnGPUUnbind () {
 
-	zglBindVertexArray ( 0 );
-	
-	if ( this->mNeedsRefresh ) {
-
-		size_t totalVBOs = this->mVertexBuffers.Size ();
-		for ( size_t i = 0; i < totalVBOs; ++i ) {
-			this->mVertexBuffers [ i ].Unbind ();
-		}
-
-		if ( this->mIndexBuffer ) {
-			this->mIndexBuffer->Unbind ();
-		}
+	if ( this->mUseVAOs ) {
+		zglBindVertexArray ( 0 );
 	}
+	this->UnbindVertex ();
 }
 
 //----------------------------------------------------------------//
@@ -532,5 +543,18 @@ void MOAIMesh::SetVertexBuffer ( u32 idx, MOAIGfxBuffer* vtxBuffer, MOAIVertexFo
 	if ( this->AffirmVertexBuffers ( idx )) {
 		this->mVertexBuffers [ idx ].SetBufferAndFormat ( *this, vtxBuffer, vtxFormat );
 		this->mNeedsRefresh = true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::UnbindVertex () {
+
+	size_t totalVBOs = this->mVertexBuffers.Size ();
+	for ( size_t i = 0; i < totalVBOs; ++i ) {
+		this->mVertexBuffers [ i ].Unbind ();
+	}
+
+	if ( this->mIndexBuffer ) {
+		this->mIndexBuffer->Unbind ();
 	}
 }
