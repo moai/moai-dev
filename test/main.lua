@@ -1,8 +1,9 @@
-WORKING_DIR = MOAIFileSystem.getWorkingDirectory () 
 
-PROJECT_DIR = WORKING_DIR .. 'project/'
-STAGING_DIR = WORKING_DIR .. 'staging/'
-TESTING_DIR = WORKING_DIR .. 'testing/'
+local WORKING_DIR = MOAIFileSystem.getWorkingDirectory () 
+
+local PROJECT_DIR = WORKING_DIR .. 'project/'
+local STAGING_DIR = WORKING_DIR .. 'staging/'
+local TESTING_DIR = WORKING_DIR .. 'testing/'
 
 MOAISim.openWindow ( "test", 640, 480 )
 
@@ -51,8 +52,7 @@ MOAITestMgr.setTestingDir ( TESTING_DIR )
 MOAITestMgr.setStagingFunc ( function () bootstrap ( 'stage' ) end )
 MOAITestMgr.setTestingFunc ( function () bootstrap ( 'test' ) end )
 
-local thread = MOAICoroutine.new ()
-thread:run ( function ()
+local main = function ()
 
 	MOAITestMgr.runTests ()
 
@@ -62,5 +62,7 @@ thread:run ( function ()
 	fileStream:close ()
 
 	os.exit ( 0 )
+end
 
-end )
+local thread = coroutine.create ( main )
+MOAISim.setListener ( MOAISim.EVENT_STEP, function () coroutine.resume ( thread ) end )
