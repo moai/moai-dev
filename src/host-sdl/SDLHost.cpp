@@ -110,6 +110,9 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		// Currently we're using the SDL host for desktop platforms only, so this should not be a problem.
 		SDL_StartTextInput ();
 	}
+	else {
+		SDL_SetWindowSize ( sWindow, width, height );
+	}
 }
 
 //================================================================//

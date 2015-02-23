@@ -832,6 +832,8 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
+		MOAITestMgr::Get ().Step ();
+		
 		this->InvokeListener ( EVENT_STEP );
 		
 		this->mActionTree->Update ( step );

@@ -248,6 +248,38 @@ end
 MOAIHttpTask = MOAIHttpTaskNSURL or MOAIHttpTaskNaCl or MOAIHttpTaskCurl 
 
 --============================================================--
+-- MOAIJsonParser
+--============================================================--
+if MOAIJsonParser then
+
+	MOAIJsonParser.extend (
+
+		'MOAIJsonParser',
+		
+		----------------------------------------------------------------
+		function ( class, superClass )
+
+			-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+			-- extend the class
+			function class.decodeFromFile ( filename )
+
+				local json = MOAIFileSystem.loadFile ( filename )
+				return json and MOAIJsonParser.decode ( json )
+			end
+
+			-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+			-- extend the class
+			function class.encodeToFile ( filename, table, flags )
+
+				flags = flags or ( MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
+				local json = MOAIJsonParser.encode ( table, flags )
+				MOAIFileSystem.saveFile ( filename, json )
+			end
+		end
+	)
+end
+
+--============================================================--
 -- MOAILayer
 --============================================================--
 MOAILayer.extend (
@@ -475,39 +507,39 @@ MOAIGfxDevice.extend (
 -- MOAIXmlParser
 --============================================================--
 if MOAIXmlParser then
-MOAIXmlParser.extend (
+	MOAIXmlParser.extend (
 
-	'MOAIXmlParser',
-	
-	----------------------------------------------------------------
-	function ( interface, class, superInterface, superClass )
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		-- extend the class
-		function class.events ( stream )
+		'MOAIXmlParser',
 		
-			local parser = MOAIXmlParser.new ()
-			parser:setStream ( stream )
-			local more = true
-	
-			local element = {
-				getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
-				getAttributes	= function () return parser:getElementAttributes () end,
-				getLineNumber	= function () return parser:getElementLineNumber () end,
-				getName			= function () return parser:getElementName () end,
-				getText			= function () return parser:getElementText () end,
-			}
-	
-			return function ()
-				if more then
-					local event = parser:step ()
-					more = ( event ~= MOAIXmlParser.XML_ERROR ) and ( event ~= MOAIXmlParser.DONE )
-					return event, more and element
+		----------------------------------------------------------------
+		function ( interface, class, superInterface, superClass )
+
+			-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+			-- extend the class
+			function class.events ( stream )
+			
+				local parser = MOAIXmlParser.new ()
+				parser:setStream ( stream )
+				local more = true
+		
+				local element = {
+					getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
+					getAttributes	= function () return parser:getElementAttributes () end,
+					getLineNumber	= function () return parser:getElementLineNumber () end,
+					getName			= function () return parser:getElementName () end,
+					getText			= function () return parser:getElementText () end,
+				}
+		
+				return function ()
+					if more then
+						local event = parser:step ()
+						more = ( event ~= MOAIXmlParser.XML_ERROR ) and ( event ~= MOAIXmlParser.DONE )
+						return event, more and element
+					end
 				end
 			end
 		end
-	end
-)
+	)
 end
 
 --============================================================--
