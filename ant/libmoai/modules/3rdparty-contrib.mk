@@ -14,6 +14,7 @@
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/contrib/moai_utf8.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/contrib/moai_whirlpool.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/contrib/edtaa3func.c
 
 	include $(BUILD_STATIC_LIBRARY)
  

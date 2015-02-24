@@ -62,6 +62,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/xmlwf
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jansson-2.1/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libpvr-3.4
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/ooid-0.99
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/sfmt-1.4
@@ -130,7 +131,6 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/builds
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libpvr-3.4
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libtess2/Include
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
@@ -187,10 +187,6 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-untz.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-untz.mk
 
-	#--------------------------------------------------------------#
-	# CHARTBOOST
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_CHARTBOOST=0
 
 #================================================================#
 # source files
@@ -201,9 +197,10 @@
 	
 	LOCAL_SRC_FILES 	+= src/jni.cpp
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/moai-android-chartboost/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
-	LOCAL_STATIC_LIBRARIES := libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libsfmt libsqlite libtinyxml libfreetype libjpg libpng libpvr libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
+	LOCAL_STATIC_LIBRARIES := libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libpvr libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
 	LOCAL_WHOLE_STATIC_LIBRARIES := libmoai-android libmoai-sim libmoai-core libcrypto-a libcrypto-b libcrypto-c libcrypto-d
 
 #----------------------------------------------------------------#
