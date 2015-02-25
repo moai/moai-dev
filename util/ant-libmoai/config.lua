@@ -34,6 +34,18 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
+	CHARTBOOST = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_CHARTBOOST',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chartboost.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-chartboost',
+	},
+
+	----------------------------------------------------------------
 	CRYPTO = {
 		
 		MODULE_DEFINE = 'AKU_WITH_CRYPTO',
@@ -220,6 +232,8 @@ EXTERNAL_LIBRARIES = {
 }
 
 STATIC_LIBRARIES = {
+
+	'libmoai-chartboost',
 
 	-- moai
 	'libmoai-box2d',

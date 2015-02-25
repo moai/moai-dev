@@ -96,7 +96,6 @@
 	
 	LOCAL_SRC_FILES 	+= src/jni.cpp
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
-	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/moai-android-chartboost/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
 	LOCAL_STATIC_LIBRARIES := @STATIC_LIBRARIES@
