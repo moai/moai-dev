@@ -10,6 +10,18 @@ SETTINGS = {
 MODULES = {
 	
 	----------------------------------------------------------------
+	ADCOLONY = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_ADCOLONY',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-adcolony.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-adcolony',
+	},
+
+	----------------------------------------------------------------
 	BOX2D = {
 		
 		MODULE_DEFINE = 'AKU_WITH_BOX2D',
@@ -70,6 +82,30 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
+	FACEBOOK = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_FACEBOOK',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-facebook.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-facebook',
+	},
+
+	----------------------------------------------------------------
+	FLURRY = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_FLURRY',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-flurry.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-flurry',
+	},
+
+	----------------------------------------------------------------
 	FMOD_EX = {
 	
 		MODULE_DEFINE = 'AKU_WITH_FMOD_EX',
@@ -86,7 +122,19 @@ MODULES = {
 		STATIC_LIBRARIES = 'libmoai-fmod-ex',
 		SHARED_LIBRARIES = 'fmodex',
 	},
+
+	----------------------------------------------------------------
+	GOOGLE_PLAY_SERVICES = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
 	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-google-play-services.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-google-play-services',
+	},
+
 	----------------------------------------------------------------
 	HTTP_CLIENT = {
 		
@@ -160,6 +208,30 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
+	TAPJOY = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_TAPJOY',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-tapjoy.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-tapjoy',
+	},
+
+	----------------------------------------------------------------
+	TWITTER = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_TWITTER',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-twitter.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-twitter',
+	},
+
+	----------------------------------------------------------------
 	UNTZ = {
 		
 		MODULE_DEFINE = 'AKU_WITH_UNTZ',
@@ -194,6 +266,18 @@ MODULES = {
 		},
 		
 		STATIC_LIBRARIES = 'libmoai-util',
+	},
+
+	----------------------------------------------------------------
+	VUNGLE = {
+		
+		MODULE_DEFINE = 'AKU_WITH_ANDROID_VUNGLE',
+	
+		INCLUDES = {
+			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-vungle.mk',
+		},
+		
+		STATIC_LIBRARIES = 'libmoai-vungle',
 	},
 }
 
@@ -233,7 +317,15 @@ EXTERNAL_LIBRARIES = {
 
 STATIC_LIBRARIES = {
 
+	'libmoai-adcolony',
 	'libmoai-chartboost',
+	'libmoai-crittercism',
+	'libmoai-facebook',
+	'libmoai-flurry',
+	'libmoai-google-play-services',
+	'libmoai-tapjoy',
+	'libmoai-twitter',
+	'libmoai-vungle',
 
 	-- moai
 	'libmoai-box2d',
