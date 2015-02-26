@@ -253,7 +253,7 @@ util.replaceInFiles ({
 
 	[ util.wrap ( util.iterateFilesAbsPath, MOAI_PROJECT_PATH .. 'src', '.java$' )] = {
 		[ '@PACKAGE@' ]							= config.PACKAGE_NAME,
-		[ '@PLATFORM_NAME@' ]					= string.upper ( config.PLATFORM_NAME ),
+		[ '@PLATFORM_NAME@' ]					= config.PLATFORM_NAME,
 		[ '@RUN_SCRIPTS@' ]						= config.LUA_MAIN,
 		[ '@WORKING_DIR@' ]						= config.LUA_WORKING_DIR,
 	},
