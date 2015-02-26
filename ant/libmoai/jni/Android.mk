@@ -86,22 +86,40 @@
 #================================================================#
 
 	#--------------------------------------------------------------#
-	# VUNGLE
+	# BOX2D
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_VUNGLE=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-vungle.mk
+	MY_LOCAL_CFLAGS += -DAKU_WITH_BOX2D=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision/Shapes
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Common
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Contacts
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Joints
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-box2d.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-box2d.mk
 
 	#--------------------------------------------------------------#
-	# FLURRY
+	# UTIL
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_FLURRY=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-flurry.mk
+	MY_LOCAL_CFLAGS += -DAKU_WITH_UTIL=1
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-util.mk
 
 	#--------------------------------------------------------------#
-	# FACEBOOK
+	# CRYPTO
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_FACEBOOK=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-facebook.mk
+	MY_LOCAL_CFLAGS += -DAKU_WITH_CRYPTO=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-a.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-b.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-d.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/zl-crypto.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-crypto.mk
 
 	#--------------------------------------------------------------#
 	# SIM
@@ -123,40 +141,35 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-sim.mk
 
 	#--------------------------------------------------------------#
-	# CRYPTO
+	# LUAEXT
 
-	MY_LOCAL_CFLAGS += -DAKU_WITH_CRYPTO=1
+	MY_LOCAL_CFLAGS += -DAKU_WITH_LUAEXT=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-luaext.mk
+
+	#--------------------------------------------------------------#
+	# FMOD_EX
+
+	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
+
+	#--------------------------------------------------------------#
+	# HTTP_CLIENT
+
+	MY_LOCAL_CFLAGS += -DAKU_WITH_HTTP_CLIENT=1
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-a.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-b.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-c.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-crypto-d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/zl-crypto.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-crypto.mk
-
-	#--------------------------------------------------------------#
-	# GOOGLE_PLAY_SERVICES
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_GOOGLE_PLAY=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-google-play-services.mk
-
-	#--------------------------------------------------------------#
-	# BOX2D
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_BOX2D=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision/Shapes
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Common
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Contacts
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Joints
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-box2d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-box2d.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-c-ares.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-curl.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-ssl.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-http-client.mk
 
 	#--------------------------------------------------------------#
 	# UNTZ
@@ -174,67 +187,6 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-untz.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-untz.mk
 
-	#--------------------------------------------------------------#
-	# FMOD_EX
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_FMOD_EX=0
-
-	#--------------------------------------------------------------#
-	# UTIL
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_UTIL=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-util.mk
-
-	#--------------------------------------------------------------#
-	# LUAEXT
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_LUAEXT=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-luaext.mk
-
-	#--------------------------------------------------------------#
-	# ADCOLONY
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_ADCOLONY=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-adcolony.mk
-
-	#--------------------------------------------------------------#
-	# TAPJOY
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_TAPJOY=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-tapjoy.mk
-
-	#--------------------------------------------------------------#
-	# TWITTER
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_TWITTER=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-twitter.mk
-
-	#--------------------------------------------------------------#
-	# HTTP_CLIENT
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_HTTP_CLIENT=1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-c-ares.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-curl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-ssl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-http-client.mk
-
-	#--------------------------------------------------------------#
-	# CHARTBOOST
-
-	MY_LOCAL_CFLAGS += -DAKU_WITH_ANDROID_CHARTBOOST=1
-	MY_INCLUDES += $(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chartboost.mk
-
 
 #================================================================#
 # source files
@@ -245,9 +197,10 @@
 	
 	LOCAL_SRC_FILES 	+= src/jni.cpp
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/moai-android-chartboost/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
-	LOCAL_STATIC_LIBRARIES := libmoai-adcolony libmoai-chartboost libmoai-facebook libmoai-flurry libmoai-google-play-services libmoai-tapjoy libmoai-twitter libmoai-vungle libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libpvr libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
+	LOCAL_STATIC_LIBRARIES := libmoai-box2d libmoai-http-client libmoai-luaext libmoai-untz libmoai-sim libmoai-crypto libmoai-util libmoai-core libzl-gfx libzl-crypto libzl-core libbox2d libuntz libvorbis libogg libcontrib libexpat libjson liblua libpvr libsfmt libsqlite libtinyxml libfreetype libjpg libpng libtess libcurl libcares libssl libcrypto-a libcrypto-b libcrypto-c libcrypto-d libzl-vfs libzlib
 	LOCAL_WHOLE_STATIC_LIBRARIES := libmoai-android libmoai-sim libmoai-core libcrypto-a libcrypto-b libcrypto-c libcrypto-d
 
 #----------------------------------------------------------------#
