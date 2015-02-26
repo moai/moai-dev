@@ -250,6 +250,9 @@
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
+		MOAIBillingAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
+
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
 	
