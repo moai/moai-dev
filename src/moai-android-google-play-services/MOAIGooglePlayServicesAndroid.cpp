@@ -8,7 +8,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include "MOAIGooglePlayServicesAndroid.h"
 
 extern JavaVM* jvm;
