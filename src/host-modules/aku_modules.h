@@ -10,6 +10,7 @@
 #include <moai-core/host.h>
 
 #if AKU_WITH_ANDROID
+	#include <host-modules/aku_modules_android.h>
 	#include <moai-android/host.h>
 #endif
 
