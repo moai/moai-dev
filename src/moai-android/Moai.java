@@ -166,15 +166,7 @@ public class Moai {
 	protected static native void 		AKUEnqueueLocationEvent			( int deviceId, int sensorId, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 	protected static native void 		AKUEnqueueCompassEvent			( int deviceId, int sensorId, float heading );
 	protected static native void 		AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount );
-	protected static native void 		AKUExtLoadLuacrypto				();
-	protected static native void 		AKUExtLoadLuacurl				();
-	protected static native void 		AKUExtLoadLuasocket				();
-	protected static native void 		AKUExtLoadLuasql				();
 	protected static native void 		AKUFinalize 					();
-	protected static native void 		AKUFMODExInit		 			();
-	protected static native void 		AKUInit 						();
-	protected static native void    	AKUModulesContextInitialize     ();
-	protected static native void    	AKUModulesRunLuaAPIWrapper      ();
 	protected static native void		AKUModulesUpdate				();
 	protected static native void 		AKUMountVirtualDirectory 		( String virtualPath, String archive );
 	protected static native void 		AKUPause 						( boolean paused );
@@ -225,11 +217,7 @@ public class Moai {
 		int contextId;
 		synchronized ( sAkuLock ) {
 			contextId = AKUCreateContext ();
-			AKUSetContext ( contextId );
-			AKUModulesContextInitialize ();
-			AKUModulesRunLuaAPIWrapper ();
 		}
-
 		return contextId;
 	}
 
@@ -299,8 +287,6 @@ public class Moai {
 	public static void init () {
 
 		synchronized ( sAkuLock ) {
-
-			AKUInit ();
 
 			AKUSetInputConfigurationName 	( "Android" );
 

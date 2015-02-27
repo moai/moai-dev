@@ -13,7 +13,7 @@
 
 #include <jni.h>
 #include <moai-core/headers.h>
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIKeyboardAndroid.h>
 
 extern JavaVM* jvm;

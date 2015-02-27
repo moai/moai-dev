@@ -21,19 +21,6 @@
 
 #endif
 
-#if AKU_WITH_ANDROID
-
-	//----------------------------------------------------------------//
-	extern void		AKUModulesAndroidAppFinalize			();
-	extern void		AKUModulesAndroidAppInitialize			();
-	extern void		AKUModulesAndroidContextInitialize		();
-	extern void		AKUModulesAndroidPause					( bool pause );
-	extern void		AKUModulesAndroidUpdate					();
-
-#endif
-
-
-
 #if AKU_WITH_PLUGINS
 
 	//----------------------------------------------------------------//
@@ -51,6 +38,10 @@
 
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppFinalize ();
+	#endif
 
     #if AKU_WITH_APPLE
 		AKUAppleAppFinalize ();
@@ -112,10 +103,6 @@ void AKUModulesAppFinalize () {
 		AKUModulesIosAppFinalize ();
 	#endif
 	
-	#if AKU_WITH_ANDROID
-		AKUModulesAndroidAppFinalize ();
-	#endif
-	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppFinalize ();
 	#endif
@@ -123,6 +110,10 @@ void AKUModulesAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppInitialize ();
+	#endif
 
     #if AKU_WITH_APPLE
 		AKUAppleAppInitialize ();
@@ -183,10 +174,6 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_IOS
 		AKUModulesIosAppInitialize ();
 	#endif
-	
-	#if AKU_WITH_ANDROID
-		AKUModulesAndroidAppInitialize ();
-	#endif
 
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppInitialize ();
@@ -195,6 +182,10 @@ void AKUModulesAppInitialize () {
 
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidContextInitialize ();
+	#endif
 
     #if AKU_WITH_APPLE
 		AKUAppleContextInitialize ();
@@ -256,10 +247,6 @@ void AKUModulesContextInitialize () {
 		AKUModulesIosContextInitialize ();
 	#endif
 	
-	#if AKU_WITH_ANDROID
-		AKUModulesAndroidContextInitialize ();
-	#endif
-	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsContextInitialize ();
 	#endif
@@ -274,6 +261,10 @@ void AKUModulesContextInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesPause ( bool pause ) {
 	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidPause ( pause );
+	#endif
+
 	#if AKU_WITH_SIM
 		AKUPause ( pause );
 	#endif
@@ -286,10 +277,6 @@ void AKUModulesPause ( bool pause ) {
 		AKUModulesIosPause ( pause );
 	#endif
 	
-	#if AKU_WITH_ANDROID
-		AKUModulesAndroidPause ( pause );
-	#endif
-	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsPause ( pause );
 	#endif
@@ -297,6 +284,10 @@ void AKUModulesPause ( bool pause ) {
 
 //----------------------------------------------------------------//
 void AKUModulesUpdate () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidUpdate ();
+	#endif
 
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientUpdate ();
@@ -320,10 +311,6 @@ void AKUModulesUpdate () {
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosUpdate ();
-	#endif
-	
-	#if AKU_WITH_ANDROID
-		AKUModulesAndroidUpdate ();
 	#endif
 	
 	#if AKU_WITH_PLUGINS

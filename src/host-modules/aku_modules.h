@@ -9,6 +9,11 @@
 
 #include <moai-core/host.h>
 
+#if AKU_WITH_ANDROID
+	#include <moai-android/host.h>
+#endif
+
+
 #if AKU_WITH_APPLE
 	#include <moai-apple/host.h>
 #endif
