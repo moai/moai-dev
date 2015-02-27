@@ -3,6 +3,8 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
+#include <lua-headers/moai_lua.h>
+#include <lua-headers/moai_test_mgr_lua.h>
 
 //================================================================//
 // objc modules
@@ -261,6 +263,12 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsContextInitialize ();
 	#endif
+	
+	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
+	AKUCallFunc ();
+	
+	AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
+	AKUCallFunc ();
 }
 
 //----------------------------------------------------------------//
