@@ -142,10 +142,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		
-		// Moai.runScript ( "../init.lua" );
 		Moai.runScript ( "bootstrap.lua" );
-			
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 

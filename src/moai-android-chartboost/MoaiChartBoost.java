@@ -31,7 +31,13 @@ public class MoaiChartBoost extends ChartboostDelegate {
 	public static void onBackPressed ( Activity activity ) {
 		
         MoaiLog.i ( "MoaiChartBoost: onBackPressed" );
-		Chartboost.onBackPressed ();
+
+		if ( Chartboost.onBackPressed ()) {
+        	return;
+		}
+    	else {
+        	super.onBackPressed ();
+    	}
     }
 	
 	//----------------------------------------------------------------//
@@ -110,7 +116,7 @@ public class MoaiChartBoost extends ChartboostDelegate {
 		MoaiLog.i ( "MoaiChartBoost: init" );
 
 		Chartboost.startWithAppId ( sActivity, appId, appSignature );
-    	Chartboost.setDelegate ( new MoaiChartBoost () );
+    	Chartboost.setDelegate ( new MoaiChartBoost ());
     	Chartboost.onCreate ( sActivity );	
 	}
 
