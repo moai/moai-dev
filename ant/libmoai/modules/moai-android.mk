@@ -12,5 +12,7 @@
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)/src/moai-android/*.cpp)
+   
+
 
 	include $(BUILD_STATIC_LIBRARY)

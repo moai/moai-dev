@@ -240,7 +240,7 @@
 # source files
 #================================================================#
 
-	LOCAL_CFLAGS		:= $(MY_LOCAL_CFLAGS) -DAKU_WITH_PLUGINS=1 -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
+	LOCAL_CFLAGS		:= $(MY_LOCAL_CFLAGS) -DAKU_WITH_ANDROID=1 -DAKU_WITH_PLUGINS=1 -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	
 	LOCAL_SRC_FILES 	+= src/jni.cpp

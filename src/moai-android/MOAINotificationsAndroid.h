@@ -4,8 +4,6 @@
 #ifndef	MOAINOTIFICATIONSANDROID_H
 #define	MOAINOTIFICATIONSANDROID_H
 
-#if AKU_WITH_ANDROID_NOTIFICATIONS
-
 #include <moai-core/headers.h>
 
 //================================================================//
@@ -68,7 +66,5 @@ public:
 	void	NotifyRemoteRegistrationComplete	( int code, cc8* registration );
 	void	RegisterLuaClass					( MOAILuaState& state );
 };
-
-#endif  //DISABLE_NOTIFICATIONS
 
 #endif  //MOAINOTIFICATIONS_H

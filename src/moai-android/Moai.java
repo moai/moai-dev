@@ -406,7 +406,7 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void onStart () {
-
+		MoaiLog.i ( "###### On Start #######" );
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onStart", new Class < ? > [] { }, new Object [] { });
 		}

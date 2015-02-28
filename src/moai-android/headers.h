@@ -9,5 +9,7 @@
 #include <moai-android/MOAIDialogAndroid.h>
 #include <moai-android/MOAIKeyboardAndroid.h>
 #include <moai-android/MOAIMoviePlayerAndroid.h>
+#include <moai-android/MOAIBillingAndroid.h>
+#include <moai-android/MOAINotificationsAndroid.h>
 
 #endif

@@ -10,7 +10,6 @@
 #include <host-modules/aku_modules.h>
 #include <host-modules/aku_modules_android.h>
 
-#include <moai-android/moaiext-android.h>
 #include <moai-android/JniUtils.h>
 
 #include <moai-core/headers.h>
@@ -144,7 +143,7 @@
 		if ( context ) {
 			AKUModulesContextInitialize ();
 		}
-		return context
+		return context;
 	}
 
 	//----------------------------------------------------------------//
