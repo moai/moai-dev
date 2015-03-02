@@ -299,7 +299,7 @@ int MOAICCParticleSystem::_setFinishParticleSizeVariance ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_getFrequency ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mEmissionRate );
+    lua_pushnumber ( state, self->mFrequency );
     return 1;
 }
 
@@ -1261,16 +1261,16 @@ int MOAICCParticleSystem::_getParticleCount( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name   setEmissionRate
+/** @name   setFrequency
     @text   Set the rate of particle generation in the system.
  
     @in     MOAICCParticleSystem    self
-    @in     number                  emissionRate
+    @in     number                  frequency
     @out    nil
  */
-int MOAICCParticleSystem::_setEmissionRate( lua_State* L ) {
+int MOAICCParticleSystem::_setFrequency( lua_State* L ) {
     MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
-    self->mEmissionRate = state.GetValue < float >(2, 1.0);
+    self->mFrequency = state.GetValue < float >(2, 1.0);
     
     return 0;
 }
@@ -1782,7 +1782,7 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
-    this->mEmissionRate = 1.0f / (this->mTotalParticles / this->mLifespan);
+    this->mFrequency = 1.0f / (this->mTotalParticles / this->mLifespan);
     
     float minLifespan = this->mLifespan - this->mLifespanVariance;
     if ( minLifespan < 0.0f ) {
@@ -1841,7 +1841,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mBlendFuncSrc( GL_ONE ),
     mBlendFuncDst( GL_ONE_MINUS_SRC_ALPHA ),
     mEmitCounter( 0.0f ),
-    mEmissionRate( 0.0f ),
+    mFrequency( 0.0f ),
     mElapsed( 0.0f ),
     mActive( false ),
     mParticlePositionType( PARTICLE_POSITION_GROUPED ),
@@ -1890,8 +1890,8 @@ MOAICCParticleSystem::~MOAICCParticleSystem () {
 
 void MOAICCParticleSystem::OnUpdate ( float step ) {
     
-    if (this->mActive && this->mEmissionRate) {
-        float rate = this->mEmissionRate;
+    if (this->mActive && this->mFrequency) {
+        float rate = this->mFrequency;
         
         if (this->mParticleCount < this->mTotalParticles) {
             this->mEmitCounter += step;
@@ -2301,7 +2301,8 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
         { "setRotationalAccelerationVariance",      _setRotationalAccelerationVariance },
         
         { "getEmissionRate",                        _getFrequency },
-        { "setEmissionRate",                        _setEmissionRate },
+        { "setEmissionRate",                        _setFrequency },
+		{ "setFrequency",                           _setFrequency },
         { "getParticlePositionType",                _getParticlePositionType },
         { "setParticlePositionType",                _setParticlePositionType },
         

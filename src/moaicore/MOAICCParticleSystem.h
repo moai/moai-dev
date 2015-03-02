@@ -105,7 +105,7 @@ private:
     
     // Emission information.
     float mEmitCounter;
-    float mEmissionRate;
+    float mFrequency;
     
     // time since start of system in seconds.
     float mElapsed;
@@ -224,7 +224,7 @@ private:
     static int      _getTotalParticles                  ( lua_State* L );
     static int      _setTotalParticles                  ( lua_State* L );
     static int      _getParticleCount                   ( lua_State* L );
-    static int      _setEmissionRate                    ( lua_State* L );
+    static int      _setFrequency                       ( lua_State* L );
     static int      _getParticlePositionType            ( lua_State* L );
     static int      _setParticlePositionType            ( lua_State* L );
     
