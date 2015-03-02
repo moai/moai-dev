@@ -44,7 +44,8 @@ private:
     
     float mLifespan;
     float mLifespanVariance;
-    float mLifespanTerm[2];
+	float mMinLifespan;
+	float mMaxLifespan;
     
     float mAngle;
     float mAngleVariance;

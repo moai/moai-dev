@@ -344,8 +344,8 @@ int MOAICCParticleSystem::_setGravity ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mLifespanTerm[0] );
-    lua_pushnumber ( state, self->mLifespanTerm[1] );
+    lua_pushnumber ( state, self->mMinLifespan );
+    lua_pushnumber ( state, self->mMaxLifespan );
     return 2;
 }
 
@@ -1652,7 +1652,7 @@ void MOAICCParticleSystem::FlipY ( ) {
 void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
     
     // timeToLive
-    particle->mTimeToLive = USFloat::Rand(this->mLifespanTerm[0], this->mLifespanTerm[1]);
+    particle->mTimeToLive = USFloat::Rand(this->mMinLifespan, this->mMaxLifespan);
     
     
     // position
@@ -1789,10 +1789,10 @@ void MOAICCParticleSystem::InitializeEmitter () {
         minLifespan = 0.0f;
     }
     
-    this->mLifespanTerm[0] = minLifespan;
+    this->mMinLifespan = minLifespan;
     
     float maxLifespan = this->mLifespan + this->mLifespanVariance;
-    this->mLifespanTerm[1] = maxLifespan;
+    this->mMaxLifespan = maxLifespan;
 }
 
 bool MOAICCParticleSystem::IsDone () {
@@ -1813,6 +1813,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mEmitterType( EMITTER_GRAVITY ),
     mLifespan( 0.0f ),
     mLifespanVariance( 0.0f ),
+	mMinLifespan( 0.0f ),
+	mMaxLifespan( 0.0f ),
     mAngle( 0.0f ),
     mAngleVariance( 0.0f ),
     mStartSize( 16.0f ),
@@ -1860,7 +1862,6 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 {
     int i = 0;
     for ( ; i < 2;  ++i) {
-        this->mLifespanTerm[i] = 0.0f;
         this->mGravity[i] = 0.0f;
         this->mGravityVariance[i] = 0.0f;
         this->mSourcePos[i] = 0.0f;
