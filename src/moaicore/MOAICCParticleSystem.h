@@ -58,8 +58,8 @@ private:
     float mStartSize;
     float mStartSizeVariance;
     
-    float mFinishSize;
-    float mFinishSizeVariance;
+    float mFinishParticleSize;
+    float mFinishParticleSizeVariance;
     
     float mGravity[2];
     float mGravityVariance[2];

@@ -245,7 +245,7 @@ int MOAICCParticleSystem::_setFinishColorVariance ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_getFinishParticleSize ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mFinishSize );
+    lua_pushnumber ( state, self->mFinishParticleSize );
     return 1;
 }
 
@@ -259,7 +259,7 @@ int MOAICCParticleSystem::_getFinishParticleSize ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mFinishSize = state.GetValue < float >( 2, 0 );
+    self->mFinishParticleSize = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -272,7 +272,7 @@ int MOAICCParticleSystem::_setFinishParticleSize ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_getFinishParticleSizeVariance ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mFinishSizeVariance );
+    lua_pushnumber ( state, self->mFinishParticleSizeVariance );
     return 1;
 }
 
@@ -286,7 +286,7 @@ int MOAICCParticleSystem::_getFinishParticleSizeVariance ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_setFinishParticleSizeVariance ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mFinishSizeVariance = state.GetValue < float >( 2, 0 );
+    self->mFinishParticleSizeVariance = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -1679,7 +1679,7 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
     
     particle->mParticleSize = start;
     
-    end = this->mFinishSize + this->mFinishSizeVariance * USFloat::Rand(-1.0f, 1.0f);
+    end = this->mFinishParticleSize + this->mFinishParticleSizeVariance * USFloat::Rand(-1.0f, 1.0f);
     particle->mDeltaParticleSize = (end - start) / particle->mTimeToLive;
     
     
@@ -1817,8 +1817,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mAngleVariance( 0.0f ),
     mStartSize( 16.0f ),
     mStartSizeVariance( 0.0f ),
-    mFinishSize( 0.0f ),
-    mFinishSizeVariance( 0.0f ),
+    mFinishParticleSize( 0.0f ),
+    mFinishParticleSizeVariance( 0.0f ),
     mMaxRadius( 0.0f ),
     mMaxRadiusVariance( 0.0f ),
     mMinRadius( 0.0f ),
@@ -2072,10 +2072,10 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
                 }
             }
             else if (text == "finishParticleSize") {
-                this->mFinishSize = (float)atof(attribute->Value());
+                this->mFinishParticleSize = (float)atof(attribute->Value());
             }
             else if (text == "finishParticleSizeVariance") {
-                this->mFinishSizeVariance = (float)atof(attribute->Value());
+                this->mFinishParticleSizeVariance = (float)atof(attribute->Value());
             }
             else if (text == "gravity") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
