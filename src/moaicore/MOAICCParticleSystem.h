@@ -65,11 +65,11 @@ private:
     float mGravity[2];
     float mGravityVariance[2];
     
-    float mMaxRadius;
-    float mMaxRadiusVariance;
+    float mStartRadius;
+    float mStartRadiusVariance;
     
-    float mMinRadius;
-    float mMinRadiusVariance;
+    float mEndRadius;
+    float mEndRadiusVariance;
     
     float mRadialAcceleration;
     float mRadialAccelVariance;

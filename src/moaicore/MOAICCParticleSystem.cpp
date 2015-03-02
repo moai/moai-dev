@@ -358,7 +358,7 @@ int MOAICCParticleSystem::_getLifespan ( lua_State* L ) {
  */
 int MOAICCParticleSystem::_getStartRadius ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mMaxRadius );
+    lua_pushnumber ( state, self->mStartRadius );
     return 1;
 }
 
@@ -372,7 +372,7 @@ int MOAICCParticleSystem::_getStartRadius ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mMaxRadius = state.GetValue < float >( 2, 0 );
+    self->mStartRadius = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -385,7 +385,7 @@ int MOAICCParticleSystem::_setStartRadius ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getStartRadiusVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mMaxRadiusVariance );
+    lua_pushnumber ( state, self->mStartRadiusVariance );
     return 1;
 }
 
@@ -399,7 +399,7 @@ int MOAICCParticleSystem::_getStartRadiusVariance ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mMaxRadiusVariance = state.GetValue < float >( 2, 0 );
+    self->mStartRadiusVariance = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -412,7 +412,7 @@ int MOAICCParticleSystem::_setStartRadiusVariance ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getEndRadius ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mMinRadius );
+    lua_pushnumber ( state, self->mEndRadius );
     return 1;
 }
 
@@ -426,7 +426,7 @@ int MOAICCParticleSystem::_getEndRadius ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mMinRadius = state.GetValue < float >( 2, 0 );
+    self->mEndRadius = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -439,7 +439,7 @@ int MOAICCParticleSystem::_setEndRadius ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getEndRadiusVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mMinRadiusVariance );
+    lua_pushnumber ( state, self->mEndRadiusVariance );
     return 1;
 }
 
@@ -454,7 +454,7 @@ int MOAICCParticleSystem::_getEndRadiusVariance ( lua_State *L ) {
 
 int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mMinRadiusVariance = state.GetValue < float >( 2, 0 );
+    self->mEndRadiusVariance = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -1738,8 +1738,8 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
     }
     // radial mode
     else {
-        float startRadius = this->mMinRadius + this->mMinRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
-        float endRadius = this->mMaxRadius + this->mMaxRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
+        float startRadius = this->mEndRadius + this->mEndRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
+        float endRadius = this->mStartRadius + this->mStartRadiusVariance *  USFloat::Rand(-1.0f, 1.0f);
         
         particle->mRadius = startRadius;
         
@@ -1821,10 +1821,10 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mStartSizeVariance( 0.0f ),
     mFinishParticleSize( 0.0f ),
     mFinishParticleSizeVariance( 0.0f ),
-    mMaxRadius( 0.0f ),
-    mMaxRadiusVariance( 0.0f ),
-    mMinRadius( 0.0f ),
-    mMinRadiusVariance( 0.0f ),
+    mStartRadius( 0.0f ),
+    mStartRadiusVariance( 0.0f ),
+    mEndRadius( 0.0f ),
+    mEndRadiusVariance( 0.0f ),
     mRadialAcceleration( 0.0f ),
     mRadialAccelVariance( 0.0f ),
     mTangentialAcceleration( 0.0f ),
@@ -2096,16 +2096,16 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
                 this->SetTotalParticles(numParticles);
             }
             else if (text == "maxRadius") {
-                this->mMaxRadius = (float)atof(attribute->Value());
+                this->mStartRadius = (float)atof(attribute->Value());
             }
             else if( text == "maxRadiusVariance") {
-                this->mMaxRadiusVariance = (float)atof(attribute->Value());
+                this->mStartRadiusVariance = (float)atof(attribute->Value());
             }
             else if (text == "minRadius") {
-                this->mMinRadius = (float)atof(attribute->Value());
+                this->mEndRadius = (float)atof(attribute->Value());
             }
             else if (text == "minRadiusVariance") {
-                this->mMinRadiusVariance = (float)atof(attribute->Value());
+                this->mEndRadiusVariance = (float)atof(attribute->Value());
             }
             else if (text == "particleLifeSpan") {
                 this->mLifespan = (float)atof(attribute->Value());
