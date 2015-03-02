@@ -602,7 +602,7 @@ int MOAICCParticleSystem::_getRect ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getRotatePerSecond ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mRotPerSecond );
+    lua_pushnumber ( state, self->mRotatePerSecond );
     return 1;
 }
 
@@ -616,7 +616,7 @@ int MOAICCParticleSystem::_getRotatePerSecond ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mRotPerSecond = state.GetValue < float >( 2, 0 );
+    self->mRotatePerSecond = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -629,7 +629,7 @@ int MOAICCParticleSystem::_setRotatePerSecond ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getRotatePerSecondVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mRotPerSecondVariance );
+    lua_pushnumber ( state, self->mRotatePerSecondVariance );
     return 1;
 }
 
@@ -643,7 +643,7 @@ int MOAICCParticleSystem::_getRotatePerSecondVariance ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setRotatePerSecondVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mRotPerSecondVariance = state.GetValue < float >( 2, 0 );
+    self->mRotatePerSecondVariance = state.GetValue < float >( 2, 0 );
     return 0;
 }
 
@@ -1640,7 +1640,7 @@ void MOAICCParticleSystem::FlipY ( ) {
     this->mGravity[1] = -this->mGravity[1];
     
     // invert angular velocity
-    this->mRotPerSecond = -this->mRotPerSecond;
+    this->mRotatePerSecond = -this->mRotatePerSecond;
     
     // invert angular acceleration
     this->mRotationalAcceleration = -this->mRotationalAcceleration;
@@ -1746,7 +1746,7 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
         particle->mDeltaRadius = (endRadius - startRadius) / particle->mTimeToLive;
         
         particle->mAngle = a;
-        particle->mDegreesPerSecond = D2R * (this->mRotPerSecond + this->mRotPerSecondVariance * USFloat::Rand(-1.0f, 1.0f));
+        particle->mDegreesPerSecond = D2R * (this->mRotatePerSecond + this->mRotatePerSecondVariance * USFloat::Rand(-1.0f, 1.0f));
         
         // rotational acceleration
         particle->mRotationalAcceleration = D2R * (this->mRotationalAcceleration + this->mRotationalAccelVariance * USFloat::Rand(-1.0f, 1.0f));
@@ -1835,8 +1835,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mRotEndVariance( 0.0f ),
     mSpeed( 0.0f ),
     mSpeedVariance( 0.0f ),
-    mRotPerSecond( 0.0f ),
-    mRotPerSecondVariance( 0.0f ),
+    mRotatePerSecond( 0.0f ),
+    mRotatePerSecondVariance( 0.0f ),
     mRotationalAcceleration( 0.0f ),
     mRotationalAccelVariance( 0.0f ),
     mDuration( -1.0f ),
@@ -2120,10 +2120,10 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
                 this->mRadialAccelVariance = (float)atof(attribute->Value());
             }
             else if (text == "rotatePerSecond") {
-                this->mRotPerSecond = (float)atof(attribute->Value());
+                this->mRotatePerSecond = (float)atof(attribute->Value());
             }
             else if (text == "rotatePerSecondVariance") {
-                this->mRotPerSecondVariance = (float)atof(attribute->Value());
+                this->mRotatePerSecondVariance = (float)atof(attribute->Value());
             }
             else if (text == "rotationEnd") {
                 this->mRotEnd = (float)atof(attribute->Value());

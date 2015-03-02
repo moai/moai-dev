@@ -86,8 +86,8 @@ private:
     float mSpeed;
     float mSpeedVariance;
     
-    float mRotPerSecond;
-    float mRotPerSecondVariance;
+    float mRotatePerSecond;
+    float mRotatePerSecondVariance;
     
     // Rotational acceleration
     float mRotationalAcceleration;
