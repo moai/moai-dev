@@ -42,8 +42,8 @@ private:
     
     EmitterType mEmitterType;
     
-    float mLifespan;
-    float mLifespanVariance;
+    float mParticleLifespan;
+    float mParticleLifespanVariance;
 	float mMinLifespan;
 	float mMaxLifespan;
     

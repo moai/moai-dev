@@ -467,7 +467,7 @@ int MOAICCParticleSystem::_setEndRadiusVariance ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getParticleLifespan ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mLifespan );
+    lua_pushnumber ( state, self->mParticleLifespan );
     return 1;
 }
 
@@ -481,7 +481,7 @@ int MOAICCParticleSystem::_getParticleLifespan ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mLifespan = state.GetValue < float >( 2, 0 );
+    self->mParticleLifespan = state.GetValue < float >( 2, 0 );
     
     self->InitializeEmitter();
     
@@ -497,7 +497,7 @@ int MOAICCParticleSystem::_setParticleLifespan ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_getParticleLifespanVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "U" )
-    lua_pushnumber ( state, self->mLifespanVariance );
+    lua_pushnumber ( state, self->mParticleLifespanVariance );
     return 1;
 }
 
@@ -511,7 +511,7 @@ int MOAICCParticleSystem::_getParticleLifespanVariance ( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setParticleLifespanVariance ( lua_State *L ) {
     MOAI_LUA_SETUP ( MOAICCParticleSystem, "UN" )
-    self->mLifespanVariance = state.GetValue < float >( 2, 0 );
+    self->mParticleLifespanVariance = state.GetValue < float >( 2, 0 );
     
     self->InitializeEmitter();
     
@@ -1782,16 +1782,16 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
 }
 
 void MOAICCParticleSystem::InitializeEmitter () {
-    this->mFrequency = 1.0f / (this->mTotalParticles / this->mLifespan);
+    this->mFrequency = 1.0f / (this->mTotalParticles / this->mParticleLifespan);
     
-    float minLifespan = this->mLifespan - this->mLifespanVariance;
+    float minLifespan = this->mParticleLifespan - this->mParticleLifespanVariance;
     if ( minLifespan < 0.0f ) {
         minLifespan = 0.0f;
     }
     
     this->mMinLifespan = minLifespan;
     
-    float maxLifespan = this->mLifespan + this->mLifespanVariance;
+    float maxLifespan = this->mParticleLifespan + this->mParticleLifespanVariance;
     this->mMaxLifespan = maxLifespan;
 }
 
@@ -1811,8 +1811,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mAllocatedParticles( 0 ),
     mTotalParticles( 0 ),
     mEmitterType( EMITTER_GRAVITY ),
-    mLifespan( 0.0f ),
-    mLifespanVariance( 0.0f ),
+    mParticleLifespan( 0.0f ),
+    mParticleLifespanVariance( 0.0f ),
 	mMinLifespan( 0.0f ),
 	mMaxLifespan( 0.0f ),
     mAngle( 0.0f ),
@@ -2108,10 +2108,10 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
                 this->mEndRadiusVariance = (float)atof(attribute->Value());
             }
             else if (text == "particleLifeSpan") {
-                this->mLifespan = (float)atof(attribute->Value());
+                this->mParticleLifespan = (float)atof(attribute->Value());
             }
             else if (text == "particleLifespanVariance") {
-                this->mLifespanVariance = (float)atof(attribute->Value());
+                this->mParticleLifespanVariance = (float)atof(attribute->Value());
             }
             else if (text == "radialAcceleration") {
                 this->mRadialAcceleration = (float)atof(attribute->Value());
