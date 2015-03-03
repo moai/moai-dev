@@ -1884,8 +1884,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 MOAICCParticleSystem::~MOAICCParticleSystem () {
     // clean up the allocated array
     if (this->mParticles) {
-        free (this->mParticles);
-        this->mParticles = NULL;
+        delete [] this->mParticles;
     }
 }
 
@@ -2351,12 +2350,14 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
 void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
     this->mTotalParticles = numberOfParticles;
     
-    if (!this->mParticles ||  numberOfParticles > this->mAllocatedParticles) {
+    if (this->mParticles == NULL || numberOfParticles > this->mAllocatedParticles) {
         // allocate new memory
-        size_t particlesize = numberOfParticles * sizeof( MOAICCParticle );
         
-        this->mParticles = (MOAICCParticle *)realloc(this->mParticles, particlesize);
-        bzero(this->mParticles, particlesize);
+        if (this->mParticles != NULL) {
+            delete [] this->mParticles;
+        }
+		
+        this->mParticles = new MOAICCParticle [numberOfParticles];
         
         this->mAllocatedParticles = numberOfParticles;
     }
