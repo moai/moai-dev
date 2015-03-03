@@ -1593,17 +1593,10 @@ void MOAICCParticleSystem::Draw ( int subPrimID ) {
     
     USAffine3D drawingMtx;
     USAffine3D spriteMtx;
-    
-    u32 maxParticles = this->mTotalParticles;
-    u32 total = this->mParticleCount;
-    if (total > maxParticles) {
-        total = maxParticles;
-    }
-    
-    
-    for ( u32 i = 0 ; i < total; ++i ) {
-        u32 idx = i;
-        MOAICCParticle *particle = &(this->mParticles[ idx ]);
+	
+	std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
+	for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin() ; particleIterator != end; ++particleIterator) {
+		MOAICCParticle *particle = &(*particleIterator);
         
         // set pen color
         if ( MOAIGfxDevice::Get().GetColorPremultiply() && this->GetPremultiply() ){
@@ -1910,9 +1903,12 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
     }
     
     if (this->mFlags & FLAGS_VISIBLE) {
-        for (int i = 0; i < (int) this->mParticleCount; ) {
-            MOAICCParticle *p = &(this->mParticles[i]);
-            
+		
+		std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
+		for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin(); 
+			 particleIterator != end; ) {
+
+			MOAICCParticle *p = &(*particleIterator);			
             // life
             p->mTimeToLive -= step;
             if ( p->mTimeToLive > 0) {
@@ -1973,14 +1969,17 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
                 // particle rotation
                 p->mParticleRotation += (p->mDeltaParticleRotation * step);
                 
-                ++i;
-                
+				++particleIterator;
             }
             else{
                 // life <= 0
-                if ( i != (int)this->mParticleCount - 1) {
-                    this->mParticles[i] = this->mParticles[this->mParticleCount - 1];
+				
+				if (particleIterator != (end - 1)) {
+					*particleIterator = *(end - 1);
                 }
+				this->mParticles.pop_back();
+				end = this->mParticles.end();
+				
                 this->mParticleCount--;
             }
         }
@@ -2348,24 +2347,11 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
 
 void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ) {
     this->mTotalParticles = numberOfParticles;
+	
 	if (numberOfParticles > this->mAllocatedParticles) {
 		this->mParticles.resize(numberOfParticles);
-		
 		this->mAllocatedParticles = numberOfParticles;
 	}
-	
-//    
-//    if (this->mParticles == NULL || numberOfParticles > this->mAllocatedParticles) {
-//        // allocate new memory
-//        
-//        if (this->mParticles != NULL) {
-//            delete [] this->mParticles;
-//        }
-//		
-//        this->mParticles = new MOAICCParticle [numberOfParticles];
-//        
-//        this->mAllocatedParticles = numberOfParticles;
-//    }
     
     this->ResetSystem(false);
     
