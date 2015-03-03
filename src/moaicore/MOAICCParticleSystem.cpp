@@ -1593,10 +1593,10 @@ void MOAICCParticleSystem::Draw ( int subPrimID ) {
     
     USAffine3D drawingMtx;
     USAffine3D spriteMtx;
-	
-	std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
-	for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin() ; particleIterator != end; ++particleIterator) {
-		MOAICCParticle *particle = &(*particleIterator);
+    
+    std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
+    for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin() ; particleIterator != end; ++particleIterator) {
+        MOAICCParticle *particle = &(*particleIterator);
         
         // set pen color
         if ( MOAIGfxDevice::Get().GetColorPremultiply() && this->GetPremultiply() ){
@@ -1806,8 +1806,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     mEmitterType( EMITTER_GRAVITY ),
     mParticleLifespan( 0.0f ),
     mParticleLifespanVariance( 0.0f ),
-	mMinLifespan( 0.0f ),
-	mMaxLifespan( 0.0f ),
+    mMinLifespan( 0.0f ),
+    mMaxLifespan( 0.0f ),
     mAngle( 0.0f ),
     mAngleVariance( 0.0f ),
     mStartSize( 16.0f ),
@@ -1877,7 +1877,7 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 MOAICCParticleSystem::~MOAICCParticleSystem () {
     // clean up the allocated array
     this->mParticles.clear();
-	
+    
 }
 
 void MOAICCParticleSystem::OnUpdate ( float step ) {
@@ -1903,12 +1903,12 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
     }
     
     if (this->mFlags & FLAGS_VISIBLE) {
-		
-		std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
-		for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin(); 
-			 particleIterator != end; ) {
+        
+        std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
+        for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin(); 
+             particleIterator != end; ) {
 
-			MOAICCParticle *p = &(*particleIterator);			
+            MOAICCParticle *p = &(*particleIterator);           
             // life
             p->mTimeToLive -= step;
             if ( p->mTimeToLive > 0) {
@@ -1969,17 +1969,17 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
                 // particle rotation
                 p->mParticleRotation += (p->mDeltaParticleRotation * step);
                 
-				++particleIterator;
+                ++particleIterator;
             }
             else{
                 // life <= 0
-				
-				if (particleIterator != (end - 1)) {
-					*particleIterator = *(end - 1);
+                
+                if (particleIterator != (end - 1)) {
+                    *particleIterator = *(end - 1);
                 }
-				this->mParticles.pop_back();
-				end = this->mParticles.end();
-				
+                this->mParticles.pop_back();
+                end = this->mParticles.end();
+                
                 this->mParticleCount--;
             }
         }
@@ -2300,7 +2300,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
         
         { "getEmissionRate",                        _getFrequency },
         { "setEmissionRate",                        _setFrequency },
-		{ "setFrequency",                           _setFrequency },
+        { "setFrequency",                           _setFrequency },
         { "getParticlePositionType",                _getParticlePositionType },
         { "setParticlePositionType",                _setParticlePositionType },
         
@@ -2347,11 +2347,11 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
 
 void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ) {
     this->mTotalParticles = numberOfParticles;
-	
-	if (numberOfParticles > this->mAllocatedParticles) {
-		this->mParticles.resize(numberOfParticles);
-		this->mAllocatedParticles = numberOfParticles;
-	}
+    
+    if (numberOfParticles > this->mAllocatedParticles) {
+        this->mParticles.resize(numberOfParticles);
+        this->mAllocatedParticles = numberOfParticles;
+    }
     
     this->ResetSystem(false);
     
