@@ -1565,8 +1565,10 @@ bool MOAICCParticleSystem::AddParticle () {
         return false;
     }
     
-    MOAICCParticle * particle = &(this->mParticles[this->mParticleCount]);
+	MOAICCParticle * particle = new MOAICCParticle();
     this->InitParticle( particle );
+	this->mParticles.push_back(*particle);
+	
     this->mParticleCount++;
     
     return true;
