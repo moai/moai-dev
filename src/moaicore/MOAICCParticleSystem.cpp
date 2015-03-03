@@ -1806,7 +1806,7 @@ bool MOAICCParticleSystem::IsFull () {
 
 
 MOAICCParticleSystem::MOAICCParticleSystem() :
-    mParticles( NULL ),
+    mParticles( 0 ),
     mParticleCount( 0 ),
     mAllocatedParticles( 0 ),
     mTotalParticles( 0 ),
@@ -1883,9 +1883,8 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 
 MOAICCParticleSystem::~MOAICCParticleSystem () {
     // clean up the allocated array
-    if (this->mParticles) {
-        delete [] this->mParticles;
-    }
+    this->mParticles.clear();
+	
 }
 
 void MOAICCParticleSystem::OnUpdate ( float step ) {
@@ -2347,20 +2346,26 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
     }
 }
 
-void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
+void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ) {
     this->mTotalParticles = numberOfParticles;
-    
-    if (this->mParticles == NULL || numberOfParticles > this->mAllocatedParticles) {
-        // allocate new memory
-        
-        if (this->mParticles != NULL) {
-            delete [] this->mParticles;
-        }
+	if (numberOfParticles > this->mAllocatedParticles) {
+		this->mParticles.resize(numberOfParticles);
 		
-        this->mParticles = new MOAICCParticle [numberOfParticles];
-        
-        this->mAllocatedParticles = numberOfParticles;
-    }
+		this->mAllocatedParticles = numberOfParticles;
+	}
+	
+//    
+//    if (this->mParticles == NULL || numberOfParticles > this->mAllocatedParticles) {
+//        // allocate new memory
+//        
+//        if (this->mParticles != NULL) {
+//            delete [] this->mParticles;
+//        }
+//		
+//        this->mParticles = new MOAICCParticle [numberOfParticles];
+//        
+//        this->mAllocatedParticles = numberOfParticles;
+//    }
     
     this->ResetSystem(false);
     

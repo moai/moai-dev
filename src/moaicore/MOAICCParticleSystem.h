@@ -32,7 +32,7 @@ private:
     
     
     // Array of particles.
-    MOAICCParticle *mParticles;
+	std::vector<MOAICCParticle> mParticles;
     u32 mParticleCount;
     u32 mAllocatedParticles;
     
