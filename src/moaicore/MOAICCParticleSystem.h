@@ -32,7 +32,7 @@ private:
     
     
     // Array of particles.
-	std::vector<MOAICCParticle> mParticles;
+    std::vector<MOAICCParticle> mParticles;
     u32 mParticleCount;
     u32 mAllocatedParticles;
     
@@ -44,8 +44,8 @@ private:
     
     float mParticleLifespan;
     float mParticleLifespanVariance;
-	float mMinLifespan;
-	float mMaxLifespan;
+    float mMinLifespan;
+    float mMaxLifespan;
     
     float mAngle;
     float mAngleVariance;
