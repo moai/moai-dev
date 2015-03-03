@@ -98,7 +98,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->SetIndexBuffer ( state.GetLuaObject < MOAIGfxBuffer >( 2, true ));
-	self->mIndexSizeInBytes = state.GetValue < u32 >( 3, 2 );
+	self->mIndexSizeInBytes = state.GetValue < u32 >( 3, 4 );
 	return 0;
 }
 

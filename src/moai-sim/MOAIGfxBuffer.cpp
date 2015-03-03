@@ -102,6 +102,28 @@ int MOAIGfxBuffer::_makeDirty ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxBuffer::_printIndices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+	
+	u32 indexSize = state.GetValue < u32 >( 2, 4 );
+	self->PrintIndices ( indexSize );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxBuffer::_printVertices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+	
+	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, true );
+	if ( format ) {
+		self->PrintVertices ( *format );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	release
 	@text	Releases any memory associated with buffer.
 	
@@ -328,6 +350,34 @@ void MOAIGfxBuffer::OnGPUUnbind () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxBuffer::PrintIndices ( u32 indexSize ) {
+
+	size_t cursor = this->GetCursor ();
+	u32 length = cursor / indexSize;
+	
+	if ( length ) {
+		this->Seek ( 0, SEEK_SET );
+		for ( u32 i = 0; i < length; ++i ) {
+		
+			u32 v = indexSize == 4 ? this->Read < u32 >( 0 ) : this->Read < u16 >( 0 );
+			printf ( "%d: %d\n", i, v );
+		}
+		this->Seek ( cursor, SEEK_SET );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
+
+	size_t cursor = this->GetCursor ();
+	if ( cursor ) {
+		this->Seek ( 0, SEEK_SET );
+		vertexFormat.PrintVertices ( *this, cursor );
+		this->Seek ( cursor, SEEK_SET );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGfxResource::RegisterLuaClass ( state );
@@ -348,6 +398,8 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "countElements",			_countElements },
 		{ "load",					_load },
 		{ "makeDirty",				_makeDirty },
+		{ "printIndices",			_printIndices },
+		{ "printVertices",			_printVertices },
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },
