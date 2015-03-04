@@ -17,6 +17,7 @@
 
 
 class MOAICCParticleSystem : public MOAIProp, public MOAIAction {
+	friend class MOAICCParticle;
 private:
     
     enum EmitterType {

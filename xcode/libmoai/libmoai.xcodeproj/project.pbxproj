@@ -1099,6 +1099,8 @@
 		B408CA2818CE644100F9A780 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = B408CA1018CE609F00F9A780 /* MOAITestMgr.h */; };
 		B408CA2918CE645900F9A780 /* MOAIXmlWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B408CA1C18CE638300F9A780 /* MOAIXmlWriter.cpp */; };
 		B408CA2A18CE645900F9A780 /* MOAIXmlWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = B408CA1D18CE638300F9A780 /* MOAIXmlWriter.h */; };
+		B4352EAA1AA6CA0600E4AF3A /* MOAICCParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4352EA91AA6CA0600E4AF3A /* MOAICCParticle.cpp */; };
+		B4352EAB1AA6CA0600E4AF3A /* MOAICCParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4352EA91AA6CA0600E4AF3A /* MOAICCParticle.cpp */; };
 		B45A8BEC1829A95D00D2B255 /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		B45A8BED1829A95D00D2B255 /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		B464B3AF187E057A002E4E0C /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
@@ -2758,6 +2760,7 @@
 		B408CA1918CE612E00F9A780 /* AKU-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-test.h"; path = "aku/AKU-test.h"; sourceTree = "<group>"; };
 		B408CA1C18CE638300F9A780 /* MOAIXmlWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIXmlWriter.cpp; sourceTree = "<group>"; };
 		B408CA1D18CE638300F9A780 /* MOAIXmlWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIXmlWriter.h; sourceTree = "<group>"; };
+		B4352EA91AA6CA0600E4AF3A /* MOAICCParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICCParticle.cpp; sourceTree = "<group>"; };
 		B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextRenderer.cpp; sourceTree = "<group>"; };
 		B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextRenderer.h; sourceTree = "<group>"; };
 		B489B0771756A43400C114DA /* MOAIFreeTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFreeTypeFont.cpp; sourceTree = "<group>"; };
@@ -4293,6 +4296,7 @@
 				B4F51F9919898558005F5779 /* MOAICCParticleSystem.cpp */,
 				B4F51F9A19898558005F5779 /* MOAICCParticleSystem.h */,
 				B4F51FA11989EB00005F5779 /* MOAICCParticle.h */,
+				B4352EA91AA6CA0600E4AF3A /* MOAICCParticle.cpp */,
 			);
 			name = particles;
 			sourceTree = "<group>";
@@ -6974,6 +6978,7 @@
 				4D851D8C1873DAB7009DF1C4 /* MOAIEaseBackBase.cpp in Sources */,
 				EB70433918761FBD0057E450 /* MOAIEaseExponentialIn.cpp in Sources */,
 				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
+				B4352EAB1AA6CA0600E4AF3A /* MOAICCParticle.cpp in Sources */,
 				03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
 				CDEFB41413E37F3C000A9523 /* MOAIDraw.cpp in Sources */,
 				CDEFB41813E37F3C000A9523 /* MOAIGfxDevice.cpp in Sources */,
@@ -7585,6 +7590,7 @@
 				E9940E0E14B7A4A0006465CC /* USPolar.cpp in Sources */,
 				E9940E1614B7A4A0006465CC /* USQuad.cpp in Sources */,
 				E9940E1A14B7A4A0006465CC /* USQuadCoord.cpp in Sources */,
+				B4352EAA1AA6CA0600E4AF3A /* MOAICCParticle.cpp in Sources */,
 				E9940E2214B7A4A0006465CC /* USSurface2D.cpp in Sources */,
 				EB70433218761E630057E450 /* MOAIEaseSineInOut.cpp in Sources */,
 				E9940E2614B7A4A0006465CC /* USSyntaxNode.cpp in Sources */,

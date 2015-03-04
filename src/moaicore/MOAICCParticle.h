@@ -11,8 +11,12 @@
 
 #include "pch.h"
 
+class MOAICCParticleSystem;
+
 class MOAICCParticle {
 public:
+	
+	MOAICCParticle(MOAICCParticleSystem *particleSystem);
 	
 	// how much longer the particle will be active
 	float mTimeToLive;
