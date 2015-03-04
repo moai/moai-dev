@@ -160,29 +160,6 @@ MOAICCParticle::MOAICCParticle(MOAICCParticle&& other)
 		mColor[index] = other.mColor[index];
 		mDeltaColor[index] = other.mDeltaColor[index];
 	}
-	
-	other.mTimeToLive = 0.0f;
-	other.mDeckIndex = 0;
-	other.mCurrentPosition.Init(0.0f, 0.0f);
-	other.mStartPosition.Init(0.0f, 0.0f);
-	other.mParticleSize = 0.0f;
-	other.mDeltaParticleSize = 0.0f;
-	other.mParticleRotation = 0.0f;
-	other.mDeltaParticleRotation = 0.0f;
-	other.mDirection.Init(0.0f, 0.0f);
-	other.mGravity.Init(0.0f, 0.0f);
-	other.mRadialAcceleration = 0.0f;
-	other.mTangentialAcceleration = 0.0f;
-	other.mAngle = 0.0f;
-	other.mDegreesPerSecond = 0.0f;
-	other.mRadius = 0.0f;
-	other.mDeltaRadius = 0.0f;
-	other.mRotationalAcceleration = 0.0f;
-	
-	for (int index = 0; index < 4; ++index) {
-		other.mColor[index] = 0.0f;
-		other.mDeltaColor[index] = 0.0f;
-	}
 }
 
 // copy constructor
