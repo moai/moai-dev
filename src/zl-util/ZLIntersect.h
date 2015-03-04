@@ -23,6 +23,7 @@ namespace ZLSect {
 	//----------------------------------------------------------------//
 	// Returns the time along the vec, not the distance
 	s32		BoxToPlane			( const ZLBox& b, const ZLPlane3D& p ); // 1, front; 0, sect; -1, behind;
+	u32		PlaneToPlane		( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& loc, ZLVec3D& vec );
 	s32		PrismToPlane		( const ZLPrism& prism, const ZLPlane3D& p );
 	s32		RayToBox			( const ZLBox& b, const ZLVec3D& loc, const ZLVec3D& dir, float &t );
 	s32		RhombusToPlane		( const ZLRhombus& rhombus, const ZLPlane3D& p );

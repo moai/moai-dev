@@ -91,6 +91,45 @@ s32 ZLSect::BoxToPlane ( const ZLBox& b, const ZLPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
+u32 ZLSect::PlaneToPlane ( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& loc, ZLVec3D& vec ) {
+
+	vec = ZLVec3D::Cross ( p0.mNorm, p1.mNorm );
+    if ( vec.LengthSqrd () < FLT_EPSILON ) return SECT_PARALLEL;
+
+	u32 component;
+	
+	float absX = ABS ( vec.mX );
+	float absY = ABS ( vec.mY );
+	float absZ = ABS ( vec.mZ );
+
+	// find the mightiest component
+    switch ( absX > absY ? ( absX > absZ ? 0 : 2 ) : ( absY > absZ ? 1 : 2 )) {
+	
+		// solve using X
+		case 0:
+			loc.mX = 0;
+			loc.mY = (( p1.mDist * p0.mNorm.mZ ) - ( p0.mDist * p1.mNorm.mZ )) / vec.mX;
+			loc.mZ = (( p0.mDist * p1.mNorm.mY ) - ( p1.mDist * p0.mNorm.mY )) / vec.mX;
+			break;
+		
+		// solve using Y
+		case 1:
+			loc.mX = (( p0.mDist * p1.mNorm.mZ ) - ( p1.mDist * p0.mNorm.mZ )) / vec.mY;
+			loc.mY = 0;
+			loc.mZ = (( p1.mDist * p0.mNorm.mX ) - ( p0.mDist * p1.mNorm.mX )) / vec.mY;
+			break;
+		
+		// solve using Z
+		case 2:
+			loc.mX = (( p1.mDist * p0.mNorm.mY ) - ( p0.mDist * p1.mNorm.mY )) / vec.mZ;
+			loc.mY = (( p0.mDist * p1.mNorm.mX ) - ( p1.mDist * p0.mNorm.mX )) / vec.mZ;
+			loc.mZ = 0;
+    }
+	
+    return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
 // Return:
 //	 1:		Prism is in front of the plane
 //	 0:		Prism intersects the plane

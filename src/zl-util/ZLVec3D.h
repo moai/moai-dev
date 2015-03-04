@@ -18,7 +18,7 @@ public:
 	TYPE	mZ;
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D operator + ( const ZLMetaVec3D& v ) const {
+	ZLMetaVec3D < TYPE > operator + ( const ZLMetaVec3D < TYPE >& v ) const {
 		ZLMetaVec3D < TYPE > result;
 		result.mX = this->mX + v.mX;
 		result.mY = this->mY + v.mY;
@@ -27,7 +27,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D operator - ( const ZLMetaVec3D& v ) const {
+	ZLMetaVec3D < TYPE > operator - ( const ZLMetaVec3D < TYPE >& v ) const {
 		ZLMetaVec3D < TYPE > result;
 		result.mX = this->mX - v.mX;
 		result.mY = this->mY - v.mY;
@@ -95,18 +95,16 @@ public:
 		mY = ty;
 		mX = tx;
 	}
-
+	
 	//----------------------------------------------------------------//
 	// V = v0 x v1
-	void Cross ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
-		float tx;
-		float ty;
-
-		tx	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
-		ty	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
-		mZ	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
-		mY = ty;
-		mX = tx;
+	static ZLMetaVec3D < TYPE > Cross ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
+		
+		float tx	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
+		float ty	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
+		float tz	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
+		
+		return ZLMetaVec3D < TYPE >( tx, ty, tz );
 	}
 
 	//----------------------------------------------------------------//
