@@ -535,11 +535,18 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	if ( !infile ) return -1;
 	
 	FILE* outfile = fopen ( outfilename, "wb" );
-	if ( !outfile ) return -1;
+	if ( !outfile ) {
+		fclose ( infile );
+		return -1;
+	}
 
 	ZLVfsZipArchiveHeader header;
 	int result = header.FindAndRead ( infile, 0 );
-	if ( result ) return -1;
+	if ( result ) {
+		fclose ( infile );
+		fclose ( outfile );
+		return -1;
+	}
 	
 	assert ( header.mDiskNumber == 0 );
 	assert ( header.mStartDisk == 0 );
