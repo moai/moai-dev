@@ -17,6 +17,9 @@ class MOAICCParticle {
 public:
 	
 	MOAICCParticle(MOAICCParticleSystem *particleSystem);
+	MOAICCParticle(MOAICCParticle&& other);
+	
+	MOAICCParticle(const MOAICCParticle& other);
 	
 	// how much longer the particle will be active
 	float mTimeToLive;
