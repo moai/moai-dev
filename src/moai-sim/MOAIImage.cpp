@@ -1927,11 +1927,21 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	float* distanceMap = ( float * ) malloc ( sizeof ( float ) * size );
 	int* binaryMap = ( int * ) malloc ( sizeof ( int ) * size );
 	
-	if ( distanceMap == NULL || binaryMap == NULL ) {
-		printf("ERROR: Out of memory\n");
-		return;
+#define PRINT_OUT_MEMORY printf("ERROR: Out of memory\n");
+
+	if ( distanceMap == NULL ) {
+		if ( binaryMap != NULL) {
+			free(binaryMap);
+		}
+		PRINT_OUT_MEMORY
+    	return;
+	} 
+	if ( binaryMap == NULL ) {
+		free(distanceMap);
+		PRINT_OUT_MEMORY
+    	return;
 	}
-	
+
 	// Init the binary map and distance map
 	for ( int y = 0; y < height; ++y ) {
 		for ( int x = 0; x < width; ++x ) {
