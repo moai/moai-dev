@@ -1546,14 +1546,12 @@ int MOAICCParticleSystem::_surge ( lua_State *L ) {
     @text   Make all particles get cleared out at the next frame.
  
     @in     MOAICCParticleSystem    self
-    @opt    boolean                 activate    Default true.  Whether to begin the generation of particles after clearing the particles.
     @out    nil
  */
 
 int MOAICCParticleSystem::_reset ( lua_State *L ) {
     MOAI_LUA_SETUP( MOAICCParticleSystem, "U" )
-    bool activate = state.GetValue < bool > (2, true);
-    self->ResetSystem( activate );
+    self->ResetSystem();
     return 0;
 }
 
@@ -2334,10 +2332,7 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
     luaL_register ( state, 0, regTable );
 }
 
-void MOAICCParticleSystem::ResetSystem ( bool activate ) {
-    if (activate){
-        this->mActive = true;
-    }
+void MOAICCParticleSystem::ResetSystem () {
     this->mElapsed = 0.0f;
     this->mSeqIndex = 0;
     for (int i = 0; i < (int)this->mParticleCount; ++i) {
@@ -2354,7 +2349,7 @@ void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ) {
         this->mAllocatedParticles = numberOfParticles;
     }
     
-    this->ResetSystem(false);
+    this->ResetSystem();
     
 }
 

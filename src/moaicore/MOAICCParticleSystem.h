@@ -273,7 +273,7 @@ public:
     
     void            SetTotalParticles       ( u32 numberOfParticles );
     void            SetVisibility           ( bool visible );
-    void            ResetSystem             ( bool activate );
+    void            ResetSystem             ();
     void            StartSystem             ();
     void            StopSystem              ();
     void            Surge                   ( u32 numberOfParticles );
