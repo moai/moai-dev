@@ -1593,8 +1593,7 @@ void MOAICCParticleSystem::Draw ( int subPrimID ) {
     USAffine3D drawingMtx;
     USAffine3D spriteMtx;
     
-    std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
-    for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin() ; particleIterator != end; ++particleIterator) {
+    for (auto particleIterator = this->mParticles.begin(), end = this->mParticles.end() ; particleIterator != end; ++particleIterator) {
         MOAICCParticle *particle = &(*particleIterator);
         
         // set pen color
@@ -1903,9 +1902,8 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
     
     if (this->mFlags & FLAGS_VISIBLE) {
         
-        std::vector<MOAICCParticle>::iterator end = this->mParticles.end();
-        for (std::vector<MOAICCParticle>::iterator particleIterator = this->mParticles.begin(); 
-             particleIterator != end; ) {
+        for (auto particleIterator = this->mParticles.begin(), end = this->mParticles.end(); 
+            particleIterator != end; ) {
 
             MOAICCParticle *p = &(*particleIterator);           
             // life
