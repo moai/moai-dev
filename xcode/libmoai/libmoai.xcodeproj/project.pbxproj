@@ -8119,7 +8119,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zlcore/zl_replace.h\"",
@@ -8127,6 +8127,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8325,7 +8326,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -8334,6 +8335,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
