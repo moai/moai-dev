@@ -1593,33 +1593,31 @@ void MOAICCParticleSystem::Draw ( int subPrimID ) {
     USAffine3D drawingMtx;
     USAffine3D spriteMtx;
     
-    for (auto particleIterator = this->mParticles.begin(), end = this->mParticles.end() ; particleIterator != end; ++particleIterator) {
-        MOAICCParticle *particle = &(*particleIterator);
-        
+    for (auto particle: this->mParticles) {
         // set pen color
         if ( MOAIGfxDevice::Get().GetColorPremultiply() && this->GetPremultiply() ){
-            USColorVec penColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
+            USColorVec penColor(particle.mColor[0], particle.mColor[1], particle.mColor[2], particle.mColor[3]);
             
-            USColorVec modulator(particle->mColor[3], particle->mColor[3], particle->mColor[3], 1.0);
+            USColorVec modulator(particle.mColor[3], particle.mColor[3], particle.mColor[3], 1.0);
             penColor.Modulate(modulator);
             
             gfxDevice.SetPenColor(penColor);
         }
         else{
             
-            gfxDevice.SetPenColor(particle->mColor[0], particle->mColor[1], particle->mColor[2], particle->mColor[3]);
+            gfxDevice.SetPenColor(particle.mColor[0], particle.mColor[1], particle.mColor[2], particle.mColor[3]);
         }
         // set transforms
-        spriteMtx.ScRoTr(particle->mParticleSize, particle->mParticleSize, 1.0f,
-                         0.0f, 0.0f, particle->mParticleRotation,
-                         particle->mCurrentPosition.mX, particle->mCurrentPosition.mY, 0.0f);
+        spriteMtx.ScRoTr(particle.mParticleSize, particle.mParticleSize, 1.0f,
+                         0.0f, 0.0f, particle.mParticleRotation,
+                         particle.mCurrentPosition.mX, particle.mCurrentPosition.mY, 0.0f);
         
         drawingMtx = this->GetLocalToWorldMtx();
         drawingMtx.Prepend( spriteMtx );
         
         gfxDevice.SetVertexTransform( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
         
-        this->mDeck->Draw ( this->mIndex + (u32) particle->mDeckIndex, this->mRemapper);
+        this->mDeck->Draw ( this->mIndex + (u32) particle.mDeckIndex, this->mRemapper);
         
     }
 }
