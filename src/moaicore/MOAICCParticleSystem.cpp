@@ -1995,9 +1995,7 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
     TiXmlElement* element = node->ToElement();
     if (element && (strcmp(element->Value(), "particleEmitterConfig") == 0)) {
         
-        TiXmlElement* childElement = node->FirstChildElement ();
-        
-        for ( ; childElement; childElement = childElement->NextSiblingElement() ) {
+        for ( TiXmlElement* childElement = node->FirstChildElement (); childElement != NULL; childElement = childElement->NextSiblingElement() ) {
             STLString text = childElement->Value ();
             TiXmlAttribute* attribute = childElement->FirstAttribute ();
             int i = 0;
