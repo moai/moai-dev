@@ -10,6 +10,33 @@
 #include <moaicore/MOAICCParticle.h>
 #include <moaicore/MOAICCParticleSystem.h> 
 
+// default constructor
+MOAICCParticle::MOAICCParticle()
+    :mTimeToLive(0.0f),
+    mDeckIndex(0),
+    mCurrentPosition(0.0f, 0.0f),
+    mStartPosition(0.0f, 0.0f),
+    mParticleSize(0.0f),
+    mDeltaParticleSize(0.0f),
+    mParticleRotation(0.0f),
+    mDeltaParticleRotation(0.0f),
+    mDirection(0.0f, 0.0f),
+    mGravity(0.0f, 0.0f),
+    mRadialAcceleration(0.0f),
+    mTangentialAcceleration(0.0f),
+    mAngle(0.0f),
+    mDegreesPerSecond(0.0f),
+    mRadius(0.0f),
+    mDeltaRadius(0.0f),
+    mRotationalAcceleration(0.0f)
+{
+    for (int index = 0; index < 4; ++index) {
+        this->mColor[index] = 0.0f;
+        this->mDeltaColor[index] = 0.0f;
+    }
+}
+
+// initialization constructor from a MOAICCParticleSystem
 MOAICCParticle::MOAICCParticle(MOAICCParticleSystem *particleSystem) {
     // timeToLive
     this->mTimeToLive = USFloat::Rand(particleSystem->mMinLifespan, particleSystem->mMaxLifespan);

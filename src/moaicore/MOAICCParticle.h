@@ -15,7 +15,7 @@ class MOAICCParticleSystem;
 
 class MOAICCParticle {
 public:
-    
+	MOAICCParticle();
     MOAICCParticle(MOAICCParticleSystem *particleSystem);
     MOAICCParticle(MOAICCParticle&& other);
     
