@@ -1871,8 +1871,6 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
 }
 
 MOAICCParticleSystem::~MOAICCParticleSystem () {
-    // clean up the allocated array
-    this->mParticles.clear();
     
 }
 
@@ -1965,15 +1963,9 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
                 p->mParticleRotation += (p->mDeltaParticleRotation * step);
                 
                 ++particleIterator;
-            }
-            else{
+            } else {
                 // life <= 0
-                
-                if (particleIterator != (end - 1)) {
-                    *particleIterator = *(end - 1);
-                }
-                this->mParticles.pop_back();
-                end = this->mParticles.end();
+                particleIterator = this->mParticles.erase(particleIterator);
                 
                 this->mParticleCount--;
             }
@@ -2329,9 +2321,8 @@ void MOAICCParticleSystem::RegisterLuaFuncs( MOAILuaState &state ) {
 void MOAICCParticleSystem::ResetSystem () {
     this->mElapsed = 0.0f;
     this->mSeqIndex = 0;
-    for (int i = 0; i < (int)this->mParticleCount; ++i) {
-        MOAICCParticle *p = &(this->mParticles[i]);
-        p->mTimeToLive = 0;
+    for (auto particle: this->mParticles) {
+		particle.mTimeToLive = 0;
     }
 }
 
