@@ -2329,7 +2329,6 @@ void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ) {
     this->mTotalParticles = numberOfParticles;
     
     if (numberOfParticles > this->mAllocatedParticles) {
-        this->mParticles.resize(numberOfParticles);
         this->mAllocatedParticles = numberOfParticles;
     }
     
