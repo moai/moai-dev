@@ -450,7 +450,12 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 		
 		if (( entryHeader.mNameLength + 1 ) > nameBufferSize ) {
 			nameBufferSize += SCAN_BUFFER_SIZE;
-			nameBuffer = ( char* )realloc ( nameBuffer, nameBufferSize );
+			char* tryRealloc = ( char* )realloc ( nameBuffer, nameBufferSize );
+			if ( tryRealloc == NULL ) {
+				goto error;
+			} else {
+				nameBuffer = tryRealloc;
+			}
 		}
 		
 		fread ( nameBuffer, entryHeader.mNameLength, 1, file );
