@@ -30,14 +30,14 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 
 	if(mInFile == NULL)
 	{
-		std::cerr << "Cannot open " << mPath.c_str() << " for reading..." << std::endl;
+		printError("Cannot open %s for reading...\n", mPath.c_str() );
 		return false;
 	}
 
 	// Try opening the given file
 	if(ov_open(mInFile, &mOggFile, NULL, 0) != 0)
 	{
-		std::cerr << "Error opening " << mPath.c_str() << " for decoding..." << std::endl;
+		printError("Error opening %s\n", mPath.c_str() );
 		return false;
 	}
 
@@ -62,31 +62,54 @@ void OggAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
-	int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
-	if(startFrame < getLength() * getSampleRate())
-		mEOF = false;
+	const int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
+
+	if ( status == 0 ) {
+		if ( startFrame < ( getLength() * getSampleRate() ) ) {
+			mEOF = false;
+		}
+	 } else {
+		 printError("Failed ov_pcm_seek: %s\n", getErrorDescription(status) );
+	 }
 }
 
-double OggAudioSource::getLength() 
+const char* OggAudioSource::getErrorDescription(const int status) const
+{
+	switch ( status ) {
+		case OV_ENOSEEK		: return "Bitstream is not seekable.";
+		case OV_EINVAL		: return "Invalid argument value.";
+		case OV_EREAD		: return "A read from media returned an error.";
+		case OV_EFAULT		: return "Internal logic fault.";
+		case OV_EBADLINK	: return "Invalid stream section supplied.";
+		case OV_ENOTVORBIS	: return "The given file/data was not recognized as Ogg Vorbis data.";
+		case OV_EBADHEADER	: return "The file/data is apparently an Ogg Vorbis stream, \
+										but contains a corrupted or undecipherable header.";
+		case OV_EVERSION	: return "The bitstream format revision of the given stream is not supported.";
+		default:
+				return "Unknow error description.";
+	}
+}
+
+double OggAudioSource::getLength() const
 { 
-	return ov_time_total(&mOggFile, -1);
+	return ov_time_total(const_cast<OggVorbis_File*>(&mOggFile), -1);
 }
 
-double OggAudioSource::getSampleRate() 
+double OggAudioSource::getSampleRate() const
 {
 	if(mpOggInfo)
 		return mpOggInfo->rate;
 	return 0; 
 }
 
-UInt32 OggAudioSource::getNumChannels()
+UInt32 OggAudioSource::getNumChannels() const
 {
 	if(mpOggInfo)
 		return mpOggInfo->channels;
 	return 0; 
 }
 
-UInt32 OggAudioSource::getBitsPerSample()
+UInt32 OggAudioSource::getBitsPerSample() const
 {
 	if(mpOggInfo)
 		return mpOggInfo->bitrate_upper;

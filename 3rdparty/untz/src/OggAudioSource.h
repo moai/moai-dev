@@ -24,10 +24,10 @@ public:
 	~OggAudioSource();
 
 	// AudioSource
-	double getSampleRate();
-	double getLength();
-	UInt32 getNumChannels();
-	UInt32 getBitsPerSample();
+	double getSampleRate() const;
+	double getLength() const;
+	UInt32 getNumChannels() const;
+	UInt32 getBitsPerSample() const;
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
@@ -37,6 +37,18 @@ public:
 	
 private:
 	void setDecoderPosition(double position);
+	const char* getErrorDescription(const int status) const;
+
+#ifdef _DEBUG  //TODO: MOAI C++11 :/
+	template<typename... Arguments>
+	static inline void printError(const char* const message, Arguments... argv) 	{
+	   printf(message, argv...);
+	}
+#else // NDEBUG
+	template<typename... Arguments> 
+	static inline void printError(const char* const message, Arguments... argv) 
+	{ }
+#endif 
 
 	RCriticalSection mDecodeLock;
 	RString mPath;
