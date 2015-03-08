@@ -9,6 +9,11 @@ set MINGW_PATH=K:\dev\mobile\moaiforge\mingw64\bin
 set EMSDK_PATH=K:\dev\mobile\moaiforge\emsdk-1.25
 set JAVA_HOME=C:\Program Files\Java\jdk1.7.0_25
 
+rem --OPTIONAL for docs--
+
+set DOXYGEN_PATH=K:\dev\mobile\doxygen
+set DOT_PATH=K:\dev\mobile\graphviz\bin
+
 rem ----------------------
 
 
@@ -72,5 +77,10 @@ popd
 
 set PATH=%PATH%;%UTIL_PATH%
 
+rem ---- Doxygen -----
+if "%DOXYGEN_PATH%"=="" goto :end
+echo "Setting DOXYGEN path..."
+set PATH=%PATH%;%DOXYGEN_PATH%;%DOT_PATH%
 
+:end
 echo "Path setup complete"

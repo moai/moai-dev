@@ -136,13 +136,13 @@ configureHost = function()
   MOAIFileSystem.setWorkingDirectory(oldworkingdir)
   
   local buildromfiles = { 
-     [output..'buildrom.bat'] = true,
-     [output..'buildrom.sh'] = true
+     [output..'build.bat'] = true,
+     [output..'build.sh'] = true
   }
     --libroot
   util.replaceInFiles ({
     [ util.wrap(pairs, buildromfiles) ]  = {
-      ['%-%-preload .-@/'] = "--preload "..luasrc.."@/",
+      ['@SRC@'] = luasrc,
     },
     [ output..'www/moai.html'] = {
       ['data%-title%=".-"'] = 'data-title="'..hostconfig.AppName..'"',

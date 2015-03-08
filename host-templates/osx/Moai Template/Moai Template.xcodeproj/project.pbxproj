@@ -18,7 +18,6 @@
 		63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9319EE170700C7AC2F /* SDLHost.cpp */; };
 		63E54A9919EE170700C7AC2F /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9519EE170700C7AC2F /* SDLHostMain.cpp */; };
 		63E54AC119EE179700C7AC2F /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9A19EE179600C7AC2F /* libbox2d.a */; };
-		63E54AC219EE179700C7AC2F /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9B19EE179600C7AC2F /* libchipmunk.a */; };
 		63E54AC319EE179700C7AC2F /* libcontrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9C19EE179600C7AC2F /* libcontrib.a */; };
 		63E54AC419EE179700C7AC2F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9D19EE179600C7AC2F /* libcrypto.a */; };
 		63E54AC519EE179700C7AC2F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9E19EE179600C7AC2F /* libcurl.a */; };
@@ -34,7 +33,6 @@
 		63E54ACF19EE179700C7AC2F /* libluasocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AA819EE179600C7AC2F /* libluasocket.a */; };
 		63E54AD019EE179700C7AC2F /* libluasql.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AA919EE179600C7AC2F /* libluasql.a */; };
 		63E54AD119EE179700C7AC2F /* libmoai-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */; };
-		63E54AD219EE179700C7AC2F /* libmoai-chipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */; };
 		63E54AD319EE179700C7AC2F /* libmoai-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAC19EE179600C7AC2F /* libmoai-core.a */; };
 		63E54AD419EE179700C7AC2F /* libmoai-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */; };
 		63E54AD519EE179700C7AC2F /* libmoai-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */; };
@@ -99,7 +97,6 @@
 		63E54A9419EE170700C7AC2F /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLHost.h; sourceTree = "<group>"; };
 		63E54A9519EE170700C7AC2F /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLHostMain.cpp; sourceTree = "<group>"; };
 		63E54A9A19EE179600C7AC2F /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbox2d.a; sourceTree = "<group>"; };
-		63E54A9B19EE179600C7AC2F /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchipmunk.a; sourceTree = "<group>"; };
 		63E54A9C19EE179600C7AC2F /* libcontrib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcontrib.a; sourceTree = "<group>"; };
 		63E54A9D19EE179600C7AC2F /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		63E54A9E19EE179600C7AC2F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
@@ -115,7 +112,6 @@
 		63E54AA819EE179600C7AC2F /* libluasocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluasocket.a; sourceTree = "<group>"; };
 		63E54AA919EE179600C7AC2F /* libluasql.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluasql.a; sourceTree = "<group>"; };
 		63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-box2d.a"; sourceTree = "<group>"; };
-		63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-chipmunk.a"; sourceTree = "<group>"; };
 		63E54AAC19EE179600C7AC2F /* libmoai-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-core.a"; sourceTree = "<group>"; };
 		63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-http-client.a"; sourceTree = "<group>"; };
 		63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-luaext.a"; sourceTree = "<group>"; };
@@ -182,7 +178,6 @@
 				63E54AFA19EE1A1300C7AC2F /* SystemConfiguration.framework in Frameworks */,
 				63E54AE819EE1A1200C7AC2F /* Foundation.framework in Frameworks */,
 				63E54AC119EE179700C7AC2F /* libbox2d.a in Frameworks */,
-				63E54AC219EE179700C7AC2F /* libchipmunk.a in Frameworks */,
 				63E54AC319EE179700C7AC2F /* libcontrib.a in Frameworks */,
 				63E54AC419EE179700C7AC2F /* libcrypto.a in Frameworks */,
 				63E54AC519EE179700C7AC2F /* libcurl.a in Frameworks */,
@@ -198,7 +193,6 @@
 				63E54ACF19EE179700C7AC2F /* libluasocket.a in Frameworks */,
 				63E54AD019EE179700C7AC2F /* libluasql.a in Frameworks */,
 				63E54AD119EE179700C7AC2F /* libmoai-box2d.a in Frameworks */,
-				63E54AD219EE179700C7AC2F /* libmoai-chipmunk.a in Frameworks */,
 				63E54AD319EE179700C7AC2F /* libmoai-core.a in Frameworks */,
 				63E54AD419EE179700C7AC2F /* libmoai-http-client.a in Frameworks */,
 				63E54AD519EE179700C7AC2F /* libmoai-luaext.a in Frameworks */,
@@ -231,7 +225,6 @@
 			isa = PBXGroup;
 			children = (
 				63E54A9A19EE179600C7AC2F /* libbox2d.a */,
-				63E54A9B19EE179600C7AC2F /* libchipmunk.a */,
 				63E54A9C19EE179600C7AC2F /* libcontrib.a */,
 				63E54A9D19EE179600C7AC2F /* libcrypto.a */,
 				63E54A9E19EE179600C7AC2F /* libcurl.a */,
@@ -247,7 +240,6 @@
 				63E54AA819EE179600C7AC2F /* libluasocket.a */,
 				63E54AA919EE179600C7AC2F /* libluasql.a */,
 				63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */,
-				63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */,
 				63E54AAC19EE179600C7AC2F /* libmoai-core.a */,
 				63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */,
 				63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */,

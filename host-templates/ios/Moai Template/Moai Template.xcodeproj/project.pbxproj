@@ -669,6 +669,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"AKU_WITH_IOS=1",
+					"DEBUG=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -697,6 +701,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "AKU_WITH_IOS=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

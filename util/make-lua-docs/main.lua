@@ -517,7 +517,7 @@ REPLACE_IN_HTML = {
 	[ '(>)_(.-[^<]*<)' ]							= concat,
 	[ '%(lua_State %*L%)' ]							= '',
 	[ 'int MOAI.-::_(.-</td>)' ]					= concat,
-	[ '(\>)lua_State[%s]*%*.-(<)' ]					= concat,
+	[ '(>)lua_State[%s]*%*.-(<)' ]					= concat,
 	[ '<em>L</em>' ]								= '',
 	[ '<td class=\'paramtype\'></td>' ]				= '',
 	[ '<td class=\'paramname\'></td>' ]				= '',

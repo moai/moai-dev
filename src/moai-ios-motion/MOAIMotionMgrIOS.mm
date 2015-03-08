@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-
-#include <moai-sim/MOAIVectorSensor.h>
 #include <moai-ios-motion/MOAIMotionMgrIOS.h>
+#include <moai-sim/MOAIVectorSensor.h>
+
 
 #import <CoreMotion/CoreMotion.h>
 
