@@ -426,6 +426,41 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getContactList
+	@text	Returns list of MOAIBox2DBody that are in contact with this body
+	
+	@in		MOAIBox2DBody self
+	@in 	boolean	touching
+	@out	... bodies
+*/
+int MOAIBox2DBody::_getContactList ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	b2Body* body = self->mBody;
+	if ( !body ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	bool touching = state.GetValue < bool >( 2, false );
+
+	u32 total = 0;
+	for ( b2ContactEdge* ce = body->GetContactList (); ce; ce = ce->next ) {
+
+		if ( !touching || ( touching && ce->contact->IsTouching ())) {
+			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )ce->other->GetUserData ();
+			if ( moaiBody ) {
+				lua_checkstack ( L, 2 );
+				total++;
+				moaiBody->PushLuaUserdata ( state );
+			}
+		}
+	}
+
+	return total;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getInertia
 	@text   See Box2D documentation.
 
@@ -1071,6 +1106,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "destroy",				_destroy },
 		{ "getAngle",				_getAngle },
 		{ "getAngularVelocity",		_getAngularVelocity },
+		{ "getContactList",			_getContactList },
 		{ "getInertia",				_getInertia },
 		{ "getGravityScale",		_getGravityScale },
 		{ "getLinearVelocity",		_getLinearVelocity },
