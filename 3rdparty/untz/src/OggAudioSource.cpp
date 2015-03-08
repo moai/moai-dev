@@ -85,31 +85,30 @@ const char* OggAudioSource::getErrorDescription(const int status) const
 		case OV_EBADHEADER	: return "The file/data is apparently an Ogg Vorbis stream, \
 										but contains a corrupted or undecipherable header.";
 		case OV_EVERSION	: return "The bitstream format revision of the given stream is not supported.";
-		default:
-				return "Unknow error description.";
+		default				: return "Unknow error description.";
 	}
 }
 
-double OggAudioSource::getLength() const
+double OggAudioSource::getLength()
 { 
-	return ov_time_total(const_cast<OggVorbis_File*>(&mOggFile), -1);
+	return ov_time_total(&mOggFile, -1);
 }
 
-double OggAudioSource::getSampleRate() const
+double OggAudioSource::getSampleRate()
 {
 	if(mpOggInfo)
 		return mpOggInfo->rate;
 	return 0; 
 }
 
-UInt32 OggAudioSource::getNumChannels() const
+UInt32 OggAudioSource::getNumChannels()
 {
 	if(mpOggInfo)
 		return mpOggInfo->channels;
 	return 0; 
 }
 
-UInt32 OggAudioSource::getBitsPerSample() const
+UInt32 OggAudioSource::getBitsPerSample()
 {
 	if(mpOggInfo)
 		return mpOggInfo->bitrate_upper;
