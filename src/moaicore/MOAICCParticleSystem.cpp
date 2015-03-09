@@ -1239,7 +1239,7 @@ int MOAICCParticleSystem::_getTotalParticles( lua_State *L ) {
  */
 int MOAICCParticleSystem::_setTotalParticles( lua_State *L ) {
     MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
-    u32 total = state.GetValue < u32 >( 2, 1 );
+    int total = state.GetValue < int >( 2, 1 );
     
     self->SetTotalParticles( total );
     
@@ -1537,7 +1537,7 @@ int MOAICCParticleSystem::_stopSystem ( lua_State *L ) {
 
 int MOAICCParticleSystem::_surge ( lua_State *L ) {
     MOAI_LUA_SETUP( MOAICCParticleSystem, "UN" )
-    u32 numberOfParticles = state.GetValue < u32 >(2, 1.0);
+    int numberOfParticles = state.GetValue < int >(2, 1.0);
     self->Surge( numberOfParticles );
     return 0;
 }
@@ -2347,7 +2347,7 @@ void MOAICCParticleSystem::ResetSystem ( bool activate ) {
     }
 }
 
-void MOAICCParticleSystem::SetTotalParticles ( u32 numberOfParticles ){
+void MOAICCParticleSystem::SetTotalParticles ( int numberOfParticles ){
     this->mTotalParticles = numberOfParticles;
     
     if (this->mParticles == NULL || numberOfParticles > this->mAllocatedParticles) {
@@ -2382,8 +2382,8 @@ void MOAICCParticleSystem::StopSystem () {
     this->mEmitCounter = 0.0f;
 }
 
-void MOAICCParticleSystem::Surge ( u32 numberOfParticles ) {
-    u32 particlesRemaining = numberOfParticles;
+void MOAICCParticleSystem::Surge ( int numberOfParticles ) {
+    int particlesRemaining = numberOfParticles;
     
     while (particlesRemaining > 0 && this->AddParticle()) {
         --particlesRemaining;

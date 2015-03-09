@@ -33,11 +33,11 @@ private:
     
     // Array of particles.
     MOAICCParticle *mParticles;
-    u32 mParticleCount;
-    u32 mAllocatedParticles;
+    int mParticleCount;
+    int mAllocatedParticles;
     
     // Maximum particles.
-    u32 mTotalParticles;
+    int mTotalParticles;
     
     
     EmitterType mEmitterType;
@@ -270,12 +270,12 @@ public:
     void            RegisterLuaClass        ( MOAILuaState& state );
     void            RegisterLuaFuncs        ( MOAILuaState& state );
     
-    void            SetTotalParticles       ( u32 numberOfParticles );
+    void            SetTotalParticles       ( int numberOfParticles );
     void            SetVisibility           ( bool visible );
     void            ResetSystem             ( bool activate );
     void            StartSystem             ();
     void            StopSystem              ();
-    void            Surge                   ( u32 numberOfParticles );
+    void            Surge                   ( int numberOfParticles );
     
 };
 
