@@ -266,7 +266,6 @@ public:
     bool            IsDone                  ();
     
                     MOAICCParticleSystem    ();
-                    ~MOAICCParticleSystem   ();
     
     void            RegisterLuaClass        ( MOAILuaState& state );
     void            RegisterLuaFuncs        ( MOAILuaState& state );

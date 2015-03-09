@@ -1869,10 +1869,6 @@ MOAICCParticleSystem::MOAICCParticleSystem() :
     RTTI_END
 }
 
-MOAICCParticleSystem::~MOAICCParticleSystem () {
-    
-}
-
 void MOAICCParticleSystem::OnUpdate ( float step ) {
     
     if (this->mActive && this->mFrequency) {
