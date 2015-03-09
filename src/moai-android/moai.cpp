@@ -15,6 +15,7 @@
 #include <moai-core/headers.h>
 #include <moai-core/host.h>
 #include <moai-sim/headers.h>
+#include <moai-sim/host.h>
 
 //================================================================//
 // Input event locking queue
