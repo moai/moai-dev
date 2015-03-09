@@ -26,7 +26,6 @@ MODULES = {
 	--   MAKE					- One or more makefiles to include. (table)
 	--   JAVA					- Imports Java source files or library components. (table)
 	--   STATIC_LIBRARIES		- Static library modules. (string)
-	--   SHARED_LIBRARIES		- Shared library modules. (string)
 
 	----------------------------------------------------------------
 	ADCOLONY = {
@@ -47,7 +46,6 @@ MODULES = {
 		},
 
 		STATIC_LIBRARIES = 'libmoai-adcolony',
-		SHARED_LIBRARIES = nil,
 	},
 
 	----------------------------------------------------------------
@@ -477,13 +475,10 @@ STATIC_LINK_ORDER = {
 	'libmoai-untz',
 	'libmoai-sim',
 	'libmoai-crypto',
-	--'libmoai-util',
-	--'libmoai-core',
 	
 	--zl
 	'libzl-gfx',
 	'libzl-crypto',
-	--'libzl-core',
 	
 	-- 3rd party
 	'libbox2d',
@@ -492,14 +487,7 @@ STATIC_LINK_ORDER = {
 	'libvorbis',
 	'libogg',
 	
-	--'libcontrib',
-	--'libexpat',
-	--'libjson',
-	--'liblua',
 	'libpvr',
-	--'libsfmt',
-	--'libsqlite',
-	--'libtinyxml',
 	'libfreetype',
 	'libjpg',
 	'libpng',
@@ -518,23 +506,6 @@ STATIC_LINK_ORDER = {
 	--'libzl-vfs',
 	--'libzlib',
 }
-
---[[
-DEFAULT_LIBRARIES = {
-	'libcontrib',
-	'libexpat',
-	'libjson',
-	'liblua',	
-	'libmoai-core',
-	'libmoai-util',
-	'libsfmt',
-	'libsqlite',
-	'libtinyxml',
-	'libzl-core',
-	'libzl-vfs',
-	'libzlib',
-}
-]]--
 
 -- Libraries to flag for symbol export.
 

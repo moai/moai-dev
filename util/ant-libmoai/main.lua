@@ -317,14 +317,13 @@ processConfigFile = function ( filename )
 	local config = { MOAI_SDK_HOME = MOAI_SDK_HOME }
 	util.dofileWithEnvironment ( filename, config )
 
-	--DEFAULT_LIBRARIES			= util.joinTables ( config.DEFAULT_LIBRARIES, DEFAULT_LIBRARIES )
 	STATIC_LIBRARIES			= util.joinTables ( config.STATIC_LINK_ORDER, STATIC_LIBRARIES )
 	WHOLE_STATIC_LIBRARIES		= util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
 
-	--if config.CONFIG_NAME then
-	--	local configPath = util.getFolderFromPath ( filename )
-	--	GLOBALS [ config.CONFIG_NAME ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
-	--end
+	if config.CONFIG_NAME then
+		local configPath = util.getFolderFromPath ( filename )
+		GLOBALS [ config.CONFIG_NAME ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+	end
 
 	if config.SETTINGS then
 		LIB_NAME = config.SETTINGS.LIB_NAME or LIB_NAME
@@ -416,7 +415,7 @@ util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
 	[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
 	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
-	[ '@GLOBALS@' ] 					= '', --getGlobalsString (),
+	[ '@GLOBALS@' ] 					= getGlobalsString (),
 	[ '@MODULES@' ] 					= getModulesString (),
 })
 
