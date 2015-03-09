@@ -48,8 +48,8 @@ public:
 	int				SetVBuf				( char* buffer, int mode, size_t size );
 	int				UnGetChar			( int character );
 	int				VarPrintf			( const char* format, va_list arg );
-					ZLVfsFile				();
-					~ZLVfsFile				();
+					ZLVfsFile			();
+					~ZLVfsFile			();
 };
 
 #endif

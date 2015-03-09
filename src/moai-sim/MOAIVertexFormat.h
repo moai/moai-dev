@@ -97,6 +97,7 @@ public:
 	void				DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 						MOAIVertexFormat				();
 						~MOAIVertexFormat				();
+	void				PrintVertices					( MOAIStream& stream, size_t size ) const;
 	void				RegisterLuaClass				( MOAILuaState& state );
 	void				RegisterLuaFuncs				( MOAILuaState& state );
 	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );

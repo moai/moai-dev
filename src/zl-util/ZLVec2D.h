@@ -319,7 +319,12 @@ public:
 	// angle between vectors in radians
 	float Radians ( const ZLMetaVec2D < TYPE >& v ) const {
 		
-		return ACos ( this->Dot ( v ));
+		float dot = this->Dot ( v );
+		
+		if ( dot <= -1.0f ) return ( float )PI;
+		if ( dot >= 1.0f ) return 0.0f;
+		
+		return ACos ( dot );
 	}
 	
 	//----------------------------------------------------------------//

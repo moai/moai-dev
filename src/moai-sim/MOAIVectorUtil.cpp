@@ -200,10 +200,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 		return nJoins;
 	}
 
-	if ( verts ) {
-		printf ( "verts:\n" );
-	}
-
 	u32 count = 0;
 	for ( int i = 0; i < nJoins; ++i ) {
 		
@@ -343,8 +339,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 						v.Scale ( miter );
 						v.Add ( join.mVertex );
 						*( verts++ ) = v;
-						
-						printf ( "    x:%f, y:%f\n", v.mX, v.mY );
 					}
 					count = count + 1;
 					break;
@@ -357,10 +351,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 				}
 			}
 		}
-	}
-	
-	if ( verts ) {
-		printf ( "\n" );
 	}
 	
 	return count;

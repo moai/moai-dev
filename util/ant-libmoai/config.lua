@@ -468,6 +468,8 @@ STATIC_LINK_ORDER = {
 	'libmoai-twitter',
 	'libmoai-vungle',
 
+	'libmoai-chartboost',
+
 	-- moai
 	'libmoai-android',
 	'libmoai-box2d',

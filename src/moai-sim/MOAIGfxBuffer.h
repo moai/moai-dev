@@ -44,6 +44,8 @@ private:
 	static int				_countElements			( lua_State* L );
 	static int				_load					( lua_State* L );
 	static int				_makeDirty				( lua_State* L );
+	static int				_printIndices			( lua_State* L );
+	static int				_printVertices			( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
@@ -76,6 +78,8 @@ public:
 	void					MakeDirty				();
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();
+	void					PrintIndices			( u32 indexSize );
+	void					PrintVertices			( MOAIVertexFormat& vertexFormat );
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					Reserve					( u32 size );
