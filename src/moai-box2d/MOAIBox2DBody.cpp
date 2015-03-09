@@ -445,9 +445,9 @@ int MOAIBox2DBody::_getContactList ( lua_State* L ) {
 	bool touching = state.GetValue < bool >( 2, false );
 
 	u32 total = 0;
-	for ( b2ContactEdge* ce = body->GetContactList (); ce; ce = ce->next ) {
+	for ( b2ContactEdge* ce = body->GetContactList (); ce != NULL; ce = ce->next ) {
 
-		if ( !touching || ( touching && ce->contact->IsTouching ())) {
+		if ( !touching || ce->contact->IsTouching () ) {
 			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )ce->other->GetUserData ();
 			if ( moaiBody ) {
 				lua_checkstack ( L, 2 );
