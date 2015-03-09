@@ -57,16 +57,16 @@ print ( 'OUTPUT_DIR', OUTPUT_DIR )
 
 GLOBALS							= {}
 MODULES							= {}
-PLUGINS							= {}
 TARGETS							= {}
 
 MODULE_APP_DECLARATIONS			= ''
 MODULE_MANIFEST_PERMISSIONS		= ''
 MODULE_PROJECT_INCLUDES			= ''
 
---DEFAULT_LIBRARIES				= {}
 STATIC_LIBRARIES				= {} -- set of all static libraries
 WHOLE_STATIC_LIBRARIES			= {}
+
+MODULES_USED					= {}
 
 --==============================================================
 -- util
@@ -161,7 +161,7 @@ getModulesString = function ()
 	local file = io.open ( TEMP_FILENAME, 'w' )
 	local first = true
 	
-	for name, module in util.pairsByKeys ( MODULES ) do
+	for name, module in util.pairsByKeys ( MODULES_USED ) do
 		if not first then file:write ( '\n\t' ) end
 		writeModule ( file, name, module )
 		first = false
@@ -182,7 +182,7 @@ getPluginsString = function ( key, format, spacer )
 	local file = io.open ( TEMP_FILENAME, 'w' )
 	local first = true
 	
-	for name, module in pairs ( MODULES ) do
+	for name, module in pairs ( MODULES_USED ) do
 		
 		local value = module.PLUGIN and module.PLUGIN [ key ]
 	
@@ -280,6 +280,7 @@ makeTarget = function ( target )
 	for i, moduleName in ipairs ( target.MODULES or {}) do
 		local module = MODULES [ moduleName ]
 		if module then
+			MODULES_USED [ moduleName ] = module
 			modules [ moduleName ] = module
 			addLibraries ( libraries, module.STATIC_LIBRARIES )
 		end
@@ -335,12 +336,6 @@ processConfigFile = function ( filename )
 	if config.MODULES then
 		for k, v in pairs ( config.MODULES ) do
 			MODULES [ k ] = v
-		end
-	end
-
-	if config.PLUGINS then
-		for k, v in pairs ( config.PLUGINS ) do
-			PLUGINS [ k ] = v
 		end
 	end
 
@@ -411,6 +406,21 @@ for i, config in ipairs ( CONFIGS ) do
 	processConfigFile ( config )
 end
 
+local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
+for k, target in pairs ( TARGETS ) do
+	if target.NAME and isEnabled ( target.NAME ) then
+		makeTarget ( target )
+		file:write ( string.format ( 'include %s.mk\n', target.NAME ))
+	end
+end
+file:close ()
+
+for k, module in pairs ( MODULES_USED ) do
+	for i, path in ipairs ( module.JAVA or {} ) do
+		importJava ( path, module.NAMESPACE or MOAI_JAVA_NAMESPACE )
+	end
+end
+
 util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
 	[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
@@ -423,21 +433,6 @@ util.replaceInFile ( JNI_DIR .. 'Application.mk', {
 	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
 	[ '@MY_APP_PLATFORM@' ] 			= MY_APP_PLATFORM,
 })
-
-for k, module in pairs ( MODULES ) do
-	for i, path in ipairs ( module.JAVA or {} ) do
-		importJava ( path, module.NAMESPACE or MOAI_JAVA_NAMESPACE )
-	end
-end
-
-local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
-for k, target in pairs ( TARGETS ) do
-	if target.NAME and isEnabled ( target.NAME ) then
-		makeTarget ( target )
-		file:write ( string.format ( 'include %s.mk\n', target.NAME ))
-	end
-end
-file:close ()
 
 util.replaceInFile ( JNI_DIR .. 'src/aku_plugins.cpp', {
 	[ '@AKU_PLUGINS_HEADERS@' ]					= getPluginsString ( 'INCLUDES', '\t#include %s\n' ),

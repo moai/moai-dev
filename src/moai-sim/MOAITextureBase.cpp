@@ -28,6 +28,8 @@
 int MOAITextureBase::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
 	
+	self->ForceCPUCreate ();
+	
 	lua_pushnumber ( state, self->mWidth );
 	lua_pushnumber ( state, self->mHeight );
 	
