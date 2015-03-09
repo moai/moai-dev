@@ -86,10 +86,13 @@ public class MoaiActivity extends Activity {
 		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		super.onCreate ( savedInstanceState );
 
+MoaiLog.i ( "on create" );
 		Moai.onCreate ( this );
 
+MoaiLog.i ( "createContext" );
 		Moai.createContext ();
 
+MoaiLog.i ( "init" );
 		Moai.init ();
 		
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
@@ -142,10 +145,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		
-		// Moai.runScript ( "../init.lua" );
 		Moai.runScript ( "bootstrap.lua" );
-			
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 

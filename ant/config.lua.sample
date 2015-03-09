@@ -1,0 +1,52 @@
+MODULES = {
+	
+	----------------------------------------------------------------
+	FOO = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_FOO_PLUGIN',
+
+		PLUGIN = {
+			INCLUDES	= '<foo-plugin.h>',
+			PREFIX		= 'FOOPlugin',
+		},
+	},
+
+	----------------------------------------------------------------
+	BAR = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_BAR_PLUGIN',
+
+		PLUGIN = {
+			INCLUDES	= '<bar-plugin.h>',
+			PREFIX		= 'BARPlugin',
+		},
+	},
+}
+
+TARGETS = {
+
+	----------------------------------------------------------------
+	MOAI = {
+		-- empty
+	},
+
+	----------------------------------------------------------------
+	MOAIFOO = {
+		
+		NAME = 'moaifoo',
+		
+		MODULES = {
+			'ANDROID',
+			'SIM',
+		},
+	},
+
+	----------------------------------------------------------------
+	MOAIBAR = {
+		
+		NAME = 'moaibar',
+		
+		MODULES = {
+		},
+	},
+}

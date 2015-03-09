@@ -13,7 +13,7 @@
 void AKUModulesAndroidAppFinalize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidAppFinalize ();
+		AKUAndroidAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY
@@ -49,7 +49,7 @@ void AKUModulesAndroidAppFinalize () {
 void AKUModulesAndroidAppInitialize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidAppInitialize ();
+		AKUAndroidAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY
@@ -85,7 +85,7 @@ void AKUModulesAndroidAppInitialize () {
 void AKUModulesAndroidContextInitialize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidContextInitialize ();
+		AKUAndroidContextInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY

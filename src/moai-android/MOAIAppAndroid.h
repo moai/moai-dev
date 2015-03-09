@@ -6,6 +6,7 @@
 
 #include <moai-sim/host.h>
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 #include <pthread.h>
 

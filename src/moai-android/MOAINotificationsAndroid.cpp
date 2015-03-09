@@ -1,14 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_NOTIFICATIONS
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAINotificationsAndroid.h>
 
 extern JavaVM* jvm;
@@ -439,5 +437,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificati
 	free ( keys );
 	free ( values );
 }
-
-#endif

@@ -6,7 +6,7 @@
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android-chartboost/MOAIChartBoostAndroid.h>
 
 //================================================================//

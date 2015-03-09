@@ -26,6 +26,7 @@ local		exec							= nil
 			iterateFiles					= nil
 			iterateFilesAbsPath				= nil
 local  		iterateFilesImplementation		= nil
+			iterateSingleOrArray			= nil
 			joinTables						= nil
 			listDirectories					= nil
 			listFiles						= nil
@@ -39,6 +40,7 @@ local		makeDlcResourceSig				= nil
 			onEntryStore					= nil
 			pack							= nil
 			package							= nil
+			pairsByKeys						= nil
 			powerIter						= nil
 			printTable						= nil
 			pruneEmptyDirs					= nil
@@ -367,6 +369,22 @@ iterateFilesImplementation = function ( path, fileFilter, absPath, recurse )
 end
 
 ----------------------------------------------------------------
+iterateSingleOrArray = function ( item )
+
+	if type ( item ) == 'table' then
+		return ipairs ( item )
+	end
+
+	return function ()
+		if item then
+			local temp = item
+			item = nil
+			return 1, temp
+		end 
+	end
+end
+
+----------------------------------------------------------------
 joinTables = function ( t1, t2 )
 	
 	local t = {}
@@ -496,6 +514,26 @@ package = function ( dstpath, srcpath )
 	else
 		util.copy ( dstpath, srcpath )
 	end
+end
+
+----------------------------------------------------------------
+pairsByKeys = function ( t, f )
+
+	local a = {}
+	for n in pairs ( t ) do table.insert ( a, n ) end
+	table.sort ( a, f )
+
+	local i = 0      -- iterator variable
+	local iter = function ()   -- iterator function
+		i = i + 1
+		if a [ i ] == nil then
+			return nil
+		else
+			return a [ i ], t [ a [ i ]]
+		end
+	end
+
+	return iter
 end
 
 ----------------------------------------------------------------

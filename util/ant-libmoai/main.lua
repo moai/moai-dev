@@ -2,17 +2,19 @@
 -- args
 --==============================================================
 
-OUTPUT_DIR			= INVOKE_DIR .. 'libmoai/'
+OUTPUT_DIR				= INVOKE_DIR .. 'libmoai/'
 
-LIB_NAME			= 'moai'
-MY_ARM_MODE			= 'arm'
-MY_ARM_ARCH			= 'armeabi-v7a'
-MY_APP_PLATFORM		= 'android-10'
+LIB_NAME				= 'moai'
+MY_ARM_MODE				= 'arm'
+MY_ARM_ARCH				= 'armeabi-v7a'
+MY_APP_PLATFORM			= 'android-10'
 
-CONFIGS				= {}
+CONFIGS					= {}
 
-DISABLED			= {}
-DISABLE_ALL			= false
+DISABLED				= {}
+DISABLE_ALL				= false
+
+MOAI_JAVA_NAMESPACE		= 'com.ziplinegames.moai'
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
@@ -53,43 +55,50 @@ print ( 'SCRIPT_DIR', SCRIPT_DIR )
 print ( 'INVOKE_DIR', INVOKE_DIR )
 print ( 'OUTPUT_DIR', OUTPUT_DIR )
 
-GLOBALS						= {}
-MODULES						= {}
-PLUGINS						= {}
+GLOBALS							= {}
+MODULES							= {}
+PLUGINS							= {}
+TARGETS							= {}
 
-ALL_LIBRARIES				= {}
-STATIC_LIBRARIES			= {} -- set of all static libraries
-WHOLE_STATIC_LIBRARIES		= {}
+MODULE_APP_DECLARATIONS			= ''
+MODULE_MANIFEST_PERMISSIONS		= ''
+MODULE_PROJECT_INCLUDES			= ''
+
+--DEFAULT_LIBRARIES				= {}
+STATIC_LIBRARIES				= {} -- set of all static libraries
+WHOLE_STATIC_LIBRARIES			= {}
 
 --==============================================================
 -- util
 --==============================================================
 
-local addStaticLibraries
+local addLibraries
 local concat
 local getGlobalsString
 local getLibrariesString
 local getModulesString
 local getPluginsStringFunc
+local importJava
 local isEnabled
+local makeTarget
 local processConfigFile
 local usage
 local writeList
 local writeModule
 
 ----------------------------------------------------------------
-addStaticLibraries = function ( libraries )
+addLibraries = function ( mask, libraries )
 
 	if type ( libraries ) == 'string' then
 		local t = util.tokenize ( libraries )
 		for i, v in ipairs ( t ) do
-			ALL_LIBRARIES [ v ] = true
+			mask [ v ] = true
 		end
 	end
 
 	if type ( libraries ) == 'table' then
 		for i, v in ipairs ( libraries ) do
-			addStaticLibraries ( v )
+			addLibraries ( mask, v )
 		end
 	end
 end
@@ -133,16 +142,16 @@ getGlobalsString = function ()
 end
 
 ----------------------------------------------------------------
-getLibrariesString = function ( libraries )
+getLibrariesString = function ( libraries, mask )
 
 	local str
 
 	for i, v in ipairs ( libraries ) do
-		if ALL_LIBRARIES [ v ] then
+		if mask [ v ] then
 			str = ( str and ( str .. ' ' ) or '' ) .. v
 		end
 	end
-	
+
 	return str or ''
 end
 
@@ -152,7 +161,7 @@ getModulesString = function ()
 	local file = io.open ( TEMP_FILENAME, 'w' )
 	local first = true
 	
-	for name, module in pairs ( MODULES ) do
+	for name, module in util.pairsByKeys ( MODULES ) do
 		if not first then file:write ( '\n\t' ) end
 		writeModule ( file, name, module )
 		first = false
@@ -168,30 +177,31 @@ end
 ----------------------------------------------------------------
 getPluginsString = function ( key, format, spacer )
 
+	spacer = spacer or ''
+
 	local file = io.open ( TEMP_FILENAME, 'w' )
 	local first = true
 	
-	for name, plugin in pairs ( PLUGINS ) do
-		if isEnabled ( name ) then
+	for name, module in pairs ( MODULES ) do
 		
-			local value = plugin [ key ]
-		
-			if type ( value ) == 'string' then
-				if not first then file:write ( spacer ) end
-				file:write ( string.format ( format, value ))
-				first = false
+		local value = module.PLUGIN and module.PLUGIN [ key ]
+	
+		if value then
+
+			file:write ( '\n' )
+			file:write ( spacer )
+			file:write ( string.format ( '#ifdef %s\n', module.PREPROCESSOR_FLAG ))
+
+			for i, v in util.iterateSingleOrArray ( value ) do
+				file:write ( spacer )
+				file:write ( string.format ( format, v ))
 			end
-		
-			if type ( value ) == 'table' then
-			
-				for i, v in ipairs ( value ) do
-					if not first then file:write ( spacer ) end
-					file:write ( string.format ( format, v ))
-					first = false
-				end
-			end
+
+			file:write ( spacer )
+			file:write ( string.format ( '#endif\n' ))
 		end
 	end
+
 	file:close ()
 	
 	local str = util.readFileAll ( TEMP_FILENAME )
@@ -201,21 +211,114 @@ getPluginsString = function ( key, format, spacer )
 end
 
 ----------------------------------------------------------------
+local importJava = function ( path, namespace )
+	
+	if not path then return end
+	path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+	
+	local srcPath = path .. 'src/'
+	if MOAIFileSystem.checkPathExists ( srcPath ) then
+		MOAIFileSystem.copy (  srcPath, OUTPUT_DIR .. 'src/' )
+	end
+
+	local libPath = path .. 'lib/'
+	if MOAIFileSystem.checkPathExists ( libPath ) then
+		for i, filename in ipairs ( util.listFiles ( libPath, 'jar' )) do
+			MOAIFileSystem.copy (  libPath .. filename, OUTPUT_DIR .. 'libs/' .. filename )
+		end
+	end
+	
+	local projectPath = path .. 'project/'
+	if MOAIFileSystem.checkPathExists ( projectPath ) then
+		for i, pathname in ipairs ( util.listDirectories ( projectPath )) do
+			MOAIFileSystem.copy (  projectPath .. pathname, OUTPUT_DIR .. 'ant/' .. pathname )
+			MODULE_PROJECT_INCLUDES = MODULE_PROJECT_INCLUDES .. string.format ( 'android.library.reference.1=../%s/\n', pathname )
+		end
+	end
+	
+	local appDeclarationsPath = path .. 'manifest_declarations.xml'
+	
+	if MOAIFileSystem.checkFileExists ( appDeclarationsPath ) then
+		local fp = io.open ( appDeclarationsPath, "r" )
+		MODULE_APP_DECLARATIONS = MODULE_APP_DECLARATIONS .. '\n' .. fp:read ( "*all" )
+		fp:close ()
+	end
+	
+	local manifestPermissionsPath = path .. 'manifest_permissions.xml'
+	if MOAIFileSystem.checkFileExists ( manifestPermissionsPath ) then
+		local fp = io.open ( manifestPermissionsPath, "r" )
+		MODULE_MANIFEST_PERMISSIONS = MODULE_MANIFEST_PERMISSIONS .. '\n' .. fp:read ( "*all" )
+		fp:close ()
+	end
+
+	local projectSrcFolder	= string.format ( '%ssrc/%s/', OUTPUT_DIR, string.gsub ( namespace, '%.', '/' ))
+
+	local files = util.listFiles ( path, 'java' )
+	for i, filename in ipairs ( files ) do
+		MOAIFileSystem.copy ( path .. filename, projectSrcFolder .. filename )
+	end
+end
+
+----------------------------------------------------------------
 isEnabled = function ( name )
-	return not ( DISABLE_ALL or DISABLED [ name ])
+	return name and not ( DISABLE_ALL or DISABLED [ name ])
+end
+
+----------------------------------------------------------------
+makeTarget = function ( target )
+
+	local targetMakefile = JNI_DIR .. target.NAME .. '.mk'
+	MOAIFileSystem.copy ( 'MoaiTarget.mk', targetMakefile )
+
+	local modules = {}
+	local libraries = {}
+	local preprecessorFlags = {}
+
+	--addLibraries ( libraries, DEFAULT_LIBRARIES )
+
+	-- build a set of modules to include
+	for i, moduleName in ipairs ( target.MODULES or {}) do
+		local module = MODULES [ moduleName ]
+		if module then
+			modules [ moduleName ] = module
+			addLibraries ( libraries, module.STATIC_LIBRARIES )
+		end
+	end
+
+	-- flags for modules included in this target
+	for k, module in pairs ( MODULES ) do
+		if module.PREPROCESSOR_FLAG then
+			preprecessorFlags [ module.PREPROCESSOR_FLAG ] = modules [ k ] and 1 or 0
+		end
+	end
+
+	-- build the preprocessor string
+	local preprocessorString = '\n'
+	for k, v in util.pairsByKeys ( preprecessorFlags ) do
+		preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -D%s=%d\n', k, v )
+	end
+
+	util.replaceInFile ( targetMakefile, {
+		[ '@LIB_NAME@' ]					= target.NAME,
+		[ '@AKU_PREPROCESSOR@' ]			= preprocessorString,
+		[ '@STATIC_LIBRARIES@' ] 			= getLibrariesString ( STATIC_LIBRARIES, libraries ),
+		[ '@WHOLE_STATIC_LIBRARIES@' ] 		= getLibrariesString ( WHOLE_STATIC_LIBRARIES, libraries ),
+	})
 end
 
 ----------------------------------------------------------------
 processConfigFile = function ( filename )
 
+	print ( 'CONFIG', filename )
+
 	filename = MOAIFileSystem.getAbsoluteFilePath ( filename )
 	if not MOAIFileSystem.checkFileExists ( filename ) then return end
 
-	local config = {}
+	local config = { MOAI_SDK_HOME = MOAI_SDK_HOME }
 	util.dofileWithEnvironment ( filename, config )
 
-	STATIC_LIBRARIES = util.joinTables ( config.STATIC_LIBRARIES, STATIC_LIBRARIES )
-	WHOLE_STATIC_LIBRARIES = util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
+	STATIC_LIBRARIES			= util.joinTables ( config.STATIC_LINK_ORDER, STATIC_LIBRARIES )
+	WHOLE_STATIC_LIBRARIES		= util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
 
 	if config.CONFIG_NAME then
 		local configPath = util.getFolderFromPath ( filename )
@@ -232,9 +335,6 @@ processConfigFile = function ( filename )
 	if config.MODULES then
 		for k, v in pairs ( config.MODULES ) do
 			MODULES [ k ] = v
-			if isEnabled ( k ) then
-				addStaticLibraries ( v.STATIC_LIBRARIES )
-			end
 		end
 	end
 
@@ -250,8 +350,10 @@ processConfigFile = function ( filename )
 		end
 	end
 	
-	if config.EXTERNAL_LIBRARIES then
-		addStaticLibraries ( config.EXTERNAL_LIBRARIES )
+	if config.TARGETS then
+		for k, v in pairs ( config.TARGETS ) do
+			TARGETS [ k ] = v
+		end
 	end
 end
 
@@ -284,38 +386,25 @@ writeModule = function ( file, name, module )
 	file:write ( '#--------------------------------------------------------------#\n' )
 	file:write ( string.format ( '\t# %s\n\n', name ))
 
-	if isEnabled ( name ) then
-		
-		if module.MODULE_DEFINE then
-			writeList ( file, '\tMY_LOCAL_CFLAGS += ', string.format ( '-D%s=1', module.MODULE_DEFINE ))
-		end
-		
-		writeList ( file, '\tMY_LOCAL_CFLAGS += ',				module.LOCAL_CFLAGS )
-		writeList ( file, '\tMY_HEADER_SEARCH_PATHS += ',		module.HEADER_SEARCH_PATHS, true )
-		writeList ( file, '\tMY_INCLUDES += ',					module.INCLUDES, true )
-		writeList ( file, '\tMY_LOCAL_STATIC_LIBRARIES += ',	module.LOCAL_STATIC_LIBRARIES )
-	else
-		
-		if module.MODULE_DEFINE then
-			writeList ( file, '\tMY_LOCAL_CFLAGS += ', string.format ( '-D%s=0', module.MODULE_DEFINE ))
-		else
-			file:write ( '\t--disabled\n' )
-		end
-	end
+	writeList ( file, '\tMY_HEADER_SEARCH_PATHS += ',		module.HEADER_SEARCH_PATHS, true )
+	writeList ( file, '\tMY_INCLUDES += ',					module.MAKE, true )
 end
 
 --==============================================================
 -- main
 --==============================================================
 
+MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
 MOAIFileSystem.affirmPath ( JNI_DIR )
 
+MOAIFileSystem.copy ( 'README.txt', OUTPUT_DIR .. 'README.txt' )
 MOAIFileSystem.copy ( 'Android.mk', JNI_DIR .. 'Android.mk' )
 MOAIFileSystem.copy ( 'Application.mk', JNI_DIR .. 'Application.mk' )
 MOAIFileSystem.copy ( 'src/', JNI_DIR .. 'src/' )
 MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
 
 processConfigFile ( 'config.lua' )
+processConfigFile ( INVOKE_DIR .. 'config.lua' )
 
 for i, config in ipairs ( CONFIGS ) do
 	print ( 'config', config )
@@ -324,25 +413,37 @@ end
 
 util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
-	[ '@LIB_NAME@' ]					= LIB_NAME,	
 	[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
 	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
 	[ '@GLOBALS@' ] 					= getGlobalsString (),
 	[ '@MODULES@' ] 					= getModulesString (),
-	[ '@STATIC_LIBRARIES@' ] 			= getLibrariesString ( STATIC_LIBRARIES ),
-	[ '@WHOLE_STATIC_LIBRARIES@' ] 		= getLibrariesString ( WHOLE_STATIC_LIBRARIES ),
 })
 
 util.replaceInFile ( JNI_DIR .. 'Application.mk', {
-	[ '@MY_ARM_ARCH@' ]				= MY_ARM_ARCH,
-	[ '@MY_APP_PLATFORM@' ] 		= MY_APP_PLATFORM,
+	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
+	[ '@MY_APP_PLATFORM@' ] 			= MY_APP_PLATFORM,
 })
 
+for k, module in pairs ( MODULES ) do
+	for i, path in ipairs ( module.JAVA or {} ) do
+		importJava ( path, module.NAMESPACE or MOAI_JAVA_NAMESPACE )
+	end
+end
+
+local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
+for k, target in pairs ( TARGETS ) do
+	if target.NAME and isEnabled ( target.NAME ) then
+		makeTarget ( target )
+		file:write ( string.format ( 'include %s.mk\n', target.NAME ))
+	end
+end
+file:close ()
+
 util.replaceInFile ( JNI_DIR .. 'src/aku_plugins.cpp', {
-	[ '@AKU_PLUGINS_HEADERS@' ]					= getPluginsString ( 'INCLUDES', '#include %s', '\n' ),
-	[ '@AKU_PLUGINS_APP_FINALIZE@' ]			= getPluginsString ( 'PREFIX', '%sAppFinalize ();', '\n\t' ),
-	[ '@AKU_PLUGINS_APP_INITIALIZE@' ]			= getPluginsString ( 'PREFIX', '%sAppInitialize ();', '\n\t' ),
-	[ '@AKU_PLUGINS_CONTEXT_INITIALIZE@' ] 		= getPluginsString ( 'PREFIX', '%sContextInitialize ();', '\n\t' ),
-	[ '@AKU_PLUGINS_PAUSE@' ] 					= getPluginsString ( 'PREFIX', '%sPause ( pause );', '\n\t' ),
-	[ '@AKU_PLUGINS_UPDATE@' ] 					= getPluginsString ( 'PREFIX', '%sUpdate ();', '\n\t' ),
+	[ '@AKU_PLUGINS_HEADERS@' ]					= getPluginsString ( 'INCLUDES', '\t#include %s\n' ),
+	[ '@AKU_PLUGINS_APP_FINALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppFinalize ();\n', '\t' ),
+	[ '@AKU_PLUGINS_APP_INITIALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppInitialize ();\n', '\t' ),
+	[ '@AKU_PLUGINS_CONTEXT_INITIALIZE@' ] 		= getPluginsString ( 'PREFIX', '\t%sContextInitialize ();\n', '\t' ),
+	[ '@AKU_PLUGINS_PAUSE@' ] 					= getPluginsString ( 'PREFIX', '\t%sPause ( pause );\n', '\t' ),
+	[ '@AKU_PLUGINS_UPDATE@' ] 					= getPluginsString ( 'PREFIX', '\t%sUpdate ();\n', '\t' ),
 })

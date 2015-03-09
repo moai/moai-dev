@@ -10,12 +10,12 @@
 #include <host-modules/aku_modules.h>
 #include <host-modules/aku_modules_android.h>
 
-#include <moai-android/moaiext-android.h>
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 
 #include <moai-core/headers.h>
 #include <moai-core/host.h>
 #include <moai-sim/headers.h>
+#include <moai-sim/host.h>
 
 //================================================================//
 // Input event locking queue
@@ -131,15 +131,20 @@
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
 
+		inputQueue = new LockingQueue < InputEvent > ();
+
 		AKUAppInitialize ();
-		AKUModulesAppInitialize ();
-        AKUModulesAndroidAppInitialize ();
+		AKUModulesAppInitialize ();   
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT jint JNICALL Java_com_ziplinegames_moai_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 
-		return AKUCreateContext ();
+		AKUContextID context = AKUCreateContext ();
+		if ( context ) {
+			AKUModulesContextInitialize ();
+		}
+		return context;
 	}
 
 	//----------------------------------------------------------------//
@@ -233,38 +238,30 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {
 
-		MOAIAppAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAppAndroid );
+		InputEvent ievent;
+		while ( inputQueue->Pop ( ievent )) {
 
-		MOAIBrowserAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIBrowserAndroid );
+			switch ( ievent.m_type ) {
 
-		MOAIDialogAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIDialogAndroid );
+			case InputEvent::INPUTEVENT_TOUCH:
+				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y );
+				break;
+			case InputEvent::INPUTEVENT_LEVEL:
+				AKUEnqueueLevelEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_x, ievent.m_y, ievent.m_z );
+				break;
+			case InputEvent::INPUTEVENT_COMPASS:
+				AKUEnqueueCompassEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_heading );
+				break;
+			case InputEvent::INPUTEVENT_LOCATION:
+				AKUEnqueueLocationEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_longitude, ievent.m_latitude, ievent.m_altitude, ievent.m_hAccuracy, ievent.m_vAccuracy, ievent.m_speed );
+				break;
+			}
+		}
 
-		MOAIMoviePlayerAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIMoviePlayerAndroid );
-
-		MOAIKeyboardAndroid::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
-
-		inputQueue = new LockingQueue < InputEvent > ();
+		AKUModulesUpdate ();
 	}
-	
-	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesContextInitialize ( JNIEnv* env, jclass obj ) {
-
-        AKUModulesContextInitialize ();
-        AKUModulesAndroidContextInitialize ();
-    }
-
-    //----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesRunLuaAPIWrapper ( JNIEnv* env, jclass obj ) {
-        
-        AKUModulesRunLuaAPIWrapper ();
-    }
 
 	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
@@ -321,6 +318,21 @@
 	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetContext ( JNIEnv* env, jclass obj, jint contextId ) {
 
 		AKUSetContext ( contextId );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {
+	
+		JNI_GET_CSTRING ( jlangCode, langCode );
+		JNI_GET_CSTRING ( jcountryCode, countryCode );
+
+		MOAIEnvironment& environment = MOAIEnvironment::Get ();
+
+		environment.SetValue ( MOAI_ENV_languageCode, langCode );
+		environment.SetValue( MOAI_ENV_countryCode, countryCode );
+
+		JNI_RELEASE_CSTRING ( jlangCode, langCode );
+		JNI_RELEASE_CSTRING ( jcountryCode, countryCode );
 	}
 
 	//----------------------------------------------------------------//
@@ -460,45 +472,4 @@
 		MOAILuaRuntime::Get ().SetPath ( path );
 
 		JNI_RELEASE_CSTRING ( jpath, path );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {
-
-		InputEvent ievent;
-		while ( inputQueue->Pop ( ievent )) {
-
-			switch ( ievent.m_type ) {
-
-			case InputEvent::INPUTEVENT_TOUCH:
-				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y );
-				break;
-			case InputEvent::INPUTEVENT_LEVEL:
-				AKUEnqueueLevelEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_x, ievent.m_y, ievent.m_z );
-				break;
-			case InputEvent::INPUTEVENT_COMPASS:
-				AKUEnqueueCompassEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_heading );
-				break;
-			case InputEvent::INPUTEVENT_LOCATION:
-				AKUEnqueueLocationEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_longitude, ievent.m_latitude, ievent.m_altitude, ievent.m_hAccuracy, ievent.m_vAccuracy, ievent.m_speed );
-				break;
-			}
-		}
-
-		AKUModulesUpdate ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {
-	
-		JNI_GET_CSTRING ( jlangCode, langCode );
-		JNI_GET_CSTRING ( jcountryCode, countryCode );
-
-		MOAIEnvironment& environment = MOAIEnvironment::Get ();
-
-		environment.SetValue ( MOAI_ENV_languageCode, langCode );
-		environment.SetValue( MOAI_ENV_countryCode, countryCode );
-
-		JNI_RELEASE_CSTRING ( jlangCode, langCode );
-		JNI_RELEASE_CSTRING ( jcountryCode, countryCode );
 	}

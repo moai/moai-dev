@@ -639,3 +639,26 @@ MOAIInputMgr.playback					= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.playback )
 MOAIInputMgr.setAutosuspend				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.setAutosuspend )
 MOAIInputMgr.setRecorder				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.setRecorder )
 MOAIInputMgr.suspendEvents				= wrapGlobal ( MOAIInputMgr, MOAIInputMgr.suspendEvents )
+
+if MOAIApp then
+
+	MOAIApp.lifecycle = {}
+
+	MOAIApp.addLifecycleListener = function ( eventID, listener )
+
+		local listeners = MOAIApp.lifecycle [ eventID ] or {}
+		MOAIApp.lifecycle [ eventID ] = listeners
+
+		table.insert ( listeners, listener )
+	end
+
+	MOAIApp.invokeLifecycleListener = function ( eventID, ... )
+
+		local listeners = MOAIApp.lifecycle [ eventID ]
+		if listeners then
+			for i, listener in pairs ( listeners ) do
+				listener ( ... )
+			end
+		end
+	end
+end
