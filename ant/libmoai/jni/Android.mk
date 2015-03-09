@@ -15,7 +15,7 @@
 	MY_LOCAL_CFLAGS		:=
 	MY_INCLUDES			:=
 	
-	
+	MOAI_MODULES	:= ../../../util/ant-libmoai/
 
 	#----------------------------------------------------------------#
 	# recursive wildcard function
@@ -69,92 +69,10 @@
 #================================================================#
 
 	#--------------------------------------------------------------#
-	# ADCOLONY
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-adcolony.mk
-
-	#--------------------------------------------------------------#
 	# ANDROID
 
 	MY_HEADER_SEARCH_PATHS += 
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-android.mk
-
-	#--------------------------------------------------------------#
-	# BOX2D
-
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision/Shapes
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Collision
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Common
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Contacts
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Joints
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-box2d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-box2d.mk
-
-	#--------------------------------------------------------------#
-	# CHARTBOOST
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-chartboost.mk
-
-	#--------------------------------------------------------------#
-	# CRYPTO
-
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-a.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-b.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-c.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-crypto.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crypto.mk
-
-	#--------------------------------------------------------------#
-	# FACEBOOK
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-facebook.mk
-
-	#--------------------------------------------------------------#
-	# FLURRY
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-flurry.mk
-
-	#--------------------------------------------------------------#
-	# GOOGLE_PLAY_SERVICES
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-google-play-services.mk
-
-	#--------------------------------------------------------------#
-	# HTTP_CLIENT
-
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-c-ares.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-curl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ssl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-client.mk
-
-	#--------------------------------------------------------------#
-	# LUAEXT
-
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-luaext.mk
 
 	#--------------------------------------------------------------#
 	# SIM
@@ -176,39 +94,6 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk
-
-	#--------------------------------------------------------------#
-	# TAPJOY
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-tapjoy.mk
-
-	#--------------------------------------------------------------#
-	# TWITTER
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-twitter.mk
-
-	#--------------------------------------------------------------#
-	# UNTZ
-
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/moai-untz
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/untz/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/untz/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/untz/src/native/android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libvorbis-1.3.2/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libvorbis-1.3.2/lib
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libogg-1.2.2/include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ogg.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-vorbis.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-untz.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-untz.mk
-
-	#--------------------------------------------------------------#
-	# VUNGLE
-
-	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-vungle.mk
 
 
 
