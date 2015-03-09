@@ -1991,175 +1991,175 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
             }
             
             if (text == "angle") {
-                this->mAngle = (float)atof(attribute->Value());
+                this->mAngle = STLString(attribute->Value()).to_float();
             }
             else if (text == "angleVariance") {
-                this->mAngleVariance = (float)atof(attribute->Value());
+                this->mAngleVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "blendFuncSource") {
-                this->mBlendFuncSrc = atoi(attribute->Value());
+                this->mBlendFuncSrc = STLString(attribute->Value()).to_int();
             }
             else if (text == "blendFuncDestination") {
-                this->mBlendFuncDst = atoi(attribute->Value());
+                this->mBlendFuncDst = STLString(attribute->Value()).to_int();
             }
             else if (text == "deckCellDimensions") {
-                this->mDeckCellHeight = (float) atof(attribute->Value());
+                this->mDeckCellHeight = STLString(attribute->Value()).to_float();
                 attribute = attribute->Next ();
                 if (attribute) {
-                    this->mDeckCellWidth = (float) atof(attribute->Value());
+                    this->mDeckCellWidth = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "deckOffset") {
-                this->mDeckOffsetX = (float) atof(attribute->Value());
+                this->mDeckOffsetX = STLString(attribute->Value()).to_float();
                 attribute = attribute->Next ();
                 if (attribute) {
-                    this->mDeckOffsetY = (float) atof(attribute->Value());
+                    this->mDeckOffsetY = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "deckTileCount") {
-                this->mDeckTilesX = (u32) atoi(attribute->Value());
+                this->mDeckTilesX = (u32) STLString(attribute->Value()).to_int();
                 attribute = attribute->Next ();
                 if (attribute) {
-                    this->mDeckTilesY = (u32) atoi(attribute->Value());
+                    this->mDeckTilesY = (u32) STLString(attribute->Value()).to_int();
                 }
             }
             else if (text == "deckTileDimensions") {
-                this->mDeckTileHeight = (float) atof(attribute->Value());
+                this->mDeckTileHeight = STLString(attribute->Value()).to_float();
                 attribute = attribute->Next ();
                 if (attribute) {
-                    this->mDeckTileWidth = (float) atof(attribute->Value());
+                    this->mDeckTileWidth = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "duration") {
-                this->mDuration = (float)atof(attribute->Value());
+                this->mDuration = STLString(attribute->Value()).to_float();
             }
             else if (text == "emitterType") {
-                this->mEmitterType = (EmitterType)atoi(attribute->Value());
+                this->mEmitterType = (EmitterType)STLString(attribute->Value()).to_int();
             }
             else if (text == "endIndex") {
-                this->mEndIndex = (u32) atoi(attribute->Value());
+                this->mEndIndex = (u32) STLString(attribute->Value()).to_int();
             }
             else if (text == "finishColor") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mFinishColor[i] = (float)atof(attribute->Value());
+                    this->mFinishColor[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "finishColorVariance") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mFinishColorVariance[i] = (float)atof(attribute->Value());
+                    this->mFinishColorVariance[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "finishParticleSize") {
-                this->mFinishParticleSize = (float)atof(attribute->Value());
+                this->mFinishParticleSize = STLString(attribute->Value()).to_float();
             }
             else if (text == "finishParticleSizeVariance") {
-                this->mFinishParticleSizeVariance = (float)atof(attribute->Value());
+                this->mFinishParticleSizeVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "gravity") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mGravity[i] = (float)atof(attribute->Value());
+                    this->mGravity[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "gravityVariance") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mGravityVariance[i] = (float)atof(attribute->Value());
+                    this->mGravityVariance[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "indexMode") {
-                this->mIndexMode = (IndexModeType) atoi(attribute->Value());
+                this->mIndexMode = (IndexModeType) STLString(attribute->Value()).to_int();
             }
             else if (text == "maxParticles") {
-                u32 numParticles = atoi(attribute->Value());
+                int numParticles = STLString(attribute->Value()).to_int();
                 this->SetTotalParticles(numParticles);
             }
             else if (text == "maxRadius") {
-                this->mStartRadius = (float)atof(attribute->Value());
+                this->mStartRadius = STLString(attribute->Value()).to_float();
             }
             else if( text == "maxRadiusVariance") {
-                this->mStartRadiusVariance = (float)atof(attribute->Value());
+                this->mStartRadiusVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "minRadius") {
-                this->mEndRadius = (float)atof(attribute->Value());
+                this->mEndRadius = STLString(attribute->Value()).to_float();
             }
             else if (text == "minRadiusVariance") {
-                this->mEndRadiusVariance = (float)atof(attribute->Value());
+                this->mEndRadiusVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "particleLifeSpan") {
-                this->mParticleLifespan = (float)atof(attribute->Value());
+                this->mParticleLifespan = STLString(attribute->Value()).to_float();
             }
             else if (text == "particleLifespanVariance") {
-                this->mParticleLifespanVariance = (float)atof(attribute->Value());
+                this->mParticleLifespanVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "radialAcceleration") {
-                this->mRadialAcceleration = (float)atof(attribute->Value());
+                this->mRadialAcceleration = STLString(attribute->Value()).to_float();
             }
             else if (text == "radialAccelVariance") {
-                this->mRadialAccelVariance = (float)atof(attribute->Value());
+                this->mRadialAccelVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotatePerSecond") {
-                this->mRotatePerSecond = (float)atof(attribute->Value());
+                this->mRotatePerSecond = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotatePerSecondVariance") {
-                this->mRotatePerSecondVariance = (float)atof(attribute->Value());
+                this->mRotatePerSecondVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationEnd") {
-                this->mRotEnd = (float)atof(attribute->Value());
+                this->mRotEnd = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationEndVariance") {
-                this->mRotEndVariance = (float)atof(attribute->Value());
+                this->mRotEndVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationStart") {
-                this->mRotStart = (float)atof(attribute->Value());
+                this->mRotStart = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationStartVariance") {
-                this->mRotStartVariance = (float)atof(attribute->Value());
+                this->mRotStartVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationalAcceleration") {
-                this->mRotationalAcceleration = (float)atof(attribute->Value());
+                this->mRotationalAcceleration = STLString(attribute->Value()).to_float();
             }
             else if (text == "rotationalAccelVariance") {
-                this->mRotationalAccelVariance = (float)atof(attribute->Value());
+                this->mRotationalAccelVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "sourcePosition") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mSourcePos[i] = (float)atof(attribute->Value());
+                    this->mSourcePos[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "sourcePositionVariance") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mSourcePosVariance[i] = (float)atof(attribute->Value());
+                    this->mSourcePosVariance[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "speed") {
-                this->mSpeed = (float)atof(attribute->Value());
+                this->mSpeed = STLString(attribute->Value()).to_float();
             }
             else if (text == "speedVariance") {
-                this->mSpeedVariance = (float)atof(attribute->Value());
+                this->mSpeedVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "startColor") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mStartColor[i] = (float)atof(attribute->Value());
+                    this->mStartColor[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "startColorVariance") {
                 for ( ; attribute; attribute = attribute->Next (), i++) {
-                    this->mStartColorVariance[i] = (float)atof(attribute->Value());
+                    this->mStartColorVariance[i] = STLString(attribute->Value()).to_float();
                 }
             }
             else if (text == "startIndex") {
-                this->mStartIndex = (u32) atoi(attribute->Value());
+                this->mStartIndex = (u32) STLString(attribute->Value()).to_int();
             }
             else if (text == "startParticleSize") {
-                this->mStartSize = (float)atof(attribute->Value());
+                this->mStartSize = STLString(attribute->Value()).to_float();
             }
             else if (text == "startParticleSizeVariance") {
-                this->mStartSizeVariance = (float)atof(attribute->Value());
+                this->mStartSizeVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "tangentialAcceleration") {
-                this->mTangentialAcceleration = (float)atof(attribute->Value());
+				this->mTangentialAcceleration = STLString(attribute->Value()).to_float();
             }
             else if (text == "tangentialAccelVariance") {
-                this->mTangentialAccelVariance = (float)atof(attribute->Value());
+                this->mTangentialAccelVariance = STLString(attribute->Value()).to_float();
             }
             else if (text == "texture") {
                 this->mTextureName = absDirPath;
