@@ -9,11 +9,8 @@
 #include "OggAudioSource.h"
 
 
-OggAudioSource::OggAudioSource()
-{
-    mpOggInfo = NULL;
-	mInFile = 0;
-}
+OggAudioSource::OggAudioSource() : mpOggInfo(NULL)
+{ }
 
 OggAudioSource::~OggAudioSource()
 {
@@ -25,19 +22,11 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 	if(mLoadedInMemory && loadIntoMemory)
 		return true;
 
-	mPath = path;
-	mInFile = fopen(mPath.c_str(), "rb");
+	const int status = ov_fopen(path.c_str(), &mOggFile);
 
-	if(mInFile == NULL)
+	if( status != 0 )
 	{
-		printError("Cannot open %s for reading...\n", mPath.c_str() );
-		return false;
-	}
-
-	// Try opening the given file
-	if(ov_open(mInFile, &mOggFile, NULL, 0) != 0)
-	{
-		printError("Error opening %s\n", mPath.c_str() );
+		printError("Cannot open %s for reading, error: %s \n", path.c_str(), getErrorDescription( status) );
 		return false;
 	}
 
@@ -50,12 +39,7 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 void OggAudioSource::close()
 {
     BufferedAudioSource::close();
-    
-	if(mInFile)
-	{
-		ov_clear(&mOggFile);
-		mInFile = 0;
-	}
+	ov_clear(&mOggFile);
 }
 
 void OggAudioSource::setDecoderPosition(Int64 startFrame)
@@ -79,13 +63,13 @@ const char* OggAudioSource::getErrorDescription(const int status) const
 		case OV_ENOSEEK		: return "Bitstream is not seekable.";
 		case OV_EINVAL		: return "Invalid argument value.";
 		case OV_EREAD		: return "A read from media returned an error.";
-		case OV_EFAULT		: return "Internal logic fault.";
+		case OV_EFAULT		: return "Internal logic fault; indicates a bug or heap/stack corruption.";
 		case OV_EBADLINK	: return "Invalid stream section supplied.";
 		case OV_ENOTVORBIS	: return "The given file/data was not recognized as Ogg Vorbis data.";
 		case OV_EBADHEADER	: return "The file/data is apparently an Ogg Vorbis stream, \
 										but contains a corrupted or undecipherable header.";
 		case OV_EVERSION	: return "The bitstream format revision of the given stream is not supported.";
-		default				: return "Unknow error description.";
+		default				: return "Unknown error description.";
 	}
 }
 
