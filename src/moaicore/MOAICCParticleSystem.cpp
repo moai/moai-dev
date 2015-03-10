@@ -1980,13 +1980,13 @@ void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
     STLString absDirPath = USFileSys::TruncateFilename ( absFilePath );
     
     TiXmlElement* element = node->ToElement();
-    if (element && (strcmp(element->Value(), "particleEmitterConfig") == 0)) {
+    if (element && element->ValueStr() == "particleEmitterConfig") {
         
         for ( TiXmlElement* childElement = node->FirstChildElement (); childElement != NULL; childElement = childElement->NextSiblingElement() ) {
-            STLString text = childElement->Value ();
+			const std::string& text = childElement->ValueStr ();
             TiXmlAttribute* attribute = childElement->FirstAttribute ();
             int i = 0;
-            if (!attribute || !text || text == "") {
+            if (!attribute || text.c_str() == NULL || text == "") {
                 continue;
             }
             
