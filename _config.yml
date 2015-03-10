@@ -1,5 +1,5 @@
 name: Moai SDK
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 future: true
 baseurl: /moai-sdk
