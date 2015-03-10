@@ -1971,6 +1971,9 @@ void MOAICCParticleSystem::OnUpdate ( float step ) {
 
 void MOAICCParticleSystem::ParseXML( cc8 *filename, TiXmlNode *node ) {
     if (!node) {
+        MOAIPrint("----------------------------------------------------------------");
+        STLString fullPath = USFileSys::GetAbsoluteDirPath(filename);
+        MOAIPrint("Could not parse file as XML: %s\n", fullPath.str());
         return;
     }
     
