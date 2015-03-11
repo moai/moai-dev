@@ -515,8 +515,7 @@ string ZLVfsFileSystem::NormalizeFilePath ( const char* path ) {
 	}
 	
 	buffer [ top ] = 0;
-	string result = buffer.c_str ();
-	return result;
+	return buffer;
 }
 
 //----------------------------------------------------------------//
