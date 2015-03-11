@@ -32,6 +32,7 @@ private:
 	
 	MOAILuaStrongRef		mOnKey;
 	MOAILuaStrongRef		mOnChar;
+	MOAILuaStrongRef		mOnEdit;
 
 	//----------------------------------------------------------------//
 	static int		_keyDown				( lua_State* L );
@@ -40,6 +41,7 @@ private:
 	static int		_keyUp					( lua_State* L );
 	static int		_setCallback			( lua_State* L );
 	static int		_setCharCallback		( lua_State* L );
+	static int		_setEditCallback		( lua_State* L );
 	static int		_setKeyCallback			( lua_State* L );
 
 public:
@@ -48,6 +50,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			EnqueueKeyboardCharEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar );
+	static void			EnqueueKeyboardEditEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
 	static void			EnqueueKeyboardKeyEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );

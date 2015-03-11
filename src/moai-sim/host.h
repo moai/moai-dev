@@ -20,6 +20,7 @@ typedef void ( *AKUExitFullscreenModeFunc )		();
 typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
+typedef void ( *AKUSetTextInputRectFunc )		( int xMin, int yMin, int xMax, int yMax );
 typedef void ( *AKUShowCursorFunc )				();
 
 // setup
@@ -47,6 +48,7 @@ AKU_API void			AKUSetFunc_ShowCursor			( AKUShowCursorFunc func );
 AKU_API void			AKUSetFunc_HideCursor			( AKUHideCursorFunc func );
 AKU_API void			AKUSetFunc_OpenWindow			( AKUOpenWindowFunc func );
 AKU_API void			AKUSetFunc_SetSimStep			( AKUSetSimStepFunc func );
+AKU_API void			AKUSetFunc_SetTextInputRect		( AKUSetTextInputRectFunc func );
 
 // input device api
 AKU_API void			AKUReserveInputDevices			( int total );
@@ -73,6 +75,7 @@ AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down )
 AKU_API void			AKUEnqueueCompassEvent			( int deviceID, int sensorID, float heading );
 AKU_API void			AKUEnqueueJoystickEvent			( int deviceID, int sensorID, float x, float y );
 AKU_API void			AKUEnqueueKeyboardCharEvent		( int deviceID, int sensorID, int unicodeChar );
+AKU_API void			AKUEnqueueKeyboardEditEvent		( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength);
 AKU_API void			AKUEnqueueKeyboardKeyEvent		( int deviceID, int sensorID, int keyID, bool down );
 AKU_API void			AKUEnqueueLevelEvent			( int deviceID, int sensorID, float x, float y, float z );
 AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );

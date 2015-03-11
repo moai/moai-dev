@@ -179,6 +179,12 @@ void AKUEnqueueKeyboardCharEvent ( int deviceID, int sensorID, int unicodeChar )
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueKeyboardEditEvent ( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength) {
+	
+	MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool down ) {
 
 	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
@@ -437,6 +443,12 @@ void AKUSetViewSize ( int width, int height ) {
 void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
 
 	MOAISim::Get ().SetShowCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_SetTextInputRect ( AKUSetTextInputRectFunc func ) {
+	
+	MOAISim::Get ().SetSetTextInputRectFunc ( func );
 }
 
 //----------------------------------------------------------------//
