@@ -53,6 +53,7 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 	}
 
 	int result = 0;
+	errno = 0;
 	while ( *cursor ) {
 
 		// Advance to end of current directory name
@@ -67,7 +68,7 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 			result = mkdir ( buffer, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
 		#endif
 		
-		if ( result && ( errno != EEXIST )) break;
+		if ( ( result == 0 ) && ( errno != EEXIST )) break;
 		result = 0;
 
 		*cursor = '/';
