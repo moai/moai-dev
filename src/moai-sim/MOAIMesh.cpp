@@ -243,6 +243,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.Flush (); // TODO: should remove this call
+	MOAIGfxDevice::Get ().SetVertexFormat ();
 
 	this->FinishInit ();
 
