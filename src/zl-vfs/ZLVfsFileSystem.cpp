@@ -80,23 +80,9 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 //----------------------------------------------------------------//
 string ZLVfsFileSystem::BlessPath ( const char* path ) {
 
-	size_t i = 0;
-	size_t j = 0;
-	
-	for ( i = 0; path [ i ]; ++i ) {
-		if ( IsSeparator ( path [ i ] )) {
-			while ( IsSeparator ( path [ ++i ]));
-			--i;
-		}
-		j++;
-	}
-	
 	string blessed;
-	blessed.reserve ( j + 1 );
-	
-	i = 0;
-	
-	for ( i = 0; path [ i ]; ++i ) {
+
+	for ( size_t i = 0; path [ i ]; ++i ) {
 		
 		char c = path [ i ];
 		
