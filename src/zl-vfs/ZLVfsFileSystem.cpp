@@ -93,7 +93,7 @@ string ZLVfsFileSystem::BlessPath ( const char* path ) {
 			--i;
 		}
 		
-		blessed.push_back ( c );
+		blessed += c;
 	}
 	
 	return blessed;
