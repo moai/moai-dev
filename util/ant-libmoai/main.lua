@@ -47,7 +47,6 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	end
 end
 
-JNI_DIR					= OUTPUT_DIR .. 'jni/'
 TEMP_FILENAME			= OUTPUT_DIR .. '.tmp'
 
 print ( 'MOAI_SDK_HOME', MOAI_SDK_HOME )
@@ -58,6 +57,7 @@ print ( 'OUTPUT_DIR', OUTPUT_DIR )
 GLOBALS							= {}
 MODULES							= {}
 TARGETS							= {}
+CONFIGS							= {}
 
 MODULE_APP_DECLARATIONS			= ''
 MODULE_MANIFEST_PERMISSIONS		= ''
@@ -67,6 +67,13 @@ STATIC_LIBRARIES				= {} -- set of all static libraries
 WHOLE_STATIC_LIBRARIES			= {}
 
 MODULES_USED					= {}
+
+FOLDERS = {
+	ANT		= OUTPUT_DIR .. 'ant',
+	JNI		= OUTPUT_DIR .. 'jni',
+	LIBS	= OUTPUT_DIR .. 'libs',
+	JAVA	= OUTPUT_DIR .. 'java',
+}
 
 --==============================================================
 -- util
@@ -80,6 +87,7 @@ local getModulesString
 local getPluginsStringFunc
 local importJava
 local isEnabled
+local makeJniProject
 local makeTarget
 local processConfigFile
 local usage
@@ -216,28 +224,50 @@ local importJava = function ( path, namespace )
 	if not path then return end
 	path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
 	
-	local srcPath = path .. 'src/'
-	if MOAIFileSystem.checkPathExists ( srcPath ) then
-		MOAIFileSystem.copy (  srcPath, OUTPUT_DIR .. 'src/' )
+	local ANT_DIR = FOLDERS.ANT
+	local JAVA_DIR = FOLDERS.JAVA
+	local LIBS_DIR = FOLDERS.LIBS
+
+	if ANT_DIR then
+		local projectPath = path .. 'project/'
+		if MOAIFileSystem.checkPathExists ( projectPath ) then
+			for i, pathname in ipairs ( util.listDirectories ( projectPath )) do
+				MOAIFileSystem.copy (  projectPath .. pathname, ANT_DIR .. pathname )
+				MODULE_PROJECT_INCLUDES = MODULE_PROJECT_INCLUDES .. string.format ( 'android.library.reference.1=../%s/\n', pathname )
+			end
+		end
 	end
 
-	local libPath = path .. 'lib/'
-	if MOAIFileSystem.checkPathExists ( libPath ) then
-		for i, filename in ipairs ( util.listFiles ( libPath, 'jar' )) do
-			MOAIFileSystem.copy (  libPath .. filename, OUTPUT_DIR .. 'libs/' .. filename )
+	if JAVA_DIR then
+
+		-- the entre foler tree names 'src'
+		local srcPath = path .. 'src/'
+		if MOAIFileSystem.checkPathExists ( srcPath ) then
+			MOAIFileSystem.copy (  srcPath, JAVA_DIR )
+		end
+
+		-- any files named 'java' in the folder; append the namespace
+		local files = util.listFiles ( path, 'java' )
+		local projectSrcFolder	= string.format ( '%s%s/', JAVA_DIR, string.gsub ( namespace, '%.', '/' ))
+		for i, filename in ipairs ( files ) do
+			MOAIFileSystem.copy ( path .. filename, projectSrcFolder .. filename )
 		end
 	end
-	
-	local projectPath = path .. 'project/'
-	if MOAIFileSystem.checkPathExists ( projectPath ) then
-		for i, pathname in ipairs ( util.listDirectories ( projectPath )) do
-			MOAIFileSystem.copy (  projectPath .. pathname, OUTPUT_DIR .. 'ant/' .. pathname )
-			MODULE_PROJECT_INCLUDES = MODULE_PROJECT_INCLUDES .. string.format ( 'android.library.reference.1=../%s/\n', pathname )
+
+	if LIBS_DIR then
+		local libPath = path .. 'lib/'
+		if MOAIFileSystem.checkPathExists ( libPath ) then
+			for i, filename in ipairs ( util.listFiles ( libPath, 'jar' )) do
+				MOAIFileSystem.copy (  libPath .. filename, LIBS_DIR .. filename )
+			end
 		end
 	end
-	
+
+	-- TODO: manifest where?
+
+	--[[
 	local appDeclarationsPath = path .. 'manifest_declarations.xml'
-	
+
 	if MOAIFileSystem.checkFileExists ( appDeclarationsPath ) then
 		local fp = io.open ( appDeclarationsPath, "r" )
 		MODULE_APP_DECLARATIONS = MODULE_APP_DECLARATIONS .. '\n' .. fp:read ( "*all" )
@@ -245,18 +275,13 @@ local importJava = function ( path, namespace )
 	end
 	
 	local manifestPermissionsPath = path .. 'manifest_permissions.xml'
+	
 	if MOAIFileSystem.checkFileExists ( manifestPermissionsPath ) then
 		local fp = io.open ( manifestPermissionsPath, "r" )
 		MODULE_MANIFEST_PERMISSIONS = MODULE_MANIFEST_PERMISSIONS .. '\n' .. fp:read ( "*all" )
 		fp:close ()
 	end
-
-	local projectSrcFolder	= string.format ( '%ssrc/%s/', OUTPUT_DIR, string.gsub ( namespace, '%.', '/' ))
-
-	local files = util.listFiles ( path, 'java' )
-	for i, filename in ipairs ( files ) do
-		MOAIFileSystem.copy ( path .. filename, projectSrcFolder .. filename )
-	end
+	]]--
 end
 
 ----------------------------------------------------------------
@@ -265,8 +290,58 @@ isEnabled = function ( name )
 end
 
 ----------------------------------------------------------------
+makeJniProject = function ()
+
+	local JNI_DIR = FOLDERS.JNI
+	if not JNI_DIR then return end
+
+	for name, filename in pairs ( CONFIGS ) do
+		local configPath = util.getFolderFromPath ( filename )
+		GLOBALS [ name ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+	end
+
+	MOAIFileSystem.copy ( 'README.txt', JNI_DIR .. 'README.txt' )
+	MOAIFileSystem.copy ( 'Android.mk', JNI_DIR .. 'Android.mk' )
+	MOAIFileSystem.copy ( 'Application.mk', JNI_DIR .. 'Application.mk' )
+	MOAIFileSystem.copy ( 'src/', JNI_DIR .. 'src/' )
+	MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
+
+	local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
+	for k, target in pairs ( TARGETS ) do
+		if target.NAME and isEnabled ( target.NAME ) then
+			makeTarget ( target )
+			file:write ( string.format ( 'include %s.mk\n', target.NAME ))
+		end
+	end
+	file:close ()
+
+	util.replaceInFile ( JNI_DIR .. 'Android.mk', {
+		[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
+		[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
+		[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
+		[ '@GLOBALS@' ] 					= getGlobalsString (),
+		[ '@MODULES@' ] 					= getModulesString (),
+	})
+
+	util.replaceInFile ( JNI_DIR .. 'Application.mk', {
+		[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
+		[ '@MY_APP_PLATFORM@' ] 			= MY_APP_PLATFORM,
+	})
+
+	util.replaceInFile ( JNI_DIR .. 'src/aku_plugins.cpp', {
+		[ '@AKU_PLUGINS_HEADERS@' ]					= getPluginsString ( 'INCLUDES', '\t#include %s\n' ),
+		[ '@AKU_PLUGINS_APP_FINALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppFinalize ();\n', '\t' ),
+		[ '@AKU_PLUGINS_APP_INITIALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppInitialize ();\n', '\t' ),
+		[ '@AKU_PLUGINS_CONTEXT_INITIALIZE@' ] 		= getPluginsString ( 'PREFIX', '\t%sContextInitialize ();\n', '\t' ),
+		[ '@AKU_PLUGINS_PAUSE@' ] 					= getPluginsString ( 'PREFIX', '\t%sPause ( pause );\n', '\t' ),
+		[ '@AKU_PLUGINS_UPDATE@' ] 					= getPluginsString ( 'PREFIX', '\t%sUpdate ();\n', '\t' ),
+	})
+end
+
+----------------------------------------------------------------
 makeTarget = function ( target )
 
+	local JNI_DIR = FOLDERS.JNI
 	local targetMakefile = JNI_DIR .. target.NAME .. '.mk'
 	MOAIFileSystem.copy ( 'MoaiTarget.mk', targetMakefile )
 
@@ -310,8 +385,6 @@ end
 ----------------------------------------------------------------
 processConfigFile = function ( filename )
 
-	print ( 'CONFIG', filename )
-
 	filename = MOAIFileSystem.getAbsoluteFilePath ( filename )
 	if not MOAIFileSystem.checkFileExists ( filename ) then return end
 
@@ -322,8 +395,7 @@ processConfigFile = function ( filename )
 	WHOLE_STATIC_LIBRARIES		= util.joinTables ( config.WHOLE_STATIC_LIBRARIES, WHOLE_STATIC_LIBRARIES )
 
 	if config.CONFIG_NAME then
-		local configPath = util.getFolderFromPath ( filename )
-		GLOBALS [ config.CONFIG_NAME ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+		CONFIGS [ config.CONFIG_NAME ] = filename
 	end
 
 	if config.SETTINGS then
@@ -333,23 +405,9 @@ processConfigFile = function ( filename )
 		MY_APP_PLATFORM = config.SETTINGS.MY_APP_PLATFORM or MY_APP_PLATFORM
 	end
 
-	if config.MODULES then
-		for k, v in pairs ( config.MODULES ) do
-			MODULES [ k ] = v
-		end
-	end
-
-	if config.GLOBALS then
-		for k, v in pairs ( config.GLOBALS ) do
-			GLOBALS [ k ] = v
-		end
-	end
-	
-	if config.TARGETS then
-		for k, v in pairs ( config.TARGETS ) do
-			TARGETS [ k ] = v
-		end
-	end
+	util.mergeTables ( MODULES, config.MODULES )
+	util.mergeTables ( GLOBALS, config.GLOBALS )
+	util.mergeTables ( TARGETS, config.TARGETS )
 end
 
 ----------------------------------------------------------------
@@ -389,56 +447,29 @@ end
 -- main
 --==============================================================
 
-MOAIFileSystem.deleteDirectory ( OUTPUT_DIR, true )
-MOAIFileSystem.affirmPath ( JNI_DIR )
-
-MOAIFileSystem.copy ( 'README.txt', OUTPUT_DIR .. 'README.txt' )
-MOAIFileSystem.copy ( 'Android.mk', JNI_DIR .. 'Android.mk' )
-MOAIFileSystem.copy ( 'Application.mk', JNI_DIR .. 'Application.mk' )
-MOAIFileSystem.copy ( 'src/', JNI_DIR .. 'src/' )
-MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
-
 processConfigFile ( 'config.lua' )
 processConfigFile ( INVOKE_DIR .. 'config.lua' )
 
 for i, config in ipairs ( CONFIGS ) do
-	print ( 'config', config )
 	processConfigFile ( config )
 end
 
-local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
-for k, target in pairs ( TARGETS ) do
-	if target.NAME and isEnabled ( target.NAME ) then
-		makeTarget ( target )
-		file:write ( string.format ( 'include %s.mk\n', target.NAME ))
+MOAIFileSystem.affirmPath ( OUTPUT_DIR )
+
+for k, path in pairs ( FOLDERS ) do
+
+	FOLDERS [ k ] = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+
+	if path and path ~= OUTPUT_DIR then
+		MOAIFileSystem.deleteDirectory ( path, true )
+		MOAIFileSystem.affirmPath ( path )
 	end
 end
-file:close ()
+
+makeJniProject ()
 
 for k, module in pairs ( MODULES_USED ) do
 	for i, path in ipairs ( module.JAVA or {} ) do
 		importJava ( path, module.NAMESPACE or MOAI_JAVA_NAMESPACE )
 	end
 end
-
-util.replaceInFile ( JNI_DIR .. 'Android.mk', {
-	[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
-	[ '@MY_ARM_MODE@' ]					= MY_ARM_MODE,
-	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
-	[ '@GLOBALS@' ] 					= getGlobalsString (),
-	[ '@MODULES@' ] 					= getModulesString (),
-})
-
-util.replaceInFile ( JNI_DIR .. 'Application.mk', {
-	[ '@MY_ARM_ARCH@' ]					= MY_ARM_ARCH,
-	[ '@MY_APP_PLATFORM@' ] 			= MY_APP_PLATFORM,
-})
-
-util.replaceInFile ( JNI_DIR .. 'src/aku_plugins.cpp', {
-	[ '@AKU_PLUGINS_HEADERS@' ]					= getPluginsString ( 'INCLUDES', '\t#include %s\n' ),
-	[ '@AKU_PLUGINS_APP_FINALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppFinalize ();\n', '\t' ),
-	[ '@AKU_PLUGINS_APP_INITIALIZE@' ]			= getPluginsString ( 'PREFIX', '\t%sAppInitialize ();\n', '\t' ),
-	[ '@AKU_PLUGINS_CONTEXT_INITIALIZE@' ] 		= getPluginsString ( 'PREFIX', '\t%sContextInitialize ();\n', '\t' ),
-	[ '@AKU_PLUGINS_PAUSE@' ] 					= getPluginsString ( 'PREFIX', '\t%sPause ( pause );\n', '\t' ),
-	[ '@AKU_PLUGINS_UPDATE@' ] 					= getPluginsString ( 'PREFIX', '\t%sUpdate ();\n', '\t' ),
-})

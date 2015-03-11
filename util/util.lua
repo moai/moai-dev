@@ -31,7 +31,7 @@ local  		iterateFilesImplementation		= nil
 			listDirectories					= nil
 			listFiles						= nil
 local		makeDlcResourceSig				= nil
-			makeExecutable = nil
+			makeExecutable					= nil
 			makeStoreEntryFunc				= nil
 			mergeTables						= nil
 			move							= nil
@@ -232,7 +232,8 @@ end
 ----------------------------------------------------------------
 isAbsPath = function ( path )
 
-	return ( path [ 1 ] ~= 0x5C ) or ( path [ 1 ] ~= 0x2F ) -- hex codes for '/' and '\'
+	local c = string.byte ( path )
+	return ( c == 0x5C ) or ( c == 0x2F ) -- hex codes for '/' and '\'
 end
 
 ----------------------------------------------------------------
