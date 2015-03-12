@@ -309,21 +309,21 @@ void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 		u32 start = eventStream.Read < u32 >( 0 );
 		u32 editLength = eventStream.Read < u32 >( 0 );
 		u32 maxLength = eventStream.Read < u32 >( 0 );
-		char *text = (char*)malloc(maxLength * sizeof(char));
-		
-		for ( u32 i = 0; i < maxLength; i++ ) {
-			text[i] = eventStream.Read < char >( 0 );
-		}
 		
 		if ( this->mOnEdit ) {
+			char *text = (char*)malloc(maxLength);
+			eventStream.ReadBytes(text, ( size_t )maxLength);
+			
 			MOAIScopedLuaState state = this->mOnEdit.GetSelf ();
 			lua_pushstring ( state, text );
 			lua_pushnumber ( state, start );
 			lua_pushnumber ( state, editLength );
 			state.DebugCall ( 3, 0 );
+			
+			free(text);
+		} else {
+			eventStream.SetCursor(eventStream.GetCursor() + maxLength);
 		}
-		
-		free(text);
 	}
 }
 
