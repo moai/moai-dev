@@ -47,8 +47,6 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	end
 end
 
-TEMP_FILENAME			= OUTPUT_DIR .. '.tmp'
-
 print ( 'MOAI_SDK_HOME', MOAI_SDK_HOME )
 print ( 'SCRIPT_DIR', SCRIPT_DIR )
 print ( 'INVOKE_DIR', INVOKE_DIR )
@@ -74,6 +72,8 @@ FOLDERS = {
 	LIBS	= OUTPUT_DIR .. 'libs',
 	JAVA	= OUTPUT_DIR .. 'java',
 }
+
+TEMP_FILENAME					= INVOKE_DIR .. '.tmp'
 
 --==============================================================
 -- util
@@ -345,11 +345,11 @@ makeTarget = function ( target )
 	local targetMakefile = JNI_DIR .. target.NAME .. '.mk'
 	MOAIFileSystem.copy ( 'MoaiTarget.mk', targetMakefile )
 
+	print ( 'TARGET', target.NAME, targetMakefile )
+
 	local modules = {}
 	local libraries = {}
 	local preprecessorFlags = {}
-
-	--addLibraries ( libraries, DEFAULT_LIBRARIES )
 
 	-- build a set of modules to include
 	for i, moduleName in ipairs ( target.MODULES or {}) do
@@ -408,6 +408,12 @@ processConfigFile = function ( filename )
 	util.mergeTables ( MODULES, config.MODULES )
 	util.mergeTables ( GLOBALS, config.GLOBALS )
 	util.mergeTables ( TARGETS, config.TARGETS )
+
+	if config.FOLDERS then
+		for k, v in pairs ( config.FOLDERS ) do
+			FOLDERS [ k ] = type ( v ) == 'string' and ( util.isAbsPath ( v ) and v or INVOKE_DIR .. v ) or false
+		end
+	end
 end
 
 ----------------------------------------------------------------
@@ -454,15 +460,17 @@ for i, config in ipairs ( CONFIGS ) do
 	processConfigFile ( config )
 end
 
-MOAIFileSystem.affirmPath ( OUTPUT_DIR )
-
 for k, path in pairs ( FOLDERS ) do
 
-	FOLDERS [ k ] = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+	if path then
 
-	if path and path ~= OUTPUT_DIR then
-		MOAIFileSystem.deleteDirectory ( path, true )
-		MOAIFileSystem.affirmPath ( path )
+		path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+		FOLDERS [ k ] = path
+
+		if path ~= INVOKE_DIR then
+			MOAIFileSystem.deleteDirectory ( path, true )
+			MOAIFileSystem.affirmPath ( path )
+		end
 	end
 end
 
