@@ -15,7 +15,7 @@
 	MY_LOCAL_CFLAGS		:=
 	MY_INCLUDES			:=
 	
-	
+	MOAI_MODULES	:= ../../../util/ant-libmoai/
 
 	#----------------------------------------------------------------#
 	# recursive wildcard function

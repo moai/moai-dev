@@ -53,6 +53,7 @@
 
 #if AKU_WITH_ANDROID_VUNGLE
 	#include <moai-android-vungle/MOAIVungleAndroid.h>;
+	#include <moai-android-vungle/host.h>;
 #endif
 
 //----------------------------------------------------------------//

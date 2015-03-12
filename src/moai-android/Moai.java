@@ -549,6 +549,7 @@ public class Moai {
 				result = theMethod.invoke ( theInstance, parameterValues );
 			}
 			catch ( Throwable e ) {
+				MoaiLog.i(">>> Moai.java(551): Failed to call " + methodName + " for " + theClass.getName());
 			}
 		}
 		return result;

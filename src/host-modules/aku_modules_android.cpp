@@ -99,8 +99,12 @@ void AKUModulesAndroidContextInitialize () {
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostContextInitialize ();
 	#endif
-
-	#if AKU_WITH_ANDROID_CRITTERCISM
+    
+    #if AKU_WITH_ANDROID_VUNGLE
+        AKUAndroidVungleContextInitialize();
+    #endif
+	
+    #if AKU_WITH_ANDROID_CRITTERCISM
 //		AKUAndroidCrittercismContextInitialize ();
 	#endif
 
