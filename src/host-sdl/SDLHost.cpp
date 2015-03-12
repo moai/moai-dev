@@ -68,9 +68,9 @@ static void SetScreenSize ( DisplayModeFunc func);
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
-void    _AKUShowCursor ();
-void    _AKUHideCursor ();
-
+void    _AKUShowCursor					();
+void    _AKUHideCursor					();
+void	_AKUSetTextInputRectFunc		( int xMin, int yMin, int xMax, int yMax );
 
 //----------------------------------------------------------------//
 void _AKUShowCursor () {
@@ -115,6 +115,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_StartTextInput ();
 	}
 }
+
+//----------------------------------------------------------------//
+void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
+	SDL_Rect sdlRect;
+	sdlRect.x = xMin;
+	sdlRect.y = yMin;
+	sdlRect.w = xMax - xMin;
+	sdlRect.h = yMax - yMin;
+	
+	SDL_SetTextInputRect ( &sdlRect );
+}
+
 
 //================================================================//
 // helpers
@@ -178,6 +190,8 @@ void Init ( int argc, char** argv ) {
 	AKUSetFunc_HideCursor ( _AKUHideCursor );
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
+	
+	AKUSetFunc_SetTextInputRect( _AKUSetTextInputRectFunc );
 	
 	#ifdef __APPLE__
 			//are we a bundle?
@@ -292,7 +306,7 @@ void MainLoop () {
 	
 	bool running = true;
 	while ( running ) {
-	
+		
 		SDL_Event sdlEvent;
 		
 		while ( SDL_PollEvent ( &sdlEvent )) {  
@@ -320,6 +334,15 @@ void MainLoop () {
 					for ( int i = 0; i < charCount; ++i ) {
 						AKUEnqueueKeyboardCharEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, unicodeString [ i ] );
 					}
+					break;
+				}
+				case SDL_TEXTEDITING: {
+					char *text = sdlEvent.edit.text;
+					int start = sdlEvent.edit.start;
+					int length = sdlEvent.edit.length;
+					
+					AKUEnqueueKeyboardEditEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, text, start, length, SDL_TEXTEDITINGEVENT_TEXT_SIZE );
+					break;
 				}
 				
 				case SDL_MOUSEBUTTONDOWN:
@@ -385,6 +408,16 @@ void MainLoop () {
 							sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED ) {
 						
 						AKUSetViewSize(sdlEvent.window.data1, sdlEvent.window.data2);
+					} else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_LOST ) {
+						// If the focus is lost, it must be stopped.
+						SDL_StopTextInput();
+						
+						// Clear Editing text.
+						AKUEnqueueKeyboardEditEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, "", 0, 0, SDL_TEXTEDITINGEVENT_TEXT_SIZE );
+					} else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_GAINED ) {
+						// Start when the focus is given.
+						// TODO:Restored the edit text.
+						SDL_StartTextInput();
 					}
 					break;
 
