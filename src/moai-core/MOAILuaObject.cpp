@@ -62,6 +62,20 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_getClassName ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAILuaObject* object = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+
+	if ( object ) {
+		lua_pushstring ( L, object->TypeName ());
+		return 1;
+	}
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_getMemberTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 	
@@ -75,19 +89,6 @@ int MOAILuaObject::_getRefTable ( lua_State* L ) {
 
 	self->PushRefTable ( state );
 	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAILuaObject::_getClassName ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAILuaObject* object = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
-
-	if ( object ) {
-		lua_pushstring ( L, object->TypeName ());
-		return 1;
-	}
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -207,6 +208,11 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// for now, singletons are just userdata with no add'l metatables
 	// so only build the metatable stack if we're *not* a singleton
 	if ( !type->IsSingleton ()) {
+	
+		// hang on to the userdata in case this object was created on the stack
+		// shouldn't need to do this for singletons
+		MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
+	
 		// instances get the 'full stack' of metatables
 		lua_newtable ( state ); // ref table
 		lua_newtable ( state ); // member table
@@ -222,6 +228,10 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// which in turn calls BindToLua if there is no mUserdata...
 	if ( type->IsSingleton ()) {
 		this->LuaRetain ( this ); // create a circular reference to 'pin' the userdata
+		
+		// in the case of a singleton, the ref table is kept in the class record, which is a strong
+		// ref (as opposed to the metatable version attached to the weak userdata for regular instance
+		// classes).
 	}
 }
 
@@ -232,25 +242,6 @@ MOAILuaClass* MOAILuaObject::GetLuaClass () {
 	assert ( false );
 	return 0;
 }
-
-//----------------------------------------------------------------//
-//cc8* MOAILuaObject::GetLuaClassName () {
-//
-//	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//	cc8* classname = this->TypeName ();
-//	
-//	if ( this->mMemberTable ) {
-//		state.Push ( this );
-//		lua_getfield ( state, -1, "getClassName" );
-//		
-//		if ( state.IsType ( -1, LUA_TFUNCTION )) {
-//			lua_pushvalue ( state, -2 );
-//			state.DebugCall ( 1, 1 );
-//			classname = state.GetValue < cc8* >( -1, "" );
-//		}
-//	}
-//	return classname;
-//}
 
 //----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaObject::GetSelf () {
@@ -318,7 +309,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
 				lua_pop ( state, 1 ); // pop the old count
 				
-				if ( count == 0 ) return; // nothing to do
+				if ( count == 0 ) return; // do nothing
 				
 				if ( count > 1 ) {
 					lua_pushnumber ( state, count - 1 ); // push the new count
@@ -326,11 +317,15 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				else {
 					lua_pushnil ( state );
 				}
+				
+				// this should make the object eligible for garbage collection
 				lua_settable ( state, -3 ); // save it in the table
 			}
 		}
 	}
 	
+	// this will take the ref count to zero, but if the object hasn't been collected it *won't* get deleted
+	// thanks to the override of MOAIObject OnRelease ()
 	object->Release ();
 }
 
@@ -338,17 +333,22 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
-	object->Retain ();
+	object->Retain (); // strong ref
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushRefTable ( state )) {
 		if ( object->PushLuaUserdata ( state )) {
 		
+			// look up the old count using the object as a key
+			
 			lua_pushvalue ( state, -1 ); // copy the userdata
 			lua_gettable ( state, -3 ); // get the count (or nil)
 			u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
 			lua_pop ( state, 1 ); // pop the old count
+			
+			// store the new count in the ref table
+			
 			lua_pushnumber ( state, count + 1 ); // push the new count
 			lua_settable ( state, -3 ); // save it in the table
 		}
@@ -378,11 +378,23 @@ MOAILuaObject::~MOAILuaObject () {
 			
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
+			
+			u32 top = state.GetTop ();
+			bool isUserdata = state.IsType ( top, LUA_TUSERDATA );
+			
+			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+			
+			top = state.GetTop ();
+			isUserdata = state.IsType ( top, LUA_TUSERDATA );
+			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
 				lua_setfield ( state, -2, "__gc" );
 				state.Pop ( 1 );
 			}
+			
+			top = state.GetTop ();
+			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			// and the ref table
 			lua_pushnil ( state );

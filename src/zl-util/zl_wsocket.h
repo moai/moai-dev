@@ -25,6 +25,9 @@
 
 #ifndef WSOCKET_H
 #define WSOCKET_H
+
+#ifdef _WIN32
+
 /*=========================================================================*\
 * Socket compatibilization module for Win32
 * LuaSocket toolkit
@@ -42,4 +45,5 @@ typedef SOCKET zl_socket;
 
 #define SOCKET_INVALID (INVALID_SOCKET)
 
+#endif
 #endif /* WSOCKET_H */

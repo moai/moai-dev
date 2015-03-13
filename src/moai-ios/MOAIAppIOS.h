@@ -10,7 +10,6 @@
 
 #import <moai-core/host.h>
 #import <moai-core/headers.h>
-#import <moai-ios/MOAIReachabilityListener.h>
 
 // TODO: rename to MOAIMailComposeDelegate
 @class MoaiMailComposeDelegate;
@@ -46,8 +45,6 @@ private:
 	
 	typedef STLList < id >::iterator NotificationObserverIt;
 	STLList < id >	mNotificationObservers;
-	
-	MOAIReachabilityListener*	mReachabilityListener;
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
 	MOAITakeCameraListener*		mTakeCameraListener;
@@ -55,17 +52,20 @@ private:
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
-	static int	_getAvailableStorage			( lua_State* L );
-	static int	_getDirectoryInDomain			( lua_State* L );
-	static int	_getInterfaceOrientation		( lua_State* L );
-	static int	_getIPAddress					( lua_State* L );
-	static int	_getUTCTime						( lua_State* L );
-	static int	_sendMail						( lua_State* L );
-	static int	_takeCamera						( lua_State* L );
+	static int		_canOpenURL						( lua_State* L );
+	static int		_getAvailableStorage			( lua_State* L );
+	static int		_getDirectoryInDomain			( lua_State* L );
+	static int		_getInterfaceOrientation		( lua_State* L );
+	static int		_getIPAddress					( lua_State* L );
+	static int		_getUTCTime						( lua_State* L );
+	static int		_openURL						( lua_State* L );
+	static int		_openURLWithParams				( lua_State* L );
+	static int		_sendMail						( lua_State* L );
+	static int		_takeCamera						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void		RegisterNotificationListeners	();
-	void		RemoveNotificationListeners		();
+	void			RegisterNotificationListeners	();
+	void			RemoveNotificationListeners		();
 	
 public:
 	
@@ -74,7 +74,7 @@ public:
 	enum {
 		DID_BECOME_ACTIVE,
 		DID_ENTER_BACKGROUND,
-		DID_RECIEVE_MEMORY_WARNING,
+		DID_RECEIVE_MEMORY_WARNING,
 		OPEN_URL,
 		WILL_ENTER_FOREGROUND,
 		WILL_RESIGN_ACTIVE,
@@ -96,14 +96,15 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-					MOAIAppIOS					();
-					~MOAIAppIOS					();
-	void			OnGlobalsFinalize			();
-	void			OpenUrl						( NSURL* url, NSString* sourceApplication );
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			UpdateReachability			();
+	static CGRect		GetScreenBoundsFromCurrentOrientation	( const CGRect& bounds ); // TODO: move to MOAIWebView or MOAIAppDelegate when those are added later
+	static BOOL			IsSystemVersionLessThan					( NSString* version ); // TODO: move to MOAIWebView or MOAIAppDelegate when those are added later
+						MOAIAppIOS								();
+						~MOAIAppIOS								();
+	void				OnGlobalsFinalize						();
+	void				OpenUrl									( NSURL* url, NSString* sourceApplication );
+	void				RegisterLuaClass						( MOAILuaState& state );
 
-	static void		callTakeCameraLuaCallback									(NSString* imagePath);
+	static void			callTakeCameraLuaCallback				( NSString* imagePath );
 };
 
 //================================================================//

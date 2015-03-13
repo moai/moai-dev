@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAICollisionFacet.h>
+#include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIGraphicsProp.h>
@@ -16,6 +16,17 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+int MOAICollisionWorld::_insertProp ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
+	
+	MOAICollisionProp* prop = state.GetLuaObject < MOAICollisionProp >( 2, true );
+	if ( prop ) {
+		self->InsertProp ( *prop );
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 int MOAICollisionWorld::_processOverlaps ( lua_State* L ) {
@@ -34,17 +45,25 @@ int MOAICollisionWorld::_setCallback ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAICollisionWorld::_setPartition ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
+
+	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2, true ));
+	return 0;
+}
+
 //================================================================//
 // MOAICollisionWorld
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::AffirmOverlap ( MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, const MOAIOverlapInfo& overlapInfo ) {
+void MOAICollisionWorld::AffirmOverlap ( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo ) {
 	
-	MOAIPropOverlapLink* overlapLink = facet0.mOverlapLinks;
+	MOAIPropOverlapLink* overlapLink = prop0.mOverlapLinks;
 	for ( ; overlapLink; overlapLink = overlapLink->mNext ) {
 	
-		if ( overlapLink->mOther == &facet1 ) {
+		if ( overlapLink->mOther == &prop1 ) {
 			MOAIPropOverlap& overlap = *overlapLink->mOverlap;
 			overlap.mIsValid = true;
 			return;
@@ -56,57 +75,57 @@ void MOAICollisionWorld::AffirmOverlap ( MOAICollisionFacet& facet0, MOAICollisi
 	
 	overlap->mIsValid = true; // latch is set
 	
-	overlap->mLeft.mOther = &facet1;
+	overlap->mLeft.mOther = &prop1;
 	overlap->mLeft.mOverlap = overlap;
-	overlap->mLeft.mNext = facet0.mOverlapLinks;
-	facet0.mOverlapLinks = &overlap->mLeft;
+	overlap->mLeft.mNext = prop0.mOverlapLinks;
+	prop0.mOverlapLinks = &overlap->mLeft;
 	
-	overlap->mRight.mOther = &facet0;
+	overlap->mRight.mOther = &prop0;
 	overlap->mRight.mOverlap = overlap;
-	overlap->mRight.mNext = facet1.mOverlapLinks;
-	facet1.mOverlapLinks = &overlap->mRight;
+	overlap->mRight.mNext = prop1.mOverlapLinks;
+	prop1.mOverlapLinks = &overlap->mRight;
 	
 	overlap->mOverlapListLink.Data ( overlap );
 	this->mOverlapList.PushBack ( overlap->mOverlapListLink );
 	
-	this->DoCallback ( OVERLAP_BEGIN, facet0, facet1, overlapInfo );
+	this->DoCallback ( OVERLAP_BEGIN, prop0, prop1, overlapInfo );
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::ClearOverlap ( MOAICollisionFacet& facet0, MOAICollisionFacet& facet1 ) {
+void MOAICollisionWorld::ClearOverlap ( MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) {
 
-	if ( !( facet0.mOverlapLinks && facet1.mOverlapLinks )) return;
+	if ( !( prop0.mOverlapLinks && prop1.mOverlapLinks )) return;
 
-	MOAIPropOverlapLink* cursor = facet0.mOverlapLinks;
-	facet0.mOverlapLinks = 0;
+	MOAIPropOverlapLink* cursor = prop0.mOverlapLinks;
+	prop0.mOverlapLinks = 0;
 	
 	while ( cursor ) {
 	
 		MOAIPropOverlapLink* overlapLink = cursor;
 		cursor = cursor->mNext;
 		
-		MOAICollisionFacet& other = *overlapLink->mOther;
+		MOAICollisionProp& other = *overlapLink->mOther;
 		
-		if ( overlapLink->mOther == &facet1 ) {
+		if ( overlapLink->mOther == &prop1 ) {
 			
-			if (( facet0.mOverlapFlags | facet1.mOverlapFlags ) & MOAICollisionFacet::OVERLAP_EVENTS_LIFECYCLE ) {
-				this->DoCallback ( OVERLAP_END, facet0, facet1 );
+			if (( prop0.mOverlapFlags | prop1.mOverlapFlags ) & MOAICollisionProp::OVERLAP_EVENTS_LIFECYCLE ) {
+				this->DoCallback ( OVERLAP_END, prop0, prop1 );
 			}
 		
-			facet1.ClearOverlapLink ( facet0 );
+			prop1.ClearOverlapLink ( prop0 );
 			this->mOverlapList.Remove ( overlapLink->mOverlap->mOverlapListLink );
 			this->mOverlapPool.Free ( overlapLink->mOverlap );
 		}
 		else {
 		
-			overlapLink->mNext = facet0.mOverlapLinks;
-			facet0.mOverlapLinks = overlapLink;
+			overlapLink->mNext = prop0.mOverlapLinks;
+			prop0.mOverlapLinks = overlapLink;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::ClearOverlaps ( MOAICollisionFacet& prop ) {
+void MOAICollisionWorld::ClearOverlaps ( MOAICollisionProp& prop ) {
 	
 	MOAIPropOverlapLink* cursor = prop.mOverlapLinks;
 	while ( cursor ) {
@@ -114,11 +133,11 @@ void MOAICollisionWorld::ClearOverlaps ( MOAICollisionFacet& prop ) {
 		MOAIPropOverlapLink* overlapLink = cursor;
 		cursor = cursor->mNext;
 		
-		MOAICollisionFacet& other = *overlapLink->mOther;
+		MOAICollisionProp& other = *overlapLink->mOther;
 		
 		// see if we should broadcast finish events
 		u32 flags = prop.mOverlapFlags | other.mOverlapFlags;
-		if ( flags & MOAICollisionFacet::OVERLAP_EVENTS_LIFECYCLE ) {
+		if ( flags & MOAICollisionProp::OVERLAP_EVENTS_LIFECYCLE ) {
 			this->DoCallback ( OVERLAP_END, prop, other );
 		}
 		
@@ -135,29 +154,29 @@ void MOAICollisionWorld::ClearOverlaps ( MOAICollisionFacet& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1 ) {
+void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) {
 	
 	if ( this->mCallback ) {
 		
 		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		
 		state.Push ( eventID );
-		state.Push ( &facet0.GetProp ());
-		state.Push ( &facet1.GetProp ());
+		state.Push ( &prop0 );
+		state.Push ( &prop1 );
 		state.DebugCall ( 3, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, const MOAIOverlapInfo& overlapInfo ) {
+void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo ) {
 	
 	if ( this->mCallback ) {
 	
 		MOAIScopedLuaState state = this->mCallback.GetSelf ();
 		
 		state.Push ( eventID );
-		state.Push ( &facet0.GetProp ());
-		state.Push ( &facet1.GetProp ());
+		state.Push ( &prop0 );
+		state.Push ( &prop1 );
 		
 		const ZLVec3D& center = overlapInfo.mCenter;
 		
@@ -185,47 +204,69 @@ void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionFacet& facet0, M
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::DrawFacet ( MOAICollisionFacet& facet ) {
+void MOAICollisionWorld::DrawCollisionProp ( MOAICollisionProp& prop ) {
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 
-	MOAIGraphicsProp* prop = facet.GetProp ().GetGraphicsProp ();
+	bool visible = false;
+	
+	if ( prop.IsActive ()) {
 		
-	if ( prop && prop->IsVisible () && !prop->IsClear ()) {
-		
-		bool visible = false;
-		
-		if ( facet.IsActive ()) {
-			
-			if ( facet.mOverlapLinks ) {
-				visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
-			}
-			
-			if ( facet.mTouched == this->mOverlapPass && !visible ) {
-				visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
-			}
-			
-			if ( !visible ) {
-				visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
-			}
+		if ( prop.mOverlapLinks ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
 		}
 		
-		if ( facet.mOverlapLinks && !visible ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
+		if ( prop.mTouched == this->mOverlapPass && !visible ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
 		}
 		
-		if ( visible ) {
-			draw.DrawBoxOutline ( prop->GetBounds ());
+		if ( !visible ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
+		}
+	}
+	
+	if ( prop.mOverlapLinks && !visible ) {
+		visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
+	}
+	
+	if ( visible ) {
+		draw.DrawBoxOutline ( prop.GetBounds ());
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::InsertProp ( MOAICollisionProp& prop ) {
+
+	if ( prop.mCollisionWorld != this ) {
+	
+		// clears out the old collision world (if any )
+		if ( prop.mCollisionWorld ) {
+			prop.mCollisionWorld->RemoveProp ( prop );
+		}
+		
+		if ( this->mPartition ) {
+			
+			// must be set before calling set partition
+			prop.mCollisionWorld = this;
+		
+			// this will invoke PrepareForInsertion () on the prop, which
+			// will verify that the prop's collision world matchs 'this'
+			prop.SetPartition ( this->mPartition );
+			
+			// now activate the prop
+			if ( prop.mOverlapFlags ) {
+				this->MakeActive ( prop );
+			}
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::InvalidateOverlaps ( MOAICollisionFacet& facet, u32 nextPass ) {
+void MOAICollisionWorld::InvalidateOverlaps ( MOAICollisionProp& prop, u32 nextPass ) {
 
-	MOAIPropOverlapLink* cursor = facet.mOverlapLinks;
+	MOAIPropOverlapLink* cursor = prop.mOverlapLinks;
 	for ( ; cursor; cursor = cursor->mNext ) {
 		cursor->mOverlap->mIsValid = cursor->mOther->mOverlapPass == nextPass;
 	}
@@ -238,17 +279,17 @@ bool MOAICollisionWorld::IsDone () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::MakeActive ( MOAICollisionFacet& facet ) {
+void MOAICollisionWorld::MakeActive ( MOAICollisionProp& prop ) {
 
-	if ( !facet.mActiveListLink.List ()) {
-		this->mActiveList.PushBack ( facet.mActiveListLink );
+	if ( !prop.mActiveListLink.List ()) {
+		this->mActiveList.PushBack ( prop.mActiveListLink );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::MakeInactive ( MOAICollisionFacet& facet ) {
+void MOAICollisionWorld::MakeInactive ( MOAICollisionProp& prop ) {
 
-	this->mActiveList.Remove ( facet.mActiveListLink );
+	this->mActiveList.Remove ( prop.mActiveListLink );
 }
 
 //----------------------------------------------------------------//
@@ -257,7 +298,6 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	mOverlapPass ( OVERLAP_PASS_INIT ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPartition )
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
@@ -271,33 +311,7 @@ MOAICollisionWorld::~MOAICollisionWorld () {
 		this->mOverlapList.Remove ( overlap->mOverlapListLink );
 		this->mOverlapPool.Free ( overlap );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::OnPropInserted ( MOAIProp& prop ) {
-
-	this->OnPropUpdated ( prop );
-}
-
-//----------------------------------------------------------------//	
-void MOAICollisionWorld::OnPropRemoved ( MOAIProp& prop ) {
-	
-	MOAICollisionFacet* collisionFacet = prop.GetCollisionFacet ();
-	
-	if ( collisionFacet ) {
-		this->ClearOverlaps ( *collisionFacet );
-		this->MakeInactive ( *collisionFacet );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::OnPropUpdated ( MOAIProp& prop ) {
-	
-	MOAICollisionFacet* collisionFacet = prop.GetCollisionFacet ();
-	
-	if ( collisionFacet && collisionFacet->mOverlapFlags ) {
-		this->MakeActive ( *collisionFacet );
-	}
+	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -309,6 +323,8 @@ void MOAICollisionWorld::OnUpdate ( double step ) {
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::ProcessOverlaps () {
+
+	if ( !this->mPartition ) return;
 
 	u32 thisPass = this->mOverlapPass;
 	u32 nextPass = thisPass + 1;
@@ -325,97 +341,95 @@ void MOAICollisionWorld::ProcessOverlaps () {
 	ActiveListIt activeIt = this->mActiveList.Head ();
 	while ( activeIt ) {
 		
-		MOAICollisionFacet& facet = *activeIt->Data ();
-		this->InvalidateOverlaps ( facet, nextPass );
+		MOAICollisionProp& prop = *activeIt->Data ();
+		this->InvalidateOverlaps ( prop, nextPass );
 		
-		MOAIProp& prop = facet.GetProp ();
-		
-		u32 overlapFlags = facet.mOverlapFlags;
+		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAICollisionProp >();
 		
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		u32 totalResults = this->GatherProps ( buffer, &prop, prop.GetBounds (), MOAIProp::CAN_OVERLAP );
+		u32 totalResults = this->mPartition->GatherProps ( buffer, &prop, prop.GetBounds (), interfaceMask );
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAICollisionFacet* otherFacet = result->mProp->GetCollisionFacet ();
+			MOAICollisionProp* otherProp = result->mProp->AsType < MOAICollisionProp >();
 			
-			if ( !otherFacet ) continue;
-			if ( !( facet.mGroupMask & otherFacet->mGroupMask )) continue;
-			if ( otherFacet->mOverlapPass == nextPass ) continue; // has been processed
+			if ( !otherProp ) continue;
+			if ( !( prop.mGroupMask & otherProp->mGroupMask )) continue;
+			if ( otherProp->mOverlapPass == nextPass ) continue; // has been processed
 			
 			// this calculates the detailed overlap, updates the links and sends overlap events
 			MOAIOverlapInfo overlapInfo;
-			if ( facet.RefineOverlap ( *otherFacet, overlapInfo )) {
+			if ( prop.RefineOverlap ( *otherProp, overlapInfo )) {
 				
-				u32 flags = facet.mOverlapFlags | otherFacet->mOverlapFlags;
+				u32 flags = prop.mOverlapFlags | otherProp->mOverlapFlags;
 				
 				// create an overlap if needed
-				if ( flags & MOAICollisionFacet::OVERLAP_EVENTS_LIFECYCLE ) {
-					this->AffirmOverlap ( facet, *otherFacet, overlapInfo );
+				if ( flags & MOAICollisionProp::OVERLAP_EVENTS_LIFECYCLE ) {
+					this->AffirmOverlap ( prop, *otherProp, overlapInfo );
 				}
 				
 				// send update event and keep both active
-				if ( flags & ( MOAICollisionFacet::OVERLAP_EVENTS_ON_UPDATE | MOAICollisionFacet::OVERLAP_EVENTS_CONTINUOUS )) {
+				if ( flags & ( MOAICollisionProp::OVERLAP_EVENTS_ON_UPDATE | MOAICollisionProp::OVERLAP_EVENTS_CONTINUOUS )) {
 				
-					facet.mTouched = nextPass;
-					otherFacet->mTouched = nextPass;
+					prop.mTouched = nextPass;
+					otherProp->mTouched = nextPass;
 				
-					this->DoCallback ( OVERLAP_UPDATE, facet, *otherFacet, overlapInfo );
+					this->DoCallback ( OVERLAP_UPDATE, prop, *otherProp, overlapInfo );
 				
-					if ( flags & MOAICollisionFacet::OVERLAP_EVENTS_CONTINUOUS ) {
-						this->MakeActive ( *otherFacet );
-						facet.mStayActive = true;
-						otherFacet->mStayActive = true;
+					if ( flags & MOAICollisionProp::OVERLAP_EVENTS_CONTINUOUS ) {
+						this->MakeActive ( *otherProp );
+						prop.mStayActive = true;
+						otherProp->mStayActive = true;
 					}
 				}
 			}
 		}
 		
-		this->PruneOverlaps ( facet );
+		this->PruneOverlaps ( prop );
 		
-		facet.mOverlapPass = nextPass;
+		prop.mOverlapPass = nextPass;
 		activeIt = activeIt->Next ();
 
-		if ( !facet.mStayActive ) {
-			this->MakeInactive ( facet );
+		if ( !prop.mStayActive ) {
+			this->MakeInactive ( prop );
 		}
-		facet.mStayActive = false;
+		prop.mStayActive = false;
 	}
 	
 	this->mOverlapPass = nextPass;
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::PruneOverlaps ( MOAICollisionFacet& facet ) {
+void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 
-	MOAIPropOverlapLink* cursor = facet.mOverlapLinks;
-	facet.mOverlapLinks = 0;
+	MOAIPropOverlapLink* cursor = prop.mOverlapLinks;
+	prop.mOverlapLinks = 0;
 	
 	while ( cursor ) {
 	
 		MOAIPropOverlapLink* overlapLink = cursor;
 		cursor = cursor->mNext;
 		
-		MOAICollisionFacet& other = *overlapLink->mOther;
+		MOAICollisionProp& other = *overlapLink->mOther;
 		MOAIPropOverlap& overlap = *overlapLink->mOverlap;
 		
 		if ( !overlap.mIsValid ) {
 			
-			if (( facet.mOverlapFlags | other.mOverlapFlags ) & MOAICollisionFacet::OVERLAP_EVENTS_LIFECYCLE ) {
-				this->DoCallback ( OVERLAP_END, facet, other );
+			if (( prop.mOverlapFlags | other.mOverlapFlags ) & MOAICollisionProp::OVERLAP_EVENTS_LIFECYCLE ) {
+				this->DoCallback ( OVERLAP_END, prop, other );
 			}
 		
-			other.ClearOverlapLink ( facet );
+			other.ClearOverlapLink ( prop );
 			this->mOverlapList.Remove ( overlapLink->mOverlap->mOverlapListLink );
 			this->mOverlapPool.Free ( overlapLink->mOverlap );
 		}
 		else {
 		
-			overlapLink->mNext = facet.mOverlapLinks;
-			facet.mOverlapLinks = overlapLink;
+			overlapLink->mNext = prop.mOverlapLinks;
+			prop.mOverlapLinks = overlapLink;
 		}
 	}
 }
@@ -423,8 +437,8 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionFacet& facet ) {
 //----------------------------------------------------------------//
 void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIPartition::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
+	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
 	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
@@ -434,16 +448,30 @@ void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartition::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
+	MOAIRenderable::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "insertProp",			_insertProp },
 		{ "processOverlaps",	_processOverlaps },
 		{ "setCallback",		_setCallback },
+		{ "setPartition",		_setPartition },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::RemoveProp ( MOAICollisionProp& prop ) {
+
+	assert ( prop.mCollisionWorld == this );
+	assert ( this->mPartition );
+	
+	this->ClearOverlaps ( prop );
+	this->MakeInactive ( prop );
+	
+	this->mPartition->RemoveProp ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -460,61 +488,59 @@ void MOAICollisionWorld::Render () {
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 
-	MOAICollisionFacet* drawList = 0;
+	MOAICollisionProp* drawList = 0;
 
 	OverlapListIt overlapIt = this->mOverlapList.Head ();
 	for ( ; overlapIt; overlapIt = overlapIt->Next ()) {
 		MOAIPropOverlap& overlap = *overlapIt->Data ();
 	
-		MOAICollisionFacet& facet0 = *overlap.mLeft.mOther;
-		MOAICollisionFacet& facet1 = *overlap.mRight.mOther;
+		MOAICollisionProp& prop0 = *overlap.mLeft.mOther;
+		MOAICollisionProp& prop1 = *overlap.mRight.mOther;
 	
-		if ( !facet0.mInDrawList ) {
-			facet0.mNextInDrawList = drawList;
-			facet0.mInDrawList = true;
-			drawList = &facet0;
+		if ( !prop0.mInDrawList ) {
+			prop0.mNextInDrawList = drawList;
+			prop0.mInDrawList = true;
+			drawList = &prop0;
 		}
 		
-		if ( !facet1.mInDrawList ) {
-			facet1.mNextInDrawList = drawList;
-			facet1.mInDrawList = true;
-			drawList = &facet1;
+		if ( !prop1.mInDrawList ) {
+			prop1.mNextInDrawList = drawList;
+			prop1.mInDrawList = true;
+			drawList = &prop1;
 		}
 	}
 	
 	ActiveListIt activeIt = this->mActiveList.Head ();
 	for ( ; activeIt; activeIt = activeIt->Next ()) {
-		MOAICollisionFacet& facet = *activeIt->Data ();
+		MOAICollisionProp& prop = *activeIt->Data ();
 		
-		if ( !facet.mInDrawList ) {
-			facet.mInDrawList = true;
-			facet.mNextInDrawList = drawList;
-			drawList = &facet;
+		if ( !prop.mInDrawList ) {
+			prop.mInDrawList = true;
+			prop.mNextInDrawList = drawList;
+			drawList = &prop;
 		}
 	}
 	
-	MOAICollisionFacet* cursor = drawList;
+	MOAICollisionProp* cursor = drawList;
 	while ( cursor ) {
 	
-		MOAICollisionFacet& facet = *cursor;
+		MOAICollisionProp& prop = *cursor;
 		cursor = cursor->mNextInDrawList;
 		
-		this->DrawFacet ( facet );
-		facet.mInDrawList = false;
-		facet.mNextInDrawList = 0;
+		this->DrawCollisionProp ( prop );
+		prop.mInDrawList = false;
+		prop.mNextInDrawList = 0;
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIPartition::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 	MOAIRenderable::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIPartition::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 	MOAIRenderable::SerializeOut ( state, serializer );
 }

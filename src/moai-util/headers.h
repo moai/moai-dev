@@ -21,6 +21,7 @@
 #include <moai-util/MOAIMutex_win32.h>
 #include <moai-util/MOAIParser.h>
 #include <moai-util/MOAIStream.h>
+#include <moai-util/MOAIStreamAdapter.h>
 #include <moai-util/MOAIStreamReader.h>
 #include <moai-util/MOAIStreamWriter.h>
 #include <moai-util/MOAITask.h>

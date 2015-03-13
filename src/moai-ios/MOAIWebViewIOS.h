@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <moai-core/headers.h>
 
-@class MOAIWebViewDelegate;
+@class MOAIWebViewController;
 
 //================================================================//
 // MOAIWebViewIOS
@@ -32,10 +32,7 @@ class MOAIWebViewIOS :
 	public MOAIInstanceEventSource {
 private:
 	
-	bool						mHasToolBar;
-	UIToolbar*					mToolBar;
-	UIWebView*					mWebView;
-	MOAIWebViewDelegate*		mWebViewDelegate;
+	MOAIWebViewController*	mWebViewController;
 	
 	//----------------------------------------------------------------//
 	static int	_canGoBack						( lua_State* L );	
@@ -44,20 +41,16 @@ private:
 	static int	_clickForward					( lua_State* L );
 	static int	_clickRefresh					( lua_State* L );
 	static int	_clickStop						( lua_State* L );
-	static int	_closeWebView					( lua_State* L );
 	static int	_getAllowsInlineMediaPlayback	( lua_State* L );
 	static int	_getCurrentRequest				( lua_State* L );
 	static int	_getMediaPlaybackRequiresAction	( lua_State* L );
 	static int	_getScalesPageToFit				( lua_State* L );
-	static int	_hasToolBar						( lua_State* L );
-	static int	_hideWebView					( lua_State* L );
+	static int	_hide							( lua_State* L );
 	static int	_isHidden						( lua_State* L );
-	static int	_initWebView					( lua_State* L );
 	static int	_isLoading						( lua_State* L );
-	static int	_loadData						( lua_State* L );
 	static int	_loadHTML						( lua_State* L );
 	static int	_loadRequest					( lua_State* L ); 
-	static int	_openUrlInSafari				( lua_State* L ); 
+	static int	_openUrlExternally				( lua_State* L );
 	static int	_runJavaScript					( lua_State* L );
 	static int	_setAllowsInlineMediaPlayback	( lua_State* L );
 	static int	_setMediaPlaybackRequiresAction	( lua_State* L );
@@ -72,7 +65,8 @@ public:
 		DID_FAIL_LOAD_WITH_ERROR,
 		SHOULD_START_LOAD_WITH_REQUEST,
 		WEB_VIEW_DID_FINISH_LOAD,
-		WEB_VIEW_DID_START_LOAD
+		WEB_VIEW_DID_START_LOAD,
+		WEB_VIEW_DID_HIDE
 	};
 	
 	enum {
@@ -84,17 +78,18 @@ public:
 		NAVIGATION_OTHER
 	};
 	
+	//----------------------------------------------------------------//
+	void		Close									();
+	void		Hide									( bool clean );
 				MOAIWebViewIOS							();
 				~MOAIWebViewIOS							();
-	void		Hide									();
 	void		RaiseDidFailLoadWithErrorEvent			( NSError* error );
 	BOOL		RaiseShouldStartLoadWithRequestEvent	( NSURLRequest* request, UIWebViewNavigationType navType );
 	void		RaiseWebViewDidFinishLoadEvent			();
 	void		RaiseWebViewDidStartLoadEvent			();
+	void		RaiseWebViewDidHideEvent				();
 	void		RegisterLuaClass						( MOAILuaState& state );
 	void		RegisterLuaFuncs						( MOAILuaState& state );
-	STLString	ToString								();
-
 };
 
 #endif

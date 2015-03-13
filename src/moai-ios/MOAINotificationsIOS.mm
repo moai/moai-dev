@@ -3,13 +3,12 @@
 
 #ifndef DISABLE_NOTIFICATIONS
 
-#include "pch.h"
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSData+MOAILib.h>
+#import <moai-apple/NSDate+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 
 #import <moai-ios/MOAINotificationsIOS.h>
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSData+MOAILib.h>
-#import <moai-ios/NSDate+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
 
 //================================================================//
 // lua

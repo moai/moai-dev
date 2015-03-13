@@ -97,19 +97,7 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
 
-	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
-
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
-		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
-		return false;
-	}
-
-	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
-		this->InvokeLoader ();
-	}
-
-	if ( this->DoGPUAffirm ()) {
-		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
+	if ( this->PrepareForBind ()) {
 		this->OnGPUBind ();
 		return true;
 	}
@@ -196,6 +184,14 @@ bool MOAIGfxResource::DoGPUAffirm () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::FinishInit () {
+
+	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) {
+		this->mState = STATE_NEEDS_CPU_CREATE;
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIGfxResource::GetLoadingPolicy () {
 
 	if ( this->mLoadingPolicy == LOADING_POLICY_NONE ) {
@@ -267,6 +263,27 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::PrepareForBind () {
+
+	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
+
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+		return false;
+	}
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->InvokeLoader ();
+	}
+
+	if ( this->DoGPUAffirm ()) {
+		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

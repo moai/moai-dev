@@ -67,9 +67,12 @@ void MOAIShader::BindUniforms () {
 		
 		for ( u32 i = 0; i < nUniforms; ++i ) {
 			MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
-				gfxDevice.Flush ();
-				uniform.Bind ();
+			
+			if ( uniform.IsValid ()) {
+				if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
+					gfxDevice.Flush ();
+					uniform.Bind ();
+				}
 			}
 		}
 	}
@@ -119,29 +122,11 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 		this->mUniformBuffers.Init ( nUniforms );
 		
 		for ( u32 i = 0; i < nUniforms; ++i ) {
-		
 			u32 type = program->mUniforms [ i ].GetType ();
 			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
 			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
+			uniformBuffer.SetValue ( program->mUniformDefaults [ i ], false );
 			
-			switch ( type ) {
-				case MOAIShaderUniformBuffer::UNIFORM_INDEX: {
-					uniformBuffer.SetValue ( 1 );
-					break;
-				}
-				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F3: {
-					ZLMatrix3x3 mtx;
-					mtx.Ident ();
-					uniformBuffer.SetValue ( mtx, false );
-					break;
-				}
-				case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F4: {
-					ZLMatrix4x4 mtx;
-					mtx.Ident ();
-					uniformBuffer.SetValue ( mtx, false );
-					break;
-				}
-			}
 		}
 	}
 }

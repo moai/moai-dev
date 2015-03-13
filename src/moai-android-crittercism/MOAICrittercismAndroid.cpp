@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_CRITTERCISM
+#if AKU_WITH_ANDROID_CRITTERCISM
 
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"

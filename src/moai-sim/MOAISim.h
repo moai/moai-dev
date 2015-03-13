@@ -66,6 +66,7 @@ private:
 		EVENT_FINALIZE,
 		EVENT_PAUSE,
 		EVENT_RESUME,
+		EVENT_STEP,
 	};
 
 	u32				mLoopState;
@@ -157,10 +158,6 @@ private:
 	//----------------------------------------------------------------//
 	double			MeasureFrameRate			();
 	void			OnGlobalsFinalize			();
-	void			OnGlobalsRestore			();
-	void			OnGlobalsRetire				();
-	void			SendPauseEvent				();
-	void			SendResumeEvent				();
 	double			StepSim						( double step, u32 multiplier );
 
 public:
@@ -214,7 +211,6 @@ public:
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			Resume						();
-	void			SendFinalizeEvent			();
 	void			SetStep						( double step );
 	void			Update						();
 };

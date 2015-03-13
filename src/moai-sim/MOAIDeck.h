@@ -62,8 +62,8 @@ protected:
 	u32		mHitColorScalar;
 	u32		mHitColorThreshold;
 	
-	u32 mContentMask;
-	SET ( u32, ContentMask, mContentMask )
+	//u32 mContentMask;
+	//SET ( u32, ContentMask, mContentMask )
 
 	u32		mDefaultShaderID;
 
@@ -98,7 +98,7 @@ public:
 		HIT_TEST_FINE,		// implementation dependent
 	};
 	
-	GET ( u32, ContentMask, mContentMask )
+	//GET ( u32, ContentMask, mContentMask )
 	GET ( u32, HitGranularity, mHitGranularity )
 	
 	//----------------------------------------------------------------//

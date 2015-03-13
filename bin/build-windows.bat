@@ -28,6 +28,7 @@ cd "build\build-%arg1%"
 echo Creating Release Libs
 cmake -G "%generator%" ^
 -DBUILD_WINDOWS=true ^
+-DMOAI_SDL=true ^
 -DMOAI_HTTP_SERVER=true ^
 -DCMAKE_INSTALL_PREFIX=%libprefix%\Release ^
 %rootpath%\cmake\hosts\host-win-sdl || exit /b 1

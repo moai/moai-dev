@@ -111,18 +111,19 @@ tess:finish ()
 
 tess:finish ()
 
-local vtxBuffer = MOAIVertexBuffer.new ()
-local idxBuffer = MOAIIndexBuffer.new ()
+local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
-tess:getTriangles ( vtxBuffer, idxBuffer );
-
-vtxBuffer:setFormat ( MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC ))
-vtxBuffer:bless ()
+local vtxBuffer = MOAIGfxBuffer.new ()
+local idxBuffer = MOAIGfxBuffer.new ()
+local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
-mesh:setVertexBuffer ( vtxBuffer )
+mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
 mesh:setIndexBuffer ( idxBuffer )
+mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
+mesh:setTotalElements ( totalElements )
+mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )

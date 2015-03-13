@@ -144,13 +144,13 @@ void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 
 	if ( this->mRoot ) {
-		this->mRoot->Attach ();
+		this->mRoot->Detach ();
 	}
 
 	this->mRoot = root;
 
 	if ( this->mRoot ) {
-		this->mRoot->Attach ( this );
+		this->mRoot->Attach ( this, false );
 	}
 }
 

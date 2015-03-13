@@ -30,15 +30,8 @@ camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 
-img = MOAIImage.new()
-
-function afterGrab ()
-	img:writePNG ( "test.png" )
-end
-
 function onStop ()
-	MOAIRenderMgr.grabNextFrame ( img, afterGrab )
-	
+	MOAIRenderMgr.grabNextFrame ( MOAIImage.new(), function ( img ) img:write ( 'test.png' ) end )	
 end
 
 action:setListener ( MOAIAction.EVENT_STOP, onStop )

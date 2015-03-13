@@ -45,7 +45,8 @@ namespace ZLColor {
 	enum BlendEquation {
 		BLEND_EQ_ADD,
 		BLEND_EQ_NONE,
-		BLEND_EQ_SUBTRACT,
+		BLEND_EQ_SUB,
+		BLEND_EQ_SUB_INV,
 	};
 	
 	enum BlendFactor {
@@ -94,6 +95,7 @@ namespace ZLColor {
 	u32				Set							( u32 c0, u8 b, u8 v ); // c0 [ b ] = v
 	void			SimpleThreshold				( void* colors, ColorFormat format, u32 nColors, u32 color );
 	u32				Sub							( u32 c0, u32 c1 );
+	u32				SubAndClamp					( u32 c0, u32 c1 );
 	u32				Swizzle						( u32 c0, u32 sw );
 };
 
@@ -121,6 +123,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
+	bool			Compare				( const ZLColorVec& c );
+	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );
 	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;
@@ -129,6 +133,7 @@ public:
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;
+	void			Scale				( float scale );
 	void			SetRGBA				( u32 color );
 	void			Set					( float r, float g, float b, float a );
 	void			SetBlack			();

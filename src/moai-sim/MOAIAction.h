@@ -62,13 +62,20 @@ private:
 	ChildIt mChildIt; // this iterator is used when updating the action tree
 	
 	float	mThrottle;
-	bool	mIsPaused;
-	bool	mAutoStop;
+	
+	enum {
+		FLAGS_AUTO_STOP			= 1 << 0,
+		FLAGS_IS_PAUSED			= 1 << 1,
+		FLAGS_IS_UPDATING		= 1 << 2,
+	};
+	
+	u32 mActionFlags;
 	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
 	static int			_attach					( lua_State* L );
 	static int			_clear					( lua_State* L );
+	static int			_defer					( lua_State* L );
 	static int			_detach					( lua_State* L );
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
@@ -83,7 +90,7 @@ private:
 	//----------------------------------------------------------------//
 	virtual void		OnLostChild				( MOAIAction* child );
 	void				OnUnblock				();
-	void				ResetPass				();
+	void				ResetPass				( u32 pass = 0 );
 	void				Update					( MOAIActionTree& tree, double step );
 
 protected:
@@ -110,8 +117,10 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void					Attach					( MOAIAction* parent = 0 );
+	void					Attach					( MOAIAction* parent, bool defer );
 	void					ClearChildren			();
+	void					Defer					( bool defer );
+	void					Detach					();
 	virtual MOAIAction*		GetDefaultParent		();
 	bool					IsActive				();
 	bool					IsBusy					();
@@ -121,7 +130,7 @@ public:
 							~MOAIAction				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					Start					( MOAIActionTree& tree );
+	void					Start					( MOAIActionTree& tree, bool defer );
 	void					Stop					();
 };
 

@@ -333,7 +333,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
 	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
-	task->PushLuaUserdata( state );
+	task->PushLuaUserdata ( state );
 	task->SetCallback ( L, 4 );
 	
 	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());

@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAICamera;
 class MOAIFrameBuffer;
@@ -238,10 +237,10 @@ public:
 	void					SetAmbientColor			( u32 color );
 	void					SetAmbientColor			( const ZLColorVec& colorVec );
 	void					SetAmbientColor			( float r, float g, float b, float a );
-	
+
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
-	void					SetBlendMode			( int srcFactor, int dstFactor );
+	void					SetBlendMode			( int srcFactor, int dstFactor, int equation = 0 );
 	
 	void					SetBufferScale			( float scale );
 	void					SetBufferSize			( u32 width, u32 height );

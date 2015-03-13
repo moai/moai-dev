@@ -25,13 +25,9 @@ font:preloadGlyphs ( charcodes, 76 )
 image = font:getImage ()
 image:writePNG ( 'font.png' )
 
--- add the font to the serializer
-serializer = MOAISerializer.new ()
-serializer:serialize ( font )
-
 -- serialize out to a file
 file = io.open ( 'font.lua', 'w' )
-file:write ( serializer:exportToString ())
+file:write ( MOAISerializer.serializeToString ( font ))
 file:close ()
 
 -- nothing up our sleeve...

@@ -91,17 +91,17 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 	
 	if ( positive != nil ) {
 		
-		alert->positiveButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:positive ]];
+		alert->positiveButtonIndex = ( int )[ alert addButtonWithTitle:[ NSString stringWithUTF8String:positive ]];
 	}
 
 	if ( neutral != nil ) {
 		
-		alert->neutralButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:neutral ]];
+		alert->neutralButtonIndex = ( int )[ alert addButtonWithTitle:[ NSString stringWithUTF8String:neutral ]];
 	}
 
 	if ( negative != nil ) {
 		
-		alert->negativeButtonIndex = [ alert addButtonWithTitle:[ NSString stringWithUTF8String:negative ]];
+		alert->negativeButtonIndex = ( int )[ alert addButtonWithTitle:[ NSString stringWithUTF8String:negative ]];
 	}
 		
 	[ alert show ];

@@ -54,6 +54,8 @@ public:
 
 private:
 
+	friend class MOAIImageFormat;
+
 	PixelFormat				mPixelFormat;
 	ZLColor::ColorFormat	mColorFormat;
 
@@ -63,7 +65,17 @@ private:
 	void*	mBitmap;
 	void*	mPalette;
 
+	//GET_SET ( void*, Bitmap, mBitmap );
+	//GET_SET ( void*, Palette, mPalette );
+
+	SET ( PixelFormat, PixelFormat, mPixelFormat )
+	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
+
+	SET ( u32, Width, mWidth )
+	SET ( u32, Height, mHeight )
+
 	//----------------------------------------------------------------//
+	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
@@ -92,48 +104,15 @@ private:
 	static int		_setColor32					( lua_State* L );
 	static int		_setRGBA					( lua_State* L );
 	static int		_simpleThreshold			( lua_State* L );
-	static int		_writePNG					( lua_State* L );
+	static int		_write						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Alloc					();
 	void			ComparePixel			( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
 	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
-	static u32		GetMinPowerOfTwo		( u32 size ); // gets the smallest power of two greater than size
-	u32				GetPaletteCount			() const;
-	u32				GetPaletteSize			() const;
-	u32				GetPixel				( u32 x, u32 y ) const;
-	u32				GetPixelDepthInBits		() const;
-	u32				GetPixelMask			() const;
-
 	void*			GetRowAddr				( u32 y );
 	const void*		GetRowAddr				( u32 y ) const;
-	size_t			GetRowSize				() const;
-
 	virtual void	OnImageStatusChanged	( bool isOK );
-	u32				SampleColor				( float x, float y, u32 filter ) const;
-	void			ToTrueColor				( const MOAIImage& image );
-	void			ToTrueColor				( void* destColors, const void* srcColors, const void* palette, u32 nColors, ZLColor::ColorFormat colorFormat, PixelFormat pixelFormat );
-	
-	//----------------------------------------------------------------//
-	#if MOAI_WITH_LIBJPG
-		static bool		IsJpg				( ZLStream& stream );
-		void			LoadJpg				( ZLStream& stream, u32 transform );
-		void			LoadJpg				( void* jpgInfoParam, u32 transform );
-	#endif
-	
-	//----------------------------------------------------------------//
-	#if MOAI_WITH_LIBPNG
-		static bool		IsPng				( ZLStream& stream );
-		void			LoadPng				( ZLStream& stream, u32 transform );
-		void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
-	#endif
-
-	//----------------------------------------------------------------//
-	#if MOAI_WITH_LIBWEBP
-		static bool		IsWebP				( ZLStream& stream );
-		void			LoadWebP			( ZLStream& stream, u32 transform );
-		void			LoadWebP			( const u8* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
-	#endif
 
 public:
 	
@@ -144,9 +123,9 @@ public:
 
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
-
-	GET ( void*, Bitmap, mBitmap )
-	GET ( void*, Palette, mPalette )
+	
+	GET_CONST ( void*, Bitmap, mBitmap );
+	GET_CONST ( void*, Palette, mPalette );
 	
 	enum {
 		FILTER_LINEAR,
@@ -155,6 +134,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIImage*		AffirmImage					( MOAILuaState& state, int idx );
+	ZLColorVec				Average						() const;
 	void					BleedRect					( ZLIntRect rect );
 	void					Blit						( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void					Clear						();
@@ -178,8 +158,15 @@ public:
 	ZLIntRect				GetBounds					();
 	u32						GetColor					( u32 x, u32 y ) const;
 	u32						GetDataSize					() const;
+	static u32				GetMinPowerOfTwo			( u32 size ); // gets the smallest power of two greater than size
 	u32						GetPaletteColor				( u32 idx ) const;
+	u32						GetPaletteCount				() const;
+	u32						GetPaletteSize				() const;
+	u32						GetPixel					( u32 x, u32 y ) const;
+	u32						GetPixelDepthInBits			() const;
+	u32						GetPixelMask				() const;
 	ZLIntRect				GetRect						();
+	size_t					GetRowSize					() const;
 	void					GetSubImage					( const MOAIImage& image, ZLIntRect rect );
 	void					Init						( const MOAIImage& image );
 	void					Init						( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
@@ -198,6 +185,7 @@ public:
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					ResizeCanvas				( const MOAIImage& image, ZLIntRect rect );
+	u32						SampleColor					( float x, float y, u32 filter ) const;
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetColor					( u32 x, u32 y, u32 color );
@@ -207,10 +195,7 @@ public:
 	void					SimpleThreshold				( const MOAIImage& image, float rT, float gT, float bT, float aT );
 	void					Take						( MOAIImage& image );
 	void					Transform					( u32 transform );
-	
-	#if MOAI_WITH_LIBPNG
-		bool					WritePNG					( ZLStream& stream );
-	#endif
+	bool					Write						( ZLStream& stream, cc8* formatName );
 };
 
 #endif

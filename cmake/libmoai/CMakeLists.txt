@@ -28,9 +28,16 @@ if (MOAI_PLUGINS)
 endif (MOAI_PLUGINS)
 
 #platform specific libs
+if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
+  add_subdirectory ( moai-sdl )
+endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
+
+if ( BUILD_OSX OR BUILD_IOS )
+  add_subdirectory ( moai-apple )
+endif ( BUILD_OSX OR BUILD_IOS )
+
 if ( BUILD_IOS )
-  add_subdirectory ( moai-iphone )
- 
+  add_subdirectory ( moai-iphone ) 
 endif ( BUILD_IOS )
 
 if ( BUILD_ANDROID )

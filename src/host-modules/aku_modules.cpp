@@ -50,6 +50,10 @@
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
 
+    #if AKU_WITH_APPLE
+		AKUAppleAppFinalize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppFinalize ();
 	#endif
@@ -86,12 +90,12 @@ void AKUModulesAppFinalize () {
 		AKULuaExtAppFinalize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimAppFinalize ();
+	#if AKU_WITH_SDL
+		AKUSdlAppFinalize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppFinalize ();
+	#if AKU_WITH_SIM
+		AKUSimAppFinalize ();
 	#endif
 
 	#if AKU_WITH_UNTZ
@@ -117,6 +121,10 @@ void AKUModulesAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
+
+    #if AKU_WITH_APPLE
+		AKUAppleAppInitialize ();
+	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppInitialize ();
@@ -154,12 +162,12 @@ void AKUModulesAppInitialize () {
 		AKULuaExtAppInitialize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimAppInitialize ();
+	#if AKU_WITH_SDL
+		AKUSdlAppInitialize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppInitialize ();
+	#if AKU_WITH_SIM
+		AKUSimAppInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ
@@ -185,6 +193,10 @@ void AKUModulesAppInitialize () {
 
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
+
+    #if AKU_WITH_APPLE
+		AKUAppleContextInitialize ();
+	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerContextInitialize ();
@@ -222,12 +234,12 @@ void AKUModulesContextInitialize () {
 		AKULuaExtContextInitialize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimContextInitialize ();
+	#if AKU_WITH_SDL
+		AKUSdlContextInitialize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestContextInitialize ();
+	#if AKU_WITH_SIM
+		AKUSimContextInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ

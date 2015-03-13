@@ -187,8 +187,11 @@ int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
 
-	MOAIScopedLuaState state = object->GetSelf ();
-	return this->AffirmMemberID ( state, -1 );
+	if ( object ) {
+		MOAIScopedLuaState state = object->GetSelf ();
+		return this->AffirmMemberID ( state, -1 );
+	}
+	return NULL_OBJ_ID;
 }
 
 //----------------------------------------------------------------//

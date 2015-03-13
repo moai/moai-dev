@@ -45,7 +45,4 @@ function dumpZippedTextAsHeader ( filename, headername, outname )
 end
 
 dumpZippedTextAsHeader ( 'moai.lua', 'moai_lua', 'moai_lua.h' )
-
-
-
-
+dumpZippedTextAsHeader ( 'moai_test_mgr.lua', 'moai_test_mgr_lua', 'moai_test_mgr_lua.h' )

@@ -85,6 +85,7 @@ set -e
 cmake \
 -DBUILD_IOS=true \
 -DCMAKE_BUILD_TYPE=Release \
+-DMOAI_APPLE=TRUE \
 -DMOAI_LUAJIT=False \
 -DCMAKE_INSTALL_PREFIX="${lib_dir}" \
 -G "Xcode" \

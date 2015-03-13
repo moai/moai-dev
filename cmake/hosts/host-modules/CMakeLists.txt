@@ -33,6 +33,10 @@ if ( MOAI_UNTZ OR LIB_PATH)
   target_link_libraries ( host-modules moai-untz )
 endif ( MOAI_UNTZ OR LIB_PATH)
 
+#SDL
+if ( MOAI_SDL OR LIB_PATH)
+  target_link_libraries ( host-modules moai-sdl )
+endif ( MOAI_SDL OR LIB_PATH)
 
 #Http Client
 if ( MOAI_HTTP_CLIENT OR LIB_PATH)
@@ -43,7 +47,6 @@ endif ( MOAI_HTTP_CLIENT OR LIB_PATH)
 if ( MOAI_HTTP_CLIENT OR LIB_PATH)
   target_link_libraries ( host-modules moai-http-server )
 endif ( MOAI_HTTP_CLIENT OR LIB_PATH)
-
 
 #LuaExt
 if ( MOAI_LUAEXT OR LIB_PATH)

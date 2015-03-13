@@ -2,10 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -17,13 +16,17 @@
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
-	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
-	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
+	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
+	MOAIGfxBuffer* idxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 3, true );
 
+	u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
+
+	u32 totalElements = 0;
 	if ( vtxBuffer && idxBuffer ) {
-		self->GetTriangles ( *vtxBuffer, *idxBuffer );
+		totalElements = self->GetTriangles ( *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	}
-	return 0;
+	state.Push ( totalElements );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -44,20 +47,21 @@ int MOAIRegion::_pointInside ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRegion::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+u32 MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
 	SafeTesselator tesselator;
 
 	u32 nPolys = this->Size ();
 	for ( u32 i = 0; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = ( *this )[ i ];
-		tessAddContour ( tesselator.mTess, 2, poly.Data (), sizeof ( ZLVec2D ), poly.Size ());
+		tesselator.AddContour ( 2, poly.Data (), sizeof ( ZLVec2D ), poly.Size ());
 	}
 	
 	int error = tesselator.Tesselate ( TESS_WINDING_ODD, TESS_POLYGONS, 3, 2 );
 	if ( !error ) {
-		tesselator.GetTriangles ( vtxBuffer, idxBuffer );
+		return tesselator.GetTriangles ( vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

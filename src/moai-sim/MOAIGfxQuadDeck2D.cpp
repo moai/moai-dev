@@ -292,7 +292,7 @@ MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

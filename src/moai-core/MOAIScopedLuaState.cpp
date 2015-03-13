@@ -26,7 +26,18 @@ void MOAIScopedLuaState::PinTop ( int top ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIScopedLuaState::Set ( lua_State* L ) {
+
+	this->Restore ();
+	
+	this->mState = L;
+	this->mRestoreTop = lua_gettop ( this->mState );
+}
+
+//----------------------------------------------------------------//
 void MOAIScopedLuaState::Take ( const MOAIScopedLuaState& assign ) {
+
+	this->Restore ();
 
 	this->mState = assign.mState;
 	this->mRestoreTop = assign.mRestoreTop;
@@ -64,9 +75,16 @@ MOAIScopedLuaState::MOAIScopedLuaState ( const MOAIScopedLuaState& assign ) :
 //----------------------------------------------------------------//
 MOAIScopedLuaState::~MOAIScopedLuaState () {
 
+	this->Restore ();
+}
+
+//----------------------------------------------------------------//
+void MOAIScopedLuaState::Restore () {
+
 	if ( this->mState ) {
 		if ( lua_gettop ( this->mState ) != this->mRestoreTop ) {
 			lua_settop ( this->mState, this->mRestoreTop );
 		}
 	}
 }
+

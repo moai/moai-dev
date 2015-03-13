@@ -108,8 +108,13 @@ u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendFactor srcFactor, ZLCol
 		case BLEND_EQ_ADD:
 			return AddAndClamp ( srcBlend32, dstBlend32 );
 			
-		case BLEND_EQ_SUBTRACT:
-			return Sub ( srcBlend32, dstBlend32 );
+		case BLEND_EQ_SUB:
+			return SubAndClamp ( srcBlend32, dstBlend32 );
+			
+		case BLEND_EQ_SUB_INV:
+			return SubAndClamp ( dstBlend32, srcBlend32 );
+		
+		// TODO: min & max
 	}
 	return 0;
 }
@@ -913,6 +918,28 @@ u32 ZLColor::Sub ( u32 c0, u32 c1 ) {
 }
 
 //----------------------------------------------------------------//
+u32 ZLColor::SubAndClamp ( u32 c0, u32 c1 ) {
+	
+	u8* cb0 = ( u8* )&c0;
+	u8* cb1 = ( u8* )&c1;
+
+	u32 r = cb0 [ R_BYTE ] - cb1 [ R_BYTE ];
+	u32 g = cb0 [ G_BYTE ] - cb1 [ G_BYTE ];
+	u32 b = cb0 [ B_BYTE ] - cb1 [ B_BYTE ];
+	u32 a = cb0 [ A_BYTE ] - cb1 [ A_BYTE ];
+	
+	u32 r32;
+	u8* rb32 = ( u8* )&r32;
+	
+	rb32 [ R_BYTE ] = r > 0xff ? 0 : r;
+	rb32 [ G_BYTE ] = g > 0xff ? 0 : g;
+	rb32 [ B_BYTE ] = b > 0xff ? 0 : b;
+	rb32 [ A_BYTE ] = a > 0xff ? 0 : a;
+	
+	return r32;
+}
+
+//----------------------------------------------------------------//
 u32 ZLColor::Swizzle ( u32 c0, u32 sw ) {
 
 	u8* cb0 = ( u8* )&c0;
@@ -940,6 +967,28 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 	this->mG += c.mG;
 	this->mB += c.mB;
 	this->mA += c.mA;
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::Compare ( const ZLColorVec& c ) {
+
+	if ((( mR != c.mR ) || ( mR != c.mR )) ||
+		(( mG != c.mG ) || ( mG != c.mG )) ||
+		(( mB != c.mB ) || ( mB != c.mB )) ||
+		(( mA != c.mA ) || ( mA != c.mA ))) return false;
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::Compare ( const ZLColorVec& c, float res ) {
+
+	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
+		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
+		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
+		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
+
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1050,6 +1099,15 @@ void ZLColorVec::Modulate ( const ZLColorVec& v0 ) {
 u32 ZLColorVec::PackRGBA () const {
 
 	return ZLColor::PackRGBA ( this->mR, this->mG, this->mB, this->mA );
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::Scale ( float scale ) {
+
+	this->mR *= scale;
+	this->mG *= scale;
+	this->mB *= scale;
+	this->mA *= scale;
 }
 
 //----------------------------------------------------------------//

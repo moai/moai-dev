@@ -33,12 +33,13 @@ private:
 	static int				_drawPoints			( lua_State* L );
 	static int				_drawRay			( lua_State* L );
 	static int				_drawRect			( lua_State* L );
+	static int				_drawTexture		( lua_State* L );
+	static int				_drawText			( lua_State* L );
 	static int				_fillCircle			( lua_State* L );
 	static int				_fillEllipse		( lua_State* L );
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
-	static int				_drawTexture		( lua_State* L );
-	static int				_drawText			( lua_State* L );
+	static int				_setBlendMode		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );

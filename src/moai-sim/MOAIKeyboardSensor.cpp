@@ -147,6 +147,7 @@ int MOAIKeyboardSensor::_setKeyCallback ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar ) {
+
 	// Don't allow non-printable characters
 	if ( unicodeChar < ' ' ) return;
 
@@ -172,12 +173,23 @@ void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( MOAIInputQueue& queue, u8 de
 
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
-	if (keyID >= MOAIKeyCodes::TOTAL) return;
+
+	if ( keyID >= MOAI_KEY_TOTAL ) return;
 
 	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
 		queue.Write < u32 >( KeyboardEventType::KEY );
 		queue.Write < u32 >( keyID );
 		queue.Write < bool >( down );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text ) {
+	
+	int i = 0;
+	while ( text [ i ]) {
+		u_int32_t uc = moai_u8_nextchar ( text, &i );
+		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( queue, deviceID, sensorID, uc );
 	}
 }
 
@@ -248,7 +260,7 @@ MOAIKeyboardSensor::MOAIKeyboardSensor () :
 	
 	RTTI_SINGLE ( MOAISensor )
 	
-	memset ( this->mState, 0, MOAIKeyCodes::TOTAL * sizeof ( u32 ));
+	memset ( this->mState, 0, MOAI_KEY_TOTAL * sizeof ( u32 ));
 }
 
 //----------------------------------------------------------------//
