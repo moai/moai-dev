@@ -653,7 +653,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
 
-	self->Start ( MOAISim::Get ().GetActionMgr ());
+	self->Start ( MOAISim::Get ().GetActionMgr (), false );
 
 	return 1;
 }
@@ -863,7 +863,7 @@ MOAITextLabel::MOAITextLabel () :
 	this->mStyleCache.SetOwner ( this );
 	this->mDesigner.SetOwner ( this );
 
-	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	//this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
 

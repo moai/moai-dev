@@ -329,7 +329,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 

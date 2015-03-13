@@ -13,6 +13,15 @@ const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITouchSensor::_countTouches ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
+	
+	state.Push ( self->mTop );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	down
 	@text	Checks to see if the screen was touched during the last iteration.
 
@@ -506,6 +515,7 @@ void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAISensor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "countTouches",		_countTouches },
 		{ "down",				_down },
 		{ "getActiveTouches",	_getActiveTouches },
 		{ "getCenterLoc",		_getCenterLoc },

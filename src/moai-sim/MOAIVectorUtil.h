@@ -4,10 +4,9 @@
 #ifndef	MOAIVECTORUTIL_H
 #define	MOAIVECTORUTIL_H
 
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorStyle.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 
+class MOAIGfxBuffer;
 class MOAIVectorShape;
 struct TESStesselator;
 typedef float TESSreal;
@@ -23,11 +22,12 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
-	void	GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer );
-	void	Reset					();
-			SafeTesselator			();
-			~SafeTesselator			();
-	int		Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
+	void			AddContour				( int size, const void* vertices, int stride, int numVertices );
+	u32				GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes );
+	void			Reset					();
+					SafeTesselator			();
+					~SafeTesselator			();
+	int				Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
 };
 
 //================================================================//
@@ -56,6 +56,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static void		ComputeLineJoins		( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior );
+	static u32		GetTriangles			( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer, ZLStream& idxStream, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes );
 	static int		StrokeLine				( const MOAIVectorStyle& style, ZLVec2D* verts, const MOAIVectorLineJoin* joins, int nJoins, float width, bool exact );
 };
 

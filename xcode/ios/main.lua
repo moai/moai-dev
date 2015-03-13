@@ -5,3 +5,6 @@
 ----------------------------------------------------------------
 
 print ( 'HELLO FROM LUA' )
+
+MOAIFileSystem.setWorkingDirectory ( 'lua' )
+dofile ( 'main.lua' )

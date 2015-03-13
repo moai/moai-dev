@@ -686,17 +686,12 @@ MOAISim::MOAISim () :
 	
 	this->mFrameTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	MOAIInputQueue* inputMgr = new MOAIInputQueue ();
-	this->mInputMgr.Set ( *this, inputMgr );
+	this->mInputMgr.Set ( *this, new MOAIInputQueue ());
+	this->mActionMgr.Set ( *this, new MOAIActionTree ());
+	this->mActionTree.Set ( *this, new MOAIActionTree ());
 	
-	MOAIActionTree* actionMgr = new MOAIActionTree ();
-	this->mActionMgr.Set ( *this, actionMgr );
-	
-	MOAIActionTree* actionTree = new MOAIActionTree ();
-	this->mActionTree.Set ( *this, actionTree );
-	
-	inputMgr->Start ( *actionTree );
-	actionMgr->Start ( *actionTree );
+	this->mInputMgr->Start ( *this->mActionTree, false );
+	this->mActionMgr->Start ( *this->mActionTree, false );
 }
 
 //----------------------------------------------------------------//
@@ -733,22 +728,15 @@ double MOAISim::MeasureFrameRate () {
 
 //----------------------------------------------------------------//
 void MOAISim::OnGlobalsFinalize () {
-	this->SendFinalizeEvent ();
-}
 
-//----------------------------------------------------------------//
-void MOAISim::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnGlobalsRetire () {
+	this->InvokeListener ( EVENT_FINALIZE );
 }
 
 //----------------------------------------------------------------//
 void MOAISim::Pause () {
 
 	if ( this->mLoopState != PAUSED ) {
-		this->SendPauseEvent();
+		this->InvokeListener ( EVENT_PAUSE );
 		this->mLoopState = PAUSED;
 		this->mPauseTime = ZLDeviceTime::GetTimeInSeconds ();
 	}
@@ -758,28 +746,29 @@ void MOAISim::Pause () {
 void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGlobalEventSource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
-	state.SetField ( -1, "EVENT_PAUSE", ( u32 )EVENT_PAUSE );
-	state.SetField ( -1, "EVENT_RESUME", ( u32 )EVENT_RESUME );
+	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
+	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
+	state.SetField ( -1, "EVENT_RESUME",	( u32 )EVENT_RESUME );
+	state.SetField ( -1, "EVENT_STEP",		( u32 )EVENT_STEP );
 
-	state.SetField ( -1, "SIM_LOOP_FORCE_STEP", ( u32 )SIM_LOOP_FORCE_STEP );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST", ( u32 )SIM_LOOP_ALLOW_BOOST );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_SPIN", ( u32 )SIM_LOOP_ALLOW_SPIN );
-	state.SetField ( -1, "SIM_LOOP_NO_DEFICIT", ( u32 )SIM_LOOP_NO_DEFICIT );
-	state.SetField ( -1, "SIM_LOOP_NO_SURPLUS", ( u32 )SIM_LOOP_NO_SURPLUS );
-	state.SetField ( -1, "SIM_LOOP_RESET_CLOCK", ( u32 )SIM_LOOP_RESET_CLOCK );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_SOAK", ( u32 )SIM_LOOP_ALLOW_SOAK );
+	state.SetField ( -1, "SIM_LOOP_FORCE_STEP",		( u32 )SIM_LOOP_FORCE_STEP );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST",	( u32 )SIM_LOOP_ALLOW_BOOST );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SPIN",		( u32 )SIM_LOOP_ALLOW_SPIN );
+	state.SetField ( -1, "SIM_LOOP_NO_DEFICIT",		( u32 )SIM_LOOP_NO_DEFICIT );
+	state.SetField ( -1, "SIM_LOOP_NO_SURPLUS",		( u32 )SIM_LOOP_NO_SURPLUS );
+	state.SetField ( -1, "SIM_LOOP_RESET_CLOCK",	( u32 )SIM_LOOP_RESET_CLOCK );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SOAK",		( u32 )SIM_LOOP_ALLOW_SOAK );
 
-	state.SetField ( -1, "LOOP_FLAGS_DEFAULT", ( u32 )LOOP_FLAGS_DEFAULT );
-	state.SetField ( -1, "LOOP_FLAGS_FIXED", ( u32 )LOOP_FLAGS_FIXED );
-	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP", ( u32 )LOOP_FLAGS_MULTISTEP );
-	state.SetField ( -1, "LOOP_FLAGS_SOAK", ( u32 )LOOP_FLAGS_SOAK );
+	state.SetField ( -1, "LOOP_FLAGS_DEFAULT",			( u32 )LOOP_FLAGS_DEFAULT );
+	state.SetField ( -1, "LOOP_FLAGS_FIXED",			( u32 )LOOP_FLAGS_FIXED );
+	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP",		( u32 )LOOP_FLAGS_MULTISTEP );
+	state.SetField ( -1, "LOOP_FLAGS_SOAK",				( u32 )LOOP_FLAGS_SOAK );
 
-	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND", ( u32 )DEFAULT_STEPS_PER_SECOND );
-	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD", ( u32 )DEFAULT_BOOST_THRESHOLD );
-	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD", ( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
-	state.SetField ( -1, "DEFAULT_CPU_BUDGET", ( u32 )DEFAULT_CPU_BUDGET );
-	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER", ( u32 )DEFAULT_STEP_MULTIPLIER );
+	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND",		( u32 )DEFAULT_STEPS_PER_SECOND );
+	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD",			( u32 )DEFAULT_BOOST_THRESHOLD );
+	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD",	( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
+	state.SetField ( -1, "DEFAULT_CPU_BUDGET",				( u32 )DEFAULT_CPU_BUDGET );
+	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER",			( u32 )DEFAULT_STEP_MULTIPLIER );
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
@@ -836,35 +825,8 @@ void MOAISim::Resume () {
 		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
 		MOAISim::Get ().GetInputMgr ().FlushEvents ( skip );
 	
-		this->SendResumeEvent();
+		this->InvokeListener ( EVENT_RESUME );
 		this->mLoopState = START;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::SendFinalizeEvent () {
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_FINALIZE, state )) {
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::SendPauseEvent () {
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_PAUSE, state )) {
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::SendResumeEvent () {
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_RESUME, state )) {
-		state.DebugCall ( 0, 0 );
 	}
 }
 
@@ -891,18 +853,25 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
+		this->InvokeListener ( EVENT_STEP );
+		
 		this->mActionTree->Update ( step );
+		
 		MOAINodeMgr::Get ().Update ();
+		MOAINodeMgr::Get ().Reset ();
 		
 		this->mSimTime += step;
 		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
+		
+			// empty the userdata cache
+			MOAILuaRuntime::Get ().PurgeUserdataCache ();
+		
 			// crank the garbage collector
 			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
 		}
 	}
-
 	return ZLDeviceTime::GetTimeInSeconds () - time;
 }
 

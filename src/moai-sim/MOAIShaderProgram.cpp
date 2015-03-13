@@ -274,6 +274,10 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
 		uniform.SetType ( type );
+		
+		MOAIShaderUniformBuffer& uniformDefault = this->mUniformDefaults [ idx ];
+		uniformDefault.SetType ( type );
+		uniformDefault.Default ();
 	}
 }
 
@@ -282,7 +286,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, float val
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -291,7 +295,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -388,6 +392,7 @@ bool MOAIShaderProgram::OnGPUCreate () {
 
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
 			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
+			uniform.ClearValue ();
 		}
 	}
 
@@ -510,6 +515,7 @@ void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
+	this->mUniformDefaults.Init ( nUniforms );
 }
 
 //----------------------------------------------------------------//
@@ -525,7 +531,7 @@ void MOAIShaderProgram::SetSource ( cc8* vshSource, cc8* fshSource ) {
 	if ( vshSource && fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-		this->DoCPUAffirm ();
+		this->FinishInit ();
 	}
 }
 

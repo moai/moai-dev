@@ -1,0 +1,7 @@
+<!-- ChartBoost 
+android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
+<activity 
+	android:name="com.chartboost.sdk.CBImpressionActivity"
+	android:theme="@android:style/Theme.Translucent.NoTitleBar"
+	android:excludeFromRecents="true" 
+/>

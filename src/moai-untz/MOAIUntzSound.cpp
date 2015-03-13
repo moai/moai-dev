@@ -195,7 +195,7 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -267,7 +267,7 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;

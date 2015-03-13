@@ -67,7 +67,11 @@
 	#ifndef MOAI_WITH_LIBPNG
 		#define MOAI_WITH_LIBPNG 1
 	#endif
-	
+
+	#ifndef MOAI_WITH_LIBPVR
+		#define MOAI_WITH_LIBPVR 1
+	#endif
+
 	#ifndef MOAI_WITH_LIBWEBP
 		#define MOAI_WITH_LIBWEBP 1
 	#endif

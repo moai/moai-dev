@@ -152,7 +152,7 @@ int zl_socket_accept(zl_socket* ps, zl_socket* pa, zl_sockaddr *addr, socklen_t 
         err = errno;
         if (err == EINTR) continue;
         if (err != EAGAIN && err != ECONNABORTED) return err;
-        if ((err = zl_socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE) return err;
+        if ((err = zl_socket_waitfd(*ps, WAITFD_R, tm)) != IO_DONE) return err;
     }
     /* can't reach here */
     return IO_UNKNOWN;
@@ -180,7 +180,7 @@ int zl_socket_connect(zl_socket* ps, zl_sockaddr *addr, socklen_t len, double tm
     /* zero timeout case optimization */
     if ( tm == 0.0 ) return IO_TIMEOUT;
     /* wait until we have the result of the connection attempt or timeout */
-    err = zl_socket_waitfd(ps, WAITFD_C, tm);
+    err = zl_socket_waitfd(*ps, WAITFD_C, tm);
     if (err == IO_CLOSED) {
         if (recv(*ps, (char *) &err, 0, 0) == 0) return IO_DONE;
         else return errno;
@@ -270,7 +270,7 @@ int zl_socket_recv(zl_socket* ps, char *data, size_t count, size_t *got, double 
         if (taken == 0) return IO_CLOSED;
         if (err == EINTR) continue;
         if (err != EAGAIN) return err; 
-        if ((err = zl_socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE) return err;
+        if ((err = zl_socket_waitfd(*ps, WAITFD_R, tm)) != IO_DONE) return err;
     }
     return IO_UNKNOWN;
 }
@@ -291,7 +291,7 @@ int zl_socket_recvfrom(zl_socket* ps, char *data, size_t count, size_t *got,
         if (taken == 0) return IO_CLOSED;
         if (err == EINTR) continue;
         if (err != EAGAIN) return err; 
-        if ((err = zl_socket_waitfd(ps, WAITFD_R, tm)) != IO_DONE) return err;
+        if ((err = zl_socket_waitfd(*ps, WAITFD_R, tm)) != IO_DONE) return err;
     }
     return IO_UNKNOWN;
 }
@@ -299,73 +299,68 @@ int zl_socket_recvfrom(zl_socket* ps, char *data, size_t count, size_t *got,
 //----------------------------------------------------------------//
 int zl_socket_select ( zl_socket n, fd_set *rfds, fd_set *wfds, fd_set *efds, double tm ) {
 
-	tm += ZLDeviceTime::GetTimeInSeconds ();
+	struct timeval* tp = NULL;
+	struct timeval tv;
 
-    int ret;
+	if ( tm >= 0.0f ) {
+		tm += ZLDeviceTime::GetTimeInSeconds ();
+		tp = &tv;
+	}
+
+	int ret;
+
     do {
-        struct timeval tv;
-        double t = tm - ZLDeviceTime::GetTimeInSeconds ();
-        tv.tv_sec = ( int )t;
-        tv.tv_usec = ( int )(( t - tv.tv_sec ) * 1.0e6 );
-        /* timeout = 0 means no wait */
-        ret = select ( n, rfds, wfds, efds, t >= 0.0 ? &tv: NULL );
+		if ( tp ) {
+			tv.tv_sec = 0;
+			tv.tv_usec = 0;
+			
+			double t = tm - ZLDeviceTime::GetTimeInSeconds ();
+			if ( t > 0.0 ) {
+				tv.tv_sec = ( int )t;
+				tv.tv_usec = ( int )(( t - tv.tv_sec ) * 1.0e6 );
+			}
+		}
+        ret = select ( n, rfds, wfds, efds, tp );
     }
 	while ( ret < 0 && errno == EINTR );
-
-    return ret;
-}
-
-//----------------------------------------------------------------//
-int zl_socket_send(zl_socket* ps, cc8*data, size_t count,
-        size_t *sent, double tm)
-{
-    int err;
-    *sent = 0;
-    /* avoid making system calls on closed sockets */
-    if (*ps == SOCKET_INVALID) return IO_CLOSED;
-    /* loop until we send something or we give up on error */
-    for ( ;; ) {
-        long put = (long) send(*ps, data, count, 0);
-        /* if we sent anything, we are done */
-        if (put > 0) {
-            *sent = put;
-            return IO_DONE;
-        }
-        err = errno;
-        /* send can't really return 0, but EPIPE means the connection was 
-           closed */
-        if (put == 0 || err == EPIPE) return IO_CLOSED;
-        /* we call was interrupted, just try again */
-        if (err == EINTR) continue;
-        /* if failed fatal reason, report error */
-        if (err != EAGAIN) return err;
-        /* wait until we can send something or we timeout */
-        if ((err = zl_socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE) return err;
-    }
-    /* can't reach here */
-    return IO_UNKNOWN;
-}
-
-//----------------------------------------------------------------//
-int zl_socket_sendto ( zl_socket* ps, cc8*data, size_t count, size_t *sent, zl_sockaddr *addr, socklen_t len, double tm ) {
 	
-	int err;
+	return ret;
+}
+
+//----------------------------------------------------------------//
+int zl_socket_send ( zl_socket n, cc8*data, size_t count, size_t *sent, double tm ) {
+
+	return zl_socket_sendto ( n, data, count, sent, 0, 0, tm );
+}
+
+//----------------------------------------------------------------//
+int zl_socket_sendto ( zl_socket n, cc8*data, size_t count, size_t *sent, zl_sockaddr *addr, socklen_t len, double tm ) {
+	
     *sent = 0;
-    if (*ps == SOCKET_INVALID) return IO_CLOSED;
- 
-	for ( ;; ) {
-        long put = (long) sendto(*ps, data, count, 0, addr, len);  
-        if (put > 0) {
+	
+    // avoid making system calls on closed sockets
+    if ( n == SOCKET_INVALID ) return IO_CLOSED;
+	
+    // loop until we send something or we give up on error
+    for ( ;; ) {
+		
+		long put = ( long )sendto ( n, data, count, 0, addr, len );
+		
+		// if we sent anything, we are done
+        if ( put > 0 ) {
             *sent = put;
             return IO_DONE;
         }
-        err = errno;
-        if (put == 0 || err == EPIPE) return IO_CLOSED;
-        if (err == EINTR) continue;
-        if (err != EAGAIN) return err;
-        if ((err = zl_socket_waitfd(ps, WAITFD_W, tm)) != IO_DONE) return err;
+		
+        int err = errno;
+		
+		if ( put == 0 || err == EPIPE ) return IO_CLOSED; // send can't really return 0, but EPIPE means the connection was closed
+        if ( err == EINTR ) continue; // we call was interrupted, just try again
+        if ( err != EAGAIN ) return err; // if failed fatal reason, report error
+        if (( err = zl_socket_waitfd ( n + 1, WAITFD_W, tm )) != IO_DONE) return err; // wait until we can send something or we timeout
     }
-    return IO_UNKNOWN;
+
+    return IO_UNKNOWN; // can't reach here
 }
 
 //----------------------------------------------------------------//
@@ -408,56 +403,44 @@ cc8* zl_socket_strerror(int err) {
 }
 
 //----------------------------------------------------------------//
-int zl_socket_waitfd ( zl_socket* ps, int sw, double tm ) {
+int zl_socket_waitfd ( zl_socket n, int sw, double tm ) {
 
-	#ifdef ZL_SOCKET_POLL
+	struct timeval* tp = NULL;
+	struct timeval tv;
 
-		int ret;
-		struct pollfd pfd;
-		pfd.fd = *ps;
-		pfd.events = sw;
-		pfd.revents = 0;
-		if ( tm == 0.0 ) return IO_TIMEOUT;  /* optimize timeout == 0 case */
-		
-		do {
-			int t = ( int )( timeout_getretry ( tm ) * 1e3 );
-			ret = poll ( &pfd, 1, t >= 0? t: -1 );
-		}
-		while ( ret == -1 && errno == EINTR );
-		
-		if ( ret == -1 ) return errno;
-		if ( ret == 0 ) return IO_TIMEOUT;
-		if ( sw == WAITFD_C && ( pfd.revents & ( POLLIN | POLLERR ))) return IO_CLOSED;
-		return IO_DONE;
-	
-	#else
-	
-		int ret;
-		fd_set rfds, wfds, *rp, *wp;
-		struct timeval tv, *tp;
-		double t;
-		
-		if ( tm == 0.0 ) return IO_TIMEOUT;  /* optimize timeout == 0 case */
+	if ( tm >= 0.0f ) {
 		tm += ZLDeviceTime::GetTimeInSeconds ();
-		
-		do {
-			/* must set bits within loop, because select may have modifed them */
-			rp = wp = NULL;
-			if (sw & WAITFD_R) { FD_ZERO(&rfds); FD_SET(*ps, &rfds); rp = &rfds; }
-			if (sw & WAITFD_W) { FD_ZERO(&wfds); FD_SET(*ps, &wfds); wp = &wfds; }
-			t = tm - ZLDeviceTime::GetTimeInSeconds ();
-			tp = NULL;
-			if (t >= 0.0) {
-				tv.tv_sec = (int)t;
-				tv.tv_usec = (int)((t-tv.tv_sec)*1.0e6);
-				tp = &tv;
-			}
-			ret = select(*ps+1, rp, wp, NULL, tp);
-		} while (ret == -1 && errno == EINTR);
-		if (ret == -1) return errno;
-		if (ret == 0) return IO_TIMEOUT;
-		if (sw == WAITFD_C && FD_ISSET(*ps, &rfds)) return IO_CLOSED;
-		return IO_DONE;
+		tp = &tv;
+	}
 	
-	#endif
+	int ret;
+	
+	fd_set rfds, wfds, *rp, *wp;
+	
+	do {
+	
+		// must set bits within loop, because select may have modifed them
+		rp = wp = NULL;
+		if ( sw & WAITFD_R ) { FD_ZERO ( &rfds ); FD_SET ( n, &rfds ); rp = &rfds; }
+		if ( sw & WAITFD_W ) { FD_ZERO ( &wfds ); FD_SET ( n, &wfds ); wp = &wfds; }
+		tp = NULL;
+		
+		if ( tp ) {
+			tv.tv_sec = 0;
+			tv.tv_usec = 0;
+			
+			double t = tm - ZLDeviceTime::GetTimeInSeconds ();
+			if ( t > 0.0 ) {
+				tv.tv_sec = ( int )t;
+				tv.tv_usec = ( int )(( t - tv.tv_sec ) * 1.0e6 );
+			}
+		}
+		ret = select ( n, rp, wp, NULL, tp );
+	}
+	while ( ret == -1 && errno == EINTR );
+
+	if ( ret == -1 ) return errno;
+	if ( ret == 0 ) return IO_TIMEOUT;
+	if ( sw == WAITFD_C && FD_ISSET ( n, &rfds )) return IO_CLOSED;
+	return IO_DONE;
 }

@@ -84,7 +84,7 @@ public:
 	void			SerializeToFile				( cc8* filename );
 	void			SerializeToStream			( ZLStream& stream );
 					MOAISerializer				();
-	virtual			~MOAISerializer			();
+	virtual			~MOAISerializer				();
 };
 
 #endif

@@ -28,11 +28,13 @@ void AKUSimContextInitialize () {
 	//MOAIProfiler::Affirm ();
 	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
+	MOAIImageFormatMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIDraw::Affirm ();
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
+	MOAINodeMgr::Affirm ();
 	MOAISim::Affirm ();
 	MOAIRenderMgr::Affirm ();
 	
@@ -48,7 +50,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
-	REGISTER_LUA_CLASS ( MOAICollisionFacet )
+	REGISTER_LUA_CLASS ( MOAICollisionProp )
 	REGISTER_LUA_CLASS ( MOAICollisionWorld )
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
@@ -56,11 +58,11 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDraw )
-	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
 	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
+	REGISTER_LUA_CLASS ( MOAIGfxBuffer )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
@@ -74,7 +76,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGridFancy )
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
-	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
@@ -82,9 +83,12 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAILayer )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
+	REGISTER_LUA_CLASS ( MOAIMatrix )
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIMultiTexture )
+	REGISTER_LUA_CLASS ( MOAINode )
+	REGISTER_LUA_CLASS ( MOAINodeMgr )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
@@ -116,7 +120,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
 	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
-	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
 	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
 	REGISTER_LUA_CLASS ( MOAIViewport )
@@ -138,8 +141,6 @@ void AKUSimContextInitialize () {
 	#if MOAI_WITH_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
-	MOAIEnvironment::Get ().DetectEnvironment ();
 }
 
 //----------------------------------------------------------------//
@@ -188,6 +189,12 @@ void AKUEnqueueKeyboardEditEvent ( int deviceID, int sensorID, char const* text,
 void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool down ) {
 
 	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, keyID, down );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueKeyboardTextEvent ( int deviceID, int sensorID, const char* text ) {
+
+	MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, text );
 }
 
 //----------------------------------------------------------------//

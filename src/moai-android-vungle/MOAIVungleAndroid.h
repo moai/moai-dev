@@ -4,7 +4,7 @@
 #ifndef MOAIVUNGLEANDROID_H
 #define MOAIVUNGLEANDROID_H
 
-#ifndef DISABLE_VUNGLE
+#if AKU_WITH_ANDROID_VUNGLE
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>

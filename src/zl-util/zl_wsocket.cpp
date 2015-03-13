@@ -23,6 +23,9 @@
 // modifications Copyright (c) 2014 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+SUPPRESS_EMPTY_FILE_WARNING
+#ifdef _WIN32
+
 /*=========================================================================*\
 * Socket compatibilization module for Win32
 * LuaSocket toolkit
@@ -440,3 +443,5 @@ static const char *wstrerror(int err) {
         default: return "Unknown error";
     }
 }
+
+#endif

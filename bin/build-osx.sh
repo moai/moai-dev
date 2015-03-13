@@ -40,6 +40,7 @@ cd build-osx
 set -e
 cmake -G "Xcode" \
 -DBUILD_OSX=TRUE \
+-DMOAI_SDL=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
 -DMOAI_HTTP_SERVER=true \
 -DCMAKE_INSTALL_PREFIX=$libprefix \

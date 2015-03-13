@@ -9,18 +9,18 @@
 
 class MOAILuaState;
 
-#define DECL_LUA_ABSTRACT(type) \
-MOAILuaClass* GetLuaClass () { return 0; } \
+#define DECL_LUA_ABSTRACT(type)									\
+MOAILuaClass* GetLuaClass () { return 0; }						\
 cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_FACTORY(type) \
-MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); } \
-static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); } \
+MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
+static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); }	\
 cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_SINGLETON(type) \
-MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); } \
-static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); } \
+MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }		\
+static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); }	\
 cc8* TypeName () const { return #type; }
 
 #define REGISTER_LUA_CLASS(type) \
@@ -76,6 +76,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int						_getClassName			( lua_State* L );
+	static int						_getTypeID				( lua_State* L );
 	static int						_new					( lua_State* L );
 	
 	//----------------------------------------------------------------//
@@ -99,6 +100,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int						_getClassName			( lua_State* L );
+	static int						_getTypeID				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void							RegisterLuaClass		( MOAILuaState& state );
@@ -113,6 +115,5 @@ public:
 	void							Register				();
 
 };
-
 
 #endif

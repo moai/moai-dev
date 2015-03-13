@@ -9,6 +9,10 @@
 
 #include <moai-core/host.h>
 
+#if AKU_WITH_APPLE
+	#include <moai-apple/host.h>
+#endif
+
 #if AKU_WITH_AUDIO_SAMPLER
 	#include <moai-audio-sampler/host.h>
 #endif
@@ -45,12 +49,12 @@
 	#include <moai-luaext/host.h>
 #endif
 
-#if AKU_WITH_SIM
-	#include <moai-sim/host.h>
+#if AKU_WITH_SDL
+	#include <moai-sdl/host.h>
 #endif
 
-#if AKU_WITH_TEST
-	#include <moai-test/host.h>
+#if AKU_WITH_SIM
+	#include <moai-sim/host.h>
 #endif
 
 #if AKU_WITH_UNTZ

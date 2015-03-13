@@ -99,16 +99,22 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 	@out	nil
 */
 int MOAICoroutine::_run ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICoroutine, "UF" )
+	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 
 	if ( !MOAISim::IsValid ()) return 0;
+
+	bool defer = false;
+	int baseParam = 2;
+	if ( state.IsType ( baseParam, LUA_TBOOLEAN )) {
+		defer = state.GetValue < bool >( baseParam++, false );
+	}
 
 	if ( MOAISim::Get ().GetActionMgr ().GetThreadInfoEnabled ()) {
 
 		// Get a copy of the function's debug info and store it so we can
 		// refer to it in any debugging info regarding this thread.
 		lua_Debug ar;
-		lua_pushvalue ( state, 2 );
+		lua_pushvalue ( state, baseParam );
 		lua_getinfo ( state, ">Snl", &ar );
 
 		bool isC = strcmp ( ar.what, "C" ) == 0;
@@ -135,14 +141,14 @@ int MOAICoroutine::_run ( lua_State* L ) {
 		}
 	}
 
-	self->mNarg = lua_gettop ( state ) - 2;
+	self->mNarg = lua_gettop ( state ) - baseParam;
 	self->mState = lua_newthread ( state );
 	self->mRef.SetRef ( *self, state, -1 );
 	lua_pop ( state, 1 );
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
 	
-	self->Start ( MOAISim::Get ().GetActionMgr ());
+	self->Start ( MOAISim::Get ().GetActionMgr (), defer );
 
 	return 0;
 }

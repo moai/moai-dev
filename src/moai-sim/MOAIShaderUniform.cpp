@@ -43,6 +43,39 @@ void MOAIShaderUniformBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderUniformBuffer::ClearValue () {
+
+	this->SetType ( this->mType );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniformBuffer::Default () {
+
+	switch ( this->mType ) {
+	
+		case MOAIShaderUniformBuffer::UNIFORM_INDEX: {
+			this->SetValue ( 1 );
+			break;
+		}
+		case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F3: {
+			ZLMatrix3x3 mtx;
+			mtx.Ident ();
+			this->SetValue ( mtx, false );
+			break;
+		}
+		case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F4: {
+			ZLMatrix4x4 mtx;
+			mtx.Ident ();
+			this->SetValue ( mtx, false );
+			break;
+		}
+		default: {
+			this->mBuffer.Fill ( 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderUniformBuffer::GetFlags ( MOAIAttrOp& attrOp ) {
     
 	switch ( this->mType ) {
@@ -282,6 +315,8 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIShaderUniformBuffer& uniformB
 
 //----------------------------------------------------------------//
 void MOAIShaderUniform::Bind () {
+
+	if ( this->mAddr == ZGL_INVALID_UNIFORM_ADDR ) return;
 
 	switch ( this->mType ) {
 

@@ -1,9 +1,0 @@
-<!-- ChartBoost 
-android:theme="@android:style/Theme.NoTitleBar.Fullscreen"-->
-<activity android:name="com.chartboost.sdk.CBDialogActivity"
-	android:configChanges="orientation|keyboard|keyboardHidden"
-	android:windowSoftInputMode="adjustResize"
-	android:screenOrientation="landscape"
-	android:theme="@android:style/Theme.Translucent"
-	android:launchMode="singleTop">
-</activity>

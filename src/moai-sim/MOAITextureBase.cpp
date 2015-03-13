@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -167,7 +166,7 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			break;
 		
 		case ZLColor::RGBA_5551:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
 			break;
 		
@@ -234,158 +233,6 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	this->mIsDirty = true;
 	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureBase::CreateTextureFromPVR ( void* data, size_t size ) {
-	UNUSED ( data );
-	UNUSED ( size );
-
-	#ifdef MOAI_OS_IPHONE // TODO: MOAI_WITH_PVR
-
-		if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
-		MOAIGfxDevice::Get ().ClearErrors ();
-
-		MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
-		if ( !header ) return false;
-		
-		bool compressed = false;
-		bool hasAlpha = header->mAlphaBitMask ? true : false;
-		
-		switch ( header->mPFFlags & MOAIPvrHeader::PF_MASK ) {
-			
-			case MOAIPvrHeader::OGL_RGBA_4444:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
-				break;
-		
-			case MOAIPvrHeader::OGL_RGBA_5551:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
-				break;
-			
-			case MOAIPvrHeader::OGL_RGBA_8888:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-			
-			case MOAIPvrHeader::OGL_RGB_565:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
-				break;
-			
-			// NO IMAGE FOR THIS
-//			case MOAIPvrHeader::OGL_RGB_555:
-//				break;
-			
-			case MOAIPvrHeader::OGL_RGB_888:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-			
-			case MOAIPvrHeader::OGL_I_8:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-			
-			case MOAIPvrHeader::OGL_AI_88:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-			
-			case MOAIPvrHeader::OGL_PVRTC2:
-				compressed = true;
-				this->mGLInternalFormat = hasAlpha ?
-					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG :
-					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-				break;
-			
-			case MOAIPvrHeader::OGL_PVRTC4:
-				compressed = true;
-				this->mGLInternalFormat = hasAlpha ?
-					ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG :
-					ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-				break;
-			
-			case MOAIPvrHeader::OGL_BGRA_8888:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_BGRA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-			
-			case MOAIPvrHeader::OGL_A_8:
-				compressed = false;
-				this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
-				this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-				break;
-		}
-	
-		this->mGLTexID = zglCreateTexture ();
-		if ( this->mGLTexID ) {
-
-			zglBindTexture ( this->mGLTexID );
-			
-			this->mTextureSize = 0;
-			
-			int width = header->mWidth;
-			int height = header->mHeight;
-			char* imageData = (char*)(header->GetFileData ( data, size));
-			if ( header->mMipMapCount == 0 ) {
-				
-				u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
-				this->mTextureSize += currentSize;
-				
-				if ( compressed ) {
-					zglCompressedTexImage2D ( 0, this->mGLInternalFormat, width, height, currentSize, imageData );
-				}
-				else {
-					zglTexImage2D ( 0, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
-				}
-				
-				if ( zglGetError () != ZGL_ERROR_NONE ) {
-					this->CleanupOnError ();
-					return false;
-				}
-			}
-			else {
-				for ( int level = 0; width > 0 && height > 0; ++level ) {
-					u32 currentSize = std::max ( 32u, width * height * header->mBitCount / 8u );
-				
-					if ( compressed ) {
-						zglCompressedTexImage2D ( level, this->mGLInternalFormat, width, height, currentSize, imageData );
-					}
-					else {
-						zglTexImage2D( level, this->mGLInternalFormat, width, height, this->mGLInternalFormat, this->mGLPixelType, imageData );
-					}
-					
-					if ( zglGetError () != ZGL_ERROR_NONE ) {
-						this->CleanupOnError ();
-						return false;
-					}
-					
-					imageData += currentSize;
-					this->mTextureSize += currentSize;
-					
-					width >>= 1;
-					height >>= 1;
-				}	
-			}
-	
-			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-			this->mIsDirty = true;
-			return true;
-		}
-
-	#endif
-	
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -563,6 +410,18 @@ void MOAITextureBase::SetFilter ( int min, int mag ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextureBase::SetTextureID ( u32 glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+
+	this->mGLTexID = glTexID;
+	this->mGLInternalFormat = internalFormat;
+	this->mGLPixelType = pixelType;
+	this->mTextureSize = textureSize;
+
+	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, textureSize );
+	this->mIsDirty = true;
+}
+
+//----------------------------------------------------------------//
 void MOAITextureBase::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
@@ -603,7 +462,7 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 		ZLIntRect imageRect = image.GetRect ();
 		imageRect.Clip ( rect );
 		
-		void* buffer = image.GetBitmap ();
+		const void* buffer = image.GetBitmap ();
 		
 		MOAIImage subImage;
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {

@@ -32,11 +32,15 @@ cc8* ZLDirectoryItr::NextDirectory () {
 
 	while ( zl_dir_read_entry ( this->mItr )) {
 		if ( zl_dir_entry_is_subdir ( this->mItr )) {
+		
 			this->mCurrent = zl_dir_entry_name ( this->mItr );
-			break;
+			
+			if (( strcmp ( this->Current (), "." ) != 0 ) && ( strcmp ( this->Current (), ".." ) != 0 )) {
+				return this->mCurrent.c_str ();
+			}
 		}
 	}
-	return this->mCurrent.size () ? this->mCurrent.c_str () : 0;
+	return 0;
 }
 
 //----------------------------------------------------------------//

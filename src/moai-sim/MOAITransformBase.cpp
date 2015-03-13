@@ -121,6 +121,26 @@ int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setParent
+	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
+	
+	@in		MOAITransformBase self
+	@opt	MOAINode parent		Default value is nil.
+	@out	nil
+*/
+int MOAITransformBase::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
+	
+	self->SetAttrLink ( PACK_ATTR ( MOAITransformBase, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	
+	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	worldToModel
 	@text	Transform a point in world space to model space.
 	
@@ -258,6 +278,33 @@ MOAITransformBase::~MOAITransformBase () {
 }
 
 //----------------------------------------------------------------//
+void MOAITransformBase::OnDepNodeUpdate () {
+	
+	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
+	
+	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), 0 );
+	if ( inherit ) {
+		this->mLocalToWorldMtx.Append ( *inherit );
+	}
+	else {
+	
+		inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformBaseAttr::Pack ( INHERIT_LOC ), 0 );
+		if ( inherit ) {
+			
+			ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
+			
+			inherit->Transform ( loc );
+			
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
+		}
+	}
+	
+	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+}
+
+//----------------------------------------------------------------//
 void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
@@ -270,6 +317,9 @@ void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ));
 	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_SCL ));
 	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
+	
+	state.SetField ( -1, "INHERIT_LOC",			MOAITransformBaseAttr::Pack ( INHERIT_LOC ));
+	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ));
 }
 
 //----------------------------------------------------------------//
@@ -283,6 +333,7 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldRot",		_getWorldRot },
 		{ "getWorldScl",		_getWorldScl },
 		{ "modelToWorld",		_modelToWorld },
+		{ "setParent",			_setParent },
 		{ "worldToModel",		_worldToModel },
 		{ NULL, NULL }
 	};

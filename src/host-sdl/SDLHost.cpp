@@ -1,18 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "moai-sim/pch.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
-#include "SDLHost.h"
-#include <moai-sim/MOAIKeyboardSensor.h>
-#include <host-sdl/KeyCodeMapping.h>
-#include <contrib/moai_utf8.h>
 
 #ifdef MOAI_OS_WINDOWS
     #include <windows.h>
@@ -25,7 +19,9 @@
 
 #include <SDL.h>
 
-#include "Joystick.h"
+#include "SDLHost.h"
+#include "SDLJoystick.h"
+#include "SDLKeyCodeMapping.h"
 
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
@@ -82,7 +78,6 @@ void _AKUHideCursor () {
 	SDL_ShowCursor(0);
 }
 
-
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 
@@ -108,6 +103,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
 		AKUSetViewSize ( width, height );
+		AKUSdlSetWindow ( sWindow );
 
 		// Enable keyboard text input.
 		// According to the SDL documentation, this will open an on-screen keyboard on some platforms.
@@ -132,7 +128,6 @@ void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
 // helpers
 //================================================================//
 
-u32			GetMoaiKeyCode		( SDL_Event sdlEvent );
 static void	Finalize			();
 static void	Init				( int argc, char** argv );
 static void	MainLoop			();
@@ -285,7 +280,7 @@ void SetScreenDpi() {
 void MainLoop () {
 
 	// TODO: array's of Joysticks
-	Joystick * joystick0 = nullptr;
+	Joystick * joystick0 = NULL;
 
 	if ( SDL_NumJoysticks() < 1 ) {
 		
@@ -298,7 +293,7 @@ void MainLoop () {
 		if ( joystick0->isOpen() || !joystick0->Open() )
 		{
 			delete joystick0;
-			joystick0 = nullptr;
+			joystick0 = NULL;
 		}
 	}
 
@@ -321,19 +316,13 @@ void MainLoop () {
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:	{
 					if ( sdlEvent.key.repeat ) break;
-					u32 moaiKeyCode = GetMoaiKeyCode ( sdlEvent );
+					int moaiKeyCode = GetMoaiKeyCode ( sdlEvent );
 					AKUEnqueueKeyboardKeyEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, moaiKeyCode, sdlEvent.key.type == SDL_KEYDOWN );
 					break;
 				}
 				
 				case SDL_TEXTINPUT: {
-					// Convert UTF-8 encoded string to Unicode characters
-					char* utf8String = sdlEvent.text.text;
-					u_int32_t unicodeString [ SDL_TEXTINPUTEVENT_TEXT_SIZE ];
-					int charCount = moai_u8_toucs ( unicodeString, SDL_TEXTINPUTEVENT_TEXT_SIZE, utf8String, -1 );
-					for ( int i = 0; i < charCount; ++i ) {
-						AKUEnqueueKeyboardCharEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, unicodeString [ i ] );
-					}
+					AKUEnqueueKeyboardTextEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, sdlEvent.text.text );
 					break;
 				}
 				case SDL_TEXTEDITING: {
@@ -389,7 +378,7 @@ void MainLoop () {
 						
 						//TODO: array's of Joysticks
 
-						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != nullptr ) {
+						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != NULL ) {
 
                             const Joystick::AXIS_MOTION & axis = joystick0->HandleAxisMotion(sdlEvent);
 					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.x, axis.y );

@@ -9,7 +9,7 @@
 #include <moai-core/MOAILuaRuntime.h>
 
 //================================================================//
-// MOAILuaFactoryClass
+// lua
 //================================================================//
 	
 //----------------------------------------------------------------//
@@ -23,14 +23,31 @@ int MOAILuaFactoryClass < TYPE >::_getClassName ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+int MOAILuaFactoryClass < TYPE >::_getTypeID ( lua_State* L ) {
+	
+	lua_pushnumber ( L, ZLTypeID < TYPE >::GetID ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	MOAILuaObject* data = new TYPE ();
 	data->PushLuaUserdata ( state );
+	
+	// since we're creating this just to hand to Lua, we can safely
+	// remove it from the runtime's global cache
+	MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+	
 	return 1;
 }
-	
+
+//================================================================//
+// MOAILuaFactoryClass
+//================================================================//
+
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaFactoryClass < TYPE >& MOAILuaFactoryClass < TYPE >::Get () {
@@ -62,6 +79,7 @@ void MOAILuaFactoryClass < TYPE >::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getClassName",			_getClassName },
+		{ "getTypeID",				_getTypeID },
 		{ "new",					_new },
 		{ NULL, NULL }
 	};
@@ -70,7 +88,7 @@ void MOAILuaFactoryClass < TYPE >::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// MOAILuaSingletonClass
+// lua
 //================================================================//
 	
 //----------------------------------------------------------------//
@@ -82,7 +100,19 @@ int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
 	state.Push ( singleton->TypeName ());
 	return 1;
 }
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 	
+	lua_pushnumber ( L, ZLTypeID < TYPE >::GetID ());
+	return 1;
+}
+
+//================================================================//
+// MOAILuaSingletonClass
+//================================================================//
+
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaSingletonClass < TYPE >& MOAILuaSingletonClass < TYPE >::Get () {
@@ -116,6 +146,7 @@ void MOAILuaSingletonClass < TYPE >::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getClassName",		_getClassName },
+		{ "getTypeID",			_getTypeID },
 		{ NULL, NULL }
 	};
 	

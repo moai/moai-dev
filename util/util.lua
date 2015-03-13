@@ -12,6 +12,7 @@ local osx = MOAIEnvironment.osBrand == 'OSX'
 			dofileWithEnvironment			= nil
 			escape							= nil
 local		exec							= nil
+			getAbsoluteDirPath				= nil
 			getFilenameFromPath				= nil
 			getFilenameExt					= nil
 			getFolderFromPath				= nil
@@ -129,6 +130,16 @@ exec = function ( cmd, path1, path2 )
 	cmd = string.format ( cmd, path1, path2 )
 	print ( cmd )
 	os.execute ( cmd )
+end
+
+----------------------------------------------------------------
+getAbsoluteDirPath = function ( path, base )
+
+	if base and not ( string.match ( path, '^/' ) or string.match ( path, '^\\' )) then
+		path = base .. path
+	end
+
+	return MOAIFileSystem.getAbsoluteDirectoryPath ( path )
 end
 
 ----------------------------------------------------------------

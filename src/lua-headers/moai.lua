@@ -462,6 +462,7 @@ MOAIGfxDevice.extend (
 	
 	----------------------------------------------------------------
 	function ( class, superClass )
+
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		-- extend the class
 		function class.setClearColor ( ... )

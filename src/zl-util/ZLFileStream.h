@@ -40,6 +40,7 @@ public:
 	size_t			GetCursor			();
 	ZLFILE*			GetFile				();
 	size_t			GetLength			();
+	bool			IsOpen				();
 	bool			Open				( cc8* filename, u32 mode );
 	bool			OpenRead			( cc8* filename );
 	bool			OpenWrite			( cc8* filename );

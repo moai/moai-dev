@@ -44,6 +44,8 @@ writeHtmlTable				= nil
 ----------------------------------------------------------------
 parseFile = function ( src, dst )
 
+	print ( 'parsing source file:', src )
+
 	MOAIFileSystem.affirmPath ( util.getFolderFromPath ( dst ))
 
 	local module = string.match ( string.sub ( src, #SRC_PATH + 1 ), '(moai%-[^/]+)/' )

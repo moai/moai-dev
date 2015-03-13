@@ -202,12 +202,12 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 	@text	Lists the sub-directories contained in a directory.
  
 	@opt	string path				Path to search. Default is current directory.
-	@out	table diresctories		A table of directory names (or nil if the path is invalid)
+	@out	table directories		A table of directory names (or nil if the path is invalid)
 */
 int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 	UNUSED ( L );
 	
-	STLString oldPath = ZLFileSys::GetCurrentPath();
+	STLString oldPath = ZLFileSys::GetCurrentPath ();
 	
 	//cc8* dir = NULL;
 	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
@@ -223,11 +223,6 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 	int n = 0;
 	dirItr.Start ();
 	while ( dirItr.NextDirectory ()) {
-
-		if( strcmp(dirItr.Current(), "..") == 0 ||
-			strcmp(dirItr.Current(), ".") == 0 ) {	
-			continue;	
-		}
 		
 		lua_pushstring ( L, dirItr.Current ());
 		n++;

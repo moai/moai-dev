@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIKeyCode.h>
+#include <moai-sim/MOAIKeyCodeEnum.h>
 
 //================================================================//
 // MOAIKeyboardSensor
@@ -25,10 +26,10 @@ private:
 		UP			= 1 << 0x02,	// The key was released during the last iteration
 	};
 
-	u32 mState [ MOAIKeyCodes::TOTAL ];
+	u32 mState [ MOAI_KEY_TOTAL ];
 
 	u32 mClearCount;
-	u32 mClearQueue [ MOAIKeyCodes::TOTAL ];	// The keys whose DOWN or UP flags are set
+	u32 mClearQueue [ MOAI_KEY_TOTAL ];	// The keys whose DOWN or UP flags are set
 	
 	MOAILuaStrongRef		mOnKey;
 	MOAILuaStrongRef		mOnChar;
@@ -52,6 +53,7 @@ public:
 	static void			EnqueueKeyboardCharEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar );
 	static void			EnqueueKeyboardEditEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
 	static void			EnqueueKeyboardKeyEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
+	static void			EnqueueKeyboardTextEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );
 	bool				KeyIsDown					( u32 keyID );

@@ -64,6 +64,7 @@ protected:
 	STLMap < u32, STLString > mAttributeMap;
 
 	ZLLeanArray < MOAIShaderUniform >			mUniforms;
+	ZLLeanArray < MOAIShaderUniformBuffer >		mUniformDefaults;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 
 	//----------------------------------------------------------------//

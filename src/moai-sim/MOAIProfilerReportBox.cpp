@@ -631,7 +631,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
-	this->SetMask ( MOAIProp::CAN_DRAW );
+	//this->SetMask ( MOAIProp::CAN_DRAW );
 	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
 

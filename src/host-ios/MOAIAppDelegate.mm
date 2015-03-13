@@ -6,7 +6,6 @@
 
 #import "MOAIAppDelegate.h"
 #import "MOAIView.h"
-#import "MOAIViewController.h"
 
 //================================================================//
 // AppDelegate
@@ -43,27 +42,23 @@
 
         [ MOAIView appInitialize ];
         
-        CGRect nativeBounds = [ MOAIView getScreenBoundsFromCurrentOrientation:([[ UIScreen mainScreen ] bounds ])];
+        CGRect nativeBounds = [[ UIScreen mainScreen ] bounds ];
         
-        // landscape startup
-        CGRect landscapeBounds;
-        landscapeBounds.origin.x = nativeBounds.origin.x;
-        landscapeBounds.origin.y = nativeBounds.origin.y;
-        landscapeBounds.size.width = nativeBounds.size.height;
-        landscapeBounds.size.height = nativeBounds.size.width;
-        
-        mMoaiView = [[ MOAIView alloc ] initWithFrame:landscapeBounds ];
+        mMoaiView = [[ MOAIView alloc ] init ];
         mMoaiView.userInteractionEnabled = YES;
         mMoaiView.multipleTouchEnabled = YES;
         mMoaiView.alpha = 1.0f;
         mMoaiView.opaque = YES;
         
-        mMoaiVC = [[ MOAIViewController alloc ] init ];
+        mMoaiVC = [[ UIViewController alloc ] init ];
         mMoaiVC.view = mMoaiView;
 
-        mWindow = [[UIWindow alloc] initWithFrame:[ MOAIView isSystemVersionLessThan:@"8.0" ] ? nativeBounds : landscapeBounds];
-        mWindow.rootViewController = mMoaiVC;
+        mWindow = [[ UIWindow alloc ] init ];
         [ mWindow makeKeyAndVisible ];
+        mWindow.rootViewController = mMoaiVC;
+        
+        mWindow.frame = nativeBounds;
+        mMoaiView.frame = nativeBounds;
         
         [ mMoaiView moaiInit ];
         [ mMoaiView setWorkingDirectory:[[ NSBundle mainBundle ] resourcePath ]];

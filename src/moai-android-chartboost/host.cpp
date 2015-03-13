@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include <moai-android-chartboost/host.h>
+#include <moai-android/JniUtils.h>
+#include <host-modules/aku_modules_android_config.h>
 #include <moai-android-chartboost/MOAIChartBoostAndroid.h>
 
 //================================================================//
@@ -9,16 +11,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUAndroidChartboostAppFinalize () {
+void AKUAndroidChartBoostAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUAndroidChartboostAppInitialize () {
+void AKUAndroidChartBoostAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUAndroidChartboostContextInitialize () {
+void AKUAndroidChartBoostContextInitialize () {
 
 	REGISTER_LUA_CLASS ( MOAIChartBoostAndroid );
-	
 }

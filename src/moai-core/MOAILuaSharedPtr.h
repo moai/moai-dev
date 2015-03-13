@@ -81,6 +81,18 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline bool PushRef ( MOAILuaState& state ) {
+	
+		if ( this->mObject ) {
+			state.Push ( this->mObject );
+		}
+		else {
+			lua_pushnil ( state );
+		}
+		return !lua_isnil ( state, -1 );
+	}
+
+	//----------------------------------------------------------------//
 	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {

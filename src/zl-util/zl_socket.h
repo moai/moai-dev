@@ -77,12 +77,12 @@ int		zl_socket_listen			( zl_socket* ps, int backlog );
 int		zl_socket_recv				( zl_socket* ps, char *data, size_t count, size_t *got, double tm );
 int		zl_socket_recvfrom			( zl_socket* ps, char *data, size_t count, size_t *got, zl_sockaddr *addr, socklen_t *addr_len, double tm );
 int		zl_socket_select			( zl_socket n, fd_set *rfds, fd_set *wfds, fd_set *efds, double tm );
-int		zl_socket_send				( zl_socket* ps, const char *data, size_t count, size_t *sent, double tm );
-int		zl_socket_sendto			( zl_socket* ps, const char *data, size_t count, size_t *sent, zl_sockaddr *addr, socklen_t addr_len, double tm );
+int		zl_socket_send				( zl_socket n, const char *data, size_t count, size_t *sent, double tm );
+int		zl_socket_sendto			( zl_socket n, const char *data, size_t count, size_t *sent, zl_sockaddr *addr, socklen_t addr_len, double tm );
 void	zl_socket_setblocking		( zl_socket* ps );
 void	zl_socket_setnonblocking	( zl_socket* ps );
 void	zl_socket_shutdown			( zl_socket* ps, int how );
 cc8*	zl_socket_strerror			( int err );
-int		zl_socket_waitfd			( zl_socket* ps, int sw, double tm );
+int		zl_socket_waitfd			( zl_socket n, int sw, double tm );
 
 #endif
