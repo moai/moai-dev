@@ -39,8 +39,9 @@ cd build-linux
 set -e
 cmake \
 -DBUILD_LINUX=TRUE \
+-DMOAI_SDL=TRUE \
+-DMOAI_HTTP_SERVER=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
--DMOAI_HTTP_SERVER=true \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
 $moai_root/cmake/hosts/host-linux-sdl
 

@@ -4,6 +4,7 @@ set (MOAI_VERSION_MINOR FALSE)
 set (MOAI_VERSION_REVISION FALSE)
 
 
+option ( MOAI_APPLE     "Enable Apple"                  FALSE )
 option ( MOAI_SDL       "Enable SDL"                    FALSE )
 option ( MOAI_BOX2D		"Enable Box2D physics"		    TRUE  )
 option ( MOAI_CURL      "Enable Curl"                 	TRUE )
