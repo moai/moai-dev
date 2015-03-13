@@ -8,11 +8,11 @@
 #include <host-modules/aku_modules.h>
 
 #if AKU_WITH_ANDROID_ADCOLONY
-	#include <moai-android-adcolony/MOAIAdColonyAndroid.h>
+	#include <moai-android-adcolony/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_BILLING
-	#include <moai-android/MOAIBillingAndroid.h>
+	#include <moai-android/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_CHARTBOOST
@@ -20,39 +20,38 @@
 #endif
 
 #if AKU_WITH_ANDROID_CRITTERCISM
-	#include <moai-android-crittercism/MOAICrittercismAndroid.h>
+	#include <moai-android-crittercism/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_FACEBOOK
-	#include <moai-android-facebook/MOAIFacebookAndroid.h>
+	#include <moai-android-facebook/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_FLURRY
-	#include <moai-android-flurry/MOAIFlurryAndroid.h>
+	#include <moai-android-flurry/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_NOTIFICATIONS
-	#include <moai-android/MOAINotificationsAndroid.h>
+	#include <moai-android/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_TAPJOY
-	#include <moai-android-tapjoy/MOAITapjoyAndroid.h>
+	#include <moai-android-tapjoy/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_TSTOREWALL
-	#include <moai-android-tstore/MOAITstoreWallAndroid.h>;
+	#include <moai-android-tstore/host.h>;
 #endif
 
 #if AKU_WITH_ANDROID_TSTOREGAMECENTER
-	#include <moai-android-tstore/MOAITstoreGamecenterAndroid.h>;
+	#include <moai-android-tstore/host.h>;
 #endif
 
 #if AKU_WITH_ANDROID_PLAYSERVICES
-	#include <moai-android-google-play-services/MOAIGooglePlayServicesAndroid.h>;
+	#include <moai-android-google-play-services/host.h>;
 #endif
 
 #if AKU_WITH_ANDROID_VUNGLE
-	#include <moai-android-vungle/MOAIVungleAndroid.h>;
 	#include <moai-android-vungle/host.h>;
 #endif
 
