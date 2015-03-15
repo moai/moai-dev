@@ -173,7 +173,7 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 		for ( ; childElement; childElement = childElement->NextSiblingElement ()) {
 			STLString text = childElement->Value ();
 			TiXmlAttribute* attribute = childElement->FirstAttribute ();
-			int i = 0;
+
 			if(!attribute || !text || text == "")
 				continue;
 
