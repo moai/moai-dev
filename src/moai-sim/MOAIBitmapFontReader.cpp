@@ -220,11 +220,11 @@ int MOAIBitmapFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 	
 	MOAIBitmapGlyph& bitmapGlyph = *this->mCurrentGlyph;
 	
-	int width = bitmapGlyph.mSrcRect.Width ();
-	int height = bitmapGlyph.mSrcRect.Height ();
+	const int width = bitmapGlyph.mSrcRect.Width ();
+	const int height = bitmapGlyph.mSrcRect.Height ();
 	
-	glyphMetrics.mWidth = ( float )bitmapGlyph.mSrcRect.Width ();
-	glyphMetrics.mHeight = ( float )bitmapGlyph.mSrcRect.Height ();
+	glyphMetrics.mWidth = ( float ) width;
+	glyphMetrics.mHeight = ( float ) height;
 	glyphMetrics.mAdvanceX = glyphMetrics.mWidth;
 	glyphMetrics.mBearingX = 0.0f;
 	glyphMetrics.mBearingY = ( float )bitmapGlyph.mBase;
