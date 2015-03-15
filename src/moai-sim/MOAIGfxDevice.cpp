@@ -1285,7 +1285,7 @@ void MOAIGfxDevice::SetViewRect () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 
-	ZLRect deviceRect = rect;
+	ZLRect deviceRect;
 	
 	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 	
