@@ -1306,7 +1306,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 //----------------------------------------------------------------//
 void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc ) {
 
-	if (( this->mPixelFormat != TRUECOLOR ) && ( this->mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
+	if (( this->mPixelFormat != TRUECOLOR ) && ( image.mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
 
 	float scale;
 
