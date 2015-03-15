@@ -97,8 +97,6 @@ int MOAIInputQueue::_suspendEvents ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIInputQueue::CanWrite () {
 
-	double time = ZLDeviceTime::GetTimeInSeconds ();
-
 	if (( this->mAutosuspend > 0 ) && ( this->mAutosuspend <= ( ZLDeviceTime::GetTimeInSeconds () - this->mLastUpdate ))) {
 		this->DiscardAll ();
 		this->mAutosuspended = true;
