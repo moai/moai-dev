@@ -65,14 +65,14 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			DoCPUAffirm					(); // gets ready to bind;
-	bool			DoGPUAffirm					(); // gets ready to bind;
 	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 
 protected:
 
 	//----------------------------------------------------------------//
+	bool			DoCPUAffirm					(); // gets ready to bind;
+	bool			DoGPUAffirm					(); // gets ready to bind;
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	
