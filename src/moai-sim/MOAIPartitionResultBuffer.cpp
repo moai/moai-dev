@@ -132,7 +132,7 @@ MOAIProp* MOAIPartitionResultBuffer::FindBest () {
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float yScale, float zScale, float priority ) {
 
-	float floatSign = mode & SORT_FLAG_DESCENDING ? -1.0f : 1.0f;
+	float floatSign = ( mode & SORT_FLAG_DESCENDING ) ? -1.0f : 1.0f;
 	s32 intSign = ( int )floatSign;
 
 	switch ( mode & SORT_MODE_MASK ) {
