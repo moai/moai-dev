@@ -289,12 +289,20 @@ void MOAIGfxBuffer::OnGPUBind () {
 		
 		if ( renew ) {
 		
-			void* buffer = zglMapBuffer ( this->mTarget );
-			if ( buffer ) {
-				this->Seek ( 0, SEEK_SET );
-				this->ReadBytes ( buffer, this->GetLength ());
-			}
-			zglUnmapBuffer ( this->mTarget );
+			// TODO: There are a few different ways to approach updating buffers with varying performance
+			// on different platforms. The approach here is just to multi-buffer the VBO and replace its
+			// contents via zglBufferSubData when they change. The TODO here is to do performance tests
+			// on multiple devices, evaluate other approaches and possible expose the configuration of
+			// those to the end user via Lua.
+		
+			zglBufferSubData ( this->mTarget, 0, this->GetLength (), this->mData );
+		
+//			void* buffer = zglMapBuffer ( this->mTarget );
+//			if ( buffer ) {
+//				this->Seek ( 0, SEEK_SET );
+//				this->ReadBytes ( buffer, this->GetLength ());
+//			}
+//			zglUnmapBuffer ( this->mTarget );
 			this->mIsDirty = false;
 		}
 	}

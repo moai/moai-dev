@@ -1325,6 +1325,13 @@ void zglBufferData ( u32 target, u32 size, const void* data, u32 usage ) {
 }
 
 //----------------------------------------------------------------//
+void zglBufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
+	glBufferSubData ( _remapEnum ( target ), ( GLintptr )offset, ( GLsizeiptr )size, ( const GLvoid* )data );
+}
+
+//----------------------------------------------------------------//
 u32 zglCreateBuffer () {
 
 	ASSERT_OPERATION_DEPTH ();
