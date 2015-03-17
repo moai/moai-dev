@@ -1661,7 +1661,7 @@ void MOAICCParticleSystem::InitParticle ( MOAICCParticle *particle ) {
         particle->mDeltaColor[i] = (end - start) / particle->mTimeToLive;
     }
     
-    // partice size
+    // particle size
     start = this->mStartSize + this->mStartSizeVariance * USFloat::Rand(-1.0f, 1.0f);
     start = MAX(0, start);
     
