@@ -331,7 +331,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 				
 					zglCompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
 				
-				#else if MOAI_WITH_LIBPVR
+				#elif MOAI_WITH_LIBPVR
 				
 					ZLLeanArray < char > buffer;
 					buffer.Init ( info.mSizeDecompressed );
