@@ -101,7 +101,7 @@ void AKUModulesAndroidContextInitialize () {
 	#endif
     
     #if AKU_WITH_ANDROID_VUNGLE
-        AKUAndroidVungleContextInitialize();
+        AKUAndroidVungleContextInitialize ();
     #endif
 	
     #if AKU_WITH_ANDROID_CRITTERCISM
