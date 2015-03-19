@@ -433,7 +433,7 @@ ZLBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	u32 size = this->mQuads.Size ();
+	u32 size = this->mSprites.Size ();
 	if ( size ) {
 	
 		idx = ( idx - 1 ) % size;

@@ -36,7 +36,7 @@ public class MoaiChartBoost extends ChartboostDelegate {
         	return;
 		}
     	else {
-        	super.onBackPressed ();
+        	activity.onBackPressed ();
     	}
     }
 	
@@ -51,35 +51,35 @@ public class MoaiChartBoost extends ChartboostDelegate {
 	public static void onDestroy ( Activity activity ) {
  
 		MoaiLog.i ( "MoaiChartBoost: onDestroy" );
-    	Chartboost.onDestroy ( activity );
+    	Chartboost.onDestroy ( sActivity );
 	}
 
 	//----------------------------------------------------------------//
-	public static void onPause ( Activity activity ) {
+	public static void onPause () {
  
 		MoaiLog.i ( "MoaiChartBoost: onPause" );
-    	Chartboost.onPause ( activity );
+    	Chartboost.onPause ( sActivity );
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume ( Activity activity ) {
+	public static void onResume () {
  
 		MoaiLog.i ( "MoaiChartBoost: onResume" );
-    	Chartboost.onResume ( activity );
+    	Chartboost.onResume ( sActivity );
 	}
 		
 	//----------------------------------------------------------------//
-	public static void onStart ( Activity activity ) {
+	public static void onStart () {
 		
 		MoaiLog.i ( "MoaiChartBoost: onStart" );
-    	Chartboost.onStart ( activity );
+    	Chartboost.onStart ( sActivity );
 	}
 	
 	//----------------------------------------------------------------//
-	public static void onStop ( Activity activity ) {
+	public static void onStop () {
 
 		MoaiLog.i ( "MoaiChartBoost: onStop" );
-    	Chartboost.onStop ( activity );
+    	Chartboost.onStop ( sActivity );
 	}
 
 	//================================================================//
