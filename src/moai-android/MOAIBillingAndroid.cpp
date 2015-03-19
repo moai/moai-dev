@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_BILLING
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -1096,6 +1094,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreBilling_A
 	JNI_RELEASE_CSTRING ( juser, user );
 	JNI_RELEASE_CSTRING ( jpayload, payload );
 }
-
-
-#endif

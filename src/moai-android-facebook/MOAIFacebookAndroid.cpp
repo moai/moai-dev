@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_FACEBOOK
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -172,18 +170,6 @@ int MOAIFacebookAndroid::_sessionValid ( lua_State* L ) {
 	return 1;
 }
 
-//----------------------------------------------------------------//
-int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
-	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
-	
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-
-	if ( idx < TOTAL ) {
-		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
-	}
-	return 0;
-}
-
 //================================================================//
 // MOAIFacebookAndroid
 //================================================================//
@@ -191,7 +177,7 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIFacebookAndroid::MOAIFacebookAndroid () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 		
 	this->SetClass ( "com/ziplinegames/moai/MoaiFacebook" );
 	
@@ -222,6 +208,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",	( u32 ) SESSION_DID_NOT_LOGIN );
 
 	luaL_Reg regTable [] = {
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIFacebookAndroid > },
 		{ "getToken",				_getToken },
 		{ "graphRequest",			_graphRequest },
 		{ "init",					_init },
@@ -231,7 +218,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "restoreSession",			_restoreSession },
 		{ "sendRequest",			_sendRequest },
 		{ "sessionValid",			_sessionValid },
-		{ "setListener",			_setListener },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebookAndroid > },
 		{ NULL, NULL }
 	};
 
@@ -240,54 +227,30 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIFacebookAndroid::NotifyDialogComplete ( int code ) {
-	
-	MOAILuaRef& callback = this->mListeners [ DIALOG_DID_NOT_COMPLETE ];
-	if ( code == DIALOG_RESULT_SUCCESS ) {
-		
-		callback = this->mListeners [ DIALOG_DID_COMPLETE ];
-	}
 
-	if ( callback ) {
-
-		MOAIScopedLuaState state = callback.GetSelf ();
-
-		state.DebugCall ( 0, 0 );
-	}
+	this->InvokeListener ( code == DIALOG_RESULT_SUCCESS ? DIALOG_DID_COMPLETE : DIALOG_DID_NOT_COMPLETE );
 }
 
 //----------------------------------------------------------------//
 void MOAIFacebookAndroid::NotifyLoginComplete ( int code ) {
 
-	MOAILuaRef& callback = this->mListeners [ SESSION_DID_NOT_LOGIN ];
-	if ( code == DIALOG_RESULT_SUCCESS ) {
-		callback = this->mListeners [ SESSION_DID_LOGIN ];
-	}
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
+	this->InvokeListener ( code == DIALOG_RESULT_SUCCESS ? SESSION_DID_LOGIN : SESSION_DID_NOT_LOGIN );
 }
 
 //----------------------------------------------------------------//
 void MOAIFacebookAndroid::NotifyRequestComplete ( cc8* response ) {
-    MOAILuaRef& callback = this->mListeners [ REQUEST_RESPONSE ];
 
-    if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-        lua_pushstring ( state, response );
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( REQUEST_RESPONSE, state )) {
+		lua_pushstring ( state, response );
 		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFacebookAndroid::NotifyRequestFailed () {
-    MOAILuaRef& callback = this->mListeners [ REQUEST_RESPONSE_FAILED ];
 
-    if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
+	this->InvokeListener ( REQUEST_RESPONSE_FAILED );
 }
 
 //================================================================//
@@ -318,5 +281,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNot
 	MOAIFacebookAndroid::Get ().NotifyRequestFailed ( );
 }
 
-
-#endif

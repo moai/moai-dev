@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_TAPJOY
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -130,5 +128,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvok
 		state.DebugCall ( 1, 0 );
 	}
 }
-
-#endif

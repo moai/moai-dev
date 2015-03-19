@@ -121,6 +121,27 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
+	CRITTERCISM = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_CRITTERCISM',
+		NAMESPACE = 'com.ziplinegames.moai',
+	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crittercism.mk',
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/crittercism-4.4.0',
+			MOAI_SDK_HOME .. 'src/moai-android-crittercism',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-crittercism',
+	},
+
+	----------------------------------------------------------------
 	CRYPTO = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_CRYPTO',
@@ -233,6 +254,28 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-google-play-services',
 	},
+
+	----------------------------------------------------------------
+	--[[
+	GOOGLE_PUSH = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PUSH',
+		NAMESPACE = 'com.ziplinegames.moai',
+	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/google-push',
+			MOAI_SDK_HOME .. 'src/moai-android-google-push',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-google-push',
+	},
+	]]--
 
 	----------------------------------------------------------------
 	HTTP_CLIENT = {
