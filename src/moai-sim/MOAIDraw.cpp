@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -350,6 +351,27 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
 
 	MOAIDraw::DrawEllipseOutline ( x0, y0, r, r, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	drawElements
+	@text	Draw elements.
+	
+	@in		...     vtxBuffer	VertexBuffer
+	@in		...     format		Vertex Format of vertices in the buffer
+	@in		number  count       Number of indices to be rendered
+	@out	nil
+ */
+int MOAIDraw::_drawElements ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	MOAIGfxBuffer* vtxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 1, false );
+	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, false );
+	u32 count = state.GetValue < u32 >( 3, 0 );
+	
+	MOAIDraw::DrawElements ( vtxBuffer, format, count );
 	return 0;
 }
 
@@ -813,6 +835,27 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.Flush (); // TODO: should remove this call
+	MOAIGfxDevice::Get ().SetVertexFormat ();
+	
+	vtxBuffer->Bind ();
+	vtxFormat->Bind ( 0 );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+	
+	gfxDevice.UpdateShaderGlobals ();
+		
+	// TODO: use gfxDevice to cache buffers
+
+	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
+	vtxBuffer->Unbind ();
+	vtxFormat->Unbind ();
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
@@ -1267,6 +1310,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCircle",				_drawCircle },
+		{ "drawElements",			_drawElements },
 		{ "drawEllipse",			_drawEllipse },
 		//{ "drawGrid",				_drawGrid }, // TODO
 		{ "drawLine",				_drawLine },

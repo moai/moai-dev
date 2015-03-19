@@ -131,7 +131,7 @@ int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( void* buffer ) const {
+void MOAIVertexFormat::Bind ( const void* buffer ) const {
 
 	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
 		this->BindProgrammable ( buffer );
@@ -142,7 +142,7 @@ void MOAIVertexFormat::Bind ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::BindFixed ( void* buffer ) const {
+void MOAIVertexFormat::BindFixed ( const void* buffer ) const {
 	UNUSED ( buffer );
 
 	#if USE_OPENGLES1
@@ -182,7 +182,7 @@ void MOAIVertexFormat::BindFixed ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
+void MOAIVertexFormat::BindProgrammable ( const void* buffer ) const {
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
