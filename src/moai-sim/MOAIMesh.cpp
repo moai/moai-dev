@@ -243,6 +243,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.Flush (); // TODO: should remove this call
+	MOAIGfxDevice::Get ().SetVertexFormat ();
 
 	this->FinishInit ();
 
@@ -426,8 +427,10 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
+			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+		}
 	}
 	this->mVAOs.Init ( total );
 	this->mVAOs.Fill ( 0 );

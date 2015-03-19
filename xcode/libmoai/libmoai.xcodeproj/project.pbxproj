@@ -9280,6 +9280,7 @@
 			children = (
 				CD9140991A0DBF81002CC335 /* anim */,
 				CDE9851B18975ADA001827F9 /* action */,
+				CDE43FF41AB7A8D000C745DB /* camera */,
 				CD8DD76419195F5A0088EA60 /* collision */,
 				CDE9851818975AA7001827F9 /* deck */,
 				CDE9851918975AB6001827F9 /* font */,
@@ -9304,14 +9305,6 @@
 				89BE6F1D173AD0CA00DFE837 /* host_particles.cpp */,
 				89BE6F1E173AD0CA00DFE837 /* host_particles.h */,
 				89BE6F2D173AD0CA00DFE837 /* MOAIAttrOp.h */,
-				89BE6F38173AD0CA00DFE837 /* MOAICamera.cpp */,
-				89BE6F39173AD0CA00DFE837 /* MOAICamera.h */,
-				89BE6F3A173AD0CA00DFE837 /* MOAICamera2D.cpp */,
-				89BE6F3B173AD0CA00DFE837 /* MOAICamera2D.h */,
-				89BE6F3C173AD0CA00DFE837 /* MOAICameraAnchor2D.cpp */,
-				89BE6F3D173AD0CA00DFE837 /* MOAICameraAnchor2D.h */,
-				89BE6F3E173AD0CA00DFE837 /* MOAICameraFitter2D.cpp */,
-				89BE6F3F173AD0CA00DFE837 /* MOAICameraFitter2D.h */,
 				89BE6F93173AD0CA00DFE837 /* MOAILayoutFrame.cpp */,
 				89BE6F94173AD0CA00DFE837 /* MOAILayoutFrame.h */,
 				89BE6FF1173AD0CA00DFE837 /* MOAISim.cpp */,
@@ -12641,6 +12634,21 @@
 				CDE36E5F1A5F6C970095E863 /* MOAIImageFormatWebP.h */,
 			);
 			name = image;
+			sourceTree = "<group>";
+		};
+		CDE43FF41AB7A8D000C745DB /* camera */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F38173AD0CA00DFE837 /* MOAICamera.cpp */,
+				89BE6F39173AD0CA00DFE837 /* MOAICamera.h */,
+				89BE6F3A173AD0CA00DFE837 /* MOAICamera2D.cpp */,
+				89BE6F3B173AD0CA00DFE837 /* MOAICamera2D.h */,
+				89BE6F3C173AD0CA00DFE837 /* MOAICameraAnchor2D.cpp */,
+				89BE6F3D173AD0CA00DFE837 /* MOAICameraAnchor2D.h */,
+				89BE6F3E173AD0CA00DFE837 /* MOAICameraFitter2D.cpp */,
+				89BE6F3F173AD0CA00DFE837 /* MOAICameraFitter2D.h */,
+			);
+			name = camera;
 			sourceTree = "<group>";
 		};
 		CDE9851718975A85001827F9 /* vector */ = {

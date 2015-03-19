@@ -310,6 +310,18 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	// angle between vectors in radians
+	float Radians ( const ZLMetaVec3D < TYPE >& v ) const {
+		
+		float dot = this->Dot ( v );
+		
+		if ( dot <= -1.0f ) return ( float )PI;
+		if ( dot >= 1.0f ) return 0.0f;
+		
+		return ACos ( dot );
+	}
+
+	//----------------------------------------------------------------//
 	void Reflect ( ZLMetaVec3D < TYPE >& norm ) {
 		TYPE dot;
 		

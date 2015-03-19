@@ -70,8 +70,8 @@ private:
 	static int			_getVertexSize					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				BindFixed						( void* buffer ) const;
-	void				BindProgrammable				( void* buffer ) const;
+	void				BindFixed						( const void* buffer ) const;
+	void				BindProgrammable				( const void* buffer ) const;
 	static u32			GetComponentSize				( u32 size, u32 type );
 	static u32			GetIndexForUse					( u32 use );
 	static u32			GetUseForIndex					( u32 idx );
@@ -88,7 +88,7 @@ public:
 	GET_CONST ( u32, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
-	void				Bind							( void* buffer ) const;
+	void				Bind							( const void* buffer ) const;
 	bool				ComputeBounds					( ZLBox& bounds, void* buffer, size_t size ) const;
 	bool				ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size ) const;
 	static bool			ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size, size_t offset, size_t stride, size_t components );
