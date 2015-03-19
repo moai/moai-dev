@@ -169,7 +169,7 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 	@in		string path
 	@opt	string base
 	@out	string path
--*/
+*/
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
