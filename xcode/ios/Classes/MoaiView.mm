@@ -32,7 +32,6 @@
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
-#import "ParticlePresets.h"
 
 namespace MoaiInputDeviceID {
 	enum {
@@ -226,9 +225,6 @@ namespace MoaiInputDeviceSensorID {
 		// init aku
 		AKUIphoneInit ( application );
         AKURunString( moai_lua_code );
-		
-		// add in the particle presets
-		ParticlePresets ();
 	}
 	
 	//----------------------------------------------------------------//

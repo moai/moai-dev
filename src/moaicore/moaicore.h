@@ -30,6 +30,7 @@
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
 #include <moaicore/MOAICanary.h>
+#include <moaicore/MOAICCParticleSystem.h>
 #include <moaicore/MOAICollisionShape.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
@@ -115,17 +116,6 @@
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIObject.h>
 #include <moaicore/MOAIParser.h>
-#include <moaicore/MOAIParticle.h>
-#include <moaicore/MOAIParticleCallbackPlugin.h>
-#include <moaicore/MOAIParticleDistanceEmitter.h>
-#include <moaicore/MOAIParticleEmitter.h>
-#include <moaicore/MOAIParticleForce.h>
-#include <moaicore/MOAIParticlePexPlugin.h>
-#include <moaicore/MOAIParticlePlugin.h>
-#include <moaicore/MOAIParticleScript.h>
-#include <moaicore/MOAIParticleState.h>
-#include <moaicore/MOAIParticleSystem.h>
-#include <moaicore/MOAIParticleTimedEmitter.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLevel.h>
