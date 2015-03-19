@@ -149,6 +149,7 @@ void MOAIEnvironment::DetectEnvironment () {
 	
 		//printf ( "Env Linux\n" );
 		this->SetValue ( MOAI_ENV_osBrand, "Linux" );
+		this->SetValue ( MOAI_ENV_osVersion, "LinuxUnknown");
 
 	#elif defined ( MOAI_OS_OSX )
 	
