@@ -11,6 +11,10 @@
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIRenderMgr.h>
+#include <moai-core/host.h>
+#include <host-modules/aku_modules.h>
+#include <host-sdl/SDLHost.h>
+#include <sdl2-2.0.0/include/SDL.h>
 
 #if MOAI_WITH_LIBCURL
 	#include <moai-http-client/MOAIUrlMgrCurl.h>
@@ -122,10 +126,7 @@ int MOAISim::_showCursor ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
-	if ( func ) {
-		func ();
-	}
+	SDL_ShowCursor(SDL_ENABLE);
 
 	return 0;
 }
@@ -137,13 +138,9 @@ int MOAISim::_showCursor ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_hideCursor ( lua_State* L ) {
-
 	MOAILuaState state ( L );
 
-	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
-	if ( func ) {
-		func ();
-	}
+	SDL_ShowCursor(SDL_DISABLE);
 
 	return 0;
 }
