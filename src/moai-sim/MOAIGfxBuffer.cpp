@@ -327,6 +327,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 			zglBindBuffer ( this->mTarget, 0 ); // OK?
 			
+			this->mIsDirty = true;
 			count++;
 		}
 		this->mVBOs [ i ] = vbo;
