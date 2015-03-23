@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_PLAYSERVICES
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -291,5 +289,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePlayServi
 
 	MOAIGooglePlayServicesAndroid::Get ().NotifyConnectionComplete ();
 }
-
-#endif

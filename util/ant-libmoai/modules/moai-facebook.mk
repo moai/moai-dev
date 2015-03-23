@@ -11,6 +11,6 @@
 	LOCAL_CFLAGS		:= $(MY_LOCAL_CFLAGS) -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h -fvisibility=hidden
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)/src/moai-facebook/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)/src/moai-android-facebook/*.cpp)
 
 	include $(BUILD_STATIC_LIBRARY)

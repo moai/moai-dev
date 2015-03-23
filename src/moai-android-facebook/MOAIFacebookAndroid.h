@@ -4,8 +4,6 @@
 #ifndef	MOAIFACEBOOKANDROID_H
 #define	MOAIFACEBOOKANDROID_H
 
-#if AKU_WITH_ANDROID_FACEBOOK
-
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
 
@@ -26,7 +24,7 @@
 	@const	SESSION_DID_NOT_LOGIN		Event code for a failed (or canceled) Facebook login.
 */
 class MOAIFacebookAndroid :
-	public MOAIGlobalClass < MOAIFacebookAndroid, MOAILuaObject >,
+	public MOAIGlobalClass < MOAIFacebookAndroid, MOAIGlobalEventSource >,
 	public JniUtils {
 private:
 
@@ -50,7 +48,6 @@ private:
 	static int	_restoreSession		( lua_State* L );
 	static int	_sendRequest		( lua_State* L );
 	static int	_sessionValid		( lua_State* L );
-	static int	_setListener 		( lua_State* L );
 
 public:
 
@@ -72,8 +69,6 @@ public:
         DIALOG_RESULT_ERROR,
 	};
 
-	MOAILuaStrongRef		mListeners [ TOTAL ];
-
 			MOAIFacebookAndroid		();
 			~MOAIFacebookAndroid	();
 	void 	NotifyDialogComplete	( int code );
@@ -82,7 +77,5 @@ public:
 	void 	NotifyRequestFailed	    ();
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
-
-#endif  //DISABLE_FACEBOOK
 
 #endif  //MOAIFACEBOOK_H

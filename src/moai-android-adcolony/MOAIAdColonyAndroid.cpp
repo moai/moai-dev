@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_ADCOLONY
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -123,5 +121,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAdColony_AKUInv
 	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MOAIAdColonyAndroid_AKUInvokeListener\n" );
 	MOAIAdColonyAndroid::Get ().InvokeListener (( u32 )eventID );
 }
-
-#endif
