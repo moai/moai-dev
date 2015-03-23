@@ -7,6 +7,8 @@
 #ifdef _WIN32
 	#include <shlobj.h>
 	typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
+#elif defined( MOAI_OS_LINUX )
+	#include <sys/utsname.h>
 #endif
 
 //================================================================//
@@ -146,9 +148,18 @@ void MOAIEnvironment::DetectEnvironment () {
 		}
 		
 	#elif defined( MOAI_OS_LINUX )
-	
-		//printf ( "Env Linux\n" );
-		this->SetValue ( MOAI_ENV_osBrand, "Linux" );
+		
+		utsname sysID;
+
+		if ( 0 == uname( &sysID ) ) {
+			
+			this->SetValue ( MOAI_ENV_osBrand, sysID.sysname );
+			this->SetValue ( MOAI_ENV_osVersion, sysID.release );
+		}
+		else {
+			this->SetValue ( MOAI_ENV_osBrand, "Linux" );
+			this->SetValue ( MOAI_ENV_osVersion, "Unknown" );
+		}
 
 	#elif defined ( MOAI_OS_OSX )
 	
