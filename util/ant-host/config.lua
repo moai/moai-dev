@@ -1,4 +1,5 @@
 ANDROID_PLATFORM_TARGET				= "android-17"
+OS_BRAND 							= "Android"
 
 MODULES = {
 
