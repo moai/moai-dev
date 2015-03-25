@@ -8,6 +8,7 @@
 #include "moai-sim/pch.h"
 
 #include <jni.h>
+ #include <moai-android/MOAIJString.h>
 
 //================================================================//
 // Utility macros
@@ -23,8 +24,8 @@
 #define JNI_RELEASE_CSTRING(jstr, cstr) \
 	if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
 	
-#define JNI_GET_JSTRING(cstr, jstr) \
-	jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
+#define JNI_GET_JSTRING(cstr) \
+	( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : jstring ( 0 );
 
 #define MOAI_JAVA_LUA_SETUP(type,str)						\
 	MOAILuaState state ( L );								\

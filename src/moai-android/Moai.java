@@ -25,6 +25,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.*;
+import java.util.*;
+import java.lang.String;
 
 //================================================================//
 // Moai
@@ -190,6 +193,23 @@ public class Moai {
 	protected static native void		AKUSetScreenDpi					( int dpi );
 	protected static native void 		AKUSetViewSize					( int width, int height );
 	protected static native void 		AKUSetWorkingDirectory 			( String path );
+
+	public static String createJString ( byte [] bytes ) {
+
+		
+		try {
+  			String str =  new String ( bytes, "UTF8" );
+			MoaiLog.i ( "JAVA CreateJString Created a string:");
+			MoaiLog.i( str );
+			return str;
+
+  		}
+		catch(UnsupportedEncodingException e1) {
+
+			MoaiLog.i ( "JAVA CreateJString failed to convert string" );
+			return null;
+		}
+	}
 
 	//----------------------------------------------------------------//
 	static {

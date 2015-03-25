@@ -34,9 +34,9 @@ int MOAITwitterAndroid::_init ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( consumerKey , jconsumerKey );
-	JNI_GET_JSTRING ( consumerSecret , jconsumerSecret );
-	JNI_GET_JSTRING ( callbackUrl , jcallbackUrl );
+	jconsumerKey = JNI_GET_JSTRING ( consumerKey );
+	jconsumerSecret = JNI_GET_JSTRING ( consumerSecret );
+	jcallbackUrl = JNI_GET_JSTRING ( callbackUrl );
 
 	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
     if ( twitter == NULL ) {
@@ -137,8 +137,8 @@ int MOAITwitterAndroid::_setAccessToken ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( token , jtoken );
-	JNI_GET_JSTRING ( tokenSecret , jtokenSecret );
+	jtoken = JNI_GET_JSTRING ( token );
+	jtokenSecret = JNI_GET_JSTRING ( tokenSecret );
 
 	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
     if ( twitter == NULL ) {
@@ -174,7 +174,7 @@ int MOAITwitterAndroid::_sendTweet ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( text, jtext );
+	jtext = JNI_GET_JSTRING ( text );
 
 	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
     if ( twitter == NULL ) {

@@ -30,9 +30,9 @@ int MOAIFlurryAndroid::_enableLogging ( lua_State *L ) {
 int MOAIFlurryAndroid::_endEvent ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 
-	jstring eventId = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString eventId = ( jstring ) self->GetJString ( state.GetValue < cc8* >( 1, "" ));
 	jmethodID logEvent = self->GetStaticMethod ( "endEvent", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( logEvent, eventId );
+	self->CallStaticVoidMethod ( logEvent, ( jstring )eventId );
 	
 	return 0;
 }
@@ -42,9 +42,9 @@ int MOAIFlurryAndroid::_endEvent ( lua_State *L ) {
 int MOAIFlurryAndroid::_init ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 		
-	jstring apiKey = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString apiKey = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( init, apiKey );
+	self->CallStaticVoidMethod ( init, ( jstring )apiKey );
 	
 	return 0;
 }
@@ -54,7 +54,7 @@ int MOAIFlurryAndroid::_init ( lua_State *L ) {
 int MOAIFlurryAndroid::_logEvent ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFlurryAndroid, "" )
 
-	jstring eventId = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString eventId = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
 	jobject hashMap = 0;
 
 	if ( state.IsType ( 2, LUA_TTABLE )) {
@@ -65,7 +65,7 @@ int MOAIFlurryAndroid::_logEvent ( lua_State *L ) {
 
 	jmethodID logEvent = self->GetStaticMethod ( "logEvent", "(Ljava/lang/String;Ljava/util/Map;Z)V" );
 	
-	self->CallStaticVoidMethod ( logEvent, eventId, hashMap, timed );
+	self->CallStaticVoidMethod ( logEvent, ( jstring )eventId, hashMap, timed );
 
 	return 0;
 }
