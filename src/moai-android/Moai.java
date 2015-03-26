@@ -553,6 +553,8 @@ public class Moai {
 			theClass = Class.forName ( className );
 		} catch ( Throwable e ) {
 
+			MoaiLog.i ( "MOAI.java Failed to add class: " );
+			MoaiLog.i ( className );
 		}
 
 		return theClass;

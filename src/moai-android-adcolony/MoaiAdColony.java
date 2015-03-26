@@ -77,20 +77,8 @@ public class MoaiAdColony implements AdColonyAdListener {
 	//----------------------------------------------------------------//
 	public static boolean isVideoReady ( String zoneId ) {
 
-		MoaiLog.i ( "MoaiAdColony: isVideoReady" );
-
 		String zoneStatus = AdColony.statusForZone ( zoneId );
-		MoaiLog.i ( "MoaiAdColony: isVideoReady status for zone: " + zoneStatus );
-
 		boolean result = new AdColonyVideoAd ( zoneId ).isReady ();
-		
-		if ( result ) {
-			MoaiLog.i ( "MoaiAdColony: isVideoReady 'result' is true; video should play" );
-		}
-		else {
-			MoaiLog.i ( "MoaiAdColony: isVideoReady - no video available" );
-		}
-		
 		return result;
 	}
 

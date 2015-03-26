@@ -8,6 +8,11 @@ MODULES = {
 		src			= MOAI_SDK_HOME .. 'src/moai-android-adcolony',
 	},
 
+	amazon_billing	= {
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/amazon-billing-1.0.3',
+		src		= MOAI_SDK_HOME .. 'src/moai-android-amazon-billing',
+	},
+	
 	chartboosst = {
 		lib		= MOAI_SDK_HOME .. '3rdparty-android/chartboost-5.1.1',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-chartboost',
