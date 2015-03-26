@@ -1,0 +1,56 @@
+# This file defines the platforms games on the Games page can support.
+# Don't add vendor-specific devices (Amazon uses Android) or app stores here.
+# Within each category, platforms are sorted by decreasing popularity.
+
+# Mobile
+
+ios:
+  title: iOS
+  image: img/icons/ios.svg
+  category: Mobile
+
+android:
+  title: Android
+  image: img/icons/android.svg
+  category: Mobile
+
+# Desktop
+
+windows:
+  title: Windows
+  image: img/icons/windows.svg
+  category: Desktop
+
+mac:
+  title: OS X
+  image: img/icons/mac.svg
+  category: Desktop
+
+linux:
+  title: Linux
+  image: img/icons/linux.svg
+  category: Desktop
+
+# Console
+
+ps4:
+  title: PlayStation 4
+  image: img/icons/playstation.svg
+  category: Console
+
+vita:
+  title: PlayStation Vita
+  image: img/icons/playstation.svg
+  category: Console
+
+ouya:
+  title: Ouya
+  image: img/icons/ouya.svg
+  category: Console
+
+# Other
+
+chrome:
+  title: Google Chrome
+  image: img/icons/chrome.svg
+  category: Other
