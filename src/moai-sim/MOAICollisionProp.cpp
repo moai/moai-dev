@@ -138,6 +138,7 @@ void MOAICollisionProp::OnRemoved () {
 
 //----------------------------------------------------------------//
 bool MOAICollisionProp::PrepareForInsertion ( const MOAIPartition& partition ) {
+	return true;
 }
 
 //----------------------------------------------------------------//
