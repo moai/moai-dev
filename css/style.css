@@ -40,6 +40,8 @@ body {
 
 .carousel-caption{
   text-align: left;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); /* Shadow */
+  filter: progid:DXImageTransform.Microsoft.Shadow(color=#000000, direction=135, strength=2); /* Shadow for IE 9- */
 }
 .carousel-indicators{
   text-align: right;
