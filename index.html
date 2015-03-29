@@ -7,7 +7,7 @@ title: Moai | The platform for pro game developers.
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
 				{% for item in site.data.carousel %}
-				<li data-target="#gameCarousel" data-slide-to="{{ forloop.index }}" class="{% if forloop.index == 1 %}active{% endif %}" ></li>
+				<li data-target="#gameCarousel" data-slide-to="{{ forloop.index0 }}" class="{% if forloop.index == 1 %}active{% endif %}" ></li>
 				{% endfor %}
 			</ol>
 			<div class="carousel-inner">
