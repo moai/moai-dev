@@ -2,4 +2,4 @@ name: Moai SDK
 markdown: kramdown
 highlighter: pygments
 future: true
-baseurl: /moai-sdk
+baseurl: /moai-dev
