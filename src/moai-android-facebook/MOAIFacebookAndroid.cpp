@@ -24,7 +24,7 @@ extern JavaVM* jvm;
 int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 	
-	jstring jtoken = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetToken );
+	MOAIJString jtoken = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetToken );
 	cc8* token = self->GetCString ( jtoken );
 	lua_pushstring ( state, token );
 	self->ReleaseCString ( jtoken, token );
@@ -42,7 +42,7 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 
-	//jstring jpath = self->GetJString ( lua_tostring ( state, 1 ));
+	//MOAIJString jpath = self->GetJString ( lua_tostring ( state, 1 ));
 
     //jobject bundle;
     //if ( state.IsType ( 2, LUA_TTABLE ) ) {
@@ -64,8 +64,8 @@ int MOAIFacebookAndroid::_graphRequest ( lua_State* L ) {
 int MOAIFacebookAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 	
-	jstring jidentifier = self->GetJString ( lua_tostring ( state, 1 ));
-	self->CallStaticVoidMethod ( self->mJava_Init, jidentifier );		
+	MOAIJString jidentifier = self->GetJString ( lua_tostring ( state, 1 ));
+	self->CallStaticVoidMethod ( self->mJava_Init, ( jstring )jidentifier );		
 	return 0;
 }
 
@@ -121,14 +121,14 @@ int MOAIFacebookAndroid::_logout ( lua_State *L ) {
 int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 	
-	jstring jlink			= self->GetJString ( lua_tostring ( state, 1 ));
-	jstring jpicture		= self->GetJString ( lua_tostring ( state, 2 ));
-	jstring jname			= self->GetJString ( lua_tostring ( state, 3 ));
-	jstring jcaption		= self->GetJString ( lua_tostring ( state, 4 ));
-	jstring jdescription	= self->GetJString ( lua_tostring ( state, 5 ));
-	jstring jmessage		= self->GetJString ( lua_tostring ( state, 6 ));
+	MOAIJString jlink			= self->GetJString ( lua_tostring ( state, 1 ));
+	MOAIJString jpicture		= self->GetJString ( lua_tostring ( state, 2 ));
+	MOAIJString jname			= self->GetJString ( lua_tostring ( state, 3 ));
+	MOAIJString jcaption		= self->GetJString ( lua_tostring ( state, 4 ));
+	MOAIJString jdescription	= self->GetJString ( lua_tostring ( state, 5 ));
+	MOAIJString jmessage		= self->GetJString ( lua_tostring ( state, 6 ));
 	
-	self->CallStaticVoidMethod ( self->mJava_PostToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage );	
+	self->CallStaticVoidMethod ( self->mJava_PostToFeed, ( jstring )jlink, ( jstring )jpicture, ( jstring )jname, ( jstring )jcaption, ( jstring )jdescription, ( jstring )jmessage );	
 		
 	return 0;
 }
@@ -152,8 +152,8 @@ int MOAIFacebookAndroid::_restoreSession ( lua_State* L ) {
 int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 	
-	jstring jmessage = self->GetJString ( lua_tostring ( state, 1 ));
-	self->CallStaticVoidMethod ( self->mJava_SendRequest, jmessage );		
+	MOAIJString jmessage = self->GetJString ( lua_tostring ( state, 1 ));
+	self->CallStaticVoidMethod ( self->mJava_SendRequest, ( jstring )jmessage );		
 	return 0;
 }
 

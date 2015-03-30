@@ -26,11 +26,11 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAdColonyAndroid::_init\n" );
 
-	jstring jidentifier		= self->GetJString ( lua_tostring ( state, 1 ));
-	jstring joptions		= self->GetJString ( lua_tostring ( state, 2 ));
-	jobjectArray jzones		= self->StringArrayFromLua ( state, 3 );
+	MOAIJString jidentifier		= self->GetJString ( lua_tostring ( state, 1 ));
+	MOAIJString joptions		= self->GetJString ( lua_tostring ( state, 2 ));
+	jobjectArray jzones			= self->StringArrayFromLua ( state, 3 );
 
-	self->CallStaticVoidMethod ( self->mJava_Init, jidentifier, joptions, jzones );
+	self->CallStaticVoidMethod ( self->mJava_Init, ( jstring )jidentifier, ( jstring )joptions, ( jstring )jzones );
 
 	return 0;
 }
@@ -47,12 +47,12 @@ int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
 
-	jstring jzone = self->GetJString ( lua_tostring ( state, 1 ));
+	MOAIJString jzone = self->GetJString ( lua_tostring ( state, 1 ));
 
 	bool prompt = state.GetValue < bool >( 2, true );
 	bool confirmation = state.GetValue < bool >( 3, true );
 
-	self->CallStaticVoidMethod ( self->mJava_PlayVideo, jzone, prompt, confirmation );
+	self->CallStaticVoidMethod ( self->mJava_PlayVideo, ( jstring )jzone, prompt, confirmation );
 
 	return 0;
 }
@@ -67,8 +67,8 @@ int MOAIAdColonyAndroid::_playVideo ( lua_State* L ) {
 int MOAIAdColonyAndroid::_videoReadyForZone ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
 	
-	jstring jzone = self->GetJString ( lua_tostring ( state, 1 ));
-	lua_pushboolean ( state, self->CallStaticBooleanMethod ( self->mJava_IsVideoReady, jzone ));
+	MOAIJString jzone = self->GetJString ( lua_tostring ( state, 1 ));
+	lua_pushboolean ( state, self->CallStaticBooleanMethod ( self->mJava_IsVideoReady, ( jstring )jzone ));
 	return 1;
 }
 

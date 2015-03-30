@@ -28,10 +28,10 @@ int MOAIVungleAndroid::_displayAdvert ( lua_State* L ) {
 int	MOAIVungleAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIVungleAndroid, "" )
 	
-	jstring appID = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString appID = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
 
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( init, appID );
+	self->CallStaticVoidMethod ( init, ( jstring )appID );
 
 	return 0;
 }

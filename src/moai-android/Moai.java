@@ -25,6 +25,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.*;
+import java.util.*;
+import java.lang.String;
 
 //================================================================//
 // Moai
@@ -191,6 +194,23 @@ public class Moai {
 	protected static native void 		AKUSetViewSize					( int width, int height );
 	protected static native void 		AKUSetWorkingDirectory 			( String path );
 
+	public static String createJString ( byte [] bytes ) {
+
+		
+		try {
+  			String str =  new String ( bytes, "UTF8" );
+			MoaiLog.i ( "JAVA CreateJString Created a string:");
+			MoaiLog.i( str );
+			return str;
+
+  		}
+		catch(UnsupportedEncodingException e1) {
+
+			MoaiLog.i ( "JAVA CreateJString failed to convert string" );
+			return null;
+		}
+	}
+
 	//----------------------------------------------------------------//
 	static {
 
@@ -321,7 +341,7 @@ public class Moai {
 				udid = "UNKNOWN";
 			}
 
-			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
+			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "@OS_BRAND@", Build.VERSION.RELEASE, udid );
 			AKUSetDeviceLocale ( Locale.getDefault ().getLanguage (), Locale.getDefault ().getCountry ());
 		}
 	}
@@ -533,6 +553,8 @@ public class Moai {
 			theClass = Class.forName ( className );
 		} catch ( Throwable e ) {
 
+			MoaiLog.i ( "MOAI.java Failed to add class: " );
+			MoaiLog.i ( className );
 		}
 
 		return theClass;

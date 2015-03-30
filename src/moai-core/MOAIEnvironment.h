@@ -43,10 +43,12 @@
 #define MOAI_ENV_iosIFA						"iosIFA"
 #define MOAI_ENV_iosIFV						"iosIFV"
 
+#define OS_BRAND_AMAZON			"Amazon"
 #define OS_BRAND_ANDROID 		"Android"
 #define OS_BRAND_IOS 			"iOS"
-#define OS_BRAND_OSX 			"OSX"
 #define OS_BRAND_LINUX 			"Linux"
+#define OS_BRAND_NOOK			"Nook"
+#define OS_BRAND_OSX 			"OSX"
 #define OS_BRAND_WINDOWS 		"Windows"
 #define OS_BRAND_UNAVAILABLE 	"Unavailable"
 
