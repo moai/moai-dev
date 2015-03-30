@@ -817,12 +817,12 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 		
 			MOAIViewport* viewport = renderMgr.GetViewport ();
 			assert ( viewport );
-			
-			ZLMatrix4x4 viewProj = camera->GetWorldToWndMtx ( *viewport );
-		
-			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
-			viewProj.TransformVec ( upVec );
-			
+
+			ZLMatrix4x4 view = camera->GetViewMtx ();
+
+			ZLVec3D upVec = view.GetYAxis ();
+
+			// For text flipping when orbiting around the map. Tilting should not affect this
 			if ( upVec.mY < 0.0f ) {
 				ZLMatrix4x4 scale;
 				scale.Scale ( -1.0f, -1.0f, 1.0f );
