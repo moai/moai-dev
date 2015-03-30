@@ -58,6 +58,7 @@ public:
 		TOTAL_ATTR,
 	};
 	
+	GET_SET ( float, FieldOfView, mFieldOfView )
 	GET_SET ( float, NearPlane, mNearPlane )
 	GET_SET ( float, FarPlane, mFarPlane )
 	

@@ -8,6 +8,8 @@ module ( 'cube', package.seeall )
 
 makeCube = function ( size )
 	
+	size = size * 0.5
+
 	local vertexFormat = MOAIVertexFormat.new ()
 	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
 	vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )

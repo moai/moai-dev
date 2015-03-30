@@ -59,30 +59,9 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 //	-1:		Box is behind the plane
 s32 ZLSect::BoxToPlane ( const ZLBox& b, const ZLPlane3D& p ) {
 
-	// Get the box spans
-	ZLVec3D spans = b.mMax;
-	spans.Sub ( b.mMin );
-	spans.Scale ( 0.5f );
-
-	// Get the span dots
-	float sdX = spans.mX * p.mNorm.mX;
-	if ( sdX < 0.0f ) sdX = -sdX;
-
-	float sdY = spans.mY * p.mNorm.mY;
-	if ( sdY < 0.0f ) sdY = -sdY;
-
-	float sdZ = spans.mZ * p.mNorm.mZ;
-	if ( sdZ < 0.0f ) sdZ = -sdZ;
-
-	// Get the radius of the box (as projected onto the plane's normal)
-	float r = sdX + sdY + sdZ;
-
-	// Get the box center
-	ZLVec3D c = b.mMin;
-	c.Add ( spans );
-
 	// The distance from the center of the box to the plane
-	float d = ZLDist::VecToPlane ( c, p );
+	float r;
+	float d = ZLDist::BoxToPlane ( b, p, r );
 
 	// Now test against the span
 	if ( d > r ) return 1; // The box is in front of the plane
@@ -103,7 +82,7 @@ u32 ZLSect::PlaneToPlane ( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& lo
 	float absZ = ABS ( vec.mZ );
 
 	// find the mightiest component
-    switch ( absX > absY ? ( absX > absZ ? 0 : 2 ) : ( absY > absZ ? 1 : 2 )) {
+    switch (( absX > absY ) ? ( absX > absZ ? 0 : 2 ) : ( absY > absZ ? 1 : 2 )) {
 	
 		// solve using X
 		case 0:

@@ -6,39 +6,74 @@
 
 require ( 'cube' )
 
---MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
---MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
-MOAISim.openWindow ( "test", 320, 480 )
+MOAISim.openWindow ( "test", 960, 480 )
+
+--MOAIGfxDevice.getFrameBuffer ():setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( 960, 480 )
+viewport:setScale ( 960, 480 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 camera = MOAICamera.new ()
+camera:setFieldOfView ( 45 )
 camera:setLoc ( 0, 0, 200 )
 layer:setCamera ( camera )
 
-local cube = cube.makeCube ( 16 )
+local cube = cube.makeCube ( 32 )
 
 makeProp = function ( x, y, z )
 
 	local prop = MOAIProp.new ()
 	prop:setDeck ( cube )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+	--prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
 	layer:insertProp ( prop )
 
 	return prop
 end
 
-makeProp ( 0, 0, 0 )
---makeProp ( 0, 0, 64 )
---makeProp ( 0, 0, -64 )
+orbit = function ( x, y, angle )
+
+	angle = math.rad ( angle )
+
+	local s = math.sin ( angle )
+	local c = math.cos ( angle )
+
+	return (( x * c ) - ( y * s )), (( x * s ) + ( y * c ))
+end
+
+--[[
+props = {
+	makeProp ( -64, 0, -64 ),
+	makeProp ( 64, 0, -64 ),
+	makeProp ( 64, 0, 64 ),
+	makeProp ( -64, 0, 64 ),
+}
+]]--
+
+--[[
+props = {
+	makeProp ( 0, 0, 0 ),
+	makeProp ( 0, 64, 0 ),
+	makeProp ( 0, 128, 0 ),
+	makeProp ( 0, 192, 0 ),
+}
+]]--
+
+props = {
+	makeProp ( 0, 0, 0 ),
+	makeProp ( 64, 0, 0 ),
+	makeProp ( 128, 0, 0 ),
+	makeProp ( 192, 0, 0 ),
+}
 
 local keyNames = {}
 for name, value in pairs ( MOAIKeyCode ) do
@@ -53,37 +88,42 @@ end
 
 main = function ()
 
+	local rotX = 0
+	local rotY = 0
+
 	while true do
 
 		if checkKey ( 'h' ) then
 			camera:setLoc ( 0, 0, 200 )
 			camera:setRot ( 0, 0, 0 )
 		end
-
-		local xMov, yMov, zMov = 0, 0, 0
-
+		
 		local left = checkKey ( MOAIKeyCode.LEFT ) or checkKey ( MOAIKeyCode.NUM_4 )
 		local right = checkKey ( MOAIKeyCode.RIGHT ) or checkKey ( MOAIKeyCode.NUM_6 )
 
-		local up = checkKey ( MOAIKeyCode.NUM_8 ) or checkKey ( ']' )
-		local down = checkKey ( MOAIKeyCode.NUM_2 ) or checkKey ( '[' )
+		local up = checkKey ( MOAIKeyCode.UP ) or checkKey ( MOAIKeyCode.NUM_8 )
+		local down = checkKey ( MOAIKeyCode.DOWN ) or checkKey ( MOAIKeyCode.NUM_2 )
 
-		xMov = xMov + ( left and -1 or 0 )
-		xMov = xMov + ( right and 1 or 0 )
+		local xMov = 0
+		xMov = xMov + ( up and -1 or 0 )
+		xMov = xMov + ( down and 1 or 0 )
 
-		yMov = yMov + ( up and 1 or 0 )
-		yMov = yMov + ( down and -1 or 0 )
+		local yMov = 0
+		yMov = yMov + ( left and -1 or 0 )
+		yMov = yMov + ( right and 1 or 0 )
 
-		zMov = zMov + ( checkKey ( MOAIKeyCode.UP ) and -1 or 0 )
-		zMov = zMov + ( checkKey ( MOAIKeyCode.DOWN ) and 1 or 0 )
+		if xMov ~= 0 or yMov ~= 0 then
 
-		if xMov ~= 0 or yMov ~= 0 or zMov ~= 0 then
-			local x, y, z = camera:getLoc ()
-			camera:setLoc ( x + xMov, y + yMov, z + zMov )
-		end
+			rotX = ( rotX + xMov ) % 360
+			rotY = ( rotY + yMov ) % 360
 
-		if checkKey ( 'c' ) then
-			camera:lookAt ( 0, 0, 0 )
+			camera:setLoc ( 0, 0, 0 )
+			camera:setRot ( rotX, rotY, 0 )
+
+			local x, y, z = layer:getFitting3D ( props )
+			camera:setLoc ( x, y, z )
+
+			--print ( rot, x, z )
 		end
 
 		coroutine.yield ()

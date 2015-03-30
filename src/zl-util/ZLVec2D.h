@@ -86,8 +86,7 @@ public:
 	//----------------------------------------------------------------//
 	bool Compare ( const ZLMetaVec2D < TYPE >& point ) {
 	
-		if ((( mX != point.mX ) || ( mX != point.mX )) ||
-			(( mY != point.mY ) || ( mY != point.mY ))) return false;
+		if (( mX != point.mX ) || ( mY != point.mY )) return false;
 
 		return true;
 	}

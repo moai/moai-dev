@@ -827,6 +827,8 @@ int MOAITransform::_setShearByX ( lua_State* L ) {
 	self->mShearYX = state.GetValue < float >( 2, 0.0f );
 	self->mShearZX = state.GetValue < float >( 3, 0.0f );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -845,6 +847,8 @@ int MOAITransform::_setShearByY ( lua_State* L ) {
 	self->mShearXY = state.GetValue < float >( 2, 0.0f );
 	self->mShearZY = state.GetValue < float >( 3, 0.0f );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -862,6 +866,8 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 
 	self->mShearXZ = state.GetValue < float >( 2, 0.0f );
 	self->mShearYZ = state.GetValue < float >( 3, 0.0f );
+
+	self->ScheduleUpdate ();
 
 	return 0;
 }
