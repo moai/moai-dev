@@ -1,3 +1,6 @@
+obj/
+libs/
+
 Thumbs.db
 .DS_Store
 /vs2010/ipch
