@@ -49,6 +49,10 @@
 		#define AKU_WITH_ANDROID_PLAYSERVICES 1
 	#endif
 
+	#ifndef AKU_WITH_ANDROID_TWITTER
+		#define AKU_WITH_ANDROID_TWITTER 1
+	#endif
+
 	#ifndef AKU_WITH_ANDROID_VUNGLE
 		#define AKU_WITH_ANDROID_VUNGLE 1
 	#endif
