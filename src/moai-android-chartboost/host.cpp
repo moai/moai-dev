@@ -6,6 +6,8 @@
 #include <host-modules/aku_modules_android_config.h>
 #include <moai-android-chartboost/MOAIChartBoostAndroid.h>
 
+#if AKU_WITH_ANDROID_CHARTBOOST
+
 //================================================================//
 // aku
 //================================================================//
@@ -23,3 +25,5 @@ void AKUAndroidChartBoostContextInitialize () {
 
 	REGISTER_LUA_CLASS ( MOAIChartBoostAndroid );
 }
+
+#endif //AKU_WITH_ANDROID_CHARTBOOST
