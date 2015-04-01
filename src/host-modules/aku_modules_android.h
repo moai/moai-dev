@@ -40,15 +40,15 @@
 #endif
 
 #if AKU_WITH_ANDROID_TSTOREWALL
-	#include <moai-android-tstore/MOAITstoreWallAndroid.h>;
+	#include <moai-android-tstore/MOAITstoreWallAndroid.h>
 #endif
 
 #if AKU_WITH_ANDROID_TSTOREGAMECENTER
-	#include <moai-android-tstore/MOAITstoreGamecenterAndroid.h>;
+	#include <moai-android-tstore/MOAITstoreGamecenterAndroid.h>
 #endif
 
 #if AKU_WITH_ANDROID_PLAYSERVICES
-	#include <moai-android-google-play-services/MOAIGooglePlayServicesAndroid.h>;
+	#include <moai-android-google-play-services/MOAIGooglePlayServicesAndroid.h>
 #endif
 
 #if AKU_WITH_ANDROID_VUNGLE

@@ -51,7 +51,7 @@ class MOAIShaderProgram :
 protected:
 
 	friend class MOAIShader;
-	friend class MOAIShaderProgram;
+	// friend class MOAIShaderProgram;
 
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;

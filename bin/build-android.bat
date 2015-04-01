@@ -3,7 +3,7 @@ setlocal enableextensions
 
 rem Requirements Check
 
-if "%ANDROID_NDK%"=="" then echo "You need to set ANDROID_NDK to your ndk path" && exit /b 1
+if "%ANDROID_NDK%"=="" echo "You need to set ANDROID_NDK to your ndk path" && exit /b 1
 
 
 
@@ -15,7 +15,7 @@ set libprefix=%1
 if "%libprefix%"=="" set libprefix=%defaultprefix%
 
 set build_folder="%MOAIROOT%\build"
-mkdir build_folder
+mkdir %build_folder%
 
 for %%G in (armeabi,armeabi-v7a,x86) DO (
 cd %build_folder%

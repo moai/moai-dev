@@ -51,7 +51,9 @@ private:
 	MOAITestResult*		mCurrent;
 
 	//----------------------------------------------------------------//
+#ifndef _assert
 	static int		_assert					( lua_State* L );
+#endif
 	static int		_comment				( lua_State* L );
 	static int		_error					( lua_State* L );
 	static int		_pop_test				( lua_State* L );
