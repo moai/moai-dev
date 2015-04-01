@@ -4,6 +4,8 @@
 #ifndef MOAIFLURRYANDROID_H
 #define MOAIFLURRYANDROID_H
 
+#include <host-modules/aku_modules_android_config.h>
+
 #if AKU_WITH_ANDROID_FLURRY
 
 #include <moai-core/headers.h>

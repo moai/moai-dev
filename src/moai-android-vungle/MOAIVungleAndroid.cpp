@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_VUNGLE
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <moai-android/moaiext-jni.h>
 #include <moai-android-vungle/MOAIVungleAndroid.h>
+
+#if AKU_WITH_ANDROID_VUNGLE
 
 //================================================================//
 // lua

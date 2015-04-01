@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_PLAYSERVICES
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -10,6 +8,8 @@
 
 #include <moai-android/moaiext-jni.h>
 #include "MOAIGooglePlayServicesAndroid.h"
+
+#if AKU_WITH_ANDROID_PLAYSERVICES
 
 extern JavaVM* jvm;
 
