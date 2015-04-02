@@ -7,7 +7,7 @@ UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
 export PATH=$PATH:$UTIL_PATH
 
 echo "Checking for cmake"
-cmake --version 2>&1 | grep "cmake [32]\.[18]" > /dev/null || { echo "cmake was not at 2.8+"; exit 1 }
+cmake --version 
 
 if [ "$BUILD_TYPE" == "linux" ]; then
   cd `dirname $0`
