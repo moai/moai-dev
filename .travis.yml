@@ -3,7 +3,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libglew-dev libglu1-mesa-dev libxmu-dev libxi-dev libsdl-dev libxxf86vm-dev libxmu-dev libxcb1-dev libxcb-randr0-dev
 install: true
-script: ./bin/ci-linux.sh
+script: bash ./bin/ci-linux.sh
 env:
   - BUILD_TYPE=linux
   - BUILD_TYPE=android
