@@ -44,7 +44,7 @@ mkdir testhost
 cd testhost
 cp -R $MOAI_ROOT/samples/hello-moai src/
 moaiutil host init
-moaiutil host build android
+moaiutil host build android-gradle
 popd
 
 
