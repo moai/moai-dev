@@ -2,7 +2,7 @@ shallow_clone: true
 clone_depth: 5
 
 install:
-  - cinst cmake
+  - cinst -y cmake
 
 build_script: bin\ci-windows.bat  
 
