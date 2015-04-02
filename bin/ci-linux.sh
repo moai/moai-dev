@@ -16,5 +16,11 @@ popd
 
 
 
-  cd `dirname $0`
-  bash build-linux.sh
+pushd `dirname $0`
+bash build-linux.sh
+echo Linux Build Successful
+popd
+
+pushd `dirname $0`
+bash build-android.sh
+popd
