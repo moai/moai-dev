@@ -17,9 +17,19 @@ popd
 
 
 pushd `dirname $0`
-bash build-linux.sh
+#bash build-linux.sh
 echo Linux Build Successful
 popd
+
+
+echo "getting ndk"
+pushd ~
+wget http://dl.google.com/android/ndk/android-ndk-r9c-linux-x86_64.tar.bz2 -O ndk.tgz
+tar -xf ndk.tgz
+export ANDROID_NDK=`pwd`/android-ndk-r9c
+popd
+
+
 
 pushd `dirname $0`
 bash build-android.sh
