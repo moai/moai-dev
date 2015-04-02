@@ -6,7 +6,7 @@ where lib || echo "Could not find lib.exe (are you in your VS developer tools pr
 
 :haslib
 set arg1=%1
-if "%arg1%"=="" set arg1=vs2012
+if "%arg1%"=="" set arg1=vs2013
 set generator=
 if "%arg1%"=="vs2008" set generator=Visual Studio 9 2008
 if "%arg1%"=="vs2010" set generator=Visual Studio 10
