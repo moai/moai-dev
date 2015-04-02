@@ -1,7 +1,7 @@
 language: c
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get intall -y  freeglut3-dev libglew-dev libglu1-mesa-dev libxmu-dev libxi-dev libsdl-dev libxxf86vm-dev libxmu-dev libxcb1-dev libxcb-randr0-dev
+  - sudo apt-get install -y libglew-dev libglu1-mesa-dev libxmu-dev libxi-dev libsdl-dev libxxf86vm-dev libxmu-dev libxcb1-dev libxcb-randr0-dev
 install: true
 script: ./bin/ci-linux.sh
 env:
