@@ -6,12 +6,18 @@ UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
 export PATH=$PATH:$UTIL_PATH
 
-echo "Checking for cmake"
-cmake --version 
+echo "getting latest cmake"
+pushd ~
+wget http://www.cmake.org/files/v3.1/cmake-3.1.3-Linux-x86_64.tar.gz
+tar xvf cmake-3.1.3-Linux-x86_64.tar.gz
+cd cmake-3.1.3-Linux-x86_64/bin
+export PATH=$PATH:$(pwd)
+popd
+
 
 if [ "$BUILD_TYPE" == "linux" ]; then
   cd `dirname $0`
-  ./build-linux.sh
+  bash build-linux.sh
 fi
 
 if [ "$BUILD_TYPE" == "android" ]; then
