@@ -40,8 +40,11 @@ erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 echo Creating Debug Libs
 cmake -DCMAKE_INSTALL_PREFIX=%libprefix%\Debug %rootpath%\cmake\hosts\host-win-sdl || exit /b 1
 
+
+if "%CI%"=="TRUE" goto skipdebug
 cmake --build . --target INSTALL --config Debug  || exit /b 1
 
+:skipdebug
 echo Creating Distribute Libs
 rmdir /S/Q %libprefix%\Distribute\lib
 
