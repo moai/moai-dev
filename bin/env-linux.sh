@@ -3,7 +3,7 @@
 if [ ! "$0" == "-bash" ]; then
   ruby -e "exit '$0'.end_with? '.sh'"
   if [ $? -ne 0 ]; then
-  echo ERROR: This file is meant to be be sourced by running with: source ./bin/env-osx.sh
+  echo ERROR: This file is meant to be be sourced by running with: source ./bin/env-linux.sh
   echo was run with: $0
 	exit 1
 fi
