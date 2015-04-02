@@ -15,9 +15,8 @@ export PATH=$(pwd):$PATH
 popd
 
 
-
 pushd `dirname $0`
-#bash build-linux.sh
+bash build-linux.sh
 echo Linux Build Successful
 popd
 
@@ -30,7 +29,24 @@ export ANDROID_NDK=`pwd`/android-ndk-r9c
 popd
 
 
-
 pushd `dirname $0`
 bash build-android.sh
+echo Android Build Successful
 popd
+
+echo Creating and building android host
+sudo chmod a+x util/moai
+sudo chmod a+x util/moaiutil
+
+export MOAI_ROOT=$(pwd)
+pushd ~
+mkdir testhost
+cd testhost
+cp -R $MOAI_ROOT/samples/hello-moai src/
+moaiutil host init
+moaiutil host build android
+popd
+
+
+
+
