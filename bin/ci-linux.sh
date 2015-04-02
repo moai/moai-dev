@@ -11,15 +11,10 @@ pushd ~
 wget http://www.cmake.org/files/v3.1/cmake-3.1.3-Linux-x86_64.tar.gz
 tar xvf cmake-3.1.3-Linux-x86_64.tar.gz
 cd cmake-3.1.3-Linux-x86_64/bin
-export PATH=$PATH:$(pwd)
+export PATH=$(pwd):$PATH
 popd
 
 
-if [ "$BUILD_TYPE" == "linux" ]; then
+
   cd `dirname $0`
   bash build-linux.sh
-fi
-
-if [ "$BUILD_TYPE" == "android" ]; then
-  echo "Android Build on Linux not configured yet"
-fi
