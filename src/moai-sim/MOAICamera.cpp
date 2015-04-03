@@ -109,6 +109,21 @@ int MOAICamera::_getNearPlane ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAICamera::_lookAt ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float z		= state.GetValue < float >( 4, 0.0f );
+
+	self->LookAt ( x, y, z );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	
@@ -125,7 +140,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -155,7 +170,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -360,6 +375,34 @@ ZLMatrix4x4 MOAICamera::GetWorldToWndMtx ( const MOAIViewport& viewport ) const 
 }
 
 //----------------------------------------------------------------//
+void MOAICamera::LookAt ( float x, float y, float z ) {
+
+	static const ZLVec3D yAxis ( 0.0f, 1.0f, 0.0f );
+	static const ZLVec3D zAxis ( 0.0f, 0.0f, -1.0f );
+
+	this->ForceUpdate ();
+
+	ZLVec3D local ( x, y, z );
+	this->GetWorldToLocalMtx ().Transform ( local );
+	
+	ZLVec3D target;
+	
+	target.Init ( local.mX, 0.0f, local.mZ );
+	target.Norm ();
+	
+	float yRot = zAxis.Radians ( target ) * R2D * ( target.mX > 0.0f ? 1.0f : -1.0f ); // yaw
+	
+	target = local;
+	target.Norm ();
+	
+	float xRot = yAxis.Radians ( target ) * R2D; // pitch
+	
+	
+	ZLVec3D rot = this->GetRot ();
+	this->SetRot ( rot.mX - ( xRot - 90.0f ), rot.mY - yRot, 0.0f );
+}
+
+//----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
@@ -367,6 +410,8 @@ MOAICamera::MOAICamera () :
 	mType ( CAMERA_TYPE_3D ) {
 
 	RTTI_SINGLE ( MOAITransform )
+	
+	//this->SetEulerOrder ( EULER_YXZ );
 }
 
 //----------------------------------------------------------------//
@@ -394,6 +439,7 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getFloorMove",		_getFloorMove },
 		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
+		{ "lookAt",				_lookAt },
 		{ "moveFieldOfView",	_moveFieldOfView },
 		{ "seekFieldOfView",	_seekFieldOfView },
 		{ "setFarPlane",		_setFarPlane },

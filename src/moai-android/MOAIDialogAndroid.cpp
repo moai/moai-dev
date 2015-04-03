@@ -6,7 +6,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIDialogAndroid.h>
 
 extern JavaVM* jvm;
@@ -52,11 +52,11 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( title, jtitle );
-	JNI_GET_JSTRING ( message, jmessage );
-	JNI_GET_JSTRING ( positive, jpositive );
-	JNI_GET_JSTRING ( neutral, jneutral );
-	JNI_GET_JSTRING ( negative, jnegative );
+	MOAIJString jtitle = JNI_GET_JSTRING ( title );
+	MOAIJString jmessage = JNI_GET_JSTRING ( message );
+	MOAIJString jpositive = JNI_GET_JSTRING ( positive );
+	MOAIJString jnuetral = JNI_GET_JSTRING ( neutral );
+	MOAIJString jnegative = JNI_GET_JSTRING ( negative );
 
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
@@ -70,7 +70,7 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, showDialog, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );	
+			env->CallStaticVoidMethod ( moai, showDialog, ( jstring )jtitle, ( jstring )jmessage, ( jstring )jpositive, ( jstring )jnuetral, ( jstring )jnegative, cancelable );	
 		}
 	}
 	

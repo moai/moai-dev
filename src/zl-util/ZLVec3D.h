@@ -18,7 +18,7 @@ public:
 	TYPE	mZ;
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D operator + ( const ZLMetaVec3D& v ) const {
+	ZLMetaVec3D < TYPE > operator + ( const ZLMetaVec3D < TYPE >& v ) const {
 		ZLMetaVec3D < TYPE > result;
 		result.mX = this->mX + v.mX;
 		result.mY = this->mY + v.mY;
@@ -27,7 +27,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D operator - ( const ZLMetaVec3D& v ) const {
+	ZLMetaVec3D < TYPE > operator - ( const ZLMetaVec3D < TYPE >& v ) const {
 		ZLMetaVec3D < TYPE > result;
 		result.mX = this->mX - v.mX;
 		result.mY = this->mY - v.mY;
@@ -63,14 +63,22 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool Compare ( const ZLMetaVec3D < TYPE >& point ) {
+	
+		if (( mX != point.mX ) || ( mY != point.mY ) || ( mZ != point.mZ )) return false;
+		
+		return true;
+	}
+
+	//----------------------------------------------------------------//
 	// Is V within res of vec?
 	bool Compare ( const ZLMetaVec3D < TYPE >& vec, TYPE res ) const {
 
-		if ((( mX <= ( vec.mX + res )) && ( mX >= ( vec.mX - res ))) &&
-			(( mY <= ( vec.mY + res )) && ( mY >= ( vec.mY - res ))) &&
-			(( mZ <= ( vec.mZ + res )) && ( mZ >= ( vec.mZ - res )))) return true;
+		if ((( mX < ( vec.mX - res )) || ( mX > ( vec.mX + res ))) ||
+			(( mY < ( vec.mY - res )) || ( mY > ( vec.mY + res ))) ||
+			(( mZ < ( vec.mZ - res )) || ( mZ > ( vec.mZ + res )))) return false;
 
-		return false;
+		return true;
 	}
 
 	//----------------------------------------------------------------//
@@ -85,18 +93,16 @@ public:
 		mY = ty;
 		mX = tx;
 	}
-
+	
 	//----------------------------------------------------------------//
 	// V = v0 x v1
-	void Cross ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
-		float tx;
-		float ty;
-
-		tx	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
-		ty	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
-		mZ	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
-		mY = ty;
-		mX = tx;
+	static ZLMetaVec3D < TYPE > Cross ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
+		
+		float tx	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
+		float ty	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
+		float tz	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
+		
+		return ZLMetaVec3D < TYPE >( tx, ty, tz );
 	}
 
 	//----------------------------------------------------------------//
@@ -208,6 +214,12 @@ public:
 	float Length () {
 		return sqrtf (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
 	}
+	
+	//----------------------------------------------------------------//
+	// |V| * |V|
+	float LengthSqrd () {
+		return (( mX * mX ) + ( mY * mY ) + ( mZ * mZ ));
+	}
 
 	//----------------------------------------------------------------//
 	void Lerp ( const ZLMetaVec3D& vec, TYPE time ) {
@@ -293,6 +305,18 @@ public:
 		this->mX = (( s32 )this->mX * reciprocal ) * decimalPlace;
 		this->mY = (( s32 )this->mY * reciprocal ) * decimalPlace;
 		this->mZ = (( s32 )this->mZ * reciprocal ) * decimalPlace;
+	}
+
+	//----------------------------------------------------------------//
+	// angle between vectors in radians
+	float Radians ( const ZLMetaVec3D < TYPE >& v ) const {
+		
+		float dot = this->Dot ( v );
+		
+		if ( dot <= -1.0f ) return ( float )PI;
+		if ( dot >= 1.0f ) return 0.0f;
+		
+		return ACos ( dot );
 	}
 
 	//----------------------------------------------------------------//

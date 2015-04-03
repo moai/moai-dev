@@ -26,7 +26,7 @@ int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
 		verts [ i ].mY = this->mLoc.mY + ( Sin ( angle ) * this->mYRad );
 		this->mStyle.GetDrawingToWorld ().Transform ( verts [ i ]);
 	}
-	tessAddContour ( tess->mTess, 2, verts, sizeof ( ZLVec2D ), steps );
+	tess->AddContour ( 2, verts, sizeof ( ZLVec2D ), steps );
 	
 	return 0;
 }

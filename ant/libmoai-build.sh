@@ -1,3 +1,3 @@
 pushd libmoai/jni > /dev/null
-ndk-build
+ndk-build -j4
 popd > /dev/null

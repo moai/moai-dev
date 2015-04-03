@@ -186,7 +186,6 @@ int MOAIProp::_getWorldBounds ( lua_State* L ) {
 	return 6;
 }
 
-
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIProp::_getWorldBoundsCenter ( lua_State* L ) {
@@ -300,14 +299,6 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
-//
-//	if ( self->mDeck ) {
-//		self->SetMask ( self->mDeck->GetContentMask ());
-//	}
-//	else {
-//		self->SetMask ( 0 );
-//	}
-	
 	return 0;
 }
 

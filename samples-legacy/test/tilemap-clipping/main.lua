@@ -1,5 +1,3 @@
-require "Keyboard"
-
 MOAISim.openWindow( "Tilemap" , 960, 640 )
 
 -- Set up viewport
@@ -149,19 +147,19 @@ function onKeyboard ( key, down )
     cx, cy = camera:getLoc ()
     moveAmt = 30 / 960
 
-    if key == Keyboard.D then
+    if key == MOAIKeyCode.D then
 
         camera:setLoc ( cx + moveAmt, cy )
 
-    elseif key == Keyboard.A then
+    elseif key == MOAIKeyCode.A then
 
         camera:setLoc ( cx - moveAmt, cy )
 
-    elseif key == Keyboard.W then
+    elseif key == MOAIKeyCode.W then
 
         camera:setLoc ( cx, cy + moveAmt )
 
-    elseif key == Keyboard.S then
+    elseif key == MOAIKeyCode.S then
 
         camera:setLoc ( cx, cy - moveAmt )
 
@@ -170,17 +168,17 @@ function onKeyboard ( key, down )
     bg:setLoc ( camera:getLoc () )
 
     sx, sy = camera:getScl ()
-    if key == Keyboard.L then
+    if key == MOAIKeyCode.L then
 
         camera:setScl ( sx + 0.1, sy + 0.1 )
 
-    elseif key == Keyboard.K then
+    elseif key == MOAIKeyCode.K then
 
         camera:setScl ( sx - 0.1, sy - 0.1 )
 
     end
 
-    if key == Keyboard.NUMBER_0 then
+    if key == MOAIKeyCode.DIGIT_0 then
 
         camera:setLoc ( 0, 0 )
         camera:setScl ( 1, 1 )
@@ -195,6 +193,6 @@ end
 
 if MOAIInputMgr.device.keyboard then
 
-    MOAIInputMgr.device.keyboard:setCallback ( onKeyboard )
+    MOAIInputMgr.device.keyboard:setKeyCallback ( onKeyboard )
 
 end

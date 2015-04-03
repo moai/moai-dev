@@ -62,7 +62,7 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 		this->mDepthFormat		= depthFormat;
 		this->mStencilFormat	= stencilFormat;
 		
-		this->DoCPUAffirm ();
+		this->FinishInit ();
 	}
 	else {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
@@ -217,7 +217,7 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::Render () {
 
-	if ( this->DoGPUAffirm ()) {
+	if ( this->PrepareForBind ()) {
 		MOAIFrameBuffer::Render ();
 	}
 }

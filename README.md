@@ -69,7 +69,7 @@ Please build according to the following procedure.
 
 	# Build
 	cd moai-dev
-	./bin/build-osx-sdl.sh
+	./bin/build-osx.sh
 	
 	# Run
 	cd <sample_directory>

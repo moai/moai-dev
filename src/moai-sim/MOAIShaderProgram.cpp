@@ -392,6 +392,7 @@ bool MOAIShaderProgram::OnGPUCreate () {
 
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
 			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
+			uniform.ClearValue ();
 		}
 	}
 
@@ -530,7 +531,7 @@ void MOAIShaderProgram::SetSource ( cc8* vshSource, cc8* fshSource ) {
 	if ( vshSource && fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-		this->DoCPUAffirm ();
+		this->FinishInit ();
 	}
 }
 

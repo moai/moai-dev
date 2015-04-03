@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAICamera;
 class MOAIFrameBuffer;

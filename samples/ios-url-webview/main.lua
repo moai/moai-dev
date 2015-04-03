@@ -4,11 +4,11 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 320, 480 )
+viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( viewWidth, viewHeight )
+viewport:setScale ( viewWidth, viewHeight )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -16,15 +16,21 @@ MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setRect ( -640, -640, 640, 640 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
---layer:insertProp ( prop )
+layer:insertProp ( prop )
 
-local action = prop:moveRot ( 540, 1.0 )
+prop:moveRot ( 360, 1.5 )
 
--- 320, 568
+function onResize ( width, height )
+	viewport:setSize ( width, height )
+	viewport:setScale ( width, height )
+	print ( 'RESIZED', width, height )
+end
+
+MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )
 
 onTouch = function ( eventType )
 
@@ -38,3 +44,4 @@ onTouch = function ( eventType )
 end
 
 MOAIInputMgr.device.touch:setCallback ( onTouch )
+

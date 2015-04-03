@@ -81,6 +81,46 @@ int MOAILayer::_getFitting ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getFitting3D ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UT" )
+
+	if (( !self->mViewport ) || ( !self->mCamera ) || ( self->mCamera->GetType () != MOAICamera::CAMERA_TYPE_3D )) return 0;
+	
+	self->mCamera->ForceUpdate ();
+	
+	ZLFrustumFitter fitter;
+	
+	fitter.Init (
+		*self->mViewport,
+		*self->mViewport,
+		self->mCamera->GetFieldOfView (),
+		self->mCamera->GetLocalToWorldMtx ()
+	);
+
+	u32 itr = state.PushTableItr ( 2 );
+	while ( state.TableItrNext ( itr )) {
+		MOAIProp* prop = state.GetLuaObject < MOAIProp >( -1, true );
+		
+		if ( prop ) {
+			ZLBox bounds = prop->GetBounds ();
+			
+			ZLVec3D center;
+			bounds.GetCenter ( center );
+			fitter.FitBox ( bounds, 0.0f );
+		}
+	}
+
+	ZLVec3D position = fitter.GetPosition ();
+	
+	state.Push ( position.mX );
+	state.Push ( position.mY );
+	state.Push ( position.mZ );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getPartition
 	@text	Returns the partition currently attached to this layer.
 	
@@ -900,6 +940,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
 		{ "getFitting",				_getFitting },
+		{ "getFitting3D",			_getFitting3D },
 		{ "getPartition",			_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },

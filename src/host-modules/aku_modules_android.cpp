@@ -13,109 +13,120 @@
 void AKUModulesAndroidAppFinalize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidAppFinalize ();
+		AKUAndroidAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyAppFinalize ();
+		AKUAndroidAdColonyAppFinalize ();
 	#endif
 
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingAppFinalize ();
-	#endif
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingAppFinalize ();
+	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismAppFinalize ();
+		AKUAndroidCrittercismAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookAppFinalize ();
+		AKUAndroidFacebookAppFinalize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryAppFinalize ();
+		AKUAndroidFlurryAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyAppFinalize ();
+		AKUAndroidTapjoyAppFinalize ();
 	#endif
+
+	#if AKU_WITH_ANDROID_VUNGLE
+        AKUAndroidVungleAppFinalize ();
+    #endif
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppInitialize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidAppInitialize ();
+		AKUAndroidAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyAppInitialize ();
+		AKUAndroidAdColonyAppInitialize ();
 	#endif
 
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingAppInitialize ();
-	#endif
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingAppInitialize ();
+	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismAppInitialize ();
+		AKUAndroidCrittercismAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookAppInitialize ();
+		AKUAndroidFacebookAppInitialize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryAppInitialize ();
+		AKUAndroidFlurryAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyAppInitialize ();
+		AKUAndroidTapjoyAppInitialize ();
 	#endif
+
+	#if AKU_WITH_ANDROID_VUNGLE
+        AKUAndroidVungleAppInitialize ();
+    #endif
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidContextInitialize () {
 
 	#if AKU_WITH_ANDROID
-//		AKUAndroidContextInitialize ();
+		AKUAndroidContextInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyContextInitialize ();
+		AKUAndroidAdColonyContextInitialize ();
 	#endif
 
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingContextInitialize ();
-	#endif
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingContextInitialize ();
+	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostContextInitialize ();
 	#endif
-
-	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismContextInitialize ();
+    
+    #if AKU_WITH_ANDROID_CRITTERCISM
+		AKUAndroidCrittercismContextInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookContextInitialize ();
+		AKUAndroidFacebookContextInitialize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryContextInitialize ();
+		AKUAndroidFlurryContextInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyContextInitialize ();
+		AKUAndroidTapjoyContextInitialize ();
 	#endif
-	
+
+	#if AKU_WITH_ANDROID_VUNGLE
+        AKUAndroidVungleContextInitialize ();
+    #endif
 }
 
 //----------------------------------------------------------------//

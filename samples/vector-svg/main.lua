@@ -6,17 +6,7 @@
 
 svg = require ( 'svg' )
 
-MOAISim.openWindow ( "test", 1280, 1280 )
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
-
-viewport = MOAIViewport.new ()
-viewport:setSize ( 1280, 1280 )
-viewport:setScale ( 1280, -1280 )
-viewport:setOffset ( -1, 1 )
-
 layer = MOAILayer2D.new ()
-layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
 
 onProp = function ( prop, style )
 
@@ -39,6 +29,20 @@ end
 onText = function ( text, style, x, y, xScale, yScale )
 end
 
-svg.parse ( 'images/tiger.svg', 0, 0, 1, 1, onProp, onText )
+svg.parse ( 'images/bird.svg', 0, 0, 1, 1, onProp, onText )
 
 print ( bounds.xMin, bounds.yMin, bounds.xMax, bounds.yMax )
+
+local width = bounds.xMax - bounds.xMin
+local height = bounds.yMax - bounds.yMin
+
+MOAISim.openWindow ( "test", width, height )
+MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+
+viewport = MOAIViewport.new ()
+viewport:setSize ( width, height )
+viewport:setScale ( width, -height )
+viewport:setOffset ( -1, 1 )
+
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )

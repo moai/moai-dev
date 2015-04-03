@@ -1,0 +1,2 @@
+cd bundle
+moai.exe

@@ -5,14 +5,6 @@
 
 #include <moai-core/MOAITestMgr.h>
 
-// run the test in each folder until the test ends OR TestMgr.finish () is called
-// optionally, tear down and rebuild the context between each run
-// run the test in each folder using a bootstrapper
-// bootstrappers
-//		run test or staging until done
-//		run test or staging in new context until done
-//		run test or staging in new process until done
-
 //================================================================//
 // local
 //================================================================//
@@ -55,6 +47,37 @@ void MOAITestResult::Push ( lua_State* L ) {
 	lua_setfield ( L, -2, "children" );
 }
 
+//----------------------------------------------------------------//
+json_t* MOAITestResult::ToJson () {
+
+	json_t* json = json_object ();
+
+	json_object_set_new ( json, "name", json_string ( this->mName ));
+	
+	json_object_set ( json, "passed", this->mPassed ? json_true () : json_false ());
+
+	if ( !this->mPassed ) {
+		json_object_set_new ( json, "error", json_string ( this->mErrorMsg ));
+	}
+
+	json_t* comments = json_array ();
+	CommentsIt commentsIt = this->mComments.begin ();
+	for ( u32 i = 0; commentsIt != this->mComments.end (); ++commentsIt, ++i ) {
+		json_array_append_new ( comments, json_string ( *commentsIt ));
+	}
+	json_object_set_new ( json, "comments", comments );
+	
+	json_t* children = json_array ();
+	ChildrenIt childrenIt = this->mChildren.begin ();
+	for ( u32 i = 0; childrenIt != this->mChildren.end (); ++childrenIt, ++i ) {
+		MOAITestResult& child = *childrenIt;
+		json_array_append_new ( children, child.ToJson ());
+	}
+	json_object_set_new ( json, "children", children );
+	
+	return json;
+}
+
 //================================================================//
 // local
 //================================================================//
@@ -74,17 +97,13 @@ int MOAITestMgr::_assert ( lua_State* L ) {
 int MOAITestMgr::_comment ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "S" )
 	
-	assert ( self->mCurrent );
-	self->mCurrent->mComments.push_back ( state.GetValue < cc8* >( 1, "" ));
+	self->Comment ( state.GetValue < cc8* >( 1, "" ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAITestMgr::_error ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "SC" )
-
-	assert ( self->mCurrent );
-	MOAITestResult& testResult = *self->mCurrent;
 
 	STLString msg;
 	msg.write ( "%s\n", state.GetValue < cc8* >( 1, "" ));
@@ -99,55 +118,26 @@ int MOAITestMgr::_error ( lua_State* L ) {
 		}
 	}
 	
-	testResult.mPassed = false;
-	testResult.mErrorMsg = msg;
-	
-	ZLLog::LogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
-
+	self->Error ( msg );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_pop_test ( lua_State* L ) {
+int MOAITestMgr::_popTest ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
-	if ( self->mCurrent  ) {
+	self->PopTest ();
 	
-		MOAITestResult& testResult = *self->mCurrent;
-	
-		if (( testResult.mPassed == false ) && testResult.mParent ) {
-			testResult.mParent->mPassed = false;
-		}
-		self->mCurrent = testResult.mParent;
-	}
-	else {
-		self->mCurrent = 0;
-	}
-	return 0;
+	state.Push ( self->mCurrent ? true : false );
+	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_push_test ( lua_State* L ) {
+int MOAITestMgr::_pushTest ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
-	MOAITestResult* parent = self->mCurrent;
-
-	if ( !parent ) {
-		if ( self->mRoot ) {
-			delete self->mRoot;
-		}
-		self->mRoot = new MOAITestResult ();
-		self->mRoot->mName = self->mSuiteName;
-	}
-
-	self->mCurrent = parent ? &parent->mChildren.extend_back () : self->mRoot;
-	self->mCurrent->mParent = parent;
-	self->mCurrent->mPassed = true;
-
-	if ( state.IsType ( 1, LUA_TSTRING )) {
-		self->mCurrent->mName = state.GetValue < cc8* >( 1, "" );
-	}
-
+	cc8* name = state.GetValue < cc8* >( 1, "" );
+	self->PushTest ( name );
 	return 0;
 }
 
@@ -160,42 +150,26 @@ int MOAITestMgr::_results ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_setProjectDir ( lua_State* L ) {
+int MOAITestMgr::_setStepFunc ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
-	
-	self->mProjectDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
+
+	self->mStepFunc.SetRef ( state, 1 );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_setStagingDir ( lua_State* L ) {
+int MOAITestMgr::_setTimeout ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
-	
-	self->mStagingDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
+
+	self->SetTimeout ( state.GetValue < float >( 1, 0.0f ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAITestMgr::_setStagingFunc ( lua_State* L ) {
+int MOAITestMgr::_standalone ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
-	self->mStagingFunc.SetRef ( state, 1 );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAITestMgr::_setTestingDir ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
-	
-	self->mTestingDir = ZLFileSys::GetAbsoluteDirPath ( state.GetValue < cc8* >( 1, "" ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAITestMgr::_setTestingFunc ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
-
-	self->mTestingFunc.SetRef ( state, 1 );
+	self->mStandalone = true;
 	return 0;
 }
 
@@ -217,15 +191,78 @@ int MOAITestMgr::_suite ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITestMgr::Abort () {
+
+	while ( this->mCurrent ) {
+		this->PopTest ();
+	}
+	//if ( this->mStandalone ) {
+		exit ( 0 );
+	//}
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Comment ( cc8* msg ) {
+
+	if ( msg && this->mCurrent ) {
+		this->mCurrent->mComments.push_back ( msg );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Error ( cc8* msg ) {
+
+	if ( msg && this->mCurrent ) {
+	
+		MOAITestResult& testResult = * this->mCurrent;
+	
+		testResult.mPassed = false;
+		testResult.mErrorMsg = msg;
+		
+		ZLLog::LogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
+	}
+}
+
+//----------------------------------------------------------------//
 MOAITestMgr::MOAITestMgr () :
 	mRoot ( 0 ),
-	mCurrent ( 0 ) {
+	mCurrent ( 0 ),
+	mStandalone ( false ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
 MOAITestMgr::~MOAITestMgr () {
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::OnAlarm ( int signum ) {
+	UNUSED ( signum );
+	
+	MOAITestMgr& testMgr = MOAITestMgr::Get ();
+	testMgr.Error ( "TIME LIMIT EXPIRED" );
+	testMgr.Abort ();
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::PopTest () {
+	
+	this->SetTimeout (); // clear the timeout, if any
+	
+	if ( this->mCurrent  ) {
+	
+		MOAITestResult& testResult = *this->mCurrent;
+	
+		if (( testResult.mPassed == false ) && testResult.mParent ) {
+			testResult.mParent->mPassed = false;
+		}
+		this->mCurrent = testResult.mParent;
+	}
+	
+	if ( !this->mCurrent ) {
+		this->WriteLog ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -240,20 +277,37 @@ void MOAITestMgr::PushResults ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITestMgr::PushTest ( cc8* name ) {
+
+	MOAITestResult* parent = this->mCurrent;
+
+	if ( !parent ) {
+		if ( this->mRoot ) {
+			delete this->mRoot;
+		}
+		this->mRoot = new MOAITestResult ();
+		this->mRoot->mName = this->mSuiteName;
+	}
+
+	this->mCurrent = parent ? &parent->mChildren.extend_back () : this->mRoot;
+	this->mCurrent->mParent = parent;
+	this->mCurrent->mPassed = true;
+	this->mCurrent->mName = name ? name : "";
+}
+
+//----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "assert",					_assert },
 		{ "comment",				_comment },
 		{ "error",					_error },
-		{ "pop_test",				_pop_test },
-		{ "push_test",				_push_test },
+		{ "popTest",				_popTest },
+		{ "pushTest",				_pushTest },
 		{ "results",				_results },
-		{ "setProjectDir",			_setProjectDir },
-		{ "setStagingDir",			_setStagingDir },
-		{ "setStagingFunc",			_setStagingFunc },
-		{ "setTestingDir",			_setTestingDir },
-		{ "setTestingFunc",			_setTestingFunc },
+		{ "setStepFunc",			_setStepFunc },
+		{ "setTimeout",				_setTimeout },
+		{ "standalone",				_standalone },
 		{ "suite",					_suite },
 		{ NULL, NULL }
 	};
@@ -264,4 +318,59 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::SetTimeout () {
+
+	struct sigaction sa;
+
+	memset ( &sa, 0, sizeof ( sa ));
+	sa.sa_handler = SIG_IGN;
+	sigaction ( SIGALRM, &sa, NULL );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::SetTimeout ( float seconds ) {
+
+	struct sigaction sa;
+
+	memset ( &sa, 0, sizeof ( sa ));
+	sa.sa_handler = MOAITestMgr::OnAlarm;
+	sigaction ( SIGALRM, &sa, NULL );
+
+	itimerval ival;
+
+	memset ( &ival, 0, sizeof ( ival ));
+	ival.it_value.tv_sec = ( int )seconds;
+	ival.it_value.tv_usec = ( int )( ZLFloat::Decimal ( seconds ) * 1000000.f );
+
+	setitimer ( ITIMER_REAL, &ival, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::Step () {
+
+	if ( this->mStepFunc ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->mStepFunc.PushRef ( state );
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::WriteLog () {
+
+	if ( this->mRoot ) {
+	
+		json_t* json = this->mRoot->ToJson ();
+		STLString out = json_dumps ( json, JSON_INDENT ( 4 ) | JSON_SORT_KEYS );
+		json_decref ( json );
+		out.append ( "\n" );
+		
+		ZLFileStream stream;
+		stream.Open ( "log.json", ZLFileStream::READ_WRITE_NEW );
+		stream.Print ( "%s", out.c_str ());
+		stream.Close ();
+	}
 }

@@ -152,6 +152,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	if ( image.IsOK ()) {
 		this->mImage.Set ( *this, &image );
 		this->mDebugName = debugname;
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 }
@@ -166,6 +167,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 		this->mImage->Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 }
@@ -185,6 +187,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 			this->mDebugName = this->mFilename;
 		}		
 		this->mTransform = transform;
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 	else {
@@ -203,6 +206,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	// if we're OK, store the debugname and load
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 }

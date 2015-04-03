@@ -226,7 +226,12 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 	float ab = ( ay * bx ) - ( ax * by );
 	float ac = ( ay * cx ) - ( ax * cy );
 	float bc = ( by * cx ) - ( bx * cy );
-
+	
+	// Dont want a straight line if P0.x == P1.x or P0.y == P1.y
+	if ( cx == 0.0f || cy == 0.0f ) {
+		return NONE;
+	}
+	
 	if (( ac == 0.0f ) || ( bc == 0.0f )) {
 		return DEGENERATE;
 	}

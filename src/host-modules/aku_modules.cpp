@@ -3,6 +3,8 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
+#include <lua-headers/moai_lua.h>
+#include <lua-headers/moai_test_mgr_lua.h>
 
 //================================================================//
 // objc modules
@@ -36,6 +38,10 @@
 
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppFinalize ();
+	#endif
 
     #if AKU_WITH_APPLE
 		AKUAppleAppFinalize ();
@@ -105,6 +111,10 @@ void AKUModulesAppFinalize () {
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
 
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppInitialize ();
+	#endif
+
     #if AKU_WITH_APPLE
 		AKUAppleAppInitialize ();
 	#endif
@@ -173,6 +183,10 @@ void AKUModulesAppInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
 
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidContextInitialize ();
+	#endif
+
     #if AKU_WITH_APPLE
 		AKUAppleContextInitialize ();
 	#endif
@@ -236,11 +250,21 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsContextInitialize ();
 	#endif
+	
+	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
+	AKUCallFunc ();
+	
+	AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
+	AKUCallFunc ();
 }
 
 //----------------------------------------------------------------//
 void AKUModulesPause ( bool pause ) {
 	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidPause ( pause );
+	#endif
+
 	#if AKU_WITH_SIM
 		AKUPause ( pause );
 	#endif
@@ -260,6 +284,10 @@ void AKUModulesPause ( bool pause ) {
 
 //----------------------------------------------------------------//
 void AKUModulesUpdate () {
+
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidUpdate ();
+	#endif
 
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientUpdate ();

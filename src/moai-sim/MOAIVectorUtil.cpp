@@ -2,11 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
 #include <zl-vfs/assert.h>
+
+#define TESS_PRECISION 10000
 
 //================================================================//
 // SafeTesselator
@@ -15,7 +18,13 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
+void SafeTesselator::AddContour ( int size, const void* vertices, int stride, int numVertices ) {
+	
+	tessAddContour ( this->mTess, size, vertices, sizeof ( TESSreal ) * size, numVertices );
+}
+
+//----------------------------------------------------------------//
+u32 SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
 	ZLMemStream idxStream;
 	ZLMemStream vtxStream;
@@ -43,25 +52,22 @@ void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer
 		vtxStream.Write < u32 >( 0xffffffff );
 	}
 	
-	idxStream.Seek ( 0, SEEK_SET );
-	vtxStream.Seek ( 0, SEEK_SET );
-	
-	idxBuffer.CopyFromStream ( idxStream, 4 );
-	
-	vtxBuffer.Clear ();
-	vtxBuffer.Reserve ( vtxStream.GetLength ());
-	vtxBuffer.WriteStream ( vtxStream );
+	return MOAIVectorUtil::GetTriangles ( vtxStream, vtxBuffer, idxStream, idxBuffer, idxSizeInBytes );
 }
 
 //------------------------------------------------------------------//
 void SafeTesselator::Reset () {
-	tessDeleteTess ( this->mTess );
+	if ( this->mTess ) {
+		tessDeleteTess ( this->mTess );
+	}
 	this->mTess = tessNewTess ( 0 );
+	tessSetPrecision ( this->mTess, TESS_PRECISION );
 }
 
 //------------------------------------------------------------------//
-SafeTesselator::SafeTesselator () {
-	this->mTess = tessNewTess ( 0 );
+SafeTesselator::SafeTesselator () :
+	mTess ( 0 ) {
+	this->Reset ();
 }
 
 //------------------------------------------------------------------//
@@ -100,6 +106,13 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 			joins [ i ].mVertex = verts [ top - i ];
 		}
 	}
+	
+//	for ( int i = 0; i < nVerts; ++i ) {
+//		
+//		ZLVec2D& vertex = joins [ i ].mVertex;
+//		vertex.mX = floorf ( vertex.mX * 1000 ) / 1000;
+//		vertex.mY = floorf ( vertex.mY * 1000 ) / 1000;
+//	}
 	
 	for ( int i = 0; i < nVerts; ++i ) {
 		
@@ -145,6 +158,34 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 		
 		joins [ i ].mJointNorm = n;
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer, ZLStream& idxStream, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
+
+	idxStream.Seek ( 0, SEEK_SET );
+	vtxStream.Seek ( 0, SEEK_SET );
+
+	vtxBuffer.Clear ();
+	vtxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ARRAY );
+	vtxBuffer.Reserve ( vtxStream.GetLength ());
+	vtxBuffer.WriteStream ( vtxStream );
+	
+	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 );
+	
+	idxBuffer.Clear ();
+	idxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
+	idxBuffer.Reserve ( totalIndices * idxSizeInBytes );
+	
+	if ( idxSizeInBytes == 4 ) {
+		idxBuffer.WriteStream ( idxStream );
+	}
+	else {
+		for ( u32 i = 0; i < totalIndices; ++i ) {
+			idxBuffer.Write < u16 >(( u16 )idxStream.Read < u32 >( 0 ));
+		}
+	}
+	return totalIndices;
 }
 
 //----------------------------------------------------------------//

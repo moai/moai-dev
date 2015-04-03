@@ -233,25 +233,28 @@ int MOAITransform::_move ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 		
 		return 1;
 	}
 
-	self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
-	
-	self->mRot.mX += state.GetValue < float >( 5, 0.0f );
-	self->mRot.mY += state.GetValue < float >( 6, 0.0f );
-	self->mRot.mZ += state.GetValue < float >( 7, 0.0f );
-	
-	self->mScale.mX += state.GetValue < float >( 8, 0.0f );
-	self->mScale.mY += state.GetValue < float >( 9, 0.0f );
-	self->mScale.mZ += state.GetValue < float >( 10, 0.0f );
-	
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 9, 0, 0 )) { // TODO: epsilon?
+
+		self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
+		self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
+		self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
+		
+		self->mRot.mX += state.GetValue < float >( 5, 0.0f );
+		self->mRot.mY += state.GetValue < float >( 6, 0.0f );
+		self->mRot.mZ += state.GetValue < float >( 7, 0.0f );
+		
+		self->mScale.mX += state.GetValue < float >( 8, 0.0f );
+		self->mScale.mY += state.GetValue < float >( 9, 0.0f );
+		self->mScale.mZ += state.GetValue < float >( 10, 0.0f );
+		
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -289,17 +292,20 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
-
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mLoc.mX += state.GetValue < float >( 2, 0.0f );
+		self->mLoc.mY += state.GetValue < float >( 3, 0.0f );
+		self->mLoc.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
+	
 	return 0;
 }
 
@@ -336,16 +342,19 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mPiv.mX += state.GetValue < float >( 2, 0.0f );
-	self->mPiv.mY += state.GetValue < float >( 3, 0.0f );
-	self->mPiv.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mPiv.mX += state.GetValue < float >( 2, 0.0f );
+		self->mPiv.mY += state.GetValue < float >( 3, 0.0f );
+		self->mPiv.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -383,16 +392,19 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mRot.mX += state.GetValue < float >( 2, 0.0f );
-	self->mRot.mY += state.GetValue < float >( 3, 0.0f );
-	self->mRot.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mRot.mX += state.GetValue < float >( 2, 0.0f );
+		self->mRot.mY += state.GetValue < float >( 3, 0.0f );
+		self->mRot.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 
 	return 0;
 }
@@ -430,16 +442,19 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mScale.mX += state.GetValue < float >( 2, 0.0f );
-	self->mScale.mY += state.GetValue < float >( 3, 0.0f );
-	self->mScale.mZ += state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	if ( !state.CheckVector ( 2, 3, 0, 0 )) { // TODO: epsilon?
+	
+		self->mScale.mX += state.GetValue < float >( 2, 0.0f );
+		self->mScale.mY += state.GetValue < float >( 3, 0.0f );
+		self->mScale.mZ += state.GetValue < float >( 4, 0.0f );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -490,23 +505,22 @@ int MOAITransform::_seek ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mLoc.mX = state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY = state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ = state.GetValue < float >( 4, 0.0f );
-	self->mRot.mX = state.GetValue < float >( 5, 0.0f );
-	self->mRot.mY = state.GetValue < float >( 6, 0.0f );
-	self->mRot.mZ = state.GetValue < float >( 7, 0.0f );
-	self->mScale.mX = state.GetValue < float >( 8, 0.0f );
-	self->mScale.mY = state.GetValue < float >( 9, 0.0f );
-	self->mScale.mZ = state.GetValue < float >( 10, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
+	ZLVec3D rot = state.GetVec3D < float >( 5, 0.0f );
+	ZLVec3D scl = state.GetVec3D < float >( 8, 1.0f );
 	
+	if ( !loc.Compare( self->mLoc ) || !rot.Compare( self->mRot ) || !scl.Compare( self->mScale )) {
+		self->SetLoc ( loc );
+		self->SetRot ( rot );
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -544,16 +558,17 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mLoc.mX = state.GetValue < float >( 2, 0.0f );
-	self->mLoc.mY = state.GetValue < float >( 3, 0.0f );
-	self->mLoc.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
+	if ( !loc.Compare ( self->mLoc )) {
+		self->SetLoc ( loc );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -592,16 +607,17 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mPiv.mX = state.GetValue < float >( 2, 0.0f );
-	self->mPiv.mY = state.GetValue < float >( 3, 0.0f );
-	self->mPiv.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D piv = state.GetVec3D < float >( 2, 0.0f );
+	if ( !piv.Compare ( self->mPiv )) {
+		self->SetPiv ( piv );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -640,16 +656,17 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mRot.mX = state.GetValue < float >( 2, 0.0f );
-	self->mRot.mY = state.GetValue < float >( 3, 0.0f );
-	self->mRot.mZ = state.GetValue < float >( 4, 0.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D rot = state.GetVec3D < float >( 2, 0.0f );
+	if ( !rot.Compare ( self->mRot )) {
+		self->SetRot ( rot );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -688,16 +705,17 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr ());
+		action->Start ( MOAISim::Get ().GetActionMgr (), false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
 	}
 	
-	self->mScale.mX = state.GetValue < float >( 2, 1.0f );
-	self->mScale.mY = state.GetValue < float >( 3, 1.0f );
-	self->mScale.mZ = state.GetValue < float >( 4, 1.0f );
-	self->ScheduleUpdate ();
+	ZLVec3D scl = state.GetVec3D < float >( 2, 1.0f );
+	if ( !scl.Compare ( self->mScale )) {
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -715,15 +733,12 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 int MOAITransform::_setLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D loc;
+	ZLVec3D loc = state.GetVec3D < float >( 2, 0.0f );
 	
-	loc.mX = state.GetValue < float >( 2, 0.0f );
-	loc.mY = state.GetValue < float >( 3, 0.0f );
-	loc.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetLoc ( loc );
-	self->ScheduleUpdate ();
-	
+	if ( !loc.Compare ( self->mLoc )) {
+		self->SetLoc ( loc );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -740,15 +755,12 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 int MOAITransform::_setPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D piv;
+	ZLVec3D piv = state.GetVec3D < float >( 2, 0.0f );
 	
-	piv.mX = state.GetValue < float >( 2, 0.0f );
-	piv.mY = state.GetValue < float >( 3, 0.0f );
-	piv.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetPiv ( piv );
-	self->ScheduleUpdate ();
-	
+	if ( !piv.Compare ( self->mPiv )) {
+		self->SetPiv ( piv );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -765,15 +777,12 @@ int MOAITransform::_setPiv ( lua_State* L ) {
 int MOAITransform::_setRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	ZLVec3D rot;
+	ZLVec3D rot = state.GetVec3D < float >( 2, 0.0f );
 	
-	rot.mX = state.GetValue < float >( 2, 0.0f );
-	rot.mY = state.GetValue < float >( 3, 0.0f );
-	rot.mZ = state.GetValue < float >( 4, 0.0f );
-	
-	self->SetRot ( rot );
-	self->ScheduleUpdate ();
-	
+	if ( !rot.Compare ( self->mRot )) {
+		self->SetRot ( rot );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -796,9 +805,10 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	scl.mY = state.GetValue < float >( 3, scl.mX );
 	scl.mZ = state.GetValue < float >( 4, 1.0f );
 	
-	self->SetScl ( scl );
-	self->ScheduleUpdate ();
-	
+	if ( !scl.Compare ( self->mScale )) {
+		self->SetScl ( scl );
+		self->ScheduleUpdate ();
+	}
 	return 0;
 }
 
@@ -816,6 +826,8 @@ int MOAITransform::_setShearByX ( lua_State* L ) {
 
 	self->mShearYX = state.GetValue < float >( 2, 0.0f );
 	self->mShearZX = state.GetValue < float >( 3, 0.0f );
+
+	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -835,6 +847,8 @@ int MOAITransform::_setShearByY ( lua_State* L ) {
 	self->mShearXY = state.GetValue < float >( 2, 0.0f );
 	self->mShearZY = state.GetValue < float >( 3, 0.0f );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -852,6 +866,8 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 
 	self->mShearXZ = state.GetValue < float >( 2, 0.0f );
 	self->mShearYZ = state.GetValue < float >( 3, 0.0f );
+
+	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -932,17 +948,47 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 //----------------------------------------------------------------//
 void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
-	localToWorldMtx.ScRoTr (
-		this->mScale.mX,
-		this->mScale.mY,
-		this->mScale.mZ,
-		ClampEuler ( this->mRot.mX ) * ( float )D2R,
-		ClampEuler ( this->mRot.mY ) * ( float )D2R,
-		ClampEuler ( this->mRot.mZ ) * ( float )D2R,
-		this->mLoc.mX,
-		this->mLoc.mY,
-		this->mLoc.mZ
-	);
+	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
+	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
+	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
+
+	if ( this->mEulerOrder == EULER_XYZ ) {
+
+		localToWorldMtx.ScRoTr (
+			this->mScale.mX,
+			this->mScale.mY,
+			this->mScale.mZ,
+			xRot,
+			yRot,
+			zRot,
+			this->mLoc.mX,
+			this->mLoc.mY,
+			this->mLoc.mZ
+		);
+	}
+	else {
+	
+		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
+	
+		ZLAffine3D euler [ 3 ];
+		
+		euler [ 0 ].RotateX ( xRot );
+		euler [ 1 ].RotateY ( yRot );
+		euler [ 2 ].RotateZ ( zRot );
+		
+		u32 idx = this->mEulerOrder & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
+		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
+		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
+	}
 	
 	ZLAffine3D shear;
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
@@ -1018,7 +1064,8 @@ MOAITransform::MOAITransform () :
 	mPiv ( 0.0f, 0.0f, 0.0f ),
 	mLoc ( 0.0f, 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f, 1.0f ),
-	mRot ( 0.0f, 0.0f, 0.0f ) {
+	mRot ( 0.0f, 0.0f, 0.0f ),
+	mEulerOrder ( EULER_XYZ ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransformBase )

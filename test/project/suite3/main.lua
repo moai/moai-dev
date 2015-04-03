@@ -1,6 +1,3 @@
-WIN_WIDTH = 320
-WIN_HEIGHT = 480
-
 --==============================================================
 -- staging
 --==============================================================
@@ -16,6 +13,8 @@ end
 
 ----------------------------------------------------------------
 test = function ()
+
+	MOAISim.openWindow ( "test", 320, 480 )
 
 	coroutine.yield ()
 
@@ -61,7 +60,9 @@ test = function ()
 	    local action
 	 
 	    action = prop:moveRot ( -360, 3 )
-	    MOAIThread.blockOnAction ( action )
+		while action:isBusy () do
+	    	coroutine.yield ()
+	    end
 
 	end )
 

@@ -33,7 +33,7 @@ int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
 	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 2 ]);
 	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 3 ]);
 
-	tessAddContour ( tess->mTess, 2, verts, sizeof ( ZLVec2D ), 4 );
+	tess->AddContour ( 2, verts, sizeof ( ZLVec2D ), 4 );
 	
 	return 0;
 }

@@ -4,16 +4,15 @@
 #include "pch.h"
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAIInputQueue.h>
+#include <contrib/moai_utf8.h>
 
-//================================================================//
-// MOAIKeyboardEvent
-//================================================================//
-class MOAIKeyboardEvent {
-public:
-
-	u32		mKey;
-	bool	mDown;
-};
+namespace KeyboardEventType {
+	enum {
+		KEY,
+		CHAR,
+		INVALID
+	};
+}
 
 //================================================================//
 // lua
@@ -21,165 +20,101 @@ public:
 
 //----------------------------------------------------------------//
 /**	@lua	keyDown
-	@text	Checks to see if one or more buttons were pressed during the last iteration.
+	@text	Checks to see if one or more keys were pressed during the last iteration.
 
-	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string keyCodes			Keycode value(s) to be checked against the input table.
-	@out	boolean... wasPressed
-
-	@overload
-	@in		MOAIKeyboardSensor self
-	@in		number keyCode			Keycode value to be checked against the input table.
-	@out	boolean wasPressed
+	@in		... keys					Keys to be checked against the input table.
+										Each key can be specified using a MOAIKeyboardSensor.* constant or the corresponding string.
+										Multiple strings can be combined: 'wasd' is equivalent to 'w', 'a', 's', 'd'.
+	@out	boolean... down				For every specified key, indicates whether this key was pressed during the last iteration.
 */
 int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
-	
-	if ( state.IsType ( 2, LUA_TSTRING )) {
-		
-		cc8* str = lua_tostring ( state, 2 );
-		
-		int count;
-		for ( count = 0; str [ count ]; ++count ) {
-			lua_pushboolean ( state, self->KeyDown ( str [ count ]));
-		}
-		return count;
-	}
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-	
-		u32 keyCode = state.GetValue < u32 >( 2, 0 );
-		lua_pushboolean ( state, self->KeyDown ( keyCode ));
-		return 1;
-	}
-	
-	return 0;
+	return CheckKeys ( L, &MOAIKeyboardSensor::KeyDown );
 }
 
 //----------------------------------------------------------------//
 /**	@lua	keyIsDown
-	@text	Checks to see if the button is currently down.
+	@text	Checks to see if one or more keys are currently pressed.
 
-	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string keyCodes			Keycode value(s) to be checked against the input table.
-	@out	boolean... isDown
-
-	@overload
-	@in		MOAIKeyboardSensor self
-	@in		number keyCode			Keycode value to be checked against the input table.
-	@out	boolean isDown
+	@in		... keys					Keys to be checked against the input table.
+										Each key can be specified using a MOAIKeyboardSensor.* constant or the corresponding string.
+										Multiple strings can be combined: 'wasd' is equivalent to 'w', 'a', 's', 'd'.
+	@out	boolean... isDown			For every specified key, indicates whether this key is currently pressed.
 */
 int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
-	
-	if ( state.IsType ( 2, LUA_TSTRING )) {
-		
-		cc8* str = lua_tostring ( state, 2 );
-		
-		int count;
-		for ( count = 0; str [ count ]; ++count ) {
-			lua_pushboolean ( state, self->KeyIsDown ( str [ count ]));
-		}
-		return count;
-	}
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-	
-		u32 keyCode = state.GetValue < u32 >( 2, 0 );
-		lua_pushboolean ( state, self->KeyIsDown ( keyCode ));
-		return 1;
-	}
-	
-	return 0;
+	return CheckKeys ( L, &MOAIKeyboardSensor::KeyIsDown );
 }
 
 //----------------------------------------------------------------//
 /**	@lua	keyIsUp
-	@text	Checks to see if the specified key is currently up.
+	@text	Checks to see if one or more keys are currently up.
 
-	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string keyCodes			Keycode value(s) to be checked against the input table.
-	@out	boolean... isUp
-
-	@overload
-	@in		MOAIKeyboardSensor self
-	@in		number keyCode			Keycode value to be checked against the input table.
-	@out	boolean isUp
+	@in		... keys					Keys to be checked against the input table.
+										Each key can be specified using a MOAIKeyboardSensor.* constant or the corresponding string.
+										Multiple strings can be combined: 'wasd' is equivalent to 'w', 'a', 's', 'd'.
+	@out	boolean... isUp				For every specified key, indicates whether this key is currently up.
 */
 int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
-	
-	if ( state.IsType ( 2, LUA_TSTRING )) {
-		
-		cc8* str = lua_tostring ( state, 2 );
-		
-		int count;
-		for ( count = 0; str [ count ]; ++count ) {
-			lua_pushboolean ( state, self->KeyIsUp ( str [ count ]));
-		}
-		return count;
-	}
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-	
-		u32 keyCode = state.GetValue < u32 >( 2, 0 );
-		lua_pushboolean ( state, self->KeyIsUp ( keyCode ));
-		return 1;
-	}
-	
-	return 0;
+	return CheckKeys ( L, &MOAIKeyboardSensor::KeyIsUp );
 }
 
 //----------------------------------------------------------------//
 /**	@lua	keyUp
-	@text	Checks to see if the specified key was released during the last iteration.
+	@text	Checks to see if one or more keys were released during the last iteration.
 
-	@overload
 	@in		MOAIKeyboardSensor self
-	@in		string keyCodes			Keycode value(s) to be checked against the input table.
-	@out	boolean... wasReleased
-
-	@overload
-	@in		MOAIKeyboardSensor self
-	@in		number keyCode			Keycode value to be checked against the input table.
-	@out	boolean wasReleased
+	@in		... keys					Keys to be checked against the input table.
+										Each key can be specified using a MOAIKeyboardSensor.* constant or the corresponding string.
+										Multiple strings can be combined: 'wasd' is equivalent to 'w', 'a', 's', 'd'.
+	@out	boolean... up				For every specified key, indicates whether this key was released during the last iteration.
 */
 int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
+	return CheckKeys ( L, &MOAIKeyboardSensor::KeyUp );
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setCallback
+	@text	This method has been deprecated. Use setKeyCallback instead.
+
+	@in		MOAIKeyboardSensor self
+	@opt	function callback			A callback function with the signature "void callback(number keyCode, bool down)".
+										Default value is nil.
+	@out	nil
+*/
+int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
+	return _setKeyCallback ( L );
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setCharCallback
+	@text	Sets or clears the callback to be issued when a character is typed.
+
+	@in		MOAIKeyboardSensor self
+	@opt	function callback			A callback function with the signature "void callback(string character)".
+										Note that for non-ASCII characters, the string argument will be a multibyte UTF-8 character.
+										Default value is nil.
+	@out	nil
+*/
+int MOAIKeyboardSensor::_setCharCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
-	if ( state.IsType ( 2, LUA_TSTRING )) {
-		
-		cc8* str = lua_tostring ( state, 2 );
-		
-		int count;
-		for ( count = 0; str [ count ]; ++count ) {
-			lua_pushboolean ( state, self->KeyUp ( str [ count ]));
-		}
-		return count;
-	}
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-	
-		u32 keyCode = state.GetValue < u32 >( 2, 0 );
-		lua_pushboolean ( state, self->KeyUp ( keyCode ));
-		return 1;
-	}
+	self->mOnChar.SetRef ( state, 2 );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setCallback
-	@text	Sets or clears the callback to be issued when a key is pressed.
+/**	@lua	setKeyCallback
+	@text	Sets or clears the callback to be issued when a key is pressed or released.
 
 	@in		MOAIKeyboardSensor self
-	@opt	function callback			Default value is nil.
+	@opt	function callback			A callback function with the signature "void callback(number keyCode, bool down)".
+										Default value is nil.
 	@out	nil
 */
-int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
+int MOAIKeyboardSensor::_setKeyCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	self->mOnKey.SetRef ( state, 2 );
@@ -192,12 +127,74 @@ int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
+void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar ) {
+
+	// Don't allow non-printable characters
+	if ( unicodeChar < ' ' ) return;
 
 	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		queue.Write < u32 >( KeyboardEventType::CHAR );
+		queue.Write < u32 >( unicodeChar );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
+
+	if ( keyID >= MOAI_KEY_TOTAL ) return;
+
+	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		queue.Write < u32 >( KeyboardEventType::KEY );
 		queue.Write < u32 >( keyID );
 		queue.Write < bool >( down );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text ) {
+	
+	int i = 0;
+	while ( text [ i ]) {
+		u_int32_t uc = moai_u8_nextchar ( text, &i );
+		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( queue, deviceID, sensorID, uc );
+	}
+}
+
+//----------------------------------------------------------------//
+// For each key, returns whether the specified predicate returns true.
+// Expects self and a number of keycodes or strings on the stack.
+int MOAIKeyboardSensor::CheckKeys ( lua_State* L, bool ( MOAIKeyboardSensor::* predicate )( u32 keyCode )) {
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
+
+	u32 argCount = lua_gettop ( state );
+	int resultCount = 0;
+
+	for ( u32 arg = 2; arg <= argCount; ++arg ) {
+		if ( state.IsType ( arg, LUA_TNUMBER )) {
+			// Argument is number. Treat as single key code.
+			u32 keyCode = state.GetValue < u32 > ( arg, 0 );
+			bool result = ( self->*predicate )( keyCode );
+			lua_pushboolean ( state, result );
+			++resultCount;
+		}
+		else if ( state.IsType ( arg, LUA_TSTRING ) ) {
+			// Argument is string. Treat as list of key codes.
+			cc8* str = lua_tostring ( state, arg );
+			for ( u32 i = 0; str [ i ]; ++i ) {
+				u32 keyCode = str [ i ];
+				bool result = ( self->*predicate )( keyCode );
+				lua_pushboolean ( state, result );
+				++resultCount;
+			}
+		}
+		else {
+			// Argument is invalid. Push nil to return the expected number of results
+			lua_pushnil ( state );
+			++resultCount;
+		}
+	}
+
+	return resultCount;
 }
 
 //----------------------------------------------------------------//
@@ -230,7 +227,7 @@ MOAIKeyboardSensor::MOAIKeyboardSensor () :
 	
 	RTTI_SINGLE ( MOAISensor )
 	
-	memset ( this->mState, 0, MOAIKeyCodes::TOTAL * sizeof ( u32 ));
+	memset ( this->mState, 0, MOAI_KEY_TOTAL * sizeof ( u32 ));
 }
 
 //----------------------------------------------------------------//
@@ -240,29 +237,52 @@ MOAIKeyboardSensor::~MOAIKeyboardSensor () {
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 	
-	u32 keyCode = eventStream.Read < u32 >( 0 );
-	bool down = eventStream.Read < bool >( false );
+	u32 eventType = eventStream.Read < u32 >( KeyboardEventType::INVALID );
+	if ( eventType == KeyboardEventType::KEY ) {
+
+		u32 keyCode = eventStream.Read < u32 >( 0 );
+		bool down = eventStream.Read < bool >( false );
 	
-	bool inQueue = (( this->mState [ keyCode ] & ( DOWN | UP )) != 0 );
+		// Ignore redundant events
+		if ( down == KeyIsDown ( keyCode )) return;
+
+		bool alreadyInClearQueue = ( this->mState [ keyCode ] & ( DOWN | UP )) != 0;
 	
-	if ( down ) {
-		this->mState [ keyCode ] |= IS_DOWN | DOWN;
-	}
-	else {
-		this->mState [ keyCode ] &= ~IS_DOWN;
-		this->mState [ keyCode ] |= UP;
-	}
+		if ( down ) {
+			this->mState [ keyCode ] |= IS_DOWN | DOWN;
+		}
+		else {
+			this->mState [ keyCode ] &= ~IS_DOWN;
+			this->mState [ keyCode ] |= UP;
+		}
 	
-	if ( this->mOnKey ) {
-		MOAIScopedLuaState state = this->mOnKey.GetSelf ();
-		lua_pushnumber ( state, keyCode );
-		lua_pushboolean ( state, down );
-		state.DebugCall ( 2, 0 );
-	}
+		if ( this->mOnKey ) {
+			MOAIScopedLuaState state = this->mOnKey.GetSelf ();
+			lua_pushnumber ( state, keyCode );
+			lua_pushboolean ( state, down );
+			state.DebugCall ( 2, 0 );
+		}
 	
-	if ( !inQueue ) {
-		this->mClearQueue [ this->mClearCount ] = keyCode;
-		this->mClearCount++;
+		if ( !alreadyInClearQueue ) {
+			this->mClearQueue [ this->mClearCount ] = keyCode;
+			this->mClearCount++;
+		}
+	} else if ( eventType == KeyboardEventType::CHAR ) {
+
+		u32 unicodeChar = eventStream.Read < u32 >( -1 );
+		
+		if ( this->mOnChar ) {
+			// Convert to UTF-8 and zero-terminate
+			char utf8Sequence [ 5 ];
+			int byteCount = moai_u8_wc_toutf8 ( utf8Sequence, unicodeChar );
+			utf8Sequence [ byteCount ] = 0;
+
+			if ( byteCount ) {
+				MOAIScopedLuaState state = this->mOnChar.GetSelf ();
+				lua_pushstring ( state, utf8Sequence );
+				state.DebugCall ( 1, 0 );
+			}
+		}
 	}
 }
 
@@ -270,10 +290,6 @@ void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 void MOAIKeyboardSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
-
-	state.SetField ( -1, "SHIFT", ( u32 )MOAIKeyCodes::SHIFT );
-	state.SetField ( -1, "CONTROL", ( u32 )MOAIKeyCodes::CONTROL );
-	state.SetField ( -1, "ALT", ( u32 )MOAIKeyCodes::ALT );
 }
 
 //----------------------------------------------------------------//
@@ -287,6 +303,8 @@ void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "keyIsUp",				_keyIsUp },
 		{ "keyUp",					_keyUp },
 		{ "setCallback",			_setCallback },
+		{ "setCharCallback",		_setCharCallback },
+		{ "setKeyCallback",			_setKeyCallback },
 		{ NULL, NULL }
 	};
 
@@ -295,8 +313,7 @@ void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::Reset () {
-
-	// clear out the old events
+	// Clear the DOWN and UP flags
 	for ( u32 i = 0; i < this->mClearCount; ++i ) {
 		u32 keyCode = this->mClearQueue [ i ];
 		this->mState [ keyCode ] &= ~( DOWN | UP );	

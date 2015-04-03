@@ -21,9 +21,8 @@ vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-vbo = MOAIVertexBuffer.new ()
-vbo:setFormat ( vertexFormat )
-vbo:reserveVerts ( 4 )
+vbo = MOAIGfxBuffer.new ()
+vbo:reserve ( 4 * vertexFormat:getVertexSize ())
 
 vbo:writeFloat ( -64, -64 )
 vbo:writeFloat ( 0, 1 )
@@ -41,11 +40,13 @@ vbo:writeFloat ( -64, 64 )
 vbo:writeFloat ( 0, 0 )
 vbo:writeColor32 ( 0, 0, 1 )
 
-vbo:bless ()
-
 mesh = MOAIMesh.new ()
+
+mesh:setVertexBuffer ( vbo, vertexFormat )
+mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
+mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
+
 mesh:setTexture ( "moai.png" )
-mesh:setVertexBuffer ( vbo )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 
 if MOAIGfxDevice.isProgrammable () then

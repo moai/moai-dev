@@ -6,7 +6,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIAppAndroid.h>
 
 extern JavaVM* jvm;
@@ -111,7 +111,7 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 	
 	JNI_GET_ENV ( jvm, env );
 	
-	JNI_GET_JSTRING ( url, jurl );
+	MOAIJString jurl = JNI_GET_JSTRING ( url );
 	
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
 	    if ( moai == NULL ) {
@@ -126,7 +126,7 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 	    	} else {
 	
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: calling java openURL" );
-			env->CallStaticVoidMethod ( moai, openURL, jurl );
+			env->CallStaticVoidMethod ( moai, openURL, ( jstring )jurl );
 		}
 	}
 
@@ -151,9 +151,9 @@ int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
 
     JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( recipient, jrecipient );
-	JNI_GET_JSTRING ( subject, jsubject );
-	JNI_GET_JSTRING ( message, jmessage );
+	MOAIJString jrecipient = JNI_GET_JSTRING ( recipient );
+	MOAIJString jsubject = JNI_GET_JSTRING ( subject );
+	MOAIJString jmessage = JNI_GET_JSTRING ( message );
 
     jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
@@ -167,7 +167,7 @@ int	MOAIAppAndroid::_sendMail ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find static java method %s", "sendMail" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, sendMail, jrecipient, jsubject, jmessage );
+			env->CallStaticVoidMethod ( moai, sendMail, ( jstring )jrecipient, ( jstring )jsubject, ( jstring )jmessage );
 		}
 	}
 
@@ -194,9 +194,9 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( prompt, jprompt );
-	JNI_GET_JSTRING ( subject, jsubject );
-	JNI_GET_JSTRING ( text, jtext );
+	MOAIJString jprompt = JNI_GET_JSTRING ( prompt );
+	MOAIJString jsubject = JNI_GET_JSTRING ( subject );
+	MOAIJString jtext = JNI_GET_JSTRING ( text );
 
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
@@ -210,7 +210,7 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find static java method %s", "share" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, share, jprompt, jsubject, jtext );
+			env->CallStaticVoidMethod ( moai, share, ( jstring )jprompt, ( jstring )jsubject, ( jstring )jtext );
 		}
 	}
 
@@ -315,7 +315,7 @@ void MOAIAppAndroid::NotifyPictureTaken() {
 		if( t_class != NULL && t_getResultCode_mid != NULL && t_getResultPath_mid != NULL ) {
 
 			int j_code = env->CallStaticIntMethod( t_class, t_getResultCode_mid );
-			jstring j_path = (jstring)env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
+			MOAIJString j_path = ( jstring )env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
 
 			JNI_GET_CSTRING( j_path, c_path );
 			state.Push( j_code );
@@ -352,7 +352,7 @@ void MOAIAppAndroid::PushPictureData( MOAILuaState& state ) {
 	if( t_class != NULL && t_getResultCode_mid != NULL && t_getResultPath_mid != NULL ) {
 
 		int j_code = env->CallStaticIntMethod( t_class, t_getResultCode_mid );
-		jstring j_path = (jstring)env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
+		MOAIJString j_path = ( jstring )env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
 
 		JNI_GET_CSTRING( j_path, c_path );
 		state.Push( j_code );
@@ -370,7 +370,7 @@ void MOAIAppAndroid::PushPicturePath( MOAILuaState& state ) {
 	jmethodID t_getResultPath_mid = env->GetStaticMethodID( t_class, "getResultPath", "()Ljava/lang/String;" );
 
 	if( t_class != NULL && t_getResultPath_mid != NULL ) {
-		jstring j_path = (jstring)env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
+		MOAIJString j_path = ( jstring )env->CallStaticObjectMethod( t_class, t_getResultPath_mid );
 		JNI_GET_CSTRING( j_path, c_path );
 		state.Push( c_path );
 		JNI_RELEASE_CSTRING( j_path, c_path );

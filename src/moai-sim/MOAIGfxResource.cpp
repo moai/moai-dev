@@ -97,19 +97,7 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
 
-	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
-
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
-		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
-		return false;
-	}
-
-	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
-		this->InvokeLoader ();
-	}
-
-	if ( this->DoGPUAffirm ()) {
-		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
+	if ( this->PrepareForBind ()) {
 		this->OnGPUBind ();
 		return true;
 	}
@@ -130,13 +118,12 @@ void MOAIGfxResource::Destroy () {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::DoCPUAffirm () {
 
-	if ( this->mState == STATE_NEW ) {
-		this->mState = STATE_NEEDS_CPU_CREATE;
-	}
+	if ( this->mState == STATE_READY_TO_BIND ) return true;
+	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_NEW )) return false;
 
 	u32 loadingPolicy = this->GetLoadingPolicy ();
 	
-	// if we're deferring both CPU and GPU, bail
+	// if we're deferring both CPU and GPU, bail (unless we're being forced to load the CPU)
 	if ( loadingPolicy == LOADING_POLICY_CPU_GPU_BIND ) return true;
 
 	// whether or not GPU is deferred, do the CPU part
@@ -193,6 +180,22 @@ bool MOAIGfxResource::DoGPUAffirm () {
 		}
 	}
 	return this->mState == STATE_READY_TO_BIND;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::ForceCPUCreate () {
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->mState = this->OnCPUCreate () ? STATE_NEEDS_GPU_CREATE : STATE_ERROR;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::FinishInit () {
+
+	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) {
+		this->mState = STATE_NEEDS_CPU_CREATE;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -267,6 +270,27 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::PrepareForBind () {
+
+	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
+
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+		return false;
+	}
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->InvokeLoader ();
+	}
+
+	if ( this->DoGPUAffirm ()) {
+		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

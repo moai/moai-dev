@@ -7,7 +7,6 @@
 
 #include <moai-core/host.h>
 #include <host-modules/aku_modules.h>
-#include <host-sdl/SDLHost.h>
 
 #ifdef MOAI_OS_WINDOWS
     #include <windows.h>
@@ -20,7 +19,16 @@
 
 #include <SDL.h>
 
-#include "Joystick.h"
+#include "SDLHost.h"
+#include "SDLJoystick.h"
+#include "SDLKeyCodeMapping.h"
+
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <limits.h>
+#endif
+
+#define UNUSED(p) (( void )p)
 
 namespace InputDeviceID {
 	enum {
@@ -38,7 +46,7 @@ namespace InputSensorID {
 		MOUSE_RIGHT,
 		MOUSE_WHEEL,
 		JOYSTICK,
-		TOUCH,
+//		TOUCH,
 		TOTAL,
 	};
 }
@@ -95,8 +103,15 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_SetSwapInterval ( 1 );
 		AKUDetectGfxContext ();
 		AKUSetViewSize ( width, height );
-		
 		AKUSdlSetWindow ( sWindow );
+
+		// Enable keyboard text input.
+		// According to the SDL documentation, this will open an on-screen keyboard on some platforms.
+		// Currently we're using the SDL host for desktop platforms only, so this should not be a problem.
+		SDL_StartTextInput ();
+	}
+	else {
+		SDL_SetWindowSize ( sWindow, width, height );
 	}
 }
 
@@ -162,24 +177,47 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
+	#ifdef __APPLE__
+			//are we a bundle?
+			CFBundleRef bref = CFBundleGetMainBundle();
+			if (bref == NULL || CFBundleGetIdentifier(bref) == NULL) {
 	AKUModulesParseArgs ( argc, argv );
+	
+			} else {
+			
+					CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL(bref);
+					assert(bundleurl != NULL);
+					
+					UInt8 buf[PATH_MAX];
+					CFURLGetFileSystemRepresentation(bundleurl, true, buf, PATH_MAX);
+
+					AKUSetWorkingDirectory((const char *)buf);
+					AKULoadFuncFromFile("bootstrap.lua");
+					AKUCallFunc();
+			}
+	#else
+			
+			
+		AKUModulesParseArgs ( argc, argv );
+	#endif
+
 	
 	atexit ( Finalize ); // do this *after* SDL_Init
 }
 
 // based on host-glut 
-void _onMultiButton( int touch_id, float x, float y, int state );
-void _onMultiButton( int touch_id, float x, float y, int state ) {
-
-	AKUEnqueueTouchEvent (
-		InputDeviceID::DEVICE,
-		InputSensorID::TOUCH,
-		touch_id,
-		state == SDL_FINGERDOWN,
-		( float )x,
-		( float )y
-	);
-}
+//void _onMultiButton( int touch_id, float x, float y, int state );
+//void _onMultiButton( int touch_id, float x, float y, int state ) {
+//
+//	AKUEnqueueTouchEvent (
+//		InputDeviceID::DEVICE,
+//		InputSensorID::TOUCH,
+//		touch_id,
+//		state == SDL_FINGERDOWN,
+//		( float )x,
+//		( float )y
+//	);
+//}
 
 
 
@@ -266,10 +304,14 @@ void MainLoop () {
 				
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:	{
-					int key = sdlEvent.key.keysym.sym;
-					if (key & 0x40000000) key = (key & 0x3FFFFFFF) + 256;
-					AKUEnqueueKeyboardEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, key, sdlEvent.key.type == SDL_KEYDOWN );
+					if ( sdlEvent.key.repeat ) break;
+					int moaiKeyCode = GetMoaiKeyCode ( sdlEvent );
+					AKUEnqueueKeyboardKeyEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, moaiKeyCode, sdlEvent.key.type == SDL_KEYDOWN );
 					break;
+				}
+				
+				case SDL_TEXTINPUT: {
+					AKUEnqueueKeyboardTextEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, sdlEvent.text.text );
 				}
 				
 				case SDL_MOUSEBUTTONDOWN:
@@ -338,17 +380,17 @@ void MainLoop () {
 					}
 					break;
 
-                case SDL_FINGERDOWN:
-                case SDL_FINGERUP:
-                case SDL_FINGERMOTION:
-                    const int id    = ( int )sdlEvent.tfinger.fingerId;
-					const float x   = sdlEvent.tfinger.x;
-					const float y   = sdlEvent.tfinger.y;
-					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
-
-					_onMultiButton(id, x, y, state);
-
-					break;
+//                case SDL_FINGERDOWN:
+//                case SDL_FINGERUP:
+//                case SDL_FINGERMOTION:
+//                    const int id    = ( int )sdlEvent.tfinger.fingerId;
+//					const float x   = sdlEvent.tfinger.x;
+//					const float y   = sdlEvent.tfinger.y;
+//					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+//
+//					_onMultiButton(id, x, y, state);
+//
+//					break;
 			} //end_switch
 		}//end_while
 		

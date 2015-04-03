@@ -237,6 +237,7 @@ AKUContextID AKUCreateContext () {
 	MOAILuaRuntime::Affirm ();
 	MOAITrace::Affirm ();
 	MOAILogMgr::Affirm ();
+	MOAITestMgr::Affirm ();
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();

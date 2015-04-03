@@ -4,8 +4,6 @@
 #ifndef	MOAICHARTBOOSTANDROID_H
 #define	MOAICHARTBOOSTANDROID_H
 
-//#if AKU_WITH_ANDROID_CHARTBOOST
-
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
 
@@ -39,7 +37,5 @@ public:
 		void 			NotifyInterstitialLoadFailed	();
 		void			RegisterLuaClass				( MOAILuaState& state );
 };
-
-//#endif  //AKU_WITH_ANDROID_CHARTBOOST
 
 #endif  //MOAICHARTBOOST_H

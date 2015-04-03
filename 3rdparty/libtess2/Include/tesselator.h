@@ -111,6 +111,11 @@ TESStesselator* tessNewTess( TESSalloc* alloc );
 //   tess - pointer to tesselator object to be deleted.
 void tessDeleteTess( TESStesselator *tess );
 
+// tessAddContour() - Clamp the tesselator's precision.
+// Parameters:
+//   precision - precision (usually a multiple of 10); if '0' (the default) then precision is unused.
+void tessSetPrecision( TESStesselator *tess, TESSreal precision );
+
 // tessAddContour() - Adds a contour to be tesselated.
 // The type of the vertex coordinates is assumed to be TESSreal.
 // Parameters:

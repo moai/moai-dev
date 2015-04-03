@@ -99,6 +99,7 @@ extern int					zl_pclose				( ZLFILE* fp );
 extern ZLFILE*				zl_popen				( const char *command, const char *mode );
 extern int					zl_printf				( const char* format, ... );
 extern int					zl_putc					( int character, ZLFILE* fp );
+extern int					zl_puts					( const char* string );
 extern int					zl_remove				( const char* path );
 extern int					zl_rename				( const char* oldname, const char* newname );
 extern void					zl_rewind				( ZLFILE* fp );
@@ -123,6 +124,7 @@ extern int					zl_vprintf				( const char* format, va_list arg );
 
 #ifdef MOAI_COMPILER_MSVC
 	extern errno_t	 		zl_fopen_s 				( ZLFILE** fp, const char* filename, const char* mode );
+	extern ZLFILE *			zl_wfopen				(const wchar_t *filename, const wchar_t *mode);
 	extern int				zl_fseeki64				( ZLFILE* fp, __int64 offset, int origin );
 #endif
 

@@ -65,17 +65,18 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool			DoGPUAffirm					(); // gets ready to bind
 	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 
 protected:
 
 	//----------------------------------------------------------------//
+	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
-	
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
 	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
@@ -99,21 +100,22 @@ public:
 
 	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_ASAP_GPU_NEXT;
 
-	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only affects
+	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only effects
 	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time
 	// we render.
 
 	//----------------------------------------------------------------//
+	bool			DoCPUAffirm					(); // preload CPU portion
 	bool			Bind						(); // bind for drawing; go to STATE_READY
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
-	bool			DoCPUAffirm					(); // gets ready to bind;
-	bool			DoGPUAffirm					(); // gets ready to bind;
+	void			ForceCPUCreate				();
 	virtual u32		GetLoadingPolicy			();
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	bool			Purge						( u32 age );
+	bool			PrepareForBind				();
 	void			Unbind						();
 };
 

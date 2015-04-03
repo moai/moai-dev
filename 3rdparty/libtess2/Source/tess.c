@@ -493,6 +493,8 @@ TESStesselator* tessNewTess( TESSalloc* alloc )
 	if (tess->alloc.regionBucketSize == 0)
 		tess->alloc.regionBucketSize = 256;
 	
+	tess->precision = 0;
+	
 	tess->normal[0] = 0;
 	tess->normal[1] = 0;
 	tess->normal[2] = 0;
@@ -553,6 +555,10 @@ void tessDeleteTess( TESStesselator *tess )
 	alloc.memfree( alloc.userData, tess );
 }
 
+void tessSetPrecision(TESStesselator *tess, TESSreal precision)
+{
+	tess->precision = precision;
+}
 
 static TESSindex GetNeighbourFace(TESShalfEdge* edge)
 {
@@ -651,10 +657,25 @@ void OutputPolymesh( TESStesselator *tess, TESSmesh *mesh, int elementType, int 
 		{
 			// Store coordinate
 			vert = &tess->vertices[v->n*vertexSize];
-			vert[0] = v->coords[0];
-			vert[1] = v->coords[1];
-			if ( vertexSize > 2 )
-				vert[2] = v->coords[2];
+			
+			if ( tess->precision > 0 ) {
+			
+				TESSreal precision = tess->precision;
+			
+				vert[0] = ( TESSreal )( floor ( v->coords [ 0 ] * precision ) / precision );
+				vert[1] = ( TESSreal )( floor ( v->coords [ 1 ] * precision ) / precision );
+				if ( vertexSize > 2 ) {
+					vert[2] = ( TESSreal )( floor ( v->coords [ 2 ] * precision ) / precision );
+				}
+			}
+			else {
+			
+				vert[0] = v->coords [ 0 ];
+				vert[1] = v->coords [ 1 ];
+				if ( vertexSize > 2 ) {
+					vert[2] = v->coords [ 2 ];
+				}
+			}
 			// Store vertex index.
 			tess->vertexIndices[v->n] = v->idx;
 		}
@@ -765,10 +786,23 @@ void OutputContours( TESStesselator *tess, TESSmesh *mesh, int vertexSize )
 		start = edge = f->anEdge;
 		do
 		{
-			*verts++ = edge->Org->coords[0];
-			*verts++ = edge->Org->coords[1];
-			if ( vertexSize > 2 )
-				*verts++ = edge->Org->coords[2];
+			if ( tess->precision > 0 ) {
+			
+				TESSreal precision = tess->precision;
+			
+				*verts++ = ( TESSreal )( floor ( edge->Org->coords [ 0 ] * precision ) / precision );
+				*verts++ = ( TESSreal )( floor ( edge->Org->coords [ 1 ] * precision ) / precision );
+				if ( vertexSize > 2 ) {
+					*verts++ = ( TESSreal )( floor ( edge->Org->coords [ 2 ] * precision ) / precision );
+				}
+			}
+			else {
+				*verts++ = edge->Org->coords [ 0 ];
+				*verts++ = edge->Org->coords [ 1 ];
+				if ( vertexSize > 2 ) {
+					*verts++ = edge->Org->coords [ 2 ];
+				}
+			}
 			*vertInds++ = edge->Org->idx;
 			++vertCount;
 			edge = edge->Lnext;
@@ -832,12 +866,21 @@ void tessAddContour( TESStesselator *tess, int size, const void* vertices,
 		}
 
 		/* The new vertex is now e->Org. */
-		e->Org->coords[0] = coords[0];
-		e->Org->coords[1] = coords[1];
-		if ( size > 2 )
-			e->Org->coords[2] = coords[2];
-		else
-			e->Org->coords[2] = 0;
+		if ( tess->precision > 0 ) {
+		
+			TESSreal precision = tess->precision;
+		
+			e->Org->coords [ 0 ] = ( TESSreal )( floor ( coords [ 0 ] * precision ) / precision );
+			e->Org->coords [ 1 ] = ( TESSreal )( floor ( coords [ 1 ] * precision ) / precision );
+			e->Org->coords [ 2 ] = ( size > 2 ) ? ( TESSreal )( floor ( coords [ 2 ] * precision ) / precision ) : 0;
+		}
+		else {
+		
+			e->Org->coords [ 0 ] = coords [ 0 ];
+			e->Org->coords [ 1 ] = coords [ 1 ];
+			e->Org->coords [ 2 ] = ( size > 2 ) ? coords [ 2 ] : 0;
+		}
+
 		/* Store the insertion number so that the vertex can be later recognized. */
 		e->Org->idx = tess->vertexIndexCounter++;
 
