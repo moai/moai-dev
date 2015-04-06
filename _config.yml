@@ -1,5 +1,17 @@
 name: Moai SDK
-markdown: kramdown
+markdown: redcarpet
 highlighter: pygments
 future: true
 baseurl: /moai-dev
+
+collections:
+  docs:
+    output: true
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: docs
+    values:
+      layout: doc
