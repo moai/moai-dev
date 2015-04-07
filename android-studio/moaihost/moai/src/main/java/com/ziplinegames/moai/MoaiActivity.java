@@ -86,13 +86,13 @@ public class MoaiActivity extends Activity {
 		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		super.onCreate ( savedInstanceState );
 
-		MoaiLog.i ( "on create" );
-		Moai.onCreate ( this );
+        MoaiLog.i ( "on create" );
+ 		Moai.onCreate ( this );
 
-		MoaiLog.i ( "createContext" );
+        MoaiLog.i ( "createContext" );
 		Moai.createContext ();
 
-		MoaiLog.i ( "init" );
+        MoaiLog.i ( "init" );
 		Moai.init ();
 		
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
@@ -111,7 +111,7 @@ public class MoaiActivity extends Activity {
 			    Moai.mount ( "bundle", myApp.publicSourceDir );
 			}
 			
-			Moai.setWorkingDirectory ( "bundle/assets" ); // TODO: this should be set from a string resource or a manifest entry
+			Moai.setWorkingDirectory ( "bundle/assets" );
 		} catch ( NameNotFoundException e ) {
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}
@@ -145,7 +145,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		Moai.runScript ( "main.lua" ); // TODO: this should be set from a string resource or a manifest entry
+		Moai.runScript ( "main.lua" );
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 
