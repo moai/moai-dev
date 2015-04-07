@@ -24,7 +24,7 @@ void ZLFrustumFitter::FitBox ( const ZLBox& box, float pad ) {
 		float radius;
 		float dist = ZLDist::BoxToPlane ( box, originPlane, radius );
 		
-		dist -= radius;
+		dist -= radius + pad;
 		
 		if ( this->mNeedsInit || ( dist < -plane.mDist )) {
 			plane.mDist = -dist;
@@ -41,10 +41,10 @@ void ZLFrustumFitter::FitPoint ( const ZLVec3D& loc, float radius ) {
 	
 		ZLPlane3D& plane = this->mPlanes [ i ];
 		
-		float dist = -( plane.mNorm.Dot ( loc ) + radius );
+		float dist = plane.mNorm.Dot ( loc ) - radius;
 		
-		if ( this->mNeedsInit || ( dist < plane.mDist )) {
-			plane.mDist = dist;
+		if ( this->mNeedsInit || ( dist < -plane.mDist )) {
+			plane.mDist = -dist;
 			this->mIsDirty = true;
 		}
 	}
