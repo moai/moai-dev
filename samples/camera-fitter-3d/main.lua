@@ -70,6 +70,13 @@ props = {
 	makeProp ( 192, 0, 0 ),
 }
 
+points = {
+	{ x = 0, y = 0, z = 0, r = 16 },
+	{ x = 64, y = 0, z = 0, r = 16 },
+	{ x = 128, y = 0, z = 0, r = 16 },
+	{ x = 192, y = 0, z = 0, r = 16 },
+}
+
 local keyNames = {}
 for name, value in pairs ( MOAIKeyCode ) do
 	if type( value ) == "number" then
