@@ -104,6 +104,16 @@ public:
 		
 		return ZLMetaVec3D < TYPE >( tx, ty, tz );
 	}
+	
+	//----------------------------------------------------------------//
+	// V = v0 x v1
+	static ZLMetaVec3D < TYPE > CrossNorm ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
+	
+		ZLMetaVec3D < TYPE > v = Cross ( v0, v1 );
+		v.Norm ();
+		
+		return v;
+	}
 
 	//----------------------------------------------------------------//
 	// |V| -= damp
