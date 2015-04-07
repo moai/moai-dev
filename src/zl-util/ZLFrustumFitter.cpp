@@ -54,43 +54,44 @@ void ZLFrustumFitter::FitPoint ( const ZLVec3D& loc, float radius ) {
 //----------------------------------------------------------------//
 ZLVec3D ZLFrustumFitter::GetPosition () {
 
+	//orient.TransformVec ( this->mFitAxis );
+
 	if ( this->mIsDirty ) {
-
-		ZLPlane3D eyePlane;
-		ZLPlane3D vHalfPlane;
-		ZLPlane3D hHalfPlane;
-
-		ZLVec3D pos;
-		ZLVec3D vec;
 		
-		float temp;
-
-		// set up the vertical plane that splits the view and get the
-		// first guess at the position of the eye plane
-		ZLSect::PlaneToPlane ( this->mPlanes [ LEFT_PLANE ], this->mPlanes [ RIGHT_PLANE ], pos, vec );
-		
-		vec.Norm ();
-		vec = vec.Cross ( this->mViewAxis, vec );
-		vHalfPlane.Init ( pos, vec );
-		
-		eyePlane.Init ( pos, mViewAxis );
+		// set up the vertical plane that splits the view
+		ZLVec3D vHalfPlanePos;
+		ZLVec3D vHalfPlaneTan;
+		ZLSect::PlaneToPlane ( this->mPlanes [ LEFT_PLANE ], this->mPlanes [ RIGHT_PLANE ], vHalfPlanePos, vHalfPlaneTan );
+		vHalfPlaneTan.Norm ();
 
 		// set up the horizontal plane that splits the view
-		ZLSect::PlaneToPlane ( this->mPlanes [ BOTTOM_PLANE ], this->mPlanes [ TOP_PLANE ], pos, vec );
+		ZLVec3D hHalfPlanePos;
+		ZLVec3D hHalfPlaneTan;
+		ZLSect::PlaneToPlane ( this->mPlanes [ BOTTOM_PLANE ], this->mPlanes [ TOP_PLANE ], hHalfPlanePos, hHalfPlaneTan );
+		hHalfPlaneTan.Norm ();
+		
+		ZLVec3D fitAxis = ZLVec3D::CrossNorm ( hHalfPlaneTan, vHalfPlaneTan );
+		
+		ZLPlane3D vHalfPlane;
+		ZLPlane3D hHalfPlane;
+		
+		vHalfPlane.Init ( vHalfPlanePos, ZLVec3D::CrossNorm ( fitAxis, vHalfPlaneTan ));
+		hHalfPlane.Init ( hHalfPlanePos, ZLVec3D::CrossNorm ( fitAxis, hHalfPlaneTan ));
 
-		vec.Norm ();
-		vec = vec.Cross ( this->mViewAxis, vec );
-		hHalfPlane.Init ( pos, vec );
-
-		// adjust the eye plane, if required
-		temp = ZLDist::VecToPlane ( pos, eyePlane );
-		if (  temp < 0.0f ) {
+		// calculate the eye plane
+		ZLPlane3D eyePlane;
+		eyePlane.Init ( hHalfPlanePos, fitAxis );
+		
+		float temp = ZLDist::VecToPlane ( vHalfPlanePos, eyePlane );
+		if ( temp < 0.0f ) {
 			eyePlane.mDist -= temp;
 		}
 
 		// The camera is at the intersection of the three planes we just found
+		ZLVec3D pos;
+		
 		pos = eyePlane.mNorm;
-		pos.Scale ( -eyePlane.mDist );
+		pos.Scale ( -( eyePlane.mDist ));
 
 		pos.Sub ( vHalfPlane.mNorm, ZLDist::VecToPlane ( pos, vHalfPlane ));
 		pos.Sub ( hHalfPlane.mNorm, ZLDist::VecToPlane ( pos, hHalfPlane ));
@@ -114,7 +115,6 @@ void ZLFrustumFitter::Init ( const ZLRect& viewRect, const ZLRect& fitRect, floa
 	this->mIsDirty = false;
 	this->mNeedsInit = true;
 
-	this->mViewAxis.Init ( 0.0f, 0.0f, -1.0f ); // looking down the -Z axis
 	this->mPosition.Init ( 0.0f, 0.0f, 0.0f );
 
     float t;
@@ -127,28 +127,15 @@ void ZLFrustumFitter::Init ( const ZLRect& viewRect, const ZLRect& fitRect, floa
 	this->mPlanes [ RIGHT_PLANE ].Init ( -cosf ( t ), 0.0f, -sinf ( t ), 0.0f );
 	
     // bottom and top frustum planes
-	t = atanf (( fitRect.mYMax - hHeight ) / distToNearPlane );
+	t = atanf (( hHeight - fitRect.mYMin ) / distToNearPlane );
 	this->mPlanes [ TOP_PLANE ].Init ( 0.0f, -cosf ( t ), -sinf ( t ), 0.0f );
 	
-	t = atanf (( hHeight - fitRect.mYMin ) / distToNearPlane );
+	t = atanf (( fitRect.mYMax - hHeight ) / distToNearPlane );
 	this->mPlanes [ BOTTOM_PLANE ].Init ( 0.0f, cosf ( t ), -sinf ( t ), 0.0f );
 	
 	for ( u32 i = 0; i < TOTAL_PLANES; ++i ) {
 		orient.TransformVec ( this->mPlanes [ i ].mNorm ); // TODO: account for shear (use lighting matrix)
 	}
-
-	 // The left and right frustum planes
-//    temp = ( hFov * 0.5f ) * D2R;
-//    mPlanes [ Rect4f::LEFT ].set ( cosf ( temp ), sinf ( temp ), 0.0f, 0.0f );
-//    mPlanes [ Rect4f::RIGHT ].set ( -mPlanes [ Rect4f::LEFT ][ A ], mPlanes [ Rect4f::LEFT ][ B ], 0.0f, 0.0f );
-//
-//    // The bottom and top frustum planes
-//    //temp = atanf ( tanf ( temp ) * aspect );
-//    temp = ( vFov * 0.5f ) * D2R;
-//    mPlanes [ Rect4f::TOP ].set ( 0.0f, sinf ( temp ), -cosf ( temp ), 0.0f );
-//    mPlanes [ Rect4f::BOTTOM ].set ( 0.0f, mPlanes [ Rect4f::TOP ][ B ], -mPlanes [ Rect4f::TOP ][ C ], 0.0f );
-
-	orient.TransformVec ( this->mViewAxis );
 }
 
 //----------------------------------------------------------------//

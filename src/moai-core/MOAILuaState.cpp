@@ -860,7 +860,7 @@ ZLBox MOAILuaState::GetValue < ZLBox >( int idx, const ZLBox value ) {
 template <>
 ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec value ) {
 
-	if ( this->CheckParams ( idx, "NNNN" )) {
+	if ( this->CheckParams ( idx, "NNNN", false )) {
 	
 		ZLColorVec color;
 		
@@ -878,16 +878,16 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 template <>
 ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
-	if ( this->CheckParams ( idx, "NNNN" )) {
+	if ( this->CheckParams ( idx, "NNNN", false )) {
 	
-		ZLRect color;
+		ZLRect rect;
 		
-		color.mXMin		= lua_tonumber ( this->mState, idx + 0 );
-		color.mYMin		= lua_tonumber ( this->mState, idx + 1 );
-		color.mXMax		= lua_tonumber ( this->mState, idx + 2 );
-		color.mYMax		= lua_tonumber ( this->mState, idx + 3 );
+		rect.mXMin		= lua_tonumber ( this->mState, idx + 0 );
+		rect.mYMin		= lua_tonumber ( this->mState, idx + 1 );
+		rect.mXMax		= lua_tonumber ( this->mState, idx + 2 );
+		rect.mYMax		= lua_tonumber ( this->mState, idx + 3 );
 		
-		return color;
+		return rect;
 	}
 	return value;
 }
@@ -896,7 +896,7 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 template <>
 ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
 
-	if ( this->CheckParams ( idx, "NN" )) {
+	if ( this->CheckParams ( idx, "NN", false )) {
 	
 		ZLVec2D vec;
 		
@@ -912,7 +912,7 @@ ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
 template <>
 ZLVec3D MOAILuaState::GetValue < ZLVec3D >( int idx, const ZLVec3D value ) {
 
-	if ( this->CheckParams ( idx, "NN" )) {
+	if ( this->CheckParams ( idx, "NN", false )) {
 	
 		ZLVec3D vec;
 		

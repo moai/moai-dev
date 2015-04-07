@@ -14,8 +14,6 @@ CONFIGS					= {}
 DISABLED				= {}
 DISABLE_ALL				= false
 
-MOAI_JAVA_NAMESPACE		= 'com.ziplinegames.moai'
-
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	
@@ -71,6 +69,11 @@ FOLDERS = {
 	JNI		= OUTPUT_DIR .. 'jni',
 	LIBS	= OUTPUT_DIR .. 'libs',
 	JAVA	= OUTPUT_DIR .. 'java',
+}
+
+JAVA = {
+	NAMESPACE			= 'com.ziplinegames.moai',
+	PLATFORM			= 'Android',
 }
 
 TEMP_FILENAME					= INVOKE_DIR .. '.tmp'
@@ -408,6 +411,7 @@ processConfigFile = function ( filename )
 	util.mergeTables ( MODULES, config.MODULES )
 	util.mergeTables ( GLOBALS, config.GLOBALS )
 	util.mergeTables ( TARGETS, config.TARGETS )
+	util.mergeTables ( JAVA, config.JAVA )
 
 	if config.FOLDERS then
 		for k, v in pairs ( config.FOLDERS ) do
@@ -478,6 +482,15 @@ makeJniProject ()
 
 for k, module in pairs ( MODULES_USED ) do
 	for i, path in ipairs ( module.JAVA or {} ) do
-		importJava ( path, module.NAMESPACE or MOAI_JAVA_NAMESPACE )
+		importJava ( path, module.NAMESPACE or JAVA.NAMESPACE )
 	end
+end
+
+if FOLDERS.JAVA then
+	util.replaceInFiles ({
+		[ util.wrap ( util.iterateFilesAbsPath, FOLDERS.JAVA, '.java$' )] = {
+			[ '@PACKAGE@' ]				= JAVA.NAMESPACE,
+			[ '@PLATFORM_NAME@' ]		= JAVA.PLATFORM,
+		},
+	})
 end

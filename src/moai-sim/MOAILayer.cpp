@@ -87,13 +87,15 @@ int MOAILayer::_getFitting3D ( lua_State* L ) {
 
 	if (( !self->mViewport ) || ( !self->mCamera ) || ( self->mCamera->GetType () != MOAICamera::CAMERA_TYPE_3D )) return 0;
 	
+	ZLRect fitRect = state.GetValue < ZLRect >( 3, *self->mViewport );
+	
 	self->mCamera->ForceUpdate ();
 	
 	ZLFrustumFitter fitter;
 	
 	fitter.Init (
 		*self->mViewport,
-		*self->mViewport,
+		fitRect,
 		self->mCamera->GetFieldOfView (),
 		self->mCamera->GetLocalToWorldMtx ()
 	);
