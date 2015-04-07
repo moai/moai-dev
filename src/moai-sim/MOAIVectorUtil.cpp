@@ -93,6 +93,10 @@ int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, 
 //----------------------------------------------------------------//
 void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior ) {
 	
+	if ( nVerts == 0 ) {
+		return;
+	}
+	
 	int top = nVerts - 1;
 	float scale = interior ? -1.0f : 1.0f;
 	
