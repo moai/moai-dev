@@ -14,7 +14,7 @@ RANLIB= ranlib
 RM= rm -f
 LIBS= -lm $(MYLIBS)
 
-MYCFLAGS=
+MYCFLAGS=-m32
 MYLDFLAGS=-m32
 MYLIBS=
 
