@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIButtonSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // MOAIButtonEvent
@@ -119,10 +119,11 @@ bool MOAIButtonSensor::ButtonUp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::EnqueueButtonEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, bool down ) {
+void MOAIButtonSensor::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
 
-	if ( queue.WriteEventHeader < MOAIButtonSensor >( deviceID, sensorID )) {
-		queue.Write < bool >( down );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIButtonSensor >( deviceID, sensorID )) {
+		inputMgr.Write < bool >( down );
 	}
 }
 

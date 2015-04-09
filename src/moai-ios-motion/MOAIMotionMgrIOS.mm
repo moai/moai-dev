@@ -8,14 +8,6 @@
 
 #import <CoreMotion/CoreMotion.h>
 
-namespace MOAIMotionDeviceID {
-	enum {
-		INPUT_DEVICE_ID,
-		RAW_INPUT_DEVICE_ID,
-		TOTAL,
-	};
-}
-
 namespace MOAIRawMotionSensorID {
 	enum {
 		ACCELEROMETER,
@@ -102,12 +94,14 @@ int MOAIMotionMgrIOS::_isMagnetometerAvailable ( lua_State* L ) {
 int MOAIMotionMgrIOS::_setAccelerometerActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	MOAIMotionMgrIOS& moaiMotionMgr = MOAIMotionMgrIOS::Get ();
 	CMMotionManager* motionMgr = MOAIMotionMgrIOS::Get ().mMotionMgr;
 	NSOperationQueue* queue = MOAIMotionMgrIOS::Get ().mOperationQueue;
+	
 	if ( !motionMgr ) return 0;
 	
 	bool active = state.GetValue < bool >( 1, false );
-	double interval = state.GetValue < double >( 1, 0.0 );
+	double interval = state.GetValue < double >( 2, 0.0 );
 	
 	bool isActive = [ motionMgr isAccelerometerActive ];
 	
@@ -127,8 +121,7 @@ int MOAIMotionMgrIOS::_setAccelerometerActive ( lua_State* L ) {
 						if ( MOAIMotionMgrIOS::IsValid ()) {
 							const CMAcceleration& acceleration = [ accelerometerData acceleration ];
 							MOAIVectorSensor::EnqueueVectorEvent (
-								MOAIMotionMgrIOS::Get (),
-								MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID,
+								moaiMotionMgr.mRawInputDeviceID,
 								MOAIRawMotionSensorID::ACCELEROMETER,
 								acceleration.x,
 								acceleration.y,
@@ -163,12 +156,15 @@ int MOAIMotionMgrIOS::_setAccelerometerUpdateInterval ( lua_State* L ) {
 int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	MOAIMotionMgrIOS& moaiMotionMgr = MOAIMotionMgrIOS::Get ();
 	CMMotionManager* motionMgr = MOAIMotionMgrIOS::Get ().mMotionMgr;
 	NSOperationQueue* queue = MOAIMotionMgrIOS::Get ().mOperationQueue;
+	
 	if ( !motionMgr ) return 0;
 	
 	bool active = state.GetValue < bool >( 1, false );
-	double interval = state.GetValue < double >( 1, 0.0 );
+	double interval = state.GetValue < double >( 2, 0.0 );
+	u32 referenceFrame = state.GetValue < u32 >( 3, ( u32 )[ motionMgr attitudeReferenceFrame ]);
 	
 	bool isActive = [ motionMgr isDeviceMotionActive ];
 	
@@ -176,7 +172,11 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 		if ( active ) {
 		
 			[ motionMgr setDeviceMotionUpdateInterval:( NSTimeInterval )interval ];
-			[ motionMgr startDeviceMotionUpdatesToQueue:queue withHandler:^( CMDeviceMotion* deviceMotion, NSError* error ) {
+			[ motionMgr
+				startDeviceMotionUpdatesUsingReferenceFrame:( CMAttitudeReferenceFrame )referenceFrame
+				toQueue:queue withHandler:^( CMDeviceMotion* deviceMotion,
+				NSError* error
+			) {
 				
 				if ( error ) {
 					[ motionMgr stopDeviceMotionUpdates ];
@@ -186,7 +186,6 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 					dispatch_async ( dispatch_get_main_queue (), ^( void ) {
 					
 						if ( MOAIMotionMgrIOS::IsValid ()) {
-							MOAIMotionMgrIOS& motionManager = MOAIMotionMgrIOS::Get ();
 							
 							const CMRotationRate& rotationRate		= [ deviceMotion rotationRate ];
 							const CMAcceleration& userAcceleration	= [ deviceMotion userAcceleration ];
@@ -197,8 +196,7 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 							
 							// TODO: consolidate these once custom event handlers are implemented
 							MOAIVectorSensor::EnqueueVectorEvent (
-								motionManager,
-								MOAIMotionDeviceID::INPUT_DEVICE_ID,
+								moaiMotionMgr.mInputDeviceID,
 								MOAIDeviceMotionSensorID::GYRO,
 								rotationRate.x,
 								rotationRate.y,
@@ -206,8 +204,7 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 							);
 							
 							MOAIVectorSensor::EnqueueVectorEvent (
-								motionManager,
-								MOAIMotionDeviceID::INPUT_DEVICE_ID,
+								moaiMotionMgr.mInputDeviceID,
 								MOAIDeviceMotionSensorID::ACCELEROMETER,
 								userAcceleration.x,
 								userAcceleration.y,
@@ -215,8 +212,7 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 							);
 							
 							MOAIVectorSensor::EnqueueVectorEvent (
-								motionManager,
-								MOAIMotionDeviceID::INPUT_DEVICE_ID,
+								moaiMotionMgr.mInputDeviceID,
 								MOAIDeviceMotionSensorID::GRAVITY,
 								gravity.x,
 								gravity.y,
@@ -224,8 +220,7 @@ int MOAIMotionMgrIOS::_setDeviceMotionActive ( lua_State* L ) {
 							);
 							
 							MOAIVectorSensor::EnqueueVectorEvent (
-								motionManager,
-								MOAIMotionDeviceID::INPUT_DEVICE_ID,
+								moaiMotionMgr.mInputDeviceID,
 								MOAIDeviceMotionSensorID::MAGNETOMETER,
 								magneticField.x,
 								magneticField.y,
@@ -260,12 +255,14 @@ int MOAIMotionMgrIOS::_setDeviceMotionUpdateInterval ( lua_State* L ) {
 int MOAIMotionMgrIOS::_setGyroActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	MOAIMotionMgrIOS& moaiMotionMgr = MOAIMotionMgrIOS::Get ();
 	CMMotionManager* motionMgr = MOAIMotionMgrIOS::Get ().mMotionMgr;
 	NSOperationQueue* queue = MOAIMotionMgrIOS::Get ().mOperationQueue;
+	
 	if ( !motionMgr ) return 0;
 	
 	bool active = state.GetValue < bool >( 1, false );
-	double interval = state.GetValue < double >( 1, 0.0 );
+	double interval = state.GetValue < double >( 2, 0.0 );
 	
 	bool isActive = [ motionMgr isGyroActive ];
 	
@@ -285,8 +282,7 @@ int MOAIMotionMgrIOS::_setGyroActive ( lua_State* L ) {
 						if ( MOAIMotionMgrIOS::IsValid ()) {
 							const CMRotationRate& rotationRate = [ gyroData rotationRate ];
 							MOAIVectorSensor::EnqueueVectorEvent (
-								MOAIMotionMgrIOS::Get (),
-								MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID,
+								moaiMotionMgr.mRawInputDeviceID,
 								MOAIRawMotionSensorID::GYRO,
 								rotationRate.x,
 								rotationRate.y,
@@ -321,12 +317,14 @@ int MOAIMotionMgrIOS::_setGyroUpdateInterval ( lua_State* L ) {
 int MOAIMotionMgrIOS::_setMagnetometerActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	MOAIMotionMgrIOS& moaiMotionMgr = MOAIMotionMgrIOS::Get ();
 	CMMotionManager* motionMgr = MOAIMotionMgrIOS::Get ().mMotionMgr;
 	NSOperationQueue* queue = MOAIMotionMgrIOS::Get ().mOperationQueue;
+	
 	if ( !motionMgr ) return 0;
 	
 	bool active = state.GetValue < bool >( 1, false );
-	double interval = state.GetValue < double >( 1, 0.0 );
+	double interval = state.GetValue < double >( 2, 0.0 );
 	
 	bool isActive = [ motionMgr isMagnetometerActive ];
 	
@@ -344,12 +342,10 @@ int MOAIMotionMgrIOS::_setMagnetometerActive ( lua_State* L ) {
 					dispatch_async ( dispatch_get_main_queue (), ^( void ) {
 					
 						if ( MOAIMotionMgrIOS::IsValid ()) {
-							MOAIMotionMgrIOS& motionManager = MOAIMotionMgrIOS::Get ();
-					
+							
 							const CMMagneticField& magneticField = [ magnetometerData magneticField ];
 							MOAIVectorSensor::EnqueueVectorEvent (
-								motionManager,
-								MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID,
+								moaiMotionMgr.mRawInputDeviceID,
 								MOAIRawMotionSensorID::MAGNETOMETER,
 								magneticField.x,
 								magneticField.y,
@@ -392,26 +388,38 @@ void MOAIMotionMgrIOS::Init () {
 	this->mMotionMgr = [[ CMMotionManager alloc ] init ];
 	this->mOperationQueue = [[ NSOperationQueue alloc ] init ];
 	
-	this->ReserveDevices ( MOAIMotionDeviceID::TOTAL );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	
-	this->SetDevice ( MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID, "rawMotion" );
+	this->mRawInputDeviceID = inputMgr.AddDevice ( 0 );
 	
-	this->ReserveSensors ( MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID, MOAIRawMotionSensorID::TOTAL );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID, MOAIRawMotionSensorID::ACCELEROMETER, "accelerometer" );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID, MOAIRawMotionSensorID::GYRO, "gyro" );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::RAW_INPUT_DEVICE_ID, MOAIRawMotionSensorID::MAGNETOMETER, "magnetometer" );
+	inputMgr.ReserveSensors ( this->mRawInputDeviceID, MOAIRawMotionSensorID::TOTAL );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mRawInputDeviceID, MOAIRawMotionSensorID::ACCELEROMETER, "accelerometer" );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mRawInputDeviceID, MOAIRawMotionSensorID::GYRO, "gyro" );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mRawInputDeviceID, MOAIRawMotionSensorID::MAGNETOMETER, "magnetometer" );
 	
-	this->SetDevice ( MOAIMotionDeviceID::INPUT_DEVICE_ID, "deviceMotion" );
+	this->mInputDeviceID = inputMgr.AddDevice ( 0 );
 	
-	this->ReserveSensors ( MOAIMotionDeviceID::INPUT_DEVICE_ID, MOAIDeviceMotionSensorID::TOTAL );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::INPUT_DEVICE_ID, MOAIDeviceMotionSensorID::ACCELEROMETER, "accelerometer" );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::INPUT_DEVICE_ID, MOAIDeviceMotionSensorID::GRAVITY, "gravity" );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::INPUT_DEVICE_ID, MOAIDeviceMotionSensorID::GYRO, "gyro" );
-	this->SetSensor < MOAIVectorSensor >( MOAIMotionDeviceID::INPUT_DEVICE_ID, MOAIDeviceMotionSensorID::MAGNETOMETER, "magnetometer" );
+	inputMgr.ReserveSensors ( this->mInputDeviceID, MOAIDeviceMotionSensorID::TOTAL );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::ACCELEROMETER, "accelerometer" );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::GRAVITY, "gravity" );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::GYRO, "gyro" );
+	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::MAGNETOMETER, "magnetometer" );
+	
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+	this->PushMemberTable ( state );
+	
+	state.Push ( inputMgr.GetDevice ( this->mRawInputDeviceID ));
+	lua_setfield ( state, -2, "rawMotion" );
+	
+	state.Push ( inputMgr.GetDevice ( this->mInputDeviceID ));
+	lua_setfield ( state, -2, "deviceMotion" );
 }
 
 //----------------------------------------------------------------//
 MOAIMotionMgrIOS::MOAIMotionMgrIOS () :
+	mInputDeviceID ( 0 ),
+	mRawInputDeviceID ( 0 ),
 	mMotionMgr ( 0 ),
 	mOperationQueue ( 0 ) {
 
@@ -438,11 +446,30 @@ MOAIMotionMgrIOS::~MOAIMotionMgrIOS () {
 //----------------------------------------------------------------//
 void MOAIMotionMgrIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	
+	NSUInteger availableFrames = [ CMMotionManager availableAttitudeReferenceFrames ];
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryZVertical ) {
+		state.SetField ( -1, "XARBITRARY_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXArbitraryZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryCorrectedZVertical ) {
+		state.SetField ( -1, "XARBITRARY_CORRECTEDZVERTICAL",	( u32 )CMAttitudeReferenceFrameXArbitraryCorrectedZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXMagneticNorthZVertical ) {
+		state.SetField ( -1, "XMAGNETICNORTH_ZVERTICAL",		( u32 )CMAttitudeReferenceFrameXMagneticNorthZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXTrueNorthZVertical ) {
+		state.SetField ( -1, "XTRUENORTH_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXTrueNorthZVertical );
+	}
+	
 	luaL_Reg regTable [] = {
 		{ "init",								_init },
 		{ "isAccelerometerAvailable",			_isAccelerometerAvailable },
 		{ "isDeviceMotionAvailable",			_isDeviceMotionAvailable },
-		{ "isGyroAvailable",					_isGyroAvailable },
+		{ "isGyroAvailable",					_isGyroAvailable }, // Mmmmmm. Gyro!
 		{ "isMagnetometerAvailable",			_isMagnetometerAvailable },
 		{ "setAccelerometerActive",				_setAccelerometerActive },
 		{ "setAccelerometerUpdateInterval",		_setAccelerometerUpdateInterval },

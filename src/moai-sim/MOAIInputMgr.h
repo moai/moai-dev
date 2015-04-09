@@ -1,27 +1,27 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIINPUTQUEUE_H
-#define MOAIINPUTQUEUE_H
+#ifndef MOAIINPUTMGR_H
+#define MOAIINPUTMGR_H
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAISensor.h>
 
 //================================================================//
-// MOAIInputQueue
+// MOAIInputMgr
 //================================================================//
-/**	@lua	MOAIInputQueue
+/**	@lua	MOAIInputMgr
 	@text	Base class for input streams and device sets.
 */
-class MOAIInputQueue :
-	public virtual MOAIAction,
+class MOAIInputMgr :
+	public MOAIGlobalClass < MOAIInputMgr, MOAILuaObject >,
 	public virtual ZLMemStream {
 private:
 
 	static const size_t CHUNK_SIZE = 256;
 
-	ZLLeanArray < MOAIInputDevice* > mDevices;
+	ZLLeanStack < MOAIInputDevice*, 8 > mDevices;
 
 	double	mTimebase;				// used to position timestamps against sim timeline
 	double	mTimestamp;				// timestamp for next event
@@ -57,20 +57,20 @@ private:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIInputQueue )
+	DECL_LUA_SINGLETON ( MOAIInputMgr )
 
 	SET ( double, Timebase, mTimebase )
 	SET ( double, Timestamp, mTimestamp )
 
 	//----------------------------------------------------------------//
+	u8					AddDevice					( cc8* name );
 	void				DeferEvents					( bool defer );
 	void				FlushEvents					( double skip );
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
 	bool				IsDone						();
-						MOAIInputQueue				();
-						~MOAIInputQueue				();
-	void				OnUpdate					( double timestep );
+						MOAIInputMgr				();
+						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveDevices				( u8 total );
@@ -78,10 +78,11 @@ public:
 	void				ResetSensors				();
 	void				SetAutosuspend				( double autosuspend );
 	void				SetConfigurationName		( cc8* name );
-	void				SetDevice					( u8 deviceID, cc8* name );
+	void				SetDevice					( u8 deviceID, cc8* name ); // back compat
 	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetDeviceHardwareInfo		( u8 deviceID, cc8* hardwareInfo );
 	void				SuspendEvents				( bool suspend );
+	void				Update						( double timestep );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

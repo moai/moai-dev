@@ -5,7 +5,7 @@
 #define	MOAIMOTIONMANAGERIOS_H
 
 #include <moai-core/headers.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 @class CMMotionManager;
 @class NSOperationQueue;
@@ -14,8 +14,11 @@
 // MOAIMotionMgrIOS
 //================================================================//
 class MOAIMotionMgrIOS :
-	public MOAIGlobalClass < MOAIMotionMgrIOS, MOAIInputQueue > {
+	public MOAIGlobalClass < MOAIMotionMgrIOS, MOAILuaObject > {
 private:
+
+	u8					mInputDeviceID;
+	u8					mRawInputDeviceID;
 
 	CMMotionManager*	mMotionMgr;
 	NSOperationQueue*	mOperationQueue;
@@ -41,8 +44,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Init							();
-						MOAIMotionMgrIOS			();
-						~MOAIMotionMgrIOS			();
+						MOAIMotionMgrIOS				();
+						~MOAIMotionMgrIOS				();
 	void				RegisterLuaClass				( MOAILuaState& state );
 };
 

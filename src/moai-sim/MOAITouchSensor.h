@@ -119,8 +119,8 @@ public:
 	DECL_LUA_FACTORY ( MOAITouchSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueTouchEvent			( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
-	static void			EnqueueTouchEventCancel		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID );
+	static void			EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
+	static void			EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
 						MOAITouchSensor				();
 						~MOAITouchSensor			();
 	void				ParseEvent					( ZLStream& eventStream );

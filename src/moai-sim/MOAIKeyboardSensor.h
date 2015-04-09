@@ -48,9 +48,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueKeyboardCharEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar );
-	static void			EnqueueKeyboardKeyEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
-	static void			EnqueueKeyboardTextEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text );
+	static void			EnqueueKeyboardCharEvent	( u8 deviceID, u8 sensorID, u32 unicodeChar );
+	static void			EnqueueKeyboardKeyEvent		( u8 deviceID, u8 sensorID, u32 keyID, bool down );
+	static void			EnqueueKeyboardTextEvent	( u8 deviceID, u8 sensorID, cc8* text );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );
 	bool				KeyIsDown					( u32 keyID );

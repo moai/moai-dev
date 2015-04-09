@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAITouchSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 const float MOAITouchSensor::DEFAULT_TAPTIME = 0.6f;
 const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
@@ -247,27 +247,29 @@ int MOAITouchSensor::_up ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
+void MOAITouchSensor::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
 
-	if ( queue.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
 	
 		float time = ( float )ZLDeviceTime::GetTimeInSeconds ();
 		
 		u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
-		queue.Write < u32 >( eventType );
-		queue.Write < u32 >( touchID );
-		queue.Write < float >( x );
-		queue.Write < float >( y );
-		queue.Write < float >( time );
+		inputMgr.Write < u32 >( eventType );
+		inputMgr.Write < u32 >( touchID );
+		inputMgr.Write < float >( x );
+		inputMgr.Write < float >( y );
+		inputMgr.Write < float >( time );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEventCancel ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID ) {
+void MOAITouchSensor::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
 
-	if ( queue.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
-		queue.Write < u32 >( TOUCH_CANCEL );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( TOUCH_CANCEL );
 	}
 }
 

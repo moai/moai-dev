@@ -4,7 +4,7 @@
 #ifndef MOAISENSOR_H
 #define MOAISENSOR_H
 
-class MOAIInputQueue;
+class MOAIInputMgr;
 
 //================================================================//
 // MOAISensor
@@ -30,7 +30,7 @@ public:
 	friend class MOAIInputContext;
 	friend class MOAIInputDevice;
 	friend class MOAIInputMgr;
-	friend class MOAIInputQueue;
+	friend class MOAIInputMgr;
 
 	//----------------------------------------------------------------//
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;

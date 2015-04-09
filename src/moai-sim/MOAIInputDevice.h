@@ -33,7 +33,7 @@ public:
 
 	friend class MOAIInputContext;
 	friend class MOAIInputMgr;
-	friend class MOAIInputQueue;
+	friend class MOAIInputMgr;
 
 	DECL_LUA_FACTORY ( MOAIInputDevice )
 

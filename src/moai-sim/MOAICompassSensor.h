@@ -29,7 +29,7 @@ public:
 	DECL_LUA_FACTORY ( MOAICompassSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueCompassEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float heading );
+	static void			EnqueueCompassEvent		( u8 deviceID, u8 sensorID, float heading );
 						MOAICompassSensor		();
 						~MOAICompassSensor		();
 	void				ParseEvent				( ZLStream& eventStream );

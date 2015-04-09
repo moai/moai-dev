@@ -140,15 +140,6 @@ int MOAISim::_getActionMgr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAISim::_getInputMgr ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAISim::Get ().GetInputMgr ().PushLuaUserdata ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getDeviceTime
 	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
 
@@ -242,37 +233,42 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_setfield ( L, -2, "texture" );
 	total += count;
 	
-#if defined(_WIN32)
-    PROCESS_MEMORY_COUNTERS pmc;
-
-    // Print the process identifier.
-    if ( GetProcessMemoryInfo( GetCurrentProcess(), &pmc, sizeof(pmc)) )
-    {
-		lua_pushnumber(L, pmc.PagefileUsage / divisor);
-		lua_setfield(L, -2, "_sys_vs");
-		lua_pushnumber(L, pmc.WorkingSetSize / divisor);
-		lua_setfield(L, -2, "_sys_rss");
-    }
-#elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR) 
-	// Tricky undocumented mach polling of memory
-	struct task_basic_info t_info;
-	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
-	kern_return_t kr = task_info(mach_task_self(),
-								 TASK_BASIC_INFO,
-								 reinterpret_cast<task_info_t>(&t_info),
-								 &t_info_count);
-	// Most likely cause for failure: |task| is a zombie.
-	if( kr == KERN_SUCCESS )
-	{
-		lua_pushnumber(L, t_info.virtual_size / divisor);
-		lua_setfield(L, -2, "_sys_vs");
-		lua_pushnumber(L, t_info.resident_size / divisor);
-		lua_setfield(L, -2, "_sys_rss");
-	}
-#endif
+	#if defined(_WIN32)
 	
-	lua_pushnumber(L, total / divisor);
-	lua_setfield(L, -2, "total");
+		PROCESS_MEMORY_COUNTERS pmc;
+
+		// Print the process identifier.
+		if ( GetProcessMemoryInfo ( GetCurrentProcess (), &pmc, sizeof ( pmc ))) {
+			lua_pushnumber ( L, pmc.PagefileUsage / divisor );
+			lua_setfield ( L, -2, "_sys_vs" );
+			lua_pushnumber ( L, pmc.WorkingSetSize / divisor );
+			lua_setfield ( L, -2, "_sys_rss" );
+		}
+		
+	#elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR)
+	
+		// Tricky undocumented mach polling of memory
+		struct task_basic_info t_info;
+		mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+	
+		kern_return_t kr = task_info (
+			mach_task_self (),
+			TASK_BASIC_INFO,
+			reinterpret_cast < task_info_t >( &t_info ),
+			&t_info_count
+		);
+	
+		// Most likely cause for failure: |task| is a zombie.
+		if( kr == KERN_SUCCESS ) {
+			lua_pushnumber ( L, t_info.virtual_size / divisor );
+			lua_setfield ( L, -2, "_sys_vs" );
+			lua_pushnumber ( L, t_info.resident_size / divisor );
+			lua_setfield ( L, -2, "_sys_rss" );
+		}
+	#endif
+	
+	lua_pushnumber ( L, total / divisor );
+	lua_setfield ( L, -2, "total" );
 	
 	return 1;
 }
@@ -666,18 +662,15 @@ MOAISim::MOAISim () :
 	
 	this->mFrameTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	this->mInputMgr.Set ( *this, new MOAIInputQueue ());
 	this->mActionMgr.Set ( *this, new MOAIActionTree ());
 	this->mActionTree.Set ( *this, new MOAIActionTree ());
 	
-	this->mInputMgr->Start ( *this->mActionTree, false );
 	this->mActionMgr->Start ( *this->mActionTree, false );
 }
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
 
-	this->mInputMgr.Set ( *this, 0 );
 	this->mActionMgr.Set ( *this, 0 );
 	this->mActionTree.Set ( *this, 0 );
 }
@@ -758,7 +751,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
 		{ "getActionMgr",				_getActionMgr },
-		{ "getInputMgr",				_getInputMgr },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
@@ -802,7 +794,7 @@ void MOAISim::Resume () {
 	if ( this->mLoopState == PAUSED ) {
 	
 		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
-		MOAISim::Get ().GetInputMgr ().FlushEvents ( skip );
+		MOAIInputMgr::Get ().FlushEvents ( skip );
 	
 		this->InvokeListener ( EVENT_RESUME );
 		this->mLoopState = START;
@@ -836,6 +828,7 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		this->InvokeListener ( EVENT_STEP );
 		
+		MOAIInputMgr::Get ().Update ( step );
 		this->mActionTree->Update ( step );
 		
 		MOAINodeMgr::Get ().Update ();
