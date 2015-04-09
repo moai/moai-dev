@@ -482,6 +482,12 @@ bool MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 bool MOAILuaObject::PushMemberTable ( MOAILuaState& state ) {
 
+	MOAILuaClass* luaType = this->GetLuaClass ();
+	if ( luaType->IsSingleton ()) {
+		this->PushLuaClassTable ( state );
+		return true;
+	}
+
 	int top = state.GetTop ();
 
 	if ( this->PushLuaUserdata ( state )) {

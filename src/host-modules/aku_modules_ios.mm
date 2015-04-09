@@ -57,6 +57,10 @@ void AKUModulesIosAppFinalize () {
 		AKUIosMobileAppTrackerAppFinalize ();
 	#endif
 
+    #if AKU_WITH_IOS_MOTION
+		AKUIosMotionAppFinalize ();
+	#endif
+
 	#if AKU_WITH_IOS_TAPJOY
 		AKUIosTapjoyAppFinalize ();
 	#endif
@@ -115,6 +119,10 @@ void AKUModulesIosAppInitialize () {
 
 	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
 		AKUIosMobileAppTrackerAppInitialize ();
+	#endif
+    
+    #if AKU_WITH_IOS_MOTION
+		AKUIosMotionAppInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_TAPJOY
@@ -175,6 +183,10 @@ void AKUModulesIosContextInitialize () {
 	
 	#if AKU_WITH_IOS_MOBILE_APP_TRACKER
 		AKUIosMobileAppTrackerContextInitialize ();
+	#endif
+
+    #if AKU_WITH_IOS_MOTION
+		AKUIosMotionContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS_TAPJOY

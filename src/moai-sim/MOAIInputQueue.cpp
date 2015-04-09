@@ -340,7 +340,7 @@ void MOAIInputQueue::SetDevice ( u8 deviceID, cc8* name ) {
 	this->LuaRetain ( device );
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	this->PushLuaUserdata ( state );
+	this->PushMemberTable ( state );
 	
 	device->PushLuaUserdata ( state );
 	lua_setfield ( state, -2, name );
