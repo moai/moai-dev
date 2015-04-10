@@ -60,7 +60,7 @@ public:
 	//----------------------------------------------------------------//
 	using MOAIDeck::DrawIndex;
 	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	void			GetGfxState				( MOAIDeckGfxState& gfxState );
+	void			GetGfxState				( u32 idx, MOAIDeckGfxState& gfxState );
 					MOAIGridDeck2D			();
 					~MOAIGridDeck2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

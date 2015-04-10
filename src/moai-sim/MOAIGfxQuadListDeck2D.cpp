@@ -461,8 +461,6 @@ MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 
 //----------------------------------------------------------------//
 MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

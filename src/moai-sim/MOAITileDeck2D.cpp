@@ -291,8 +291,6 @@ MOAITileDeck2D::MOAITileDeck2D () {
 
 //----------------------------------------------------------------//
 MOAITileDeck2D::~MOAITileDeck2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -327,7 +325,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetField < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
+	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetField < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//
@@ -335,7 +333,7 @@ void MOAITileDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& seriali
 
 	MOAIGridSpace::SerializeOut ( state, serializer );
 	
-	state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
+	//state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
 }
 
 //----------------------------------------------------------------//

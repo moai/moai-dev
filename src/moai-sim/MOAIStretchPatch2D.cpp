@@ -335,8 +335,6 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 
 //----------------------------------------------------------------//
 MOAIStretchPatch2D::~MOAIStretchPatch2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

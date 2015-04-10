@@ -56,14 +56,13 @@ protected:
 	// should probebly go into a 'graphics deck' and play off of the developing
 	// notion of 'aspects'
 	MOAILuaSharedPtr < MOAIShader >		mShader;
-	MOAILuaSharedPtr < MOAIGfxState >	mTexture;
 	MOAILuaSharedPtr < MOAIImage >		mHitMask;
+	
+	ZLLeanArray < MOAIGfxState* >		mTextures;
+	u32									mTextureBatchSize;
 	
 	u32		mHitColorScalar;
 	u32		mHitColorThreshold;
-	
-	//u32 mContentMask;
-	//SET ( u32, ContentMask, mContentMask )
 
 	u32		mDefaultShaderID;
 
@@ -74,6 +73,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int				_getTexture				( lua_State* L );
+	static int				_reserveTextures		( lua_State* L );
 	static int				_setBoundsDeck			( lua_State* L );
 	static int				_setHitGranularity		( lua_State* L );
 	static int				_setHitMask				( lua_State* L );
@@ -81,11 +81,14 @@ protected:
 	static int				_setHitMaskThreshold	( lua_State* L );
 	static int				_setShader				( lua_State* L );
 	static int				_setTexture				( lua_State* L );
+	static int				_setTextureBatchSize	( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					ClearTextures			();
 	virtual ZLBox			ComputeMaxBounds		() = 0;
 	virtual void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	virtual ZLBox			GetItemBounds			( u32 idx ) = 0;
+	u32						GetTextureIndex			( u32 idx );
 	void					SetBoundsDirty			();
 	bool					TestHit					( float x, float y ); // in local (uv) space of the mask
 	bool					TestHit					( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
@@ -108,12 +111,14 @@ public:
 	ZLBox					GetBounds				();
 	ZLBox					GetBounds				( u32 idx );
 	virtual void			GetCollisionShape		( MOAICollisionShape& shape );
-	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
+	virtual void			GetGfxState				( u32 idx, MOAIDeckGfxState& gfxState );
 	virtual bool			Inside					( u32 idx, ZLVec3D vec, float pad );
 							MOAIDeck				();
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					ReserveTextures			( u32 n );
+	void					SetTexture				( u32 idx, MOAIGfxState* texture );
 };
 
 #endif

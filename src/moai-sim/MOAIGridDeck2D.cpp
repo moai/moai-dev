@@ -215,13 +215,12 @@ ZLBox MOAIGridDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridDeck2D::GetGfxState ( MOAIDeckGfxState& gfxState ) {
+void MOAIGridDeck2D::GetGfxState ( u32 idx, MOAIDeckGfxState& gfxState ) {
 
 	if ( this->mDeck ) {
-		this->mDeck->GetGfxState ( gfxState );
+		this->mDeck->GetGfxState ( idx, gfxState );
 	}
-	gfxState.SetShader ( this->mShader );
-	gfxState.SetTexture ( this->mTexture );
+	MOAIDeck::GetGfxState ( idx, gfxState );
 }
 
 //----------------------------------------------------------------//

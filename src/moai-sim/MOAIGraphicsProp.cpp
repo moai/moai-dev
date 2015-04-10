@@ -636,7 +636,7 @@ void MOAIGraphicsProp::LoadGfxState () {
 	MOAIDeckGfxState gfxState;
 
 	if ( this->mDeck ) {
-		this->mDeck->GetGfxState ( gfxState );
+		this->mDeck->GetGfxState ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), gfxState );
 	}
 
 	gfxState.SetShader ( this->mShader );

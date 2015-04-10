@@ -297,8 +297,6 @@ MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

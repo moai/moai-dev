@@ -251,7 +251,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		gfxDevice.SetGfxState ( this->mTexture );
+		//gfxDevice.SetGfxState ( this->mTexture );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
