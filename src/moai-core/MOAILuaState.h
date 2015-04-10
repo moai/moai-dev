@@ -40,8 +40,8 @@ public:
 	bool			Base64Decode				( int idx );
 	bool			Base64Encode				( int idx );
 	bool			CheckParams					( int idx, cc8* format, bool verbose = true ); // "BCFLNSTU"
-	bool			CheckVector				( int idx, u32 n, lua_Number match, lua_Number fallback );
-	bool			CheckVector				( int idx, u32 n, lua_Number min, lua_Number max, lua_Number fallback );
+	bool			CheckVector					( int idx, u32 n, lua_Number match, lua_Number fallback );
+	bool			CheckVector					( int idx, u32 n, lua_Number min, lua_Number max, lua_Number fallback );
 	void			ClearField					( int idx, cc8* key );
 	void			CloneTable					( int idx );
 	void			CopyToTop					( int idx );
