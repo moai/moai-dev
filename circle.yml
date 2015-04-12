@@ -1,6 +1,3 @@
-machine:
-  environment:
-    XCODE_PROJECT: /tmp/yes_this_will_warn_but_at_least_it_doesnt_hang
 test:
   override:
     - bash ./bin/ci-osx.sh
