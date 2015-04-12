@@ -58,5 +58,5 @@ do
   $moai_root/cmake || exit 1
 
   cmake --build . --target install
-
+  echo Finished building $ARCH
 done
