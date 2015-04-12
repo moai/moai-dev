@@ -4,8 +4,6 @@
 #ifndef	MOAIFACEBOOKANDROID_H
 #define	MOAIFACEBOOKANDROID_H
 
-#if AKU_WITH_ANDROID_FACEBOOK
-
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
 
@@ -83,6 +81,6 @@ public:
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
-#endif  //DISABLE_FACEBOOK
+
 
 #endif  //MOAIFACEBOOK_H

@@ -16,7 +16,7 @@ void AKUModulesAndroidAppFinalize () {
 	#endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
-		AKUAndroidChartboostAppFinalize ();
+		AKUAndroidChartBoostAppFinalize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_CRITTERCISM
@@ -57,7 +57,7 @@ void AKUModulesAndroidAppInitialize () {
 	#endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
-		AKUAndroidChartboostAppInitialize ();
+		AKUAndroidChartBoostAppInitialize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_CRITTERCISM
@@ -98,7 +98,7 @@ void AKUModulesAndroidContextInitialize () {
 	#endif
 	
 	#if AKU_WITH_ANDROID_CHARTBOOST
-		AKUAndroidChartboostContextInitialize ();
+		AKUAndroidChartBoostContextInitialize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_CRITTERCISM
