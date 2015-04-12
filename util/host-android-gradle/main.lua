@@ -104,7 +104,7 @@ copyhostfiles = function()
 			MOAIFileSystem.copy(fullpath, output..entry)
 	end
 
-    
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'host-templates/android/studio/MoaiTemplate/local.properties.template', output..'local.properties')
     local hostmodules = MOAI_SDK_HOME..'src/host-modules'
     MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/moai.cpp', output..'app/src/main/jni/moai.cpp')
 
