@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>5A10B985-5B0F-426C-95EE-8F3ED779304D</string>
+	<string>FE08BA17-B690-4F3F-A6AC-FFC43A3FECFC</string>
 	<key>IDESourceControlProjectName</key>
-	<string>MoaiSample</string>
+	<string>Moai</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
 		<string>https://github.com/patrickmeehan/moai-dev.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>xcode/ios-static/MoaiSample.xcodeproj</string>
+	<string>xcode/osx-static/Moai.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
