@@ -4,6 +4,8 @@
 #ifndef	MOAIFACEBOOKANDROID_H
 #define	MOAIFACEBOOKANDROID_H
 
+#include <host-modules/aku_modules_android_config.h>
+
 #if AKU_WITH_ANDROID_FACEBOOK
 
 #include <moai-core/headers.h>

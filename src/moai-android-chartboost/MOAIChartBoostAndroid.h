@@ -4,7 +4,9 @@
 #ifndef	MOAICHARTBOOSTANDROID_H
 #define	MOAICHARTBOOSTANDROID_H
 
-//#if AKU_WITH_ANDROID_CHARTBOOST
+#include <host-modules/aku_modules_android_config.h>
+
+#if AKU_WITH_ANDROID_CHARTBOOST
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
@@ -40,6 +42,6 @@ public:
 		void			RegisterLuaClass				( MOAILuaState& state );
 };
 
-//#endif  //AKU_WITH_ANDROID_CHARTBOOST
+#endif  //AKU_WITH_ANDROID_CHARTBOOST
 
 #endif  //MOAICHARTBOOST_H

@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-//#if AKU_WITH_ANDROID_CHARTBOOST
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <moai-android/moaiext-jni.h>
 #include <moai-android-chartboost/MOAIChartBoostAndroid.h>
+
+#if AKU_WITH_ANDROID_CHARTBOOST
 
 //================================================================//
 // lua
@@ -104,4 +104,4 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiChartBoost_AKUI
 	MOAIChartBoostAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 
-//#endif
+#endif //AKU_WITH_ANDROID_CHARTBOOST

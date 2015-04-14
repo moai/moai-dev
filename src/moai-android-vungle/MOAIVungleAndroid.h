@@ -4,6 +4,8 @@
 #ifndef MOAIVUNGLEANDROID_H
 #define MOAIVUNGLEANDROID_H
 
+#include <host-modules/aku_modules_android_config.h>
+
 #if AKU_WITH_ANDROID_VUNGLE
 
 #include <moai-core/headers.h>

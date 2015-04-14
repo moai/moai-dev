@@ -43,6 +43,10 @@ void AKUModulesAndroidAppFinalize () {
 	#if AKU_WITH_ANDROID_TAPJOY
 //		AKUAndroidTapjoyAppFinalize ();
 	#endif
+
+	#if AKU_WITH_ANDROID_TWITTER
+//		AKUAndroidTwitterAppFinalize ();
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -78,6 +82,10 @@ void AKUModulesAndroidAppInitialize () {
 
 	#if AKU_WITH_ANDROID_TAPJOY
 //		AKUAndroidTapjoyAppInitialize ();
+	#endif
+
+	#if AKU_WITH_ANDROID_TWITTER
+//		AKUAndroidTwitterAppInitialize ();
 	#endif
 }
 
@@ -116,6 +124,9 @@ void AKUModulesAndroidContextInitialize () {
 //		AKUAndroidTapjoyContextInitialize ();
 	#endif
 	
+	#if AKU_WITH_ANDROID_TWITTER
+//		AKUAndroidTwitterContextInitialize ();
+	#endif
 }
 
 //----------------------------------------------------------------//
