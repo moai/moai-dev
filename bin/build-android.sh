@@ -33,9 +33,9 @@ cd build
 build_folder=$moai_root/build
 
 
+ARCHS=(armeabi armeabi-v7a x86)
 
-
-for ARCH in armeabi armeabi-v7a x86
+for ARCH in $ARCHS
 do
 
   cd $build_folder
@@ -55,7 +55,7 @@ do
   -DANDROID_ABI=$ARCH \
   -DCMAKE_INSTALL_PREFIX=$libprefix/$ARCH \
   -DLIBRARY_OUTPUT_PATH_ROOT=./build-android-$ARCH/ \
-  $moai_root/cmake
+  $moai_root/cmake || exit 1
 
   cmake --build . --target install
 
