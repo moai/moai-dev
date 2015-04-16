@@ -19,61 +19,8 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// MOAIDeckGfxState
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIDeckGfxState::MOAIDeckGfxState () :
-	mShader ( 0 ),
-	mTexture ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::Reset () {
-	this->mShader = 0;
-	this->mTexture = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::SetShader ( MOAIShader* shader ) {
-
-	if ( shader ) {
-		this->mShader = shader;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::SetTexture ( MOAIGfxState* texture ) {
-
-	if ( texture ) {
-		this->mTexture = texture;
-	}
-}
-
-//================================================================//
 // local
 //================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	u32 textureIdx = state.GetValue < u32 >( 2, 1 ) - 1;
-	
-	MOAIGfxState* texture = self->mTextures [ textureIdx ];
-	texture->PushLuaUserdata ( state );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_reserveTextures ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-	
-	return 0;
-}
 
 //----------------------------------------------------------------//
 /**	@lua	setBoundsDeck
@@ -161,72 +108,9 @@ int MOAIDeck::_setHitMaskThreshold ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setShader
-	@text	Set the shader to use if neither the deck item nor the prop specifies a shader.
-	
-	@in		MOAIDeck self
-	@in		MOAIShader shader
-	@out	nil
-*/
-int MOAIDeck::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "UU" )
-	
-	self->mShader.Set ( *self, state.GetLuaObject < MOAIShader >( 2, true ));
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIDeck self
-	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
-	@out	MOAIGfxState texture
-*/
-int MOAIDeck::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	u32 textureIdx = 0;
-	u32 param = 2;
-	
-	if ( state.IsType ( param, LUA_TNUMBER )) {
-		textureIdx = state.GetValue < u32 >( param++, 1 ) - 1;
-	}
-
-	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, param );
-	self->SetTexture ( textureIdx, texture );
-
-	if ( texture ) {
-		texture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_setTextureBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-	
-	self->mTextureBatchSize = state.GetValue < u32 >( 2, 0 );
-	return 0;
-}
-
 //================================================================//
 // MOAIDeck
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIDeck::ClearTextures () {
-
-	for ( u32 i = 0; i < this->mTextures.Size (); ++i ) {
-		this->LuaRelease ( this->mTextures [ i ]);
-	}
-	this->mTextures.Clear ();
-}
 
 //----------------------------------------------------------------//
 bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
@@ -236,31 +120,28 @@ bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials ) {
 
-	this->Draw ( idx, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	this->Draw ( idx, materials, ZLVec3D::ORIGIN, ZLVec3D::AXIS );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
-	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
-	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
+	scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -scale.mX : scale.mX;
+	scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -scale.mY : scale.mY;
 	
-	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
+	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, materials, offset, scale );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
-	UNUSED ( zScl );
+	UNUSED ( materials );
+	UNUSED ( offset );
+	UNUSED ( scale );
 }
 
 //----------------------------------------------------------------//
@@ -312,27 +193,6 @@ void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIDeck::GetTextureIndex ( u32 idx ) {
-
-	return this->mTextureBatchSize > 0 ? ((( u32 )(( idx - 1 ) / this->mTextureBatchSize )) % this->mTextures.Size ()) : 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::GetGfxState ( u32 idx, MOAIDeckGfxState& gfxState ) {
-
-	if ( this->mShader ) {
-		gfxState.SetShader ( this->mShader );
-	}
-	else {
-		gfxState.SetShader ( &MOAIShaderMgr::Get ().GetShader ( this->mDefaultShaderID ));
-	}
-	
-	if ( this->mTextures.Size ()) {
-		gfxState.SetTexture ( this->mTextures [ this->GetTextureIndex ( idx )]);
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
@@ -344,15 +204,14 @@ bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 
 //----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
-	mTextureBatchSize ( 0 ),
 	mHitColorScalar ( 0xffffffff ),
 	mHitColorThreshold ( 0x00000000 ),
-	//mContentMask ( 0xffffffff ),
-	mDefaultShaderID ( MOAIShaderMgr::DECK2D_SHADER ),
 	mBoundsDirty ( true ),
 	mHitGranularity ( HIT_TEST_COARSE ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIMaterialBatch )
+	RTTI_END
 	
 	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
@@ -360,14 +219,13 @@ MOAIDeck::MOAIDeck () :
 //----------------------------------------------------------------//
 MOAIDeck::~MOAIDeck () {
 
-	this->mShader.Set ( *this, 0 );
 	this->mBoundsDeck.Set ( *this, 0 );
-	
-	this->ClearTextures ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
+
+	MOAIMaterialBatch::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "HIT_TEST_COARSE",			HIT_TEST_COARSE );
 	state.SetField ( -1, "HIT_TEST_MEDIUM",			HIT_TEST_MEDIUM );
@@ -377,21 +235,24 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIMaterialBatch::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
-		{ "getTexture",				_getTexture },
-		{ "reserveTextures",		_reserveTextures },
 		{ "setBoundsDeck",			_setBoundsDeck },
 		{ "setHitGranularity",		_setHitGranularity },
 		{ "setHitMask",				_setHitMask },
 		{ "setHitMaskScalar",		_setHitMaskScalar },
 		{ "setHitMaskThreshold",	_setHitMaskThreshold },
-		{ "setShader",				_setShader },
-		{ "setTexture",				_setTexture },
-		{ "setTextureBatchSize",	_setTextureBatchSize },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+MOAIMaterialBatch* MOAIDeck::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
+
+	return override ? override : this;
 }
 
 //----------------------------------------------------------------//
@@ -445,26 +306,4 @@ bool MOAIDeck::TestHit ( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x,
 	}
 
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::ReserveTextures ( u32 n ) {
-
-	this->ClearTextures ();
-	
-	this->mTextures.Init ( n );
-	this->mTextures.Fill ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::SetTexture ( u32 idx, MOAIGfxState* texture ) {
-
-	this->mTextures.Grow ( idx, 1, 0 );
-	
-	if ( this->mTextures [ idx ] != texture ) {
-	
-		this->LuaRetain ( texture );
-		this->LuaRelease ( this->mTextures [ idx ]);
-		this->mTextures [ idx ] = texture;
-	}
 }

@@ -13,6 +13,13 @@ template < typename TYPE >
 class ZLMetaVec3D {
 public:
 
+	static const ZLMetaVec3D < TYPE >	X_AXIS;
+	static const ZLMetaVec3D < TYPE >	Y_AXIS;
+	static const ZLMetaVec3D < TYPE >	Z_AXIS;
+
+	static const ZLMetaVec3D < TYPE >	ORIGIN;		// all 0's
+	static const ZLMetaVec3D < TYPE >	AXIS;		// all 1's
+
 	TYPE	mX;
 	TYPE	mY;
 	TYPE	mZ;
@@ -460,6 +467,13 @@ public:
 	~ZLMetaVec3D () {
 	}
 };
+
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::X_AXIS ( 1, 0, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Y_AXIS ( 0, 1, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Z_AXIS ( 0, 0, 1 );
+
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::ORIGIN ( 0, 0, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::AXIS ( 1, 1, 1 );
 
 typedef ZLMetaVec3D < int > ZLIntVec3D;
 typedef ZLMetaVec3D < float > ZLVec3D;

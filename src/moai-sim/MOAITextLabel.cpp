@@ -736,8 +736,9 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
+		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
 
-		if ( !this->mShader ) {
+		if ( !shader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
 			// specialized implementation of MOAIDeck...
 			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );

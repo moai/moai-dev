@@ -17,6 +17,7 @@ class MOAIDeckRemapper;
 class MOAIGfxState;
 class MOAIGrid;
 class MOAILayoutFrame;
+class MOAIMaterialBatch;
 class MOAIOverlapPrim2D;
 class MOAIPartition;
 class MOAIPartitionCell;
@@ -79,8 +80,8 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_getMaterialBatch	( lua_State* L );
 	static int		_getScissorRect		( lua_State* L );
-	static int		_getTexture			( lua_State* L );
 	static int		_isVisible			( lua_State* L );
 	static int		_setBillboard		( lua_State* L );
 	static int		_setBlendEquation	( lua_State* L );
@@ -89,15 +90,11 @@ private:
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
 	static int		_setLODLimits		( lua_State* L );
+	static int		_setMaterialBatch	( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setScissorRect		( lua_State* L );
-	static int		_setShader			( lua_State* L );
-	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			DrawGrid			( int subPrimID );
 
 protected:
 
@@ -108,11 +105,11 @@ protected:
 	u32										mBillboard;
 	
 	// TODO: these should all be attributes
-	MOAILuaSharedPtr < MOAIShader >			mShader;
-	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
+	MOAILuaSharedPtr < MOAIMaterialBatch >	mMaterialBatch;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 	
+	// TODO: this crap should move to the material
 	int										mCullMode;
 	int										mDepthTest;
 	bool									mDepthMask;

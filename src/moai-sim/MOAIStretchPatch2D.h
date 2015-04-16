@@ -67,7 +67,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	using MOAIDeck::DrawIndex;
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

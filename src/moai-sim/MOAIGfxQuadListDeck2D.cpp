@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -43,7 +44,7 @@ int MOAIGfxQuadListDeck2D::_reservePairs ( lua_State* L ) {
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReservePairs ( total );
-
+	
 	return 0;
 }
 
@@ -134,7 +135,9 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 		return 0;
 	}
 	
-	self->SetPair ( idx, uvQuadID, quadID );
+	u32 materialID = state.IsType ( 5, LUA_TNUMBER ) ? state.GetValue < u32 >( 5, 1 ) - 1 : MOAIMaterialBatch::UNKNOWN;
+	
+	self->SetPair ( idx, uvQuadID, quadID, materialID );
 
 	return 0;
 }
@@ -358,11 +361,19 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( zScl );
+void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
+
+		idx = idx - 1;
+		u32 itemIdx = idx % size;
+
+		bool hasMaterials = materials.Size () > 0;
+		
+		if ( !hasMaterials ) {
+			materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+		}
 
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -370,9 +381,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float z
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
-		idx = ( idx - 1 ) % size;
-
-		USSprite& sprite = this->mSprites [ idx ];
+		USSprite& sprite = this->mSprites [ itemIdx ];
 		MOAIQuadBrush glQuad;
 		
 		u32 base = sprite.mBasePair;
@@ -384,12 +393,16 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float z
 			
 			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
 			
+			if ( hasMaterials ) {
+				materials.LoadGfxState ( spritePair.mMaterialID, idx, MOAIShaderMgr::DECK2D_SHADER );
+			}
+			
 			ZLQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
 			ZLQuad& quad = this->mQuads [ spritePair.mQuadID ];
 			
 			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
 			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-			glQuad.Draw ( xOff, yOff, zOff, xScl, yScl );
+			glQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 		}
 	}
 }
@@ -536,7 +549,7 @@ void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID ) {
+void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID, u32 materialID ) {
 	
 	if ( !this->mPairs.Size ()) return;
 	if ( !this->mUVQuads.Size ()) return;
@@ -546,6 +559,7 @@ void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID ) {
 	
 	spritePair.mUVQuadID = uvQuadID % this->mUVQuads.Size ();
 	spritePair.mQuadID = quadID % this->mQuads.Size ();
+	spritePair.mMaterialID = materialID;
 }
 
 //----------------------------------------------------------------//

@@ -322,6 +322,61 @@ MOAILayer.extend (
 --============================================================--
 MOAIGraphicsProp.extend (
 
+	'MOAIGraphicsProp',
+	
+	----------------------------------------------------------------
+	function ( interface, class, superInterface, superClass )
+		
+		local affirmMaterialBatch = function ( self )
+			local materials = self:getMaterialBatch () or MOAIMaterialBatch.new ()
+			self:setMaterialBatch ( materials )
+			return materials
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.getIndexBatchSize ( self )
+			local materials = self:getMaterialBatch ()
+			return materials and materials:getIndexBatchSize ()
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.getShader ( self, idx )
+			local materials = self:getMaterialBatch ()
+			return materials and materials:getShader ( idx )
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.getTexture ( self, idx )
+			local materials = self:getMaterialBatch ()
+			return materials and materials:getTexture ( idx )
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.setIndexBatchSize ( self, indexBatchSize )
+			local materials = affirmMaterialBatch ( self )
+			return materials:setIndexBatchSize ( indexBatchSize )
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.setShader ( self, idx, shader )
+			local materials = affirmMaterialBatch ( self )
+			return materials:setTexture ( idx, shader )
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.setTexture ( self, idx, texture )
+			print ( 'SET TEXTURE', self, idx, texture )
+			local materials = affirmMaterialBatch ( self )
+			return materials:setTexture ( idx, texture )
+		end
+	end
+)
+
+--============================================================--
+-- MOAIGraphicsProp
+--============================================================--
+MOAIGraphicsProp.extend (
+
 	'MOAIGraphicsProp2D',
 	
 	----------------------------------------------------------------

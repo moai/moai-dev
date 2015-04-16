@@ -85,7 +85,7 @@ protected:
 	u32										mFlags;
 
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
-	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
+	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper; // TODO: replace with inline remapper
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;

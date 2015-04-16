@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGridFancy.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 
 //================================================================//
 // local
@@ -322,10 +324,13 @@ int MOAIGridFancy::_setPalette ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	float tileWidth = this->GetTileWidth();
-	float tileHeight = this->GetTileHeight();
+	ZLVec3D offset	= ZLVec3D::ORIGIN;
+	ZLVec3D scale	= ZLVec3D::AXIS;
+	
+	float tileWidth = this->GetTileWidth ();
+	float tileHeight = this->GetTileHeight ();
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	ZLColorVec penColor = gfxDevice.GetPenColor();
@@ -337,17 +342,24 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOA
 			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
 			u32 color = this->GetColor ( wrap.mX, wrap.mY );
 			float alpha = this->GetAlpha ( wrap.mX, wrap.mY );
-			float scale = this->GetScale ( wrap.mX, wrap.mY );
+			float tileScale = this->GetScale ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
 			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
-			if (color) {
+			if ( color ) {
 				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
-			} else {
+			}
+			else {
 				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
 			}
-			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), loc.mX, loc.mY, 0.0f, tileWidth * scale, tileHeight * scale, 1.0f);
+			
+			offset.mX	= loc.mX;
+			offset.mY	= loc.mY;
+			scale.mX	= tileWidth * tileScale;
+			scale.mY	= tileHeight * tileScale;
+			
+			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), materials, offset, scale );
 		}
 	}
 	

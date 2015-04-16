@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIQuadBrush.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -237,16 +238,17 @@ ZLBox MOAITileDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( zScl );
-	
+void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+
+	idx = idx - 1;
+
+	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-	
-	idx = idx - 1;
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );
@@ -257,7 +259,7 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 	float uOff = uvRect.mXMin + ( 0.5f * uScale );
 	float vOff = uvRect.mYMin - ( 0.5f * vScale );
 	
-	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl, uOff, vOff, uScale, vScale );
+	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

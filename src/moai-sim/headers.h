@@ -59,6 +59,7 @@
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMotionSensor.h>

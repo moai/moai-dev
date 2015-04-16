@@ -1031,6 +1031,13 @@ ZLVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 }
 
 //----------------------------------------------------------------//
+ZLVec3D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position, float z ) const {
+
+	ZLVec2D point = this->GetTilePoint ( cellCoord, position );
+	return ZLVec3D ( point.mX, point.mY, z );
+}
+
+//----------------------------------------------------------------//
 ZLRect MOAIGridSpace::GetTileRect ( MOAICellCoord cellCoord ) const {
 
 	float xOff = 0.0f;
