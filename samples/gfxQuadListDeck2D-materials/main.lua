@@ -15,7 +15,10 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuadListDeck = MOAIGfxQuadListDeck2D.new ()
-gfxQuadListDeck:setTexture ( "test.png" )
+
+gfxQuadListDeck:setTexture ( 1, "../resources/moai.png" )
+gfxQuadListDeck:setTexture ( 2, "../resources/test.png" )
+gfxQuadListDeck:setTexture ( 3, "../resources/numbers.png" )
 
 gfxQuadListDeck:reserveQuads ( 4 )
 gfxQuadListDeck:setRect ( 1, -64, 0, 0, 64 )
@@ -41,10 +44,5 @@ gfxQuadListDeck:setList ( 1, 1, 4 )
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuadListDeck )
 layer:insertProp ( prop )
-
-prop:setTexture ( 1, "../resources/moai.png" )
-prop:setTexture ( 2, "../resources/test.png" )
-prop:setTexture ( 3, "../resources/numbers.png" )
-prop:setIndexBatchSize ( 1 )
 
 layer:insertProp ( prop )
