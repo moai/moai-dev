@@ -88,7 +88,7 @@ print "Hello"
 then
 
 ```
-lua bin2c.lua hello.lua
+lua bin2c.lua hello.lua
 ```
 
 gives C code:

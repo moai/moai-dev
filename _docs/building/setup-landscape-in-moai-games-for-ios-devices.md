@@ -31,7 +31,7 @@ Step 2
 In MoaiAppDelegate.mm change the line
 
 ```
-mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
+mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
 ```
 to:
 

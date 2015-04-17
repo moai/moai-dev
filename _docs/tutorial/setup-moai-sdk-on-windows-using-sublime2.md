@@ -36,12 +36,12 @@ Login [here](https://dashboard.moaicloud.com/signup.php) and download the SDK. A
 Let's quickly examine the SDK folder structure:
 
 ```
-/3dparty (contains glut libs)
-/bin (this folder contains all the hosts, i.e what will run your lua scripts)
-/docs (the API reference guide)
-/hosts 
-/include (lua includes)
-/samples (the sdk samples)
+/3dparty (contains glut libs)
+/bin (this folder contains all the hosts, i.e what will run your lua scripts)
+/docs (the API reference guide)
+/hosts 
+/include (lua includes)
+/samples (the sdk samples)
 ```
 
 Before we go any further, you should go into the samples folder and run some of the samples. This will work without any extra setup. Just go into any sample's folder and double click the run.bat file and it'll execute the sample. Familiarize yourself with all the different functionalities the SDK has to offer. There are a lot of samples!
@@ -60,7 +60,7 @@ This is needed for the Android deployment and can be downloaded from [here](http
 Go ahead and also add this folder to the "Path" enviroment variable.
 
 ```
-;C:\Program Files (x86)\7-Zip
+;C:\Program Files (x86)\7-Zip
 ```
 
 Download the project template
@@ -72,10 +72,10 @@ Extract the zip file to a folder of your choice. Have a quick look at the extrac
 
 ```
 /main
-../assets (some test asset)
+../assets (some test asset)
 ../main.lua
 ../config.lua
-/tools(various batch files and txt files in here)
+/tools(various batch files and txt files in here)
 ```
 
 Get the project running on Desktop
@@ -91,7 +91,7 @@ Go to Tools -\> Build System -\> New Build System .. This will open up a new fil
 
 ```
 {
-       "cmd": ["${project_path:${folder}}/tools/run.bat"]
+       "cmd": ["${project_path:${folder}}/tools/run.bat"]
 }
 ```
 
@@ -116,7 +116,7 @@ Replace the text with this:
 
 ```
 {
-       "cmd": ["${project_path:${folder}}/tools/deploy-to-device.bat"]
+       "cmd": ["${project_path:${folder}}/tools/deploy-to-device.bat"]
 }
 ```
 

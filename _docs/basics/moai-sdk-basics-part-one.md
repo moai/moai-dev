@@ -20,39 +20,39 @@ Instances of classes do not inherit the global class table. Instead, they are cr
 To access members of a class table, always use the dot operator:
 
 ```lua
-MOAIFoo.new ()
+MOAIFoo.new ()
 MOAIFoo.SOME_CONST
 ```
 
 To access members of an instance table, use the colon operator or (when calling methods) use the dot operator and pass in the instance:
 
 ```lua
-foo = MOAIFoo.new ()
-foo:doSomething ()
-foo.doSomething ( foo )
-foo.doSomething = myDoSomething -- this is OK
+foo = MOAIFoo.new ()
+foo:doSomething ()
+foo.doSomething ( foo )
+foo.doSomething = myDoSomething -- this is OK
 ```
 
 Moai framework objects will be garbage collected just like regular Lua objects. That said, they are also reference counted by the C++ runtime, so when you add them to Moai containers or systems that Moai manages, they will remain until no longer needed:
 
 ```lua
-foo = MOAIFoo.new ()
-container = MOAIFooContainer.new ()
+foo = MOAIFoo.new ()
+container = MOAIFooContainer.new ()
 
-container:insertFoo ( foo ) -- foo will be reference counted
-foo = nil -- foo will not be garbage collected yet
+container:insertFoo ( foo ) -- foo will be reference counted
+foo = nil -- foo will not be garbage collected yet
 
-container = nil -- now container and contents may be garbage collected
+container = nil -- now container and contents may be garbage collected
 ```
 
 While Moai container objects typically reference count their members, inter-object relationships usually do not:
 
 ```lua
-foo1 = MOAIFoo.new ()
-foo2 = MOAIFoo.new ()
- 
-foo1:setSomeRelationship ( foo2 ) -- weak reference to foo2
-foo2 = nil -- foo2 may be garbage collected
+foo1 = MOAIFoo.new ()
+foo2 = MOAIFoo.new ()
+ 
+foo1:setSomeRelationship ( foo2 ) -- weak reference to foo2
+foo2 = nil -- foo2 may be garbage collected
 ```
 
 Some Moai objects inherit from other Moai objects. Keep this in mind when checking the reference. If one object inherits another, it may be used interchangeably with the object it inherits.
@@ -63,15 +63,15 @@ Setting Up
 Moai is designed to run inside a host application and render to an OpenGL surface. The surface is provided by the host application. When Moai renders, it may render to the entire surface or just a rectangular section of the surface. This section is called a viewport and you need to define one before you start rendering:
 
 ```lua
-viewport = MOAIViewport.new ()
-viewport:setSize ( 480, 320 )
-viewport:setScale ( 480, 320 )
+viewport = MOAIViewport.new ()
+viewport:setSize ( 480, 320 )
+viewport:setScale ( 480, 320 )
 ```
 
 The size of the viewport is the viewport’s rectangle on the OpenGL surface provided by the host. The setSize () method is overloaded to accept the full rectangle:
 
 ```lua
-viewport:setSize ( 100, 100, 200, 200 )
+viewport:setSize ( 100, 100, 200, 200 )
 ```
 
 Viewports are defined in a typical ‘window style’ coordinate system in which the origin is in the upper left hand corner of the drawing surface and the Y-axis descends down the screen. The above code creates a viewport with its upper left hand corner at (100, 100) and its lower right hand corner at (200, 200).
@@ -81,15 +81,15 @@ To support resolution independence, Moai allows you to set a scalar on each axis
 Now, it may happen that your world units correspond to pixels:
 
 ```lua
-viewport:setSize ( 480, 320 )
-viewport:setScale ( 480, 320 ) – viewport will show 480 x 320 world units
+viewport:setSize ( 480, 320 )
+viewport:setScale ( 480, 320 ) – viewport will show 480 x 320 world units
 ```
 
 This is an easy way to think, especially if you are coming from an art background. But remember that world units are something you can choose based in your own preferences:
 
 ```lua
-viewport:setSize ( 480, 320 )
-viewport:setScale ( 15, 10 ) -- viewport will show 15 x 10 world units
+viewport:setSize ( 480, 320 )
+viewport:setScale ( 15, 10 ) -- viewport will show 15 x 10 world units
 ```
 
 The above viewport will display a 1 x 1 ‘unit’ object as 32 x 32 pixels on the screen. You might do this if you want to describe your game in some other coordinate system – meters, for example, or maybe tiles if you are making a tile-based arcade game. In the previous example 1 ‘meter’ or ‘tile’ (it’s up to you) happens to be equivalent to 32 pixels.
@@ -97,9 +97,9 @@ The above viewport will display a 1 x 1 ‘unit’ object as 32 x 32 pixels on t
 One of the nice things about setting up your viewport this way is that you immediately solve a big part of the resolution independence problem:
 
 ```lua
--- retina display
-viewport:setSize ( 960, 640 )
-viewport:setScale ( 15, 10 ) -- viewport will still show 15 x 10 world units
+-- retina display
+viewport:setSize ( 960, 640 )
+viewport:setScale ( 15, 10 ) -- viewport will still show 15 x 10 world units
 ```
 
 As you can see, the size of the viewport changed, but not the scale. The contents of the viewport will simply stretch to fill the larger viewport. (I’ll talk about how to also show higher resolution assets later).
@@ -111,9 +111,9 @@ In Moai, the origin of the world is at the center of the view, not the upper lef
 There are times to use a window style coordinate system. For example, when laying out a UI you are probably most used to thinking in window style coordinates. You can do this with a little extra configuration:
 
 ```lua
-viewport:setSize ( 480, 320 )
-viewport:setScale ( 480, -320 ) -- use negative Y axis
-viewport:setOffset ( -1, 1 ) -- offset projection origin by -1, 1 in OpenGL projection space
+viewport:setSize ( 480, 320 )
+viewport:setScale ( 480, -320 ) -- use negative Y axis
+viewport:setOffset ( -1, 1 ) -- offset projection origin by -1, 1 in OpenGL projection space
 ```
 
 The above code snippet sets up a viewport with a window style coordinate system. The origin is at the upper left hand corner of the viewport and the Y axis increases down the screen. The viewport offset is set in projection space. Projection space is a 2 x 2 rectangle with an ascending Y axis. The value of ( -1, 1 ) moves the projection one half screen to the left and 1 half screen up, thereby placing the origin at the upper left hand corner of the view.
@@ -142,16 +142,16 @@ And a bit more concretely: let’s say you wanted to make a texture atlas and re
 Here's an example:
 
 ```lua
--- load the sprite sheet; this will be the source for our sprite
-spriteSheet = MOAITileDeck2D.new ()
-spriteSheet:setTexture ( ‘frames.png’ ) -- load a texture
-spriteSheet:setSize ( 8, 8 ) -- subdivide the texture into 8 x 8 = 64 frames
-spriteSheet:setRect ( -32, -32, 32, 32 ) -- set the world space dimensions of the sprites
+-- load the sprite sheet; this will be the source for our sprite
+spriteSheet = MOAITileDeck2D.new ()
+spriteSheet:setTexture ( ‘frames.png’ ) -- load a texture
+spriteSheet:setSize ( 8, 8 ) -- subdivide the texture into 8 x 8 = 64 frames
+spriteSheet:setRect ( -32, -32, 32, 32 ) -- set the world space dimensions of the sprites
 
--- create a sprite and initialize it
-sprite = MOAIProp2D.new ()
-sprite:setDeck ( spriteSheet )
-sprite:setIndex ( 3 ) -- show the third image in the deck
+-- create a sprite and initialize it
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( spriteSheet )
+sprite:setIndex ( 3 ) -- show the third image in the deck
 ```
 
 If you’ve already looked through our samples, you’ve probably seen plenty of code that looks like this. This example intentionally goes against the standard class naming to try and illustrate the concept in more familiar terms.
@@ -161,15 +161,15 @@ You’ll notice that a MOAITileDeck2D as used as an image source. This is done h
 One quirk of the decision to bake the idea of indices directly into MOAIProp2D and MOAIDeck2D (as opposed to more specialized classes) is that even deck types meant to contain only a single item may also be indexed:
 
 ```lua
--- create a deck representing a single textured quad
-texturedQuad = MOAIGfxQuad2D.new ()
-texturedQuad:setTexture ( ‘test.png’ ) -- load an image to use as the quad’s texture
-texturedQuad:setRect ( -32, -32, 32, 32 ) -- set the world space dimensions of the quad
+-- create a deck representing a single textured quad
+texturedQuad = MOAIGfxQuad2D.new ()
+texturedQuad:setTexture ( ‘test.png’ ) -- load an image to use as the quad’s texture
+texturedQuad:setRect ( -32, -32, 32, 32 ) -- set the world space dimensions of the quad
 
--- create a sprite and initialize it
-sprite = MOAIProp2D.new ()
-sprite:setDeck ( texturedQuad )
-sprite:setIndex ( 3 ) -- this index is ignored by MOAIGfxQuad2D
+-- create a sprite and initialize it
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texturedQuad )
+sprite:setIndex ( 3 ) -- this index is ignored by MOAIGfxQuad2D
 ```
 
 By convention, a deck with no indices just ignores the out of range index. Note that this is up to the individual deck type: MOAIGfxQuad2D ignores indices when drawing; other deck types may behave differently.
@@ -194,16 +194,16 @@ Graphics geometry in Moai is initialized using UV coordinates. Most likely you�
 Just be aware that Moai assumes you’re going to be working in a simulation style coordinate system and for this reason whenever default UV values are provided, Moai assumes vertices with higher Y values are lower in UV coordinate space. For example:
 
 ```lua
-texturedQuad = MOAIGfxQuad2D.new () -- default UV coords are ( 0, 1, 1, 0 )
-texturedQuad:setRect ( -32, -32, 32, 32 )
+texturedQuad = MOAIGfxQuad2D.new () -- default UV coords are ( 0, 1, 1, 0 )
+texturedQuad:setRect ( -32, -32, 32, 32 )
 ```
 
 If you are working in a window style viewport coordinate system, you will need to explicitly set your UV coordinates to the reverse of this or your images may appear upside down:
 
 ```lua
-texturedQuad = MOAIGfxQuad2D.new ()
-texturedQuad:setRect ( 0, 0, 64, 64 )
-texturedQuad:setUVRect ( 0, 0, 1, 1 )
+texturedQuad = MOAIGfxQuad2D.new ()
+texturedQuad:setRect ( 0, 0, 64, 64 )
+texturedQuad:setUVRect ( 0, 0, 1, 1 )
 ```
 
 UV Coordinates and Resolution Independence
@@ -227,32 +227,32 @@ When setting up a scene, you typically want to group as many props of a given ty
 Here’s an example that sets up a layer and renders a single prop:
 
 ```lua
--- open a window (not needed on mobile platforms)
-MOAISim.openWindow ( ‘test’, 320, 480 )
+-- open a window (not needed on mobile platforms)
+MOAISim.openWindow ( ‘test’, 320, 480 )
 
--- create a viewport
-viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+-- create a viewport
+viewport = MOAIViewport.new ()
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 
--- create a layer and sets its viewport
-layer = MOAILayer2D.new ()
-layer:setViewport ( viewport )
- 
--- push the layer onto the render stack
-MOAISim.pushRenderPass ( layer )
+-- create a layer and sets its viewport
+layer = MOAILayer2D.new ()
+layer:setViewport ( viewport )
+ 
+-- push the layer onto the render stack
+MOAISim.pushRenderPass ( layer )
 
--- create a deck representing a single textured quad
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( ‘test.png’ ) -- load an image to use as the quad’s texture
-gfxQuad:setRect ( -64, -64, 64, 64 ) -- set the dimensions of the quad
+-- create a deck representing a single textured quad
+gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad:setTexture ( ‘test.png’ ) -- load an image to use as the quad’s texture
+gfxQuad:setRect ( -64, -64, 64, 64 ) -- set the dimensions of the quad
 
--- create a prop and initialize it
-prop = MOAIProp2D.new ()
-prop :setDeck (gfxQuad)
+-- create a prop and initialize it
+prop = MOAIProp2D.new ()
+prop :setDeck (gfxQuad)
 
--- add the prop to the layer
-layer:insertProp ( prop )
+-- add the prop to the layer
+layer:insertProp ( prop )
 ```
 
 Transforms
@@ -263,65 +263,65 @@ Moai uses affine transforms to position objects in space. If you have experience
 Moai props derive from transforms, but you can also create pure transforms:
 
 ```lua
-transform = MOAITransform.new ()
-transform:setLoc ( 100, 100 )
+transform = MOAITransform.new ()
+transform:setLoc ( 100, 100 )
 ```
 
 You can create a parent/child relationship between transforms:
 
 ```lua
-transform1 = MOAITransform.new ()
-transform2 = MOAITransform.new ()
-transform2:setParent ( transform1 )
+transform1 = MOAITransform.new ()
+transform2 = MOAITransform.new ()
+transform2:setParent ( transform1 )
 ```
 
 Child transforms will inherit the position, orientation and scale of their parents. Because MOAIProp2D has MOAITransform as a base class, you can also create a parent/child relationship between props and transforms:
 
 ```lua
-transform = MOAITransform.new ()
-prop = MOAIProp2D.new ()
-prop:setParent ( transform )
+transform = MOAITransform.new ()
+prop = MOAIProp2D.new ()
+prop:setParent ( transform )
 ```
 
 And between props:
 
 ```lua
-prop1 = MOAIProp2D.new ()
-prop2 = MOAIProp2D.new ()
-prop2:setParent (prop1)
+prop1 = MOAIProp2D.new ()
+prop2 = MOAIProp2D.new ()
+prop2:setParent (prop1)
 ```
 
 Since transforms don’t have any shape or size, you do not need to add them to layers; they have no dimension and therefore cannot exist in a layer:
 
 ```lua
-transform = MOAITransform.new ()
-prop = MOAIProp2D.new ()
-prop:setParent ( transform )
+transform = MOAITransform.new ()
+prop = MOAIProp2D.new ()
+prop:setParent ( transform )
 
-layer:insertProp ( prop ) -- insert the prop
-layer:insertProp ( transform ) -- this has no meaning
+layer:insertProp ( prop ) -- insert the prop
+layer:insertProp ( transform ) -- this has no meaning
 ```
 
 Ad you’ve probably gathered, you can use transforms to move multiple props (and other transforms in unison:
 
 ```lua
-root = MOAITransform.new ()
-prop1 = MOAIProp2D.new ()
-prop1:setParent ( root )
-prop1:setLoc ( -10, 0 ) -- prop 1 is to the left of root
+root = MOAITransform.new ()
+prop1 = MOAIProp2D.new ()
+prop1:setParent ( root )
+prop1:setLoc ( -10, 0 ) -- prop 1 is to the left of root
 
-prop2 = MOAIProp2D.new ()
-prop2:setParent ( root )
-prop2:setLoc ( 10, 0 ) -- prop 2 is to the right of root
+prop2 = MOAIProp2D.new ()
+prop2:setParent ( root )
+prop2:setLoc ( 10, 0 ) -- prop 2 is to the right of root
 
-root:setLoc ( 100, 100 ) -- prop1 at (90, 100); prop2 is at (110, 100)
+root:setLoc ( 100, 100 ) -- prop1 at (90, 100); prop2 is at (110, 100)
 ```
 
 If you’re used to authoring tools, you may assume that creating a parent/child relationship also creates a group. Be careful; it doesn’t. Moai doesn’t make any additional assumptions about the relationships of objects in a spatial hierarchy. If you create a parent/child relationship between props, Moai will not, for example, automatically add the child prop to a layer if its parent is added:
 
 ```lua
-prop2:setParent ( prop1 )
-layer:addProp ( prop1 ) -- prop 2 will not be added to the layer
+prop2:setParent ( prop1 )
+layer:addProp ( prop1 ) -- prop 2 will not be added to the layer
 ```
 
 As you can see, Moai takes a low level view of things. ‘Groups’ are a high level concept with a lot of implications across layer membership, attribute inheritance and event propagation. The key idea is that you can (and should) create all of these relationships in Lua; a future tutorial will explain how. You can even create a Lua wrapper that mimics the group and event semantics of your favorite authoring framework. Even though baking assumptions about things like groups into the engine might make Moai more intuitive for some users, the constraints it would place on the design didn’t seem worth it. With Moai, it’s better to start from the low level view of things and use the right tool (Lua) for the job of creating high level constructs.
