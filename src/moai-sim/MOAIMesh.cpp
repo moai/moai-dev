@@ -225,14 +225,12 @@ ZLBox MOAIMesh::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
-	UNUSED ( zScl );
+	UNUSED ( offset );
+	UNUSED ( scale );
+
+	materials.LoadGfxState ( idx, MOAIShaderMgr::MESH_SHADER );
 
 	// TODO: make use of offset and scale
 	
@@ -251,7 +249,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		gfxDevice.SetGfxState ( this->mTexture );
+		//gfxDevice.SetGfxState ( this->mTexture );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
@@ -292,8 +290,6 @@ MOAIMesh::MOAIMesh () :
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
-	
-	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 	
 	this->ClearBounds ();
 }

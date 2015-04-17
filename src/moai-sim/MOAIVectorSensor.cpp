@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 #include <moai-sim/MOAIVectorSensor.h>
 
 //================================================================//
@@ -49,12 +49,13 @@ int MOAIVectorSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorSensor::EnqueueVectorEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float x, float y, float z ) {
+void MOAIVectorSensor::EnqueueVectorEvent ( u8 deviceID, u8 sensorID, float x, float y, float z ) {
 
-	if ( queue.WriteEventHeader < MOAIVectorSensor >( deviceID, sensorID )) {
-		queue.Write < float >( x );
-		queue.Write < float >( y );
-		queue.Write < float >( z );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIVectorSensor >( deviceID, sensorID )) {
+		inputMgr.Write < float >( x );
+		inputMgr.Write < float >( y );
+		inputMgr.Write < float >( z );
 	}
 }
 

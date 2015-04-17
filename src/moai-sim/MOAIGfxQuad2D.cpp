@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -183,9 +184,9 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( idx );
-	UNUSED ( zScl );
+void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+	
+	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -193,7 +194,7 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
-	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl );
+	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 }
 
 //----------------------------------------------------------------//
@@ -229,8 +230,6 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 //----------------------------------------------------------------//
 MOAIGfxQuad2D::~MOAIGfxQuad2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

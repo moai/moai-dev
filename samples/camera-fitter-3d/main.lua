@@ -6,12 +6,26 @@
 
 require ( 'cube' )
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 960, 480 )
 
 --MOAIGfxDevice.getFrameBuffer ():setClearDepth ( true )
+
+XMIN = 20
+XMAX = 940
+
+YMIN = 20
+YMAX = 460
+
+viewport = MOAIViewport.new ()
+viewport:setSize ( XMIN, YMIN, XMAX, YMAX )
+
+layer = MOAILayer.new ()
+layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
+MOAISim.pushRenderPass ( layer )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 960, 480 )
@@ -33,7 +47,6 @@ makeProp = function ( x, y, z )
 	local prop = MOAIProp.new ()
 	prop:setDeck ( cube )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-	--prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
 	layer:insertProp ( prop )
 
@@ -50,29 +63,18 @@ orbit = function ( x, y, angle )
 	return (( x * c ) - ( y * s )), (( x * s ) + ( y * c ))
 end
 
---[[
-props = {
-	makeProp ( -64, 0, -64 ),
-	makeProp ( 64, 0, -64 ),
-	makeProp ( 64, 0, 64 ),
-	makeProp ( -64, 0, 64 ),
-}
-]]--
-
---[[
-props = {
-	makeProp ( 0, 0, 0 ),
-	makeProp ( 0, 64, 0 ),
-	makeProp ( 0, 128, 0 ),
-	makeProp ( 0, 192, 0 ),
-}
-]]--
-
 props = {
 	makeProp ( 0, 0, 0 ),
 	makeProp ( 64, 0, 0 ),
 	makeProp ( 128, 0, 0 ),
 	makeProp ( 192, 0, 0 ),
+}
+
+points = {
+	{ x = 0, y = 0, z = 0, r = 16 },
+	{ x = 64, y = 0, z = 0, r = 16 },
+	{ x = 128, y = 0, z = 0, r = 16 },
+	{ x = 192, y = 0, z = 0, r = 16 },
 }
 
 local keyNames = {}
@@ -120,7 +122,8 @@ main = function ()
 			camera:setLoc ( 0, 0, 0 )
 			camera:setRot ( rotX, rotY, 0 )
 
-			local x, y, z = layer:getFitting3D ( props )
+			-- boundaries for the fit rect must not cross the center line of the layer's viewport
+			local x, y, z = layer:getFitting3D ( props, XMIN, YMIN, XMAX, YMAX )
 			camera:setLoc ( x, y, z )
 
 			--print ( rot, x, z )

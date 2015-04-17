@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	bool			Inside					( u32 idx, ZLVec3D vec, float pad );
 					MOAIGfxQuad2D			();
 					~MOAIGfxQuad2D			();

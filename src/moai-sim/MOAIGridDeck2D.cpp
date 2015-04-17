@@ -153,8 +153,7 @@ ZLBox MOAIGridDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( zScl );
+void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	u32 size = this->mBrushes.Size ();
 	if ( !size ) return;
@@ -170,11 +169,13 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 	
 	MOAIGrid& grid = *this->mGrid;
 	
-	float tileWidth = grid.GetTileWidth () * xScl; 
-	float tileHeight = grid.GetTileHeight () * yScl;
+	float tileWidth = grid.GetTileWidth ();
+	float tileHeight = grid.GetTileHeight ();
 	
-	xOff = xOff - ( c0.mX * tileWidth ) + brush.mOffset.mX;
-	yOff = yOff - ( c0.mY * tileHeight ) + brush.mOffset.mY;
+	scale.Scale ( tileWidth, tileHeight, 1.0f );
+	
+	offset.mX = offset.mX - ( c0.mX * tileWidth ) + brush.mOffset.mX;
+	offset.mY = offset.mY - ( c0.mY * tileHeight ) + brush.mOffset.mY;
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -183,10 +184,13 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
-			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-			loc.Scale ( xScl, yScl );
+			ZLVec3D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER, offset.mZ );
+			loc.Scale ( scale.mX, scale.mY, 1.0f );
 			
-			this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
+			loc.mX = loc.mX + offset.mX;
+			loc.mY = loc.mY + offset.mY;
+			
+			this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), materials, loc, scale );
 		}
 	}
 }
@@ -212,16 +216,6 @@ ZLBox MOAIGridDeck2D::GetItemBounds ( u32 idx ) {
 	
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	return bounds;
-}
-
-//----------------------------------------------------------------//
-void MOAIGridDeck2D::GetGfxState ( MOAIDeckGfxState& gfxState ) {
-
-	if ( this->mDeck ) {
-		this->mDeck->GetGfxState ( gfxState );
-	}
-	gfxState.SetShader ( this->mShader );
-	gfxState.SetTexture ( this->mTexture );
 }
 
 //----------------------------------------------------------------//
@@ -264,6 +258,12 @@ void MOAIGridDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+MOAIMaterialBatch* MOAIGridDeck2D::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
+
+	return override ? override : ( this->mDeck ? this->mDeck->ResolveMaterialBatch ( override ) : this );
 }
 
 //----------------------------------------------------------------//

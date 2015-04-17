@@ -180,6 +180,7 @@ public:
 	ZLRect				GetCellRect				( MOAICellCoord cellCoord ) const;
 	
 	ZLVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
+	ZLVec3D				GetTilePoint			( MOAICellCoord cellCoord, u32 position, float z ) const;
 	ZLRect				GetTileRect				( MOAICellCoord cellCoord ) const;
 	
 	int					GetTotalCells			() const;

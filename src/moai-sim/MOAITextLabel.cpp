@@ -736,8 +736,9 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
+		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
 
-		if ( !this->mShader ) {
+		if ( !shader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
 			// specialized implementation of MOAIDeck...
 			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
@@ -817,12 +818,12 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 		
 			MOAIViewport* viewport = renderMgr.GetViewport ();
 			assert ( viewport );
-			
-			ZLMatrix4x4 viewProj = camera->GetWorldToWndMtx ( *viewport );
-		
-			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
-			viewProj.TransformVec ( upVec );
-			
+
+			ZLMatrix4x4 view = camera->GetViewMtx ();
+
+			ZLVec3D upVec = view.GetYAxis ();
+
+			// For text flipping when orbiting around the map. Tilting should not affect this
 			if ( upVec.mY < 0.0f ) {
 				ZLMatrix4x4 scale;
 				scale.Scale ( -1.0f, -1.0f, 1.0f );

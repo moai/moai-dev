@@ -50,23 +50,24 @@ private:
 	static int		_setRemapper			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	ZLBox			ComputeMaxBounds		();
-	ZLBox			GetItemBounds			( u32 idx );
+	ZLBox					ComputeMaxBounds		();
+	ZLBox					GetItemBounds			( u32 idx );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGridDeck2D )
 	
-	//----------------------------------------------------------------//
 	using MOAIDeck::DrawIndex;
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	void			GetGfxState				( MOAIDeckGfxState& gfxState );
-					MOAIGridDeck2D			();
-					~MOAIGridDeck2D			();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	
+	//----------------------------------------------------------------//
+	void					DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+							MOAIGridDeck2D			();
+							~MOAIGridDeck2D			();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
+	MOAIMaterialBatch*		ResolveMaterialBatch	( MOAIMaterialBatch* override );
+	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

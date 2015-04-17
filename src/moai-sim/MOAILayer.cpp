@@ -87,30 +87,57 @@ int MOAILayer::_getFitting3D ( lua_State* L ) {
 
 	if (( !self->mViewport ) || ( !self->mCamera ) || ( self->mCamera->GetType () != MOAICamera::CAMERA_TYPE_3D )) return 0;
 	
+	ZLRect fitRect = state.GetValue < ZLRect >( 3, *self->mViewport );
+	
 	self->mCamera->ForceUpdate ();
 	
 	ZLFrustumFitter fitter;
 	
 	fitter.Init (
 		*self->mViewport,
-		*self->mViewport,
+		fitRect,
 		self->mCamera->GetFieldOfView (),
 		self->mCamera->GetLocalToWorldMtx ()
 	);
 
 	u32 itr = state.PushTableItr ( 2 );
 	while ( state.TableItrNext ( itr )) {
-		MOAIProp* prop = state.GetLuaObject < MOAIProp >( -1, true );
+	
+		int type = lua_type ( state, -1 );
 		
-		if ( prop ) {
-			ZLBox bounds = prop->GetBounds ();
+		switch ( type ) {
+		
+			case LUA_TTABLE: {
 			
-			ZLVec3D center;
-			bounds.GetCenter ( center );
-			fitter.FitBox ( bounds, 0.0f );
+				ZLVec3D loc;
+				
+				loc.mX = state.GetField < float >( -1, "x", 0.0f );
+				loc.mY = state.GetField < float >( -1, "y", 0.0f );
+				loc.mZ = state.GetField < float >( -1, "z", 0.0f );
+				
+				float r = state.GetField < float >( -1, "r", 0.0f );
+				
+				fitter.FitPoint( loc, r );
+				
+				break;
+			}
+			
+			case LUA_TUSERDATA: {
+			
+				MOAIProp* prop = state.GetLuaObject < MOAIProp >( -1, true );
+		
+				if ( prop ) {
+					ZLBox bounds = prop->GetBounds ();
+					
+					ZLVec3D center;
+					bounds.GetCenter ( center );
+					fitter.FitBox ( bounds, 0.0f );
+				}
+				break;
+			}
 		}
 	}
-
+	
 	ZLVec3D position = fitter.GetPosition ();
 	
 	state.Push ( position.mX );

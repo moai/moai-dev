@@ -33,7 +33,7 @@ public:
 
 	friend class MOAIInputContext;
 	friend class MOAIInputMgr;
-	friend class MOAIInputQueue;
+	friend class MOAIInputMgr;
 
 	DECL_LUA_FACTORY ( MOAIInputDevice )
 
@@ -41,12 +41,13 @@ public:
 	GET_SET ( bool, Active, mIsActive );
 
 	//----------------------------------------------------------------//
+	void			ClearSensorState		();
 					MOAIInputDevice			();
 					~MOAIInputDevice		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveSensors			( u8 total );
-	void			ResetSensors			();
+	void			ResetSensorState		();
 	void			SetHardwareInfo			( cc8* hardwareInfo );
 };
 

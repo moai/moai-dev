@@ -7,14 +7,14 @@
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILua.h>
 
-#define MOAI_LUA_SETUP(type,str)										\
-	MOAILuaState state ( L );											\
-	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );	\
+#define MOAI_LUA_SETUP(type,str)												\
+	MOAILuaState state ( L );													\
+	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );			\
 	if ( !self ) return 0;
 
-#define MOAI_LUA_SETUP_SINGLE(type,str)										\
-	MOAILuaState state ( L );												\
-	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );	\
+#define MOAI_LUA_SETUP_SINGLE(type,str)											\
+	MOAILuaState state ( L );													\
+	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );		\
 	if ( !self ) return 0;
 
 //================================================================//

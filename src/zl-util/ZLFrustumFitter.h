@@ -24,7 +24,6 @@ private:
 	};
 
 	ZLPlane3D	mPlanes [ TOTAL_PLANES ];
-	ZLVec3D		mViewAxis;
 	ZLVec3D		mPosition;
 
 	bool		mNeedsInit;

@@ -8,6 +8,10 @@
 #import <contrib/MOAIOpenUDID.h>
 #import <AdSupport/ASIdentifierManager.h>
 #import <moai-sim/MOAIGfxDevice.h>
+
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
 //================================================================//
 // aku-util
 //================================================================//
@@ -67,6 +71,16 @@ void AKUIosContextInitialize () {
 			environment.SetValue ( MOAI_ENV_iosIFA, [[[ sharedManager advertisingIdentifier ] UUIDString ] UTF8String ]);
 		}
     }
+	
+    int name [] = { CTL_HW, HW_MACHINE };
+	
+	size_t size = 0;
+    sysctl ( name, 2, NULL, &size, NULL, 0 );
+	
+    char *devPlatform = ( char* )alloca ( size );
+    sysctl ( name, 2, devPlatform, &size, NULL, 0 );
+	
+    environment.SetValue ( MOAI_ENV_devPlatform, devPlatform );
 }
 
 //----------------------------------------------------------------//

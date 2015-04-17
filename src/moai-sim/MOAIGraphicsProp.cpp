@@ -7,12 +7,13 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAIRenderMgr.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -26,10 +27,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getMaterialBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	self->mMaterialBatch.PushRef ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getScissorRect
 	@text	Retrieve the prop's scissor rect.
 	
-	@in		MOAIProp self
+	@in		MOAIGraphicsProp self
 	@out	MOAIScissorRect scissorRect 	Or nil if none exists.
 */
 int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
@@ -46,18 +56,18 @@ int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
 /**	@lua	getTexture
 	@text	Returns the texture.
 	
-	@in		MOAIProp self
+	@in		MOAIGraphicsProp self
 	@out	MOAITexture texture
 */
-int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-	
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
+//int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+//	
+//	if ( self->mTexture ) {
+//		self->mTexture->PushLuaUserdata ( state );
+//		return 1;
+//	}
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	isVisible
@@ -247,6 +257,15 @@ int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_setMaterialBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	self->mMaterialBatch.Set ( *self, state.GetLuaObject < MOAIMaterialBatch >( 2, true ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
@@ -295,14 +314,14 @@ int MOAIGraphicsProp::_setScissorRect ( lua_State* L ) {
 	@opt	MOAIShader shader	Default value is nil.
 	@out	nil
 */
-int MOAIGraphicsProp::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-	
-	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
-	self->SetDependentMember < MOAIShader >( self->mShader, shader );
-	
-	return 0;
-}
+//int MOAIGraphicsProp::_setShader ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+//	
+//	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
+//	self->SetDependentMember < MOAIShader >( self->mShader, shader );
+//	
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	setTexture
@@ -314,18 +333,18 @@ int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
 	@out	MOAIGfxState texture
 */
-int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-
-	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
-	self->mTexture.Set ( *self, texture );
-
-	if ( texture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
+//int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+//
+//	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
+//	self->mTexture.Set ( *self, texture );
+//
+//	if ( texture ) {
+//		self->mTexture->PushLuaUserdata ( state );
+//		return 1;
+//	}
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	setUVTransform
@@ -377,15 +396,20 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
+		
+			// TODO: fix this conflict with material batch concept
 			case ATTR_SHADER:
-				this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				//this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
 				return true;
+				
 			case ATTR_BLEND_MODE:
 				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
 				return true;
+				
 			case ATTR_LOCAL_VISIBLE:
 				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT )));
 				return true;
+				
 			case ATTR_VISIBLE:
 				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 				return true;
@@ -410,11 +434,23 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
+	MOAIMaterialBatch* materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
+	
 	if ( this->mGrid ) {
-		this->DrawGrid ( subPrimID );
+	
+		MOAIGrid& grid = *this->mGrid;
+		MOAICellCoord c0, c1;
+
+		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
+			this->GetGridBoundsInView ( c0, c1 );
+		}
+		else {
+			c0 = c1 = grid.GetCellCoord ( subPrimID );
+		}
+		grid.Draw ( this->mDeck, this->mRemapper, *materials, c0, c1 );
 	}
 	else {
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), *materials );
 	}
 }
 
@@ -489,20 +525,6 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::DrawGrid ( int subPrimID ) {
-
-	MOAIGrid& grid = *this->mGrid;
-	MOAICellCoord c0, c1;
-
-	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
-		this->GetGridBoundsInView ( c0, c1 );
-	} else {
-		c0 = c1 = grid.GetCellCoord ( subPrimID );
-	}
-	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
 }
 
 //----------------------------------------------------------------//
@@ -633,17 +655,19 @@ void MOAIGraphicsProp::LoadGfxState () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	MOAIDeckGfxState gfxState;
+	//MOAIDeckGfxState gfxState;
 
-	if ( this->mDeck ) {
-		this->mDeck->GetGfxState ( gfxState );
-	}
+	// TODO: deck resolves when drawing
 
-	gfxState.SetShader ( this->mShader );
-	gfxState.SetTexture ( this->mTexture );
+	//if ( this->mDeck ) {
+	//	this->mDeck->GetGfxState ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), gfxState );
+	//}
 
-	gfxDevice.SetShader ( gfxState.GetShader ());
-	gfxDevice.SetGfxState ( gfxState.GetTexture ());
+	//gfxState.SetShader ( this->mShader );
+	//gfxState.SetTexture ( this->mTexture );
+
+	//gfxDevice.SetShader ( gfxState.GetShader ());
+	//gfxDevice.SetGfxState ( gfxState.GetTexture ());
 
 	gfxDevice.SetPenColor ( this->mColor );
 	gfxDevice.SetCullFunc ( this->mCullMode );
@@ -704,10 +728,9 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 //----------------------------------------------------------------//
 MOAIGraphicsProp::~MOAIGraphicsProp () {
 	
-	this->mShader.Set ( *this, 0 );
-	this->mTexture.Set ( *this, 0 );
 	this->mUVTransform.Set ( *this, 0 );
 	this->mScissorRect.Set ( *this, 0 );
+	this->mMaterialBatch.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -785,8 +808,8 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getMaterialBatch",	_getMaterialBatch },
 		{ "getScissorRect",		_getScissorRect },
-		{ "getTexture",			_getTexture },
 		{ "isVisible",			_isVisible },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendEquation",	_setBlendEquation },
@@ -795,10 +818,9 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setDepthMask",		_setDepthMask },
 		{ "setDepthTest",		_setDepthTest },
 		{ "setLODLimits",		_setLODLimits },
+		{ "setMaterialBatch",	_setMaterialBatch },
 		{ "setParent",			_setParent },
 		{ "setScissorRect",		_setScissorRect },
-		{ "setShader",			_setShader },
-		{ "setTexture",			_setTexture },
 		{ "setUVTransform",		_setUVTransform },
 		{ "setVisible",			_setVisible },
 		{ NULL, NULL }
