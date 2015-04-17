@@ -1,15 +1,29 @@
-<ul class="nav nav-list">
-    <li class=nav-><a href="{{ site.baseurl }}/docs" style="padding-left: 0">Home</a></li>
+
+<ul id="nav-menu" class="nav nav-list">
+    <li class="parent">
+      <a class="subtree-name" href="{{ site.baseurl }}/docs">Home</a>
+    </li>
+    {% assign docpages = site.docs | sort: 'order'  %}
   
     {% for section in site.data.sections %}
         {% assign attr = section[0] %}
         {% assign label = section[1] %}
-        <li class=nav-header>{{ label }}</li>
-        {% for page in site.categories[attr] %}
-         
-            <li data-order="{{ page.order }}"><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></li>
+        <li class="parent collapsibleListOpen">
+          <div class="subtree-name">{{ label }}</div>
+        
+        <ul class="nav nav-list">
+        {% for p in docpages %}
+             
+            {% assign pathsections = p.relative_path | split: "/" %} 
+            {% if pathsections.size == 3 %}
+            {% assign cat = pathsections[1] %}
+                {% if cat == attr %}
+                  <li ><a href="{{ site.baseurl }}{{ p.url }}">{{ p.title }}</a></li>
+                {% endif %}
+            {% endif %}
         {% endfor %}
+        </ul>
+      </li>
     {% endfor %}
-<!-- List additional links. It is recommended to add a divider
-    e.g. <li class=divider></li> first to break up the content. -->
+
 </ul>

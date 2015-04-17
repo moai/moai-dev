@@ -4,131 +4,31 @@ title: Moai | Minimalist game development engine.
 ---
 
 <div class="container">
-	{% for item in site.categories.games %}
+	{% for post in site.categories.games %}
 	<div class="row">
-		<h2>{{ item.title }}</h2>
+		{% assign post_name = post.path | split: '/' | last | remove: '.md' | capitalize %}
+		{% assign image_prefix = site.baseurl | append: '/img/games/' | append: post_name %}
+		<a id="{{ post_name }}"></a><h2>{{ post.title }} <small>{% if post.coming_soon %}Coming soon!{% else %}{{ post.date | date: '%b %Y' }}{% endif %}</small></h2>
 		<div>
-			<a href="{{ item.hero.url }}"><img style="margin-right: 15px; float: left;"  src="{{ site.baseurl }}/img/game/{{ item.hero.image }}" height="160" width="240"></a>
+			<a href="{{ post.main.url }}"><img style="margin-right: 15px; float: left;" src="{{ image_prefix | append: '.' | append: post.main.image_type }}" width="240" height="160"></a>
 		</div>
-		{% if item.coming-soon %}
-		<p><em><strong>Coming Soon:</strong></em> 
-	    {% endif %}
-	    {{ item.excerpt | remove: '<p>' | remove: '</p>'}}
-		</p>
+		{{ post.excerpt }}
+		{% if post.video %}
 		<p>
-            {% if item.icon %}
-<a target="_blank" href="{{ item.icon.url }}"><img style="margin-right: 15px; float: left; border-radius: 10px;" alt="icon" src="{{ site.baseurl }}/img/game/{{ item.icon.image }}" height="67" width="67"></a>
-            {% endif %}  
-
-           	{% if item.video %}
-			<a target="_blank" href="{{ item.video.url }}"><img style="margin-right: 15px; float: left;" alt="video" src="{{ site.baseurl }}/img/game/{{ item.video.image }}" height="67" width="120"></a>
-			{% endif %}
-
-			{% for plat in item.available %}{% if forloop.first %}Available on:<br>
-		    {% else %},&nbsp;{% endif %}<a target="_blank" href="{{ plat[1] }}">{{ plat[0] }}</a>{% endfor %}
+			<a target="_blank" href="{{ post.video.url }}"><img alt="video" src="{{ image_prefix | append: '_video.' | append: post.video.image_type }}" width="120" height="67"></a>
 		</p>
-		<div class="item-separator"></div>
+		{% endif %}
+		<p>
+			{% assign current_category = 'Other' %}
+			{% for platform_id in post.platforms %}
+				{% assign platform = site.data.platforms[platform_id] %}
+				{% if platform.category != current_category %}
+					{% assign current_category = platform.category %}
+					{% unless forloop.first %} &bullet; {% endunless %}<em>{{ current_category }}:</em>
+				{% endif %}
+				<img src="{{ site.baseurl }}/{{ platform.image }}" style="vertical-align: -1px;" width="16" height="16" title="{{ platform.title }}" />
+			{% endfor %}
+		</p>
 	</div>
-
-	<h2></h2>
 	{% endfor %}
-
-
-	
-	
-	
-	<div class="leading-3 row">
-		<h2>Lost Spell</h2>
-		<p><img style="margin-right: 15px; float: left;" alt="Lost Spell Game Play" src="{{ site.baseurl }}/img/game/lost_spell_gameplay.png" width="240" height="160"></p>
-		<p><em>Lost Spell</em> by Hatrix Games is a new puzzle game with slick graphics and multi-slashing gameplay. It's billed as the first ever match &amp; slash game - intuitive slashing action with the flavor of a classic match three game. The Moai team agrees it's easy to pick up and pretty darn fun!</p>
-		<p>Available on:<a target="_blank" href="http://itunes.apple.com/us/app/lost-spell/id539183968?mt=8">iOS</a>
-		</p><p><a target="_blank" href="http://itunes.apple.com/us/app/lost-spell/id539183968?mt=8"><img alt="Lost Spell Icon" src="{{ site.baseurl }}/img/game/lost_spell_icon.png" width="64" height="64"></a></p>
-	</div>
-	<div class="leading-4 row">
-		<h2>Double Fine Adventure</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="Double Fine Adventure" src="{{ site.baseurl }}/img/game/double_fine_adventure_concept.jpg" height="180" width="240"></div>
-		<p><em><strong>Coming Soon:</strong> Double Fine Adventure</em> (developed by <a target="_blank" href="http:/www.doublefine.com/">Double Fine Productions</a>) is already well known as the most successfully crowd-funded video game ever. This game will be released to PCs, phones, and tablets in Spring 2013, and deliver a classic adventure experience in the vein of <em>Grim Fandango</em> and<em>&nbsp;Secret of Monkey Island</em>.</p>
-		<p>Double Fine chose Moai after a thorough exploration of the technology options. Watch this video for their reasons in their own words.</p>
-		<p><a target="_blank" href="http://www.youtube.com/watch?v=cRRpSu4JelI"><img style="margin-right: 15px; float: left;" alt="Double Fine Chooses Moai video" src="{{ site.baseurl }}/img/game/double_fine_vid_thumb.jpg" height="67" width="120"></a></p>
-	</div>
-	<div class="leading-5 row">
-		<h2>Strikefleet Omega</h2>
-		<p><img style="margin-right: 15px; float: left;" alt="Strikefleet Omega" src="{{ site.baseurl }}/img/game/strikefleet.png" height="180" width="240"></p>
-		<p>STRIKEFLEET OMEGA was developed by Harebrained Schemes and published by 6 Waves Inc.&nbsp;The game follows the EEF Retribution and the remnants of Earth’s defenders on an epic journey to end an alien hive’s unrelenting aggression by locating and eliminating their hidden hive queen.</p>
-		<p>Available on:<a target="_blank" href="http://itunes.apple.com/ca/app/strikefleet-omega/id520359912?mt=8">iOS</a> <a href="https://play.google.com/store/apps/details?id=com.sixwaves.strikefleetomega">Android</a> </p>
-		<p><img alt="strikefleet icon" src="{{ site.baseurl }}/img/game/strikefleet_icon.png" height="67" width="66"></p>
-	</div>
-	<div class="leading-6 row">
-		<h2>The Moron Test 2</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="tmt2 game play" src="{{ site.baseurl }}/img/game/tmt2_game_play.jpg" height="180" width="240"></div>
-		<p><em>The Moron Test 2</em> was developed by <a target="_blank" href="http://www.distinctdev.com">DistinctDev</a>, who've racked up more than 25 million players over the lifetime of the <em><a target="_blank" href="http://www.themorontest.com/">Moron Test</a></em> franchise.&nbsp; Their motto is "it's fun to fail," and their fiendish puzzles and natural word of mouth virality have made <em>The Moron Test</em> titles regular chart-leaders.</p>
-		<p><a href="/blog/interview-with-berkeley-malagon-from-distinctdev.html">Read about DistinctDev's transition</a> from managing porting projects for <em>eight</em> different platforms to using Moai for development.</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/the-moron-test-2/id479067148?mt=8"><img style="margin-right: 15px; float: left;" alt="Get the Moron Test 2" src="{{ site.baseurl }}/img/game/tmt2_icon.png" height="67" width="67"></a> Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/the-moron-test-2/id479067148?mt=8">iOS</a>, <a target="_blank" href="https://play.google.com/store/apps/details?id=com.distinctdev.tmt2">Android</a>, <a target="_blank" href="http://www.amazon.com/DistinctDev-Inc-The-Moron-Test/dp/B007KLXKFE">Amazon</a>.</p>
-	</div>
-	<div class="leading-7 row">
-		<h2>Breaking News</h2>
-		<p><img style="margin-right: 15px; float: left;" alt="Breaking News Gameplay" src="{{ site.baseurl }}/img/game/breaking_news_play.png" height="160" width="240"></p>
-		<p><em>Breaking News</em> is the latest title from Harebrained Schemes. With it you can read the latest headlines, share the news you like, and throw eggs and other things at the news you don't like!</p>
-		<p>Available on:<a target="_blank" href="https://play.google.com/store/apps/details?id=com.harebrainedschemes.news">Android</a> <a target="_blank" href="/www.amazon.com/Harebrained-Schemes-LLC-Breaking-News/dp/B009CLD6XQ/">Amazon</a></p>
-		<p><a target="_blank" href="https://play.google.com/store/apps/details?id=com.harebrainedschemes.news"><img alt="Breaking News Icon" src="{{ site.baseurl }}/img/game/breaking_news_icon.png" height="64" width="64"></a></p>
-	</div>
-	<div class="leading-8 row">
-		<h2>Crimson Steam Pirates</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="Crimson: Steam Pirates game play" src="{{ site.baseurl }}/img/game/crimson_game_play.jpg" height="180" width="240"></div>
-		<p><em>Crimson: Steam Pirates</em> was developed by <a target="_blank" href="http://harebrained-schemes.com/">Harebrained Schemes</a> and published by <a target="_blank" href="http://www.bungie.net/projects/aerospace/">Bungie Aerospace</a>.&nbsp; Crimson hit #1 free app on iPad at launch and is a great example of an episodic story-driven strategy game.</p>
-		<p>Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/crimson-steam-pirates/id438053238?mt=8">iOS</a>, <a target="_blank" href="http://chrome.google.com/webstore/detail/glfbkgkceahodalogdpenjoekbacjfcj">Chrome</a>.</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/crimson-steam-pirates/id438053238?mt=8"><img alt="Get Crimson Steam Pirates" src="{{ site.baseurl }}/img/game/crimson_icon.png" height="67" width="67"></a> &nbsp;&nbsp;<a target="_blank" href="http://www.youtube.com/watch?v=E2KCySh45pQ"><img alt="Watch the making of Crimson: Steam Pirates video" src="{{ site.baseurl }}/img/game/crimson_video.jpg" height="67" width="120"></a></p>
-	</div>
-	<div class="leading-9 row">
-		<h2>You're a Bank</h2>
-		<p><a href="http://sgarces.wordpress.com/"><img alt="yab logo" src="{{ site.baseurl }}/img/game/yab_logo.png" height="150" width="240" style="margin-right: 15px; float: left;"></a></p>
-		<p>&nbsp;</p>
-		<p><em>You're a Bank</em>&nbsp;was developed by&nbsp;<a href="http://sgarces.wordpress.com/">Sergio Garces</a>, it gives you a chance to run your own Investment Bank and make millions - all without risking a dime.&nbsp;</p>
-		<p><a target="_blank" href="http://www.youtube.com/watch?v=mH9eczl1Ahk"><img alt="yab icon.jpg" src="{{ site.baseurl }}/img/game/yab_icon.jpg.jpg" height="67" width="67" style="margin-right: 15px; float: left;"></a>Available on:<br><a target="_blank" href="https://itunes.apple.com/ca/app/youre-a-bank/id597299846">iOS</a>,&nbsp;<a target="_blank" href="https://play.google.com/store/apps/details?id=com.sgarces.bank">Android</a>,&nbsp;<a target="_blank" href="http://www.amazon.com/Sergio-Garces-Youre-a-Bank/dp/B00B8OXV76">Amazon</a>.</p>
-	</div>
-	<div class="leading-10 row">
-		<h2>Animal Circus</h2>
-		<p><img style="margin-right: 15px; float: left;" alt="animalcircus" src="{{ site.baseurl }}/img/game/animalcircus.png" height="180" width="240"></p>
-		<p>Animal Circus is a cute physics stacking puzzle game developed by H2Soft, who also published Dust PangPang.</p>
-		<p>Available on:<a target="_blank" href="http://itunes.apple.com/us/app/the-animal-circus/id532124709?mt=8">iOS</a> <a href="https://play.google.com/store/apps/details?id=kr.h2soft.circus">Android</a></p>
-		<p><img alt="animalcircus icon" src="{{ site.baseurl }}/img/game/animalcircus_icon.png" height="67" width="67"></p>
-		<p>&nbsp;</p>
-	</div>
-	<div class="leading-11 row">
-		<h2>Dust PangPang</h2>
-		<p><img style="margin-right: 15px; float: left;" alt="dust-pangpangSShot" src="{{ site.baseurl }}/img/game/dust-pangpangSShot.png" width="240" height="160"></p>
-		<p>Dust PangPang was developed by H2Soft. Once upon a time in a peaceful Tiddy's dollhouse, a bunch of Dust invaded the dollhouse and were making a mess. Tiddy decided to fight with Dust and is trying to clean them away.</p>
-		<p>Available on:<a target="_blank" href="http://itunes.apple.com/us/app/tiny-tiddy/id519624048?mt=8">iOS</a> <a href="http://itunes.apple.com/app/id537485518?ls=1&amp;mt=12">Mac</a></p>
-		<p><img alt="dust-pangpang" src="{{ site.baseurl }}/img/game/dust-pangpang.png" width="64" height="64"></p>
-		<p>&nbsp;</p>
-	</div>
-	<div class="leading-12 row">
-		<h2>Wolf Toss</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="wolf toss game play" src="{{ site.baseurl }}/img/game/wolf_toss_game_play.jpg" height="180" width="240"></div>
-		<p><em>Wolf Toss </em>was developed by <a target="_blank" href="http://www.ziplinegames.com">Zipline Games</a> and released to iOS, Android, and Chrome on the same day.&nbsp; It's gone on to attract over a million players and a 4.5 star review average. This physics-based puzzle game makes use of Moai Direct Leaderboards, Achievements, News Ticker and Push notifications, plus custom cloud logic in Lua for receipt verification and the Wolf Coins player loyalty program.&nbsp; Read about the <em>Wolf Toss</em> lifecycle in this <a target="_blank" href="http://gamasutra.com/blogs/author/MikeArcuri/906870/">Gamasutra Expert Blog</a>.</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/wolf-toss/id461992615?mt=8"><img style="margin-right: 15px; float: left;" alt="wolf toss icon" src="{{ site.baseurl }}/img/game/wolf_toss_icon.png" height="67" width="67"></a> Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/wolf-toss/id461992615?mt=8">iOS</a>, <a target="_blank" href="https://play.google.com/store/apps/details?id=com.ziplinegames.wolftoss">Android</a>, <a target="_blank" href="http://chrome.google.com/webstore/detail/pjlncddmdljpioccbmempchonhlifakc">Chrome</a>, <a href="http://www.amazon.com/gp/product/B007SOM734">Amazon</a>.</p>
-	</div>
-	<div class="leading-13 row">
-		<h2>Go Go Kiddo	</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="Go Go Kiddo Game Play" src="{{ site.baseurl }}/img/game/gogokiddo_game_play.jpg" height="180" width="240"></div>
-		<p><em>Go Go Kiddo</em> (developed by <a target="_blank" href="http://gogokiddo.net/">the company of the same name</a>) is all about delivering "Vitamin Fortified Fun" to kids and parents alike.&nbsp; This game is a collection of 5 minigames tied together with terrific interactive video content, and it's been very well received by players.</p>
-		<p>In our video interview with the Go Go Kiddo team, we cover all the bases, talking to creative, art, and programming.</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/go-go-kiddo-!/id462821593?ls=1&amp;mt=8"><img style="margin-right: 15px; float: left;" alt="gogokiddo icon" src="{{ site.baseurl }}/img/game/gogokiddo_icon.png" height="67" width="67"></a> <a target="_blank" href="http://www.youtube.com/watch?v=gM1rrhetygo"><img style="margin-right: 15px; float: left;" alt="gogokiddo video" src="{{ site.baseurl }}/img/game/gogokiddo_video.jpg" height="67" width="120"></a>Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/go-go-kiddo-!/id462821593?ls=1&amp;mt=8">iOS</a>, <a target="_blank" href="http://www.amazon.com/Go-Kiddo/dp/B006IVA75I/ref=sr_1_9?ie=UTF8&amp;qid=1323202922&amp;sr=8-9">Amazon</a>.</p>
-		<p>&nbsp;</p>
-		<div style="clear: right;">&nbsp;</div>
-	</div>
-	<div class="leading-14 row">
-		<h2>Horns and Halos Photobooth</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="horns and halos gameplay" src="{{ site.baseurl }}/img/game/horns_and_halos_gameplay.jpg" height="160" width="240"></div>
-		<p>Photograph the inner angel and demon within everyone!<br><br>Take photos of your friends and family, dress them up with digital stickers, add your own word balloons, thought balloons, and captions and then share.</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/horns-halos-photobooth/id498085510?mt=8"><img style="margin-right: 15px; float: left;" alt="horns halos icon" src="{{ site.baseurl }}/img/game/horns_halos_icon.png" height="67" width="67"></a> Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/horns-halos-photobooth/id498085510?mt=8">iOS</a>, <a target="_blank" href="http://www.amazon.com/Harebrained-Schemes-LLC-Horns-Photobooth/dp/B0073XF4HQ/ref=sr_1_fkmr1_1?ie=UTF8&amp;qid=1329163766&amp;sr=8-1-fkmr1">Amazon</a></p>
-	</div>
-	<div class="leading-15 row">
-		<h2>Bubble Ball 2</h2>
-		<div><img style="margin-right: 15px; float: left;" alt="bubble ball game play" src="{{ site.baseurl }}/img/game/bubble_ball_game_play.jpg" height="160" width="240"></div>
-		<p><em>Bubble Ball 2</em> was developed <a target="_blank" href="http://www.naygames.com/">Nay Games</a> who've gathered more than 11 million players over the lifetime of their <a target="_blank" href="http://www.naygames.com/getbubbleball/">Bubble Ball franchise</a>.&nbsp; The most exciting feature in Bubble Ball 2 is user-created levels, which are powered by custom Lua logic in Moai Cloud.</p>
-		<p>&nbsp;</p>
-		<p><a target="_blank" href="http://itunes.apple.com/us/app/bubble-ball/id412089940?mt=8"><img style="margin-right: 15px; float: left;" alt="bubbleballicon" src="{{ site.baseurl }}/img/game/bubbleballicon.png" height="67" width="67"></a> <a target="_blank" href="http://www.youtube.com/watch?v=r1a5W09fkCU"><img style="margin-right: 15px; float: left;" alt="bubble ball video" src="{{ site.baseurl }}/img/game/bubble_ball_video.jpg" height="66" width="120"></a>Available on:<br><a target="_blank" href="http://itunes.apple.com/us/app/bubble-ball/id412089940?mt=8">iOS</a>, <a target="_blank" href="https://play.google.com/store/apps/details?id=com.naygames.bubbleball">Android</a>, <a target="_blank" href="http://www.amazon.com/Nay-Games-LLC-Bubble-Ball/dp/B00653KOZ2">Amazon</a>.</p>
-	</div>
-	<br><br>
 </div>

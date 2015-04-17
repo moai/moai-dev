@@ -3,119 +3,120 @@ layout: default
 title: Moai | The platform for pro game developers.
 ---
 <!-- Game Highlight Carousel -->
-    <div id="gameCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        {% for item in site.data.carousel %}
-        <li data-target="#gameCarousel" data-slide-to="{{ forloop.index }}" class="{% if forloop.index == 1 %} active {% endif %}" ></li>
-        {% endfor %}
-      </ol>
-      <div class="carousel-inner">
-       <!-- <div class="item active">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/broken-age.jpg" alt="Broken Age">
-          <div class="container">
-            <div class="carousel-caption">
-              <h2>Broken Age</h2>
-              <p class="hidden-xs">Double Fine is using Moai to reinvent classic adventure game after a record-breaking Kickstarter campaign.</p>
-            </div>
-          </div>
-        </div> -->
-        {% for item in site.data.carousel %}
-        <div class="item {% if forloop.index == 1 %} active {% endif %}">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/carousel/{{ item.image }}" alt="{{ item.caption }}">
-          <div class="container">
-            <div class="carousel-caption">
-              <h2>{{ item.caption }}</h2>
-              <p class="hidden-xs">{{ item.blurb }}</p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <a class="left carousel-control" href="#gameCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#gameCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div>
-    <!-- /gameCarousel -->
-    <!-- MARKETING MESSAGE / FEATURES -->
-    <div class="container marketing">
-      <!-- Three columns of text below the carousel -->
-      <div class="row">
-        <div class="col-lg-3 col-sm-6">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/multi-platform.jpg" alt="Multi-Platform">
-          <h3>Multi-Platform</h3>
-          <p>Create games or business apps on iOS, Android, Mac, Windows, Linux, HTML5. No Porting to different device platforms required!</p>
-        </div><!-- /.col-lg-3 -->
-        <div class="col-lg-3 col-sm-6">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/powerfully-simple.jpg" alt="Powerfully Simple">
-          <h3>Powerfully Simple</h3>
-          <p>Focus on creative coding: develop in Lua, a lighting-fast and easy to use scripting language, sitting on top a powerful C++ engine. Test your work in moments on your computer, without compiles, builds, or deploying to a device.</p>
-        </div><!-- /.col-lg-3 -->
-        <div class="col-lg-3 col-sm-6">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/fully-featured.jpg" alt="Fully Featured">
-          <h3>Fully Featured</h3>
-          <p>Integrated libraries and services for 2D and 3D rendering and animation, sound, physics, text, tilesets, particle effects, device input, game logic, monetization and more.</p>
-        </div><!-- /.col-lg-3 -->
-        <div class="col-lg-3 col-sm-6">
-          <img class="img-responsive" src="{{ site.baseurl }}/img/flexible-and-free.jpg" alt="flexible and free">
-          <h3>Flexible and Free!</h2>
-          <p>MOAI is open source, so you can easily access and modify the code of the engine, in order to add any feature or a 3rd party library. Moai can grow as far as your project requires.</p>
-        </div><!-- /.col-lg-3 -->
-      </div><!-- /.row -->
-    </div>
-    <!-- /MARKETING MESSAGE / FEATURES -->
-    <!-- GETTING STARTED -->
-    <div class="getting-started">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1 class="text-center">Get Started With MOAI</h1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <h3>Quick Start: Download MOAI</h3>
-            <p>Want to get started right away? Download the latest
-            stable release of Moai with precompiled libraries for all platforms. Check out samples, and start making your next breakthrough hit app!<p>
-            <a class="btn btn-lg btn-primary" href="http://getmoai.com/sdk/moai-sdk-download.html" role="button">Download Moai 1.4</a>
-          </div>
-          <div class="col-sm-6">
-            <h3>Complete Source Code Repository</h3>
-            <p>You like to tinker and check how stuff work under the hood? Need to expand Moai? Want to contribute? Check out current developments on GitHub!</p>
-            <a class="btn btn-lg btn-primary" href="http://github.com/moai/moai-dev" role="button">Moai Source Code on GitHub</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /GETTING STARTED -->
-    <!-- LEARN -->
-    <div class="learn-moai">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1 class="text-center">Learn Moai</h1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <h2>API Reference</h2>
-            <ul>
-              <li><a href="api/latest">Complete List of Lua APIS</a></li>
-            </ul>
-          </div>
-          <div class="col-sm-4">
-            <h2>Documentation</h2>
-            <ul>
-              <li><a href="http://getmoai.com/wiki/index.php?title=Main_Page">See the wiki</a></li>
-            </ul>
-          </div>
-          <div class="col-sm-4">
-            <h2>Forums</h2>
-            <p> Welcome MOAI Community! Ask questions, discuss the new features, showcase your work and participate in making Moai even better!</p>
-            <ul>
-              <li><a href="http://getmoai.com/forums">Forums</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /LEARN -->
+		<div id="gameCarousel" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				{% for item in site.data.carousel %}
+				<li data-target="#gameCarousel" data-slide-to="{{ forloop.index0 }}" class="{% if forloop.index == 1 %}active{% endif %}" ></li>
+				{% endfor %}
+			</ol>
+			<div class="carousel-inner">
+				{% for item in site.data.carousel %}
+					{% for post in site.categories.games %}
+						{% assign current_post_name = post.path | split: '/' | last | remove: '.md' | capitalize %}
+						{% if current_post_name == item %}
+							{% assign item_post_name = current_post_name %}
+							{% assign item_image_prefix = site.baseurl | append: '/img/games/' | append: item_post_name %}
+							{% assign item_data = post %}
+						{% endif %}
+					{% endfor %}
+				<div class="item{% if forloop.index == 1 %} active{% endif %}">
+					<a href="{{ site.baseurl | append: '/games#' | append: item_post_name }}">
+						<img class="img-responsive" src="{{ item_image_prefix }}_carousel_1280w.{{ item_data.carousel.image_type }}" srcset="{{ item_image_prefix }}_carousel_640w.{{ item_data.carousel.image_type }} 640w, {{ item_image_prefix }}_carousel_1280w.{{ item_data.carousel.image_type }} 1280w">
+						<div class="container">
+							<div class="carousel-caption">
+								<h2>{{ item_data.title }}</h2>
+								<p class="hidden-xs">{{ item_data.carousel.blurb }}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+			<a class="left carousel-control" href="#gameCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+			<a class="right carousel-control" href="#gameCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
+		<!-- /gameCarousel -->
+		<!-- MARKETING MESSAGE / FEATURES -->
+		<div class="container marketing">
+			<!-- Three columns of text below the carousel -->
+			<div class="row">
+				<div class="col-lg-3 col-sm-6">
+					<img class="img-responsive" src="{{ site.baseurl }}/img/multi-platform.jpg" alt="Multi-Platform">
+					<h3>Multi-Platform</h3>
+					<p>Create games or business apps on iOS, Android, Mac, Windows, Linux, HTML5. No Porting to different device platforms required!</p>
+				</div><!-- /.col-lg-3 -->
+				<div class="col-lg-3 col-sm-6">
+					<img class="img-responsive" src="{{ site.baseurl }}/img/powerfully-simple.jpg" alt="Powerfully Simple">
+					<h3>Powerfully Simple</h3>
+					<p>Focus on creative coding: develop in Lua, a lighting-fast and easy to use scripting language, sitting on top a powerful C++ engine. Test your work in moments on your computer, without compiles, builds, or deploying to a device.</p>
+				</div><!-- /.col-lg-3 -->
+				<div class="col-lg-3 col-sm-6">
+					<img class="img-responsive" src="{{ site.baseurl }}/img/fully-featured.jpg" alt="Fully Featured">
+					<h3>Fully Featured</h3>
+					<p>Integrated libraries and services for 2D and 3D rendering and animation, sound, physics, text, tilesets, particle effects, device input, game logic, monetization and more.</p>
+				</div><!-- /.col-lg-3 -->
+				<div class="col-lg-3 col-sm-6">
+					<img class="img-responsive" src="{{ site.baseurl }}/img/flexible-and-free.jpg" alt="flexible and free">
+					<h3>Flexible and Free!</h2>
+					<p>MOAI is open source, so you can easily access and modify the code of the engine, in order to add any feature or a 3rd party library. Moai can grow as far as your project requires.</p>
+				</div><!-- /.col-lg-3 -->
+			</div><!-- /.row -->
+		</div>
+		<!-- /MARKETING MESSAGE / FEATURES -->
+		<!-- GETTING STARTED -->
+		<div class="getting-started">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="text-center">Get Started With MOAI</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<h3>Quick Start: Download MOAI</h3>
+						<p>Want to get started right away? Download the latest
+						stable release of Moai with precompiled libraries for all platforms. Check out samples, and start making your next breakthrough hit app!<p>
+						<a class="btn btn-lg btn-primary" href="http://getmoai.com/sdk/moai-sdk-download.html" role="button">Download Moai 1.4</a>
+					</div>
+					<div class="col-sm-6">
+						<h3>Complete Source Code Repository</h3>
+						<p>You like to tinker and check how stuff work under the hood? Need to expand Moai? Want to contribute? Check out current developments on GitHub!</p>
+						<a class="btn btn-lg btn-primary" href="http://github.com/moai/moai-dev" role="button">Moai Source Code on GitHub</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /GETTING STARTED -->
+		<!-- LEARN -->
+		<div class="learn-moai">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="text-center">Learn Moai</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h2>API Reference</h2>
+						<ul>
+							<li><a href="api/latest">Complete List of Lua APIS</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4">
+						<h2>Documentation</h2>
+						<ul>
+							<li><a href="http://getmoai.com/wiki/index.php?title=Main_Page">See the wiki</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4">
+						<h2>Forums</h2>
+						<p> Welcome MOAI Community! Ask questions, discuss the new features, showcase your work and participate in making Moai even better!</p>
+						<ul>
+							<li><a href="http://getmoai.com/forums">Forums</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /LEARN -->

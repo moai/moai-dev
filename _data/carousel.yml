@@ -1,11 +1,7 @@
-- caption: Broken Age
-  image: broken-age.jpg
-  blurb: Double Fine is using Moai to reinvent classic adventure game after a record-breaking Kickstarter campaign.
+# This file defines which apps in what order appear on the carousel.
+# Each item is the name of a .md file in the /games/_posts folder which contains the actual information.
 
-- caption: Strikefleet Omega
-  image: strikefleet-omega.jpg
-  blurb: Harebrained Schemes used Moai to create their game that plays like a hybrid of tower defense and a real-time strategy.
-
-- caption: Freedom Fall
-  image: freedom-fall.jpg
-  blurb: Stirfire studios made this awesome platform game using the Moai SDK and released on Steam.
+- 2014-01-14-broken-age-1
+- 2014-05-01-elevate
+- 2014-09-14-cannibal-cookout
+- 2014-11-01-land-of-venn
