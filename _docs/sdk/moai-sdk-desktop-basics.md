@@ -35,13 +35,13 @@ Setting up on Ubuntu [Experimental]
 Developing on Linux is still experimental with MOAI but is possible using GLUT.
 
 ```
-   sudo apt-get install cmake freeglut3 freeglut3-dev binutils-gold libxmu-dev libxi-dev dos2unix libasound2-dev
+   sudo apt-get install cmake freeglut3 freeglut3-dev binutils-gold libxmu-dev libxi-dev dos2unix libasound2-dev
 ```
-`   git clone -b Version-1.3-Build-98-cmake `[`https://github.com/shadowmint/moai-dev.git`](https://github.com/shadowmint/moai-dev.git)\
+`   git clone -b Version-1.3-Build-98-cmake `[`https://github.com/shadowmint/moai-dev.git`](https://github.com/shadowmint/moai-dev.git)\
 ```
-   cd moai-dev
-   mkdir build
-   cd build
-   cmake ../cmake/
-   make
+   cd moai-dev
+   mkdir build
+   cd build
+   cmake ../cmake/
+   make
 ```

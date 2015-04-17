@@ -14,7 +14,7 @@ Usage
 -----
 
 ```
-$ lua pack.lua path/to/your/source/tree > out.lua
+$ lua pack.lua path/to/your/source/tree > out.lua
 ```
 
 Notes
@@ -28,7 +28,7 @@ Notes
 -   "`require "mod.submod"`" will look for "`module/submodule.lua`" then for "`module/submodule/init.lua`". If you want to get that functionality without the packer, you must add your game root directory in the package.path as follows, for example at the top of main.lua or in a config.lua file loaded before main.lua:
 
 ```
- package.path = "./?.lua;./?/init.lua" .. package.path:sub(8,-1)
+ package.path = "./?.lua;./?/init.lua" .. package.path:sub(8,-1)
 ```
 
 :   This allows you to put Lua libraries that use "`init.lua`" as loader in your game tree. Packages in your local tree will shadow the ones installed system-wide (if any).
@@ -40,25 +40,25 @@ Suppose that you have the following source tree:
 
 ```
 foo
- +-- bar.lua
- |     content: print "Bar"
- +-- baz
- |     +-- baz.lua
- |     |     content: print "Baz"
- |     +-- qux
- |          +-- init.lua
- |                content: print( ... )
- |                         return "Quux"   
- +-- main.lua
-       content: require "bar" 
-                dofile "baz/baz.lua"
-                print( require "baz.qux" )
+ +-- bar.lua
+ |     content: print "Bar"
+ +-- baz
+ |     +-- baz.lua
+ |     |     content: print "Baz"
+ |     +-- qux
+ |          +-- init.lua
+ |                content: print( ... )
+ |                         return "Quux"   
+ +-- main.lua
+       content: require "bar" 
+                dofile "baz/baz.lua"
+                print( require "baz.qux" )
 ```
 
 You use
 
 ```
-$ lua pack.lua foo > foo.lua
+$ lua pack.lua foo > foo.lua
 ```
 
 and get the following:
@@ -116,8 +116,8 @@ dofile"main.lua"
 When run, **`moai foo.lua`** gives
 
 ```
-Bar 
-Baz  
+Bar 
+Baz  
 baz.qux
 Quux
 ```

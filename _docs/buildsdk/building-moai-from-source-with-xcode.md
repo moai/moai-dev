@@ -39,8 +39,8 @@ Here are the steps for the GitHub project, for Xcode 4.2:
 6\) \*In the Identity and Type window, click the arrow at the end of the Full Path, to open your built executable in the Finder. (The right of the image above) i.e:
 
 ```
-/Users/~your name~/Library/Developer/Xcode/DerivedData...
-  .../MoaiSample-dolieihhalcypohcexopkdpixhis/Build/Products/Debug/moai
+/Users/~your name~/Library/Developer/Xcode/DerivedData...
+  .../MoaiSample-dolieihhalcypohcexopkdpixhis/Build/Products/Debug/moai
 ```
 
 7\) Make a New Folder "bin", and New sub-Folder "osx", under the moai-sdk ("moai-moai-beta-4d876f4")
@@ -61,16 +61,16 @@ Troubleshooting
 If "socket" is not built correctly, this message will show in terminal
 
 ```
-   module 'socket' not found:
-       no field package.preload['socket']
-       no file './socket.lua'
-       no file '/usr/local/share/lua/5.1/socket.lua'
-       no file '/usr/local/share/lua/5.1/socket/init.lua'
-       no file '/usr/local/lib/lua/5.1/socket.lua'
-       no file '/usr/local/lib/lua/5.1/socket/init.lua'
-       no file './socket.so'
-       no file '/usr/local/lib/lua/5.1/socket.so'
-       no file '/usr/local/lib/lua/5.1/loadall.so'
+   module 'socket' not found:
+       no field package.preload['socket']
+       no file './socket.lua'
+       no file '/usr/local/share/lua/5.1/socket.lua'
+       no file '/usr/local/share/lua/5.1/socket/init.lua'
+       no file '/usr/local/lib/lua/5.1/socket.lua'
+       no file '/usr/local/lib/lua/5.1/socket/init.lua'
+       no file './socket.so'
+       no file '/usr/local/lib/lua/5.1/socket.so'
+       no file '/usr/local/lib/lua/5.1/loadall.so'
 ```
 
 ##### Fix
