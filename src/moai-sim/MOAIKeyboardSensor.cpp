@@ -127,6 +127,17 @@ int MOAIKeyboardSensor::_setKeyCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIKeyboardSensor::ClearState () {
+
+	// Clear the DOWN and UP flags
+	for ( u32 i = 0; i < this->mClearCount; ++i ) {
+		u32 keyCode = this->mClearQueue [ i ];
+		this->mState [ keyCode ] = 0;
+	}
+	this->mClearCount = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( u8 deviceID, u8 sensorID, u32 unicodeChar ) {
 
 	// Don't allow non-printable characters
@@ -314,7 +325,8 @@ void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::Reset () {
+void MOAIKeyboardSensor::ResetState () {
+
 	// Clear the DOWN and UP flags
 	for ( u32 i = 0; i < this->mClearCount; ++i ) {
 		u32 keyCode = this->mClearQueue [ i ];

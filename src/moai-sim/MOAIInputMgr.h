@@ -64,6 +64,7 @@ public:
 
 	//----------------------------------------------------------------//
 	u8					AddDevice					( cc8* name );
+	void				ClearSensorState			();
 	void				DeferEvents					( bool defer );
 	void				FlushEvents					( double skip );
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
@@ -75,7 +76,7 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveDevices				( u8 total );
 	void				ReserveSensors				( u8 deviceID, u8 total );
-	void				ResetSensors				();
+	void				ResetSensorState			();
 	void				SetAutosuspend				( double autosuspend );
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name ); // back compat

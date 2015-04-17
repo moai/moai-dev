@@ -48,6 +48,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
+	void				ClearState					();
 	static void			EnqueueKeyboardCharEvent	( u8 deviceID, u8 sensorID, u32 unicodeChar );
 	static void			EnqueueKeyboardKeyEvent		( u8 deviceID, u8 sensorID, u32 keyID, bool down );
 	static void			EnqueueKeyboardTextEvent	( u8 deviceID, u8 sensorID, cc8* text );
@@ -61,7 +62,7 @@ public:
 	void				ParseEvent					( ZLStream& eventStream );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Reset						();
+	void				ResetState					();
 };
 
 #endif

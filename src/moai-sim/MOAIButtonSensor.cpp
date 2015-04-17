@@ -119,6 +119,12 @@ bool MOAIButtonSensor::ButtonUp () {
 }
 
 //----------------------------------------------------------------//
+void MOAIButtonSensor::ClearState () {
+
+	this->mState = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIButtonSensor::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
@@ -182,7 +188,7 @@ void MOAIButtonSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::Reset () {
+void MOAIButtonSensor::ResetState () {
 
 	// clear out the old events
 	this->mState &= ~( DOWN | UP );	

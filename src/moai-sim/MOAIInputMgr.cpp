@@ -117,6 +117,17 @@ bool MOAIInputMgr::CanWrite () {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::ClearSensorState () {
+
+	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+		MOAIInputDevice* device = this->mDevices [ i ];
+		if ( device ) {
+			device->ClearSensorState ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIInputMgr::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
@@ -138,6 +149,7 @@ void MOAIInputMgr::FlushEvents ( double skip ) {
 
 	this->mTimebase += skip;
 	this->DiscardAll ();
+	this->ClearSensorState ();
 }
 
 //----------------------------------------------------------------//
@@ -268,12 +280,12 @@ void MOAIInputMgr::ReserveSensors ( u8 deviceID, u8 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::ResetSensors () {
+void MOAIInputMgr::ResetSensorState () {
 
 	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
-			device->ResetSensors ();
+			device->ResetSensorState ();
 		}
 	}
 }
@@ -359,7 +371,7 @@ void MOAIInputMgr::Update ( double timestep ) {
 		this->mAutosuspended = false;
 
 		// reset the input sensors
-		this->ResetSensors ();
+		this->ResetSensorState ();
 
 		if ( !this->mDefer ) {
 			

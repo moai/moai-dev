@@ -116,7 +116,7 @@ void MOAIWheelSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIWheelSensor::Reset () {
+void MOAIWheelSensor::ResetState () {
 
 	this->mDelta = 0;
 }

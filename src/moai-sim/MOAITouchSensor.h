@@ -103,7 +103,6 @@ private:
 	u32				AddTouch				();
 	void			AddLingerTouch			( MOAITouchLinger& touch );
 	s32				CheckLingerList			( float x, float y, float time );
-	void			Clear					();
 	u32				FindTouch				( u32 touchID );
 	void			PrintStacks				();
 
@@ -119,6 +118,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITouchSensor )
 
 	//----------------------------------------------------------------//
+	void				ClearState					();
 	static void			EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
 	static void			EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
 						MOAITouchSensor				();
@@ -126,7 +126,7 @@ public:
 	void				ParseEvent					( ZLStream& eventStream );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Reset						();
+	void				ResetState					();
 };
 
 #endif

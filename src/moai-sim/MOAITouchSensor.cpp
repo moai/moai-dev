@@ -321,7 +321,7 @@ s32 MOAITouchSensor::CheckLingerList ( float x, float y, float time ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::Clear () {
+void MOAITouchSensor::ClearState () {
 
 	this->mTop = 0;
 	this->mLingerTop = 0;
@@ -355,7 +355,7 @@ MOAITouchSensor::MOAITouchSensor () {
 	
 	mAcceptCancel = false;
 	
-	this->Clear ();
+	this->ClearState ();
 }
 
 //----------------------------------------------------------------//
@@ -373,7 +373,7 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 	if ( eventType == TOUCH_CANCEL ) {
 		
 		// for now, TOUCH_CANCEL clobbers all touches
-		this->Clear ();
+		this->ClearState ();
 		
 		if ( this->mCallback && this->mAcceptCancel ) {
 			MOAIScopedLuaState state = this->mCallback.GetSelf ();
@@ -536,7 +536,7 @@ void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::Reset () {
+void MOAITouchSensor::ResetState () {
 
 	u32 top = this->mTop;
 	u32 j = 0;
@@ -577,6 +577,6 @@ void MOAITouchSensor::Reset () {
 	}
 
 	if ( this->mTop == 0 && this->mLingerTop == 0 ) {
-		this->Clear ();
+		this->ClearState ();
 	}
 }

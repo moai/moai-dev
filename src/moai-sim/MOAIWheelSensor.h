@@ -37,7 +37,7 @@ public:
 	void				ParseEvent				( ZLStream& eventStream );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Reset					();
+	void				ResetState				();
 };
 
 #endif

@@ -33,12 +33,13 @@ public:
 	friend class MOAIInputMgr;
 
 	//----------------------------------------------------------------//
+	virtual void	ClearState			() {}
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;
 					MOAISensor			();
 					~MOAISensor			();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	virtual void	Reset				() {}
+	virtual void	ResetState			() {}
 };
 
 #endif
