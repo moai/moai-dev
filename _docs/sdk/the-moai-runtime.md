@@ -1,5 +1,6 @@
 ---
 title: "The Moai Runtime"
+order: -900
 ---
 
 The [Moai](http://getmoai.com) SDK uses an Object-Oriented Reactive approach. The (re)action chain is defined in Lua and enacted in C++, which allows to get the best of both worlds, expressibility and speed.

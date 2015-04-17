@@ -1,5 +1,6 @@
 ---
 title: "Extending Moai SDK"
+order: -650
 ---
 
 Extension Options

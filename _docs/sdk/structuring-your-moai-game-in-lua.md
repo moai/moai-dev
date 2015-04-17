@@ -1,5 +1,6 @@
 ---
 title: "Structuring Your Moai Game in Lua"
+order: -800
 ---
 
 Moai's object model is so flat and componentized and the Lua programming languages is so minimalist and permissive that some developers experiences a sort of 'decompression sickness' when faced with the task of learning it. Even if it's clear what each individual part does, the lack of an overall structure or system can be disorienting.

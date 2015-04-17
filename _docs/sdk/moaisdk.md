@@ -1,5 +1,6 @@
 ---
 title: "MoaiSDK"
+order: -1000
 ---
 
 Moai SDK is an open source game framework for quickly developing great mobile games. You can work in Lua or C++, and Moai SDK runs on multiple platforms including iOS, Android, Chrome, Windows, Mac and Linux.

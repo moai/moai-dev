@@ -1,5 +1,6 @@
 ---
 title: "Tools that work with Moai"
+order: 1
 ---
 
 Beyond development environments like Xcode, Eclipse and Visual Studio, here are some tools that work great with Moai.

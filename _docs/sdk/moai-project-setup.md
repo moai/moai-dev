@@ -1,5 +1,6 @@
 ---
 title: "Moai Project Setup"
+order: -750
 ---
 
 This article presents an overview of Moai's project structure and describes some typical ways to use the Moai framework from a development environment and project organization standpoint. To proceed, you'll need a good Lua text editor and an IDE. Most Moai developers uses Xcode, Visual Studio and Eclipse, but it is certainly possible to use an alternate IDE.

@@ -1,5 +1,6 @@
 ---
 title: "Protecting Your Lua Files"
+order: 0
 ---
 
 Packaging Lua Code

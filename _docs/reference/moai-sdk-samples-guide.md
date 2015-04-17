@@ -1,5 +1,6 @@
 ---
 title: "Moai SDK Samples Guide"
+order: -1
 ---
 
 The Moai samples were (mostly) written by the SDK developers to test features as they were being added. You can use them to get a feel for how Moai operates. This reference is a quick overview of what each sample means. Organization of the samples and documentation is a work in progress.
@@ -7,15 +8,15 @@ The Moai samples were (mostly) written by the SDK developers to test features as
 anim
 ----
 
--   [anim-basic](anim-basic.html)
--   [anim-curve](anim-curve.html)
--   [anim-curve-modes](anim-curve-modes.html)
--   [anim-driver](anim-driver.html)
--   [anim-flipbook](anim-flipbook.html)
--   [anim-listener](anim-listener.html)
--   [anim-span](anim-span.html)
--   [chase](chase.html)
--   [chase-bridge](chase-bridge.html)
+-   [anim-basic](samples/anim-basic.html)
+-   [anim-curve](samples/anim-curve.html)
+-   [anim-curve-modes](samples/anim-curve-modes.html)
+-   [anim-driver](samples/anim-driver.html)
+-   [anim-flipbook](samples/anim-flipbook.html)
+-   [anim-listener](samples/anim-listener.html)
+-   [anim-span](samples/anim-span.html)
+-   [chase](samples/chase.html)
+-   [chase-bridge](samples/chase-bridge.html)
 
 camera
 ------
@@ -37,18 +38,18 @@ contrib
 deck
 ----
 
--   [gfxQuad2D](gfxquad2d.html)
--   [gfxQuad2D-grid](gfxquad2d-grid.html)
--   [gfxQuadDeck2D](gfxquaddeck2d.html)
--   [gfxQuadDeck2D-grid](gfxquaddeck2d-grid.html)
--   [gfxQuadListDeck2D](gfxquadlistdeck2d.html)
--   [gfxQuadListDeck2D-grid](gfxquadlistdeck2d-grid.html)
+-   [gfxQuad2D](samples/gfxquad2d.html)
+-   [gfxQuad2D-grid](samples/gfxquad2d-grid.html)
+-   [gfxQuadDeck2D](samples/gfxquaddeck2d.html)
+-   [gfxQuadDeck2D-grid](samples/gfxquaddeck2d-grid.html)
+-   [gfxQuadListDeck2D](samples/gfxquadlistdeck2d.html)
+-   [gfxQuadListDeck2D-grid](samples/gfxquadlistdeck2d-grid.html)
 -   scriptDeck
 -   stretchPatch-basic
 -   stretchPatch-flipbook
--   [tileDeck2D](tiledeck2d.html)
--   [tileDeck2D-grid](tiledeck2d-grid.html)
--   [tilemap-animated](tilemap-animated.html)
+-   [tileDeck2D](samples/tiledeck2d.html)
+-   [tileDeck2D-grid](samples/tiledeck2d-grid.html)
+-   [tilemap-animated](samples/tilemap-animated.html)
 -   tilemap-expand-for-sort
 -   tilemap-wrapping
 

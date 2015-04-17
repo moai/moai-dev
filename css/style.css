@@ -88,6 +88,98 @@ footer > .container > p{
   color: #b3b2ad;
 }
 
+/* DOCS
+-------------------------------------------------- */
+
 .improve-docs {
   float:right;
 }
+
+#nav-menu .subtree-name:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+#nav-menu .nav > li > a:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+#nav-menu li.collapsibleListOpen {
+  /* background:$navtree-element-listopen-bg url('../images/minus.png?embed=true') no-repeat 16px 16px; */
+  background: #353d4e url("../img/nav/minus.png?embed=true") no-repeat 16px 16px;
+  cursor: pointer;
+}
+
+#nav-menu li.collapsibleListClosed {
+  /* background: $navtree-element-listclosed-bg url('../images/plus.png?embed=true') no-repeat 16px 16px; */
+  background: #2f3646 url("../img/nav/plus.png?embed=true") no-repeat 16px 16px;
+  cursor: pointer;
+}
+
+#nav-menu li.collapsibleListClosed > ul {
+  display: none;
+}
+
+#nav-menu li {
+  border-top: 1px solid #1b1c1e;
+  background-color: #1e242f;
+}
+
+#nav-menu li.active {
+  background-color: #0070cd;
+  /* margin-left: -40px;  */
+  /* padding-left: 40px;  */
+}
+
+#nav-menu li ul li.active {
+  margin-left: -40px;
+  padding-left: 40px;
+}
+
+#nav-menu li ul li ul li.active {
+  margin-left: -80px;
+  padding-left: 80px;
+}
+
+#nav-menu li ul li ul li ul li.active {
+  margin-left: -120px;
+  padding-left: 120px;
+}
+
+#nav-menu .subtree-name {
+  padding: 12px 38px;
+  color: #eee;
+  font-family: "Proxima N W15 Light", Helvetica, Arial, sans-serif;
+}
+
+#nav-menu .subtree-name + ul li {
+  border: 0px;
+}
+
+#nav-menu .subtree-name + ul {
+  padding-left: 20px;
+  background-color: #1e242f;
+}
+
+#nav-menu .subtree-name + ul li.collapsibleListClosed {
+  background-color: #1e242f;
+}
+
+#nav-menu .subtree-name + ul li.collapsibleListOpen {
+  background-color: #1e242f;
+}
+
+#nav-menu .parent .subtree-name {
+  padding-left: 40px;
+}
+
+#nav-menu .nav > li > a {
+  font-family: "Proxima N W15 Light", Helvetica, Arial, sans-serif;
+  padding: 5px 0px;
+  color: #eee;
+  
+}
+
+
+
