@@ -2,7 +2,7 @@ name: Moai SDK
 markdown: redcarpet
 highlighter: pygments
 future: true
-baseurl: /moai-dev
+baseurl: /moai-sdk
 
 collections:
   docs:
