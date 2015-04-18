@@ -1,5 +1,7 @@
 ---
 title: "Building Moai From Source With Scons"
+order: 30
+out_of_date: true
 ---
 
 Moai SDK now supports running games with [Native Client](http://en.wikipedia.org/wiki/Google_Native_Client) in Google's Chrome browser, as announced [recently](http://getmoai.com/2011/10/big-news-moai-for-chrome/) on the Moai blog.

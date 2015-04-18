@@ -1,5 +1,6 @@
 ---
-title: "Building Moai From Source With Android NDK"
+title: "Building Moai Libraries For Android"
+order: 0
 ---
 
 Building the Moai source code for Android requires the Android Native Development Kit (NDK), which can be downloaded [here](http://developer.android.com/sdk/ndk/index.html). If you're using Windows, you will also need to install Cygwin, which is required by the Android NDK. Android may abandon Cygwin for future releases of the NDK, but for now it is still required and can be downloaded [here](http://cygwin.com/install.html).

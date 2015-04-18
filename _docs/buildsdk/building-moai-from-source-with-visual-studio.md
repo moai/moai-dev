@@ -1,5 +1,6 @@
 ---
 title: "Building Moai From Source With Visual Studio"
+order: 20
 ---
 
 The Visual Studio solutions contain projects to build a suite of executables, the Moai core library and extensions, and sub-projects for the open source 3rd party libraries Moai depends on.
