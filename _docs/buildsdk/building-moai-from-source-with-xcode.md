@@ -1,5 +1,6 @@
 ---
 title: "Building Moai From Source With Xcode"
+order: 10
 ---
 
 Building Moai from Source with Xcode

@@ -9,8 +9,14 @@ layout: default
         </div>
 
         <div id="content" class="col-md-9">
-            <a href="https://github.com/moaiforge/moai-sdk/tree/gh-pages/{{page.relative_path}}" class="improve-docs btn"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+            <a href="{{ site.data.settings.edit_root }}{{page.relative_path}}" class="improve-docs btn"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
             <h1>{{ page.title }}</h1>
+            {% if page.out_of_date == true %}
+               {% include out-of-date.html %}
+            {% endif %}
+            {% if page.help_wanted == true %}
+               {% include help-wanted.html %}
+            {% endif %}
             {{ content }}
         </div>
                
