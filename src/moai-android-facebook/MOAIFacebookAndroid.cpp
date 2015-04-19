@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_FACEBOOK
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
@@ -179,7 +177,7 @@ int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 
 	if ( idx < TOTAL ) {
-		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetRef ( state, 2 );
 	}
 	return 0;
 }
@@ -318,5 +316,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNot
 	MOAIFacebookAndroid::Get ().NotifyRequestFailed ( );
 }
 
-
-#endif

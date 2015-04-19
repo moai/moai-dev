@@ -4,7 +4,7 @@
 #ifndef MOAIFLURRYANDROID_H
 #define MOAIFLURRYANDROID_H
 
-#if AKU_WITH_ANDROID_FLURRY
+
 
 #include <moai-core/headers.h>
 #include <moai-android/JniUtils.h>
@@ -34,6 +34,6 @@ public:
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
 
-#endif  //DISABLE_FLURRY
+
 
 #endif  //MOAIFLURRY_H

@@ -6,7 +6,7 @@ where lib || echo "Could not find lib.exe (are you in your VS developer tools pr
 
 :haslib
 set arg1=%1
-if "%arg1%"=="" set arg1=vs2012
+if "%arg1%"=="" set arg1=vs2013
 set generator=
 if "%arg1%"=="vs2008" set generator=Visual Studio 9 2008
 if "%arg1%"=="vs2010" set generator=Visual Studio 10
@@ -40,8 +40,11 @@ erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 echo Creating Debug Libs
 cmake -DCMAKE_INSTALL_PREFIX=%libprefix%\Debug %rootpath%\cmake\hosts\host-win-sdl || exit /b 1
 
+
+if "%CI%"=="TRUE" goto skipdebug
 cmake --build . --target INSTALL --config Debug  || exit /b 1
 
+:skipdebug
 echo Creating Distribute Libs
 rmdir /S/Q %libprefix%\Distribute\lib
 

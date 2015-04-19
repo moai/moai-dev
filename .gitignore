@@ -33,3 +33,5 @@ cmake/projects/
 
 bin/api-reference-parser/vendor
 docs/api-reference
+moai-sdk/
+/lib/

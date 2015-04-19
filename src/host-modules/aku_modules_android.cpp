@@ -1,8 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <string.h>
-#include <moai-core/headers.h>
+#include <zl-common/zl_platform.h>
 #include <host-modules/aku_modules_android.h>
 
 //================================================================//
@@ -12,108 +11,122 @@
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppFinalize () {
 
-	#if AKU_WITH_ANDROID
-//		AKUAndroidAppFinalize ();
-	#endif
-
 	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyAppFinalize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingAppFinalize ();
+		AKUAndroidAdColonyAppFinalize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppFinalize ();
 	#endif
-
+	
 	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismAppFinalize ();
+		AKUAndroidCrittercismAppFinalize ();
 	#endif
-
+	
 	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookAppFinalize ();
+		AKUAndroidFacebookAppFinalize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryAppFinalize ();
+	  AKUAndroidFlurryAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES
+		AKUAndroidGooglePlayServicesAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_TAPJOY
+		AKUAndroidTapjoyAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_TWITTER
+		AKUAndroidTwitterAppFinalize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_VUNGLE
+		AKUAndroidVungleAppFinalize ();
 	#endif
 
-	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyAppFinalize ();
-	#endif
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppInitialize () {
-
-	#if AKU_WITH_ANDROID
-//		AKUAndroidAppInitialize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyAppInitialize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingAppInitialize ();
+	
+	#if AKU_WITH_IOS_ADCOLONY
+		AKUAndroidAdColonyAppInitialize ();
 	#endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppInitialize ();
 	#endif
-
+	
 	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismAppInitialize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookAppInitialize ();
+		AKUAndroidCrittercismAppInitialize ();
 	#endif
 	
-	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryAppInitialize ();
+	#if AKU_WITH_ANDROID_FACEBOOK
+		AKUAndroidFacebookAppInitialize ();
 	#endif
 
-	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyAppInitialize ();
+	#if AKU_WITH_ANDROID_FLURRY
+		AKUAndroidFlurryAppInitialize ();
 	#endif
+	
+	#if AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES
+		AKUAndroidGooglePlayServicesAppInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_TAPJOY
+		AKUAndroidTapjoyAppInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_TWITTER
+		AKUAndroidTwitterAppInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_VUNGLE
+		AKUAndroidVungleAppInitialize ();
+	#endif
+
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidContextInitialize () {
-
-	#if AKU_WITH_ANDROID
-//		AKUAndroidContextInitialize ();
+	
+	#if AKU_WITH_IOS_ADCOLONY
+		AKUAndroidAdColonyContextInitialize ();
 	#endif
-
-	#if AKU_WITH_ANDROID_ADCOLONY
-//		AKUAndroidAdColonyContextInitialize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_BILLING
-//		AKUAndroidBillingContextInitialize ();
-	#endif
-
+	
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostContextInitialize ();
 	#endif
-
+	
 	#if AKU_WITH_ANDROID_CRITTERCISM
-//		AKUAndroidCrittercismContextInitialize ();
-	#endif
-
-	#if AKU_WITH_ANDROID_FACEBOOK
-//		AKUAndroidFacebookContextInitialize ();
+		AKUAndroidCrittercismContextInitialize ();
 	#endif
 	
-	#if AKU_WITH_ANDROID_FLURRY
-//		AKUAndroidFlurryContextInitialize ();
+	#if AKU_WITH_ANDROID_FACEBOOK
+		AKUAndroidFacebookContextInitialize ();
 	#endif
 
+	#if AKU_WITH_ANDROID_FLURRY
+		AKUAndroidFlurryContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES
+		AKUAndroidGooglePlayServicesContextInitialize ();
+	#endif
+	
 	#if AKU_WITH_ANDROID_TAPJOY
-//		AKUAndroidTapjoyContextInitialize ();
+		AKUAndroidTapjoyContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_TWITTER
+		AKUAndroidTwitterContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID_VUNGLE
+		AKUAndroidVungleContextInitialize ();
 	#endif
 	
 }

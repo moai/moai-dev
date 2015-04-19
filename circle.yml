@@ -1,0 +1,3 @@
+test:
+  override:
+    - bash ./bin/ci-osx.sh
