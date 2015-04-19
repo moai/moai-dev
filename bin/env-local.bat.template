@@ -1,0 +1,11 @@
+
+rem ---- SETTINGS -------
+rem * edit or remove these to suit your setup.
+
+set CMAKE_PATH=K:\dev\mobile\moaiforge\cmake\bin
+set NDK_PATH=K:\dev\mobile\moaiforge\android-ndk-r9d
+set MINGW_PATH=K:\dev\mobile\moaiforge\mingw64\bin
+set EMSDK_PATH=K:\dev\mobile\moaiforge\emsdk-1.25
+set JAVA_HOME=C:\Program Files\Java\jdk1.7.0_25
+set DOXYGEN_PATH=K:\dev\mobile\doxygen
+set DOT_PATH=K:\dev\mobile\graphviz\bin
