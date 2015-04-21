@@ -311,6 +311,9 @@ void MOAITexture::OnCPUDestroy () {
 	// the image and/or buffer
 	if ( this->HasReloader () || this->mFilename.size ()) {
 		
+		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
+		if (this->mImage)
+			this->mImage->Clear();
 		this->mImage.Set ( *this, 0 );
 		
 		if ( this->mTextureData ) {

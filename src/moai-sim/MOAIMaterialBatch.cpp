@@ -129,7 +129,9 @@ void MOAIMaterialBatch::Clear () {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::LoadGfxState ( u32 idx, u32 defaultShader ) {
 
-	idx = this->mIndexBatchSize > 0 ? ((( u32 )( idx / this->mIndexBatchSize )) % this->mMaterials.Size ()) : 0;
+	if (this->mMaterials.Size ())  {
+		idx = this->mIndexBatchSize > 0 ? ((( u32 )( idx / this->mIndexBatchSize )) % this->mMaterials.Size ()) : 0;
+	}
 
 	this->RawLoadGfxState ( idx, defaultShader );
 }
