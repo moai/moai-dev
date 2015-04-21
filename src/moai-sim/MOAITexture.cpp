@@ -29,6 +29,7 @@
 		@in		MOAITexture self
 		@in		MOAIImage image
 		@opt	string debugname		Name used when reporting texture debug information
+		@opt	boolean autoClear		Default value is 'false.' Only used if there is a reloader in play.
 		@out	nil
 	
 	@overload
@@ -126,7 +127,8 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 		if ( !done ) {
 			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
 			if ( image ) {
-				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)" );
+				bool autoClear	= state.GetValue < bool >( debugNameIdx + 1, false );
+				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)", autoClear );
 				done = true;
 			}
 		}
@@ -151,13 +153,13 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
+void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
 		this->mImage.Set ( *this, &image );
-		this->mAutoClearImage = false;
+		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
 		this->DoCPUAffirm ();
