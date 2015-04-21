@@ -512,6 +512,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 
 	MOAIViewport* viewport = renderMgr.GetViewport ();
 	MOAICamera* camera = renderMgr.GetCamera ();
+	
 	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
 
 	ZLMatrix4x4 worldDrawingMtx;
@@ -523,7 +524,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			ZLAffine3D billboardMtx;
 			billboardMtx.Init ( camera->GetBillboardMtx ());
 			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
-			
 			break;
 		}
 		
@@ -598,6 +598,30 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
 			worldDrawingMtx.Prepend ( billboardMtx );
 		
+			break;
+		}
+		
+		case BILLBOARD_SCREEN: {
+			
+			MOAIGfxDevice::Get ().GetWorldToWndMtx ();
+			
+			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
+			
+			ZLMatrix4x4 localToWorldMtx;
+			worldDrawingMtx.Init (this->GetLocalToWorldMtx ());
+			
+			// TODO: check that pivot is supported correctly
+			ZLVec3D loc;
+			worldDrawingMtx.GetTranslation ( loc );
+			viewProjMtx.Project ( loc );
+			
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = loc.mX;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = loc.mY;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = loc.mZ;
+			
+			viewProjMtx.Inverse ();
+			worldDrawingMtx.Append ( viewProjMtx );
+			
 			break;
 		}
 		
@@ -776,6 +800,7 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
 	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
 	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
+	state.SetField ( -1, "BILLBOARD_SCREEN",			( u32 )BILLBOARD_SCREEN );
 }
 
 //----------------------------------------------------------------//

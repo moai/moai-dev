@@ -71,6 +71,7 @@ private:
 	static int			_setBoundsPad				( lua_State* L );
 	static int			_setDeck					( lua_State* L );
 	static int			_setExpandForSort			( lua_State* L );
+	static int			_setFlag					( lua_State* L ); // TODO: macro
 	static int			_setGrid					( lua_State* L );
 	static int			_setGridScale				( lua_State* L );
 	static int			_setIndex					( lua_State* L );
@@ -127,6 +128,8 @@ public:
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_PAD_BOUNDS			= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
+		FLAGS_PARTITION_GLOBAL		= 0x08,
+		TOTAL_FLAGS,
 	};
 
 	GET_SET ( u32, Index, mIndex )
