@@ -26,6 +26,7 @@ private:
 	
 	// for loading from image
 	MOAILuaSharedPtr < MOAIImage> mImage;
+	bool				mAutoClearImage;
 	
 	// for loading compressed data
 	void*				mTextureData;

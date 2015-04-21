@@ -83,7 +83,13 @@ void MOAITexture::Clear () {
 
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
+	
+	if ( this->mImage && this->mAutoClearImage ) {
+		this->mImage->Clear ();
+	}
+	
 	this->mImage.Set ( *this, 0 );
+	this->mAutoClearImage = false;
 	
 	if ( this->mTextureData ) {
 		free ( this->mTextureData );
@@ -151,6 +157,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	
 	if ( image.IsOK ()) {
 		this->mImage.Set ( *this, &image );
+		this->mAutoClearImage = false;
 		this->mDebugName = debugname;
 		this->FinishInit ();
 		this->DoCPUAffirm ();
@@ -163,7 +170,10 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
+	
 		this->mImage.Set ( *this, new MOAIImage ());
+		this->mAutoClearImage = true;
+		
 		this->mImage->Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
@@ -264,6 +274,7 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 			
 			if ( image->IsOK ()) {
 				this->mImage.Set ( *this, image );
+				this->mAutoClearImage = true;
 				this->mWidth = image->GetWidth ();
 				this->mHeight = image->GetHeight ();
 			}
@@ -279,7 +290,8 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ),
 	mTextureData ( 0 ),
 	mTextureDataSize ( 0 ),
-	mTextureDataFormat ( 0 ) {
+	mTextureDataFormat ( 0 ),
+	mAutoClearImage ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )
@@ -312,8 +324,10 @@ void MOAITexture::OnCPUDestroy () {
 	if ( this->HasReloader () || this->mFilename.size ()) {
 		
 		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
-		if (this->mImage)
-			this->mImage->Clear();
+		if ( this->mImage && this->mAutoClearImage ) {
+			this->mImage->Clear ();
+		}
+		
 		this->mImage.Set ( *this, 0 );
 		
 		if ( this->mTextureData ) {
