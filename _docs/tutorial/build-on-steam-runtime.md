@@ -14,15 +14,16 @@ I used a fresh ubuntu 14.04 (might work with others)
  ./setup_chroot.sh --outputdir ~/steam-runtime-build --i386
 ```
  waiting waiting waiting
+ 
 ```bash
  cd ~/steam-runtime-build
  chroot steamrt_scout_i386
  cd ~
  apt-get install git
- wget v
- bash cmake-2.8.12.2-Linux-i386.sh (say yes)
+ wget http://www.cmake.org/files/v3.1/cmake-3.1.3-Linux-i386.sh
+ bash cmake-3.1.3-Linux-i386.sh (say yes)
  rm /usr/bin/cmake
- ln -s ~/cmake-2.8.12.2-Linux-i386/bin/cmake /usr/bin
+ ln -s ~/cmake-3.1.3-Linux-i386/bin/cmake /usr/bin
  git clone http://github.com/moai/moai-dev
  cd moai-dev
  git checkout 1.5-stable 
