@@ -350,20 +350,26 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y ) {
 		
-		this->WriteVtx ( x, y, 0.0f );
+		this->WriteVtx ( x, y, 0.0f, 1.0f );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y, float z ) {
 		
+		this->WriteVtx ( x, y, z, 1.0f );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtx ( float x, float y, float z, float w ) {
+		
 		ZLVec4D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
 		vtx.mZ = z;
-		vtx.mW = 1.0f;
+		vtx.mW = w;
 		
 		if ( this->mCpuVertexTransform ) {
-			this->mCpuVertexTransformMtx.Transform ( vtx );	
+			this->mCpuVertexTransformMtx.Transform ( vtx );
 		}
 		this->Write ( vtx );
 	}

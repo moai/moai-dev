@@ -28,11 +28,6 @@ int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
 	verts [ 3 ].mX = this->mRect.mXMin;
 	verts [ 3 ].mY = this->mRect.mYMax;
 
-	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 0 ]);
-	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 1 ]);
-	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 2 ]);
-	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 3 ]);
-
 	tess->AddContour ( 2, verts, sizeof ( ZLVec2D ), 4 );
 	
 	return 0;

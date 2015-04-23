@@ -1021,14 +1021,20 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, const MOAIVectorSt
 	const int nelems = tessGetElementCount ( tess->mTess );
 	const float* verts = tessGetVertices ( tess->mTess );
 	
+	ZLAffine2D ident;
+	ident.Ident ();
+	
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
 		int n = elems [( i * 2 ) + 1 ];
 		
 		for ( int j = 0; j < n; ++j ) {
 			
-			ZLVec2D& v0 = (( ZLVec2D* )verts )[ b + j ];
-			ZLVec2D& v1 = (( ZLVec2D* )verts )[ b + (( j + 1 ) % n )];
+			ZLVec2D v0 = (( ZLVec2D* )verts )[ b + j ];
+			ZLVec2D v1 = (( ZLVec2D* )verts )[ b + (( j + 1 ) % n )];
+			
+			style.mDrawingToWorld.Transform ( v0 );
+			style.mDrawingToWorld.Transform ( v1 );
 			
 			if ( doLighting ) {
 			
@@ -1052,10 +1058,10 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, const MOAIVectorSt
 				color32 = color.PackRGBA ();
 			}
 			
-			this->WriteVertex ( v0.mX, v0.mY, 0.0f, color32, vertexExtraID );
-			this->WriteVertex ( v1.mX, v1.mY, 0.0f, color32, vertexExtraID );
-			this->WriteVertex ( v0.mX, v0.mY, z, color32, vertexExtraID );
-			this->WriteVertex ( v1.mX, v1.mY, z, color32, vertexExtraID );
+			this->WriteVertex ( v0.mX, v0.mY, 0.0f, ident, color32, vertexExtraID );
+			this->WriteVertex ( v1.mX, v1.mY, 0.0f, ident, color32, vertexExtraID );
+			this->WriteVertex ( v0.mX, v0.mY, z, ident, color32, vertexExtraID );
+			this->WriteVertex ( v1.mX, v1.mY, z, ident, color32, vertexExtraID );
 			
 			this->mIdxStream.Write < u32 >( base + 0 );
 			this->mIdxStream.Write < u32 >( base + 1 );
@@ -1098,10 +1104,13 @@ void MOAIVectorTesselator::WriteTriangleIndices ( SafeTesselator* tess, u32 base
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertex ( float x, float y, float z, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteVertex ( float x, float y, float z, const ZLAffine2D& transform2D, u32 color, u32 vertexExtraID ) {
 
-	this->mVtxStream.Write < float >( x );
-	this->mVtxStream.Write < float >( y );
+	ZLVec2D vec2D ( x, y );
+	transform2D.Transform ( vec2D );
+
+	this->mVtxStream.Write < float >( vec2D.mX );
+	this->mVtxStream.Write < float >( vec2D.mY );
 	this->mVtxStream.Write < float >( z );
 	this->mVtxStream.Write < u32 >( color );
 	
@@ -1112,7 +1121,7 @@ void MOAIVectorTesselator::WriteVertex ( float x, float y, float z, u32 color, u
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertices ( SafeTesselator* tess, float z, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteVertices ( SafeTesselator* tess, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID ) {
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
@@ -1133,7 +1142,7 @@ void MOAIVectorTesselator::WriteVertices ( SafeTesselator* tess, float z, u32 co
 		if ( this->mVerbose ) {
 			log.write ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}
-		this->WriteVertex ( vert.mX, vert.mY, z, color, vertexExtraID );
+		this->WriteVertex ( vert.mX, vert.mY, z, style.mDrawingToWorld, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {

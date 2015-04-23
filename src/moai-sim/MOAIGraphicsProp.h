@@ -136,6 +136,7 @@ public:
 		BILLBOARD_NORMAL,
 		BILLBOARD_ORTHO,
 		BILLBOARD_COMPASS,
+		BILLBOARD_SCREEN,
 	};
 
 	enum {
@@ -153,8 +154,8 @@ public:
 	};
 
 	enum {
-		FLAGS_LOCAL_VISIBLE			= 0x08,
-		FLAGS_VISIBLE				= 0x10, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
+		FLAGS_LOCAL_VISIBLE			= 0x01 << MOAIProp::TOTAL_FLAGS,
+		FLAGS_VISIBLE				= 0x02 << MOAIProp::TOTAL_FLAGS, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
 	enum {

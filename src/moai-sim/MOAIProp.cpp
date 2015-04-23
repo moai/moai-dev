@@ -333,6 +333,19 @@ int MOAIProp::_setExpandForSort ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: macro
+int MOAIProp::_setFlag ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	u32 flag		= state.GetValue < u32 >( 2, 0 );
+	bool set		= state.GetValue < bool >( 3, true );
+
+	self->mFlags = set ? self->mFlags |= flag : self->mFlags &= flag;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setGrid
 	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
 			will override the standard indexer.
@@ -609,6 +622,10 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
 
+	if ( this->mFlags & FLAGS_PARTITION_GLOBAL ) {
+		return BOUNDS_GLOBAL;
+	}
+
 	u32 status = BOUNDS_EMPTY;
 
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
@@ -622,7 +639,7 @@ u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
 	if (( status == BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
 		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
 	}
-	
+
 	return status;
 }
 
@@ -704,7 +721,9 @@ void MOAIProp::OnDepNodeUpdate () {
 	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
 	
 	// update the prop location in the partition
-	propBounds.Transform ( this->mLocalToWorldMtx );
+	if ( propBoundsStatus == BOUNDS_OK ) {
+		propBounds.Transform ( this->mLocalToWorldMtx );
+	}
 	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
 }
 
@@ -750,6 +769,9 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
 	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
+	
+	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
+	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
 }
 
 //----------------------------------------------------------------//
@@ -771,6 +793,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBoundsPad",			_setBoundsPad },
 		{ "setDeck",				_setDeck },
 		{ "setExpandForSort",		_setExpandForSort },
+		{ "setFlag",				_setFlag },
 		{ "setGrid",				_setGrid },
 		{ "setGridScale",			_setGridScale },
 		{ "setIndex",				_setIndex },
