@@ -80,7 +80,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 
 	// Sanity check
 	size_t textLength = strlen ( text );
-	if ( textLength <= 0 ) return;
+	if ( textLength == 0 ) return;
 	
 	// Get the context data
 	assert ( g_CurrentTextDrawContext );

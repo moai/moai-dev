@@ -328,7 +328,7 @@ bool MOAIPathFinder::CheckMask ( u32 terrain ) {
 	if ( !terrain || ( terrain & MOAITileFlags::HIDDEN )) return false;
 
 	if ( this->mTerrainDeck ) {
-		return this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK ) ? true : false;
+		return ( this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK ) ) ? true : false;
 	}
 	return true;
 }

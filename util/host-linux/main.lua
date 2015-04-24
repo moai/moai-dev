@@ -72,6 +72,10 @@ copyhostfiles = function()
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios_config.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_ios.mm')
+    
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')
+    MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.cpp')
 
 end
 

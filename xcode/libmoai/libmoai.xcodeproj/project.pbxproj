@@ -3688,6 +3688,10 @@
 		CDB718B11A44E7FE003DFFBA /* zl_usocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB718AA1A44E7FE003DFFBA /* zl_usocket.cpp */; };
 		CDB718B21A44E7FE003DFFBA /* zl_usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */; };
 		CDB718B31A44E7FE003DFFBA /* zl_usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */; };
+		CDC097E71AE9C7BF002E325F /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC097E31AE9C7BF002E325F /* host.h */; };
+		CDC097E81AE9C7BF002E325F /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC097E41AE9C7BF002E325F /* host.mm */; };
+		CDC097E91AE9C7BF002E325F /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC097E51AE9C7BF002E325F /* MOAIMoviePlayerIOS.h */; };
+		CDC097EA1AE9C7BF002E325F /* MOAIMoviePlayerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC097E61AE9C7BF002E325F /* MOAIMoviePlayerIOS.mm */; };
 		CDC1239317FA808A00FB64BB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238417FA808A00FB64BB /* headers.h */; };
 		CDC1239417FA808A00FB64BB /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1238517FA808A00FB64BB /* pch.cpp */; };
 		CDC1239517FA808A00FB64BB /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238617FA808A00FB64BB /* pch.h */; };
@@ -7727,6 +7731,11 @@
 		CDBA13141A305641007503F3 /* moai_version_major.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_major.h; path = "config-default/moai_version_major.h"; sourceTree = "<group>"; };
 		CDBA13151A305641007503F3 /* moai_version_minor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_minor.h; path = "config-default/moai_version_minor.h"; sourceTree = "<group>"; };
 		CDBA13161A30564B007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
+		CDC097E11AE9C72E002E325F /* libmoai-ios-movie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-movie.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDC097E31AE9C7BF002E325F /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-movie/host.h"; sourceTree = "<group>"; };
+		CDC097E41AE9C7BF002E325F /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-movie/host.mm"; sourceTree = "<group>"; };
+		CDC097E51AE9C7BF002E325F /* MOAIMoviePlayerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMoviePlayerIOS.h; path = "moai-ios-movie/MOAIMoviePlayerIOS.h"; sourceTree = "<group>"; };
+		CDC097E61AE9C7BF002E325F /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moai-ios-movie/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
 		CDC1238317FA804C00FB64BB /* libmoai-ios-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDC1238417FA808A00FB64BB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "zl-crypto/headers.h"; sourceTree = "<group>"; };
 		CDC1238517FA808A00FB64BB /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "zl-crypto/pch.cpp"; sourceTree = "<group>"; };
@@ -8125,6 +8134,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDA4B9F61808ACA6000129F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDC097DB1AE9C72E002E325F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8683,6 +8699,7 @@
 				CD70C16D184488BC005CEBC0 /* moai-ios-kontagent */,
 				CD4C4131180A663300C02381 /* moai-ios-mobile-app-tracker */,
 				CDD7814C1A1162F400AD133E /* moai-ios-motion */,
+				CDC097E21AE9C79E002E325F /* moai-ios-movie */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
 				CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */,
 				CDA4B7361808AB4A000129F9 /* moai-ios-vungle */,
@@ -8754,6 +8771,7 @@
 				CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */,
 				CD257BA21A6255380057A53A /* libmoai-ios-apple.a */,
 				CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */,
+				CDC097E11AE9C72E002E325F /* libmoai-ios-movie.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12461,6 +12479,17 @@
 			name = "config-default";
 			sourceTree = "<group>";
 		};
+		CDC097E21AE9C79E002E325F /* moai-ios-movie */ = {
+			isa = PBXGroup;
+			children = (
+				CDC097E31AE9C7BF002E325F /* host.h */,
+				CDC097E41AE9C7BF002E325F /* host.mm */,
+				CDC097E51AE9C7BF002E325F /* MOAIMoviePlayerIOS.h */,
+				CDC097E61AE9C7BF002E325F /* MOAIMoviePlayerIOS.mm */,
+			);
+			name = "moai-ios-movie";
+			sourceTree = "<group>";
+		};
 		CDC122D317FA802700FB64BB /* zl-crypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -14786,6 +14815,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDC097D51AE9C72E002E325F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDC097E91AE9C7BF002E325F /* MOAIMoviePlayerIOS.h in Headers */,
+				CDC097E71AE9C7BF002E325F /* host.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDC122D517FA804C00FB64BB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15737,6 +15775,23 @@
 			productReference = CDA4B9FC1808ACA6000129F9 /* libmoai-ios-vungle.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CDC097D41AE9C72E002E325F /* libmoai-ios-movie */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDC097DC1AE9C72E002E325F /* Build configuration list for PBXNativeTarget "libmoai-ios-movie" */;
+			buildPhases = (
+				CDC097D51AE9C72E002E325F /* Headers */,
+				CDC097D81AE9C72E002E325F /* Sources */,
+				CDC097DB1AE9C72E002E325F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-movie";
+			productName = OpenUSLS;
+			productReference = CDC097E11AE9C72E002E325F /* libmoai-ios-movie.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDC1237E17FA804C00FB64BB /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-crypto" */;
@@ -15945,6 +16000,7 @@
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				CD4C4132180A667300C02381 /* libmoai-ios-mobile-app-tracker */,
 				CDD7814D1A11631E00AD133E /* libmoai-ios-motion */,
+				CDC097D41AE9C72E002E325F /* libmoai-ios-movie */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
@@ -18438,6 +18494,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDC097D81AE9C72E002E325F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDC097E81AE9C7BF002E325F /* host.mm in Sources */,
+				CDC097EA1AE9C7BF002E325F /* MOAIMoviePlayerIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDC1233E17FA804C00FB64BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -19600,7 +19665,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.2\"",
+					"\"../../3rdparty/libpvr-3.4\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -20927,7 +20992,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.2\"",
+					"\"../../3rdparty/libpvr-3.4\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -24253,6 +24318,135 @@
 			};
 			name = Distribution;
 		};
+		CDC097DD1AE9C72E002E325F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-movie";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CDC097DE1AE9C72E002E325F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-movie";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		CDC097DF1AE9C72E002E325F /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-movie";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		CDC097E01AE9C72E002E325F /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "moai-ios-movie";
+				SDKROOT = iphoneos;
+			};
+			name = Distribution;
+		};
 		CDC1237F17FA804C00FB64BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -25255,7 +25449,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.2\"",
+					"\"../../3rdparty/libpvr-3.4\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -25684,7 +25878,7 @@
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.2\"",
+					"\"../../3rdparty/libpvr-3.4\"",
 					"\"../../3rdparty/c-ares-1.7.5\"",
 					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
 					"\"../../3rdparty/openssl-1.0.0m/include\"",
@@ -26502,6 +26696,17 @@
 				CDA4B9F91808ACA6000129F9 /* Release */,
 				CDA4B9FA1808ACA6000129F9 /* AdHoc */,
 				CDA4B9FB1808ACA6000129F9 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDC097DC1AE9C72E002E325F /* Build configuration list for PBXNativeTarget "libmoai-ios-movie" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDC097DD1AE9C72E002E325F /* Debug */,
+				CDC097DE1AE9C72E002E325F /* Release */,
+				CDC097DF1AE9C72E002E325F /* AdHoc */,
+				CDC097E01AE9C72E002E325F /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

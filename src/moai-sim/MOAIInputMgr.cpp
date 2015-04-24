@@ -107,8 +107,6 @@ u8 MOAIInputMgr::AddDevice ( cc8* name  ) {
 //----------------------------------------------------------------//
 bool MOAIInputMgr::CanWrite () {
 
-	double time = ZLDeviceTime::GetTimeInSeconds ();
-
 	if (( this->mAutosuspend > 0 ) && ( this->mAutosuspend <= ( ZLDeviceTime::GetTimeInSeconds () - this->mLastUpdate ))) {
 		this->DiscardAll ();
 		this->mAutosuspended = true;

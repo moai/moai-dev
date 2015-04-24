@@ -53,6 +53,7 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 	}
 
 	int result = 0;
+	errno = 0;
 	while ( *cursor ) {
 
 		// Advance to end of current directory name
@@ -67,7 +68,7 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 			result = mkdir ( buffer, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
 		#endif
 		
-		if ( result && ( errno != EEXIST )) break;
+		if ( ( result == 0 ) && ( errno != EEXIST )) break;
 		result = 0;
 
 		*cursor = '/';
@@ -80,23 +81,9 @@ int ZLVfsFileSystem::AffirmPath ( const char* path ) {
 //----------------------------------------------------------------//
 string ZLVfsFileSystem::BlessPath ( const char* path ) {
 
-	size_t i = 0;
-	size_t j = 0;
-	
-	for ( i = 0; path [ i ]; ++i ) {
-		if ( IsSeparator ( path [ i ] )) {
-			while ( IsSeparator ( path [ ++i ]));
-			--i;
-		}
-		j++;
-	}
-	
 	string blessed;
-	blessed.reserve ( j + 1 );
-	
-	i = 0;
-	
-	for ( i = 0; path [ i ]; ++i ) {
+
+	for ( size_t i = 0; path [ i ]; ++i ) {
 		
 		char c = path [ i ];
 		
@@ -107,7 +94,7 @@ string ZLVfsFileSystem::BlessPath ( const char* path ) {
 			--i;
 		}
 		
-		blessed.push_back ( c );
+		blessed += c;
 	}
 	
 	return blessed;

@@ -938,7 +938,7 @@ u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 	else {
 	
 		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
-		if ( limitWidth && limitWidth ) {
+		if ( limitWidth && limitHeight ) {
 			bounds.Init ( textFrame.mXMin, textFrame.mYMax, textFrame.mXMax, textFrame.mYMin, 0.0f, 0.0f );
 			return MOAIProp::BOUNDS_OK;
 		}

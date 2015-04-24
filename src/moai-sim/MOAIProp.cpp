@@ -284,6 +284,8 @@ int MOAIProp::_setBoundsPad ( lua_State* L ) {
 	bool pad = (( self->mBoundsPad.mX != 0.0f ) || ( self->mBoundsPad.mY != 0.0f ) || ( self->mBoundsPad.mZ != 0.0f ));
 	self->mFlags = pad ? ( self->mFlags | FLAGS_PAD_BOUNDS ) : ( self->mFlags & ~FLAGS_PAD_BOUNDS );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -299,6 +301,7 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
+	self->ScheduleUpdate ();
 	return 0;
 }
 
@@ -361,6 +364,7 @@ int MOAIProp::_setGrid ( lua_State* L ) {
 	if ( !grid ) return 0;
 	
 	self->mGrid.Set ( *self, grid );
+	self->ScheduleUpdate ();
 	
 	return 0;
 }
@@ -469,6 +473,7 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 
 	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2, true );
 	self->SetDependentMember < MOAIDeckRemapper >( self->mRemapper, remapper );
+	self->ScheduleUpdate ();
 	
 	return 0;
 }

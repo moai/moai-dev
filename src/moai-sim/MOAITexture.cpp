@@ -162,7 +162,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -180,7 +180,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -200,7 +200,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 	else {
 	
@@ -219,7 +219,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -245,7 +245,8 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 
 	MOAIImageFormat* format = 0;
-		
+	bool result = false;
+
 	format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
 	if ( format ) {
 	
@@ -264,6 +265,8 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 				
 				this->mWidth = textureInfo.mWidth;
 				this->mHeight = textureInfo.mHeight;
+				
+				result = true;
 			}
 			else {
 				free ( data );
@@ -279,12 +282,14 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 				this->mAutoClearImage = true;
 				this->mWidth = image->GetWidth ();
 				this->mHeight = image->GetHeight ();
+				result = true;
 			}
 			else {
 				delete image;
 			}
 		}
 	}
+	return result;
 }
 
 //----------------------------------------------------------------//

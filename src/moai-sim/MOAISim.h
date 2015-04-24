@@ -50,6 +50,7 @@ public:
 	typedef void ( *HideCursorFunc )				();
 	typedef void ( *OpenWindowFunc )				( const char* title, int width, int height );
 	typedef void ( *SetSimStepFunc )				( double step );
+	typedef void ( *SetTextInputRectFunc )			( int xMin, int yMin, int xMax, int yMax );
 
 private:
 
@@ -96,6 +97,7 @@ private:
 	ExitFullscreenModeFunc		mExitFullscreenModeFunc;
 	OpenWindowFunc				mOpenWindowFunc;
 	SetSimStepFunc				mSetSimStepFunc;
+	SetTextInputRectFunc		mSetTextInputRectFunc;
 	ShowCursorFunc				mShowCursorFunc;
 	HideCursorFunc				mHideCursorFunc;
 	
@@ -139,6 +141,7 @@ private:
 	static int		_setStepMultiplier			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
 	static int		_setTraceback				( lua_State* L );
+	static int		_setTextInputRect			( lua_State* L );
 	static int		_showCursor					( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
@@ -185,6 +188,7 @@ public:
 	GET_SET ( OpenWindowFunc, OpenWindowFunc, mOpenWindowFunc );
 	GET_SET ( SetSimStepFunc, SetSimStepFunc, mSetSimStepFunc );
 	GET_SET ( ShowCursorFunc, ShowCursorFunc, mShowCursorFunc );
+	GET_SET ( SetTextInputRectFunc, SetTextInputRectFunc, mSetTextInputRectFunc );
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;

@@ -16,10 +16,12 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 local font = MOAIFont.new ()
-font:loadFromTTF ( 'arial-rounded.TTF' )
+font:loadFromTTF ( 'VL-PGothic.ttf' )
 
 local textChars = { "E", "d", "i", "t", " ", "m", "e", "!" } -- This is Unicode-safe
 local cursorIndex = #textChars -- 0-based
+
+local editingText = ""
 
 -- Show text label
 local label = MOAITextLabel.new ()
@@ -32,9 +34,21 @@ layer:insertProp ( label )
 
 -- Set label text
 function updateLabel ()
-	label:setString ( table.concat ( textChars ) )
+	label:setString ( table.concat ( textChars ) .. editingText )
 end
 updateLabel ()
+
+function updateTextInputRect()
+	if #editingText > 0 then
+		-- TODO:getTextBounds does not return the actual range.
+		local x1, y1, x2, y2 = label:getTextBounds ( math.max(#label:getText() - #editingText, 1), #editingText )
+		local offsetX, offsetY = -115, 50
+		local xMin, yMin, _ =layer:worldToWnd( x1 + offsetX, y1 + offsetY, 0 )
+		local xMax, yMax, _ =layer:worldToWnd( x2 + offsetX, y2 + offsetY, 0 )
+		MOAISim.setTextInputRect(xMin, yMin, xMax, yMax)
+	end
+
+end
 
 -- Show cursor
 local cursorColor = MOAIColor.new ()
@@ -45,9 +59,9 @@ cursorDeck:setDrawCallback ( function ( index )
 	local cursorWidth = 2
 	local cursorHeight = 30
 	local cursorX
-	if cursorIndex > 0 then
+	if cursorIndex + #editingText > 0 then
 		-- Let's be UTF-8-safe
-		local byteIndex = #( table.concat ( textChars, "", 1, cursorIndex ))
+		local byteIndex = #( table.concat ( textChars, "", 1, cursorIndex )) + #editingText
 		local x1, y1, x2, y2 = label:getTextBounds ( 1, byteIndex )
 		cursorX = x2 - x1 + 2
 	else
@@ -88,6 +102,9 @@ end )
 
 -- Handle key-down events
 MOAIInputMgr.device.keyboard:setKeyCallback ( function ( keyCode, down )
+	if #editingText > 0 then
+		return
+	end
 	if down then
 		resetCursor = true
 		
@@ -120,6 +137,15 @@ end )
 
 MOAIInputMgr.device.keyboard:setCharCallback ( function ( c )
 	table.insert ( textChars, cursorIndex + 1, c )
+	editingText = ""
 	updateLabel ()
 	cursorIndex = cursorIndex + 1
 end )
+
+MOAIInputMgr.device.keyboard:setEditCallback ( function ( text, start, length )
+	print(text, start, length)
+	editingText = text
+	updateLabel ()
+	updateTextInputRect ()
+end )
+

@@ -1306,7 +1306,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 //----------------------------------------------------------------//
 void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc ) {
 
-	if (( this->mPixelFormat != TRUECOLOR ) && ( this->mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
+	if (( this->mPixelFormat != TRUECOLOR ) && ( image.mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
 
 	float scale;
 
@@ -1964,13 +1964,21 @@ void MOAIImage::GenerateSDFDeadReckoning( ZLIntRect rect, int threshold ) {
 	
 	// Treating 1d array as 2d
 	float* distanceMap = ( float * ) malloc ( sizeof ( float ) * size );
-	int* binaryMap = ( int * ) malloc ( sizeof ( int ) * size );
-	
-	if ( distanceMap == NULL || binaryMap == NULL ) {
+
+	if ( distanceMap == NULL ) {
 		printf("ERROR: Out of memory\n");
-		return;
+    	return;
+	} 
+
+	// Treating 1d array as 2d
+	int* binaryMap = ( int * ) malloc ( sizeof ( int ) * size );
+
+	if ( binaryMap == NULL ) {
+		free ( distanceMap );
+		printf("ERROR: Out of memory\n");
+    	return;
 	}
-	
+
 	// Init the binary map and distance map
 	for ( int y = 0; y < height; ++y ) {
 		for ( int x = 0; x < width; ++x ) {

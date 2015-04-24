@@ -536,6 +536,26 @@ int MOAISim::_setTraceback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setTextInputRect
+	@text	Sets text input rect.
+ 
+	@out	nil
+ */
+int MOAISim::_setTextInputRect ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	ZLIntRect rect = state.GetRect< int >( 1 );
+	rect.Bless();
+	
+	SetTextInputRectFunc func = MOAISim::Get ().GetSetTextInputRectFunc ();
+	if ( func ) {
+		func ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	showCursor
 	@text	Shows system cursor.
 
@@ -775,6 +795,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
 		{ "setTraceback",				_setTraceback },
+		{ "setTextInputRect",			_setTextInputRect },
 		{ "showCursor",					_showCursor },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }

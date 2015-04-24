@@ -1,2 +1,2 @@
 #!/bin/bash
-bash buildrom.sh
+bash buildrom.sh @SRC@

@@ -219,7 +219,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			const MOAITextStyle* style = sprite.mStyle;
 			
-			rgba0 = sprite.mMask & MOAITextSprite::MASK_COLOR ? sprite.mRGBA : sprite.mStyle->mColor;
+			rgba0 = ( sprite.mMask & MOAITextSprite::MASK_COLOR ) ? sprite.mRGBA : sprite.mStyle->mColor;
 			
 			if ( rgba0 != rgba1 ) {
 				rgba1 = rgba0;

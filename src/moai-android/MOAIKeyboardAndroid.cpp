@@ -201,10 +201,7 @@ void MOAIKeyboardAndroid::PushText ( MOAILuaState& state ) {
 		if ( getString ) {
 			MOAIJString jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
 
-			const char *kc = env->GetStringUTFChars((jstring) jkeystring, NULL);
-
 			JNI_GET_CSTRING ( jkeystring, keystring );
-
 			state.Push(keystring);
 			JNI_RELEASE_CSTRING ( jkeystring, keystring );
 		}

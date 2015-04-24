@@ -1,6 +1,9 @@
+#!/usr/bin/env bash
 INVOKE_DIR=$(pwd)
 MOAI_SDK_HOME=$(dirname "${0}")/../
 MOAI_CMD=${1}
+
+export PATH=$PATH:$MOAI_SDK_HOME/util
 
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
