@@ -52,7 +52,7 @@ void AKUModulesAndroidAppFinalize () {
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppInitialize () {
 	
-	#if AKU_WITH_IOS_ADCOLONY
+	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyAppInitialize ();
 	#endif
 
@@ -93,7 +93,7 @@ void AKUModulesAndroidAppInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesAndroidContextInitialize () {
 	
-	#if AKU_WITH_IOS_ADCOLONY
+	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyContextInitialize ();
 	#endif
 	
