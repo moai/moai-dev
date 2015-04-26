@@ -1,0 +1,1974 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>liboilfuncs-doc</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch01.html" title="Liboil Stable API">
+<link rel="prev" href="liboil-liboilfuncs-pixel.html" title="Pixel Operations">
+<link rel="next" href="ch02.html" title="Liboil Unstable API">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilfuncs-pixel.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="ch02.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilfuncs-doc.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilfuncs-doc.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="liboilfuncs-doc">
+<a name="liboil-liboilfuncs-doc"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilfuncs-doc.top_of_page"></a>liboilfuncs-doc</span></h2>
+<p>liboilfuncs-doc</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilfuncs-doc.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-f32" title="oil_clip_f32 ()">oil_clip_f32</a>                        (float *dest,
+                                                         int dstr,
+                                                         const float *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const float *s2_1,
+                                                         const float *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-f64" title="oil_clip_f64 ()">oil_clip_f64</a>                        (double *dest,
+                                                         int dstr,
+                                                         const double *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const double *s2_1,
+                                                         const double *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-s16" title="oil_clip_s16 ()">oil_clip_s16</a>                        (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-s32" title="oil_clip_s32 ()">oil_clip_s32</a>                        (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-s8" title="oil_clip_s8 ()">oil_clip_s8</a>                         (<a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-u16" title="oil_clip_u16 ()">oil_clip_u16</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-u32" title="oil_clip_u32 ()">oil_clip_u32</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-clip-u8" title="oil_clip_u8 ()">oil_clip_u8</a>                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-dequantize8x8-s16" title="oil_dequantize8x8_s16 ()">oil_dequantize8x8_s16</a>               (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s1_8x8,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_8x8,
+                                                         int sstr2);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-diffsquaresum-f64" title="oil_diffsquaresum_f64 ()">oil_diffsquaresum_f64</a>               (double *d_1,
+                                                         const double *src1,
+                                                         int sstr1,
+                                                         const double *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-md5" title="oil_md5 ()">oil_md5</a>                             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_4,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_16);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-mix-u8" title="oil_mix_u8 ()">oil_mix_u8</a>                          (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-null" title="oil_null ()">oil_null</a>                            (void);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-scanlinescale2-u8" title="oil_scanlinescale2_u8 ()">oil_scanlinescale2_u8</a>               (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-sincos-f64" title="oil_sincos_f64 ()">oil_sincos_f64</a>                      (double *dest1,
+                                                         double *dest2,
+                                                         int n,
+                                                         const double *s1_1,
+                                                         const double *s2_1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-utf8-validate" title="oil_utf8_validate ()">oil_utf8_validate</a>                   (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-diff8x8-s16-u8" title="oil_diff8x8_s16_u8 ()">oil_diff8x8_s16_u8</a>                  (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-diff8x8-average-s16-u8" title="oil_diff8x8_average_s16_u8 ()">oil_diff8x8_average_s16_u8</a>          (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss3);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-err-inter8x8-u8-avg" title="oil_err_inter8x8_u8_avg ()">oil_err_inter8x8_u8_avg</a>             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss2);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-recon8x8-inter" title="oil_recon8x8_inter ()">oil_recon8x8_inter</a>                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_8x8);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-err-intra8x8-u8" title="oil_err_intra8x8_u8 ()">oil_err_intra8x8_u8</a>                 (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-recon8x8-intra" title="oil_recon8x8_intra ()">oil_recon8x8_intra</a>                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-colsad8x8-u8" title="oil_colsad8x8_u8 ()">oil_colsad8x8_u8</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-composite-over-u8" title="oil_composite_over_u8 ()">oil_composite_over_u8</a>               (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-diff8x8-const128-s16-u8" title="oil_diff8x8_const128_s16_u8 ()">oil_diff8x8_const128_s16_u8</a>         (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-copy8x8-u8" title="oil_copy8x8_u8 ()">oil_copy8x8_u8</a>                      (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-err-inter8x8-u8" title="oil_err_inter8x8_u8 ()">oil_err_inter8x8_u8</a>                 (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-fdct8x8theora" title="oil_fdct8x8theora ()">oil_fdct8x8theora</a>                   (const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-rowsad8x8-u8" title="oil_rowsad8x8_u8 ()">oil_rowsad8x8_u8</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-recon8x8-inter2" title="oil_recon8x8_inter2 ()">oil_recon8x8_inter2</a>                 (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s3_8x8);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-composite-add-u8" title="oil_composite_add_u8 ()">oil_composite_add_u8</a>                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-doc.html#oil-sad8x8-u8-avg" title="oil_sad8x8_u8_avg ()">oil_sad8x8_u8_avg</a>                   (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss2);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilfuncs-doc.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilfuncs-doc.details"></a><h2>Details</h2>
+<div class="refsect2" title="oil_clip_f32 ()">
+<a name="oil-clip-f32"></a><h3>oil_clip_f32 ()</h3>
+<pre class="programlisting">void                oil_clip_f32                        (float *dest,
+                                                         int dstr,
+                                                         const float *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const float *s2_1,
+                                                         const float *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_f64 ()">
+<a name="oil-clip-f64"></a><h3>oil_clip_f64 ()</h3>
+<pre class="programlisting">void                oil_clip_f64                        (double *dest,
+                                                         int dstr,
+                                                         const double *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const double *s2_1,
+                                                         const double *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_s16 ()">
+<a name="oil-clip-s16"></a><h3>oil_clip_s16 ()</h3>
+<pre class="programlisting">void                oil_clip_s16                        (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_s32 ()">
+<a name="oil-clip-s32"></a><h3>oil_clip_s32 ()</h3>
+<pre class="programlisting">void                oil_clip_s32                        (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_s8 ()">
+<a name="oil-clip-s8"></a><h3>oil_clip_s8 ()</h3>
+<pre class="programlisting">void                oil_clip_s8                         (<a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_u16 ()">
+<a name="oil-clip-u16"></a><h3>oil_clip_u16 ()</h3>
+<pre class="programlisting">void                oil_clip_u16                        (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_u32 ()">
+<a name="oil-clip-u32"></a><h3>oil_clip_u32 ()</h3>
+<pre class="programlisting">void                oil_clip_u32                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clip_u8 ()">
+<a name="oil-clip-u8"></a><h3>oil_clip_u8 ()</h3>
+<pre class="programlisting">void                oil_clip_u8                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src,
+                                                         int sstr,
+                                                         int n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_1);</pre>
+<p>
+Clips each value in <em class="parameter"><code>src</code></em> to the range [<em class="parameter"><code>s2_1</code></em>,<em class="parameter"><code>s3_1</code></em>] and places
+the result in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_dequantize8x8_s16 ()">
+<a name="oil-dequantize8x8-s16"></a><h3>oil_dequantize8x8_s16 ()</h3>
+<pre class="programlisting">void                oil_dequantize8x8_s16               (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s1_8x8,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_8x8,
+                                                         int sstr2);</pre>
+<p>
+Multiplies each element in <em class="parameter"><code>s1_8x8</code></em> by the corresponding element
+in <em class="parameter"><code>s2_8x8</code></em> and places the result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_diffsquaresum_f64 ()">
+<a name="oil-diffsquaresum-f64"></a><h3>oil_diffsquaresum_f64 ()</h3>
+<pre class="programlisting">void                oil_diffsquaresum_f64               (double *d_1,
+                                                         const double *src1,
+                                                         int sstr1,
+                                                         const double *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Calculates the sum of squared differences between <em class="parameter"><code>src1</code></em> and <em class="parameter"><code>src2</code></em>
+and places the result in <em class="parameter"><code>d_1</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_md5 ()">
+<a name="oil-md5"></a><h3>oil_md5 ()</h3>
+<pre class="programlisting">void                oil_md5                             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_4,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_16);</pre>
+<p>
+Performs an MD5 checksum iteration.  The iteration operates on
+the 64 bytes contained in <em class="parameter"><code>s_16</code></em>, and changes the hash contained
+in <em class="parameter"><code>i_4</code></em>.  This only implements a portion of the MD5 algorithm.
+The full MD5 algorithm requires initializing the hash
+with a specific value and additional handling of bytes at the
+end of the stream.
+</p>
+<p>
+See also the md5 example in the Liboil source code.
+</p>
+<p>
+FIXME: need a reference here</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_4</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_16</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_mix_u8 ()">
+<a name="oil-mix-u8"></a><h3>oil_mix_u8 ()</h3>
+<pre class="programlisting">void                oil_mix_u8                          (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);</pre>
+<p>
+Performs the compisiting operation DEST = (SRC2 IN MASK) OVER SRC1,
+except it is done incorrectly, so this function should not be used.
+</p>
+<p>
+FIXME: This function is broken.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td> SRC1
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td> SRC2
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src3</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_null ()">
+<a name="oil-null"></a><h3>oil_null ()</h3>
+<pre class="programlisting">void                oil_null                            (void);</pre>
+<p>
+Does nothing, and does it fast.
+</p>
+<p>
+This function is useful for testing the overhead of calling
+a Liboil function.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_scanlinescale2_u8 ()">
+<a name="oil-scanlinescale2-u8"></a><h3>oil_scanlinescale2_u8 ()</h3>
+<pre class="programlisting">void                oil_scanlinescale2_u8               (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);</pre>
+<p>
+Upsamples the source array by a factor of two.  That is, if the
+values in <em class="parameter"><code>s</code></em> are A,B,C,D,E, the values written to <em class="parameter"><code>d</code></em> are
+A,A,B,B,C,C,D,D,E,E.  Note that <em class="parameter"><code>n</code></em> is the number of elements
+written to <em class="parameter"><code>d</code></em>, and that half of <em class="parameter"><code>s</code></em> is not used.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d</code></em> :</span></p></td>
+<td> destination array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s</code></em> :</span></p></td>
+<td> source array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_sincos_f64 ()">
+<a name="oil-sincos-f64"></a><h3>oil_sincos_f64 ()</h3>
+<pre class="programlisting">void                oil_sincos_f64                      (double *dest1,
+                                                         double *dest2,
+                                                         int n,
+                                                         const double *s1_1,
+                                                         const double *s2_1);</pre>
+<p>
+Calculates sin(x) and cos(x) and places the results in <em class="parameter"><code>dest1</code></em> and
+<em class="parameter"><code>dest2</code></em> respectively.  Values for x start at <em class="parameter"><code>s1_1</code></em> and are incremented
+by <em class="parameter"><code>s2_1</code></em> for each destination element.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_utf8_validate ()">
+<a name="oil-utf8-validate"></a><h3>oil_utf8_validate ()</h3>
+<pre class="programlisting">void                oil_utf8_validate                   (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);</pre>
+<p>
+Checks <em class="parameter"><code>s</code></em> for valid UTF-8 characters.  If the entire <em class="parameter"><code>s</code></em> array
+represents valid UTF-8 characters, <em class="parameter"><code>n</code></em> is written to <em class="parameter"><code>d_1</code></em>.
+Otherwise, the index in the array of the beginning of the first
+invalid UTF-8 character is written to <em class="parameter"><code>d_1</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_diff8x8_s16_u8 ()">
+<a name="oil-diff8x8-s16-u8"></a><h3>oil_diff8x8_s16_u8 ()</h3>
+<pre class="programlisting">void                oil_diff8x8_s16_u8                  (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);</pre>
+<p>
+Calculates the difference of each value in <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s2_8x8</code></em>
+and places the result in <em class="parameter"><code>d_8x8</code></em>.  Note that the destination type
+is larger than the source type.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_diff8x8_average_s16_u8 ()">
+<a name="oil-diff8x8-average-s16-u8"></a><h3>oil_diff8x8_average_s16_u8 ()</h3>
+<pre class="programlisting">void                oil_diff8x8_average_s16_u8          (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss3);</pre>
+<p>
+Calculates the difference of each value in <em class="parameter"><code>s1_8x8</code></em> and the
+average of <em class="parameter"><code>s2_8x8</code></em> and <em class="parameter"><code>s3_8x8</code></em>,
+and places the result in <em class="parameter"><code>d_8x8</code></em>.  Note that the destination type
+is larger than the source type.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss3</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_err_inter8x8_u8_avg ()">
+<a name="oil-err-inter8x8-u8-avg"></a><h3>oil_err_inter8x8_u8_avg ()</h3>
+<pre class="programlisting">void                oil_err_inter8x8_u8_avg             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss2);</pre>
+<p>
+Calculates an intermediate 8x8 block where each element is the
+difference between <em class="parameter"><code>s1_8x8</code></em> and the average of <em class="parameter"><code>s2_8x8</code></em> and <em class="parameter"><code>s3_8x8</code></em>.
+The sum of squares of the difference of each element in the 
+intermediate block and the mean of the intermediate block is
+placed into <em class="parameter"><code>d_1</code></em>.
+This result is 64 times the variance of the mean of the intermediate
+block.
+</p>
+<p>
+FIXME: This function is broken, since the reference function uses
+<em class="parameter"><code>ss2</code></em> as the stride for both <em class="parameter"><code>s2_8x8</code></em> and <em class="parameter"><code>s3_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_recon8x8_inter ()">
+<a name="oil-recon8x8-inter"></a><h3>oil_recon8x8_inter ()</h3>
+<pre class="programlisting">void                oil_recon8x8_inter                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s2_8x8);</pre>
+<p>
+Adds each element in <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s2_8x8</code></em>, clamps to the range [0,255],
+and places the result in the destination array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_err_intra8x8_u8 ()">
+<a name="oil-err-intra8x8-u8"></a><h3>oil_err_intra8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_err_intra8x8_u8                 (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1);</pre>
+<p>
+Calculates the sum of squared differences from the mean over
+<em class="parameter"><code>s1_8x8</code></em> and places the result in <em class="parameter"><code>d_1</code></em>.  This result is 64 times
+the variance of the mean of <em class="parameter"><code>s1_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_recon8x8_intra ()">
+<a name="oil-recon8x8-intra"></a><h3>oil_recon8x8_intra ()</h3>
+<pre class="programlisting">void                oil_recon8x8_intra                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8);</pre>
+<p>
+Adds 128 to each value in the source array, clamps to the range [0,255],
+and places the result in the destination array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_colsad8x8_u8 ()">
+<a name="oil-colsad8x8-u8"></a><h3>oil_colsad8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_colsad8x8_u8                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);</pre>
+<p>
+Divides the 8x8 block into 16 1x4 regions, and calculates the
+sum of absolute differences between <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s2_8x8</code></em> for
+each region.  The maximum of the results in each region is
+placed in <em class="parameter"><code>d_1</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_over_u8 ()">
+<a name="oil-composite-over-u8"></a><h3>oil_composite_over_u8 ()</h3>
+<pre class="programlisting">void                oil_composite_over_u8               (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC OVER DEST.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_diff8x8_const128_s16_u8 ()">
+<a name="oil-diff8x8-const128-s16-u8"></a><h3>oil_diff8x8_const128_s16_u8 ()</h3>
+<pre class="programlisting">void                oil_diff8x8_const128_s16_u8         (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1);</pre>
+<p>
+Subtracts 128 from each value in <em class="parameter"><code>s1_8x8</code></em>
+and places the result in <em class="parameter"><code>d_8x8</code></em>.  Note that the destination type
+is larger than the source type.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_copy8x8_u8 ()">
+<a name="oil-copy8x8-u8"></a><h3>oil_copy8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_copy8x8_u8                      (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Copies an 8x8 block.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_err_inter8x8_u8 ()">
+<a name="oil-err-inter8x8-u8"></a><h3>oil_err_inter8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_err_inter8x8_u8                 (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2);</pre>
+<p>
+Calculates an intermediate 8x8 block where each element is the
+difference between <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s2_8x8</code></em>.
+The sum of squares of the difference of each element in the 
+intermediate block and the mean of the intermediate block is
+placed into <em class="parameter"><code>d_1</code></em>.  This result is
+equal to 64 times the variance of the mean of the intermediate block.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_fdct8x8theora ()">
+<a name="oil-fdct8x8theora"></a><h3>oil_fdct8x8theora ()</h3>
+<pre class="programlisting">void                oil_fdct8x8theora                   (const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8);</pre>
+<p>
+Calculates the FDCT transformation of <em class="parameter"><code>s_8x8</code></em> according to the Theora
+specification and places the result in <em class="parameter"><code>d_8x8</code></em>.
+</p>
+<p>
+Note that the source and destination arrays are reversed compared
+to normal Liboil order.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_rowsad8x8_u8 ()">
+<a name="oil-rowsad8x8-u8"></a><h3>oil_rowsad8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_rowsad8x8_u8                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8);</pre>
+<p>
+Calculates the sum of absolute differences between <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s1_8s8</code></em>
+for the first 4 elements of the first row, and the sum of absolute
+differences for the last 4 elements of the first row, and places the
+maximum of those values in <em class="parameter"><code>dest</code></em>.
+</p>
+<p>
+FIXME: This function is declared incorrectly.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_recon8x8_inter2 ()">
+<a name="oil-recon8x8-inter2"></a><h3>oil_recon8x8_inter2 ()</h3>
+<pre class="programlisting">void                oil_recon8x8_inter2                 (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         int ss2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s3_8x8);</pre>
+<p>
+Adds each element in <em class="parameter"><code>s1_8x8</code></em> and <em class="parameter"><code>s2_8x8</code></em>, divides by 2, and adds
+to <em class="parameter"><code>s3_8x8</code></em>, clamps to the range [0,255], and places the result in
+the destination array.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_add_u8 ()">
+<a name="oil-composite-add-u8"></a><h3>oil_composite_add_u8 ()</h3>
+<pre class="programlisting">void                oil_composite_add_u8                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC ADD DEST.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_sad8x8_u8_avg ()">
+<a name="oil-sad8x8-u8-avg"></a><h3>oil_sad8x8_u8_avg ()</h3>
+<pre class="programlisting">void                oil_sad8x8_u8_avg                   (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_8x8,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_8x8,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s3_8x8,
+                                                         int ss2);</pre>
+<p>
+Calculates the sum of absolute differences between <em class="parameter"><code>s1_8x8</code></em> and
+the average of <em class="parameter"><code>s2_8x8</code></em> and <em class="parameter"><code>s3_8x8</code></em>.
+</p>
+<p>
+FIXME: This function is broken because the reference function assumes
+the stride for <em class="parameter"><code>s3_8x8</code></em> is <em class="parameter"><code>ss2</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

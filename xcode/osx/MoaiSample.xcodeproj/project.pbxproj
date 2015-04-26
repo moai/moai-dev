@@ -18,6 +18,8 @@
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
+		CD18306F1AECC02A00D92E9E /* libmoai-osx-video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD18306D1AECBFE200D92E9E /* libmoai-osx-video.a */; };
+		CD1830701AECC07E00D92E9E /* libmoai-osx-3rdparty-video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD18306B1AECBFE200D92E9E /* libmoai-osx-3rdparty-video.a */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
@@ -72,6 +74,160 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CD1830661AECBFE200D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD182C971AECB5D100D92E9E;
+			remoteInfo = "libmoai-ios-3rdparty-video";
+		};
+		CD1830681AECBFE200D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD182EE81AECBEC100D92E9E;
+			remoteInfo = "libmoai-ios-video";
+		};
+		CD18306A1AECBFE200D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD182E241AECB69C00D92E9E;
+			remoteInfo = "libmoai-osx-3rdparty-video";
+		};
+		CD18306C1AECBFE200D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD18302E1AECBF3400D92E9E;
+			remoteInfo = "libmoai-osx-video";
+		};
+		CD1830711AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2B11356485F000ADC60;
+			remoteInfo = "libmoai-osx";
+		};
+		CD1830731AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD1845231A626BD500FCCCE0;
+			remoteInfo = "libmoai-osx-apple";
+		};
+		CD1830751AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2A81356485F000ADC60;
+			remoteInfo = "libmoai-osx-3rdparty-core";
+		};
+		CD1830771AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD80789E1831C3B500E658D9;
+			remoteInfo = "libmoai-osx-3rdparty-crypto";
+		};
+		CD1830791AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD32B3C119F9EDD10059D019;
+			remoteInfo = "libmoai-osx-3rdparty-sdl";
+		};
+		CD18307B1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD182C981AECB69C00D92E9E;
+			remoteInfo = "libmoai-osx-3rdparty-video";
+		};
+		CD18307D1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE725E173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		CD18307F1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD95D48D1831D4E20080C34E;
+			remoteInfo = "libmoai-osx-crypto";
+		};
+		CD1830811AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE75BE173C121800DFE837;
+			remoteInfo = "libmoai-osx-http-client";
+		};
+		CD1830831AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7687173C160E00DFE837;
+			remoteInfo = "libmoai-osx-http-server";
+		};
+		CD1830851AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06BD5139882D900AB0420;
+			remoteInfo = "libmoai-osx-luaext";
+		};
+		CD1830871AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD42F2D61A60A7CC001B6D72;
+			remoteInfo = "libmoai-osx-sdl";
+		};
+		CD1830891AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6F07173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		CD18308B1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C4B913A1918600C9386C;
+			remoteInfo = "libmoai-osx-untz";
+		};
+		CD18308D1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD182EE91AECBF3400D92E9E;
+			remoteInfo = "libmoai-osx-video";
+		};
+		CD18308F1AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04ACB51472557F009C20E5;
+			remoteInfo = "libmoai-osx-zl-core";
+		};
+		CD1830911AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD807DF81831C42100E658D9;
+			remoteInfo = "libmoai-osx-zl-crypto";
+		};
+		CD1830931AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD6D745F17EE415D00964415;
+			remoteInfo = "libmoai-osx-zl-vfs";
+		};
 		CDE6C7C01AD8682200D6B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -498,6 +654,7 @@
 				CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */,
 				CDFD8FB21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				CDFD8FB31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
+				CD1830701AECC07E00D92E9E /* libmoai-osx-3rdparty-video.a in Frameworks */,
 				CDFD8FB41AD8653C0003F415 /* libmoai-osx-apple.a in Frameworks */,
 				CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */,
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
@@ -507,6 +664,7 @@
 				CDFD8FBA1AD8653C0003F415 /* libmoai-osx-sdl.a in Frameworks */,
 				CDFD8FBB1AD8653C0003F415 /* libmoai-osx-sim.a in Frameworks */,
 				CDFD8FBC1AD8653C0003F415 /* libmoai-osx-untz.a in Frameworks */,
+				CD18306F1AECC02A00D92E9E /* libmoai-osx-video.a in Frameworks */,
 				CDFD8FBD1AD8653C0003F415 /* libmoai-osx-zl-core.a in Frameworks */,
 				CDFD8FBE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a in Frameworks */,
 				CDFD8FBF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a in Frameworks */,
@@ -659,6 +817,7 @@
 				CDE6C7C31AD8682200D6B83A /* libmoai-ios-apple.a */,
 				CDE6C7C51AD8682200D6B83A /* libmoai-ios-3rdparty-core.a */,
 				CDE6C7C71AD8682200D6B83A /* libmoai-ios-3rdparty-crypto.a */,
+				CD1830671AECBFE200D92E9E /* libmoai-ios-3rdparty-video.a */,
 				CDE6C7C91AD8682200D6B83A /* libmoai-ios-adcolony.a */,
 				CDE6C7CB1AD8682200D6B83A /* libmoai-ios-audio-sampler.a */,
 				CDE6C7CD1AD8682200D6B83A /* libmoai-ios-billing.a */,
@@ -681,6 +840,7 @@
 				CDE6C7EF1AD8682200D6B83A /* libmoai-ios-tapjoy.a */,
 				CDE6C7F11AD8682200D6B83A /* libmoai-ios-untz.a */,
 				CDE6C7F31AD8682200D6B83A /* libmoai-ios-urban-airship.a */,
+				CD1830691AECBFE200D92E9E /* libmoai-ios-video.a */,
 				CDE6C7F51AD8682200D6B83A /* libmoai-ios-vungle.a */,
 				CDE6C7F71AD8682200D6B83A /* libmoai-ios-zl-core.a */,
 				CDE6C7F91AD8682200D6B83A /* libmoai-ios-zl-crypto.a */,
@@ -690,6 +850,7 @@
 				CDE6C8011AD8682200D6B83A /* libmoai-osx-3rdparty-core.a */,
 				CDE6C8031AD8682200D6B83A /* libmoai-osx-3rdparty-crypto.a */,
 				CDE6C8051AD8682200D6B83A /* libmoai-osx-3rdparty-sdl.a */,
+				CD18306B1AECBFE200D92E9E /* libmoai-osx-3rdparty-video.a */,
 				CDE6C8071AD8682200D6B83A /* libmoai-osx-audio-sampler.a */,
 				CDE6C8091AD8682200D6B83A /* libmoai-osx-box2d.a */,
 				CDE6C80B1AD8682200D6B83A /* libmoai-osx-crypto.a */,
@@ -701,6 +862,7 @@
 				CDE6C8171AD8682200D6B83A /* libmoai-osx-sdl.a */,
 				CDE6C8191AD8682200D6B83A /* libmoai-osx-sim.a */,
 				CDE6C81B1AD8682200D6B83A /* libmoai-osx-untz.a */,
+				CD18306D1AECBFE200D92E9E /* libmoai-osx-video.a */,
 				CDE6C81D1AD8682200D6B83A /* libmoai-osx-zl-core.a */,
 				CDE6C81F1AD8682200D6B83A /* libmoai-osx-zl-crypto.a */,
 				CDE6C8211AD8682200D6B83A /* libmoai-osx-zl-vfs.a */,
@@ -722,6 +884,24 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD1830721AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830741AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830761AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830781AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18307A1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18307C1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18307E1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830801AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830821AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830841AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830861AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830881AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18308A1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18308C1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD18308E1AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830901AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830921AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD1830941AECC0AC00D92E9E /* PBXTargetDependency */,
 			);
 			name = moai;
 			productName = moai;
@@ -809,6 +989,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		CD1830671AECBFE200D92E9E /* libmoai-ios-3rdparty-video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-3rdparty-video.a";
+			remoteRef = CD1830661AECBFE200D92E9E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD1830691AECBFE200D92E9E /* libmoai-ios-video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-video.a";
+			remoteRef = CD1830681AECBFE200D92E9E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD18306B1AECBFE200D92E9E /* libmoai-osx-3rdparty-video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-3rdparty-video.a";
+			remoteRef = CD18306A1AECBFE200D92E9E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD18306D1AECBFE200D92E9E /* libmoai-osx-video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-video.a";
+			remoteRef = CD18306C1AECBFE200D92E9E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CDE6C7C11AD8682200D6B83A /* libmoai-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1200,6 +1408,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CD1830721AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx";
+			targetProxy = CD1830711AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830741AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-apple";
+			targetProxy = CD1830731AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830761AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-core";
+			targetProxy = CD1830751AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830781AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-crypto";
+			targetProxy = CD1830771AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18307A1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-sdl";
+			targetProxy = CD1830791AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18307C1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-video";
+			targetProxy = CD18307B1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18307E1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-box2d";
+			targetProxy = CD18307D1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830801AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-crypto";
+			targetProxy = CD18307F1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830821AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-http-client";
+			targetProxy = CD1830811AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830841AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-http-server";
+			targetProxy = CD1830831AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830861AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-luaext";
+			targetProxy = CD1830851AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830881AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sdl";
+			targetProxy = CD1830871AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18308A1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sim";
+			targetProxy = CD1830891AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18308C1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-untz";
+			targetProxy = CD18308B1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD18308E1AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-video";
+			targetProxy = CD18308D1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830901AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-core";
+			targetProxy = CD18308F1AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830921AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-crypto";
+			targetProxy = CD1830911AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+		CD1830941AECC0AC00D92E9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-vfs";
+			targetProxy = CD1830931AECC0AC00D92E9E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0300CF6C140DC53C00ABCC5B /* Debug */ = {

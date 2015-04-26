@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE indexdiv PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<indexdiv>
+<indexdiv><title>O</title>
+<indexentry><primaryie linkends="oil-init"><link linkend="oil-init">oil_init</link></primaryie></indexentry>
+</indexdiv>
+</indexdiv>

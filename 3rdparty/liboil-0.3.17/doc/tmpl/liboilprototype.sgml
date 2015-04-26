@@ -1,0 +1,72 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT OilPrototype ##### -->
+<para>
+
+</para>
+
+@n_params: 
+@params: 
+@klass: 
+
+<!-- ##### FUNCTION oil_prototype_from_string ##### -->
+<para>
+
+</para>
+
+@s: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_prototype_to_string ##### -->
+<para>
+
+</para>
+
+@proto: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_prototype_to_arg_string ##### -->
+<para>
+
+</para>
+
+@proto: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_prototype_free ##### -->
+<para>
+
+</para>
+
+@proto: 
+
+
+<!-- ##### FUNCTION oil_prototype_append_param ##### -->
+<para>
+
+</para>
+
+@proto: 
+@param: 
+
+

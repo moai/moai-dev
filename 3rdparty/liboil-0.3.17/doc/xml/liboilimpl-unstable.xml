@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilimpl-unstable">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilimpl-unstable.top_of_page">OilFunctionImpl</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilFunctionImpl</refname>
+<refpurpose>Functions for manipulating function implementations.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilimpl-unstable.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilFunctionImpl">OilFunctionImpl</link>;
+<link linkend="OilFunctionImpl">OilFunctionImpl</link> *   <link linkend="oil-impl-get-by-index">oil_impl_get_by_index</link>               (<link linkend="int">int</link> i);
+<link linkend="int">int</link>                 <link linkend="oil-impl-is-runnable">oil_impl_is_runnable</link>                (<link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);
+enum                <link linkend="OilImplFlag">OilImplFlag</link>;
+#define             <link linkend="OIL-CPU-FLAG-MASK--CAPS">OIL_CPU_FLAG_MASK</link>
+#define             <link linkend="OIL-DEFINE-IMPL-FULL--CAPS">OIL_DEFINE_IMPL_FULL</link>                (function,klass,flags)
+#define             <link linkend="OIL-DEFINE-IMPL--CAPS">OIL_DEFINE_IMPL</link>                     (function,klass)
+#define             <link linkend="OIL-DEFINE-IMPL-REF--CAPS">OIL_DEFINE_IMPL_REF</link>                 (function,klass)
+#define             <link linkend="OIL-DEFINE-IMPL-ASM--CAPS">OIL_DEFINE_IMPL_ASM</link>                 (function,klass)
+#define             <link linkend="OIL-DEFINE-IMPL-DEPENDS--CAPS">OIL_DEFINE_IMPL_DEPENDS</link>             (function,klass,...)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilimpl-unstable.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilimpl-unstable.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilFunctionImpl" role="struct">
+<title>OilFunctionImpl</title>
+<indexterm zone="OilFunctionImpl"><primary sortas="OilFunctionImpl">OilFunctionImpl</primary></indexterm><programlisting>typedef struct {
+} OilFunctionImpl;
+</programlisting>
+<para>
+An opaque structure representing a function implementation.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-impl-get-by-index" role="function">
+<title>oil_impl_get_by_index ()</title>
+<indexterm zone="oil-impl-get-by-index"><primary sortas="oil_impl_get_by_index">oil_impl_get_by_index</primary></indexterm><programlisting><link linkend="OilFunctionImpl">OilFunctionImpl</link> *   oil_impl_get_by_index               (<link linkend="int">int</link> i);</programlisting>
+<para>
+Returns a pointer to the function implementation with index <parameter>i</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>i</parameter>&#160;:</term>
+<listitem><simpara> index
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to a function implementation structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-impl-is-runnable" role="function">
+<title>oil_impl_is_runnable ()</title>
+<indexterm zone="oil-impl-is-runnable"><primary sortas="oil_impl_is_runnable">oil_impl_is_runnable</primary></indexterm><programlisting><link linkend="int">int</link>                 oil_impl_is_runnable                (<link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);</programlisting>
+<para>
+Determines whether the function implementation given by <parameter>impl</parameter>
+can be executed by the current CPU.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>impl</parameter>&#160;:</term>
+<listitem><simpara> an <parameter>OilFunctionImpl</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> 1 if the implementation can be executed, otherwise 0
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OilImplFlag" role="enum">
+<title>enum OilImplFlag</title>
+<indexterm zone="OilImplFlag"><primary sortas="OilImplFlag">OilImplFlag</primary></indexterm><programlisting>typedef enum {
+  OIL_IMPL_FLAG_REF = (1&lt;&lt;0),
+  OIL_IMPL_FLAG_OPT = (1&lt;&lt;1),
+  OIL_IMPL_FLAG_ASM = (1&lt;&lt;2),
+  OIL_IMPL_FLAG_DISABLED = (1&lt;&lt;3),
+  OIL_IMPL_FLAG_CMOV = (1&lt;&lt;16),
+  OIL_IMPL_FLAG_MMX = (1&lt;&lt;17),
+  OIL_IMPL_FLAG_SSE = (1&lt;&lt;18),
+  OIL_IMPL_FLAG_MMXEXT = (1&lt;&lt;19),
+  OIL_IMPL_FLAG_SSE2 = (1&lt;&lt;20),
+  OIL_IMPL_FLAG_3DNOW = (1&lt;&lt;21),
+  OIL_IMPL_FLAG_3DNOWEXT = (1&lt;&lt;22),
+  OIL_IMPL_FLAG_SSE3 = (1&lt;&lt;23),
+  OIL_IMPL_FLAG_ALTIVEC = (1&lt;&lt;24),
+  OIL_IMPL_FLAG_EDSP = (1&lt;&lt;25),
+  OIL_IMPL_FLAG_ARM6 = (1&lt;&lt;26),
+  OIL_IMPL_FLAG_VFP = (1&lt;&lt;27),
+  OIL_IMPL_FLAG_SSSE3 = (1&lt;&lt;28)
+} OilImplFlag;
+</programlisting>
+<para>
+Implementation flags.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_REF</parameter>: is the reference implementation for the class.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_OPT</parameter>: was compiled with alternate CFLAGS as specified
+by --enable-alternate-optimization.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_ASM</parameter>: is written in assembly code.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_DISABLED</parameter>: is disabled.  This can be set either in the
+source code or during library initialization.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_CMOV</parameter>: uses the i386 instruction cmov or its variants.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_MMX</parameter>: uses MMX instructions.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_SSE</parameter>: uses SSE instructions.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_MMXEXT</parameter>: uses AMD's extended MMX instructions.  These
+are a subset of what Intel calls SSE2.  If an implementation uses
+only AMD's extended MMX instructions, it should set this flag, and
+not <parameter>OIL_IMPL_FLAG_SSE2</parameter>.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_SSE2</parameter>: uses SSE2 instructions.  This flag implies
+<parameter>OIL_IMPL_FLAG_SSE</parameter> and <parameter>OIL_IMPL_FLAG_MMXEXT</parameter>.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_3DNOW</parameter>: uses 3DNow! instructions.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_3DNOWEXT</parameter>: uses extended 3DNow! instructions.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_SSE3</parameter>: uses SSE3 instructions.  This flag implies
+<parameter>OIL_IMPL_FLAG_SSE2</parameter>.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_SSSE3</parameter>: uses SSSE3 instructions.  This flag implies
+<parameter>OIL_IMPL_FLAG_SSE3</parameter>.
+</para>
+<para>
+<parameter>OIL_IMPL_FLAG_ALTIVEC</parameter>: uses Altivec instructions.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-CPU-FLAG-MASK--CAPS" role="macro">
+<title>OIL_CPU_FLAG_MASK</title>
+<indexterm zone="OIL-CPU-FLAG-MASK--CAPS"><primary sortas="OIL_CPU_FLAG_MASK">OIL_CPU_FLAG_MASK</primary></indexterm><programlisting>#define OIL_CPU_FLAG_MASK 0xffff0000
+</programlisting>
+<para>
+Mask describing which bits in <link linkend="OilImplFlag"><type>OilImplFlag</type></link> depend on the current
+CPU.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-DEFINE-IMPL-FULL--CAPS" role="macro">
+<title>OIL_DEFINE_IMPL_FULL()</title>
+<indexterm zone="OIL-DEFINE-IMPL-FULL--CAPS"><primary sortas="OIL_DEFINE_IMPL_FULL">OIL_DEFINE_IMPL_FULL</primary></indexterm><programlisting>#define             OIL_DEFINE_IMPL_FULL(function,klass,flags)</programlisting>
+<para>
+Defines a <link linkend="OilFunctionImpl"><type>OilFunctionImpl</type></link> structure for the function <parameter>function</parameter>
+and class <parameter>klass</parameter>.  CPU-dependent flags in <parameter>flags</parameter> will indicate
+that this implementation requires the given CPU flags.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>function</parameter>&#160;:</term>
+<listitem><simpara> name of function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> implementation flags and CPU requirements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-IMPL--CAPS" role="macro">
+<title>OIL_DEFINE_IMPL()</title>
+<indexterm zone="OIL-DEFINE-IMPL--CAPS"><primary sortas="OIL_DEFINE_IMPL">OIL_DEFINE_IMPL</primary></indexterm><programlisting>#define             OIL_DEFINE_IMPL(function,klass)</programlisting>
+<para>
+Shorthand for defining a C implementation.  See <link linkend="OIL-DEFINE-IMPL-FULL--CAPS"><function>OIL_DEFINE_IMPL_FULL()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>function</parameter>&#160;:</term>
+<listitem><simpara> name of function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-IMPL-REF--CAPS" role="macro">
+<title>OIL_DEFINE_IMPL_REF()</title>
+<indexterm zone="OIL-DEFINE-IMPL-REF--CAPS"><primary sortas="OIL_DEFINE_IMPL_REF">OIL_DEFINE_IMPL_REF</primary></indexterm><programlisting>#define             OIL_DEFINE_IMPL_REF(function,klass)</programlisting>
+<para>
+Shorthand for defining a reference implementation.  See <link linkend="OIL-DEFINE-IMPL-FULL--CAPS"><function>OIL_DEFINE_IMPL_FULL()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>function</parameter>&#160;:</term>
+<listitem><simpara> name of function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-IMPL-ASM--CAPS" role="macro">
+<title>OIL_DEFINE_IMPL_ASM()</title>
+<indexterm zone="OIL-DEFINE-IMPL-ASM--CAPS"><primary sortas="OIL_DEFINE_IMPL_ASM">OIL_DEFINE_IMPL_ASM</primary></indexterm><programlisting>#define             OIL_DEFINE_IMPL_ASM(function,klass)</programlisting>
+<para>
+Shorthand for defining an implementation written in inline
+assembly code.  See <link linkend="OIL-DEFINE-IMPL-FULL--CAPS"><function>OIL_DEFINE_IMPL_FULL()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>function</parameter>&#160;:</term>
+<listitem><simpara> name of function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-IMPL-DEPENDS--CAPS" role="macro">
+<title>OIL_DEFINE_IMPL_DEPENDS()</title>
+<indexterm zone="OIL-DEFINE-IMPL-DEPENDS--CAPS"><primary sortas="OIL_DEFINE_IMPL_DEPENDS">OIL_DEFINE_IMPL_DEPENDS</primary></indexterm><programlisting>#define             OIL_DEFINE_IMPL_DEPENDS(function,klass,...)</programlisting>
+<para>
+Shorthand for defining an implementation that uses another Liboil
+function class.  This is not currently used.  See
+<link linkend="OIL-DEFINE-IMPL-FULL--CAPS"><function>OIL_DEFINE_IMPL_FULL()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>function</parameter>&#160;:</term>
+<listitem><simpara> name of function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> other classes this implementation uses
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,702 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>liboilfuncs-dct</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch01.html" title="Liboil Stable API">
+<link rel="prev" href="liboil-liboilfuncs-math8x8.html" title="Simple Arithmetic on Blocks">
+<link rel="next" href="liboil-liboilfuncs-pixel.html" title="Pixel Operations">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilfuncs-math8x8.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboilfuncs-pixel.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilfuncs-dct.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilfuncs-dct.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="liboilfuncs-dct">
+<a name="liboil-liboilfuncs-dct"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilfuncs-dct.top_of_page"></a>liboilfuncs-dct</span></h2>
+<p>liboilfuncs-dct</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilfuncs-dct.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-dct36-f32" title="oil_dct36_f32 ()">oil_dct36_f32</a>                       (float *d_36,
+                                                         int dstr,
+                                                         const float *s_36,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-fdct8-f64" title="oil_fdct8_f64 ()">oil_fdct8_f64</a>                       (double *d_8,
+                                                         const double *s_8,
+                                                         int dstr,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-fdct8x8-f64" title="oil_fdct8x8_f64 ()">oil_fdct8x8_f64</a>                     (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-fdct8x8s-s16" title="oil_fdct8x8s_s16 ()">oil_fdct8x8s_s16</a>                    (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8-f64" title="oil_idct8_f64 ()">oil_idct8_f64</a>                       (double *d_8,
+                                                         int dstr,
+                                                         const double *s_8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8x8-f64" title="oil_idct8x8_f64 ()">oil_idct8x8_f64</a>                     (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8x8-s16" title="oil_idct8x8_s16 ()">oil_idct8x8_s16</a>                     (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-imdct12-f64" title="oil_imdct12_f64 ()">oil_imdct12_f64</a>                     (double *d_12,
+                                                         const double *s_6);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-imdct32-f32" title="oil_imdct32_f32 ()">oil_imdct32_f32</a>                     (float *d_32,
+                                                         const float *s_32);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-imdct36-f64" title="oil_imdct36_f64 ()">oil_imdct36_f64</a>                     (double *d_36,
+                                                         const double *s_18);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-mdct12-f64" title="oil_mdct12_f64 ()">oil_mdct12_f64</a>                      (double *d_6,
+                                                         const double *s_12);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-mdct36-f64" title="oil_mdct36_f64 ()">oil_mdct36_f64</a>                      (double *d_18,
+                                                         const double *s_36);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8theora-s16" title="oil_idct8theora_s16 ()">oil_idct8theora_s16</a>                 (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8x8lim10-f64" title="oil_idct8x8lim10_f64 ()">oil_idct8x8lim10_f64</a>                (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8x8lim10-s16" title="oil_idct8x8lim10_s16 ()">oil_idct8x8lim10_s16</a>                (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);
+void                <a class="link" href="liboil-liboilfuncs-dct.html#oil-idct8x8theora-s16" title="oil_idct8x8theora_s16 ()">oil_idct8x8theora_s16</a>               (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilfuncs-dct.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilfuncs-dct.details"></a><h2>Details</h2>
+<div class="refsect2" title="oil_dct36_f32 ()">
+<a name="oil-dct36-f32"></a><h3>oil_dct36_f32 ()</h3>
+<pre class="programlisting">void                oil_dct36_f32                       (float *d_36,
+                                                         int dstr,
+                                                         const float *s_36,
+                                                         int sstr);</pre>
+<p>
+FIXME: This function is broken.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_36</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_36</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_fdct8_f64 ()">
+<a name="oil-fdct8-f64"></a><h3>oil_fdct8_f64 ()</h3>
+<pre class="programlisting">void                oil_fdct8_f64                       (double *d_8,
+                                                         const double *s_8,
+                                                         int dstr,
+                                                         int sstr);</pre>
+<p>
+Performs a Forward Discrete Cosine Transform on <em class="parameter"><code>s_8</code></em> and places
+the result in <em class="parameter"><code>d_8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_fdct8x8_f64 ()">
+<a name="oil-fdct8x8-f64"></a><h3>oil_fdct8x8_f64 ()</h3>
+<pre class="programlisting">void                oil_fdct8x8_f64                     (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a 2-D Forward Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em> and places
+the result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_fdct8x8s_s16 ()">
+<a name="oil-fdct8x8s-s16"></a><h3>oil_fdct8x8s_s16 ()</h3>
+<pre class="programlisting">void                oil_fdct8x8s_s16                    (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Performs a 2-D Forward Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em> and places
+the result in <em class="parameter"><code>d_8x8</code></em>.
+</p>
+<p>
+This function uses an alternate scaling used by RTjpeg.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8_f64 ()">
+<a name="oil-idct8-f64"></a><h3>oil_idct8_f64 ()</h3>
+<pre class="programlisting">void                oil_idct8_f64                       (double *d_8,
+                                                         int dstr,
+                                                         const double *s_8,
+                                                         int sstr);</pre>
+<p>
+Performs a Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8</code></em> and places
+the result in <em class="parameter"><code>d_8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8x8_f64 ()">
+<a name="oil-idct8x8-f64"></a><h3>oil_idct8x8_f64 ()</h3>
+<pre class="programlisting">void                oil_idct8x8_f64                     (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a 2-D Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em> and places
+the result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8x8_s16 ()">
+<a name="oil-idct8x8-s16"></a><h3>oil_idct8x8_s16 ()</h3>
+<pre class="programlisting">void                oil_idct8x8_s16                     (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a limited 2-D Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em>
+and places the result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_imdct12_f64 ()">
+<a name="oil-imdct12-f64"></a><h3>oil_imdct12_f64 ()</h3>
+<pre class="programlisting">void                oil_imdct12_f64                     (double *d_12,
+                                                         const double *s_6);</pre>
+<p>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <em class="parameter"><code>s_6</code></em> and places the result in <em class="parameter"><code>d_12</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_12</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_6</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_imdct32_f32 ()">
+<a name="oil-imdct32-f32"></a><h3>oil_imdct32_f32 ()</h3>
+<pre class="programlisting">void                oil_imdct32_f32                     (float *d_32,
+                                                         const float *s_32);</pre>
+<p>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <em class="parameter"><code>s_32</code></em> and places the result in <em class="parameter"><code>d_32</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_32</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_32</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_imdct36_f64 ()">
+<a name="oil-imdct36-f64"></a><h3>oil_imdct36_f64 ()</h3>
+<pre class="programlisting">void                oil_imdct36_f64                     (double *d_36,
+                                                         const double *s_18);</pre>
+<p>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <em class="parameter"><code>s_18</code></em> and places the result in <em class="parameter"><code>d_36</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_36</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_18</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_mdct12_f64 ()">
+<a name="oil-mdct12-f64"></a><h3>oil_mdct12_f64 ()</h3>
+<pre class="programlisting">void                oil_mdct12_f64                      (double *d_6,
+                                                         const double *s_12);</pre>
+<p>
+Performs a Modified Discrete Cosine Transform (MDCT)
+on the source array <em class="parameter"><code>s_12</code></em> and places the result in <em class="parameter"><code>d_6</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_6</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_12</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_mdct36_f64 ()">
+<a name="oil-mdct36-f64"></a><h3>oil_mdct36_f64 ()</h3>
+<pre class="programlisting">void                oil_mdct36_f64                      (double *d_18,
+                                                         const double *s_36);</pre>
+<p>
+Performs a Modified Discrete Cosine Transform (MDCT)
+on the source array <em class="parameter"><code>s_36</code></em> and places the result in <em class="parameter"><code>d_18</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_18</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_36</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8theora_s16 ()">
+<a name="oil-idct8theora-s16"></a><h3>oil_idct8theora_s16 ()</h3>
+<pre class="programlisting">void                oil_idct8theora_s16                 (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8,
+                                                         int sstr);</pre>
+<p>
+Performs a Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8</code></em> and places
+the result in <em class="parameter"><code>d_8</code></em>, as defined by the Theora specification.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8x8lim10_f64 ()">
+<a name="oil-idct8x8lim10-f64"></a><h3>oil_idct8x8lim10_f64 ()</h3>
+<pre class="programlisting">void                oil_idct8x8lim10_f64                (double *d_8x8,
+                                                         int dstr,
+                                                         const double *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a 2-D Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em> and places
+the result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8x8lim10_s16 ()">
+<a name="oil-idct8x8lim10-s16"></a><h3>oil_idct8x8lim10_s16 ()</h3>
+<pre class="programlisting">void                oil_idct8x8lim10_s16                (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a limited 2-D Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em>
+and places the result in <em class="parameter"><code>d_8x8</code></em>.  The source 8x8 block must be non-zero
+only in the 10 lowest-order components.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_idct8x8theora_s16 ()">
+<a name="oil-idct8x8theora-s16"></a><h3>oil_idct8x8theora_s16 ()</h3>
+<pre class="programlisting">void                oil_idct8x8theora_s16               (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int sstr);</pre>
+<p>
+Performs a Inverse Discrete Cosine Transform on <em class="parameter"><code>s_8x8</code></em> and places
+the result in <em class="parameter"><code>d_8x8</code></em>, as defined by the Theora specification.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

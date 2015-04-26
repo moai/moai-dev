@@ -1,0 +1,345 @@
+//------------------------------------------------------------------
+// file:  readme.txt
+//    Readme to accompany libmotovec.a
+//------------------------------------------------------------------
+
+Rev 0.30 release - 5/28/2003 by Chuck Corley
+
+This release includes two new files, string_vec.S and checksum_vec.s,
+which you could paste into the Linux kernel files:
+/arch/ppc/lib/string.S  and
+/arch/ppc/lib/checksum.S
+if you wanted to employ AltiVec in the Linux kernel.  We used the
+memcpy_vec and csum_partial_copy_generic_vec functions from these 
+files only in the modified versions of /net/core/skbuf.c and
+/net/core/iovec.c to give us the networking performance boost in
+Linux described in the SNDF presentation "Accelerating Networking Data
+Movement Using the AltiVec® Technology" at www.motorola.com/sndf under
+Dallas-2003/Host Processors (H1110).  Also see the white paper
+"Enhanced TCP/IP Performance with AltiVec Technology" at 
+e-www.motorola.com/brdata/PDFDB/docs/ALTIVECTCPIPWP.pdf
+
+These files contain the following functions
+string.S contains:                   string_vec.S contains:
+memcpy                               memcpy_vec
+bcopy                                bcopy_vec
+memmove                              memmove_vec
+backwards_memcpy                     backwards_memcpy_vec
+memset                               memset_vec
+memcmp                               memcmp_vec
+memchr                               (coming soon)
+cacheable_memcpy                     cacheable_memcpy_vec
+cacheable_memzero                    cacheable_memzero_vec
+strcpy                               strcpy_vec
+strncpy                              (coming soon)
+strcat                               (coming soon)
+strcmp                               strcmp_vec
+strlen                               strlen_vec
+__copy_tofrom_user*                  __copy_tofrom_user_vec*
+__clear_user*                        __clear_user_vec*
+__strncpy_from_user*                 (coming soon)
+__strnlen_user*                      (coming soon)
+
+checksum.S contains:                 checksum_vec.S contains:
+csum_partial                         csum_partial_vec
+csum_partial_copy_generic*           csum_partial_copy_generic_vec
+ip_fast_csum                         (unlikely to benefit)			
+csum_tcpudp_magic                    (unlikely to benefit)
+
+*these functions have ex_table entries for handling memory access
+exceptions in the kernel.  The AltiVec versions were functionally
+tested by hand.
+
+csum_partial_copy_generic_vec and csum_partial_vec previously 
+assembled into libmotovec.a have been removed since they are in the file
+above.  We are finding that selective use of the *_vec functions in 
+the OS kernel is much "safer" than wholescale replacement of the libc
+library.  libmotovec.a returns to being exclusively a performance-enhancing
+library of libc functions that can be safely linked with user application
+code to test the performance of AltiVec.
+
+My presentation for SDNF-Europe includes performance comparisons
+of the scalar versus vector versions of the above functions.  It should
+be available on the SNDF website soon. It also includes an updated
+explanation of memcpy without the potential incoherency problem discussed
+below.
+
+So this release contains in libmotovec.a:
+memcpy.o           from vec_memcpy.S Rev 0.30 dated  4/02/2003
+bcopy.o            from vec_memcpy.S Rev 0.30 dated  4/02/2003
+memmove.o          from vec_memcpy.S Rev 0.30 dated  4/02/2003
+memset.o           from vec_memset.S Rev 0.10 dated  5/01/2003
+bzero.o            from vec_memset.S Rev 0.10 dated  5/01/2003
+strcmp.o           from vec_strcmp.S Rev 0.00 dated  3/03/2002
+strlen.o           from vec_strlen.S Rev 0.00 dated 12/26/2002
+
+And in string.s:
+memcpy_vec derived from vec_memcpy.S Rev 0.30 dated  4/02/2003
+bcopy_vec                   derived from vec_memcpy.S Rev 0.30
+memmove_vec                 derived from vec_memcpy.S Rev 0.30
+backwards_memcpy_vec        derived from vec_memcpy.S Rev 0.30
+memset_vec derived from vec_memset.S Rev 0.10 dated  5/01/2003
+memcmp_vec                  derived from vec_memcmp.S Rev 0.00
+memchr                                           (coming soon)
+cacheable_memcpy_vec        derived from vec_memcpy.S Rev 0.30
+cacheable_memzero_vec       derived from vec_memset.S Rev 0.10
+strcpy_vec                  derived from vec_strcpy.S Rev 0.10
+strncpy_vec                                      (coming soon)
+strcat_vec                                       (coming soon)
+strcmp_vec   derived from vec_strcmp.S Rev 0.00 (not released)
+strlen_vec   derived from vec_strlen.S Rev 0.00 (not released)
+__copy_tofrom_user_vec*     derived from vec_memcpy.S Rev 0.30
+__clear_user_vec*           derived from vec_memcpy.S Rev 0.30
+__strncpy_from_user_vec*                         (coming soon)
+__strnlen_user_vec*                              (coming soon)
+*with ex_table and exception code
+
+And in checksum.s:
+csum_partial_vec  derived from vec_csum.S Rev 0.0 dated 4/19/03
+csum_partial_copy_generic_vec           from vec_csum.S Rev 0.0
+
+string_vec.S and checksum_vec.S are only known to assemble with gcc 2.95
+and gcc 3.3+.  Should work with other gcc compilers but may need
+editing to be compatible with non-gcc compilers.
+
+Rev 0.20 release - 5/12/2003 by Chuck Corley
+
+Thanks to all of you who attended SNDF.  My presentation "Implementing
+and Using the Motorola AltiVec Libraries" is available for downloading 
+at www.motorola.com/sndf under Dallas-2003/Host Processors (H1109). 
+
+During the presentation DS from Lucent pointed out that the way I was
+bringing the beginning and ending destination Quad Words (vectors) into
+the registers for merging with the permuted source made the
+"uninvolved" destination bytes vulnerable to potential incoherency if
+some interrupting process changed those bytes while I was holding them
+in a register.  While the possibility seemed small, I have rewritten the
+code to avoid this potential problem.  The result actually is slightly 
+faster than the original for small buffers.
+
+So this release contains:
+memcpy.o       from vec_memcpy.S Rev 0.30 dated 4/02/2003
+bcopy.o        from vec_memcpy.S Rev 0.30 dated 4/02/2003
+memmove.o      from vec_memcpy.S Rev 0.30 dated 4/02/2003
+memset.o       from vec_memset.S Rev 0.10 dated 5/01/2003
+bzero.o        from vec_memset.S Rev 0.10 dated 5/01/2003
+csum_partial_copy_generic_vec from vec_csum.S Rev 0.0 dated 4/19/03
+csum_partial_vec from vec_csum.S Rev 0.0 dated 4/19/03
+
+The latter two additions were assembled into libmotovec.a despite the
+fact they are not standard libc functions.  Rather they are the Altivec
+enabled equivalents of functions by the same name from the linux
+source tree (Linux 2.4.17).  While we are pursuing how to get these
+functions incorporated into Linux, here they are assembled and in
+source form if you are building your own version of linux.  The use
+of an earlier version of csum_partial_copy_generic_vec and memcpy_vec is 
+documented to speed up TCP/IP and UDP transfers in Jacob Pan's SNDF
+presentation "Accelerating Networking Data Movement Using AltiVec
+Technology" (H1110) available at the website above.  csum_partial
+does not appear to be called with large enough buffer sizes in linux 
+to warrant using the vectorized version.
+
+I am also releasing the source for memset and bzero in this release.
+strcpy, strlen, strncpy, strcmp, memcmp, strcat, and memchr are still 
+on my list to do - soon.
+
+Rev 0.10 release - 3/13/2003 by Chuck Corley
+
+The presence of dcbz in the 32 byte loop of memcpy (or memmove)
+causes an alignment exception to non-cacheable memory (MPC7410 User's
+Manual p. 4-20 and MPC7450 User's Manual p. 4-25) so it was 
+removed in this release.  dcbz instructions were not present in 
+memset in any of these releases.  That fixed the alignment problem 
+but hurt the performance some; then it was "rediscovered" that
+dcba would have been a better choice anyway as it does not cause 
+an exception; it would just be noop'ed.  So this release substitutes
+dcba for dcbz.
+
+This release contains improvements in memcpy that should be
+documented in an application note which is still not finished but
+are being pretty nicely documented for SNDF presentation H1109.
+
+The memcpy was further loop unrolled to provide a 128B loop for
+large buffers (>256 bytes) and the data stream touch instruction
+was added.  It may still be possible to improve the tuning of
+the dst instruction, particularly in memmove, but this release
+is worthy of reving the number to the next significant revision.
+
+I've developed a new metric which will be explained at SNDF in
+Dallas, TX, March 23-26, 2003.  As the number of bytes in a 
+buffer gets larger, the memcpy routine settles into repetitions
+of the inner loop.  32 bytes were moved in the inner loop of
+Rev 0.0x and 128 bytes are moved in the inner loop of Rev 0.10.
+And the number of processor clocks per inner loop can be shown
+to approach the minimum possible.  Therefore the new metric
+measures the incremental transfer rate for the inner loop after 
+a reasonable number (>512) of bytes have been moved.  This will
+not be the bytes transferred per second because there were some
+less efficient transfers at start-up but this is the transfer
+rate that the routine is asymptotically approaching as the buffer
+gets big (regularly testing to 1460 bytes).
+
+Here is that metric for several cases:
+
+Case 1: For gcc's lib c memcpy when buffers are not word aligned 
+Case 2: For gcc's lib c memcpy when buffers are word aligned 
+Case 3: For Rev 0.01 of memcpy with Altivec irrespective of alignment
+Case 4: For Rev 0.10 of memcpy with Altivec irrespective of alignment
+
+Numbers are provided for the cold DCache and warm DCache.  Code is
+assumed to always be resident in the ICache as would be expected here
+where the inner loop has run multiple times.
+
+                                   COLD DCACHE           WARM DCACHE
+ FOR THE MPC7410@400/100     Insts  Clks   MB/Sec   Insts   Clks  MB/Sec
+Case 1: gcc_NWA (1 byte/loop)  6     6       71       6      3     133
+Case 2: gcc_WA (16 B/loop)    12    62      103      12      8     800     
+Case 3: vec_memcpy Rev 0.01   12    60      213      12      7    1961
+Case 4: vec_memcpy Rev 0.10   46   125      410      46     41    1250
+
+
+                                   COLD DCACHE           WARM DCACHE
+ FOR THE MPC7445@1GHz/133   Insts  Clks   MB/Sec   Insts   Clks  MB/Sec
+Case 1: gcc_NWA               6     8       122       6      3     350 
+Case 2: gcc_WA                12   104      153      12     12    1333             
+Case 3: vec_memcpy Rev 0.01   12   110      292      12      7    4413  
+Case 4: vec_memcpy Rev 0.10   46   247      518      46     35    3666
+
+Perhaps you notice that we are trading off Warm DCache performance to
+improve the Cold DCache case.  There are other interesting tradeoffs
+in going from 32 byte inner loop to 128 bytes.  And in using the dcba
+instruction - or not.  In other words, the numbers for vec_memcpy above
+are not the highest possible in the Warm DCache case but they look like
+a good compromise which most benefits the Cold DCache case.  More at SNDF
+(or eventually in the app note) ...
+
+I am releasing the source code to vec_memcpy.S with this release so if
+if you don't like the tradeoff above you can make your own selection.  It
+successfully assembles for me with Codewarrior, Diab, Green Hills, gcc,
+and Metaware.  It is nicely commented but could use more documentation.
+I will specifically be explaining it in SNDF presentation H1109.
+
+*************************************************************************
+
+Rev 0.01 release - 2/17/2003 by Chuck Corley
+
+Fixed a problem at Last_ld_fwd: that caused a load beyond a page
+boundary and resulting segment fault in Linux.  Last source load 
+of SRC+BK in vec_memcpy could be > SRC+BC-1.  Also found and fixed
+an error where the Quick and Dirty (QND) code that was in there for
+dst wasn't completely commented out.  Plan to enable dst soon.
+Probably loop unroll to 128 bytes first though.
+
+**********************************************************************
+
+Initial Release - 2/10/2003 by Chuck Corley
+
+Contains the libc functions:
+memcpy.o       from vec_memcpy.S Rev 0.0 dated 2/09/2003
+bcopy.o        from vec_memcpy.S Rev 0.0 dated 2/09/2003
+memmove.o      from vec_memcpy.S Rev 0.0 dated 2/09/2003
+memset.o       from vec_memset.S Rev 0.0 dated 2/09/2003
+bzero.o        from vec_memset.S Rev 0.0 dated 2/09/2003
+
+These functions are implemented in AltiVec but are still not as fast
+as we know how to make them.  Watch this site for frequent revisions 
+over the next several months.
+
+We are in the process of creating application notes to explain the 
+source code and the performance associated with these library functions;
+watch this site for those application notes to be added.  A logical 
+deadline for completion of this work is the Smart Network Developers
+Forum in Dallas, TX, March 23-26, 2003, where we will be discussing this 
+library, its performance, and application.
+
+We will also be adding the following libc functions in the very near future:
+strcpy
+strcmp
+strlen
+memcmp
+memchr
+strncpy
+
+We also have preliminary work completed on the following functions 
+found in Linux and have to figure out how to distribute them:
+csum_partial
+csum_partial_generic
+__copy_tofrom_user
+page_copy
+
+We believe that these libraries will improve performance on Motorola G4
+processors for applications that make heavy use of the included functions.
+On non-G4 microprocessors they will cause illegal operation exceptions
+because those processors do not support AltiVec.
+
+To use this library, you must:
+1. Include it on the linker command line prior to the compiler's libc
+library.
+
+Examples:
+For gcc:
+powerpc-eabisim-ld -T../../spprt/gcc_dink.script -Qy -dn -Bstatic ../../spprt/gcc_obj/gcc_crt0.o  ../../spprt/gcc_obj/dtime.o  ../../spprt/gcc_obj/cache.o  ../../spprt/gcc_obj/Support.o  ../../spprt/gcc_obj/dinkusr.o  ../../spprt/gcc_obj/perfmon.o gcc_obj/test_memmove.o c:\BMS\vec_lib\libmotovec\libmotovec.a   c:/cygwin/Altivec/powerpc-eabisim\lib\libm.a --start-group -lsim -lc --end-group -o gccBM.elf
+
+For Diab:
+dld ../../spprt/diab_dink.dld ../../spprt/diab_obj/diab_crt0.o  ../../spprt/diab_obj/dtime.o  ../../spprt/diab_obj/cache.o  ../../spprt/diab_obj/Support.o  ../../spprt/diab_obj/dinkusr.o  ../../spprt/diab_obj/perfmon.o diab_obj/test_memmove.o c:\BMS\vec_lib\libmotovec\libmotovec.a  -Y P,c:/diab/5.0.3/PPCEH:c:/diab/5.0.3/PPCE/simple:c:/diab/5.0.3/PPCE:c:/diab/5.0.3/PPCEN -lc -lm -o diabBM.elf
+
+For Green Hills:
+elxr -T../../spprt/ghs_dink.lnk ../../spprt/ghs_obj/ghs_crt0.o  ../../spprt/ghs_obj/dtime.o  ../../spprt/ghs_obj/cache.o  ../../spprt/ghs_obj/Support.o  ../../spprt/ghs_obj/dinkusr.o  ../../spprt/ghs_obj/perfmon.o ghs_obj/test_memmove.o c:\BMS\vec_lib\libmotovec\libmotovec.a  -Lc:\GHS\ppc36\ppc  -lansi -lsys -larch -lind -o ghsBM.elf
+
+For CodeWarrior:
+mwldeppc -lcf ../../spprt/cw_dink.lcf -nostdlib -fp fmadd -proc 7450 ../../spprt/cw_obj/cw_crt0.o  ../../spprt/cw_obj/dtime.o  ../../spprt/cw_obj/cache.o  ../../spprt/cw_obj/Support.o  ../../spprt/cw_obj/dinkusr.o  ../../spprt/cw_obj/perfmon.o cw_obj/test_memmove.o c:\BMS\vec_lib\libmotovec\libmotovec.a  -Lc:/"Program Files"/Metrowerks/CodeWarrior/PowerPC_EABI_Support/Runtime/Lib/ -lRuntime.PPCEABI.H.a  -Lc:/"Program Files"/Metrowerks/CodeWarrior/PowerPC_EABI_Support/Msl/MSL_C/Ppc_eabi/Lib/ -lMSL_C.PPCEABI.bare.H.a -o cwBM.elf
+
+For Metaware:
+ldppc ../../spprt/mw_link.txt -Bnoheader -Bhardalign -dn -q -Qn ../../spprt/mw_obj/mw_crt0.o  ../../spprt/mw_obj/dtime.o  ../../spprt/mw_obj/cache.o  ../../spprt/mw_obj/Support.o  ../../spprt/mw_obj/dinkusr.o  ../../spprt/mw_obj/perfmon.o mw_obj/test_memmove.o c:\BMS\vec_lib\libmotovec\libmotovec.a  -Y P,c:/hcppc/lib/be/fp -lct -lmwt -o mwBM.elf
+
+
+2. Enable AltiVec in the Machine State Processor (MSR) register of the
+target machine.
+
+Example:
+AltiVec_enable:
+	mfmsr	r4		// Get current MSR contents
+	oris	r4,r4,0x0200	// Set the AltiVec enable bit MSR[6]
+	mtmsr	r4		// Write to MSR
+	isync			// Context synchronizing instr after mtmsr
+
+
+3. If the AltiVec vector register set is used in more than one context,
+the AltiVec registers must be saved and restored on context switches.  The
+AltiVec EABI extensions define a register (SPR 256 - the VRSAVE register)
+which can be used to reduce the number of vector registers which have to
+be saved to only those in use.  This library is currently compiled
+without that VRSAVE feature enabled, so all 32 vector registers will have
+to be saved and restored.  We are currently thinking that this is a more
+efficient practice anyway and note that Linux and several RTOSes are taking
+that approach in saving and restoring the vector registers.  We have observed
+very little performance difference in Linux for saving all of the AltiVec 
+registers on a context switch versus saving only 8.  And saving all of the 
+registers is a less than 1% total impact on performance.
+
+4. There is one worrisome problem with this library when run on the MPC745X
+microprocessors in the 60x bus mode.  The MPC7450 Family User's Manual
+(Section 7.3) states that "The 60x bus protocol does not support a 16-byte
+bus transaction.  Therefore, cache-inhibited AltiVec loads, stores, and
+write-through stores take an alignment exception.  This requires a re-write
+of the alignment exception routines in software that supports AltiVec quad
+word access in 60x bus mode on the MPC745X."
+
+This says that if the user is attempting to use these routines in a
+cache-inhibited area of memory on a MPC745X in 60x bus mode, it will require
+special alignment exception handling software.  We are currently implementing
+that software for the Linux OS.  Alternatively, the user can restrict this 
+library's use to areas of memory known to be cacheable.
+
+This library was built using gcc, but as shown in the examples of step 1 above,
+links and executes with Diab5.0, Green Hills 3.6, Codewarrior EPPC 6.1, and
+Metaware 4.5.  The gcc archiver was used to create it in the following 
+command lines:
+
+powerpc-eabisim-gcc -c -s -fvec -mcpu=750 -mregnames   -I. -I./source -I../../spprt -Ic:/cygwin/Altivec\powerpc-eabisim\include         -Ic:/cygwin/Altivec\lib\gcc-lib\powerpc-eabisim\gcc-2.95.2\include -o gcc_obj/vec_memcpy.o -D__GNUC__  -DLIBMOTOVEC ../vec_memcpy/Source/vec_memcpy.S -o gcc_obj/vec_memcpy.o
+
+powerpc-eabisim-gcc -c -s -fvec -mcpu=750 -mregnames   -I. -I./source -I../../spprt -Ic:/cygwin/Altivec\powerpc-eabisim\include         -Ic:/cygwin/Altivec\lib\gcc-lib\powerpc-eabisim\gcc-2.95.2\include -o gcc_obj/vec_memset.o -D__GNUC__  -DLIBMOTOVEC ../vec_memset/source/vec_memset.S -o gcc_obj/vec_memset.o
+
+powerpc-eabisim-ar -ru libmotovec.a gcc_obj/vec_memcpy.o        gcc_obj/vec_memset.o
+
+Email questions or suggestions to risc10@email.sps.mot.com

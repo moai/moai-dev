@@ -1,0 +1,266 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### ENUM OilType ##### -->
+<para>
+
+</para>
+
+@OIL_TYPE_UNKNOWN: 
+@OIL_TYPE_INT: 
+@OIL_TYPE_s8: 
+@OIL_TYPE_u8: 
+@OIL_TYPE_s16: 
+@OIL_TYPE_u16: 
+@OIL_TYPE_s32: 
+@OIL_TYPE_u32: 
+@OIL_TYPE_s64: 
+@OIL_TYPE_u64: 
+@OIL_TYPE_f32: 
+@OIL_TYPE_f64: 
+@OIL_TYPE_s8p: 
+@OIL_TYPE_u8p: 
+@OIL_TYPE_s16p: 
+@OIL_TYPE_u16p: 
+@OIL_TYPE_s32p: 
+@OIL_TYPE_u32p: 
+@OIL_TYPE_s64p: 
+@OIL_TYPE_u64p: 
+@OIL_TYPE_f32p: 
+@OIL_TYPE_f64p: 
+
+<!-- ##### FUNCTION oil_type_sizeof ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### MACRO oil_type_is_floating_point ##### -->
+<para>
+
+</para>
+
+@type: 
+
+
+<!-- ##### FUNCTION oil_type_name ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### ENUM OilArgType ##### -->
+<para>
+
+</para>
+
+@OIL_ARG_UNKNOWN: 
+@OIL_ARG_N: 
+@OIL_ARG_M: 
+@OIL_ARG_DEST1: 
+@OIL_ARG_DSTR1: 
+@OIL_ARG_DEST2: 
+@OIL_ARG_DSTR2: 
+@OIL_ARG_DEST3: 
+@OIL_ARG_DSTR3: 
+@OIL_ARG_SRC1: 
+@OIL_ARG_SSTR1: 
+@OIL_ARG_SRC2: 
+@OIL_ARG_SSTR2: 
+@OIL_ARG_SRC3: 
+@OIL_ARG_SSTR3: 
+@OIL_ARG_SRC4: 
+@OIL_ARG_SSTR4: 
+@OIL_ARG_SRC5: 
+@OIL_ARG_SSTR5: 
+@OIL_ARG_INPLACE1: 
+@OIL_ARG_ISTR1: 
+@OIL_ARG_INPLACE2: 
+@OIL_ARG_ISTR2: 
+@OIL_ARG_LAST: 
+
+<!-- ##### FUNCTION oil_arg_type_name ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### MACRO oil_type_s8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_u8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_s16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_u16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_s32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_u32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_s64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_u64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_f32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_f64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_s8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_u8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_s16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_u16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_s32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_min_u32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_s8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_u8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_s16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_u16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_s32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_type_max_u32 ##### -->
+<para>
+
+</para>
+
+
+

@@ -1,0 +1,296 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION oil_argb_paint_u8 ##### -->
+<para>
+
+</para>
+
+@i_4xn: 
+@s1_4: 
+@s2_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_ayuv2argb_u8 ##### -->
+<para>
+
+</para>
+
+@d_4xn: 
+@s_4xn: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_ayuv2uyvy ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_ayuv2yuyv ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_ayuv2yvyu ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_add_argb ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_add_argb_const_src ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_argb ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s1_n: 
+@s2_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_argb_const_mask ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s1_n: 
+@s2_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_argb_const_src ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s1_1: 
+@s2_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_over_argb ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_n: 
+@s2_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_over_argb_const_mask ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_n: 
+@s2_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_in_over_argb_const_src ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_1: 
+@s2_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_over_argb ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_composite_over_argb_const_src ##### -->
+<para>
+
+</para>
+
+@i_n: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_merge_linear_argb ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@s2_n: 
+@s3_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_resample_linear_argb ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_2xn: 
+@n: 
+@i_2: 
+
+
+<!-- ##### FUNCTION oil_resample_linear_u8 ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_2xn: 
+@n: 
+@i_2: 
+
+
+<!-- ##### FUNCTION oil_rgb2bgr ##### -->
+<para>
+
+</para>
+
+@d_3xn: 
+@s_3xn: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_rgb2rgba ##### -->
+<para>
+
+</para>
+
+@d_4xn: 
+@s_3xn: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_yuv2rgbx_sub2_u8 ##### -->
+<para>
+
+</para>
+
+@d_4xn: 
+@src1: 
+@src2: 
+@src3: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_yuv2rgbx_sub4_u8 ##### -->
+<para>
+
+</para>
+
+@d_4xn: 
+@src1: 
+@src2: 
+@src3: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_yuv2rgbx_u8 ##### -->
+<para>
+
+</para>
+
+@d_4xn: 
+@src1: 
+@src2: 
+@src3: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_uyvy2ayuv ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_yuyv2ayuv ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_yvyu2ayuv ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+

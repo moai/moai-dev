@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="Liboil Reference Manual" link="index.html" author="" name="liboil" version="2" language="c">
+  <chapters>
+    <sub name="Liboil Stable API" link="ch01.html">
+      <sub name="Intialization" link="liboil-liboilinit.html"/>
+      <sub name="Type Conversion" link="liboil-liboilfuncs-conv.html"/>
+      <sub name="liboilfuncs-copy" link="liboil-liboilfuncs-copy.html"/>
+      <sub name="Simple Arithmetic" link="liboil-liboilfuncs-math.html"/>
+      <sub name="Simple Arithmetic on Blocks" link="liboil-liboilfuncs-math8x8.html"/>
+      <sub name="liboilfuncs-dct" link="liboil-liboilfuncs-dct.html"/>
+      <sub name="Pixel Operations" link="liboil-liboilfuncs-pixel.html"/>
+      <sub name="liboilfuncs-doc" link="liboil-liboilfuncs-doc.html"/>
+    </sub>
+    <sub name="Liboil Unstable API" link="ch02.html">
+      <sub name="Intialization" link="liboil-liboilinit-unstable.html"/>
+      <sub name="CPU" link="liboil-liboilcpu.html"/>
+      <sub name="Debug" link="liboil-liboildebug.html"/>
+      <sub name="OilFunctionClass" link="liboil-liboilclass-unstable.html"/>
+      <sub name="OilFunctionImpl" link="liboil-liboilimpl-unstable.html"/>
+      <sub name="OilParameter" link="liboil-liboilparameter.html"/>
+      <sub name="OilProfile" link="liboil-liboilprofile.html"/>
+      <sub name="OilPrototype" link="liboil-liboilprototype.html"/>
+      <sub name="Random Number Generation" link="liboil-liboilrandom.html"/>
+      <sub name="OilTest" link="liboil-liboiltest.html"/>
+      <sub name="liboiltypes" link="liboil-liboiltypes.html"/>
+      <sub name="Macros" link="liboil-liboilmacros.html"/>
+      <sub name="liboiljunk" link="liboil-liboiljunk.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <keyword type="function" name="oil_init ()" link="liboil-liboilinit.html#oil-init" since="0.3.0"/>
+    <keyword type="function" name="oil_clipconv8x8_u8_s16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv8x8-u8-s16"/>
+    <keyword type="function" name="oil_clipconv_s16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s16-f32"/>
+    <keyword type="function" name="oil_clipconv_s16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s16-f64"/>
+    <keyword type="function" name="oil_clipconv_s16_s32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s16-s32"/>
+    <keyword type="function" name="oil_clipconv_s16_u16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s16-u16"/>
+    <keyword type="function" name="oil_clipconv_s16_u32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s16-u32"/>
+    <keyword type="function" name="oil_clipconv_s32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s32-f32"/>
+    <keyword type="function" name="oil_clipconv_s32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s32-f64"/>
+    <keyword type="function" name="oil_clipconv_s32_u32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s32-u32"/>
+    <keyword type="function" name="oil_clipconv_s8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-f32"/>
+    <keyword type="function" name="oil_clipconv_s8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-f64"/>
+    <keyword type="function" name="oil_clipconv_s8_s16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-s16"/>
+    <keyword type="function" name="oil_clipconv_s8_s32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-s32"/>
+    <keyword type="function" name="oil_clipconv_s8_u16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-u16"/>
+    <keyword type="function" name="oil_clipconv_s8_u32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-u32"/>
+    <keyword type="function" name="oil_clipconv_s8_u8 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-s8-u8"/>
+    <keyword type="function" name="oil_clipconv_u16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u16-f32"/>
+    <keyword type="function" name="oil_clipconv_u16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u16-f64"/>
+    <keyword type="function" name="oil_clipconv_u16_s16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u16-s16"/>
+    <keyword type="function" name="oil_clipconv_u16_s32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u16-s32"/>
+    <keyword type="function" name="oil_clipconv_u16_u32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u16-u32"/>
+    <keyword type="function" name="oil_clipconv_u32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u32-f32"/>
+    <keyword type="function" name="oil_clipconv_u32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u32-f64"/>
+    <keyword type="function" name="oil_clipconv_u32_s32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u32-s32"/>
+    <keyword type="function" name="oil_clipconv_u8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-f32"/>
+    <keyword type="function" name="oil_clipconv_u8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-f64"/>
+    <keyword type="function" name="oil_clipconv_u8_s16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-s16"/>
+    <keyword type="function" name="oil_clipconv_u8_s32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-s32"/>
+    <keyword type="function" name="oil_clipconv_u8_s8 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-s8"/>
+    <keyword type="function" name="oil_clipconv_u8_u16 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-u16"/>
+    <keyword type="function" name="oil_clipconv_u8_u32 ()" link="liboil-liboilfuncs-conv.html#oil-clipconv-u8-u32"/>
+    <keyword type="function" name="oil_conv8x8_f64_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv8x8-f64-s16"/>
+    <keyword type="function" name="oil_conv8x8_s16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv8x8-s16-f64"/>
+    <keyword type="function" name="oil_conv_f32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-f64"/>
+    <keyword type="function" name="oil_conv_f32_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-s16"/>
+    <keyword type="function" name="oil_conv_f32_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-s32"/>
+    <keyword type="function" name="oil_conv_f32_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-s8"/>
+    <keyword type="function" name="oil_conv_f32_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-u16"/>
+    <keyword type="function" name="oil_conv_f32_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-u32"/>
+    <keyword type="function" name="oil_conv_f32_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f32-u8"/>
+    <keyword type="function" name="oil_conv_f64_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-f32"/>
+    <keyword type="function" name="oil_conv_f64_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-s16"/>
+    <keyword type="function" name="oil_conv_f64_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-s32"/>
+    <keyword type="function" name="oil_conv_f64_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-s8"/>
+    <keyword type="function" name="oil_conv_f64_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-u16"/>
+    <keyword type="function" name="oil_conv_f64_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-u32"/>
+    <keyword type="function" name="oil_conv_f64_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-f64-u8"/>
+    <keyword type="function" name="oil_conv_s16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-f32"/>
+    <keyword type="function" name="oil_conv_s16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-f64"/>
+    <keyword type="function" name="oil_conv_s16_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-s32"/>
+    <keyword type="function" name="oil_conv_s16_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-s8"/>
+    <keyword type="function" name="oil_conv_s16_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-u16"/>
+    <keyword type="function" name="oil_conv_s16_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-u32"/>
+    <keyword type="function" name="oil_conv_s16_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s16-u8"/>
+    <keyword type="function" name="oil_conv_s32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-f32"/>
+    <keyword type="function" name="oil_conv_s32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-f64"/>
+    <keyword type="function" name="oil_conv_s32_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-s16"/>
+    <keyword type="function" name="oil_conv_s32_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-s8"/>
+    <keyword type="function" name="oil_conv_s32_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-u16"/>
+    <keyword type="function" name="oil_conv_s32_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-u32"/>
+    <keyword type="function" name="oil_conv_s32_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s32-u8"/>
+    <keyword type="function" name="oil_conv_s8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-f32"/>
+    <keyword type="function" name="oil_conv_s8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-f64"/>
+    <keyword type="function" name="oil_conv_s8_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-s16"/>
+    <keyword type="function" name="oil_conv_s8_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-s32"/>
+    <keyword type="function" name="oil_conv_s8_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-u16"/>
+    <keyword type="function" name="oil_conv_s8_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-u32"/>
+    <keyword type="function" name="oil_conv_s8_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-s8-u8"/>
+    <keyword type="function" name="oil_conv_u16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-f32"/>
+    <keyword type="function" name="oil_conv_u16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-f64"/>
+    <keyword type="function" name="oil_conv_u16_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-s16"/>
+    <keyword type="function" name="oil_conv_u16_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-s32"/>
+    <keyword type="function" name="oil_conv_u16_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-s8"/>
+    <keyword type="function" name="oil_conv_u16_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-u32"/>
+    <keyword type="function" name="oil_conv_u16_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u16-u8"/>
+    <keyword type="function" name="oil_conv_u32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-f32"/>
+    <keyword type="function" name="oil_conv_u32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-f64"/>
+    <keyword type="function" name="oil_conv_u32_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-s16"/>
+    <keyword type="function" name="oil_conv_u32_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-s32"/>
+    <keyword type="function" name="oil_conv_u32_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-s8"/>
+    <keyword type="function" name="oil_conv_u32_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-u16"/>
+    <keyword type="function" name="oil_conv_u32_u8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u32-u8"/>
+    <keyword type="function" name="oil_conv_u8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-f32"/>
+    <keyword type="function" name="oil_conv_u8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-f64"/>
+    <keyword type="function" name="oil_conv_u8_s16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-s16"/>
+    <keyword type="function" name="oil_conv_u8_s32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-s32"/>
+    <keyword type="function" name="oil_conv_u8_s8 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-s8"/>
+    <keyword type="function" name="oil_conv_u8_u16 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-u16"/>
+    <keyword type="function" name="oil_conv_u8_u32 ()" link="liboil-liboilfuncs-conv.html#oil-conv-u8-u32"/>
+    <keyword type="function" name="oil_scaleconv_f32_s16 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-s16"/>
+    <keyword type="function" name="oil_scaleconv_f32_s32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-s32"/>
+    <keyword type="function" name="oil_scaleconv_f32_s8 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-s8"/>
+    <keyword type="function" name="oil_scaleconv_f32_u16 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-u16"/>
+    <keyword type="function" name="oil_scaleconv_f32_u32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-u32"/>
+    <keyword type="function" name="oil_scaleconv_f32_u8 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f32-u8"/>
+    <keyword type="function" name="oil_scaleconv_f64_s16 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-s16"/>
+    <keyword type="function" name="oil_scaleconv_f64_s32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-s32"/>
+    <keyword type="function" name="oil_scaleconv_f64_s8 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-s8"/>
+    <keyword type="function" name="oil_scaleconv_f64_u16 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-u16"/>
+    <keyword type="function" name="oil_scaleconv_f64_u32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-u32"/>
+    <keyword type="function" name="oil_scaleconv_f64_u8 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-f64-u8"/>
+    <keyword type="function" name="oil_scaleconv_s16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s16-f32"/>
+    <keyword type="function" name="oil_scaleconv_s16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s16-f64"/>
+    <keyword type="function" name="oil_scaleconv_s32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s32-f32"/>
+    <keyword type="function" name="oil_scaleconv_s32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s32-f64"/>
+    <keyword type="function" name="oil_scaleconv_s8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s8-f32"/>
+    <keyword type="function" name="oil_scaleconv_s8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-s8-f64"/>
+    <keyword type="function" name="oil_scaleconv_u16_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u16-f32"/>
+    <keyword type="function" name="oil_scaleconv_u16_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u16-f64"/>
+    <keyword type="function" name="oil_scaleconv_u32_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u32-f32"/>
+    <keyword type="function" name="oil_scaleconv_u32_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u32-f64"/>
+    <keyword type="function" name="oil_scaleconv_u8_f32 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u8-f32"/>
+    <keyword type="function" name="oil_scaleconv_u8_f64 ()" link="liboil-liboilfuncs-conv.html#oil-scaleconv-u8-f64"/>
+    <keyword type="function" name="oil_compare_u8 ()" link="liboil-liboilfuncs-copy.html#oil-compare-u8"/>
+    <keyword type="function" name="oil_copy_u8 ()" link="liboil-liboilfuncs-copy.html#oil-copy-u8"/>
+    <keyword type="function" name="oil_permute_f32 ()" link="liboil-liboilfuncs-copy.html#oil-permute-f32"/>
+    <keyword type="function" name="oil_permute_f64 ()" link="liboil-liboilfuncs-copy.html#oil-permute-f64"/>
+    <keyword type="function" name="oil_permute_s16 ()" link="liboil-liboilfuncs-copy.html#oil-permute-s16"/>
+    <keyword type="function" name="oil_permute_s32 ()" link="liboil-liboilfuncs-copy.html#oil-permute-s32"/>
+    <keyword type="function" name="oil_permute_s8 ()" link="liboil-liboilfuncs-copy.html#oil-permute-s8"/>
+    <keyword type="function" name="oil_permute_u16 ()" link="liboil-liboilfuncs-copy.html#oil-permute-u16"/>
+    <keyword type="function" name="oil_permute_u32 ()" link="liboil-liboilfuncs-copy.html#oil-permute-u32"/>
+    <keyword type="function" name="oil_permute_u8 ()" link="liboil-liboilfuncs-copy.html#oil-permute-u8"/>
+    <keyword type="function" name="oil_splat_u32 ()" link="liboil-liboilfuncs-copy.html#oil-splat-u32"/>
+    <keyword type="function" name="oil_splat_u8 ()" link="liboil-liboilfuncs-copy.html#oil-splat-u8"/>
+    <keyword type="function" name="oil_swab_u16 ()" link="liboil-liboilfuncs-copy.html#oil-swab-u16"/>
+    <keyword type="function" name="oil_swab_u32 ()" link="liboil-liboilfuncs-copy.html#oil-swab-u32"/>
+    <keyword type="function" name="oil_tablelookup_u8 ()" link="liboil-liboilfuncs-copy.html#oil-tablelookup-u8"/>
+    <keyword type="function" name="oil_testzero_u8 ()" link="liboil-liboilfuncs-copy.html#oil-testzero-u8"/>
+    <keyword type="function" name="oil_trans8x8_f64 ()" link="liboil-liboilfuncs-copy.html#oil-trans8x8-f64"/>
+    <keyword type="function" name="oil_trans8x8_u16 ()" link="liboil-liboilfuncs-copy.html#oil-trans8x8-u16"/>
+    <keyword type="function" name="oil_trans8x8_u32 ()" link="liboil-liboilfuncs-copy.html#oil-trans8x8-u32"/>
+    <keyword type="function" name="oil_trans8x8_u8 ()" link="liboil-liboilfuncs-copy.html#oil-trans8x8-u8"/>
+    <keyword type="function" name="oil_unzigzag8x8_s16 ()" link="liboil-liboilfuncs-copy.html#oil-unzigzag8x8-s16"/>
+    <keyword type="function" name="oil_zigzag8x8_s16 ()" link="liboil-liboilfuncs-copy.html#oil-zigzag8x8-s16"/>
+    <keyword type="function" name="oil_splat_u32_ns ()" link="liboil-liboilfuncs-copy.html#oil-splat-u32-ns"/>
+    <keyword type="function" name="oil_splat_u8_ns ()" link="liboil-liboilfuncs-copy.html#oil-splat-u8-ns"/>
+    <keyword type="macro" name="oil_trans8x8_s16()" link="liboil-liboilfuncs-copy.html#oil-trans8x8-s16"/>
+    <keyword type="macro" name="oil_memcpy()" link="liboil-liboilfuncs-copy.html#oil-memcpy"/>
+    <keyword type="function" name="oil_abs_f32_f32 ()" link="liboil-liboilfuncs-math.html#oil-abs-f32-f32"/>
+    <keyword type="function" name="oil_abs_f64_f64 ()" link="liboil-liboilfuncs-math.html#oil-abs-f64-f64"/>
+    <keyword type="function" name="oil_abs_u16_s16 ()" link="liboil-liboilfuncs-math.html#oil-abs-u16-s16"/>
+    <keyword type="function" name="oil_abs_u32_s32 ()" link="liboil-liboilfuncs-math.html#oil-abs-u32-s32"/>
+    <keyword type="function" name="oil_abs_u8_s8 ()" link="liboil-liboilfuncs-math.html#oil-abs-u8-s8"/>
+    <keyword type="function" name="oil_average2_u8 ()" link="liboil-liboilfuncs-math.html#oil-average2-u8"/>
+    <keyword type="function" name="oil_multsum_f32 ()" link="liboil-liboilfuncs-math.html#oil-multsum-f32"/>
+    <keyword type="function" name="oil_multsum_f64 ()" link="liboil-liboilfuncs-math.html#oil-multsum-f64"/>
+    <keyword type="function" name="oil_scalaradd_f32 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-f32"/>
+    <keyword type="function" name="oil_scalaradd_f64 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-f64"/>
+    <keyword type="function" name="oil_scalaradd_s16 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-s16"/>
+    <keyword type="function" name="oil_scalaradd_s32 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-s32"/>
+    <keyword type="function" name="oil_scalaradd_s8 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-s8"/>
+    <keyword type="function" name="oil_scalaradd_u16 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-u16"/>
+    <keyword type="function" name="oil_scalaradd_u32 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-u32"/>
+    <keyword type="function" name="oil_scalaradd_u8 ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-u8"/>
+    <keyword type="function" name="oil_scalarmult_f32 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-f32"/>
+    <keyword type="function" name="oil_scalarmult_f64 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-f64"/>
+    <keyword type="function" name="oil_scalarmult_s16 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-s16"/>
+    <keyword type="function" name="oil_scalarmult_s32 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-s32"/>
+    <keyword type="function" name="oil_scalarmult_s8 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-s8"/>
+    <keyword type="function" name="oil_scalarmult_u16 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-u16"/>
+    <keyword type="function" name="oil_scalarmult_u32 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-u32"/>
+    <keyword type="function" name="oil_scalarmult_u8 ()" link="liboil-liboilfuncs-math.html#oil-scalarmult-u8"/>
+    <keyword type="function" name="oil_vectoradd_f32 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-f32"/>
+    <keyword type="function" name="oil_vectoradd_f64 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-f64"/>
+    <keyword type="function" name="oil_vectoradd_s16 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s16"/>
+    <keyword type="function" name="oil_vectoradd_s32 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s32"/>
+    <keyword type="function" name="oil_vectoradd_s8 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s8"/>
+    <keyword type="function" name="oil_vectoradd_u16 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-u16"/>
+    <keyword type="function" name="oil_vectoradd_u32 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-u32"/>
+    <keyword type="function" name="oil_vectoradd_u8 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-u8"/>
+    <keyword type="function" name="oil_vectoradd_s_s8 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-s8"/>
+    <keyword type="function" name="oil_vectoradd_s_u8 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-u8"/>
+    <keyword type="function" name="oil_vectoradd_s_s16 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-s16"/>
+    <keyword type="function" name="oil_vectoradd_s_u16 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-u16"/>
+    <keyword type="function" name="oil_vectoradd_s_f32 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-f32"/>
+    <keyword type="function" name="oil_vectoradd_s_f64 ()" link="liboil-liboilfuncs-math.html#oil-vectoradd-s-f64"/>
+    <keyword type="function" name="oil_squaresum_f64 ()" link="liboil-liboilfuncs-math.html#oil-squaresum-f64"/>
+    <keyword type="function" name="oil_squaresum_shifted_s16 ()" link="liboil-liboilfuncs-math.html#oil-squaresum-shifted-s16"/>
+    <keyword type="function" name="oil_sum_f64 ()" link="liboil-liboilfuncs-math.html#oil-sum-f64"/>
+    <keyword type="function" name="oil_add_f32 ()" link="liboil-liboilfuncs-math.html#oil-add-f32"/>
+    <keyword type="function" name="oil_divide_f32 ()" link="liboil-liboilfuncs-math.html#oil-divide-f32"/>
+    <keyword type="function" name="oil_floor_f32 ()" link="liboil-liboilfuncs-math.html#oil-floor-f32"/>
+    <keyword type="function" name="oil_inverse_f32 ()" link="liboil-liboilfuncs-math.html#oil-inverse-f32"/>
+    <keyword type="function" name="oil_maximum_f32 ()" link="liboil-liboilfuncs-math.html#oil-maximum-f32"/>
+    <keyword type="function" name="oil_minimum_f32 ()" link="liboil-liboilfuncs-math.html#oil-minimum-f32"/>
+    <keyword type="function" name="oil_multiply_f32 ()" link="liboil-liboilfuncs-math.html#oil-multiply-f32"/>
+    <keyword type="function" name="oil_negative_f32 ()" link="liboil-liboilfuncs-math.html#oil-negative-f32"/>
+    <keyword type="function" name="oil_scalaradd_f32_ns ()" link="liboil-liboilfuncs-math.html#oil-scalaradd-f32-ns"/>
+    <keyword type="function" name="oil_scalarmultiply_f32_ns ()" link="liboil-liboilfuncs-math.html#oil-scalarmultiply-f32-ns"/>
+    <keyword type="function" name="oil_sign_f32 ()" link="liboil-liboilfuncs-math.html#oil-sign-f32"/>
+    <keyword type="function" name="oil_subtract_f32 ()" link="liboil-liboilfuncs-math.html#oil-subtract-f32"/>
+    <keyword type="function" name="oil_mult8x8_s16 ()" link="liboil-liboilfuncs-math8x8.html#oil-mult8x8-s16"/>
+    <keyword type="function" name="oil_sad8x8_f64 ()" link="liboil-liboilfuncs-math8x8.html#oil-sad8x8-f64"/>
+    <keyword type="function" name="oil_sad8x8_s16 ()" link="liboil-liboilfuncs-math8x8.html#oil-sad8x8-s16"/>
+    <keyword type="function" name="oil_sad8x8_f64_2 ()" link="liboil-liboilfuncs-math8x8.html#oil-sad8x8-f64-2"/>
+    <keyword type="function" name="oil_sad8x8_s16_2 ()" link="liboil-liboilfuncs-math8x8.html#oil-sad8x8-s16-2"/>
+    <keyword type="function" name="oil_sad8x8_u8 ()" link="liboil-liboilfuncs-math8x8.html#oil-sad8x8-u8"/>
+    <keyword type="function" name="oil_dct36_f32 ()" link="liboil-liboilfuncs-dct.html#oil-dct36-f32"/>
+    <keyword type="function" name="oil_fdct8_f64 ()" link="liboil-liboilfuncs-dct.html#oil-fdct8-f64"/>
+    <keyword type="function" name="oil_fdct8x8_f64 ()" link="liboil-liboilfuncs-dct.html#oil-fdct8x8-f64"/>
+    <keyword type="function" name="oil_fdct8x8s_s16 ()" link="liboil-liboilfuncs-dct.html#oil-fdct8x8s-s16"/>
+    <keyword type="function" name="oil_idct8_f64 ()" link="liboil-liboilfuncs-dct.html#oil-idct8-f64"/>
+    <keyword type="function" name="oil_idct8x8_f64 ()" link="liboil-liboilfuncs-dct.html#oil-idct8x8-f64"/>
+    <keyword type="function" name="oil_idct8x8_s16 ()" link="liboil-liboilfuncs-dct.html#oil-idct8x8-s16"/>
+    <keyword type="function" name="oil_imdct12_f64 ()" link="liboil-liboilfuncs-dct.html#oil-imdct12-f64"/>
+    <keyword type="function" name="oil_imdct32_f32 ()" link="liboil-liboilfuncs-dct.html#oil-imdct32-f32"/>
+    <keyword type="function" name="oil_imdct36_f64 ()" link="liboil-liboilfuncs-dct.html#oil-imdct36-f64"/>
+    <keyword type="function" name="oil_mdct12_f64 ()" link="liboil-liboilfuncs-dct.html#oil-mdct12-f64"/>
+    <keyword type="function" name="oil_mdct36_f64 ()" link="liboil-liboilfuncs-dct.html#oil-mdct36-f64"/>
+    <keyword type="function" name="oil_idct8theora_s16 ()" link="liboil-liboilfuncs-dct.html#oil-idct8theora-s16"/>
+    <keyword type="function" name="oil_idct8x8lim10_f64 ()" link="liboil-liboilfuncs-dct.html#oil-idct8x8lim10-f64"/>
+    <keyword type="function" name="oil_idct8x8lim10_s16 ()" link="liboil-liboilfuncs-dct.html#oil-idct8x8lim10-s16"/>
+    <keyword type="function" name="oil_idct8x8theora_s16 ()" link="liboil-liboilfuncs-dct.html#oil-idct8x8theora-s16"/>
+    <keyword type="function" name="oil_argb_paint_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-argb-paint-u8"/>
+    <keyword type="function" name="oil_ayuv2argb_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-ayuv2argb-u8"/>
+    <keyword type="function" name="oil_ayuv2uyvy ()" link="liboil-liboilfuncs-pixel.html#oil-ayuv2uyvy"/>
+    <keyword type="function" name="oil_ayuv2yuyv ()" link="liboil-liboilfuncs-pixel.html#oil-ayuv2yuyv"/>
+    <keyword type="function" name="oil_ayuv2yvyu ()" link="liboil-liboilfuncs-pixel.html#oil-ayuv2yvyu"/>
+    <keyword type="function" name="oil_composite_add_argb ()" link="liboil-liboilfuncs-pixel.html#oil-composite-add-argb"/>
+    <keyword type="function" name="oil_composite_add_argb_const_src ()" link="liboil-liboilfuncs-pixel.html#oil-composite-add-argb-const-src"/>
+    <keyword type="function" name="oil_composite_in_argb ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-argb"/>
+    <keyword type="function" name="oil_composite_in_argb_const_mask ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-argb-const-mask"/>
+    <keyword type="function" name="oil_composite_in_argb_const_src ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-argb-const-src"/>
+    <keyword type="function" name="oil_composite_in_over_argb ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb"/>
+    <keyword type="function" name="oil_composite_in_over_argb_const_mask ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb-const-mask"/>
+    <keyword type="function" name="oil_composite_in_over_argb_const_src ()" link="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb-const-src"/>
+    <keyword type="function" name="oil_composite_over_argb ()" link="liboil-liboilfuncs-pixel.html#oil-composite-over-argb"/>
+    <keyword type="function" name="oil_composite_over_argb_const_src ()" link="liboil-liboilfuncs-pixel.html#oil-composite-over-argb-const-src"/>
+    <keyword type="function" name="oil_merge_linear_argb ()" link="liboil-liboilfuncs-pixel.html#oil-merge-linear-argb"/>
+    <keyword type="function" name="oil_resample_linear_argb ()" link="liboil-liboilfuncs-pixel.html#oil-resample-linear-argb"/>
+    <keyword type="function" name="oil_resample_linear_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-resample-linear-u8"/>
+    <keyword type="function" name="oil_rgb2bgr ()" link="liboil-liboilfuncs-pixel.html#oil-rgb2bgr"/>
+    <keyword type="function" name="oil_rgb2rgba ()" link="liboil-liboilfuncs-pixel.html#oil-rgb2rgba"/>
+    <keyword type="function" name="oil_yuv2rgbx_sub2_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-sub2-u8"/>
+    <keyword type="function" name="oil_yuv2rgbx_sub4_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-sub4-u8"/>
+    <keyword type="function" name="oil_yuv2rgbx_u8 ()" link="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-u8"/>
+    <keyword type="function" name="oil_uyvy2ayuv ()" link="liboil-liboilfuncs-pixel.html#oil-uyvy2ayuv"/>
+    <keyword type="function" name="oil_yuyv2ayuv ()" link="liboil-liboilfuncs-pixel.html#oil-yuyv2ayuv"/>
+    <keyword type="function" name="oil_yvyu2ayuv ()" link="liboil-liboilfuncs-pixel.html#oil-yvyu2ayuv"/>
+    <keyword type="function" name="oil_clip_f32 ()" link="liboil-liboilfuncs-doc.html#oil-clip-f32"/>
+    <keyword type="function" name="oil_clip_f64 ()" link="liboil-liboilfuncs-doc.html#oil-clip-f64"/>
+    <keyword type="function" name="oil_clip_s16 ()" link="liboil-liboilfuncs-doc.html#oil-clip-s16"/>
+    <keyword type="function" name="oil_clip_s32 ()" link="liboil-liboilfuncs-doc.html#oil-clip-s32"/>
+    <keyword type="function" name="oil_clip_s8 ()" link="liboil-liboilfuncs-doc.html#oil-clip-s8"/>
+    <keyword type="function" name="oil_clip_u16 ()" link="liboil-liboilfuncs-doc.html#oil-clip-u16"/>
+    <keyword type="function" name="oil_clip_u32 ()" link="liboil-liboilfuncs-doc.html#oil-clip-u32"/>
+    <keyword type="function" name="oil_clip_u8 ()" link="liboil-liboilfuncs-doc.html#oil-clip-u8"/>
+    <keyword type="function" name="oil_dequantize8x8_s16 ()" link="liboil-liboilfuncs-doc.html#oil-dequantize8x8-s16"/>
+    <keyword type="function" name="oil_diffsquaresum_f64 ()" link="liboil-liboilfuncs-doc.html#oil-diffsquaresum-f64"/>
+    <keyword type="function" name="oil_md5 ()" link="liboil-liboilfuncs-doc.html#oil-md5"/>
+    <keyword type="function" name="oil_mix_u8 ()" link="liboil-liboilfuncs-doc.html#oil-mix-u8"/>
+    <keyword type="function" name="oil_null ()" link="liboil-liboilfuncs-doc.html#oil-null"/>
+    <keyword type="function" name="oil_scanlinescale2_u8 ()" link="liboil-liboilfuncs-doc.html#oil-scanlinescale2-u8"/>
+    <keyword type="function" name="oil_sincos_f64 ()" link="liboil-liboilfuncs-doc.html#oil-sincos-f64"/>
+    <keyword type="function" name="oil_utf8_validate ()" link="liboil-liboilfuncs-doc.html#oil-utf8-validate"/>
+    <keyword type="function" name="oil_diff8x8_s16_u8 ()" link="liboil-liboilfuncs-doc.html#oil-diff8x8-s16-u8"/>
+    <keyword type="function" name="oil_diff8x8_average_s16_u8 ()" link="liboil-liboilfuncs-doc.html#oil-diff8x8-average-s16-u8"/>
+    <keyword type="function" name="oil_err_inter8x8_u8_avg ()" link="liboil-liboilfuncs-doc.html#oil-err-inter8x8-u8-avg"/>
+    <keyword type="function" name="oil_recon8x8_inter ()" link="liboil-liboilfuncs-doc.html#oil-recon8x8-inter"/>
+    <keyword type="function" name="oil_err_intra8x8_u8 ()" link="liboil-liboilfuncs-doc.html#oil-err-intra8x8-u8"/>
+    <keyword type="function" name="oil_recon8x8_intra ()" link="liboil-liboilfuncs-doc.html#oil-recon8x8-intra"/>
+    <keyword type="function" name="oil_colsad8x8_u8 ()" link="liboil-liboilfuncs-doc.html#oil-colsad8x8-u8"/>
+    <keyword type="function" name="oil_composite_over_u8 ()" link="liboil-liboilfuncs-doc.html#oil-composite-over-u8"/>
+    <keyword type="function" name="oil_diff8x8_const128_s16_u8 ()" link="liboil-liboilfuncs-doc.html#oil-diff8x8-const128-s16-u8"/>
+    <keyword type="function" name="oil_copy8x8_u8 ()" link="liboil-liboilfuncs-doc.html#oil-copy8x8-u8"/>
+    <keyword type="function" name="oil_err_inter8x8_u8 ()" link="liboil-liboilfuncs-doc.html#oil-err-inter8x8-u8"/>
+    <keyword type="function" name="oil_fdct8x8theora ()" link="liboil-liboilfuncs-doc.html#oil-fdct8x8theora"/>
+    <keyword type="function" name="oil_rowsad8x8_u8 ()" link="liboil-liboilfuncs-doc.html#oil-rowsad8x8-u8"/>
+    <keyword type="function" name="oil_recon8x8_inter2 ()" link="liboil-liboilfuncs-doc.html#oil-recon8x8-inter2"/>
+    <keyword type="function" name="oil_composite_add_u8 ()" link="liboil-liboilfuncs-doc.html#oil-composite-add-u8"/>
+    <keyword type="function" name="oil_sad8x8_u8_avg ()" link="liboil-liboilfuncs-doc.html#oil-sad8x8-u8-avg"/>
+    <keyword type="function" name="oil_init_no_optimize ()" link="liboil-liboilinit-unstable.html#oil-init-no-optimize"/>
+    <keyword type="function" name="oil_optimize_all ()" link="liboil-liboilinit-unstable.html#oil-optimize-all"/>
+    <keyword type="function" name="oil_optimize ()" link="liboil-liboilinit-unstable.html#oil-optimize"/>
+    <keyword type="function" name="oil_cpu_get_flags ()" link="liboil-liboilcpu.html#oil-cpu-get-flags"/>
+    <keyword type="function" name="oil_cpu_get_ticks_per_second ()" link="liboil-liboilcpu.html#oil-cpu-get-ticks-per-second"/>
+    <keyword type="function" name="OilDebugPrintFunc ()" link="liboil-liboildebug.html#OilDebugPrintFunc"/>
+    <keyword type="enum" name="enum OilDebugLevel" link="liboil-liboildebug.html#OilDebugLevel"/>
+    <keyword type="function" name="oil_debug_set_print_function ()" link="liboil-liboildebug.html#oil-debug-set-print-function"/>
+    <keyword type="function" name="oil_debug_get_level ()" link="liboil-liboildebug.html#oil-debug-get-level"/>
+    <keyword type="function" name="oil_debug_set_level ()" link="liboil-liboildebug.html#oil-debug-set-level"/>
+    <keyword type="macro" name="OIL_ERROR()" link="liboil-liboildebug.html#OIL-ERROR--CAPS"/>
+    <keyword type="macro" name="OIL_WARNING()" link="liboil-liboildebug.html#OIL-WARNING--CAPS"/>
+    <keyword type="macro" name="OIL_INFO()" link="liboil-liboildebug.html#OIL-INFO--CAPS"/>
+    <keyword type="macro" name="OIL_DEBUG()" link="liboil-liboildebug.html#OIL-DEBUG--CAPS"/>
+    <keyword type="macro" name="OIL_LOG()" link="liboil-liboildebug.html#OIL-LOG--CAPS"/>
+    <keyword type="macro" name="OIL_FUNCTION" link="liboil-liboildebug.html#OIL-FUNCTION--CAPS"/>
+    <keyword type="macro" name="OIL_DEBUG_PRINT()" link="liboil-liboildebug.html#OIL-DEBUG-PRINT--CAPS"/>
+    <keyword type="struct" name="OilFunctionClass" link="liboil-liboilclass-unstable.html#OilFunctionClass"/>
+    <keyword type="macro" name="OIL_DECLARE_CLASS()" link="liboil-liboilclass-unstable.html#OIL-DECLARE-CLASS--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_CLASS_FULL()" link="liboil-liboilclass-unstable.html#OIL-DEFINE-CLASS-FULL--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_CLASS()" link="liboil-liboilclass-unstable.html#OIL-DEFINE-CLASS--CAPS"/>
+    <keyword type="function" name="oil_class_get_by_index ()" link="liboil-liboilclass-unstable.html#oil-class-get-by-index"/>
+    <keyword type="function" name="oil_class_get ()" link="liboil-liboilclass-unstable.html#oil-class-get"/>
+    <keyword type="function" name="oil_class_optimize ()" link="liboil-liboilclass-unstable.html#oil-class-optimize"/>
+    <keyword type="function" name="oil_class_get_n_classes ()" link="liboil-liboilclass-unstable.html#oil-class-get-n-classes"/>
+    <keyword type="function" name="oil_class_choose_by_name ()" link="liboil-liboilclass-unstable.html#oil-class-choose-by-name"/>
+    <keyword type="function" name="oil_class_register_impl_by_name ()" link="liboil-liboilclass-unstable.html#oil-class-register-impl-by-name"/>
+    <keyword type="function" name="oil_class_register_impl ()" link="liboil-liboilclass-unstable.html#oil-class-register-impl"/>
+    <keyword type="function" name="oil_class_register_impl_full ()" link="liboil-liboilclass-unstable.html#oil-class-register-impl-full"/>
+    <keyword type="struct" name="OilFunctionImpl" link="liboil-liboilimpl-unstable.html#OilFunctionImpl"/>
+    <keyword type="function" name="oil_impl_get_by_index ()" link="liboil-liboilimpl-unstable.html#oil-impl-get-by-index"/>
+    <keyword type="function" name="oil_impl_is_runnable ()" link="liboil-liboilimpl-unstable.html#oil-impl-is-runnable"/>
+    <keyword type="enum" name="enum OilImplFlag" link="liboil-liboilimpl-unstable.html#OilImplFlag"/>
+    <keyword type="macro" name="OIL_CPU_FLAG_MASK" link="liboil-liboilimpl-unstable.html#OIL-CPU-FLAG-MASK--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_IMPL_FULL()" link="liboil-liboilimpl-unstable.html#OIL-DEFINE-IMPL-FULL--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_IMPL()" link="liboil-liboilimpl-unstable.html#OIL-DEFINE-IMPL--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_IMPL_REF()" link="liboil-liboilimpl-unstable.html#OIL-DEFINE-IMPL-REF--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_IMPL_ASM()" link="liboil-liboilimpl-unstable.html#OIL-DEFINE-IMPL-ASM--CAPS"/>
+    <keyword type="macro" name="OIL_DEFINE_IMPL_DEPENDS()" link="liboil-liboilimpl-unstable.html#OIL-DEFINE-IMPL-DEPENDS--CAPS"/>
+    <keyword type="struct" name="OilParameter" link="liboil-liboilparameter.html#OilParameter"/>
+    <keyword type="function" name="oil_param_get_source_data ()" link="liboil-liboilparameter.html#oil-param-get-source-data"/>
+    <keyword type="struct" name="OilProfile" link="liboil-liboilprofile.html#OilProfile"/>
+    <keyword type="macro" name="OIL_PROFILE_HIST_LENGTH" link="liboil-liboilprofile.html#OIL-PROFILE-HIST-LENGTH--CAPS"/>
+    <keyword type="function" name="oil_profile_stamp ()" link="liboil-liboilprofile.html#oil-profile-stamp"/>
+    <keyword type="function" name="oil_profile_init ()" link="liboil-liboilprofile.html#oil-profile-init"/>
+    <keyword type="function" name="oil_profile_stop_handle ()" link="liboil-liboilprofile.html#oil-profile-stop-handle"/>
+    <keyword type="function" name="oil_profile_get_ave_std ()" link="liboil-liboilprofile.html#oil-profile-get-ave-std"/>
+    <keyword type="macro" name="oil_profile_start()" link="liboil-liboilprofile.html#oil-profile-start"/>
+    <keyword type="macro" name="oil_profile_stop()" link="liboil-liboilprofile.html#oil-profile-stop"/>
+    <keyword type="struct" name="OilPrototype" link="liboil-liboilprototype.html#OilPrototype"/>
+    <keyword type="function" name="oil_prototype_from_string ()" link="liboil-liboilprototype.html#oil-prototype-from-string"/>
+    <keyword type="function" name="oil_prototype_to_string ()" link="liboil-liboilprototype.html#oil-prototype-to-string"/>
+    <keyword type="function" name="oil_prototype_to_arg_string ()" link="liboil-liboilprototype.html#oil-prototype-to-arg-string"/>
+    <keyword type="function" name="oil_prototype_free ()" link="liboil-liboilprototype.html#oil-prototype-free"/>
+    <keyword type="function" name="oil_prototype_append_param ()" link="liboil-liboilprototype.html#oil-prototype-append-param"/>
+    <keyword type="macro" name="oil_rand_s32()" link="liboil-liboilrandom.html#oil-rand-s32"/>
+    <keyword type="macro" name="oil_rand_s16()" link="liboil-liboilrandom.html#oil-rand-s16"/>
+    <keyword type="macro" name="oil_rand_s8()" link="liboil-liboilrandom.html#oil-rand-s8"/>
+    <keyword type="macro" name="oil_rand_u32()" link="liboil-liboilrandom.html#oil-rand-u32"/>
+    <keyword type="macro" name="oil_rand_u16()" link="liboil-liboilrandom.html#oil-rand-u16"/>
+    <keyword type="macro" name="oil_rand_u8()" link="liboil-liboilrandom.html#oil-rand-u8"/>
+    <keyword type="macro" name="oil_rand_s64()" link="liboil-liboilrandom.html#oil-rand-s64"/>
+    <keyword type="macro" name="oil_rand_u64()" link="liboil-liboilrandom.html#oil-rand-u64"/>
+    <keyword type="macro" name="oil_rand_f32()" link="liboil-liboilrandom.html#oil-rand-f32"/>
+    <keyword type="macro" name="oil_rand_f64()" link="liboil-liboilrandom.html#oil-rand-f64"/>
+    <keyword type="function" name="oil_random_alpha ()" link="liboil-liboilrandom.html#oil-random-alpha"/>
+    <keyword type="function" name="oil_random_argb ()" link="liboil-liboilrandom.html#oil-random-argb"/>
+    <keyword type="function" name="oil_random_f32 ()" link="liboil-liboilrandom.html#oil-random-f32"/>
+    <keyword type="function" name="oil_random_f64 ()" link="liboil-liboilrandom.html#oil-random-f64"/>
+    <keyword type="function" name="oil_random_s16 ()" link="liboil-liboilrandom.html#oil-random-s16"/>
+    <keyword type="function" name="oil_random_s32 ()" link="liboil-liboilrandom.html#oil-random-s32"/>
+    <keyword type="function" name="oil_random_s64 ()" link="liboil-liboilrandom.html#oil-random-s64"/>
+    <keyword type="function" name="oil_random_s8 ()" link="liboil-liboilrandom.html#oil-random-s8"/>
+    <keyword type="function" name="oil_random_u16 ()" link="liboil-liboilrandom.html#oil-random-u16"/>
+    <keyword type="function" name="oil_random_u32 ()" link="liboil-liboilrandom.html#oil-random-u32"/>
+    <keyword type="function" name="oil_random_u64 ()" link="liboil-liboilrandom.html#oil-random-u64"/>
+    <keyword type="function" name="oil_random_u8 ()" link="liboil-liboilrandom.html#oil-random-u8"/>
+    <keyword type="struct" name="OilTest" link="liboil-liboiltest.html#OilTest"/>
+    <keyword type="function" name="OilTestFunction ()" link="liboil-liboiltest.html#OilTestFunction"/>
+    <keyword type="macro" name="OIL_TEST_HEADER" link="liboil-liboiltest.html#OIL-TEST-HEADER--CAPS"/>
+    <keyword type="macro" name="OIL_TEST_FOOTER" link="liboil-liboiltest.html#OIL-TEST-FOOTER--CAPS"/>
+    <keyword type="function" name="oil_test_new ()" link="liboil-liboiltest.html#oil-test-new"/>
+    <keyword type="function" name="oil_test_init ()" link="liboil-liboiltest.html#oil-test-init"/>
+    <keyword type="function" name="oil_test_free ()" link="liboil-liboiltest.html#oil-test-free"/>
+    <keyword type="function" name="oil_test_set_iterations ()" link="liboil-liboiltest.html#oil-test-set-iterations"/>
+    <keyword type="function" name="oil_test_check_ref ()" link="liboil-liboiltest.html#oil-test-check-ref"/>
+    <keyword type="function" name="oil_test_check_impl ()" link="liboil-liboiltest.html#oil-test-check-impl"/>
+    <keyword type="function" name="oil_test_cleanup ()" link="liboil-liboiltest.html#oil-test-cleanup"/>
+    <keyword type="function" name="oil_test_get_source_data ()" link="liboil-liboiltest.html#oil-test-get-source-data"/>
+    <keyword type="function" name="oil_test_get_value ()" link="liboil-liboiltest.html#oil-test-get-value"/>
+    <keyword type="function" name="oil_test_set_test_footer ()" link="liboil-liboiltest.html#oil-test-set-test-footer"/>
+    <keyword type="function" name="oil_test_set_test_header ()" link="liboil-liboiltest.html#oil-test-set-test-header"/>
+    <keyword type="enum" name="enum OilType" link="liboil-liboiltypes.html#OilType"/>
+    <keyword type="function" name="oil_type_sizeof ()" link="liboil-liboiltypes.html#oil-type-sizeof"/>
+    <keyword type="macro" name="oil_type_is_floating_point()" link="liboil-liboiltypes.html#oil-type-is-floating-point"/>
+    <keyword type="function" name="oil_type_name ()" link="liboil-liboiltypes.html#oil-type-name"/>
+    <keyword type="enum" name="enum OilArgType" link="liboil-liboiltypes.html#OilArgType"/>
+    <keyword type="function" name="oil_arg_type_name ()" link="liboil-liboiltypes.html#oil-arg-type-name"/>
+    <keyword type="macro" name="oil_type_s8" link="liboil-liboiltypes.html#oil-type-s8"/>
+    <keyword type="macro" name="oil_type_u8" link="liboil-liboiltypes.html#oil-type-u8"/>
+    <keyword type="macro" name="oil_type_s16" link="liboil-liboiltypes.html#oil-type-s16"/>
+    <keyword type="macro" name="oil_type_u16" link="liboil-liboiltypes.html#oil-type-u16"/>
+    <keyword type="macro" name="oil_type_s32" link="liboil-liboiltypes.html#oil-type-s32"/>
+    <keyword type="macro" name="oil_type_u32" link="liboil-liboiltypes.html#oil-type-u32"/>
+    <keyword type="macro" name="oil_type_s64" link="liboil-liboiltypes.html#oil-type-s64"/>
+    <keyword type="macro" name="oil_type_u64" link="liboil-liboiltypes.html#oil-type-u64"/>
+    <keyword type="macro" name="oil_type_f32" link="liboil-liboiltypes.html#oil-type-f32"/>
+    <keyword type="macro" name="oil_type_f64" link="liboil-liboiltypes.html#oil-type-f64"/>
+    <keyword type="macro" name="oil_type_min_s8" link="liboil-liboiltypes.html#oil-type-min-s8"/>
+    <keyword type="macro" name="oil_type_min_u8" link="liboil-liboiltypes.html#oil-type-min-u8"/>
+    <keyword type="macro" name="oil_type_min_s16" link="liboil-liboiltypes.html#oil-type-min-s16"/>
+    <keyword type="macro" name="oil_type_min_u16" link="liboil-liboiltypes.html#oil-type-min-u16"/>
+    <keyword type="macro" name="oil_type_min_s32" link="liboil-liboiltypes.html#oil-type-min-s32"/>
+    <keyword type="macro" name="oil_type_min_u32" link="liboil-liboiltypes.html#oil-type-min-u32"/>
+    <keyword type="macro" name="oil_type_max_s8" link="liboil-liboiltypes.html#oil-type-max-s8"/>
+    <keyword type="macro" name="oil_type_max_u8" link="liboil-liboiltypes.html#oil-type-max-u8"/>
+    <keyword type="macro" name="oil_type_max_s16" link="liboil-liboiltypes.html#oil-type-max-s16"/>
+    <keyword type="macro" name="oil_type_max_u16" link="liboil-liboiltypes.html#oil-type-max-u16"/>
+    <keyword type="macro" name="oil_type_max_s32" link="liboil-liboiltypes.html#oil-type-max-s32"/>
+    <keyword type="macro" name="oil_type_max_u32" link="liboil-liboiltypes.html#oil-type-max-u32"/>
+    <keyword type="macro" name="oil_min()" link="liboil-liboilmacros.html#oil-min"/>
+    <keyword type="macro" name="oil_max()" link="liboil-liboilmacros.html#oil-max"/>
+    <keyword type="macro" name="oil_divide_255()" link="liboil-liboilmacros.html#oil-divide-255"/>
+    <keyword type="macro" name="oil_argb()" link="liboil-liboilmacros.html#oil-argb"/>
+    <keyword type="macro" name="oil_argb_noclamp()" link="liboil-liboilmacros.html#oil-argb-noclamp"/>
+    <keyword type="macro" name="oil_argb_A()" link="liboil-liboilmacros.html#oil-argb-A"/>
+    <keyword type="macro" name="oil_argb_G()" link="liboil-liboilmacros.html#oil-argb-G"/>
+    <keyword type="macro" name="oil_argb_B()" link="liboil-liboilmacros.html#oil-argb-B"/>
+    <keyword type="macro" name="oil_argb_R()" link="liboil-liboilmacros.html#oil-argb-R"/>
+    <keyword type="macro" name="oil_muldiv_255()" link="liboil-liboilmacros.html#oil-muldiv-255"/>
+    <keyword type="macro" name="oil_clamp_255()" link="liboil-liboilmacros.html#oil-clamp-255"/>
+    <keyword type="macro" name="OIL_GET()" link="liboil-liboilmacros.html#OIL-GET--CAPS"/>
+    <keyword type="macro" name="OIL_OFFSET()" link="liboil-liboilmacros.html#OIL-OFFSET--CAPS"/>
+    <keyword type="macro" name="OIL_INCREMENT()" link="liboil-liboilmacros.html#OIL-INCREMENT--CAPS"/>
+    <keyword type="macro" name="OIL_OPT_MANGLE()" link="liboil-liboiljunk.html#OIL-OPT-MANGLE--CAPS"/>
+    <keyword type="macro" name="OIL_OPT_SUFFIX" link="liboil-liboiljunk.html#OIL-OPT-SUFFIX--CAPS"/>
+    <keyword type="macro" name="OIL_CHECK_PROTOTYPE()" link="liboil-liboiljunk.html#OIL-CHECK-PROTOTYPE--CAPS"/>
+    <keyword type="macro" name="OIL_OPT_FLAG_MANGLE()" link="liboil-liboiljunk.html#OIL-OPT-FLAG-MANGLE--CAPS"/>
+    <keyword type="macro" name="OIL_NO_CLASSES" link="liboil-liboiljunk.html#OIL-NO-CLASSES--CAPS"/>
+    <keyword type="macro" name="NULL" link="liboil-liboiljunk.html#NULL--CAPS"/>
+  </functions>
+</book>

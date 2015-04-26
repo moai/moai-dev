@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Macros</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch02.html" title="Liboil Unstable API">
+<link rel="prev" href="liboil-liboiltypes.html" title="liboiltypes">
+<link rel="next" href="liboil-liboiljunk.html" title="liboiljunk">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboiltypes.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboiljunk.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilmacros.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilmacros.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Macros">
+<a name="liboil-liboilmacros"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilmacros.top_of_page"></a>Macros</span></h2>
+<p>Macros — Macros</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilmacros.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#define             <a class="link" href="liboil-liboilmacros.html#oil-min" title="oil_min()">oil_min</a>                             (x,y)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-max" title="oil_max()">oil_max</a>                             (x,y)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-divide-255" title="oil_divide_255()">oil_divide_255</a>                      (x)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb" title="oil_argb()">oil_argb</a>                            (a,r,g,b)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb-noclamp" title="oil_argb_noclamp()">oil_argb_noclamp</a>                    (a,r,g,b)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb-A" title="oil_argb_A()">oil_argb_A</a>                          (color)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb-G" title="oil_argb_G()">oil_argb_G</a>                          (color)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb-B" title="oil_argb_B()">oil_argb_B</a>                          (color)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-argb-R" title="oil_argb_R()">oil_argb_R</a>                          (color)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-muldiv-255" title="oil_muldiv_255()">oil_muldiv_255</a>                      (a,b)
+#define             <a class="link" href="liboil-liboilmacros.html#oil-clamp-255" title="oil_clamp_255()">oil_clamp_255</a>                       (x)
+#define             <a class="link" href="liboil-liboilmacros.html#OIL-GET--CAPS" title="OIL_GET()">OIL_GET</a>                             (ptr, offset, type)
+#define             <a class="link" href="liboil-liboilmacros.html#OIL-OFFSET--CAPS" title="OIL_OFFSET()">OIL_OFFSET</a>                          (ptr, offset)
+#define             <a class="link" href="liboil-liboilmacros.html#OIL-INCREMENT--CAPS" title="OIL_INCREMENT()">OIL_INCREMENT</a>                       (ptr, offset)
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilmacros.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilmacros.details"></a><h2>Details</h2>
+<div class="refsect2" title="oil_min()">
+<a name="oil-min"></a><h3>oil_min()</h3>
+<pre class="programlisting">#define oil_min(x,y) ((x)&lt;(y)?(x):(y))
+</pre>
+<p>
+Evaluates to the minimum of <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td> a value
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td> a value
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_max()">
+<a name="oil-max"></a><h3>oil_max()</h3>
+<pre class="programlisting">#define oil_max(x,y) ((x)&gt;(y)?(x):(y))
+</pre>
+<p>
+Evaluates to the maximum of <em class="parameter"><code>x</code></em> and <em class="parameter"><code>y</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td> a value
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td> a value
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_divide_255()">
+<a name="oil-divide-255"></a><h3>oil_divide_255()</h3>
+<pre class="programlisting">#define oil_divide_255(x) ((((x)+128) + (((x)+128)&gt;&gt;8))&gt;&gt;8)
+</pre>
+<p>
+Divides <em class="parameter"><code>x</code></em> by 255 in a way that is compatible with the pixel
+operations in Liboil.  The number 65025 is 255*255.
+</p>
+<p>
+Evaluates to <em class="parameter"><code>x</code></em> divided by 255.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td> a value in the range [0,65025]
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb()">
+<a name="oil-argb"></a><h3>oil_argb()</h3>
+<pre class="programlisting">#define             oil_argb(a,r,g,b)</pre>
+<p>
+Creates a Liboil ARGB value from individual components.  Clamps
+each component to [0,255].
+</p>
+<p>
+Evaluates to the ARGB value</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td> alpha component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>r</code></em> :</span></p></td>
+<td> red component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>g</code></em> :</span></p></td>
+<td> green component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td> blue component
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb_noclamp()">
+<a name="oil-argb-noclamp"></a><h3>oil_argb_noclamp()</h3>
+<pre class="programlisting">#define             oil_argb_noclamp(a,r,g,b)</pre>
+<p>
+Creates a Liboil ARGB value from individual components.  Does not
+clamp components.
+</p>
+<p>
+Evaluates to the ARGB value</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td> alpha component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>r</code></em> :</span></p></td>
+<td> red component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>g</code></em> :</span></p></td>
+<td> green component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td> blue component
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb_A()">
+<a name="oil-argb-A"></a><h3>oil_argb_A()</h3>
+<pre class="programlisting">#define oil_argb_A(color) (((color)&gt;&gt;24)&amp;0xff)
+</pre>
+<p>
+Extracts the alpha component from <em class="parameter"><code>color</code></em>.
+</p>
+<p>
+Evaluates to the alpha component</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td> an ARGB value
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb_G()">
+<a name="oil-argb-G"></a><h3>oil_argb_G()</h3>
+<pre class="programlisting">#define oil_argb_G(color) (((color)&gt;&gt;8)&amp;0xff)
+</pre>
+<p>
+Extracts the green component from <em class="parameter"><code>color</code></em>.
+</p>
+<p>
+Evaluates to the green component</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td> an ARGB value
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb_B()">
+<a name="oil-argb-B"></a><h3>oil_argb_B()</h3>
+<pre class="programlisting">#define oil_argb_B(color) (((color)&gt;&gt;0)&amp;0xff)
+</pre>
+<p>
+Extracts the blue component from <em class="parameter"><code>color</code></em>.
+</p>
+<p>
+Evaluates to the blue component</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td> an ARGB value
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_argb_R()">
+<a name="oil-argb-R"></a><h3>oil_argb_R()</h3>
+<pre class="programlisting">#define oil_argb_R(color) (((color)&gt;&gt;16)&amp;0xff)
+</pre>
+<p>
+Extracts the red component from <em class="parameter"><code>color</code></em>.
+</p>
+<p>
+Evaluates to the red component</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>color</code></em> :</span></p></td>
+<td> an ARGB value
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_muldiv_255()">
+<a name="oil-muldiv-255"></a><h3>oil_muldiv_255()</h3>
+<pre class="programlisting">#define oil_muldiv_255(a,b) oil_divide_255((a)*(b))
+</pre>
+<p>
+Multiplies <em class="parameter"><code>a</code></em> and <em class="parameter"><code>b</code></em> and divides the result by 255 in a way that
+is compatible with the pixel operations in Liboil.
+</p>
+<p>
+Evaluates to the result.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>a</code></em> :</span></p></td>
+<td> a value in the range [0,255]
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>b</code></em> :</span></p></td>
+<td> a value in the range [0,255]
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_clamp_255()">
+<a name="oil-clamp-255"></a><h3>oil_clamp_255()</h3>
+<pre class="programlisting">#define oil_clamp_255(x) oil_max(0,oil_min((x),255))
+</pre>
+<p>
+Clamps <em class="parameter"><code>x</code></em> to the range [0,255].
+</p>
+<p>
+Evaluates to the clamped value.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td> a value
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="OIL_GET()">
+<a name="OIL-GET--CAPS"></a><h3>OIL_GET()</h3>
+<pre class="programlisting">#define OIL_GET(ptr, offset, type) (*(type *)((uint8_t *)(ptr) + (offset)) )
+</pre>
+<p>
+Offsets <em class="parameter"><code>ptr</code></em> by <em class="parameter"><code>offset</code></em> number of bytes, and dereferences it
+as type <em class="parameter"><code>type</code></em>.  Note that the offset is in bytes, and not in
+the size of the pointer type.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ptr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="OIL_OFFSET()">
+<a name="OIL-OFFSET--CAPS"></a><h3>OIL_OFFSET()</h3>
+<pre class="programlisting">#define OIL_OFFSET(ptr, offset) ((void *)((uint8_t *)(ptr) + (offset)) )
+</pre>
+<p>
+Add <em class="parameter"><code>offset</code></em> bytes to the pointer <em class="parameter"><code>ptr</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ptr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="OIL_INCREMENT()">
+<a name="OIL-INCREMENT--CAPS"></a><h3>OIL_INCREMENT()</h3>
+<pre class="programlisting">#define OIL_INCREMENT(ptr, offset) (ptr = (void *)((uint8_t *)ptr + (offset)) )
+</pre>
+<p>
+Increments the pointer <em class="parameter"><code>ptr</code></em> by <em class="parameter"><code>offset</code></em> number of bytes.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ptr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>offset</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

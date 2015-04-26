@@ -1,0 +1,115 @@
+
+Hacking on liboil
+=================
+
+
+New Implementations
+-------------------
+
+  New implementations using GCC inline assembly code should go in
+  liboil/${arch}, or liboil/i386_amd64 if they compile on both i386
+  and amd64 architectures.  New implementations that are written in
+  POSIX C should go in liboil/c.  New implementations written with
+  MMX/SSE/Altivec instrinsics should go in liboil/mmx, liboil/sse,
+  or liboil/altivec.
+
+  Implementations copied from other projects should generally be
+  given a separate directory under liboil/, similar to liboil/motovec.
+
+  Things to check for when writing new implementations:
+
+    - handle the n==0 case correctly
+
+    - handle various array alignments correctly if the vectorized
+      code has trouble loading misaligned data.  Sometimes this is
+      only a problem on certain CPUs.
+
+    - unrolled loops and vectorized code needs to handle any extra
+      array elements at the end of array.
+
+    - if a class has strides, they must be followed.
+
+  Things implementations can assume:
+
+    - n will never be negative
+
+    - alignment of individual array members.  For example, if the
+      type is "u32", you can assume that pointers and strides are
+      multiples of 4.
+
+  In general, if your implementation is enabled on the current CPU
+  and 'make check' passes, it's probably a clean implementation.
+
+  Broken implementations (i.e., code that is a work-in-progress)
+  are still allowed, as long as the broken code is wrapped in
+  #ifdef ENABLE_BROKEN_IMPLS/#endif.
+
+
+New Classes
+-----------
+
+  Reference implementations for new classes should go in liboil/ref.
+
+  The naming of new classes is a tricky business.  The goal is to
+  make the name short, easy to remember and type, but descriptive
+  enough to differentiate it from alternatives.  This policy has
+  not always been followed in the past, so don't follow that lead.
+
+  Try to:
+  
+    - Use full names instead of abbreviations.  Some abbreviations
+      however are common and acceptable, such as "diff", "avg", or
+      "abs".
+
+    - Use a name that makes sense independent of the application
+      that you may be copying it from.
+
+    - Use nouns instead of verbs (thus, "difference" instead of
+      "subtract", or "sum" instead of "add").
+
+  Class names are made up of a base part that describes what the
+  function does, appended with modifiers.  Common modifiers are
+  for the type ("_f64", "_u8"), or to indicate inaccuracies or
+  limitations in implementations ("_i10", "_l10").
+
+  _i10 stands for "inaccurate by a factor of 10", where the baseline
+  accuracy is 2^-52 for doubles and 2^-24 (I think).  It's a decilog
+  scale, so _i20 is a factor of 100, etc.  The baseline accuracy comes
+  from the least expressible number greater than 1.0.
+
+  _l10 stands for "something is limited to 10".  Sometimes this means
+  input range, e.g., _l15 is (was?) used for some function class that
+  could only handle input values in the range [-1<<14, 1<<14-1].
+  Another class uses this to mean that only 10 of the input values
+  can be non-zero (oil_idct8x8theora_l10).
+
+  These modifiers are obviously not well-thought-out.  In order to
+  be useful, applications need to be able to make predictions about
+  accuracy based on value of n, input values, etc.  I also don't
+  think that simply defining new classes is a maintainable solution.
+
+  Use of underscores in the base part of the class name is arbitrary.
+  This may change in the future.
+
+  New classes should not use the modifier "_ns", since non-strided
+  arrays are the default.  
+
+  Parameters should generally follow the order:
+
+    i1, is1, i2, is2, ..., d1, ds1, ..., s1, ss1, ..., n, m
+
+  After you add a new class, it's necessary to run 'make update' in
+  the liboil/ directory to regenerate some built headers.
+
+
+
+Test Machines
+-------------
+
+  Machines that ds has access to:
+
+    power5.infradead.org - powerpc POWER5
+    bombadil.infradead.org - powerpc PPC970MP (G5)
+
+
+

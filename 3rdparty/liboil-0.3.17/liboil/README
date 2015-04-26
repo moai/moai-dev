@@ -1,0 +1,42 @@
+
+Source Layout
+=============
+
+(Note that at the current time, this document is not followed 100%.)
+
+Reference functions should always go in ref/.  Non-reference functions
+may not be in ref/.
+
+Implementations are roughly categorized by the compiler flags they
+use, architecture they compile on, where the source code came from,
+or what type of functions they are.  The goal is to have all the
+automake conditionals in liboil/Makefile.am, and none in lower-level
+makefiles.
+
+ - GCC Inline assembly directories: (powerpc, i386)
+
+These can have any kind of GCC inline assembly (post gcc-3.2) that
+compiles on the given architecture.  This also typically includes
+assembly code that contains MMX/SSE/Altivec instructions, but does
+not require any special compiler flags.
+
+The directory powerpc_asm_blocks is for inline assembly that uses
+the -fasm-blocks compiler flag on powerpc.
+
+ - Intrinsics: (sse, altivec)
+
+These directories contain architecture-specific code that is portable
+among compilers.
+  
+ - Source: (motovec, fb)
+
+The motovec directory should only contain source files derived from
+Motovec.  The fb directory only contains source derived from X.
+
+ - Random: (simdpack, colorspace, copy, dct, md5, math, utf, jpeg)
+
+Don't add files to these directories.
+
+
+
+

@@ -1,0 +1,2144 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilfuncs-math">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilfuncs-math.top_of_page">Simple Arithmetic</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Simple Arithmetic</refname>
+<refpurpose>Aritmetic operations</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilfuncs-math.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-abs-f32-f32">oil_abs_f32_f32</link>                     (<link linkend="float">float</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-abs-f64-f64">oil_abs_f64_f64</link>                     (<link linkend="double">double</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-abs-u16-s16">oil_abs_u16_s16</link>                     (<link linkend="uint16-t">uint16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-abs-u32-s32">oil_abs_u32_s32</link>                     (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-abs-u8-s8">oil_abs_u8_s8</link>                       (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-average2-u8">oil_average2_u8</link>                     (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-multsum-f32">oil_multsum_f32</link>                     (<link linkend="float">float</link> *dest,
+                                                         const <link linkend="float">float</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-multsum-f64">oil_multsum_f64</link>                     (<link linkend="double">double</link> *dest,
+                                                         const <link linkend="double">double</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-f32">oil_scalaradd_f32</link>                   (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-f64">oil_scalaradd_f64</link>                   (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="double">double</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-s16">oil_scalaradd_s16</link>                   (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-s32">oil_scalaradd_s32</link>                   (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-s8">oil_scalaradd_s8</link>                    (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-u16">oil_scalaradd_u16</link>                   (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-u32">oil_scalaradd_u32</link>                   (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-u8">oil_scalaradd_u8</link>                    (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-f32">oil_scalarmult_f32</link>                  (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-f64">oil_scalarmult_f64</link>                  (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="double">double</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-s16">oil_scalarmult_s16</link>                  (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-s32">oil_scalarmult_s32</link>                  (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-s8">oil_scalarmult_s8</link>                   (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-u16">oil_scalarmult_u16</link>                  (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-u32">oil_scalarmult_u32</link>                  (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmult-u8">oil_scalarmult_u8</link>                   (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-f32">oil_vectoradd_f32</link>                   (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="float">float</link> *s3_1,
+                                                         const <link linkend="float">float</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-f64">oil_vectoradd_f64</link>                   (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="double">double</link> *s3_1,
+                                                         const <link linkend="double">double</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s16">oil_vectoradd_s16</link>                   (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int16-t">int16_t</link> *s3_1,
+                                                         const <link linkend="int16-t">int16_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s32">oil_vectoradd_s32</link>                   (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int32-t">int32_t</link> *s3_1,
+                                                         const <link linkend="int32-t">int32_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s8">oil_vectoradd_s8</link>                    (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int8-t">int8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int8-t">int8_t</link> *s3_1,
+                                                         const <link linkend="int8-t">int8_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-u16">oil_vectoradd_u16</link>                   (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s3_1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-u32">oil_vectoradd_u32</link>                   (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s3_1,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-u8">oil_vectoradd_u8</link>                    (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s3_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s4_1);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-s8">oil_vectoradd_s_s8</link>                  (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int8-t">int8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-u8">oil_vectoradd_s_u8</link>                  (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-s16">oil_vectoradd_s_s16</link>                 (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-u16">oil_vectoradd_s_u16</link>                 (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-f32">oil_vectoradd_s_f32</link>                 (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-vectoradd-s-f64">oil_vectoradd_s_f64</link>                 (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-squaresum-f64">oil_squaresum_f64</link>                   (<link linkend="double">double</link> *d,
+                                                         const <link linkend="double">double</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-squaresum-shifted-s16">oil_squaresum_shifted_s16</link>           (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         const <link linkend="int16-t">int16_t</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-sum-f64">oil_sum_f64</link>                         (<link linkend="double">double</link> *d_1,
+                                                         const <link linkend="double">double</link> *s,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-add-f32">oil_add_f32</link>                         (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-divide-f32">oil_divide_f32</link>                      (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-floor-f32">oil_floor_f32</link>                       (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-inverse-f32">oil_inverse_f32</link>                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-maximum-f32">oil_maximum_f32</link>                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-minimum-f32">oil_minimum_f32</link>                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-multiply-f32">oil_multiply_f32</link>                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-negative-f32">oil_negative_f32</link>                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalaradd-f32-ns">oil_scalaradd_f32_ns</link>                (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-scalarmultiply-f32-ns">oil_scalarmultiply_f32_ns</link>           (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-sign-f32">oil_sign_f32</link>                        (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-subtract-f32">oil_subtract_f32</link>                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilfuncs-math.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilfuncs-math.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-abs-f32-f32" role="function">
+<title>oil_abs_f32_f32 ()</title>
+<indexterm zone="oil-abs-f32-f32"><primary sortas="oil_abs_f32_f32">oil_abs_f32_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_abs_f32_f32                     (<link linkend="float">float</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the absolute value of each element in the source array
+and writes it into the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara> stride of destination elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements in arrays
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-abs-f64-f64" role="function">
+<title>oil_abs_f64_f64 ()</title>
+<indexterm zone="oil-abs-f64-f64"><primary sortas="oil_abs_f64_f64">oil_abs_f64_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_abs_f64_f64                     (<link linkend="double">double</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the absolute value of each element in the source array
+and writes it into the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara> stride of destination elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements in arrays
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-abs-u16-s16" role="function">
+<title>oil_abs_u16_s16 ()</title>
+<indexterm zone="oil-abs-u16-s16"><primary sortas="oil_abs_u16_s16">oil_abs_u16_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_abs_u16_s16                     (<link linkend="uint16-t">uint16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the absolute value of each element in the source array
+and writes it into the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara> stride of destination elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements in arrays
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-abs-u32-s32" role="function">
+<title>oil_abs_u32_s32 ()</title>
+<indexterm zone="oil-abs-u32-s32"><primary sortas="oil_abs_u32_s32">oil_abs_u32_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_abs_u32_s32                     (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the absolute value of each element in the source array
+and writes it into the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara> stride of destination elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements in arrays
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-abs-u8-s8" role="function">
+<title>oil_abs_u8_s8 ()</title>
+<indexterm zone="oil-abs-u8-s8"><primary sortas="oil_abs_u8_s8">oil_abs_u8_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_abs_u8_s8                       (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *src,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the absolute value of each element in the source array
+and writes it into the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara> stride of destination elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements in arrays
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-average2-u8" role="function">
+<title>oil_average2_u8 ()</title>
+<indexterm zone="oil-average2-u8"><primary sortas="oil_average2_u8">oil_average2_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_average2_u8                     (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Averages each element in <parameter>s1</parameter> and <parameter>s2</parameter> and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This class is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-multsum-f32" role="function">
+<title>oil_multsum_f32 ()</title>
+<indexterm zone="oil-multsum-f32"><primary sortas="oil_multsum_f32">oil_multsum_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_multsum_f32                     (<link linkend="float">float</link> *dest,
+                                                         const <link linkend="float">float</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies each element in <parameter>src1</parameter> and <parameter>src2</parameter> and sums the results
+over the entire array, and places the sum into <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-multsum-f64" role="function">
+<title>oil_multsum_f64 ()</title>
+<indexterm zone="oil-multsum-f64"><primary sortas="oil_multsum_f64">oil_multsum_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_multsum_f64                     (<link linkend="double">double</link> *dest,
+                                                         const <link linkend="double">double</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies each element in <parameter>src1</parameter> and <parameter>src2</parameter> and sums the results
+over the entire array, and places the sum into <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-f32" role="function">
+<title>oil_scalaradd_f32 ()</title>
+<indexterm zone="oil-scalaradd-f32"><primary sortas="oil_scalaradd_f32">oil_scalaradd_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_f32                   (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-f64" role="function">
+<title>oil_scalaradd_f64 ()</title>
+<indexterm zone="oil-scalaradd-f64"><primary sortas="oil_scalaradd_f64">oil_scalaradd_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_f64                   (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="double">double</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-s16" role="function">
+<title>oil_scalaradd_s16 ()</title>
+<indexterm zone="oil-scalaradd-s16"><primary sortas="oil_scalaradd_s16">oil_scalaradd_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_s16                   (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-s32" role="function">
+<title>oil_scalaradd_s32 ()</title>
+<indexterm zone="oil-scalaradd-s32"><primary sortas="oil_scalaradd_s32">oil_scalaradd_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_s32                   (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-s8" role="function">
+<title>oil_scalaradd_s8 ()</title>
+<indexterm zone="oil-scalaradd-s8"><primary sortas="oil_scalaradd_s8">oil_scalaradd_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_s8                    (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-u16" role="function">
+<title>oil_scalaradd_u16 ()</title>
+<indexterm zone="oil-scalaradd-u16"><primary sortas="oil_scalaradd_u16">oil_scalaradd_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_u16                   (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-u32" role="function">
+<title>oil_scalaradd_u32 ()</title>
+<indexterm zone="oil-scalaradd-u32"><primary sortas="oil_scalaradd_u32">oil_scalaradd_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_u32                   (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-u8" role="function">
+<title>oil_scalaradd_u8 ()</title>
+<indexterm zone="oil-scalaradd-u8"><primary sortas="oil_scalaradd_u8">oil_scalaradd_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_u8                    (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-f32" role="function">
+<title>oil_scalarmult_f32 ()</title>
+<indexterm zone="oil-scalarmult-f32"><primary sortas="oil_scalarmult_f32">oil_scalarmult_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_f32                  (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-f64" role="function">
+<title>oil_scalarmult_f64 ()</title>
+<indexterm zone="oil-scalarmult-f64"><primary sortas="oil_scalarmult_f64">oil_scalarmult_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_f64                  (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="double">double</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-s16" role="function">
+<title>oil_scalarmult_s16 ()</title>
+<indexterm zone="oil-scalarmult-s16"><primary sortas="oil_scalarmult_s16">oil_scalarmult_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_s16                  (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-s32" role="function">
+<title>oil_scalarmult_s32 ()</title>
+<indexterm zone="oil-scalarmult-s32"><primary sortas="oil_scalarmult_s32">oil_scalarmult_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_s32                  (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-s8" role="function">
+<title>oil_scalarmult_s8 ()</title>
+<indexterm zone="oil-scalarmult-s8"><primary sortas="oil_scalarmult_s8">oil_scalarmult_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_s8                   (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-u16" role="function">
+<title>oil_scalarmult_u16 ()</title>
+<indexterm zone="oil-scalarmult-u16"><primary sortas="oil_scalarmult_u16">oil_scalarmult_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_u16                  (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-u32" role="function">
+<title>oil_scalarmult_u32 ()</title>
+<indexterm zone="oil-scalarmult-u32"><primary sortas="oil_scalarmult_u32">oil_scalarmult_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_u32                  (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmult-u8" role="function">
+<title>oil_scalarmult_u8 ()</title>
+<indexterm zone="oil-scalarmult-u8"><primary sortas="oil_scalarmult_u8">oil_scalarmult_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmult_u8                   (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> to each value in <parameter>s1</parameter> and places the
+result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-f32" role="function">
+<title>oil_vectoradd_f32 ()</title>
+<indexterm zone="oil-vectoradd-f32"><primary sortas="oil_vectoradd_f32">oil_vectoradd_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_f32                   (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="float">float</link> *s3_1,
+                                                         const <link linkend="float">float</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-f64" role="function">
+<title>oil_vectoradd_f64 ()</title>
+<indexterm zone="oil-vectoradd-f64"><primary sortas="oil_vectoradd_f64">oil_vectoradd_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_f64                   (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="double">double</link> *s3_1,
+                                                         const <link linkend="double">double</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s16" role="function">
+<title>oil_vectoradd_s16 ()</title>
+<indexterm zone="oil-vectoradd-s16"><primary sortas="oil_vectoradd_s16">oil_vectoradd_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s16                   (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int16-t">int16_t</link> *s3_1,
+                                                         const <link linkend="int16-t">int16_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s32" role="function">
+<title>oil_vectoradd_s32 ()</title>
+<indexterm zone="oil-vectoradd-s32"><primary sortas="oil_vectoradd_s32">oil_vectoradd_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s32                   (<link linkend="int32-t">int32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int32-t">int32_t</link> *s3_1,
+                                                         const <link linkend="int32-t">int32_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s8" role="function">
+<title>oil_vectoradd_s8 ()</title>
+<indexterm zone="oil-vectoradd-s8"><primary sortas="oil_vectoradd_s8">oil_vectoradd_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s8                    (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int8-t">int8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="int8-t">int8_t</link> *s3_1,
+                                                         const <link linkend="int8-t">int8_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-u16" role="function">
+<title>oil_vectoradd_u16 ()</title>
+<indexterm zone="oil-vectoradd-u16"><primary sortas="oil_vectoradd_u16">oil_vectoradd_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_u16                   (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s3_1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-u32" role="function">
+<title>oil_vectoradd_u32 ()</title>
+<indexterm zone="oil-vectoradd-u32"><primary sortas="oil_vectoradd_u32">oil_vectoradd_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_u32                   (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s3_1,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-u8" role="function">
+<title>oil_vectoradd_u8 ()</title>
+<indexterm zone="oil-vectoradd-u8"><primary sortas="oil_vectoradd_u8">oil_vectoradd_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_u8                    (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s3_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s4_1);</programlisting>
+<para>
+Multiplies the constant <parameter>s3_1</parameter> with each element of <parameter>s1</parameter> and
+multiplies the constant <parameter>s4_1</parameter> with each element of <parameter>s2</parameter> and
+adds the two results together and places the final result in
+<parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s3_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s4_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-s8" role="function">
+<title>oil_vectoradd_s_s8 ()</title>
+<indexterm zone="oil-vectoradd-s-s8"><primary sortas="oil_vectoradd_s_s8">oil_vectoradd_s_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_s8                  (<link linkend="int8-t">int8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int8-t">int8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+of the type and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-u8" role="function">
+<title>oil_vectoradd_s_u8 ()</title>
+<indexterm zone="oil-vectoradd-s-u8"><primary sortas="oil_vectoradd_s_u8">oil_vectoradd_s_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_u8                  (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+of the type and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-s16" role="function">
+<title>oil_vectoradd_s_s16 ()</title>
+<indexterm zone="oil-vectoradd-s-s16"><primary sortas="oil_vectoradd_s_s16">oil_vectoradd_s_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_s16                 (<link linkend="int16-t">int16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+of the type and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-u16" role="function">
+<title>oil_vectoradd_s_u16 ()</title>
+<indexterm zone="oil-vectoradd-s-u16"><primary sortas="oil_vectoradd_s_u16">oil_vectoradd_s_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_u16                 (<link linkend="uint16-t">uint16_t</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+of the type and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-f32" role="function">
+<title>oil_vectoradd_s_f32 ()</title>
+<indexterm zone="oil-vectoradd-s-f32"><primary sortas="oil_vectoradd_s_f32">oil_vectoradd_s_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_f32                 (<link linkend="float">float</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+[-1,1] and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-vectoradd-s-f64" role="function">
+<title>oil_vectoradd_s_f64 ()</title>
+<indexterm zone="oil-vectoradd-s-f64"><primary sortas="oil_vectoradd_s_f64">oil_vectoradd_s_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_vectoradd_s_f64                 (<link linkend="double">double</link> *d,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="double">double</link> *s2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds each element of <parameter>s1</parameter> to <parameter>s2</parameter> and clamps the result to the range
+[-1,1] and places the result in <parameter>d</parameter>.
+</para>
+<para>
+FIXME: This function is difficult to optimize and will likely be
+replaced.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-squaresum-f64" role="function">
+<title>oil_squaresum_f64 ()</title>
+<indexterm zone="oil-squaresum-f64"><primary sortas="oil_squaresum_f64">oil_squaresum_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_squaresum_f64                   (<link linkend="double">double</link> *d,
+                                                         const <link linkend="double">double</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Sums the square of each element in <parameter>s</parameter> and places the result in
+<parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-squaresum-shifted-s16" role="function">
+<title>oil_squaresum_shifted_s16 ()</title>
+<indexterm zone="oil-squaresum-shifted-s16"><primary sortas="oil_squaresum_shifted_s16">oil_squaresum_shifted_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_squaresum_shifted_s16           (<link linkend="uint32-t">uint32_t</link> *d,
+                                                         const <link linkend="int16-t">int16_t</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Square each element in <parameter>s</parameter> and divide by (1&lt;&lt;15), and sum the
+results, placing the final result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sum-f64" role="function">
+<title>oil_sum_f64 ()</title>
+<indexterm zone="oil-sum-f64"><primary sortas="oil_sum_f64">oil_sum_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sum_f64                         (<link linkend="double">double</link> *d_1,
+                                                         const <link linkend="double">double</link> *s,
+                                                         <link linkend="int">int</link> sstr,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Sums the elements in the source array and places the result in
+<parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara> stride of source elements
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-add-f32" role="function">
+<title>oil_add_f32 ()</title>
+<indexterm zone="oil-add-f32"><primary sortas="oil_add_f32">oil_add_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_add_f32                         (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds elements in <parameter>s2</parameter> and <parameter>s1</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-divide-f32" role="function">
+<title>oil_divide_f32 ()</title>
+<indexterm zone="oil-divide-f32"><primary sortas="oil_divide_f32">oil_divide_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_divide_f32                      (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Divides elements in <parameter>s1</parameter> by <parameter>s2</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-floor-f32" role="function">
+<title>oil_floor_f32 ()</title>
+<indexterm zone="oil-floor-f32"><primary sortas="oil_floor_f32">oil_floor_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_floor_f32                       (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the greatest integer less than or equal to each element
+in <parameter>s</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-inverse-f32" role="function">
+<title>oil_inverse_f32 ()</title>
+<indexterm zone="oil-inverse-f32"><primary sortas="oil_inverse_f32">oil_inverse_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_inverse_f32                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the multiplicative inverse of each element in <parameter>s</parameter> and
+places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-maximum-f32" role="function">
+<title>oil_maximum_f32 ()</title>
+<indexterm zone="oil-maximum-f32"><primary sortas="oil_maximum_f32">oil_maximum_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_maximum_f32                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Places the greater of <parameter>s1</parameter> and <parameter>s2</parameter> in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-minimum-f32" role="function">
+<title>oil_minimum_f32 ()</title>
+<indexterm zone="oil-minimum-f32"><primary sortas="oil_minimum_f32">oil_minimum_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_minimum_f32                     (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Places the lesser of <parameter>s1</parameter> and <parameter>s2</parameter> in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-multiply-f32" role="function">
+<title>oil_multiply_f32 ()</title>
+<indexterm zone="oil-multiply-f32"><primary sortas="oil_multiply_f32">oil_multiply_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_multiply_f32                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies elements in <parameter>s1</parameter> and <parameter>s2</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-negative-f32" role="function">
+<title>oil_negative_f32 ()</title>
+<indexterm zone="oil-negative-f32"><primary sortas="oil_negative_f32">oil_negative_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_negative_f32                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Negates each element in <parameter>s</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalaradd-f32-ns" role="function">
+<title>oil_scalaradd_f32_ns ()</title>
+<indexterm zone="oil-scalaradd-f32-ns"><primary sortas="oil_scalaradd_f32_ns">oil_scalaradd_f32_ns</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalaradd_f32_ns                (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Adds the constant value <parameter>s2_1</parameter> to each source element and places
+the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-scalarmultiply-f32-ns" role="function">
+<title>oil_scalarmultiply_f32_ns ()</title>
+<indexterm zone="oil-scalarmultiply-f32-ns"><primary sortas="oil_scalarmultiply_f32_ns">oil_scalarmultiply_f32_ns</primary></indexterm><programlisting><link linkend="void">void</link>                oil_scalarmultiply_f32_ns           (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Multiplies the constant value <parameter>s2_1</parameter> and each source element and places
+the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_1</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sign-f32" role="function">
+<title>oil_sign_f32 ()</title>
+<indexterm zone="oil-sign-f32"><primary sortas="oil_sign_f32">oil_sign_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sign_f32                        (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Calculates the sign of each element in <parameter>s</parameter> and
+places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-subtract-f32" role="function">
+<title>oil_subtract_f32 ()</title>
+<indexterm zone="oil-subtract-f32"><primary sortas="oil_subtract_f32">oil_subtract_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_subtract_f32                    (<link linkend="float">float</link> *d,
+                                                         const <link linkend="float">float</link> *s1,
+                                                         const <link linkend="float">float</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Subtracts elements in <parameter>s2</parameter> from <parameter>s1</parameter> and places the result in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara> destination
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source 1
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source 2
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

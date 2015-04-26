@@ -1,0 +1,124 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION OilDebugPrintFunc ##### -->
+<para>
+
+</para>
+
+@level: 
+@file: 
+@func: 
+@line: 
+@format: 
+@varargs: 
+
+
+<!-- ##### ENUM OilDebugLevel ##### -->
+<para>
+
+</para>
+
+@OIL_DEBUG_NONE: 
+@OIL_DEBUG_ERROR: 
+@OIL_DEBUG_WARNING: 
+@OIL_DEBUG_INFO: 
+@OIL_DEBUG_DEBUG: 
+@OIL_DEBUG_LOG: 
+
+<!-- ##### FUNCTION oil_debug_set_print_function ##### -->
+<para>
+
+</para>
+
+@func: 
+
+
+<!-- ##### FUNCTION oil_debug_get_level ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_debug_set_level ##### -->
+<para>
+
+</para>
+
+@level: 
+
+
+<!-- ##### MACRO OIL_ERROR ##### -->
+<para>
+
+</para>
+
+@...: 
+
+
+<!-- ##### MACRO OIL_WARNING ##### -->
+<para>
+
+</para>
+
+@...: 
+
+
+<!-- ##### MACRO OIL_INFO ##### -->
+<para>
+
+</para>
+
+@...: 
+
+
+<!-- ##### MACRO OIL_DEBUG ##### -->
+<para>
+
+</para>
+
+@...: 
+
+
+<!-- ##### MACRO OIL_LOG ##### -->
+<para>
+
+</para>
+
+@...: 
+
+
+<!-- ##### MACRO OIL_FUNCTION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO OIL_DEBUG_PRINT ##### -->
+<para>
+
+</para>
+
+@level: 
+@...: 
+
+

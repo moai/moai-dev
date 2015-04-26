@@ -1,0 +1,120 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT OilFunctionImpl ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION oil_impl_get_by_index ##### -->
+<para>
+
+</para>
+
+@i: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_impl_is_runnable ##### -->
+<para>
+
+</para>
+
+@impl: 
+@Returns: 
+
+
+<!-- ##### ENUM OilImplFlag ##### -->
+<para>
+
+</para>
+
+@OIL_IMPL_FLAG_REF: 
+@OIL_IMPL_FLAG_OPT: 
+@OIL_IMPL_FLAG_ASM: 
+@OIL_IMPL_FLAG_DISABLED: 
+@OIL_IMPL_FLAG_CMOV: 
+@OIL_IMPL_FLAG_MMX: 
+@OIL_IMPL_FLAG_SSE: 
+@OIL_IMPL_FLAG_MMXEXT: 
+@OIL_IMPL_FLAG_SSE2: 
+@OIL_IMPL_FLAG_3DNOW: 
+@OIL_IMPL_FLAG_3DNOWEXT: 
+@OIL_IMPL_FLAG_SSE3: 
+@OIL_IMPL_FLAG_ALTIVEC: 
+@OIL_IMPL_FLAG_EDSP: 
+@OIL_IMPL_FLAG_ARM6: 
+@OIL_IMPL_FLAG_VFP: 
+@OIL_IMPL_FLAG_SSSE3: 
+
+<!-- ##### MACRO OIL_CPU_FLAG_MASK ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO OIL_DEFINE_IMPL_FULL ##### -->
+<para>
+
+</para>
+
+@function: 
+@klass: 
+@flags: 
+
+
+<!-- ##### MACRO OIL_DEFINE_IMPL ##### -->
+<para>
+
+</para>
+
+@function: 
+@klass: 
+
+
+<!-- ##### MACRO OIL_DEFINE_IMPL_REF ##### -->
+<para>
+
+</para>
+
+@function: 
+@klass: 
+
+
+<!-- ##### MACRO OIL_DEFINE_IMPL_ASM ##### -->
+<para>
+
+</para>
+
+@function: 
+@klass: 
+
+
+<!-- ##### MACRO OIL_DEFINE_IMPL_DEPENDS ##### -->
+<para>
+
+</para>
+
+@function: 
+@klass: 
+@...: 
+
+

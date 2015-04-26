@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>OilPrototype</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch02.html" title="Liboil Unstable API">
+<link rel="prev" href="liboil-liboilprofile.html" title="OilProfile">
+<link rel="next" href="liboil-liboilrandom.html" title="Random Number Generation">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilprofile.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboilrandom.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilprototype.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilprototype.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="OilPrototype">
+<a name="liboil-liboilprototype"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilprototype.top_of_page"></a>OilPrototype</span></h2>
+<p>OilPrototype — Functions to manipulate prototype information.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilprototype.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a>;
+<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *      <a class="link" href="liboil-liboilprototype.html#oil-prototype-from-string" title="oil_prototype_from_string ()">oil_prototype_from_string</a>           (const char *s);
+char *              <a class="link" href="liboil-liboilprototype.html#oil-prototype-to-string" title="oil_prototype_to_string ()">oil_prototype_to_string</a>             (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);
+char *              <a class="link" href="liboil-liboilprototype.html#oil-prototype-to-arg-string" title="oil_prototype_to_arg_string ()">oil_prototype_to_arg_string</a>         (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);
+void                <a class="link" href="liboil-liboilprototype.html#oil-prototype-free" title="oil_prototype_free ()">oil_prototype_free</a>                  (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);
+void                <a class="link" href="liboil-liboilprototype.html#oil-prototype-append-param" title="oil_prototype_append_param ()">oil_prototype_append_param</a>          (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *param);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilprototype.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilprototype.details"></a><h2>Details</h2>
+<div class="refsect2" title="OilPrototype">
+<a name="OilPrototype"></a><h3>OilPrototype</h3>
+<pre class="programlisting">typedef struct {
+  int n_params;
+  OilParameter *params;
+  OilFunctionClass *klass;
+} OilPrototype;
+</pre>
+<p>
+An opaque structure describing the C function prototype of
+an <em class="parameter"><code>OilFunctionClass</code></em>.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_prototype_from_string ()">
+<a name="oil-prototype-from-string"></a><h3>oil_prototype_from_string ()</h3>
+<pre class="programlisting"><a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *      oil_prototype_from_string           (const char *s);</pre>
+<p>
+Converts the string <em class="parameter"><code>s</code></em> containing C prototype that follows
+Liboil parameter naming rules into a OilPrototype.  If the
+string cannot be converted, NULL is returned.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s</code></em> :</span></p></td>
+<td> a string
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the OilPrototype.  When it is no longer needed, free
+the prototype using <a class="link" href="liboil-liboilprototype.html#oil-prototype-free" title="oil_prototype_free ()"><code class="function">oil_prototype_free()</code></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_prototype_to_string ()">
+<a name="oil-prototype-to-string"></a><h3>oil_prototype_to_string ()</h3>
+<pre class="programlisting">char *              oil_prototype_to_string             (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);</pre>
+<p>
+Converts a prototype into the corresponding C style declaration.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proto</code></em> :</span></p></td>
+<td> the OilPrototype
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string that should be freed using <code class="function">free()</code> when it is no
+longer needed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_prototype_to_arg_string ()">
+<a name="oil-prototype-to-arg-string"></a><h3>oil_prototype_to_arg_string ()</h3>
+<pre class="programlisting">char *              oil_prototype_to_arg_string         (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);</pre>
+<p>
+Converts a prototype into the corresponding C argument list.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proto</code></em> :</span></p></td>
+<td> the OilPrototype
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string that should be freed using <code class="function">free()</code> when it is no
+longer needed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_prototype_free ()">
+<a name="oil-prototype-free"></a><h3>oil_prototype_free ()</h3>
+<pre class="programlisting">void                oil_prototype_free                  (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto);</pre>
+<p>
+Frees memory associated with <em class="parameter"><code>proto</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>proto</code></em> :</span></p></td>
+<td> the OilPrototype
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_prototype_append_param ()">
+<a name="oil-prototype-append-param"></a><h3>oil_prototype_append_param ()</h3>
+<pre class="programlisting">void                oil_prototype_append_param          (<a class="link" href="liboil-liboilprototype.html#OilPrototype" title="OilPrototype">OilPrototype</a> *proto,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *param);</pre>
+<p>
+Appends <em class="parameter"><code>param</code></em> to the list of parameters contained in <em class="parameter"><code>proto</code></em>.  The
+contents of <em class="parameter"><code>param</code></em> are copied.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>proto</code></em> :</span></p></td>
+<td> the OilPrototype
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>param</code></em> :</span></p></td>
+<td> an OilParameter
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

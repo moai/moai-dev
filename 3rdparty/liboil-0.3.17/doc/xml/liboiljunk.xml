@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboiljunk">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboiljunk.top_of_page">liboiljunk</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>liboiljunk</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboiljunk.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="OIL-OPT-MANGLE--CAPS">OIL_OPT_MANGLE</link>                      (a)
+#define             <link linkend="OIL-OPT-SUFFIX--CAPS">OIL_OPT_SUFFIX</link>
+#define             <link linkend="OIL-CHECK-PROTOTYPE--CAPS">OIL_CHECK_PROTOTYPE</link>                 (a)
+#define             <link linkend="OIL-OPT-FLAG-MANGLE--CAPS">OIL_OPT_FLAG_MANGLE</link>                 (a)
+#define             <link linkend="OIL-NO-CLASSES--CAPS">OIL_NO_CLASSES</link>
+#define             <link linkend="NULL--CAPS">NULL</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboiljunk.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboiljunk.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OIL-OPT-MANGLE--CAPS" role="macro">
+<title>OIL_OPT_MANGLE()</title>
+<indexterm zone="OIL-OPT-MANGLE--CAPS"><primary sortas="OIL_OPT_MANGLE">OIL_OPT_MANGLE</primary></indexterm><programlisting>#define OIL_OPT_MANGLE(a) a
+</programlisting>
+<para>
+Used internally to implement the --enable-alternate-optimizations
+configure option.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>a</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-OPT-SUFFIX--CAPS" role="macro">
+<title>OIL_OPT_SUFFIX</title>
+<indexterm zone="OIL-OPT-SUFFIX--CAPS"><primary sortas="OIL_OPT_SUFFIX">OIL_OPT_SUFFIX</primary></indexterm><programlisting>#define OIL_OPT_SUFFIX
+</programlisting>
+<para>
+Used internally to implement the --enable-alternate-optimizations
+configure option.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-CHECK-PROTOTYPE--CAPS" role="macro">
+<title>OIL_CHECK_PROTOTYPE()</title>
+<indexterm zone="OIL-CHECK-PROTOTYPE--CAPS"><primary sortas="OIL_CHECK_PROTOTYPE">OIL_CHECK_PROTOTYPE</primary></indexterm><programlisting>#define             OIL_CHECK_PROTOTYPE(a)</programlisting>
+<para>
+Macro used internally to implement the --enable-prototype-checking
+configure option.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>a</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-OPT-FLAG-MANGLE--CAPS" role="macro">
+<title>OIL_OPT_FLAG_MANGLE()</title>
+<indexterm zone="OIL-OPT-FLAG-MANGLE--CAPS"><primary sortas="OIL_OPT_FLAG_MANGLE">OIL_OPT_FLAG_MANGLE</primary></indexterm><programlisting>#define             OIL_OPT_FLAG_MANGLE(a)</programlisting>
+<para>
+Used internally to implement the --enable-alternate-optimizations
+configure option.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>a</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-NO-CLASSES--CAPS" role="macro">
+<title>OIL_NO_CLASSES</title>
+<indexterm zone="OIL-NO-CLASSES--CAPS"><primary sortas="OIL_NO_CLASSES">OIL_NO_CLASSES</primary></indexterm><programlisting>#define OIL_NO_CLASSES
+</programlisting>
+<para>
+Used internally to implement the --enable-alternate-optimizations
+configure option.</para>
+<para>
+</para></refsect2>
+<refsect2 id="NULL--CAPS" role="macro">
+<title>NULL</title>
+<indexterm zone="NULL--CAPS"><primary sortas="NULL">NULL</primary></indexterm><programlisting>#define NULL ((void *)0)
+</programlisting>
+<para>
+FIXME: gtk-doc is broken and doesn't know how to ignore this.</para>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

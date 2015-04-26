@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboiltypes">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboiltypes.top_of_page">liboiltypes</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>liboiltypes</refname>
+<refpurpose>Internal Liboil types</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboiltypes.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+enum                <link linkend="OilType">OilType</link>;
+<link linkend="int">int</link>                 <link linkend="oil-type-sizeof">oil_type_sizeof</link>                     (<link linkend="OilType">OilType</link> type);
+#define             <link linkend="oil-type-is-floating-point">oil_type_is_floating_point</link>          (type)
+const <link linkend="char">char</link> *        <link linkend="oil-type-name">oil_type_name</link>                       (<link linkend="OilType">OilType</link> type);
+enum                <link linkend="OilArgType">OilArgType</link>;
+const <link linkend="char">char</link> *        <link linkend="oil-arg-type-name">oil_arg_type_name</link>                   (<link linkend="OilArgType">OilArgType</link> type);
+#define             <link linkend="oil-type-s8">oil_type_s8</link>
+#define             <link linkend="oil-type-u8">oil_type_u8</link>
+#define             <link linkend="oil-type-s16">oil_type_s16</link>
+#define             <link linkend="oil-type-u16">oil_type_u16</link>
+#define             <link linkend="oil-type-s32">oil_type_s32</link>
+#define             <link linkend="oil-type-u32">oil_type_u32</link>
+#define             <link linkend="oil-type-s64">oil_type_s64</link>
+#define             <link linkend="oil-type-u64">oil_type_u64</link>
+#define             <link linkend="oil-type-f32">oil_type_f32</link>
+#define             <link linkend="oil-type-f64">oil_type_f64</link>
+#define             <link linkend="oil-type-min-s8">oil_type_min_s8</link>
+#define             <link linkend="oil-type-min-u8">oil_type_min_u8</link>
+#define             <link linkend="oil-type-min-s16">oil_type_min_s16</link>
+#define             <link linkend="oil-type-min-u16">oil_type_min_u16</link>
+#define             <link linkend="oil-type-min-s32">oil_type_min_s32</link>
+#define             <link linkend="oil-type-min-u32">oil_type_min_u32</link>
+#define             <link linkend="oil-type-max-s8">oil_type_max_s8</link>
+#define             <link linkend="oil-type-max-u8">oil_type_max_u8</link>
+#define             <link linkend="oil-type-max-s16">oil_type_max_s16</link>
+#define             <link linkend="oil-type-max-u16">oil_type_max_u16</link>
+#define             <link linkend="oil-type-max-s32">oil_type_max_s32</link>
+#define             <link linkend="oil-type-max-u32">oil_type_max_u32</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboiltypes.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboiltypes.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilType" role="enum">
+<title>enum OilType</title>
+<indexterm zone="OilType"><primary sortas="OilType">OilType</primary></indexterm><programlisting>typedef enum {
+  OIL_TYPE_UNKNOWN = 0,
+  OIL_TYPE_INT,
+  OIL_TYPE_s8,
+  OIL_TYPE_u8,
+  OIL_TYPE_s16,
+  OIL_TYPE_u16,
+  OIL_TYPE_s32,
+  OIL_TYPE_u32,
+  OIL_TYPE_s64,
+  OIL_TYPE_u64,
+  OIL_TYPE_f32,
+  OIL_TYPE_f64,
+  OIL_TYPE_s8p,
+  OIL_TYPE_u8p,
+  OIL_TYPE_s16p,
+  OIL_TYPE_u16p,
+  OIL_TYPE_s32p,
+  OIL_TYPE_u32p,
+  OIL_TYPE_s64p,
+  OIL_TYPE_u64p,
+  OIL_TYPE_f32p,
+  OIL_TYPE_f64p,
+} OilType;
+</programlisting>
+<para>
+Enumeration containing the data types understood by Liboil.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-sizeof" role="function">
+<title>oil_type_sizeof ()</title>
+<indexterm zone="oil-type-sizeof"><primary sortas="oil_type_sizeof">oil_type_sizeof</primary></indexterm><programlisting><link linkend="int">int</link>                 oil_type_sizeof                     (<link linkend="OilType">OilType</link> type);</programlisting>
+<para>
+Looks up the size of the OilType represented by <parameter>type</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the OilType
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the size of <parameter>type</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-type-is-floating-point" role="macro">
+<title>oil_type_is_floating_point()</title>
+<indexterm zone="oil-type-is-floating-point"><primary sortas="oil_type_is_floating_point">oil_type_is_floating_point</primary></indexterm><programlisting>#define             oil_type_is_floating_point(type)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-type-name" role="function">
+<title>oil_type_name ()</title>
+<indexterm zone="oil-type-name"><primary sortas="oil_type_name">oil_type_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        oil_type_name                       (<link linkend="OilType">OilType</link> type);</programlisting>
+<para>
+Looks up the name of the OilType given by <parameter>type</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> an OilType
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string containing the name of the OilType <parameter>type</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OilArgType" role="enum">
+<title>enum OilArgType</title>
+<indexterm zone="OilArgType"><primary sortas="OilArgType">OilArgType</primary></indexterm><programlisting>typedef enum {
+  OIL_ARG_UNKNOWN = 0,
+  OIL_ARG_N,
+  OIL_ARG_M,
+  OIL_ARG_DEST1,
+  OIL_ARG_DSTR1,
+  OIL_ARG_DEST2,
+  OIL_ARG_DSTR2,
+  OIL_ARG_DEST3,
+  OIL_ARG_DSTR3,
+  OIL_ARG_SRC1,
+  OIL_ARG_SSTR1,
+  OIL_ARG_SRC2,
+  OIL_ARG_SSTR2,
+  OIL_ARG_SRC3,
+  OIL_ARG_SSTR3,
+  OIL_ARG_SRC4,
+  OIL_ARG_SSTR4,
+  OIL_ARG_SRC5,
+  OIL_ARG_SSTR5,
+  OIL_ARG_INPLACE1,
+  OIL_ARG_ISTR1,
+  OIL_ARG_INPLACE2,
+  OIL_ARG_ISTR2,
+
+  OIL_ARG_LAST
+} OilArgType;
+</programlisting>
+<para>
+Enumeration containing the types of parameter types understood
+by Liboil.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-arg-type-name" role="function">
+<title>oil_arg_type_name ()</title>
+<indexterm zone="oil-arg-type-name"><primary sortas="oil_arg_type_name">oil_arg_type_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        oil_arg_type_name                   (<link linkend="OilArgType">OilArgType</link> type);</programlisting>
+<para>
+Looks up the name of the OilArgType specified by <parameter>type</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> an OilArgType
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string containing the name
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-type-s8" role="macro">
+<title>oil_type_s8</title>
+<indexterm zone="oil-type-s8"><primary sortas="oil_type_s8">oil_type_s8</primary></indexterm><programlisting>#define oil_type_s8 int8_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-u8" role="macro">
+<title>oil_type_u8</title>
+<indexterm zone="oil-type-u8"><primary sortas="oil_type_u8">oil_type_u8</primary></indexterm><programlisting>#define oil_type_u8 uint8_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-s16" role="macro">
+<title>oil_type_s16</title>
+<indexterm zone="oil-type-s16"><primary sortas="oil_type_s16">oil_type_s16</primary></indexterm><programlisting>#define oil_type_s16 int16_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-u16" role="macro">
+<title>oil_type_u16</title>
+<indexterm zone="oil-type-u16"><primary sortas="oil_type_u16">oil_type_u16</primary></indexterm><programlisting>#define oil_type_u16 uint16_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-s32" role="macro">
+<title>oil_type_s32</title>
+<indexterm zone="oil-type-s32"><primary sortas="oil_type_s32">oil_type_s32</primary></indexterm><programlisting>#define oil_type_s32 int32_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-u32" role="macro">
+<title>oil_type_u32</title>
+<indexterm zone="oil-type-u32"><primary sortas="oil_type_u32">oil_type_u32</primary></indexterm><programlisting>#define oil_type_u32 uint32_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-s64" role="macro">
+<title>oil_type_s64</title>
+<indexterm zone="oil-type-s64"><primary sortas="oil_type_s64">oil_type_s64</primary></indexterm><programlisting>#define oil_type_s64 int64_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-u64" role="macro">
+<title>oil_type_u64</title>
+<indexterm zone="oil-type-u64"><primary sortas="oil_type_u64">oil_type_u64</primary></indexterm><programlisting>#define oil_type_u64 uint64_t
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-f32" role="macro">
+<title>oil_type_f32</title>
+<indexterm zone="oil-type-f32"><primary sortas="oil_type_f32">oil_type_f32</primary></indexterm><programlisting>#define oil_type_f32 float
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-f64" role="macro">
+<title>oil_type_f64</title>
+<indexterm zone="oil-type-f64"><primary sortas="oil_type_f64">oil_type_f64</primary></indexterm><programlisting>#define oil_type_f64 double
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-s8" role="macro">
+<title>oil_type_min_s8</title>
+<indexterm zone="oil-type-min-s8"><primary sortas="oil_type_min_s8">oil_type_min_s8</primary></indexterm><programlisting>#define oil_type_min_s8 (-128)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-u8" role="macro">
+<title>oil_type_min_u8</title>
+<indexterm zone="oil-type-min-u8"><primary sortas="oil_type_min_u8">oil_type_min_u8</primary></indexterm><programlisting>#define oil_type_min_u8 (0)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-s16" role="macro">
+<title>oil_type_min_s16</title>
+<indexterm zone="oil-type-min-s16"><primary sortas="oil_type_min_s16">oil_type_min_s16</primary></indexterm><programlisting>#define oil_type_min_s16 (-32768)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-u16" role="macro">
+<title>oil_type_min_u16</title>
+<indexterm zone="oil-type-min-u16"><primary sortas="oil_type_min_u16">oil_type_min_u16</primary></indexterm><programlisting>#define oil_type_min_u16 (0)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-s32" role="macro">
+<title>oil_type_min_s32</title>
+<indexterm zone="oil-type-min-s32"><primary sortas="oil_type_min_s32">oil_type_min_s32</primary></indexterm><programlisting>#define oil_type_min_s32 (-2147483647 - 1)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-min-u32" role="macro">
+<title>oil_type_min_u32</title>
+<indexterm zone="oil-type-min-u32"><primary sortas="oil_type_min_u32">oil_type_min_u32</primary></indexterm><programlisting>#define oil_type_min_u32 (0)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-s8" role="macro">
+<title>oil_type_max_s8</title>
+<indexterm zone="oil-type-max-s8"><primary sortas="oil_type_max_s8">oil_type_max_s8</primary></indexterm><programlisting>#define oil_type_max_s8 (127)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-u8" role="macro">
+<title>oil_type_max_u8</title>
+<indexterm zone="oil-type-max-u8"><primary sortas="oil_type_max_u8">oil_type_max_u8</primary></indexterm><programlisting>#define oil_type_max_u8 (255)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-s16" role="macro">
+<title>oil_type_max_s16</title>
+<indexterm zone="oil-type-max-s16"><primary sortas="oil_type_max_s16">oil_type_max_s16</primary></indexterm><programlisting>#define oil_type_max_s16 (32767)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-u16" role="macro">
+<title>oil_type_max_u16</title>
+<indexterm zone="oil-type-max-u16"><primary sortas="oil_type_max_u16">oil_type_max_u16</primary></indexterm><programlisting>#define oil_type_max_u16 (65535)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-s32" role="macro">
+<title>oil_type_max_s32</title>
+<indexterm zone="oil-type-max-s32"><primary sortas="oil_type_max_s32">oil_type_max_s32</primary></indexterm><programlisting>#define oil_type_max_s32 (2147483647)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-type-max-u32" role="macro">
+<title>oil_type_max_u32</title>
+<indexterm zone="oil-type-max-u32"><primary sortas="oil_type_max_u32">oil_type_max_u32</primary></indexterm><programlisting>#define oil_type_max_u32 (4294967295U)
+</programlisting>
+<para>
+Useful for autogenerated code.  Do not use otherwise.</para>
+<para>
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,94 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION oil_mult8x8_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@s1_8x8: 
+@s2_8x8: 
+@ds: 
+@ss1: 
+@ss2: 
+
+
+<!-- ##### FUNCTION oil_sad8x8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s1_8x8: 
+@ss1: 
+@s2_8x8: 
+@ss2: 
+
+
+<!-- ##### FUNCTION oil_sad8x8_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s1_8x8: 
+@ss1: 
+@s2_8x8: 
+@ss2: 
+
+
+<!-- ##### FUNCTION oil_sad8x8_f64_2 ##### -->
+<para>
+
+</para>
+
+@d_1: 
+@s1_8x8: 
+@ss1: 
+@s2_8x8: 
+@ss2: 
+
+
+<!-- ##### FUNCTION oil_sad8x8_s16_2 ##### -->
+<para>
+
+</para>
+
+@d_1: 
+@s1_8x8: 
+@ss1: 
+@s2_8x8: 
+@ss2: 
+
+
+<!-- ##### FUNCTION oil_sad8x8_u8 ##### -->
+<para>
+
+</para>
+
+@d_1: 
+@s1_8x8: 
+@ss1: 
+@s2_8x8: 
+@ss2: 
+
+

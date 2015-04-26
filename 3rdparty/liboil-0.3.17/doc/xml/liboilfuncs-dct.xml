@@ -1,0 +1,447 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilfuncs-dct">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilfuncs-dct.top_of_page">liboilfuncs-dct</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>liboilfuncs-dct</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilfuncs-dct.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-dct36-f32">oil_dct36_f32</link>                       (<link linkend="float">float</link> *d_36,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s_36,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-fdct8-f64">oil_fdct8_f64</link>                       (<link linkend="double">double</link> *d_8,
+                                                         const <link linkend="double">double</link> *s_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-fdct8x8-f64">oil_fdct8x8_f64</link>                     (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-fdct8x8s-s16">oil_fdct8x8s_s16</link>                    (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-idct8-f64">oil_idct8_f64</link>                       (<link linkend="double">double</link> *d_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-idct8x8-f64">oil_idct8x8_f64</link>                     (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-idct8x8-s16">oil_idct8x8_s16</link>                     (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-imdct12-f64">oil_imdct12_f64</link>                     (<link linkend="double">double</link> *d_12,
+                                                         const <link linkend="double">double</link> *s_6);
+<link linkend="void">void</link>                <link linkend="oil-imdct32-f32">oil_imdct32_f32</link>                     (<link linkend="float">float</link> *d_32,
+                                                         const <link linkend="float">float</link> *s_32);
+<link linkend="void">void</link>                <link linkend="oil-imdct36-f64">oil_imdct36_f64</link>                     (<link linkend="double">double</link> *d_36,
+                                                         const <link linkend="double">double</link> *s_18);
+<link linkend="void">void</link>                <link linkend="oil-mdct12-f64">oil_mdct12_f64</link>                      (<link linkend="double">double</link> *d_6,
+                                                         const <link linkend="double">double</link> *s_12);
+<link linkend="void">void</link>                <link linkend="oil-mdct36-f64">oil_mdct36_f64</link>                      (<link linkend="double">double</link> *d_18,
+                                                         const <link linkend="double">double</link> *s_36);
+<link linkend="void">void</link>                <link linkend="oil-idct8theora-s16">oil_idct8theora_s16</link>                 (<link linkend="int16-t">int16_t</link> *d_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-idct8x8lim10-f64">oil_idct8x8lim10_f64</link>                (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-idct8x8lim10-s16">oil_idct8x8lim10_s16</link>                (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+<link linkend="void">void</link>                <link linkend="oil-idct8x8theora-s16">oil_idct8x8theora_s16</link>               (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilfuncs-dct.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilfuncs-dct.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-dct36-f32" role="function">
+<title>oil_dct36_f32 ()</title>
+<indexterm zone="oil-dct36-f32"><primary sortas="oil_dct36_f32">oil_dct36_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_dct36_f32                       (<link linkend="float">float</link> *d_36,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *s_36,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+FIXME: This function is broken.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_36</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_36</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-fdct8-f64" role="function">
+<title>oil_fdct8_f64 ()</title>
+<indexterm zone="oil-fdct8-f64"><primary sortas="oil_fdct8_f64">oil_fdct8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_fdct8_f64                       (<link linkend="double">double</link> *d_8,
+                                                         const <link linkend="double">double</link> *s_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a Forward Discrete Cosine Transform on <parameter>s_8</parameter> and places
+the result in <parameter>d_8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-fdct8x8-f64" role="function">
+<title>oil_fdct8x8_f64 ()</title>
+<indexterm zone="oil-fdct8x8-f64"><primary sortas="oil_fdct8x8_f64">oil_fdct8x8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_fdct8x8_f64                     (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a 2-D Forward Discrete Cosine Transform on <parameter>s_8x8</parameter> and places
+the result in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-fdct8x8s-s16" role="function">
+<title>oil_fdct8x8s_s16 ()</title>
+<indexterm zone="oil-fdct8x8s-s16"><primary sortas="oil_fdct8x8s_s16">oil_fdct8x8s_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_fdct8x8s_s16                    (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Performs a 2-D Forward Discrete Cosine Transform on <parameter>s_8x8</parameter> and places
+the result in <parameter>d_8x8</parameter>.
+</para>
+<para>
+This function uses an alternate scaling used by RTjpeg.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8-f64" role="function">
+<title>oil_idct8_f64 ()</title>
+<indexterm zone="oil-idct8-f64"><primary sortas="oil_idct8_f64">oil_idct8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8_f64                       (<link linkend="double">double</link> *d_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a Inverse Discrete Cosine Transform on <parameter>s_8</parameter> and places
+the result in <parameter>d_8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8x8-f64" role="function">
+<title>oil_idct8x8_f64 ()</title>
+<indexterm zone="oil-idct8x8-f64"><primary sortas="oil_idct8x8_f64">oil_idct8x8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8x8_f64                     (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a 2-D Inverse Discrete Cosine Transform on <parameter>s_8x8</parameter> and places
+the result in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8x8-s16" role="function">
+<title>oil_idct8x8_s16 ()</title>
+<indexterm zone="oil-idct8x8-s16"><primary sortas="oil_idct8x8_s16">oil_idct8x8_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8x8_s16                     (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a limited 2-D Inverse Discrete Cosine Transform on <parameter>s_8x8</parameter>
+and places the result in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-imdct12-f64" role="function">
+<title>oil_imdct12_f64 ()</title>
+<indexterm zone="oil-imdct12-f64"><primary sortas="oil_imdct12_f64">oil_imdct12_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_imdct12_f64                     (<link linkend="double">double</link> *d_12,
+                                                         const <link linkend="double">double</link> *s_6);</programlisting>
+<para>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <parameter>s_6</parameter> and places the result in <parameter>d_12</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_12</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_6</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-imdct32-f32" role="function">
+<title>oil_imdct32_f32 ()</title>
+<indexterm zone="oil-imdct32-f32"><primary sortas="oil_imdct32_f32">oil_imdct32_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_imdct32_f32                     (<link linkend="float">float</link> *d_32,
+                                                         const <link linkend="float">float</link> *s_32);</programlisting>
+<para>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <parameter>s_32</parameter> and places the result in <parameter>d_32</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_32</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_32</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-imdct36-f64" role="function">
+<title>oil_imdct36_f64 ()</title>
+<indexterm zone="oil-imdct36-f64"><primary sortas="oil_imdct36_f64">oil_imdct36_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_imdct36_f64                     (<link linkend="double">double</link> *d_36,
+                                                         const <link linkend="double">double</link> *s_18);</programlisting>
+<para>
+Performs a Inverse Modified Discrete Cosine Transform (IMDCT)
+on the source array <parameter>s_18</parameter> and places the result in <parameter>d_36</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_36</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_18</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-mdct12-f64" role="function">
+<title>oil_mdct12_f64 ()</title>
+<indexterm zone="oil-mdct12-f64"><primary sortas="oil_mdct12_f64">oil_mdct12_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_mdct12_f64                      (<link linkend="double">double</link> *d_6,
+                                                         const <link linkend="double">double</link> *s_12);</programlisting>
+<para>
+Performs a Modified Discrete Cosine Transform (MDCT)
+on the source array <parameter>s_12</parameter> and places the result in <parameter>d_6</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_6</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_12</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-mdct36-f64" role="function">
+<title>oil_mdct36_f64 ()</title>
+<indexterm zone="oil-mdct36-f64"><primary sortas="oil_mdct36_f64">oil_mdct36_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_mdct36_f64                      (<link linkend="double">double</link> *d_18,
+                                                         const <link linkend="double">double</link> *s_36);</programlisting>
+<para>
+Performs a Modified Discrete Cosine Transform (MDCT)
+on the source array <parameter>s_36</parameter> and places the result in <parameter>d_18</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_18</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_36</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8theora-s16" role="function">
+<title>oil_idct8theora_s16 ()</title>
+<indexterm zone="oil-idct8theora-s16"><primary sortas="oil_idct8theora_s16">oil_idct8theora_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8theora_s16                 (<link linkend="int16-t">int16_t</link> *d_8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a Inverse Discrete Cosine Transform on <parameter>s_8</parameter> and places
+the result in <parameter>d_8</parameter>, as defined by the Theora specification.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8x8lim10-f64" role="function">
+<title>oil_idct8x8lim10_f64 ()</title>
+<indexterm zone="oil-idct8x8lim10-f64"><primary sortas="oil_idct8x8lim10_f64">oil_idct8x8lim10_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8x8lim10_f64                (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a 2-D Inverse Discrete Cosine Transform on <parameter>s_8x8</parameter> and places
+the result in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8x8lim10-s16" role="function">
+<title>oil_idct8x8lim10_s16 ()</title>
+<indexterm zone="oil-idct8x8lim10-s16"><primary sortas="oil_idct8x8lim10_s16">oil_idct8x8lim10_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8x8lim10_s16                (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a limited 2-D Inverse Discrete Cosine Transform on <parameter>s_8x8</parameter>
+and places the result in <parameter>d_8x8</parameter>.  The source 8x8 block must be non-zero
+only in the 10 lowest-order components.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-idct8x8theora-s16" role="function">
+<title>oil_idct8x8theora_s16 ()</title>
+<indexterm zone="oil-idct8x8theora-s16"><primary sortas="oil_idct8x8theora_s16">oil_idct8x8theora_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_idct8x8theora_s16               (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> sstr);</programlisting>
+<para>
+Performs a Inverse Discrete Cosine Transform on <parameter>s_8x8</parameter> and places
+the result in <parameter>d_8x8</parameter>, as defined by the Theora specification.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

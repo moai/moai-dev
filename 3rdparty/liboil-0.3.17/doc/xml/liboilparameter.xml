@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilparameter">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilparameter.top_of_page">OilParameter</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilParameter</refname>
+<refpurpose>Functions to manipulate prototype parameter information.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilparameter.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilParameter">OilParameter</link>;
+<link linkend="void">void</link> *              <link linkend="oil-param-get-source-data">oil_param_get_source_data</link>           (<link linkend="OilParameter">OilParameter</link> *param);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilparameter.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilparameter.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilParameter" role="struct">
+<title>OilParameter</title>
+<indexterm zone="OilParameter"><primary sortas="OilParameter">OilParameter</primary></indexterm><programlisting>typedef struct {
+} OilParameter;
+</programlisting>
+<para>
+An opaque structure representing a single parameter in the
+function prototype of an OilFunctionClass.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-param-get-source-data" role="function">
+<title>oil_param_get_source_data ()</title>
+<indexterm zone="oil-param-get-source-data"><primary sortas="oil_param_get_source_data">oil_param_get_source_data</primary></indexterm><programlisting><link linkend="void">void</link> *              oil_param_get_source_data           (<link linkend="OilParameter">OilParameter</link> *param);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>param</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

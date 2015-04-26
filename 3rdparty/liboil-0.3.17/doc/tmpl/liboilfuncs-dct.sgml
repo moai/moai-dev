@@ -1,0 +1,185 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION oil_dct36_f32 ##### -->
+<para>
+
+</para>
+
+@d_36: 
+@dstr: 
+@s_36: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_fdct8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8: 
+@s_8: 
+@dstr: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_fdct8x8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_fdct8x8s_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_idct8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8: 
+@dstr: 
+@s_8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_idct8x8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_idct8x8_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_imdct12_f64 ##### -->
+<para>
+
+</para>
+
+@d_12: 
+@s_6: 
+
+
+<!-- ##### FUNCTION oil_imdct32_f32 ##### -->
+<para>
+
+</para>
+
+@d_32: 
+@s_32: 
+
+
+<!-- ##### FUNCTION oil_imdct36_f64 ##### -->
+<para>
+
+</para>
+
+@d_36: 
+@s_18: 
+
+
+<!-- ##### FUNCTION oil_mdct12_f64 ##### -->
+<para>
+
+</para>
+
+@d_6: 
+@s_12: 
+
+
+<!-- ##### FUNCTION oil_mdct36_f64 ##### -->
+<para>
+
+</para>
+
+@d_18: 
+@s_36: 
+
+
+<!-- ##### FUNCTION oil_idct8theora_s16 ##### -->
+<para>
+
+</para>
+
+@d_8: 
+@dstr: 
+@s_8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_idct8x8lim10_f64 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_idct8x8lim10_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+
+<!-- ##### FUNCTION oil_idct8x8theora_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@dstr: 
+@s_8x8: 
+@sstr: 
+
+

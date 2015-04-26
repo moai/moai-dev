@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboiltest">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboiltest.top_of_page">OilTest</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilTest</refname>
+<refpurpose>Test and profile function implementations.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboiltest.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilTest">OilTest</link>;
+<link linkend="void">void</link>                (<link linkend="OilTestFunction">*OilTestFunction</link>)                  (<link linkend="OilTest">OilTest</link> *test);
+#define             <link linkend="OIL-TEST-HEADER--CAPS">OIL_TEST_HEADER</link>
+#define             <link linkend="OIL-TEST-FOOTER--CAPS">OIL_TEST_FOOTER</link>
+<link linkend="OilTest">OilTest</link> *           <link linkend="oil-test-new">oil_test_new</link>                        (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass);
+<link linkend="void">void</link>                <link linkend="oil-test-init">oil_test_init</link>                       (<link linkend="OilTest">OilTest</link> *test);
+<link linkend="void">void</link>                <link linkend="oil-test-free">oil_test_free</link>                       (<link linkend="OilTest">OilTest</link> *test);
+<link linkend="void">void</link>                <link linkend="oil-test-set-iterations">oil_test_set_iterations</link>             (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="int">int</link> iterations);
+<link linkend="void">void</link>                <link linkend="oil-test-check-ref">oil_test_check_ref</link>                  (<link linkend="OilTest">OilTest</link> *test);
+<link linkend="int">int</link>                 <link linkend="oil-test-check-impl">oil_test_check_impl</link>                 (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);
+<link linkend="void">void</link>                <link linkend="oil-test-cleanup">oil_test_cleanup</link>                    (<link linkend="OilTest">OilTest</link> *test);
+<link linkend="void">void</link> *              <link linkend="oil-test-get-source-data">oil_test_get_source_data</link>            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilArgType">OilArgType</link> arg_type);
+<link linkend="int">int</link>                 <link linkend="oil-test-get-value">oil_test_get_value</link>                  (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilArgType">OilArgType</link> arg_type);
+<link linkend="void">void</link>                <link linkend="oil-test-set-test-footer">oil_test_set_test_footer</link>            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilParameter">OilParameter</link> *p,
+                                                         <link linkend="int">int</link> test_footer);
+<link linkend="void">void</link>                <link linkend="oil-test-set-test-header">oil_test_set_test_header</link>            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilParameter">OilParameter</link> *p,
+                                                         <link linkend="int">int</link> test_header);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboiltest.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboiltest.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilTest" role="struct">
+<title>OilTest</title>
+<indexterm zone="OilTest"><primary sortas="OilTest">OilTest</primary></indexterm><programlisting>typedef struct {
+} OilTest;
+</programlisting>
+<para>
+An opaque structure describing how to test an OilFunctionImpl
+for an OilFunctionClass.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OilTestFunction" role="function">
+<title>OilTestFunction ()</title>
+<indexterm zone="OilTestFunction"><primary sortas="OilTestFunction">OilTestFunction</primary></indexterm><programlisting><link linkend="void">void</link>                (*OilTestFunction)                  (<link linkend="OilTest">OilTest</link> *test);</programlisting>
+<para>
+Typedef for functions that initialize special values
+in source arrays for a particular function class.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the <parameter>OilTest</parameter> structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-TEST-HEADER--CAPS" role="macro">
+<title>OIL_TEST_HEADER</title>
+<indexterm zone="OIL-TEST-HEADER--CAPS"><primary sortas="OIL_TEST_HEADER">OIL_TEST_HEADER</primary></indexterm><programlisting>#define OIL_TEST_HEADER 256
+</programlisting>
+<para>
+Default number of bytes that are prepended to the array test area.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-TEST-FOOTER--CAPS" role="macro">
+<title>OIL_TEST_FOOTER</title>
+<indexterm zone="OIL-TEST-FOOTER--CAPS"><primary sortas="OIL_TEST_FOOTER">OIL_TEST_FOOTER</primary></indexterm><programlisting>#define OIL_TEST_FOOTER 256
+</programlisting>
+<para>
+Default number of bytes that are appended to the array test area.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-test-new" role="function">
+<title>oil_test_new ()</title>
+<indexterm zone="oil-test-new"><primary sortas="oil_test_new">oil_test_new</primary></indexterm><programlisting><link linkend="OilTest">OilTest</link> *           oil_test_new                        (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass);</programlisting>
+<para>
+Creates a new OilTest for the OilFunctionClass represented by <parameter>klass</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> an OilFunctionClass
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the new OilTest
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-init" role="function">
+<title>oil_test_init ()</title>
+<indexterm zone="oil-test-init"><primary sortas="oil_test_init">oil_test_init</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_init                       (<link linkend="OilTest">OilTest</link> *test);</programlisting>
+<para>
+Intializes <parameter>test</parameter>.
+</para>
+<para>
+FIXME: needs work</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-free" role="function">
+<title>oil_test_free ()</title>
+<indexterm zone="oil-test-free"><primary sortas="oil_test_free">oil_test_free</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_free                       (<link linkend="OilTest">OilTest</link> *test);</programlisting>
+<para>
+Frees memory associated with <parameter>test</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-set-iterations" role="function">
+<title>oil_test_set_iterations ()</title>
+<indexterm zone="oil-test-set-iterations"><primary sortas="oil_test_set_iterations">oil_test_set_iterations</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_set_iterations             (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="int">int</link> iterations);</programlisting>
+<para>
+Sets the number of iterations of <parameter>test</parameter> to <parameter>iterations</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iterations</parameter>&#160;:</term>
+<listitem><simpara> the number of iterations
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-check-ref" role="function">
+<title>oil_test_check_ref ()</title>
+<indexterm zone="oil-test-check-ref"><primary sortas="oil_test_check_ref">oil_test_check_ref</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_check_ref                  (<link linkend="OilTest">OilTest</link> *test);</programlisting>
+<para>
+Runs the test specified by <parameter>test</parameter> on the reference function of the
+class being tested.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-check-impl" role="function">
+<title>oil_test_check_impl ()</title>
+<indexterm zone="oil-test-check-impl"><primary sortas="oil_test_check_impl">oil_test_check_impl</primary></indexterm><programlisting><link linkend="int">int</link>                 oil_test_check_impl                 (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);</programlisting>
+<para>
+Runs the testing procedure described by <parameter>test</parameter> on the implementation
+<parameter>impl</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>impl</parameter>&#160;:</term>
+<listitem><simpara> an OilFunctionImpl
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> 1 if <parameter>impl</parameter> passes the test, 0 if it fails
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-cleanup" role="function">
+<title>oil_test_cleanup ()</title>
+<indexterm zone="oil-test-cleanup"><primary sortas="oil_test_cleanup">oil_test_cleanup</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_cleanup                    (<link linkend="OilTest">OilTest</link> *test);</programlisting>
+<para>
+Cleans up <parameter>test</parameter>.
+</para>
+<para>
+FIXME: needs work</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-get-source-data" role="function">
+<title>oil_test_get_source_data ()</title>
+<indexterm zone="oil-test-get-source-data"><primary sortas="oil_test_get_source_data">oil_test_get_source_data</primary></indexterm><programlisting><link linkend="void">void</link> *              oil_test_get_source_data            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilArgType">OilArgType</link> arg_type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-get-value" role="function">
+<title>oil_test_get_value ()</title>
+<indexterm zone="oil-test-get-value"><primary sortas="oil_test_get_value">oil_test_get_value</primary></indexterm><programlisting><link linkend="int">int</link>                 oil_test_get_value                  (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilArgType">OilArgType</link> arg_type);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg_type</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-set-test-footer" role="function">
+<title>oil_test_set_test_footer ()</title>
+<indexterm zone="oil-test-set-test-footer"><primary sortas="oil_test_set_test_footer">oil_test_set_test_footer</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_set_test_footer            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilParameter">OilParameter</link> *p,
+                                                         <link linkend="int">int</link> test_footer);</programlisting>
+<para>
+Sets the number of bytes of guard footer for <parameter>p</parameter> to <parameter>test_footer</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>p</parameter>&#160;:</term>
+<listitem><simpara> the OilParameter to change the footer for
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>test_footer</parameter>&#160;:</term>
+<listitem><simpara> the number of bytes of guard footer
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-test-set-test-header" role="function">
+<title>oil_test_set_test_header ()</title>
+<indexterm zone="oil-test-set-test-header"><primary sortas="oil_test_set_test_header">oil_test_set_test_header</primary></indexterm><programlisting><link linkend="void">void</link>                oil_test_set_test_header            (<link linkend="OilTest">OilTest</link> *test,
+                                                         <link linkend="OilParameter">OilParameter</link> *p,
+                                                         <link linkend="int">int</link> test_header);</programlisting>
+<para>
+Sets the number of bytes of guard header for <parameter>p</parameter> to <parameter>test_header</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> the OilTest
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>p</parameter>&#160;:</term>
+<listitem><simpara> the OilParameter to change the header for
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>test_header</parameter>&#160;:</term>
+<listitem><simpara> the number of bytes of guard header
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

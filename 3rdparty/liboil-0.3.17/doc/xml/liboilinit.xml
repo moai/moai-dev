@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilinit">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilinit.top_of_page">Intialization</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Intialization</refname>
+<refpurpose>Initialization functions</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilinit.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-init">oil_init</link>                            (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilinit.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilinit.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-init" role="function" condition="since:0.3.0">
+<title>oil_init ()</title>
+<indexterm zone="oil-init" role="0.3.0"><primary sortas="oil_init">oil_init</primary></indexterm><programlisting><link linkend="void">void</link>                oil_init                            (void);</programlisting>
+<para>
+Initialize liboil.  This function must be called before any
+other liboil function is used.  <link linkend="oil-init"><function>oil_init()</function></link> may be called multiple
+times.</para>
+<para>
+</para><para role="since">Since 0.3.0</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

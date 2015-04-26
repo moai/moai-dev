@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilprototype">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilprototype.top_of_page">OilPrototype</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilPrototype</refname>
+<refpurpose>Functions to manipulate prototype information.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilprototype.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilPrototype">OilPrototype</link>;
+<link linkend="OilPrototype">OilPrototype</link> *      <link linkend="oil-prototype-from-string">oil_prototype_from_string</link>           (const <link linkend="char">char</link> *s);
+<link linkend="char">char</link> *              <link linkend="oil-prototype-to-string">oil_prototype_to_string</link>             (<link linkend="OilPrototype">OilPrototype</link> *proto);
+<link linkend="char">char</link> *              <link linkend="oil-prototype-to-arg-string">oil_prototype_to_arg_string</link>         (<link linkend="OilPrototype">OilPrototype</link> *proto);
+<link linkend="void">void</link>                <link linkend="oil-prototype-free">oil_prototype_free</link>                  (<link linkend="OilPrototype">OilPrototype</link> *proto);
+<link linkend="void">void</link>                <link linkend="oil-prototype-append-param">oil_prototype_append_param</link>          (<link linkend="OilPrototype">OilPrototype</link> *proto,
+                                                         <link linkend="OilParameter">OilParameter</link> *param);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilprototype.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilprototype.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilPrototype" role="struct">
+<title>OilPrototype</title>
+<indexterm zone="OilPrototype"><primary sortas="OilPrototype">OilPrototype</primary></indexterm><programlisting>typedef struct {
+  int n_params;
+  OilParameter *params;
+  OilFunctionClass *klass;
+} OilPrototype;
+</programlisting>
+<para>
+An opaque structure describing the C function prototype of
+an <parameter>OilFunctionClass</parameter>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-prototype-from-string" role="function">
+<title>oil_prototype_from_string ()</title>
+<indexterm zone="oil-prototype-from-string"><primary sortas="oil_prototype_from_string">oil_prototype_from_string</primary></indexterm><programlisting><link linkend="OilPrototype">OilPrototype</link> *      oil_prototype_from_string           (const <link linkend="char">char</link> *s);</programlisting>
+<para>
+Converts the string <parameter>s</parameter> containing C prototype that follows
+Liboil parameter naming rules into a OilPrototype.  If the
+string cannot be converted, NULL is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> a string
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the OilPrototype.  When it is no longer needed, free
+the prototype using <link linkend="oil-prototype-free"><function>oil_prototype_free()</function></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-prototype-to-string" role="function">
+<title>oil_prototype_to_string ()</title>
+<indexterm zone="oil-prototype-to-string"><primary sortas="oil_prototype_to_string">oil_prototype_to_string</primary></indexterm><programlisting><link linkend="char">char</link> *              oil_prototype_to_string             (<link linkend="OilPrototype">OilPrototype</link> *proto);</programlisting>
+<para>
+Converts a prototype into the corresponding C style declaration.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>proto</parameter>&#160;:</term>
+<listitem><simpara> the OilPrototype
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string that should be freed using <link linkend="free"><function>free()</function></link> when it is no
+longer needed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-prototype-to-arg-string" role="function">
+<title>oil_prototype_to_arg_string ()</title>
+<indexterm zone="oil-prototype-to-arg-string"><primary sortas="oil_prototype_to_arg_string">oil_prototype_to_arg_string</primary></indexterm><programlisting><link linkend="char">char</link> *              oil_prototype_to_arg_string         (<link linkend="OilPrototype">OilPrototype</link> *proto);</programlisting>
+<para>
+Converts a prototype into the corresponding C argument list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>proto</parameter>&#160;:</term>
+<listitem><simpara> the OilPrototype
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a string that should be freed using <link linkend="free"><function>free()</function></link> when it is no
+longer needed.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-prototype-free" role="function">
+<title>oil_prototype_free ()</title>
+<indexterm zone="oil-prototype-free"><primary sortas="oil_prototype_free">oil_prototype_free</primary></indexterm><programlisting><link linkend="void">void</link>                oil_prototype_free                  (<link linkend="OilPrototype">OilPrototype</link> *proto);</programlisting>
+<para>
+Frees memory associated with <parameter>proto</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>proto</parameter>&#160;:</term>
+<listitem><simpara> the OilPrototype
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-prototype-append-param" role="function">
+<title>oil_prototype_append_param ()</title>
+<indexterm zone="oil-prototype-append-param"><primary sortas="oil_prototype_append_param">oil_prototype_append_param</primary></indexterm><programlisting><link linkend="void">void</link>                oil_prototype_append_param          (<link linkend="OilPrototype">OilPrototype</link> *proto,
+                                                         <link linkend="OilParameter">OilParameter</link> *param);</programlisting>
+<para>
+Appends <parameter>param</parameter> to the list of parameters contained in <parameter>proto</parameter>.  The
+contents of <parameter>param</parameter> are copied.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>proto</parameter>&#160;:</term>
+<listitem><simpara> the OilPrototype
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>param</parameter>&#160;:</term>
+<listitem><simpara> an OilParameter
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

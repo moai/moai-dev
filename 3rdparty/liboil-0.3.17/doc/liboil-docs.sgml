@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <bookinfo>
+    <title>Liboil Reference Manual</title>
+  </bookinfo>
+
+  <chapter>
+    <title>Liboil Stable API</title>
+
+    <para>
+      These functions are part of the stable API, and will not change
+      during the lifetime of the 0.3 series.
+    </para>
+
+    <xi:include href="xml/liboilinit.xml"/>
+    <xi:include href="xml/liboilfuncs-conv.xml"/>
+    <xi:include href="xml/liboilfuncs-copy.xml"/>
+    <xi:include href="xml/liboilfuncs-math.xml"/>
+    <xi:include href="xml/liboilfuncs-math8x8.xml"/>
+    <xi:include href="xml/liboilfuncs-dct.xml"/>
+    <xi:include href="xml/liboilfuncs-pixel.xml"/>
+    <xi:include href="xml/liboilfuncs-doc.xml"/>
+
+  </chapter>
+  <chapter>
+    <title>Liboil Unstable API</title>
+
+    <para>
+      These functions are part of the unstable API, and may change
+      between releases in the 0.3 series.  These functions should not
+      be used by applications.  Some of this functionality
+      may be moved to the stable API during the 0.3 series.
+    </para>
+
+    <xi:include href="xml/liboilinit-unstable.xml"/>
+    <xi:include href="xml/liboilcpu.xml"/>
+    <xi:include href="xml/liboildebug.xml"/>
+    <xi:include href="xml/liboilclass-unstable.xml"/>
+    <xi:include href="xml/liboilimpl-unstable.xml"/>
+    <xi:include href="xml/liboilparameter.xml"/>
+    <xi:include href="xml/liboilprofile.xml"/>
+    <xi:include href="xml/liboilprototype.xml"/>
+    <xi:include href="xml/liboilrandom.xml"/>
+    <xi:include href="xml/liboiltest.xml"/>
+    <xi:include href="xml/liboiltypes.xml"/>
+    <xi:include href="xml/liboilmacros.xml"/>
+    <xi:include href="xml/liboiljunk.xml"/>
+  </chapter>
+</book>

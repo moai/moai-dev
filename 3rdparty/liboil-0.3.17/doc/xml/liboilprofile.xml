@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilprofile">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilprofile.top_of_page">OilProfile</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilProfile</refname>
+<refpurpose>Measuring the length of time needed to execute Liboil functions.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilprofile.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilProfile">OilProfile</link>;
+#define             <link linkend="OIL-PROFILE-HIST-LENGTH--CAPS">OIL_PROFILE_HIST_LENGTH</link>
+unsigned <link linkend="long">long</link>       <link linkend="oil-profile-stamp">oil_profile_stamp</link>                   (void);
+<link linkend="void">void</link>                <link linkend="oil-profile-init">oil_profile_init</link>                    (<link linkend="OilProfile">OilProfile</link> *prof);
+<link linkend="void">void</link>                <link linkend="oil-profile-stop-handle">oil_profile_stop_handle</link>             (<link linkend="OilProfile">OilProfile</link> *prof);
+<link linkend="void">void</link>                <link linkend="oil-profile-get-ave-std">oil_profile_get_ave_std</link>             (<link linkend="OilProfile">OilProfile</link> *prof,
+                                                         <link linkend="double">double</link> *ave_p,
+                                                         <link linkend="double">double</link> *std_p);
+#define             <link linkend="oil-profile-start">oil_profile_start</link>                   (x)
+#define             <link linkend="oil-profile-stop">oil_profile_stop</link>                    (x)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilprofile.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilprofile.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilProfile" role="struct">
+<title>OilProfile</title>
+<indexterm zone="OilProfile"><primary sortas="OilProfile">OilProfile</primary></indexterm><programlisting>typedef struct {
+} OilProfile;
+</programlisting>
+<para>
+An opaque structure representing profiling information.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-PROFILE-HIST-LENGTH--CAPS" role="macro">
+<title>OIL_PROFILE_HIST_LENGTH</title>
+<indexterm zone="OIL-PROFILE-HIST-LENGTH--CAPS"><primary sortas="OIL_PROFILE_HIST_LENGTH">OIL_PROFILE_HIST_LENGTH</primary></indexterm><programlisting>#define OIL_PROFILE_HIST_LENGTH 10
+</programlisting>
+<para>
+Internal definition of the number of histogram entries in <link linkend="OilProfile"><type>OilProfile</type></link>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-profile-stamp" role="function">
+<title>oil_profile_stamp ()</title>
+<indexterm zone="oil-profile-stamp"><primary sortas="oil_profile_stamp">oil_profile_stamp</primary></indexterm><programlisting>unsigned <link linkend="long">long</link>       oil_profile_stamp                   (void);</programlisting>
+<para>
+Creates a timestamp based on a CPU-specific high-frequency
+counter, if available.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a timestamp
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-profile-init" role="function">
+<title>oil_profile_init ()</title>
+<indexterm zone="oil-profile-init"><primary sortas="oil_profile_init">oil_profile_init</primary></indexterm><programlisting><link linkend="void">void</link>                oil_profile_init                    (<link linkend="OilProfile">OilProfile</link> *prof);</programlisting>
+<para>
+Initializes a profiling structure.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>prof</parameter>&#160;:</term>
+<listitem><simpara> the OilProfile structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-profile-stop-handle" role="function">
+<title>oil_profile_stop_handle ()</title>
+<indexterm zone="oil-profile-stop-handle"><primary sortas="oil_profile_stop_handle">oil_profile_stop_handle</primary></indexterm><programlisting><link linkend="void">void</link>                oil_profile_stop_handle             (<link linkend="OilProfile">OilProfile</link> *prof);</programlisting>
+<para>
+Handles post-processing of a single profiling run.
+</para>
+<para>
+FIXME: need more info</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>prof</parameter>&#160;:</term>
+<listitem><simpara> the OilProfile structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-profile-get-ave-std" role="function">
+<title>oil_profile_get_ave_std ()</title>
+<indexterm zone="oil-profile-get-ave-std"><primary sortas="oil_profile_get_ave_std">oil_profile_get_ave_std</primary></indexterm><programlisting><link linkend="void">void</link>                oil_profile_get_ave_std             (<link linkend="OilProfile">OilProfile</link> *prof,
+                                                         <link linkend="double">double</link> *ave_p,
+                                                         <link linkend="double">double</link> *std_p);</programlisting>
+<para>
+Calculates the average and standard deviation of a number of
+profiling runs, and places the results in the locations
+provided by <parameter>ave_p</parameter> and <parameter>std_p</parameter>.  Either <parameter>ave_p</parameter> and <parameter>std_p</parameter> may
+be NULL, in which case the values will not be written.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>prof</parameter>&#160;:</term>
+<listitem><simpara> the OilProfile structure
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ave_p</parameter>&#160;:</term>
+<listitem><simpara> pointer to average
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>std_p</parameter>&#160;:</term>
+<listitem><simpara> pointer to standard deviation
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-profile-start" role="macro">
+<title>oil_profile_start()</title>
+<indexterm zone="oil-profile-start"><primary sortas="oil_profile_start">oil_profile_start</primary></indexterm><programlisting>#define             oil_profile_start(x)</programlisting>
+<para>
+Starts a profiling run by obtaining a timestamp via <link linkend="oil-profile-stamp"><function>oil_profile_stamp()</function></link>
+and writing it into <parameter>x</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>x</parameter>&#160;:</term>
+<listitem><simpara> a pointer to an OilProfile structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-profile-stop" role="macro">
+<title>oil_profile_stop()</title>
+<indexterm zone="oil-profile-stop"><primary sortas="oil_profile_stop">oil_profile_stop</primary></indexterm><programlisting>#define             oil_profile_stop(x)</programlisting>
+<para>
+Stops a profiling run by obtaining a timestamp via <link linkend="oil-profile-stamp"><function>oil_profile_stamp()</function></link>
+and writing it into <parameter>x</parameter>.  It then calls <link linkend="oil-profile-stop-handle"><function>oil_profile_stop_handle()</function></link> to
+handle post-processing of the profiling run.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>x</parameter>&#160;:</term>
+<listitem><simpara> a pointer to an OilProfile structure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

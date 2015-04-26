@@ -1,0 +1,431 @@
+<!-- ##### SECTION ./tmpl/liboil.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/liboil.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/liboil.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/liboil.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/liboil.sgml:Title ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/liboilfunction.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/liboilfunction.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/liboilfunction.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/liboilfunction.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/liboilfunction.sgml:Title ##### -->
+
+
+
+<!-- ##### MACRO LIBOIL_CHECK_PROTOTYPE ##### -->
+<para>
+
+</para>
+
+@a: 
+
+<!-- ##### MACRO OIL_IMPL_FLAG_3DNOW ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_3DNOWEXT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_ALTIVEC ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_ASM ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_CMOV ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_DISABLED ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_MMX ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_MMXEXT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_OPT ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_REF ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_SSE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_SSE2 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_IMPL_FLAG_SSE3 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM OilImplFlagI386 ##### -->
+<para>
+
+</para>
+
+@OIL_IMPL_FLAG_CMOV: 
+@OIL_IMPL_FLAG_MMX: 
+@OIL_IMPL_FLAG_SSE: 
+@OIL_IMPL_FLAG_MMXEXT: 
+@OIL_IMPL_FLAG_SSE2: 
+@OIL_IMPL_FLAG_3DNOW: 
+@OIL_IMPL_FLAG_3DNOWEXT: 
+@OIL_IMPL_FLAG_SSE3: 
+
+<!-- ##### ENUM OilImplFlagPowerPC ##### -->
+<para>
+
+</para>
+
+@OIL_IMPL_FLAG_ALTIVEC: 
+
+<!-- ##### FUNCTION oil_cpu_fault_check_disable ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION oil_cpu_fault_check_enable ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION oil_cpu_fault_check_try ##### -->
+<para>
+
+</para>
+
+@func: 
+@priv: 
+@Returns: 
+
+<!-- ##### FUNCTION oil_profile_stamp_gtod ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### MACRO oil_rand_f32_0_1 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_s16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_s32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_s8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_u16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_u32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f32_u8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_0_1 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_s16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_s32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_s8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_u16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_u32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_f64_u8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION oil_rand_rgba ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+@a: 
+
+<!-- ##### MACRO oil_rand_s16_l15 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_s16_l4 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_s16_l8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_s16_l9 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_s32_l31 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO oil_rand_u32_l31 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_f32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_f64 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_s16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_s32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_s8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_u16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_u32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_max_u8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_s16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_s32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_s8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_u16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_u32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_min_u8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_s16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_s32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_s8 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_u16 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_u32 ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO type_u8 ##### -->
+<para>
+
+</para>
+
+

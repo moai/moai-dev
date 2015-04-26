@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilinit-unstable">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilinit-unstable.top_of_page">Intialization</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Intialization</refname>
+<refpurpose>Initialization functions</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilinit-unstable.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-init-no-optimize">oil_init_no_optimize</link>                (void);
+<link linkend="void">void</link>                <link linkend="oil-optimize-all">oil_optimize_all</link>                    (void);
+<link linkend="void">void</link>                <link linkend="oil-optimize">oil_optimize</link>                        (const <link linkend="char">char</link> *class_name);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilinit-unstable.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilinit-unstable.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-init-no-optimize" role="function">
+<title>oil_init_no_optimize ()</title>
+<indexterm zone="oil-init-no-optimize"><primary sortas="oil_init_no_optimize">oil_init_no_optimize</primary></indexterm><programlisting><link linkend="void">void</link>                oil_init_no_optimize                (void);</programlisting>
+<para>
+Initialize liboil similar to <link linkend="oil-init"><function>oil_init()</function></link>, but do not run the
+profiling stage.  This function is mainly useful for internal
+programs.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-optimize-all" role="function">
+<title>oil_optimize_all ()</title>
+<indexterm zone="oil-optimize-all"><primary sortas="oil_optimize_all">oil_optimize_all</primary></indexterm><programlisting><link linkend="void">void</link>                oil_optimize_all                    (void);</programlisting>
+<para>
+Optimize all function classes.</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-optimize" role="function">
+<title>oil_optimize ()</title>
+<indexterm zone="oil-optimize"><primary sortas="oil_optimize">oil_optimize</primary></indexterm><programlisting><link linkend="void">void</link>                oil_optimize                        (const <link linkend="char">char</link> *class_name);</programlisting>
+<para>
+Optimize the function class that has the name specified by <parameter>class_name</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>class_name</parameter>&#160;:</term>
+<listitem><simpara> a string
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

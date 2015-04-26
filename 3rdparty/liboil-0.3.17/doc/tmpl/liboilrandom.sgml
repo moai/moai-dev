@@ -1,0 +1,197 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO oil_rand_s32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_s16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_s8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_u32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_u16 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_u8 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_s64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_u64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_f32 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO oil_rand_f64 ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION oil_random_alpha ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_argb ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_f32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_f64 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_s16 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_s32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_s64 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_s8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_u16 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_u32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_u64 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_random_u8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@n: 
+
+

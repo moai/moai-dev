@@ -1,0 +1,1512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>liboilfuncs-copy</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch01.html" title="Liboil Stable API">
+<link rel="prev" href="liboil-liboilfuncs-conv.html" title="Type Conversion">
+<link rel="next" href="liboil-liboilfuncs-math.html" title="Simple Arithmetic">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilfuncs-conv.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboilfuncs-math.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilfuncs-copy.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilfuncs-copy.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="liboilfuncs-copy">
+<a name="liboil-liboilfuncs-copy"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilfuncs-copy.top_of_page"></a>liboilfuncs-copy</span></h2>
+<p>liboilfuncs-copy</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilfuncs-copy.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-compare-u8" title="oil_compare_u8 ()">oil_compare_u8</a>                      (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-copy-u8" title="oil_copy_u8 ()">oil_copy_u8</a>                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-f32" title="oil_permute_f32 ()">oil_permute_f32</a>                     (float *dest,
+                                                         int dstr,
+                                                         const float *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-f64" title="oil_permute_f64 ()">oil_permute_f64</a>                     (double *dest,
+                                                         int dstr,
+                                                         const double *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-s16" title="oil_permute_s16 ()">oil_permute_s16</a>                     (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-s32" title="oil_permute_s32 ()">oil_permute_s32</a>                     (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-s8" title="oil_permute_s8 ()">oil_permute_s8</a>                      (<a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-u16" title="oil_permute_u16 ()">oil_permute_u16</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-u32" title="oil_permute_u32 ()">oil_permute_u32</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-permute-u8" title="oil_permute_u8 ()">oil_permute_u8</a>                      (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-splat-u32" title="oil_splat_u32 ()">oil_splat_u32</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-splat-u8" title="oil_splat_u8 ()">oil_splat_u8</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-swab-u16" title="oil_swab_u16 ()">oil_swab_u16</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-swab-u32" title="oil_swab_u32 ()">oil_swab_u32</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-tablelookup-u8" title="oil_tablelookup_u8 ()">oil_tablelookup_u8</a>                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_256,
+                                                         int ss2,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-testzero-u8" title="oil_testzero_u8 ()">oil_testzero_u8</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-trans8x8-f64" title="oil_trans8x8_f64 ()">oil_trans8x8_f64</a>                    (double *d_8x8,
+                                                         int ds,
+                                                         const double *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-trans8x8-u16" title="oil_trans8x8_u16 ()">oil_trans8x8_u16</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-trans8x8-u32" title="oil_trans8x8_u32 ()">oil_trans8x8_u32</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-trans8x8-u8" title="oil_trans8x8_u8 ()">oil_trans8x8_u8</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-unzigzag8x8-s16" title="oil_unzigzag8x8_s16 ()">oil_unzigzag8x8_s16</a>                 (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-zigzag8x8-s16" title="oil_zigzag8x8_s16 ()">oil_zigzag8x8_s16</a>                   (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-splat-u32-ns" title="oil_splat_u32_ns ()">oil_splat_u32_ns</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-copy.html#oil-splat-u8-ns" title="oil_splat_u8_ns ()">oil_splat_u8_ns</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_1,
+                                                         int n);
+#define             <a class="link" href="liboil-liboilfuncs-copy.html#oil-trans8x8-s16" title="oil_trans8x8_s16()">oil_trans8x8_s16</a>                    (dest, dstr, src, sstr)
+#define             <a class="link" href="liboil-liboilfuncs-copy.html#oil-memcpy" title="oil_memcpy()">oil_memcpy</a>                          (dest,src,n_bytes)
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilfuncs-copy.description"></a><h2>Description</h2>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilfuncs-copy.details"></a><h2>Details</h2>
+<div class="refsect2" title="oil_compare_u8 ()">
+<a name="oil-compare-u8"></a><h3>oil_compare_u8 ()</h3>
+<pre class="programlisting">void                oil_compare_u8                      (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2,
+                                                         int n);</pre>
+<p>
+Compares two arrays.  The index of the first two elements that are
+unequal is written into dest.  If all elements are equal, <em class="parameter"><code>n</code></em> is
+written into dest.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td> destination array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1</code></em> :</span></p></td>
+<td> source array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2</code></em> :</span></p></td>
+<td> source array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_copy_u8 ()">
+<a name="oil-copy-u8"></a><h3>oil_copy_u8 ()</h3>
+<pre class="programlisting">void                oil_copy_u8                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src,
+                                                         int n);</pre>
+<p>
+Copies from source to destination.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td> destination array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td> source array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_f32 ()">
+<a name="oil-permute-f32"></a><h3>oil_permute_f32 ()</h3>
+<pre class="programlisting">void                oil_permute_f32                     (float *dest,
+                                                         int dstr,
+                                                         const float *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_f64 ()">
+<a name="oil-permute-f64"></a><h3>oil_permute_f64 ()</h3>
+<pre class="programlisting">void                oil_permute_f64                     (double *dest,
+                                                         int dstr,
+                                                         const double *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_s16 ()">
+<a name="oil-permute-s16"></a><h3>oil_permute_s16 ()</h3>
+<pre class="programlisting">void                oil_permute_s16                     (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_s32 ()">
+<a name="oil-permute-s32"></a><h3>oil_permute_s32 ()</h3>
+<pre class="programlisting">void                oil_permute_s32                     (<a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_s8 ()">
+<a name="oil-permute-s8"></a><h3>oil_permute_s8 ()</h3>
+<pre class="programlisting">void                oil_permute_s8                      (<a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int8-t"
+>int8_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_u16 ()">
+<a name="oil-permute-u16"></a><h3>oil_permute_u16 ()</h3>
+<pre class="programlisting">void                oil_permute_u16                     (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_u32 ()">
+<a name="oil-permute-u32"></a><h3>oil_permute_u32 ()</h3>
+<pre class="programlisting">void                oil_permute_u32                     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_permute_u8 ()">
+<a name="oil-permute-u8"></a><h3>oil_permute_u8 ()</h3>
+<pre class="programlisting">void                oil_permute_u8                      (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         int sstr1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int32-t"
+>int32_t</a> *src2,
+                                                         int sstr2,
+                                                         int n);</pre>
+<p>
+Copies elements in <em class="parameter"><code>src1</code></em> to <em class="parameter"><code>dest</code></em>, permuting them by <em class="parameter"><code>src2</code></em>.  That is,
+<em class="parameter"><code>dest</code></em>[i] is set to <em class="parameter"><code>src1</code></em>[<em class="parameter"><code>src2</code></em>[i]].  Values in <em class="parameter"><code>src2</code></em> must be
+non-negative and less than <em class="parameter"><code>n</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_splat_u32 ()">
+<a name="oil-splat-u32"></a><h3>oil_splat_u32 ()</h3>
+<pre class="programlisting">void                oil_splat_u32                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Copies the constant source value <em class="parameter"><code>s1_1</code></em> to each element in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_splat_u8 ()">
+<a name="oil-splat-u8"></a><h3>oil_splat_u8 ()</h3>
+<pre class="programlisting">void                oil_splat_u8                        (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         int dstr,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Copies the constant source value <em class="parameter"><code>s1_1</code></em> to each element in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_swab_u16 ()">
+<a name="oil-swab-u16"></a><h3>oil_swab_u16 ()</h3>
+<pre class="programlisting">void                oil_swab_u16                        (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Swaps the endianness of values in the source array and places the
+results in the destination array.  The arguments <em class="parameter"><code>s_n</code></em> and <em class="parameter"><code>d_n</code></em> may
+be equal.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_swab_u32 ()">
+<a name="oil-swab-u32"></a><h3>oil_swab_u32 ()</h3>
+<pre class="programlisting">void                oil_swab_u32                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Swaps the endianness of values in the source array and places the
+results in the destination array.  The arguments <em class="parameter"><code>s_n</code></em> and <em class="parameter"><code>d_n</code></em> may
+be equal.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_tablelookup_u8 ()">
+<a name="oil-tablelookup-u8"></a><h3>oil_tablelookup_u8 ()</h3>
+<pre class="programlisting">void                oil_tablelookup_u8                  (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1,
+                                                         int ss1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_256,
+                                                         int ss2,
+                                                         int n);</pre>
+<p>
+Looks up each element in <em class="parameter"><code>s1</code></em> using the lookup table in <em class="parameter"><code>s2_256</code></em>,
+and places the table value in <em class="parameter"><code>d</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_256</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_testzero_u8 ()">
+<a name="oil-testzero-u8"></a><h3>oil_testzero_u8 ()</h3>
+<pre class="programlisting">void                oil_testzero_u8                     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s,
+                                                         int n);</pre>
+<p>
+Tests each element in the source array for equality with 0.  The
+index of the first zero element is written into dest.  If all
+elements are non-zero, <em class="parameter"><code>n</code></em> is written into dest.
+</p>
+<p>
+This function is roughly equivalent to <code class="function">strnlen()</code>.  One notable
+difference is that implementations of this function may legally
+read past the zero byte.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_1</code></em> :</span></p></td>
+<td> destination array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s</code></em> :</span></p></td>
+<td> source array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_trans8x8_f64 ()">
+<a name="oil-trans8x8-f64"></a><h3>oil_trans8x8_f64 ()</h3>
+<pre class="programlisting">void                oil_trans8x8_f64                    (double *d_8x8,
+                                                         int ds,
+                                                         const double *s_8x8,
+                                                         int ss);</pre>
+<p>
+Performs a matrix transpose the 8x8 block represented by <em class="parameter"><code>s_8x8</code></em>
+and places the
+result in <em class="parameter"><code>d_8x8</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_trans8x8_u16 ()">
+<a name="oil-trans8x8-u16"></a><h3>oil_trans8x8_u16 ()</h3>
+<pre class="programlisting">void                oil_trans8x8_u16                    (<a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint16-t"
+>uint16_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Performs a matrix transpose the 8x8 block represented by <em class="parameter"><code>s_8x8</code></em>
+and places the
+result in <em class="parameter"><code>d_8x8</code></em>.  Note that this function can also be used for
+any type of this size.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_trans8x8_u32 ()">
+<a name="oil-trans8x8-u32"></a><h3>oil_trans8x8_u32 ()</h3>
+<pre class="programlisting">void                oil_trans8x8_u32                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Performs a matrix transpose the 8x8 block represented by <em class="parameter"><code>s_8x8</code></em>
+and places the
+result in <em class="parameter"><code>d_8x8</code></em>.  Note that this function can also be used for
+any type of this size.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_trans8x8_u8 ()">
+<a name="oil-trans8x8-u8"></a><h3>oil_trans8x8_u8 ()</h3>
+<pre class="programlisting">void                oil_trans8x8_u8                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Performs a matrix transpose the 8x8 block represented by <em class="parameter"><code>s_8x8</code></em>
+and places the
+result in <em class="parameter"><code>d_8x8</code></em>.  Note that this function can also be used for
+any type of this size.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_unzigzag8x8_s16 ()">
+<a name="oil-unzigzag8x8-s16"></a><h3>oil_unzigzag8x8_s16 ()</h3>
+<pre class="programlisting">void                oil_unzigzag8x8_s16                 (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Reorders an 8x8 block to reverse the zig-zag reordering of
+<em class="parameter"><code>oil_zigzag8x8_s16</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_zigzag8x8_s16 ()">
+<a name="oil-zigzag8x8-s16"></a><h3>oil_zigzag8x8_s16 ()</h3>
+<pre class="programlisting">void                oil_zigzag8x8_s16                   (<a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *d_8x8,
+                                                         int ds,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#int16-t"
+>int16_t</a> *s_8x8,
+                                                         int ss);</pre>
+<p>
+Reorders an 8x8 block using a zig-zag pattern.  The zig-zag pattern
+is described in the JPEG specification.
+</p>
+<p>
+FIXME: describe zigzag pattern</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ds</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_8x8</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>ss</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_splat_u32_ns ()">
+<a name="oil-splat-u32-ns"></a><h3>oil_splat_u32_ns ()</h3>
+<pre class="programlisting">void                oil_splat_u32_ns                    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Copies the constant source value <em class="parameter"><code>s1_1</code></em> to each element in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_splat_u8_ns ()">
+<a name="oil-splat-u8-ns"></a><h3>oil_splat_u8_ns ()</h3>
+<pre class="programlisting">void                oil_splat_u8_ns                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *dest,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Copies the constant source value <em class="parameter"><code>s1_1</code></em> to each element in <em class="parameter"><code>dest</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_trans8x8_s16()">
+<a name="oil-trans8x8-s16"></a><h3>oil_trans8x8_s16()</h3>
+<pre class="programlisting">#define             oil_trans8x8_s16(dest, dstr, src, sstr)</pre>
+<p>
+Macro wrapping <code class="function">trans8x8_u16()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>sstr</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_memcpy()">
+<a name="oil-memcpy"></a><h3>oil_memcpy()</h3>
+<pre class="programlisting">#define             oil_memcpy(dest,src,n_bytes)</pre>
+<p>
+Macro that uses <a class="link" href="liboil-liboilfuncs-copy.html#oil-copy-u8" title="oil_copy_u8 ()"><code class="function">oil_copy_u8()</code></a> to provide an implementation of
+<code class="function">memcpy()</code>.  Note that <a class="link" href="liboil-liboilfuncs-copy.html#oil-copy-u8" title="oil_copy_u8 ()"><code class="function">oil_copy_u8()</code></a> is optimized for short copies,
+and may be very slow for large copies compared to alternatives,
+including the system <code class="function">memcpy()</code>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dest</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n_bytes</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

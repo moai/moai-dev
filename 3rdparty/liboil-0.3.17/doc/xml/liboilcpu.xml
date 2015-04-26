@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilcpu">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilcpu.top_of_page">CPU</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>CPU</refname>
+<refpurpose>Check the capabilities of the current CPU</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilcpu.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+unsigned <link linkend="int">int</link>        <link linkend="oil-cpu-get-flags">oil_cpu_get_flags</link>                   (void);
+<link linkend="double">double</link>              <link linkend="oil-cpu-get-ticks-per-second">oil_cpu_get_ticks_per_second</link>        (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilcpu.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilcpu.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-cpu-get-flags" role="function">
+<title>oil_cpu_get_flags ()</title>
+<indexterm zone="oil-cpu-get-flags"><primary sortas="oil_cpu_get_flags">oil_cpu_get_flags</primary></indexterm><programlisting>unsigned <link linkend="int">int</link>        oil_cpu_get_flags                   (void);</programlisting>
+<para>
+Returns a bitmask containing the available CPU features.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the CPU features.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-cpu-get-ticks-per-second" role="function">
+<title>oil_cpu_get_ticks_per_second ()</title>
+<indexterm zone="oil-cpu-get-ticks-per-second"><primary sortas="oil_cpu_get_ticks_per_second">oil_cpu_get_ticks_per_second</primary></indexterm><programlisting><link linkend="double">double</link>              oil_cpu_get_ticks_per_second        (void);</programlisting>
+<para>
+Returns the estimated number of ticks per second.  This feature
+is currently unimplemented.
+</para>
+<para>
+This function may take several milliseconds or more to execute
+in order to calculate a good estimate of the number of ticks (as
+measured by the profiling functions) per second.  Note that the
+number of ticks per second is often dependent on the CPU frequency,
+which can change dynamically.  Thus the value returned by this
+function may be incorrect as soon as it is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a double
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

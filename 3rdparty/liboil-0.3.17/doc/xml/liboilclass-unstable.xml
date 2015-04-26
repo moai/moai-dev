@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilclass-unstable">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilclass-unstable.top_of_page">OilFunctionClass</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>OilFunctionClass</refname>
+<refpurpose>Functions for manipulating function classes</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilclass-unstable.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+                    <link linkend="OilFunctionClass">OilFunctionClass</link>;
+#define             <link linkend="OIL-DECLARE-CLASS--CAPS">OIL_DECLARE_CLASS</link>                   (klass)
+#define             <link linkend="OIL-DEFINE-CLASS-FULL--CAPS">OIL_DEFINE_CLASS_FULL</link>               (klass, string, test)
+#define             <link linkend="OIL-DEFINE-CLASS--CAPS">OIL_DEFINE_CLASS</link>                    (klass, string)
+<link linkend="OilFunctionClass">OilFunctionClass</link> *  <link linkend="oil-class-get-by-index">oil_class_get_by_index</link>              (<link linkend="int">int</link> i);
+<link linkend="OilFunctionClass">OilFunctionClass</link> *  <link linkend="oil-class-get">oil_class_get</link>                       (const <link linkend="char">char</link> *class_name);
+<link linkend="void">void</link>                <link linkend="oil-class-optimize">oil_class_optimize</link>                  (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass);
+<link linkend="int">int</link>                 <link linkend="oil-class-get-n-classes">oil_class_get_n_classes</link>             (void);
+<link linkend="void">void</link>                <link linkend="oil-class-choose-by-name">oil_class_choose_by_name</link>            (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         const <link linkend="char">char</link> *name);
+<link linkend="void">void</link>                <link linkend="oil-class-register-impl-by-name">oil_class_register_impl_by_name</link>     (const <link linkend="char">char</link> *klass_name,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);
+<link linkend="void">void</link>                <link linkend="oil-class-register-impl">oil_class_register_impl</link>             (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);
+<link linkend="void">void</link>                <link linkend="oil-class-register-impl-full">oil_class_register_impl_full</link>        (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         <link linkend="void">void</link> (funcvoid) (),
+                                                         const <link linkend="char">char</link> *name,
+                                                         unsigned <link linkend="int">int</link> flags);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilclass-unstable.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<para>
+Functions operate on arrays of data.  The arrays can be either source
+arrays (input only), destination arrays (output only), or in-place
+arrays (both input and output).
+</para>
+</para>
+<para>
+<para>
+The interpretation of a parameter can usually be determined from its
+name.  Parameters for arrays are of the form d1_1xn, where the first
+character represents the direction (source, destination, or in-place),
+the second represents the index for that particular direction, and
+the characters after the underscore indicate the size of the array.
+In this case, "1xn" represents an array that is 1 by N.  Note that
+the index and the size can both be omitted, giving a default of 1
+for the index and 1xn for the size.
+</para>
+</para>
+<para>
+<para>
+Parameters that represent strides are of the form "d1s".  The
+interpretation is similar to above, except that the s indicates
+a stride parameter.
+</para>
+</para>
+<para>
+<para>
+The exceptions to the above rule are "dest", "src", "dstr", "sstr", etc.
+These are aliases for "d1", "s1", "d1s", and "s1s", respectively.  This
+form is deprecated and will be removed in the 0.4 series.
+</para>
+</para>
+<para>
+<para>
+Two special parameters are "n" and "m", which determine the size of
+the arrays in other parameters.
+</para>
+</para>
+<para>
+<para>
+Data arrays are laid out such that rows are separated by the number
+of bytes given by the corresponding stride.  Elements in each row
+are contiguous.  If there is no stride parameter corresponding to an
+array, the rows of the array are contiguous.
+</para></para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilclass-unstable.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="OilFunctionClass" role="struct">
+<title>OilFunctionClass</title>
+<indexterm zone="OilFunctionClass"><primary sortas="OilFunctionClass">OilFunctionClass</primary></indexterm><programlisting>typedef struct {
+} OilFunctionClass;
+</programlisting>
+<para>
+An opaque structure representing a function class.</para>
+<para>
+</para></refsect2>
+<refsect2 id="OIL-DECLARE-CLASS--CAPS" role="macro">
+<title>OIL_DECLARE_CLASS()</title>
+<indexterm zone="OIL-DECLARE-CLASS--CAPS"><primary sortas="OIL_DECLARE_CLASS">OIL_DECLARE_CLASS</primary></indexterm><programlisting>#define             OIL_DECLARE_CLASS(klass)</programlisting>
+<para>
+Declares the Liboil function class <parameter>klass</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> the name of a function class (without the oil_ prefix)
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-CLASS-FULL--CAPS" role="macro">
+<title>OIL_DEFINE_CLASS_FULL()</title>
+<indexterm zone="OIL-DEFINE-CLASS-FULL--CAPS"><primary sortas="OIL_DEFINE_CLASS_FULL">OIL_DEFINE_CLASS_FULL</primary></indexterm><programlisting>#define             OIL_DEFINE_CLASS_FULL(klass, string, test)</programlisting>
+<para>
+Defines a <link linkend="OilFunctionClass"><type>OilFunctionClass</type></link> structure for <parameter>klass</parameter>.  Classes
+defined this way will be automatically at Liboil initialization
+time.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>string</parameter>&#160;:</term>
+<listitem><simpara> prototype of class
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>test</parameter>&#160;:</term>
+<listitem><simpara> test function
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="OIL-DEFINE-CLASS--CAPS" role="macro">
+<title>OIL_DEFINE_CLASS()</title>
+<indexterm zone="OIL-DEFINE-CLASS--CAPS"><primary sortas="OIL_DEFINE_CLASS">OIL_DEFINE_CLASS</primary></indexterm><programlisting>#define             OIL_DEFINE_CLASS(klass, string)</programlisting>
+<para>
+Defines a <link linkend="OilFunctionClass"><type>OilFunctionClass</type></link> structure for <parameter>klass</parameter>.  Classes
+defined this way will be automatically at Liboil initialization
+time.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> name of class to declare (without oil_ prefix)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>string</parameter>&#160;:</term>
+<listitem><simpara> prototype of class
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-get-by-index" role="function">
+<title>oil_class_get_by_index ()</title>
+<indexterm zone="oil-class-get-by-index"><primary sortas="oil_class_get_by_index">oil_class_get_by_index</primary></indexterm><programlisting><link linkend="OilFunctionClass">OilFunctionClass</link> *  oil_class_get_by_index              (<link linkend="int">int</link> i);</programlisting>
+<para>
+Returns a pointer to the function class with index <parameter>i</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>i</parameter>&#160;:</term>
+<listitem><simpara> index
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> an <parameter>OilFunctionClass</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-get" role="function">
+<title>oil_class_get ()</title>
+<indexterm zone="oil-class-get"><primary sortas="oil_class_get">oil_class_get</primary></indexterm><programlisting><link linkend="OilFunctionClass">OilFunctionClass</link> *  oil_class_get                       (const <link linkend="char">char</link> *class_name);</programlisting>
+<para>
+Returns a pointer to the function class that has the given class
+name.  If no such class is found, NULL is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>class_name</parameter>&#160;:</term>
+<listitem><simpara> the name of the function class
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a pointer to a function class
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-optimize" role="function">
+<title>oil_class_optimize ()</title>
+<indexterm zone="oil-class-optimize"><primary sortas="oil_class_optimize">oil_class_optimize</primary></indexterm><programlisting><link linkend="void">void</link>                oil_class_optimize                  (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass);</programlisting>
+<para>
+Tests and profiles each implementation for the given function
+class.  Testing compares the output of running each implementation
+on random input against the reference implementation for the
+same input.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> a function class
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-get-n-classes" role="function">
+<title>oil_class_get_n_classes ()</title>
+<indexterm zone="oil-class-get-n-classes"><primary sortas="oil_class_get_n_classes">oil_class_get_n_classes</primary></indexterm><programlisting><link linkend="int">int</link>                 oil_class_get_n_classes             (void);</programlisting>
+<para>
+Returns the number of function classes.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the number of function classes
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-choose-by-name" role="function">
+<title>oil_class_choose_by_name ()</title>
+<indexterm zone="oil-class-choose-by-name"><primary sortas="oil_class_choose_by_name">oil_class_choose_by_name</primary></indexterm><programlisting><link linkend="void">void</link>                oil_class_choose_by_name            (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Sets the chosen implementation for the given function class to
+the implementation with the given name.  If no implementation
+having the given name is found, the chosen implementation is
+not changed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> a function class
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> the name of an implementation
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-register-impl-by-name" role="function">
+<title>oil_class_register_impl_by_name ()</title>
+<indexterm zone="oil-class-register-impl-by-name"><primary sortas="oil_class_register_impl_by_name">oil_class_register_impl_by_name</primary></indexterm><programlisting><link linkend="void">void</link>                oil_class_register_impl_by_name     (const <link linkend="char">char</link> *klass_name,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);</programlisting>
+<para>
+Adds <parameter>impl</parameter> to the list of implementations associated with
+the function class given by <parameter>klass_name</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass_name</parameter>&#160;:</term>
+<listitem><simpara> the name of the class
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>impl</parameter>&#160;:</term>
+<listitem><simpara> an implementation
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-register-impl" role="function">
+<title>oil_class_register_impl ()</title>
+<indexterm zone="oil-class-register-impl"><primary sortas="oil_class_register_impl">oil_class_register_impl</primary></indexterm><programlisting><link linkend="void">void</link>                oil_class_register_impl             (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         <link linkend="OilFunctionImpl">OilFunctionImpl</link> *impl);</programlisting>
+<para>
+Adds <parameter>impl</parameter> to the list of implementations associated with
+the function class given by <parameter>klass</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> the class
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>impl</parameter>&#160;:</term>
+<listitem><simpara> an implementation
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-class-register-impl-full" role="function">
+<title>oil_class_register_impl_full ()</title>
+<indexterm zone="oil-class-register-impl-full"><primary sortas="oil_class_register_impl_full">oil_class_register_impl_full</primary></indexterm><programlisting><link linkend="void">void</link>                oil_class_register_impl_full        (<link linkend="OilFunctionClass">OilFunctionClass</link> *klass,
+                                                         <link linkend="void">void</link> (funcvoid) (),
+                                                         const <link linkend="char">char</link> *name,
+                                                         unsigned <link linkend="int">int</link> flags);</programlisting>
+<para>
+Adds <parameter>func</parameter> to the list of implementations associated with
+the function class given by <parameter>klass</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>klass</parameter>&#160;:</term>
+<listitem><simpara> the class
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> the function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> name of the function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara> CPU flags
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,64 @@
+<!-- ##### SECTION Title ##### -->
+liboiljunk
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO OIL_OPT_MANGLE ##### -->
+<para>
+
+</para>
+
+@a: 
+
+
+<!-- ##### MACRO OIL_OPT_SUFFIX ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO OIL_CHECK_PROTOTYPE ##### -->
+<para>
+
+</para>
+
+@a: 
+
+
+<!-- ##### MACRO OIL_OPT_FLAG_MANGLE ##### -->
+<para>
+
+</para>
+
+@a: 
+
+
+<!-- ##### MACRO OIL_NO_CLASSES ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO NULL ##### -->
+<para>
+
+</para>
+
+
+

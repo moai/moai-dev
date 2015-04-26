@@ -1,0 +1,93 @@
+
+Bugs can be reported on liboil at https://bugs.freedesktop.org/.
+
+When starting a program that uses liboil, it is not uncommon to
+see an error message such as:
+
+
+  OIL: ERROR liboiltest.c 309: oil_test_check_impl(): function
+  fbCompositeSolid_nx8888mmx in class composite_over_argb_const_src
+  failed check (1.67772e+07 > 100) outside=0
+
+
+This message is an error for liboil, but because of the way that
+liboil works, the error does not affect the performance of the
+program being run.
+
+
+Bug reporting:
+
+ 1. I get a message like the one above:
+
+    What to do:
+
+      - File a bug on the liboil package of your distro with a
+        severity/priority of 'normal'.  You may also want to file the
+        bug and/or search for duplicates in the upstream bugzilla.
+
+    What to include:
+
+      - The output of oil-bugreport.
+
+    Triaging:
+
+      - Debug messages with the same function ('fbCompositeSolid_nx8888mmx')
+        are duplicates.  If the function is different, they are not
+        duplicates and should be separate bug reports.
+
+
+ 2. I get a message like the one above and my program crashes.  I think
+    it's caused by liboil.
+
+    It's not.  The bug is elsewhere.  Really.  The debug message means
+    that liboil caught a potential crash and is avoiding it.
+
+
+ 3. My program crashes on startup and the backtrace includes oil_init().
+
+    What to do:
+
+      - File a bug on liboil with a severity 'crasher'.
+
+    What to include:
+
+      - The version of liboil
+
+      - A stack backtrace.  Alternately, set 'OIL_DEBUG=3' in the
+        environment and capture the output of the program as it
+        crashes.
+
+      - The output of oil-bugreport.
+
+    Workarounds:
+
+      - User:  Set 'OIL_CPU_FLAGS=0' in your environment.  This will make
+        function calls to liboil really slow, but will generally avoid
+        any serious problems.
+
+      - Distributor:  Find the offending function the source code and
+        disable it by commenting out the function and the OIL_DEFINE_IMPL()
+        line (usually immediately following it).
+
+
+ 4. When I debug a program that uses liboil, gdb stops with SIGILL.
+ 
+    Illegal instruction signals can be a normal occurance during the
+    startup of liboil, depending on your particular CPU.  Liboil is
+    either testing features of your CPU and the kernel is reporting
+    that a feature is not supported, or liboil is running an
+    implementation that isn't flagged correctly for the CPU features
+    that it uses.  In the latter case, an error message is printed,
+    which should be reported as a normal bug.
+    
+    By default, gdb stops the debugged program when it gets a SIGILL
+    signal.  That's not the desired behavior however, since liboil is
+    prepared (and sometimes expecting) to get the signal.  So you
+    should use the gdb command 'c' to continue past these signals.  If
+    you do lots of liboil debugging (like I do), you may prefer to
+    ignore all SIGILL signals using the command 'handle SIGILL nostop
+    noprint'.
+
+
+
+

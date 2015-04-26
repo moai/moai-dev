@@ -1,0 +1,82 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT OilProfile ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_PROFILE_HIST_LENGTH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION oil_profile_stamp ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_profile_init ##### -->
+<para>
+
+</para>
+
+@prof: 
+
+
+<!-- ##### FUNCTION oil_profile_stop_handle ##### -->
+<para>
+
+</para>
+
+@prof: 
+
+
+<!-- ##### FUNCTION oil_profile_get_ave_std ##### -->
+<para>
+
+</para>
+
+@prof: 
+@ave_p: 
+@std_p: 
+
+
+<!-- ##### MACRO oil_profile_start ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO oil_profile_stop ##### -->
+<para>
+
+</para>
+
+@x: 
+
+

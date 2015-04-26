@@ -1,0 +1,124 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT OilFunctionClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO OIL_DECLARE_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+
+<!-- ##### MACRO OIL_DEFINE_CLASS_FULL ##### -->
+<para>
+
+</para>
+
+@klass: 
+@string: 
+@test: 
+
+
+<!-- ##### MACRO OIL_DEFINE_CLASS ##### -->
+<para>
+
+</para>
+
+@klass: 
+@string: 
+
+
+<!-- ##### FUNCTION oil_class_get_by_index ##### -->
+<para>
+
+</para>
+
+@i: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_class_get ##### -->
+<para>
+
+</para>
+
+@class_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_class_optimize ##### -->
+<para>
+
+</para>
+
+@klass: 
+
+
+<!-- ##### FUNCTION oil_class_get_n_classes ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION oil_class_choose_by_name ##### -->
+<para>
+
+</para>
+
+@klass: 
+@name: 
+
+
+<!-- ##### FUNCTION oil_class_register_impl_by_name ##### -->
+<para>
+
+</para>
+
+@klass_name: 
+@impl: 
+
+
+<!-- ##### FUNCTION oil_class_register_impl ##### -->
+<para>
+
+</para>
+
+@klass: 
+@impl: 
+
+
+<!-- ##### FUNCTION oil_class_register_impl_full ##### -->
+<para>
+
+</para>
+
+@klass: 
+@func: 
+@name: 
+@flags: 
+
+

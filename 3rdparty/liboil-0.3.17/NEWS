@@ -1,0 +1,14 @@
+
+0.3.10
+======
+
+ - Lots of new classes and implementations were added for Schrödinger.
+ - Several i386 implementations also compile on amd64, so these were
+   copied over to a separate directory and are now enabled on amd64.
+ - Feature detection on amd64 has been fixed.
+ - All known startup warnings have been fixed.
+ - The core now handles arrays that are 'N plus a constant' in length.
+ - Wrap a bunch of functions in HAVE_UNALIGNED_ACCESS to indicate that
+   they require an architecture that handles unaligned access.
+
+

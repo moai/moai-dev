@@ -1,0 +1,144 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO oil_min ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+
+<!-- ##### MACRO oil_max ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+
+<!-- ##### MACRO oil_divide_255 ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO oil_argb ##### -->
+<para>
+
+</para>
+
+@a: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### MACRO oil_argb_noclamp ##### -->
+<para>
+
+</para>
+
+@a: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### MACRO oil_argb_A ##### -->
+<para>
+
+</para>
+
+@color: 
+
+
+<!-- ##### MACRO oil_argb_G ##### -->
+<para>
+
+</para>
+
+@color: 
+
+
+<!-- ##### MACRO oil_argb_B ##### -->
+<para>
+
+</para>
+
+@color: 
+
+
+<!-- ##### MACRO oil_argb_R ##### -->
+<para>
+
+</para>
+
+@color: 
+
+
+<!-- ##### MACRO oil_muldiv_255 ##### -->
+<para>
+
+</para>
+
+@a: 
+@b: 
+
+
+<!-- ##### MACRO oil_clamp_255 ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### MACRO OIL_GET ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@offset: 
+@type: 
+
+
+<!-- ##### MACRO OIL_OFFSET ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@offset: 
+
+
+<!-- ##### MACRO OIL_INCREMENT ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@offset: 
+
+

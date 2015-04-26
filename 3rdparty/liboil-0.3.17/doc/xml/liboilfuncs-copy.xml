@@ -1,0 +1,889 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilfuncs-copy">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilfuncs-copy.top_of_page">liboilfuncs-copy</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>liboilfuncs-copy</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilfuncs-copy.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-compare-u8">oil_compare_u8</link>                      (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-copy-u8">oil_copy_u8</link>                         (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         const <link linkend="uint8-t">uint8_t</link> *src,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-f32">oil_permute_f32</link>                     (<link linkend="float">float</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-f64">oil_permute_f64</link>                     (<link linkend="double">double</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-s16">oil_permute_s16</link>                     (<link linkend="int16-t">int16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-s32">oil_permute_s32</link>                     (<link linkend="int32-t">int32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-s8">oil_permute_s8</link>                      (<link linkend="int8-t">int8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-u16">oil_permute_u16</link>                     (<link linkend="uint16-t">uint16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-u32">oil_permute_u32</link>                     (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-permute-u8">oil_permute_u8</link>                      (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-splat-u32">oil_splat_u32</link>                       (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-splat-u8">oil_splat_u8</link>                        (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-swab-u16">oil_swab_u16</link>                        (<link linkend="uint16-t">uint16_t</link> *d_n,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s_n,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-swab-u32">oil_swab_u32</link>                        (<link linkend="uint32-t">uint32_t</link> *d_n,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s_n,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-tablelookup-u8">oil_tablelookup_u8</link>                  (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_256,
+                                                         <link linkend="int">int</link> ss2,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-testzero-u8">oil_testzero_u8</link>                     (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-trans8x8-f64">oil_trans8x8_f64</link>                    (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-trans8x8-u16">oil_trans8x8_u16</link>                    (<link linkend="uint16-t">uint16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-trans8x8-u32">oil_trans8x8_u32</link>                    (<link linkend="uint32-t">uint32_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-trans8x8-u8">oil_trans8x8_u8</link>                     (<link linkend="uint8-t">uint8_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-unzigzag8x8-s16">oil_unzigzag8x8_s16</link>                 (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-zigzag8x8-s16">oil_zigzag8x8_s16</link>                   (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);
+<link linkend="void">void</link>                <link linkend="oil-splat-u32-ns">oil_splat_u32_ns</link>                    (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-splat-u8-ns">oil_splat_u8_ns</link>                     (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);
+#define             <link linkend="oil-trans8x8-s16">oil_trans8x8_s16</link>                    (dest, dstr, src, sstr)
+#define             <link linkend="oil-memcpy">oil_memcpy</link>                          (dest,src,n_bytes)
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilfuncs-copy.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilfuncs-copy.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-compare-u8" role="function">
+<title>oil_compare_u8 ()</title>
+<indexterm zone="oil-compare-u8"><primary sortas="oil_compare_u8">oil_compare_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_compare_u8                      (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Compares two arrays.  The index of the first two elements that are
+unequal is written into dest.  If all elements are equal, <parameter>n</parameter> is
+written into dest.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-copy-u8" role="function">
+<title>oil_copy_u8 ()</title>
+<indexterm zone="oil-copy-u8"><primary sortas="oil_copy_u8">oil_copy_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_copy_u8                         (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         const <link linkend="uint8-t">uint8_t</link> *src,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies from source to destination.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-f32" role="function">
+<title>oil_permute_f32 ()</title>
+<indexterm zone="oil-permute-f32"><primary sortas="oil_permute_f32">oil_permute_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_f32                     (<link linkend="float">float</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="float">float</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-f64" role="function">
+<title>oil_permute_f64 ()</title>
+<indexterm zone="oil-permute-f64"><primary sortas="oil_permute_f64">oil_permute_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_f64                     (<link linkend="double">double</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="double">double</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-s16" role="function">
+<title>oil_permute_s16 ()</title>
+<indexterm zone="oil-permute-s16"><primary sortas="oil_permute_s16">oil_permute_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_s16                     (<link linkend="int16-t">int16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int16-t">int16_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-s32" role="function">
+<title>oil_permute_s32 ()</title>
+<indexterm zone="oil-permute-s32"><primary sortas="oil_permute_s32">oil_permute_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_s32                     (<link linkend="int32-t">int32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int32-t">int32_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-s8" role="function">
+<title>oil_permute_s8 ()</title>
+<indexterm zone="oil-permute-s8"><primary sortas="oil_permute_s8">oil_permute_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_s8                      (<link linkend="int8-t">int8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="int8-t">int8_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-u16" role="function">
+<title>oil_permute_u16 ()</title>
+<indexterm zone="oil-permute-u16"><primary sortas="oil_permute_u16">oil_permute_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_u16                     (<link linkend="uint16-t">uint16_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint16-t">uint16_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-u32" role="function">
+<title>oil_permute_u32 ()</title>
+<indexterm zone="oil-permute-u32"><primary sortas="oil_permute_u32">oil_permute_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_u32                     (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-permute-u8" role="function">
+<title>oil_permute_u8 ()</title>
+<indexterm zone="oil-permute-u8"><primary sortas="oil_permute_u8">oil_permute_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_permute_u8                      (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *src1,
+                                                         <link linkend="int">int</link> sstr1,
+                                                         const <link linkend="int32-t">int32_t</link> *src2,
+                                                         <link linkend="int">int</link> sstr2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies elements in <parameter>src1</parameter> to <parameter>dest</parameter>, permuting them by <parameter>src2</parameter>.  That is,
+<parameter>dest</parameter>[i] is set to <parameter>src1</parameter>[<parameter>src2</parameter>[i]].  Values in <parameter>src2</parameter> must be
+non-negative and less than <parameter>n</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-splat-u32" role="function">
+<title>oil_splat_u32 ()</title>
+<indexterm zone="oil-splat-u32"><primary sortas="oil_splat_u32">oil_splat_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_splat_u32                       (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies the constant source value <parameter>s1_1</parameter> to each element in <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-splat-u8" role="function">
+<title>oil_splat_u8 ()</title>
+<indexterm zone="oil-splat-u8"><primary sortas="oil_splat_u8">oil_splat_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_splat_u8                        (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         <link linkend="int">int</link> dstr,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies the constant source value <parameter>s1_1</parameter> to each element in <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-swab-u16" role="function">
+<title>oil_swab_u16 ()</title>
+<indexterm zone="oil-swab-u16"><primary sortas="oil_swab_u16">oil_swab_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_swab_u16                        (<link linkend="uint16-t">uint16_t</link> *d_n,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s_n,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Swaps the endianness of values in the source array and places the
+results in the destination array.  The arguments <parameter>s_n</parameter> and <parameter>d_n</parameter> may
+be equal.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_n</parameter>&#160;:</term>
+<listitem><simpara>
+n:
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-swab-u32" role="function">
+<title>oil_swab_u32 ()</title>
+<indexterm zone="oil-swab-u32"><primary sortas="oil_swab_u32">oil_swab_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_swab_u32                        (<link linkend="uint32-t">uint32_t</link> *d_n,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s_n,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Swaps the endianness of values in the source array and places the
+results in the destination array.  The arguments <parameter>s_n</parameter> and <parameter>d_n</parameter> may
+be equal.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_n</parameter>&#160;:</term>
+<listitem><simpara>
+n:
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-tablelookup-u8" role="function">
+<title>oil_tablelookup_u8 ()</title>
+<indexterm zone="oil-tablelookup-u8"><primary sortas="oil_tablelookup_u8">oil_tablelookup_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_tablelookup_u8                  (<link linkend="uint8-t">uint8_t</link> *d,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_256,
+                                                         <link linkend="int">int</link> ss2,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Looks up each element in <parameter>s1</parameter> using the lookup table in <parameter>s2_256</parameter>,
+and places the table value in <parameter>d</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_256</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-testzero-u8" role="function">
+<title>oil_testzero_u8 ()</title>
+<indexterm zone="oil-testzero-u8"><primary sortas="oil_testzero_u8">oil_testzero_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_testzero_u8                     (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Tests each element in the source array for equality with 0.  The
+index of the first zero element is written into dest.  If all
+elements are non-zero, <parameter>n</parameter> is written into dest.
+</para>
+<para>
+This function is roughly equivalent to <link linkend="strnlen"><function>strnlen()</function></link>.  One notable
+difference is that implementations of this function may legally
+read past the zero byte.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara> destination array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s</parameter>&#160;:</term>
+<listitem><simpara> source array
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-trans8x8-f64" role="function">
+<title>oil_trans8x8_f64 ()</title>
+<indexterm zone="oil-trans8x8-f64"><primary sortas="oil_trans8x8_f64">oil_trans8x8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_trans8x8_f64                    (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="double">double</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Performs a matrix transpose the 8x8 block represented by <parameter>s_8x8</parameter>
+and places the
+result in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-trans8x8-u16" role="function">
+<title>oil_trans8x8_u16 ()</title>
+<indexterm zone="oil-trans8x8-u16"><primary sortas="oil_trans8x8_u16">oil_trans8x8_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_trans8x8_u16                    (<link linkend="uint16-t">uint16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint16-t">uint16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Performs a matrix transpose the 8x8 block represented by <parameter>s_8x8</parameter>
+and places the
+result in <parameter>d_8x8</parameter>.  Note that this function can also be used for
+any type of this size.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-trans8x8-u32" role="function">
+<title>oil_trans8x8_u32 ()</title>
+<indexterm zone="oil-trans8x8-u32"><primary sortas="oil_trans8x8_u32">oil_trans8x8_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_trans8x8_u32                    (<link linkend="uint32-t">uint32_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Performs a matrix transpose the 8x8 block represented by <parameter>s_8x8</parameter>
+and places the
+result in <parameter>d_8x8</parameter>.  Note that this function can also be used for
+any type of this size.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-trans8x8-u8" role="function">
+<title>oil_trans8x8_u8 ()</title>
+<indexterm zone="oil-trans8x8-u8"><primary sortas="oil_trans8x8_u8">oil_trans8x8_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_trans8x8_u8                     (<link linkend="uint8-t">uint8_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Performs a matrix transpose the 8x8 block represented by <parameter>s_8x8</parameter>
+and places the
+result in <parameter>d_8x8</parameter>.  Note that this function can also be used for
+any type of this size.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-unzigzag8x8-s16" role="function">
+<title>oil_unzigzag8x8_s16 ()</title>
+<indexterm zone="oil-unzigzag8x8-s16"><primary sortas="oil_unzigzag8x8_s16">oil_unzigzag8x8_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_unzigzag8x8_s16                 (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Reorders an 8x8 block to reverse the zig-zag reordering of
+<parameter>oil_zigzag8x8_s16</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-zigzag8x8-s16" role="function">
+<title>oil_zigzag8x8_s16 ()</title>
+<indexterm zone="oil-zigzag8x8-s16"><primary sortas="oil_zigzag8x8_s16">oil_zigzag8x8_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_zigzag8x8_s16                   (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s_8x8,
+                                                         <link linkend="int">int</link> ss);</programlisting>
+<para>
+Reorders an 8x8 block using a zig-zag pattern.  The zig-zag pattern
+is described in the JPEG specification.
+</para>
+<para>
+FIXME: describe zigzag pattern</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-splat-u32-ns" role="function">
+<title>oil_splat_u32_ns ()</title>
+<indexterm zone="oil-splat-u32-ns"><primary sortas="oil_splat_u32_ns">oil_splat_u32_ns</primary></indexterm><programlisting><link linkend="void">void</link>                oil_splat_u32_ns                    (<link linkend="uint32-t">uint32_t</link> *dest,
+                                                         const <link linkend="uint32-t">uint32_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies the constant source value <parameter>s1_1</parameter> to each element in <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-splat-u8-ns" role="function">
+<title>oil_splat_u8_ns ()</title>
+<indexterm zone="oil-splat-u8-ns"><primary sortas="oil_splat_u8_ns">oil_splat_u8_ns</primary></indexterm><programlisting><link linkend="void">void</link>                oil_splat_u8_ns                     (<link linkend="uint8-t">uint8_t</link> *dest,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_1,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Copies the constant source value <parameter>s1_1</parameter> to each element in <parameter>dest</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-trans8x8-s16" role="macro">
+<title>oil_trans8x8_s16()</title>
+<indexterm zone="oil-trans8x8-s16"><primary sortas="oil_trans8x8_s16">oil_trans8x8_s16</primary></indexterm><programlisting>#define             oil_trans8x8_s16(dest, dstr, src, sstr)</programlisting>
+<para>
+Macro wrapping <link linkend="trans8x8-u16"><function>trans8x8_u16()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sstr</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-memcpy" role="macro">
+<title>oil_memcpy()</title>
+<indexterm zone="oil-memcpy"><primary sortas="oil_memcpy">oil_memcpy</primary></indexterm><programlisting>#define             oil_memcpy(dest,src,n_bytes)</programlisting>
+<para>
+Macro that uses <link linkend="oil-copy-u8"><function>oil_copy_u8()</function></link> to provide an implementation of
+<link linkend="memcpy"><function>memcpy()</function></link>.  Note that <link linkend="oil-copy-u8"><function>oil_copy_u8()</function></link> is optimized for short copies,
+and may be very slow for large copies compared to alternatives,
+including the system <link linkend="memcpy"><function>memcpy()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n_bytes</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

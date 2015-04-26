@@ -1,0 +1,1404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Pixel Operations</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch01.html" title="Liboil Stable API">
+<link rel="prev" href="liboil-liboilfuncs-dct.html" title="liboilfuncs-dct">
+<link rel="next" href="liboil-liboilfuncs-doc.html" title="liboilfuncs-doc">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilfuncs-dct.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboilfuncs-doc.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboilfuncs-pixel.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboilfuncs-pixel.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Pixel Operations">
+<a name="liboil-liboilfuncs-pixel"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboilfuncs-pixel.top_of_page"></a>Pixel Operations</span></h2>
+<p>Pixel Operations — Operations on pixels</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboilfuncs-pixel.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-argb-paint-u8" title="oil_argb_paint_u8 ()">oil_argb_paint_u8</a>                   (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_4,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-ayuv2argb-u8" title="oil_ayuv2argb_u8 ()">oil_ayuv2argb_u8</a>                    (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_4xn,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-ayuv2uyvy" title="oil_ayuv2uyvy ()">oil_ayuv2uyvy</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-ayuv2yuyv" title="oil_ayuv2yuyv ()">oil_ayuv2yuyv</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-ayuv2yvyu" title="oil_ayuv2yvyu ()">oil_ayuv2yvyu</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-add-argb" title="oil_composite_add_argb ()">oil_composite_add_argb</a>              (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-add-argb-const-src" title="oil_composite_add_argb_const_src ()">oil_composite_add_argb_const_src</a>    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-argb" title="oil_composite_in_argb ()">oil_composite_in_argb</a>               (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-argb-const-mask" title="oil_composite_in_argb_const_mask ()">oil_composite_in_argb_const_mask</a>    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-argb-const-src" title="oil_composite_in_argb_const_src ()">oil_composite_in_argb_const_src</a>     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb" title="oil_composite_in_over_argb ()">oil_composite_in_over_argb</a>          (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb-const-mask" title="oil_composite_in_over_argb_const_mask ()">oil_composite_in_over_argb_const_mask</a>
+                                                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-in-over-argb-const-src" title="oil_composite_in_over_argb_const_src ()">oil_composite_in_over_argb_const_src</a>
+                                                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-over-argb" title="oil_composite_over_argb ()">oil_composite_over_argb</a>             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-composite-over-argb-const-src" title="oil_composite_over_argb_const_src ()">oil_composite_over_argb_const_src</a>   (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-merge-linear-argb" title="oil_merge_linear_argb ()">oil_merge_linear_argb</a>               (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s2_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s3_1,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-resample-linear-argb" title="oil_resample_linear_argb ()">oil_resample_linear_argb</a>            (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_2xn,
+                                                         int n,
+                                                         <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_2);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-resample-linear-u8" title="oil_resample_linear_u8 ()">oil_resample_linear_u8</a>              (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_2xn,
+                                                         int n,
+                                                         <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_2);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-rgb2bgr" title="oil_rgb2bgr ()">oil_rgb2bgr</a>                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_3xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_3xn,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-rgb2rgba" title="oil_rgb2rgba ()">oil_rgb2rgba</a>                        (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_3xn,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-sub2-u8" title="oil_yuv2rgbx_sub2_u8 ()">oil_yuv2rgbx_sub2_u8</a>                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-sub4-u8" title="oil_yuv2rgbx_sub4_u8 ()">oil_yuv2rgbx_sub4_u8</a>                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-yuv2rgbx-u8" title="oil_yuv2rgbx_u8 ()">oil_yuv2rgbx_u8</a>                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-uyvy2ayuv" title="oil_uyvy2ayuv ()">oil_uyvy2ayuv</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-yuyv2ayuv" title="oil_yuyv2ayuv ()">oil_yuyv2ayuv</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+void                <a class="link" href="liboil-liboilfuncs-pixel.html#oil-yvyu2ayuv" title="oil_yvyu2ayuv ()">oil_yvyu2ayuv</a>                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboilfuncs-pixel.description"></a><h2>Description</h2>
+<p>
+Pixels are 4-element arrays of type uint8_t.  The elements, in
+memory order, represent the alpha, red, green, and blue
+components respectively.  The color components are premultiplied
+with the alpha component.  Liboil functions represent pixels
+as the type uint32_t.
+</p>
+<p>
+The compositing operators IN, OVER, and ADD are defined the same
+as cairo.</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboilfuncs-pixel.details"></a><h2>Details</h2>
+<div class="refsect2" title="oil_argb_paint_u8 ()">
+<a name="oil-argb-paint-u8"></a><h3>oil_argb_paint_u8 ()</h3>
+<pre class="programlisting">void                oil_argb_paint_u8                   (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *i_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s1_4,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);</pre>
+<p>
+Composites source color onto in-place array according to the alpha
+array.
+</p>
+<p>
+Deprecated.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_4xn</code></em> :</span></p></td>
+<td> array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_4</code></em> :</span></p></td>
+<td> source color
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td> source alpha array
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_ayuv2argb_u8 ()">
+<a name="oil-ayuv2argb-u8"></a><h3>oil_ayuv2argb_u8 ()</h3>
+<pre class="programlisting">void                oil_ayuv2argb_u8                    (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_4xn,
+                                                         int n);</pre>
+<p>
+Converts AYUV pixels to ARGB pixels.  AYUV pixels are in the
+JPEG colorspace.  Note that this function doesn't follow normal
+liboil pixel conventions.
+</p>
+<p>
+(This function should be replaced by one that handles other
+conversion factors.)</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_ayuv2uyvy ()">
+<a name="oil-ayuv2uyvy"></a><h3>oil_ayuv2uyvy ()</h3>
+<pre class="programlisting">void                oil_ayuv2uyvy                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in AYUV format to UYVY.  Note that only approximately
+half of the destination array is written.  Alpha values are ignored.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_ayuv2yuyv ()">
+<a name="oil-ayuv2yuyv"></a><h3>oil_ayuv2yuyv ()</h3>
+<pre class="programlisting">void                oil_ayuv2yuyv                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in AYUV format to YUYV.  Note that only approximately
+half of the destination array is written.  Alpha values are ignored.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_ayuv2yvyu ()">
+<a name="oil-ayuv2yvyu"></a><h3>oil_ayuv2yvyu ()</h3>
+<pre class="programlisting">void                oil_ayuv2yvyu                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in AYUV format to YVYU.  Note that only approximately
+half of the destination array is written.  Alpha values are ignored.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_add_argb ()">
+<a name="oil-composite-add-argb"></a><h3>oil_composite_add_argb ()</h3>
+<pre class="programlisting">void                oil_composite_add_argb              (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC ADD DEST.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_add_argb_const_src ()">
+<a name="oil-composite-add-argb-const-src"></a><h3>oil_composite_add_argb_const_src ()</h3>
+<pre class="programlisting">void                oil_composite_add_argb_const_src    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC ADD DEST, for a
+constant SRC.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_argb ()">
+<a name="oil-composite-in-argb"></a><h3>oil_composite_in_argb ()</h3>
+<pre class="programlisting">void                oil_composite_in_argb               (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC IN MASK.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_argb_const_mask ()">
+<a name="oil-composite-in-argb-const-mask"></a><h3>oil_composite_in_argb_const_mask ()</h3>
+<pre class="programlisting">void                oil_composite_in_argb_const_mask    (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC IN MASK, for a constant
+MASK.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_argb_const_src ()">
+<a name="oil-composite-in-argb-const-src"></a><h3>oil_composite_in_argb_const_src ()</h3>
+<pre class="programlisting">void                oil_composite_in_argb_const_src     (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC IN MASK, for a constant
+SRC.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_over_argb ()">
+<a name="oil-composite-in-over-argb"></a><h3>oil_composite_in_over_argb ()</h3>
+<pre class="programlisting">void                oil_composite_in_over_argb          (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = (SRC IN MASK) OVER DEST.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_over_argb_const_mask ()">
+<a name="oil-composite-in-over-argb-const-mask"></a><h3>oil_composite_in_over_argb_const_mask ()</h3>
+<pre class="programlisting">void                oil_composite_in_over_argb_const_mask
+                                                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_1,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = (SRC IN MASK) OVER DEST,
+for a constant MASK.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_1</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_in_over_argb_const_src ()">
+<a name="oil-composite-in-over-argb-const-src"></a><h3>oil_composite_in_over_argb_const_src ()</h3>
+<pre class="programlisting">void                oil_composite_in_over_argb_const_src
+                                                        (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s2_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = (SRC IN MASK) OVER DEST,
+for a constant SRC.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td> MASK
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_over_argb ()">
+<a name="oil-composite-over-argb"></a><h3>oil_composite_over_argb ()</h3>
+<pre class="programlisting">void                oil_composite_over_argb             (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_n,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC OVER DEST.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_n</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_composite_over_argb_const_src ()">
+<a name="oil-composite-over-argb-const-src"></a><h3>oil_composite_over_argb_const_src ()</h3>
+<pre class="programlisting">void                oil_composite_over_argb_const_src   (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s1_1,
+                                                         int n);</pre>
+<p>
+Performs the compositing operation DEST = SRC OVER DEST, for a
+constant SRC.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_n</code></em> :</span></p></td>
+<td> DEST
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s1_1</code></em> :</span></p></td>
+<td> SRC
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td> number of elements
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_merge_linear_argb ()">
+<a name="oil-merge-linear-argb"></a><h3>oil_merge_linear_argb ()</h3>
+<pre class="programlisting">void                oil_merge_linear_argb               (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s2_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s3_1,
+                                                         int n);</pre>
+<p>
+Linearly interpolate the <em class="parameter"><code>s_n</code></em> and <em class="parameter"><code>s2_n</code></em> arrays using the scale
+factor in <em class="parameter"><code>s3_1</code></em>.  The value <em class="parameter"><code>s3_1</code></em> must be in the range [0, 256]
+A value of 0 indicates weights of 1.0 and 0.0 for
+the s_n and s2_n arrays respectively.  A value of 256 indicates
+weights of 0.0 and 1.0 respectively.
+</p>
+<p>
+This function is not intended for alpha blending; use one of the
+compositing functions instead.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s2_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s3_1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_resample_linear_argb ()">
+<a name="oil-resample-linear-argb"></a><h3>oil_resample_linear_argb ()</h3>
+<pre class="programlisting">void                oil_resample_linear_argb            (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_2xn,
+                                                         int n,
+                                                         <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_2);</pre>
+<p>
+Linearly resamples a row of pixels.  FIXME.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_2xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_resample_linear_u8 ()">
+<a name="oil-resample-linear-u8"></a><h3>oil_resample_linear_u8 ()</h3>
+<pre class="programlisting">void                oil_resample_linear_u8              (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_2xn,
+                                                         int n,
+                                                         <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *i_2);</pre>
+<p>
+Linearly resamples a row of pixels.  FIXME.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_2xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>i_2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_rgb2bgr ()">
+<a name="oil-rgb2bgr"></a><h3>oil_rgb2bgr ()</h3>
+<pre class="programlisting">void                oil_rgb2bgr                         (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_3xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_3xn,
+                                                         int n);</pre>
+<p>
+Converts arrays of 24-bit RGB pixels from RGBRGBRGB ordering to
+BGRBGRBGR ordering (and vice-versa).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_3xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_3xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_rgb2rgba ()">
+<a name="oil-rgb2rgba"></a><h3>oil_rgb2rgba ()</h3>
+<pre class="programlisting">void                oil_rgb2rgba                        (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *s_3xn,
+                                                         int n);</pre>
+<p>
+Converts arrays of 24-bit RGB pixels in RGBRGBRGB memory order
+to 32-bit RGBA pixels in RGBARGBA order.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_3xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_yuv2rgbx_sub2_u8 ()">
+<a name="oil-yuv2rgbx-sub2-u8"></a><h3>oil_yuv2rgbx_sub2_u8 ()</h3>
+<pre class="programlisting">void                oil_yuv2rgbx_sub2_u8                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);</pre>
+<p>
+Converts YUV pixels to RGB pixels.  Each YUV component is in a
+separate source array, and are combined and converted to RGB.
+The U and V arrays are subsampled by a factor of 2, so only
+half of each array is used.
+</p>
+<p>
+This function should be replaced by one that makes sense.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td> Y component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td> U component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src3</code></em> :</span></p></td>
+<td> V component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_yuv2rgbx_sub4_u8 ()">
+<a name="oil-yuv2rgbx-sub4-u8"></a><h3>oil_yuv2rgbx_sub4_u8 ()</h3>
+<pre class="programlisting">void                oil_yuv2rgbx_sub4_u8                (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);</pre>
+<p>
+Converts YUV pixels to RGB pixels.  Each YUV component is in a
+separate source array, and are combined and converted to RGB.
+The U and V arrays are subsampled by a factor of 4, so only
+a quarter of each array is used.
+</p>
+<p>
+This function should be replaced by one that makes sense.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td> Y component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td> U component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src3</code></em> :</span></p></td>
+<td> V component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_yuv2rgbx_u8 ()">
+<a name="oil-yuv2rgbx-u8"></a><h3>oil_yuv2rgbx_u8 ()</h3>
+<pre class="programlisting">void                oil_yuv2rgbx_u8                     (<a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *d_4xn,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src1,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src2,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint8-t"
+>uint8_t</a> *src3,
+                                                         int n);</pre>
+<p>
+Converts YUV pixels to RGB pixels.  Each YUV component is in a
+separate source array, and are combined and converted to RGB.
+</p>
+<p>
+This function should be replaced by one that makes sense.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_4xn</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src1</code></em> :</span></p></td>
+<td> Y component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src2</code></em> :</span></p></td>
+<td> U component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>src3</code></em> :</span></p></td>
+<td> V component
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_uyvy2ayuv ()">
+<a name="oil-uyvy2ayuv"></a><h3>oil_uyvy2ayuv ()</h3>
+<pre class="programlisting">void                oil_uyvy2ayuv                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in UYVY format to AYUV.  Note that only approximately
+half of the source array is used.  Alpha values are set to 255.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_yuyv2ayuv ()">
+<a name="oil-yuyv2ayuv"></a><h3>oil_yuyv2ayuv ()</h3>
+<pre class="programlisting">void                oil_yuyv2ayuv                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in YUYV format to AYUV.  Note that only approximately
+half of the source array is used.  Alpha values are set to 255.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_yvyu2ayuv ()">
+<a name="oil-yvyu2ayuv"></a><h3>oil_yvyu2ayuv ()</h3>
+<pre class="programlisting">void                oil_yvyu2ayuv                       (<a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *d_n,
+                                                         const <a
+href="../cog/cog-cog-stdint.html#uint32-t"
+>uint32_t</a> *s_n,
+                                                         int n);</pre>
+<p>
+Converts pixels in YVYU format to AYUV.  Note that only approximately
+half of the source array is used.  Alpha values are set to 255.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>d_n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>s_n</code></em> :</span></p></td>
+<td>
+n:
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

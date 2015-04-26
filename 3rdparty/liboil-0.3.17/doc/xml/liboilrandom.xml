@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilrandom">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilrandom.top_of_page">Random Number Generation</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Random Number Generation</refname>
+<refpurpose>Random number generation</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilrandom.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="oil-rand-s32">oil_rand_s32</link>                        ()
+#define             <link linkend="oil-rand-s16">oil_rand_s16</link>                        ()
+#define             <link linkend="oil-rand-s8">oil_rand_s8</link>                         ()
+#define             <link linkend="oil-rand-u32">oil_rand_u32</link>                        ()
+#define             <link linkend="oil-rand-u16">oil_rand_u16</link>                        ()
+#define             <link linkend="oil-rand-u8">oil_rand_u8</link>                         ()
+#define             <link linkend="oil-rand-s64">oil_rand_s64</link>                        ()
+#define             <link linkend="oil-rand-u64">oil_rand_u64</link>                        ()
+#define             <link linkend="oil-rand-f32">oil_rand_f32</link>                        ()
+#define             <link linkend="oil-rand-f64">oil_rand_f64</link>                        ()
+<link linkend="void">void</link>                <link linkend="oil-random-alpha">oil_random_alpha</link>                    (<link linkend="oil-type-u8">oil_type_u8</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-argb">oil_random_argb</link>                     (<link linkend="oil-type-u32">oil_type_u32</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-f32">oil_random_f32</link>                      (<link linkend="oil-type-f32">oil_type_f32</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-f64">oil_random_f64</link>                      (<link linkend="oil-type-f64">oil_type_f64</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-s16">oil_random_s16</link>                      (<link linkend="oil-type-s16">oil_type_s16</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-s32">oil_random_s32</link>                      (<link linkend="oil-type-s32">oil_type_s32</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-s64">oil_random_s64</link>                      (<link linkend="oil-type-s64">oil_type_s64</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-s8">oil_random_s8</link>                       (<link linkend="oil-type-s8">oil_type_s8</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-u16">oil_random_u16</link>                      (<link linkend="oil-type-u16">oil_type_u16</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-u32">oil_random_u32</link>                      (<link linkend="oil-type-u32">oil_type_u32</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-u64">oil_random_u64</link>                      (<link linkend="oil-type-u64">oil_type_u64</link> *dest,
+                                                         <link linkend="int">int</link> n);
+<link linkend="void">void</link>                <link linkend="oil-random-u8">oil_random_u8</link>                       (<link linkend="oil-type-u8">oil_type_u8</link> *dest,
+                                                         <link linkend="int">int</link> n);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilrandom.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilrandom.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-rand-s32" role="macro">
+<title>oil_rand_s32()</title>
+<indexterm zone="oil-rand-s32"><primary sortas="oil_rand_s32">oil_rand_s32</primary></indexterm><programlisting>#define oil_rand_s32() ((rand()&amp;0xffff)&lt;&lt;16 | (rand()&amp;0xffff))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [-(1&lt;&lt;31), (1&lt;&lt;31)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-s16" role="macro">
+<title>oil_rand_s16()</title>
+<indexterm zone="oil-rand-s16"><primary sortas="oil_rand_s16">oil_rand_s16</primary></indexterm><programlisting>#define oil_rand_s16() ((int16_t)(rand()&amp;0xffff))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [-(1&lt;&lt;15), (1&lt;&lt;15)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-s8" role="macro">
+<title>oil_rand_s8()</title>
+<indexterm zone="oil-rand-s8"><primary sortas="oil_rand_s8">oil_rand_s8</primary></indexterm><programlisting>#define oil_rand_s8() ((int8_t)(rand()&amp;0xffff))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [-(1&lt;&lt;7), (1&lt;&lt;7)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-u32" role="macro">
+<title>oil_rand_u32()</title>
+<indexterm zone="oil-rand-u32"><primary sortas="oil_rand_u32">oil_rand_u32</primary></indexterm><programlisting>#define oil_rand_u32() ((uint32_t)((rand()&amp;0xffff)&lt;&lt;16 | (rand()&amp;0xffff)))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [0, (1&lt;&lt;32)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-u16" role="macro">
+<title>oil_rand_u16()</title>
+<indexterm zone="oil-rand-u16"><primary sortas="oil_rand_u16">oil_rand_u16</primary></indexterm><programlisting>#define oil_rand_u16() ((uint16_t)(rand()&amp;0xffff))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [0, (1&lt;&lt;16)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-u8" role="macro">
+<title>oil_rand_u8()</title>
+<indexterm zone="oil-rand-u8"><primary sortas="oil_rand_u8">oil_rand_u8</primary></indexterm><programlisting>#define oil_rand_u8() ((uint8_t)(rand()&amp;0xffff))
+</programlisting>
+<para>
+Evaluates to a random integer in the range [0, (1&lt;&lt;8)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-s64" role="macro">
+<title>oil_rand_s64()</title>
+<indexterm zone="oil-rand-s64"><primary sortas="oil_rand_s64">oil_rand_s64</primary></indexterm><programlisting>#define oil_rand_s64() ((int64_t)(oil_rand_s32())&lt;&lt;32 | oil_rand_s32())
+</programlisting>
+<para>
+Evaluates to a random integer in the range [-(1&lt;&lt;63), (1&lt;&lt;63)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-u64" role="macro">
+<title>oil_rand_u64()</title>
+<indexterm zone="oil-rand-u64"><primary sortas="oil_rand_u64">oil_rand_u64</primary></indexterm><programlisting>#define oil_rand_u64() ((uint64_t)(oil_rand_u32())&lt;&lt;32 | oil_rand_u32())
+</programlisting>
+<para>
+Evaluates to a random integer in the range [0, (1&lt;&lt;64)-1].</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-f32" role="macro">
+<title>oil_rand_f32()</title>
+<indexterm zone="oil-rand-f32"><primary sortas="oil_rand_f32">oil_rand_f32</primary></indexterm><programlisting>#define oil_rand_f32() (rand()/(RAND_MAX+1.0))
+</programlisting>
+<para>
+Evaluates to a random single-precision floating point number
+in the range [0, 1.0).</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-rand-f64" role="macro">
+<title>oil_rand_f64()</title>
+<indexterm zone="oil-rand-f64"><primary sortas="oil_rand_f64">oil_rand_f64</primary></indexterm><programlisting>#define oil_rand_f64() (((rand()/(RAND_MAX+1.0))+rand())/(RAND_MAX+1.0))
+</programlisting>
+<para>
+Evaluates to a random double-precision floating point number
+in the range [0, 1.0).</para>
+<para>
+</para></refsect2>
+<refsect2 id="oil-random-alpha" role="function">
+<title>oil_random_alpha ()</title>
+<indexterm zone="oil-random-alpha"><primary sortas="oil_random_alpha">oil_random_alpha</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_alpha                    (<link linkend="oil-type-u8">oil_type_u8</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [0, 255] to the destination
+array suitable for alpha values.  This is similar to <link linkend="oil-random-u8"><function>oil_random_u8()</function></link>,
+except the values 0 and 255 are strongly favored.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-argb" role="function">
+<title>oil_random_argb ()</title>
+<indexterm zone="oil-random-argb"><primary sortas="oil_random_argb">oil_random_argb</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_argb                     (<link linkend="oil-type-u32">oil_type_u32</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Creates valid random RGBA values and places them in the destination
+array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara> destination array.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara> number of values to write.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-f32" role="function">
+<title>oil_random_f32 ()</title>
+<indexterm zone="oil-random-f32"><primary sortas="oil_random_f32">oil_random_f32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_f32                      (<link linkend="oil-type-f32">oil_type_f32</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random single-precision floating point values in the
+range [0, 1.0) to the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-f64" role="function">
+<title>oil_random_f64 ()</title>
+<indexterm zone="oil-random-f64"><primary sortas="oil_random_f64">oil_random_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_f64                      (<link linkend="oil-type-f64">oil_type_f64</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random double-precision floating point values in the
+range [0, 1.0) to the destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-s16" role="function">
+<title>oil_random_s16 ()</title>
+<indexterm zone="oil-random-s16"><primary sortas="oil_random_s16">oil_random_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_s16                      (<link linkend="oil-type-s16">oil_type_s16</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [-(1&lt;&lt;15), (1&lt;&lt;15)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-s32" role="function">
+<title>oil_random_s32 ()</title>
+<indexterm zone="oil-random-s32"><primary sortas="oil_random_s32">oil_random_s32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_s32                      (<link linkend="oil-type-s32">oil_type_s32</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [-(1&lt;&lt;31), (1&lt;&lt;31)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-s64" role="function">
+<title>oil_random_s64 ()</title>
+<indexterm zone="oil-random-s64"><primary sortas="oil_random_s64">oil_random_s64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_s64                      (<link linkend="oil-type-s64">oil_type_s64</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [-(1&lt;&lt;63), (1&lt;&lt;63)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-s8" role="function">
+<title>oil_random_s8 ()</title>
+<indexterm zone="oil-random-s8"><primary sortas="oil_random_s8">oil_random_s8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_s8                       (<link linkend="oil-type-s8">oil_type_s8</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [-(1&lt;&lt;7), (1&lt;&lt;7)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-u16" role="function">
+<title>oil_random_u16 ()</title>
+<indexterm zone="oil-random-u16"><primary sortas="oil_random_u16">oil_random_u16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_u16                      (<link linkend="oil-type-u16">oil_type_u16</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [0, (1&lt;&lt;16)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-u32" role="function">
+<title>oil_random_u32 ()</title>
+<indexterm zone="oil-random-u32"><primary sortas="oil_random_u32">oil_random_u32</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_u32                      (<link linkend="oil-type-u32">oil_type_u32</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [0, (1&lt;&lt;32)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-u64" role="function">
+<title>oil_random_u64 ()</title>
+<indexterm zone="oil-random-u64"><primary sortas="oil_random_u64">oil_random_u64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_u64                      (<link linkend="oil-type-u64">oil_type_u64</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [0, (1&lt;&lt;64)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-random-u8" role="function">
+<title>oil_random_u8 ()</title>
+<indexterm zone="oil-random-u8"><primary sortas="oil_random_u8">oil_random_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_random_u8                       (<link linkend="oil-type-u8">oil_type_u8</link> *dest,
+                                                         <link linkend="int">int</link> n);</programlisting>
+<para>
+Writes random values in the range [0, (1&lt;&lt;8)-1] to the
+destination array.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dest</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>n</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

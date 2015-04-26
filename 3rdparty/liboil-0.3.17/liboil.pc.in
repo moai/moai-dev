@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/liboil-@LIBOIL_MAJORMINOR@
+toolsdir=${exec_prefix}/bin
+
+
+Name: liboil-@LIBOIL_MAJORMINOR@
+Description: Library of Optimized Inner Loops
+Version: @VERSION@
+Libs: -L${libdir} -loil-@LIBOIL_MAJORMINOR@ @LIBM@ @LIBRT@
+Cflags: -I${includedir}
+
+

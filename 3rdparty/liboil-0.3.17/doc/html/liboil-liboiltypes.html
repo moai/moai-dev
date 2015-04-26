@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>liboiltypes</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch02.html" title="Liboil Unstable API">
+<link rel="prev" href="liboil-liboiltest.html" title="OilTest">
+<link rel="next" href="liboil-liboilmacros.html" title="Macros">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboiltest.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboilmacros.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboiltypes.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboiltypes.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="liboiltypes">
+<a name="liboil-liboiltypes"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboiltypes.top_of_page"></a>liboiltypes</span></h2>
+<p>liboiltypes — Internal Liboil types</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboiltypes.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+enum                <a class="link" href="liboil-liboiltypes.html#OilType" title="enum OilType">OilType</a>;
+int                 <a class="link" href="liboil-liboiltypes.html#oil-type-sizeof" title="oil_type_sizeof ()">oil_type_sizeof</a>                     (<a class="link" href="liboil-liboiltypes.html#OilType" title="enum OilType">OilType</a> type);
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-is-floating-point" title="oil_type_is_floating_point()">oil_type_is_floating_point</a>          (type)
+const char *        <a class="link" href="liboil-liboiltypes.html#oil-type-name" title="oil_type_name ()">oil_type_name</a>                       (<a class="link" href="liboil-liboiltypes.html#OilType" title="enum OilType">OilType</a> type);
+enum                <a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a>;
+const char *        <a class="link" href="liboil-liboiltypes.html#oil-arg-type-name" title="oil_arg_type_name ()">oil_arg_type_name</a>                   (<a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> type);
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-s8" title="oil_type_s8">oil_type_s8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-u8" title="oil_type_u8">oil_type_u8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-s16" title="oil_type_s16">oil_type_s16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-u16" title="oil_type_u16">oil_type_u16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-s32" title="oil_type_s32">oil_type_s32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-u32" title="oil_type_u32">oil_type_u32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-s64" title="oil_type_s64">oil_type_s64</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-u64" title="oil_type_u64">oil_type_u64</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-f32" title="oil_type_f32">oil_type_f32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-f64" title="oil_type_f64">oil_type_f64</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-s8" title="oil_type_min_s8">oil_type_min_s8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-u8" title="oil_type_min_u8">oil_type_min_u8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-s16" title="oil_type_min_s16">oil_type_min_s16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-u16" title="oil_type_min_u16">oil_type_min_u16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-s32" title="oil_type_min_s32">oil_type_min_s32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-min-u32" title="oil_type_min_u32">oil_type_min_u32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-s8" title="oil_type_max_s8">oil_type_max_s8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-u8" title="oil_type_max_u8">oil_type_max_u8</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-s16" title="oil_type_max_s16">oil_type_max_s16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-u16" title="oil_type_max_u16">oil_type_max_u16</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-s32" title="oil_type_max_s32">oil_type_max_s32</a>
+#define             <a class="link" href="liboil-liboiltypes.html#oil-type-max-u32" title="oil_type_max_u32">oil_type_max_u32</a>
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboiltypes.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboiltypes.details"></a><h2>Details</h2>
+<div class="refsect2" title="enum OilType">
+<a name="OilType"></a><h3>enum OilType</h3>
+<pre class="programlisting">typedef enum {
+  OIL_TYPE_UNKNOWN = 0,
+  OIL_TYPE_INT,
+  OIL_TYPE_s8,
+  OIL_TYPE_u8,
+  OIL_TYPE_s16,
+  OIL_TYPE_u16,
+  OIL_TYPE_s32,
+  OIL_TYPE_u32,
+  OIL_TYPE_s64,
+  OIL_TYPE_u64,
+  OIL_TYPE_f32,
+  OIL_TYPE_f64,
+  OIL_TYPE_s8p,
+  OIL_TYPE_u8p,
+  OIL_TYPE_s16p,
+  OIL_TYPE_u16p,
+  OIL_TYPE_s32p,
+  OIL_TYPE_u32p,
+  OIL_TYPE_s64p,
+  OIL_TYPE_u64p,
+  OIL_TYPE_f32p,
+  OIL_TYPE_f64p,
+} OilType;
+</pre>
+<p>
+Enumeration containing the data types understood by Liboil.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_sizeof ()">
+<a name="oil-type-sizeof"></a><h3>oil_type_sizeof ()</h3>
+<pre class="programlisting">int                 oil_type_sizeof                     (<a class="link" href="liboil-liboiltypes.html#OilType" title="enum OilType">OilType</a> type);</pre>
+<p>
+Looks up the size of the OilType represented by <em class="parameter"><code>type</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> the OilType
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the size of <em class="parameter"><code>type</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_is_floating_point()">
+<a name="oil-type-is-floating-point"></a><h3>oil_type_is_floating_point()</h3>
+<pre class="programlisting">#define             oil_type_is_floating_point(type)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_name ()">
+<a name="oil-type-name"></a><h3>oil_type_name ()</h3>
+<pre class="programlisting">const char *        oil_type_name                       (<a class="link" href="liboil-liboiltypes.html#OilType" title="enum OilType">OilType</a> type);</pre>
+<p>
+Looks up the name of the OilType given by <em class="parameter"><code>type</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> an OilType
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string containing the name of the OilType <em class="parameter"><code>type</code></em>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum OilArgType">
+<a name="OilArgType"></a><h3>enum OilArgType</h3>
+<pre class="programlisting">typedef enum {
+  OIL_ARG_UNKNOWN = 0,
+  OIL_ARG_N,
+  OIL_ARG_M,
+  OIL_ARG_DEST1,
+  OIL_ARG_DSTR1,
+  OIL_ARG_DEST2,
+  OIL_ARG_DSTR2,
+  OIL_ARG_DEST3,
+  OIL_ARG_DSTR3,
+  OIL_ARG_SRC1,
+  OIL_ARG_SSTR1,
+  OIL_ARG_SRC2,
+  OIL_ARG_SSTR2,
+  OIL_ARG_SRC3,
+  OIL_ARG_SSTR3,
+  OIL_ARG_SRC4,
+  OIL_ARG_SSTR4,
+  OIL_ARG_SRC5,
+  OIL_ARG_SSTR5,
+  OIL_ARG_INPLACE1,
+  OIL_ARG_ISTR1,
+  OIL_ARG_INPLACE2,
+  OIL_ARG_ISTR2,
+
+  OIL_ARG_LAST
+} OilArgType;
+</pre>
+<p>
+Enumeration containing the types of parameter types understood
+by Liboil.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_arg_type_name ()">
+<a name="oil-arg-type-name"></a><h3>oil_arg_type_name ()</h3>
+<pre class="programlisting">const char *        oil_arg_type_name                   (<a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> type);</pre>
+<p>
+Looks up the name of the OilArgType specified by <em class="parameter"><code>type</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td> an OilArgType
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a string containing the name
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_s8">
+<a name="oil-type-s8"></a><h3>oil_type_s8</h3>
+<pre class="programlisting">#define oil_type_s8 int8_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_u8">
+<a name="oil-type-u8"></a><h3>oil_type_u8</h3>
+<pre class="programlisting">#define oil_type_u8 uint8_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_s16">
+<a name="oil-type-s16"></a><h3>oil_type_s16</h3>
+<pre class="programlisting">#define oil_type_s16 int16_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_u16">
+<a name="oil-type-u16"></a><h3>oil_type_u16</h3>
+<pre class="programlisting">#define oil_type_u16 uint16_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_s32">
+<a name="oil-type-s32"></a><h3>oil_type_s32</h3>
+<pre class="programlisting">#define oil_type_s32 int32_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_u32">
+<a name="oil-type-u32"></a><h3>oil_type_u32</h3>
+<pre class="programlisting">#define oil_type_u32 uint32_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_s64">
+<a name="oil-type-s64"></a><h3>oil_type_s64</h3>
+<pre class="programlisting">#define oil_type_s64 int64_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_u64">
+<a name="oil-type-u64"></a><h3>oil_type_u64</h3>
+<pre class="programlisting">#define oil_type_u64 uint64_t
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_f32">
+<a name="oil-type-f32"></a><h3>oil_type_f32</h3>
+<pre class="programlisting">#define oil_type_f32 float
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_f64">
+<a name="oil-type-f64"></a><h3>oil_type_f64</h3>
+<pre class="programlisting">#define oil_type_f64 double
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_s8">
+<a name="oil-type-min-s8"></a><h3>oil_type_min_s8</h3>
+<pre class="programlisting">#define oil_type_min_s8 (-128)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_u8">
+<a name="oil-type-min-u8"></a><h3>oil_type_min_u8</h3>
+<pre class="programlisting">#define oil_type_min_u8 (0)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_s16">
+<a name="oil-type-min-s16"></a><h3>oil_type_min_s16</h3>
+<pre class="programlisting">#define oil_type_min_s16 (-32768)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_u16">
+<a name="oil-type-min-u16"></a><h3>oil_type_min_u16</h3>
+<pre class="programlisting">#define oil_type_min_u16 (0)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_s32">
+<a name="oil-type-min-s32"></a><h3>oil_type_min_s32</h3>
+<pre class="programlisting">#define oil_type_min_s32 (-2147483647 - 1)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_min_u32">
+<a name="oil-type-min-u32"></a><h3>oil_type_min_u32</h3>
+<pre class="programlisting">#define oil_type_min_u32 (0)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_s8">
+<a name="oil-type-max-s8"></a><h3>oil_type_max_s8</h3>
+<pre class="programlisting">#define oil_type_max_s8 (127)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_u8">
+<a name="oil-type-max-u8"></a><h3>oil_type_max_u8</h3>
+<pre class="programlisting">#define oil_type_max_u8 (255)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_s16">
+<a name="oil-type-max-s16"></a><h3>oil_type_max_s16</h3>
+<pre class="programlisting">#define oil_type_max_s16 (32767)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_u16">
+<a name="oil-type-max-u16"></a><h3>oil_type_max_u16</h3>
+<pre class="programlisting">#define oil_type_max_u16 (65535)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_s32">
+<a name="oil-type-max-s32"></a><h3>oil_type_max_s32</h3>
+<pre class="programlisting">#define oil_type_max_s32 (2147483647)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_type_max_u32">
+<a name="oil-type-max-u32"></a><h3>oil_type_max_u32</h3>
+<pre class="programlisting">#define oil_type_max_u32 (4294967295U)
+</pre>
+<p>
+Useful for autogenerated code.  Do not use otherwise.</p>
+<p>
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

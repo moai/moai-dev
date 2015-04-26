@@ -1,0 +1,405 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>OilTest</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="Liboil Reference Manual">
+<link rel="up" href="ch02.html" title="Liboil Unstable API">
+<link rel="prev" href="liboil-liboilrandom.html" title="Random Number Generation">
+<link rel="next" href="liboil-liboiltypes.html" title="liboiltypes">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Liboil Stable API">
+<link rel="chapter" href="ch02.html" title="Liboil Unstable API">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="liboil-liboilrandom.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Liboil Reference Manual</th>
+<td><a accesskey="n" href="liboil-liboiltypes.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#liboil-liboiltest.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#liboil-liboiltest.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="OilTest">
+<a name="liboil-liboiltest"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="liboil-liboiltest.top_of_page"></a>OilTest</span></h2>
+<p>OilTest — Test and profile function implementations.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="liboil-liboiltest.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+                    <a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a>;
+void                (<a class="link" href="liboil-liboiltest.html#OilTestFunction" title="OilTestFunction ()">*OilTestFunction</a>)                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);
+#define             <a class="link" href="liboil-liboiltest.html#OIL-TEST-HEADER--CAPS" title="OIL_TEST_HEADER">OIL_TEST_HEADER</a>
+#define             <a class="link" href="liboil-liboiltest.html#OIL-TEST-FOOTER--CAPS" title="OIL_TEST_FOOTER">OIL_TEST_FOOTER</a>
+<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *           <a class="link" href="liboil-liboiltest.html#oil-test-new" title="oil_test_new ()">oil_test_new</a>                        (<a class="link" href="liboil-liboilclass-unstable.html#OilFunctionClass" title="OilFunctionClass">OilFunctionClass</a> *klass);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-init" title="oil_test_init ()">oil_test_init</a>                       (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-free" title="oil_test_free ()">oil_test_free</a>                       (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-set-iterations" title="oil_test_set_iterations ()">oil_test_set_iterations</a>             (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         int iterations);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-check-ref" title="oil_test_check_ref ()">oil_test_check_ref</a>                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);
+int                 <a class="link" href="liboil-liboiltest.html#oil-test-check-impl" title="oil_test_check_impl ()">oil_test_check_impl</a>                 (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilimpl-unstable.html#OilFunctionImpl" title="OilFunctionImpl">OilFunctionImpl</a> *impl);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-cleanup" title="oil_test_cleanup ()">oil_test_cleanup</a>                    (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);
+void *              <a class="link" href="liboil-liboiltest.html#oil-test-get-source-data" title="oil_test_get_source_data ()">oil_test_get_source_data</a>            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> arg_type);
+int                 <a class="link" href="liboil-liboiltest.html#oil-test-get-value" title="oil_test_get_value ()">oil_test_get_value</a>                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> arg_type);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-set-test-footer" title="oil_test_set_test_footer ()">oil_test_set_test_footer</a>            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *p,
+                                                         int test_footer);
+void                <a class="link" href="liboil-liboiltest.html#oil-test-set-test-header" title="oil_test_set_test_header ()">oil_test_set_test_header</a>            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *p,
+                                                         int test_header);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="liboil-liboiltest.description"></a><h2>Description</h2>
+<p>
+</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="liboil-liboiltest.details"></a><h2>Details</h2>
+<div class="refsect2" title="OilTest">
+<a name="OilTest"></a><h3>OilTest</h3>
+<pre class="programlisting">typedef struct {
+} OilTest;
+</pre>
+<p>
+An opaque structure describing how to test an OilFunctionImpl
+for an OilFunctionClass.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="OilTestFunction ()">
+<a name="OilTestFunction"></a><h3>OilTestFunction ()</h3>
+<pre class="programlisting">void                (*OilTestFunction)                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);</pre>
+<p>
+Typedef for functions that initialize special values
+in source arrays for a particular function class.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the <em class="parameter"><code>OilTest</code></em> structure
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="OIL_TEST_HEADER">
+<a name="OIL-TEST-HEADER--CAPS"></a><h3>OIL_TEST_HEADER</h3>
+<pre class="programlisting">#define OIL_TEST_HEADER 256
+</pre>
+<p>
+Default number of bytes that are prepended to the array test area.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="OIL_TEST_FOOTER">
+<a name="OIL-TEST-FOOTER--CAPS"></a><h3>OIL_TEST_FOOTER</h3>
+<pre class="programlisting">#define OIL_TEST_FOOTER 256
+</pre>
+<p>
+Default number of bytes that are appended to the array test area.</p>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_new ()">
+<a name="oil-test-new"></a><h3>oil_test_new ()</h3>
+<pre class="programlisting"><a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *           oil_test_new                        (<a class="link" href="liboil-liboilclass-unstable.html#OilFunctionClass" title="OilFunctionClass">OilFunctionClass</a> *klass);</pre>
+<p>
+Creates a new OilTest for the OilFunctionClass represented by <em class="parameter"><code>klass</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>klass</code></em> :</span></p></td>
+<td> an OilFunctionClass
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the new OilTest
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_init ()">
+<a name="oil-test-init"></a><h3>oil_test_init ()</h3>
+<pre class="programlisting">void                oil_test_init                       (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);</pre>
+<p>
+Intializes <em class="parameter"><code>test</code></em>.
+</p>
+<p>
+FIXME: needs work</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_free ()">
+<a name="oil-test-free"></a><h3>oil_test_free ()</h3>
+<pre class="programlisting">void                oil_test_free                       (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);</pre>
+<p>
+Frees memory associated with <em class="parameter"><code>test</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_set_iterations ()">
+<a name="oil-test-set-iterations"></a><h3>oil_test_set_iterations ()</h3>
+<pre class="programlisting">void                oil_test_set_iterations             (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         int iterations);</pre>
+<p>
+Sets the number of iterations of <em class="parameter"><code>test</code></em> to <em class="parameter"><code>iterations</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iterations</code></em> :</span></p></td>
+<td> the number of iterations
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_check_ref ()">
+<a name="oil-test-check-ref"></a><h3>oil_test_check_ref ()</h3>
+<pre class="programlisting">void                oil_test_check_ref                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);</pre>
+<p>
+Runs the test specified by <em class="parameter"><code>test</code></em> on the reference function of the
+class being tested.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_check_impl ()">
+<a name="oil-test-check-impl"></a><h3>oil_test_check_impl ()</h3>
+<pre class="programlisting">int                 oil_test_check_impl                 (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilimpl-unstable.html#OilFunctionImpl" title="OilFunctionImpl">OilFunctionImpl</a> *impl);</pre>
+<p>
+Runs the testing procedure described by <em class="parameter"><code>test</code></em> on the implementation
+<em class="parameter"><code>impl</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>impl</code></em> :</span></p></td>
+<td> an OilFunctionImpl
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> 1 if <em class="parameter"><code>impl</code></em> passes the test, 0 if it fails
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_cleanup ()">
+<a name="oil-test-cleanup"></a><h3>oil_test_cleanup ()</h3>
+<pre class="programlisting">void                oil_test_cleanup                    (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test);</pre>
+<p>
+Cleans up <em class="parameter"><code>test</code></em>.
+</p>
+<p>
+FIXME: needs work</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_get_source_data ()">
+<a name="oil-test-get-source-data"></a><h3>oil_test_get_source_data ()</h3>
+<pre class="programlisting">void *              oil_test_get_source_data            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> arg_type);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg_type</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_get_value ()">
+<a name="oil-test-get-value"></a><h3>oil_test_get_value ()</h3>
+<pre class="programlisting">int                 oil_test_get_value                  (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboiltypes.html#OilArgType" title="enum OilArgType">OilArgType</a> arg_type);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg_type</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_set_test_footer ()">
+<a name="oil-test-set-test-footer"></a><h3>oil_test_set_test_footer ()</h3>
+<pre class="programlisting">void                oil_test_set_test_footer            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *p,
+                                                         int test_footer);</pre>
+<p>
+Sets the number of bytes of guard footer for <em class="parameter"><code>p</code></em> to <em class="parameter"><code>test_footer</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>p</code></em> :</span></p></td>
+<td> the OilParameter to change the footer for
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test_footer</code></em> :</span></p></td>
+<td> the number of bytes of guard footer
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="oil_test_set_test_header ()">
+<a name="oil-test-set-test-header"></a><h3>oil_test_set_test_header ()</h3>
+<pre class="programlisting">void                oil_test_set_test_header            (<a class="link" href="liboil-liboiltest.html#OilTest" title="OilTest">OilTest</a> *test,
+                                                         <a class="link" href="liboil-liboilparameter.html#OilParameter" title="OilParameter">OilParameter</a> *p,
+                                                         int test_header);</pre>
+<p>
+Sets the number of bytes of guard header for <em class="parameter"><code>p</code></em> to <em class="parameter"><code>test_header</code></em>.</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test</code></em> :</span></p></td>
+<td> the OilTest
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>p</code></em> :</span></p></td>
+<td> the OilParameter to change the header for
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>test_header</code></em> :</span></p></td>
+<td> the number of bytes of guard header
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

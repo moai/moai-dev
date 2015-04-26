@@ -1,0 +1,325 @@
+<!-- ##### SECTION Title ##### -->
+
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION oil_compare_u8 ##### -->
+<para>
+
+</para>
+
+@d_1: 
+@s1: 
+@s2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_copy_u8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_f32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_f64 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_s16 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_s32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_s8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_u16 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_u32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_permute_u8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src1: 
+@sstr1: 
+@src2: 
+@sstr2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_splat_u32 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_splat_u8 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_swab_u16 ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_swab_u32 ##### -->
+<para>
+
+</para>
+
+@d_n: 
+@s_n: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_tablelookup_u8 ##### -->
+<para>
+
+</para>
+
+@d: 
+@ds: 
+@s1: 
+@ss1: 
+@s2_256: 
+@ss2: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_testzero_u8 ##### -->
+<para>
+
+</para>
+
+@d_1: 
+@s: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_trans8x8_f64 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_trans8x8_u16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_trans8x8_u32 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_trans8x8_u8 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_unzigzag8x8_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_zigzag8x8_s16 ##### -->
+<para>
+
+</para>
+
+@d_8x8: 
+@ds: 
+@s_8x8: 
+@ss: 
+
+
+<!-- ##### FUNCTION oil_splat_u32_ns ##### -->
+<para>
+
+</para>
+
+@dest: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### FUNCTION oil_splat_u8_ns ##### -->
+<para>
+
+</para>
+
+@dest: 
+@s1_1: 
+@n: 
+
+
+<!-- ##### MACRO oil_trans8x8_s16 ##### -->
+<para>
+
+</para>
+
+@dest: 
+@dstr: 
+@src: 
+@sstr: 
+
+
+<!-- ##### MACRO oil_memcpy ##### -->
+<para>
+
+</para>
+
+@dest: 
+@src: 
+@n_bytes: 
+
+

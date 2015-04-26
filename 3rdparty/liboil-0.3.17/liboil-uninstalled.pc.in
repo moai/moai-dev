@@ -1,0 +1,10 @@
+prefix=
+exec_prefix=
+libdir=${pcfiledir}/liboil/
+includedir=${pcfiledir}/
+
+Name: liboil-@LIBOIL_MAJORMINOR@ uninstalled
+Description: Library of Optimized Inner Loops
+Version: @VERSION@
+Libs: -L${libdir} -loil-@LIBOIL_MAJORMINOR@ @LIBM@ @LIBRT@
+Cflags: -I${includedir} -I@srcdir@

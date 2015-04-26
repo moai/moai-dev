@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+>
+<refentry id="liboil-liboilfuncs-math8x8">
+<refmeta>
+<refentrytitle role="top_of_page" id="liboil-liboilfuncs-math8x8.top_of_page">Simple Arithmetic on Blocks</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBOIL Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Simple Arithmetic on Blocks</refname>
+<refpurpose>Aritmetic operations on 8x8 blocks</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="liboil-liboilfuncs-math8x8.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+<link linkend="void">void</link>                <link linkend="oil-mult8x8-s16">oil_mult8x8_s16</link>                     (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         <link linkend="int">int</link> ss1,
+                                                         <link linkend="int">int</link> ss2);
+<link linkend="void">void</link>                <link linkend="oil-sad8x8-f64">oil_sad8x8_f64</link>                      (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="double">double</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="double">double</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);
+<link linkend="void">void</link>                <link linkend="oil-sad8x8-s16">oil_sad8x8_s16</link>                      (<link linkend="uint32-t">uint32_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);
+<link linkend="void">void</link>                <link linkend="oil-sad8x8-f64-2">oil_sad8x8_f64_2</link>                    (<link linkend="double">double</link> *d_1,
+                                                         const <link linkend="double">double</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="double">double</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);
+<link linkend="void">void</link>                <link linkend="oil-sad8x8-s16-2">oil_sad8x8_s16_2</link>                    (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);
+<link linkend="void">void</link>                <link linkend="oil-sad8x8-u8">oil_sad8x8_u8</link>                       (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="liboil-liboilfuncs-math8x8.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="liboil-liboilfuncs-math8x8.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="oil-mult8x8-s16" role="function">
+<title>oil_mult8x8_s16 ()</title>
+<indexterm zone="oil-mult8x8-s16"><primary sortas="oil_mult8x8_s16">oil_mult8x8_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_mult8x8_s16                     (<link linkend="int16-t">int16_t</link> *d_8x8,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         <link linkend="int">int</link> ss1,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+Multiplies each element in <parameter>s1_8x8</parameter> and <parameter>s2_8x8</parameter> and places the result
+in <parameter>d_8x8</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sad8x8-f64" role="function">
+<title>oil_sad8x8_f64 ()</title>
+<indexterm zone="oil-sad8x8-f64"><primary sortas="oil_sad8x8_f64">oil_sad8x8_f64</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sad8x8_f64                      (<link linkend="double">double</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="double">double</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="double">double</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+FIXME: This function is broken and has been replaced by
+@<link linkend="oil-sad8x8-f64-2"><function>oil_sad8x8_f64_2()</function></link> because the destination of this function
+is an 8x8 block instead of a single value.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sad8x8-s16" role="function">
+<title>oil_sad8x8_s16 ()</title>
+<indexterm zone="oil-sad8x8-s16"><primary sortas="oil_sad8x8_s16">oil_sad8x8_s16</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sad8x8_s16                      (<link linkend="uint32-t">uint32_t</link> *d_8x8,
+                                                         <link linkend="int">int</link> ds,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+FIXME: This function is broken and has been replaced by
+@<link linkend="oil-sad8x8-s16-2"><function>oil_sad8x8_s16_2()</function></link> because the destination of this function
+is an 8x8 block instead of a single value.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ds</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sad8x8-f64-2" role="function">
+<title>oil_sad8x8_f64_2 ()</title>
+<indexterm zone="oil-sad8x8-f64-2"><primary sortas="oil_sad8x8_f64_2">oil_sad8x8_f64_2</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sad8x8_f64_2                    (<link linkend="double">double</link> *d_1,
+                                                         const <link linkend="double">double</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="double">double</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+Calculates the sum of absolute differences between elements in <parameter>s1_8x8</parameter>
+and <parameter>s2_8x8</parameter>, and places the result in <parameter>d_1</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sad8x8-s16-2" role="function">
+<title>oil_sad8x8_s16_2 ()</title>
+<indexterm zone="oil-sad8x8-s16-2"><primary sortas="oil_sad8x8_s16_2">oil_sad8x8_s16_2</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sad8x8_s16_2                    (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="int16-t">int16_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="int16-t">int16_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+Calculates the sum of absolute differences between elements in <parameter>s1_8x8</parameter>
+and <parameter>s2_8x8</parameter>, and places the result in <parameter>d_1</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="oil-sad8x8-u8" role="function">
+<title>oil_sad8x8_u8 ()</title>
+<indexterm zone="oil-sad8x8-u8"><primary sortas="oil_sad8x8_u8">oil_sad8x8_u8</primary></indexterm><programlisting><link linkend="void">void</link>                oil_sad8x8_u8                       (<link linkend="uint32-t">uint32_t</link> *d_1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s1_8x8,
+                                                         <link linkend="int">int</link> ss1,
+                                                         const <link linkend="uint8-t">uint8_t</link> *s2_8x8,
+                                                         <link linkend="int">int</link> ss2);</programlisting>
+<para>
+Calculates the sum of absolute differences between elements in <parameter>s1_8x8</parameter>
+and <parameter>s2_8x8</parameter>, and places the result in <parameter>d_1</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>d_1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s1_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>s2_8x8</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ss2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

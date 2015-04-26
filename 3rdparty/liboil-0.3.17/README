@@ -1,0 +1,83 @@
+
+***** WARNING *****
+
+Liboil is now in maintenence-only mode.  No new features will
+be added, and bugs will be fixed according to their severity and
+availablility of patches.
+
+Users of liboil are recommended to switch to Orc
+(http://code.entropywave.com/projects/orc/).  Please contact
+David Schleef <ds@schleef.org> about converting liboil functions
+to Orc code -- in many cases this work has already been done.
+
+***** WARNING *****
+
+
+Requirements
+============
+
+Liboil has no required dependecies (other than a decent C compiler
+and standard C library).  A few extra tests and examples are enabled
+if you have glib-2.0 installed, but these extras are neither required
+nor installed.
+
+Using GCC is strongly recommended, since the most interesting bits
+of liboil are written in GCC-style inline assembly.  GCC versions
+prior to 3.4 are not supported.
+
+
+Problems Compiling?
+===================
+
+Function implementations in liboil are designed to be modular, so
+if your compiler is having difficulty compiling a particular function,
+simply disable it and the corresponding OIL_DEFINE_IMPL() line.
+
+
+ABI warning
+===========
+
+Only a portion of the liboil API is ABI stable.  This portion is
+guaranteed to be stable through the 0.3.x series, and by using
+a compatibility library, through the 0.4.x series as well.  This
+policy is designed to provide almost all applications the necessary
+ABI stability for the symbols likely to be used in liboil.
+
+Any symbols declared by including <liboil/liboil.h> follow this
+ABI policy.  This includes all liboil function classes as well
+as a limited number of core functions, such as oil_init().
+
+Functions defined in other header files should not be used.
+
+
+ABI Implementation
+==================
+
+The liboil-0.3.x series create the shared library liboil-0.3.so.
+Applications that use liboil are linked against this library, and
+will load liboil-0.3.so at runtime.
+
+The liboil-0.4.x series will create two shared libraries,
+liboil-0.4.so and a compaitiblity library liboil-0.3.so that
+implements functionality removed in the 0.3->0.4 transition.
+The 0.3 shared library will be binary compatible with the
+liboil-0.3.x releases.  Thus, applictions compiled with a
+liboil-0.3.x release will continue to function after the shared
+library is upgraded to a 0.4.x release.  Applications compiled
+with 0.4.x will use liboil-0.4.so directly.
+
+Distributions can use this compatibility library in order to
+smooth transitions between liboil major releases.  For example,
+consider the case where AppA depends on libB and libC, and both
+libraries use liboil.  When liboil-0.4 is released, the distro
+can start using it immediately, and AppA will continue to work
+correctly.  Then, at a convenient time, libB and libC can
+independently be recompiled using liboil-0.4.x, and the packages
+will no longer depend on liboil-0.3.so.
+
+The traditional way of dealing with these changes is to migrate
+all packages to the new library as quickly as possible.  This is
+unduly cumbersome.
+
+
+
