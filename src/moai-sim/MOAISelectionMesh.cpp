@@ -24,9 +24,9 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 base		= state.GetValue < u32 >( 3, 0 );
-	u32 size		= state.GetValue < u32 >( 4, 0 );
+	u32 top			= state.GetValue < u32 >( 4, 0 );
 
-	self->AddSelection ( set, base, size );
+	self->AddSelection ( set, base, top );
 
 	return 0;
 }
@@ -72,8 +72,11 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAISelectionMesh::_reserveSets ( lua_State* L ) {
+int MOAISelectionMesh::_reserveSelections ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
+
+	u32 total = state.GetValue < u32 >( 2, 0 );
+	self->ReserveSelections ( total );
 
 	return 0;
 }
@@ -83,22 +86,25 @@ int MOAISelectionMesh::_reserveSets ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t size ) {
+void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 
-	size_t top = base + size;
+	if ( set >= this->mSets.Size ()) return;
 
 	MOAISelectionSpan* cursor = this->mSpanListHead;
 	
 	MOAISelectionSpan* prevInSet = 0;
 	MOAISelectionSpan* prevAdjacentInSet = 0;
+	MOAISelectionSpan* spanListTail = 0;
 	
 	for ( ; cursor && ( cursor->mTop < base ); cursor = cursor->mNext ) {
+	
+		spanListTail = cursor;
 	
 		if ( cursor->mSetID == set ) {
 		
 			prevInSet = cursor;
 		
-			if (( cursor->mTop + 1 ) == base ) {
+			if ( cursor->mTop == base ) {
 				prevAdjacentInSet = cursor;
 			}
 		}
@@ -110,40 +116,48 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t size ) {
 	
 		if ( prevAdjacentInSet ) {
 			cursor = prevAdjacentInSet;
+			prevAdjacentInSet = 0;
+		}
+		else if ( cursor->mBase == base ) {
+			this->ChangeSpanSet ( cursor, set );
 		}
 		
 		if ( cursor->mSetID == set ) {
-		
-			if ( cursor->mTop < top ) {
 			
-				cursor->mTop = top;
-				
+			if ( cursor->mTop <= top ) {
+			
 				MOAISelectionSpan* next = cursor->mNext;
 				
-				while ( next && ( next->mTop < top )) {
+				while ( next && ( next->mTop <= top )) {
 				
-					MOAISelectionSpan* kill = next;
-					next = next->mNext;
-					
-					this->mSpanPool.Free ( kill );
+					if ( cursor->mNextInSet == next ) {
+						cursor->mNextInSet = next->mNextInSet;
+					}
+					next = this->FreeSpanAndGetNext ( next );
+				}
+				
+				if ( next && ( next->mSetID == set ) && ( next->mBase <= top )) {
+					top = next->mTop;
+					cursor->mNextInSet = next->mNextInSet;
+					next = this->FreeSpanAndGetNext ( next );
 				}
 				
 				cursor->mNext = next;
+				cursor->mTop = top;
 				
 				if ( next ) {
-					next->mBase = top + 1;
+					next->mBase = top;
 				}
-				else {
-					this->mSpanListTail = cursor;
-				}
+//				else {
+//					this->mSpanListTail = cursor;
+//				}
 			}
 		}
 		else {
 		
-		
-			if ( cursor->mTop < top ) {
+			if ( cursor->mTop <= top ) {
 			
-				cursor->mTop = base - 1;
+				cursor->mTop = base;
 				MOAISelectionSpan* next = cursor->mNext;
 				
 				if ( next && ( next->mSetID == set )) {
@@ -163,17 +177,21 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t size ) {
 			else {
 			
 				// we need to split the span
-				cursor->mTop = base - 1;
 				span = this->AllocSpan ( set, base, top );
-				MOAISelectionSpan* cap = this->AllocSpan ( cursor->mSetID, top + 1, cursor->mTop );
+				MOAISelectionSpan* cap = this->AllocSpan ( cursor->mSetID, top, cursor->mTop );
 				
 				cap->mNext = cursor->mNext;
 				span->mNext = cap;
 				cursor->mNext = span;
 				
-				if ( this->mSpanListTail == cursor ) {
-					this->mSpanListTail = cap;
-				}
+				cap->mNextInSet = cursor->mNextInSet;
+				cursor->mNextInSet = cap;
+				
+				cursor->mTop = base;
+				
+//				if ( this->mSpanListTail == cursor ) {
+//					this->mSpanListTail = cap;
+//				}
 			}
 		}
 	}
@@ -184,27 +202,30 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t size ) {
 		}
 		else {
 	
-			MOAISelectionSpan* span = this->AllocSpan ( set, base, top );
+			span = this->AllocSpan ( set, base, top );
 			
-			if ( this->mSpanListTail ) {
-				this->mSpanListTail->mNext = span;
+			if ( spanListTail ) {
+				spanListTail->mNext = span;
 			}
 			else {
 				this->mSpanListHead = span;
 			}
-			this->mSpanListTail = span;
+			
+//			if ( this->mSpanListTail ) {
+//				this->mSpanListTail->mNext = span;
+//			}
+//			else {
+//				this->mSpanListHead = span;
+//			}
+//			this->mSpanListTail = span;
 		}
 	}
 	
 	// if there's a new span
 	if ( span ) {
-	
 		if ( prevInSet ) {
-		
 			span->mNextInSet = prevInSet->mNextInSet;
 			prevInSet->mNextInSet = span;
-		}
-		else {
 		}
 	}
 }
@@ -223,7 +244,44 @@ MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( u32 set, size_t base, size_t t
 	span->mNext = 0;
 	span->mNextInSet = 0;
 	
+	if ( !this->mSets [ set ]) {
+		this->mSets [ set ] = span;
+	}
 	return span;
+}
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, u32 set ) {
+
+	if ( span && span->mSetID != set ) {
+
+		if ( this->mSets [ span->mSetID ] == span ) {
+			this->mSets [ span->mSetID ] = span->mNextInSet;
+		}
+		
+		MOAISelectionSpan* firstInSet = this->mSets [ set ];
+		
+		if (( firstInSet && ( span->mBase <= firstInSet->mBase )) || !firstInSet ) {
+			span->mNextInSet = firstInSet;
+			this->mSets [ set ] = span;
+		}
+		
+		span->mSetID = set;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::Clear () {
+
+	MOAISelectionSpan* next = this->mSpanListHead;
+	while ( next ) {
+		next = FreeSpanAndGetNext ( next );
+	}
+	
+	this->mSets.Clear ();
+	
+	this->mSpanListHead = 0;
+	//this->mSpanListTail = 0;
 }
 
 //----------------------------------------------------------------//
@@ -278,13 +336,29 @@ void MOAISelectionMesh::ClearSelection ( u32 set ) {
 //}
 
 //----------------------------------------------------------------//
+MOAISelectionSpan* MOAISelectionMesh::FreeSpanAndGetNext ( MOAISelectionSpan* span ) {
+
+	MOAISelectionSpan* next = 0;
+
+	if ( span ) {
+	
+		if ( this->mSets [ span->mSetID ] == span ) {
+			this->mSets [ span->mSetID ] = span->mNextInSet;
+		}
+		
+		next = span->mNext;
+		this->mSpanPool.Free ( span );
+	}
+	return next;
+}
+
+//----------------------------------------------------------------//
 void MOAISelectionMesh::MergeSelections ( u32 set, u32 merge ) {
 }
 
 //----------------------------------------------------------------//
 MOAISelectionMesh::MOAISelectionMesh () :
-	mSpanListHead ( 0 ),
-	mSpanListTail ( 0 ) {
+	mSpanListHead ( 0 ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIMesh )
@@ -301,6 +375,22 @@ MOAISelectionMesh::~MOAISelectionMesh () {
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::PrintSelection ( u32 idx ) {
+
+	if ( idx < this->mSets.Size ()) {
+	
+		printf ( "set %d - ", idx );
+	
+		MOAISelectionSpan* span = this->mSets [ idx ];
+		for ( ; span; span = span->mNextInSet ) {
+		
+			printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
+			
+			if ( span->mNextInSet ) {
+				printf ( ", " );
+			}
+		}
+		printf ( "\n" );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -309,15 +399,13 @@ void MOAISelectionMesh::PrintSelections () {
 	MOAISelectionSpan* span = this->mSpanListHead;
 	for ( ; span; span = span->mNext ) {
 	
-		printf ( "%d:[%d-%d]", span->mSetID, span->mBase, span->mTop );
+		printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
 		
 		if ( span->mNext ) {
 			printf ( ", " );
 		}
-		else {
-			printf ( "\n" );
-		}
 	}
+	printf ( "\n" );
 }
 
 //----------------------------------------------------------------//
@@ -336,7 +424,7 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clearSelection",			_clearSelection },
 		{ "mergeSelections",		_mergeSelections },
 		{ "printSelection",			_printSelection },
-		{ "reserveSets",			_reserveSets },
+		{ "reserveSelections",		_reserveSelections },
 		{ NULL, NULL }
 	};
 	
@@ -344,7 +432,12 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ReserveSets () {
+void MOAISelectionMesh::ReserveSelections ( u32 total ) {
+
+	this->Clear ();
+
+	this->mSets.Init ( total );
+	this->mSets.Fill ( 0 );
 }
 
 //----------------------------------------------------------------//
