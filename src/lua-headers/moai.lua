@@ -508,6 +508,55 @@ MOAISim.extend (
 )
 
 --============================================================--
+-- MOAIScriptNode
+--============================================================--
+MOAIScriptNode.extend (
+	'MOAIScriptNode',
+
+	----------------------------------------------------------------
+	function ( interface, class, superInterface, superClass )
+		
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.connect ( self, srcField, node, dstField )
+			local attrSrc = self.__attrNames [ srcField ]
+			local attrDst = node.__attrNames [ dstField ]
+			if attrSrc and attrDst then
+				interface.setAttrLink ( self, attrSrc, node, attrDst )
+			end
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		local new = class.new
+		
+		function class.new ()
+			local self = new ()
+
+			self.__attrNames = {}
+			local ref = superInterface.getRefTable ( self )
+			local mem = superInterface.getMemberTable ( self )
+
+			ref.__newindex = function ( self, key, value )
+				if self.__attrNames [ key ] then
+					mem [ key ] = value
+					superInterface.scheduleUpdate ( self )
+				else
+					mem [ key ] = value
+				end
+			end
+
+			return self
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.setAttrName ( self, attrId, attrName )
+			superInterface.setAttrName ( self, attrId, attrName )
+			self.__attrNames [ attrName ] = attrId
+		end
+	end
+)
+
+--============================================================--
 -- MOAITextLabel
 --============================================================--
 MOAITextLabel.extend (
