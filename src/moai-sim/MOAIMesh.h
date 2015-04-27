@@ -45,7 +45,7 @@ public:
 class MOAIMesh :
 	public MOAIDeck,
 	public MOAIGfxResource {
-private:
+protected:
 
 	ZLLeanArray < u32 >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	u32										mCurrentVAO;
