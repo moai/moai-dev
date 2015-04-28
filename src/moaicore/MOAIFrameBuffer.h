@@ -80,6 +80,7 @@ protected:
 	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderTable				( lua_State* L );
 	static int		_setRenderTable				( lua_State* L );
+	static int		_getRenderCount				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			RenderTable					( MOAILuaState& state, int idx );
