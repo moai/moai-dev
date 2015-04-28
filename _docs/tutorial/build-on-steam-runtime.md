@@ -9,7 +9,7 @@ I used a fresh ubuntu 14.04 (might work with others)
 
 ```bash
  sudo apt-get install git
- git clone https://github.com/ValveSoftware/steam-runltime
+ git clone https://github.com/ValveSoftware/steam-runtime
  cd steam-runtime
  ./setup_chroot.sh --outputdir ~/steam-runtime-build --i386
 ```
