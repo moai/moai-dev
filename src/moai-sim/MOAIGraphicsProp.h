@@ -80,21 +80,28 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
-	static int		_getMaterialBatch	( lua_State* L );
-	static int		_getScissorRect		( lua_State* L );
-	static int		_isVisible			( lua_State* L );
-	static int		_setBillboard		( lua_State* L );
-	static int		_setBlendEquation	( lua_State* L );
-	static int		_setBlendMode		( lua_State* L );
-	static int		_setCullMode		( lua_State* L );
-	static int		_setDepthMask		( lua_State* L );
-	static int		_setDepthTest		( lua_State* L );
-	static int		_setLODLimits		( lua_State* L );
-	static int		_setMaterialBatch	( lua_State* L );
-	static int		_setParent			( lua_State* L );
-	static int		_setScissorRect		( lua_State* L );
-	static int		_setUVTransform		( lua_State* L );
-	static int		_setVisible			( lua_State* L );
+	static int		_getIndexBatchSize		( lua_State* L );
+	static int		_getMaterialBatch		( lua_State* L );
+	static int		_getScissorRect			( lua_State* L );
+	static int		_getShader				( lua_State* L );
+	static int		_getTexture				( lua_State* L );
+	static int		_isVisible				( lua_State* L );
+	static int		_reserveMaterials		( lua_State* L );
+	static int		_setBillboard			( lua_State* L );
+	static int		_setBlendEquation		( lua_State* L );
+	static int		_setBlendMode			( lua_State* L );
+	static int		_setCullMode			( lua_State* L );
+	static int		_setDepthMask			( lua_State* L );
+	static int		_setDepthTest			( lua_State* L );
+	static int		_setIndexBatchSize		( lua_State* L );
+	static int		_setLODLimits			( lua_State* L );
+	static int		_setMaterialBatch		( lua_State* L );
+	static int		_setParent				( lua_State* L );
+	static int		_setScissorRect			( lua_State* L );
+	static int		_setShader				( lua_State* L );
+	static int		_setTexture				( lua_State* L );
+	static int		_setUVTransform			( lua_State* L );
+	static int		_setVisible				( lua_State* L );
 
 protected:
 
@@ -173,20 +180,21 @@ public:
 	GET_SET ( u32, LODFlags, mLODFlags )
 
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void		Draw					( int subPrimID, float lod );
-	virtual void		DrawDebug				( int subPrimID, float lod );
-	bool				IsVisible				(); // just check the visibility flags
-	bool				IsVisible				( float lod ); // check the visibility flags *and* the LOD
-						MOAIGraphicsProp		();
-	virtual				~MOAIGraphicsProp		();
-	void				OnDepNodeUpdate			();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Render					();
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetVisible				( bool visible );
+	MOAIMaterialBatch*		AffirmMaterialBatch			();
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	virtual void			Draw						( int subPrimID, float lod );
+	virtual void			DrawDebug					( int subPrimID, float lod );
+	bool					IsVisible					(); // just check the visibility flags
+	bool					IsVisible					( float lod ); // check the visibility flags *and* the LOD
+							MOAIGraphicsProp			();
+	virtual					~MOAIGraphicsProp			();
+	void					OnDepNodeUpdate				();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
+	void					Render						();
+	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void					SetVisible					( bool visible );
 };
 
 #endif

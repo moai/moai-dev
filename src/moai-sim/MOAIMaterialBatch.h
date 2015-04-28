@@ -50,6 +50,8 @@ public:
 
 	static const u32 UNKNOWN = 0xffffffff;
 
+	GET_SET ( u32, IndexBatchSize, mIndexBatchSize )
+
 	DECL_LUA_FACTORY ( MOAIMaterialBatch )
 
 	//----------------------------------------------------------------//
@@ -68,7 +70,9 @@ public:
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetShader					( u32 idx, u32 shaderID );
 	void				SetShader					( u32 idx, MOAIShader* shader );
+	MOAIShader*			SetShader					( MOAILuaState& state, u32 idx );
 	void				SetTexture					( u32 idx, MOAIGfxState* texture );
+	MOAIGfxState*		SetTexture					( MOAILuaState& state, u32 idx );
 	size_t				Size						();
 };
 

@@ -40,6 +40,7 @@ int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 // TODO: doxygen
 int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+	state.Push ( self->RawGetShader ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 0;
 }
 
@@ -47,6 +48,7 @@ int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 // TODO
 int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+	state.Push ( self->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 0;
 }
 
@@ -54,6 +56,7 @@ int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 // TODO
 int MOAIMaterialBatch::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+	self->Reserve ( state.GetValue ( 2, 0 ));
 	return 0;
 }
 
@@ -69,25 +72,7 @@ int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
 // TODO: doxygen
 int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
-
-	u32 shaderIdx = 0;
-	u32 param = 2;
-	
-	if ( state.IsType ( param, LUA_TNUMBER )) {
-		shaderIdx = state.GetValue < u32 >( param++, 1 ) - 1;
-	}
-
-	MOAIShader* shader = 0;
-
-	if ( state.IsType ( param, LUA_TNUMBER )) {
-		shader = MOAIShaderMgr::Get ().GetShader ( state.GetValue < u32 >( param, MOAIShaderMgr::UNKNOWN_SHADER ));
-	}
-	else {
-		shader = state.GetLuaObject < MOAIShader >( 2, true );
-	}
-
-	self->SetShader ( shaderIdx, shader );
-	state.Push ( shader );
+	state.Push ( self->SetShader ( state, 2 ));
 	return 1;
 }
 
@@ -95,18 +80,7 @@ int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 // TODO: doxygen
 int MOAIMaterialBatch::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
-
-	u32 textureIdx = 0;
-	u32 param = 2;
-	
-	if ( state.IsType ( param, LUA_TNUMBER )) {
-		textureIdx = state.GetValue < u32 >( param++, 1 ) - 1;
-	}
-
-	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, param );
-	
-	self->SetTexture ( textureIdx, texture );
-	state.Push ( texture );
+	state.Push ( self->SetTexture ( state, 2 ));
 	return 1;
 }
 
@@ -187,6 +161,7 @@ void MOAIMaterialBatch::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIMaterialBatch::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getIndexBatchSize",		_getIndexBatchSize },
 		{ "getShader",				_getShader },
 		{ "getTexture",				_getTexture },
 		{ "reserve",				_reserve },
@@ -260,6 +235,27 @@ void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
+MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
+	
+	u32 shaderIdx = 0;
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		shaderIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
+	}
+
+	MOAIShader* shader = 0;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		shader = MOAIShaderMgr::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgr::UNKNOWN_SHADER ));
+	}
+	else {
+		shader = state.GetLuaObject < MOAIShader >( 2, true );
+	}
+	
+	this->SetShader ( shaderIdx, shader );
+	return shader;
+}
+
+//----------------------------------------------------------------//
 void MOAIMaterialBatch::SetTexture ( u32 idx, MOAIGfxState* texture ) {
 
 	this->mMaterials.Grow ( idx, 1 );
@@ -271,6 +267,19 @@ void MOAIMaterialBatch::SetTexture ( u32 idx, MOAIGfxState* texture ) {
 		this->LuaRelease ( material.mTexture );
 		material.mTexture  = texture;
 	}
+}
+
+//----------------------------------------------------------------//
+MOAIGfxState* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
+	
+	u32 txtureIdx = 0;
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		txtureIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
+	}
+
+	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, idx );
+	this->SetTexture ( txtureIdx, texture );
+	return texture;
 }
 
 //----------------------------------------------------------------//
