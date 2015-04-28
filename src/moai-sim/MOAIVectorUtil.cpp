@@ -189,7 +189,7 @@ u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer
 			idxBuffer.Write < u16 >(( u16 )idxStream.Read < u32 >( 0 ));
 		}
 	}
-	return totalIndices / 3;
+	return totalIndices;
 }
 
 //----------------------------------------------------------------//
