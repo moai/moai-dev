@@ -175,7 +175,7 @@ u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer
 	vtxBuffer.Reserve ( vtxStream.GetLength ());
 	vtxBuffer.WriteStream ( vtxStream );
 	
-	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 );
+	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 ); // stream is 32-bits, so divide by 4 to get total indices
 	
 	idxBuffer.Clear ();
 	idxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
@@ -189,7 +189,7 @@ u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer
 			idxBuffer.Write < u16 >(( u16 )idxStream.Read < u32 >( 0 ));
 		}
 	}
-	return totalIndices;
+	return totalIndices / 3;
 }
 
 //----------------------------------------------------------------//
