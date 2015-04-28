@@ -238,6 +238,13 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAIFrameBuffer::_getRenderCount( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
+	lua_pushnumber ( L, self->mRenderCounter );
+	return 1;
+}
+
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
@@ -317,6 +324,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getRenderTable",				_getRenderTable },
 		{ "grabNextFrame",				_grabNextFrame },
 		{ "setRenderTable",				_setRenderTable },
+		{ "getRenderCount",				_getRenderCount },
 		{ NULL, NULL }
 	};
 
