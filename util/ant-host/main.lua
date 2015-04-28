@@ -153,6 +153,7 @@ processConfigFile = function ( filename )
 				lib = lib and MOAIFileSystem.getAbsoluteDirectoryPath ( lib ),
 				bin = bin and MOAIFileSystem.getAbsoluteFilePath ( bin ),
 			}
+
 		end
 	end
 

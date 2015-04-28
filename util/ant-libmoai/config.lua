@@ -72,6 +72,27 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
+	AMAZON_MOBILE_ADS = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_AMAZON_MOBILE_ADS',
+		NAMESPACE = 'com.ziplinegames.moai',
+	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-amazon-mobile-ads.mk',
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/amazon-mobile-ads-5.5.102',
+			MOAI_SDK_HOME .. 'src/moai-android-amazon-mobile-ads',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-amazon-mobile-ads',
+	},
+
+	----------------------------------------------------------------
 	BOX2D = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_BOX2D',
@@ -502,6 +523,7 @@ STATIC_LINK_ORDER = {
 
 	-- integrations
 	'libmoai-adcolony',
+	'libmoai-amazon-mobile-ads',
 	'libmoai-chartboost',
 	'libmoai-crittercism',
 	'libmoai-facebook',

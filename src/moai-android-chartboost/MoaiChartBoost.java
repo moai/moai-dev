@@ -43,7 +43,7 @@ public class MoaiChartBoost extends ChartboostDelegate {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 	
-		MoaiLog.i ( "MoaiChartBoost: onCreate" );
+		MoaiLog.i ( "MoaiChartBoost: onCreate1234" );
 		sActivity = activity;
 	}
 
