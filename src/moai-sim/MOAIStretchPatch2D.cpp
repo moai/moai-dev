@@ -181,7 +181,7 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVe
 	
 	// TODO: make use of offset and scale
 	
-	materials.LoadGfxState ( idx - 1, MOAIShaderMgr::DECK2D_SHADER );
+	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );

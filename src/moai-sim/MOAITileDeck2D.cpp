@@ -242,7 +242,7 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 
 	idx = idx - 1;
 
-	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );

@@ -230,7 +230,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	materials.LoadGfxState ( idx, MOAIShaderMgr::MESH_SHADER );
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
 
 	// TODO: make use of offset and scale
 	

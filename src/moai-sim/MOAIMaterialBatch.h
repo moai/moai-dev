@@ -22,6 +22,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	void				LoadGfxState			( MOAIMaterial* fallback, u32 defaultShader );
 						MOAIMaterial			();
 	virtual				~MOAIMaterial			();
 };
@@ -56,10 +57,13 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Clear						();
-	void				LoadGfxState				( u32 idx, u32 defaultShader );
-	void				LoadGfxState				( u32 materialID, u32 deckIndex, u32 defaultShader );
+	MOAIMaterial*		GetMaterial					( u32 idx );
+	MOAIMaterial*		GetMaterial					( u32 materialID, u32 deckIndex );
+	void				LoadGfxState				( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader );
+	void				LoadGfxState				( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader );
 						MOAIMaterialBatch			();
 	virtual				~MOAIMaterialBatch			();
+	MOAIMaterial*		RawGetMaterial				( u32 idx );
 	MOAIShader*			RawGetShader				( u32 idx );
 	MOAIGfxState*		RawGetTexture				( u32 idx );
 	void				RawLoadGfxState				( u32 idx, u32 defaultShader );

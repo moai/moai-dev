@@ -15,6 +15,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMaterial::LoadGfxState ( MOAIMaterial* fallback, u32 defaultShader ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	MOAIShader* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	MOAIGfxState* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
+	
+	gfxDevice.SetShader ( shader );
+	
+	if ( texture ) {
+		gfxDevice.SetGfxState ( texture );
+	}
+	else {
+		gfxDevice.SetTexture ();
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIMaterial::MOAIMaterial () :
 	mShader ( 0 ),
 	mTexture ( 0 ) {
@@ -101,24 +119,41 @@ void MOAIMaterialBatch::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::LoadGfxState ( u32 idx, u32 defaultShader ) {
+MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 idx ) {
 
-	if (this->mMaterials.Size ())  {
-		idx = this->mIndexBatchSize > 0 ? ((( u32 )( idx / this->mIndexBatchSize )) % this->mMaterials.Size ()) : 0;
+	size_t totalMaterials = this->mMaterials.Size ();
+
+	if ( totalMaterials )  {
+		idx = this->mIndexBatchSize > 0 ? ((( u32 )( idx / this->mIndexBatchSize )) % totalMaterials ) : 0;
 	}
-
-	this->RawLoadGfxState ( idx, defaultShader );
+	return this->RawGetMaterial ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::LoadGfxState ( u32 materialID, u32 deckIndex, u32 defaultShader ) {
+MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 materialID, u32 deckIndex ) {
 
 	if ( materialID == UNKNOWN ) {
-		this->LoadGfxState ( deckIndex, defaultShader );
+		return this->GetMaterial ( deckIndex );
 	}
-	else {
-		this->RawLoadGfxState ( materialID, defaultShader );
-	}
+	return this->RawGetMaterial ( materialID );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader ) {
+
+	MOAIMaterial* primary = this->GetMaterial ( idx );
+	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( idx ) : 0;
+
+	primary->LoadGfxState ( secondary, defaultShader );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader ) {
+
+	MOAIMaterial* primary = this->GetMaterial ( materialID, deckIndex );
+	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( materialID, deckIndex ) : 0;
+
+	primary->LoadGfxState ( secondary, defaultShader );
 }
 
 //----------------------------------------------------------------//
@@ -132,6 +167,12 @@ MOAIMaterialBatch::MOAIMaterialBatch () :
 
 //----------------------------------------------------------------//
 MOAIMaterialBatch::~MOAIMaterialBatch () {
+}
+
+//----------------------------------------------------------------//
+MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( u32 idx ) {
+
+	return ( idx < this->mMaterials.Size ()) ? &this->mMaterials [ idx ] : 0;
 }
 
 //----------------------------------------------------------------//
@@ -204,7 +245,13 @@ void MOAIMaterialBatch::RawLoadGfxState ( u32 idx, u32 defaultShader ) {
 	shader = shader ? shader : MOAIShaderMgr::Get ().GetShader ( defaultShader );
 	
 	gfxDevice.SetShader ( shader );
-	gfxDevice.SetGfxState ( texture );
+	
+	if ( texture ) {
+		gfxDevice.SetGfxState ( texture );
+	}
+	else {
+		gfxDevice.SetTexture ();
+	}
 }
 
 //----------------------------------------------------------------//

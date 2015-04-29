@@ -120,7 +120,7 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( idx - 1, MOAIShaderMgr::LINE_SHADER );
+	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER );
 	
 	if ( this->mOnDraw ) {
 	
