@@ -18,7 +18,7 @@
 {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) { 
 		// If on the phone, the image picker is presented modally. Dismiss it.
-		[picker dismissModalViewControllerAnimated:YES]; 
+		[picker dismissViewControllerAnimated:YES completion:nil];
 	} else {
 		// If on the pad, the image picker is in the popover. Dismiss the popover. 
 		[popover dismissPopoverAnimated:YES];

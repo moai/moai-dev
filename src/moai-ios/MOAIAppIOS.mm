@@ -330,7 +330,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 
 	} else {
-		[rootVC presentModalViewController:ipc animated:YES];
+		[rootVC presentViewController:ipc animated:YES completion:nil];
 	}
 	
 	return 0;
