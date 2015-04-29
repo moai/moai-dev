@@ -243,11 +243,7 @@ void MOAIInputMgr::Record ( size_t size ) {
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
-}
 
-//----------------------------------------------------------------//
-void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
 	luaL_Reg regTable [] = {
 		{ "autoTimestamp",		_autoTimestamp },
 		{ "deferEvents",		_deferEvents },
@@ -260,6 +256,11 @@ void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
