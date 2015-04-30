@@ -23,14 +23,15 @@
 #elif defined( _WIN32 )
 	#define MOAI_OS_WINDOWS
 
-#elif defined( __linux )
+#elif defined( EMSCRIPTEN )
+	#define MOAI_OS_HTML
 
+#elif defined( __linux )
 	#ifdef ANDROID
 		#define MOAI_OS_ANDROID
 	#else
 		#define MOAI_OS_LINUX
 	#endif
-
 #else
 	#define MOAI_OS_UNKNOWN
 #endif
