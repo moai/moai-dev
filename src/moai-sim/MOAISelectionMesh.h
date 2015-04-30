@@ -33,7 +33,6 @@ protected:
 	ZLLeanArray < MOAISelectionSpan* >		mSets;
 	
 	MOAISelectionSpan*		mSpanListHead;
-	//MOAISelectionSpan*		mSpanListTail;
 
 	//----------------------------------------------------------------//
 	static int			_addSelection				( lua_State* L );
@@ -55,7 +54,7 @@ public:
 	//----------------------------------------------------------------//
 	void				AddSelection				( u32 set, size_t base, size_t top );
 	void				ClearSelection				( u32 set );
-	//void				DrawIndex					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	void				MergeSelections				( u32 set, u32 merge );
 						MOAISelectionMesh			();
 						~MOAISelectionMesh			();

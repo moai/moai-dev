@@ -233,11 +233,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
 
 	// TODO: make use of offset and scale
-	
-	//if ( !this->mVertexBuffer ) return;
-	
-	//const MOAIVertexFormat* format = this->mVertexBuffer->GetVertexFormat ();
-	//if ( !format ) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.Flush (); // TODO: should remove this call
@@ -249,7 +244,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		//gfxDevice.SetGfxState ( this->mTexture );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );

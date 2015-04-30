@@ -4,10 +4,10 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
-
 MOAISim.openWindow ( "test", 320, 480 )
+
+frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+frameBuffer:setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -15,6 +15,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
+layer:setPartitionCull2D ( false )
 MOAISim.pushRenderPass ( layer )
 
 camera = MOAICamera.new ()
@@ -120,8 +121,14 @@ local printSelections = function ()
 	print ()
 end
 
-mesh:reserveSelections ( 2 )
+mesh:reserveSelections ( 4 )
 
+mesh:addSelection ( 1, 1, 36 )
+mesh:addSelection ( 2, 37, 36 )
+mesh:addSelection ( 3, 73, 36 )
+mesh:addSelection ( 4, 109, 36 )
+
+--[[
 mesh:addSelection ( 1, 0, 500 )
 printSelections ()
 
@@ -143,9 +150,34 @@ printSelections ()
 mesh:addSelection ( 1, 200, 300 )
 mesh:addSelection ( 1, 700, 800 )
 printSelections ()
+]]--
 
-prop = MOAIProp.new ()
-prop:setDeck ( mesh )
+local function makeProp ( idx )
+
+	local prop = MOAIProp.new ()
+	prop:setDeck ( mesh )
+	prop:setIndex ( idx )
+	
+	prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS )
+
+	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+	layer:insertProp ( prop )
+
+	return prop
+end
+
+prop = makeProp ( 1 )
 prop:moveRot ( 360, 360, 0, 6 )
-prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-layer:insertProp ( prop )
+prop:seekColor ( 1, 0, 0, 1, 6 )
+
+prop = makeProp ( 2 )
+prop:moveRot ( 360, 0, 360, 6 )
+prop:seekColor ( 0, 1, 0, 1, 6 )
+
+prop = makeProp ( 3 )
+prop:moveRot ( 0, 360, 360, 6 )
+prop:seekColor ( 0, 0, 1, 1, 6 )
+
+prop = makeProp ( 4 )
+prop:moveRot ( 360, 360, 0, 6 )
+prop:seekColor ( 1, 1, 0, 1, 6 )

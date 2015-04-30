@@ -23,8 +23,8 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNNN" )
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 base		= state.GetValue < u32 >( 3, 0 );
-	u32 top			= state.GetValue < u32 >( 4, 0 );
+	u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
+	u32 top			= state.GetValue < u32 >( 4, 0 ) + base;
 
 	self->AddSelection ( set, base, top );
 
@@ -289,51 +289,63 @@ void MOAISelectionMesh::ClearSelection ( u32 set ) {
 }
 
 //----------------------------------------------------------------//
-//void MOAISelectionMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-//	UNUSED ( idx );
-//	UNUSED ( xOff );
-//	UNUSED ( yOff );
-//	UNUSED ( zOff );
-//	UNUSED ( xScl );
-//	UNUSED ( yScl );
-//	UNUSED ( zScl );
-//
-//	// TODO: make use of offset and scale
-//	
-//	//if ( !this->mVertexBuffer ) return;
-//	
-//	//const MOAIVertexFormat* format = this->mVertexBuffer->GetVertexFormat ();
-//	//if ( !format ) return;
-//
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//	gfxDevice.Flush (); // TODO: should remove this call
-//	MOAIGfxDevice::Get ().SetVertexFormat ();
-//
-//	this->FinishInit ();
-//
-//	if ( this->Bind ()) {
-//
-//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-//		gfxDevice.SetGfxState ( this->mTexture );
-//		
-//		gfxDevice.SetPenWidth ( this->mPenWidth );
-//		gfxDevice.SetPointSize ( this->mPointSize );
-//		
-//		gfxDevice.UpdateShaderGlobals ();
-//		
-//		// TODO: use gfxDevice to cache buffers
-//		if ( this->mIndexBuffer ) {
-//			if ( this->mIndexBuffer->Bind ()) {
-//				zglDrawElements ( this->mPrimType, this->mTotalElements, this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT, 0 );
-//			}
-//		}
-//		else {
-//			zglDrawArrays ( this->mPrimType, 0, this->mTotalElements );
-//		}
-//		this->Unbind ();
-//	}
-//}
+void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+	UNUSED ( offset );
+	UNUSED ( scale );
+	
+	size_t size = this->mSets.Size ();
+	if ( !size ) return;
+
+	idx = idx - 1;
+	u32 itemIdx = idx % size;
+	
+	MOAISelectionSpan* span = this->mSets [ itemIdx ];
+	if ( !span ) return;
+
+	materials.LoadGfxState ( idx, MOAIShaderMgr::MESH_SHADER );
+
+	// TODO: make use of offset and scale
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.Flush (); // TODO: should remove this call
+	MOAIGfxDevice::Get ().SetVertexFormat ();
+
+	this->FinishInit ();
+
+	if ( this->Bind ()) {
+
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		
+		gfxDevice.SetPenWidth ( this->mPenWidth );
+		gfxDevice.SetPointSize ( this->mPointSize );
+		
+		gfxDevice.UpdateShaderGlobals ();
+		
+		// TODO: use gfxDevice to cache buffers
+		if ( this->mIndexBuffer ) {
+			if ( this->mIndexBuffer->Bind ()) {
+			
+				for ( ; span; span = span->mNextInSet ) {
+					
+					zglDrawElements (
+						this->mPrimType,
+						span->mTop - span->mBase,
+						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
+						( const void* )span->mBase
+					);
+				}
+			}
+		}
+		else {
+		
+			for ( ; span; span = span->mNextInSet ) {
+				zglDrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
+			}
+		}
+		this->Unbind ();
+	}
+}
 
 //----------------------------------------------------------------//
 MOAISelectionSpan* MOAISelectionMesh::FreeSpanAndGetNext ( MOAISelectionSpan* span ) {
