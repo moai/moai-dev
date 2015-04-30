@@ -37,7 +37,7 @@ target_include_directories (moai-core PUBLIC
 )
 
 LINK_DIRECTORIES("${LUA_LIB_DIR}")
-target_link_libraries ( moai-core zlcore ${LUA_LIB})
+target_link_libraries ( moai-core zlcore ${LUA_LIB} jansson)
 add_dependencies ( moai-core liblua-static)
 
 set_target_properties(moai-core PROPERTIES FOLDER Core)

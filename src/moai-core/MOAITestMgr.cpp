@@ -326,17 +326,18 @@ void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout () {
-
+#ifndef _MSC_VER
 	struct sigaction sa;
 
 	memset ( &sa, 0, sizeof ( sa ));
 	sa.sa_handler = SIG_IGN;
 	sigaction ( SIGALRM, &sa, NULL );
+#endif
 }
 
 //----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout ( float seconds ) {
-
+#ifndef _MSC_VER
 	struct sigaction sa;
 
 	memset ( &sa, 0, sizeof ( sa ));
@@ -350,6 +351,7 @@ void MOAITestMgr::SetTimeout ( float seconds ) {
 	ival.it_value.tv_usec = ( int )( ZLFloat::Decimal ( seconds ) * 1000000.f );
 
 	setitimer ( ITIMER_REAL, &ival, 0 );
+#endif
 }
 
 //----------------------------------------------------------------//
