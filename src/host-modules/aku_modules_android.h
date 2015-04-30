@@ -11,6 +11,10 @@
 	#include <moai-android-adcolony/host.h>
 #endif
 
+#if AKU_WITH_ANDROID
+  #include <moai-android/host.h>
+#endif
+
 #if AKU_WITH_ANDROID_BILLING
 	#include <moai-android/host.h>
 #endif

@@ -110,6 +110,8 @@ copyhostfiles = function()
 
     MOAIFileSystem.copy(hostmodules, output..'/app/src/main/jni/host-modules')
 
+    MOAIFileSystem.copy(output..'/app/src/main/jni/host-modules/aku_plugins.cpp.in',output..'/app/src/main/jni/host-modules/aku_plugins.cpp')
+
     --don't want these ones
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios.h')
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios_config.h')
@@ -267,13 +269,13 @@ configureHost = function()
     --libroot
   util.replaceInFiles ({
 	  [ util.wrap(pairs, hostfiles) ]  = {
-      ['@PACKAGE@'] = 'com.getmoai.androidhost', --hardcoded, this package doesn't need to be unique per app anymore
+      ['package com.ziplinegames.moai'] = 'package com.getmoai.androidhost', --hardcoded, this package doesn't need to be unique per app anymore
       ['@WORKING_DIR@'] = 'bundle/assets'
     },
 		[ output .. 'gradle.properties' ] = {
-			[ 'moaiLibRoot=[^\n]+' ]= "moaiLibRoot=./lib",
-			[ 'moaiLuaRoot=[^\n]+' ]= "moaiLuaRoot="..luasrc,
-      [ 'moaiModules=[^\n]+' ]= "moaiModules="..modulestr
+			[ 'moaiLibRoot=[^\n]*' ]= "moaiLibRoot=./lib",
+			[ 'moaiLuaRoot=[^\n]*' ]= "moaiLuaRoot="..luasrc,
+      [ 'moaiModules=[^\n]*' ]= "moaiModules="..modulestr
 		},
     [ output .. 'app/build.gradle'] = {
       [ 'applicationId "[^"]+"']= 'applicationId "'..hostconfig['ApplicationId']..'"'
@@ -287,6 +289,9 @@ configureHost = function()
     [ output .. 'local.properties' ] = {
       [ 'sdk.dir=[^\n]+' ]= "sdk.dir="..sdkdir,
       [ 'ndk.dir=[^\n]+' ]= "ndk.dir="..ndkdir
+    },
+    [output..'app/src/main/jni/host-modules/aku_plugins.cpp'] = {
+      [ '@[^@]+@' ] = ""
     }
 	})
   
