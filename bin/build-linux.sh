@@ -18,6 +18,7 @@ fi
 mkdir -p $libprefix
 
 libprefix=$(cd $libprefix; pwd)
+cores=$(getconf _NPROCESSORS_ONLN)
 
 cd `dirname $0`/..
 
@@ -47,7 +48,7 @@ cmake \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
 $moai_root/cmake/hosts/host-linux-sdl
 
-cmake --build . --target install
+cmake --build . --target install -- -j$cores
 
 cp $libprefix/bin/moai $moai_root/util/moai
 

@@ -6,6 +6,13 @@ fi
 
 which cmake || (echo Could not find cmake ; exit 1)
 
+#get cores
+if [ "$OSTYPE" == "linux-gnu" ]; then
+  cores=$(getconf _NPROCESSORS_ONLN)
+else
+  cores=$(sysctl -n hw.logicalcpu_max)
+fi
+
 if [ x$1 == x ]; then
   libprefix=`dirname $0`/../lib/android
 else
@@ -14,7 +21,6 @@ fi
 
 mkdir -p $libprefix
 libprefix=$(cd $libprefix; pwd)
-
 
 
 cd `dirname $0`/..
@@ -56,6 +62,6 @@ do
   -DLIBRARY_OUTPUT_PATH_ROOT=./build-android-$ARCH/ \
   $moai_root/cmake || exit 1
 
-  cmake --build . --target install
+  cmake --build . --target install -- -j$cores
   echo Finished building $ARCH
 done
