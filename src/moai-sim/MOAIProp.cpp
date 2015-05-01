@@ -388,6 +388,26 @@ int MOAIProp::_setGridScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setHitGranularity
+	@text	Specify the granularity to use when performing a hit test. This is a hint to the implementation
+			as to how much processing to allocate to a given test. The default value is MOAIProp.HIT_TEST_COARSE,
+			which will cause only the deck or prop bounds to be used. A setting of MOAIProp.HIT_TEST_MEDIUM or
+			MOAIProp.HIT_TEST_FINE is implementation dependent on the deck, but 'medium' usually means to test
+			against the geometry of the deck and 'fine' means to test against both the geometry and the pixels
+			of the hit mask (if any).
+	
+	@in		MOAIProp self
+	@opt	int granularity		One of MOAIProp.HIT_TEST_COARSE, MOAIProp.HIT_TEST_MEDIUM, MOAIProp.HIT_TEST_FINE. Default is MOAIProp.HIT_TEST_COARSE.
+	@out	nil
+*/
+int MOAIProp::_setHitGranularity ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
@@ -659,6 +679,12 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 
 	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
+	
+	return this->InsideModelBounds ( vec, pad );
+}
+
+//----------------------------------------------------------------//
+bool MOAIProp::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
 
 	ZLBox bounds;
 
@@ -677,9 +703,7 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 		if ( pad != 0 ) bounds.Bless ();
 		passTrivial = bounds.Contains ( vec );
 	}
-	
-	// TODO: handle grids
-	return ( passTrivial && this->mDeck ) ? this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), vec, pad ) : passTrivial;
+	return passTrivial;
 }
 
 //----------------------------------------------------------------//
@@ -694,7 +718,8 @@ MOAIProp::MOAIProp () :
 	mFlags ( 0 ),
 	mIndex ( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
-	mBoundsPad ( 0.0f, 0.0f, 0.0f ) {
+	mBoundsPad ( 0.0f, 0.0f, 0.0f ),
+	mHitGranularity ( HIT_TEST_COARSE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -777,6 +802,10 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
 	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
+	
+	state.SetField ( -1, "HIT_TEST_COARSE",			( u32 )HIT_TEST_COARSE );
+	state.SetField ( -1, "HIT_TEST_MEDIUM",			( u32 )HIT_TEST_MEDIUM );
+	state.SetField ( -1, "HIT_TEST_FINE",			( u32 )HIT_TEST_FINE );
 }
 
 //----------------------------------------------------------------//
@@ -801,6 +830,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFlag",				_setFlag },
 		{ "setGrid",				_setGrid },
 		{ "setGridScale",			_setGridScale },
+		{ "setHitGranularity",		_setHitGranularity },
 		{ "setIndex",				_setIndex },
 		{ "setLayer",				_setLayer },
 		{ "setPartition",			_setPartition },

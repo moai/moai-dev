@@ -184,6 +184,7 @@ public:
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	virtual void			Draw						( int subPrimID, float lod );
 	virtual void			DrawDebug					( int subPrimID, float lod );
+	bool					Inside						( ZLVec3D vec, float pad );
 	bool					IsVisible					(); // just check the visibility flags
 	bool					IsVisible					( float lod ); // check the visibility flags *and* the LOD
 							MOAIGraphicsProp			();

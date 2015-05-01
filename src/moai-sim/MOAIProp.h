@@ -74,6 +74,7 @@ private:
 	static int			_setFlag					( lua_State* L ); // TODO: macro
 	static int			_setGrid					( lua_State* L );
 	static int			_setGridScale				( lua_State* L );
+	static int			_setHitGranularity			( lua_State* L );
 	static int			_setIndex					( lua_State* L );
 	static int			_setLayer					( lua_State* L );
 	static int			_setPartition				( lua_State* L );
@@ -95,6 +96,8 @@ protected:
 	ZLBox									mBoundsOverride;
 	ZLVec3D									mBoundsPad;
 
+	u32										mHitGranularity;
+
 	//----------------------------------------------------------------//
 	virtual u32			AffirmInterfaceMask			( MOAIPartition& partition ) = 0;
 	virtual u32			OnGetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
@@ -111,6 +114,12 @@ public:
 
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
 	static const int NO_SUBPRIM_ID		= 0xffffffff;
+	
+	enum {
+		HIT_TEST_COARSE,	// no hit test will be performed; only the prop's bounds will be used
+		HIT_TEST_MEDIUM,	// implementation dependent
+		HIT_TEST_FINE,		// implementation dependent
+	};
 	
 	enum {
 		BOUNDS_EMPTY,
@@ -150,6 +159,7 @@ public:
 	MOAIPartition*					GetPartitionTrait		();
 	bool							GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
 	virtual bool					Inside					( ZLVec3D vec, float pad );
+	bool							InsideModelBounds		( const ZLVec3D& vec, float pad );
 									MOAIProp				();
 	virtual							~MOAIProp				();
 	void							OnDepNodeUpdate			();

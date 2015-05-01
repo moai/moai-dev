@@ -272,10 +272,10 @@ ZLBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITileDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAITileDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//
@@ -286,7 +286,6 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 	this->mQuad.SetUVs ( -0.5f, -0.5f, 0.5f, 0.5f );
 }

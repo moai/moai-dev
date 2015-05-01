@@ -261,9 +261,9 @@ void MOAIGridDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIGridDeck2D::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
+MOAIMaterialBatch& MOAIGridDeck2D::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
 
-	return override ? override : ( this->mDeck ? this->mDeck->ResolveMaterialBatch ( override ) : this );
+	return override ? *override : ( this->mDeck ? this->mDeck->ResolveMaterialBatch ( override ) : *this );
 }
 
 //----------------------------------------------------------------//
