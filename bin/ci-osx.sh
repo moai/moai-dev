@@ -14,6 +14,8 @@ cd cmake-3.1.3-Darwin-x86_64/bin
 export PATH=$(pwd):$PATH
 popd
 
+echo "installing xcpretty"
+gem install xcpretty
 
 pushd `dirname $0`
 bash build-osx.sh
