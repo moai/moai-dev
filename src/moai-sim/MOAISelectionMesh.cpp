@@ -302,7 +302,7 @@ void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 	MOAISelectionSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;
 
-	materials.LoadGfxState ( idx, MOAIShaderMgr::MESH_SHADER );
+	materials.LoadGfxState ( 0, idx, MOAIShaderMgr::MESH_SHADER );
 
 	// TODO: make use of offset and scale
 
