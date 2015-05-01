@@ -85,19 +85,20 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 	//----------------------------------------------------------------//
 	public static void cacheInterstitial ( String location ) {
 		
-		MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial" );
-
 		if ( !adListener.AdLoaded () && !interstitial.isLoading ()) {
-			interstitial.loadAd ();
+			
+			boolean isLoading = interstitial.loadAd ();
+			MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial is loading: " + isLoading );
+
 		} else {
-			MoaiLog.i ( "MoaiAmazonMobileAds: interstitial still loading" );
+			MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial interstitial still loading" );
 		}
 	}
 
 	//----------------------------------------------------------------//
 	public static boolean hasCachedInterstitial ( String location ) {
 		
-		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial (loadingAd,interstitial.isLoading ()) " + adListener.AdLoaded () + interstitial.isLoading ());
+		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial AdLoaded :" + adListener.AdLoaded () + " interstitial.isLoading: " + interstitial.isLoading ());
 		return adListener.AdLoaded ();
 	}
 
@@ -114,18 +115,17 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 	//----------------------------------------------------------------//
 	public static void showInterstitial ( String location ) {
 				
-		MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial" );
 		
 		if ( adListener.AdLoaded () && !interstitial.isShowing ()) {
 			
-			interstitial.showAd ();
+			boolean showedAd = interstitial.showAd ();
 			adListener.AdLoaded ( false );
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad shown: " + showedAd );
 
 		} else {
-			MoaiLog.i ( "MoaiAmazonMobileAds: no cached ads" );
-			MoaiLog.i ( "MoaiAmazonMobileAds: loadingAd " + adListener.AdLoaded () );
-			MoaiLog.i ( "MoaiAmazonMobileAds: interstitial.isLoading () " + interstitial.isLoading () );
-			MoaiLog.i ( "MoaiAmazonMobileAds: interstitial.isShowing () " + interstitial.isShowing () );
+			
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial adListener.AdLoaded: " + adListener.AdLoaded () + " interstitial.isShowing: " + interstitial.isShowing ());
+
 		}
 	}
 }
