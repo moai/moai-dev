@@ -82,6 +82,7 @@ copyhostfiles = function()
     local hostmodules = MOAI_SDK_HOME..'src/host-modules'
     MOAIFileSystem.copy(sdlhost, output..'app/host-sdl')
     MOAIFileSystem.copy(hostmodules, output..'app/host-modules')
+    MOAIFileSystem.copy(output..'app/host-modules/aku_plugins.cpp.in',output..'app/host-modules/aku_plugins.cpp')
 
     --don't want these ones
     MOAIFileSystem.deleteFile(output..'app/host-modules/aku_modules_ios.h')
@@ -150,6 +151,9 @@ configureHost = function()
     },
     [ output..'bootstrap.lua'] = {
         ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
+    },
+    [output..'app/host-modules/aku_plugins.cpp'] = {
+      [ '@[^@]+@' ] = ""
     }
   })
 
