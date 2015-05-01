@@ -17,6 +17,9 @@ popd
 echo "installing xcpretty"
 gem install xcpretty
 
+#all success from here please
+set -e
+
 pushd `dirname $0`
 bash build-osx.sh
 echo OSX Lib Build Successful
@@ -28,18 +31,25 @@ echo IOS Lib Build Successful
 popd
 
 pushd `dirname $0`/..
-echo Creating and building android host
 sudo chmod a+x util/moai
 sudo chmod a+x util/moaiutil
 export MOAI_ROOT=$(pwd)
 popd
 
 pushd ~
+
+echo Creating test project
 mkdir testhost
 cd testhost
 cp -R $MOAI_ROOT/samples/hello-moai src/
 moaiutil host init
+
+echo Creating and building ios host
 moaiutil host build ios
+
+echo Creating and building osx host
+moaiutil host build osx
+
 popd
 
 
