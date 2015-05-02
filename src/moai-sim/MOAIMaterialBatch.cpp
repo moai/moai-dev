@@ -104,7 +104,7 @@ int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO
-int MOAIMaterialBatch::_reserve ( lua_State* L ) {
+int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->Reserve ( state.GetValue ( 2, 0 ));
 	return 0;
@@ -267,15 +267,13 @@ void MOAIMaterialBatch::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getIndexBatchSize",		_getIndexBatchSize },
 		{ "getShader",				_getShader },
 		{ "getTexture",				_getTexture },
-		{ "reserve",				_reserve },
-		{ "reserveTextures",		_reserve }, // back compat
+		{ "reserveMaterials",		_reserveMaterials },
 		{ "setHitMask",				_setHitMask },
 		{ "setHitMaskScalar",		_setHitMaskScalar },
 		{ "setHitMaskThreshold",	_setHitMaskThreshold },
 		{ "setIndexBatchSize",		_setIndexBatchSize },
 		{ "setShader",				_setShader },
 		{ "setTexture",				_setTexture },
-		{ "setTextureBatchSize",	_setIndexBatchSize }, // back compat
 		{ NULL, NULL }
 	};
 	

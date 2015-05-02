@@ -50,7 +50,7 @@ private:
 	static int			_getIndexBatchSize			( lua_State* L );
 	static int			_getShader					( lua_State* L );
 	static int			_getTexture					( lua_State* L );
-	static int			_reserve					( lua_State* L );
+	static int			_reserveMaterials			( lua_State* L );
 	static int			_setHitMask					( lua_State* L );
 	static int			_setHitMaskScalar			( lua_State* L );
 	static int			_setHitMaskThreshold		( lua_State* L );

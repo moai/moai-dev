@@ -237,6 +237,13 @@ int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIQuadBrush& MOAIGfxQuadDeck2D::AffirmQuad ( u32 idx ) {
+
+	this->mQuads.Grow ( idx, 1 );
+	return this->mQuads [ idx ];
+}
+
+//----------------------------------------------------------------//
 ZLBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 
 	ZLRect rect;

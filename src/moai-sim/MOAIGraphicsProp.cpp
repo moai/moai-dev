@@ -695,12 +695,12 @@ bool MOAIGraphicsProp::Inside ( ZLVec3D vec, float pad ) {
 	bool passTrivial = this->InsideModelBounds ( vec, pad );
 	
 	// TODO: handle grids
-	if ( passTrivial && this->mDeck ) {
+	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
 	
 		MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
 		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials, this->mHitGranularity, vec, pad );
 	}
-	return true;
+	return passTrivial;
 }
 
 //----------------------------------------------------------------//

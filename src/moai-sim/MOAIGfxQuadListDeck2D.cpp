@@ -115,6 +115,7 @@ int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
 	@in		number idx
 	@in		number uvQuadID
 	@in		number quadID
+	@opt	number materialID
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {

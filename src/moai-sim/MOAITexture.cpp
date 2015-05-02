@@ -104,21 +104,21 @@ void MOAITexture::Clear () {
 bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
 	u32 transform = MOAITexture::DEFAULT_TRANSFORM;
-	cc8* debugName = "";
+	cc8* debugName = 0;
 	int debugNameIdx = 1;
 	
 	if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
 		transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
 		debugNameIdx++;
 	}
-	debugName = state.GetValue < cc8* >( debugNameIdx, "" );
-		
+	debugName = state.GetValue < cc8* >( debugNameIdx, 0 );
+	
 	bool done = false;
 
 	if ( state.IsType ( idx, LUA_TSTRING )) {
 		cc8* filename = lua_tostring ( state, idx );
 		u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
-		this->Init ( filename, transform );
+		this->Init ( filename, transform, debugName ? debugName : filename );
 		done = true;
 	}
 	

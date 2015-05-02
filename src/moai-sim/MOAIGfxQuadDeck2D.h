@@ -33,8 +33,9 @@ private:
 	static int	_transformUV			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	ZLBox		ComputeMaxBounds		();
-	ZLBox		GetItemBounds			( u32 idx );
+	MOAIQuadBrush&		AffirmQuad				( u32 idx );
+	ZLBox				ComputeMaxBounds		();
+	ZLBox				GetItemBounds			( u32 idx );
 	
 public:
 	
