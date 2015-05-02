@@ -13,6 +13,11 @@ else
   cores=$(sysctl -n hw.logicalcpu_max)
 fi
 
+#override cores for ci
+if [ "$CI" == "true" ]; then
+  cores=2
+fi
+
 if [ x$1 == x ]; then
   libprefix=`dirname $0`/../lib/android
 else
