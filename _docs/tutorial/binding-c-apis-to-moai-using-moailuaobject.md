@@ -6,7 +6,7 @@ In this tutorial we'll cover techniques for binding instance objects (objects al
 
 For a discussion of how to add support for events and callback registration using setEvent () to instance and class objects and how to implement common objects such as nodes, props and decks see Advanced C++ Object Implementation using MOAILuaObject.
 
-For a discussion of how Moai's C++ to Lua binding works see [How Moai's C++ to Lua Binding Works](how-moai's-c-to-lua-binding-works.html).
+For a discussion of how Moai's C++ to Lua binding works see [How Moai's C++ to Lua Binding Works](../reference/how-moai's-c-to-lua-binding-works.html).
 
 How to Bind Instance Objects to Lua
 -----------------------------------

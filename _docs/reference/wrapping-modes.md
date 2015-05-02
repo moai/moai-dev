@@ -6,7 +6,7 @@ You can think about MOAIAnimCurve as a sample of a function. For any numerical i
 
 MOAIAnimCurve is best suited to representing a span of a function beginning at time (aka 'x0' or 't0') zero and continuing until some final time (aka 'x1' or 't1'). Since the typical use of curves is to drive animation of node attributes we usually think of them as sampling an animation signal from t0 to t1 where the resulting sample is stored in the anim curve starting at 0 and ending at t1-t0 (aka '<i>length</i>'). The length of a curve is set implicitly by the time value of its last sample.
 
-When we animate, a timer (see [anim-curve](anim-curve.html)) or anim (see [anim-driver](anim-driver.html)) provides the curve with an input going from 0 to t1-t0 which produces an output that matches the original sample curve (which itself was most likely created by an animation or animation tool).
+When we animate, a timer (see [anim-curve](samples/anim-curve.html)) or anim (see [anim-driver](samples/anim-driver.html)) provides the curve with an input going from 0 to t1-t0 which produces an output that matches the original sample curve (which itself was most likely created by an animation or animation tool).
 
 Of course, the timer providing input to the curve may be configured to emit a t value of less than 0 or greater that t1-t0. In this case, since the curve has only sampled t0 to t1 from the original function, what value should it return?
 

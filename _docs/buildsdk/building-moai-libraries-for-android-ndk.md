@@ -1,6 +1,7 @@
 ---
 title: "Building Moai Libraries For Android"
 order: 0
+out_of_date: true
 ---
 
 Building the Moai source code for Android requires the Android Native Development Kit (NDK), which can be downloaded [here](http://developer.android.com/sdk/ndk/index.html). If you're using Windows, you will also need to install Cygwin, which is required by the Android NDK. Android may abandon Cygwin for future releases of the NDK, but for now it is still required and can be downloaded [here](http://cygwin.com/install.html).
@@ -9,6 +10,6 @@ Unzip the contents of the NDK package to a location with no spaces in its path -
 
 Once the NDK and Cygwin are installed, you can run the 'build' script located in the ant/libmoai/ folder to build Moai for Android - no command-line parameters are required, but many are available to control optional components and the target environment. Once the build is complete (it takes a while), you should have a new Moai library in 'ant/libmoai/libs/armeabi' and/or 'ant/libmoai/libs/armeabi-v7a'.
 
-See [Building Moai Games For Android Devices](building-moai-games-for-android-devices.html) for details on creating and running a Moai Android host.
+See [Building Moai Games For Android Devices](../building/building-moai-games-for-android-devices.html) for details on creating and running a Moai Android host.
 
 NOTE: More details coming soon...

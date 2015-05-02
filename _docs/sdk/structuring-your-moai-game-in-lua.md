@@ -40,7 +40,7 @@ The job of the Scene Manager is to maintain lists of rigs and to perform batch o
 
 Of course, the Scene Manager could be further abstracted to a set of tables and some methods that perform batch operations on their contents. This would probably be a more Moai-like approach, but it's hard to walk away from the notion of a 'scene' even though that construct is often more semantic than practical. The things we typically think about a 'scene' doing (like moving batches of objects on and of screen or building a render stack) could just as easily be done in an ad hoc fashion by stateless methods in a library operating on lists.
 
-For an example of a scene manager, see [the WolfClicker state-manager](https://github.com/moai/moai-dev/blob/master/samples/tutorials/WolfClicker/modules/state-manager.lua).
+For an example of a scene manager, see [the WolfClicker state-manager](https://github.com/moai/moai-dev/blob/master/samples-legacy/tutorials/WolfClicker/modules/state-manager.lua).
 
 Paradigm Shift
 --------------

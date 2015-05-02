@@ -35,7 +35,7 @@ Each of the platforms has it own requirements other than cmake and are outlined 
 
 Plaform guides for building Moai Libraries:
 
-  * [Android](building-moai-libraries-for-android.html)
+  * [Android](building-moai-libraries-for-android-ndk.html)
   * iOS
   * Windows
   * Linux

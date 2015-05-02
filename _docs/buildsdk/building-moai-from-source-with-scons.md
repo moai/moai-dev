@@ -47,7 +47,7 @@ When the build completes, you will need to copy the moai\_x86\_32.exe, moai\_x86
 Running a Moai Native Client Host
 ---------------------------------
 
-See [Building Moai Games for Google Chrome](building-moai-games-for-google-chrome.html).
+See [Building Moai Games for Google Chrome](../building/building-moai-games-for-google-chrome.html).
 
 The basic workflow is:
 
