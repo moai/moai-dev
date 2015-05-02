@@ -14,6 +14,10 @@ end
 
 
 function findAndroidSdk()
+  
+  local fromenv = os.getenv("ANDROID_SDK_ROOT") or os.getenv("ANDROID_HOME") or os.getenv("ANDROID_SDK_HOME")
+  if fromenv then return fromenv end
+  
   local isWindows = MOAIEnvironment.osBrand == 'Windows'
   if isWindows then
     local appdata = os.getenv("LOCALAPPDATA")
@@ -31,7 +35,7 @@ function findAndroidSdk()
   
   if MOAIEnvironment.osBrand == "linux" then
     local home = os.getenv("HOME")
-    local sdkpath = home..""
+    local sdkpath = home.."/android-sdk-linux"
     if (home and MOAIFileSystem.checkPathExists(sdkpath)) then
       return sdkpath
     end
