@@ -17,16 +17,12 @@ import android.widget.Button;
 //================================================================//
 // MoaiAmazonMobileAds
 //================================================================//
-public class MoaiAmazonMobileAds extends DefaultAdListener {
-
-	public enum ListenerEvent {
-		INTERSTITIAL_LOAD_FAILED,
-		INTERSTITIAL_DISMISSED,
-    }
+public class MoaiAmazonMobileAds extends Activity {
 
 	private static Activity sActivity = null;
     private static InterstitialAd interstitial = null;
     private static MoaiAmazonMobileAdListener adListener = new MoaiAmazonMobileAdListener ();
+
 	protected static native void AKUInvokeListener ( int eventID );
 
 	//----------------------------------------------------------------//
@@ -43,49 +39,9 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onBackPressed ( Activity activity ) {
-		
-        MoaiLog.i ( "MoaiAmazonMobileAds: onBackPressed" );
-    }
-	
-	//----------------------------------------------------------------//
-	public static void onDestroy ( Activity activity ) {
- 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onDestroy" );
-	}
-
-	//----------------------------------------------------------------//
-	public static void onPause () {
- 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onPause" );
-	}
-
-	//----------------------------------------------------------------//
-	public static void onResume () {
- 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onResume" );
-	}
-		
-	//----------------------------------------------------------------//
-	public static void onStart () {
-		
-		MoaiLog.i ( "MoaiAmazonMobileAds: onStart" );
-	}
-	
-	//----------------------------------------------------------------//
-	public static void onStop () {
-
-		MoaiLog.i ( "MoaiAmazonMobileAds: onStop" );
-	}
-
-	//================================================================//
-	// ChartBoost JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
 	public static void cacheInterstitial ( String location ) {
 		
-		if ( !adListener.AdLoaded () && !interstitial.isLoading ()) {
+		if ( !adListener.adLoaded && !interstitial.isLoading ()) {
 			
 			boolean isLoading = interstitial.loadAd ();
 			MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial is loading: " + isLoading );
@@ -98,8 +54,8 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 	//----------------------------------------------------------------//
 	public static boolean hasCachedInterstitial ( String location ) {
 		
-		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial AdLoaded :" + adListener.AdLoaded () + " interstitial.isLoading: " + interstitial.isLoading ());
-		return adListener.AdLoaded ();
+		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial AdLoaded :" + adListener.adLoaded + " interstitial.isLoading: " + interstitial.isLoading ());
+		return adListener.adLoaded;
 	}
 
 	//----------------------------------------------------------------//
@@ -107,8 +63,6 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 		
 		MoaiLog.i ( "MoaiAmazonMobileAds: init" );
 
-		AdRegistration.enableLogging ( true );
-        AdRegistration.enableTesting ( true );
         AdRegistration.setAppKey ( appId );
 	}
 
@@ -116,15 +70,15 @@ public class MoaiAmazonMobileAds extends DefaultAdListener {
 	public static void showInterstitial ( String location ) {
 				
 		
-		if ( adListener.AdLoaded () && !interstitial.isShowing ()) {
+		if ( adListener.adLoaded && !interstitial.isShowing ()) {
 			
 			boolean showedAd = interstitial.showAd ();
-			adListener.AdLoaded ( false );
+			adListener.adLoaded = false;
 			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad shown: " + showedAd );
 
 		} else {
 			
-			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial adListener.AdLoaded: " + adListener.AdLoaded () + " interstitial.isShowing: " + interstitial.isShowing ());
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial adListener.AdLoaded: " + adListener.adLoaded + " interstitial.isShowing: " + interstitial.isShowing ());
 
 		}
 	}
@@ -140,15 +94,7 @@ class MoaiAmazonMobileAdListener extends DefaultAdListener {
      * This event is called once an ad loads successfully.
      */
 
-    private static boolean adLoaded = false;
-
-    public static boolean AdLoaded () {
-    	return adLoaded;
-    }
-
-	public static void AdLoaded ( boolean val ) {
-    	adLoaded = val;
-    }
+    public static boolean adLoaded = false;
 
     public void onAdLoaded ( final Ad ad, final AdProperties adProperties ) {
 
