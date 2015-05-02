@@ -5,7 +5,7 @@ title: "Using MOAIAnim"
 Problems with Attribute-Based Animation
 ---------------------------------------
 
-In the [anim-curve](anim-curve.html) sample we applied curve values by creating attribute links between node attributes. This is unworkable for a production game with a large number of animations for a couple of reasons.
+In the [anim-curve](samples/anim-curve.html) sample we applied curve values by creating attribute links between node attributes. This is unworkable for a production game with a large number of animations for a couple of reasons.
 
 First, it makes sharing anim curves (which can contain a lot of data) difficult. Since each link can only pull from a single source attribute, an anim curve can only be driven by one timer. This means that even though many attributes may be animated by the curve, they will all be synchronized.
 

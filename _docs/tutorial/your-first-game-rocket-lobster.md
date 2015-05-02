@@ -6,7 +6,7 @@ This tutorial will take you through the beginnings of implementing a small game 
 
 Enter: Rocket Lobster. The game consists of enemy missiles flying down from the top of the screen towards the player’s bases at the bottom. The player is tasked with shooting defensive missiles of their own up to stop the enemy missiles from reaching their lobster. Er, base.
 
-This tutorial assumes the reader has at least a basic understanding of Lua and programming. It is suggested you read [Moai SDK Basics Part One](moai-sdk-basics-part-one.html) and [Moai SDK Basics Part Two](moai-sdk-basics-part-two.html) to become more familiar with a few of the Moai classes used in this tutorial.
+This tutorial assumes the reader has at least a basic understanding of Lua and programming. It is suggested you read [Moai SDK Basics Part One](../basics/moai-sdk-basics-part-one.html) and [Moai SDK Basics Part Two](../basics/moai-sdk-basics-part-two.html) to become more familiar with a few of the Moai classes used in this tutorial.
 
 In order to run the tutorial, first download the [RocketLobster tutorial files](http://getmoai.com/images/getmoai/rocket_lobster/files%20for%20rocketlobster.zip). This will contain the all the image files, the font file, and the completed code (as well as a blank .lua file).
 
@@ -28,7 +28,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 ```
 
-More in depth information on viewports and layers can be found in the [Moai SDK Basics Part One](moai-sdk-basics-part-one.html) article.
+More in depth information on viewports and layers can be found in the [Moai SDK Basics Part One](../basics/moai-sdk-basics-part-one.html) article.
 
 Go ahead and run the program so far and you should get:
 

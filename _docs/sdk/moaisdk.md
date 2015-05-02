@@ -22,47 +22,42 @@ Moai SDK Reference Documentation
 --------------------------------
 
 -   [Moai SDK Framework Reference](http://getmoai.com/docs)
--   [Moai SDK Samples Guide](moai-sdk-samples-guide.html)
+-   [Moai SDK Samples Guide](../reference/moai-sdk-samples-guide.html)
 
-Release Notes
--------------
-
--   [Breaking Changes in Moai SDK 1.0](breaking-changes-in-moai-sdk-1-0.html)
 
 Building Moai Games
 -------------------
 
--   [Cross Platform Development With Moai](cross-platform-development-with-moai.html)
--   [Building Moai Games For Android Devices](building-moai-games-for-android-devices.html)
--   [Building Moai Games For iOS Devices](building-moai-games-for-ios-devices.html)
--   [Building Moai Games for Google Chrome](building-moai-games-for-google-chrome.html)
--   [Setup landscape in Moai Games For iOS Devices](setup-landscape-in-moai-games-for-ios-devices.html)
+-   [Cross Platform Development With Moai](../building/cross-platform-development-with-moai.html)
+-   [Building Moai Games For Android Devices](../building/building-moai-games-for-android-devices.html)
+-   [Building Moai Games For iOS Devices](../building/building-moai-games-for-ios-devices.html)
+-   [Building Moai Games for Google Chrome](../building/building-moai-games-for-google-chrome.html)
+-   [Setup landscape in Moai Games For iOS Devices](../building/setup-landscape-in-moai-games-for-ios-devices.html)
 
 Moai SDK Tutorials
 ------------------
 
--   [Your First Game : Rocket Lobster](your-first-game-rocket-lobster.html)
--   [Basic Prop Animations](basic-prop-animations.html)
--   [Textboxes](textboxes.html)
--   [Using ParticleHelper](using-particlehelper.html)
--   [Code snips](code-snips.html)
--   [Game Center and Moai Cloud](game-center-and-moai-cloud.html)
--   [Your First Cloud Game : Wolf Clicker](your-first-cloud-game-wolf-clicker.html)
--   [Binding C++ APIs to Moai using MOAILuaObject](binding-c-apis-to-moai-using-moailuaobject.html)
+-   [Your First Game : Rocket Lobster](../tutorial/your-first-game-rocket-lobster.html)
+-   [Basic Prop Animations](../tutorial/basic-prop-animations.html)
+-   [Textboxes](../tutorial/textboxes.html)
+-   [Using ParticleHelper](../tutorial/using-particlehelper.html)
+-   [Code snips](../reference/code-snips.html)
+-   [Your First Cloud Game : Wolf Clicker](../tutorial/your-first-cloud-game-wolf-clicker.html)
+-   [Binding C++ APIs to Moai using MOAILuaObject](../tutorial/binding-c-apis-to-moai-using-moailuaobject.html)
 
 Moai Box2D Tutorials
 --------------------
 
--   [Getting Started With Box2D](getting-started-with-box2d.html)
--   [Density, Friction And Restitution](density-friction-and-restitution.html)
+-   [Getting Started With Box2D](../tutorial/getting-started-with-box2d.html)
+-   [Density, Friction And Restitution](../tutorial/density-friction-and-restitution.html)
 
 Building The Moai SDK From Source
 ---------------------------------
 
--   [ Building Moai From Source With Visual Studio (Windows)](building-moai-from-source-with-visual-studio.html)
--   [ Building Moai From Source With Ant (Android)](building-moai-from-source-with-android-ndk.html)
--   [ Building Moai From Source With Xcode (Mac & iOS)](building-moai-from-source-with-xcode.html)
--   [ Building Moai From Source With Scons (Chrome)](building-moai-from-source-with-scons.html)
+-   [ Building Moai From Source With Visual Studio (Windows)](../buildsdk/building-moai-from-source-with-visual-studio.html)
+-   [ Building Moai From Source For Android](../buildsdk/building-moai-libraries-for-android-ndk.html)
+-   [ Building Moai From Source With Xcode (Mac & iOS)](../buildsdk/building-moai-from-source-with-xcode.html)
+-   [ Building Moai From Source With Scons (Chrome)](../buildsdk/building-moai-from-source-with-scons.html)
 
 Lua Resources
 -------------

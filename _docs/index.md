@@ -11,20 +11,14 @@ Documentation
 
 [Moai Technical White Paper](http://getmoai.com/wiki/docs/MoaiWhitepaper.pdf) - Read the white paper on Moai
 
-[Moai SDK](moaisdk.html) - getting started guides, documentation and samples for the Moai SDK.
+[Moai SDK](sdk/moaisdk.html) - getting started guides, documentation and samples for the Moai SDK.
 
-[ Moai Cloud](moaicloud.html) - develop and host cloud logic and data for your mobile game with the Moai Cloud.
-
-[ Moai Direct](moaidirect.html) - cloud-enable your existing game with Moai Direct services.
 
 Moai Basics Series
 ------------------
 
--   [Moai SDK Basics Part One](moai-sdk-basics-part-one.html)
--   [Moai SDK Basics Part Two](moai-sdk-basics-part-two.html)
--   [Moai Cloud Basics Part One](moai-cloud-basics-part-one.html)
--   [Moai Cloud Basics Part Two](moai-cloud-basics-part-two.html)
--   [Using MongoDB Databases With Moai Cloud](using-mongodb-databases-with-moai-cloud.html)
+-   [Moai SDK Basics Part One](basics/moai-sdk-basics-part-one.html)
+-   [Moai SDK Basics Part Two](basics/moai-sdk-basics-part-two.html)
 
 External/3rd-party tutorials and resources
 ------------------------------------------
