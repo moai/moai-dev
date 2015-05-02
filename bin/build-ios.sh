@@ -46,7 +46,7 @@ fi
 #our build command
 #ARCHS, SDK
 build () {
-  xcodebuild ONLY_ACTIVE_ARCH=NO ARCHS="$1" -project moai.xcodeproj -target install -configuration Release -target install -sdk $2 | pretty
+  xcodebuild IPHONEOS_DEPLOYMENT_TARGET="6.0"  ONLY_ACTIVE_ARCH=NO ARCHS="$1" -project moai.xcodeproj -configuration Release -target install -sdk $2 | pretty
 }
 
 
