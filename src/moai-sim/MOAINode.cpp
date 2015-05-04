@@ -389,6 +389,7 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 			srcNode.Activate ( *this );
 		}
 		else {
+		
 			MOAINodeMgr& depNodeMgr = MOAINodeMgr::Get ();
 			
 			if ( srcNode.IsNodeUpstream ( this ) && this->mState != STATE_UPDATING ) {
@@ -677,16 +678,21 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 //----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	if ( MOAINodeMgr::IsValid () ) {
+	MOAINodeMgr& nodeMgr = MOAINodeMgr::Get ();
 	
+	if ( nodeMgr.IsValid ()) {
+	
+		nodeMgr.mScheduled = true;
+		
 		if (( this->mState == STATE_IDLE ) || ( this->mState == STATE_ACTIVE )) {
 		
 			// add to the list if not already in it
 			if ( this->mState == STATE_IDLE ) {
+			
 				this->mState = STATE_SCHEDULED;
 
 				// push us at the end of the list
-				MOAINodeMgr::Get ().PushBack ( *this );
+				nodeMgr.PushBack ( *this );
 				
 				// activate source nodes
 				MOAIDepLink* link = this->mPullLinks;
@@ -694,8 +700,9 @@ void MOAINode::ScheduleUpdate () {
 					link->mSourceNode->Activate ( *this );
 				}
 			}
+			
 			this->mState = STATE_SCHEDULED;
-
+			
 			this->ExtendUpdate ();
 		}
 	}

@@ -66,7 +66,9 @@ void MOAINodeMgr::InsertBefore ( MOAINode& cursor, MOAINode& node ) {
 //----------------------------------------------------------------//
 MOAINodeMgr::MOAINodeMgr () :
 	mUpdateListHead ( 0 ),
-	mUpdateListTail ( 0 ) {
+	mUpdateListTail ( 0 ),
+	mScheduled ( false ),
+	mMaxIterations ( DEFAULT_MAX_ITERATIONS ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 }
@@ -156,12 +158,8 @@ void MOAINodeMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAINodeMgr::Reset () {
 	
 	// TODO: fix this up later
-	MOAINode* node = this->mUpdateListHead;
-	while ( node ) {
-		
-		MOAINode* temp = node;
-		node = node->mNext;
-		temp->mState = MOAINode::STATE_IDLE;
+	for ( MOAINode* node = this->mUpdateListHead; node; node = node->mNext ) {
+		node->mState = MOAINode::STATE_IDLE;
 	}
 	
 	this->mUpdateListHead = 0;
@@ -171,12 +169,17 @@ void MOAINodeMgr::Reset () {
 //----------------------------------------------------------------//
 void MOAINodeMgr::Update () {
 
-	//size_t count = 0;
+	for ( u32 iterations = 0; this->mScheduled && ( iterations < this->mMaxIterations ); ++iterations ) {
 
-	MOAINode* node = this->mUpdateListHead;
-	for ( ; node ; node = node->mNext ) {
-		//count++;
-		node->DepNodeUpdate ();
+		this->mScheduled = false;
+
+		MOAINode* node = this->mUpdateListHead;
+		for ( ; node ; node = node->mNext ) {
+			node->DepNodeUpdate ();
+		}
 	}
-	//printf ( "NODES UPDATED: %d\n", count );
+	
+	if ( !this->mScheduled ) {
+		this->Reset ();
+	}
 }
