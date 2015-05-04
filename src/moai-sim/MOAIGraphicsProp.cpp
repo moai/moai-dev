@@ -464,7 +464,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	MOAIMaterialBatch* materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
+	MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
 	
 	if ( this->mGrid ) {
 	
@@ -477,10 +477,10 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 		else {
 			c0 = c1 = grid.GetCellCoord ( subPrimID );
 		}
-		grid.Draw ( this->mDeck, this->mRemapper, *materials, c0, c1 );
+		grid.Draw ( this->mDeck, this->mRemapper, materials, c0, c1 );
 	}
 	else {
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), *materials );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials );
 	}
 }
 
@@ -684,6 +684,23 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	}
 	
 	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::Inside ( ZLVec3D vec, float pad ) {
+
+	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
+	worldToLocal.Transform ( vec );
+
+	bool passTrivial = this->InsideModelBounds ( vec, pad );
+	
+	// TODO: handle grids
+	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
+	
+		MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
+		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials, this->mHitGranularity, vec, pad );
+	}
+	return passTrivial;
 }
 
 //----------------------------------------------------------------//

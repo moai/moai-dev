@@ -65,7 +65,7 @@ public:
 							~MOAIGridDeck2D			();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	MOAIMaterialBatch*		ResolveMaterialBatch	( MOAIMaterialBatch* override );
+	MOAIMaterialBatch&		ResolveMaterialBatch	( MOAIMaterialBatch* override );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

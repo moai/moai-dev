@@ -38,76 +38,6 @@ int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setHitGranularity
-	@text	Specify the granularity to use when performing a hit test. This is a hint to the implementation
-			as to how much processing to allocate to a given test. The default value is MOAIDeck.HIT_TEST_COARSE,
-			which will cause only the deck or prop bounds to be used. A setting of MOAIDeck.HIT_TEST_MEDIUM or
-			MOAIDeck.HIT_TEST_FINE is implementation dependent on the deck, but 'medium' usually means to test
-			against the geometry of the deck and 'fine' means to test against both the geometry and the pixels
-			of the hit mask (if any).
-	
-	@opt	int granularity		One of MOAIDeck.HIT_TEST_COARSE, MOAIDeck.HIT_TEST_MEDIUM, MOAIDeck.HIT_TEST_FINE. Default is MOAIDeck.HIT_TEST_COARSE.
-	@out	nil
-*/
-int MOAIDeck::_setHitGranularity ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setHitMask
-	@text	Set or load an image to act as the hit mask for this deck.
-	
-	@in		MOAIDeck self
-	@in		variant mask		A MOAIImage or a path to an image file
-	@out	MOAIImage mask
-*/
-int MOAIDeck::_setHitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	MOAIImage* image = MOAIImage::AffirmImage ( state, 2 );
-	self->mHitMask.Set ( *self, image );
-
-	if ( image ) {
-		self->mHitMask->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_setHitMaskScalar ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	float rS	= state.GetValue < float>( 2, 1.0f );
-	float gS	= state.GetValue < float>( 3, 1.0f );
-	float bS	= state.GetValue < float>( 4, 1.0f );
-	float aS	= state.GetValue < float>( 5, 1.0f );
-
-	self->mHitColorScalar = ZLColor::PackRGBA ( rS, gS, bS, aS );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_setHitMaskThreshold ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	float rT	= state.GetValue < float>( 2, 0.0f );
-	float gT	= state.GetValue < float>( 3, 0.0f );
-	float bT	= state.GetValue < float>( 4, 0.0f );
-	float aT	= state.GetValue < float>( 5, 0.0f );
-
-	self->mHitColorThreshold = ZLColor::PackRGBA ( rT, gT, bT, aT );
-
-	return 0;
-}
-
 //================================================================//
 // MOAIDeck
 //================================================================//
@@ -193,8 +123,10 @@ void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
+	UNUSED ( materials );
+	UNUSED ( granularity );
 	UNUSED ( vec );
 	UNUSED ( pad );
 	
@@ -204,10 +136,7 @@ bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 
 //----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
-	mHitColorScalar ( 0xffffffff ),
-	mHitColorThreshold ( 0x00000000 ),
-	mBoundsDirty ( true ),
-	mHitGranularity ( HIT_TEST_COARSE ) {
+	mBoundsDirty ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIMaterialBatch )
@@ -226,10 +155,6 @@ MOAIDeck::~MOAIDeck () {
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIMaterialBatch::RegisterLuaClass ( state );
-
-	state.SetField ( -1, "HIT_TEST_COARSE",			HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",			HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",			HIT_TEST_FINE );
 }
 
 //----------------------------------------------------------------//
@@ -239,10 +164,6 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setBoundsDeck",			_setBoundsDeck },
-		{ "setHitGranularity",		_setHitGranularity },
-		{ "setHitMask",				_setHitMask },
-		{ "setHitMaskScalar",		_setHitMaskScalar },
-		{ "setHitMaskThreshold",	_setHitMaskThreshold },
 		{ NULL, NULL }
 	};
 
@@ -250,60 +171,13 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIDeck::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
+MOAIMaterialBatch& MOAIDeck::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
 
-	return override ? override : this;
+	return override ? *override : *this;
 }
 
 //----------------------------------------------------------------//
 void MOAIDeck::SetBoundsDirty () {
 
 	this->mBoundsDirty = true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::TestHit ( float x, float y ) {
-
-	static const ZLColorVec defaultHitColor ( 0.0f, 0.0f, 0.0f, 1.0f );
-
-	if ( this->mHitMask ) {
-	
-		float width = ( float )this->mHitMask->GetWidth ();
-		float height = ( float )this->mHitMask->GetHeight ();
-	
-		ZLColorVec scalar ( this->mHitColorScalar );
-		ZLColorVec threshold ( this->mHitColorThreshold );
-	
-		ZLColorVec maskColor ( this->mHitMask->GetColor (( u32 )( width * x ), ( u32 )( height * y ))); // TODO: wrap, clamp
-		
-		maskColor.Modulate ( scalar );
-		
-		return (
-			( threshold.mR <= maskColor.mR ) &&
-			( threshold.mG <= maskColor.mG ) &&
-			( threshold.mB <= maskColor.mB ) &&
-			( threshold.mA <= maskColor.mA )
-		);
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::TestHit ( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
-
-	u32 granularity = this->GetHitGranularity ();
-
-	if ( granularity == HIT_TEST_COARSE ) return true;
-
-	ZLVec2D uv;
-
-	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 0, x, y, uv)) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-	
-	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 1, x, y, uv)) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-
-	return false;
 }
