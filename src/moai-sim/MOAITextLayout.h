@@ -9,6 +9,8 @@
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
+class MOAIShader;
+
 //================================================================//
 // MOAITextSprite
 //================================================================//
@@ -22,6 +24,7 @@ private:
 	MOAIGlyph*				mGlyph;
 	MOAITextStyle*			mStyle;
 	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
+	MOAIShader*				mShader;
 	
 	u32			mIdx;		// index in original string
 	ZLVec2D		mPen;		// The pen x and y coordinates
@@ -112,7 +115,7 @@ public:
 	void				ClearHighlight			( u32 base, u32 top );
 	void				ClearHighlights			();
 	u32					CountSprites			();
-	void				Draw					( u32 reveal );
+	void				Draw					( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders );
 	void				DrawDebug				();
 	bool				GetBounds				( ZLRect& rect );
 	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
