@@ -36,6 +36,14 @@ int MOAILayer::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	state.Push (( MOAILuaObject* )self->mCamera );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getFitting
 	@text	Computes a camera fitting for a given world rect along with
 			an optional screen space padding. To do a fitting, compute
@@ -254,6 +262,14 @@ int	MOAILayer::_getSortScale ( lua_State* L ) {
 	lua_pushnumber ( state, self->mSortScale [ 3 ]);
 
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	state.Push (( MOAILuaObject* )self->mViewport );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -966,12 +982,14 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
+		{ "getCamera",				_getCamera },
 		{ "getFitting",				_getFitting },
 		{ "getFitting3D",			_getFitting3D },
 		{ "getPartition",			_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
+		{ "getViewport",			_getViewport },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setCamera",				_setCamera },
