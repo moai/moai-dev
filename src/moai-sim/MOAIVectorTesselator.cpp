@@ -970,6 +970,11 @@ int MOAIVectorTesselator::Tesselate () {
 				poly.Init ( n );
 				
 				memcpy ( poly.Data (), &verts [ b * 2 ], sizeof ( ZLVec2D ) * n );
+				
+				for ( int i = 0; i < poly.Size (); ++i ) {
+					this->mStyle.mDrawingToWorld.Transform ( poly [ i ]);
+				}
+
 				poly.Bless ();
 			}
 		}
