@@ -19,10 +19,19 @@ import android.widget.Button;
 //================================================================//
 public class MoaiAmazonMobileAds extends Activity {
 
-	private static Activity sActivity = null;
-    private static InterstitialAd interstitial = null;
-    private static MoaiAmazonMobileAdListener adListener = new MoaiAmazonMobileAdListener ();
+	public enum ListenerEvent {
+		INTERSTITIAL_LOAD_FAILED,
+		INTERSTITIAL_DISMISSED,
+    }
 
+    public static InterstitialAd adToLoad = null;
+    public static InterstitialAd adToShow = null;
+    public static InterstitialAd ad_1 = null;
+    public static InterstitialAd ad_2 = null;
+    public static boolean loadedAd_1 = false;
+    public static boolean loadedAd_2 = false;
+    private static MoaiAmazonMobileAdListener adListener = new MoaiAmazonMobileAdListener ();
+    private static AdTargetingOptions targetOptions;
 	protected static native void AKUInvokeListener ( int eventID );
 
 	//----------------------------------------------------------------//
@@ -33,18 +42,32 @@ public class MoaiAmazonMobileAds extends Activity {
 	public static void onCreate ( Activity activity ) {
 	
 		MoaiLog.i ( "MoaiAmazonMobileAds: onCreate" );
-		sActivity = activity;
-		interstitial = new InterstitialAd ( sActivity );
-        interstitial.setListener ( adListener );
+		ad_1 = new InterstitialAd ( activity );
+        ad_1.setListener ( adListener );
+        ad_1.setTimeout ( 5000 );
+
+		ad_2 = new InterstitialAd ( activity );
+        ad_2.setListener ( adListener );
+        ad_2.setTimeout ( 5000 );
+
+        adToLoad = ad_1;
+
+        targetOptions. enableGeoLocation ( true );
 	}
 
 	//----------------------------------------------------------------//
 	public static void cacheInterstitial ( String location ) {
 		
-		if ( !adListener.adLoaded && !interstitial.isLoading ()) {
+		if ( ( !loadedAd_1 || !loadedAd_2 ) && !adToLoad.isLoading ()) {
 			
-			boolean isLoading = interstitial.loadAd ();
+			boolean isLoading = adToLoad.loadAd ( targetOptions );
 			MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial is loading: " + isLoading );
+			if ( adToLoad == ad_1 ) { 
+				MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial ad_1" );
+			} else {
+
+				MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial ad_2" );
+			}
 
 		} else {
 			MoaiLog.i ( "MoaiAmazonMobileAds: cacheInterstitial interstitial still loading" );
@@ -54,8 +77,15 @@ public class MoaiAmazonMobileAds extends Activity {
 	//----------------------------------------------------------------//
 	public static boolean hasCachedInterstitial ( String location ) {
 		
-		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial AdLoaded :" + adListener.adLoaded + " interstitial.isLoading: " + interstitial.isLoading ());
-		return adListener.adLoaded;
+		MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2 + " adToLoad.isLoading: " + adToLoad.isLoading ());
+		if ( loadedAd_1 ) { 
+				MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial ad_1" );
+			} 
+		if ( loadedAd_2 ) { 
+
+				MoaiLog.i ( "MoaiAmazonMobileAds: hasCachedInterstitial ad_2" );
+			}
+		return loadedAd_1 || loadedAd_2;
 	}
 
 	//----------------------------------------------------------------//
@@ -64,59 +94,122 @@ public class MoaiAmazonMobileAds extends Activity {
 		MoaiLog.i ( "MoaiAmazonMobileAds: init" );
 
         AdRegistration.setAppKey ( appId );
+        AdRegistration.enableLogging ( true );
+        AdRegistration.enableTesting ( false );
 	}
 
 	//----------------------------------------------------------------//
-	public static void showInterstitial ( String location ) {
+	public static boolean showInterstitial ( String location ) {
 				
-		
-		if ( adListener.adLoaded && !interstitial.isShowing ()) {
-			
-			boolean showedAd = interstitial.showAd ();
-			adListener.adLoaded = false;
-			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad shown: " + showedAd );
+		if ( adToShow == null && ( loadedAd_1 || loadedAd_2 )) {
+
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial pushLoadedAdToShow adToShow == null loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2  );
+			pushLoadedAdToShow ();
+		}
+
+		if ( adToShow != null && !adToShow.isShowing ()) {
+
+			if ( adToShow == ad_1 ) {
+
+				MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad_1" );
+				loadedAd_1 = false;
+
+			} else {
+				
+				MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad_2" );
+				loadedAd_2 = false;
+			}
+
+			boolean showedAd = adToShow.showAd ();
+			adToShow = null;
+
+			if ( loadedAd_1 || loadedAd_2 ) {
+
+				MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial pushLoadedAdToShow next loaded loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2  );
+				pushLoadedAdToShow ();
+			}
+
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial ad shown: " + showedAd + "  loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2  );
+			return true;
 
 		} else {
 			
-			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial adListener.AdLoaded: " + adListener.adLoaded + " interstitial.isShowing: " + interstitial.isShowing ());
-
+			MoaiLog.i ( "MoaiAmazonMobileAds: showInterstitial loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2 + " adToShow.isShowing: " + adToShow.isShowing ());
+			return false;
 		}
+	}
+
+	public static void pushLoadedAdToShow () {
+
+		if ( adToShow == null || ( !adToShow.isShowing () && adToShow != adToLoad && !( loadedAd_1 || loadedAd_2 ))) {
+			
+			MoaiLog.i ( "MoaiAmazonMobileAds: pushLoadedAdToShow ad swap loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2  );
+			adToShow = adToLoad;
+
+			if ( adToLoad == ad_1 ) {
+				
+				adToLoad = ad_2;
+
+			} else {
+				
+				adToLoad = ad_1;
+			}
+
+			cacheInterstitial ( "" );
+		} else {
+
+			MoaiLog.i ( "MoaiAmazonMobileAds: pushLoadedAdToShow failed loadedAd_1: " + loadedAd_1 + " loadedAd_2: " + loadedAd_2 );
+		}
+
 	}
 }
 
-/**
- * This class is for an event listener that tracks ad lifecycle events.
- * It extends DefaultAdListener, so you can override only the methods that you need.
- * In this case, there is no need to override methods specific to expandable ads.
- */
 class MoaiAmazonMobileAdListener extends DefaultAdListener {
-    /**
-     * This event is called once an ad loads successfully.
-     */
 
-    public static boolean adLoaded = false;
+    public void onAdLoaded ( Ad ad, AdProperties adProperties ) {
 
-    public void onAdLoaded ( final Ad ad, final AdProperties adProperties ) {
+		if ( ad == MoaiAmazonMobileAds.ad_1 ) {
+			MoaiAmazonMobileAds.loadedAd_1 = true;
+		} else {
+			MoaiAmazonMobileAds.loadedAd_2 = true;
+		}
 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onAdLoaded" );
-		adLoaded = true;
+		MoaiLog.i ( "MoaiAmazonMobileAds: onAdLoaded loadedAd_1: " + MoaiAmazonMobileAds.loadedAd_1 + " loadedAd_2: " + MoaiAmazonMobileAds.loadedAd_2 );
+
+		MoaiAmazonMobileAds.pushLoadedAdToShow ();
     }
 
-    /**
-     * This event is called if an ad fails to load.
-     */
-    public void onAdFailedToLoad ( final Ad view, final AdError error ) {
+    public void onAdFailedToLoad ( Ad view, AdError error ) {
 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad:" );
-		adLoaded = false;
-    }
-    
-    /**
-     * This event is called when an interstitial ad has been dismissed by the user.
-     */
-    public void onAdDismissed ( final Ad ad ) {
+		if ( view == MoaiAmazonMobileAds.ad_1 ) {
+			MoaiAmazonMobileAds.loadedAd_1 = false;
+		} else {
+			MoaiAmazonMobileAds.loadedAd_2 = false;
+		}
 
-		MoaiLog.i ( "MoaiAmazonMobileAds: onAdDismissed" );
-		adLoaded = false;
+		MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad:" + error.getMessage () + "  loadedAd_1: " + MoaiAmazonMobileAds.loadedAd_1 + " loadedAd_2: " + MoaiAmazonMobileAds.loadedAd_2 );
+			
+		if ( error.getCode () == AdError.ErrorCode.NETWORK_ERROR ) {
+			MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad NETWORK_ERROR" );
+			MoaiAmazonMobileAds.cacheInterstitial ( "" );
+		}
+
+		if ( error.getCode () == AdError.ErrorCode.NETWORK_TIMEOUT ) {
+			MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad NETWORK_TIMEOUT" );
+			MoaiAmazonMobileAds.cacheInterstitial ( "" );
+		}
+
+		if ( error.getCode () == AdError.ErrorCode.NO_FILL ) {
+			MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad NO_FILL" );
+		}
+
+		if ( error.getCode () == AdError.ErrorCode.INTERNAL_ERROR ) {
+			MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad INTERNAL_ERROR" );
+			MoaiAmazonMobileAds.cacheInterstitial ( "" );
+		}
+
+		if ( error.getCode () == AdError.ErrorCode.REQUEST_ERROR ) {
+			MoaiLog.i ( "MoaiAmazonMobileAds: onAdFailedToLoad REQUEST_ERROR" );
+		}
     }
 }

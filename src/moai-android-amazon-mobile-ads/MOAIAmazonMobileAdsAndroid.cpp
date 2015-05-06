@@ -54,9 +54,9 @@ int MOAIAmazonMobileAdsAndroid::_showInterstitial ( lua_State* L ) {
 
 	MOAIJString jlocation = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
 
-	jmethodID showInterstitial = self->GetStaticMethod ( "showInterstitial", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( showInterstitial, ( jstring )jlocation );
-	return 0;
+	jmethodID showInterstitial = self->GetStaticMethod ( "showInterstitial", "(Ljava/lang/String;)Z" );
+	self->CallStaticBooleanMethod ( showInterstitial, ( jstring )jlocation );
+	return 1;
 }
 
 //================================================================//
