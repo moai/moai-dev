@@ -738,19 +738,14 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-	
-		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
-
-		if ( shader ) {
-			gfxDevice.SetShader ( shader );
-		}
-		else {
-			// TODO: this should really come from MOAIFont, which should really be a
-			// specialized implementation of MOAIDeck...
-			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
-		}
 		
-		this->mLayout.Draw ( this->mReveal );
+		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
+		bool useSpriteShaders = !shader;
+		
+		if ( useSpriteShaders ) {
+			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+		}
+		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
 	}
 }
 

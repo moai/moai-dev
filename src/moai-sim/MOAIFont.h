@@ -10,6 +10,7 @@
 class MOAIFontReader;
 class MOAIGlyph;
 class MOAIGlyphCache;
+class MOAIShader;
 class MOAITextureBase;
 class MOAITexture;
 
@@ -71,6 +72,7 @@ protected:
 	
 	MOAILuaSharedPtr < MOAIFontReader > mReader;
 	MOAILuaSharedPtr < MOAIGlyphCache > mCache;
+	MOAILuaSharedPtr < MOAIShader > mShader;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
@@ -98,6 +100,7 @@ protected:
 	static int			_setFlags				( lua_State* L );
 	static int			_setImage				( lua_State* L );
 	static int			_setReader				( lua_State* L );
+	static int			_setShader				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	#ifdef DOXYGEN
@@ -118,6 +121,8 @@ public:
 
 	GET ( int, MinFilter, mMinFilter );
 	GET ( int, MagFilter, mMagFilter );
+
+	GET ( MOAIShader*, Shader, mShader );
 
 	GET_SET ( float, DefaultSize, mDefaultSize );
 	

@@ -148,9 +148,6 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 				if ( next ) {
 					next->mBase = top;
 				}
-//				else {
-//					this->mSpanListTail = cursor;
-//				}
 			}
 		}
 		else {
@@ -188,10 +185,6 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 				cursor->mNextInSet = cap;
 				
 				cursor->mTop = base;
-				
-//				if ( this->mSpanListTail == cursor ) {
-//					this->mSpanListTail = cap;
-//				}
 			}
 		}
 	}
@@ -210,14 +203,6 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 			else {
 				this->mSpanListHead = span;
 			}
-			
-//			if ( this->mSpanListTail ) {
-//				this->mSpanListTail->mNext = span;
-//			}
-//			else {
-//				this->mSpanListHead = span;
-//			}
-//			this->mSpanListTail = span;
 		}
 	}
 	

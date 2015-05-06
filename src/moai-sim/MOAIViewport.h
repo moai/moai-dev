@@ -23,6 +23,8 @@ private:
 	float		mRotation;
 
 	//----------------------------------------------------------------//
+	static int		_getFrame		( lua_State* L );
+	static int		_getSize		( lua_State* L );
 	static int		_setOffset		( lua_State* L );
 	static int		_setRotation	( lua_State* L );
 	static int		_setScale		( lua_State* L );

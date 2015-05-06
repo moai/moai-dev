@@ -202,7 +202,7 @@ u32 MOAITextLayout::CountSprites () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Draw ( u32 reveal ) {
+void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders ) {
 	
 	if ( reveal ) {
 		
@@ -213,6 +213,12 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
+		
+		if ( !useSpriteShaders ) {
+			gfxDevice.SetShader ( defaultShader );
+		}
+
+		MOAIShader* currentShader = 0;
 
 		u32 size = this->mSprites.GetTop ();
 		for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
@@ -227,6 +233,15 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				blendColor.SetRGBA ( rgba0 );
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
+			}
+			
+			if ( useSpriteShaders ) {
+			
+				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
+				if ( spriteShader != currentShader ) {
+					gfxDevice.SetShader ( spriteShader );
+					currentShader = spriteShader;
+				}
 			}
 			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY, style->mPadding );
 		}
@@ -408,6 +423,7 @@ void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& styl
 	
 	textSprite.mRGBA		= style.mColor;
 	textSprite.mTexture		= style.mFont->GetGlyphTexture ( glyph );
+	textSprite.mShader		= style.mShader ? style.mShader : style.mFont->GetShader ();
 	textSprite.mMask		= 0;
 
 	this->mSprites.Push ( textSprite );
