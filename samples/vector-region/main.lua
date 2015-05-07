@@ -43,7 +43,7 @@ local totalElements = region:getTriangles ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-mesh:setIndexBuffer ( idxBuffer )
+mesh:setIndexBuffer ( idxBuffer, 2 )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 mesh:setTotalElements ( totalElements )

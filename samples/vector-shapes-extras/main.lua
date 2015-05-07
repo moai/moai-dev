@@ -107,7 +107,7 @@ local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-mesh:setIndexBuffer ( idxBuffer )
+mesh:setIndexBuffer ( idxBuffer, 2 )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( shader )
 mesh:setTotalElements ( totalElements )
