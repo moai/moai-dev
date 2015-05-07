@@ -71,6 +71,22 @@ int MOAIGfxBuffer::_countElements ( lua_State* L ) {
 		totalElements =  ( u32 )MOAIVertexFormat::CountElements ( length, offset, stride );
 	}
 	
+	// prim type, index size in bytes
+	else if ( state.CheckParams ( 2, "NN", false )) {
+	
+		u32  primType			= state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
+		u32  idxSizeInBytes		= state.GetValue < u32 >( 3, 4 );
+		
+		totalElements = self->GetSize () / idxSizeInBytes;
+		
+		if ( primType == ZGL_PRIM_LINES ) {
+			totalElements /= 2;
+		}
+		else if ( primType == ZGL_PRIM_TRIANGLES ) {
+			totalElements /= 3;
+		}
+	}
+	
 	// vertex format
 	else if ( state.CheckParams ( 2, "U", false )) {
 	

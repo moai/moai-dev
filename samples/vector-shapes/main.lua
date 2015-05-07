@@ -85,13 +85,12 @@ tess:pushPoly ()
 tess:finish ()
 ]]--
 
-tess:finish ()
-
 local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
 local vtxBuffer = MOAIGfxBuffer.new ()
 local idxBuffer = MOAIGfxBuffer.new ()
-local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
+
+local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
