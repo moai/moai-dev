@@ -97,13 +97,12 @@ tess:pushCombo ()
 	tess:pushPoly ( 25, -25, -25, -25, -25, 25, 25, 25 )
 tess:finish ()
 
-tess:finish ()
-
 -- yank a mesh out of the tess
 
 local vtxBuffer = MOAIGfxBuffer.new ()
 local idxBuffer = MOAIGfxBuffer.new ()
-local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
+
+local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )

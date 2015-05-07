@@ -39,7 +39,9 @@ public:
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
-	virtual int			Tesselate					( MOAIVectorTesselator& drawing );
+	
+	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator* tess );
+	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream* vertexStream, ZLStream* indexStream );
 };
 
 #endif

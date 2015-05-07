@@ -22,13 +22,12 @@ tess:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 tess:setCircleResolution ( 32 )
 
 tess:pushEllipse ( 0, 0, 100 )
-tess:finish ()
 
 local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
 local vtxBuffer = MOAIGfxBuffer.new ()
 local idxBuffer = MOAIGfxBuffer.new ()
-local totalElements = tess:getTriangles ( vtxBuffer, idxBuffer, 2 );
+local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2 );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
