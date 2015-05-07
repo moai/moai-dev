@@ -197,8 +197,7 @@ onGroup = function ( text, attributes, style )
 
 			local vtxBuffer = MOAIGfxBuffer.new ()
 			local idxBuffer = MOAIGfxBuffer.new ()
-
-			local totalElements = drawing:tesselate ( vtxBuffer, idxBuffer, 2 )
+			local totalElements = drawing:getTriangles ( vtxBuffer, idxBuffer, 2 );
 
 			local mesh = MOAIMesh.new ()
 			mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
