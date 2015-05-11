@@ -283,6 +283,11 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
+	
+		draw.DrawRectOutline ( this->mBounds );
+	}
+	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
 		
 		u32 totalLines = this->mLines.GetTop ();

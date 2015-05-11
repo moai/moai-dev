@@ -137,6 +137,7 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TEXT_BOX",								( u32 )TEXT_BOX );
 	state.SetField ( -1, "TEXT_BOX_BASELINES",						( u32 )TEXT_BOX_BASELINES );
 	state.SetField ( -1, "TEXT_BOX_LAYOUT",							( u32 )TEXT_BOX_LAYOUT );
+	state.SetField ( -1, "TEXT_BOX_LAYOUT_BOUNDS",					( u32 )TEXT_BOX_LAYOUT_BOUNDS );
 	state.SetField ( -1, "TEXT_BOX_GLYPHS",							( u32 )TEXT_BOX_GLYPHS );
 }
 

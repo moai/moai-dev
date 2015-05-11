@@ -93,7 +93,9 @@ void MOAITextDesignParser::AcceptToken () {
 //----------------------------------------------------------------//
 void MOAITextDesignParser::Align () {
 
-	ZLRect bounds = this->mLayout->mBounds;
+	//ZLRect bounds = this->mLayout->mBounds;
+	ZLRect bounds;
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
 	
@@ -140,6 +142,8 @@ void MOAITextDesignParser::Align () {
 	MOAIAnimCurve** curves = this->mDesigner->mCurves;
 	u32 totalCurves = this->mDesigner->mCurves.Size ();
 	
+	u32 spriteCount = 0;
+	
 	for ( u32 i = baseLine; i < totalLines; ++i ) {
 		
 		MOAITextLine& line = this->mLayout->mLines [ i ];
@@ -185,14 +189,25 @@ void MOAITextDesignParser::Align () {
 				MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
 				sprite.mPen.mX += xOff;
 				sprite.mPen.mY += curve ? yOff + curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : yOff;
+				
+				
+				ZLRect glyphRect = sprite.mGlyph->GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			
+				const ZLRect& padding = sprite.mStyle->mPadding;
+				glyphRect.mXMin += padding.mXMin;
+				glyphRect.mYMin += padding.mYMin;
+				glyphRect.mXMax += padding.mXMax;
+				glyphRect.mYMax += padding.mYMax;
+				
+				if ( spriteCount == 0 ) {
+					bounds = glyphRect;
+				}
+				else {
+					bounds.Grow ( glyphRect );
+				}
+				
+				spriteCount++;
 			}
-		}
-		
-		if ( i == 0 ) {
-			bounds = lineRect;
-		}
-		else {
-			bounds.Grow ( lineRect );
 		}
 	}
 	
