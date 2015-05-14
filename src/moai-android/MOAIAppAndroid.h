@@ -36,6 +36,7 @@ private:
 		APP_OPENED_FROM_URL,
 		BACK_BUTTON_PRESSED,
 		EVENT_PICTURE_TAKEN,
+        TOTAL,
 	};
 
 	//----------------------------------------------------------------//
