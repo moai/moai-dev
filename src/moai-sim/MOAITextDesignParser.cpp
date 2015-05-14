@@ -93,9 +93,10 @@ void MOAITextDesignParser::AcceptToken () {
 //----------------------------------------------------------------//
 void MOAITextDesignParser::Align () {
 
-	//ZLRect bounds = this->mLayout->mBounds;
-	ZLRect bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	ZLRect layoutBounds = this->mLayout->mLayoutBounds;
+	ZLRect glyphBounds;
+	
+	glyphBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
 	
@@ -200,14 +201,21 @@ void MOAITextDesignParser::Align () {
 				glyphRect.mYMax += padding.mYMax;
 				
 				if ( spriteCount == 0 ) {
-					bounds = glyphRect;
+					glyphBounds = glyphRect;
 				}
 				else {
-					bounds.Grow ( glyphRect );
+					glyphBounds.Grow ( glyphRect );
 				}
 				
 				spriteCount++;
 			}
+		}
+		
+		if ( i == 0 ) {
+			layoutBounds = lineRect;
+		}
+		else {
+			layoutBounds.Grow ( lineRect );
 		}
 	}
 	
@@ -265,7 +273,8 @@ void MOAITextDesignParser::Align () {
 		}
 	}
 	
-	this->mLayout->mBounds = bounds;
+	this->mLayout->mGlyphBounds		= glyphBounds;
+	this->mLayout->mLayoutBounds	= layoutBounds;
 }
 
 //----------------------------------------------------------------//

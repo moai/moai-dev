@@ -829,13 +829,13 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 				
 				// if there's no x-axis constraint, flip inside the glyph rect
 				if ( !this->mDesigner.GetLimitHeight ()) {
-					float xOffset = this->mLayout.mBounds.mXMin + this->mLayout.mBounds.mXMax;
+					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
 					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
 				}
 				
 				// if there's no y-axis constraint, flip inside the glyph rect
 				if ( !this->mDesigner.GetLimitHeight ()) {
-					float yOffset = this->mLayout.mBounds.mYMin + this->mLayout.mBounds.mYMax;
+					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
 					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
 				}
 				worldDrawingMtx.Prepend ( flip );

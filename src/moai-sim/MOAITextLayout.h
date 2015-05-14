@@ -88,7 +88,9 @@ private:
 	// that will be rendered for the current page.
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
-	ZLRect								mBounds;
+	
+	ZLRect								mGlyphBounds; // tight-fitting bounds including only actual glyphs
+	ZLRect								mLayoutBounds; // includes padding for font
 	
 	// calculated during alignment
 	// - the text is laid out in model space with the origin at the *center* of the text frame
