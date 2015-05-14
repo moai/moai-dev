@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-util/ZLFrustumFItter.h>
+#include <zl-util/ZLFrustumFitter.h>
 #include <zl-util/ZLDistance.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLMathConsts.h>
