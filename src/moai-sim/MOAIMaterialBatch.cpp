@@ -215,7 +215,19 @@ void MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 material
 	MOAIMaterial* primary = this->GetMaterial ( materialID, deckIndex );
 	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( materialID, deckIndex ) : 0;
 
-	primary->LoadGfxState ( secondary, defaultShader );
+	if ( primary ) {
+		primary->LoadGfxState ( secondary, defaultShader );
+	}
+	else if ( secondary ) {
+		secondary->LoadGfxState ( 0, defaultShader );
+	}
+	else {
+	
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+		gfxDevice.SetTexture ();
+		gfxDevice.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	}
 }
 
 //----------------------------------------------------------------//

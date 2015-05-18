@@ -20,6 +20,57 @@ void AKUSimAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSimContextInitialize () {
 
+	ZLPolygon2D poly;
+	poly.ReserveVertices ( 4 );
+	
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 100.0f, 0.0f );
+	poly.SetVert ( 2, 100.0f, 100.0f );
+	poly.SetVert ( 3, 0.0f, 100.0f );
+	poly.Bless ();
+
+	printf ( "%s\n", poly.GetInfoString ());
+	
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 0.0f, 100.0f );
+	poly.SetVert ( 2, 100.0f, 100.0f );
+	poly.SetVert ( 3, 100.0f, 0.0f );
+	poly.Bless ();
+	
+	printf ( "%s\n", poly.GetInfoString ());
+
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 100.0f, 0.0f );
+	poly.SetVert ( 2, 10.0f, 10.0f );
+	poly.SetVert ( 3, 0.0f, 100.0f );
+	poly.Bless ();
+	
+	printf ( "%s\n", poly.GetInfoString ());
+	
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 0.0f, 100.0f );
+	poly.SetVert ( 2, 10.0f, 10.0f );
+	poly.SetVert ( 3, 100.0f, 0.0f );
+	poly.Bless ();
+	
+	printf ( "%s\n", poly.GetInfoString ());
+	
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 100.0f, 0.0f );
+	poly.SetVert ( 2, 0.0f, 100.0f );
+	poly.SetVert ( 3, 100.0f, 100.0f );
+	poly.Bless ();
+	
+	printf ( "%s\n", poly.GetInfoString ());
+
+	poly.SetVert ( 0, 0.0f, 0.0f );
+	poly.SetVert ( 1, 100.0f, 100.0f );
+	poly.SetVert ( 2, 100.0f, 0.0f );
+	poly.SetVert ( 3, 0.0f, 100.0f );
+	poly.Bless ();
+	
+	printf ( "%s\n", poly.GetInfoString ());
+
 	ZLBitBuffer::Test ();
 
 	MOAINodeMgr::Affirm ();
@@ -47,6 +98,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
 	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
+	//REGISTER_LUA_CLASS ( MOAIBspBuilder2D )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )

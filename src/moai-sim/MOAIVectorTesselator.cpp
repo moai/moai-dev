@@ -939,25 +939,22 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 		const float* verts	= tessGetVertices ( tess.mTess );
 
 		// each elem is an edge loop
-		region->Init ( nelems );
+		region->ReservePolygons ( nelems );
 		
 		for ( int i = 0; i < nelems; ++i ) {
 		
-			ZLPolygon2D& poly = ( *region )[ i ];
+			ZLPolygon2D& poly = region->GetPolygon ( i );
 			
 			int b = elems [( i * 2 )];
 			int n = elems [( i * 2 ) + 1 ];
 			
-			poly.Init ( n );
-			
-			memcpy ( poly.Data (), &verts [ b * 2 ], sizeof ( ZLVec2D ) * n );
+			poly.SetVertices (( ZLVec2D* )&verts [ b * 2 ], n );
 			
 			// TODO: think this needs to move to inside MOAIVectorShape::Tesselate ()
-			for ( int i = 0; i < poly.Size (); ++i ) {
-				this->mStyle.mDrawingToWorld.Transform ( poly [ i ]);
-			}
-
+			poly.Transform ( this->mStyle.mDrawingToWorld );
 			poly.Bless ();
+			
+			printf ( "WINDING: %s\n", poly.GetInfoString ());
 		}
 		return nelems;
 	}

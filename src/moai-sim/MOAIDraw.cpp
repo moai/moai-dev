@@ -1015,9 +1015,6 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 	
 	gfxDevice.BeginPrim ( primType );
 
-	/*
-	See http://www.lua.org/manual/5.0/manual.html#3.11 for iterator explanation
-	*/
 	u32 counter = 0;
 	lua_pushnil ( L );
     while ( lua_next ( L, 1 ) != 0 ) {
@@ -1053,6 +1050,24 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 	gfxDevice.BeginPrim ();
 		gfxDevice.WriteVtx ( x, y, 0.0f );
 		gfxDevice.WriteFinalColor4b ();
+	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawPolyOutline ( const ZLPolygon2D& poly ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_LOOP );
+	
+	size_t size = poly.GetSize ();
+
+	gfxDevice.BeginPrim ();
+	for ( u32 i = 0; i < size; ++i ) {
+		const ZLVec2D& v0 = poly.GetVertex ( i );
+		gfxDevice.WriteVtx ( v0.mX, v0.mY, 0.0f );
+		gfxDevice.WriteFinalColor4b ();
+	}
 	gfxDevice.EndPrim ();
 }
 
