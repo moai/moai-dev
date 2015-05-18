@@ -19,6 +19,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_bless				( lua_State* L );
 	static int		_drawDebug			( lua_State* L );
+	static int		_getDistance		( lua_State* L );
 	static int		_getTriangles		( lua_State* L );
 	static int		_pointInside		( lua_State* L );
 	static int		_reservePolygons	( lua_State* L );
@@ -32,6 +33,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void					DrawDebug				() const;
+	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );
 	const ZLPolygon2D&		GetPolygon				( u32 idx ) const;
 	u32						GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytex ) const;

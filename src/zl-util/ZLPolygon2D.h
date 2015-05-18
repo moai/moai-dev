@@ -132,6 +132,58 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d, ZLMetaVec2D < TYPE >& p ) const {
+		UNUSED ( d );
+	
+		bool foundResult = false;
+		
+		size_t totalVerts = this->mVertices.Size ();
+		
+		for ( size_t i = 0; i < totalVerts; ++i ) {
+		
+			ZLMetaVec2D < TYPE >& e0 = this->mVertices [ i ];
+			ZLMetaVec2D < TYPE >& e1 = this->mVertices [( i + 1 ) % totalVerts ];
+		
+			// get the edge vector
+			ZLMetaVec2D < TYPE > n = ZLMetaVec2D < TYPE >::Sub ( e1, e0 );
+			
+			// distance of edges and point along edge
+			float edgeDist0		= n.Dot ( e0 );
+			float edgeDist1		= n.Dot ( e1 );
+			float edgeDist		= n.Dot ( point );
+			
+			ZLMetaVec2D < TYPE > candidateP;
+			
+			// if point lies inside edge
+			if (( edgeDist0 <= edgeDist ) && ( edgeDist <= edgeDist1 )) {
+				// snap the point onto the edge
+				
+				// edge normal
+				n.Rotate90Anticlockwise ();
+				n.NormSafe ();
+				
+				// snap
+				candidateP = ZLMetaVec2D < TYPE >::Add ( point, n, n.Dot ( e0 ) - n.Dot ( point ));
+			}
+			else {
+				// snap point to closest end point
+				candidateP = ( edgeDist < edgeDist0 ) ? e0 : e1;
+			}
+			
+			float candidateD = candidateP.Dist ( point );
+			
+			if (( !foundResult ) || ( candidateD < d )) {
+			
+				d = candidateD;
+				p = candidateP;
+				
+				foundResult = true;
+			}
+		}
+		return foundResult;
+	}
+	
+	//----------------------------------------------------------------//
 	cc8* GetInfoString () const {
 	
 		return ZLMetaPolygon2D < TYPE >::GetInfoString ( this->mInfo );

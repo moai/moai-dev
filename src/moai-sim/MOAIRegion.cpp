@@ -36,6 +36,28 @@ int MOAIRegion::_drawDebug ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_getDistance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	ZLVec2D point = state.GetValue < ZLVec2D >( 2, ZLVec2D ( 0.0f, 0.0f ));
+
+	float d;
+	ZLVec2D p;
+	
+	if ( self->GetDistance ( point, d, p )) {
+	
+		state.Push ( d );
+		state.Push ( p.mX );
+		state.Push ( p.mY );
+		
+		return 3;
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
@@ -173,6 +195,30 @@ void MOAIRegion::DrawDebug () const {
 }
 
 //----------------------------------------------------------------//
+bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) const {
+
+	bool foundResult = false;
+
+	for ( size_t i = 0; i < this->mPolygons.Size (); ++i ) {
+	
+		ZLPolygon2D& poly = this->mPolygons [ i ];
+		
+		float		candidateD;
+		ZLVec2D		candidateP;
+		
+		if ( poly.GetDistance ( point, candidateD, candidateP )) {
+		
+			if (( !foundResult ) || ( candidateD < d )) {
+				d = candidateD;
+				p = candidateP;
+				foundResult = true;
+			}
+		}
+	}
+	return foundResult;
+}
+
+//----------------------------------------------------------------//
 ZLPolygon2D& MOAIRegion::GetPolygon ( u32 idx ) {
 
 	return this->mPolygons [ idx ];
@@ -239,6 +285,7 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "bless",				_bless },
 		{ "drawDebug",			_drawDebug },
+		{ "getDistance",		_getDistance },
 		{ "getTriangles",		_getTriangles },
 		{ "pointInside",		_pointInside },
 		{ "reservePolygons",	_reservePolygons },
