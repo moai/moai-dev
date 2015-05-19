@@ -459,6 +459,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 
 	if ( !this->IsVisible ( lod )) return;
 	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
 
 	this->LoadGfxState ();
 	this->LoadVertexTransform ();
