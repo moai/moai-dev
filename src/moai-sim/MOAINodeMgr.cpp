@@ -14,8 +14,15 @@
 // TODO: doxygen
 int MOAINodeMgr::_reset ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAINodeMgr, "" )
-	
 	self->Reset ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAINodeMgr::_setMaxIterations ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAINodeMgr, "" )
+	self->mMaxIterations = state.GetValue < u32 >( 2, DEFAULT_MAX_ITERATIONS );
 	return 0;
 }
 
@@ -23,7 +30,6 @@ int MOAINodeMgr::_reset ( lua_State* L ) {
 // TODO: doxygen
 int MOAINodeMgr::_update ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAINodeMgr, "" )
-	
 	self->Update ();
 	return 0;
 }
@@ -142,6 +148,7 @@ void MOAINodeMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
+		{ "setMaxIterations",		_setMaxIterations },
 		{ "update",					_update },
 		{ NULL, NULL }
 	};

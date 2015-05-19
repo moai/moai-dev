@@ -39,6 +39,8 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAINodeMgr )
 
+	GET_SET ( u32, MaxIterations, mMaxIterations )
+
 	//----------------------------------------------------------------//
 	void			Reset				();
 					MOAINodeMgr			();
