@@ -1063,6 +1063,10 @@
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
+		CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
+		CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
+		CD0BB6411B0D22B900399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
 		CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD14013F1A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */; };
@@ -6264,6 +6268,8 @@
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaUtil.cpp; sourceTree = "<group>"; };
+		CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaUtil.h; sourceTree = "<group>"; };
 		CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIInputMgr.cpp; sourceTree = "<group>"; };
 		CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputMgr.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
@@ -9225,6 +9231,8 @@
 				89BE6CCF1739A42500DFE837 /* MOAIFileSystem.h */,
 				89BE6CD21739A42500DFE837 /* MOAIJsonParser.cpp */,
 				89BE6CD31739A42500DFE837 /* MOAIJsonParser.h */,
+				CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */,
+				CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */,
 				89BE6CD41739A42500DFE837 /* MOAIMath.cpp */,
 				89BE6CD51739A42500DFE837 /* MOAIMath.h */,
 				89BE6CD81739A42500DFE837 /* MOAIMutex.cpp */,
@@ -13034,6 +13042,7 @@
 				89BE6D3B1739A42500DFE837 /* MOAIStreamReader.h in Headers */,
 				89BE6D3F1739A42500DFE837 /* MOAIStreamWriter.h in Headers */,
 				CDADCCFB1A3576A10029FEDA /* MOAITrace.h in Headers */,
+				CD0BB6411B0D22B900399FCB /* MOAILuaUtil.h in Headers */,
 				89BE6D431739A42500DFE837 /* MOAITask.h in Headers */,
 				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */,
@@ -13242,6 +13251,7 @@
 				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
+				CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */,
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
@@ -16317,6 +16327,7 @@
 				89BE6B3B173975E500DFE837 /* MOAIObject.cpp in Sources */,
 				89BE6B3F173975E500DFE837 /* MOAIRtti.cpp in Sources */,
 				89BE6B43173975E500DFE837 /* MOAISerializer.cpp in Sources */,
+				CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */,
 				89BE6B47173975E500DFE837 /* MOAISerializerBase.cpp in Sources */,
 				89BE6B4F173975E500DFE837 /* pch.cpp in Sources */,
 				89BE6CFD1739A42500DFE837 /* host.cpp in Sources */,
@@ -16641,6 +16652,7 @@
 				89BE6B4E173975E500DFE837 /* pch.cpp in Sources */,
 				CD1845C01A62751200FCCCE0 /* MOAIEnvironment.cpp in Sources */,
 				89BE6CFC1739A42500DFE837 /* host.cpp in Sources */,
+				CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */,
 				89BE6D001739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
 				89BE6D041739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
 				89BE6D081739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
