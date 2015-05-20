@@ -28,7 +28,7 @@ void AKUModulesAndroidAppFinalize () {
 	// 	AKUAndroidBillingAppFinalize ();
 	// #endif
 
-	#if AKU_WITH_ANDROID_CHARTBOOST
+	#if AKU_WITH_ANDROID_CHARTBOOST	
 		AKUAndroidChartBoostAppFinalize ();
 	#endif
 
@@ -50,6 +50,10 @@ void AKUModulesAndroidAppFinalize () {
 
 	#if AKU_WITH_ANDROID_VUNGLE
         AKUAndroidVungleAppFinalize ();
+    #endif
+
+	#if AKU_WITH_ANDROID_WILDTANGENT_ADS
+        //AKUAndroidWildTangentAdsAppFinalize ();
     #endif
 }
 
@@ -94,6 +98,10 @@ void AKUModulesAndroidAppInitialize () {
 	#if AKU_WITH_ANDROID_VUNGLE
         AKUAndroidVungleAppInitialize ();
     #endif
+        
+	#if AKU_WITH_ANDROID_WILDTANGENT_ADS
+        //AKUAndroidWildTangentAdsAppInitialize ();
+    #endif
 }
 
 //----------------------------------------------------------------//
@@ -137,6 +145,10 @@ void AKUModulesAndroidContextInitialize () {
 
 	#if AKU_WITH_ANDROID_VUNGLE
         AKUAndroidVungleContextInitialize ();
+    #endif
+        
+	#if AKU_WITH_ANDROID_WILDTANGENT_ADS
+        AKUAndroidWildTangentAdsContextInitialize ();
     #endif
 }
 

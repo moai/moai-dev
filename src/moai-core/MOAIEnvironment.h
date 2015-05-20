@@ -52,6 +52,10 @@
 #define OS_BRAND_WINDOWS 		"Windows"
 #define OS_BRAND_UNAVAILABLE 	"Unavailable"
 
+#define APP_ID_AMAZON		"com.ziplinegames.amazon.slotstycoon"
+#define APP_ID_GOOGLE		"com.ziplinegames.google.slotstycoon"
+#define APP_ID_WILDTANGENT	"com.ziplinegames.wildtangent.slotstycoon"
+
 //================================================================//
 // MOAIEnvironment
 //================================================================//

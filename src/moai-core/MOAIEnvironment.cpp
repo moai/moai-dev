@@ -191,6 +191,10 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
 	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
 	
+	state.SetField ( -1, "APP_ID_AMAZON", APP_ID_AMAZON );
+	state.SetField ( -1, "APP_ID_GOOGLE", APP_ID_GOOGLE );
+	state.SetField ( -1, "APP_ID_WILDTANGENT", APP_ID_WILDTANGENT );
+
 	state.SetField ( -1, "OS_BRAND_AMAZON", OS_BRAND_AMAZON );
 	state.SetField ( -1, "OS_BRAND_ANDROID", OS_BRAND_ANDROID );
 	state.SetField ( -1, "OS_BRAND_IOS", OS_BRAND_IOS );

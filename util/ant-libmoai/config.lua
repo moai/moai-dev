@@ -269,7 +269,7 @@ MODULES = {
 		},
 		
 		JAVA = {
-			MOAI_SDK_HOME .. '3rdparty-android/google-play-services',
+			MOAI_SDK_HOME .. '3rdparty-android/google-play-services-v22',
 			MOAI_SDK_HOME .. 'src/moai-android-google-play-services',
 		},
 
@@ -474,6 +474,26 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-vungle',
 	},
+
+	WILDTANGENT_ADS = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_WILDTANGENT_ADS',
+		NAMESPACE = 'com.ziplinegames.moai',
+	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-wildtangent-ads.mk',
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/wildtangent-ads',
+			MOAI_SDK_HOME .. 'src/moai-android-wildtangent-ads',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-wildtangent-ads',
+	},
 }
 
 TARGETS = {
@@ -532,8 +552,7 @@ STATIC_LINK_ORDER = {
 	'libmoai-tapjoy',
 	'libmoai-twitter',
 	'libmoai-vungle',
-
-	'libmoai-chartboost',
+	'libmoai-wildtangent-ads',
 
 	-- moai
 	'libmoai-android',

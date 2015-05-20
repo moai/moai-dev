@@ -18,6 +18,7 @@ import android.os.Build;
 import android.provider.Settings.Secure;
 import android.util.DisplayMetrics;
 
+import java.lang.reflect.*;
 import java.lang.reflect.Method;
 import java.lang.Runtime;
 import java.util.Calendar;
@@ -151,6 +152,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiMoviePlayer",
 		"com.ziplinegames.moai.MoaiTapjoy",
 		"com.ziplinegames.moai.MoaiVungle",
+		"com.ziplinegames.moai.MoaiWildTangentAds",
 	};
 
 	private static Activity 				sActivity = null;
@@ -571,8 +573,23 @@ public class Moai {
 				Method theMethod = theClass.getMethod ( methodName, parameterTypes );
 				result = theMethod.invoke ( theInstance, parameterValues );
 			}
+			catch (InvocationTargetException ite) {
+				ite.printStackTrace();
+
+				MoaiLog.i ("-----caused by: ----------");
+				MoaiLog.i (ite.getCause().toString ());
+				ite.getCause().printStackTrace();
+			}
 			catch ( Throwable e ) {
-				MoaiLog.i(">>> Moai.java(551): Failed to call " + methodName + " for " + theClass.getName());
+
+				Throwable lastException = e;
+				while ( e.getCause () != null ) {
+					MoaiLog.i ( e.toString ());
+					lastException = e.getCause ();
+					e = lastException;
+				}
+				
+				MoaiLog.i ( ">>> Moai.java(551): Failed to call " + methodName + " for " + theClass.getName());
 			}
 		}
 		return result;

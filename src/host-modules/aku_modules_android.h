@@ -59,6 +59,10 @@
 	#include <moai-android-vungle/host.h>;
 #endif
 
+#if AKU_WITH_ANDROID_WILDTANGENT_ADS
+	#include <moai-android-wildtangent-ads/host.h>;
+#endif
+
 //----------------------------------------------------------------//
 void		AKUModulesAndroidAppFinalize			();
 void		AKUModulesAndroidAppInitialize			();

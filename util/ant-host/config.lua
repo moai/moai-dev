@@ -18,7 +18,7 @@ MODULES = {
 		src		= MOAI_SDK_HOME .. 'src/moai-android-amazon-mobile-ads',
 	},
 
-	chartboosst = {
+	chartboost = {
 		lib		= MOAI_SDK_HOME .. '3rdparty-android/chartboost-5.1.1',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-chartboost',
 	},
@@ -48,7 +48,7 @@ MODULES = {
 	},
 	
 	google_play = {
-		lib		= MOAI_SDK_HOME .. '3rdparty-android/google-play-services',
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/google-play-services-v22',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-google-play-services',
 	},
 	
@@ -70,5 +70,10 @@ MODULES = {
 	vungle	= {
 		lib		= MOAI_SDK_HOME .. '3rdparty-android/vungle-1.3.11',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-vungle',
+	},
+
+	wildtangent_ads	= {
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/wildtangent-ads',
+		src		= MOAI_SDK_HOME .. 'src/moai-android-wildtangent-ads',
 	},
 }

@@ -46,7 +46,7 @@ public class MoaiGooglePush {
 
 		MoaiLog.i ( "MoaiGooglePush onResume: Checking for pending notification" );
 		
-		Bundle notification = sActivity.getIntent ().getExtras ().getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
+		Bundle notification = sActivity.getIntent ().getBundleExtra ( MoaiGooglePushConstants.ACTION_RECEIVE );
     	if ( notification != null ) {
 
 			MoaiLog.i ( "MoaiGooglePush onResume: Got a remote notification in app resume" );

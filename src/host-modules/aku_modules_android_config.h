@@ -57,4 +57,7 @@
 		#define AKU_WITH_ANDROID_VUNGLE 1
 	#endif
 
+	#ifndef AKU_WITH_ANDROID_WILDTANGENT_ADS
+		#define AKU_WITH_ANDROID_WILDTANGENT_ADS 1
+	#endif
 #endif

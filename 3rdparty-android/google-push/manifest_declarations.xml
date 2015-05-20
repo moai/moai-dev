@@ -1,4 +1,6 @@
 <!-- Google Push (C2DM) Messaging -->
+
+<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/gms_app_id" />
 <receiver android:name="com.ziplinegames.moai.MoaiGooglePushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
 	<intent-filter>
 		<action android:name="com.google.android.c2dm.intent.RECEIVE" />
