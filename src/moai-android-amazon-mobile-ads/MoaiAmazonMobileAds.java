@@ -32,13 +32,10 @@ public class MoaiAmazonMobileAds extends Activity {
     public static boolean loadedAd_2 = false;
     private static MoaiAmazonMobileAdListener adListener = new MoaiAmazonMobileAdListener ();
     private static AdTargetingOptions targetOptions;
+
 	protected static native void AKUInvokeListener ( int eventID );
 
 	//----------------------------------------------------------------//
-
-    /**
-     * When the activity starts, set up the click events for the buttons so that they load or show ads when clicked.
-     */
 	public static void onCreate ( Activity activity ) {
 	
 		MoaiLog.i ( "MoaiAmazonMobileAds: onCreate" );
@@ -52,7 +49,8 @@ public class MoaiAmazonMobileAds extends Activity {
 
         adToLoad = ad_1;
 
-        targetOptions. enableGeoLocation ( true );
+        targetOptions = new AdTargetingOptions ();
+        targetOptions.enableGeoLocation ( true );
 	}
 
 	//----------------------------------------------------------------//

@@ -42,7 +42,6 @@ int MOAIAmazonMobileAdsAndroid::_init ( lua_State* L ) {
 	MOAIJString jappID			= self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAmazonMobileAdsAndroid: Calling init\n" );
 	self->CallStaticVoidMethod ( init, ( jstring )jappID );
 	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAmazonMobileAdsAndroid: Done calling init\n" );
 	return 0;

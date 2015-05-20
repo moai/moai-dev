@@ -38,20 +38,10 @@ int MOAIChartBoostAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIChartBoostAndroid, "" )
 	
 	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid::_init\n" );
-
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: Getting jappID...\n" );
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: state.GetValue < cc8* >( 1, 0 ): %s\n",state.GetValue < cc8* >( 1, 0 ) );
 	MOAIJString jappID			= self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
-
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: Getting jappSignature...\n" );
-
 	MOAIJString jappSignature	= self->GetJString ( state.GetValue < cc8* >( 2, 0 ));
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: Got jappSignature\n" );
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;Ljava/lang/String;)V" );
-
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: Calling init\n" );
 	self->CallStaticVoidMethod ( init, ( jstring )jappID, ( jstring )jappSignature );
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIChartBoostAndroid: Done calling init\n" );
 	return 0;
 }
 
