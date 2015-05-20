@@ -25,6 +25,18 @@ class MOAIAppAndroid :
 	public MOAIGlobalClass < MOAIAppAndroid, MOAIGlobalEventSource > {
 private:
 
+	//----------------------------------------------------------------//
+	static int	_getPictureCode			( lua_State* L );
+	static int	_getPicturePath			( lua_State* L );
+	static int	_getUTCTime				( lua_State* L );
+	static int 	_getStatusBarHeight 	( lua_State* L );
+	static int	_openURL				( lua_State* L );
+	static int	_sendMail				( lua_State* L );
+	static int	_share					( lua_State* L );
+	static int	_takePicture			( lua_State* L );
+
+public:
+
 	enum {
 		ACTIVITY_ON_CREATE,
 		ACTIVITY_ON_DESTROY,
@@ -38,18 +50,6 @@ private:
 		EVENT_PICTURE_TAKEN,
         TOTAL,
 	};
-
-	//----------------------------------------------------------------//
-	static int	_getPictureCode			( lua_State* L );
-	static int	_getPicturePath			( lua_State* L );
-	static int	_getUTCTime				( lua_State* L );
-	static int 	_getStatusBarHeight 	( lua_State* L );
-	static int	_openURL				( lua_State* L );
-	static int	_sendMail				( lua_State* L );
-	static int	_share					( lua_State* L );
-	static int	_takePicture			( lua_State* L );
-
-public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
 
