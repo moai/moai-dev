@@ -20,6 +20,10 @@ void AKUModulesAndroidAppFinalize () {
 		AKUAndroidAdColonyAppFinalize ();
 	#endif
 
+	#if AKU_WITH_ANDROID_AMAZON_MOBILE_ADS
+		AKUAndroidAmazonMobileAdsAppFinalize ();
+	#endif
+
 	// #if AKU_WITH_ANDROID_BILLING
 	// 	AKUAndroidBillingAppFinalize ();
 	// #endif
@@ -60,6 +64,9 @@ void AKUModulesAndroidAppInitialize () {
 		AKUAndroidAdColonyAppInitialize ();
 	#endif
 
+	#if AKU_WITH_ANDROID_AMAZON_MOBILE_ADS
+		AKUAndroidAmazonMobileAdsAppInitialize ();
+	#endif
 	// #if AKU_WITH_ANDROID_BILLING
 	// 	AKUAndroidBillingAppInitialize ();
 	// #endif
@@ -98,6 +105,10 @@ void AKUModulesAndroidContextInitialize () {
 
 	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyContextInitialize ();
+	#endif
+
+	#if AKU_WITH_ANDROID_AMAZON_MOBILE_ADS
+		AKUAndroidAmazonMobileAdsContextInitialize ();
 	#endif
 
 	// #if AKU_WITH_ANDROID_BILLING

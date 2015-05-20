@@ -13,6 +13,11 @@ MODULES = {
 		src		= MOAI_SDK_HOME .. 'src/moai-android-amazon-billing',
 	},
 	
+	amazon_mobile_ads	= {
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/amazon-mobile-ads-5.5.102',
+		src		= MOAI_SDK_HOME .. 'src/moai-android-amazon-mobile-ads',
+	},
+
 	chartboosst = {
 		lib		= MOAI_SDK_HOME .. '3rdparty-android/chartboost-5.1.1',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-chartboost',

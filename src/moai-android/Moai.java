@@ -139,6 +139,7 @@ public class Moai {
 	private static String [] sExternalClasses = {
 		"com.ziplinegames.moai.MoaiAdColony",
 		"com.ziplinegames.moai.MoaiAmazonBilling",
+		"com.ziplinegames.moai.MoaiAmazonMobileAds",
 		"com.ziplinegames.moai.MoaiChartBoost",
 		"com.ziplinegames.moai.MoaiCrittercism",
 		"com.ziplinegames.moai.MoaiFacebook",
