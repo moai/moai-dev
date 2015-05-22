@@ -283,6 +283,7 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "APP_OPENED_FROM_URL",     ( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
 	state.SetField ( -1, "EVENT_PICTURE_TAKEN",		( u32 )EVENT_PICTURE_TAKEN );
+	state.SetField ( -1, "EVENT_MEMORY_WARNING",	( u32 )EVENT_MEMORY_WARNING );
 
 	luaL_Reg regTable [] = {
         { "getPictureCode",			_getPictureCode },
