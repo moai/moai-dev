@@ -52,6 +52,15 @@ int MOAITextureBase::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextureBase::_setDebugName ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
+
+	self->mDebugName = state.GetValue < cc8* >( 2, "" );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setFilter
 	@text	Set default filtering mode for texture.
 	
@@ -376,6 +385,7 @@ void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },
 		{ "release",				_release },
+		{ "setDebugName",			_setDebugName },
 		{ "setFilter",				_setFilter },
 		{ "setWrap",				_setWrap },
 		{ NULL, NULL }

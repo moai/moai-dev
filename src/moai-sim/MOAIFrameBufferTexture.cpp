@@ -82,6 +82,8 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 		RTTI_EXTEND ( MOAIFrameBuffer )
 		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
+ 
+	this->mDebugName = "(texture from MOAIFrameBufferTexture)";
 }
 
 //----------------------------------------------------------------//
