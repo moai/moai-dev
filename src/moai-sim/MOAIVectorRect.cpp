@@ -34,9 +34,9 @@ int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorRect::AddStrokeContours ( SafeTesselator* tess ) {
+int MOAIVectorRect::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
 
-	return MOAIVectorShape::AddStrokeContours ( tess );
+	return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 }
 
 //----------------------------------------------------------------//

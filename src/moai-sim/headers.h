@@ -63,6 +63,7 @@
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIMeshBuilder.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>

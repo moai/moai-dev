@@ -51,7 +51,6 @@ private:
 	static int				_reserveVBOs			( lua_State* L );
 	static int				_reset					( lua_State* L );
 	static int				_setTarget				( lua_State* L );
-	static int				_writeColor32			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	u32						GetLoadingPolicy		();

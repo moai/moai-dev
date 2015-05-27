@@ -14,6 +14,8 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorUtil.h>
+#include <moai-sim/MOAIVertexFormat.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -393,6 +395,14 @@ int MOAIVectorTesselator::_setLineWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_setMergeNormals ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+
+	self->mStyle.mMergeNormals = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_setMiterLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
@@ -487,6 +497,15 @@ int MOAIVectorTesselator::_setVertexExtra ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIVectorTesselator::_setVertexFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	self->mVertexFormat.Set ( *self, MOAIVertexFormat::AffirmVertexFormat ( state, 2 ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
@@ -498,20 +517,29 @@ int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
+	u32 totalElements = 0;
+	
 	MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
 	MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
 	
-	u32 totalElements = 0;
-	
 	if ( vtxBuffer && idxBuffer ) {
+	
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, idxSizeInBytes );
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
+
+		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
 	}
 	
 	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
 	
 	if ( region ) {
 		totalElements = self->Tesselate ( region );
+	}
+	
+	MOAIMeshBuilder* meshBuilder = state.GetLuaObject < MOAIMeshBuilder >( 2, false );
+	
+	if ( meshBuilder ) {
+		totalElements = self->Tesselate ( meshBuilder );
 	}
 	
 	state.Push ( totalElements );
@@ -647,6 +675,7 @@ MOAIVectorTesselator::MOAIVectorTesselator () :
 MOAIVectorTesselator::~MOAIVectorTesselator () {
 
 	this->Clear ();
+	this->mVertexFormat.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -867,6 +896,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineColor",			_setLineColor },
 		{ "setLineStyle",			_setLineStyle },
 		{ "setLineWidth",			_setLineWidth },
+		{ "setMergeNormals",		_setMergeNormals },
 		{ "setMiterLimit",			_setMiterLimit },
 		{ "setPolyClosed",			_setPolyClosed },
 		{ "setShadowColor",			_setShadowColor },
@@ -878,6 +908,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setStrokeWidth",			_setStrokeWidth },
 		{ "setVerbose",				_setVerbose },
 		{ "setVertexExtra",			_setVertexExtra },
+		{ "setVertexFormat",		_setVertexFormat },
 		{ "setWindingRule",			_setWindingRule },
 		{ "tesselate",				_tesselate },
 		{ "worldToDrawing",			_worldToDrawing },
@@ -927,6 +958,8 @@ int MOAIVectorTesselator::Tesselate ( SafeTesselator* tess ) {
 //----------------------------------------------------------------//
 int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 
+	assert ( region );
+
 	SafeTesselator tess;
 	if ( !this->Tesselate ( &tess )) return 0;
 	
@@ -962,7 +995,21 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream ) {
+int MOAIVectorTesselator::Tesselate ( MOAIMeshBuilder* meshBuilder ) {
+
+	assert ( meshBuilder );
+
+	ZLStream* vtxStream = meshBuilder;
+	ZLStream* idxStream = &meshBuilder->GetIndexStream ();
+
+	if ( this->Tesselate ( vtxStream, idxStream, meshBuilder->GetVertexFormat ())) {
+		return idxStream->GetLength () >> 2;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format ) {
 
 	assert ( vtxStream );
 
@@ -973,7 +1020,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream )
 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
-		error = shape->Tesselate ( *this, vtxStream, idxStream );
+		error = shape->Tesselate ( *this, vtxStream, idxStream, format );
 		if ( error ) return error;
 	}
 	
@@ -982,28 +1029,30 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream )
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes ) {
+int MOAIVectorTesselator::Tesselate ( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes ) {
 
 	assert ( vtxBuffer && idxBuffer );
 	
 	ZLMemStream vtxStream;
 	ZLMemStream idxStream;
 	
-	if ( this->Tesselate ( &vtxStream, &idxStream )) {
+	if ( this->Tesselate ( &vtxStream, &idxStream, format )) {
 		return MOAIVectorUtil::GetTriangles ( vtxStream, *vtxBuffer, idxStream, *idxBuffer, idxSizeInBytes );
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
 
 	assert ( vtxStream && idxStream );
 
 	u32 base = this->CountVertices ( *vtxStream );
 	float z = style.GetExtrude ();
 
-	ZLVec3D lightVec = style.GetLightVec ();
+	ZLVec3D lightVec3D = style.GetLightVec ();
+	ZLVec2D lightVec ( lightVec3D.mX, lightVec3D.mY );
+	
 	float lightLen = lightVec.Norm ();
 	bool doLighting = lightLen != 0.0f ? true : false;
 	
@@ -1017,53 +1066,97 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 	float shadowAlpha = shadowColor.mA;
 	shadowColor.mA = 1.0f;
 
+	float normalsMergeCos = style.GetMergeNormalsCosine ();
+
 	u32 color32 = fillColor.PackRGBA ();
 
 	const int* elems = tessGetElements ( tess->mTess );
 	const int nelems = tessGetElementCount ( tess->mTess );
 	const float* verts = tessGetVertices ( tess->mTess );
 	
-	ZLAffine2D ident;
-	ident.Ident ();
-	
 	for ( int i = 0; i < nelems; ++i ) {
+		
 		int b = elems [( i * 2 )];
-		int n = elems [( i * 2 ) + 1 ];
+		int n = elems [( i * 2 ) + 1 ]; // vertices
+		
+		ZLVec2D* vertices = ( ZLVec2D* )alloca ( n * sizeof ( ZLVec2D ));
+		assert ( vertices );
+		
+		ZLVec2D* faceNormals = ( ZLVec2D* )alloca ( n * sizeof ( ZLVec2D ));
+		assert ( faceNormals );
 		
 		for ( int j = 0; j < n; ++j ) {
 			
 			ZLVec2D v0 = (( ZLVec2D* )verts )[ b + j ];
-			ZLVec2D v1 = (( ZLVec2D* )verts )[ b + (( j + 1 ) % n )];
-			
 			style.mDrawingToWorld.Transform ( v0 );
-			style.mDrawingToWorld.Transform ( v1 );
+			vertices [ j ] = v0;
+		}
+		
+		for ( int j = 0; j < n; ++j ) {
+			
+			const ZLVec2D& v0 = vertices [ j ];
+			const ZLVec2D& v1 = vertices [( j + 1 ) % n ];
+			
+			ZLVec2D e = v1;
+			e.Sub ( v0 );
+			e.Rotate90Clockwise ();
+			e.Norm ();
+			
+			faceNormals [ j ] = e;
+		}
+		
+		for ( int j = 0; j < n; ++j ) {
+			
+			const ZLVec2D& v0 = vertices [ j ];
+			const ZLVec2D& v1 = vertices [( j + 1 ) % n ];
+			
+			const ZLVec2D& n0 = faceNormals [( j + n - 1 ) % n ]; // prev
+			const ZLVec2D& n1 = faceNormals [ j ]; // current
+			const ZLVec2D& n2 = faceNormals [( j + 1 ) % n ]; // next
+
+			ZLVec2D normal0 = n1;
+			if ( n1.Dot ( n0 ) > normalsMergeCos ) {
+				normal0.Add ( n0 );
+				normal0.Norm ();
+			}
+			
+			ZLVec2D normal1 = n1;
+			if ( n1.Dot ( n2 ) > normalsMergeCos ) {
+				normal1.Add ( n2 );
+				normal1.Norm ();
+			}
+			
+			u32 color0 = color32;
+			u32 color1 = color32;
 			
 			if ( doLighting ) {
-			
-				ZLVec2D e = v1;
-				e.Sub ( v0 );
-				e.Rotate90Clockwise ();
-				e.Norm ();
-				
-				ZLVec3D n ( e.mX, e.mY, 0.0f );
 				
 				ZLColorVec color;
+				float dot;
 				
-				float dot = lightVec.Dot ( n );
+				dot = lightVec.Dot ( normal0 );
 				if ( dot < 0.0f ) {
 					color.Lerp ( shadowCurve, fillColor, shadowColor, -dot * shadowAlpha );
 				}
 				else {
 					color.Lerp ( lightCurve, fillColor, lightColor, dot * lightAlpha );
 				}
+				color0 = color.PackRGBA ();
 				
-				color32 = color.PackRGBA ();
+				dot = lightVec.Dot ( normal1 );
+				if ( dot < 0.0f ) {
+					color.Lerp ( shadowCurve, fillColor, shadowColor, -dot * shadowAlpha );
+				}
+				else {
+					color.Lerp ( lightCurve, fillColor, lightColor, dot * lightAlpha );
+				}
+				color1 = color.PackRGBA ();
 			}
 			
-			this->WriteVertex ( *vtxStream, v0.mX, v0.mY, 0.0f, ident, color32, vertexExtraID );
-			this->WriteVertex ( *vtxStream, v1.mX, v1.mY, 0.0f, ident, color32, vertexExtraID );
-			this->WriteVertex ( *vtxStream, v0.mX, v0.mY, z, ident, color32, vertexExtraID );
-			this->WriteVertex ( *vtxStream, v1.mX, v1.mY, z, ident, color32, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, 0.0f, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, 0.0f, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, z, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, z, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
 			
 			idxStream->Write < u32 >( base + 0 );
 			idxStream->Write < u32 >( base + 1 );
@@ -1079,7 +1172,7 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID ) {
 
 	assert ( vtxStream && idxStream );
 
@@ -1099,12 +1192,14 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 	
 	for ( int i = 0; i < nverts; ++i ) {
 		
-		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
+		ZLVec2D vert = (( const ZLVec2D* )verts )[ i ];
 		
 		if ( this->mVerbose ) {
 			log.write ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}
-		this->WriteVertex ( *vtxStream, vert.mX, vert.mY, z, style.mDrawingToWorld, color, vertexExtraID );
+		
+		style.mDrawingToWorld.Transform ( vert );
+		this->WriteVertex ( *vtxStream, format, vert.mX, vert.mY, z, 0.0f, 0.0f, 1.0f, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {
@@ -1139,18 +1234,26 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, float x, float y, float z, const ZLAffine2D& transform2D, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID ) {
 
-	ZLVec2D vec2D ( x, y );
-	transform2D.Transform ( vec2D );
+	format = format ? format : ( this->mVertexFormat ? this->mVertexFormat : MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZC ));
+	assert ( format );
 
-	stream.Write < float >( vec2D.mX );
-	stream.Write < float >( vec2D.mY );
-	stream.Write < float >( z );
-	stream.Write < u32 >( color );
+	size_t vertexSize = format->GetVertexSize ();
+	size_t base = stream.GetCursor ();
+
+	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
-	if ( this->mVtxExtraSize ) {
+		stream.Seek ( base + ( vertexSize - this->mVtxExtraSize ), SEEK_SET );
+		
 		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
 		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 	}
+	
+	format->WriteVertex ( stream, base, 0, x, y, z, 1.0f );
+	format->WriteColor ( stream, base, 0, color );
+	format->WriteNormal ( stream, base, 0, xn, yn, zn );
+	
+	// next vertex
+	format->SeekVertex ( stream, base, 1 );
 }

@@ -32,7 +32,7 @@ protected:
 	ZLLeanPool < MOAISelectionSpan, 16 >	mSpanPool;
 	ZLLeanArray < MOAISelectionSpan* >		mSets;
 	
-	MOAISelectionSpan*		mSpanListHead;
+	MOAISelectionSpan*	mSpanListHead;
 
 	//----------------------------------------------------------------//
 	static int			_addSelection				( lua_State* L );

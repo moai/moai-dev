@@ -20,57 +20,6 @@ void AKUSimAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSimContextInitialize () {
 
-	ZLPolygon2D poly;
-	poly.ReserveVertices ( 4 );
-	
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 100.0f, 0.0f );
-	poly.SetVert ( 2, 100.0f, 100.0f );
-	poly.SetVert ( 3, 0.0f, 100.0f );
-	poly.Bless ();
-
-	printf ( "%s\n", poly.GetInfoString ());
-	
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 0.0f, 100.0f );
-	poly.SetVert ( 2, 100.0f, 100.0f );
-	poly.SetVert ( 3, 100.0f, 0.0f );
-	poly.Bless ();
-	
-	printf ( "%s\n", poly.GetInfoString ());
-
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 100.0f, 0.0f );
-	poly.SetVert ( 2, 10.0f, 10.0f );
-	poly.SetVert ( 3, 0.0f, 100.0f );
-	poly.Bless ();
-	
-	printf ( "%s\n", poly.GetInfoString ());
-	
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 0.0f, 100.0f );
-	poly.SetVert ( 2, 10.0f, 10.0f );
-	poly.SetVert ( 3, 100.0f, 0.0f );
-	poly.Bless ();
-	
-	printf ( "%s\n", poly.GetInfoString ());
-	
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 100.0f, 0.0f );
-	poly.SetVert ( 2, 0.0f, 100.0f );
-	poly.SetVert ( 3, 100.0f, 100.0f );
-	poly.Bless ();
-	
-	printf ( "%s\n", poly.GetInfoString ());
-
-	poly.SetVert ( 0, 0.0f, 0.0f );
-	poly.SetVert ( 1, 100.0f, 100.0f );
-	poly.SetVert ( 2, 100.0f, 0.0f );
-	poly.SetVert ( 3, 0.0f, 100.0f );
-	poly.Bless ();
-	
-	printf ( "%s\n", poly.GetInfoString ());
-
 	ZLBitBuffer::Test ();
 
 	MOAINodeMgr::Affirm ();
@@ -140,6 +89,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIMaterialBatch )
 	REGISTER_LUA_CLASS ( MOAIMatrix )
 	REGISTER_LUA_CLASS ( MOAIMesh )
+	REGISTER_LUA_CLASS ( MOAIMeshBuilder )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIMultiTexture )
 	REGISTER_LUA_CLASS ( MOAINode )

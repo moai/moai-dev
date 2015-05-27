@@ -304,6 +304,31 @@ int MOAIStream::_write32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	writeColor32
+	@text	Write a packed 32-bit color to the vertex buffer.
+	
+	@in		MOAIStream self
+	@opt	number r				Default value is 1.
+	@opt	number g				Default value is 1.
+	@opt	number b				Default value is 1.
+	@opt	number a				Default value is 1.
+	@out	nil
+*/
+int MOAIStream::_writeColor32 ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" )
+	
+	float r = state.GetValue < float >( 2, 1.0f );
+	float g = state.GetValue < float >( 3, 1.0f );
+	float b = state.GetValue < float >( 4, 1.0f );
+	float a = state.GetValue < float >( 5, 1.0f );
+	
+	u32 color = ZLColor::PackRGBA ( r, g, b, a );
+	self->Write < u32 >( color );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	writeDouble
 	@text	Writes a 64-bit floating point value to the stream.
 	
@@ -608,6 +633,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "write8",				_write8 },
 		{ "write16",			_write16 },
 		{ "write32",			_write32 },
+		{ "writeColor32",		_writeColor32 },
 		{ "writeDouble",		_writeDouble },
 		{ "writeFloat",			_writeFloat },
 		{ "writeFormat",		_writeFormat },
