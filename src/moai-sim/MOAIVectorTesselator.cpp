@@ -987,7 +987,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 			poly.Transform ( this->mStyle.mDrawingToWorld );
 			poly.Bless ();
 			
-			printf ( "WINDING: %s\n", poly.GetInfoString ());
+//			printf ( "WINDING: %s\n", poly.GetInfoString ());
 		}
 		return nelems;
 	}
