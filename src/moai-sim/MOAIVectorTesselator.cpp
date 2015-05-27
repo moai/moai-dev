@@ -1240,20 +1240,23 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* for
 	assert ( format );
 
 	size_t vertexSize = format->GetVertexSize ();
-	size_t base = stream.GetCursor ();
+
+	void* vertex = alloca ( vertexSize );
+	ZLByteStream vertexStream;
+	vertexStream.SetBuffer ( vertex, vertexSize, vertexSize );
 
 	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
-		stream.Seek ( base + ( vertexSize - this->mVtxExtraSize ), SEEK_SET );
+		vertexStream.Seek ( vertexSize - this->mVtxExtraSize, SEEK_SET );
 		
 		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
-		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
+		vertexStream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 	}
 	
-	format->WriteVertex ( stream, base, 0, x, y, z, 1.0f );
-	format->WriteColor ( stream, base, 0, color );
-	format->WriteNormal ( stream, base, 0, xn, yn, zn );
+	format->WriteVertex ( vertexStream, 0, 0, x, y, z, 1.0f );
+	format->WriteColor ( vertexStream, 0, 0, color );
+	format->WriteNormal ( vertexStream, 0, 0, xn, yn, zn );
 	
 	// next vertex
-	format->SeekVertex ( stream, base, 1 );
+	stream.WriteBytes ( vertex, vertexSize );
 }

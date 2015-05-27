@@ -108,6 +108,7 @@ void MOAIMeshBuilder::Build () {
 		
 		if ( vertexMap.contains ( vertex )) {
 			index = vertexMap [ vertex ];
+			//printf ( "REDUCE: %d -> %d\n", i, index );
 		}
 		else {
 			index = vertexMap.size ();
@@ -115,7 +116,7 @@ void MOAIMeshBuilder::Build () {
 		}
 		this->mIndexMap [ i ] = index;
 		
-		printf ( "INDEX: %d -> %d\n", i, index );
+		//printf ( "INDEX: %d -> %d\n", i, index );
 	}
 	
 	size_t vertexSize = this->mVertexFormat->GetVertexSize ();
@@ -127,7 +128,7 @@ void MOAIMeshBuilder::Build () {
 		const void* source = vertexMapIt->first;
 		void* dest = this->GetVertexBuffer ( vertices, vertexMapIt->second );
 		
-		printf ( "copy: %d\n", vertexMapIt->second );
+		//printf ( "copy: %d\n", vertexMapIt->second );
 		
 		memcpy ( dest, source, vertexSize );
 	}
