@@ -21,6 +21,7 @@ public:
 	GET_SET ( ZLStream*, ProxiedStream, mProxiedStream )
 
 	//----------------------------------------------------------------//
+	void			Compact					();
 	void			Flush					();
 	u32				GetCaps					();
 	size_t			GetCursor				();
@@ -28,6 +29,7 @@ public:
 	bool			IsAtEnd					();
 	size_t			ReadBytes				( void* buffer, size_t size );
 	int				SetCursor				( long offset );
+	size_t			SetLength				( size_t length );
 	size_t			WriteBytes				( const void* buffer, size_t size );
 					ZLStreamProxy			();
 					~ZLStreamProxy			();

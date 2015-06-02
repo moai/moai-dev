@@ -4,7 +4,6 @@
 #ifndef	MOAIVECTORTESSELATOR_H
 #define	MOAIVECTORTESSELATOR_H
 
-#include <moai-sim/MOAIMeshBuilder.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
 
@@ -137,7 +136,6 @@ public:
 	void				SetVertexExtra				( u32 idx, void* extra, size_t size );
 	int					Tesselate					( SafeTesselator* tess );
 	int					Tesselate					( MOAIRegion* region );
-	int					Tesselate					( MOAIMeshBuilder* meshBuilder );
 	int					Tesselate					( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format );
 	int					Tesselate					( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes );
 	void				WriteSkirt					( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );

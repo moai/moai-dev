@@ -41,6 +41,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int				_computeBounds			( lua_State* L );
+	static int				_copyFromStream			( lua_State* L );
 	static int				_countElements			( lua_State* L );
 	static int				_load					( lua_State* L );
 	static int				_makeDirty				( lua_State* L );
@@ -74,6 +75,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear					();
+	void					CopyFromStream			( ZLStream& stream );
+	void					CopyFromStream			( ZLStream& stream, u32 idxSizeInBytes, u32 srcInputSizeInBytes );
 	size_t					GetSize					();
 	void					MakeDirty				();
 							MOAIGfxBuffer			();

@@ -529,6 +529,16 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 
 		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
 	}
+	else {
+		
+		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
+		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
+		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
+	
+		if ( vtxStream && idxStream && format ) {
+			totalElements = self->Tesselate ( vtxStream, idxStream, format );
+		}
+	}
 	
 	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
 	
@@ -536,11 +546,11 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		totalElements = self->Tesselate ( region );
 	}
 	
-	MOAIMeshBuilder* meshBuilder = state.GetLuaObject < MOAIMeshBuilder >( 2, false );
+	//MOAIMeshBuilder* meshBuilder = state.GetLuaObject < MOAIMeshBuilder >( 2, false );
 	
-	if ( meshBuilder ) {
-		totalElements = self->Tesselate ( meshBuilder );
-	}
+	//if ( meshBuilder ) {
+	//	totalElements = self->Tesselate ( meshBuilder );
+	//}
 	
 	state.Push ( totalElements );
 	return 1;
@@ -995,20 +1005,6 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIMeshBuilder* meshBuilder ) {
-
-	assert ( meshBuilder );
-
-	ZLStream* vtxStream = meshBuilder;
-	ZLStream* idxStream = &meshBuilder->GetIndexStream ();
-
-	if ( this->Tesselate ( vtxStream, idxStream, meshBuilder->GetVertexFormat ())) {
-		return idxStream->GetLength () >> 2;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format ) {
 
 	assert ( vtxStream );
@@ -1239,24 +1235,22 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* for
 	format = format ? format : ( this->mVertexFormat ? this->mVertexFormat : MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZC ));
 	assert ( format );
 
+	size_t base = stream.GetCursor ();
+	format->WriteAhead ( stream );
+
 	size_t vertexSize = format->GetVertexSize ();
-
-	void* vertex = alloca ( vertexSize );
-	ZLByteStream vertexStream;
-	vertexStream.SetBuffer ( vertex, vertexSize, vertexSize );
-
 	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
-		vertexStream.Seek ( vertexSize - this->mVtxExtraSize, SEEK_SET );
+		stream.Seek ( vertexSize - this->mVtxExtraSize, SEEK_SET );
 		
 		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
-		vertexStream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
+		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 	}
 	
-	format->WriteVertex ( vertexStream, 0, 0, x, y, z, 1.0f );
-	format->WriteColor ( vertexStream, 0, 0, color );
-	format->WriteNormal ( vertexStream, 0, 0, xn, yn, zn );
+	format->WriteCoord ( stream, x, y, z, 1.0f );
+	format->WriteColor ( stream, color );
+	format->WriteNormal ( stream, xn, yn, zn );
 	
 	// next vertex
-	stream.WriteBytes ( vertex, vertexSize );
+	format->SeekVertex ( stream, base, 1 );
 }

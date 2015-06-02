@@ -35,6 +35,7 @@
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
+#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
@@ -63,7 +64,6 @@
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIMeshBuilder.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>

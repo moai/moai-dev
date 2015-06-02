@@ -34,20 +34,21 @@ public:
 	static const u32 DEFAULT_FILE_MODE = READ;
 
 	//----------------------------------------------------------------//
-	void			Close				();
-	void			Flush				();
-	u32				GetCaps				();
-	size_t			GetCursor			();
-	ZLFILE*			GetFile				();
-	size_t			GetLength			();
-	bool			IsOpen				();
-	bool			Open				( cc8* filename, u32 mode );
-	bool			OpenRead			( cc8* filename );
-	bool			OpenWrite			( cc8* filename );
-	size_t			ReadBytes			( void* buffer, size_t size );
-	size_t			WriteBytes			( const void* buffer, size_t size );
-					ZLFileStream		();
-					~ZLFileStream		();
+	void				Close				();
+	void				Flush				();
+	u32					GetCaps				();
+	size_t				GetCursor			();
+	ZLFILE*				GetFile				();
+	size_t				GetLength			();
+	bool				IsOpen				();
+	bool				Open				( cc8* filename, u32 mode );
+	bool				OpenRead			( cc8* filename );
+	bool				OpenWrite			( cc8* filename );
+	size_t				ReadBytes			( void* buffer, size_t size );
+	virtual size_t		SetLength			( size_t length );
+	size_t				WriteBytes			( const void* buffer, size_t size );
+						ZLFileStream		();
+						~ZLFileStream		();
 };
 
 #endif

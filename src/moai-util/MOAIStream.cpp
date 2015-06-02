@@ -11,6 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStream::_compact ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	self->Compact ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	flush
 	@text	Forces any remaining buffered data into the stream.
 	
@@ -228,9 +236,9 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStream::_seek ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	MOAI_LUA_SETUP ( MOAIStream, "UN" );
 	
-	u32 offset	= state.GetValue < u32 >( 2, 0 );
+	s32 offset	= state.GetValue < s32 >( 2, 0 );
 	u32 mode	= state.GetValue < u32 >( 3, SEEK_SET );
 	
 	self->Seek ( offset, mode );
@@ -615,6 +623,7 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "compact",			_compact },
 		{ "flush",				_flush },
 		{ "getCursor",			_getCursor },
 		{ "getLength",			_getLength },

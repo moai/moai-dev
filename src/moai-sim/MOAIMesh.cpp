@@ -80,8 +80,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	self->ClearBounds ();
 	
 	if ( state.CheckParams ( 2, "NNNNNN-" )) {
-		self->mHasBounds = true;
-		self->mBounds = state.GetValue < ZLBox >( 2, self->mBounds );
+		self->SetBounds ( state.GetValue < ZLBox >( 2, self->mBounds ));
 	}
 	return 0;
 }
@@ -98,7 +97,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->SetIndexBuffer ( state.GetLuaObject < MOAIGfxBuffer >( 2, true ));
-	self->mIndexSizeInBytes = state.GetValue < u32 >( 3, 4 );
+	self->SetIndexSizeInBytes ( state.GetValue < u32 >( 3, 4 ));
 	return 0;
 }
 
@@ -146,7 +145,7 @@ int MOAIMesh::_setPointSize ( lua_State* L ) {
 int MOAIMesh::_setPrimType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
-	self->mPrimType = state.GetValue < u32 >( 2, 0 );
+	self->SetPrimType ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -155,7 +154,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setTotalElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
-	self->mTotalElements = state.GetValue < u32 >( 2, 0 );
+	self->SetTotalElements ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -521,6 +520,13 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	
 	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
 	state.SetField < u32 >( -1, "mPointSize", this->mPointSize );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetBounds ( const ZLBox& bounds ) {
+
+	this->mBounds = bounds;
+	this->mHasBounds = true;
 }
 
 //----------------------------------------------------------------//

@@ -30,6 +30,7 @@ private:
 	u32			mUse;
 	bool		mNormalized;
 	u32			mOffset;
+	u32			mSizeInBytes;
 };
 
 //================================================================//
@@ -85,7 +86,6 @@ private:
 	static u32					GetIndexForUse					( u32 use );
 	static u32					GetUseForIndex					( u32 idx );
 	static size_t				PackAttribute					( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute );
-	static ZLVec4D				ReadCoord						( MOAIStream& stream, size_t stride, size_t components );
 	void						UnbindFixed						() const;
 	void						UnbindProgrammable				() const;
 	static ZLVec4D				UnpackAttribute					( const void* buffer, const MOAIVertexAttribute& attribute, float zFallback, float wFallback );
@@ -102,32 +102,39 @@ public:
 	//----------------------------------------------------------------//
 	static MOAIVertexFormat*	AffirmVertexFormat				( MOAILuaState& state, int idx );
 	void						Bind							( const void* buffer ) const;
-	int							Compare							( const void* v0, const void* v1, float componentEpsilon, float normEpsilon );
-	bool						ComputeBounds					( ZLBox& bounds, void* buffer, size_t size ) const;
-	bool						ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size ) const;
-	static bool					ComputeBounds					( ZLBox& bounds, MOAIStream& stream, size_t size, size_t offset, size_t stride, size_t components );
-	size_t						CountElements					( size_t size );
-	static size_t				CountElements					( size_t size, size_t offset, size_t stride );
+	
+	int							Compare							( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const;
+	
+	bool						ComputeBounds					( ZLBox& bounds, const void* buffer, size_t size ) const;
+	bool						ComputeBounds					( ZLBox& bounds, ZLStream& stream, size_t size ) const;
 	void						DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 								MOAIVertexFormat				();
 								~MOAIVertexFormat				();
+	
 	void						PrintVertices					( ZLStream& stream, size_t size ) const;
+	
+	ZLVec4D						ReadAttribute					( ZLStream& stream, u32 attrID, float zFallback, float wFallback ) const;
+	ZLColorVec					ReadColor						( ZLStream& stream ) const;
+	ZLVec4D						ReadCoord						( ZLStream& stream ) const;
+	ZLVec3D						ReadNormal						( ZLStream& stream ) const;
+	ZLVec3D						ReadUV							( ZLStream& stream ) const;
+	
 	void						RegisterLuaClass				( MOAILuaState& state );
 	void						RegisterLuaFuncs				( MOAILuaState& state );
 	
-	size_t						SeekVertex						( ZLStream& stream, size_t base, size_t vertex );
+	size_t						SeekVertex						( ZLStream& stream, size_t base, size_t vertex ) const;
 	
 	void						SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
 	void						SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
-	void						SnapCoords						( void* dest, float xSnap, float ySnap, float zSnap );
 	void						Unbind							() const;
 	
-	void						WriteAttribute					( ZLStream& stream, size_t base, size_t vertex, u32 attrID, float x, float y, float z, float w );
-	void						WriteColor						( ZLStream& stream, size_t base, size_t vertex, u32 color );
-	void						WriteColor						( ZLStream& stream, size_t base, size_t vertex, float r, float g, float b, float a );
-	void						WriteNormal						( ZLStream& stream, size_t base, size_t vertex, float x, float y, float z );
-	void						WriteUV							( ZLStream& stream, size_t base, size_t vertex, float x, float y, float z );
-	void						WriteVertex						( ZLStream& stream, size_t base, size_t vertex, float x, float y, float z, float w );
+	void						WriteAhead						( ZLStream& stream ) const; // writes an empty vertex as a placeholder
+	void						WriteAttribute					( ZLStream& stream, u32 attrID, float x, float y, float z, float w ) const;
+	void						WriteColor						( ZLStream& stream, u32 color ) const;
+	void						WriteColor						( ZLStream& stream, float r, float g, float b, float a ) const;
+	void						WriteCoord						( ZLStream& stream, float x, float y, float z, float w ) const;
+	void						WriteNormal						( ZLStream& stream, float x, float y, float z ) const;
+	void						WriteUV							( ZLStream& stream, float x, float y, float z ) const;
 };
 
 #endif

@@ -16,6 +16,10 @@ bool ZLStream::CheckCaps ( u32 flags ) {
 }
 
 //----------------------------------------------------------------//
+void ZLStream::Compact () {
+}
+
+//----------------------------------------------------------------//
 void ZLStream::Flush () {
 }
 
@@ -249,6 +253,12 @@ int ZLStream::Seek ( long offset, int origin ) {
 int ZLStream::SetCursor ( long offset ) {
 	UNUSED ( offset );
 	return -1;
+}
+
+//----------------------------------------------------------------//
+size_t ZLStream::SetLength ( size_t length ) {
+	UNUSED ( length );
+	return 0;
 }
 
 //----------------------------------------------------------------//

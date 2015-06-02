@@ -20,10 +20,12 @@ public:
 		CAN_READ	= 0x01,
 		CAN_WRITE	= 0x02,
 		CAN_SEEK	= 0x04,
+		CAN_TRUNC	= 0x08,
 	};
 
 	//----------------------------------------------------------------//
 	bool				CheckCaps				( u32 flags );
+	virtual void		Compact					();
 	virtual void		Flush					();
 	virtual u32			GetCaps					() = 0;
 	virtual size_t		GetCursor				() = 0;
@@ -37,6 +39,7 @@ public:
 	STLString			ReadToken				( cc8* delimiters = 0 );
 	int					Seek					( long offset, int origin );
 	virtual int			SetCursor				( long offset );
+	virtual size_t		SetLength				( size_t length );
 	virtual size_t		WriteBytes				( const void* buffer, size_t size );
 	size_t				WriteStream				( ZLStream& source );
 	size_t				WriteStream				( ZLStream& source, size_t size );
