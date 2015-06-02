@@ -15,6 +15,14 @@ COMMON = {
 
 MAC = {
 
+	[ 'src/moai-apple/host.h' ]						= true,
+
+	[ 'src/moai-ios/host.h' ]						= true,
+	[ 'src/moai-ios-billing/host.h' ]				= true,
+	[ 'src/moai-ios-facebook/host.h' ]				= true,
+	[ 'src/moai-ios-gamecenter/host.h' ]			= true,
+	[ 'src/moai-ios-motion/host.h' ]				= true,
+
 	[ 'bin/osx' ]									= true,
 
 	[ 'lib/ios' ]									= true,

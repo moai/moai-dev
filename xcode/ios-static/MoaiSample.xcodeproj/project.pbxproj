@@ -42,10 +42,11 @@
 		CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD9F769E1808DEDC0001EF0C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9F769D1808DEDC0001EF0C /* AdSupport.framework */; };
+		CDBA1E4F1B1E44FA00DCDC75 /* libmoai-ios-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */; };
+		CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */; };
 		CDC963D11A12C6B000F9CA22 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CA1A12C6B000F9CA22 /* main.mm */; };
 		CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */; };
 		CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
-		CDC963DA1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */; };
 		CDFD7CB21A089DC000A94E6B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFD7CA21A089DC000A94E6B /* Default-568h@2x.png */; };
 		CDFD7CB51A089DC000A94E6B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFD7CA31A089DC000A94E6B /* Default.png */; };
 		CDFD7CB81A089DC000A94E6B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFD7CA41A089DC000A94E6B /* Default@2x.png */; };
@@ -108,13 +109,13 @@
 		CD4DF2C61A12E62900E9A523 /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CD9F769D1808DEDC0001EF0C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-apple.a"; path = "../../lib/ios/libmoai-ios-apple.a"; sourceTree = "<group>"; };
+		CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-movie.a"; path = "../../lib/ios/libmoai-ios-movie.a"; sourceTree = "<group>"; };
 		CDC963CA1A12C6B000F9CA22 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = "../../src/host-ios/main.mm"; sourceTree = "<group>"; };
 		CDC963CB1A12C6B000F9CA22 /* MOAIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAppDelegate.h; path = "../../src/host-ios/MOAIAppDelegate.h"; sourceTree = "<group>"; };
 		CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppDelegate.mm; path = "../../src/host-ios/MOAIAppDelegate.mm"; sourceTree = "<group>"; };
 		CDC963CD1A12C6B000F9CA22 /* MOAIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIView.h; path = "../../src/host-ios/MOAIView.h"; sourceTree = "<group>"; };
 		CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIView.mm; path = "../../src/host-ios/MOAIView.mm"; sourceTree = "<group>"; };
-		CDC963CF1A12C6B000F9CA22 /* MOAIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIViewController.h; path = "../../src/host-ios/MOAIViewController.h"; sourceTree = "<group>"; };
-		CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIViewController.mm; path = "../../src/host-ios/MOAIViewController.mm"; sourceTree = "<group>"; };
 		CDFD7CA21A089DC000A94E6B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../src/host-ios/Default-568h@2x.png"; sourceTree = "<group>"; };
 		CDFD7CA31A089DC000A94E6B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "../../src/host-ios/Default.png"; sourceTree = "<group>"; };
 		CDFD7CA41A089DC000A94E6B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../src/host-ios/Default@2x.png"; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */,
+				CDBA1E4F1B1E44FA00DCDC75 /* libmoai-ios-apple.a in Frameworks */,
 				CD4DF2B51A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a in Frameworks */,
 				CD4DF2B61A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				CD4DF2B71A12E35B00E9A523 /* libmoai-ios-billing.a in Frameworks */,
@@ -153,6 +155,7 @@
 				CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */,
 				CD4DF2BA1A12E35B00E9A523 /* libmoai-ios-http-client.a in Frameworks */,
 				CD4DF2BB1A12E35B00E9A523 /* libmoai-ios-luaext.a in Frameworks */,
+				CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */,
 				CD4DF2BC1A12E35B00E9A523 /* libmoai-ios-sim.a in Frameworks */,
 				CD4DF2BD1A12E35B00E9A523 /* libmoai-ios-untz.a in Frameworks */,
 				CD4DF2BE1A12E35B00E9A523 /* libmoai-ios-zl-core.a in Frameworks */,
@@ -275,11 +278,13 @@
 			children = (
 				CD4DF2A81A12E35B00E9A523 /* libmoai-ios-3rdparty-core.a */,
 				CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */,
+				CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */,
 				CD4DF2AA1A12E35B00E9A523 /* libmoai-ios-billing.a */,
 				CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */,
 				CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */,
 				CD4DF2AD1A12E35B00E9A523 /* libmoai-ios-http-client.a */,
 				CD4DF2AE1A12E35B00E9A523 /* libmoai-ios-luaext.a */,
+				CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */,
 				CD4DF2AF1A12E35B00E9A523 /* libmoai-ios-sim.a */,
 				CD4DF2B01A12E35B00E9A523 /* libmoai-ios-untz.a */,
 				CD4DF2B11A12E35B00E9A523 /* libmoai-ios-zl-core.a */,
@@ -298,8 +303,6 @@
 				CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */,
 				CDC963CD1A12C6B000F9CA22 /* MOAIView.h */,
 				CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */,
-				CDC963CF1A12C6B000F9CA22 /* MOAIViewController.h */,
-				CDC963D01A12C6B000F9CA22 /* MOAIViewController.mm */,
 			);
 			name = moai;
 			sourceTree = SOURCE_ROOT;
@@ -400,7 +403,6 @@
 			files = (
 				CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */,
-				CDC963DA1A12C6B000F9CA22 /* MOAIViewController.mm in Sources */,
 				CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */,
 				CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
 				CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
@@ -414,10 +416,6 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/patrick/git/moai-dev/bin/ios",
-				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
 			};
@@ -426,10 +424,6 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/patrick/git/moai-dev/bin/ios",
-				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
 			};
@@ -443,6 +437,11 @@
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"AKU_WITH_APPLE=1",
+					"AKU_WITH_IOS=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"./\"",
 					"\"../../src/config\"",
@@ -450,7 +449,7 @@
 					"\"../../src\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = ../../lib/ios;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -470,6 +469,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"AKU_WITH_APPLE=1",
+					"AKU_WITH_IOS=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"./\"",
 					"\"../../src/config\"",
@@ -477,7 +481,7 @@
 					"\"../../src\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = ../../lib/ios;
 				OTHER_CFLAGS = (
 					"-include",

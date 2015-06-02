@@ -14,6 +14,9 @@ MOAI_SDK_HOME=$(abspath ${MOAI_SDK_HOME})
 # add Moai util directory to path
 export PATH=$PATH:$MOAI_SDK_HOME/util
 
+# add local bin directory to path
+export PATH=$PATH:$MOAI_SDK_HOME/bin/osx
+
 # call moaiutil
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
