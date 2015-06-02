@@ -26,7 +26,7 @@ public class MoaiWildTangentAds {
 
 	private static final String TEST_UNIT_ID    = "/6499/example/interstitial";
 	private static final String RELEASE_UNIT_ID = "/4337/Mobile/Interstitial";
-	private static final boolean RELEASE_MODE   = false;
+	private static final boolean RELEASE_MODE   = true;
 
 	private static PublisherInterstitialAd mInterstitialAd = null;
 	private static Activity mActivity					   = null;

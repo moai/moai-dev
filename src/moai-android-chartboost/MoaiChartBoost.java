@@ -28,16 +28,13 @@ public class MoaiChartBoost extends ChartboostDelegate {
 	protected static native void AKUInvokeListener ( int eventID );
 	
 	//----------------------------------------------------------------//
-	public static void onBackPressed ( Activity activity ) {
+	public static void onBackPressed () {
 		
         MoaiLog.i ( "MoaiChartBoost: onBackPressed" );
 
 		if ( Chartboost.onBackPressed ()) {
         	return;
 		}
-    	else {
-        	activity.onBackPressed ();
-    	}
     }
 	
 	//----------------------------------------------------------------//
