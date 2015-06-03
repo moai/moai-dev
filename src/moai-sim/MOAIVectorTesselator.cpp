@@ -1224,10 +1224,12 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* for
 	size_t vertexSize = format->GetVertexSize ();
 	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
-		stream.Seek ( vertexSize - this->mVtxExtraSize, SEEK_SET );
+		stream.Seek ( base + ( vertexSize - this->mVtxExtraSize ), SEEK_SET );
 		
 		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
 		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
+		
+		stream.Seek ( base, SEEK_SET );
 	}
 	
 	format->WriteCoord ( stream, x, y, z, 1.0f );
