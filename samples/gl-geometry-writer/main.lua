@@ -33,9 +33,6 @@ function makeCube ( size )
 	local vtxStream = MOAIMemStream.new ()
 	local idxStream = MOAIMemStream.new ()
 
-	--local meshBuilder = MOAIMeshBuilder.new ()
-	--meshBuilder:setVertexFormat ( vtxFormat )
-
 	local geometryWriter = MOAIGeometryWriter.new ()
 	geometryWriter:setVertexFormat ( vtxFormat )
 
@@ -66,13 +63,6 @@ function makeCube ( size )
 
 	local mesh = geometryWriter:getMesh ( vtxStream, idxStream, 2 )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
-
-	--mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-	--mesh:setIndexBuffer ( idxBuffer, 2 )
-	--mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
-	
-	--mesh:setTotalElements ( 6 )
-	--mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 	return mesh
 end

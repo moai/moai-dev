@@ -509,28 +509,25 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
 	u32 totalElements = 0;
-
-	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 4, false );
-
-	if ( format ) {
 	
-		MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
-		MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
+	MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
+	MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
 
-		if ( vtxBuffer && idxBuffer ) {
+	if ( vtxBuffer && idxBuffer ) {
+	
+		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
-			u32 idxSizeInBytes = state.GetValue < u32 >( 5, 4 );
-			
-			totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
-		}
-		else {
-			
-			MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
-			MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
+		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
+	}
+	else {
 		
-			if ( vtxStream && idxStream ) {
-				totalElements = self->Tesselate ( vtxStream, idxStream, format );
-			}
+		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
+		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
+		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
+	
+		if ( vtxStream && idxStream ) {
+			totalElements = self->Tesselate ( vtxStream, idxStream, format );
 		}
 	}
 	

@@ -74,7 +74,7 @@
 
 	mObserver = [[ NSNotificationCenter defaultCenter ]
 		addObserverForName:kReachabilityChangedNotification
-		object:[ UIApplication sharedApplication ]
+		object:nil
 		queue:nil
 		usingBlock:^( NSNotification* notification ) {
 		
