@@ -497,15 +497,6 @@ int MOAIVectorTesselator::_setVertexExtra ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIVectorTesselator::_setVertexFormat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
-	
-	self->mVertexFormat.Set ( *self, MOAIVertexFormat::AffirmVertexFormat ( state, 2 ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
@@ -521,12 +512,12 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	
 	MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
 	MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
-	
+
 	if ( vtxBuffer && idxBuffer ) {
 	
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
-
+		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 5, false );
+		
 		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
 	}
 	else {
@@ -535,7 +526,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
 		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
 	
-		if ( vtxStream && idxStream && format ) {
+		if ( vtxStream && idxStream ) {
 			totalElements = self->Tesselate ( vtxStream, idxStream, format );
 		}
 	}
@@ -545,12 +536,6 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	if ( region ) {
 		totalElements = self->Tesselate ( region );
 	}
-	
-	//MOAIMeshBuilder* meshBuilder = state.GetLuaObject < MOAIMeshBuilder >( 2, false );
-	
-	//if ( meshBuilder ) {
-	//	totalElements = self->Tesselate ( meshBuilder );
-	//}
 	
 	state.Push ( totalElements );
 	return 1;
@@ -685,7 +670,6 @@ MOAIVectorTesselator::MOAIVectorTesselator () :
 MOAIVectorTesselator::~MOAIVectorTesselator () {
 
 	this->Clear ();
-	this->mVertexFormat.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -918,7 +902,6 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setStrokeWidth",			_setStrokeWidth },
 		{ "setVerbose",				_setVerbose },
 		{ "setVertexExtra",			_setVertexExtra },
-		{ "setVertexFormat",		_setVertexFormat },
 		{ "setWindingRule",			_setWindingRule },
 		{ "tesselate",				_tesselate },
 		{ "worldToDrawing",			_worldToDrawing },
@@ -1232,7 +1215,7 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 //----------------------------------------------------------------//
 void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID ) {
 
-	format = format ? format : ( this->mVertexFormat ? this->mVertexFormat : MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZC ));
+	format = format ? format : MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZC );
 	assert ( format );
 
 	size_t base = stream.GetCursor ();

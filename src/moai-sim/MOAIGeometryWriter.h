@@ -46,6 +46,7 @@ public:
 	void			ApplyColor				( ZLStream& stream, const ZLColorVec& color );
 	void			ApplyLinearGradient		( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
 	MOAIMesh*		GetMesh					( ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes );
+	u32				GetMesh					( ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes );
 					MOAIGeometryWriter		();
 					~MOAIGeometryWriter		();
 	void			PruneVertices			( MOAIStream& vtxStream, MOAIStream& idxStream );

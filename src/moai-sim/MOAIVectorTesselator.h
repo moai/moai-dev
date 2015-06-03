@@ -27,8 +27,6 @@ private:
 		VERTEX_SIZE = 16,
 	};
 
-	MOAILuaSharedPtr < MOAIVertexFormat >	mVertexFormat;
-
 	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
 	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
 	
@@ -91,7 +89,6 @@ private:
 	static int		_setStrokeWidth			( lua_State* L );
 	static int		_setVerbose				( lua_State* L );
 	static int		_setVertexExtra			( lua_State* L );
-	static int		_setVertexFormat		( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
 	static int		_tesselate				( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
