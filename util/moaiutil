@@ -17,6 +17,14 @@ export PATH=$PATH:$MOAI_SDK_HOME/util
 # add local bin directory to path
 export PATH=$PATH:$MOAI_SDK_HOME/bin/osx
 
+# if we're missing moai, build it
+if ! [ -x "$(which moai)" ]
+then
+	pushd $MOAI_SDK_HOME/xcode/osx > /dev/null
+	./build.sh
+	popd > /dev/null
+fi
+
 # call moaiutil
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
