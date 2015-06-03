@@ -506,6 +506,7 @@ TARGETS = {
 			'FLURRY',
 			'GOOGLE_PLAY_SERVICES',
 			'HTTP_CLIENT',
+			'HTTP_SERVER',
 			'LUAEXT',
 			'SIM',
 			'TAPJOY',
@@ -538,6 +539,7 @@ STATIC_LINK_ORDER = {
 	'libmoai-android',
 	'libmoai-box2d',
 	'libmoai-http-client',
+	'libmoai-http-server',
 	'libmoai-fmod-ex',
 	'libmoai-luaext',
 	'libmoai-untz',
@@ -561,6 +563,7 @@ STATIC_LINK_ORDER = {
 	'libpng',
 	'libtess',
 	
+	'libmongoose',
 	'libcurl',
 	'libcares',
 	'libssl',
