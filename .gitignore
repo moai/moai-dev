@@ -1,5 +1,6 @@
 obj/
 libs/
+util/libmoai
 
 Thumbs.db
 .DS_Store
