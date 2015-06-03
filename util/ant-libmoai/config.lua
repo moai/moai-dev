@@ -305,6 +305,27 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
+	HTTP_SERVER = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_HTTP_SERVER',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/mongoose',
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-mongoose.mk',
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmongoose libmoai-http-server',
+	},
+
+	----------------------------------------------------------------
 	LUAEXT = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_LUAEXT',

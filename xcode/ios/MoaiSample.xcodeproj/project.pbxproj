@@ -1617,7 +1617,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\n\nif [ -f \"$SRCROOT/lua\" ]\nthen\n    cp -a \"$SRCROOT/lua\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\nfi\n";
+			shellScript = "rm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\nmkdir -p \"$SRCROOT/lua\"\ncp -a \"$SRCROOT/lua\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\n";
 		};
 		CDF389EB1A51CED500BDEB4D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

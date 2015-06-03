@@ -41,6 +41,8 @@
 		CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */; };
 		CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CD79ECBF1B1FAB2100863789 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD79ECBE1B1FAB2100863789 /* lua */; };
+		CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */; };
 		CD9F769E1808DEDC0001EF0C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9F769D1808DEDC0001EF0C /* AdSupport.framework */; };
 		CDBA1E4F1B1E44FA00DCDC75 /* libmoai-ios-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */; };
 		CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */; };
@@ -108,6 +110,8 @@
 		CD4DF2C51A12E62900E9A523 /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CD4DF2C61A12E62900E9A523 /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		CD79ECBE1B1FAB2100863789 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
+		CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-http-server.a"; path = "../../lib/ios/libmoai-ios-http-server.a"; sourceTree = "<group>"; };
 		CD9F769D1808DEDC0001EF0C /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-apple.a"; path = "../../lib/ios/libmoai-ios-apple.a"; sourceTree = "<group>"; };
 		CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-movie.a"; path = "../../lib/ios/libmoai-ios-movie.a"; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 				CD4DF2B81A12E35B00E9A523 /* libmoai-ios-box2d.a in Frameworks */,
 				CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */,
 				CD4DF2BA1A12E35B00E9A523 /* libmoai-ios-http-client.a in Frameworks */,
+				CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */,
 				CD4DF2BB1A12E35B00E9A523 /* libmoai-ios-luaext.a in Frameworks */,
 				CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */,
 				CD4DF2BC1A12E35B00E9A523 /* libmoai-ios-sim.a in Frameworks */,
@@ -221,6 +226,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CD79ECBE1B1FAB2100863789 /* lua */,
 				CDBA1E821B1E735700DCDC75 /* Default-568h@2x.png */,
 				CDBA1E831B1E735700DCDC75 /* Default.png */,
 				CDBA1E841B1E735700DCDC75 /* Default@2x.png */,
@@ -283,6 +289,7 @@
 				CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */,
 				CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */,
 				CD4DF2AD1A12E35B00E9A523 /* libmoai-ios-http-client.a */,
+				CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */,
 				CD4DF2AE1A12E35B00E9A523 /* libmoai-ios-luaext.a */,
 				CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */,
 				CD4DF2AF1A12E35B00E9A523 /* libmoai-ios-sim.a */,
@@ -384,6 +391,7 @@
 				CDBA1E931B1E735700DCDC75 /* Default.png in Resources */,
 				CDBA1E961B1E735700DCDC75 /* Icon-40@2x.png in Resources */,
 				CDBA1E921B1E735700DCDC75 /* Default-568h@2x.png in Resources */,
+				CD79ECBF1B1FAB2100863789 /* lua in Resources */,
 				CDBA1E971B1E735700DCDC75 /* Icon-72.png in Resources */,
 				CDBA1E9E1B1E735700DCDC75 /* Icon-Small.png in Resources */,
 				CDBA1E951B1E735700DCDC75 /* Icon-40.png in Resources */,
@@ -410,7 +418,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\n\nif [ -f \"$SRCROOT/lua\" ]\nthen\n    cp -a \"$SRCROOT/lua\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\nfi\n";
+			shellScript = "rm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\nmkdir -p \"$SRCROOT/lua\"\ncp -a \"$SRCROOT/lua\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/lua\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
