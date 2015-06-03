@@ -28,7 +28,7 @@
 //================================================================//
 @interface MOAIReachabilityListener : NSObject {
 
-	MOAIGlobals*			mContext;
+	id						mObserver;
 	MOAIReachability*		mReach;
 }
 
@@ -70,9 +70,25 @@
 
 	[ self stopListener ];
 
-	mContext = MOAIGlobalsMgr::Get ();
+	MOAIGlobals* context = MOAIGlobalsMgr::Get ();
 
-	[[ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector ( reachabilityChanged: ) name: kReachabilityChangedNotification object: nil ];
+	mObserver = [[ NSNotificationCenter defaultCenter ]
+		addObserverForName:kReachabilityChangedNotification
+		object:[ UIApplication sharedApplication ]
+		queue:nil
+		usingBlock:^( NSNotification* notification ) {
+		
+			MOAIScopedContext scopedContext;
+
+			if ( !MOAIGlobalsMgr::Check ( context )) return;
+			MOAIGlobalsMgr::Set ( context );
+			
+			NSLog ( @"%@", notification.name );
+			
+			[ self updateMoaiEnvironment ];
+		}
+	];
+
 	mReach = [[ MOAIReachability reachabilityForInternetConnection ] retain ];
 	[ mReach startNotifier ];
 }
@@ -81,21 +97,19 @@
 //----------------------------------------------------------------//
 - ( void ) stopListener {
 
+	if ( mObserver ) {
+		[[ NSNotificationCenter defaultCenter ] removeObserver:mObserver ];
+	}
+
 	if ( mReach ) {
 		[ mReach stopNotifier ];
 		[ mReach release ];
-		[[ NSNotificationCenter defaultCenter ] removeObserver: self name: kReachabilityChangedNotification object: nil ];
 	}
 	mReach = nil;
 }
 
 //----------------------------------------------------------------//
 -( void ) updateMoaiEnvironment {
-
-	MOAIScopedContext scopedContext;
-
-	if ( !MOAIGlobalsMgr::Check ( mContext )) return;
-	MOAIGlobalsMgr::Set ( mContext );
 	
 	if ( !MOAIEnvironment::IsValid ()) return;
 	MOAIEnvironment& environment = MOAIEnvironment::Get();

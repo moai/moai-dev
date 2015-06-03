@@ -450,6 +450,8 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
 
+	MOAIGlobals* context = MOAIGlobalsMgr::Get ();
+
 	NotificationListenerMapIt notificationIt = this->mNotificationListenerMap.begin ();
 	for ( ; notificationIt != this->mNotificationListenerMap.end (); ++notificationIt ) {
 		NSString* observerName = [ NSString stringWithUTF8String:notificationIt->first ];
@@ -460,6 +462,12 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 			object:[ UIApplication sharedApplication ]
 			queue:nil
 			usingBlock:^( NSNotification* notification ) {
+			
+				MOAIScopedContext scopedContext;
+
+				if ( !MOAIGlobalsMgr::Check ( context )) return;
+				MOAIGlobalsMgr::Set ( context );
+			
 				NSLog ( @"%@", notification.name );
 				this->InvokeListener ( eventID );
 				
