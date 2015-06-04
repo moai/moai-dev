@@ -390,7 +390,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		
 		u32 totalSpritePairs = this->mPairs.Size ();
 		
-		u32 materialID = this->mPairs [ 0 ].mMaterialID - 1;
+		u32 materialID = MOAIMaterialBatch::UNKNOWN;
 		
 		for ( u32 i = base; i < top; ++i ) {
 			

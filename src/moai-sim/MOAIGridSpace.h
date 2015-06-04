@@ -107,10 +107,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	MOAICellCoord	GetAxialHexCellCoord		( float x, float y ) const;
-	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
-	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
-	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
-	virtual void	OnResize				();
+	MOAICellCoord	GetHexCellCoord				( float x, float y, float a, float b ) const;
+	MOAICellCoord	GetObliqueCellCoord			( float x, float y ) const;
+	ZLVec2D			GetRectPoint				( float x, float y, float width, float height, u32 position ) const;
+	virtual void	OnResize					();
 
 public:
 	
