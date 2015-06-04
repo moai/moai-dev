@@ -2460,6 +2460,7 @@ void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "COLOR_FMT_A_1",				( u32 )ZLColor::A_1 );
 	state.SetField ( -1, "COLOR_FMT_A_4",				( u32 )ZLColor::A_4 );
 	state.SetField ( -1, "COLOR_FMT_A_8",				( u32 )ZLColor::A_8 );
+	state.SetField ( -1, "COLOR_FMT_LA_8",				( u32 )ZLColor::LA_8 );
 	state.SetField ( -1, "COLOR_FMT_RGB_888",			( u32 )ZLColor::RGB_888 );
 	state.SetField ( -1, "COLOR_FMT_RGB_565",			( u32 )ZLColor::RGB_565 );
 	state.SetField ( -1, "COLOR_FMT_RGBA_5551",			( u32 )ZLColor::RGBA_5551 );
