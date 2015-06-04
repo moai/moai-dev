@@ -37,7 +37,7 @@ public:
 	virtual size_t		ReadBytes				( void* buffer, size_t size );
 	STLString			ReadString				( size_t size );
 	STLString			ReadToken				( cc8* delimiters = 0 );
-	int					Seek					( long offset, int origin );
+	int					Seek					( long offset, int origin = SEEK_SET );
 	virtual int			SetCursor				( long offset );
 	virtual size_t		SetLength				( size_t length );
 	virtual size_t		WriteBytes				( const void* buffer, size_t size );

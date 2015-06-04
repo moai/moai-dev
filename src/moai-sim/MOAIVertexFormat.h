@@ -111,7 +111,9 @@ public:
 								MOAIVertexFormat				();
 								~MOAIVertexFormat				();
 	
+	void						PrintVertices					( ZLStream& stream ) const;
 	void						PrintVertices					( ZLStream& stream, size_t size ) const;
+	void						PrintVertices					( const void* buffer, size_t size ) const;
 	
 	ZLVec4D						ReadAttribute					( ZLStream& stream, u32 attrID, float zFallback, float wFallback ) const;
 	ZLColorVec					ReadColor						( ZLStream& stream ) const;

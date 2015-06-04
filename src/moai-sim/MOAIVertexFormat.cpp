@@ -218,11 +218,14 @@ int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentE
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 
 		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
-			
+		
 		float tolerance = attribute.mType == ZGL_TYPE_FLOAT ? componentEpsilon : 0.0f;
 		
-		ZLVec4D coord0 = MOAIVertexFormat::UnpackCoord ( v0, attribute );
-		ZLVec4D coord1 = MOAIVertexFormat::UnpackCoord ( v1, attribute );
+		const void* a0 = ( const void* )(( size_t )v0 + attribute.mOffset );
+		const void* a1 = ( const void* )(( size_t )v1 + attribute.mOffset );
+		
+		ZLVec4D coord0 = MOAIVertexFormat::UnpackCoord ( a0, attribute );
+		ZLVec4D coord1 = MOAIVertexFormat::UnpackCoord ( a1, attribute );
 		
 		if ( attribute.mUse == ARRAY_NORMAL ) {
 		
@@ -264,6 +267,7 @@ int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentE
 			}
 		}
 	}
+	
 	return 0;
 }
 
@@ -505,6 +509,12 @@ size_t MOAIVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& coord, con
 }
 
 //----------------------------------------------------------------//
+void MOAIVertexFormat::PrintVertices ( ZLStream& stream ) const {
+
+	this->PrintVertices ( stream, stream.GetLength () - stream.GetCursor ());
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
@@ -551,6 +561,14 @@ void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 			printf ( "\n" );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::PrintVertices ( const void* buffer, size_t size ) const {
+
+	ZLByteStream stream;
+	stream.SetBuffer ( buffer, size, size );
+	this->PrintVertices ( stream, size );
 }
 
 //----------------------------------------------------------------//

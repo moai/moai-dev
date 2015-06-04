@@ -409,7 +409,7 @@ void MOAIGeometryWriter::PruneVertices ( MOAIStream& vtxStream, MOAIStream& idxS
 			//printf ( "REDUCE: %d -> %d\n", i, index );
 		}
 		else {
-			
+		
 			vtxStream.Seek ( vertex, SEEK_SET );
 			vtxStream.ReadBytes ( vtxBuffer0, vtxSize );
 		
