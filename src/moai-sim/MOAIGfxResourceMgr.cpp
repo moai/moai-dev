@@ -183,6 +183,11 @@ void MOAIGfxResourceMgr::Update () {
 	zglBegin ();
 	
 	u32 top = this->mDeleterStack.GetTop ();
+	
+	if ( top ) {
+		zglFlush ();
+	}
+	
 	for ( u32 i = 0; i < top; ++i ) {
 		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
 		deleter.Delete ();

@@ -31,13 +31,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIWheelSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueWheelEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float value );
+	static void			EnqueueWheelEvent		( u8 deviceID, u8 sensorID, float value );
 						MOAIWheelSensor			();
 						~MOAIWheelSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Reset					();
+	void				ResetState				();
 };
 
 #endif

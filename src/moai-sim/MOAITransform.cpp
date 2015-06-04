@@ -827,6 +827,8 @@ int MOAITransform::_setShearByX ( lua_State* L ) {
 	self->mShearYX = state.GetValue < float >( 2, 0.0f );
 	self->mShearZX = state.GetValue < float >( 3, 0.0f );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -845,6 +847,8 @@ int MOAITransform::_setShearByY ( lua_State* L ) {
 	self->mShearXY = state.GetValue < float >( 2, 0.0f );
 	self->mShearZY = state.GetValue < float >( 3, 0.0f );
 
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -862,6 +866,8 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 
 	self->mShearXZ = state.GetValue < float >( 2, 0.0f );
 	self->mShearYZ = state.GetValue < float >( 3, 0.0f );
+
+	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -942,17 +948,47 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 //----------------------------------------------------------------//
 void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
-	localToWorldMtx.ScRoTr (
-		this->mScale.mX,
-		this->mScale.mY,
-		this->mScale.mZ,
-		ClampEuler ( this->mRot.mX ) * ( float )D2R,
-		ClampEuler ( this->mRot.mY ) * ( float )D2R,
-		ClampEuler ( this->mRot.mZ ) * ( float )D2R,
-		this->mLoc.mX,
-		this->mLoc.mY,
-		this->mLoc.mZ
-	);
+	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
+	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
+	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
+
+	if ( this->mEulerOrder == EULER_XYZ ) {
+
+		localToWorldMtx.ScRoTr (
+			this->mScale.mX,
+			this->mScale.mY,
+			this->mScale.mZ,
+			xRot,
+			yRot,
+			zRot,
+			this->mLoc.mX,
+			this->mLoc.mY,
+			this->mLoc.mZ
+		);
+	}
+	else {
+	
+		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
+	
+		ZLAffine3D euler [ 3 ];
+		
+		euler [ 0 ].RotateX ( xRot );
+		euler [ 1 ].RotateY ( yRot );
+		euler [ 2 ].RotateZ ( zRot );
+		
+		u32 idx = this->mEulerOrder & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
+		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
+		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
+	}
 	
 	ZLAffine3D shear;
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
@@ -1028,7 +1064,8 @@ MOAITransform::MOAITransform () :
 	mPiv ( 0.0f, 0.0f, 0.0f ),
 	mLoc ( 0.0f, 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f, 1.0f ),
-	mRot ( 0.0f, 0.0f, 0.0f ) {
+	mRot ( 0.0f, 0.0f, 0.0f ),
+	mEulerOrder ( EULER_XYZ ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransformBase )

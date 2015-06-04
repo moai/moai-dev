@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
+package com.ziplinegames.moai;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -86,10 +86,13 @@ public class MoaiActivity extends Activity {
 		requestWindowFeature ( Window.FEATURE_NO_TITLE );
 		super.onCreate ( savedInstanceState );
 
+		MoaiLog.i ( "on create" );
 		Moai.onCreate ( this );
 
+		MoaiLog.i ( "createContext" );
 		Moai.createContext ();
 
+		MoaiLog.i ( "init" );
 		Moai.init ();
 		
 		getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
@@ -108,7 +111,7 @@ public class MoaiActivity extends Activity {
 			    Moai.mount ( "bundle", myApp.publicSourceDir );
 			}
 			
-			Moai.setWorkingDirectory ( "@WORKING_DIR@" );
+			Moai.setWorkingDirectory ( "bundle/assets" ); // TODO: this should be set from a string resource or a manifest entry
 		} catch ( NameNotFoundException e ) {
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}
@@ -142,10 +145,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		
-		// Moai.runScript ( "../init.lua" );
-		Moai.runScript ( "bootstrap.lua" );
-			
+		Moai.runScript ( "main.lua" ); // TODO: this should be set from a string resource or a manifest entry
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 

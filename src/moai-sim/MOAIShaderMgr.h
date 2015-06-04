@@ -38,6 +38,7 @@ public:
 		LINE_SHADER_3D,
 		MESH_SHADER,
 		TOTAL_SHADERS,
+		UNKNOWN_SHADER			= 0xffffffff,
 	};
 
 private:
@@ -55,8 +56,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					BindShader				( u32 shaderID );
-	MOAIShaderProgram&		GetProgram				( u32 shaderID );
-	MOAIShader&				GetShader				( u32 shaderID );
+	MOAIShaderProgram*		GetProgram				( u32 shaderID );
+	MOAIShader*				GetShader				( u32 shaderID );
 							MOAIShaderMgr			();
 							~MOAIShaderMgr			();
 	void					RegisterLuaClass		( MOAILuaState& state );

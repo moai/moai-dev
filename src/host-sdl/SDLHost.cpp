@@ -46,7 +46,7 @@ namespace InputSensorID {
 		MOUSE_RIGHT,
 		MOUSE_WHEEL,
 		JOYSTICK,
-		TOUCH,
+//		TOUCH,
 		TOTAL,
 	};
 }
@@ -109,6 +109,9 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		// According to the SDL documentation, this will open an on-screen keyboard on some platforms.
 		// Currently we're using the SDL host for desktop platforms only, so this should not be a problem.
 		SDL_StartTextInput ();
+	}
+	else {
+		SDL_SetWindowSize ( sWindow, width, height );
 	}
 }
 
@@ -217,18 +220,18 @@ void Init ( int argc, char** argv ) {
 }
 
 // based on host-glut 
-void _onMultiButton( int touch_id, float x, float y, int state );
-void _onMultiButton( int touch_id, float x, float y, int state ) {
-
-	AKUEnqueueTouchEvent (
-		InputDeviceID::DEVICE,
-		InputSensorID::TOUCH,
-		touch_id,
-		state == SDL_FINGERDOWN,
-		( float )x,
-		( float )y
-	);
-}
+//void _onMultiButton( int touch_id, float x, float y, int state );
+//void _onMultiButton( int touch_id, float x, float y, int state ) {
+//
+//	AKUEnqueueTouchEvent (
+//		InputDeviceID::DEVICE,
+//		InputSensorID::TOUCH,
+//		touch_id,
+//		state == SDL_FINGERDOWN,
+//		( float )x,
+//		( float )y
+//	);
+//}
 
 
 
@@ -410,17 +413,17 @@ void MainLoop () {
 					}
 					break;
 
-                case SDL_FINGERDOWN:
-                case SDL_FINGERUP:
-                case SDL_FINGERMOTION:
-                    const int id    = ( int )sdlEvent.tfinger.fingerId;
-					const float x   = sdlEvent.tfinger.x;
-					const float y   = sdlEvent.tfinger.y;
-					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
-
-					_onMultiButton(id, x, y, state);
-
-					break;
+//                case SDL_FINGERDOWN:
+//                case SDL_FINGERUP:
+//                case SDL_FINGERMOTION:
+//                    const int id    = ( int )sdlEvent.tfinger.fingerId;
+//					const float x   = sdlEvent.tfinger.x;
+//					const float y   = sdlEvent.tfinger.y;
+//					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
+//
+//					_onMultiButton(id, x, y, state);
+//
+//					break;
 			} //end_switch
 		}//end_while
 		

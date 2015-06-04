@@ -16,7 +16,7 @@ class ZLMemStream :
 private:
 
 	// guest buffer is an optimization; handle case where we want to use some locally
-	// allocated memory to read data of unknown size. if a write operation overflows the
+	// allocated memory to read or write data of unknown size. if a write operation overflows the
 	// guest buffer then its contents are copied into the main buffer and the guest buffer
 	// is forgotten. usage would be to allocate a buffer on the stack, set it as the guest
 	// buffer then write whatever is needed.
@@ -28,7 +28,7 @@ private:
 
 	ZLLeanArray < void* > mChunks;
 
-	size_t		mBase;			// offset into base chunk (in the event of DiscardFront); never larged than chunk size
+	size_t		mBase;			// offset into base chunk (in the event of DiscardFront); never larger than chunk size
 	size_t		mCursor;		// current position in stream
 	size_t		mLength;		// current length of stream
 
@@ -42,6 +42,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear				();
+	void			Compact				();
 	void			DiscardAll			();
 	void			DiscardBack			( size_t size );
 	void			DiscardFront		( size_t size );
@@ -52,6 +53,7 @@ public:
 	void			Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
 	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
+	size_t			SetLength			( size_t length );
 	size_t			WriteBytes			( const void* buffer, size_t size );
 					ZLMemStream			();
 					~ZLMemStream		();

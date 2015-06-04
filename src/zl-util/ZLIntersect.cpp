@@ -59,35 +59,98 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 //	-1:		Box is behind the plane
 s32 ZLSect::BoxToPlane ( const ZLBox& b, const ZLPlane3D& p ) {
 
-	// Get the box spans
-	ZLVec3D spans = b.mMax;
-	spans.Sub ( b.mMin );
-	spans.Scale ( 0.5f );
-
-	// Get the span dots
-	float sdX = spans.mX * p.mNorm.mX;
-	if ( sdX < 0.0f ) sdX = -sdX;
-
-	float sdY = spans.mY * p.mNorm.mY;
-	if ( sdY < 0.0f ) sdY = -sdY;
-
-	float sdZ = spans.mZ * p.mNorm.mZ;
-	if ( sdZ < 0.0f ) sdZ = -sdZ;
-
-	// Get the radius of the box (as projected onto the plane's normal)
-	float r = sdX + sdY + sdZ;
-
-	// Get the box center
-	ZLVec3D c = b.mMin;
-	c.Add ( spans );
-
 	// The distance from the center of the box to the plane
-	float d = ZLDist::VecToPlane ( c, p );
+	float r;
+	float d = ZLDist::BoxToPlane ( b, p, r );
 
 	// Now test against the span
 	if ( d > r ) return 1; // The box is in front of the plane
 	if ( d < -r ) return -1; // The box is behind the plane
 	return 0; // The box intersects the plane
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::LineToLine ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0, const ZLVec2D& q1 ) {
+
+	float t;
+	return ZLSect::LineToLine ( p0, p1, q0, q1, t );
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::LineToLine ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0, const ZLVec2D& q1, float& t ) {
+
+	// TODO: this one ignores colinear lines. provide an alternative method that cares about colinear lines.
+
+	ZLVec2D r = ZLVec2D::Sub ( p1, p0 ); // a0, b0
+	ZLVec2D s = ZLVec2D::Sub ( q1, q0 ); // a1, b1
+
+	float det = ZLVec2D::Cross ( r, s ); // c0
+
+	// parallel
+	if ( det == 0 ) return SECT_PARALLEL;
+
+	ZLVec2D m = ZLVec2D::Sub ( q0, p0 );
+
+	t = ZLVec2D::Cross ( m, s ) / det;
+	float u = ZLVec2D::Cross ( m, r ) / det;
+
+	return ( t >= 0.0f ) && ( t <= 1.0f ) && ( u >= 0.0f ) && ( u <= 1.0f ) ? SECT_HIT : SECT_HIT_OUT_OF_RANGE;
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::PlaneToPlane ( const ZLPlane2D& p0, const ZLPlane2D& p1, ZLVec2D& loc ) {
+
+	loc = p0.mNorm;
+	loc.Scale ( -p0.mDist );
+
+	ZLVec2D vec = p0.mNorm;
+	vec.Rotate90Clockwise ();
+	
+	float t;
+	u32 result = ZLSect::VecToPlane ( loc, vec, p1, t );
+	if ( result == SECT_HIT ) {
+		loc.Add ( vec, t );
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::PlaneToPlane ( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& loc, ZLVec3D& vec ) {
+
+	vec = ZLVec3D::Cross ( p0.mNorm, p1.mNorm );
+    if ( vec.LengthSqrd () < FLT_EPSILON ) return SECT_PARALLEL;
+
+	u32 component;
+	
+	float absX = ABS ( vec.mX );
+	float absY = ABS ( vec.mY );
+	float absZ = ABS ( vec.mZ );
+
+	// find the mightiest component
+    switch (( absX > absY ) ? ( absX > absZ ? 0 : 2 ) : ( absY > absZ ? 1 : 2 )) {
+	
+		// solve using X
+		case 0:
+			loc.mX = 0;
+			loc.mY = (( p1.mDist * p0.mNorm.mZ ) - ( p0.mDist * p1.mNorm.mZ )) / vec.mX;
+			loc.mZ = (( p0.mDist * p1.mNorm.mY ) - ( p1.mDist * p0.mNorm.mY )) / vec.mX;
+			break;
+		
+		// solve using Y
+		case 1:
+			loc.mX = (( p0.mDist * p1.mNorm.mZ ) - ( p1.mDist * p0.mNorm.mZ )) / vec.mY;
+			loc.mY = 0;
+			loc.mZ = (( p1.mDist * p0.mNorm.mX ) - ( p0.mDist * p1.mNorm.mX )) / vec.mY;
+			break;
+		
+		// solve using Z
+		case 2:
+			loc.mX = (( p1.mDist * p0.mNorm.mY ) - ( p0.mDist * p1.mNorm.mY )) / vec.mZ;
+			loc.mY = (( p0.mDist * p1.mNorm.mX ) - ( p1.mDist * p0.mNorm.mX )) / vec.mZ;
+			loc.mZ = 0;
+    }
+	
+    return SECT_HIT;
 }
 
 //----------------------------------------------------------------//

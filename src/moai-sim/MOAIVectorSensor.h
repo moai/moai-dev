@@ -31,7 +31,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIVectorSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueVectorEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float x, float y, float z );
+	static void			EnqueueVectorEvent		( u8 deviceID, u8 sensorID, float x, float y, float z );
 						MOAIVectorSensor		();
 						~MOAIVectorSensor		();
 	void				ParseEvent				( ZLStream& eventStream );

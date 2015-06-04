@@ -29,10 +29,10 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess ) {
+int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
 
 	if ( this->mIsClosed ) {
-		return MOAIVectorShape::AddStrokeContours ( tess );
+		return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 	}
 
 	int nVerts = ( int )this->mVertices.Size ();
@@ -100,7 +100,7 @@ bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool clos
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetDrawingToWorld (), vertices, total );
+		memcpy ( this->mVertices, vertices, total * sizeof ( ZLVec2D ));
 		this->mIsClosed = closed;
 	}
 	return true;

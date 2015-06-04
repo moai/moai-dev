@@ -20,9 +20,11 @@ class MOAIGfxQuadDeck2D :
 private:
 
 	ZLLeanArray < MOAIQuadBrush >		mQuads;
+	ZLLeanArray < u32 >					mMaterialIDs;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
+	static int	_setMaterialID			( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
@@ -31,16 +33,17 @@ private:
 	static int	_transformUV			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	ZLBox		ComputeMaxBounds		();
-	ZLBox		GetItemBounds			( u32 idx );
+	MOAIQuadBrush&		AffirmQuad				( u32 idx );
+	ZLBox				ComputeMaxBounds		();
+	ZLBox				GetItemBounds			( u32 idx );
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxQuadDeck2D )
 	
 	//----------------------------------------------------------------//
-	void		DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	bool		Inside					( u32 idx, ZLVec3D vec, float pad );
+	void		DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	bool		Inside					( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );

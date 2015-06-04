@@ -45,7 +45,7 @@ public:
 class MOAIMesh :
 	public MOAIDeck,
 	public MOAIGfxResource {
-private:
+protected:
 
 	ZLLeanArray < u32 >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	u32										mCurrentVAO;
@@ -96,9 +96,13 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
+	GET_SET ( u32, PrimType, mPrimType )
+	GET_SET ( u32, TotalElements, mTotalElements )
+	GET_SET ( u32, IndexSizeInBytes, mIndexSizeInBytes )
+	
 	//----------------------------------------------------------------//
 	void				ClearBounds					();
-	void				DrawIndex					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	MOAIGfxState*		GetShaderDefault			();
 						MOAIMesh					();
 						~MOAIMesh					();
@@ -108,6 +112,7 @@ public:
 	void				ReserveVertexBuffers		( u32 total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void				SetBounds					( const ZLBox& bounds );
 	void				SetIndexBuffer				( MOAIGfxBuffer* indexBuffer );
 	void				SetVertexBuffer				( u32 idx, MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 	void				SetVertexBufferBounds		( u32 idx, bool hasBounds, const ZLBox& bounds );

@@ -8,6 +8,8 @@
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILua.h>
 
+#include <jansson.h>
+
 //================================================================//
 // MOAITestResult
 //================================================================//
@@ -26,6 +28,7 @@ public:
 	STLList < MOAITestResult > mChildren;
 
 	//----------------------------------------------------------------//
+	json_t*			ToJson					();
 	void			Push					( lua_State* L );
 };
 
@@ -34,21 +37,17 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAITestMgr :
-	public MOAIGlobalClass < MOAITestMgr, MOAIGlobalEventSource > {
+	public MOAIGlobalClass < MOAITestMgr, MOAILuaObject > {
 private:
 
-	MOAILuaStrongRef	mCallFunc;
-	MOAILuaStrongRef	mStagingFunc;
-	MOAILuaStrongRef	mTestingFunc;
-
-	STLString			mProjectDir;
-	STLString			mStagingDir;
-	STLString			mTestingDir;
+	MOAILuaStrongRef	mStepFunc;
 
 	STLString			mSuiteName;
 	
 	MOAITestResult*		mRoot;
 	MOAITestResult*		mCurrent;
+
+	bool				mStandalone;
 
 	//----------------------------------------------------------------//
 #ifndef _assert
@@ -56,18 +55,25 @@ private:
 #endif
 	static int		_comment				( lua_State* L );
 	static int		_error					( lua_State* L );
-	static int		_pop_test				( lua_State* L );
-	static int		_push_test				( lua_State* L );
+	static int		_popTest				( lua_State* L );
+	static int		_pushTest				( lua_State* L );
 	static int		_results				( lua_State* L );
-	static int		_setProjectDir			( lua_State* L );
-	static int		_setStagingDir			( lua_State* L );
-	static int		_setStagingFunc			( lua_State* L );
-	static int		_setTestingDir			( lua_State* L );
-	static int		_setTestingFunc			( lua_State* L );
+	static int		_setStepFunc			( lua_State* L );
+	static int		_setTimeout				( lua_State* L );
+	static int		_standalone				( lua_State* L );
 	static int		_suite					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void			Abort					();
+	void			Comment					( cc8* msg );
+	void			Error					( cc8* msg );
+	static void		OnAlarm					( int signum );
+	void			PopTest					();
 	void			PushResults				( lua_State* L );
+	void			PushTest				( cc8* name );
+	void			SetTimeout				();
+	void			SetTimeout				( float seconds );
+	void			WriteLog				();
 
 public:
 
@@ -78,6 +84,7 @@ public:
 					~MOAITestMgr			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Step					();
 };
 
 #endif

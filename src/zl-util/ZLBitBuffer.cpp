@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <zl-util/STLString.h>
 #include <zl-util/ZLBitBuffer.h>
+#include <zl-util/ZLLog.h>
 
 //================================================================//
 // helpers
@@ -12,6 +13,7 @@
 bool	check_bin	( const void* buffer, cc8* str );
 bool	check_hex	( const void* buffer, cc8* str );
 void	decode_bin	( void* buffer, cc8* str );
+void	print_bin	( const void* buffer, size_t size );
 
 //----------------------------------------------------------------//
 bool check_bin ( const void* buffer, cc8* str ) {
@@ -69,6 +71,38 @@ void decode_bin ( void* buffer, cc8* str ) {
 		
 		bytes [ byte ] = ( bytes [ byte ] & ~( 1 << shift )) | ( bit << shift );
 	}
+}
+
+//----------------------------------------------------------------//
+void print_bin ( const void* buffer, size_t size ) {
+
+	STLString str = "";
+
+	const u8* bytes = ( const u8* )buffer;
+
+	for ( size_t i = 0; i < size; ++i ) {
+	
+		u32 byte = i >> 3;
+		u32 shift = i & 0x07;
+		
+		u32 bit = ( bytes [ byte ] & ( 1 << shift ));
+		
+		str.write ( bit ? "1" : "0" );
+	}
+	printf ( "%s\n", str.c_str ());
+}
+
+//----------------------------------------------------------------//
+void print_bits ( u32 byte, u32 bits = 8 ) {
+
+	STLString str = "";
+
+	for ( size_t i = 0; i < bits; ++i ) {
+	
+		u32 bit = ( byte & ( 1 << i ));
+		str.write ( bit ? "1" : "0" );
+	}
+	printf ( "%s\n", str.c_str ());
 }
 
 //================================================================//
@@ -138,8 +172,8 @@ void ZLBitBuffer::Blit ( void* dest, size_t destX, const void* src, size_t srcX,
 				u32 srcValue = (( srcBytes [ 0 ] >> srcMod ) + ( srcBytes [ 1 ] << ( 8 - srcMod ))) & 0xff;
 				u32 destValue = (( destBytes [ 0 ] + ( destBytes [ 1 ] << 8 )) & ~( 0xff << destMod )) | ( srcValue << destMod );
 				
-				destBytes [ 0 ] = destValue & 0x000000ff;
-				destBytes [ 1 ] = ( destValue >> 8 ) & 0x000000ff;
+				destBytes [ 0 ] = destValue & 0xff;
+				destBytes [ 1 ] = ( destValue >> 8 ) & 0xff;
 				
 				srcBytes++;
 				destBytes++;
@@ -155,11 +189,11 @@ void ZLBitBuffer::Blit ( void* dest, size_t destX, const void* src, size_t srcX,
 				if (( srcMod + n ) > 8 ) {
 					srcValue = ( srcValue + ( *srcBytes << ( 8 - srcMod ))) & mask;
 				}
-				
-				*( destBytes++ ) = ( *destBytes & ~( mask << destMod )) | ( srcValue << destMod );
+
+				destBytes [ 0 ] = ( *destBytes & ~( mask << destMod )) | ( srcValue << destMod );
 				
 				if (( destMod + n ) > 8 ) {
-					*destBytes = ( *destBytes & ~( mask >> ( 8 - destMod ))) | ( srcValue >> ( 8 - destMod ));
+					destBytes [ 1 ] = ( destBytes [ 1 ] & ~( mask >> ( 8 - destMod ))) | ( srcValue >> ( 8 - destMod ));
 				}
 			}
 		}

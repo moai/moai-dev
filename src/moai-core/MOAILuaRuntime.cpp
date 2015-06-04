@@ -583,6 +583,19 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 	
 	int type = lua_type ( state, idx );
 	
+	switch ( type ) {
+		case LUA_TNIL:
+		case LUA_TBOOLEAN:
+		case LUA_TLIGHTUSERDATA:
+		case LUA_TNUMBER:
+		case LUA_TSTRING:
+			return;
+		default:
+			break;
+	}
+	
+	lua_checkstack ( state, 255 );
+	
 	if ( type == LUA_TUSERDATA ) {
 		MOAILuaObject* object = MOAILuaObject::IsMoaiUserdata ( state, idx ) ? ( MOAILuaObject* )state.GetPtrUserData ( idx ) : NULL;
 		if ( object && this->mTrackingMap.contains ( object )) {
@@ -598,13 +611,14 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 	// bail if we've already iterated into this item
 	const void* addr = lua_topointer ( state, idx );
 	
-	if ( traversalState.mTraversalStack.contains ( addr ) || traversalState.mIgnoreSet.contains ( addr )) return;
-	traversalState.mTraversalStack.insert ( addr );
-	
+	if ( traversalState.mIgnoreSet.contains ( addr )) return; // always ignore
+	if ( traversalState.mTraversalStack.contains ( addr )) return;
 	if ( traversalState.mIgnoreTraversed && ( traversalState.mTraversalSet.contains ( addr ))) return;
-	traversalState.mTraversalSet.insert ( addr );
 	
-	//printf ( "%s\n", path.c_str ());
+	traversalState.mTraversalStack.affirm ( addr );
+	traversalState.mTraversalSet.affirm ( addr );
+	
+	//printf ( "%d %s\n", idx, path.c_str ());
 	
 	switch ( type ) {
 	
@@ -618,13 +632,16 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 				
 				int keyIdx = state.AbsIndex ( -2 );
 				int valIdx = state.AbsIndex ( -1 );
-				
+
 				int keyType = lua_type ( state, keyIdx );
-				
 				cc8* keyName = lua_tostring ( state, keyIdx );
 				
 				// update the path and follow the keys (if iterable)
 				switch ( keyType ) {
+					
+					case LUA_TLIGHTUSERDATA:
+						keyPath.write ( "[%p]", lua_topointer ( state, keyIdx ));
+						break;
 					
 					case LUA_TBOOLEAN:
 					case LUA_TNUMBER:
@@ -646,6 +663,7 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 						const void* keyAddr = lua_topointer ( state, keyIdx );
 					
 						switch ( keyType ) {
+						
 							case LUA_TFUNCTION:
 								keyTypeName = "function";
 								break;
@@ -653,7 +671,11 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 							case LUA_TTABLE:
 								keyTypeName = "table";
 								break;
-								
+							
+							case LUA_TTHREAD:
+								keyTypeName = "thread";
+								break;
+							
 							case LUA_TUSERDATA:
 								
 								if ( MOAILuaObject::IsMoaiUserdata ( state, keyIdx )) {
@@ -697,7 +719,7 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 			
 			lua_getfenv ( state, idx );
 			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<env: %p>", path.c_str (), lua_topointer ( state, -1 )), trackingGroup, traversalState );
-			traversalState.mIgnoreSet.insert ( lua_topointer ( state, -1 ));
+			traversalState.mIgnoreSet.affirm ( lua_topointer ( state, -1 ));
 			state.Pop ( 1 );
 			break;
 		}
@@ -715,14 +737,16 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 	if (( type == LUA_TTABLE ) || ( type == LUA_TUSERDATA )) {
 	
 		MOAILuaObject* object = MOAILuaObject::IsMoaiUserdata ( state, idx ) ? ( MOAILuaObject* )state.GetPtrUserData ( idx ) : NULL;
+		
 		if ( object ) {
+			
+			// iterate the member table *first*
+			object->PushMemberTable ( state );
+			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<member>", path.c_str ()), trackingGroup, traversalState );
+			state.Pop ( 1 );
 			
 			object->PushRefTable ( state );
 			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<ref>", path.c_str ()), trackingGroup, traversalState );
-			state.Pop ( 1 );
-			
-			object->PushMemberTable ( state );
-			this->FindLuaRefs ( state, -1, file, STLString::build ( "%s.<member>", path.c_str ()), trackingGroup, traversalState );
 			state.Pop ( 1 );
 		}
 		else {

@@ -53,6 +53,8 @@ protected:
 	ZLVec3D			mScale;
 	ZLVec3D			mRot;		// Euler angles, in degrees
 
+	u32				mEulerOrder;
+
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
 	static int	_addPiv			( lua_State* L );
@@ -90,6 +92,15 @@ public:
 	DECL_ATTR_HELPER ( MOAITransform )
 
 	enum {
+		EULER_XYZ		= ( 2 << 0x04 ) + ( 1 << 0x02 ) + ( 0 << 0x00 ),
+		EULER_XZY		= ( 1 << 0x04 ) + ( 2 << 0x02 ) + ( 0 << 0x00 ),
+		EULER_YXZ		= ( 2 << 0x04 ) + ( 0 << 0x02 ) + ( 1 << 0x00 ),
+		EULER_YZX		= ( 0 << 0x04 ) + ( 2 << 0x02 ) + ( 1 << 0x00 ),
+		EULER_ZXY		= ( 1 << 0x04 ) + ( 0 << 0x02 ) + ( 2 << 0x00 ),
+		EULER_ZYX		= ( 0 << 0x04 ) + ( 1 << 0x02 ) + ( 2 << 0x00 ),
+	};
+
+	enum {
 		ATTR_X_PIV,
 		ATTR_Y_PIV,
 		ATTR_Z_PIV,
@@ -120,6 +131,8 @@ public:
 	GET_SET ( float, XLoc, mLoc.mX )
 	GET_SET ( float, YLoc, mLoc.mY )
 	GET_SET ( float, ZLoc, mLoc.mZ )
+	
+	GET_SET ( u32, EulerOrder, mEulerOrder )
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );

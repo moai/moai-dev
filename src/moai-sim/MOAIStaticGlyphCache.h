@@ -44,7 +44,7 @@ public:
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	int					SetImage					( MOAIFont& font, MOAIImage& image );
-	void				SetTexture					( int id, MOAITexture * texture );
+	void				SetTexture					( int id, MOAITexture* texture );
 };
 
 #endif

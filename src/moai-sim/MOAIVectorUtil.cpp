@@ -93,6 +93,10 @@ int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, 
 //----------------------------------------------------------------//
 void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D* verts, int nVerts, bool open, bool forward, bool interior ) {
 	
+	if ( nVerts == 0 ) {
+		return;
+	}
+	
 	int top = nVerts - 1;
 	float scale = interior ? -1.0f : 1.0f;
 	
@@ -171,7 +175,7 @@ u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer
 	vtxBuffer.Reserve ( vtxStream.GetLength ());
 	vtxBuffer.WriteStream ( vtxStream );
 	
-	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 );
+	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 ); // stream is 32-bits, so divide by 4 to get total indices
 	
 	idxBuffer.Clear ();
 	idxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
@@ -198,10 +202,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 			}
 		}
 		return nJoins;
-	}
-
-	if ( verts ) {
-		printf ( "verts:\n" );
 	}
 
 	u32 count = 0;
@@ -343,8 +343,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 						v.Scale ( miter );
 						v.Add ( join.mVertex );
 						*( verts++ ) = v;
-						
-						printf ( "    x:%f, y:%f\n", v.mX, v.mY );
 					}
 					count = count + 1;
 					break;
@@ -357,10 +355,6 @@ int MOAIVectorUtil::StrokeLine ( const MOAIVectorStyle& style, ZLVec2D* verts, c
 				}
 			}
 		}
-	}
-	
-	if ( verts ) {
-		printf ( "\n" );
 	}
 	
 	return count;

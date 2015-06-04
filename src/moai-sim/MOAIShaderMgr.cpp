@@ -40,12 +40,12 @@
 int MOAIShaderMgr::_getProgram ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	u32 shaderID = state.GetValue < u32 >( 1, 0xffffffff );
+	u32 shaderID = state.GetValue < u32 >( 1, UNKNOWN_SHADER );
 	
 	if ( shaderID < TOTAL_SHADERS ) {
 	
-		MOAIShaderProgram& program = MOAIShaderMgr::Get ().GetProgram ( shaderID );
-		program.PushLuaUserdata ( state );
+		MOAIShaderProgram* program = MOAIShaderMgr::Get ().GetProgram ( shaderID );
+		state.Push ( program );
 		return 1;
 	}
 	return 0;
@@ -56,12 +56,12 @@ int MOAIShaderMgr::_getProgram ( lua_State* L ) {
 int MOAIShaderMgr::_getShader ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	u32 shaderID = state.GetValue < u32 >( 1, 0xffffffff );
+	u32 shaderID = state.GetValue < u32 >( 1, UNKNOWN_SHADER );
 	
 	if ( shaderID < TOTAL_SHADERS ) {
 	
-		MOAIShader& shader = MOAIShaderMgr::Get ().GetShader ( shaderID );
-		shader.PushLuaUserdata ( state );
+		MOAIShader* shader = MOAIShaderMgr::Get ().GetShader ( shaderID );
+		state.Push ( shader );
 		return 1;
 	}
 	return 0;
@@ -78,164 +78,171 @@ void MOAIShaderMgr::BindShader ( u32 shaderID ) {
 	
 	if ( gfxDevice.IsProgrammable ()) {
 
-		MOAIShader& shader = this->GetShader ( shaderID );
-		gfxDevice.SetShader ( &shader );
+		MOAIShader* shader = this->GetShader ( shaderID );
+		gfxDevice.SetShader ( shader );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIShaderProgram& MOAIShaderMgr::GetProgram ( u32 shaderID ) {
+MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 
-	assert ( shaderID < TOTAL_SHADERS );
-	MOAIShaderProgram* program = this->mPrograms [ shaderID ];
+	MOAIShaderProgram* program = 0;
+
+	if ( shaderID < TOTAL_SHADERS ) {
 	
-	if ( !program ) {
-
-		program = new MOAIShaderProgram ();
-		this->LuaRetain ( program );
+		program = this->mPrograms [ shaderID ];
 		
-		switch ( shaderID ) {
-			
-			case DECK2D_SHADER:
-				
-				program->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case DECK2D_SNAPPING_SHADER:
-				
-				program->SetSource ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				
-				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				
-				program->ReserveGlobals ( 2 );
-				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
-				
-				break;
-			
-			case DECK2D_TEX_ONLY_SHADER:
-				
-				program->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case FONT_SHADER:
-				
-				program->SetSource ( _fontShaderVSH, _fontShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				break;
-			
-			case FONT_SNAPPING_SHADER:
-				
-				program->SetSource ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				
-				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				
-				program->ReserveGlobals ( 2 );
-				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
-				
-				break;
-				
-			case FONT_EFFECTS_SHADER:
-				
-				//program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
-				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-				
-				//program->ReserveUniforms ( 2 );
-				//program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				//program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
-				
-				//program->ReserveGlobals ( 2 );
-				//program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-				//program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
-				
-				break;
-			
-			case LINE_SHADER:
-				
-				program->SetSource ( _lineShaderVSH, _lineShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
-				break;
-			
-			case LINE_SHADER_3D:
-				
-				program->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
-				program->SetVertexAttribute ( 0, "position" );
-				program->SetVertexAttribute ( 1, "color" );
-				
-				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
-				
-				program->ReserveGlobals ( 2 );
-				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
-				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
-				
-				break;
+		if ( !program ) {
 
-			case MESH_SHADER:
-
-				program->SetSource ( _meshShaderVSH, _meshShaderFSH );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-
-				program->ReserveUniforms ( 2 );
-				program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-				program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+			program = new MOAIShaderProgram ();
+			this->LuaRetain ( program );
+			
+			switch ( shaderID ) {
 				
-				program->ReserveGlobals ( 2 );
-				program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
-				program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+				case DECK2D_SHADER:
+					
+					program->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					break;
 				
-				break;
+				case DECK2D_SNAPPING_SHADER:
+					
+					program->SetSource ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					program->ReserveUniforms ( 2 );
+					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					
+					program->ReserveGlobals ( 2 );
+					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
+					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+					
+					break;
+				
+				case DECK2D_TEX_ONLY_SHADER:
+					
+					program->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					break;
+				
+				case FONT_SHADER:
+					
+					program->SetSource ( _fontShaderVSH, _fontShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					break;
+				
+				case FONT_SNAPPING_SHADER:
+					
+					program->SetSource ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					program->ReserveUniforms ( 2 );
+					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					
+					program->ReserveGlobals ( 2 );
+					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
+					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+					
+					break;
+					
+				case FONT_EFFECTS_SHADER:
+					
+					//program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
+					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					//program->ReserveUniforms ( 2 );
+					//program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					//program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					
+					//program->ReserveGlobals ( 2 );
+					//program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
+					//program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+					
+					break;
+				
+				case LINE_SHADER:
+					
+					program->SetSource ( _lineShaderVSH, _lineShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
+					break;
+				
+				case LINE_SHADER_3D:
+					
+					program->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
+					program->SetVertexAttribute ( 0, "position" );
+					program->SetVertexAttribute ( 1, "color" );
+					
+					program->ReserveUniforms ( 2 );
+					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+					
+					program->ReserveGlobals ( 2 );
+					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
+					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+					
+					break;
+
+				case MESH_SHADER:
+
+					program->SetSource ( _meshShaderVSH, _meshShaderFSH );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+
+					program->ReserveUniforms ( 2 );
+					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+					
+					program->ReserveGlobals ( 2 );
+					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
+					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+					
+					break;
+			}
+			
+			this->mPrograms [ shaderID ] = program;
 		}
-		
-		this->mPrograms [ shaderID ] = program;
 	}
-	
-	return *program;
+	return program;
 }
 
 //----------------------------------------------------------------//
-MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
+MOAIShader* MOAIShaderMgr::GetShader ( u32 shaderID ) {
 
-	assert ( shaderID < TOTAL_SHADERS );
-	MOAIShader* shader = this->mShaders [ shaderID ];
+	MOAIShader* shader = 0;
+
+	if ( shaderID < TOTAL_SHADERS ) {
 	
-	if ( !shader ) {
+		shader = this->mShaders [ shaderID ];
+		
+		if ( !shader ) {
 
-		shader = new MOAIShader ();
-		this->LuaRetain ( shader );
-		
-		MOAIShaderProgram& program = this->GetProgram ( shaderID );
-		shader->SetProgram ( &program );
-		
-		this->mShaders [ shaderID ] = shader;
+			MOAIShaderProgram* program = this->GetProgram ( shaderID );
+			if ( program ) {
+
+				shader = new MOAIShader ();
+				this->LuaRetain ( shader );
+				shader->SetProgram ( program );
+				this->mShaders [ shaderID ] = shader;
+			}
+		}
 	}
-	
-	return *shader;
+	return shader;
 }
 
 //----------------------------------------------------------------//

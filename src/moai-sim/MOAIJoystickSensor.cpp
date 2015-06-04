@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIJoystickSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // MOAIJoystickEvent
@@ -56,11 +56,12 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::EnqueueJoystickEvent( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float x, float y ) {
+void MOAIJoystickSensor::EnqueueJoystickEvent( u8 deviceID, u8 sensorID, float x, float y ) {
 
-	if ( queue.WriteEventHeader < MOAIJoystickSensor >( deviceID, sensorID )) {
-		queue.Write < float >( x );
-		queue.Write < float >( y );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIJoystickSensor >( deviceID, sensorID )) {
+		inputMgr.Write < float >( x );
+		inputMgr.Write < float >( y );
 	}
 }
 

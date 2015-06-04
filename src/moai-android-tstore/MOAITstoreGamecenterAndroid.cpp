@@ -6,7 +6,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android-tstore/MOAITstoreGamecenterAndroid.h>
 
 extern JavaVM* jvm;
@@ -363,8 +363,8 @@ int MOAITstoreGamecenterAndroid::_setPoint ( lua_State* L ) {
 	cc8* name = lua_tostring ( state, 2 );
 
 	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( name, jname )
-	JNI_GET_JSTRING ( score, jscore )
+	jname = JNI_GET_JSTRING ( name )
+	jscore = JNI_GET_JSTRING ( score )
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {
@@ -398,7 +398,7 @@ int MOAITstoreGamecenterAndroid::_setUserInfo ( lua_State* L ) {
 	cc8* name = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( name, jname )
+	jname = JNI_GET_JSTRING ( name )
 
 	jclass tstore = env->FindClass ( "com/ziplinegames/moai/MoaiTstoreGamecenter" );
     if ( tstore == NULL ) {

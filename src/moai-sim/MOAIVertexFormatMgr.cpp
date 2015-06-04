@@ -17,13 +17,8 @@ int MOAIVertexFormatMgr::_getFormat ( lua_State* L ) {
 
 	u32 formatID = state.GetValue < u32 >( 1, 0xffffffff );
 	
-	if ( formatID < TOTAL_FORMATS ) {
-	
-		MOAIVertexFormat& format = MOAIVertexFormatMgr::Get ().GetFormat ( formatID );
-		format.PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
+	state.Push ( MOAIVertexFormatMgr::Get ().GetFormat ( formatID ));
+	return 1;
 }
 
 //================================================================//
@@ -31,46 +26,49 @@ int MOAIVertexFormatMgr::_getFormat ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexFormat& MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
+MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 	
-	assert ( formatID < TOTAL_FORMATS );
-	MOAIVertexFormat* format = this->mFormats [ formatID ];
+	MOAIVertexFormat* format = 0;
 	
-	if ( !format ) {
+	if ( formatID < TOTAL_FORMATS ) {
+	
+		format = this->mFormats [ formatID ];
+		
+		if ( !format ) {
 
-		format = new MOAIVertexFormat ();
-		this->LuaRetain ( format );
-		
-		switch ( formatID ) {
+			format = new MOAIVertexFormat ();
+			this->LuaRetain ( format );
 			
-			case XYZC:
-				format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_VERTEX, false );
-				format->DeclareAttribute ( XYZC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
-				break;
+			switch ( formatID ) {
+				
+				case XYZC:
+					format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_VERTEX, false );
+					format->DeclareAttribute ( XYZC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					break;
+				
+				case XYZWC:
+					format->DeclareAttribute ( XYZWC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+					format->DeclareAttribute ( XYZWC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					break;
+				
+				case XYZWUVC:
+					format->DeclareAttribute ( XYZWUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+					format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					break;
+			}
 			
-			case XYZWC:
-				format->DeclareAttribute ( XYZWC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-				format->DeclareAttribute ( XYZWC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
-				break;
-			
-			case XYZWUVC:
-				format->DeclareAttribute ( XYZWUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-				format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
-				format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
-				break;
+			this->mFormats [ formatID ] = format;
 		}
-		
-		this->mFormats [ formatID ] = format;
 	}
-	
-	return *format;
+	return format;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIVertexFormatMgr::GetVertexSize ( u32 formatID ) {
 
-	const MOAIVertexFormat& format = this->GetFormat ( formatID );
-	return format.GetVertexSize ();
+	const MOAIVertexFormat* format = this->GetFormat ( formatID );
+	return format ? format->GetVertexSize () : 0;
 }
 
 //----------------------------------------------------------------//

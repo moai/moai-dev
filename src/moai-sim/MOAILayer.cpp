@@ -36,6 +36,14 @@ int MOAILayer::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	state.Push (( MOAILuaObject* )self->mCamera );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getFitting
 	@text	Computes a camera fitting for a given world rect along with
 			an optional screen space padding. To do a fitting, compute
@@ -76,6 +84,73 @@ int MOAILayer::_getFitting ( lua_State* L ) {
 
 	float fitting = self->GetFitting ( worldRect, hPad, vPad );
 	lua_pushnumber ( state, fitting );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getFitting3D ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UT" )
+
+	if (( !self->mViewport ) || ( !self->mCamera ) || ( self->mCamera->GetType () != MOAICamera::CAMERA_TYPE_3D )) return 0;
+	
+	ZLRect fitRect = state.GetValue < ZLRect >( 3, *self->mViewport );
+	
+	self->mCamera->ForceUpdate ();
+	
+	ZLFrustumFitter fitter;
+	
+	fitter.Init (
+		*self->mViewport,
+		fitRect,
+		self->mCamera->GetFieldOfView (),
+		self->mCamera->GetLocalToWorldMtx ()
+	);
+
+	u32 itr = state.PushTableItr ( 2 );
+	while ( state.TableItrNext ( itr )) {
+	
+		int type = lua_type ( state, -1 );
+		
+		switch ( type ) {
+		
+			case LUA_TTABLE: {
+			
+				ZLVec3D loc;
+				
+				loc.mX = state.GetField < float >( -1, "x", 0.0f );
+				loc.mY = state.GetField < float >( -1, "y", 0.0f );
+				loc.mZ = state.GetField < float >( -1, "z", 0.0f );
+				
+				float r = state.GetField < float >( -1, "r", 0.0f );
+				
+				fitter.FitPoint( loc, r );
+				
+				break;
+			}
+			
+			case LUA_TUSERDATA: {
+			
+				MOAIProp* prop = state.GetLuaObject < MOAIProp >( -1, true );
+		
+				if ( prop ) {
+					ZLBox bounds = prop->GetBounds ();
+					
+					ZLVec3D center;
+					bounds.GetCenter ( center );
+					fitter.FitBox ( bounds, 0.0f );
+				}
+				break;
+			}
+		}
+	}
+	
+	ZLVec3D position = fitter.GetPosition ();
+	
+	state.Push ( position.mX );
+	state.Push ( position.mY );
+	state.Push ( position.mZ );
 
 	return 3;
 }
@@ -187,6 +262,14 @@ int	MOAILayer::_getSortScale ( lua_State* L ) {
 	lua_pushnumber ( state, self->mSortScale [ 3 ]);
 
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_getViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	state.Push (( MOAILuaObject* )self->mViewport );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -899,11 +982,14 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
+		{ "getCamera",				_getCamera },
 		{ "getFitting",				_getFitting },
+		{ "getFitting3D",			_getFitting3D },
 		{ "getPartition",			_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
+		{ "getViewport",			_getViewport },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setCamera",				_setCamera },

@@ -1,14 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#if AKU_WITH_ANDROID_NOTIFICATIONS
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAINotificationsAndroid.h>
 
 extern JavaVM* jvm;
@@ -65,7 +63,7 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 	
 	JNI_GET_ENV ( jvm, env );
 	
-	JNI_GET_JSTRING ( message, jmessage );
+	MOAIJString jmessage = JNI_GET_JSTRING ( message );
 	
 	jobjectArray jvalues = NULL;
 	jobjectArray jkeys = NULL;
@@ -106,10 +104,10 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 				cc8* value = _luaParseTable ( state, -1 );
 				if ( value ) {
 
-					JNI_GET_JSTRING ( value, jvalue );
+					MOAIJString jvalue = JNI_GET_JSTRING ( value );
 					env->SetObjectArrayElement ( jvalues, curidx, jvalue );
 					
-					JNI_GET_JSTRING ( key, jkey );
+					MOAIJString jkey = JNI_GET_JSTRING ( key );
 					env->SetObjectArrayElement ( jkeys, curidx, jkey );
 					
 					++curidx;
@@ -143,7 +141,7 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "localNotificationInSeconds" );
     	} else {
 
-			env->CallStaticVoidMethod ( moai, localNotificationInSeconds, seconds, jmessage, jkeys, jvalues );				
+			env->CallStaticVoidMethod ( moai, localNotificationInSeconds, seconds, ( jstring )jmessage, ( jstring )jkeys, ( jstring )jvalues );				
 		}
 	}
 	
@@ -165,7 +163,7 @@ int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 	
-	JNI_GET_JSTRING ( alias, jalias );
+	MOAIJString jalias = JNI_GET_JSTRING ( alias );
 
 	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
     if ( push == NULL ) {
@@ -179,7 +177,7 @@ int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "registerForRemoteNotifications" );
     	} else {
 
-			env->CallStaticVoidMethod ( push, registerForRemoteNotifications, jalias );				
+			env->CallStaticVoidMethod ( push, registerForRemoteNotifications, ( jstring )jalias );				
 		}
 	}
 			
@@ -373,8 +371,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushRecei
 		
 	for ( int i = 0; i < entries; i++ ) {
 		
-		jstring jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
-		jstring jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
+		MOAIJString jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
+		MOAIJString jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
 			
 		JNI_GET_CSTRING ( jkey, key );
 		JNI_GET_CSTRING ( jvalue, value );
@@ -387,8 +385,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushRecei
 
 	for ( int i = 0; i < entries; i++ ) {
 		
-		jstring jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
-		jstring jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
+		MOAIJString jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
+		MOAIJString jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
 			
 		JNI_RELEASE_CSTRING ( jkey, keys [ i ]);
 		JNI_RELEASE_CSTRING ( jvalue, values [ i ]);
@@ -412,8 +410,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificati
 		
 	for ( int i = 0; i < entries; i++ ) {
 		
-		jstring jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
-		jstring jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
+		MOAIJString jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
+		MOAIJString jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
 			
 		JNI_GET_CSTRING ( jkey, key );
 		JNI_GET_CSTRING ( jvalue, value );
@@ -426,8 +424,8 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificati
 
 	for ( int i = 0; i < entries; i++ ) {
 		
-		jstring jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
-		jstring jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
+		MOAIJString jkey = ( jstring ) env->GetObjectArrayElement ( jkeys, i );
+		MOAIJString jvalue = ( jstring ) env->GetObjectArrayElement ( jvalues, i );
 			
 		JNI_RELEASE_CSTRING ( jkey, keys [ i ]);
 		JNI_RELEASE_CSTRING ( jvalue, values [ i ]);
@@ -439,5 +437,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificati
 	free ( keys );
 	free ( values );
 }
-
-#endif

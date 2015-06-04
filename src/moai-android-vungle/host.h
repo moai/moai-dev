@@ -9,7 +9,7 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUAndroidVungleAppFinalize				();
+AKU_API void	AKUAndroidVungleAppFinalize                 ();
 AKU_API void	AKUAndroidVungleAppInitialize				();
 AKU_API void	AKUAndroidVungleContextInitialize			();
 

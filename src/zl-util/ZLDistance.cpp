@@ -13,6 +13,35 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+float ZLDist::BoxToPlane ( const ZLBox& b, const ZLPlane3D& p, float& r ) {
+
+	// Get the box spans
+	ZLVec3D spans = b.mMax;
+	spans.Sub ( b.mMin );
+	spans.Scale ( 0.5f );
+
+	// Get the span dots
+	float sdX = spans.mX * p.mNorm.mX;
+	if ( sdX < 0.0f ) sdX = -sdX;
+
+	float sdY = spans.mY * p.mNorm.mY;
+	if ( sdY < 0.0f ) sdY = -sdY;
+
+	float sdZ = spans.mZ * p.mNorm.mZ;
+	if ( sdZ < 0.0f ) sdZ = -sdZ;
+
+	// Get the radius of the box (as projected onto the plane's normal)
+	r = sdX + sdY + sdZ;
+
+	// Get the box center
+	ZLVec3D c = b.mMin;
+	c.Add ( spans );
+
+	// The distance from the center of the box to the plane
+	return ZLDist::VecToPlane ( c, p );
+}
+
+//----------------------------------------------------------------//
 float ZLDist::PointToPlane2D ( const ZLVec2D& p, const ZLPlane2D& plane ) {
 
 	float d = p.Dot ( plane.mNorm ) + plane.mDist;

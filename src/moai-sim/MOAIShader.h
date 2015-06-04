@@ -29,13 +29,14 @@ public:
 	GET ( MOAIShaderProgram*, Program, mProgram )
 
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void			BindUniforms			();
-					MOAIShader				();
-					~MOAIShader				();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetProgram				( MOAIShaderProgram* program );
+	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
+	bool					ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void					BindUniforms			();
+							MOAIShader				();
+							~MOAIShader				();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					SetProgram				( MOAIShaderProgram* program );
 };
 
 #endif

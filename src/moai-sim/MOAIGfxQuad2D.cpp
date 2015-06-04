@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -183,9 +184,9 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( idx );
-	UNUSED ( zScl );
+void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+	
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -193,15 +194,14 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 	
-	this->mQuad.Draw ( xOff, yOff, zOff, xScl, yScl );
+	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
-	UNUSED ( idx );
+bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//
@@ -229,8 +229,6 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 //----------------------------------------------------------------//
 MOAIGfxQuad2D::~MOAIGfxQuad2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

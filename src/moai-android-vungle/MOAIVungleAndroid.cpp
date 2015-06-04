@@ -1,11 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android-vungle/MOAIVungleAndroid.h>
 
 //================================================================//
@@ -29,10 +28,10 @@ int MOAIVungleAndroid::_displayAdvert ( lua_State* L ) {
 int	MOAIVungleAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIVungleAndroid, "" )
 	
-	jstring appID = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString appID = self->GetJString ( state.GetValue < cc8* >( 1, "" ));
 
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( init, appID );
+	self->CallStaticVoidMethod ( init, ( jstring )appID );
 
 	return 0;
 }
@@ -105,4 +104,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiVungle_AKUOnVie
 		state.DebugCall ( 1, 0 );
 	}
 }
-

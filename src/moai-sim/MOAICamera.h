@@ -30,6 +30,8 @@ private:
 	static int		_getFloorMove			( lua_State* L );
 	static int		_getFocalLength			( lua_State* L );
 	static int		_getNearPlane			( lua_State* L );
+	static int		_getViewVector			( lua_State* L );
+	static int		_lookAt					( lua_State* L );
 	static int		_moveFieldOfView		( lua_State* L );
 	static int		_seekFieldOfView		( lua_State* L );
 	static int		_setFarPlane			( lua_State* L );
@@ -37,6 +39,9 @@ private:
 	static int		_setNearPlane			( lua_State* L );
 	static int		_setOrtho				( lua_State* L );
 	static int		_setType				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			LookAt					( float x, float y, float z );
 	
 public:
 	
@@ -54,6 +59,7 @@ public:
 		TOTAL_ATTR,
 	};
 	
+	GET_SET ( float, FieldOfView, mFieldOfView )
 	GET_SET ( float, NearPlane, mNearPlane )
 	GET_SET ( float, FarPlane, mFarPlane )
 	
@@ -66,6 +72,7 @@ public:
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetViewMtx				() const;
+	ZLVec3D			GetViewVector			() const;
 	ZLMatrix4x4		GetWndToWorldMtx		( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetWorldToWndMtx		( const MOAIViewport& viewport ) const;
 					MOAICamera				();

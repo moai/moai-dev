@@ -63,6 +63,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void SetTop ( size_t top, const TYPE& value ) {
+	
+		this->Grow ( top, CHUNKSIZE, value );
+		this->mTop = top;
+	}
+	
+	//----------------------------------------------------------------//
 	TYPE& Top () {
 		assert ( this->mTop > 0 );
 		return this->mData [ this->mTop - 1 ];

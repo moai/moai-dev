@@ -22,6 +22,8 @@
 int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
+	self->ForceUpdate ();
+
 	ZLVec3D direction = self->mLocalToWorldMtx.GetHeading ();
 
 	lua_pushnumber ( state, direction.mX );
@@ -43,6 +45,8 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
+	self->ForceUpdate ();
+
 	ZLVec3D loc = self->mLocalToWorldMtx.GetTranslation ();
 
 	lua_pushnumber ( state, loc.mX );
@@ -62,6 +66,8 @@ int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
+	self->ForceUpdate ();
+
 	float rot = self->mLocalToWorldMtx.GetRot ();
 	
 	lua_pushnumber ( state, rot );
@@ -80,6 +86,8 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 */
 int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
 
 	ZLVec3D scale = self->mLocalToWorldMtx.GetStretch ();
 	
@@ -104,6 +112,8 @@ int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 */
 int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
 
 	ZLVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -154,6 +164,8 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 */
 int MOAITransformBase::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
 
 	ZLVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );

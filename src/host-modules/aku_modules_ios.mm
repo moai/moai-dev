@@ -57,8 +57,8 @@ void AKUModulesIosAppFinalize () {
 		AKUIosMobileAppTrackerAppFinalize ();
 	#endif
 	
-	#if AKU_WITH_IOS_MOTION
-	  AKUIosMotionAppFinalize ();
+    #if AKU_WITH_IOS_MOTION
+		AKUIosMotionAppFinalize ();
 	#endif
 
 	#if AKU_WITH_IOS_MOVIE
@@ -126,7 +126,7 @@ void AKUModulesIosAppInitialize () {
 	#endif
 	
 	#if AKU_WITH_IOS_MOTION
-	  AKUIosMotionAppInitialize ();
+		AKUIosMotionAppInitialize ();
 	#endif
 	
 	#if AKU_WITH_IOS_MOVIE
@@ -194,7 +194,7 @@ void AKUModulesIosContextInitialize () {
 	#endif
 	
 	#if AKU_WITH_IOS_MOTION
-	   AKUIosMotionContextInitialize ();
+		AKUIosMotionContextInitialize ();
 	#endif
 	
 	#if AKU_WITH_IOS_MOVIE

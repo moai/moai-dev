@@ -16,7 +16,7 @@ class MOAIScriptDeck :
 	public MOAIDeck {
 private:
 
-	ZLRect				mRect;
+	ZLRect					mRect;
 
 	MOAILuaMemberRef		mOnDraw;
 	MOAILuaMemberRef		mOnRect;
@@ -37,7 +37,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );
