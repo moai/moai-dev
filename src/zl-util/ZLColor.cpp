@@ -202,6 +202,24 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 				bufferPtr = buffer;
 				break;
 			
+			case LA_8:
+			
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = *( u16* )src;
+					src = ( void* )(( size_t )src + 2 );
+					
+					u8 l = color & 0xFF;
+					u8 a = ( color >> 0x08 ) & 0xFF;
+					
+					buffer [ i ] =	l  +
+									( l << 0x08 ) +
+									( l << 0x10 ) +
+									( a << 0x18 );
+				}
+				bufferPtr = buffer;
+				break;
+			
 			case RGB_888:
 				
 				for ( u32 i = 0; i < copy; ++i ) {
@@ -315,7 +333,19 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					dest = ( void* )(( size_t )dest + 1 );
 				}
 				break;
-		
+			
+			case LA_8:
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					(( u8* )dest )[ 0 ] = color & 0xFF;
+					(( u8* )dest )[ 1 ] = ( color >> 0x18 ) & 0xFF;
+					dest = ( void* )(( size_t )dest + 2 );
+				}
+				break;
+			
 			case RGB_888:
 			
 				for ( u32 i = 0; i < copy; ++i ) {
@@ -398,6 +428,9 @@ u32 ZLColor::ConvertFromRGBA ( u32 color, ColorFormat format ) {
 		case A_8:
 			return ( color >> 0x18 ) & 0x000000FF;
 		
+		case LA_8:
+			return ( color & 0xFF ) + (( color >> 0x18 ) & 0xFF );
+		
 		case RGB_888:
 			return color & 0x00FFFFFF;
 			
@@ -444,6 +477,17 @@ u32 ZLColor::ConvertToRGBA ( u32 color, ColorFormat format ) {
 		
 		case A_8:
 			return ( color << 0x18 ) & 0xFF000000;
+		
+		case LA_8: {
+		
+			u8 l = color & 0xFF;
+			u8 a = ( color >> 0x18 ) & 0xFF;
+			
+			return	l  +
+					( l << 0x08 ) +
+					( l << 0x10 ) +
+					( a << 0x18 );
+		}
 		
 		case RGB_888:
 			return color | 0xFF000000;
@@ -608,6 +652,7 @@ u32 ZLColor::GetDepthInBits ( ColorFormat format ) {
 		case A_1:			return 1;
 		case A_4:			return 4;
 		case A_8:			return 8;
+		case LA_8:			return 16;
 		case RGB_888:		return 24;
 		case RGB_565:		return 16;
 		case RGBA_5551:		return 16;
@@ -625,11 +670,12 @@ u32 ZLColor::GetMask ( ColorFormat format ) {
 		case A_1:			return 0x00000001;
 		case A_4:			return 0x0000000F;
 		case A_8:			return 0x000000FF;
-		case RGB_888:		return 0x00ffffff;
-		case RGB_565:		return 0x0000ffff;
-		case RGBA_5551:		return 0x0000ffff;
-		case RGBA_4444:		return 0x0000ffff;
-		case RGBA_8888:		return 0xffffffff;
+		case LA_8:			return 0x0000FFFF;
+		case RGB_888:		return 0x00FFFFFF;
+		case RGB_565:		return 0x0000FFFF;
+		case RGBA_5551:		return 0x0000FFFF;
+		case RGBA_4444:		return 0x0000FFFF;
+		case RGBA_8888:		return 0xFFFFFFFF;
 		default:			break;
 	}
 	return 0;
@@ -760,12 +806,23 @@ void ZLColor::PremultiplyAlpha ( void* colors, ColorFormat format, u32 nColors )
 		case RGB_565:
 			break;
 		
-		case RGBA_5551: 
+		case LA_8:
+		
+			for ( u32 i = 0; i < nColors; ++i ) {
+				color = *( u32* )colors;
+				alpha = ( color >> 0x18 ) & 0xFF;
+				*( u16* )colors = ( u16 )(	(( color & 0xFF ) * alpha ) >> 0x08 ) +
+											( alpha << 0x08 );
+				colors = ( void* )(( size_t )colors + 2 );
+			}
+			break;
+		
+		case RGBA_5551:
 			
 			for ( u32 i = 0; i < nColors; ++i ) {
 				color = *( u16* )colors;
 				alpha = ( color >> 0x0F ) & 0x01;
-				*( u16* )colors = ( u16 )(	(((( color >> 0x00 ) & 0x1F ) * alpha ) << 0x00 ) +
+				*( u16* )colors = ( u16 )(	( (( color >> 0x00 ) & 0x1F ) * alpha ) +
 											(((( color >> 0x05 ) & 0x1F ) * alpha ) << 0x05 ) +
 											(((( color >> 0x0A ) & 0x1F ) * alpha ) << 0x0A ) +
 											( alpha << 0x0F ));
@@ -791,7 +848,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, ColorFormat format, u32 nColors )
 			for ( u32 i = 0; i < nColors; ++i ) {
 				color = *( u32* )colors;
 				alpha = ( color >> 0x18 ) & 0xFF;
-				*( u32* )colors =	((((( color >> 0x00 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x00 ) +
+				*( u32* )colors =	( ((( color >> 0x00 ) & 0xFF ) * alpha ) >> 0x08 ) +
 									((((( color >> 0x08 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x08 ) +
 									((((( color >> 0x10 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x10 ) +
 									( alpha << 0x18 );
@@ -850,6 +907,23 @@ void ZLColor::SimpleThreshold ( void* colors, ColorFormat format, u32 nColors, u
 		case A_4:
 		case A_8:
 			break;
+		
+		case LA_8: {
+		
+			u8* bytes = ( u8* )colors;
+		
+			u32 lT = ( color >> 0x00 ) & 0xFF;
+			u32 aT = ( color >> 0x08 ) & 0xFF;
+		
+			for ( u32 i = 0; i < nColors; ++i ) {
+
+				bytes [ 0 ] = bytes [ 0 ] > lT ? 0xFF : 0x00;
+				bytes [ 1 ] = bytes [ 1 ] > aT ? 0xFF : 0x00;
+
+				bytes = ( u8* )(( size_t )bytes + 2 );
+			}
+			break;
+		}
 		
 		case RGB_888: {
 		
