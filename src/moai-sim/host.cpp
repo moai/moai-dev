@@ -47,6 +47,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
 	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
+	//REGISTER_LUA_CLASS ( MOAIBspBuilder2D )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
@@ -63,6 +64,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
 	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
+	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
 	REGISTER_LUA_CLASS ( MOAIGfxBuffer )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
@@ -110,6 +112,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
+	REGISTER_LUA_CLASS ( MOAISelectionMesh )
 	REGISTER_LUA_CLASS ( MOAIShader )
 	REGISTER_LUA_CLASS ( MOAIShaderMgr )
 	REGISTER_LUA_CLASS ( MOAIShaderProgram )
@@ -180,6 +183,12 @@ void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
 void AKUEnqueueKeyboardCharEvent ( int deviceID, int sensorID, int unicodeChar ) {
 
 	MOAIKeyboardSensor::EnqueueKeyboardCharEvent (( u8 )deviceID, ( u8 )sensorID, unicodeChar );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueKeyboardEditEvent ( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength) {
+	
+	MOAIKeyboardSensor::EnqueueKeyboardEditEvent (( u8 )deviceID, ( u8 )sensorID, text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
 }
 
 //----------------------------------------------------------------//
@@ -447,6 +456,12 @@ void AKUSetViewSize ( int width, int height ) {
 void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
 
 	MOAISim::Get ().SetShowCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_SetTextInputRect ( AKUSetTextInputRectFunc func ) {
+	
+	MOAISim::Get ().SetSetTextInputRectFunc ( func );
 }
 
 //----------------------------------------------------------------//

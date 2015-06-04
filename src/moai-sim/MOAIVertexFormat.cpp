@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIVertexFormat.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // local
@@ -18,6 +19,7 @@
 	@in		number type			Data type of component elements. See OpenGL ES documentation.
 	@in		number size			Number of elements. See OpenGL ES documentation.
 	@opt	boolean normalized	See OpenGL ES documentation.
+	@opt	number use			One of MOAIVertexFormat.ARRAY_COLOR, MOAIVertexFormat.ARRAY_NORMAL, MOAIVertexFormat.ARRAY_TEX_COORD, MOAIVertexFormat.ARRAY_VERTEX, MOAIVertexFormat.VERTEX_USE_TUPLE,
 	@out	nil
 */
 int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
@@ -27,8 +29,10 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	bool normalized		= state.GetValue < bool >( 5, false );
+	
+	u32 use				= state.GetValue < u32 >( 6, VERTEX_USE_TUPLE );
 
-	self->DeclareAttribute ( index, type, size, NULL_INDEX, normalized );
+	self->DeclareAttribute ( index, type, size, use, normalized );
 	
 	return 0;
 }
@@ -131,6 +135,20 @@ int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, int idx ) {
+
+	MOAIVertexFormat* format = 0;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		format = MOAIVertexFormatMgr::Get ().GetFormat ( state.GetValue < u32 >( idx, MOAIVertexFormatMgr::UNKNOWN_FORMAT ));
+	}
+	else {
+		format = state.GetLuaObject < MOAIVertexFormat >( 2, true );
+	}
+	return format;
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexFormat::Bind ( const void* buffer ) const {
 
 	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
@@ -195,63 +213,93 @@ void MOAIVertexFormat::BindProgrammable ( const void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, void* buffer, size_t size ) const {
+int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const {
 
-	MOAIByteStream stream;
-	stream.Open ( buffer, size );
+	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+		
+		float tolerance = attribute.mType == ZGL_TYPE_FLOAT ? componentEpsilon : 0.0f;
+		
+		const void* a0 = ( const void* )(( size_t )v0 + attribute.mOffset );
+		const void* a1 = ( const void* )(( size_t )v1 + attribute.mOffset );
+		
+		ZLVec4D coord0 = MOAIVertexFormat::UnpackCoord ( a0, attribute );
+		ZLVec4D coord1 = MOAIVertexFormat::UnpackCoord ( a1, attribute );
+		
+		if ( attribute.mUse == ARRAY_NORMAL ) {
+		
+			if ( coord0.ZLVec3D::Dot ( coord1 ) < ( 1.0f - normEpsilon )) {
+			
+				if ( coord0.mX != coord1.mX ) {
+					return ( coord0.mX < coord1.mX ) ? -1 : 1;
+				}
+				
+				if ( coord0.mY != coord1.mY ) {
+					return ( coord0.mY < coord1.mY ) ? -1 : 1;
+				}
+				
+				if ( coord0.mZ != coord1.mZ ) {
+					return ( coord0.mZ < coord1.mZ ) ? -1 : 1;
+				}
+			}
+			
+			if ( ABS ( coord0.mW - coord1.mW ) > tolerance ) {
+				return ( coord0.mW < coord1.mW ) ? -1 : 1;
+			}
+		}
+		else {
+		
+			if ( ABS ( coord0.mX - coord1.mX ) > tolerance ) {
+				return ( coord0.mX < coord1.mX ) ? -1 : 1;
+			}
+			
+			if ( ABS ( coord0.mY - coord1.mY ) > tolerance ) {
+				return ( coord0.mY < coord1.mY ) ? -1 : 1;
+			}
+			
+			if ( ABS ( coord0.mZ - coord1.mZ ) > tolerance ) {
+				return ( coord0.mZ < coord1.mZ ) ? -1 : 1;
+			}
+			
+			if ( ABS ( coord0.mW - coord1.mW ) > tolerance ) {
+				return ( coord0.mW < coord1.mW ) ? -1 : 1;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, const void* buffer, size_t size ) const {
+
+	ZLByteStream stream;
+	stream.SetBuffer ( buffer, size, size );
 	return this->ComputeBounds ( bounds, stream, size );
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t size ) const {
+bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return false;
-
-	u32 coordAttributeIdx = this->mAttributeUseTable [ ARRAY_VERTEX ].mAttrID;
-	if ( coordAttributeIdx >= this->mTotalAttributes ) return false;
-
-	MOAIVertexAttribute& coordAttr = this->mAttributes [ coordAttributeIdx ];
-	if ( coordAttr.mType != ZGL_TYPE_FLOAT ) return false; // TODO: handle other types
-	if ( coordAttr.mSize < 2 ) return false;
 	
-	return MOAIVertexFormat::ComputeBounds ( bounds, stream, size, coordAttr.mOffset, this->mVertexSize, coordAttr.mSize );
-}
-
-//----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, MOAIStream& stream, size_t size, size_t offset, size_t stride, size_t components ) {
-
-	if ( components < 2 ) return false;
-
-	u32 total = MOAIVertexFormat::CountElements ( size, offset, stride );
-	if ( !total ) return false;
+	size_t base = stream.GetCursor ();
 	
-	stream.Seek ( offset, SEEK_CUR );
-	
-	ZLVec3D coord = MOAIVertexFormat::ReadCoord ( stream, stride, components );
+	ZLVec4D coord = this->ReadCoord ( stream );
 	
 	bounds.Init ( coord );
 	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	for ( u32 i = 1; i < total; ++i ) {
-	
-		coord = MOAIVertexFormat::ReadCoord ( stream, stride, components );
+		this->SeekVertex ( stream, base, i );
+		coord = this->ReadCoord ( stream );
 		bounds.Grow ( coord );
+		
 	}
+	this->SeekVertex ( stream, base, total );
 	return true;
-}
-
-//----------------------------------------------------------------//
-size_t MOAIVertexFormat::CountElements ( size_t size ) {
-
-	return ( size_t )( size / this->mVertexSize );
-}
-
-
-//----------------------------------------------------------------//
-size_t MOAIVertexFormat::CountElements ( size_t size, size_t offset, size_t stride ) {
-
-	return stride ? ( size_t )(( size - offset ) / stride ) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -263,11 +311,13 @@ void MOAIVertexFormat::DeclareAttribute ( u32 index, u32 type, u32 size, u32 use
 	
 	u32 offset = this->mVertexSize;
 	
-	attr.mIndex = index;
-	attr.mSize = size;
-	attr.mType = type;
-	attr.mNormalized = normalized;
-	attr.mOffset = offset;
+	attr.mIndex			= index;
+	attr.mSize			= size;
+	attr.mType			= type;
+	attr.mUse			= use;
+	attr.mNormalized	= normalized;
+	attr.mOffset		= offset;
+	attr.mSizeInBytes	= MOAIVertexFormat::GetComponentSize ( size, type );
 	
 	this->mVertexSize += MOAIVertexFormat::GetComponentSize ( size, type );
 	
@@ -359,7 +409,113 @@ MOAIVertexFormat::~MOAIVertexFormat () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::PrintVertices ( MOAIStream& stream, size_t size ) const {
+size_t MOAIVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute ) {
+
+	u32 components = attribute.mSize;
+	size_t size = 0;
+
+	switch ( attribute.mType ) {
+	
+		case ZGL_TYPE_BYTE: {
+			
+			float normalize = attribute.mNormalized ? 127.0f : 1.0f;
+			
+			switch ( components ) {
+				case 4:
+					(( s8* )buffer )[ 3 ] = ( s8 )( coord.mW * normalize );
+				case 3:
+					(( s8* )buffer )[ 2 ] = ( s8 )( coord.mZ * normalize );
+				default:
+					(( s8* )buffer )[ 1 ] = ( s8 )( coord.mY * normalize );
+					(( s8* )buffer )[ 0 ] = ( s8 )( coord.mX * normalize );
+			}
+			
+			size = components;
+			break;
+		}
+		
+		case ZGL_TYPE_FLOAT: {
+		
+			switch ( components ) {
+				case 4:
+					(( float* )buffer )[ 3 ] = coord.mW;
+				case 3:
+					(( float* )buffer )[ 2 ] = coord.mZ;
+				default:
+					(( float* )buffer )[ 1 ] = coord.mY;
+					(( float* )buffer )[ 0 ] = coord.mX;
+			}
+			
+			size = components * sizeof ( float );
+			break;
+		}
+		
+		case ZGL_TYPE_SHORT: {
+		
+			float normalize = attribute.mNormalized ? 32767.0f : 1.0f;
+		
+			switch ( components ) {
+				case 4:
+					(( s16* )buffer )[ 3 ] = ( s16 )( coord.mW * normalize );
+				case 3:
+					(( s16* )buffer )[ 2 ] = ( s16 )( coord.mZ * normalize );
+				default:
+					(( s16* )buffer )[ 1 ] = ( s16 )( coord.mY * normalize );
+					(( s16* )buffer )[ 0 ] = ( s16 )( coord.mX * normalize );
+			}
+			
+			size = components * sizeof ( s16 );
+			break;
+		}
+		
+		case ZGL_TYPE_UNSIGNED_BYTE: {
+		
+			float normalize = attribute.mNormalized ? 255.0f : 1.0f;
+		
+			switch ( components ) {
+				case 4:
+					(( u8* )buffer )[ 3 ] = ( u8 )( coord.mW * normalize );
+				case 3:
+					(( u8* )buffer )[ 2 ] = ( u8 )( coord.mZ * normalize );
+				default:
+					(( u8* )buffer )[ 1 ] = ( u8 )( coord.mY * normalize );
+					(( u8* )buffer )[ 0 ] = ( u8 )( coord.mX * normalize );
+			}
+			
+			size = components;
+			break;
+		}
+		
+		case ZGL_TYPE_UNSIGNED_SHORT: {
+			
+			float normalize = attribute.mNormalized ? 65535.0f : 1.0f;
+			
+			switch ( components ) {
+				case 4:
+					(( u16* )buffer )[ 3 ] = ( u16 )( coord.mW * normalize );
+				case 3:
+					(( u16* )buffer )[ 2 ] = ( u16 )( coord.mZ * normalize );
+				default:
+					(( u16* )buffer )[ 1 ] = ( u16 )( coord.mY * normalize );
+					(( u16* )buffer )[ 0 ] = ( u16 )( coord.mX * normalize );
+			}
+			
+			size = components * sizeof ( u16 );
+			break;
+		}
+	}
+	
+	return size;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::PrintVertices ( ZLStream& stream ) const {
+
+	this->PrintVertices ( stream, stream.GetLength () - stream.GetCursor ());
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return;
@@ -408,29 +564,71 @@ void MOAIVertexFormat::PrintVertices ( MOAIStream& stream, size_t size ) const {
 }
 
 //----------------------------------------------------------------//
-ZLVec3D MOAIVertexFormat::ReadCoord ( MOAIStream& stream, size_t stride, size_t components ) {
+void MOAIVertexFormat::PrintVertices ( const void* buffer, size_t size ) const {
 
-	size_t next = stream.GetCursor () + stride;
+	ZLByteStream stream;
+	stream.SetBuffer ( buffer, size, size );
+	this->PrintVertices ( stream, size );
+}
+
+//----------------------------------------------------------------//
+ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, u32 attrID, float zFallback, float wFallback ) const {
+
+	if ( attrID < this->mTotalAttributes ) {
 	
-	ZLVec3D coord (
-		stream.Read < float >( 0.0f ),
-		stream.Read < float >( 0.0f ),
-		components > 2 ? stream.Read < float >( 0.0f ) : 0.0f
-	);
-	
-	stream.Seek ( next, SEEK_SET );
-	return coord;
+		u8 buffer [ MAX_ATTR_BYTES ];
+		
+		const MOAIVertexAttribute& attribute = this->mAttributes [ attrID ];
+		
+		size_t base = stream.GetCursor ();
+		stream.Seek ( base + attribute.mOffset, SEEK_SET );
+		stream.ReadBytes ( buffer, attribute.mSizeInBytes );
+		stream.Seek ( base, SEEK_SET );
+		
+		return this->UnpackAttribute ( buffer, attribute, zFallback, wFallback );
+	}
+	return ZLVec4D ( 0.0f, 0.0f, zFallback, wFallback );
+}
+
+//----------------------------------------------------------------//
+ZLColorVec MOAIVertexFormat::ReadColor ( ZLStream& stream ) const {
+
+	ZLVec4D color = this->ReadAttribute ( stream, this->mAttributeUseTable [ ARRAY_COLOR ].mAttrID, 0.0f, 1.0f );
+	return ZLColorVec ( color.mX, color.mY, color.mZ, color.mW );
+}
+
+//----------------------------------------------------------------//
+ZLVec4D MOAIVertexFormat::ReadCoord ( ZLStream& stream ) const {
+
+	return this->ReadAttribute ( stream, this->mAttributeUseTable [ ARRAY_VERTEX ].mAttrID, 0.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+ZLVec3D MOAIVertexFormat::ReadNormal ( ZLStream& stream ) const {
+
+	return this->ReadAttribute ( stream, this->mAttributeUseTable [ ARRAY_NORMAL ].mAttrID, 0.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+ZLVec3D MOAIVertexFormat::ReadUV ( ZLStream& stream ) const {
+
+	return this->ReadAttribute ( stream, this->mAttributeUseTable [ ARRAY_TEX_COORD ].mAttrID, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	state.SetField ( -1, "GL_BYTE", ( u32 )ZGL_TYPE_BYTE );
-	//state.SetField ( -1, "GL_FIXED", ( u32 )GL_FIXED );
-	state.SetField ( -1, "GL_FLOAT", ( u32 )ZGL_TYPE_FLOAT );
-	state.SetField ( -1, "GL_SHORT", ( u32 )ZGL_TYPE_SHORT );
-	state.SetField ( -1, "GL_UNSIGNED_BYTE", ( u32 )ZGL_TYPE_UNSIGNED_BYTE );
-	state.SetField ( -1, "GL_UNSIGNED_SHORT", ( u32 )ZGL_TYPE_UNSIGNED_SHORT );
+	state.SetField ( -1, "GL_BYTE",					( u32 )ZGL_TYPE_BYTE );
+	state.SetField ( -1, "GL_FLOAT",				( u32 )ZGL_TYPE_FLOAT );
+	state.SetField ( -1, "GL_SHORT",				( u32 )ZGL_TYPE_SHORT );
+	state.SetField ( -1, "GL_UNSIGNED_BYTE",		( u32 )ZGL_TYPE_UNSIGNED_BYTE );
+	state.SetField ( -1, "GL_UNSIGNED_SHORT",		( u32 )ZGL_TYPE_UNSIGNED_SHORT );
+	
+	state.SetField ( -1, "ARRAY_COLOR",				( u32 )ARRAY_COLOR );
+	state.SetField ( -1, "ARRAY_NORMAL",			( u32 )ARRAY_NORMAL );
+	state.SetField ( -1, "ARRAY_TEX_COORD",			( u32 )ARRAY_TEX_COORD );
+	state.SetField ( -1, "ARRAY_VERTEX",			( u32 )ARRAY_VERTEX );
+	state.SetField ( -1, "VERTEX_USE_TUPLE",		( u32 )VERTEX_USE_TUPLE );
 }
 
 //----------------------------------------------------------------//
@@ -446,6 +644,13 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vertex ) const {
+
+	stream.Seek ( base + ( vertex * this->mVertexSize ), SEEK_SET );
+	return stream.GetCursor ();
 }
 
 //----------------------------------------------------------------//
@@ -559,4 +764,149 @@ void MOAIVertexFormat::UnbindProgrammable () const {
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		zglDisableVertexAttribArray ( attr.mIndex );
 	}
+}
+
+//----------------------------------------------------------------//
+ZLVec4D MOAIVertexFormat::UnpackAttribute ( const void* buffer, const MOAIVertexAttribute& attribute, float zFallback, float wFallback ) {
+
+	ZLVec4D coord;
+
+	u32 components = attribute.mSize;
+
+	switch ( attribute.mType ) {
+	
+		case ZGL_TYPE_BYTE: {
+		
+			float normalize = attribute.mNormalized ? 127.0f : 1.0f;
+		
+			coord.Init (
+				(( float )((( s8* )buffer )[ 0 ]) / normalize ),
+				(( float )((( s8* )buffer )[ 1 ]) / normalize ),
+				components > 2 ? (( float )((( s8* )buffer )[ 2 ]) / normalize ) : zFallback,
+				components > 3 ? (( float )((( s8* )buffer )[ 3 ]) / normalize ) : wFallback
+			);
+			break;
+		}
+		
+		case ZGL_TYPE_FLOAT: {
+		
+			coord.Init (
+				(( float* )buffer )[ 0 ],
+				(( float* )buffer )[ 1 ],
+				components > 2 ? (( float* )buffer )[ 2 ] : zFallback,
+				components > 3 ? (( float* )buffer )[ 3 ] : wFallback
+			);
+			break;
+		}
+		
+		case ZGL_TYPE_SHORT: {
+		
+			float normalize = attribute.mNormalized ? 32767.0f : 1.0f;
+		
+			coord.Init (
+				(( float )((( s16* )buffer )[ 0 ]) / normalize ),
+				(( float )((( s16* )buffer )[ 1 ]) / normalize ),
+				components > 2 ? (( float )((( s16* )buffer )[ 2 ]) / normalize ) : zFallback,
+				components > 3 ? (( float )((( s16* )buffer )[ 3 ]) / normalize ) : wFallback
+			);
+			break;
+		}
+		
+		case ZGL_TYPE_UNSIGNED_BYTE: {
+		
+			float normalize = attribute.mNormalized ? 255.0f : 1.0f;
+		
+			coord.Init (
+				(( float )((( u8* )buffer )[ 0 ]) / normalize ),
+				(( float )((( u8* )buffer )[ 1 ]) / normalize ),
+				components > 2 ? (( float )((( u8* )buffer )[ 2 ]) / normalize ) : zFallback,
+				components > 3 ? (( float )((( u8* )buffer )[ 3 ]) / normalize ) : wFallback
+			);
+			break;
+		}
+		
+		case ZGL_TYPE_UNSIGNED_SHORT: {
+			
+			float normalize = attribute.mNormalized ? 65535.0f : 1.0f;
+			
+			coord.Init (
+				(( float )((( u16* )buffer )[ 0 ]) / normalize ),
+				(( float )((( u16* )buffer )[ 1 ]) / normalize ),
+				components > 2 ? (( float )((( u16* )buffer )[ 2 ]) / normalize ) : zFallback,
+				components > 3 ? (( float )((( u16* )buffer )[ 3 ]) / normalize ) : wFallback
+			);
+			break;
+		}
+	}
+
+	return coord;
+}
+
+//----------------------------------------------------------------//
+ZLVec4D MOAIVertexFormat::UnpackCoord ( const void* buffer, const MOAIVertexAttribute& attribute ) {
+	
+	return MOAIVertexFormat::UnpackAttribute ( buffer, attribute, 0.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteAhead ( ZLStream& stream ) const {
+
+	size_t base = stream.GetCursor ();
+
+	void* buffer = alloca ( this->mVertexSize );
+	memset ( buffer, 0, this->mVertexSize );
+	
+	stream.WriteBytes ( buffer, this->mVertexSize );
+	stream.Seek ( base, SEEK_SET );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteAttribute ( ZLStream& stream, u32 attrID, float x, float y, float z, float w ) const {
+
+	if ( attrID < this->mTotalAttributes ) {
+	
+		u8 buffer [ MAX_ATTR_BYTES ];
+		
+		const MOAIVertexAttribute& attribute = this->mAttributes [ attrID ];
+		
+		size_t size = this->PackAttribute ( buffer, ZLVec4D ( x, y, z, w ), attribute );
+		
+		if ( size ) {
+			size_t base = stream.GetCursor ();
+			stream.Seek ( base + attribute.mOffset, SEEK_SET );
+			stream.WriteBytes ( buffer, size );
+			stream.Seek ( base, SEEK_SET );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteColor ( ZLStream& stream, u32 color ) const {
+
+	ZLColorVec colorVec ( color );
+	this->WriteAttribute ( stream, this->mAttributeUseTable [ ARRAY_COLOR ].mAttrID, colorVec.mR, colorVec.mG, colorVec.mB, colorVec.mA );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteColor ( ZLStream& stream, float r, float g, float b, float a ) const {
+	
+	this->WriteAttribute ( stream, this->mAttributeUseTable [ ARRAY_COLOR ].mAttrID, r, g, b, a );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteCoord ( ZLStream& stream, float x, float y, float z, float w ) const {
+
+	this->WriteAttribute ( stream, this->mAttributeUseTable [ ARRAY_VERTEX ].mAttrID, x, y, z, w );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteNormal ( ZLStream& stream, float x, float y, float z ) const {
+
+	this->WriteAttribute ( stream, this->mAttributeUseTable [ ARRAY_NORMAL ].mAttrID, x, y, z, 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::WriteUV ( ZLStream& stream, float x, float y, float z ) const {
+
+	this->WriteAttribute ( stream, this->mAttributeUseTable [ ARRAY_TEX_COORD ].mAttrID, x, y, z, 0.0f );
 }

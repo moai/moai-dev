@@ -39,7 +39,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
-	bool			Inside					( u32 idx, ZLVec3D vec, float pad );
+	bool			Inside					( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
 					MOAIGfxQuad2D			();
 					~MOAIGfxQuad2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

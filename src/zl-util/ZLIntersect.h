@@ -15,14 +15,26 @@ class ZLRhombus;
 //================================================================//
 namespace ZLSect {
 
+	// Point	- a point
+	// Line		- two points
+	// Ray		- a point and a vector
+	// Vec		- a directed vector
+
+	// TODO: clean up this API and standardize the language
+
 	enum {
-		SECT_HIT		= 0,
+		SECT_HIT			= 0,
 		SECT_PARALLEL,
 		SECT_TANGENT,
+		SECT_HIT_OUT_OF_RANGE,
 	};
+	
 	//----------------------------------------------------------------//
 	// Returns the time along the vec, not the distance
 	s32		BoxToPlane			( const ZLBox& b, const ZLPlane3D& p ); // 1, front; 0, sect; -1, behind;
+	u32		LineToLine			( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0, const ZLVec2D& q1 );
+	u32		LineToLine			( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0, const ZLVec2D& q1, float& t );
+	u32		PlaneToPlane		( const ZLPlane2D& p0, const ZLPlane2D& p1, ZLVec2D& loc );
 	u32		PlaneToPlane		( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& loc, ZLVec3D& vec );
 	s32		PrismToPlane		( const ZLPrism& prism, const ZLPlane3D& p );
 	s32		RayToBox			( const ZLBox& b, const ZLVec3D& loc, const ZLVec3D& dir, float &t );

@@ -29,6 +29,7 @@
 		@in		MOAITexture self
 		@in		MOAIImage image
 		@opt	string debugname		Name used when reporting texture debug information
+		@opt	boolean autoClear		Default value is 'false.' Only used if there is a reloader in play.
 		@out	nil
 	
 	@overload
@@ -83,7 +84,13 @@ void MOAITexture::Clear () {
 
 	this->mFilename.clear ();
 	this->mDebugName.clear ();
+	
+	if ( this->mImage && this->mAutoClearImage ) {
+		this->mImage->Clear ();
+	}
+	
 	this->mImage.Set ( *this, 0 );
+	this->mAutoClearImage = false;
 	
 	if ( this->mTextureData ) {
 		free ( this->mTextureData );
@@ -97,21 +104,21 @@ void MOAITexture::Clear () {
 bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
 	u32 transform = MOAITexture::DEFAULT_TRANSFORM;
-	cc8* debugName = "";
+	cc8* debugName = 0;
 	int debugNameIdx = 1;
 	
 	if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
 		transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
 		debugNameIdx++;
 	}
-	debugName = state.GetValue < cc8* >( debugNameIdx, "" );
-		
+	debugName = state.GetValue < cc8* >( debugNameIdx, 0 );
+	
 	bool done = false;
 
 	if ( state.IsType ( idx, LUA_TSTRING )) {
 		cc8* filename = lua_tostring ( state, idx );
 		u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
-		this->Init ( filename, transform );
+		this->Init ( filename, transform, debugName ? debugName : filename );
 		done = true;
 	}
 	
@@ -120,7 +127,8 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 		if ( !done ) {
 			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
 			if ( image ) {
-				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)" );
+				bool autoClear	= state.GetValue < bool >( debugNameIdx + 1, false );
+				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)", autoClear );
 				done = true;
 			}
 		}
@@ -145,15 +153,16 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
+void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
 		this->mImage.Set ( *this, &image );
+		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -163,12 +172,15 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 	this->Clear ();
 	
 	if ( image.IsOK ()) {
+	
 		this->mImage.Set ( *this, new MOAIImage ());
+		this->mAutoClearImage = true;
+		
 		this->mImage->Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -188,7 +200,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 	else {
 	
@@ -207,7 +219,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm ();
+		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
 }
 
@@ -233,7 +245,8 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 
 	MOAIImageFormat* format = 0;
-		
+	bool result = false;
+
 	format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
 	if ( format ) {
 	
@@ -252,6 +265,8 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 				
 				this->mWidth = textureInfo.mWidth;
 				this->mHeight = textureInfo.mHeight;
+				
+				result = true;
 			}
 			else {
 				free ( data );
@@ -264,14 +279,17 @@ bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
 			
 			if ( image->IsOK ()) {
 				this->mImage.Set ( *this, image );
+				this->mAutoClearImage = true;
 				this->mWidth = image->GetWidth ();
 				this->mHeight = image->GetHeight ();
+				result = true;
 			}
 			else {
 				delete image;
 			}
 		}
 	}
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -279,7 +297,8 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ),
 	mTextureData ( 0 ),
 	mTextureDataSize ( 0 ),
-	mTextureDataFormat ( 0 ) {
+	mTextureDataFormat ( 0 ),
+	mAutoClearImage ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )
@@ -312,8 +331,10 @@ void MOAITexture::OnCPUDestroy () {
 	if ( this->HasReloader () || this->mFilename.size ()) {
 		
 		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
-		if (this->mImage)
-			this->mImage->Clear();
+		if ( this->mImage && this->mAutoClearImage ) {
+			this->mImage->Clear ();
+		}
+		
 		this->mImage.Set ( *this, 0 );
 		
 		if ( this->mTextureData ) {

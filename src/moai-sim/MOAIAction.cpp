@@ -62,7 +62,7 @@ void MOAIActionStackMgr::Push ( MOAIAction& action ) {
 
 	@in		MOAIAction self
 	@in		MOAIAction child
-	@opt	boolean defer		Default value is 'true.'
+	@opt	boolean defer		Default value is 'false.'
 	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
@@ -86,7 +86,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 
 	@in		MOAIAction self
 	@opt	MOAIAction parent		Default value is nil; same effect as calling detach ().
-	@opt	boolean defer			Default value is 'true.'
+	@opt	boolean defer			Default value is 'false.'
 	@out	MOAIAction self
 */
 int MOAIAction::_attach ( lua_State* L ) {
@@ -122,7 +122,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 int MOAIAction::_defer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
-	bool defer = state.GetValue < bool >( 2, true );
+	bool defer = state.GetValue < bool >( 2, false );
 	self->Defer ( defer );
 	return 0;
 }
@@ -232,14 +232,14 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 
 	@in		MOAIAction self
 	@opt	MOAIAction parent		Default value is MOAIActionMgr.getRoot ()
-	@opt	boolean defer			Action will first run during the next sim step, even if it visited during the current sim step. Default value is 'true.'
+	@opt	boolean defer			Action will first run during the next sim step, even if it visited during the current sim step. Default value is 'false.'
 	@out	MOAIAction self
 */
 int MOAIAction::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	MOAIAction* action		= state.GetLuaObject < MOAIAction >( 2, true );
-	bool defer				= state.GetValue < bool >( 3, true );
+	bool defer				= state.GetValue < bool >( 3, false );
 	
 	if ( !action ) {
 		action = MOAISim::Get ().GetActionMgr ().GetDefaultParent ();

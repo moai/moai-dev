@@ -242,7 +242,7 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 
 	idx = idx - 1;
 
-	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -272,10 +272,10 @@ ZLBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITileDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAITileDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//
@@ -286,7 +286,6 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 	this->mQuad.SetUVs ( -0.5f, -0.5f, 0.5f, 0.5f );
 }

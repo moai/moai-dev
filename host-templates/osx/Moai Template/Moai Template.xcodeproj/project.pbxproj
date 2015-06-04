@@ -18,7 +18,6 @@
 		63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9319EE170700C7AC2F /* SDLHost.cpp */; };
 		63E54A9919EE170700C7AC2F /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9519EE170700C7AC2F /* SDLHostMain.cpp */; };
 		63E54AC119EE179700C7AC2F /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9A19EE179600C7AC2F /* libbox2d.a */; };
-		63E54AC219EE179700C7AC2F /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9B19EE179600C7AC2F /* libchipmunk.a */; };
 		63E54AC319EE179700C7AC2F /* libcontrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9C19EE179600C7AC2F /* libcontrib.a */; };
 		63E54AC419EE179700C7AC2F /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9D19EE179600C7AC2F /* libcrypto.a */; };
 		63E54AC519EE179700C7AC2F /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A9E19EE179600C7AC2F /* libcurl.a */; };
@@ -34,7 +33,6 @@
 		63E54ACF19EE179700C7AC2F /* libluasocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AA819EE179600C7AC2F /* libluasocket.a */; };
 		63E54AD019EE179700C7AC2F /* libluasql.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AA919EE179600C7AC2F /* libluasql.a */; };
 		63E54AD119EE179700C7AC2F /* libmoai-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */; };
-		63E54AD219EE179700C7AC2F /* libmoai-chipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */; };
 		63E54AD319EE179700C7AC2F /* libmoai-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAC19EE179600C7AC2F /* libmoai-core.a */; };
 		63E54AD419EE179700C7AC2F /* libmoai-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */; };
 		63E54AD519EE179700C7AC2F /* libmoai-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */; };
@@ -74,12 +72,20 @@
 		63E54B0519EE1B7000C7AC2F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54A7119EE14DF00C7AC2F /* AppKit.framework */; };
 		63E54B0719EE1C4B00C7AC2F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E54B0619EE1C4B00C7AC2F /* Carbon.framework */; };
 		63F755911A3C370900EF9127 /* libzlcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F755901A3C370900EF9127 /* libzlcrypto.a */; };
-		63F755941A3C374700EF9127 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F755921A3C374700EF9127 /* Joystick.cpp */; };
+		BD02B41B1AB7B508006743DE /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD02B4171AB7B508006743DE /* SDLJoystick.cpp */; };
+		BD02B41C1AB7B508006743DE /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD02B4191AB7B508006743DE /* SDLKeyCodeMapping.cpp */; };
+		BD02B4201AB7B53F006743DE /* aku_plugins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD02B41D1AB7B53F006743DE /* aku_plugins.cpp */; };
+		BD02B4281AB7B5A7006743DE /* libmoai-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4221AB7B5A7006743DE /* libmoai-apple.a */; };
+		BD02B4291AB7B5A7006743DE /* libmoai-audiosampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4231AB7B5A7006743DE /* libmoai-audiosampler.a */; };
+		BD02B42A1AB7B5A7006743DE /* libmoai-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4241AB7B5A7006743DE /* libmoai-http-server.a */; };
+		BD02B42B1AB7B5A7006743DE /* libmoai-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4251AB7B5A7006743DE /* libmoai-sdl.a */; };
+		BD02B42C1AB7B5A7006743DE /* libpvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4261AB7B5A7006743DE /* libpvr.a */; };
+		BD02B42D1AB7B5A7006743DE /* libwebp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD02B4271AB7B5A7006743DE /* libwebp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		63157D5B19FCB407009018A3 /* bootstrap.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bootstrap.lua; path = ../bootstrap.lua; sourceTree = "<group>"; };
-		63157D5E19FCB4F0009018A3 /* anim-basic */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "anim-basic"; path = "../../samples/anim-basic"; sourceTree = "<group>"; };
+		63157D5E19FCB4F0009018A3 /* anim-basic */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "anim-basic"; path = "../../../samples/anim-basic"; sourceTree = "<group>"; };
 		63157D6019FCB57D009018A3 /* libmoai-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-crypto.a"; sourceTree = "<group>"; };
 		63157D6119FCB57D009018A3 /* libtess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtess.a; sourceTree = "<group>"; };
 		63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_modules_util.cpp; sourceTree = "<group>"; };
@@ -99,7 +105,6 @@
 		63E54A9419EE170700C7AC2F /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLHost.h; sourceTree = "<group>"; };
 		63E54A9519EE170700C7AC2F /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLHostMain.cpp; sourceTree = "<group>"; };
 		63E54A9A19EE179600C7AC2F /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbox2d.a; sourceTree = "<group>"; };
-		63E54A9B19EE179600C7AC2F /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libchipmunk.a; sourceTree = "<group>"; };
 		63E54A9C19EE179600C7AC2F /* libcontrib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcontrib.a; sourceTree = "<group>"; };
 		63E54A9D19EE179600C7AC2F /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		63E54A9E19EE179600C7AC2F /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
@@ -115,7 +120,6 @@
 		63E54AA819EE179600C7AC2F /* libluasocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluasocket.a; sourceTree = "<group>"; };
 		63E54AA919EE179600C7AC2F /* libluasql.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libluasql.a; sourceTree = "<group>"; };
 		63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-box2d.a"; sourceTree = "<group>"; };
-		63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-chipmunk.a"; sourceTree = "<group>"; };
 		63E54AAC19EE179600C7AC2F /* libmoai-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-core.a"; sourceTree = "<group>"; };
 		63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-http-client.a"; sourceTree = "<group>"; };
 		63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-luaext.a"; sourceTree = "<group>"; };
@@ -153,8 +157,18 @@
 		63E54B0319EE1B4D00C7AC2F /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		63E54B0619EE1C4B00C7AC2F /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		63F755901A3C370900EF9127 /* libzlcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libzlcrypto.a; sourceTree = "<group>"; };
-		63F755921A3C374700EF9127 /* Joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
-		63F755931A3C374700EF9127 /* Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
+		BD02B4171AB7B508006743DE /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLJoystick.cpp; sourceTree = "<group>"; };
+		BD02B4181AB7B508006743DE /* SDLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLJoystick.h; sourceTree = "<group>"; };
+		BD02B4191AB7B508006743DE /* SDLKeyCodeMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLKeyCodeMapping.cpp; sourceTree = "<group>"; };
+		BD02B41A1AB7B508006743DE /* SDLKeyCodeMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLKeyCodeMapping.h; sourceTree = "<group>"; };
+		BD02B41D1AB7B53F006743DE /* aku_plugins.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_plugins.cpp; sourceTree = "<group>"; };
+		BD02B41F1AB7B53F006743DE /* aku_plugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aku_plugins.h; sourceTree = "<group>"; };
+		BD02B4221AB7B5A7006743DE /* libmoai-apple.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-apple.a"; sourceTree = "<group>"; };
+		BD02B4231AB7B5A7006743DE /* libmoai-audiosampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-audiosampler.a"; sourceTree = "<group>"; };
+		BD02B4241AB7B5A7006743DE /* libmoai-http-server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-http-server.a"; sourceTree = "<group>"; };
+		BD02B4251AB7B5A7006743DE /* libmoai-sdl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-sdl.a"; sourceTree = "<group>"; };
+		BD02B4261AB7B5A7006743DE /* libpvr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpvr.a; sourceTree = "<group>"; };
+		BD02B4271AB7B5A7006743DE /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,28 +196,31 @@
 				63E54AFA19EE1A1300C7AC2F /* SystemConfiguration.framework in Frameworks */,
 				63E54AE819EE1A1200C7AC2F /* Foundation.framework in Frameworks */,
 				63E54AC119EE179700C7AC2F /* libbox2d.a in Frameworks */,
-				63E54AC219EE179700C7AC2F /* libchipmunk.a in Frameworks */,
 				63E54AC319EE179700C7AC2F /* libcontrib.a in Frameworks */,
 				63E54AC419EE179700C7AC2F /* libcrypto.a in Frameworks */,
+				BD02B4281AB7B5A7006743DE /* libmoai-apple.a in Frameworks */,
 				63E54AC519EE179700C7AC2F /* libcurl.a in Frameworks */,
 				63E54AC619EE179700C7AC2F /* libexpat.a in Frameworks */,
 				63E54AC719EE179700C7AC2F /* libfreetype.a in Frameworks */,
 				63E54AC819EE179700C7AC2F /* libglew.a in Frameworks */,
 				63E54AC919EE179700C7AC2F /* libjansson.a in Frameworks */,
+				BD02B4291AB7B5A7006743DE /* libmoai-audiosampler.a in Frameworks */,
 				63E54ACA19EE179700C7AC2F /* libjpg.a in Frameworks */,
 				63E54ACB19EE179700C7AC2F /* libluacrypto.a in Frameworks */,
 				63E54ACC19EE179700C7AC2F /* libluacurl.a in Frameworks */,
 				63E54ACD19EE179700C7AC2F /* libluafilesystem.a in Frameworks */,
 				63E54ACE19EE179700C7AC2F /* libluajit.a in Frameworks */,
+				BD02B42C1AB7B5A7006743DE /* libpvr.a in Frameworks */,
 				63E54ACF19EE179700C7AC2F /* libluasocket.a in Frameworks */,
 				63E54AD019EE179700C7AC2F /* libluasql.a in Frameworks */,
 				63E54AD119EE179700C7AC2F /* libmoai-box2d.a in Frameworks */,
-				63E54AD219EE179700C7AC2F /* libmoai-chipmunk.a in Frameworks */,
 				63E54AD319EE179700C7AC2F /* libmoai-core.a in Frameworks */,
+				BD02B42B1AB7B5A7006743DE /* libmoai-sdl.a in Frameworks */,
 				63E54AD419EE179700C7AC2F /* libmoai-http-client.a in Frameworks */,
 				63E54AD519EE179700C7AC2F /* libmoai-luaext.a in Frameworks */,
 				63E54AD619EE179700C7AC2F /* libmoai-sim.a in Frameworks */,
 				63E54AD719EE179700C7AC2F /* libmoai-untz.a in Frameworks */,
+				BD02B42A1AB7B5A7006743DE /* libmoai-http-server.a in Frameworks */,
 				63E54AD819EE179700C7AC2F /* libmoai-util.a in Frameworks */,
 				63E54AD919EE179700C7AC2F /* libmongoose.a in Frameworks */,
 				63E54ADA19EE179700C7AC2F /* libogg.a in Frameworks */,
@@ -215,6 +232,7 @@
 				63E54ADF19EE179700C7AC2F /* libsqlite3.a in Frameworks */,
 				63E54AE019EE179700C7AC2F /* libssl.a in Frameworks */,
 				63E54AE119EE179700C7AC2F /* libtinyxml.a in Frameworks */,
+				BD02B42D1AB7B5A7006743DE /* libwebp.a in Frameworks */,
 				63E54AE219EE179700C7AC2F /* libtlsf.a in Frameworks */,
 				63E54AE319EE179700C7AC2F /* libuntz.a in Frameworks */,
 				63E54AE419EE179700C7AC2F /* libvorbis.a in Frameworks */,
@@ -230,8 +248,13 @@
 		63157D5619FCAE84009018A3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				BD02B4221AB7B5A7006743DE /* libmoai-apple.a */,
+				BD02B4231AB7B5A7006743DE /* libmoai-audiosampler.a */,
+				BD02B4241AB7B5A7006743DE /* libmoai-http-server.a */,
+				BD02B4251AB7B5A7006743DE /* libmoai-sdl.a */,
+				BD02B4261AB7B5A7006743DE /* libpvr.a */,
+				BD02B4271AB7B5A7006743DE /* libwebp.a */,
 				63E54A9A19EE179600C7AC2F /* libbox2d.a */,
-				63E54A9B19EE179600C7AC2F /* libchipmunk.a */,
 				63E54A9C19EE179600C7AC2F /* libcontrib.a */,
 				63E54A9D19EE179600C7AC2F /* libcrypto.a */,
 				63E54A9E19EE179600C7AC2F /* libcurl.a */,
@@ -247,7 +270,6 @@
 				63E54AA819EE179600C7AC2F /* libluasocket.a */,
 				63E54AA919EE179600C7AC2F /* libluasql.a */,
 				63E54AAA19EE179600C7AC2F /* libmoai-box2d.a */,
-				63E54AAB19EE179600C7AC2F /* libmoai-chipmunk.a */,
 				63E54AAC19EE179600C7AC2F /* libmoai-core.a */,
 				63E54AAD19EE179600C7AC2F /* libmoai-http-client.a */,
 				63E54AAE19EE179600C7AC2F /* libmoai-luaext.a */,
@@ -362,6 +384,8 @@
 		63E54A8B19EE170700C7AC2F /* host-modules */ = {
 			isa = PBXGroup;
 			children = (
+				BD02B41D1AB7B53F006743DE /* aku_plugins.cpp */,
+				BD02B41F1AB7B53F006743DE /* aku_plugins.h */,
 				63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */,
 				63157D6519FCB5A1009018A3 /* aku_modules_util.h */,
 				63E54A8C19EE170700C7AC2F /* aku_modules.cpp */,
@@ -374,8 +398,10 @@
 		63E54A9219EE170700C7AC2F /* host-sdl */ = {
 			isa = PBXGroup;
 			children = (
-				63F755921A3C374700EF9127 /* Joystick.cpp */,
-				63F755931A3C374700EF9127 /* Joystick.h */,
+				BD02B4171AB7B508006743DE /* SDLJoystick.cpp */,
+				BD02B4181AB7B508006743DE /* SDLJoystick.h */,
+				BD02B4191AB7B508006743DE /* SDLKeyCodeMapping.cpp */,
+				BD02B41A1AB7B508006743DE /* SDLKeyCodeMapping.h */,
 				63E54A9319EE170700C7AC2F /* SDLHost.cpp */,
 				63E54A9419EE170700C7AC2F /* SDLHost.h */,
 				63E54A9519EE170700C7AC2F /* SDLHostMain.cpp */,
@@ -448,8 +474,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD02B41B1AB7B508006743DE /* SDLJoystick.cpp in Sources */,
+				BD02B4201AB7B53F006743DE /* aku_plugins.cpp in Sources */,
+				BD02B41C1AB7B508006743DE /* SDLKeyCodeMapping.cpp in Sources */,
 				63E54A9619EE170700C7AC2F /* aku_modules.cpp in Sources */,
-				63F755941A3C374700EF9127 /* Joystick.cpp in Sources */,
 				63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */,
 				63E54A9919EE170700C7AC2F /* SDLHostMain.cpp in Sources */,
 				63157D6619FCB5A1009018A3 /* aku_modules_util.cpp in Sources */,
@@ -533,6 +561,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"AKU_WITH_SDL=1",
 					"_DEBUG=1",
 					"DEBUG=1",
 					"$(inherited)",
@@ -570,6 +599,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"AKU_WITH_SDL=1",
+					"$(inherited)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib/include\"",
 					"\"$(SRCROOT)/app\"",

@@ -47,4 +47,4 @@ install(TARGETS moai-core EXPORT libmoai ARCHIVE DESTINATION lib)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include/moai-core
           FILES_MATCHING PATTERN "*.h")
 
-install(FILES "${MOAI_ROOT}/src/lua-headers/moai_lua.h" DESTINATION include/lua-headers)
+install(DIRECTORY ${MOAI_ROOT}/src/lua-headers DESTINATION include FILES_MATCHING PATTERN "*.h")

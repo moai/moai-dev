@@ -186,7 +186,7 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -198,11 +198,10 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D o
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
-	UNUSED ( idx );
+bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//

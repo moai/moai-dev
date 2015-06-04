@@ -115,6 +115,7 @@ int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
 	@in		number idx
 	@in		number uvQuadID
 	@in		number quadID
+	@opt	number materialID
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
@@ -372,7 +373,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		bool hasMaterials = materials.Size () > 0;
 		
 		if ( !hasMaterials ) {
-			materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+			materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 		}
 
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -397,7 +398,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 			
 			if (( hasMaterials ) && ( materialID != spritePair.mMaterialID )) {
 				materialID = spritePair.mMaterialID;
-				materials.LoadGfxState ( materialID, idx, MOAIShaderMgr::DECK2D_SHADER );
+				materials.LoadGfxState ( this, materialID, idx, MOAIShaderMgr::DECK2D_SHADER );
 			}
 			
 			ZLQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
@@ -446,7 +447,7 @@ ZLBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
 	u32 size = this->mSprites.Size ();
@@ -459,7 +460,7 @@ bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 		
 		for ( u32 i	 = 0; i < sprite.mTotalPairs; ++i ) {
 			USSpritePair& prim = this->mPairs [ sprite.mBasePair + i ];
-			if ( this->TestHit ( this->mQuads [ prim.mQuadID ], this->mUVQuads [ prim.mUVQuadID ], vec.mX, vec.mY )) return true;
+			if ( materials.TestHit ( this, prim.mMaterialID, idx, granularity, this->mQuads [ prim.mQuadID ], this->mUVQuads [ prim.mUVQuadID ], vec.mX, vec.mY )) return true;
 		}
 	}
 	return false;

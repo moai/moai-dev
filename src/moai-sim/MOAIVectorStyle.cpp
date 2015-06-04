@@ -45,6 +45,14 @@ void MOAIVectorStyle::Default () {
 	
 	this->mFillExtraID = 0;
 	this->mStrokeExtraID = 0;
+	
+	this->mMergeNormals = 0.0f;
+}
+
+//----------------------------------------------------------------//
+float MOAIVectorStyle::GetMergeNormalsCosine () const {
+
+	return Cos ( this->mMergeNormals * D2R );
 }
 
 //----------------------------------------------------------------//

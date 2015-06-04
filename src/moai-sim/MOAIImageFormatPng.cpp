@@ -7,6 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBPNG
 
 #include <moai-sim/MOAIImageFormatPng.h>
+#include <moai-sim/MOAITextureBase.h>
 
 #include <png.h>
 

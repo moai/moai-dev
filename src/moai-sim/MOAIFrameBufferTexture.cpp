@@ -63,6 +63,7 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 		this->mStencilFormat	= stencilFormat;
 		
 		this->FinishInit ();
+		this->DoCPUAffirm ();
 	}
 	else {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );

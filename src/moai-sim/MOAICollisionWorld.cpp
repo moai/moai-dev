@@ -104,9 +104,9 @@ void MOAICollisionWorld::ClearOverlap ( MOAICollisionProp& prop0, MOAICollisionP
 		MOAIPropOverlapLink* overlapLink = cursor;
 		cursor = cursor->mNext;
 		
-		MOAICollisionProp& other = *overlapLink->mOther;
+		const MOAICollisionProp* otherProp = overlapLink->mOther;
 		
-		if ( overlapLink->mOther == &prop1 ) {
+		if ( otherProp == &prop1 ) {
 			
 			if (( prop0.mOverlapFlags | prop1.mOverlapFlags ) & MOAICollisionProp::OVERLAP_EVENTS_LIFECYCLE ) {
 				this->DoCallback ( OVERLAP_END, prop0, prop1 );

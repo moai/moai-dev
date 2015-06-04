@@ -53,6 +53,10 @@ if (MOAI_WEBP)
 	target_link_libraries (moai-sim webp)
 endif (MOAI_WEBP)
 
+if (MOAI_PVR)
+  target_link_libraries (moai-sim pvr)
+endif (MOAI_PVR)
+
 if (MOAI_BOX2D)
  target_link_libraries ( moai-sim moai-box2d)
 endif (MOAI_BOX2D)

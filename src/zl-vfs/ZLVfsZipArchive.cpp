@@ -450,7 +450,12 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 		
 		if (( entryHeader.mNameLength + 1 ) > nameBufferSize ) {
 			nameBufferSize += SCAN_BUFFER_SIZE;
-			nameBuffer = ( char* )realloc ( nameBuffer, nameBufferSize );
+			char* tryRealloc = ( char* )realloc ( nameBuffer, nameBufferSize );
+			if ( tryRealloc == NULL ) {
+				goto error;
+			} else {
+				nameBuffer = tryRealloc;
+			}
 		}
 		
 		fread ( nameBuffer, entryHeader.mNameLength, 1, file );
@@ -535,11 +540,18 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	if ( !infile ) return -1;
 	
 	FILE* outfile = fopen ( outfilename, "wb" );
-	if ( !outfile ) return -1;
+	if ( !outfile ) {
+		fclose ( infile );
+		return -1;
+	}
 
 	ZLVfsZipArchiveHeader header;
 	int result = header.FindAndRead ( infile, 0 );
-	if ( result ) return -1;
+	if ( result ) {
+		fclose ( infile );
+		fclose ( outfile );
+		return -1;
+	}
 	
 	assert ( header.mDiskNumber == 0 );
 	assert ( header.mStartDisk == 0 );

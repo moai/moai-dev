@@ -250,7 +250,7 @@ int MOAIHttpTaskBase::_performAsync ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	performSync
-	@text	Perform the HTTP task synchronously ( blocking).
+	@text	Perform the HTTP task synchronously (blocking).
 
 	@in		MOAIHttpTaskBase self
 	@out	nil

@@ -1,9 +1,8 @@
-language: c
+language: android
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y build-essential libglew-dev libglu1-mesa-dev libxmu-dev libxi-dev libsdl-dev libxxf86vm-dev libxmu-dev libxcb1-dev libxcb-randr0-dev libxcb-util0-dev
 install: true
-script: ./bin/ci-linux.sh
-branches:
-  only:
-  - master
-env:
-  global:
-    secure: eIdZl81aKELEv7b+rxyIt6aMBoetaf+Onl/nW92kPmz/yrrmQomAgdRgzijs7tzlAu5T0rp8jF119eNLOxbnDH0fPNQHNJVIMCxecxPj7Huzp6ikDjt78jKWRCwnDbyN4vSSK7QTVljPpsMEERWqXm+Y1I/rgJLCoGiYI1i5tSQ=
+before_script: bash ./bin/ci-linux.sh
+script: bash ./bin/ci-android.sh
+

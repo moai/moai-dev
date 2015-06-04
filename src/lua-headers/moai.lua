@@ -322,61 +322,6 @@ MOAILayer.extend (
 --============================================================--
 MOAIGraphicsProp.extend (
 
-	'MOAIGraphicsProp',
-	
-	----------------------------------------------------------------
-	function ( interface, class, superInterface, superClass )
-		
-		local affirmMaterialBatch = function ( self )
-			local materials = self:getMaterialBatch () or MOAIMaterialBatch.new ()
-			self:setMaterialBatch ( materials )
-			return materials
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.getIndexBatchSize ( self )
-			local materials = self:getMaterialBatch ()
-			return materials and materials:getIndexBatchSize ()
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.getShader ( self, idx )
-			local materials = self:getMaterialBatch ()
-			return materials and materials:getShader ( idx )
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.getTexture ( self, idx )
-			local materials = self:getMaterialBatch ()
-			return materials and materials:getTexture ( idx )
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.setIndexBatchSize ( self, indexBatchSize )
-			local materials = affirmMaterialBatch ( self )
-			return materials:setIndexBatchSize ( indexBatchSize )
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.setShader ( self, idx, shader )
-			local materials = affirmMaterialBatch ( self )
-			return materials:setTexture ( idx, shader )
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.setTexture ( self, idx, texture )
-			print ( 'SET TEXTURE', self, idx, texture )
-			local materials = affirmMaterialBatch ( self )
-			return materials:setTexture ( idx, texture )
-		end
-	end
-)
-
---============================================================--
--- MOAIGraphicsProp
---============================================================--
-MOAIGraphicsProp.extend (
-
 	'MOAIGraphicsProp2D',
 	
 	----------------------------------------------------------------
@@ -504,6 +449,55 @@ MOAISim.extend (
 		function class.removeRenderPass ( pass )
 			MOAIRenderMgr.removeRenderPass ( pass )
 		end 
+	end
+)
+
+--============================================================--
+-- MOAIScriptNode
+--============================================================--
+MOAIScriptNode.extend (
+	'MOAIScriptNode',
+
+	----------------------------------------------------------------
+	function ( interface, class, superInterface, superClass )
+		
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.connect ( self, srcField, node, dstField )
+			local attrSrc = self.__attrNames [ srcField ]
+			local attrDst = node.__attrNames [ dstField ]
+			if attrSrc and attrDst then
+				interface.setAttrLink ( self, attrSrc, node, attrDst )
+			end
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		local new = class.new
+		
+		function class.new ()
+			local self = new ()
+
+			self.__attrNames = {}
+			local ref = superInterface.getRefTable ( self )
+			local mem = superInterface.getMemberTable ( self )
+
+			ref.__newindex = function ( self, key, value )
+				if self.__attrNames [ key ] then
+					mem [ key ] = value
+					superInterface.scheduleUpdate ( self )
+				else
+					mem [ key ] = value
+				end
+			end
+
+			return self
+		end
+
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		function interface.setAttrName ( self, attrId, attrName )
+			superInterface.setAttrName ( self, attrId, attrName )
+			self.__attrNames [ attrName ] = attrId
+		end
 	end
 )
 

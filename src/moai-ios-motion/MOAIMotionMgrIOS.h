@@ -19,7 +19,7 @@ class MOAIMotionMgrIOS :
 private:
 
 	bool				mIsHeadingActive;
-	bool				mIsLocationActive;
+	//bool				mIsLocationActive;
 
 	u8					mLocationDeviceID;
 	u8					mInputDeviceID;

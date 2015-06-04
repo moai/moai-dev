@@ -13,29 +13,15 @@ test = {
 
 transform = MOAITransform.new ()
 
--- create the serializer and add the objects in the order we want them back
-serializer = MOAISerializer.new ()
-serializer:serialize ( test )
-serializer:serialize ( transform )
+testStr = MOAISerializer.serializeToString ({ test, transform })
 
--- the serializer will produce a chunk that, when executed, will return
--- the objects in the order they were paseed in
-testStr = serializer:exportToString ()
-
--- we can write the chunk out to a file as is, or compile using string.dump before writing...
-compiled = string.dump ( loadstring ( testStr, '' )) -- using empty string for name of chunk
+compiled = string.dump ( loadstring ( testStr, '' ))
 file = io.open ( 'out.lua', 'wb' )
 file:write ( compiled )
 file:close ()
 
--- time to deserialize the objects
-test, transform = dofile ( 'out.lua' )
+test, transform = unpack ( dofile ( 'out.lua' ))
 
--- we'll serialize all over again, but this time print the result to observe the chunk format
-serializer = MOAISerializer.new ()
-serializer:serialize ( test )
-serializer:serialize ( transform )
-testStr = serializer:exportToString ()
+testStr = MOAISerializer.serializeToString ({ test, transform })
 
--- serialized objects, pretty printed
 print ( testStr )

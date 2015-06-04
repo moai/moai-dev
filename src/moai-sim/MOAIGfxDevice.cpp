@@ -1225,7 +1225,13 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 
-	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
+	MOAIVertexFormat* format = MOAIVertexFormatMgr::Get ().GetFormat ( preset );
+	if ( format ) {
+		this->SetVertexFormat ( *format );
+	}
+	else {
+		this->SetVertexFormat ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1285,7 +1291,7 @@ void MOAIGfxDevice::SetViewRect () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 
-	ZLRect deviceRect = rect;
+	ZLRect deviceRect;
 	
 	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 	

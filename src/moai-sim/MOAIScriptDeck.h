@@ -16,7 +16,7 @@ class MOAIScriptDeck :
 	public MOAIDeck {
 private:
 
-	ZLRect				mRect;
+	ZLRect					mRect;
 
 	MOAILuaMemberRef		mOnDraw;
 	MOAILuaMemberRef		mOnRect;

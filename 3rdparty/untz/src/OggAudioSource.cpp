@@ -9,11 +9,8 @@
 #include "OggAudioSource.h"
 
 
-OggAudioSource::OggAudioSource()
-{
-    mpOggInfo = NULL;
-	mInFile = 0;
-}
+OggAudioSource::OggAudioSource() : mpOggInfo(NULL)
+{ }
 
 OggAudioSource::~OggAudioSource()
 {
@@ -25,19 +22,11 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 	if(mLoadedInMemory && loadIntoMemory)
 		return true;
 
-	mPath = path;
-	mInFile = fopen(mPath.c_str(), "rb");
+	const int status = ov_fopen(path.c_str(), &mOggFile);
 
-	if(mInFile == NULL)
+	if( status != 0 )
 	{
-		std::cerr << "Cannot open " << mPath.c_str() << " for reading..." << std::endl;
-		return false;
-	}
-
-	// Try opening the given file
-	if(ov_open(mInFile, &mOggFile, NULL, 0) != 0)
-	{
-		std::cerr << "Error opening " << mPath.c_str() << " for decoding..." << std::endl;
+		printError("Cannot open %s for reading, error: %s \n", path.c_str(), getErrorDescription( status) );
 		return false;
 	}
 
@@ -50,29 +39,46 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 void OggAudioSource::close()
 {
     BufferedAudioSource::close();
-    
-	if(mInFile)
-	{
-		ov_clear(&mOggFile);
-		mInFile = 0;
-	}
+	ov_clear(&mOggFile);
 }
 
 void OggAudioSource::setDecoderPosition(Int64 startFrame)
 {
 	RScopedLock l(&mDecodeLock);
 
-	int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
-	if(startFrame < getLength() * getSampleRate())
-		mEOF = false;
+	const int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
+
+	if ( status == 0 ) {
+		if ( startFrame < ( getLength() * getSampleRate() ) ) {
+			mEOF = false;
+		}
+	 } else {
+		 printError("Failed ov_pcm_seek: %s\n", getErrorDescription(status) );
+	 }
 }
 
-double OggAudioSource::getLength() 
+const char* OggAudioSource::getErrorDescription(const int status) const
+{
+	switch ( status ) {
+		case OV_ENOSEEK		: return "Bitstream is not seekable.";
+		case OV_EINVAL		: return "Invalid argument value.";
+		case OV_EREAD		: return "A read from media returned an error.";
+		case OV_EFAULT		: return "Internal logic fault; indicates a bug or heap/stack corruption.";
+		case OV_EBADLINK	: return "Invalid stream section supplied.";
+		case OV_ENOTVORBIS	: return "The given file/data was not recognized as Ogg Vorbis data.";
+		case OV_EBADHEADER	: return "The file/data is apparently an Ogg Vorbis stream, \
+										but contains a corrupted or undecipherable header.";
+		case OV_EVERSION	: return "The bitstream format revision of the given stream is not supported.";
+		default				: return "Unknown error description.";
+	}
+}
+
+double OggAudioSource::getLength()
 { 
 	return ov_time_total(&mOggFile, -1);
 }
 
-double OggAudioSource::getSampleRate() 
+double OggAudioSource::getSampleRate()
 {
 	if(mpOggInfo)
 		return mpOggInfo->rate;

@@ -12,9 +12,10 @@ else
   libprefix=$1
 fi
 
+mkdir -p $libprefix
 libprefix=$(cd $libprefix; pwd)
 
-mkdir -p $libprefix
+
 
 cd `dirname $0`/..
 moai_root=$(pwd)
@@ -32,9 +33,8 @@ cd build
 build_folder=$moai_root/build
 
 
-
-
-for ARCH in armeabi armeabi-v7a x86
+ARCHS="armeabi armeabi-v7a x86"
+for ARCH in $ARCHS
 do
 
   cd $build_folder
@@ -54,8 +54,8 @@ do
   -DANDROID_ABI=$ARCH \
   -DCMAKE_INSTALL_PREFIX=$libprefix/$ARCH \
   -DLIBRARY_OUTPUT_PATH_ROOT=./build-android-$ARCH/ \
-  $moai_root/cmake
+  $moai_root/cmake || exit 1
 
   cmake --build . --target install
-
+  echo Finished building $ARCH
 done

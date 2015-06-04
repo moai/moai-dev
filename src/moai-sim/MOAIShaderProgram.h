@@ -51,7 +51,7 @@ class MOAIShaderProgram :
 protected:
 
 	friend class MOAIShader;
-	friend class MOAIShaderProgram;
+	// friend class MOAIShaderProgram;
 
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
@@ -106,9 +106,10 @@ public:
 		GLOBAL_VIEW_HALF_WIDTH,
 		GLOBAL_VIEW_HALF_HEIGHT,
 		GLOBAL_WORLD,
+		GLOBAL_WORLD_INVERSE,
 		GLOBAL_WORLD_VIEW,
+		GLOBAL_WORLD_VIEW_INVERSE,
 		GLOBAL_WORLD_VIEW_PROJ,
-		GLOBAL_WORLD_VIEW_PROJ_NORM,
 	};
 
 	//----------------------------------------------------------------//

@@ -6,5 +6,7 @@
 
 print ( 'HELLO FROM LUA' )
 
-MOAIFileSystem.setWorkingDirectory ( 'lua' )
-dofile ( 'main.lua' )
+if MOAIFileSystem.checkFileExists ( 'lua/main.lua' ) then
+	MOAIFileSystem.setWorkingDirectory ( 'lua' )
+	dofile ( 'main.lua' )
+end

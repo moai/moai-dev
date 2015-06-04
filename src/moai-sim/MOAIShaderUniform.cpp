@@ -228,6 +228,27 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value, bool check ) {
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 
+	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
+
+	if ( this->mType == UNIFORM_MATRIX_F3 ) {
+	
+		float m [ 9 ];
+
+		m [ 0 ]    = value.m [ AffineElem3D::C0_R0 ];
+		m [ 1 ]    = value.m [ AffineElem3D::C1_R0 ];
+		m [ 2 ]    = value.m [ AffineElem3D::C2_R0 ];
+
+		m [ 3 ]    = value.m [ AffineElem3D::C0_R1 ];
+		m [ 4 ]    = value.m [ AffineElem3D::C1_R1 ];
+		m [ 5 ]    = value.m [ AffineElem3D::C2_R1 ];
+
+		m [ 6 ]    = value.m [ AffineElem3D::C0_R2 ];
+		m [ 7 ]    = value.m [ AffineElem3D::C1_R2 ];
+		m [ 8 ]    = value.m [ AffineElem3D::C2_R2 ];
+
+		return this->SetBuffer ( m, sizeof ( m ), check );
+	}
+
 	float m [ 16 ];
 	
 	m [ 0 ]		= value.m [ AffineElem3D::C0_R0 ];
@@ -255,6 +276,27 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) {
+
+	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
+
+	if ( this->mType == UNIFORM_MATRIX_F3 ) {
+	
+		float m [ 9 ];
+
+		m [ 0 ]    = value.m [ ZLMatrix4x4::C0_R0 ];
+		m [ 1 ]    = value.m [ ZLMatrix4x4::C1_R0 ];
+		m [ 2 ]    = value.m [ ZLMatrix4x4::C2_R0 ];
+
+		m [ 3 ]    = value.m [ ZLMatrix4x4::C0_R1 ];
+		m [ 4 ]    = value.m [ ZLMatrix4x4::C1_R1 ];
+		m [ 5 ]    = value.m [ ZLMatrix4x4::C2_R1 ];
+
+		m [ 6 ]    = value.m [ ZLMatrix4x4::C0_R2 ];
+		m [ 7 ]    = value.m [ ZLMatrix4x4::C1_R2 ];
+		m [ 8 ]    = value.m [ ZLMatrix4x4::C2_R2 ];
+
+		return this->SetBuffer ( m, sizeof ( m ), check );
+	}
 
 	float m [ 16 ];
 
@@ -284,19 +326,48 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) 
 //----------------------------------------------------------------//
 bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) {
 
-	float m [ 9 ];
+	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
 
-	m [ 0 ]    = value.m [ ZLMatrix3x3::C0_R0 ];
-	m [ 1 ]    = value.m [ ZLMatrix3x3::C1_R0 ];
-	m [ 2 ]    = value.m [ ZLMatrix3x3::C2_R0 ];
+	if ( this->mType == UNIFORM_MATRIX_F3 ) {
 
-	m [ 3 ]    = value.m [ ZLMatrix3x3::C0_R1 ];
-	m [ 4 ]    = value.m [ ZLMatrix3x3::C1_R1 ];
-	m [ 5 ]    = value.m [ ZLMatrix3x3::C2_R1 ];
+		float m [ 9 ];
 
-	m [ 6 ]    = value.m [ ZLMatrix3x3::C0_R2 ];
-	m [ 7 ]    = value.m [ ZLMatrix3x3::C1_R2 ];
-	m [ 8 ]    = value.m [ ZLMatrix3x3::C2_R2 ];
+		m [ 0 ]    = value.m [ ZLMatrix3x3::C0_R0 ];
+		m [ 1 ]    = value.m [ ZLMatrix3x3::C1_R0 ];
+		m [ 2 ]    = value.m [ ZLMatrix3x3::C2_R0 ];
+
+		m [ 3 ]    = value.m [ ZLMatrix3x3::C0_R1 ];
+		m [ 4 ]    = value.m [ ZLMatrix3x3::C1_R1 ];
+		m [ 5 ]    = value.m [ ZLMatrix3x3::C2_R1 ];
+
+		m [ 6 ]    = value.m [ ZLMatrix3x3::C0_R2 ];
+		m [ 7 ]    = value.m [ ZLMatrix3x3::C1_R2 ];
+		m [ 8 ]    = value.m [ ZLMatrix3x3::C2_R2 ];
+
+		return this->SetBuffer ( m, sizeof ( m ), check );
+	}
+	
+	float m [ 16 ];
+
+	m [ 0 ]		= value.m [ ZLMatrix3x3::C0_R0 ];
+	m [ 1 ]		= value.m [ ZLMatrix3x3::C1_R0 ];
+	m [ 2 ]		= value.m [ ZLMatrix3x3::C2_R0 ];
+	m [ 3 ]		= 0.0f;
+
+	m [ 4 ]		= value.m [ ZLMatrix3x3::C0_R1 ];
+	m [ 5 ]		= value.m [ ZLMatrix3x3::C1_R1 ];
+	m [ 6 ]		= value.m [ ZLMatrix3x3::C2_R1 ];
+	m [ 7 ]		= 0.0f;
+
+	m [ 8 ]		= value.m [ ZLMatrix3x3::C0_R2 ];
+	m [ 9 ]		= value.m [ ZLMatrix3x3::C1_R2 ];
+	m [ 10 ]	= value.m [ ZLMatrix3x3::C2_R2 ];
+	m [ 11 ]	= 0.0f;
+
+	m [ 12 ]	= 0.0f;
+	m [ 13 ]	= 0.0f;
+	m [ 14 ]	= 0.0f;
+	m [ 15 ]	= 1.0f;
 
 	return this->SetBuffer ( m, sizeof ( m ), check );
 }

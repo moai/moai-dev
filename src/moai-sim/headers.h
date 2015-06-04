@@ -16,6 +16,7 @@
 #include <moai-sim/MOAIAttrOp.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIBoundsDeck.h>
+//#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
@@ -34,6 +35,7 @@
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
+#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
@@ -101,6 +103,7 @@
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIScriptNode.h>
+#include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>

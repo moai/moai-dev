@@ -107,8 +107,6 @@ u8 MOAIInputMgr::AddDevice ( cc8* name  ) {
 //----------------------------------------------------------------//
 bool MOAIInputMgr::CanWrite () {
 
-	double time = ZLDeviceTime::GetTimeInSeconds ();
-
 	if (( this->mAutosuspend > 0 ) && ( this->mAutosuspend <= ( ZLDeviceTime::GetTimeInSeconds () - this->mLastUpdate ))) {
 		this->DiscardAll ();
 		this->mAutosuspended = true;
@@ -245,11 +243,7 @@ void MOAIInputMgr::Record ( size_t size ) {
 
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
-}
 
-//----------------------------------------------------------------//
-void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
 	luaL_Reg regTable [] = {
 		{ "autoTimestamp",		_autoTimestamp },
 		{ "deferEvents",		_deferEvents },
@@ -262,6 +256,11 @@ void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

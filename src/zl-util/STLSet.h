@@ -11,9 +11,9 @@ using namespace std;
 //================================================================//
 // STLSet
 //================================================================//
-template < typename KEY >
+template < typename KEY, typename COMPARE = less < KEY > >
 class STLSet :
-	public set < KEY > {
+	public set < KEY, COMPARE > {
 public:
 
 	//----------------------------------------------------------------//

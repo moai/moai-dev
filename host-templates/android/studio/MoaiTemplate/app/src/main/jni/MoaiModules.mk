@@ -9,6 +9,12 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libsfmt.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
+LOCAL_MODULE    := pvr 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libpvr.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
 LOCAL_MODULE    := moai-core 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-core.a
 
