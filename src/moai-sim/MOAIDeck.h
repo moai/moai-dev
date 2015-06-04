@@ -38,6 +38,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int						_setBoundsDeck				( lua_State* L );
+	static int						_subdivideRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual ZLBox					ComputeMaxBounds			() = 0;

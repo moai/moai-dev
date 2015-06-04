@@ -380,7 +380,6 @@ void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
-
 		{ NULL, NULL }
 	};
 
