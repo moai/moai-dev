@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+
 -- just for readability
 local RECT_XMIN		= 1
 local RECT_YMIN		= 2
@@ -17,6 +20,8 @@ assert ( json )
 
 local CHUNKSIZE = json.chunkSize
 
+local WIDTH_IN_CHUNKS = math.ceil ( json.width / CHUNKSIZE )
+
 local ANCHOR_X = json.anchor.x
 local ANCHOR_Y = json.anchor.y
 
@@ -26,140 +31,56 @@ local materialIDs	= {}
 local sprites		= {}
 
 for i, tile in ipairs ( json.tiles ) do
-	local cropRect = tile.cropRect
-	local padRect = tile.paddingRect
 
-	local cropRectWidth = cropRect [ RECT_XMAX ] - cropRect [ RECT_XMIN ]
-	local cropRectHeight = cropRect [ RECT_YMAX ] - cropRect [ RECT_YMIN ]
+	local cropRect	= tile.cropRect
+	local padRect	= tile.paddingRect
 
-	local uvRect = {
-		[ RECT_XMIN ]		= cropRect [ RECT_XMIN ] / CHUNKSIZE,
-		[ RECT_YMIN ]		= cropRect [ RECT_YMAX ] / CHUNKSIZE,
-		[ RECT_XMAX ]		= cropRect [ RECT_XMAX ] / CHUNKSIZE,
-		[ RECT_YMAX ]		= cropRect [ RECT_YMIN ] / CHUNKSIZE,
-	}
+	local xOff = ANCHOR_X + cropRect [ RECT_XMIN ] - padRect [ RECT_XMIN ]
+	local yOff = ANCHOR_Y + cropRect [ RECT_YMIN ] - padRect [ RECT_YMIN ]
 
-	local screenRect = {
-		[ RECT_XMIN ]		= padRect [ RECT_XMIN ] - ANCHOR_X,
-		[ RECT_YMIN ]		= padRect [ RECT_YMIN ] - ANCHOR_Y,
-		[ RECT_XMAX ]		= padRect [ RECT_XMIN ] - ANCHOR_X + cropRectWidth,
-		[ RECT_YMAX ]		= padRect [ RECT_YMIN ] - ANCHOR_Y + cropRectHeight,
-	}
+	local screenSub, screenSubWidth, screenSubHeight = MOAIGfxQuadListDeck2D.subdivideRect (
 
-	local material1 = math.floor ( uvRect [ RECT_XMIN ])
-	local material2 = math.floor ( uvRect [ RECT_XMAX ])
+		CHUNKSIZE,
+		CHUNKSIZE,
 
-	--print ( 'crop rect', i, cropRect [ RECT_XMIN ], cropRect [ RECT_YMIN ], cropRect [ RECT_XMAX ], cropRect [ RECT_YMAX ])
-	--print ( ' - uv', i, uvRect [ RECT_XMIN ], uvRect [ RECT_YMIN ], uvRect [ RECT_XMAX ], uvRect [ RECT_YMAX ])
+		cropRect [ RECT_XMIN ],
+		cropRect [ RECT_YMIN ],
+		cropRect [ RECT_XMAX ],
+		cropRect [ RECT_YMAX ]
+	)
 
-	if material1 == material2 then
+	table.insert ( sprites, {
+		base	= #materialIDs + 1,
+		size	= #screenSub,
+	})
+	
+	for i, screenRect in ipairs ( screenSub ) do
 
-		-- the rect does not straddle a material boundary, so
-		-- just offset it by its material ID (in uv space) and record it
+		local xChunk = math.floor ( screenRect [ RECT_XMIN ] / CHUNKSIZE )
+		local yChunk = math.floor ( screenRect [ RECT_YMIN ] / CHUNKSIZE )
 
-		table.insert ( sprites, {
-			base	= #materialIDs + 1,
-			size	= 1,
-		})
+		local uvRect = {
+			[ RECT_XMIN ]	= ( screenRect [ RECT_XMIN ] - ( xChunk * CHUNKSIZE )) / CHUNKSIZE,
+			[ RECT_YMIN ]	= ( screenRect [ RECT_YMIN ] - ( yChunk * CHUNKSIZE )) / CHUNKSIZE,
+			[ RECT_XMAX ]	= ( screenRect [ RECT_XMAX ] - ( xChunk * CHUNKSIZE )) / CHUNKSIZE,
+			[ RECT_YMAX ]	= ( screenRect [ RECT_YMAX ] - ( yChunk * CHUNKSIZE )) / CHUNKSIZE,
+		}
 
-		table.insert ( uvRects, {
-			[ RECT_XMIN ]		= uvRect [ RECT_XMIN ] - material1,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= uvRect [ RECT_XMAX ] - material1,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		})
+		screenRect [ RECT_XMIN ] = screenRect [ RECT_XMIN ] - xOff
+		screenRect [ RECT_YMIN ] = screenRect [ RECT_YMIN ] - yOff
+		screenRect [ RECT_XMAX ] = screenRect [ RECT_XMAX ] - xOff
+		screenRect [ RECT_YMAX ] = screenRect [ RECT_YMAX ] - yOff
 
+		screenRect [ RECT_YMIN ] = screenRect [ RECT_YMIN ] * -1
+		screenRect [ RECT_YMAX ] = screenRect [ RECT_YMAX ] * -1
+
+		print ( screenRect [ RECT_XMIN ], screenRect [ RECT_YMIN ], screenRect [ RECT_XMAX ], screenRect [ RECT_YMAX ])
+
+		local materialID = ( xChunk + ( yChunk * WIDTH_IN_CHUNKS )) + 1
+
+		table.insert ( uvRects, uvRect )
 		table.insert ( screenRects, screenRect )
-		table.insert ( materialIDs, material1 + 1 )
-
-		local screenRect2 = screenRect
-		
-		local uvRect2 = {
-			[ RECT_XMIN ]		= uvRect [ RECT_XMIN ] - material1,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= uvRect [ RECT_XMAX ] - material1,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		}
-		print ( ' - uv', i, uvRect2 [ RECT_XMIN ], uvRect2 [ RECT_YMIN ], uvRect2 [ RECT_XMAX ], uvRect2 [ RECT_YMAX ])
-		print ( ' NEW - screenRect', i, screenRect2 [ RECT_XMIN ], screenRect2 [ RECT_YMIN ], screenRect2 [ RECT_XMAX ], screenRect2 [ RECT_YMAX ])
-		print("Material", material1 + 1)
-
-	else
-
-		-- the rect does straddle a material boundary, so split it in two
-
-		-- sorry, we're not handling super-big sprites at the moment
-		assert ( material2 == ( material1 + 1 ))
-
-		table.insert ( sprites, {
-			base	= #materialIDs + 1,
-			size	= 2,
-		})
-
-		local split = (( material2 - uvRect [ RECT_XMIN ]) / ( uvRect [ RECT_XMAX ] - uvRect [ RECT_XMIN ])) * cropRectWidth
-
-		table.insert ( uvRects, {
-			[ RECT_XMIN ]		= uvRect [ RECT_XMIN ] - material1,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= 1,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		})
-
-		local uvRect2 = {
-			[ RECT_XMIN ]		= uvRect [ RECT_XMIN ] - material1,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= 1,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		}
-		print ( ' - uv', i, uvRect2 [ RECT_XMIN ], uvRect2 [ RECT_YMIN ], uvRect2 [ RECT_XMAX ], uvRect2 [ RECT_YMAX ])
-
-		table.insert ( uvRects, {
-			[ RECT_XMIN ]		= 0,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= uvRect [ RECT_XMAX ] - material2,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		})
-		uvRect2 = {
-			[ RECT_XMIN ]		= 0,
-			[ RECT_YMIN ]		= uvRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= uvRect [ RECT_XMAX ] - material2,
-			[ RECT_YMAX ]		= uvRect [ RECT_YMAX ],
-		}
-		print ( ' - uv', i, uvRect2 [ RECT_XMIN ], uvRect2 [ RECT_YMIN ], uvRect2 [ RECT_XMAX ], uvRect2 [ RECT_YMAX ])
-		table.insert ( screenRects, {
-			[ RECT_XMIN ]		= screenRect [ RECT_XMIN ],
-			[ RECT_YMIN ]		= screenRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= screenRect [ RECT_XMIN ] + split,
-			[ RECT_YMAX ]		= screenRect [ RECT_YMAX ],
-		})
-		local screenRect2 = {
-			[ RECT_XMIN ]		= screenRect [ RECT_XMIN ],
-			[ RECT_YMIN ]		= screenRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= screenRect [ RECT_XMIN ] + split,
-			[ RECT_YMAX ]		= screenRect [ RECT_YMAX ],
-		}
-		print ( ' NEW - screenRect', i, screenRect2 [ RECT_XMIN ], screenRect2 [ RECT_YMIN ], screenRect2 [ RECT_XMAX ], screenRect2 [ RECT_YMAX ])
-
-		table.insert ( screenRects, {
-			[ RECT_XMIN ]		= screenRect [ RECT_XMAX ] - ( cropRectWidth - split ),
-			[ RECT_YMIN ]		= screenRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= screenRect [ RECT_XMAX ],
-			[ RECT_YMAX ]		= screenRect [ RECT_YMAX ],
-		})
-
-		screenRect2 = {
-			[ RECT_XMIN ]		= screenRect [ RECT_XMAX ] - ( cropRectWidth - split ),
-			[ RECT_YMIN ]		= screenRect [ RECT_YMIN ],
-			[ RECT_XMAX ]		= screenRect [ RECT_XMAX ],
-			[ RECT_YMAX ]		= screenRect [ RECT_YMAX ],
-		}
-		print ( ' NEW - screenRect', i, screenRect2 [ RECT_XMIN ], screenRect2 [ RECT_YMIN ], screenRect2 [ RECT_XMAX ], screenRect2 [ RECT_YMAX ])
-
-		table.insert ( materialIDs, material1 + 1 )
-		table.insert ( materialIDs, material2 + 1 )
-
-		print("Material", material1 + 1)
-		print("Material", material2 + 1)
+		table.insert ( materialIDs, materialID )
 	end
 end
 
@@ -179,7 +100,6 @@ local loadAsBitmap = function ( filename )
 	return image
 end
 
-
 local maxCols = math.ceil(json.width / CHUNKSIZE)
 local maxRows = math.ceil(json.height / CHUNKSIZE)
 
@@ -189,16 +109,19 @@ local extension = ".png"
 -- reload the images one by one and generate bitmaps from their alpha
 -- ideally, these will be pre-generated and stored alongside the png's
 for i=1, fileCount do
+
 	local zeroBasedIdx = i - 1
 	local imageFilename = basename .. "." .. zeroBasedIdx .. extension
+
 	-- Make sure the file exists!  If it does not, MOAITexture.load fails silently.
 	assert(MOAIFileSystem.checkFileExists(imageFilename), "Texture._loadChunk: missing file '" .. imageFilename .. "'")
+
 	gfxQuadListDeck:setTexture ( i, imageFilename )
 	gfxQuadListDeck:setHitMask ( i, loadAsBitmap ( imageFilename ))
 	gfxQuadListDeck:setHitMaskThreshold ( i, 0, 0, 0, 1 )
 end
 
-local totalRects	= #materialIDs
+local totalRects = #materialIDs
 
 gfxQuadListDeck:reserveUVQuads ( totalRects)
 gfxQuadListDeck:reserveQuads ( totalRects )
@@ -283,7 +206,6 @@ MOAIInputMgr.device.mouseRight:setCallback ( function ( down ) onMouseEvent ( do
 
 font = MOAIFont.new ()
 font:loadFromTTF ( 'r/arial-rounded.TTF' )
-
 
 label:setString ( '' )
 label:setFont ( font )
