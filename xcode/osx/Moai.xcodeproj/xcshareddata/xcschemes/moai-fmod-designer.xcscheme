@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
-               BuildableName = "moai"
-               BlueprintName = "moai"
-               ReferencedContainer = "container:MoaiSample.xcodeproj">
+               BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+               BuildableName = "moai-fmod-designer"
+               BlueprintName = "moai-fmod-designer"
+               ReferencedContainer = "container:Moai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
-            BuildableName = "moai"
-            BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -44,18 +44,18 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      customWorkingDirectory = "/Users/patrick/git/moai-dev/samples/sdl-dialog"
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
-            BuildableName = "moai"
-            BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -67,13 +67,14 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
-            BuildableName = "moai"
-            BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            BlueprintIdentifier = "CD6DC25E1574B378008C3996"
+            BuildableName = "moai-fmod-designer"
+            BlueprintName = "moai-fmod-designer"
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
