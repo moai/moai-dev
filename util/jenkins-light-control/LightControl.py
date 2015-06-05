@@ -3,9 +3,14 @@ __author__ = 'conghu'
 import jenkins
 import json
 import httplib
-
+import datetime
 def SetLight(id,bri,hue):
-    page_index = {"bri":bri,"hue":hue}
+    page_index = {"on":True,"bri":bri,"hue":hue}
+
+    day = datetime.datetime.today().weekday()
+    t = datetime.datetime.now().hour
+    if(day>4 or t > 22 or t < 8):
+        page_index = {"on":False}
 
     url = "/api/newdeveloper/lights/{}/state".format(id)
 
@@ -13,7 +18,7 @@ def SetLight(id,bri,hue):
     body_content = json.dumps(page_index)
     connection.request('PUT', url, body_content)
     result = connection.getresponse()
-    print( result )
+
 
 
 def UpdateJobStatus(job,id):
