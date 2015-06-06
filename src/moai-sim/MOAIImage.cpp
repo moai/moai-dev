@@ -373,7 +373,7 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number threshold default is 0.2
+	@opt	number threshold	Default is 0.2
 	@out	nil
 */
 int MOAIImage::_generateSDFAA ( lua_State* L ) {
@@ -397,7 +397,7 @@ int MOAIImage::_generateSDFAA ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number threshold default is 256
+	@opt	number threshold	Default is 256
 	@out	nil
 */
 int MOAIImage::_generateSDFDeadReckoning( lua_State* L ) {

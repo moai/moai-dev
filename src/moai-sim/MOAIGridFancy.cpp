@@ -92,7 +92,7 @@ int MOAIGridFancy::_getAlpha ( lua_State* L ) {
 	@in		MOAIGridFancy self
 	@in		number xTile
 	@in		number yTile
-	@out	number color (index into palette)
+	@out	number color	index into palette
 */
 int MOAIGridFancy::_getColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridFancy, "UNN" )

@@ -248,7 +248,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	
 	@in		MOAIBox2DBody self
 	@in		number angularImpulse	in kg * units / s, converted to kg * m / s
-	@opt	boolean wake wake this body. Default is true
+	@opt	boolean wake			wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
@@ -276,7 +276,7 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	@in		number forceY	in kg * units / s^2, converted to N [kg * m / s^2]
 	@opt	number pointX	in units, world coordinates, converted to meters
 	@opt	number pointY	in units, world coordinates, converted to meters
-	@opt	boolean wake wake this body. Default is true
+	@opt	boolean wake	wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyForce ( lua_State* L ) {
@@ -312,7 +312,7 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	@in		number impulseY	in kg * units / s, converted to kg * m / s
 	@opt	number pointX	in units, world coordinates, converted to meters
 	@opt	number pointY	in units, world coordinates, converted to meters
-	@opt	boolean wake wake this body. Default is true
+	@opt	boolean wake	wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
@@ -344,7 +344,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	
 	@in		MOAIBox2DBody self
 	@opt	number torque	in (kg * units / s^2) * units, converted to N-m. Default value is 0.
-	@opt	boolean wake wake this body. Default is true
+	@opt	boolean wake	wake this body. Default is true
 	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
