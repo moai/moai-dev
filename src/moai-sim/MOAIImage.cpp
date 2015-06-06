@@ -294,7 +294,7 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 	@text	Apply gamma correction.
 
 	@in		MOAIImage self
-	@opt	gamma			Default value is 1.
+	@opt	number gamma			Default value is 1.
 	@out	nil
 */
 int MOAIImage::_gammaCorrection ( lua_State* L ) {
@@ -612,7 +612,7 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 	@opt	g1, g2, g3, g4
 	@opt	b1, b2, b3, b4
 	@opt	a1, a2, a3, a4
-	@opt	K					Default value is 1.
+	@opt	number K					Default value is 1.
 	@out	nil
 */
 int MOAIImage::_mix ( lua_State* L ) {
