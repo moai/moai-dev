@@ -318,7 +318,6 @@ void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
-		gfxDevice.SetPointSize ( this->mPointSize );
 		
 		gfxDevice.UpdateShaderGlobals ();
 		

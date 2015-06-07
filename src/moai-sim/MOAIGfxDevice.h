@@ -136,24 +136,19 @@ private:
 	static int				_getFrameBuffer				( lua_State* L );
 	static int				_getMaxTextureUnits			( lua_State* L );
 	static int				_getViewSize				( lua_State* L );
-	static int				_isProgrammable				( lua_State* L );
 	static int				_setDefaultTexture			( lua_State* L );
 	static int				_setPenColor				( lua_State* L );
 	static int				_setPenWidth				( lua_State* L );
-	static int				_setPointSize				( lua_State* L );
 	static int				_release					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DisableTextureUnits		( u32 activeTextures );
 	void					DrawPrims				();
-	void					GpuLoadMatrix			( const ZLMatrix4x4& mtx ) const;
-	void					GpuMultMatrix			( const ZLMatrix4x4& mtx ) const;
 	bool					SetTexture				( u32 textureUnit, MOAITextureBase* texture );
 	void					TransformAndWriteQuad	( ZLVec4D* vtx, ZLVec2D* uv );
 	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
-	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
 	
 public:
@@ -257,7 +252,6 @@ public:
 	void					SetPenColor				( const ZLColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
 	void					SetPenWidth				( float penWidth );
-	void					SetPointSize			( float pointSize );
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
 	void					SetScissorRect			( ZLRect rect );

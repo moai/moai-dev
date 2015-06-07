@@ -62,7 +62,6 @@ protected:
 	u32			mPrimType;
 	
 	float		mPenWidth;
-	float		mPointSize;
 	
 	bool		mUseVAOs;
 	bool		mNeedsRefresh;
@@ -73,7 +72,6 @@ protected:
 	static int			_setBounds					( lua_State* L );
 	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
-	static int			_setPointSize				( lua_State* L );
 	static int			_setPrimType				( lua_State* L );
 	static int			_setTotalElements			( lua_State* L );
 	static int			_setVertexBuffer			( lua_State* L );

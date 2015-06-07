@@ -119,22 +119,6 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setPointSize
-	@text	Sets the point size for drawing prims in this vertex buffer.
-			Only valid with prim types GL_POINTS.
-	
-	@in		MOAIMesh self
-	@in		number pointSize
-	@out	nil
-*/
-int MOAIMesh::_setPointSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
-	
-	self->mPointSize = state.GetValue < float >( 2, 1.0f );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setPrimType
 	@text	Sets the prim type the buffer represents.
 	
@@ -246,7 +230,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
-		gfxDevice.SetPointSize ( this->mPointSize );
 		
 		gfxDevice.UpdateShaderGlobals ();
 		
@@ -276,7 +259,6 @@ MOAIMesh::MOAIMesh () :
 	mTotalElements ( 0 ),
 	mPrimType ( ZGL_PRIM_TRIANGLES ),
 	mPenWidth ( 1.0f ),
-	mPointSize ( 1.0f ),
 	mUseVAOs ( false ),
 	mNeedsRefresh ( false ) {
 
@@ -404,7 +386,6 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBounds",					_setBounds },
 		{ "setIndexBuffer",				_setIndexBuffer },
 		{ "setPenWidth",				_setPenWidth },
-		{ "setPointSize",				_setPointSize },
 		{ "setPrimType",				_setPrimType },
 		{ "setTotalElements",			_setTotalElements },
 		{ "setVertexBuffer",			_setVertexBuffer },
@@ -477,7 +458,6 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	}
 	
 	this->mPenWidth		= state.GetField < float >( -1, "mPenWidth", 0 );
-	this->mPointSize	= state.GetField < float >( -1, "mPointSize", 0 );
 	
 	this->mNeedsRefresh = true;
 	
@@ -520,7 +500,6 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	lua_setfield ( state, -2, "mBounds" );
 	
 	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
-	state.SetField < u32 >( -1, "mPointSize", this->mPointSize );
 }
 
 //----------------------------------------------------------------//

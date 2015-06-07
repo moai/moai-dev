@@ -292,12 +292,6 @@ void MOAITextureBase::OnGPUBind () {
 	zglBindTexture ( this->mGLTexID );
 	
 	if ( this->mIsDirty ) {
-	
-		#if USE_OPENGLES1	
-			if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
-				zglTexEnvi ( ZGL_TEXTURE_ENV_MODE, ZGL_COMPOSE_MODULATE );
-			}
-		#endif
 		
 		zglTexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
 		zglTexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );

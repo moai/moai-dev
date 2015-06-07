@@ -54,20 +54,14 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 
 	this->Destroy ();
 
-	if ( MOAIGfxDevice::Get ().IsFramebufferSupported ()) {
-
-		this->mWidth			= width;
-		this->mHeight			= height;
-		this->mColorFormat		= colorFormat;
-		this->mDepthFormat		= depthFormat;
-		this->mStencilFormat	= stencilFormat;
-		
-		this->FinishInit ();
-		this->DoCPUAffirm ();
-	}
-	else {
-		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
-	}
+	this->mWidth			= width;
+	this->mHeight			= height;
+	this->mColorFormat		= colorFormat;
+	this->mDepthFormat		= depthFormat;
+	this->mStencilFormat	= stencilFormat;
+	
+	this->FinishInit ();
+	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//

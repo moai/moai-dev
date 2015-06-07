@@ -67,22 +67,6 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 	return 2;
 }
 
-
-//----------------------------------------------------------------//
-/**	@lua	isProgrammable
-	@text	Returns a boolean indicating whether or not Moai is running
-			under the programmable pipeline.
-
-	@out	boolean isProgrammable
-*/
-int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	lua_pushboolean ( L, gfxDevice.IsProgrammable ());
-	
-	return 1;
-}
-
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
@@ -144,20 +128,6 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 
 	float width = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPenWidth ( width );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPointSize
-
-	@in		number size
-	@out	nil
-*/
-int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	float size = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxDevice::Get ().SetPointSize ( size );
 	return 0;
 }
 
@@ -242,9 +212,6 @@ void MOAIGfxDevice::DetectContext () {
 	
 	zglInitialize ();
 	
-	this->mIsProgrammable = zglGetCap ( ZGL_CAPS_IS_PROGRAMMABLE ) == 1;
-	this->mIsFramebufferSupported = zglGetCap ( ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED ) == 1;
-	
 	u32 maxTextureUnits = zglGetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
 	this->mTextureUnits.Init ( maxTextureUnits );
 	this->mTextureUnits.Fill ( 0 );
@@ -276,14 +243,6 @@ void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
 		this->Flush ();
 	
 		for ( u32 i = activeTextures; i < this->mActiveTextures; ++i ) {
-			
-			#if USE_OPENGLES1
-				if ( !this->IsProgrammable ()) {
-					zglActiveTexture ( i );
-					zglDisable ( ZGL_PIPELINE_TEXTURE_2D );
-				}
-			#endif
-			
 			this->mTextureUnits [ i ] = 0;
 		}
 	}
@@ -491,23 +450,6 @@ ZLMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const ZLMatrix4x4& mtx ) const {
-	UNUSED ( mtx );
-	#if USE_OPENGLES1
-		zglLoadMatrix ( mtx.m );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const ZLMatrix4x4& mtx ) const {
-	UNUSED ( mtx );
-	
-	#if USE_OPENGLES1
-		zglMultMatrix ( mtx.m );
-	#endif
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxDevice::IsOpaque () const {
 	
 	assert ( this->mDefaultBuffer );
@@ -594,17 +536,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
-	
-	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::OnGlobalsFinalize () {
-
-	// TODO: do we care about releasing resources on shutdown?
-	// commented out for now.
-	//this->ReleaseResources ();
 }
 
 //----------------------------------------------------------------//
@@ -622,12 +558,10 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "getViewSize",				_getViewSize },
-		{ "isProgrammable",				_isProgrammable },
 		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
-		{ "setPointSize",				_setPointSize },
 		{ "release",					_release },
 		{ NULL, NULL }
 	};
@@ -680,11 +614,6 @@ void MOAIGfxDevice::ResetState () {
 	this->mPrimCount = 0;
 
 	// turn off texture
-	#if USE_OPENGLES1
-		if ( !this->IsProgrammable ()) {	
-			zglDisable ( ZGL_PIPELINE_TEXTURE_2D );	
-		}
-	#endif
 	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
@@ -721,28 +650,6 @@ void MOAIGfxDevice::ResetState () {
 	zglScissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
 	
 	this->mScissorRect = scissorRect;
-	
-	// fixed function reset
-	#if USE_OPENGLES1
-		if ( !this->IsProgrammable ()) {
-			
-			// load identity matrix
-			zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
-			zglLoadIdentity ();
-			
-			zglMatrixMode ( ZGL_MATRIX_PROJECTION );
-			zglLoadIdentity ();
-			
-			zglMatrixMode ( ZGL_MATRIX_TEXTURE );
-			zglLoadIdentity ();
-			
-			// reset the current vertex color
-			zglColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-			
-			// reset the point size
-			zglPointSize ( this->mPointSize );
-		}
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -880,15 +787,9 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->Flush ();
 
-	if ( this->mIsFramebufferSupported ) {
-		if ( frameBuffer ) {
-			zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
-			this->mFrameBuffer = frameBuffer;
-		}
-		else {
-			zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mDefaultBuffer->mGLFrameBufferID );
-			this->mFrameBuffer = this->mDefaultBuffer;
-		}	
+	if ( frameBuffer ) {
+		zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
+		this->mFrameBuffer = frameBuffer;
 	}
 }
 
@@ -930,19 +831,6 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 		this->mPenWidth = penWidth;
 		zglLineWidth ( penWidth );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetPointSize ( float pointSize ) {
-	UNUSED ( pointSize );
-
-	#if USE_OPENGLES1
-		if ( this->mPointSize != pointSize ) {
-			this->Flush ();
-			this->mPointSize = pointSize;
-			zglPointSize ( pointSize );
-		}
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1052,7 +940,7 @@ void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
 
-	if (( this->mShaderProgram != program ) && this->mIsProgrammable ) {
+	if ( this->mShaderProgram != program ) {
 	
 		this->Flush ();
 		this->mShaderProgram = program;
@@ -1122,12 +1010,6 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 	this->Flush ();
 	
 	zglActiveTexture ( textureUnit );
-	
-	#if USE_OPENGLES1
-		if (( !this->mTextureUnits [ textureUnit ]) && ( !this->IsProgrammable ())) {
-			zglEnable ( ZGL_PIPELINE_TEXTURE_2D );
-		}
-	#endif
 	
 	if ( !texture->Bind ()) {
 		return this->SetTexture ( textureUnit, this->mDefaultTexture );
@@ -1218,7 +1100,6 @@ void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 		}
 		
 		this->UpdateCpuVertexMtx ();
-		this->UpdateGpuVertexMtx ();
 	}
 }
 
@@ -1261,9 +1142,6 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) 
 				this->mCpuVertexTransformCache [ i ] = false;
 			}
 			this->UpdateCpuVertexMtx ();
-		}
-		else {
-			this->UpdateGpuVertexMtx ();
 		}
 	}
 	
@@ -1399,61 +1277,6 @@ void MOAIGfxDevice::UpdateCpuVertexMtx () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::UpdateGpuVertexMtx () {
-
-	if ( this->IsProgrammable ()) return;
-
-	#if USE_OPENGLES1
-		this->Flush ();
-
-		// update the gpu matrices
-		switch ( this->mVertexMtxOutput ) {
-			
-			case VTX_STAGE_MODEL:
-			
-				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
-				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-				this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
-			
-				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
-				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-				
-				break;
-				
-			case VTX_STAGE_WORLD:
-				
-				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
-				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
-				
-				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
-				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-			
-				break;
-				
-			case VTX_STAGE_VIEW:
-				
-				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
-				zglLoadIdentity ();
-				
-				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
-				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-				
-				break;
-			
-			case VTX_STAGE_PROJ:
-			
-				zglMatrixMode ( ZGL_MATRIX_MODELVIEW );
-				zglLoadIdentity ();
-				
-				zglMatrixMode ( ZGL_MATRIX_PROJECTION );
-				zglLoadIdentity ();
-			
-				break;
-		}
-	#endif
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateShaderGlobals () {
 
 	if ( this->mShaderProgram && this->mShaderDirty ) {
@@ -1466,30 +1289,12 @@ void MOAIGfxDevice::UpdateShaderGlobals () {
 void MOAIGfxDevice::UpdateUVMtx () {
 
 	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
-		
+	
 		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
-
-		#if USE_OPENGLES1
-			// flush and load gl UV transform
-			if ( !this->mIsProgrammable ) {
-				this->Flush ();
-				zglMatrixMode ( ZGL_MATRIX_TEXTURE );
-				zglLoadIdentity ();
-			}
-		#endif
 	}
 	else {
-		
+	
 		this->mCpuUVTransform = false;
-
-		#if USE_OPENGLES1
-			// flush and load gl UV transform
-			if ( !this->mIsProgrammable ) {
-				this->Flush ();
-				zglMatrixMode ( ZGL_MATRIX_TEXTURE );
-				this->GpuLoadMatrix ( this->mUVTransform );
-			}
-		#endif
 	}
 }
 

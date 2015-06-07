@@ -70,14 +70,10 @@ private:
 	static int			_getVertexSize					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				BindFixed						( const void* buffer ) const;
-	void				BindProgrammable				( const void* buffer ) const;
 	static u32			GetComponentSize				( u32 size, u32 type );
 	static u32			GetIndexForUse					( u32 use );
 	static u32			GetUseForIndex					( u32 idx );
 	static ZLVec3D		ReadCoord						( MOAIStream& stream, size_t stride, size_t components );
-	void				UnbindFixed						() const;
-	void				UnbindProgrammable				() const;
 	
 public:
 	
