@@ -325,7 +325,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -339,13 +339,13 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },

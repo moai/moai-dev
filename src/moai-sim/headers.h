@@ -111,6 +111,7 @@
 #include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISpanList.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAITexture.h>

@@ -99,7 +99,7 @@ function makeMesh ()
 	writeCube ( vbo, 64, 64, 0, 32 )
 	writeCube ( vbo, 64, -64, 0, 32 )
 
-	local mesh = MOAISelectionMesh.new ()
+	local mesh = MOAIMesh.new ()
 	mesh:setTexture ( 'moai.png' )
 
 	mesh:setVertexBuffer ( vbo, vertexFormat )
@@ -112,7 +112,9 @@ function makeMesh ()
 	return mesh
 end
 
-local mesh = makeMesh ()
+local mesh = MOAISelectionMesh.new ()
+
+mesh:setMesh ( makeMesh ())
 
 local printSelections = function ()
 	mesh:printSelection ()
@@ -127,30 +129,6 @@ mesh:addSelection ( 1, 1, 36 )
 mesh:addSelection ( 2, 37, 36 )
 mesh:addSelection ( 3, 73, 36 )
 mesh:addSelection ( 4, 109, 36 )
-
---[[
-mesh:addSelection ( 1, 0, 500 )
-printSelections ()
-
-mesh:addSelection ( 1, 500, 1000 )
-printSelections ()
-
-mesh:addSelection ( 2, 250, 750 )
-printSelections ()
-
-mesh:addSelection ( 1, 250, 750 )
-printSelections ()
-
-mesh:addSelection ( 2, 500, 1000 )
-printSelections ()
-
-mesh:addSelection ( 2, 0, 500 )
-printSelections ()
-
-mesh:addSelection ( 1, 200, 300 )
-mesh:addSelection ( 1, 700, 800 )
-printSelections ()
-]]--
 
 local function makeProp ( idx )
 

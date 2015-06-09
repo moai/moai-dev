@@ -73,8 +73,6 @@ public:
 	DECL_LUA_FACTORY ( MOAISerializer )
 
 	//----------------------------------------------------------------//
-	void			AddLuaReturn				( MOAILuaObject* object );
-	void			AddLuaReturn				( MOAILuaState& state, int idx );
 	ObjID			AffirmMemberID				( MOAILuaObject* object );
 	ObjID			AffirmMemberID				( MOAILuaState& state, int idx );
 	void			Clear						();

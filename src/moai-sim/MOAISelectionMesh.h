@@ -4,21 +4,21 @@
 #ifndef	MOAISELECTIONMESH_H
 #define	MOAISELECTIONMESH_H
 
+#include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIMesh.h>
 
 //================================================================//
 // MOAISelectionSpan
 //================================================================//
-class MOAISelectionSpan {
-public:
+class MOAISelectionSpan :
+	public MOAIMeshSpan {
+private:
 	
-	u32						mSetID;
+	friend class MOAISelectionMesh;
 	
-	size_t					mBase;
-	size_t					mTop;
+	u32					mSetID;
 	
-	MOAISelectionSpan*		mNext;
-	MOAISelectionSpan*		mNextInSet;
+	MOAISelectionSpan*	mNextInMaster;
 };
 
 //================================================================//
@@ -26,13 +26,15 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAISelectionMesh :
-	public MOAIMesh {
+	public MOAIDeckProxy {
 protected:
 
 	ZLLeanPool < MOAISelectionSpan, 16 >	mSpanPool;
-	ZLLeanArray < MOAISelectionSpan* >		mSets;
+	ZLLeanArray < MOAIMeshSpan* >			mSets;
 	
 	MOAISelectionSpan*	mSpanListHead;
+
+	MOAIMesh* mMesh;
 
 	//----------------------------------------------------------------//
 	static int			_addSelection				( lua_State* L );
@@ -40,11 +42,13 @@ protected:
 	static int			_mergeSelections			( lua_State* L );
 	static int			_printSelection				( lua_State* L );
 	static int			_reserveSelections			( lua_State* L );
+	static int			_setMesh					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	MOAISelectionSpan*	AllocSpan					( u32 set, size_t base, size_t top );
 	void				ChangeSpanSet				( MOAISelectionSpan* span, u32 set );
 	void				Clear						();
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	MOAISelectionSpan*	FreeSpanAndGetNext			( MOAISelectionSpan* span );
 
 public:
@@ -54,7 +58,6 @@ public:
 	//----------------------------------------------------------------//
 	void				AddSelection				( u32 set, size_t base, size_t top );
 	void				ClearSelection				( u32 set );
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	void				MergeSelections				( u32 set, u32 merge );
 						MOAISelectionMesh			();
 						~MOAISelectionMesh			();

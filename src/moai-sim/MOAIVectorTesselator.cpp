@@ -43,6 +43,14 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_clearShapes ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	self->ClearShapes ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_clearTransforms ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
@@ -580,6 +588,17 @@ int MOAIVectorTesselator::_worldToDrawingVec ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVectorTesselator::Clear () {
 
+	this->ClearShapes ();
+	
+	for ( u32 i = 0; i < this->mVtxExtras.Size (); ++i ) {
+		free ( this->mVtxExtras [ i ]);
+	}
+	this->mVtxExtraSize = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::ClearShapes () {
+
 	for ( u32 i = 0; i < this->mDirectory.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mDirectory [ i ];
 		if ( shape ) {
@@ -587,13 +606,9 @@ void MOAIVectorTesselator::Clear () {
 		}
 	}
 	
-	this->mDirectory.Clear ();
-	this->mShapeStack.Clear ();
-	
-	for ( u32 i = 0; i < this->mVtxExtras.Size (); ++i ) {
-		free ( this->mVtxExtras [ i ]);
-	}
-	this->mVtxExtraSize = 0;
+	this->mDirectory.Reset ();
+	this->mShapeStack.Reset ();
+	this->mVertexStack.Reset ();
 }
 
 //----------------------------------------------------------------//
@@ -605,9 +620,9 @@ void MOAIVectorTesselator::ClearTransforms () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorTesselator::CountVertices ( ZLStream& vtxStream ) {
+u32 MOAIVectorTesselator::CountVertices ( const MOAIVertexFormat& format, ZLStream& vtxStream ) {
 
-	return ( vtxStream.GetLength () / ( VERTEX_SIZE + this->mVtxExtraSize ));
+	return ( vtxStream.GetLength () / format.GetVertexSize ());
 }
 
 //----------------------------------------------------------------//
@@ -859,6 +874,7 @@ void MOAIVectorTesselator::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "clearShapes",			_clearShapes },
 		{ "clearTransforms",		_clearTransforms },
 		{ "drawingToWorld",			_drawingToWorld },
 		{ "drawingToWorldVec",		_drawingToWorldVec },
@@ -991,9 +1007,12 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
 int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format ) {
 
 	assert ( vtxStream );
+	assert ( idxStream );
 
 	int error = this->Finish ();
 	if ( error ) return error;
+
+	int base = this->CountVertices ( *format, *vtxStream );
 
 	this->mDepthOffset = 0.0f;
 
@@ -1004,7 +1023,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
-	return idxStream ? ( u32 )( idxStream->GetLength () >> 2 ) : this->CountVertices ( *vtxStream );
+	return this->CountVertices ( *format, *vtxStream ) - base;
 }
 
 //----------------------------------------------------------------//
@@ -1026,7 +1045,7 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 
 	assert ( vtxStream && idxStream );
 
-	u32 base = this->CountVertices ( *vtxStream );
+	u32 base = this->CountVertices ( *format, *vtxStream );
 	float z = style.GetExtrude ();
 
 	ZLVec3D lightVec3D = style.GetLightVec ();
@@ -1155,7 +1174,7 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 
 	assert ( vtxStream && idxStream );
 
-	u32 base = this->CountVertices ( *vtxStream );
+	u32 base = this->CountVertices ( *format, *vtxStream );
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 

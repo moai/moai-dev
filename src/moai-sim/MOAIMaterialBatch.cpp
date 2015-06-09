@@ -119,7 +119,7 @@ int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 	@out	MOAIImage mask
 */
 int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->SetHitMask ( state, 2 ));
 	return 1;
 }
@@ -127,7 +127,7 @@ int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskScalar ( state, 2 );
 	return 0;
 }
@@ -135,7 +135,7 @@ int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskThreshold ( state, 2 );
 	return 0;
 }

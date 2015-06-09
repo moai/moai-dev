@@ -19,6 +19,13 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	void Clear () {
+
+		this->ZLLeanArray < TYPE >::Clear ();
+		this->mTop = 0;
+	}
+	
+	//----------------------------------------------------------------//
 	size_t GetTop () const {
 		
 		return this->mTop;

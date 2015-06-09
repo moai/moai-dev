@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
@@ -51,7 +51,7 @@ private:
 			UV/model quad indices if geometry is used in multiple lists.
 */
 class MOAIGfxQuadListDeck2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 	
 	ZLLeanArray < ZLQuad >			mUVQuads;
