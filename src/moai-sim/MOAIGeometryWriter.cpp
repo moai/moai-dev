@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+ // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -331,7 +331,7 @@ u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxS
 	
 	idxBuffer->SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
 	
-	if ( idxStream->GetLength()) {
+	if ( idxStream->GetLength ()) {
 		idxBuffer->CopyFromStream ( *idxStream, idxSizeInBytes, 4 );
 	}
 	else {

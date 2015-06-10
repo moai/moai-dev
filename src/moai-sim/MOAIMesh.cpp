@@ -271,7 +271,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 						this->mPrimType,
 						span->mTop - span->mBase,
 						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-						( const void* )span->mBase
+						( const void* )( span->mBase * this->mIndexSizeInBytes )
 					);
 				}
 			}

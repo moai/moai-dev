@@ -1012,7 +1012,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 	int error = this->Finish ();
 	if ( error ) return error;
 
-	int base = this->CountVertices ( *format, *vtxStream );
+	int base = idxStream->GetLength ();
 
 	this->mDepthOffset = 0.0f;
 
@@ -1023,7 +1023,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
-	return this->CountVertices ( *format, *vtxStream ) - base;
+	return ( idxStream->GetLength () - base ) >> 2;
 }
 
 //----------------------------------------------------------------//

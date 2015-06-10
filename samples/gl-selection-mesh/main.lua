@@ -113,7 +113,6 @@ function makeMesh ()
 end
 
 local mesh = MOAISelectionMesh.new ()
-
 mesh:setMesh ( makeMesh ())
 
 local printSelections = function ()
