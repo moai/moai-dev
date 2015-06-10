@@ -87,7 +87,7 @@ protected:
 	int					ComputeLineStart		(FT_UInt unicode, size_t lineIndex,
 												 int alignment, FT_Int imageWidth);
 	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
-	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
+	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions, FT_Int **glyphXAdvances, FT_Int **glyphXOffsets,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, size_t maxGlyphs, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
 	USRect				DimensionsWithMaxWidth	(cc8* text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,

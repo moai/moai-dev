@@ -451,13 +451,15 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 	if (returnGlyphBounds) {
 		FT_Vector *positions;
 		FT_Glyph *glyphs;
+		FT_Int *xAdvances;
+		FT_Int *xOffsets;
 		FT_UInt numGlyphs;
 		FT_Error error;
 		
 		FT_Int maxDescender;
 		FT_Int maxAscender;
 		
-		USRect rect = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
+		USRect rect = this->DimensionsOfLine(text, fontSize, &positions, &xAdvances, &xOffsets, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
 		u32 tableIndex;
 		u32 tableSize = numGlyphs;
 		
@@ -531,7 +533,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 		return rect;
 	}
 	else{
-		return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, maxGlyphs, NULL, NULL);
+		return this->DimensionsOfLine(text, fontSize, NULL, NULL, NULL, NULL, NULL, maxGlyphs, NULL, NULL);
 	}
 }
 
@@ -548,7 +550,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 	@out		FT_Int		maxAscender		The maximum y-position of the glyph bounding boxes
 	@return		USRect		rect			The bounding box of the string
  */
-USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Glyph **glyphArray, FT_UInt *glyphNum, const size_t maxGlyphs, FT_Int *maxDescender, FT_Int *maxAscender){
+USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector **glyphPositions, FT_Int **glyphXAdvances, FT_Int **glyphXOffsets, FT_Glyph **glyphArray, FT_UInt *glyphNum, const size_t maxGlyphs, FT_Int *maxDescender, FT_Int *maxAscender) {
 	USRect rect;
 	rect.Init(0,0,0,0);
 	
@@ -569,13 +571,14 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		*maxAscender = 0;
 	}
 	
-	
 	FT_GlyphSlot  slot = face->glyph;
 	FT_UInt numGlyphs = 0;
 	FT_UInt previousGlyphIndex = 0;
 	
 	FT_Glyph* glyphs = new FT_Glyph [maxGlyphs];
 	FT_Vector* positions = new FT_Vector [maxGlyphs];
+	FT_Int* xAdvances = new FT_Int [maxGlyphs];
+	FT_Int* xOffsets = new FT_Int [maxGlyphs];
 	
 	bool useKerning = FT_HAS_KERNING(face);
 	
@@ -608,7 +611,13 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 		error = FT_Get_Glyph( face->glyph, &glyphs[numGlyphs]);
 		CHECK_ERROR(error);
 		
-		penX += (slot->advance.x >> 6);
+		int glyphXAdvance = (int)(slot->advance.x >> 6);
+		int glyphXOffset = (int)(slot->metrics.horiBearingX >> 6);
+		
+		xAdvances[numGlyphs] = glyphXAdvance;
+		xOffsets[numGlyphs] = glyphXOffset;
+		
+		penX += glyphXAdvance;
 		
 		previousGlyphIndex = glyphIndex;
 		numGlyphs++;
@@ -674,8 +683,7 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	// clean-up
 	if (glyphArray) {
 		*glyphArray = glyphs;
-	}
-	else{
+	} else {
 		deleteGlyphArray(glyphs, maxGlyphs);
 	}
 	
@@ -686,9 +694,20 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, FT_Vector *
 	
 	if (glyphPositions) {
 		*glyphPositions = positions;
-	}
-	else{
+	} else {
 		delete [] positions;
+	}
+	
+	if (glyphXAdvances) {
+		*glyphXAdvances = xAdvances;
+	} else {
+		delete [] xAdvances;
+	}
+	
+	if (glyphXOffsets) {
+		*glyphXOffsets = xOffsets;
+	} else {
+		delete [] xOffsets;
 	}
 	
 	return rect;
@@ -1591,6 +1610,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	// get dimensions of the line of text
 	FT_Vector *positions;
 	FT_Glyph *glyphs;
+	FT_Int *xAdvances;
+	FT_Int *xOffsets;
 	FT_UInt numGlyphs;
 	FT_Error error;
 	
@@ -1599,7 +1620,7 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	FT_Int maxDescender;
 	FT_Int maxAscender;
 	
-	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
+	USRect dimensions = this->DimensionsOfLine(text, fontSize, &positions, &xAdvances, &xOffsets, &glyphs, &numGlyphs, maxGlyphs, &maxDescender, &maxAscender);
 	
 	rect->Init(0.0, 0.0, 0.0, 0.0);
 	rect->Grow(dimensions);
