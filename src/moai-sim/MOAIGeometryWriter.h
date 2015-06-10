@@ -18,17 +18,17 @@ class MOAIGeometryWriter :
 private:
 	
 	//----------------------------------------------------------------//
-	static int		_applyColor				( lua_State* L );
-	static int		_applyLinearGradient	( lua_State* L );
-	static int		_getMesh				( lua_State* L );
-	static int		_pruneVertices			( lua_State* L );
-	static int		_snapCoords				( lua_State* L );
-	static int		_writeBox				( lua_State* L );
-	static int		_writeCone				( lua_State* L );
-	static int		_writeCube				( lua_State* L );
-	static int		_writeCylinder			( lua_State* L );
-	static int		_writeIcoSphere			( lua_State* L );
-	static int		_writeUVSphere			( lua_State* L );
+	static int			_applyColor				( lua_State* L );
+	static int			_applyLinearGradient	( lua_State* L );
+	static int			_getMesh				( lua_State* L );
+	static int			_pruneVertices			( lua_State* L );
+	static int			_snapCoords				( lua_State* L );
+	static int			_writeBox				( lua_State* L );
+	static int			_writeCone				( lua_State* L );
+	static int			_writeCube				( lua_State* L );
+	static int			_writeCylinder			( lua_State* L );
+	static int			_writeIcoSphere			( lua_State* L );
+	static int			_writeUVSphere			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0 );

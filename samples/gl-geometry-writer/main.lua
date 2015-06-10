@@ -33,16 +33,13 @@ function makeCube ( size )
 	local vtxStream = MOAIMemStream.new ()
 	local idxStream = MOAIMemStream.new ()
 
-	local geometryWriter = MOAIGeometryWriter.new ()
-	geometryWriter:setVertexFormat ( vtxFormat )
-
 	for i = 1, 16 do
 
 		local hSize = size * 0.5
 
-		geometryWriter:writeCube ( vtxStream, size, 0, y, 0 )
+		MOAIGeometryWriter.writeCube ( vtxFormat, vtxStream, size, 0, y, 0 )
 
-		geometryWriter:applyLinearGradient ( vtxStream,
+		MOAIGeometryWriter.applyLinearGradient ( vtxFormat, vtxStream,
 			-hSize, y - hSize, -hSize,
 			hSize, y + hSize, hSize,
 			0, 0, 0, 1,
@@ -58,10 +55,10 @@ function makeCube ( size )
 	end
 
 	vtxStream:seek ( 0 )
-	geometryWriter:snapCoords ( vtxStream, 0.1 )
-	geometryWriter:pruneVertices ( vtxStream, idxStream )
+	MOAIGeometryWriter.snapCoords ( vtxFormat, vtxStream, 0.1 )
+	MOAIGeometryWriter.pruneVertices ( vtxFormat, vtxStream, idxStream )
 
-	local mesh = geometryWriter:getMesh ( vtxStream, idxStream, 2 )
+	local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream, 2 )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 	return mesh
