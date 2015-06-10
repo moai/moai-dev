@@ -520,7 +520,10 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, wideString[n]);
+				int xAdvance = xAdvances[n];
+				int xOffset = xOffsets[n];
+				
+				MOAIFreeTypeFont::PushGlyphMetricsToLuaTable(glyphRect, xAdvance, xOffset, &baselineY, tableIndex, state, wideString[n]);
 				
 				FT_Done_Glyph(image);
 			}
@@ -543,6 +546,8 @@ USRect MOAIFreeTypeFont::DimensionsOfLine(cc8 *text, float fontSize, bool return
 	@in			cc8*		text			The string to find dimensions of
 	@in			float		fontSize		The font size to use
 	@out		FT_Vector*	glyphPositions	An array of the locations of the glyphs
+	@out		FT_Int**	glyphXAdvances  An array of the xAdvance values of the glyphs
+	@out		FT_Int**	glyphXOffsets	An array of the xOffset values of the glyphs
 	@out		FT_Glyph*	glyphArray		An array of glyphs
 	@out		FT_UInt		glyphNum		The total number of glyphs used
  	@in			size_t		maxGlyphs		The number of glyphs to be allocated
@@ -795,16 +800,23 @@ USRect MOAIFreeTypeFont::DimensionsWithMaxWidth(cc8 *text, float fontSize, float
 					pen_x += (delta.x >> 6);
 				}
 				
-				int yOffset = pen_y - (int)(face->glyph->metrics.horiBearingY >> 6);
-				int xOffset = pen_x + (int)(face->glyph->metrics.horiBearingX >> 6);
+				int xOffset = (int)(face->glyph->metrics.horiBearingX >> 6);
+				int yOffset = (int)(face->glyph->metrics.horiBearingY >> 6);
+				
+				int glyphRectX = pen_x + xOffset;
+				int glyphRectY = pen_y - yOffset;
 				
 				USRect glyphRect;
-				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
+				glyphRect.Init(glyphRectX, glyphRectY, glyphRectX + bitmap.width, glyphRectY + bitmap.rows);
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(rect, NULL, lineIndex, state, text_ptr[i2]);
+				int xAdvance = (int)(face->glyph->metrics.horiAdvance >> 6);
+				
+				u32 wideChar = text_ptr[i2];
+				MOAIFreeTypeFont::PushGlyphMetricsToLuaTable(glyphRect, xAdvance, xOffset, NULL, lineIndex, state, wideChar);
 				
 				// step to next glyph
-				pen_x += (face->glyph->metrics.horiAdvance >> 6);
+				pen_x += xAdvance;
+				
 				
 				previousGlyphIndex = glyphIndex;
 			} 
@@ -1361,8 +1373,8 @@ float MOAIFreeTypeFont::OptimalSize(const MOAIOptimalSizeParameters& params ){
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline, u32 index,  MOAILuaState &state, u32 wideChar){
-	
+void MOAIFreeTypeFont::PushGlyphMetricsToLuaTable(USRect rect, int xAdvance, int xOffset, int *baseline, u32 index, MOAILuaState &state, u32 wideChar) {
+
 	// a mutable C-string long enough to hold four characters and the null character at the end
 	static const size_t NUMBER_OF_CHARACTERS_IN_UTF8_CHARACTER = 4,
 						STRING_SIZE = NUMBER_OF_CHARACTERS_IN_UTF8_CHARACTER + 1;
@@ -1375,15 +1387,18 @@ void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline,
 	// convert the wide character parameter to a utf-8 string and get the encoding length
 	int charLength = u8_wc_toutf8(utf8String, wideChar);
 	
+	int elementsCount = 6;
 	
-	int elements = ( baseline != NULL ) ? 5 : 4;
+	if (baseline != NULL) {
+		elementsCount++;
+	}
 	
 	if (charLength > 0) {
-		elements += 1;
+		elementsCount++;
 	}
 	
 	// create a table with the appropiate number of elements
-	lua_createtable(state, elements, 0);
+	lua_createtable(state, elementsCount, 0);
 	
 	// push xMin
 	state.Push(rect.mXMin);
@@ -1400,6 +1415,14 @@ void MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(USRect rect, int *baseline,
 	// push yMax
 	state.Push(rect.mYMax);
 	lua_setfield(state, -2, "yMax");
+	
+	// push xAdvance
+	state.Push(xAdvance);
+	lua_setfield(state, -2, "xAdvance");
+	
+	// push xOffset
+	state.Push(xOffset);
+	lua_setfield(state, -2, "xOffset");
 	
 	// push baselineY
 	if (baseline) {
@@ -1511,23 +1534,28 @@ void MOAIFreeTypeFont::RenderLines(FT_Int imageWidth, FT_Int imageHeight, int hA
 				pen_x += (delta.x >> 6);
 			}
 			
-			int yOffset = (int)(pen_y - (face->glyph->metrics.horiBearingY >> 6));
-			int xOffset = (int)(pen_x + (face->glyph->metrics.horiBearingX >> 6));
+			int xOffset = face->glyph->metrics.horiBearingX >> 6;
+			int yOffset = face->glyph->metrics.horiBearingY >> 6;
 			
-			this->DrawBitmap(&bitmap, xOffset, yOffset, imageWidth, imageHeight);
+			int glyphRectX = pen_x + xOffset;
+			int glyphRectY = pen_y - yOffset;
 			
+			this->DrawBitmap(&bitmap, glyphRectX, glyphRectY, imageWidth, imageHeight);
 			
-			if (returnGlyphBounds){
+			int xAdvance = face->glyph->metrics.horiAdvance >> 6;
+			
+			if (returnGlyphBounds) {
 				
 				USRect glyphRect;
-				glyphRect.Init(xOffset, yOffset, xOffset + bitmap.width, yOffset + bitmap.rows);
+				glyphRect.Init(glyphRectX, glyphRectY, glyphRectX + bitmap.width, glyphRectY + bitmap.rows);
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, NULL, lineIndex, state, text_ptr[i2]);
+				u32 wideChar = text_ptr[i2];
+				MOAIFreeTypeFont::PushGlyphMetricsToLuaTable(glyphRect, xAdvance, xOffset, NULL, lineIndex, state, wideChar);
 				
 			}
 			
 			// step to next glyph
-			pen_x += (face->glyph->metrics.horiAdvance >> 6);
+			pen_x += xAdvance;
 			
 			previousGlyphIndex = glyphIndex;
 			
@@ -1696,7 +1724,10 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 				glyphRect.Init(left, bottom, left + bit->bitmap.width, bottom + bit->bitmap.rows);
 				int baselineY = maxAscender;
 				
-				MOAIFreeTypeFont::PushRectAndBaselineToLuaTable(glyphRect, &baselineY, tableIndex, state, wideString[n]);
+				int xAdvance = xAdvances[n];
+				int xOffset = xOffsets[n];
+				
+				MOAIFreeTypeFont::PushGlyphMetricsToLuaTable(glyphRect, xAdvance, xOffset, &baselineY, tableIndex, state, wideString[n]);
 				
 			}
 			
