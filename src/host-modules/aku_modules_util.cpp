@@ -4,8 +4,6 @@
 #include <string.h>
 #include <host-modules/aku_modules.h>
 #include <host-modules/aku_modules_util.h>
-#include <lua-headers/moai_lua.h>
-#include <lua-headers/moai_test_mgr_lua.h>
 
 //================================================================//
 // local
@@ -89,10 +87,4 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 
 //----------------------------------------------------------------//
 void AKUModulesRunLuaAPIWrapper () {
-
-	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
-	AKUCallFunc ();
-	
-	AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
-	AKUCallFunc ();
 }

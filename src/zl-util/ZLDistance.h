@@ -4,13 +4,15 @@
 #ifndef	ZLDISTANCE_H
 #define	ZLDISTANCE_H
 
-//----------------------------------------------------------------//
+#include <zl-util/ZLBox.h>
 #include <zl-util/ZLPlane.h>
 
 //================================================================//
 // ZLDist
 //================================================================//
 namespace ZLDist {
+	
+	float	BoxToPlane			( const ZLBox& b, const ZLPlane3D& p, float& r );
 	
 	float	PointToPlane2D		( const ZLVec2D& p, const ZLPlane2D& plane );
 	float	PointToPoint		( const ZLVec2D& p1, const ZLVec2D& p2 );

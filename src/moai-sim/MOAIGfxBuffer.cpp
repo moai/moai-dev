@@ -24,20 +24,9 @@ int MOAIGfxBuffer::_computeBounds ( lua_State* L ) {
 	bool hasBounds = false;
 	ZLBox bounds;
 	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-	// offset, stride, components
-	if ( state.CheckParams ( 2, "NNN", false )) {
-	
-		u32 offset			= state.GetValue < u32 >( 2, 0 );
-		u32 stride			= state.GetValue < u32 >( 3, 0 );
-		u32 components		= state.GetValue < u32 >( 4, 0 );
-		u32 length			= state.GetValue < u32 >( 5, ( u32 )self->GetLength ());
-		
-		hasBounds = MOAIVertexFormat::ComputeBounds ( bounds, *self, length, offset, stride, components );
-	}
 	
 	// vertex format
-	else if ( state.CheckParams ( 2, "U", false )) {
+	if ( state.CheckParams ( 2, "U", false )) {
 	
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, 0 );
 		if ( format ) {
@@ -56,19 +45,55 @@ int MOAIGfxBuffer::_computeBounds ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	if ( stream ) {
+	
+		if ( state.IsType ( 3, LUA_TNUMBER )) {
+		
+			u32 idxSizeInBytes = state.GetValue ( 3, 4 );
+			u32 srcInputSizeInBytes = state.GetValue ( 4, idxSizeInBytes );
+			
+			self->CopyFromStream ( *stream, idxSizeInBytes, srcInputSizeInBytes );
+		
+		}
+		else {
+			self->CopyFromStream ( *stream );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGfxBuffer::_countElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 
 	u32 totalElements = 0;
-
-	// offset, stride, components
-	if ( state.CheckParams ( 2, "NNN", false )) {
 	
-		u32 offset			= state.GetValue < u32 >( 2, 0 );
-		u32 stride			= state.GetValue < u32 >( 3, 0 );
-		u32 length			= state.GetValue < u32 >( 4, ( u32 )self->GetLength ());
+	// prim type, index size in bytes
+	if ( state.CheckParams ( 2, "NN", false )) {
+	
+		u32  primType			= state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
+		u32  idxSizeInBytes		= state.GetValue < u32 >( 3, 4 );
 		
-		totalElements =  ( u32 )MOAIVertexFormat::CountElements ( length, offset, stride );
+		totalElements = self->GetSize () / idxSizeInBytes;
+		
+		if ( primType == ZGL_PRIM_LINES ) {
+			totalElements /= 2;
+		}
+		else if ( primType == ZGL_PRIM_TRIANGLES ) {
+			totalElements /= 3;
+		}
+	}
+	
+	// size
+	if ( state.CheckParams ( 2, "N", false )) {
+		
+		u32  elementSize		= state.GetValue < u32 >( 2, 4 );
+		totalElements = self->GetSize () / elementSize;
 	}
 	
 	// vertex format
@@ -77,7 +102,7 @@ int MOAIGfxBuffer::_countElements ( lua_State* L ) {
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, 0 );
 		if ( format ) {
 			u32 length = state.GetValue < u32 >( 3, ( u32 )self->GetLength ());
-			totalElements = ( u32 )format->CountElements ( length );
+			totalElements = ( u32 )( length / format->GetVertexSize ());
 		}
 	}
 	
@@ -98,6 +123,28 @@ int MOAIGfxBuffer::_makeDirty ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 	
 	self->mIsDirty = true;
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxBuffer::_printIndices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+	
+	u32 indexSize = state.GetValue < u32 >( 2, 4 );
+	self->PrintIndices ( indexSize );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxBuffer::_printVertices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+	
+	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, true );
+	if ( format ) {
+		self->PrintVertices ( *format );
+	}
 	return 0;
 }
 
@@ -165,31 +212,6 @@ int MOAIGfxBuffer::_setTarget ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	writeColor32
-	@text	Write a packed 32-bit color to the vertex buffer.
-	
-	@in		MOAIGfxBuffer self
-	@opt	number r				Default value is 1.
-	@opt	number g				Default value is 1.
-	@opt	number b				Default value is 1.
-	@opt	number a				Default value is 1.
-	@out	nil
-*/
-int MOAIGfxBuffer::_writeColor32 ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
-	
-	float r = state.GetValue < float >( 2, 1.0f );
-	float g = state.GetValue < float >( 3, 1.0f );
-	float b = state.GetValue < float >( 4, 1.0f );
-	float a = state.GetValue < float >( 5, 1.0f );
-	
-	u32 color = ZLColor::PackRGBA ( r, g, b, a );
-	self->Write < u32 >( color );
-	
-	return 0;
-}
-
 //================================================================//
 // MOAIGfxBuffer
 //================================================================//
@@ -201,6 +223,46 @@ void MOAIGfxBuffer::Clear () {
 	this->ReserveVBOs ( 0 );
 	
 	this->Destroy ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
+
+	size_t size = stream.GetLength () - stream.GetCursor ();
+	this->Reserve (( u32 )size );
+	this->WriteStream ( stream );
+	
+	this->mIsDirty = true;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, u32 idxSizeInBytes, u32 srcInputSizeInBytes ) {
+
+	u32 size = ( u32 )( stream.GetLength () - stream.GetCursor ());
+	
+	u32 totalIndices = ( u32 )( size / srcInputSizeInBytes );
+	
+	this->Reserve ( totalIndices * idxSizeInBytes );
+	
+	for ( u32 i = 0; i < totalIndices; ++i ) {
+	
+		u32 idx = 0;
+		
+		if ( srcInputSizeInBytes == 4 ) {
+			idx = stream.Read < u32 >( 0 );
+		}
+		else {
+			idx = stream.Read < u16 >( 0 );
+		}
+	
+		if ( idxSizeInBytes == 4 ) {
+			this->Write < u32 >( idx );
+		}
+		else {
+			this->Write < u16 >(( u16 )idx );
+		}
+	}
+	this->mIsDirty = true;
 }
 
 //----------------------------------------------------------------//
@@ -267,12 +329,20 @@ void MOAIGfxBuffer::OnGPUBind () {
 		
 		if ( renew ) {
 		
-			void* buffer = zglMapBuffer ( this->mTarget );
-			if ( buffer ) {
-				this->Seek ( 0, SEEK_SET );
-				this->ReadBytes ( buffer, this->GetLength ());
-			}
-			zglUnmapBuffer ( this->mTarget );
+			// TODO: There are a few different ways to approach updating buffers with varying performance
+			// on different platforms. The approach here is just to multi-buffer the VBO and replace its
+			// contents via zglBufferSubData when they change. The TODO here is to do performance tests
+			// on multiple devices, evaluate other approaches and possible expose the configuration of
+			// those to the end user via Lua.
+		
+			zglBufferSubData ( this->mTarget, 0, this->GetLength (), this->mData );
+		
+//			void* buffer = zglMapBuffer ( this->mTarget );
+//			if ( buffer ) {
+//				this->Seek ( 0, SEEK_SET );
+//				this->ReadBytes ( buffer, this->GetLength ());
+//			}
+//			zglUnmapBuffer ( this->mTarget );
 			this->mIsDirty = false;
 		}
 	}
@@ -297,6 +367,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 			zglBindBuffer ( this->mTarget, 0 ); // OK?
 			
+			this->mIsDirty = true;
 			count++;
 		}
 		this->mVBOs [ i ] = vbo;
@@ -328,6 +399,34 @@ void MOAIGfxBuffer::OnGPUUnbind () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxBuffer::PrintIndices ( u32 indexSize ) {
+
+	size_t cursor = this->GetCursor ();
+	u32 length = cursor / indexSize;
+	
+	if ( length ) {
+		this->Seek ( 0, SEEK_SET );
+		for ( u32 i = 0; i < length; ++i ) {
+		
+			u32 v = indexSize == 4 ? this->Read < u32 >( 0 ) : this->Read < u16 >( 0 );
+			printf ( "%d: %d\n", i, v );
+		}
+		this->Seek ( cursor, SEEK_SET );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
+
+	size_t cursor = this->GetCursor ();
+	if ( cursor ) {
+		this->Seek ( 0, SEEK_SET );
+		vertexFormat.PrintVertices ( *this, cursor );
+		this->Seek ( cursor, SEEK_SET );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGfxResource::RegisterLuaClass ( state );
@@ -345,15 +444,17 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "computeBounds",			_computeBounds },
+		{ "copyFromStream",			_copyFromStream },
 		{ "countElements",			_countElements },
 		{ "load",					_load },
 		{ "makeDirty",				_makeDirty },
+		{ "printIndices",			_printIndices },
+		{ "printVertices",			_printVertices },
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },
 		{ "reset",					_reset },
 		{ "setTarget",				_setTarget },
-		{ "writeColor32",			_writeColor32 },
 		{ NULL, NULL }
 	};
 	

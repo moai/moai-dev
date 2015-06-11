@@ -4,8 +4,6 @@
 #ifndef	MOAIBILLINGANDROID_H
 #define	MOAIBILLINGANDROID_H
 
-#ifndef DISABLE_BILLING
-
 #include <moai-core/headers.h>
 
 //================================================================//
@@ -169,7 +167,5 @@ public:
 	void 			NotifyFortumoPurchaseStateChanged( int, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*, const cc8*);
 	void			RegisterLuaClass				( MOAILuaState& state );
 };
-
-#endif  //DISABLE_BILLING
 
 #endif  //MOAIBILLING_H

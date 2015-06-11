@@ -118,13 +118,12 @@ void MOAIGfxResource::Destroy () {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::DoCPUAffirm () {
 
-	if ( this->mState == STATE_NEW ) {
-		this->mState = STATE_NEEDS_CPU_CREATE;
-	}
+	if ( this->mState == STATE_READY_TO_BIND ) return true;
+	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_NEW )) return false;
 
 	u32 loadingPolicy = this->GetLoadingPolicy ();
 	
-	// if we're deferring both CPU and GPU, bail
+	// if we're deferring both CPU and GPU, bail (unless we're being forced to load the CPU)
 	if ( loadingPolicy == LOADING_POLICY_CPU_GPU_BIND ) return true;
 
 	// whether or not GPU is deferred, do the CPU part
@@ -181,6 +180,14 @@ bool MOAIGfxResource::DoGPUAffirm () {
 		}
 	}
 	return this->mState == STATE_READY_TO_BIND;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::ForceCPUCreate () {
+
+	if ( this->mState == STATE_NEEDS_CPU_CREATE ) {
+		this->mState = this->OnCPUCreate () ? STATE_NEEDS_GPU_CREATE : STATE_ERROR;
+	}
 }
 
 //----------------------------------------------------------------//

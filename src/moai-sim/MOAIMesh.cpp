@@ -80,8 +80,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	self->ClearBounds ();
 	
 	if ( state.CheckParams ( 2, "NNNNNN-" )) {
-		self->mHasBounds = true;
-		self->mBounds = state.GetValue < ZLBox >( 2, self->mBounds );
+		self->SetBounds ( state.GetValue < ZLBox >( 2, self->mBounds ));
 	}
 	return 0;
 }
@@ -98,7 +97,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->SetIndexBuffer ( state.GetLuaObject < MOAIGfxBuffer >( 2, true ));
-	self->mIndexSizeInBytes = state.GetValue < u32 >( 3, 2 );
+	self->SetIndexSizeInBytes ( state.GetValue < u32 >( 3, 4 ));
 	return 0;
 }
 
@@ -146,7 +145,7 @@ int MOAIMesh::_setPointSize ( lua_State* L ) {
 int MOAIMesh::_setPrimType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
-	self->mPrimType = state.GetValue < u32 >( 2, 0 );
+	self->SetPrimType ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -155,7 +154,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setTotalElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
-	self->mTotalElements = state.GetValue < u32 >( 2, 0 );
+	self->SetTotalElements ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -225,24 +224,18 @@ ZLBox MOAIMesh::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
-	UNUSED ( zScl );
+	UNUSED ( offset );
+	UNUSED ( scale );
+
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
 
 	// TODO: make use of offset and scale
-	
-	//if ( !this->mVertexBuffer ) return;
-	
-	//const MOAIVertexFormat* format = this->mVertexBuffer->GetVertexFormat ();
-	//if ( !format ) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.Flush (); // TODO: should remove this call
+	MOAIGfxDevice::Get ().SetVertexFormat ();
 
 	this->FinishInit ();
 
@@ -250,7 +243,6 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		gfxDevice.SetGfxState ( this->mTexture );
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		gfxDevice.SetPointSize ( this->mPointSize );
@@ -291,8 +283,6 @@ MOAIMesh::MOAIMesh () :
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
-	
-	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 	
 	this->ClearBounds ();
 }
@@ -426,8 +416,10 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
+			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+		}
 	}
 	this->mVAOs.Init ( total );
 	this->mVAOs.Fill ( 0 );
@@ -528,6 +520,13 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	
 	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
 	state.SetField < u32 >( -1, "mPointSize", this->mPointSize );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetBounds ( const ZLBox& bounds ) {
+
+	this->mBounds = bounds;
+	this->mHasBounds = true;
 }
 
 //----------------------------------------------------------------//

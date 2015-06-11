@@ -71,8 +71,10 @@ private:
 	static int			_setBoundsPad				( lua_State* L );
 	static int			_setDeck					( lua_State* L );
 	static int			_setExpandForSort			( lua_State* L );
+	static int			_setFlag					( lua_State* L ); // TODO: macro
 	static int			_setGrid					( lua_State* L );
 	static int			_setGridScale				( lua_State* L );
+	static int			_setHitGranularity			( lua_State* L );
 	static int			_setIndex					( lua_State* L );
 	static int			_setLayer					( lua_State* L );
 	static int			_setPartition				( lua_State* L );
@@ -85,7 +87,7 @@ protected:
 	u32										mFlags;
 
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
-	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
+	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper; // TODO: replace with inline remapper
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
@@ -93,6 +95,8 @@ protected:
 
 	ZLBox									mBoundsOverride;
 	ZLVec3D									mBoundsPad;
+
+	u32										mHitGranularity;
 
 	//----------------------------------------------------------------//
 	virtual u32			AffirmInterfaceMask			( MOAIPartition& partition ) = 0;
@@ -112,6 +116,12 @@ public:
 	static const int NO_SUBPRIM_ID		= 0xffffffff;
 	
 	enum {
+		HIT_TEST_COARSE,	// no hit test will be performed; only the prop's bounds will be used
+		HIT_TEST_MEDIUM,	// implementation dependent
+		HIT_TEST_FINE,		// implementation dependent
+	};
+	
+	enum {
 		BOUNDS_EMPTY,
 		BOUNDS_GLOBAL,
 		BOUNDS_OK,
@@ -127,6 +137,8 @@ public:
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_PAD_BOUNDS			= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
+		FLAGS_PARTITION_GLOBAL		= 0x08,
+		TOTAL_FLAGS,
 	};
 
 	GET_SET ( u32, Index, mIndex )
@@ -147,6 +159,7 @@ public:
 	MOAIPartition*					GetPartitionTrait		();
 	bool							GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
 	virtual bool					Inside					( ZLVec3D vec, float pad );
+	bool							InsideModelBounds		( const ZLVec3D& vec, float pad );
 									MOAIProp				();
 	virtual							~MOAIProp				();
 	void							OnDepNodeUpdate			();

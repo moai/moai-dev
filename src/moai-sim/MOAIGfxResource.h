@@ -65,14 +65,13 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool			DoGPUAffirm					(); // gets ready to bind
 	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 
 protected:
 
 	//----------------------------------------------------------------//
-	bool			DoCPUAffirm					(); // gets ready to bind;
-	bool			DoGPUAffirm					(); // gets ready to bind;
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	
@@ -106,8 +105,10 @@ public:
 	// we render.
 
 	//----------------------------------------------------------------//
+	bool			DoCPUAffirm					(); // preload CPU portion
 	bool			Bind						(); // bind for drawing; go to STATE_READY
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
+	void			ForceCPUCreate				();
 	virtual u32		GetLoadingPolicy			();
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();

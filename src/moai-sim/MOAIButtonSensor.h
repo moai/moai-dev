@@ -42,13 +42,14 @@ public:
 	bool				ButtonIsDown			();
 	bool				ButtonIsUp				();
 	bool				ButtonUp				();
-	static void			EnqueueButtonEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, bool down );
+	void				ClearState				();
+	static void			EnqueueButtonEvent		( u8 deviceID, u8 sensorID, bool down );
 						MOAIButtonSensor		();
 						~MOAIButtonSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Reset					();
+	void				ResetState				();
 };
 
 #endif

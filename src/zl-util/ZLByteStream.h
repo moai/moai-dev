@@ -35,7 +35,7 @@ public:
 	size_t			ReadBytes			( void* buffer, size_t size );
 	void			SetBuffer			( void* buffer, size_t size, size_t length = 0 );
 	void			SetBuffer			( const void* buffer, size_t size, size_t length = 0 );
-	void			SetLength			( size_t size );
+	size_t			SetLength			( size_t length );
 	size_t			WriteBytes			( const void* buffer, size_t size );
 					ZLByteStream		();
 					~ZLByteStream		();

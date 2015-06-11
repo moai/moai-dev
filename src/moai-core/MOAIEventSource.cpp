@@ -188,9 +188,11 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( this->PushListener ( eventID, state )) {
-		state.DebugCall ( 0, 0 );
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->PushListener ( eventID, state )) {
+			state.DebugCall ( 0, 0 );
+		}
 	}
 }
 

@@ -248,6 +248,15 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILogMgr::LuaSetupClass( MOAILuaState& state, cc8* typeStr ) {
+
+	if ( this->mTypeCheckLuaParams && typeStr ) {
+		return state.CheckParams ( 1, typeStr, true );
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAILogMgr::MOAILogMgr () :
 	mLevel ( LOG_STATUS ),
 	mFile ( 0 ),

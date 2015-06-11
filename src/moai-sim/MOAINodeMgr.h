@@ -13,11 +13,17 @@ class MOAINodeMgr :
 	public MOAIGlobalClass < MOAINodeMgr, MOAILuaObject > {
 private:
 
+	static const u32 DEFAULT_MAX_ITERATIONS = 3; // arbitrary number
+
 	MOAINode* mUpdateListHead;
 	MOAINode* mUpdateListTail;
 
+	bool mScheduled;
+	u32 mMaxIterations;
+
 	//----------------------------------------------------------------//
 	static int		_reset				( lua_State* L );
+	static int		_setMaxIterations	( lua_State* L );
 	static int		_update				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -32,6 +38,8 @@ public:
 	friend class MOAINode;
 
 	DECL_LUA_SINGLETON ( MOAINodeMgr )
+
+	GET_SET ( u32, MaxIterations, mMaxIterations )
 
 	//----------------------------------------------------------------//
 	void			Reset				();

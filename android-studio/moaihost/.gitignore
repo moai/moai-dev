@@ -1,0 +1,10 @@
+.gitignore/
+.gradle/
+.idea/workspace.xml
+.idea/libraries/
+libs/
+build/
+obj/
+
+local.properties
+.DS_Store

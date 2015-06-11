@@ -24,11 +24,8 @@
 //	return ( uint )hash;
 //}
 
-#define FNV_seed 2166136261u
-#define FNV_prime 16777619u
-
 //----------------------------------------------------------------//
-static u32 HashString ( cc8* szKey, const u32 nLength, const u32 seed = FNV_seed ) {
+u32 ZLHashedString::Hash ( cc8* szKey, const u32 nLength, const u32 seed ) {
 
     u32 hash = seed;
 
@@ -41,6 +38,7 @@ static u32 HashString ( cc8* szKey, const u32 nLength, const u32 seed = FNV_seed
     hash += hash << 3;
     hash ^= hash >> 17;
     hash += hash << 5;
+
     return ( hash );
 }
 
@@ -96,7 +94,7 @@ u32 ZLHashedString::GetStringHash ( cc8* str, u32 strLength ) {
 	u32 hash = 0;
 
 	if ( str != 0 && strLength > 0 ) {
-		hash = HashString ( str, strLength );
+		hash = Hash ( str, strLength );
 	}
 
 	return hash;

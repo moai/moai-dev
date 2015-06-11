@@ -41,15 +41,17 @@ private:
 
 	//----------------------------------------------------------------//
 	static int				_computeBounds			( lua_State* L );
+	static int				_copyFromStream			( lua_State* L );
 	static int				_countElements			( lua_State* L );
 	static int				_load					( lua_State* L );
 	static int				_makeDirty				( lua_State* L );
+	static int				_printIndices			( lua_State* L );
+	static int				_printVertices			( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
 	static int				_reset					( lua_State* L );
 	static int				_setTarget				( lua_State* L );
-	static int				_writeColor32			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	u32						GetLoadingPolicy		();
@@ -65,6 +67,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxBuffer )
 	
+	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	IS ( Dirty, mIsDirty, true )
 	
@@ -72,10 +75,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear					();
+	void					CopyFromStream			( ZLStream& stream );
+	void					CopyFromStream			( ZLStream& stream, u32 idxSizeInBytes, u32 srcInputSizeInBytes );
 	size_t					GetSize					();
 	void					MakeDirty				();
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();
+	void					PrintIndices			( u32 indexSize );
+	void					PrintVertices			( MOAIVertexFormat& vertexFormat );
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					Reserve					( u32 size );

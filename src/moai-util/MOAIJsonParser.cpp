@@ -206,11 +206,14 @@ int MOAIJsonParser::_decode ( lua_State* L ) {
 		
 		json_error_t error;
 		json_t* json = json_loadb ( buffer, bufflen, JSON_DISABLE_EOF_CHECK, &error );
+		
 		if ( json ) {
-			
 			_jsonToLua ( L, json );
 			json_decref ( json );
 			return 1;
+		}
+		else {
+			printf ( "%d %d %d %s %s\n", error.line, error.column, error.position, error.source, error.text );
 		}
 	}
 	return 0;

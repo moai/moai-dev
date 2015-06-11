@@ -6,7 +6,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIMoviePlayerAndroid.h>
 
 extern JavaVM* jvm;
@@ -30,7 +30,7 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 	
-	JNI_GET_JSTRING ( url, jurl );
+	MOAIJString jurl = JNI_GET_JSTRING ( url );
 
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
@@ -44,7 +44,7 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "init" );
     	} else {
 
-			env->CallStaticVoidMethod ( movie, init, jurl );
+			env->CallStaticVoidMethod ( movie, init, ( jstring )jurl );
 		}
 	}
 

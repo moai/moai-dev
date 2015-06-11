@@ -13,7 +13,7 @@
 
 #include <jni.h>
 #include <moai-core/headers.h>
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIKeyboardAndroid.h>
 
 extern JavaVM* jvm;
@@ -85,13 +85,13 @@ int MOAIKeyboardAndroid::_setText ( lua_State* L ) {
 	cc8* text = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env ); 
-	JNI_GET_JSTRING ( text, jtext );
+	MOAIJString jtext = JNI_GET_JSTRING ( text );
 
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
 	if ( moai ) {
 		jmethodID setText = env->GetStaticMethodID ( moai, "setText", "(Ljava/lang/String;)V" );
 		if ( setText ) {
-			env->CallStaticVoidMethod ( moai, setText, jtext ); 
+			env->CallStaticVoidMethod ( moai, setText, ( jstring )jtext ); 
 			return 1;
 		}
 	}
@@ -160,7 +160,7 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 		if ( moai ) {
 			jmethodID getString = env->GetStaticMethodID ( moai, "getString", "()Ljava/lang/String;" );
 			if ( getString ) {
-				jstring jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
+				MOAIJString jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
 				JNI_GET_CSTRING ( jkeystring, ckeystring );
 				
 				MOAIScopedLuaState state = callback.GetSelf ();  
@@ -199,7 +199,7 @@ void MOAIKeyboardAndroid::PushText ( MOAILuaState& state ) {
 	if ( moai ) {
 		jmethodID getString = env->GetStaticMethodID ( moai, "getString", "()Ljava/lang/String;" );
 		if ( getString ) {
-			jstring jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
+			MOAIJString jkeystring = ( jstring )env->CallStaticObjectMethod ( moai, getString );
 
 			JNI_GET_CSTRING ( jkeystring, keystring );
 			state.Push(keystring);

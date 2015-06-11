@@ -16,10 +16,10 @@ class MOAIGridFancy :
 	public MOAIGrid {
 private:
 
-	ZLLeanArray < u32 > mColors;
-	ZLLeanArray < ZLColorVec > mColorPalette;
-	ZLLeanArray < float > mAlphas;
-	ZLLeanArray < float > mScales;
+	ZLLeanArray < u32 >			mColors;
+	ZLLeanArray < ZLColorVec >	mColorPalette;
+	ZLLeanArray < float >		mAlphas;
+	ZLLeanArray < float >		mScales;
 
 	//----------------------------------------------------------------//
 	static int		_fillAlpha			( lua_State* L );
@@ -47,7 +47,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGridFancy )
 	
 	//----------------------------------------------------------------//
-	void			Draw				( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 );
+	void			Draw				( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			FillAlpha			( float value );
 	void			FillColor			( u32 value );
 	void			FillScale			( float value );

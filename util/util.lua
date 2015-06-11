@@ -26,11 +26,12 @@ local		exec							= nil
 			iterateFiles					= nil
 			iterateFilesAbsPath				= nil
 local  		iterateFilesImplementation		= nil
+			iterateSingleOrArray			= nil
 			joinTables						= nil
 			listDirectories					= nil
 			listFiles						= nil
 local		makeDlcResourceSig				= nil
-			makeExecutable = nil
+			makeExecutable					= nil
 			makeStoreEntryFunc				= nil
 			mergeTables						= nil
 			move							= nil
@@ -39,6 +40,7 @@ local		makeDlcResourceSig				= nil
 			onEntryStore					= nil
 			pack							= nil
 			package							= nil
+			pairsByKeys						= nil
 			powerIter						= nil
 			printTable						= nil
 			pruneEmptyDirs					= nil
@@ -53,6 +55,12 @@ local		makeDlcResourceSig				= nil
 			trim							= nil
 			wrap							= nil
 			zip								= nil
+
+-- HACK
+local moaiCopy = MOAIFileSystem.copy
+if osx then
+	MOAIFileSystem.copy = function ( srcpath, dstpath ) copy ( dstpath, srcpath ) end
+end
 
 ----------------------------------------------------------------
 arrayToSet = function ( array )
@@ -89,8 +97,20 @@ end
 ----------------------------------------------------------------
 copy = function ( dstpath, srcpath )
 
-	print ( string.format ( 'copying: %s -> %s', srcpath, dstpath ))
-	MOAIFileSystem.copy ( srcpath, dstpath )
+	if osx then
+		
+		-- awful, but until there's a better way...
+		moaiCopy( srcpath, dstpath )
+
+		-- so awful
+		os.execute ( string.format ( 'rm -fr %s', dstpath ))
+
+		local cmd = string.format ( 'cp -a %s %s', srcpath, dstpath )
+		print ( cmd )
+		os.execute ( cmd )
+	else
+		moaiCopy ( srcpath, dstpath )
+	end
 end
 
 ----------------------------------------------------------------
@@ -230,7 +250,8 @@ end
 ----------------------------------------------------------------
 isAbsPath = function ( path )
 
-	return ( path [ 1 ] ~= 0x5C ) or ( path [ 1 ] ~= 0x2F ) -- hex codes for '/' and '\'
+	local c = string.byte ( path )
+	return ( c == 0x5C ) or ( c == 0x2F ) -- hex codes for '/' and '\'
 end
 
 ----------------------------------------------------------------
@@ -367,6 +388,22 @@ iterateFilesImplementation = function ( path, fileFilter, absPath, recurse )
 end
 
 ----------------------------------------------------------------
+iterateSingleOrArray = function ( item )
+
+	if type ( item ) == 'table' then
+		return ipairs ( item )
+	end
+
+	return function ()
+		if item then
+			local temp = item
+			item = nil
+			return 1, temp
+		end 
+	end
+end
+
+----------------------------------------------------------------
 joinTables = function ( t1, t2 )
 	
 	local t = {}
@@ -496,6 +533,26 @@ package = function ( dstpath, srcpath )
 	else
 		util.copy ( dstpath, srcpath )
 	end
+end
+
+----------------------------------------------------------------
+pairsByKeys = function ( t, f )
+
+	local a = {}
+	for n in pairs ( t ) do table.insert ( a, n ) end
+	table.sort ( a, f )
+
+	local i = 0      -- iterator variable
+	local iter = function ()   -- iterator function
+		i = i + 1
+		if a [ i ] == nil then
+			return nil
+		else
+			return a [ i ], t [ a [ i ]]
+		end
+	end
+
+	return iter
 end
 
 ----------------------------------------------------------------

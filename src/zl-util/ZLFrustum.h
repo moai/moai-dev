@@ -44,18 +44,21 @@ public:
 	ZLBox		mAABB;
 	ZLVec3D		mPoints [ TOTAL_POINTS ];
 	ZLPlane3D	mPlanes [ TOTAL_PLANES ];
-	bool		mUsePlanes;
+	bool		mUsePlanesForCull;
 
 	//----------------------------------------------------------------//
-	bool	Cull			( const ZLVec3D& vec ) const;
-	bool	Cull			( const ZLBox& box ) const;
-	bool	Cull			( const ZLPrism& prism ) const;
-	bool	Cull			( const ZLRhombus& rhombus ) const;
-	bool	GetXYSectRect	( const ZLAffine3D& mtx, ZLRect& rect ) const;
-	void	Init			( const ZLMatrix4x4& invViewProjMtx );
-	//void	Init			( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far );
-	//void	Init			( ZLVec3D& loc, ZLVec3D& viewAxis, ZLVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
-			ZLFrustum		();
+//	void		BeginFit		( ZLFrustumFitter& fitter, const ZLVec3D& loc );
+//	void		EndFit			( ZLFrustumFitter& fitter );
+//	void		FitPoint		( ZLFrustumFitter& fitter, const ZLVec3D& loc, float radius );
+	bool		Cull			( const ZLVec3D& vec ) const;
+	bool		Cull			( const ZLBox& box ) const;
+	bool		Cull			( const ZLPrism& prism ) const;
+	bool		Cull			( const ZLRhombus& rhombus ) const;
+	bool		GetXYSectRect	( const ZLAffine3D& mtx, ZLRect& rect ) const;
+	void		Init			( const ZLMatrix4x4& invViewProjMtx );
+	//void		Init			( ZLVec3D& loc, ZLRhombus rhombus, ZLPlane3D& near, ZLPlane3D& far );
+	//void		Init			( ZLVec3D& loc, ZLVec3D& viewAxis, ZLVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
+				ZLFrustum		();
 };
 
 #endif

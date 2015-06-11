@@ -21,11 +21,11 @@ gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 gfxQuad:setHitMask ( "moai.png" )
 gfxQuad:setHitMaskScalar ( 1, 1, 1, 1 )
-gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 )
-gfxQuad:setHitGranularity ( MOAIGfxQuad2D.HIT_TEST_FINE )
+gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 ) -- just hit test the white pixels
 
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
+prop:setHitGranularity ( MOAIProp.HIT_TEST_FINE )
 layer:insertProp ( prop )
 
 function clickCallback ( down )

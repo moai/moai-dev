@@ -8,14 +8,30 @@
 #include "moai-sim/pch.h"
 
 #include <jni.h>
+ #include <moai-android/MOAIJString.h>
 
-#include <moai-android/moaiext-jni.h>
+//================================================================//
+// Utility macros
+//================================================================//
+
+#define JNI_GET_ENV(jvm, env) 	\
+	JNIEnv* env; 				\
+	jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
+	
+#define JNI_GET_CSTRING(jstr, cstr) \
+	const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
+
+#define JNI_RELEASE_CSTRING(jstr, cstr) \
+	if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
+	
+#define JNI_GET_JSTRING(cstr) \
+	( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : jstring ( 0 );
 
 #define MOAI_JAVA_LUA_SETUP(type,str)						\
 	MOAILuaState state ( L );								\
 	if ( !state.CheckParams ( 1, str, true )) return 0;		\
 	type* self = &type::Get ();
-	
+
 //================================================================//
 // JniUtils
 //================================================================//

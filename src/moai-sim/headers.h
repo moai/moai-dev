@@ -16,6 +16,7 @@
 #include <moai-sim/MOAIAttrOp.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIBoundsDeck.h>
+//#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
@@ -34,6 +35,7 @@
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
+#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
@@ -51,7 +53,7 @@
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAIInputDevice.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 #include <moai-sim/MOAIJoystickSensor.h>
 #include <moai-sim/MOAIKeyCode.h>
 #include <moai-sim/MOAIKeyCodeEnum.h>
@@ -59,6 +61,7 @@
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMotionSensor.h>
@@ -100,6 +103,7 @@
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIScriptNode.h>
+#include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>

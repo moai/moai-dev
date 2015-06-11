@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIMotionSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // lua
@@ -49,12 +49,13 @@ int MOAIMotionSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMotionSensor::EnqueueLevelEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float x, float y, float z ) {
+void MOAIMotionSensor::EnqueueLevelEvent ( u8 deviceID, u8 sensorID, float x, float y, float z ) {
 
-	if ( queue.WriteEventHeader < MOAIMotionSensor >( deviceID, sensorID )) {
-		queue.Write < float >( x );
-		queue.Write < float >( y );
-		queue.Write < float >( z );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIMotionSensor >( deviceID, sensorID )) {
+		inputMgr.Write < float >( x );
+		inputMgr.Write < float >( y );
+		inputMgr.Write < float >( z );
 	}
 }
 

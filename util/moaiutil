@@ -3,8 +3,29 @@ INVOKE_DIR=$(pwd)
 MOAI_SDK_HOME=$(dirname "${0}")/../
 MOAI_CMD=${1}
 
+# ensure MOAI_SDK_HOME path is absolute
+abspath() {
+    cd "$(dirname "$1")"
+    printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
+}
+
+MOAI_SDK_HOME=$(abspath ${MOAI_SDK_HOME})
+
+# add Moai util directory to path
 export PATH=$PATH:$MOAI_SDK_HOME/util
 
+# add local bin directory to path
+export PATH=$PATH:$MOAI_SDK_HOME/bin/osx
+
+# if we're missing moai, build it
+if ! [ -x "$(which moai)" ]
+then
+	pushd $MOAI_SDK_HOME/xcode/osx > /dev/null
+	./build.sh
+	popd > /dev/null
+fi
+
+# call moaiutil
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
 

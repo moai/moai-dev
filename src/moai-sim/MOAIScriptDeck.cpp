@@ -118,9 +118,9 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( zOff );
-	UNUSED ( zScl );
+void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+	
+	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER );
 	
 	if ( this->mOnDraw ) {
 	
@@ -135,10 +135,10 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 		
 			// TODO: fix this to take all offset/scale params
 			lua_pushnumber ( state, idx );
-			lua_pushnumber ( state, xOff );
-			lua_pushnumber ( state, yOff );
-			lua_pushnumber ( state, xScl );
-			lua_pushnumber ( state, yScl );
+			lua_pushnumber ( state, offset.mX );
+			lua_pushnumber ( state, offset.mY );
+			lua_pushnumber ( state, scale.mX );
+			lua_pushnumber ( state, scale.mY );
 			state.DebugCall ( 5, 0 );
 		}
 	}
@@ -177,7 +177,6 @@ MOAIScriptDeck::MOAIScriptDeck () {
 	RTTI_SINGLE ( MOAIDeck )
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mDefaultShaderID = MOAIShaderMgr::LINE_SHADER;
 }
 
 //----------------------------------------------------------------//

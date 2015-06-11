@@ -330,6 +330,7 @@ extern void		zglRenderbufferStorage			( u32 internalFormat, u32 width, u32 heigh
 //----------------------------------------------------------------//
 extern void		zglBindBuffer					( u32 target, u32 buffer );
 extern void		zglBufferData					( u32 target, u32 size, const void* data, u32 usage );
+extern void		zglBufferSubData				( u32 target, u32 offset, u32 size, const void* data );
 extern u32		zglCreateBuffer					();
 extern void*	zglMapBuffer					( u32 target );
 extern void		zglUnmapBuffer					( u32 target );

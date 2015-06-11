@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIWheelSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // lua
@@ -60,10 +60,11 @@ int MOAIWheelSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIWheelSensor::EnqueueWheelEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float value ) {
+void MOAIWheelSensor::EnqueueWheelEvent ( u8 deviceID, u8 sensorID, float value ) {
 
-	if ( queue.WriteEventHeader < MOAIWheelSensor >( deviceID, sensorID )) {
-		queue.Write < float >( value );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIWheelSensor >( deviceID, sensorID )) {
+		inputMgr.Write < float >( value );
 	}
 }
 
@@ -115,7 +116,7 @@ void MOAIWheelSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIWheelSensor::Reset () {
+void MOAIWheelSensor::ResetState () {
 
 	this->mDelta = 0;
 }

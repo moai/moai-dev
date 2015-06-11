@@ -50,10 +50,11 @@ public:
 	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueKeyboardCharEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar );
-	static void			EnqueueKeyboardEditEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
-	static void			EnqueueKeyboardKeyEvent		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down );
-	static void			EnqueueKeyboardTextEvent	( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text );
+	void				ClearState					();
+	static void			EnqueueKeyboardCharEvent	( u8 deviceID, u8 sensorID, u32 unicodeChar );
+	static void			EnqueueKeyboardEditEvent	( u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
+	static void			EnqueueKeyboardKeyEvent		( u8 deviceID, u8 sensorID, u32 keyID, bool down );
+	static void			EnqueueKeyboardTextEvent	( u8 deviceID, u8 sensorID, cc8* text );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );
 	bool				KeyIsDown					( u32 keyID );
@@ -64,7 +65,7 @@ public:
 	void				ParseEvent					( ZLStream& eventStream );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Reset						();
+	void				ResetState					();
 };
 
 #endif

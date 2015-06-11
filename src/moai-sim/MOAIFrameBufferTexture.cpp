@@ -62,6 +62,7 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 		this->mDepthFormat		= depthFormat;
 		this->mStencilFormat	= stencilFormat;
 		
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 	else {
@@ -82,6 +83,8 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 		RTTI_EXTEND ( MOAIFrameBuffer )
 		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
+ 
+	this->mDebugName = "(texture from MOAIFrameBufferTexture)";
 }
 
 //----------------------------------------------------------------//

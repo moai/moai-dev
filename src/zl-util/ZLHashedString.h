@@ -35,6 +35,9 @@ private:
 
 public:
 
+	static const u32 FNV_seed = 2166136261u;
+	static const u32 FNV_prime = 16777619u;
+
 	static const ZLHashedString	Empty;
 
 	GET_CONST ( cc8*, String, mHashedString->mName )
@@ -42,6 +45,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static u32		GetStringHash		( cc8* str, u32 strLength );
+	static u32		Hash				( cc8* szKey, const u32 nLength, const u32 seed = FNV_seed );
 					ZLHashedString		();
 					ZLHashedString		( cc8* name );
 					ZLHashedString		( const ZLHashedString& other );

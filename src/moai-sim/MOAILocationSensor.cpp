@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAILocationSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // lua
@@ -55,15 +55,16 @@ int MOAILocationSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILocationSensor::EnqueueLocationEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
+void MOAILocationSensor::EnqueueLocationEvent ( u8 deviceID, u8 sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
-	if ( queue.WriteEventHeader < MOAILocationSensor >( deviceID, sensorID )) {
-		queue.Write < double >( longitude );
-		queue.Write < double >( latitude );
-		queue.Write < double >( altitude );
-		queue.Write < float >( hAccuracy );
-		queue.Write < float >( vAccuracy );
-		queue.Write < float >( speed );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAILocationSensor >( deviceID, sensorID )) {
+		inputMgr.Write < double >( longitude );
+		inputMgr.Write < double >( latitude );
+		inputMgr.Write < double >( altitude );
+		inputMgr.Write < float >( hAccuracy );
+		inputMgr.Write < float >( vAccuracy );
+		inputMgr.Write < float >( speed );
 	}
 }
 
