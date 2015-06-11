@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				CDBA1E4A1B1E443400DCDC75 /* PBXTargetDependency */,
+				CDBA1E4C1B1E443400DCDC75 /* PBXTargetDependency */,
 				3EDC16EC19F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC16EE19F6DD37007A7775 /* PBXTargetDependency */,
 				CDFD7C2B1A0857EF00A94E6B /* PBXTargetDependency */,
@@ -39,22 +41,23 @@
 			buildPhases = (
 			);
 			dependencies = (
+				CDBA1E321B1E442500DCDC75 /* PBXTargetDependency */,
+				CDBA1E361B1E442500DCDC75 /* PBXTargetDependency */,
+				CDBA1E381B1E442500DCDC75 /* PBXTargetDependency */,
+				CDBA1E421B1E442500DCDC75 /* PBXTargetDependency */,
+				CDBA1E441B1E442500DCDC75 /* PBXTargetDependency */,
 				3E72B9AA19F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A291A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9AC19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */,
-				3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9CE19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9D019F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A391A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9DE19F703FA00A9DE30 /* PBXTargetDependency */,
-				3E72B9E019F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9E419F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A411A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9E819F703FA00A9DE30 /* PBXTargetDependency */,
@@ -2542,6 +2545,16 @@
 		CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
 		CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
+		CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
+		CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
+		CD67B4601B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
+		CD67B4611B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
+		CD67B4621B264C9C004298CF /* MOAIDeckProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */; };
+		CD67B4631B264C9C004298CF /* MOAIDeckProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */; };
+		CD67B4661B264FF0004298CF /* MOAIStandardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B4641B264FF0004298CF /* MOAIStandardDeck.cpp */; };
+		CD67B4671B264FF0004298CF /* MOAIStandardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B4641B264FF0004298CF /* MOAIStandardDeck.cpp */; };
+		CD67B4681B264FF0004298CF /* MOAIStandardDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */; };
+		CD67B4691B264FF0004298CF /* MOAIStandardDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */; };
 		CD69AB3717FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
 		CD69AB3917FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -2570,6 +2583,10 @@
 		CD69AB5017FA6CF90053E028 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3517FA6CF90053E028 /* tess.c */; };
 		CD69AB5117FA6CF90053E028 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
 		CD69AB5217FA6CF90053E028 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
+		CD6AFDA51B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */; };
+		CD6AFDA61B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */; };
+		CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */; };
+		CD6AFDA81B1683F800A36954 /* MOAIGeometryWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */; };
 		CD6D74C017EE415D00964415 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
 		CD6D74C117EE415D00964415 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6932173974FD00DFE837 /* pch.h */; };
 		CD6D74C217EE415D00964415 /* zl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6934173974FD00DFE837 /* zl_mutex.h */; };
@@ -2626,8 +2643,6 @@
 		CD73A60F188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */; };
 		CD7548A51AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
 		CD7548A61AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
-		CD7548A71AEDA92300AD7FD8 /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7548A41AEDA92300AD7FD8 /* MOAISelectionMesh.h */; };
-		CD7548A81AEDA92300AD7FD8 /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7548A41AEDA92300AD7FD8 /* MOAISelectionMesh.h */; };
 		CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */; };
 		CD781096187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */; };
 		CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */; };
@@ -4743,6 +4758,8 @@
 		CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */; };
 		CDE440181AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
 		CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
+		CDE7C5681B0C00440038A8C9 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7C5671B0C00440038A8C9 /* tesselator.h */; };
+		CDE7C5691B0C00440038A8C9 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7C5671B0C00440038A8C9 /* tesselator.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
 		CDECEE2118E0C87C00546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CDECEE2418E0C88700546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -4844,27 +4861,6 @@
 			remoteGlobalIDString = 89BE737C173AD2B600DFE837;
 			remoteInfo = "libmoai-ios-box2d";
 		};
-		3E72B9B919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CDA4B7AF1808AC6D000129F9;
-			remoteInfo = "libmoai-ios-chartboost";
-		};
-		3E72B9BD19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD5232471808ADF400B81720;
-			remoteInfo = "libmoai-ios-crittercism";
-		};
-		3E72B9C319F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD70C10F18441DD0005CEBC0;
-			remoteInfo = "libmoai-ios-flurry";
-		};
 		3E72B9C919F703FA00A9DE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -4899,13 +4895,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
 			remoteInfo = "libmoai-ios-untz";
-		};
-		3E72B9DF19F703FA00A9DE30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD4C4167180A9AEA00C02381;
-			remoteInfo = "libmoai-ios-urban-airship";
 		};
 		3E72B9E319F703FA00A9DE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5025,6 +5014,55 @@
 			proxyType = 1;
 			remoteGlobalIDString = CDC122D417FA804C00FB64BB;
 			remoteInfo = "libmoai-ios-zl-crypto";
+		};
+		CDBA1E311B1E442500DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD257B251A6255380057A53A;
+			remoteInfo = "libmoai-ios-apple";
+		};
+		CDBA1E351B1E442500DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA0D9F71A01B111002B71B6;
+			remoteInfo = "libmoai-ios-audio-sampler";
+		};
+		CDBA1E371B1E442500DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA4B8251808AC82000129F9;
+			remoteInfo = "libmoai-ios-facebook";
+		};
+		CDBA1E411B1E442500DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD7814D1A11631E00AD133E;
+			remoteInfo = "libmoai-ios-motion";
+		};
+		CDBA1E431B1E442500DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDC097D41AE9C72E002E325F;
+			remoteInfo = "libmoai-ios-movie";
+		};
+		CDBA1E491B1E443400DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD1845231A626BD500FCCCE0;
+			remoteInfo = "libmoai-osx-apple";
+		};
+		CDBA1E4B1B1E443400DCDC75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD42F2D61A60A7CC001B6D72;
+			remoteInfo = "libmoai-osx-sdl";
 		};
 		CDFD7C2A1A0857EF00A94E6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6560,6 +6598,11 @@
 		CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moai-ios-chartboost/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		CD5232421808ADDA00B81720 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moai-ios-chartboost/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISelectionMesh.h; sourceTree = "<group>"; };
+		CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckProxy.cpp; sourceTree = "<group>"; };
+		CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckProxy.h; sourceTree = "<group>"; };
+		CD67B4641B264FF0004298CF /* MOAIStandardDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStandardDeck.cpp; sourceTree = "<group>"; };
+		CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStandardDeck.h; sourceTree = "<group>"; };
 		CD69AB0417FA6C7E0053E028 /* MOAIPinTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPinTransform.cpp; sourceTree = "<group>"; };
 		CD69AB0517FA6C7E0053E028 /* MOAIPinTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPinTransform.h; sourceTree = "<group>"; };
 		CD69AB0617FA6C7E0053E028 /* MOAIVectorCombo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorCombo.cpp; sourceTree = "<group>"; };
@@ -6580,6 +6623,8 @@
 		CD69AB3417FA6CF90053E028 /* sweep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sweep.h; path = ../../3rdparty/libtess2/Source/sweep.h; sourceTree = "<group>"; };
 		CD69AB3517FA6CF90053E028 /* tess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tess.c; path = ../../3rdparty/libtess2/Source/tess.c; sourceTree = "<group>"; };
 		CD69AB3617FA6CF90053E028 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
+		CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGeometryWriter.cpp; sourceTree = "<group>"; };
+		CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGeometryWriter.h; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6ECF6A1A6E247C004813FF /* MOAIMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMatrix.cpp; sourceTree = "<group>"; };
 		CD6ECF6B1A6E247C004813FF /* MOAIMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMatrix.h; sourceTree = "<group>"; };
@@ -7297,7 +7342,6 @@
 		CD74E9D0137805910093EE68 /* t1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_srvr.c; path = "../../3rdparty/openssl-1.0.0m/ssl/t1_srvr.c"; sourceTree = "<group>"; };
 		CD74E9D1137805910093EE68 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = "../../3rdparty/openssl-1.0.0m/ssl/tls1.h"; sourceTree = "<group>"; };
 		CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISelectionMesh.cpp; sourceTree = "<group>"; };
-		CD7548A41AEDA92300AD7FD8 /* MOAISelectionMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISelectionMesh.h; sourceTree = "<group>"; };
 		CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleCache.cpp; sourceTree = "<group>"; };
 		CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleCache.h; sourceTree = "<group>"; };
 		CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleMap.cpp; sourceTree = "<group>"; };
@@ -7844,6 +7888,7 @@
 		CDE4400F1AC0D27600C745DB /* ZLFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustum.h; sourceTree = "<group>"; };
 		CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustumFitter.cpp; sourceTree = "<group>"; };
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
+		CDE7C5671B0C00440038A8C9 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextDesignParser.cpp; sourceTree = "<group>"; };
 		CDEFD55B181ECB3E0058D772 /* MOAITextDesignParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextDesignParser.h; sourceTree = "<group>"; };
@@ -10260,6 +10305,7 @@
 				CD69AB3417FA6CF90053E028 /* sweep.h */,
 				CD69AB3517FA6CF90053E028 /* tess.c */,
 				CD69AB3617FA6CF90053E028 /* tess.h */,
+				CDE7C5671B0C00440038A8C9 /* tesselator.h */,
 			);
 			name = libtess;
 			sourceTree = "<group>";
@@ -12308,12 +12354,14 @@
 		CD9E5C321A78AC5100469462 /* mesh */ = {
 			isa = PBXGroup;
 			children = (
+				CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */,
+				CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */,
 				CD9E5BE01A772B4100469462 /* MOAIGfxBuffer.cpp */,
 				CD9E5BE11A772B4100469462 /* MOAIGfxBuffer.h */,
 				89BE6F97173AD0CA00DFE837 /* MOAIMesh.cpp */,
 				89BE6F98173AD0CA00DFE837 /* MOAIMesh.h */,
 				CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */,
-				CD7548A41AEDA92300AD7FD8 /* MOAISelectionMesh.h */,
+				CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
 				89BE701B173AD0CB00DFE837 /* MOAIVertexFormat.h */,
 				89BE701C173AD0CB00DFE837 /* MOAIVertexFormatMgr.cpp */,
@@ -12657,6 +12705,8 @@
 				89BE6F35173AD0CA00DFE837 /* MOAIBoundsDeck.h */,
 				89BE6F4A173AD0CA00DFE837 /* MOAIDeck.cpp */,
 				89BE6F4B173AD0CA00DFE837 /* MOAIDeck.h */,
+				CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */,
+				CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */,
 				89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */,
 				89BE6F4D173AD0CA00DFE837 /* MOAIDeckRemapper.h */,
 				89BE6F63173AD0CA00DFE837 /* MOAIGfxQuad2D.cpp */,
@@ -12667,6 +12717,8 @@
 				89BE6F68173AD0CA00DFE837 /* MOAIGfxQuadListDeck2D.h */,
 				89BE6FE7173AD0CA00DFE837 /* MOAIScriptDeck.cpp */,
 				89BE6FE8173AD0CA00DFE837 /* MOAIScriptDeck.h */,
+				CD67B4641B264FF0004298CF /* MOAIStandardDeck.cpp */,
+				CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */,
 				89BE6FF6173AD0CA00DFE837 /* MOAIStretchPatch2D.cpp */,
 				89BE6FF7173AD0CA00DFE837 /* MOAIStretchPatch2D.h */,
 				89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */,
@@ -12918,6 +12970,7 @@
 				CD881FC519FF6736004498E8 /* endian_inl.h in Headers */,
 				CD4900DD141AB6EC00913D80 /* lzio.h in Headers */,
 				07952A401447907100143A72 /* jconfig.h in Headers */,
+				CDE7C5691B0C00440038A8C9 /* tesselator.h in Headers */,
 				CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */,
 				07952A4C1447907100143A72 /* jdct.h in Headers */,
 				CD3024DE1A68F34E00CCEE32 /* PVRTTexture.h in Headers */,
@@ -13141,6 +13194,7 @@
 				CD881FC419FF6736004498E8 /* endian_inl.h in Headers */,
 				CDD48B7617FA794E00525B77 /* SFMT-params44497.h in Headers */,
 				CD4900A2141AB6EC00913D80 /* lualib.h in Headers */,
+				CDE7C5681B0C00440038A8C9 /* tesselator.h in Headers */,
 				CDCDD0151A23F233008779B5 /* iasciitab.h in Headers */,
 				CD4900A4141AB6EC00913D80 /* lundump.h in Headers */,
 				CD3024DD1A68F34E00CCEE32 /* PVRTTexture.h in Headers */,
@@ -13303,6 +13357,7 @@
 				CD4C3EDE180A63BB00C02381 /* MOAITransform.h in Headers */,
 				CD4C3E3F180A63BB00C02381 /* MOAIGlyphSet.h in Headers */,
 				CD4C3E7C180A63BB00C02381 /* MOAIParticleSystem.h in Headers */,
+				CD67B4681B264FF0004298CF /* MOAIStandardDeck.h in Headers */,
 				CD4C3E76180A63BB00C02381 /* MOAIParticlePlugin.h in Headers */,
 				CD4C3ED8180A63BB00C02381 /* MOAITileFlags.h in Headers */,
 				CD4C3EA0180A63BB00C02381 /* MOAIProfilerReportBase.h in Headers */,
@@ -13323,8 +13378,10 @@
 				CD4C3E7E180A63BB00C02381 /* MOAIParticleTimedEmitter.h in Headers */,
 				CD73A60A188F0AEC00DFACDB /* MOAIGraphicsProp.h in Headers */,
 				CD4C3E6E180A63BB00C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
+				CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
 				CD4C3E96180A63BB00C02381 /* MOAIProfilerAutoScope.h in Headers */,
 				CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */,
+				CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */,
 				CD4C3E29180A63BB00C02381 /* MOAIFrameBufferTexture.h in Headers */,
 				CD4C3E0A180A63BB00C02381 /* MOAICameraFitter2D.h in Headers */,
 				CD4C3E1E180A63BB00C02381 /* MOAIEaseType.h in Headers */,
@@ -13338,7 +13395,6 @@
 				CD73A602188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */,
 				CD4C3E7A180A63BB00C02381 /* MOAIParticleState.h in Headers */,
 				CD4C3E0E180A63BB00C02381 /* MOAIColor.h in Headers */,
-				CD7548A71AEDA92300AD7FD8 /* MOAISelectionMesh.h in Headers */,
 				CD4C3DEB180A63BB00C02381 /* MOAIAction.h in Headers */,
 				CDC5203818A17EB700BCC12F /* MOAIShaderProgram.h in Headers */,
 				CD4C3E78180A63BB00C02381 /* MOAIParticleScript.h in Headers */,
@@ -13364,6 +13420,7 @@
 				CDE36E621A5F6C970095E863 /* MOAIImageFormatJpg.h in Headers */,
 				CD4C3E55180A63BB00C02381 /* MOAIJoystickSensor.h in Headers */,
 				CD73A5FE188F0AD200DFACDB /* MOAICollisionProp.h in Headers */,
+				CD67B4621B264C9C004298CF /* MOAIDeckProxy.h in Headers */,
 				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */,
 				CD4C3E2B180A63BB00C02381 /* MOAIFreeTypeFontReader.h in Headers */,
@@ -13501,11 +13558,13 @@
 				CD4C40D6180A63C200C02381 /* MOAIProfilerScope.h in Headers */,
 				CD4C4104180A63C200C02381 /* MOAITexture.h in Headers */,
 				CD781098187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
+				CD67B4691B264FF0004298CF /* MOAIStandardDeck.h in Headers */,
 				CD4C4097180A63C200C02381 /* MOAIMultiTexture.h in Headers */,
 				CD4C40E7180A63C200C02381 /* MOAIScriptNode.h in Headers */,
 				CD4C404C180A63C200C02381 /* MOAIDraw.h in Headers */,
 				CD4C40EF180A63C200C02381 /* MOAISim.h in Headers */,
 				CD4C4099180A63C200C02381 /* MOAINode.h in Headers */,
+				CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
 				CD4C4027180A63C200C02381 /* MOAIAnimCurveQuat.h in Headers */,
 				CD4C40A8180A63C200C02381 /* MOAIParticlePlugin.h in Headers */,
 				CD4C405D180A63C200C02381 /* MOAIFreeTypeFontReader.h in Headers */,
@@ -13587,7 +13646,6 @@
 				CD4C405F180A63C200C02381 /* MOAIGfxDevice.h in Headers */,
 				CD4C40CE180A63C200C02381 /* MOAIProfilerEntryBase.h in Headers */,
 				CD48CF251A12F8F70029F932 /* MOAIRegion.h in Headers */,
-				CD7548A81AEDA92300AD7FD8 /* MOAISelectionMesh.h in Headers */,
 				CD1401421A0C5F660065AEE7 /* MOAIInputMgr.h in Headers */,
 				CD4C4095180A63C200C02381 /* MOAIMotionSensor.h in Headers */,
 				CD4C401B180A63C200C02381 /* host_particles.h in Headers */,
@@ -13597,6 +13655,7 @@
 				CD4C40B0180A63C200C02381 /* MOAIParticleTimedEmitter.h in Headers */,
 				CD4C40FC180A63C200C02381 /* MOAITextBundle.h in Headers */,
 				CDEFD579181ECB3E0058D772 /* MOAIVectorEllipse.h in Headers */,
+				CD67B4631B264C9C004298CF /* MOAIDeckProxy.h in Headers */,
 				CD4C4065180A63C200C02381 /* MOAIGfxQuadListDeck2D.h in Headers */,
 				CD4C40AE180A63C200C02381 /* MOAIParticleSystem.h in Headers */,
 				CD4C4050180A63C200C02381 /* MOAIEaseType.h in Headers */,
@@ -13607,6 +13666,7 @@
 				CD4C4042180A63C200C02381 /* MOAICompassSensor.h in Headers */,
 				CD4C4112180A63C200C02381 /* MOAITransform2D.h in Headers */,
 				CD9E5BE71A772B4100469462 /* MOAIGfxBuffer.h in Headers */,
+				CD6AFDA81B1683F800A36954 /* MOAIGeometryWriter.h in Headers */,
 				CD4C40B4180A63C200C02381 /* MOAIPartitionCell.h in Headers */,
 				CD4C40F2180A63C200C02381 /* MOAIStaticGlyphCache.h in Headers */,
 				CDEFD56D181ECB3E0058D772 /* MOAITextLabel.h in Headers */,
@@ -16684,6 +16744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD6AFDA51B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */,
 				CD4C3EF4180A63BB00C02381 /* MOAIVertexFormat.cpp in Sources */,
 				CD4C3E8B180A63BB00C02381 /* MOAIPathGraph.cpp in Sources */,
 				CDC5203618A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */,
@@ -16763,6 +16824,7 @@
 				CD4C3EC5180A63BB00C02381 /* MOAISurfaceSampler2D.cpp in Sources */,
 				CD4C3EF8180A63BB00C02381 /* MOAIViewport.cpp in Sources */,
 				CD4C3EBC180A63BB00C02381 /* MOAISim.cpp in Sources */,
+				CD67B4661B264FF0004298CF /* MOAIStandardDeck.cpp in Sources */,
 				CD4C3DE6180A63BB00C02381 /* host.cpp in Sources */,
 				CD4C3EAA180A63BB00C02381 /* MOAIQuadBrush.cpp in Sources */,
 				CD4C3E56180A63BB00C02381 /* MOAIKeyboardSensor.cpp in Sources */,
@@ -16812,6 +16874,7 @@
 				CD4C3ED1180A63BB00C02381 /* MOAITexture.cpp in Sources */,
 				CD4C3EAC180A63BB00C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */,
+				CD67B4601B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */,
 				CD4C3ED3180A63BB00C02381 /* MOAITextureBase.cpp in Sources */,
 				CD4C3E05180A63BB00C02381 /* MOAICamera2D.cpp in Sources */,
 				CDE36E641A5F6C970095E863 /* MOAIImageFormatPng.cpp in Sources */,
@@ -16849,6 +16912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD6AFDA61B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */,
 				CDE36E611A5F6C970095E863 /* MOAIImageFormatJpg.cpp in Sources */,
 				CDC5203F18A17EB700BCC12F /* MOAIVectorTesselator.cpp in Sources */,
 				CD4C402B180A63C200C02381 /* MOAIBitmapFontReader.cpp in Sources */,
@@ -16928,6 +16992,7 @@
 				CD14014E1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp in Sources */,
 				CD4C40A7180A63C200C02381 /* MOAIParticlePlugin.cpp in Sources */,
 				CD4C40EA180A63C200C02381 /* MOAIShader.cpp in Sources */,
+				CD67B4671B264FF0004298CF /* MOAIStandardDeck.cpp in Sources */,
 				CD4C40E8180A63C200C02381 /* MOAISensor.cpp in Sources */,
 				CD4C4047180A63C200C02381 /* MOAIDeck.cpp in Sources */,
 				CD4C4128180A63C200C02381 /* MOAIVertexFormatMgr.cpp in Sources */,
@@ -16977,6 +17042,7 @@
 				CD4C4039180A63C200C02381 /* MOAICameraAnchor2D.cpp in Sources */,
 				CD4C4098180A63C200C02381 /* MOAINode.cpp in Sources */,
 				CD4C4105180A63C200C02381 /* MOAITextureBase.cpp in Sources */,
+				CD67B4611B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */,
 				CD1401401A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */,
 				CD4C407E180A63C200C02381 /* MOAIImageTexture.cpp in Sources */,
 				CD4C40F3180A63C200C02381 /* MOAIStretchPatch2D.cpp in Sources */,
@@ -19244,21 +19310,6 @@
 			target = 89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */;
 			targetProxy = 3E72B9B719F703FA00A9DE30 /* PBXContainerItemProxy */;
 		};
-		3E72B9BA19F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CDA4B7AF1808AC6D000129F9 /* libmoai-ios-chartboost */;
-			targetProxy = 3E72B9B919F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
-		3E72B9BE19F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD5232471808ADF400B81720 /* libmoai-ios-crittercism */;
-			targetProxy = 3E72B9BD19F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
-		3E72B9C419F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD70C10F18441DD0005CEBC0 /* libmoai-ios-flurry */;
-			targetProxy = 3E72B9C319F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
 		3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */;
@@ -19283,11 +19334,6 @@
 			isa = PBXTargetDependency;
 			target = CD07C3A313A182AA00C9386C /* libmoai-ios-untz */;
 			targetProxy = 3E72B9DD19F703FA00A9DE30 /* PBXContainerItemProxy */;
-		};
-		3E72B9E019F703FA00A9DE30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */;
-			targetProxy = 3E72B9DF19F703FA00A9DE30 /* PBXContainerItemProxy */;
 		};
 		3E72B9E419F703FA00A9DE30 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -19373,6 +19419,41 @@
 			isa = PBXTargetDependency;
 			target = CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */;
 			targetProxy = CDB14A401A01CCFB008CEA54 /* PBXContainerItemProxy */;
+		};
+		CDBA1E321B1E442500DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD257B251A6255380057A53A /* libmoai-ios-apple */;
+			targetProxy = CDBA1E311B1E442500DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E361B1E442500DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA0D9F71A01B111002B71B6 /* libmoai-ios-audio-sampler */;
+			targetProxy = CDBA1E351B1E442500DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E381B1E442500DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA4B8251808AC82000129F9 /* libmoai-ios-facebook */;
+			targetProxy = CDBA1E371B1E442500DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E421B1E442500DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDD7814D1A11631E00AD133E /* libmoai-ios-motion */;
+			targetProxy = CDBA1E411B1E442500DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E441B1E442500DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDC097D41AE9C72E002E325F /* libmoai-ios-movie */;
+			targetProxy = CDBA1E431B1E442500DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E4A1B1E443400DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD1845231A626BD500FCCCE0 /* libmoai-osx-apple */;
+			targetProxy = CDBA1E491B1E443400DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDBA1E4C1B1E443400DCDC75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */;
+			targetProxy = CDBA1E4B1B1E443400DCDC75 /* PBXContainerItemProxy */;
 		};
 		CDFD7C2B1A0857EF00A94E6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -19603,12 +19684,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
-					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
+					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
+					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					../../3rdparty/kontagent_ios_v1.5.6,
+					"../../3rdparty/facebook-ios-sdk-3.14.1",
+					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -20931,12 +21012,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
-					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
+					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
+					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					../../3rdparty/kontagent_ios_v1.5.6,
+					"../../3rdparty/facebook-ios-sdk-3.14.1",
+					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -25387,12 +25468,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
-					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
+					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
+					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					../../3rdparty/kontagent_ios_v1.5.6,
+					"../../3rdparty/facebook-ios-sdk-3.14.1",
+					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -25816,12 +25897,12 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"$(MOAI_SDK_SRC)3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					"$(MOAI_SDK_SRC)3rdparty/kontagent_ios_v1.5.6",
-					"$(MOAI_SDK_SRC)3rdparty/facebook-ios-sdk-3.14.1",
-					"$(MOAI_SDK_SRC)3rdparty/adcolony-2.2.4",
+					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
+					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
+					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
+					../../3rdparty/kontagent_ios_v1.5.6,
+					"../../3rdparty/facebook-ios-sdk-3.14.1",
+					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;

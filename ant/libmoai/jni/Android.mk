@@ -146,6 +146,13 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-client.mk
 
 	#--------------------------------------------------------------#
+	# HTTP_SERVER
+
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/mongoose
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-mongoose.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk
+
+	#--------------------------------------------------------------#
 	# LUAEXT
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src

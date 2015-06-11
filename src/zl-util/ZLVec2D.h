@@ -84,6 +84,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	static TYPE Cross ( const ZLMetaVec2D < TYPE >& v0, const ZLMetaVec2D < TYPE >& v1 ) {
+	
+		return ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
+	}
+	
+	//----------------------------------------------------------------//
 	bool Compare ( const ZLMetaVec2D < TYPE >& point ) {
 	
 		if (( mX != point.mX ) || ( mY != point.mY )) return false;
@@ -124,7 +130,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	float Dist ( const ZLMetaVec2D < TYPE >& point ) {
+	TYPE Dist ( const ZLMetaVec2D < TYPE >& point ) {
 		
 		TYPE x = this->mX - point.mX;
 		TYPE y = this->mY - point.mY;
@@ -133,7 +139,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	float DistSqrd ( const ZLMetaVec2D < TYPE >& point ) const {
+	TYPE DistSqrd ( const ZLMetaVec2D < TYPE >& point ) const {
 	
 		TYPE x = this->mX - point.mX;
 		TYPE y = this->mY - point.mY;
@@ -143,8 +149,15 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V . point
-	float Dot ( const ZLMetaVec2D < TYPE >& point ) const {
+	TYPE Dot ( const ZLMetaVec2D < TYPE >& point ) const {
+	
 		return ( mX * point.mX ) + ( mY * point.mY );
+	}
+	
+	//----------------------------------------------------------------//
+	static TYPE Dot ( const ZLMetaVec2D < TYPE >& v0, const ZLMetaVec2D < TYPE >& v1 ) {
+	
+		return ( v0.mX * v1.mX ) + ( v0.mY * v1.mY );
 	}
 	
 	//----------------------------------------------------------------//

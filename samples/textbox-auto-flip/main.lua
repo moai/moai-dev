@@ -6,9 +6,10 @@
 
 MOAISim.openWindow ( "test", 1024, 1024 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 1, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPHS, 1, 0.5, 0.5, 0.5, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPHS, 1, 0.5, 0.5, 0.5, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPH_BOUNDS, 1, 1, 0, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
 
 camera = MOAICamera2D.new ()
 
@@ -72,4 +73,20 @@ addLabel ( text2,		-128, -128,		MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_J
 addLabel ( text2,		128, -128,		MOAITextBox.RIGHT_JUSTIFY, MOAITextBox.BOTTOM_JUSTIFY )
 addLabel ( text2,		384, -128,		MOAITextBox.CENTER_JUSTIFY, MOAITextBox.BASELINE_JUSTIFY )
 
-camera:moveRot ( 360, 10 )
+local main = function ()
+
+	while true do
+
+		if MOAIInputMgr.device.mouseLeft:isDown () then
+			camera:moveRot ( 1, 0 )
+		end
+
+		if MOAIInputMgr.device.mouseRight:isDown () then
+			camera:moveRot ( -1, 0 )
+		end
+
+		coroutine.yield ()
+	end
+end
+
+MOAICoroutine.new ():run ( main )

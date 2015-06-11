@@ -1,4 +1,6 @@
 #!/bin/bash
 
-xcodebuild -configuration Release -project MoaiSample.xcodeproj -target moai -sdk iphonesimulator || exit 1
-xcodebuild -configuration Release -project MoaiSample.xcodeproj -target moai -sdk iphoneos || exit 1
+set -e # exit on error
+
+xcodebuild -derivedDataPath build -configuration Release -project MoaiSample.xcodeproj -scheme moai -sdk iphonesimulator
+xcodebuild -derivedDataPath build -configuration Release -project MoaiSample.xcodeproj -scheme moai -sdk iphoneos

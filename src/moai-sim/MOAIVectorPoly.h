@@ -20,7 +20,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator* tess );
-	int				AddStrokeContours		( SafeTesselator* tess );
+	int				AddStrokeContours		( SafeTesselator* tess, bool inside, bool outside );
 	bool			IsClosed				();
 					MOAIVectorPoly			();
 					~MOAIVectorPoly			();

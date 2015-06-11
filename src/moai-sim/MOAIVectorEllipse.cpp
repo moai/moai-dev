@@ -31,9 +31,9 @@ int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator* tess ) {
+int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
 
-	return MOAIVectorShape::AddStrokeContours ( tess );
+	return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 }
 
 //----------------------------------------------------------------//

@@ -26,6 +26,32 @@ void ZLMemStream::Clear () {
 }
 
 //----------------------------------------------------------------//
+void ZLMemStream::ClearChunks () {
+
+	if ( this->mChunks ) {
+		for ( size_t i = 0; i < this->mTotalChunks; ++i ) {
+			free ( this->mChunks [ i ]);
+		}
+		this->mChunks.Clear ();
+		this->mTotalChunks = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLMemStream::Compact () {
+
+	size_t chunks = ( size_t )( this->mLength / this->mChunkSize ) + 1;
+	if ( chunks < this->mTotalChunks ) {
+	
+		for ( size_t i = chunks; i < this->mTotalChunks; ++i ) {
+			free ( this->mChunks [ i ]);
+		}
+		this->mChunks.Resize ( chunks );
+		this->mTotalChunks = chunks;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLMemStream::DiscardAll () {
 
 	this->DiscardFront ( this->mLength );
@@ -77,21 +103,9 @@ void ZLMemStream::DiscardFront ( size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void ZLMemStream::ClearChunks () {
-
-	if ( this->mChunks ) {
-		for ( size_t i = 0; i < this->mTotalChunks; ++i ) {
-			free ( this->mChunks [ i ]);
-		}
-		this->mChunks.Clear ();
-		this->mTotalChunks = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 u32 ZLMemStream::GetCaps () {
 
-	return CAN_READ | CAN_WRITE | CAN_SEEK;
+	return CAN_READ | CAN_WRITE | CAN_SEEK | CAN_TRUNC;
 }
 
 //----------------------------------------------------------------//
@@ -237,6 +251,19 @@ void ZLMemStream::SetGuestBuffer ( void* guestBuffer, size_t guestBufferSize ) {
 		this->mGuestBuffer = guestBuffer;
 		this->mGuestBufferSize = guestBufferSize;
 	}
+}
+
+//----------------------------------------------------------------//
+size_t ZLMemStream::SetLength ( size_t length ) {
+
+	if ( length < this->mLength ) {
+		this->DiscardBack ( this->mLength - length );
+	}
+	else {
+		this->Reserve ( length );
+		this->mLength = length;
+	}
+	return length;
 }
 
 //----------------------------------------------------------------//

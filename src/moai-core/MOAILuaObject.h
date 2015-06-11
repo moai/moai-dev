@@ -75,7 +75,7 @@ public:
 	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
-	bool					PushMemberTable			( MOAILuaState& state );
+	bool					PushMemberTable				( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );

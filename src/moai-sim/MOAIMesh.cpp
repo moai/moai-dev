@@ -80,8 +80,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	self->ClearBounds ();
 	
 	if ( state.CheckParams ( 2, "NNNNNN-" )) {
-		self->mHasBounds = true;
-		self->mBounds = state.GetValue < ZLBox >( 2, self->mBounds );
+		self->SetBounds ( state.GetValue < ZLBox >( 2, self->mBounds ));
 	}
 	return 0;
 }
@@ -98,7 +97,7 @@ int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->SetIndexBuffer ( state.GetLuaObject < MOAIGfxBuffer >( 2, true ));
-	self->mIndexSizeInBytes = state.GetValue < u32 >( 3, 4 );
+	self->SetIndexSizeInBytes ( state.GetValue < u32 >( 3, 4 ));
 	return 0;
 }
 
@@ -130,7 +129,7 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 int MOAIMesh::_setPrimType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
-	self->mPrimType = state.GetValue < u32 >( 2, 0 );
+	self->SetPrimType ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -139,7 +138,7 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 int MOAIMesh::_setTotalElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
-	self->mTotalElements = state.GetValue < u32 >( 2, 0 );
+	self->SetTotalElements ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -210,7 +209,12 @@ ZLBox MOAIMesh::ComputeMaxBounds () {
 
 //----------------------------------------------------------------//
 void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( idx );
+
+	this->DrawIndex ( idx, 0, materials, offset, scale );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( offset );
 	UNUSED ( scale );
 
@@ -226,6 +230,15 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 
 	if ( this->Bind ()) {
 
+		// I am super lazy, so set this up here instead of adding if's below
+		MOAIMeshSpan defaultSpan;
+		if ( !span ) {
+			defaultSpan.mBase = 0;
+			defaultSpan.mTop = this->mTotalElements;
+			defaultSpan.mNext = 0;
+			span = &defaultSpan;
+		}
+
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
@@ -236,11 +249,20 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->Bind ()) {
-				zglDrawElements ( this->mPrimType, this->mTotalElements, this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT, 0 );
+				for ( ; span; span = span->mNext ) {
+					zglDrawElements (
+						this->mPrimType,
+						span->mTop - span->mBase,
+						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
+						( const void* )( span->mBase * this->mIndexSizeInBytes )
+					);
+				}
 			}
 		}
 		else {
-			zglDrawArrays ( this->mPrimType, 0, this->mTotalElements );
+			for ( ; span; span = span->mNext ) {
+				zglDrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
+			}
 		}
 		this->Unbind ();
 	}
@@ -263,7 +285,7 @@ MOAIMesh::MOAIMesh () :
 	mNeedsRefresh ( false ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 	
@@ -362,7 +384,7 @@ void MOAIMesh::OnGPUUnbind () {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 	MOAIGfxResource::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_POINTS",			( u32 )ZGL_PRIM_POINTS );
@@ -377,7 +399,7 @@ void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	MOAIGfxResource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -500,6 +522,13 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	lua_setfield ( state, -2, "mBounds" );
 	
 	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetBounds ( const ZLBox& bounds ) {
+
+	this->mBounds = bounds;
+	this->mHasBounds = true;
 }
 
 //----------------------------------------------------------------//

@@ -119,7 +119,7 @@ int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 	@out	MOAIImage mask
 */
 int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->SetHitMask ( state, 2 ));
 	return 1;
 }
@@ -127,7 +127,7 @@ int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskScalar ( state, 2 );
 	return 0;
 }
@@ -135,7 +135,7 @@ int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskThreshold ( state, 2 );
 	return 0;
 }
@@ -215,7 +215,19 @@ void MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 material
 	MOAIMaterial* primary = this->GetMaterial ( materialID, deckIndex );
 	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( materialID, deckIndex ) : 0;
 
-	primary->LoadGfxState ( secondary, defaultShader );
+	if ( primary ) {
+		primary->LoadGfxState ( secondary, defaultShader );
+	}
+	else if ( secondary ) {
+		secondary->LoadGfxState ( 0, defaultShader );
+	}
+	else {
+	
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+		gfxDevice.SetTexture ();
+		gfxDevice.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	}
 }
 
 //----------------------------------------------------------------//
@@ -412,15 +424,7 @@ MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 
-	MOAIShader* shader = 0;
-
-	if ( state.IsType ( idx, LUA_TNUMBER )) {
-		shader = MOAIShaderMgr::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgr::UNKNOWN_SHADER ));
-	}
-	else {
-		shader = state.GetLuaObject < MOAIShader >( 2, true );
-	}
-	
+	MOAIShader* shader = MOAIShader::AffirmShader ( state, idx );
 	this->SetShader ( materialIdx, shader );
 	return shader;
 }

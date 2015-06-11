@@ -31,8 +31,8 @@ size_t ZLByteStream::GetCapacity () {
 //----------------------------------------------------------------//
 u32 ZLByteStream::GetCaps () {
 
-	if ( this->mWriteBuffer ) return CAN_READ | CAN_WRITE | CAN_SEEK;
-	if ( this->mReadBuffer ) return CAN_READ | CAN_SEEK;
+	if ( this->mWriteBuffer ) return CAN_READ | CAN_WRITE | CAN_SEEK | CAN_TRUNC;
+	if ( this->mReadBuffer ) return CAN_READ | CAN_SEEK | CAN_TRUNC;
 	return 0;
 }
 
@@ -85,6 +85,8 @@ void ZLByteStream::SetBuffer ( void* buffer, size_t size, size_t length ) {
 //----------------------------------------------------------------//
 void ZLByteStream::SetBuffer ( const void* buffer, size_t size, size_t length ) {
 
+	length = length > size ? size : length;
+
 	this->mCursor = 0;
 	this->mLength = length;
 	this->mCapacity = size;
@@ -100,9 +102,11 @@ int ZLByteStream::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
-void ZLByteStream::SetLength ( size_t size ) {
+size_t ZLByteStream::SetLength ( size_t length ) {
 
-	this->mLength = size;
+	length = length > this->mCapacity ? this->mCapacity : length;
+	this->mLength = length;
+	return length;
 }
 
 //----------------------------------------------------------------//

@@ -390,7 +390,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		
 		u32 totalSpritePairs = this->mPairs.Size ();
 		
-		u32 materialID = this->mPairs [ 0 ].mMaterialID - 1;
+		u32 materialID = MOAIMaterialBatch::UNKNOWN;
 		
 		for ( u32 i = base; i < top; ++i ) {
 			
@@ -470,7 +470,7 @@ bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 
 MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -483,13 +483,13 @@ MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveLists",		_reserveLists },

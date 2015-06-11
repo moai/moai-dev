@@ -61,6 +61,7 @@ public:
 	u32					mCircleResolution;
 	
 	float				mExtrude;
+	float				mZOffset;
 	
 	ZLVec3D				mLightVec;
 	
@@ -75,6 +76,8 @@ public:
 	
 	u32					mFillExtraID;
 	u32					mStrokeExtraID;
+	
+	float				mMergeNormals; // in degrees - 0 to 180; 0 will not be merged
 	
 	GET_SET_CONST ( u32, FillStyle, mFillStyle )
 	GET_SET_CONST ( ZLColorVec&, FillColor, mFillColor )
@@ -95,6 +98,7 @@ public:
 	GET_SET_CONST ( u32, CircleResolution, mCircleResolution )
 	
 	GET_SET_CONST ( float, Extrude, mExtrude )
+	GET_SET_CONST ( float, ZOffset, mZOffset )
 	
 	GET_SET_CONST ( ZLVec3D&, LightVec, mLightVec )
 	
@@ -110,8 +114,11 @@ public:
 	GET_SET_CONST ( u32, FillExtraID, mFillExtraID )
 	GET_SET_CONST ( u32, StrokeExtraID, mStrokeExtraID )
 	
+	GET_SET_CONST ( u32, MergeNormals, mMergeNormals )
+	
 	//----------------------------------------------------------------//
 	void		Default						();
+	float		GetMergeNormalsCosine		() const;
 	u32			GetResolutionForWedge		( float radians ) const;
 };
 

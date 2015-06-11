@@ -31,6 +31,7 @@ void MOAIVectorStyle::Default () {
 	this->SetCircleResolution ( MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	
 	this->mExtrude = 0.0f;
+	this->mZOffset = 0.0f;
 	
 	this->mLightVec.Init ( 0.0f, 0.0f, 0.0f );
 	
@@ -45,6 +46,14 @@ void MOAIVectorStyle::Default () {
 	
 	this->mFillExtraID = 0;
 	this->mStrokeExtraID = 0;
+	
+	this->mMergeNormals = 0.0f;
+}
+
+//----------------------------------------------------------------//
+float MOAIVectorStyle::GetMergeNormalsCosine () const {
+
+	return Cos ( this->mMergeNormals * D2R );
 }
 
 //----------------------------------------------------------------//

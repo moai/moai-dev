@@ -157,6 +157,12 @@ int ZLFileStream::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
+size_t ZLFileStream::SetLength ( size_t length ) {
+	UNUSED ( length );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 size_t ZLFileStream::WriteBytes ( const void* buffer, size_t size ) {
 
 	size_t result = zl_fwrite ( buffer, 1, size, this->mFile );
