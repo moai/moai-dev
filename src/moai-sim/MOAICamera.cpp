@@ -371,6 +371,14 @@ ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetViewProjMtx ( const MOAIViewport& viewport ) const {
+
+	ZLMatrix4x4 mtx = this->GetViewMtx ();
+	mtx.Append ( this->GetProjMtx ( viewport ));
+	return mtx;
+}
+
+//----------------------------------------------------------------//
 ZLVec3D MOAICamera::GetViewVector () const {
 
 	ZLVec3D viewVec = this->GetLocalToWorldMtx ().GetZAxis ();
