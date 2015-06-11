@@ -31,6 +31,7 @@ void MOAIVectorStyle::Default () {
 	this->SetCircleResolution ( MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	
 	this->mExtrude = 0.0f;
+	this->mZOffset = 0.0f;
 	
 	this->mLightVec.Init ( 0.0f, 0.0f, 0.0f );
 	

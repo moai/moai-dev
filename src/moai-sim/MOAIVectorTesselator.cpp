@@ -316,6 +316,7 @@ int MOAIVectorTesselator::_setExtrude ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
 	self->mStyle.mExtrude = state.GetValue < float >( 2, 0.0f );
+	self->mStyle.mZOffset = state.GetValue < float >( 3, 0.0f );
 	return 0;
 }
 
@@ -1047,6 +1048,7 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 
 	u32 base = this->CountVertices ( *format, *vtxStream );
 	float z = style.GetExtrude ();
+	float zOff = style.GetZOffset ();
 
 	ZLVec3D lightVec3D = style.GetLightVec ();
 	ZLVec2D lightVec ( lightVec3D.mX, lightVec3D.mY );
@@ -1151,10 +1153,10 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 				color1 = color.PackRGBA ();
 			}
 			
-			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, 0.0f, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, 0.0f, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, z, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, z, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, z + zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, z + zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
 			
 			idxStream->Write < u32 >( base + 0 );
 			idxStream->Write < u32 >( base + 1 );
