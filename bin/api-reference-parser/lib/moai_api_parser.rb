@@ -122,18 +122,24 @@ class MoaiAPIParser
   end
 
   def parse_version
-    file = File.open ( destination + "src/config-default/moai_version.h" )
-    data = file.read
+    File.open ( destination + "src/config-default/moai_version_major.h" ) do |file|
+      data = file.read
 
-    data.match ( /MOAI_SDK_VERSION_MAJOR_MINOR\s(\S*)\s*/ )
-    self.version_major = $1
+      data.match ( /MOAI_SDK_VERSION_MAJOR_MINOR\s(\S*)\s*/ )
+      self.version_major = $1
+    end
+    File.open ( destination + "src/config-default/moai_version_minor.h" ) do |file|
+      data = file.read
 
-    data.match ( /MOAI_SDK_VERSION_REVISION\s(\S*)\s*/ )
-    self.version_revision = $1
+      data.match ( /MOAI_SDK_VERSION_REVISION\s(\S*)\s*/ )
+      self.version_revision = $1
+    end
+    File.open ( destination + "src/config-default/moai_version_author.h" ) do |file|
+      data = file.read
 
-    data.match ( /MOAI_SDK_VERSION_AUTHOR\s\"(.*)\"\s*/ )
-    self.version_author = $1    
-
+      data.match ( /MOAI_SDK_VERSION_AUTHOR\s\"(.*)\"\s*/ )
+      self.version_author = $1    
+    end
   end
 
   def full_version
