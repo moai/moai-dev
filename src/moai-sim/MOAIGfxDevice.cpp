@@ -202,7 +202,7 @@ void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
 
 	if ( activeTextures < this->mActiveTextures ) {
 		
-		this->Flush ();
+		this->FlushBufferedPrims ();
 	
 		for ( u32 i = activeTextures; i < this->mActiveTextures; ++i ) {
 			this->mTextureUnits [ i ] = 0;
@@ -210,12 +210,6 @@ void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
 	}
 	
 	this->mActiveTextures = activeTextures;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::Flush () {
-
-	this->DrawPrims ();
 }
 
 //----------------------------------------------------------------//
@@ -300,9 +294,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mShaderProgram ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
-	mMaxTextureSize ( 0 ),
-	mVertexFormat ( 0 ),
-	mVertexFormatBuffer ( 0 ) {
+	mMaxTextureSize ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -381,8 +373,8 @@ void MOAIGfxDevice::ResetState () {
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
 
-	this->mTop = 0;
-	this->mPrimCount = 0;
+	//this->mTop = 0;
+	//this->mPrimCount = 0;
 
 	// turn off texture
 	this->mTextureUnits [ 0 ] = 0;
@@ -404,7 +396,7 @@ void MOAIGfxDevice::ResetState () {
 	this->mDepthMask = false;
 	
 	// clear the vertex format
-	this->SetVertexFormat ();
+	this->UnbindBufferedDrawing ();
 
 	// clear the shader
 	this->mShaderProgram = 0;
@@ -427,7 +419,7 @@ void MOAIGfxDevice::ResetState () {
 void MOAIGfxDevice::SetBlendMode () {
 
 	if ( this->mBlendEnabled ) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		zglDisable ( ZGL_PIPELINE_BLEND );
 		this->mBlendEnabled = false;
 	}
@@ -437,7 +429,7 @@ void MOAIGfxDevice::SetBlendMode () {
 void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !this->mBlendEnabled ) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		zglEnable ( ZGL_PIPELINE_BLEND );
 		this->mBlendMode = blendMode;
 		zglBlendMode(this->mBlendMode.mEquation);
@@ -445,7 +437,7 @@ void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 		this->mBlendEnabled = true;
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mBlendMode = blendMode;
 		zglBlendMode(this->mBlendMode.mEquation);
 		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
@@ -485,7 +477,7 @@ void MOAIGfxDevice::SetCullFunc ( int cullFunc ) {
 
 	if ( this->mCullFunc != cullFunc ) {
 	
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mCullFunc = cullFunc;
 	
 		if ( cullFunc ) {
@@ -509,7 +501,7 @@ void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
 
 	if ( this->mDepthFunc != depthFunc ) {
 	
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mDepthFunc = depthFunc;
 	
 		if ( depthFunc ) {
@@ -526,7 +518,7 @@ void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
 void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 
 	if ( this->mDepthMask != depthMask ) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mDepthMask = depthMask;
 		zglDepthMask ( this->mDepthMask );
 	}
@@ -535,7 +527,7 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
-	this->Flush ();
+	this->FlushBufferedPrims ();
 
 	if ( frameBuffer ) {
 		zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
@@ -556,7 +548,7 @@ bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
 void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 
 	if ( this->mPenWidth != penWidth ) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mPenWidth = penWidth;
 		zglLineWidth ( penWidth );
 	}
@@ -582,7 +574,7 @@ void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
 			( current.mXMax != rect.mXMax ) ||
 			( current.mYMax != rect.mYMax )) {
 		
-		this->Flush ();
+		this->FlushBufferedPrims ();
 
 		ZLRect deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 
@@ -622,30 +614,33 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
 	if ( shader ) {
-		this->SetShaderProgram ( shader->GetProgram ());
+		this->SetShader ( shader->GetProgram ());
 		shader->BindUniforms ();
 	}
 	else {
-		this->SetShaderProgram ( 0 );
+		this->SetShader (( MOAIShaderProgram* )0 );
 	}	
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
+void MOAIGfxDevice::SetShader ( u32 preset ) {
 
 	MOAIShaderMgr::Get ().BindShader ( preset );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
+void MOAIGfxDevice::SetShader ( MOAIShaderProgram* program ) {
 
 	if ( this->mShaderProgram != program ) {
 	
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mShaderProgram = program;
 		
 		if ( program ) {
 			program->Bind ();
+		}
+		else {
+			program->Unbind ();
 		}
 	}
 	this->mShaderDirty = true;
@@ -706,7 +701,7 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 	
 	if ( this->mTextureUnits [ textureUnit ] == texture ) return true;
 	
-	this->Flush ();
+	this->FlushBufferedPrims ();
 	
 	zglActiveTexture ( textureUnit );
 	
@@ -716,50 +711,6 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 	
 	this->mTextureUnits [ textureUnit ] = texture;
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexFormat () {
-
-	this->Flush ();
-	
-	if ( this->mVertexFormat ) {
-		this->mVertexFormat->Unbind ();
-	}
-	this->mVertexFormat = 0;
-	this->mVertexFormatBuffer = 0;
-	this->mVertexSize = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
-
-	this->SetVertexFormat ( format, this->mBuffer );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format, void* buffer ) {
-
-	if (( this->mVertexFormat != &format ) || ( this->mVertexFormatBuffer != buffer )) {
-
-		this->SetVertexFormat ();
-		this->mVertexFormat = &format;
-		this->mVertexFormat->Bind ( buffer );
-		this->mVertexFormatBuffer = buffer;
-		this->mVertexSize = format.GetVertexSize ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
-
-	MOAIVertexFormat* format = MOAIVertexFormatMgr::Get ().GetFormat ( preset );
-	if ( format ) {
-		this->SetVertexFormat ( *format );
-	}
-	else {
-		this->SetVertexFormat ();
-	}
 }
 
 //----------------------------------------------------------------//

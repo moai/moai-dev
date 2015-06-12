@@ -223,8 +223,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	// TODO: make use of offset and scale
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.Flush (); // TODO: should remove this call
-	MOAIGfxDevice::Get ().SetVertexFormat ();
+	gfxDevice.UnbindBufferedDrawing (); // TODO: should remove this call
 
 	this->FinishInit ();
 

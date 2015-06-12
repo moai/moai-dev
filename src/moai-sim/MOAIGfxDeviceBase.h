@@ -27,7 +27,6 @@ public:
 	GET ( u32, DrawCount, mDrawCount );
 	
 	//----------------------------------------------------------------//
-	virtual void	Flush						() = 0;
 					MOAIGfxDeviceBase			();
 	virtual			~MOAIGfxDeviceBase			();
 };

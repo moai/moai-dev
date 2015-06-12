@@ -789,7 +789,6 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	}
 	
 	this->RenderTable ( this->mOverlayTable );
-	gfxDevice.Flush ();
 }
 
 //----------------------------------------------------------------//

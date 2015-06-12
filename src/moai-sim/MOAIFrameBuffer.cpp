@@ -360,7 +360,7 @@ void MOAIFrameBuffer::Render () {
 		state.Pop ( 1 );
 	}
 
-	gfxDevice.Flush ();
+	gfxDevice.FlushBufferedPrims ();
 
 	if ( this->mGrabNextFrame ) {
 

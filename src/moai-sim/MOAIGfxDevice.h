@@ -72,27 +72,24 @@ private:
 	size_t								mTextureMemoryUsage;
 	u32									mMaxTextureSize;
 
-	const MOAIVertexFormat*				mVertexFormat;
-	void*								mVertexFormatBuffer;
-
 	MOAILuaSharedPtr < MOAITexture >	mDefaultTexture;
 
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultBuffer;
 	MOAIFrameBuffer*						mFrameBuffer;
 
 	//----------------------------------------------------------------//
-	static int				_getFrameBuffer				( lua_State* L );
-	static int				_getMaxTextureUnits			( lua_State* L );
-	static int				_getViewSize				( lua_State* L );
-	static int				_setDefaultTexture			( lua_State* L );
-	static int				_setPenColor				( lua_State* L );
-	static int				_setPenWidth				( lua_State* L );
+	static int			_getFrameBuffer				( lua_State* L );
+	static int			_getMaxTextureUnits			( lua_State* L );
+	static int			_getViewSize				( lua_State* L );
+	static int			_setDefaultTexture			( lua_State* L );
+	static int			_setPenColor				( lua_State* L );
+	static int			_setPenWidth				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					Clear						();
-	void					DisableTextureUnits			( u32 activeTextures );
-	bool					SetTexture					( u32 textureUnit, MOAITextureBase* texture );
-	void					TransformAndWriteQuad		( ZLVec4D* vtx, ZLVec2D* uv );
+	void				Clear						();
+	void				DisableTextureUnits			( u32 activeTextures );
+	bool				SetTexture					( u32 textureUnit, MOAITextureBase* texture );
+	void				TransformAndWriteQuad		( ZLVec4D* vtx, ZLVec2D* uv );
 	
 public:
 	
@@ -115,69 +112,64 @@ public:
 	
 	//----------------------------------------------------------------//
 	
-	void					ClearErrors				();
-	void					ClearSurface			( u32 clearFlags ); // takes zgl clear flags
-	void					DetectContext			();
-	void					DetectFramebuffer		();
-	void					Flush					();
+	void			ClearErrors				();
+	void			ClearSurface			( u32 clearFlags ); // takes zgl clear flags
+	void			DetectContext			();
+	void			DetectFramebuffer		();
 	
-	float					GetDeviceScale			();
+	float			GetDeviceScale			();
 	
-	u32						GetHeight				() const;
-	u32						GetWidth				() const;
+	u32				GetHeight				() const;
+	u32				GetWidth				() const;
 	
-	bool					IsOpaque				() const;
-	u32						LogErrors				();
+	bool			IsOpaque				() const;
+	u32				LogErrors				();
 	
-							MOAIGfxDevice			();
-							~MOAIGfxDevice			();
+					MOAIGfxDevice			();
+					~MOAIGfxDevice			();
 	
-	void					OnGlobalsFinalize		();
+	void			OnGlobalsFinalize		();
 
-	void					RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
 	
-	void					ReportTextureAlloc		( cc8* name, size_t size );
-	void					ReportTextureFree		( cc8* name, size_t size );
+	void			ReportTextureAlloc		( cc8* name, size_t size );
+	void			ReportTextureFree		( cc8* name, size_t size );
 	
-	void					ResetDrawCount			();
-	void					ResetState				();
+	void			ResetDrawCount			();
+	void			ResetState				();
 
-	void					SetBlendMode			();
-	void					SetBlendMode			( const MOAIBlendMode& blendMode );
-	void					SetBlendMode			( int srcFactor, int dstFactor, int equation = 0 );
+	void			SetBlendMode			();
+	void			SetBlendMode			( const MOAIBlendMode& blendMode );
+	void			SetBlendMode			( int srcFactor, int dstFactor, int equation = 0 );
 	
-	void					SetBufferScale			( float scale );
-	void					SetBufferSize			( u32 width, u32 height );
+	void			SetBufferScale			( float scale );
+	void			SetBufferSize			( u32 width, u32 height );
 	
-	void					SetCullFunc				();
-	void					SetCullFunc				( int cullFunc );
+	void			SetCullFunc				();
+	void			SetCullFunc				( int cullFunc );
 
-	void					SetDepthFunc			();
-	void					SetDepthFunc			( int depthFunc );
-	void					SetDepthMask			( bool depthMask );
-	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
-	bool					SetGfxState				( MOAIGfxState* gfxState );
-	void					SetPenWidth				( float penWidth );
-	void					SetScissorRect			();
-	void					SetScissorRect			( ZLRect rect );
-	void					SetScreenSpace			( MOAIViewport& viewport );
-	void					SetShader				( MOAIShader* shader = 0 );
-	void					SetShaderPreset			( u32 preset );
-	void					SetShaderProgram		( MOAIShaderProgram* program = 0 );
+	void			SetDepthFunc			();
+	void			SetDepthFunc			( int depthFunc );
+	void			SetDepthMask			( bool depthMask );
+	void			SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
+	bool			SetGfxState				( MOAIGfxState* gfxState );
+	void			SetPenWidth				( float penWidth );
+	void			SetScissorRect			();
+	void			SetScissorRect			( ZLRect rect );
+	void			SetScreenSpace			( MOAIViewport& viewport );
 	
-	bool					SetTexture				();
-	bool					SetTexture				( MOAITextureBase* texture );
-	bool					SetTexture				( MOAIMultiTexture* multi );
+	void			SetShader				( MOAIShader* shader = 0 );
+	void			SetShader				( u32 preset );
+	void			SetShader				( MOAIShaderProgram* program = 0 );
 	
-	void					SetVertexFormat			();
-	void					SetVertexFormat			( const MOAIVertexFormat& format );
-	void					SetVertexFormat			( const MOAIVertexFormat& format, void* buffer );
-	void					SetVertexPreset			( u32 preset );
+	bool			SetTexture				();
+	bool			SetTexture				( MOAITextureBase* texture );
+	bool			SetTexture				( MOAIMultiTexture* multi );
 
-	void					SetViewRect				();
-	void					SetViewRect				( ZLRect rect );
+	void			SetViewRect				();
+	void			SetViewRect				( ZLRect rect );
 		
-	void					UpdateShaderGlobals		();
+	void			UpdateShaderGlobals		();
 };
 
 #endif

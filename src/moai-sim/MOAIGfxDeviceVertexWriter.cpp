@@ -29,8 +29,8 @@ void MOAIGfxDeviceVertexWriter::BeginPrim () {
 
 		u32 primBytes = this->mPrimSize * this->mVertexSize;
 
-		this->mMaxPrims = ( u32 )( this->mSize / primBytes );
-		this->mPrimTop = this->mTop + primBytes;
+		this->mMaxPrims = ( u32 )( this->mVtxBuffer.GetSize () / primBytes );
+		this->mPrimTop = this->mVtxBuffer.GetCursor () + primBytes;
 	}
 }
 
@@ -42,78 +42,108 @@ void MOAIGfxDeviceVertexWriter::BeginPrim ( u32 primType ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::ClearVertexBuffer () {
+void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( const MOAIVertexFormat& format ) {
+	
+	if ( this->mVertexFormat != &format ) {
 
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
-		this->mBuffer = 0;
-		this->mSize = 0;
-		this->mTop = 0;
+		this->FlushBufferedPrims ();
+
+		if ( this->mVertexFormat ) {
+			this->mVertexFormat->Unbind ();
+		}
+		else {
+		
+			// explicitely clear the dirty flag here so the buffer will not swap when we bind it
+			this->mVtxBuffer.MakeDirty ( false );
+			this->mVtxBuffer.Bind ();
+		}
+		
+		this->mVertexFormat = &format;
+		this->mVertexFormat->Bind ( 0 );
+		this->mVertexSize = format.GetVertexSize ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::DrawPrims () {
+void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( u32 preset ) {
 
-	if ( this->mVertexSize ) {
-		u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / this->mVertexSize );
-		if ( count > 0 ) {
-			this->UpdateShaderGlobals ();
-			zglDrawArrays ( this->mPrimType, 0, count );
-			this->mDrawCount++;
-		}
-	}
+	const MOAIVertexFormat* format = MOAIVertexFormatMgr::Get ().GetFormat ( preset );
 	
-	this->mTop = 0;
-	this->mPrimTop = 0;
-	this->mPrimCount = 0;
+	assert ( format );
+	this->BindBufferedDrawing ( *format );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::EndPrim () {
 
 	if ( this->mPrimSize ) {
-		this->mTop = this->mPrimTop;
+		this->mVtxBuffer.Seek ( this->mPrimTop );
 	}
 	++this->mPrimCount;
 	
 	if (( this->mPrimSize == 0 ) || ( this->mPrimCount >= this->mMaxPrims )) {
-		this->Flush ();
+		this->FlushBufferedPrims ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
+
+	if ( this->mVertexSize ) {
+	
+		size_t cursor = this->mVtxBuffer.GetCursor ();
+		if ( cursor ) {
+	
+			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( cursor / this->mVertexSize );
+			if ( count > 0 ) {
+				
+				//zglBufferSubData ( ZGL_BUFFER_TARGET_ARRAY, 0, this->mVtxBuffer.GetCursor (), this->mVtxBuffer.GetData ());
+			
+				zglBufferData ( ZGL_BUFFER_TARGET_ARRAY, cursor, this->mVtxBuffer.GetData (), ZGL_BUFFER_USAGE_DYNAMIC_DRAW );
+			
+				this->UpdateShaderGlobals ();
+				zglDrawArrays ( this->mPrimType, 0, count );
+				this->mDrawCount++;
+				
+				// bind the next buffer
+				this->mVtxBuffer.Swap ();
+			}
+		}
+	}
+	this->mVtxBuffer.Seek ( 0 );
+	//this->mIdxBuffer.Seek ( 0 );
+	
+	this->mPrimTop = 0;
+	this->mPrimCount = 0;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	mFinalColor32 ( 0xffffffff ),
-	mBuffer ( 0 ),
-	mSize ( 0 ),
-	mTop ( 0 ),
 	mVertexSize ( 0 ),
 	mMaxPrims ( 0 ),
 	mPrimCount ( 0 ),
 	mPrimSize ( 0 ),
 	mPrimTop ( 0 ),
-	mPrimType ( 0xffffffff ) {
+	mPrimType ( 0xffffffff ),
+	mVertexFormat ( 0 ) {
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
-	this->ReserveVertexBuffer ( DEFAULT_VERTEX_BUFFER_SIZE );
+	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
+	this->mVtxBuffer.ReserveVBOs ( 2 );
+	this->mVtxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ARRAY );
+	//this->mVtxBuffer.SetLoadingPolicy ( MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
+	
+	//this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
+	//this->mIdxBuffer.ReserveVBOs ( 2 );
+	//this->mIdxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxDeviceVertexWriter::~MOAIGfxDeviceVertexWriter () {
-
-	this->ClearVertexBuffer ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::ReserveVertexBuffer ( u32 size ) {
-
-	this->mSize = size;
-	this->mTop = 0;
-	this->mBuffer = malloc ( size );
 }
 
 //----------------------------------------------------------------//
@@ -163,7 +193,7 @@ void MOAIGfxDeviceVertexWriter::SetPrimType ( u32 primType ) {
 
 	if ( this->mPrimType != primType ) {
 
-		this->Flush ();
+		this->FlushBufferedPrims ();
 		this->mPrimType = primType;
 
 		switch ( primType ) {
@@ -202,40 +232,53 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 	this->BeginPrim ();
 	
 		// left top
-		this->Write ( vtx [ 0 ]);
-		this->Write ( uv [ 0 ]);
-		this->WriteFinalColor4b ();
+		this->mVtxBuffer.Write ( vtx [ 0 ]);
+		this->mVtxBuffer.Write ( uv [ 0 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 		
 		// left bottom
-		this->Write ( vtx [ 3 ]);
-		this->Write ( uv [ 3 ]);
-		this->WriteFinalColor4b ();	
+		this->mVtxBuffer.Write ( vtx [ 3 ]);
+		this->mVtxBuffer.Write ( uv [ 3 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// right bottom
-		this->Write ( vtx[ 2 ]);
-		this->Write ( uv [ 2 ]);
-		this->WriteFinalColor4b ();
+		this->mVtxBuffer.Write ( vtx[ 2 ]);
+		this->mVtxBuffer.Write ( uv [ 2 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 		
 	this->EndPrim ();
 	
 	this->BeginPrim ();
 	
 		// left top
-		this->Write ( vtx [ 0 ]);
-		this->Write ( uv [ 0 ]);
-		this->WriteFinalColor4b ();	
+		this->mVtxBuffer.Write ( vtx [ 0 ]);
+		this->mVtxBuffer.Write ( uv [ 0 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// right bottom
-		this->Write ( vtx [ 2 ]);
-		this->Write ( uv [ 2 ]);
-		this->WriteFinalColor4b ();	
+		this->mVtxBuffer.Write ( vtx [ 2 ]);
+		this->mVtxBuffer.Write ( uv [ 2 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// right top
-		this->Write ( vtx [ 1 ]);
-		this->Write ( uv [ 1 ]);
-		this->WriteFinalColor4b ();
+		this->mVtxBuffer.Write ( vtx [ 1 ]);
+		this->mVtxBuffer.Write ( uv [ 1 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 		
 	this->EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::UnbindBufferedDrawing () {
+
+	this->FlushBufferedPrims ();
+	
+	if ( this->mVertexFormat ) {
+		this->mVertexFormat->Unbind ();
+		this->mVtxBuffer.Unbind ();
+	}
+	this->mVertexFormat = 0;
+	this->mVertexSize = 0;
 }
 
 //----------------------------------------------------------------//

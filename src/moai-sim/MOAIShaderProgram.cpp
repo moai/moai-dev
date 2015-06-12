@@ -308,7 +308,7 @@ u32 MOAIShaderProgram::GetLoadingPolicy () {
 bool MOAIShaderProgram::LoadGfxState () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetShaderProgram ( this );
+	gfxDevice.SetShader ( this );
 	return true;
 }
 
@@ -430,6 +430,8 @@ void MOAIShaderProgram::OnGPULost () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnGPUUnbind () {
+
+	zglUseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//

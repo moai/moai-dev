@@ -88,7 +88,8 @@ public:
 	friend class MOAIGfxDevice;
 	friend class MOAIGfxResourceMgr;
 
-	GET ( u32, State, mState );
+	GET ( u32, State, mState )
+	SET ( u32, LoadingPolicy, mLoadingPolicy )
 	
 	enum {
 		LOADING_POLICY_NONE,				// don't care and/or use global policy

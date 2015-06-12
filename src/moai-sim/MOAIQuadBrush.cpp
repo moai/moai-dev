@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 	
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWUVC );
+	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
 	gfxDevice.SetPrimType ( ZGL_PRIM_TRIANGLES );
 }
 

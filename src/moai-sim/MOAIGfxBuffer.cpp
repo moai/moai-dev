@@ -278,9 +278,9 @@ u32 MOAIGfxBuffer::GetLoadingPolicy () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MakeDirty () {
+void MOAIGfxBuffer::MakeDirty ( bool dirty ) {
 
-	this->mIsDirty = true;
+	this->mIsDirty = dirty;
 }
 
 //----------------------------------------------------------------//
@@ -315,9 +315,9 @@ void MOAIGfxBuffer::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUBind () {
 	
-	bool renew = this->mIsDirty && this->GetLength ();
+	bool dirty = this->mIsDirty && this->GetLength ();
 	
-	if ( renew ) {
+	if ( dirty ) {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 	}
 	
@@ -327,7 +327,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 		zglBindBuffer ( this->mTarget, vbo );
 		
-		if ( renew ) {
+		if ( dirty ) {
 		
 			// TODO: There are a few different ways to approach updating buffers with varying performance
 			// on different platforms. The approach here is just to multi-buffer the VBO and replace its
@@ -335,14 +335,11 @@ void MOAIGfxBuffer::OnGPUBind () {
 			// on multiple devices, evaluate other approaches and possible expose the configuration of
 			// those to the end user via Lua.
 		
-			zglBufferSubData ( this->mTarget, 0, this->GetLength (), this->mData );
-		
-//			void* buffer = zglMapBuffer ( this->mTarget );
-//			if ( buffer ) {
-//				this->Seek ( 0, SEEK_SET );
-//				this->ReadBytes ( buffer, this->GetLength ());
-//			}
-//			zglUnmapBuffer ( this->mTarget );
+			u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+			zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
+			
+			//zglBufferSubData ( this->mTarget, 0, this->GetLength (), this->mData );
+			
 			this->mIsDirty = false;
 		}
 	}
@@ -356,16 +353,16 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 	}
 
 	u32 count = 0;
-	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+	//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		
 		u32 vbo = zglCreateBuffer ();
 		if ( vbo ) {
 		
-			zglBindBuffer ( this->mTarget, vbo );
-			zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
-			zglBindBuffer ( this->mTarget, 0 ); // OK?
+			//zglBindBuffer ( this->mTarget, vbo );
+			//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
+			//zglBindBuffer ( this->mTarget, 0 ); // OK?
 			
 			this->mIsDirty = true;
 			count++;
@@ -486,6 +483,19 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 	else {
 		this->mVBOs.Clear ();
 		this->mCurrentVBO = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::Swap () {
+
+	u32 prevVBO = this->mCurrentVBO;
+	this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
+	
+	if ( prevVBO != this->mCurrentVBO ) {
+	
+		u32 vbo = this->mVBOs [ this->mCurrentVBO ];
+		zglBindBuffer ( this->mTarget, vbo );
 	}
 }
 

@@ -78,7 +78,7 @@ public:
 	void					CopyFromStream			( ZLStream& stream );
 	void					CopyFromStream			( ZLStream& stream, u32 idxSizeInBytes, u32 srcInputSizeInBytes );
 	size_t					GetSize					();
-	void					MakeDirty				();
+	void					MakeDirty				( bool dirty = true );
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();
 	void					PrintIndices			( u32 indexSize );
@@ -87,6 +87,7 @@ public:
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					Reserve					( u32 size );
 	void					ReserveVBOs				( u32 gpuBuffers );
+	void					Swap					();
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
