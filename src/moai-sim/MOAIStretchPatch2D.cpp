@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIQuadBrush.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -174,15 +175,13 @@ ZLBox MOAIStretchPatch2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
-	UNUSED ( zScl );
+void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+	UNUSED ( offset );
+	UNUSED ( scale );
 	
 	// TODO: make use of offset and scale
+	
+	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -326,7 +325,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -335,20 +334,18 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 
 //----------------------------------------------------------------//
 MOAIStretchPatch2D::~MOAIStretchPatch2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },

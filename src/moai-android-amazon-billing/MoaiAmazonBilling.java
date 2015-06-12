@@ -74,8 +74,11 @@ public class MoaiAmazonBilling extends BasePurchasingObserver {
 	//----------------------------------------------------------------//
 	public static boolean checkBillingSupported () {
 		
-		MoaiLog.i ( "MoaiAmazonBilling checkBillingSupported: Checking if billing is supported" );
-		AKUNotifyAmazonBillingSupported ( sBillingAvailable );
+		MoaiLog.i ( "MoaiAmazonBilling checkBillingSupported" );
+
+		// sBillingAvailable is set to true in onSDKAvailable() which is called after this
+		// function is called 
+		AKUNotifyAmazonBillingSupported ( true );//sBillingAvailable );
 		
 		return true;
 	}
@@ -96,15 +99,20 @@ public class MoaiAmazonBilling extends BasePurchasingObserver {
 	public static boolean requestPurchase ( String productId, String developerPayload ) {
 
 		String requestId = PurchasingManager.initiatePurchaseRequest ( productId );
+
 		if ( requestId != null ) {
 			
+			MoaiLog.i ( "MoaiAmazonBilling requestPurchase requestID true" );
 			HashMap < String, String > state = new HashMap < String, String > ();
 			state.put ( MoaiAmazonBillingConstants.PENDING_PURCHASE_STATE_PRODUCT_ID , productId );
 			state.put ( MoaiAmazonBillingConstants.PENDING_PURCHASE_STATE_DEVELOPER_PAYLOAD , developerPayload );
-			
 			sPendingPurchases.put ( requestId, state );
+
+		} else {
+
+			MoaiLog.i ( "MoaiAmazonBilling requestPurchase requestID false" );
 		}
-		
+
 		return ( requestId != null );
 	}
 
@@ -157,9 +165,11 @@ public class MoaiAmazonBilling extends BasePurchasingObserver {
 	@Override
 	public void onPurchaseResponse ( PurchaseResponse response ) {
 				
+		MoaiLog.i ( "MoaiAmazonBilling onPurchaseResponse" );
 		HashMap < String, String > state = sPendingPurchases.get ( response.getRequestId ());
 		if ( state != null ) {
 			
+			MoaiLog.i ( "MoaiAmazonBilling state not null" );
 			String productId = state.get ( MoaiAmazonBillingConstants.PENDING_PURCHASE_STATE_PRODUCT_ID );
 			String developerPayload = state.get ( MoaiAmazonBillingConstants.PENDING_PURCHASE_STATE_DEVELOPER_PAYLOAD );
 			
@@ -171,6 +181,9 @@ public class MoaiAmazonBilling extends BasePurchasingObserver {
 			}
 			
 			sPendingPurchases.remove ( response.getRequestId ());
+		} else {
+
+			MoaiLog.i ( "MoaiAmazonBilling state is null" );
 		}
 	}
 	

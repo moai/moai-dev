@@ -1,11 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android-tapjoy/MOAITapjoyAndroid.h>
 
 //================================================================//
@@ -24,13 +23,13 @@
 int MOAITapjoyAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAITapjoyAndroid, "" )
 	
-	jstring appID			= self->GetJString ( state.GetValue < cc8* >( 1, "" ));
-	jstring appSignature	= self->GetJString ( state.GetValue < cc8* >( 2, "" ));
-	int	videoCacheCount		= state.GetValue < int >( 3, 1 );
+	MOAIJString appID			= self->GetJString ( state.GetValue < cc8* >( 1, "" ));
+	MOAIJString appSignature	= self->GetJString ( state.GetValue < cc8* >( 2, "" ));
+	int	videoCacheCount			= state.GetValue < int >( 3, 1 );
 	
 	printf ( "attempting to get init method" );
 	jmethodID init = self->GetStaticMethod ( "init", "(Ljava/lang/String;Ljava/lang/String;I)V" );
-	self->CallStaticVoidMethod ( init, appID, appSignature, videoCacheCount );
+	self->CallStaticVoidMethod ( init, ( jstring )appID, ( jstring )appSignature, videoCacheCount );
 	
 	return 0;
 }
@@ -44,10 +43,10 @@ int MOAITapjoyAndroid::_init ( lua_State* L ) {
 int MOAITapjoyAndroid::_setUserId ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAITapjoyAndroid, "" )
 	
-	jstring userID = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+	MOAIJString userID = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
 
 	jmethodID setUserID = self->GetStaticMethod ( "setUserId", "(Ljava/lang/String;)V" );
-	self->CallStaticVoidMethod ( setUserID, userID );
+	self->CallStaticVoidMethod ( setUserID, ( jstring )userID );
 	return 0;
 }
 
@@ -60,7 +59,7 @@ int MOAITapjoyAndroid::_setUserId ( lua_State *L ) {
 int MOAITapjoyAndroid::_showOffers ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAITapjoyAndroid, "" )
 	
-	jstring userID = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
+	MOAIJString userID = self->GetJString ( state.GetValue < cc8* >( 1, 0 ));
 
 	jmethodID showOffers = self->GetStaticMethod ( "showOffers", "()V" );
 	self->CallStaticVoidMethod ( showOffers );
@@ -129,4 +128,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvok
 		state.DebugCall ( 1, 0 );
 	}
 }
-

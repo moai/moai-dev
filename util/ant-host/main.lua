@@ -229,8 +229,8 @@ util.replaceInFiles ({
 	[ MOAI_PROJECT_PATH .. 'AndroidManifest.xml' ] = {
 		[ '@NAME@' ]							= config.PROJECT_NAME,
 		[ '@PACKAGE@' ]							= config.PACKAGE_NAME,
-		[ '@VERSION_CODE@' ]					= '1',
-		[ '@VERSION_NAME@' ]					= '1.0',
+		[ '@VERSION_CODE@' ]					= config.VERSION_CODE,
+		[ '@VERSION_NAME@' ]					= config.VERSION_NAME,
 		[ '@DEBUGGABLE@' ]						= config.MANIFEST_DEBUGGABLE,
 		[ '@EXTERNAL_APPLICATION_ENTRIES@' ]	= MODULE_APP_DECLARATIONS,
 		[ '@EXTERNAL_MANIFEST_PERMISSIONS@' ] 	= MODULE_MANIFEST_PERMISSIONS,
@@ -253,7 +253,7 @@ util.replaceInFiles ({
 
 	[ util.wrap ( util.iterateFilesAbsPath, MOAI_PROJECT_PATH .. 'src', '.java$' )] = {
 		[ '@PACKAGE@' ]							= config.PACKAGE_NAME,
-		[ '@PLATFORM_NAME@' ]					= string.upper ( config.PLATFORM_NAME ),
+		[ '@OS_BRAND@' ]						= config.OS_BRAND,
 		[ '@RUN_SCRIPTS@' ]						= config.LUA_MAIN,
 		[ '@WORKING_DIR@' ]						= config.LUA_WORKING_DIR,
 	},

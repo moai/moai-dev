@@ -1,10 +1,12 @@
-box2D 2.1.2
+box2D 2.3.0
+c-ares-1.7.5
 curl 7.19.7
 expat 2.0.1
 freetype 2.4.4
 glew 1.5.6
-jansson 2.1
 ISO8601DateFormatter.m, .h
+jansson 2.1
+jpeg-8c
 libogg 1.2.2
 libvorbis 1.3.2
 libpng 1.4.0
@@ -12,13 +14,18 @@ libpvr 3.4
 lua 5.1.3
 luacrypto 0.2.0
 luacurl 1.2.1
+luajit 2.0.3
 luasocket 2.0.2
 luasql 2.2.0
+mongoose
+ooid 0.99
 openssl 1.0.0
-physfs 2.0.2
 rtaudio 4.0.8
+sdl 2.0.0
+sfmt 1.4
 sqlite 3.6.16
 tinyxml 2.5.3
+tlsf 2.0
 untz
 utf8.c, .h
 zlib 1.2.3
@@ -31,7 +38,12 @@ OPINION. Zipline Games accepts no responsibility of liability based on any
 misunderstandings that may arise from these notes or any mistakes or false
 information contained herein.
 
-Box2D, Chipmunk
+The list of library dependencies above is not meant to be current or definitive.
+By using Moai SDK you agree that it is your responsibility alone to be aware of
+dependencies and to make sure your software complies with any 3rd party licensing
+issues.
+
+Box2D
 
 	If you use Box2D to make a physics based game or application,
 	please include an attribution to Erin Catto (Box2D). This isn't required
@@ -62,6 +74,13 @@ OpenSSL
 	to reconfigure libcurl to build without HTTPS support and/or provide a 
 	native HTTP/HTTPS implementation of MOAIHttpTask.
 
+SDL
+
+	SDL is used only for the desktop prototyping builds. SDL is licensed under
+	the GNU Lesser General Public License (LGPL, not reproduced here). Make sure
+	you read this license and understand its implications before using SDL in
+	a commercial release of your product.
+
 Untz
 
 	Untz is a commissioned work for hire by Retronyms for Zipline Games, Inc.
@@ -75,9 +94,9 @@ Untz
 	license before using Untz.
 
 ----------------------------------------------------------------
-box2D 2.1.2
+box2D 2.3.0
 ----------------------------------------------------------------
-Copyright (c) 2006-2010 Erin Catto http://www.gphysics.com
+Copyright (c) 2006-2013 Erin Catto http://www.gphysics.com
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -95,29 +114,19 @@ appreciated but is not required.
 misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 
-
 ----------------------------------------------------------------
-chipmunk 5.3.4
+c-ares 1.7.5
 ----------------------------------------------------------------
-Copyright (c) 2007 Scott Lembcke and Howling Moon Software
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright 1998 by the Massachusetts Institute of Technology.
+ 
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided that
+the above copyright notice appear in all copies and that both that copyright
+notice and this permission notice appear in supporting documentation, and that
+the name of M.I.T. not be used in advertising or publicity pertaining to
+distribution of the software without specific, written prior permission.
+M.I.T. makes no representations about the suitability of this software for any
+purpose.  It is provided "as is" without express or implied warranty.
 
 ----------------------------------------------------------------
 curl 7.19.7
@@ -277,47 +286,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 
 ----------------------------------------------------------------
-glut 3.7.6
-----------------------------------------------------------------
-The OpenGL Utility Toolkit distribution for Win32 (Windows NT &
-Windows 95) contains source code modified from the original source
-code for GLUT version 3.3 which was developed by Mark J. Kilgard.  The
-original source code for GLUT is Copyright 1997 by Mark J. Kilgard.
-GLUT for Win32 is Copyright 1997 by Nate Robins and is not in the
-public domain, but it is freely distributable without licensing fees.
-It is provided without guarantee or warrantee expressed or implied.
-It was ported with the permission of Mark J. Kilgard by Nate Robins.
-
-THIS SOURCE CODE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OR MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
-
-OpenGL (R) is a registered trademark of Silicon Graphics, Inc.
-
-----------------------------------------------------------------
-jansson 2.1
-----------------------------------------------------------------
-Copyright (c) 2009-2011 Petri Lehtinen <petri@digip.org>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-----------------------------------------------------------------
 ISO8601DateFormatter.m, .h
 ----------------------------------------------------------------
 Copyright © 2006 Peter Hosey All rights reserved.
@@ -344,101 +312,98 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ----------------------------------------------------------------
+jansson 2.1
+----------------------------------------------------------------
+Copyright (c) 2009-2011 Petri Lehtinen <petri@digip.org>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+----------------------------------------------------------------
+jpeg-8c
+----------------------------------------------------------------
+The authors make NO WARRANTY or representation, either express or implied,
+with respect to this software, its quality, accuracy, merchantability, or
+fitness for a particular purpose.  This software is provided "AS IS", and you,
+its user, assume the entire risk as to its quality and accuracy.
+
+This software is copyright (C) 1991-2011, Thomas G. Lane, Guido Vollbeding.
+All Rights Reserved except as specified below.
+
+Permission is hereby granted to use, copy, modify, and distribute this
+software (or portions thereof) for any purpose, without fee, subject to these
+conditions:
+(1) If any part of the source code for this software is distributed, then this
+README file must be included, with this copyright and no-warranty notice
+unaltered; and any additions, deletions, or changes to the original files
+must be clearly indicated in accompanying documentation.
+(2) If only executable code is distributed, then the accompanying
+documentation must state that "this software is based in part on the work of
+the Independent JPEG Group".
+(3) Permission for use of this software is granted only if the user accepts
+full responsibility for any undesirable consequences; the authors accept
+NO LIABILITY for damages of any kind.
+
+These conditions apply to any software derived from or based on the IJG code,
+not just to the unmodified library.  If you use our work, you ought to
+acknowledge us.
+
+Permission is NOT granted for the use of any IJG author's name or company name
+in advertising or publicity relating to this software or products derived from
+it.  This software may be referred to only as "the Independent JPEG Group's
+software".
+
+We specifically permit and encourage the use of this software as the basis of
+commercial products, provided that all warranty or liability claims are
+assumed by the product vendor.
+
+
+ansi2knr.c is included in this distribution by permission of L. Peter Deutsch,
+sole proprietor of its copyright holder, Aladdin Enterprises of Menlo Park, CA.
+ansi2knr.c is NOT covered by the above copyright and conditions, but instead
+by the usual distribution terms of the Free Software Foundation; principally,
+that you must include source code if you redistribute it.  (See the file
+ansi2knr.c for full details.)  However, since ansi2knr.c is not needed as part
+of any program generated from the IJG code, this does not limit you more than
+the foregoing paragraphs do.
+
+The Unix configuration script "configure" was produced with GNU Autoconf.
+It is copyright by the Free Software Foundation but is freely distributable.
+The same holds for its supporting scripts (config.guess, config.sub,
+ltmain.sh).  Another support script, install-sh, is copyright by X Consortium
+but is also freely distributable.
+
+The IJG distribution formerly included code to read and write GIF files.
+To avoid entanglement with the Unisys LZW patent, GIF reading support has
+been removed altogether, and the GIF writer has been simplified to produce
+"uncompressed GIFs".  This technique does not use the LZW algorithm; the
+resulting GIF files are larger than usual, but are readable by all standard
+GIF decoders.
+
+We are required to state that
+    "The Graphics Interchange Format(c) is the Copyright property of
+    CompuServe Incorporated.  GIF(sm) is a Service Mark property of
+    CompuServe Incorporated."
+
+----------------------------------------------------------------
 libogg 1.2.2
 ----------------------------------------------------------------
 Copyright (c) 2002, Xiph.org Foundation
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
-
-- Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-
-- Redistributions in binary form must reproduce the above copyright
-notice, this list of conditions and the following disclaimer in the
-documentation and/or other materials provided with the distribution.
-
-- Neither the name of the Xiph.org Foundation nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION
-OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-----------------------------------------------------------------
-libpvr 3.4
-----------------------------------------------------------------
-SDK END USER LICENSE AGREEMENT
-
-PLEASE READ THIS AGREEMENT CAREFULLY.  BY USING ANY PORTION OF THE SDK YOU WILL BE LEGALLY BOUND TO THESE TERMS.  
-Imagination Technologies Limited ("Imagination") provides this Software Development Kit subject to the terms of this Agreement.  If you do not agree with any of these terms, then do not install or otherwise use the SDK.
-
-1.	Definitions
-"SDK" means all or any component of software in source or binary form, tools, code examples, drivers, files, libraries, utilities, reference manuals, documentation, or other materials, and including any related updates or upgrades made available by Imagination under this Agreement from time to time. 
-
-2.	Licence Grant
-Subject to your compliance with the terms of this Agreement, Imagination grants to you a non-exclusive, non-assignable licence to:
-(a)	use the SDK for the sole purpose of developing, profiling, or assisting in the optimisation of internal, commercial, or non-commercial applications ("Development License");
-(b)	distribute the SDK in source code, object file, or compiled binary form as a component of your  application, provided that:
-	i.	you do not distribute the SDK on a stand alone basis;
-	ii.	you distribute such components under terms no less restrictive than those in this Agreement; 
-	iii.	you comply with the attribution requirements set out in Appendix 1;
-	iv.	you are solely responsible for any update, support obligation or other liability that may arise from such distribution;
-	v.	you do not make any statements that your application or its performance are certified, guaranteed or otherwise endorsed by Imagination ("Production License")
-(c)	Use the SDK as expressly authorised by Imagination in writing, on the payment and/or support terms set out in Appendix 2 (if applicable) ("Custom License").  
-
-3.	Restrictions 
-Other than as expressly permitted herein, you may not: (i) use the SDK for any unauthorised purpose; (ii) modify, disassemble, decompile, reverse engineer, revise or enhance the SDK, create derivative works or attempt to discover the source code for any element of the SDK not already provided in source code form; (iii) remove any proprietary or copyright notices on or accompanying the SDK; or (iv) incorporate or combine the SDK, with any open source software in such a way that would cause the SDK, or any portion thereof, to be subject to all or part of the licence obligations or other intellectual property related terms with respect to such open source software.  
-
-4.	Ownership
-Imagination retains all ownership of the SDK, including without limitation all copyrights and other intellectual property rights therein.
-
-5.	Warranty Disclaimer
-THE SDK IS PROVIDED "AS IS". Imagination HEREBY DISCLAIMS ALL EXPRESS OR IMPLIED WARRANTIES AND CONDITIONS WITH REGARD TO THE SDK, INCLUDING ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. 
-
-6.	Limitation of Liability
-IN NO EVENT WILL Imagination BE LIABLE TO YOU FOR ANY DAMAGES, CLAIMS OR COSTS WHATSOEVER ARISING FROM THIS AGREEMENT AND/OR YOUR USE OF THE SDK OR ANY COMPONENT THEREOF, INCLUDING WITHOUT LIMITATION ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL DAMAGES, OR ANY LOST PROFITS OR LOST SAVINGS, EVEN IF Imagination HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS OR FOR ANY CLAIM BY ANY THIRD PARTY. THE FOREGOING LIMITATIONS AND EXCLUSIONS APPLY TO THE EXTENT PERMITTED BY APPLICABLE LAW IN YOUR JURISDICTION. 
-
-7.	Third Party Materials
-All third party materials found on this SDK, including without limitation, artwork, graphics, game demos and patches, are the sole and exclusive property of such third parties. Imagination makes no representations or warranties about the accuracy, usability or validity of any third party materials, and disclaims all liabilities in connection with such third party materials.
-
-8.	Term
-This Agreement is effective until terminated.  Imagination has the right to terminate this Agreement immediately if you fail to comply with any term of this Agreement.  You may terminate this Agreement by destroying or returning to Imagination all copies of the SDK in your possession.
-
-9.	Governing Law 
-This Agreement is governed by and shall be construed in accordance with English law and each party agrees to submit to the exclusive jurisdiction of the courts of England. 
-
-
-APPENDIX 1: ATTRIBUTION REQUIREMENTS 
-
-If source code is released as it is, the Copyright notice should be kept in a visible position.
-If object code is bundled with a product, all branding should be kept as it was originally, and the following acknowledgement should be displayed clearly in any associated documentation or other collateral in printed or electronic form distributed with the product incorporating the SDK component: "This product includes components of the PowerVR SDK from Imagination Technologies Limited"
-If source code is used to compile a product,  the following acknowledgement should be displayed clearly in any associated documentation or other collateral in printed or electronic form distributed with the product incorporating the SDK component: "This product includes components of the PowerVR SDK from Imagination Technologies Limited" 
-
-
-APPENDIX 2: FEES
-
-LICENCE FEES: 
-0 (Zero)
-ROYALTY FEES: 
-0 (Zero)
-SUPPORT AND MAINTENANCE TERMS AND FEES: 
-0 (Zero)
-
-----------------------------------------------------------------
-libvorbis 1.3.2
-----------------------------------------------------------------
-Copyright (c) 2002-2008 Xiph.org Foundation
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -582,7 +547,128 @@ glennrp at users.sourceforge.net
 January 3, 2010
 
 ----------------------------------------------------------------
-lua 5.1.3
+libpvr 3.4
+----------------------------------------------------------------
+SDK END USER LICENSE AGREEMENT
+
+PLEASE READ THIS AGREEMENT CAREFULLY.  BY USING ANY PORTION OF THE SDK YOU WILL BE LEGALLY BOUND TO THESE TERMS.  
+Imagination Technologies Limited ("Imagination") provides this Software Development Kit subject to the terms of this Agreement.  If you do not agree with any of these terms, then do not install or otherwise use the SDK.
+
+1.	Definitions
+"SDK" means all or any component of software in source or binary form, tools, code examples, drivers, files, libraries, utilities, reference manuals, documentation, or other materials, and including any related updates or upgrades made available by Imagination under this Agreement from time to time. 
+
+2.	Licence Grant
+Subject to your compliance with the terms of this Agreement, Imagination grants to you a non-exclusive, non-assignable licence to:
+(a)	use the SDK for the sole purpose of developing, profiling, or assisting in the optimisation of internal, commercial, or non-commercial applications ("Development License");
+(b)	distribute the SDK in source code, object file, or compiled binary form as a component of your  application, provided that:
+	i.	you do not distribute the SDK on a stand alone basis;
+	ii.	you distribute such components under terms no less restrictive than those in this Agreement; 
+	iii.	you comply with the attribution requirements set out in Appendix 1;
+	iv.	you are solely responsible for any update, support obligation or other liability that may arise from such distribution;
+	v.	you do not make any statements that your application or its performance are certified, guaranteed or otherwise endorsed by Imagination ("Production License")
+(c)	Use the SDK as expressly authorised by Imagination in writing, on the payment and/or support terms set out in Appendix 2 (if applicable) ("Custom License").  
+
+3.	Restrictions 
+Other than as expressly permitted herein, you may not: (i) use the SDK for any unauthorised purpose; (ii) modify, disassemble, decompile, reverse engineer, revise or enhance the SDK, create derivative works or attempt to discover the source code for any element of the SDK not already provided in source code form; (iii) remove any proprietary or copyright notices on or accompanying the SDK; or (iv) incorporate or combine the SDK, with any open source software in such a way that would cause the SDK, or any portion thereof, to be subject to all or part of the licence obligations or other intellectual property related terms with respect to such open source software.  
+
+4.	Ownership
+Imagination retains all ownership of the SDK, including without limitation all copyrights and other intellectual property rights therein.
+
+5.	Warranty Disclaimer
+THE SDK IS PROVIDED "AS IS". Imagination HEREBY DISCLAIMS ALL EXPRESS OR IMPLIED WARRANTIES AND CONDITIONS WITH REGARD TO THE SDK, INCLUDING ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. 
+
+6.	Limitation of Liability
+IN NO EVENT WILL Imagination BE LIABLE TO YOU FOR ANY DAMAGES, CLAIMS OR COSTS WHATSOEVER ARISING FROM THIS AGREEMENT AND/OR YOUR USE OF THE SDK OR ANY COMPONENT THEREOF, INCLUDING WITHOUT LIMITATION ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL DAMAGES, OR ANY LOST PROFITS OR LOST SAVINGS, EVEN IF Imagination HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS OR FOR ANY CLAIM BY ANY THIRD PARTY. THE FOREGOING LIMITATIONS AND EXCLUSIONS APPLY TO THE EXTENT PERMITTED BY APPLICABLE LAW IN YOUR JURISDICTION. 
+
+7.	Third Party Materials
+All third party materials found on this SDK, including without limitation, artwork, graphics, game demos and patches, are the sole and exclusive property of such third parties. Imagination makes no representations or warranties about the accuracy, usability or validity of any third party materials, and disclaims all liabilities in connection with such third party materials.
+
+8.	Term
+This Agreement is effective until terminated.  Imagination has the right to terminate this Agreement immediately if you fail to comply with any term of this Agreement.  You may terminate this Agreement by destroying or returning to Imagination all copies of the SDK in your possession.
+
+9.	Governing Law 
+This Agreement is governed by and shall be construed in accordance with English law and each party agrees to submit to the exclusive jurisdiction of the courts of England. 
+
+
+APPENDIX 1: ATTRIBUTION REQUIREMENTS 
+
+If source code is released as it is, the Copyright notice should be kept in a visible position.
+If object code is bundled with a product, all branding should be kept as it was originally, and the following acknowledgement should be displayed clearly in any associated documentation or other collateral in printed or electronic form distributed with the product incorporating the SDK component: "This product includes components of the PowerVR SDK from Imagination Technologies Limited"
+If source code is used to compile a product,  the following acknowledgement should be displayed clearly in any associated documentation or other collateral in printed or electronic form distributed with the product incorporating the SDK component: "This product includes components of the PowerVR SDK from Imagination Technologies Limited" 
+
+
+APPENDIX 2: FEES
+
+LICENCE FEES: 
+0 (Zero)
+ROYALTY FEES: 
+0 (Zero)
+SUPPORT AND MAINTENANCE TERMS AND FEES: 
+0 (Zero)
+
+----------------------------------------------------------------
+libtess2
+----------------------------------------------------------------
+** SGI FREE SOFTWARE LICENSE B (Version 2.0, Sept. 18, 2008) 
+** Copyright (C) [dates of first publication] Silicon Graphics, Inc.
+** All Rights Reserved.
+**
+** Permission is hereby granted, free of charge, to any person obtaining a copy
+** of this software and associated documentation files (the "Software"), to deal
+** in the Software without restriction, including without limitation the rights
+** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+** of the Software, and to permit persons to whom the Software is furnished to do so,
+** subject to the following conditions:
+** 
+** The above copyright notice including the dates of first publication and either this
+** permission notice or a reference to http://oss.sgi.com/projects/FreeB/ shall be
+** included in all copies or substantial portions of the Software. 
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+** INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+** PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL SILICON GRAPHICS, INC.
+** BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+** TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+** OR OTHER DEALINGS IN THE SOFTWARE.
+** 
+** Except as contained in this notice, the name of Silicon Graphics, Inc. shall not
+** be used in advertising or otherwise to promote the sale, use or other dealings in
+** this Software without prior written authorization from Silicon Graphics, Inc.
+
+----------------------------------------------------------------
+libvorbis 1.3.2
+----------------------------------------------------------------
+Copyright (c) 2002-2008 Xiph.org Foundation
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+- Neither the name of the Xiph.org Foundation nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+----------------------------------------------------------------
+lua 5.1.3, 5.2.2
 ----------------------------------------------------------------
 Lua License
 -----------
@@ -678,6 +764,63 @@ luacurl 1.2.1
  *******************************************************************************************/
 
 ----------------------------------------------------------------
+luajit 2.0.3
+----------------------------------------------------------------
+LuaJIT -- a Just-In-Time Compiler for Lua. http://luajit.org/
+
+Copyright (C) 2005-2014 Mike Pall. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+[ MIT license: http://www.opensource.org/licenses/mit-license.php ]
+
+===============================================================================
+[ LuaJIT includes code from Lua 5.1/5.2, which has this license statement: ]
+
+Copyright (C) 1994-2012 Lua.org, PUC-Rio.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+===============================================================================
+[ LuaJIT includes code from dlmalloc, which has this license statement: ]
+
+This is a version (aka dlmalloc) of malloc/free/realloc written by
+Doug Lea and released to the public domain, as explained at
+http://creativecommons.org/licenses/publicdomain
+
+----------------------------------------------------------------
 luasocket 2.0.2
 ----------------------------------------------------------------
 LuaSocket 2.0.2 license
@@ -748,6 +891,56 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.</p>
+
+----------------------------------------------------------------
+mongoose
+----------------------------------------------------------------
+Copyright (c) 2004-2013 Sergey Lyubka
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+----------------------------------------------------------------
+ooid 0.99
+----------------------------------------------------------------
+Boost Software License - Version 1.0 - August 17th, 2003
+
+Permission is hereby granted, free of charge, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by
+this license (the "Software") to use, reproduce, display, distribute,
+execute, and transmit the Software, and to prepare derivative works of the
+Software, and to permit third-parties to whom the Software is furnished to
+do so, all subject to the following:
+
+The copyright notices in the Software and this entire statement, including
+the above license grant, this restriction and the following disclaimer,
+must be included in all copies of the Software, in whole or in part, and
+all derivative works of the Software, unless such copies or derivative
+works are solely in the form of machine-executable object code generated by
+a source language processor.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 
 ----------------------------------------------------------------
 openssl 1.0.0
@@ -880,31 +1073,6 @@ openssl 1.0.0
  */
 
 ----------------------------------------------------------------
-physfs 2.0.2
-----------------------------------------------------------------
-Copyright (c) 2001-2011 Ryan C. Gordon and others.
-
-This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from
-the use of this software.
-
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
-
-1. The origin of this software must not be misrepresented; you must not
-claim that you wrote the original software. If you use this software in a
-product, an acknowledgment in the product documentation would be
-appreciated but is not required.
-
-2. Altered source versions must be plainly marked as such, and must not be
-misrepresented as being the original software.
-
-3. This notice may not be removed or altered from any source distribution.
-
-   Ryan C. Gordon <icculus@icculus.org>
-
-----------------------------------------------------------------
 rtaudio 4.0.8
 ----------------------------------------------------------------
 RtAudio: a set of realtime audio i/o C++ classes
@@ -933,6 +1101,64 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
 ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+----------------------------------------------------------------
+sdl 2.0.0
+----------------------------------------------------------------
+Simple DirectMedia Layer
+Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
+  
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+  
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required. 
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+----------------------------------------------------------------
+sfmt 1.4
+----------------------------------------------------------------
+Copyright (c) 2006,2007 Mutsuo Saito, Makoto Matsumoto and Hiroshima
+University.
+Copyright (c) 2012 Mutsuo Saito, Makoto Matsumoto, Hiroshima University
+and The University of Tokyo.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+    * Neither the names of Hiroshima University, The University of
+      Tokyo nor the names of its contributors may be used to endorse
+      or promote products derived from this software without specific
+      prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ----------------------------------------------------------------
 sqlite 3.6.16
@@ -969,6 +1195,15 @@ must not be misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source 
 distribution.
+
+----------------------------------------------------------------
+tlsf 2.0
+----------------------------------------------------------------
+Two Level Segregated Fit memory allocator implementation.
+Written by Matthew Conte (matt@baisoku.org).
+Public Domain, no restrictions.
+
+http://tlsf.baisoku.org
 
 ----------------------------------------------------------------
 untz

@@ -7,6 +7,7 @@
 #include <moai-sim/MOAINode.h>
 
 class MOAIFont;
+class MOAIShader;
 
 //================================================================//
 // MOAITextStyleState
@@ -14,11 +15,12 @@ class MOAIFont;
 class MOAITextStyleState {
 protected:
 
-	MOAIFont*	mFont;
-	float		mSize;
-	ZLVec2D		mScale;
-	u32			mColor;
-	ZLRect		mPadding;
+	MOAIFont*		mFont;
+	MOAIShader*		mShader;
+	float			mSize;
+	ZLVec2D			mScale;
+	u32				mColor;
+	ZLRect			mPadding;
 
 public:
 
@@ -55,6 +57,7 @@ private:
 	static int		_getSize				( lua_State* L );
 	static int		_setColor				( lua_State* L );
 	static int		_setFont				( lua_State* L );
+	static int		_setShader				( lua_State* L );
 	static int		_setPadding				( lua_State* L );
 	static int		_setScale				( lua_State* L );
 	static int		_setSize				( lua_State* L );
@@ -77,6 +80,7 @@ public:
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
+	void			SetShader				( MOAIShader* shader );
 	void			SetSize					( float size );
 };
 

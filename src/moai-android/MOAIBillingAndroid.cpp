@@ -1,14 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_BILLING
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIBillingAndroid.h>
 
 extern JavaVM* jvm;
@@ -85,7 +83,7 @@ int MOAIBillingAndroid::_confirmNotification ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( notification, jnotification );
+	MOAIJString jnotification = JNI_GET_JSTRING ( notification );
 
 	jclass billing = env->FindClass ( MOAIBillingAndroid::Get ().mBillingProvider );
     if ( billing == NULL ) {
@@ -99,7 +97,7 @@ int MOAIBillingAndroid::_confirmNotification ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "confirmNotification" );
     	} else {
 
-			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, confirmNotification, jnotification );
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, confirmNotification, ( jstring )jnotification );
 
 			lua_pushboolean ( state, jsuccess );
 
@@ -168,8 +166,8 @@ int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( identifier, jidentifier );
-	JNI_GET_JSTRING ( payload, jpayload );
+	MOAIJString jidentifier = JNI_GET_JSTRING ( identifier );
+	MOAIJString jpayload = JNI_GET_JSTRING ( payload );
 
 	jclass billing = env->FindClass ( MOAIBillingAndroid::Get ().mBillingProvider );
     if ( billing == NULL ) {
@@ -183,7 +181,7 @@ int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "requestPurchase" );
     	} else {
 
-			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, requestPurchase, jidentifier, jpayload );
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, requestPurchase, ( jstring )jidentifier, ( jstring )jpayload );
 
 			lua_pushboolean ( state, jsuccess );
 
@@ -211,7 +209,7 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( offset, joffset );
+	MOAIJString joffset = JNI_GET_JSTRING ( offset );
 
 	jclass billing = env->FindClass ( MOAIBillingAndroid::Get ().mBillingProvider );
     if ( billing == NULL ) {
@@ -225,7 +223,7 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "restoreTransactions" );
     	} else {
 
-			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, restoreTransactions, joffset );
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, restoreTransactions, ( jstring )joffset );
 
 			lua_pushboolean ( state, jsuccess );
 
@@ -315,7 +313,7 @@ int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( key, jkey );
+	MOAIJString jkey = JNI_GET_JSTRING ( key );
 
 	jclass billing = env->FindClass ( MOAIBillingAndroid::Get ().mBillingProvider );
     if ( billing == NULL ) {
@@ -329,7 +327,7 @@ int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "setPublicKey" );
     	} else {
 
-			env->CallStaticVoidMethod ( billing, setPublicKey, jkey );
+			env->CallStaticVoidMethod ( billing, setPublicKey, ( jstring )jkey );
 		}
 	}
 
@@ -422,7 +420,7 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 	cc8* token = lua_tostring ( state, 1 );
 
 	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( token, jtoken );
+	MOAIJString jtoken = JNI_GET_JSTRING ( token );
 
 	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
     if ( billing == NULL ) {
@@ -436,7 +434,7 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "consumePurchaseSync" );
     	} else {
 
-			jint result = ( jint )env->CallStaticIntMethod ( billing, consumePurchaseSync, jtoken );
+			jint result = ( jint )env->CallStaticIntMethod ( billing, consumePurchaseSync, ( jstring )jtoken );
 			lua_pushinteger ( state, result );
 			return 1;
 		}
@@ -463,7 +461,7 @@ int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	// get type
 	int type = lua_tointeger ( state, 1 );
 	cc8* continuation = lua_tostring ( state, 2 );
-	JNI_GET_JSTRING ( continuation, jcontinuation );
+	MOAIJString jcontinuation = JNI_GET_JSTRING ( continuation );
 
 	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
     if ( billing == NULL ) {
@@ -477,7 +475,7 @@ int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "getPurchasedProducts" );
     	} else {
 
-			jstring jresult = ( jstring )env->CallStaticObjectMethod ( billing, getPurchasedProducts, type, jcontinuation );
+			MOAIJString jresult = ( jstring )env->CallStaticObjectMethod ( billing, getPurchasedProducts, type, ( jstring )jcontinuation );
 
 			JNI_GET_CSTRING ( jresult, result );
 			lua_pushstring ( state, result );
@@ -507,8 +505,8 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 	cc8* devPayload = lua_tostring ( state, 3 );
 
 	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( sku, jsku );
-	JNI_GET_JSTRING ( devPayload, jdevPayload );
+	MOAIJString jsku = JNI_GET_JSTRING ( sku );
+	MOAIJString jdevPayload = JNI_GET_JSTRING ( devPayload );
 
 	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
     if ( billing == NULL ) {
@@ -522,7 +520,7 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "purchaseProduct" );
     	} else {
 
-			jint result = ( jint )env->CallStaticIntMethod ( billing, purchaseProduct, jsku, type, jdevPayload );
+			jint result = ( jint )env->CallStaticIntMethod ( billing, purchaseProduct, ( jstring )jsku, type, ( jstring )jdevPayload );
 			lua_pushinteger ( state, result );
 			return 1;
 		}
@@ -551,10 +549,10 @@ int MOAIBillingAndroid::_purchaseProductFortumo( lua_State* L ) {
 	cc8* displayName = lua_tostring ( state, 4 );
 
 	JNI_GET_ENV ( jvm, env );
-	JNI_GET_JSTRING ( productId, jproductId );
-	JNI_GET_JSTRING ( serviceId, jserviceId );
-	JNI_GET_JSTRING ( secret, jsecret );
-	JNI_GET_JSTRING ( displayName, jdisplayName );
+	MOAIJString jproductId = JNI_GET_JSTRING ( productId );
+	MOAIJString jserviceId = JNI_GET_JSTRING ( serviceId );
+	MOAIJString jsecret = JNI_GET_JSTRING ( secret );
+	MOAIJString jdisplayName = JNI_GET_JSTRING ( displayName );
 
 	jclass billing = env->FindClass ( "com/ziplinegames/slotstycoon/MoaiActivity" );
     if ( billing == NULL ) {
@@ -568,7 +566,7 @@ int MOAIBillingAndroid::_purchaseProductFortumo( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "purchaseProduct" );
     	} else {
 
-			env->CallStaticVoidMethod ( billing, purchaseProduct, jproductId, jserviceId, jsecret, jdisplayName );
+			env->CallStaticVoidMethod ( billing, purchaseProduct, ( jstring )jproductId, ( jstring )jserviceId, ( jstring )jsecret, ( jstring )jdisplayName );
 
 			return 0;
 		}
@@ -619,7 +617,7 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 
 			if ( value ) {
 
-				JNI_GET_JSTRING ( value, jvalue );
+				MOAIJString jvalue = JNI_GET_JSTRING ( value );
 				env->SetObjectArrayElement ( jskus, key - 1, jvalue );
 			}
 			else {
@@ -649,7 +647,7 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "requestProductsSync" );
     	} else {
 
-			jstring jresult = ( jstring )env->CallStaticObjectMethod ( billing, requestProductsSync, jskus, type );
+			MOAIJString jresult = ( jstring )env->CallStaticObjectMethod ( billing, requestProductsSync, jskus, type );
 
 			JNI_GET_CSTRING ( jresult, result );
 			lua_pushstring ( state, result );
@@ -1096,6 +1094,3 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTstoreBilling_A
 	JNI_RELEASE_CSTRING ( juser, user );
 	JNI_RELEASE_CSTRING ( jpayload, payload );
 }
-
-
-#endif

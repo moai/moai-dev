@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -736,17 +737,16 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
-
-		if ( !this->mShader ) {
-			// TODO: this should really come from MOAIFont, which should really be a
-			// specialized implementation of MOAIDeck...
-			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
-		}
-
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
-		this->mLayout.Draw ( this->mReveal );
+		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
+		bool useSpriteShaders = !shader;
+		
+		if ( useSpriteShaders ) {
+			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+		}
+		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
 	}
 }
 
@@ -817,16 +817,30 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 		
 			MOAIViewport* viewport = renderMgr.GetViewport ();
 			assert ( viewport );
-			
-			ZLMatrix4x4 viewProj = camera->GetWorldToWndMtx ( *viewport );
-		
+			ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
+
 			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
+
 			viewProj.TransformVec ( upVec );
-			
-			if ( upVec.mY < 0.0f ) {
-				ZLMatrix4x4 scale;
-				scale.Scale ( -1.0f, -1.0f, 1.0f );
-				worldDrawingMtx.Prepend ( scale );
+
+			// For text flipping when orbiting around the map. Tilting should not affect this
+			if ( upVec.mY > 0.0f ) {
+
+				ZLMatrix4x4 flip;
+				flip.Scale ( -1.0f, -1.0f, 1.0f );
+				
+				// if there's no x-axis constraint, flip inside the glyph rect
+				if ( !this->mDesigner.GetLimitHeight ()) {
+					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
+					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
+				}
+				
+				// if there's no y-axis constraint, flip inside the glyph rect
+				if ( !this->mDesigner.GetLimitHeight ()) {
+					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
+					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
+				}
+				worldDrawingMtx.Prepend ( flip );
 			}
 		}
 	}

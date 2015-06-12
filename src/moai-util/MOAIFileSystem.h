@@ -27,10 +27,12 @@ private:
 	static int		_getWorkingDirectory		( lua_State* L );
 	static int		_listDirectories			( lua_State* L );
 	static int		_listFiles					( lua_State* L );
+	static int		_loadFile					( lua_State* L );
 	static int		_mountVirtualDirectory		( lua_State* L );
 	static int		_pathFromRef				( lua_State* L );
 	static int		_pathToRef					( lua_State* L );
 	static int		_rename						( lua_State* L );
+	static int		_saveFile					( lua_State* L );
 	static int		_setPathRef					( lua_State* L );
 	static int		_setWorkingDirectory		( lua_State* L );
 	static int		_stripPKZipTimestamps		( lua_State* L );

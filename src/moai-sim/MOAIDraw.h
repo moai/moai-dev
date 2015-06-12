@@ -9,6 +9,8 @@ class MOAITextureBase;
 class MOAITexture;
 class MOAIFont;
 class MOAIGlyph;
+class MOAIGfxBuffer;
+class MOAIVertexFormat;
 
 //================================================================//
 // MOAIDraw
@@ -27,6 +29,7 @@ private:
 	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
+	static int				_drawElements		( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
 	static int				_drawGrid			( lua_State* L );
 	static int				_drawLine			( lua_State* L );
@@ -58,6 +61,7 @@ public:
 	static void			DrawBoxAxis				( const ZLBox& box );
 	static void			DrawBoxDiagonals		( const ZLBox& box );
 	static void			DrawBoxOutline			( const ZLBox& box );
+	static void			DrawElements			( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count );
 	static void			DrawEllipseFill			( const ZLRect& rect, u32 steps );
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipseOutline		( const ZLRect& rect, u32 steps );
@@ -69,6 +73,7 @@ public:
 	static void			DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 );
 	static void			DrawPoint				( const ZLVec2D& loc );
 	static void			DrawPoint				( float x, float y );
+	static void			DrawPolyOutline			( const ZLPolygon2D& poly );
 	static void			DrawQuad				( const ZLQuad& quad );
 	static void			DrawRay					( float x, float y, float dx, float dy );
 	static void			DrawRectEdges			( ZLRect rect, u32 edges );

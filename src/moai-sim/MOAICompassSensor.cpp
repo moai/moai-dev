@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICompassSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 
 //================================================================//
 // lua
@@ -45,10 +45,11 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::EnqueueCompassEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, float heading ) {
+void MOAICompassSensor::EnqueueCompassEvent ( u8 deviceID, u8 sensorID, float heading ) {
 
-	if ( queue.WriteEventHeader < MOAICompassSensor >( deviceID, sensorID )) {
-		queue.Write < float >( heading );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAICompassSensor >( deviceID, sensorID )) {
+		inputMgr.Write < float >( heading );
 	}
 }
 

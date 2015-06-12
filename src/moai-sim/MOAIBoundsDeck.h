@@ -4,7 +4,7 @@
 #ifndef	MOAIBOUNDSDECK_H
 #define	MOAIBOUNDSDECK_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 class MOAITextureBase;
@@ -25,7 +25,7 @@ class MOAITextureBase;
 			by using MOAIDeck's setBoundsDeck () method.</p>
 */
 class MOAIBoundsDeck :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 
 	friend class MOAIDeck;
@@ -39,15 +39,13 @@ private:
 	static int	_setBounds				( lua_State* L );
 	static int	_setIndex				( lua_State* L );
 	
-	//----------------------------------------------------------------//
-	ZLBox		ComputeMaxBounds		();
-	ZLBox		GetItemBounds			( u32 idx );
-	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBoundsDeck )
 	
 	//----------------------------------------------------------------//
+	ZLBox		ComputeMaxBounds		();
+	ZLBox		GetItemBounds			( u32 idx );
 				MOAIBoundsDeck			();
 				~MOAIBoundsDeck			();
 	void		RegisterLuaClass		( MOAILuaState& state );

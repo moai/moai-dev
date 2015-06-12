@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIKeyboardSensor.h>
-#include <moai-sim/MOAIInputQueue.h>
+#include <moai-sim/MOAIInputMgr.h>
 #include <contrib/moai_utf8.h>
 
 namespace KeyboardEventType {
@@ -146,50 +146,65 @@ int MOAIKeyboardSensor::_setKeyCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 unicodeChar ) {
+void MOAIKeyboardSensor::ClearState () {
+
+	// Clear the DOWN and UP flags
+	for ( u32 i = 0; i < this->mClearCount; ++i ) {
+		u32 keyCode = this->mClearQueue [ i ];
+		this->mState [ keyCode ] = 0;
+	}
+	this->mClearCount = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( u8 deviceID, u8 sensorID, u32 unicodeChar ) {
 
 	// Don't allow non-printable characters
 	if ( unicodeChar < ' ' ) return;
 
-	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		queue.Write < u32 >( KeyboardEventType::CHAR );
-		queue.Write < u32 >( unicodeChar );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::CHAR );
+		inputMgr.Write < u32 >( unicodeChar );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
-	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		queue.Write < u32 >( KeyboardEventType::EDIT );
-		queue.Write < u32 >( start );
-		queue.Write < u32 >( editLength );
-		queue.Write < u32 >( maxLength );
+void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
+	
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::EDIT );
+		inputMgr.Write < u32 >( start );
+		inputMgr.Write < u32 >( editLength );
+		inputMgr.Write < u32 >( maxLength );
 		
 		for ( u32 i = 0; i < maxLength; i++ ) {
-			queue.Write < char >( text[i] );
+			inputMgr.Write < char >( text[i] );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
+void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
 
 	if ( keyID >= MOAI_KEY_TOTAL ) return;
 
-	if ( queue.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		queue.Write < u32 >( KeyboardEventType::KEY );
-		queue.Write < u32 >( keyID );
-		queue.Write < bool >( down );
+	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::KEY );
+		inputMgr.Write < u32 >( keyID );
+		inputMgr.Write < bool >( down );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, cc8* text ) {
+void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( u8 deviceID, u8 sensorID, cc8* text ) {
 	
 	int i = 0;
 	while ( text [ i ]) {
 		u_int32_t uc = moai_u8_nextchar ( text, &i );
-		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( queue, deviceID, sensorID, uc );
+		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( deviceID, sensorID, uc );
 	}
 }
 
@@ -366,7 +381,8 @@ void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::Reset () {
+void MOAIKeyboardSensor::ResetState () {
+
 	// Clear the DOWN and UP flags
 	for ( u32 i = 0; i < this->mClearCount; ++i ) {
 		u32 keyCode = this->mClearQueue [ i ];

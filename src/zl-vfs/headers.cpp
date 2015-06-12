@@ -550,9 +550,20 @@ int zl_fputc ( int c, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_fputs ( const char* string, ZLFILE* fp ) {
 
-	ZLVfsFile* file = ( ZLVfsFile* )fp;
-	if ( file ) {
-		return file->PutString ( string );
+	if (( fp == 0 ) || ( fp == zl_stdout )) {
+
+		#ifdef ANDROID
+			return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s", string );
+		#else
+			return printf ( "%s", string );
+		#endif
+	}
+	else {
+
+		ZLVfsFile* file = ( ZLVfsFile* )fp;
+		if ( file ) {
+			return file->PutString ( string );
+		}
 	}
 	return EOF;
 }
@@ -723,6 +734,16 @@ int zl_putc ( int character, ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+int zl_puts ( const char* string ) {
+
+	#ifdef ANDROID
+		return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s\n", string );
+	#else
+		return printf ( "%s\n", string );
+	#endif
+}
+
+//----------------------------------------------------------------//
 int zl_remove ( const char* path ) {
 
 	return ZLVfsFileSystem::Get ().Remove ( path );
@@ -801,23 +822,26 @@ int zl_ungetc ( int character, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 
-	ZLVfsFile* file = ( ZLVfsFile* )fp;
-	if ( file ) {
-		return file->VarPrintf ( format, arg );
+	if (( fp == 0 ) || ( fp == zl_stdout )) {
+	
+		#ifdef ANDROID
+			return __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
+		#else
+			return vprintf ( format, arg );
+		#endif
+	}
+	else {
+
+		ZLVfsFile* file = ( ZLVfsFile* )fp;
+		if ( file ) {
+			return file->VarPrintf ( format, arg );
+		}
 	}
 	return -1;
 }
 
 //----------------------------------------------------------------//
-int zl_vprintf ( const char * format, va_list arg ) {
+int zl_vprintf ( const char* format, va_list arg ) {
 
-	int result;
-	
-	#ifdef ANDROID
-		result = __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
-	#else
-		result = vprintf ( format, arg );
-	#endif
-
-	return result;
+	return zl_vfprintf ( zl_stdout, format, arg );
 }

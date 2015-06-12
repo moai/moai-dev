@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -26,12 +27,27 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mQuads.Init ( total );
+	self->mMaterialIDs.Init ( total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		MOAIQuadBrush& quad = self->mQuads [ i ];
 		quad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 		quad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );
+		self->mMaterialIDs [ i ] = MOAIMaterialBatch::UNKNOWN;
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxQuadDeck2D::_setMaterialID ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 id		= state.IsType ( 3, LUA_TNUMBER ) ? state.GetValue < u32 >( 3, 1 ) - 1 : MOAIMaterialBatch::UNKNOWN;
+	
+	self->mMaterialIDs [ idx ] = id;
+	
 	return 0;
 }
 
@@ -221,6 +237,13 @@ int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIQuadBrush& MOAIGfxQuadDeck2D::AffirmQuad ( u32 idx ) {
+
+	this->mQuads.Grow ( idx, 1 );
+	return this->mQuads [ idx ];
+}
+
+//----------------------------------------------------------------//
 ZLBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 
 	ZLRect rect;
@@ -237,19 +260,25 @@ ZLBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
-	UNUSED ( zScl );
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
-		idx = ( idx - 1 ) % size;
-		this->mQuads [ idx ].Draw ( xOff, yOff, zOff, xScl, yScl );
+
+		idx = idx - 1;
+		u32 itemIdx = idx % size;
+
+		materials.LoadGfxState ( this, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER );
+
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+
+	
+		
+		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 	}
 }
 
@@ -273,14 +302,14 @@ ZLBox MOAIGfxQuadDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAIGfxQuadDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
 		idx = ( idx - 1 ) % size;
 		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
-		return this->TestHit ( quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
+		return materials.TestHit ( this, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
 	}
 	return false;
 }
@@ -289,7 +318,7 @@ bool MOAIGfxQuadDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -297,23 +326,22 @@ MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
-
-	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },
+		{ "setMaterialID",		_setMaterialID },
 		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
 		{ "setUVQuad",			_setUVQuad },

@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
@@ -17,6 +17,16 @@ private:
 
 	u32		mUVQuadID;
 	u32		mQuadID;
+	u32		mMaterialID;
+
+public:
+
+	//----------------------------------------------------------------//
+	USSpritePair () :
+		mUVQuadID ( 0 ),
+		mQuadID ( 0 ),
+		mMaterialID ( MOAIMaterialBatch::UNKNOWN ) {
+	}
 };
 
 //================================================================//
@@ -41,7 +51,7 @@ private:
 			UV/model quad indices if geometry is used in multiple lists.
 */
 class MOAIGfxQuadListDeck2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 	
 	ZLLeanArray < ZLQuad >			mUVQuads;
@@ -73,8 +83,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, const ZLVec2D& vec );
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	bool			Inside					( u32 idx, ZLVec3D vec, float pad );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	bool			Inside					( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -84,7 +94,7 @@ public:
 	void			ReserveQuads			( u32 total );
 	void			ReserveUVQuads			( u32 total );
 	void			SetList					( u32 idx, u32 basePairID, u32 totalPairs );
-	void			SetPair					( u32 idx, u32 uvRectID, u32 screenRectID );
+	void			SetPair					( u32 idx, u32 uvRectID, u32 screenRectID, u32 materialID );
 	void			SetQuad					( u32 idx, ZLQuad& quad );
 	void			SetRect					( u32 idx, ZLRect& rect );
 	void			SetUVQuad				( u32 idx, ZLQuad& quad );

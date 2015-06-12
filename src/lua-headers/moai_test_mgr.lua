@@ -21,55 +21,75 @@ MOAITestMgr.extend (
 		local stagingDir		= './staging/'
 		local testingDir		= './testing/'
 
-		local superError		= superClass.error
-		local superPopTest		= superClass.pop_test
-		local superPushTest		= superClass.push_test
+		local thread			= nil
 
-		class.error				= function () assert ( false ) end
-		class.pop_test			= function () assert ( false ) end
-		class.push_test			= function () assert ( false ) end
+		local dummyFunc			= function () assert ( false ) end
 
-		--MOAITestMgr.setProjectDir ( PROJECT_DIR )
-		--MOAITestMgr.setStagingDir ( STAGING_DIR )
-		--MOAITestMgr.setTestingDir ( TESTING_DIR )
+		class.error				= dummyFunc
+		class.popTest			= dummyFunc
+		class.pushTest			= dummyFunc
+		class.setStepFunc		= dummyFunc
+		class.suite				= dummyFunc
 
-		--MOAITestMgr.setStagingFunc ( function () bootstrap ( 'stage' ) end )
-		--MOAITestMgr.setTestingFunc ( function () bootstrap ( 'test' ) end )
-
-		--MOAITestMgr.runTests ()
+		local step = function ( co )
+			local success, err = coroutine.resume ( co )
+			if not success then
+				print ( err )
+				os.exit ( 1 )
+			end
+		end
 
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.runTests ()
 
-			if not MOAIFileSystem.checkPathExists ( projectDir ) then return end
-
-			local oldPath = MOAIFileSystem.getWorkingDirectory ()
-
-			local dirs = MOAIFileSystem.listDirectories ( projectDir ) or {}
-			for i, subdir in ipairs ( dirs ) do
-
-				MOAITestMgr.suite ( subdir )
-
-				local projectSubDir = projectDir .. subdir
-				local stagingSubDir = stagingDir .. subdir
-				local testingSubDir = testingDir .. subdir
-
-				if not MOAIFileSystem.checkPathExists ( stagingSubDir ) then
-					MOAIFileSystem.copy ( projectSubDir, stagingSubDir )
-					MOAIFileSystem.setWorkingDirectory ( stagingSubDir )
-					print ( 'STAGING', stagingSubDir )
-					stagingFunc ()
-				end
-
-				MOAIFileSystem.deleteDirectory ( testingSubDir, true )
-				MOAIFileSystem.copy ( stagingSubDir, testingSubDir )
-
-				MOAIFileSystem.setWorkingDirectory ( testingSubDir )
-				print ( 'TESTING', testingSubDir )
-				testingFunc ()
+			if not MOAIFileSystem.checkPathExists ( projectDir ) then
+				os.exit ( 0 )
 			end
 
-			MOAIFileSystem.setWorkingDirectory ( oldPath )
+			local main = function ()
+
+				local log = {}
+
+				local oldPath = MOAIFileSystem.getWorkingDirectory ()
+
+				local dirs = MOAIFileSystem.listDirectories ( projectDir ) or {}
+				for i, subdir in ipairs ( dirs ) do
+
+					superClass.suite ( subdir )
+
+					local projectSubDir = projectDir .. subdir
+					local stagingSubDir = stagingDir .. subdir
+					local testingSubDir = testingDir .. subdir
+
+					if not MOAIFileSystem.checkPathExists ( stagingSubDir ) then
+						MOAIFileSystem.copy ( projectSubDir, stagingSubDir )
+						MOAIFileSystem.setWorkingDirectory ( stagingSubDir )
+						print ( 'STAGING', stagingSubDir )
+						stagingFunc ()
+					end
+
+					MOAIFileSystem.deleteDirectory ( testingSubDir, true )
+					MOAIFileSystem.copy ( stagingSubDir, testingSubDir )
+
+					MOAIFileSystem.setWorkingDirectory ( testingSubDir )
+					print ( 'TESTING', testingSubDir )
+					testingFunc ()
+
+					local results = MOAIJsonParser.decodeFromFile ( 'log.json' )
+					if results then
+						table.insert ( log, results )
+					end
+				end
+
+				MOAIFileSystem.setWorkingDirectory ( oldPath )
+				MOAIJsonParser.encodeToFile ( 'log.json', log )
+
+				os.exit ( 0 )
+			end
+
+			thread = coroutine.create ( main )
+			step ( thread )
+			superClass.setStepFunc ( function () step ( thread ) end )
 		end
 
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
@@ -104,24 +124,43 @@ MOAITestMgr.extend (
 
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.test ( s, f  )
-			
-			superPushTest ( s )
 
-			local co = coroutine.create ( f )
+			local multiProc = false
 
-			while true do
+			local main = function ()
 
-				local success, err = coroutine.resume ( co )
+				superClass.pushTest ( s )
 
-				if not success then
-					superError ( err, co )
+				local co = coroutine.create ( f )
+				
+				while true do
+
+					local success, err = coroutine.resume ( co )
+
+					if not success then
+						superClass.error ( err, co )
+					end
+
+					if coroutine.status ( co ) == 'dead' then break end
+					coroutine.yield ()
 				end
 
-				if coroutine.status ( co ) == 'dead' then break end
-				coroutine.yield ()
+				local more = superClass.popTest ()
+
+				if multiProc and not more then
+					os.exit ( 0 )
+				end
 			end
 
-			superPopTest ()
+			if thread then
+				main ()
+			else
+				multiProc = true
+				MOAITestMgr.standalone ()
+				thread = coroutine.create ( main )
+				step ( thread )
+				superClass.setStepFunc ( function () step ( thread ) end )
+			end
 		end
 
 	end

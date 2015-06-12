@@ -28,10 +28,10 @@ jobject JniUtils::BundleFromLua ( lua_State* L, int index ) {
             cc8* value = lua_tostring( state, -1 );
             if ( value != NULL ) {
 				
-				jstring jkey = this->GetJString ( key );
-				jstring jvalue = this->GetJString ( value );
+				MOAIJString jkey = this->GetJString ( key );
+				MOAIJString jvalue = this->GetJString ( value );
 
-                this->Env ()->CallObjectMethod( bundle, put, jkey, jvalue );
+                this->Env ()->CallObjectMethod( bundle, put, ( jstring )jkey, ( jstring )jvalue );
             }
         }
         // removes 'value'; keeps 'key' for next iteration
@@ -125,7 +125,7 @@ jclass JniUtils::GetClass ( cc8* className ) {
 jclass JniUtils::GetClassViaLoader ( cc8* className ) {
 
 	/*
-	jstring jclassName = this->GetJString ( className );
+	MOAIJString jclassName = this->GetJString ( className );
 	
 	jclass contextClass = this->GetClass ( "android/content/Context" );
 	jmethodID getClassLoader = this->GetMethod ( contextClass, "getClassLoader", "()Ljava/lang/ClassLoader;" );
@@ -223,10 +223,10 @@ jobject JniUtils::HashMapFromLua ( lua_State* L, int index ) {
             cc8* value = lua_tostring( state, -1 );
             if ( value != NULL ) {
 				
-				jstring jkey = this->GetJString ( key );
-				jstring jvalue = this->GetJString ( value );
+				MOAIJString jkey = this->GetJString ( key );
+				MOAIJString jvalue = this->GetJString ( value );
 
-                this->Env ()->CallObjectMethod( hashMap, put, jkey, jvalue );
+                this->Env ()->CallObjectMethod( hashMap, put, ( jstring )jkey, ( jstring )jvalue );
             }
         }
         // removes 'value'; keeps 'key' for next iteration
@@ -263,7 +263,7 @@ bool JniUtils::SetClass ( cc8* className ) {
 	
 	ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: set class %s", className );
 	
-	this->mClass = this->GetClass ( className );
+	this->mClass = ( jclass )this->Env()->NewGlobalRef ( this->GetClass ( className ));
 	return this->mClass != NULL;
 }
 
@@ -302,7 +302,7 @@ jobjectArray JniUtils::StringArrayFromLua ( lua_State* L, int index ) {
         lua_pop ( state, 1 );
 
         if ( value ) {
-            jstring jvalue = this->GetJString ( value );
+            MOAIJString jvalue = this->GetJString ( value );
             this->Env ()->SetObjectArrayElement ( array, key - 1, jvalue );
         }
         else {

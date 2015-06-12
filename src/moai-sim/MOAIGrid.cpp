@@ -2,7 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 
 //================================================================//
 // local
@@ -397,9 +399,14 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIGrid::Draw ( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+
+	ZLVec3D offset	= ZLVec3D::ORIGIN;
+	ZLVec3D scale	= ZLVec3D::AXIS;
+	
 	float tileWidth = this->GetTileWidth ();
 	float tileHeight = this->GetTileHeight ();
+	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
@@ -409,7 +416,12 @@ void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICell
 			MOAICellCoord coord ( x, y );
 			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
-			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+			offset.mX	= loc.mX;
+			offset.mY	= loc.mY;
+			scale.mX	= tileWidth;
+			scale.mY	= tileHeight;
+
+			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), materials, offset, scale );
 		}
 	}
 }

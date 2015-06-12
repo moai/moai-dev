@@ -6,6 +6,7 @@
 
 #include <moai-sim/host.h>
 #include <moai-core/headers.h>
+#include <moai-android/JniUtils.h>
 
 #include <pthread.h>
 
@@ -24,19 +25,6 @@ class MOAIAppAndroid :
 	public MOAIGlobalClass < MOAIAppAndroid, MOAIGlobalEventSource > {
 private:
 
-	enum {
-		ACTIVITY_ON_CREATE,
-		ACTIVITY_ON_DESTROY,
-		ACTIVITY_ON_START,
-		ACTIVITY_ON_STOP,
-		ACTIVITY_ON_PAUSE,
-		ACTIVITY_ON_RESUME,
-		ACTIVITY_ON_RESTART,
-		APP_OPENED_FROM_URL,
-		BACK_BUTTON_PRESSED,
-		EVENT_PICTURE_TAKEN,
-	};
-
 	//----------------------------------------------------------------//
 	static int	_getPictureCode			( lua_State* L );
 	static int	_getPicturePath			( lua_State* L );
@@ -48,6 +36,21 @@ private:
 	static int	_takePicture			( lua_State* L );
 
 public:
+
+	enum {
+		ACTIVITY_ON_CREATE,
+		ACTIVITY_ON_DESTROY,
+		ACTIVITY_ON_START,
+		ACTIVITY_ON_STOP,
+		ACTIVITY_ON_PAUSE,
+		ACTIVITY_ON_RESUME,
+		ACTIVITY_ON_RESTART,
+		APP_OPENED_FROM_URL,
+		BACK_BUTTON_PRESSED,
+		EVENT_PICTURE_TAKEN,
+		EVENT_MEMORY_WARNING,
+        TOTAL,
+	};
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
 

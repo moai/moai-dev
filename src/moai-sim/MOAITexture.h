@@ -26,6 +26,7 @@ private:
 	
 	// for loading from image
 	MOAILuaSharedPtr < MOAIImage> mImage;
+	bool				mAutoClearImage;
 	
 	// for loading compressed data
 	void*				mTextureData;
@@ -51,7 +52,7 @@ public:
 	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
 	void					Clear					();
 	bool					Init					( MOAILuaState& state, int idx );
-	void					Init					( MOAIImage& image, cc8* debugname );
+	void					Init					( MOAIImage& image, cc8* debugname, bool autoClear );
 	void					Init					( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname );
 	void					Init					( cc8* filename, u32 transform, cc8* debugname = 0 );
 	void					Init					( ZLStream& stream, u32 transform, cc8* debugname );

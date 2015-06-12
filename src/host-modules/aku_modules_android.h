@@ -11,16 +11,20 @@
 	#include <moai-android-adcolony/host.h>
 #endif
 
+#if AKU_WITH_ANDROID_BILLING
+	#include <moai-android/host.h>
+#endif
+
 #if AKU_WITH_ANDROID_CHARTBOOST
 	#include <moai-android-chartboost/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_CRITTERCISM
-  #include <moai-android-crittercism/host.h>
+	#include <moai-android-crittercism/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_FACEBOOK
-  #include <moai-android-facebook/host.h>
+	#include <moai-android-facebook/host.h>
 #endif
 
 #if AKU_WITH_ANDROID_FLURRY
@@ -31,8 +35,24 @@
 	#include <moai-android-google-play-services/host.h>
 #endif
 
+#if AKU_WITH_ANDROID_NOTIFICATIONS
+	#include <moai-android/host.h>
+#endif
+
 #if AKU_WITH_ANDROID_TAPJOY
 	#include <moai-android-tapjoy/host.h>
+#endif
+
+#if AKU_WITH_ANDROID_TSTOREWALL
+	#include <moai-android-tstore/host.h>;
+#endif
+
+#if AKU_WITH_ANDROID_TSTOREGAMECENTER
+	#include <moai-android-tstore/host.h>;
+#endif
+
+#if AKU_WITH_ANDROID_PLAYSERVICES
+	#include <moai-android-google-play-services/host.h>;
 #endif
 
 #if AKU_WITH_ANDROID_TWITTER
@@ -42,6 +62,7 @@
 #if AKU_WITH_ANDROID_VUNGLE
 	#include <moai-android-vungle/host.h>
 #endif
+
 /*
 #ifndef AKU_WITH_ANDROID_AMAZON_BILLING
 	#define AKU_WITH_ANDROID_AMAZON_BILLING 1
@@ -91,6 +112,7 @@
 /*
 #ifndef AKU_WITH_ANDROID_VUNGLE
 	#define AKU_WITH_ANDROID_VUNGLE 0
+>>>>>>> community/develop
 #endif
 */
 

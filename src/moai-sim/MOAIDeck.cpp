@@ -19,173 +19,68 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// MOAIDeckGfxState
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIDeckGfxState::MOAIDeckGfxState () :
-	mShader ( 0 ),
-	mTexture ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::Reset () {
-	this->mShader = 0;
-	this->mTexture = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::SetShader ( MOAIShader* shader ) {
-
-	if ( shader ) {
-		this->mShader = shader;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckGfxState::SetTexture ( MOAIGfxState* texture ) {
-
-	if ( texture ) {
-		this->mTexture = texture;
-	}
-}
-
-//================================================================//
 // local
 //================================================================//
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDeck::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+int MOAIDeck::_subdivideRect ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "NNNNNN" )
 
-	self->mTexture->PushLuaUserdata ( state );
+	float tileWidth		= state.GetValue < float >( 1, 1.0f );
+	float tileHeight	= state.GetValue < float >( 2, 1.0f );
+
+	tileWidth	= ABS ( tileWidth );
+	tileHeight	= ABS ( tileHeight );
+
+	ZLRect rect = state.GetRect < float >( 3 );
 	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setBoundsDeck
-	@text	Set or clear the bounds override deck.
+	u32 x0 = ( u32 )( rect.mXMin / tileWidth );
+	u32 x1 = ( u32 )( rect.mXMax / tileWidth );
 	
-	@in		MOAIDeck self
-	@opt	MOAIBoundsDeck boundsDeck
-	@out	nil
-*/
-int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	u32 y0 = ( u32 )( rect.mYMin / tileHeight );
+	u32 y1 = ( u32 )( rect.mYMax / tileHeight );
 	
-	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
+	u32 count	= 0;
+	u32 xCount	= 0;
+	u32 yCount	= 0;
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setHitGranularity
-	@text	Specify the granularity to use when performing a hit test. This is a hint to the implementation
-			as to how much processing to allocate to a given test. The default value is MOAIDeck.HIT_TEST_COARSE,
-			which will cause only the deck or prop bounds to be used. A setting of MOAIDeck.HIT_TEST_MEDIUM or
-			MOAIDeck.HIT_TEST_FINE is implementation dependent on the deck, but 'medium' usually means to test
-			against the geometry of the deck and 'fine' means to test against both the geometry and the pixels
-			of the hit mask (if any).
+	lua_newtable ( state );
 	
-	@opt	int granularity		One of MOAIDeck.HIT_TEST_COARSE, MOAIDeck.HIT_TEST_MEDIUM, MOAIDeck.HIT_TEST_FINE. Default is MOAIDeck.HIT_TEST_COARSE.
-	@out	nil
-*/
-int MOAIDeck::_setHitGranularity ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setHitMask
-	@text	Set or load an image to act as the hit mask for this deck.
-	
-	@in		MOAIDeck self
-	@in		variant mask		A MOAIImage or a path to an image file
-	@out	MOAIImage mask
-*/
-int MOAIDeck::_setHitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	MOAIImage* image = MOAIImage::AffirmImage ( state, 2 );
-	self->mHitMask.Set ( *self, image );
-
-	if ( image ) {
-		self->mHitMask->PushLuaUserdata ( state );
-		return 1;
+	for ( u32 y = y0; y <= y1; ++y ) {
+		for ( u32 x = x0; x <= x1; ++x ) {
+		
+			ZLRect tile;
+		
+			tile.mXMin	= x * tileWidth;
+			tile.mYMin	= y * tileHeight;
+			tile.mXMax	= tile.mXMin + tileWidth;
+			tile.mYMax	= tile.mYMin + tileHeight;
+		
+			ZLRect sub;
+			if ( tile.Intersect ( rect, sub )) {
+			
+				count++;
+				state.Push ( count );
+			
+				lua_newtable ( state );
+				state.SetFieldByIndex < float >( -1, 1, sub.mXMin );
+				state.SetFieldByIndex < float >( -1, 2, sub.mYMin );
+				state.SetFieldByIndex < float >( -1, 3, sub.mXMax );
+				state.SetFieldByIndex < float >( -1, 4, sub.mYMax );
+				
+				lua_settable ( state, -3 );
+				
+				xCount = ( x - x0 ) + 1;
+				yCount = ( y - y0 ) + 1;
+			}
+		}
 	}
-	return 0;
-}
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_setHitMaskScalar ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	state.Push ( xCount );
+	state.Push ( yCount );
 
-	float rS	= state.GetValue < float>( 2, 1.0f );
-	float gS	= state.GetValue < float>( 3, 1.0f );
-	float bS	= state.GetValue < float>( 4, 1.0f );
-	float aS	= state.GetValue < float>( 5, 1.0f );
-
-	self->mHitColorScalar = ZLColor::PackRGBA ( rS, gS, bS, aS );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIDeck::_setHitMaskThreshold ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	float rT	= state.GetValue < float>( 2, 0.0f );
-	float gT	= state.GetValue < float>( 3, 0.0f );
-	float bT	= state.GetValue < float>( 4, 0.0f );
-	float aT	= state.GetValue < float>( 5, 0.0f );
-
-	self->mHitColorThreshold = ZLColor::PackRGBA ( rT, gT, bT, aT );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setShader
-	@text	Set the shader to use if neither the deck item nor the prop specifies a shader.
-	
-	@in		MOAIDeck self
-	@in		MOAIShader shader
-	@out	nil
-*/
-int MOAIDeck::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "UU" )
-	
-	self->mShader.Set ( *self, state.GetLuaObject < MOAIShader >( 2, true ));
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIDeck self
-	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
-	@out	MOAIGfxState texture
-*/
-int MOAIDeck::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-
-	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
-	self->mTexture.Set ( *self, texture );
-
-	if ( texture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
+	return 3;
 }
 
 //================================================================//
@@ -200,73 +95,28 @@ bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials ) {
 
-	this->Draw ( idx, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
+	this->Draw ( idx, materials, ZLVec3D::ORIGIN, ZLVec3D::AXIS );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
-	xScl = ( idx & MOAITileFlags::XFLIP ) ? -xScl : xScl;
-	yScl = ( idx & MOAITileFlags::YFLIP ) ? -yScl : yScl;
+	scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -scale.mX : scale.mX;
+	scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -scale.mY : scale.mY;
 	
-	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, xOff, yOff, zOff, xScl, yScl, zScl );
+	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, materials, offset, scale );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl ) {
+void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( zOff );
-	UNUSED ( xScl );
-	UNUSED ( yScl );
-	UNUSED ( zScl );
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds () {
-
-	if ( this->mBoundsDirty ) {
-		this->mMaxBounds = this->ComputeMaxBounds ();
-		
-		// flip and expand to account for flip flags
-		ZLBox bounds = this->mMaxBounds;
-		bounds.Scale ( -1.0f );
-		bounds.Bless ();
-		
-		this->mMaxBounds.Grow ( bounds );
-		this->mBoundsDirty = false;
-	}
-	return this->mMaxBounds;
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds ( u32 idx ) {
-	
-	ZLBox bounds;
-	
-	if ( this->mBoundsDeck ) {
-		bounds = this->mBoundsDeck->GetItemBounds ( idx & MOAITileFlags::CODE_MASK );
-	}
-	else {
-		bounds = this->GetItemBounds ( idx & MOAITileFlags::CODE_MASK );
-	}
-
-	if ( idx & MOAITileFlags::FLIP_MASK ) {
-
-		ZLVec3D scale;
-		scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
-		scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;
-		scale.mZ = 1.0f;
-
-		bounds.Scale ( scale );
-		bounds.Bless ();
-	}
-	return bounds;
+	UNUSED ( materials );
+	UNUSED ( offset );
+	UNUSED ( scale );
 }
 
 //----------------------------------------------------------------//
@@ -276,20 +126,10 @@ void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GetGfxState ( MOAIDeckGfxState& gfxState ) {
-
-	if ( this->mShader ) {
-		gfxState.SetShader ( this->mShader );
-	}
-	else {
-		gfxState.SetShader ( &MOAIShaderMgr::Get ().GetShader ( this->mDefaultShaderID ));
-	}
-	gfxState.SetTexture ( this->mTexture );
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
+	UNUSED ( materials );
+	UNUSED ( granularity );
 	UNUSED ( vec );
 	UNUSED ( pad );
 	
@@ -298,47 +138,22 @@ bool MOAIDeck::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () :
-	mHitColorScalar ( 0xffffffff ),
-	mHitColorThreshold ( 0x00000000 ),
-	//mContentMask ( 0xffffffff ),
-	mDefaultShaderID ( MOAIShaderMgr::DECK2D_SHADER ),
-	mBoundsDirty ( true ),
-	mHitGranularity ( HIT_TEST_COARSE ) {
+MOAIDeck::MOAIDeck () {
 	
-	RTTI_SINGLE ( MOAILuaObject )
-	
-	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIDeck::~MOAIDeck () {
-
-	this->mShader.Set ( *this, 0 );
-	this->mTexture.Set ( *this, 0 );
-	this->mBoundsDeck.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "HIT_TEST_COARSE",			HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",			HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",			HIT_TEST_FINE );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
-
 	luaL_Reg regTable [] = {
-		{ "getTexture",				_getTexture },
-		{ "setBoundsDeck",			_setBoundsDeck },
-		{ "setHitGranularity",		_setHitGranularity },
-		{ "setHitMask",				_setHitMask },
-		{ "setHitMaskScalar",		_setHitMaskScalar },
-		{ "setHitMaskThreshold",	_setHitMaskThreshold },
-		{ "setShader",				_setShader },
-		{ "setTexture",				_setTexture },
+		{ "subdivideRect",			_subdivideRect },
 		{ NULL, NULL }
 	};
 
@@ -346,54 +161,6 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::SetBoundsDirty () {
-
-	this->mBoundsDirty = true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::TestHit ( float x, float y ) {
-
-	static const ZLColorVec defaultHitColor ( 0.0f, 0.0f, 0.0f, 1.0f );
-
-	if ( this->mHitMask ) {
-	
-		float width = ( float )this->mHitMask->GetWidth ();
-		float height = ( float )this->mHitMask->GetHeight ();
-	
-		ZLColorVec scalar ( this->mHitColorScalar );
-		ZLColorVec threshold ( this->mHitColorThreshold );
-	
-		ZLColorVec maskColor ( this->mHitMask->GetColor (( u32 )( width * x ), ( u32 )( height * y ))); // TODO: wrap, clamp
-		
-		maskColor.Modulate ( scalar );
-		
-		return (
-			( threshold.mR <= maskColor.mR ) &&
-			( threshold.mG <= maskColor.mG ) &&
-			( threshold.mB <= maskColor.mB ) &&
-			( threshold.mA <= maskColor.mA )
-		);
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::TestHit ( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
-
-	u32 granularity = this->GetHitGranularity ();
-
-	if ( granularity == HIT_TEST_COARSE ) return true;
-
-	ZLVec2D uv;
-
-	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 0, x, y, uv)) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-	
-	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 1, x, y, uv)) {
-		return granularity == HIT_TEST_FINE ? this->TestHit ( uv.mX, uv.mY ) : true;
-	}
-
-	return false;
+void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
 }

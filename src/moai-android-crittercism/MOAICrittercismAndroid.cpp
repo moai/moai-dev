@@ -6,8 +6,9 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android-crittercism/MOAICrittercismAndroid.h>
+#include <moai-android/MOAIJString.h>
 
 extern JavaVM* jvm;
 
@@ -63,7 +64,7 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( identifier, jidentifier );
+	MOAIJString jidentifier = JNI_GET_JSTRING ( identifier );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
@@ -77,7 +78,7 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find static java method %s", "init" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, init, jidentifier );
+			env->CallStaticVoidMethod ( crittercism, init, ( jstring )jidentifier );
 		}
 	}
 
@@ -99,7 +100,7 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( breadcrumb, jbreadcrumb );
+	MOAIJString jbreadcrumb = JNI_GET_JSTRING ( breadcrumb );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
@@ -113,7 +114,7 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find static java method %s", "leaveBreadcrumb" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, leaveBreadcrumb, jbreadcrumb );
+			env->CallStaticVoidMethod ( crittercism, leaveBreadcrumb, ( jstring )jbreadcrumb );
 		}
 	}
 
@@ -135,7 +136,7 @@ int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	JNI_GET_JSTRING ( ident, jident );
+	MOAIJString jident = JNI_GET_JSTRING ( ident );
 
 	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
     if ( crittercism == NULL ) {
@@ -149,7 +150,7 @@ int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find static java method %s", "setUser" );
     	} else {
 
-			env->CallStaticVoidMethod ( crittercism, setUser, jident );
+			env->CallStaticVoidMethod ( crittercism, setUser, ( jstring )jident );
 		}
 	}
 
@@ -184,4 +185,3 @@ void MOAICrittercismAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
-

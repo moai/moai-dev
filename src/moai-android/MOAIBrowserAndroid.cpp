@@ -6,7 +6,7 @@
 
 #include <jni.h>
 
-#include <moai-android/moaiext-jni.h>
+#include <moai-android/JniUtils.h>
 #include <moai-android/MOAIBrowserAndroid.h>
 
 extern JavaVM* jvm;
@@ -25,8 +25,8 @@ extern JavaVM* jvm;
 int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
 
-	jstring jurl = self->GetJString ( lua_tostring ( state, 1 ));
-	lua_pushboolean( state, self->CallStaticBooleanMethod ( self->mJava_CanOpenURL, jurl ));
+	MOAIJString jurl = self->GetJString ( lua_tostring ( state, 1 ));
+	lua_pushboolean( state, self->CallStaticBooleanMethod ( self->mJava_CanOpenURL, ( jstring )jurl ));
 	return 1;
 }
 
@@ -42,8 +42,8 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURL");
 
-	jstring jurl = self->GetJString ( lua_tostring ( state, 1 ));
-	self->CallStaticVoidMethod ( self->mJava_OpenURL, jurl );
+	MOAIJString jurl = self->GetJString ( lua_tostring ( state, 1 ));
+	self->CallStaticVoidMethod ( self->mJava_OpenURL, ( jstring )jurl );
 	return 0;
 }
 
@@ -68,8 +68,8 @@ int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
 
 	if ( url == NULL || params == NULL ) return 0;
 
-	jstring jurl = self->GetJString ( url );
-	self->CallStaticVoidMethod ( self->mJava_OpenURLWithParams, jurl, params );
+	MOAIJString jurl = self->GetJString ( url );
+	self->CallStaticVoidMethod ( self->mJava_OpenURLWithParams, ( jstring )jurl, params );
 
 	return 0;
 }

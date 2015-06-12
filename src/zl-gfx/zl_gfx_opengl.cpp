@@ -65,7 +65,7 @@ using namespace std;
 	#include <GLES/glext.h>
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
-	#include <EGL/egl.h>
+	//#include <EGL/egl.h>
 
 	#define GL_WRITE_ONLY			0x88B9
 
@@ -75,11 +75,11 @@ using namespace std;
 	typedef void		( GL_APIENTRYP PFNGLGETGENVERTEXARRAYSPROC )	( GLsizei n, GLuint* arrays );
 	typedef void		( GL_APIENTRYP PFNGLDELETEVERTEXARRAYSPROC )	( GLsizei n, const GLuint* arrays );
 
-	static PFNGLMAPBUFFEROESPROC		glMapBuffer				= ( PFNGLMAPBUFFEROESPROC )eglGetProcAddress ( "glMapBufferOES" );
-	static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferOES" );
-	static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysOES" );
-	static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayOES" );
-	static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysOES" );
+	//static PFNGLMAPBUFFEROESPROC		glMapBuffer				= ( PFNGLMAPBUFFEROESPROC )eglGetProcAddress ( "glMapBufferOES" );
+	//static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferOES" );
+	//static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysOES" );
+	//static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayOES" );
+	//static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysOES" );
 
 #endif
 
@@ -1325,6 +1325,13 @@ void zglBufferData ( u32 target, u32 size, const void* data, u32 usage ) {
 }
 
 //----------------------------------------------------------------//
+void zglBufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
+
+	ASSERT_OPERATION_DEPTH ();
+	glBufferSubData ( _remapEnum ( target ), ( GLintptr )offset, ( GLsizeiptr )size, ( const GLvoid* )data );
+}
+
+//----------------------------------------------------------------//
 u32 zglCreateBuffer () {
 
 	ASSERT_OPERATION_DEPTH ();
@@ -1338,14 +1345,22 @@ u32 zglCreateBuffer () {
 void* zglMapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
+	#ifdef MOAI_OS_ANDROID
+		return 0;
+	#else
+		return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
+	#endif
 }
 
 //----------------------------------------------------------------//
 void zglUnmapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	glUnmapBuffer ( _remapEnum ( target ));
+	#ifdef MOAI_OS_ANDROID
+		return;
+	#else
+		glUnmapBuffer ( _remapEnum ( target ));
+	#endif
 }
 
 //================================================================//
@@ -1357,7 +1372,11 @@ void zglBindVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	glBindVertexArray ( vertexArrayID );
+	#ifdef MOAI_OS_ANDROID
+		return;
+	#else
+		glBindVertexArray ( vertexArrayID );
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1379,7 +1398,11 @@ void zglDeleteVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	glDeleteVertexArrays ( 1, &vertexArrayID );
+	#ifdef MOAI_OS_ANDROID
+		return;
+	#else
+		glDeleteVertexArrays ( 1, &vertexArrayID );
+	#endif
 }
 
 #endif

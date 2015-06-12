@@ -10,29 +10,29 @@
 	<string>MoaiSample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>2BDA21E9-546C-4DB1-BEA4-F32CBFDE0B25</key>
+		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
 		<string>https://github.com/patrickmeehan/moai-dev.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>xcode/ios/MoaiSample.xcodeproj/project.xcworkspace</string>
+	<string>xcode/ios-static/MoaiSample.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>2BDA21E9-546C-4DB1-BEA4-F32CBFDE0B25</key>
+		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/patrickmeehan/moai-dev.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>2BDA21E9-546C-4DB1-BEA4-F32CBFDE0B25</string>
+	<string>63C4897045D0EF88507AD257AEF500CB53038CE0</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2BDA21E9-546C-4DB1-BEA4-F32CBFDE0B25</string>
+			<string>63C4897045D0EF88507AD257AEF500CB53038CE0</string>
 			<key>IDESourceControlWCCName</key>
 			<string>moai-dev</string>
 		</dict>

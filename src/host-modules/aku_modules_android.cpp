@@ -11,9 +11,17 @@
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppFinalize () {
 
+	#if AKU_WITH_ANDROID
+		AKUAndroidAppFinalize ();
+	#endif
+
 	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyAppFinalize ();
 	#endif
+
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingAppFinalize ();
+	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppFinalize ();
@@ -28,7 +36,7 @@ void AKUModulesAndroidAppFinalize () {
 	#endif
 	
 	#if AKU_WITH_ANDROID_FLURRY
-	  AKUAndroidFlurryAppFinalize ();
+		AKUAndroidFlurryAppFinalize ();
 	#endif
 	
 	#if AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES
@@ -46,15 +54,22 @@ void AKUModulesAndroidAppFinalize () {
 	#if AKU_WITH_ANDROID_VUNGLE
 		AKUAndroidVungleAppFinalize ();
 	#endif
-
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidAppInitialize () {
-	
-	#if AKU_WITH_IOS_ADCOLONY
+
+	#if AKU_WITH_ANDROID
+		AKUAndroidAppInitialize ();
+	#endif
+
+	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyAppInitialize ();
 	#endif
+
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingAppInitialize ();
+	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppInitialize ();
@@ -87,21 +102,28 @@ void AKUModulesAndroidAppInitialize () {
 	#if AKU_WITH_ANDROID_VUNGLE
 		AKUAndroidVungleAppInitialize ();
 	#endif
-
 }
 
 //----------------------------------------------------------------//
 void AKUModulesAndroidContextInitialize () {
-	
-	#if AKU_WITH_IOS_ADCOLONY
+
+	#if AKU_WITH_ANDROID
+		AKUAndroidContextInitialize ();
+	#endif
+
+	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyContextInitialize ();
 	#endif
-	
+
+	// #if AKU_WITH_ANDROID_BILLING
+	// 	AKUAndroidBillingContextInitialize ();
+	// #endif
+
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostContextInitialize ();
 	#endif
-	
-	#if AKU_WITH_ANDROID_CRITTERCISM
+    
+    #if AKU_WITH_ANDROID_CRITTERCISM
 		AKUAndroidCrittercismContextInitialize ();
 	#endif
 	
@@ -124,11 +146,10 @@ void AKUModulesAndroidContextInitialize () {
 	#if AKU_WITH_ANDROID_TWITTER
 		AKUAndroidTwitterContextInitialize ();
 	#endif
-	
+
 	#if AKU_WITH_ANDROID_VUNGLE
-		AKUAndroidVungleContextInitialize ();
-	#endif
-	
+        AKUAndroidVungleContextInitialize ();
+    #endif
 }
 
 //----------------------------------------------------------------//

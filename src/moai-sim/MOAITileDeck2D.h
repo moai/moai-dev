@@ -4,7 +4,7 @@
 #ifndef	MOAITILEDECK2D_H
 #define	MOAITILEDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 class MOAITextureBase;
 
@@ -16,7 +16,7 @@ class MOAITextureBase;
 			from the texture's left top to right bottom.
 */
 class MOAITileDeck2D :
-	public MOAIDeck,
+	public MOAIStandardDeck,
 	public MOAIGridSpace {
 private:
 	
@@ -40,8 +40,8 @@ public:
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
-	bool			Inside					( u32 idx, ZLVec3D vec, float pad );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	bool			Inside					( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

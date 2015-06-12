@@ -156,7 +156,7 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 	MOAISerializer* serializer = &defaultSerializer;
 	int base = 1;
 	
-	if ( state.GetTop () == 3 ) {
+	if ( state.GetTop () == 2 ) {
 		serializer = state.GetLuaObject < MOAISerializer >( 1, true );
 		if ( !serializer ) return 0;
 		base = 2;

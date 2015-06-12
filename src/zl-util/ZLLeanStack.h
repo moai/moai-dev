@@ -19,6 +19,13 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	void Clear () {
+
+		this->ZLLeanArray < TYPE >::Clear ();
+		this->mTop = 0;
+	}
+	
+	//----------------------------------------------------------------//
 	size_t GetTop () const {
 		
 		return this->mTop;
@@ -59,6 +66,13 @@ public:
 	void SetTop ( size_t top ) {
 	
 		this->Grow ( top, CHUNKSIZE );
+		this->mTop = top;
+	}
+	
+	//----------------------------------------------------------------//
+	void SetTop ( size_t top, const TYPE& value ) {
+	
+		this->Grow ( top, CHUNKSIZE, value );
 		this->mTop = top;
 	}
 	

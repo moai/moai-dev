@@ -48,6 +48,8 @@ MOAIImageTexture::MOAIImageTexture () :
 		RTTI_EXTEND ( MOAITextureBase )
 		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
+	
+	this->mDebugName = "(stacktrace from MOAIImageTexture)";
 }
 
 //----------------------------------------------------------------//
@@ -76,6 +78,7 @@ bool MOAIImageTexture::OnGPUCreate () {
 void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 
 	if ( isOK ) {
+		this->FinishInit ();
 		this->DoCPUAffirm ();
 	}
 }

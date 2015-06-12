@@ -137,7 +137,7 @@ bool ZLFrustum::Cull ( const ZLVec3D& vec ) const {
 
 	if ( !this->mAABB.Contains ( vec )) return true;
 	
-	if ( this->mUsePlanes ) {
+	if ( this->mUsePlanesForCull ) {
 		if ( ZLDist::VecToPlane ( vec, mPlanes [ NEAR_PLANE ]) > 0.0f ) return true;
 		if ( ZLDist::VecToPlane ( vec, mPlanes [ FAR_PLANE ]) > 0.0f ) return true;
 		if ( ZLDist::VecToPlane ( vec, mPlanes [ LEFT_PLANE ]) > 0.0f ) return true;
@@ -153,7 +153,7 @@ bool ZLFrustum::Cull ( const ZLBox& box ) const {
 
 	if ( !box.Overlap ( mAABB )) return true;
 
-	if ( this->mUsePlanes ) {
+	if ( this->mUsePlanesForCull ) {
 		if ( ZLSect::BoxToPlane ( box, mPlanes [ NEAR_PLANE ]) > 0 ) return true;
 		if ( ZLSect::BoxToPlane ( box, mPlanes [ FAR_PLANE ]) > 0 ) return true;
 		if ( ZLSect::BoxToPlane ( box, mPlanes [ LEFT_PLANE ]) > 0 ) return true;
@@ -300,7 +300,7 @@ void ZLFrustum::Init ( const ZLMatrix4x4& invViewProjMtx ) {
 	double frustArea = _frustArea ( *this );
 	double boxArea = this->mAABB.Area ();
 	
-	this->mUsePlanes = (( float )( frustArea / boxArea )) < MIN_FILL_RATIO;
+	this->mUsePlanesForCull = (( float )( frustArea / boxArea )) < MIN_FILL_RATIO;
 }
 
 //----------------------------------------------------------------//

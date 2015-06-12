@@ -28,6 +28,8 @@
 int MOAITextureBase::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
 	
+	self->ForceCPUCreate ();
+	
 	lua_pushnumber ( state, self->mWidth );
 	lua_pushnumber ( state, self->mHeight );
 	
@@ -46,6 +48,15 @@ int MOAITextureBase::_release ( lua_State* L ) {
 	
 	self->Destroy ();
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextureBase::_setDebugName ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
+
+	self->mDebugName = state.GetValue < cc8* >( 2, "" );
 	return 0;
 }
 
@@ -152,6 +163,11 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		
 		case ZLColor::A_8:
 			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+		
+		case ZLColor::LA_8:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
@@ -374,6 +390,7 @@ void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },
 		{ "release",				_release },
+		{ "setDebugName",			_setDebugName },
 		{ "setFilter",				_setFilter },
 		{ "setWrap",				_setWrap },
 		{ NULL, NULL }
