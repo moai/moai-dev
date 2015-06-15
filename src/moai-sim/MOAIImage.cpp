@@ -1780,6 +1780,9 @@ void MOAIImage::GenerateOutlineFromSDF ( ZLIntRect rect, float distMin, float di
 				colorVec.mA = a;
 			}
 			else {
+				colorVec.mR = 1;
+				colorVec.mG = 1;
+				colorVec.mB = 1;
 				colorVec.mA = 0;
 			}
 			
