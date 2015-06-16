@@ -1897,6 +1897,10 @@
 		CD32B5D419F9EF2E0059D019 /* SDL_hints.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CBF17F08459006AEB47 /* SDL_hints.c */; };
 		CD32B5D519F9EF2E0059D019 /* SDL_log.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC017F08459006AEB47 /* SDL_log.c */; };
 		CD32B5D619F9EF2E0059D019 /* SDL.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC117F08459006AEB47 /* SDL.c */; };
+		CD3430FE1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
+		CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
+		CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
+		CD3431011B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
 		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
 		CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
 		CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
@@ -6534,6 +6538,8 @@
 		CD323B1D1A80530000E2FEBB /* MOAIMeshShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-fsh.h"; path = "shaders/MOAIMeshShader-fsh.h"; sourceTree = "<group>"; };
 		CD323B1E1A80530000E2FEBB /* MOAIMeshShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-vsh.h"; path = "shaders/MOAIMeshShader-vsh.h"; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexArray.cpp; sourceTree = "<group>"; };
+		CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexArray.h; sourceTree = "<group>"; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
 		CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBitBuffer.h; sourceTree = "<group>"; };
@@ -12408,6 +12414,8 @@
 				89BE6F98173AD0CA00DFE837 /* MOAIMesh.h */,
 				CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */,
 				CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */,
+				CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */,
+				CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */,
 				CDF941B41B2FAEB1009D7787 /* MOAIVertexBuffer.cpp */,
 				CDF941B51B2FAEB1009D7787 /* MOAIVertexBuffer.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
@@ -13441,6 +13449,7 @@
 				CD4C3E08180A63BB00C02381 /* MOAICameraAnchor2D.h in Headers */,
 				CD1401411A0C5F660065AEE7 /* MOAIInputMgr.h in Headers */,
 				CD73A602188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */,
+				CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */,
 				CD4C3E7A180A63BB00C02381 /* MOAIParticleState.h in Headers */,
 				CD4C3E0E180A63BB00C02381 /* MOAIColor.h in Headers */,
 				CD4C3DEB180A63BB00C02381 /* MOAIAction.h in Headers */,
@@ -13681,6 +13690,7 @@
 				CD4C401D180A63C200C02381 /* MOAIAction.h in Headers */,
 				CD4C4029180A63C200C02381 /* MOAIAnimCurveVec.h in Headers */,
 				CD4C4019180A63C200C02381 /* host.h in Headers */,
+				CD3431011B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */,
 				CD4C4044180A63C200C02381 /* MOAICoroutine.h in Headers */,
 				CD4C408D180A63C200C02381 /* MOAILayer2D.h in Headers */,
 				CD4C4114180A63C200C02381 /* MOAITransformBase.h in Headers */,
@@ -16836,6 +16846,7 @@
 				CD4C3E11180A63BB00C02381 /* MOAICoroutine.cpp in Sources */,
 				CD4C3EA3180A63BB00C02381 /* MOAIProfilerScope.cpp in Sources */,
 				CD4C3E93180A63BB00C02381 /* MOAIProfiler.cpp in Sources */,
+				CD3430FE1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */,
 				CD4C3EFC180A63BB00C02381 /* pch.cpp in Sources */,
 				CD4C3EFA180A63BB00C02381 /* MOAIWheelSensor.cpp in Sources */,
 				CD4C3DF2180A63BB00C02381 /* MOAIAnimCurveBase.cpp in Sources */,
@@ -17009,6 +17020,7 @@
 				CD4C40F7180A63C200C02381 /* MOAISurfaceSampler2D.cpp in Sources */,
 				CD4C40AB180A63C200C02381 /* MOAIParticleState.cpp in Sources */,
 				CD4C412E180A63C200C02381 /* pch.cpp in Sources */,
+				CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */,
 				CD4C4026180A63C200C02381 /* MOAIAnimCurveQuat.cpp in Sources */,
 				CD4C40E6180A63C200C02381 /* MOAIScriptNode.cpp in Sources */,
 				CD4C40E0180A63C200C02381 /* MOAIRenderMgr.cpp in Sources */,

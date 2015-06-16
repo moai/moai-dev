@@ -93,6 +93,8 @@ protected:
 public:
 
 	GET ( u32, State, mState )
+	IS ( Ready, mState, STATE_READY_TO_BIND )
+	
 	SET ( u32, LoadingPolicy, mLoadingPolicy )
 	
 	enum {

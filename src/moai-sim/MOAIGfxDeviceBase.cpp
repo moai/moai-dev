@@ -5,6 +5,7 @@
 
 #include <moai-sim/MOAIGfxDeviceBase.h>
 #include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
@@ -13,22 +14,25 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
-	mShaderDirty ( false ),
-	mDrawCount ( 0 ),
-	mCurrentIdxBuffer ( 0 ),
-	mCurrentVtxBuffer ( 0 ),
-	mCurrentVtxFormat ( 0 ) {
+void MOAIGfxDeviceBase::BindVertexArray ( MOAIVertexArray* vtxArray ) {
+
+	if ( this->mCurrentVtxArray != vtxArray ) {
 	
-	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+		if ( this->mCurrentVtxArray ) {
+			this->mCurrentVtxArray->Unbind ();
+		}
+		
+		this->BindVertexBuffer ();
+		this->mCurrentVtxArray = vtxArray;
+		
+		if ( vtxArray ) {
+			vtxArray->Bind ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDeviceBase::~MOAIGfxDeviceBase () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceBase::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
+void MOAIGfxDeviceBase::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 
 	if ( this->mCurrentIdxBuffer != buffer ) {
 	
@@ -49,7 +53,7 @@ void MOAIGfxDeviceBase::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
+void MOAIGfxDeviceBase::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	if ( this->mCurrentVtxBuffer != buffer ) {
 	
@@ -74,10 +78,8 @@ void MOAIGfxDeviceBase::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::SetVertexFormat ( MOAIVertexFormat* format ) {
+void MOAIGfxDeviceBase::BindVertexFormat ( MOAIVertexFormat* format ) {
 
-	assert ( this->mCurrentVtxBuffer ); // must currently have a valid vertex buffer bound (to receive the vertex format)
-	
 	if ( this->mCurrentVtxFormat != format ) {
 	
 		this->FlushBufferedPrims ();
@@ -89,7 +91,26 @@ void MOAIGfxDeviceBase::SetVertexFormat ( MOAIVertexFormat* format ) {
 		this->mCurrentVtxFormat = format;
 			
 		if ( format ) {
+		
+			assert ( this->mCurrentVtxBuffer ); // must currently have a valid vertex buffer bound (to receive the vertex format)
+		
 			format->Bind ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
+	mShaderDirty ( false ),
+	mDrawCount ( 0 ),
+	mCurrentIdxBuffer ( 0 ),
+	mCurrentVtxArray ( 0 ),
+	mCurrentVtxBuffer ( 0 ),
+	mCurrentVtxFormat ( 0 ) {
+	
+	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxDeviceBase::~MOAIGfxDeviceBase () {
 }

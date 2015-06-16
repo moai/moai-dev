@@ -2,9 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+
 #include <moai-sim/MOAIGeometryWriter.h>
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
@@ -99,11 +101,11 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 	
 	if ( format && vtxStream && idxStream ) {
 	
-		MOAIGfxBuffer* vtxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 4, false );
-		MOAIGfxBuffer* idxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 5, false );
+		MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 4, false );
+		MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 5, false );
 	
 		if ( vtxBuffer && idxBuffer ) {
-		
+			
 			u32 idxSizeInBytes = state.GetValue < u32 >( 6, 4 );
 			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 			
@@ -292,8 +294,8 @@ void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, Z
 //----------------------------------------------------------------//
 MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes ) {
 
-	MOAIGfxBuffer* vtxBuffer = new MOAIGfxBuffer ();
-	MOAIGfxBuffer* idxBuffer = new MOAIGfxBuffer ();
+	MOAIVertexBuffer* vtxBuffer = new MOAIVertexBuffer ();
+	MOAIIndexBuffer* idxBuffer = new MOAIIndexBuffer ();
 
 	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 	
@@ -301,7 +303,6 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	
 	mesh->SetVertexBuffer ( 0, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
 	mesh->SetIndexBuffer ( idxBuffer );
-	mesh->SetIndexSizeInBytes ( idxSizeInBytes );
 
 	mesh->SetPrimType ( ZGL_PRIM_TRIANGLES );
 	mesh->SetTotalElements ( totalElements );
@@ -315,41 +316,37 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes ) {
+u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, u32 idxSizeInBytes ) {
 
-//	assert ( vtxStream );
-//	assert ( idxStream );
-//	
-//	vtxBuffer->Clear ();
-//	idxBuffer->Clear ();
-//	
-//	size_t vtxStreamBase = vtxStream->GetCursor ();
-//	size_t idxStreamBase = idxStream->GetCursor ();
-//	
-//	vtxBuffer->CopyFromStream ( *vtxStream );
-//	
-//	if ( idxStream->GetLength ()) {
-//		idxBuffer->CopyFromStream ( *idxStream, idxSizeInBytes, 4 );
-//	}
-//	else {
-//	
-//		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
-//		
-//		for ( u32 i = 0; i < totalVertices; ++i ) {
-//		
-//			if ( idxSizeInBytes == 4 ) {
-//				idxBuffer->Write < u32 >( i );
-//			}
-//			else {
-//				idxBuffer->Write < u16 >(( u16 )i );
-//			}
-//		}
-//	}
-//	
-//	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
-//	idxStream->Seek ( idxStreamBase, SEEK_SET );
-//	
-//	return idxBuffer->GetSize () / idxSizeInBytes;
+	assert ( vtxStream );
+	assert ( idxStream );
+	
+	vtxBuffer->Clear ();
+	idxBuffer->Clear ();
+	
+	size_t vtxStreamBase = vtxStream->GetCursor ();
+	size_t idxStreamBase = idxStream->GetCursor ();
+	
+	vtxBuffer->CopyFromStream ( *vtxStream );
+	
+	idxBuffer->SetIndexSize ( idxSizeInBytes );
+	
+	if ( idxStream->GetLength ()) {
+		
+		idxBuffer->CopyFromStream ( *idxStream, 4 );
+	}
+	else {
+	
+		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
+		for ( u32 i = 0; i < totalVertices; ++i ) {
+			idxBuffer->WriteIndex ( i );
+		}
+	}
+	
+	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
+	idxStream->Seek ( idxStreamBase, SEEK_SET );
+	
+	return idxBuffer->GetSize () / idxSizeInBytes;
 }
 
 //----------------------------------------------------------------//

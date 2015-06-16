@@ -5,6 +5,7 @@
 #define	MOAIGFXDEVICEBASE_H
 
 class MOAIIndexBuffer;
+class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
@@ -21,6 +22,7 @@ protected:
 	u32				mDrawCount;
 
 	MOAIIndexBuffer*		mCurrentIdxBuffer;
+	MOAIVertexArray*		mCurrentVtxArray;
 	MOAIVertexBuffer*		mCurrentVtxBuffer;
 	MOAIVertexFormat*		mCurrentVtxFormat;
 
@@ -35,12 +37,14 @@ public:
 	GET ( u32, DrawCount, mDrawCount );
 	
 	//----------------------------------------------------------------//
+	void			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
+	void			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
+	void			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
+	void			BindVertexFormat			( MOAIVertexFormat* format = 0 );
+
 	virtual void	FlushBufferedPrims			() = 0;
 					MOAIGfxDeviceBase			();
 	virtual			~MOAIGfxDeviceBase			();
-	void			SetIndexBuffer				( MOAIIndexBuffer* buffer );
-	void			SetVertexBuffer				( MOAIVertexBuffer* buffer );
-	void			SetVertexFormat				( MOAIVertexFormat* format );
 };
 
 #endif

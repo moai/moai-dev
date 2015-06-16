@@ -91,9 +91,9 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->mVtxBuffer.ScheduleFlush ();
 				this->mIdxBuffer.ScheduleFlush ();
 				
-				this->SetVertexBuffer ( &this->mVtxBuffer );
-				this->SetVertexFormat ( this->mVertexFormat );
-				this->SetIndexBuffer ( &this->mIdxBuffer );
+				this->BindVertexBuffer ( &this->mVtxBuffer );
+				this->BindVertexFormat ( this->mVertexFormat );
+				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
 				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, 0 );
@@ -108,8 +108,8 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				
 				this->mVtxBuffer.ScheduleFlush ();
 				
-				this->SetVertexBuffer ( &this->mVtxBuffer );
-				this->SetVertexFormat ( this->mVertexFormat );
+				this->BindVertexBuffer ( &this->mVtxBuffer );
+				this->BindVertexFormat ( this->mVertexFormat );
 				
 				this->UpdateShaderGlobals ();
 				zglDrawArrays ( this->mPrimType, 0, count );
@@ -288,8 +288,8 @@ void MOAIGfxDeviceVertexWriter::UnbindBufferedDrawing () {
 
 	this->FlushBufferedPrims ();
 
-	this->SetVertexBuffer ( 0 );
-	this->SetIndexBuffer ( 0 );
+	this->BindVertexBuffer ();
+	this->BindIndexBuffer ();
 	
 	this->mVertexFormat = 0;
 	this->mVertexSize = 0;

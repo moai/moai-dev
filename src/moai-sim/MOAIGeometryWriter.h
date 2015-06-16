@@ -6,8 +6,9 @@
 
 #include <moai-sim/MOAIVertexFormat.h>
 
-class MOAIGfxBuffer;
+class MOAIIndexBuffer;
 class MOAIMesh;
+class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
 //================================================================//
@@ -43,7 +44,7 @@ public:
 	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, const ZLColorVec& color );
 	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
 	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes );
-	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes );
+	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, u32 idxSizeInBytes );
 						MOAIGeometryWriter		();
 						~MOAIGeometryWriter		();
 	static void			PruneVertices			( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream );

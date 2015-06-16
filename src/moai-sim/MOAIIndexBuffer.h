@@ -40,6 +40,7 @@ public:
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetIndexSize			( u32 idxSize );
+	void			WriteIndex				( u32 index );
 };
 
 #endif

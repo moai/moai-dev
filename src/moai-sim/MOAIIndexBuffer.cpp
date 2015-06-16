@@ -166,6 +166,8 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setIndexSize",			_setIndexSize },
 		{ NULL, NULL }
 	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -187,4 +189,15 @@ void MOAIIndexBuffer::SetIndexSize ( u32 idxSize ) {
 
 	assert (( idxSize == 2 ) || ( idxSize == 4 ));
 	this->mIndexSize = idxSize;
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::WriteIndex ( u32 index ) {
+
+	if ( this->mIndexSize == 4 ) {
+		this->Write < u32 >( index );
+	}
+	else {
+		this->Write < u16 >(( u16 )index );
+	}
 }
