@@ -167,29 +167,31 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 //----------------------------------------------------------------//
 u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer, ZLStream& idxStream, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
-	idxStream.Seek ( 0, SEEK_SET );
-	vtxStream.Seek ( 0, SEEK_SET );
+	return 0;
 
-	vtxBuffer.Clear ();
-	vtxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ARRAY );
-	vtxBuffer.Reserve ( vtxStream.GetLength ());
-	vtxBuffer.WriteStream ( vtxStream );
-	
-	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 ); // stream is 32-bits, so divide by 4 to get total indices
-	
-	idxBuffer.Clear ();
-	idxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
-	idxBuffer.Reserve ( totalIndices * idxSizeInBytes );
-	
-	if ( idxSizeInBytes == 4 ) {
-		idxBuffer.WriteStream ( idxStream );
-	}
-	else {
-		for ( u32 i = 0; i < totalIndices; ++i ) {
-			idxBuffer.Write < u16 >(( u16 )idxStream.Read < u32 >( 0 ));
-		}
-	}
-	return totalIndices;
+//	idxStream.Seek ( 0, SEEK_SET );
+//	vtxStream.Seek ( 0, SEEK_SET );
+//
+//	vtxBuffer.Clear ();
+//	vtxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ARRAY );
+//	vtxBuffer.Reserve ( vtxStream.GetLength ());
+//	vtxBuffer.WriteStream ( vtxStream );
+//	
+//	u32 totalIndices = ( u32 )( idxStream.GetLength () >> 2 ); // stream is 32-bits, so divide by 4 to get total indices
+//	
+//	idxBuffer.Clear ();
+//	idxBuffer.SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
+//	idxBuffer.Reserve ( totalIndices * idxSizeInBytes );
+//	
+//	if ( idxSizeInBytes == 4 ) {
+//		idxBuffer.WriteStream ( idxStream );
+//	}
+//	else {
+//		for ( u32 i = 0; i < totalIndices; ++i ) {
+//			idxBuffer.Write < u16 >(( u16 )idxStream.Read < u32 >( 0 ));
+//		}
+//	}
+//	return totalIndices;
 }
 
 //----------------------------------------------------------------//

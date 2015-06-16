@@ -16,6 +16,7 @@ class MOAIGfxState :
 private:
 
 	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceBase;
 
 	//----------------------------------------------------------------//
 	// this is for binding via the gfx device's cache; we need this since
@@ -41,6 +42,10 @@ class MOAIGfxResource :
 	public MOAIGfxState {
 private:
 
+	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxResourceMgr;
+
 	enum {
 		STATE_NEW, // we use this state to ensure we call DoCPUAffirm after init
 		STATE_NEEDS_CPU_CREATE,
@@ -65,9 +70,11 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool			Bind						(); // bind for drawing; go to STATE_READY
 	bool			DoGPUAffirm					(); // gets ready to bind
 	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
+	void			Unbind						();
 
 protected:
 
@@ -84,9 +91,6 @@ protected:
 	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
 
 public:
-
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxResourceMgr;
 
 	GET ( u32, State, mState )
 	SET ( u32, LoadingPolicy, mLoadingPolicy )
@@ -107,7 +111,6 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			DoCPUAffirm					(); // preload CPU portion
-	bool			Bind						(); // bind for drawing; go to STATE_READY
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
 	void			ForceCPUCreate				();
 	virtual u32		GetLoadingPolicy			();
@@ -117,7 +120,6 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	bool			Purge						( u32 age );
 	bool			PrepareForBind				();
-	void			Unbind						();
 };
 
 #endif

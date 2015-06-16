@@ -4,8 +4,9 @@
 #ifndef	MOAIGFXDEVICEVERTEXWRITER_H
 #define	MOAIGFXDEVICEVERTEXWRITER_H
 
-#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDeviceMtxCache.h>
+#include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAICamera;
 class MOAIFrameBuffer;
@@ -31,25 +32,29 @@ protected:
 	static const size_t DEFAULT_VERTEX_BUFFER_SIZE	= 0x8000;
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
 
+	bool						mIsDrawing;
+
 	ZLColorVec					mAmbientColor;
 	ZLColorVec					mPenColor;
 	
 	ZLColorVec					mFinalColor;
 	u32							mFinalColor32;
 
-	MOAIGfxBuffer				mVtxBuffer;
-	//MOAIGfxBuffer				mIdxBuffer;
+	MOAIVertexBuffer			mVtxBuffer;
+	MOAIIndexBuffer				mIdxBuffer;
 	
 	u32							mVertexSize;
 
+	u32							mMaxVertices;
 	u32							mMaxPrims;
 
 	u32							mPrimCount;
 	u32							mPrimSize;
-	u32							mPrimTop;
+	u32							mPrimTopIdx;
+	u32							mPrimTopVtx;
 	u32							mPrimType;
 
-	const MOAIVertexFormat*		mVertexFormat;
+	MOAIVertexFormat*			mVertexFormat;
 
 	//----------------------------------------------------------------//
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
@@ -63,11 +68,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			BeginPrim						();
-	void			BeginPrim						( u32 primType );
+	void			BeginPrim						( u32 primType, u32 primSize = 0 );
 	
-	void			BindBufferedDrawing				( const MOAIVertexFormat& format );
+	void			BindBufferedDrawing				( MOAIVertexFormat& format );
 	void			BindBufferedDrawing				( u32 preset );
-	
 	
 	void			EndPrim							();
 	
@@ -82,7 +86,9 @@ public:
 	void			SetPenColor						( u32 color );
 	void			SetPenColor						( const ZLColorVec& colorVec );
 	void			SetPenColor						( float r, float g, float b, float a );
-	void			SetPrimType						( u32 primType );
+
+	void			SetPrimType						( u32 primType, u32 primSize = 0 );
+
 	void			UnbindBufferedDrawing			();
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );

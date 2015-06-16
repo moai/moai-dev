@@ -317,42 +317,39 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 //----------------------------------------------------------------//
 u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes ) {
 
-	assert ( vtxStream );
-	assert ( idxStream );
-	
-	vtxBuffer->Clear ();
-	idxBuffer->Clear ();
-	
-	size_t vtxStreamBase = vtxStream->GetCursor ();
-	size_t idxStreamBase = idxStream->GetCursor ();
-	
-	vtxBuffer->SetTarget ( ZGL_BUFFER_TARGET_ARRAY );
-	vtxBuffer->CopyFromStream ( *vtxStream );
-	
-	idxBuffer->SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
-	
-	if ( idxStream->GetLength ()) {
-		idxBuffer->CopyFromStream ( *idxStream, idxSizeInBytes, 4 );
-	}
-	else {
-	
-		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
-		
-		for ( u32 i = 0; i < totalVertices; ++i ) {
-		
-			if ( idxSizeInBytes == 4 ) {
-				idxBuffer->Write < u32 >( i );
-			}
-			else {
-				idxBuffer->Write < u16 >(( u16 )i );
-			}
-		}
-	}
-	
-	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
-	idxStream->Seek ( idxStreamBase, SEEK_SET );
-	
-	return idxBuffer->GetSize () / idxSizeInBytes;
+//	assert ( vtxStream );
+//	assert ( idxStream );
+//	
+//	vtxBuffer->Clear ();
+//	idxBuffer->Clear ();
+//	
+//	size_t vtxStreamBase = vtxStream->GetCursor ();
+//	size_t idxStreamBase = idxStream->GetCursor ();
+//	
+//	vtxBuffer->CopyFromStream ( *vtxStream );
+//	
+//	if ( idxStream->GetLength ()) {
+//		idxBuffer->CopyFromStream ( *idxStream, idxSizeInBytes, 4 );
+//	}
+//	else {
+//	
+//		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
+//		
+//		for ( u32 i = 0; i < totalVertices; ++i ) {
+//		
+//			if ( idxSizeInBytes == 4 ) {
+//				idxBuffer->Write < u32 >( i );
+//			}
+//			else {
+//				idxBuffer->Write < u16 >(( u16 )i );
+//			}
+//		}
+//	}
+//	
+//	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
+//	idxStream->Seek ( idxStreamBase, SEEK_SET );
+//	
+//	return idxBuffer->GetSize () / idxSizeInBytes;
 }
 
 //----------------------------------------------------------------//

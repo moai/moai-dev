@@ -149,14 +149,13 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( const void* buffer ) const {
+void MOAIVertexFormat::Bind () const {
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
-		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-
-		void* addr = ( void* )(( size_t )buffer + attr.mOffset );
-		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
+		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
+		
+		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, ( const void* )attr.mOffset );
 		zglEnableVertexAttribArray ( attr.mIndex );
 	}
 }

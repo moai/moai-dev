@@ -46,23 +46,23 @@ public:
 	
 private:
 	
-	int				mCullFunc;
-	int				mDepthFunc;
-	bool			mDepthMask;
+	int						mCullFunc;
+	int						mDepthFunc;
+	bool					mDepthMask;
 
-	MOAIBlendMode	mBlendMode;
-	bool			mBlendEnabled;
+	MOAIBlendMode			mBlendMode;
+	bool					mBlendEnabled;
 
-	bool			mHasContext;
+	bool					mHasContext;
 
-	bool			mIsFramebufferSupported;
-	bool			mIsOpenGLES;
+	bool					mIsFramebufferSupported;
+	bool					mIsOpenGLES;
 
-	u32				mMajorVersion;
-	u32				mMinorVersion;
+	u32						mMajorVersion;
+	u32						mMinorVersion;
 	
-	float			mPenWidth;
-	float			mPointSize;
+	float					mPenWidth;
+	float					mPointSize;
 
 	ZLRect					mScissorRect;
 	MOAIShaderProgram*		mShaderProgram;
@@ -153,6 +153,7 @@ public:
 	void			SetDepthMask			( bool depthMask );
 	void			SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool			SetGfxState				( MOAIGfxState* gfxState );
+	
 	void			SetPenWidth				( float penWidth );
 	void			SetScissorRect			();
 	void			SetScissorRect			( ZLRect rect );

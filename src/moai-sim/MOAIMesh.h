@@ -26,19 +26,19 @@ public:
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-class MOAIVertexBuffer {
-public:
-	
-	MOAILuaSharedPtr < MOAIGfxBuffer >			mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
-	
-	//----------------------------------------------------------------//
-	void		Bind					();
-				MOAIVertexBuffer		();
-				~MOAIVertexBuffer		();
-	void		SetBufferAndFormat		( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format );
-	void		Unbind					();
-};
+//class MOAIVertexBufferFoo {
+//public:
+//	
+//	MOAILuaSharedPtr < MOAIGfxBuffer >			mBuffer;
+//	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
+//	
+//	//----------------------------------------------------------------//
+//	void		Bind					();
+//				MOAIVertexBuffer		();
+//				~MOAIVertexBuffer		();
+//	void		SetBufferAndFormat		( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format );
+//	void		Unbind					();
+//};
 
 //================================================================//
 // MOAIMesh
@@ -63,7 +63,7 @@ protected:
 	ZLLeanArray < u32 >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	u32										mCurrentVAO;
 
-	ZLLeanArray < MOAIVertexBuffer >		mVertexBuffers;
+	//ZLLeanArray < MOAIVertexBuffer >		mVertexBuffers;
 	MOAILuaSharedPtr < MOAIGfxBuffer >		mIndexBuffer;
 
 	u32			mIndexSizeInBytes;

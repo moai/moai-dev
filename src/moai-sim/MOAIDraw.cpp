@@ -421,6 +421,9 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 	} else {
 		MOAIDraw::DrawLuaParams ( L, ZGL_PRIM_LINE_STRIP );
 	}
+	
+	MOAIGfxDevice::Get ().FlushBufferedPrims ();
+	
 	return 0;
 }
 
@@ -835,22 +838,22 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	MOAIGfxDevice::Get ().UnbindBufferedDrawing ();
-	
-	vtxBuffer->Bind ();
-	vtxFormat->Bind ( 0 );
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-	
-	gfxDevice.UpdateShaderGlobals ();
-		
-	// TODO: use gfxDevice to cache buffers
-
-	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
-	vtxBuffer->Unbind ();
-	vtxFormat->Unbind ();
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	
+//	MOAIGfxDevice::Get ().UnbindBufferedDrawing ();
+//	
+//	vtxBuffer->Bind ();
+//	vtxFormat->Bind ( 0 );
+//	
+//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+//	
+//	gfxDevice.UpdateShaderGlobals ();
+//		
+//	// TODO: use gfxDevice to cache buffers
+//
+//	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
+//	vtxBuffer->Unbind ();
+//	vtxFormat->Unbind ();
 }
 
 //----------------------------------------------------------------//

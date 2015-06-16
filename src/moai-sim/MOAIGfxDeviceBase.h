@@ -4,6 +4,10 @@
 #ifndef	MOAIGFXDEVICEBASE_H
 #define	MOAIGFXDEVICEBASE_H
 
+class MOAIIndexBuffer;
+class MOAIVertexBuffer;
+class MOAIVertexFormat;
+
 //================================================================//
 // MOAIGfxDeviceBase
 //================================================================//
@@ -16,6 +20,10 @@ protected:
 	
 	u32				mDrawCount;
 
+	MOAIIndexBuffer*		mCurrentIdxBuffer;
+	MOAIVertexBuffer*		mCurrentVtxBuffer;
+	MOAIVertexFormat*		mCurrentVtxFormat;
+
 	//----------------------------------------------------------------//
 	virtual void	UpdateShaderGlobals			() = 0;
 
@@ -27,8 +35,12 @@ public:
 	GET ( u32, DrawCount, mDrawCount );
 	
 	//----------------------------------------------------------------//
+	virtual void	FlushBufferedPrims			() = 0;
 					MOAIGfxDeviceBase			();
 	virtual			~MOAIGfxDeviceBase			();
+	void			SetIndexBuffer				( MOAIIndexBuffer* buffer );
+	void			SetVertexBuffer				( MOAIVertexBuffer* buffer );
+	void			SetVertexFormat				( MOAIVertexFormat* format );
 };
 
 #endif

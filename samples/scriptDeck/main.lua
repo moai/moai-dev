@@ -25,6 +25,16 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 	
 	MOAIDraw.drawRay ( 0, 0, 0, 1 )
 	
+	--[[
+	MOAIDraw.drawLine (
+		-32, 32,
+		32, 32,
+		32, -32,
+		-32, -32,
+		-32, 32
+	)
+	]]--
+
 	MOAIDraw.drawLine (
 		-64, 64,
 		64, 64,
@@ -32,7 +42,7 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 		-64, -64,
 		-64, 64
 	)
-	
+
 	MOAIGfxDevice.setPenColor ( 1, 1, 0, 1 )
 	
 	MOAIDraw.fillFan (

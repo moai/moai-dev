@@ -14,41 +14,41 @@
 #include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
-// MOAIVertexBuffer
+// MOAIVertexBufferFoo
 //================================================================//
 
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::Bind () {
-
-	if ( this->mBuffer && this->mFormat ) {
-		this->mBuffer->Bind ();
-		this->mFormat->Bind ( 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIVertexBuffer::MOAIVertexBuffer () {
-}
-
-//----------------------------------------------------------------//
-MOAIVertexBuffer::~MOAIVertexBuffer () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::SetBufferAndFormat ( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format ) {
-
-	this->mBuffer.Set ( owner, buffer );
-	this->mFormat.Set ( owner, format );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::Unbind () {
-
-	if ( this->mBuffer && this->mFormat ) {
-		this->mBuffer->Unbind ();
-		this->mFormat->Unbind ();
-	}
-}
+////----------------------------------------------------------------//
+//void MOAIVertexBuffer::Bind () {
+//
+//	if ( this->mBuffer && this->mFormat ) {
+//		this->mBuffer->Bind ();
+//		this->mFormat->Bind ( 0 );
+//	}
+//}
+//
+////----------------------------------------------------------------//
+//MOAIVertexBuffer::MOAIVertexBuffer () {
+//}
+//
+////----------------------------------------------------------------//
+//MOAIVertexBuffer::~MOAIVertexBuffer () {
+//}
+//
+////----------------------------------------------------------------//
+//void MOAIVertexBuffer::SetBufferAndFormat ( MOAIMesh& owner, MOAIGfxBuffer* buffer, MOAIVertexFormat* format ) {
+//
+//	this->mBuffer.Set ( owner, buffer );
+//	this->mFormat.Set ( owner, format );
+//}
+//
+////----------------------------------------------------------------//
+//void MOAIVertexBuffer::Unbind () {
+//
+//	if ( this->mBuffer && this->mFormat ) {
+//		this->mBuffer->Unbind ();
+//		this->mFormat->Unbind ();
+//	}
+//}
 
 //================================================================//
 // local
@@ -176,23 +176,23 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIMesh::AffirmVertexBuffers ( u32 idx ) {
 
-	if (( this->mVertexBuffers.Size () == 0 ) && ( idx == 0 )) {
-		this->ReserveVertexBuffers ( 1 );
-	}
-	return ( idx < this->mVertexBuffers.Size ());
+//	if (( this->mVertexBuffers.Size () == 0 ) && ( idx == 0 )) {
+//		this->ReserveVertexBuffers ( 1 );
+//	}
+//	return ( idx < this->mVertexBuffers.Size ());
 }
 
 //----------------------------------------------------------------//
 void MOAIMesh::BindVertex () {
 
-	size_t totalVBOs = this->mVertexBuffers.Size ();
-	for ( size_t i = 0; i < totalVBOs; ++i ) {
-		this->mVertexBuffers [ i ].Bind ();
-	}
-
-	if ( this->mIndexBuffer ) {
-		this->mIndexBuffer->Bind ();
-	}
+//	size_t totalVBOs = this->mVertexBuffers.Size ();
+//	for ( size_t i = 0; i < totalVBOs; ++i ) {
+//		this->mVertexBuffers [ i ].Bind ();
+//	}
+//
+//	if ( this->mIndexBuffer ) {
+//		this->mIndexBuffer->Bind ();
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -218,53 +218,53 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
-
-	// TODO: make use of offset and scale
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.UnbindBufferedDrawing (); // TODO: should remove this call
-
-	this->FinishInit ();
-
-	if ( this->Bind ()) {
-
-		// I am super lazy, so set this up here instead of adding if's below
-		MOAIMeshSpan defaultSpan;
-		if ( !span ) {
-			defaultSpan.mBase = 0;
-			defaultSpan.mTop = this->mTotalElements;
-			defaultSpan.mNext = 0;
-			span = &defaultSpan;
-		}
-
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
-		gfxDevice.SetPenWidth ( this->mPenWidth );
-		
-		gfxDevice.UpdateShaderGlobals ();
-		
-		// TODO: use gfxDevice to cache buffers
-		if ( this->mIndexBuffer ) {
-			if ( this->mIndexBuffer->Bind ()) {
-				for ( ; span; span = span->mNext ) {
-					zglDrawElements (
-						this->mPrimType,
-						span->mTop - span->mBase,
-						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-						( const void* )( span->mBase * this->mIndexSizeInBytes )
-					);
-				}
-			}
-		}
-		else {
-			for ( ; span; span = span->mNext ) {
-				zglDrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
-			}
-		}
-		this->Unbind ();
-	}
+//	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
+//
+//	// TODO: make use of offset and scale
+//
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	gfxDevice.UnbindBufferedDrawing (); // TODO: should remove this call
+//
+//	this->FinishInit ();
+//
+//	if ( this->Bind ()) {
+//
+//		// I am super lazy, so set this up here instead of adding if's below
+//		MOAIMeshSpan defaultSpan;
+//		if ( !span ) {
+//			defaultSpan.mBase = 0;
+//			defaultSpan.mTop = this->mTotalElements;
+//			defaultSpan.mNext = 0;
+//			span = &defaultSpan;
+//		}
+//
+//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		
+//		gfxDevice.SetPenWidth ( this->mPenWidth );
+//		
+//		gfxDevice.UpdateShaderGlobals ();
+//		
+//		// TODO: use gfxDevice to cache buffers
+//		if ( this->mIndexBuffer ) {
+//			if ( this->mIndexBuffer->Bind ()) {
+//				for ( ; span; span = span->mNext ) {
+//					zglDrawElements (
+//						this->mPrimType,
+//						span->mTop - span->mBase,
+//						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
+//						( const void* )( span->mBase * this->mIndexSizeInBytes )
+//					);
+//				}
+//			}
+//		}
+//		else {
+//			for ( ; span; span = span->mNext ) {
+//				zglDrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
+//			}
+//		}
+//		this->Unbind ();
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -431,96 +431,96 @@ void MOAIMesh::ReserveVAOs ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 
-	for ( size_t i = 0; i < this->mVertexBuffers.Size (); ++i ) {
-		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
-	}
-	this->mVertexBuffers.Init ( total );
+//	for ( size_t i = 0; i < this->mVertexBuffers.Size (); ++i ) {
+//		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
+//	}
+//	this->mVertexBuffers.Init ( total );
 }
 
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	u32 totalVAOs = state.GetField < u32 >( -1, "mTotalVAOs", 0 );
-	this->ReserveVAOs ( totalVAOs );
-	
-	u32 totalVertexBuffers = state.GetField < u32 >( -1, "mTotalVertexBuffers", 0 );
-	this->ReserveVertexBuffers ( totalVertexBuffers );
-	
-	if ( state.GetFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
-		int itr = state.PushTableItr ( -1 );
-		for ( u32 i = 0; state.TableItrNext ( itr ); ++i ) {
-			if ( state.IsType ( -1, LUA_TTABLE )) {
-				MOAIGfxBuffer* buffer = serializer.MemberIDToObject < MOAIGfxBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
-				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetField < MOAISerializer::ObjID >( -1, "mFormat", 0 ));
-				this->SetVertexBuffer ( i, buffer, format );
-			}
-		}
-		state.Pop ();
-	}
-	
-	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIGfxBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
-	
-	this->mIndexSizeInBytes = state.GetField < u32 >( -1, "mIndexSizeInBytes", 0 );
-	this->mTotalElements = state.GetField < u32 >( -1, "mTotalElements", 0 );
-	
-	this->mHasBounds = state.GetField < bool >( -1, "mHasBounds", 0 );
-	
-	if ( state.GetFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
-		
-		this->mBounds.mMin.mX	= state.GetField < float >( -1, "mMinX", 0 );
-		this->mBounds.mMin.mY	= state.GetField < float >( -1, "mMinY", 0 );
-		this->mBounds.mMin.mZ	= state.GetField < float >( -1, "mMinZ", 0 );
-		
-		this->mBounds.mMax.mX	= state.GetField < float >( -1, "mMaxX", 0 );
-		this->mBounds.mMax.mY	= state.GetField < float >( -1, "mMaxY", 0 );
-		this->mBounds.mMax.mZ	= state.GetField < float >( -1, "mMaxZ", 0 );
-		
-		state.Pop ();
-	}
-	
-	this->mPenWidth		= state.GetField < float >( -1, "mPenWidth", 0 );
-	
-	this->mNeedsRefresh = true;
-	
-	this->FinishInit ();
+//	u32 totalVAOs = state.GetField < u32 >( -1, "mTotalVAOs", 0 );
+//	this->ReserveVAOs ( totalVAOs );
+//	
+//	u32 totalVertexBuffers = state.GetField < u32 >( -1, "mTotalVertexBuffers", 0 );
+//	this->ReserveVertexBuffers ( totalVertexBuffers );
+//	
+//	if ( state.GetFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
+//		int itr = state.PushTableItr ( -1 );
+//		for ( u32 i = 0; state.TableItrNext ( itr ); ++i ) {
+//			if ( state.IsType ( -1, LUA_TTABLE )) {
+//				MOAIGfxBuffer* buffer = serializer.MemberIDToObject < MOAIGfxBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
+//				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetField < MOAISerializer::ObjID >( -1, "mFormat", 0 ));
+//				this->SetVertexBuffer ( i, buffer, format );
+//			}
+//		}
+//		state.Pop ();
+//	}
+//	
+//	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIGfxBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
+//	
+//	this->mIndexSizeInBytes = state.GetField < u32 >( -1, "mIndexSizeInBytes", 0 );
+//	this->mTotalElements = state.GetField < u32 >( -1, "mTotalElements", 0 );
+//	
+//	this->mHasBounds = state.GetField < bool >( -1, "mHasBounds", 0 );
+//	
+//	if ( state.GetFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
+//		
+//		this->mBounds.mMin.mX	= state.GetField < float >( -1, "mMinX", 0 );
+//		this->mBounds.mMin.mY	= state.GetField < float >( -1, "mMinY", 0 );
+//		this->mBounds.mMin.mZ	= state.GetField < float >( -1, "mMinZ", 0 );
+//		
+//		this->mBounds.mMax.mX	= state.GetField < float >( -1, "mMaxX", 0 );
+//		this->mBounds.mMax.mY	= state.GetField < float >( -1, "mMaxY", 0 );
+//		this->mBounds.mMax.mZ	= state.GetField < float >( -1, "mMaxZ", 0 );
+//		
+//		state.Pop ();
+//	}
+//	
+//	this->mPenWidth		= state.GetField < float >( -1, "mPenWidth", 0 );
+//	
+//	this->mNeedsRefresh = true;
+//	
+//	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	state.SetField < u32 >( -1, "mTotalVAOs", this->mVAOs.Size ());
-	state.SetField < u32 >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
-	
-	lua_newtable ( state );
-	for ( u32 i = 0; i < this->mVertexBuffers.Size (); ++i ) {
-		state.Push ( i + 1 );
-		lua_newtable ( state );
-		state.SetField < MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mBuffer ));
-		state.SetField < MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
-		lua_settable ( state, -3 );
-	}
-	lua_setfield ( state, -2, "mVertexBuffers" );
-	
-	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
-	
-	state.SetField < u32 >( -1, "mIndexSizeInBytes", this->mIndexSizeInBytes );
-	state.SetField < u32 >( -1, "mTotalElements", this->mTotalElements );
-	
-	state.SetField < bool >( -1, "mHasBounds", this->mHasBounds );
-	
-	lua_newtable ( state );
-	
-		state.SetField < float >( -1, "mMinX", this->mBounds.mMin.mX );
-		state.SetField < float >( -1, "mMinY", this->mBounds.mMin.mY );
-		state.SetField < float >( -1, "mMinZ", this->mBounds.mMin.mZ );
-	
-		state.SetField < float >( -1, "mMaxX", this->mBounds.mMax.mX );
-		state.SetField < float >( -1, "mMaxY", this->mBounds.mMax.mY );
-		state.SetField < float >( -1, "mMaxZ", this->mBounds.mMax.mZ );
-	
-	lua_setfield ( state, -2, "mBounds" );
-	
-	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
+//	state.SetField < u32 >( -1, "mTotalVAOs", this->mVAOs.Size ());
+//	state.SetField < u32 >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
+//	
+//	lua_newtable ( state );
+//	for ( u32 i = 0; i < this->mVertexBuffers.Size (); ++i ) {
+//		state.Push ( i + 1 );
+//		lua_newtable ( state );
+//		state.SetField < MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mBuffer ));
+//		state.SetField < MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
+//		lua_settable ( state, -3 );
+//	}
+//	lua_setfield ( state, -2, "mVertexBuffers" );
+//	
+//	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
+//	
+//	state.SetField < u32 >( -1, "mIndexSizeInBytes", this->mIndexSizeInBytes );
+//	state.SetField < u32 >( -1, "mTotalElements", this->mTotalElements );
+//	
+//	state.SetField < bool >( -1, "mHasBounds", this->mHasBounds );
+//	
+//	lua_newtable ( state );
+//	
+//		state.SetField < float >( -1, "mMinX", this->mBounds.mMin.mX );
+//		state.SetField < float >( -1, "mMinY", this->mBounds.mMin.mY );
+//		state.SetField < float >( -1, "mMinZ", this->mBounds.mMin.mZ );
+//	
+//		state.SetField < float >( -1, "mMaxX", this->mBounds.mMax.mX );
+//		state.SetField < float >( -1, "mMaxY", this->mBounds.mMax.mY );
+//		state.SetField < float >( -1, "mMaxZ", this->mBounds.mMax.mZ );
+//	
+//	lua_setfield ( state, -2, "mBounds" );
+//	
+//	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
 }
 
 //----------------------------------------------------------------//
@@ -540,21 +540,21 @@ void MOAIMesh::SetIndexBuffer ( MOAIGfxBuffer* indexBuffer ) {
 //----------------------------------------------------------------//
 void MOAIMesh::SetVertexBuffer ( u32 idx, MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
 
-	if ( this->AffirmVertexBuffers ( idx )) {
-		this->mVertexBuffers [ idx ].SetBufferAndFormat ( *this, vtxBuffer, vtxFormat );
-		this->mNeedsRefresh = true;
-	}
+//	if ( this->AffirmVertexBuffers ( idx )) {
+//		this->mVertexBuffers [ idx ].SetBufferAndFormat ( *this, vtxBuffer, vtxFormat );
+//		this->mNeedsRefresh = true;
+//	}
 }
 
 //----------------------------------------------------------------//
 void MOAIMesh::UnbindVertex () {
 
-	size_t totalVBOs = this->mVertexBuffers.Size ();
-	for ( size_t i = 0; i < totalVBOs; ++i ) {
-		this->mVertexBuffers [ i ].Unbind ();
-	}
-
-	if ( this->mIndexBuffer ) {
-		this->mIndexBuffer->Unbind ();
-	}
+//	size_t totalVBOs = this->mVertexBuffers.Size ();
+//	for ( size_t i = 0; i < totalVBOs; ++i ) {
+//		this->mVertexBuffers [ i ].Unbind ();
+//	}
+//
+//	if ( this->mIndexBuffer ) {
+//		this->mIndexBuffer->Unbind ();
+//	}
 }
