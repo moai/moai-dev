@@ -21,7 +21,7 @@ class MOAITexture;
 
 
 struct MOAIFreeTypeTextLine {
-	int lineWidth;
+	FT_Int lineWidth;
 	u32 startIndex;
 	u32* text;
 };
@@ -81,13 +81,13 @@ protected:
 	static int			_setDefaultSize			( lua_State* L );
 		
 	//----------------------------------------------------------------//
-	void				BuildLine				(u32* buffer, size_t buf_len, int pen_x,
+	void				BuildLine				(u32* buffer, size_t buf_len, FT_Int pen_x,
 												 u32 lastChar, u32 startIndex);
 	void				BuildLine				(u32* buffer, size_t bufferLength, u32 startIndex);
-	int					ComputeLineStart		(FT_UInt unicode, size_t lineIndex,
+	FT_Int				ComputeLineStart		(FT_UInt unicode, size_t lineIndex,
 												 int alignment, FT_Int imageWidth);
-	int					ComputeLineStartY		(int textHeight, FT_Int imageHeight, int vAlign);
-	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions,
+	FT_Int				ComputeLineStartY		(FT_Int textHeight, FT_Int imageHeight, int vAlign);
+	USRect				DimensionsOfLine		(cc8* text, float fontSize, FT_Vector **glyphPositions, FT_Int **glyphXAdvances, FT_Int **glyphXOffsets,
 												 FT_Glyph **glyphArray, FT_UInt *glyphNumber, size_t maxGlyphs, FT_Int *maxDescender,
 												 FT_Int *maxAscender);
 	USRect				DimensionsWithMaxWidth	(cc8* text, float fontSize, float width, int wordBreak, bool returnGlyphBounds,
@@ -96,14 +96,13 @@ protected:
 												 FT_Int imageHeight);
 	void				GenerateLines			( FT_Int imageWidth, cc8* text, int wordBreak);
 	void				InitBitmapData			( u32 width, u32 height );
-	static int			NewPropFromFittedTexture( MOAILuaState& state, bool singleLine);
-	static void			PushRectAndBaselineToLuaTable	(USRect rect, int *baseline, u32 index, MOAILuaState &state, u32 wideChar = 0);
+	static void			PushGlyphMetricsToLuaTable(USRect rect, FT_Int xAdvance, FT_Int xOffset, FT_Int *baseline, u32 index, MOAILuaState &state, u32 wideChar = 0);
 	void				RenderLines				( FT_Int imageWidth, FT_Int imageHeight, int hAlign,
 												 int vAlign, bool returnGlyphBounds, float lineSpacing,
 												 MOAILuaState& state);
 	void				ResetBitmapData			();
 	void				StoreGlyphAndAdvanceAtIndex		(size_t index);
-	int					WidthOfString			(u32* buffer, size_t bufferLength, u32 startIndex = 0);
+	FT_Int				WidthOfString			(u32* buffer, size_t bufferLength, u32 startIndex = 0);
 	
 	
 	
