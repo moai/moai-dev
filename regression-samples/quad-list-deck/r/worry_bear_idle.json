@@ -5,7 +5,7 @@
     "y": 141
   }, 
   "chunkBleedMargin": 0, 
-  "chunkSize": 512, 
+  "chunkSize": 256, 
   "efficiency": 54, 
   "framesPerSecond": 24.0, 
   "height": 256, 
