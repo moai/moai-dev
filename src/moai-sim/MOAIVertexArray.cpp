@@ -119,7 +119,7 @@ bool MOAIVertexArray::AffirmVertexBuffers ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArray::BindVertex () {
+void MOAIVertexArray::BindVertexArrayItem () {
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {
@@ -174,13 +174,13 @@ void MOAIVertexArray::OnGPUBind () {
 		zglBindVertexArray ( vao );
 
 		if ( this->mNeedsFlush ) {
-			this->BindVertex ();
+			this->BindVertexArrayItem ();
 			this->mNeedsFlush = false;
 		}
 	}
 	else {
 	
-		this->BindVertex ();
+		this->BindVertexArrayItem ();
 	}
 }
 
@@ -222,7 +222,7 @@ void MOAIVertexArray::OnGPUUnbind () {
 	if ( this->mUseVAOs ) {
 		zglBindVertexArray ( 0 );
 	}
-	this->UnbindVertex ();
+	this->UnbindVertexArrayItem ();
 }
 
 //----------------------------------------------------------------//
@@ -319,7 +319,7 @@ void MOAIVertexArray::SetVertexBuffer ( u32 idx, MOAIVertexBuffer* vtxBuffer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArray::UnbindVertex () {
+void MOAIVertexArray::UnbindVertexArrayItem () {
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {

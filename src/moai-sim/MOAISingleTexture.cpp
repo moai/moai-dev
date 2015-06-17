@@ -263,7 +263,7 @@ u32 MOAISingleTexture::GetHeight () {
 MOAISingleTexture* MOAISingleTexture::GetTextureForUnit ( u32 unit ) {
 	UNUSED ( unit );
 
-	assert ( unit == 1 );
+	assert ( unit == 0 );
 
 	return this;
 }

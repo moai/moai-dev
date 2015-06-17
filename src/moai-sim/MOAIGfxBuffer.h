@@ -32,6 +32,13 @@ class MOAIGfxBuffer :
 protected:
 	
 	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
+	
+	enum {
+		UPDATE_MODE_MAPBUFFER,
+		UPDATE_MODE_ORPHAN,
+		UPDATE_MODE_SUBDATA,
+	};
 	
 	ZLLeanArray < u32 >		mVBOs;
 	u32						mCurrentVBO;
@@ -40,6 +47,8 @@ protected:
 
 	MOAIGfxBufferLoader*	mLoader;
 	void*					mData;
+
+	bool					mUseVBOs;
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
@@ -73,6 +82,7 @@ public:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					CopyFromStream			( ZLStream& stream );
+	const void*				GetAddress				();
 	size_t					GetSize					();
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();
@@ -84,7 +94,6 @@ public:
 	void					ScheduleFlush			();
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	//void					Swap					(); // TODO: should be private; causes re-bind
 };
 
 #endif

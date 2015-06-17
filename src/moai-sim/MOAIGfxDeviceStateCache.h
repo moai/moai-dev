@@ -48,7 +48,7 @@ protected:
 
 	MOAIFrameBuffer*						mCurrentFrameBuffer;
 	MOAIIndexBuffer*						mCurrentIdxBuffer;
-	MOAITextureBase*							mCurrentTexture;
+	MOAITextureBase*						mCurrentTexture;
 	MOAIVertexArray*						mCurrentVtxArray;
 	MOAIVertexBuffer*						mCurrentVtxBuffer;
 	MOAIVertexFormat*						mCurrentVtxFormat;

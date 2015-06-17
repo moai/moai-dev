@@ -127,6 +127,12 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
+const void* MOAIGfxBuffer::GetAddress () {
+
+	return this->mUseVBOs ? 0 : this->mData;
+}
+
+//----------------------------------------------------------------//
 size_t MOAIGfxBuffer::GetSize () {
 
 	return this->GetLength ();
@@ -142,9 +148,10 @@ u32 MOAIGfxBuffer::GetLoadingPolicy () {
 MOAIGfxBuffer::MOAIGfxBuffer () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
-	mNeedsFlush ( true ),
+	mNeedsFlush ( false ),
 	mLoader ( 0 ),
-	mData ( 0 ) {
+	mData ( 0 ),
+	mUseVBOs ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -175,6 +182,8 @@ void MOAIGfxBuffer::OnCPUDestroy () {
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUBind () {
+	
+	if ( !this->mUseVBOs ) return;
 	
 	bool dirty = this->mNeedsFlush && this->GetCursor ();
 	
@@ -209,9 +218,8 @@ void MOAIGfxBuffer::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIGfxBuffer::OnGPUCreate () {
 
-	if ( !this->mVBOs.Size ()) {
-		this->mVBOs.Init ( 1 );
-	}
+	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
+	if ( !this->mUseVBOs ) return true;
 
 	u32 count = 0;
 	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
@@ -222,14 +230,14 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 		if ( vbo ) {
 		
 			zglBindBuffer ( this->mTarget, vbo );
-			zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
+			zglBufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->mData : 0, hint );
 			zglBindBuffer ( this->mTarget, 0 );
 			
-			this->mNeedsFlush = true;
 			count++;
 		}
 		this->mVBOs [ i ] = vbo;
 	}
+	this->mNeedsFlush = false;
 	return count == this->mVBOs.Size ();
 }
 
@@ -297,6 +305,7 @@ void MOAIGfxBuffer::Reserve ( u32 size ) {
 	if ( size ) {
 		this->mData = calloc ( size, 1 );
 		this->SetBuffer ( this->mData, size, size );
+		this->mNeedsFlush = true;
 		this->FinishInit ();
 	}
 }
@@ -359,15 +368,3 @@ void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 	lua_setfield ( state, -2, "mData" );
 }
 
-//----------------------------------------------------------------//
-//void MOAIGfxBuffer::Swap () {
-//
-//	u32 prevVBO = this->mCurrentVBO;
-//	this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
-//	
-//	if ( prevVBO != this->mCurrentVBO ) {
-//	
-//		u32 vbo = this->mVBOs [ this->mCurrentVBO ];
-//		zglBindBuffer ( this->mTarget, vbo );
-//	}
-//}

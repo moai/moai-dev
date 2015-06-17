@@ -50,7 +50,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	bool				AffirmVertexBuffers			( u32 idx );
-	void				BindVertex					();
+	void				BindVertexArrayItem			();
 	bool				OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
 	void				OnCPUDestroy				(); // clear any CPU-side memory used by class
 	void				OnGPUBind					(); // select GPU-side resource on device for use
@@ -58,7 +58,7 @@ protected:
 	void				OnGPUDestroy				(); // schedule GPU-side resource for destruction
 	void				OnGPULost					(); // clear any handles or references to GPU-side (called by 'Abandon')
 	void				OnGPUUnbind					(); // unbind GPU-side resource
-	void				UnbindVertex				();
+	void				UnbindVertexArrayItem		();
 
 public:
 	
