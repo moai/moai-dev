@@ -145,7 +145,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 			if ( glyph ) {
 
 				// Draw the current glyph
-				MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
+				MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
 				if ( glyphTexture ) {
 
 					GlyphPlacement placement = { glyph, cursorX, cursorY };
@@ -234,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 
 			const GlyphPlacement& glyphPlacement = *it;
 			MOAIGlyph* glyph = glyphPlacement.glyph;
-			MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
+			MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
 			//glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
 		}
 	}

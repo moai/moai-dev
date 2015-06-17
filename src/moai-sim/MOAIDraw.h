@@ -5,7 +5,7 @@
 #define	MOAIDRAW_H
 
 class MOAIAnimCurve;
-class MOAITextureBase;
+class MOAISingleTexture;
 class MOAITexture;
 class MOAIFont;
 class MOAIGlyph;

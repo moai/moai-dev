@@ -5,32 +5,6 @@
 #define	MOAIGFXRESOURCE_H
 
 //================================================================//
-// MOAIGfxState
-//================================================================//
-/**	@lua	MOAIGfxState
-	@text	Abstract base class for objects that represent changes
-			to graphics state.
-*/
-class MOAIGfxState :
-	public virtual MOAILuaObject {
-private:
-
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceBase;
-
-	//----------------------------------------------------------------//
-	// this is for binding via the gfx device's cache; we need this since
-	// Bind () is supposed to be ignorant of
-	virtual bool		LoadGfxState			() { return false; }
-
-public:
-
-	//----------------------------------------------------------------//
-						MOAIGfxState			();
-	virtual				~MOAIGfxState			();
-};
-
-//================================================================//
 // MOAIGfxResource
 //================================================================//
 /**	@lua	MOAIGfxResource
@@ -39,11 +13,12 @@ public:
 			context (if possible).
 */
 class MOAIGfxResource :
-	public MOAIGfxState {
+	public virtual MOAILuaObject {
 private:
 
 	friend class MOAIGfxDevice;
 	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
 	friend class MOAIGfxResourceMgr;
 
 	enum {

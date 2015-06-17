@@ -2,13 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIMultiTexture.h>
+#include <moai-sim/MOAISingleTexture.h>
 
 //================================================================//
 // local
@@ -21,12 +18,12 @@
 			coordinates from pixels, as this will prevent texture
 			resolution swapping.
 	
-	@in		MOAITextureBase self
+	@in		MOAISingleTexture self
 	@out	number width
 	@out	number height
 */
-int MOAITextureBase::_getSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
+int MOAISingleTexture::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 	
 	self->ForceCPUCreate ();
 	
@@ -40,11 +37,11 @@ int MOAITextureBase::_getSize ( lua_State* L ) {
 /**	@lua	release
 	@text	Releases any memory associated with the texture.
 	
-	@in		MOAITextureBase self
+	@in		MOAISingleTexture self
 	@out	nil
 */
-int MOAITextureBase::_release ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
+int MOAISingleTexture::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 	
 	self->Destroy ();
 	
@@ -53,8 +50,8 @@ int MOAITextureBase::_release ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAITextureBase::_setDebugName ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "U" )
+int MOAISingleTexture::_setDebugName ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 
 	self->mDebugName = state.GetValue < cc8* >( 2, "" );
 	return 0;
@@ -64,14 +61,14 @@ int MOAITextureBase::_setDebugName ( lua_State* L ) {
 /**	@lua	setFilter
 	@text	Set default filtering mode for texture.
 	
-	@in		MOAITextureBase self
-	@in		number min			One of MOAITextureBase.GL_LINEAR, MOAITextureBase.GL_LINEAR_MIPMAP_LINEAR, MOAITextureBase.GL_LINEAR_MIPMAP_NEAREST,
-								MOAITextureBase.GL_NEAREST, MOAITextureBase.GL_NEAREST_MIPMAP_LINEAR, MOAITextureBase.GL_NEAREST_MIPMAP_NEAREST
+	@in		MOAISingleTexture self
+	@in		number min			One of MOAISingleTexture.GL_LINEAR, MOAISingleTexture.GL_LINEAR_MIPMAP_LINEAR, MOAISingleTexture.GL_LINEAR_MIPMAP_NEAREST,
+								MOAISingleTexture.GL_NEAREST, MOAISingleTexture.GL_NEAREST_MIPMAP_LINEAR, MOAISingleTexture.GL_NEAREST_MIPMAP_NEAREST
 	@opt	number mag			Defaults to value passed to 'min'.
 	@out	nil
 */
-int MOAITextureBase::_setFilter ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "UN" )
+int MOAISingleTexture::_setFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISingleTexture, "UN" )
 
 	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
@@ -85,12 +82,12 @@ int MOAITextureBase::_setFilter ( lua_State* L ) {
 /**	@lua	setWrap
 	@text	Set wrapping mode for texture.
 	
-	@in		MOAITextureBase self
+	@in		MOAISingleTexture self
 	@in		boolean wrap		Texture will wrap if true, clamp if not.
 	@out	nil
 */
-int MOAITextureBase::_setWrap ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextureBase, "UB" )
+int MOAISingleTexture::_setWrap ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISingleTexture, "UB" )
 	
 	bool wrap = state.GetValue < bool >( 2, false );
 	
@@ -100,11 +97,11 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITextureBase
+// MOAISingleTexture
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureBase::CleanupOnError () {
+void MOAISingleTexture::CleanupOnError () {
 
 	this->mTextureSize = 0;
 	zglDeleteTexture ( this->mGLTexID );
@@ -115,7 +112,13 @@ void MOAITextureBase::CleanupOnError () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
+u32 MOAISingleTexture::CountActiveUnits () {
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 
@@ -252,23 +255,26 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextureBase::GetHeight () {
+u32 MOAISingleTexture::GetHeight () {
 	return this->mHeight;
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextureBase::GetWidth () {
+MOAISingleTexture* MOAISingleTexture::GetTextureForUnit ( u32 unit ) {
+	UNUSED ( unit );
+
+	assert ( unit == 1 );
+
+	return this;
+}
+
+//----------------------------------------------------------------//
+u32 MOAISingleTexture::GetWidth () {
 	return this->mWidth;
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureBase::LoadGfxState () {
-
-	return MOAIGfxDevice::Get ().SetTexture ( this );
-}
-
-//----------------------------------------------------------------//
-MOAITextureBase::MOAITextureBase () :
+MOAISingleTexture::MOAISingleTexture () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
@@ -285,23 +291,23 @@ MOAITextureBase::MOAITextureBase () :
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase::~MOAITextureBase () {
+MOAISingleTexture::~MOAISingleTexture () {
 
 	this->OnGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureBase::OnCPUCreate () {
+bool MOAISingleTexture::OnCPUCreate () {
 
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnCPUDestroy () {
+void MOAISingleTexture::OnCPUDestroy () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnGPUBind () {
+void MOAISingleTexture::OnGPUBind () {
 
 	zglBindTexture ( this->mGLTexID );
 	
@@ -318,7 +324,7 @@ void MOAITextureBase::OnGPUBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnGPUDestroy () {
+void MOAISingleTexture::OnGPUDestroy () {
 
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxDevice::IsValid ()) {
@@ -330,7 +336,7 @@ void MOAITextureBase::OnGPUDestroy () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnGPULost () {
+void MOAISingleTexture::OnGPULost () {
 
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxDevice::IsValid ()) {
@@ -341,13 +347,13 @@ void MOAITextureBase::OnGPULost () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnGPUUnbind () {
+void MOAISingleTexture::OnGPUUnbind () {
 
 	zglBindTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISingleTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIGfxResource::RegisterLuaClass ( state );
 	
@@ -377,7 +383,7 @@ void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISingleTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIGfxResource::RegisterLuaFuncs ( state );
 
@@ -394,25 +400,25 @@ void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAISingleTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAISingleTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetFilter ( int filter ) {
+void MOAISingleTexture::SetFilter ( int filter ) {
 
 	this->SetFilter ( filter, filter );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetFilter ( int min, int mag ) {
+void MOAISingleTexture::SetFilter ( int min, int mag ) {
 
 	this->mMinFilter = min;
 	this->mMagFilter = mag;
@@ -421,7 +427,7 @@ void MOAITextureBase::SetFilter ( int min, int mag ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetTextureID ( u32 glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAISingleTexture::SetTextureID ( u32 glTexID, int internalFormat, int pixelType, size_t textureSize ) {
 
 	this->mGLTexID = glTexID;
 	this->mGLInternalFormat = internalFormat;
@@ -433,14 +439,14 @@ void MOAITextureBase::SetTextureID ( u32 glTexID, int internalFormat, int pixelT
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetWrap ( int wrap ) {
+void MOAISingleTexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
 	this->mIsDirty = true;
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureBase::ShouldGenerateMipmaps () {
+bool MOAISingleTexture::ShouldGenerateMipmaps () {
 
 	return (
 		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
@@ -451,7 +457,7 @@ bool MOAITextureBase::ShouldGenerateMipmaps () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
+void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
 	// TODO: what happens when image is an unsupported format?
 

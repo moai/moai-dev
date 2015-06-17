@@ -267,7 +267,7 @@ int MOAIGraphicsProp2D::_setShader ( lua_State* L ) {
 	
 	@in		MOAIGraphicsProp2D self
 	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
+	@opt	number transform	Any bitwise combination of MOAISingleTexture.QUANTIZE, MOAISingleTexture.TRUECOLOR, MOAISingleTexture.PREMULTIPLY_ALPHA
 	@out	MOAIGfxState texture
 */
 int MOAIGraphicsProp2D::_setTexture ( lua_State* L ) {

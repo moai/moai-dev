@@ -58,6 +58,9 @@ class MOAIFrameBuffer :
 	public MOAIClearableView {
 protected:
 	
+	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceStateCache;
+	
 	u32					mBufferWidth;
 	u32					mBufferHeight;
 	float				mBufferScale;
@@ -83,8 +86,6 @@ protected:
 	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:
-	
-	friend class MOAIGfxDevice;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBuffer )
 	

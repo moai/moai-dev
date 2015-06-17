@@ -61,6 +61,7 @@ private:
 
 	friend class MOAIGfxDevice;
 	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
 
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;

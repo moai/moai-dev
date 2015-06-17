@@ -11,12 +11,11 @@
 class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAITextureBase;
+class MOAISingleTexture;
 class MOAIVertexFormat;
 class MOAIViewport;
 
@@ -24,7 +23,7 @@ class MOAIViewport;
 // MOAIGfxDeviceVertexWriter
 //================================================================//
 class MOAIGfxDeviceVertexWriter :
-	public virtual MOAIGfxDeviceMtxCache {
+	public MOAIGfxDeviceMtxCache {
 protected:
 
 	static const size_t	INDEX_SIZE		= 4;
@@ -57,6 +56,7 @@ protected:
 	MOAIVertexFormat*			mVertexFormat;
 
 	//----------------------------------------------------------------//
+	void			OnGfxStateWillChange			();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 	void			UpdateFinalColor				();
 

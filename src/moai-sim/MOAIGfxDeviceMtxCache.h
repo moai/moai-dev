@@ -4,14 +4,14 @@
 #ifndef	MOAIGFXDEVICEMTXCACHE_H
 #define	MOAIGFXDEVICEMTXCACHE_H
 
-#include <moai-sim/MOAIGfxDeviceBase.h>
+#include <moai-sim/MOAIGfxDeviceStateCache.h>
 
 //================================================================//
 // MOAIGfxDeviceMtxCache
 //================================================================//
 // TODO: doxygen
 class MOAIGfxDeviceMtxCache :
-	public virtual MOAIGfxDeviceBase {
+	public MOAIGfxDeviceStateCache {
 public:
 	
 	enum {

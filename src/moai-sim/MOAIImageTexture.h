@@ -5,7 +5,7 @@
 #define	MOAIIMAGETEXTURE_H
 
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAISingleTexture.h>
 
 //================================================================//
 // MOAIImageTexture
@@ -17,7 +17,7 @@
 			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTexture :
-	public MOAITextureBase,
+	public MOAISingleTexture,
 	public MOAIImage {
 private:
 

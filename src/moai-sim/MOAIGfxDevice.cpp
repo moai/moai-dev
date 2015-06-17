@@ -31,7 +31,7 @@
 int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	state.Push ( MOAIGfxDevice::Get ().GetDefaultBuffer ());
+	state.Push ( MOAIGfxDevice::Get ().GetDefaultFrameBuffer ());
 
 	return 1;
 }
@@ -136,12 +136,6 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::Clear () {
-
-	this->mDefaultTexture.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::ClearErrors () {
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
@@ -182,7 +176,7 @@ void MOAIGfxDevice::DetectContext () {
 
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
-	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
 	zglEnd ();
 }
@@ -192,36 +186,21 @@ void MOAIGfxDevice::DetectFramebuffer () {
 	
 	zglBegin ();
 	
-	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
 	zglEnd ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::DisableTextureUnits ( u32 activeTextures ) {
-
-	if ( activeTextures < this->mActiveTextures ) {
-		
-		this->FlushBufferedPrims ();
-	
-		for ( u32 i = activeTextures; i < this->mActiveTextures; ++i ) {
-			this->mTextureUnits [ i ] = 0;
-		}
-	}
-	
-	this->mActiveTextures = activeTextures;
-}
-
-//----------------------------------------------------------------//
 float MOAIGfxDevice::GetDeviceScale () {
 
-	return this->mFrameBuffer->mBufferScale;
+	return this->mCurrentFrameBuffer->mBufferScale;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIGfxDevice::GetHeight () const {
 
-	return this->mFrameBuffer->mBufferHeight;
+	return this->mCurrentFrameBuffer->mBufferHeight;
 }
 
 //----------------------------------------------------------------//
@@ -250,14 +229,14 @@ u32 MOAIGfxDevice::GetHeight () const {
 //----------------------------------------------------------------//
 u32 MOAIGfxDevice::GetWidth () const {
 
-	return this->mFrameBuffer->mBufferWidth;
+	return this->mCurrentFrameBuffer->mBufferWidth;
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxDevice::IsOpaque () const {
 	
-	assert ( this->mDefaultBuffer );
-	return this->mDefaultBuffer->IsOpaque ();
+	assert ( this->mDefaultFrameBuffer );
+	return this->mDefaultFrameBuffer->IsOpaque ();
 }
 
 //----------------------------------------------------------------//
@@ -276,10 +255,6 @@ u32 MOAIGfxDevice::LogErrors () {
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
-	mCullFunc ( 0 ),
-	mDepthFunc ( 0 ),
-	mDepthMask ( true ),
-	mBlendEnabled ( 0 ),
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
 	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
@@ -289,10 +264,6 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	#endif
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
-	mPenWidth ( 1.0f ),
-	mPointSize ( 1.0f ),
-	mShaderProgram ( 0 ),
-	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
 	mMaxTextureSize ( 0 ) {
 	
@@ -300,15 +271,15 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
-	this->mDefaultBuffer.Set ( *this, new MOAIFrameBuffer ());
-	this->mFrameBuffer = this->mDefaultBuffer;
+	this->mDefaultFrameBuffer.Set ( *this, new MOAIFrameBuffer ());
+	this->mCurrentFrameBuffer = this->mDefaultFrameBuffer;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::~MOAIGfxDevice () {
 
-	this->mDefaultBuffer.Set ( *this, 0 );
-	this->Clear ();
+	this->mDefaultFrameBuffer.Set ( *this, 0 );
+	this->mDefaultTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -405,193 +376,23 @@ void MOAIGfxDevice::ResetState () {
 	this->mPenWidth = 1.0f;
 	zglLineWidth ( this->mPenWidth );
 	
-	// reset the point size
-	this->mPointSize = 1.0f;
-	
 	// reset the scissor rect
-	ZLRect scissorRect = this->mFrameBuffer->GetBufferRect ();
+	ZLRect scissorRect = this->mCurrentFrameBuffer->GetBufferRect ();
 	zglScissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
 	
 	this->mScissorRect = scissorRect;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode () {
-
-	if ( this->mBlendEnabled ) {
-		this->FlushBufferedPrims ();
-		zglDisable ( ZGL_PIPELINE_BLEND );
-		this->mBlendEnabled = false;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
-
-	if ( !this->mBlendEnabled ) {
-		this->FlushBufferedPrims ();
-		zglEnable ( ZGL_PIPELINE_BLEND );
-		this->mBlendMode = blendMode;
-		zglBlendMode(this->mBlendMode.mEquation);
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
-		this->mBlendEnabled = true;
-	}
-	else if ( !this->mBlendMode.IsSame ( blendMode )) {
-		this->FlushBufferedPrims ();
-		this->mBlendMode = blendMode;
-		zglBlendMode(this->mBlendMode.mEquation);
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
-
-	MOAIBlendMode blendMode;
-	blendMode.SetBlend ( srcFactor, dstFactor );
-	blendMode.SetBlendEquation( equation );
-	
-	this->SetBlendMode ( blendMode );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferScale ( float scale ) {
 
-	this->mDefaultBuffer->SetBufferScale ( scale );
+	this->mDefaultFrameBuffer->SetBufferScale ( scale );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
-	this->mDefaultBuffer->SetBufferSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetCullFunc () {
-
-	this->SetCullFunc ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetCullFunc ( int cullFunc ) {
-
-	if ( this->mCullFunc != cullFunc ) {
-	
-		this->FlushBufferedPrims ();
-		this->mCullFunc = cullFunc;
-	
-		if ( cullFunc ) {
-			zglEnable ( ZGL_PIPELINE_CULL );
-			zglCullFace ( this->mCullFunc );
-		}
-		else {
-			zglDisable ( ZGL_PIPELINE_CULL );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetDepthFunc () {
-
-	this->SetDepthFunc ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
-
-	if ( this->mDepthFunc != depthFunc ) {
-	
-		this->FlushBufferedPrims ();
-		this->mDepthFunc = depthFunc;
-	
-		if ( depthFunc ) {
-			zglEnable ( ZGL_PIPELINE_DEPTH );
-			zglDepthFunc ( this->mDepthFunc );
-		}
-		else {
-			zglDisable ( ZGL_PIPELINE_DEPTH );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
-
-	if ( this->mDepthMask != depthMask ) {
-		this->FlushBufferedPrims ();
-		this->mDepthMask = depthMask;
-		zglDepthMask ( this->mDepthMask );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
-	this->FlushBufferedPrims ();
-
-	if ( frameBuffer ) {
-		zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
-		this->mFrameBuffer = frameBuffer;
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
-
-	if ( gfxState ) {
-		return gfxState->LoadGfxState ();
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
-
-	if ( this->mPenWidth != penWidth ) {
-		this->FlushBufferedPrims ();
-		this->mPenWidth = penWidth;
-		zglLineWidth ( penWidth );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetScissorRect () {
-
-	this->SetScissorRect ( this->mFrameBuffer->GetBufferRect ());
-	zglDisable ( ZGL_PIPELINE_SCISSOR );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
-	
-	rect.Bless ();
-	this->mViewRect.Clip ( rect );
-
-	ZLRect& current = this->mScissorRect;
-	
-	if (	( current.mXMin != rect.mXMin ) ||
-			( current.mYMin != rect.mYMin ) ||
-			( current.mXMax != rect.mXMax ) ||
-			( current.mYMax != rect.mYMax )) {
-		
-		this->FlushBufferedPrims ();
-
-		ZLRect deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
-
-		s32 x = ( s32 )deviceRect.mXMin;
-		s32 y = ( s32 )deviceRect.mYMin;
-		
-		u32 w = ( u32 )( deviceRect.Width () + 0.5f );
-		u32 h = ( u32 )( deviceRect.Height () + 0.5f );
-
-		w = h == 0 ? 0 : w;
-		h = w == 0 ? 0 : h;
-		
-		zglScissor ( x, y, w, h );
-		this->mScissorRect = rect;
-	
-		zglEnable ( ZGL_PIPELINE_SCISSOR );
-	}
+	this->mDefaultFrameBuffer->SetBufferSize ( width, height );
 }
 
 //----------------------------------------------------------------//
@@ -611,113 +412,10 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
-
-	if ( shader ) {
-		this->SetShader ( shader->GetProgram ());
-		shader->BindUniforms ();
-	}
-	else {
-		this->SetShader (( MOAIShaderProgram* )0 );
-	}	
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetShader ( u32 preset ) {
-
-	MOAIShaderMgr::Get ().BindShader ( preset );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetShader ( MOAIShaderProgram* program ) {
-
-	if ( this->mShaderProgram != program ) {
-	
-		this->FlushBufferedPrims ();
-		this->mShaderProgram = program;
-		
-		if ( program ) {
-			program->Bind ();
-		}
-		else {
-			program->Unbind ();
-		}
-	}
-	this->mShaderDirty = true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture () {
-	
-	this->DisableTextureUnits ( 0 );
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
-	
-	if ( !texture ) {
-		return this->SetTexture ();
-	}
-	
-	this->DisableTextureUnits ( 1 );
-	return this->SetTexture ( 0, texture );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
-
-	if ( !multi ) {
-		return this->SetTexture ();
-	}
-	
-	u32 total = 0;
-	u32 multiSize = multi->mTextures.Size ();
-	for ( ; total < multiSize; ++total ) {
-		if ( !multi->mTextures [ total ]) break;
-	}
-	
-	if ( total > this->mTextureUnits.Size ()) {
-		total = this->mTextureUnits.Size ();
-	}
-	
-	// disable any unused textures
-	this->DisableTextureUnits ( total );
-	
-	for ( u32 i = 0; i < total; ++i ) {
-		this->SetTexture ( i, multi->mTextures [ i ]);
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
-	
-	if ( !texture ) {
-		// TODO: is this right?
-		this->mTextureUnits [ textureUnit ] = 0;
-		return false;
-	}
-	
-	if ( this->mTextureUnits [ textureUnit ] == texture ) return true;
-	
-	this->FlushBufferedPrims ();
-	
-	zglActiveTexture ( textureUnit );
-	
-	if ( !texture->Bind ()) {
-		return this->SetTexture ( textureUnit, this->mDefaultTexture );
-	}
-	
-	this->mTextureUnits [ textureUnit ] = texture;
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::SetViewRect () {
 
-	float width = ( float )this->mFrameBuffer->mBufferWidth;
-	float height = ( float )this->mFrameBuffer->mBufferHeight;
+	float width = ( float )this->mCurrentFrameBuffer->mBufferWidth;
+	float height = ( float )this->mCurrentFrameBuffer->mBufferHeight;
 
 	MOAIViewport rect;
 	rect.Init ( 0.0f, 0.0f, width, height );
@@ -730,7 +428,7 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 
 	ZLRect deviceRect;
 	
-	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
+	deviceRect = this->mCurrentFrameBuffer->WndRectToDevice ( rect );
 	
 	s32 x = ( s32 )deviceRect.mXMin;
 	s32 y = ( s32 )deviceRect.mYMin;

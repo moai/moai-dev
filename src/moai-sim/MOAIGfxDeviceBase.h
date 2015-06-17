@@ -21,11 +21,6 @@ protected:
 	
 	u32				mDrawCount;
 
-	MOAIIndexBuffer*		mCurrentIdxBuffer;
-	MOAIVertexArray*		mCurrentVtxArray;
-	MOAIVertexBuffer*		mCurrentVtxBuffer;
-	MOAIVertexFormat*		mCurrentVtxFormat;
-
 	//----------------------------------------------------------------//
 	virtual void	UpdateShaderGlobals			() = 0;
 
@@ -37,12 +32,6 @@ public:
 	GET ( u32, DrawCount, mDrawCount );
 	
 	//----------------------------------------------------------------//
-	void			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
-	void			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
-	void			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
-	void			BindVertexFormat			( MOAIVertexFormat* format = 0 );
-
-	virtual void	FlushBufferedPrims			() = 0;
 					MOAIGfxDeviceBase			();
 	virtual			~MOAIGfxDeviceBase			();
 };

@@ -23,7 +23,7 @@ private:
 	
 	MOAIGlyph*				mGlyph;
 	MOAITextStyle*			mStyle;
-	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
+	MOAISingleTexture*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	MOAIShader*				mShader;
 	
 	u32			mIdx;		// index in original string

@@ -158,6 +158,12 @@ MOAIGfxDeviceVertexWriter::~MOAIGfxDeviceVertexWriter () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::OnGfxStateWillChange () {
+
+	this->FlushBufferedPrims ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::SetAmbientColor ( u32 color ) {
 
 	this->mAmbientColor.SetRGBA ( color );

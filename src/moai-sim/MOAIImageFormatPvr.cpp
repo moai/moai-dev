@@ -215,7 +215,7 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 	MOAIGfxDevice::Get ().ClearErrors ();

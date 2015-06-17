@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIStandardDeck.h>
 
-class MOAITextureBase;
+class MOAISingleTexture;
 
 //================================================================//
 // MOAITileDeck2D

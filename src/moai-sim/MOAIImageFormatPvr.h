@@ -25,7 +25,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			CheckHeader					( const void* buffer );
-	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
+	bool			CreateTexture				( MOAISingleTexture& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
 	bool			GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
 					MOAIImageFormatPvr			();

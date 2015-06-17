@@ -7,20 +7,17 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxDeviceBase.h>
-#include <moai-sim/MOAIGfxDeviceMtxCache.h>
 #include <moai-sim/MOAIGfxDeviceVertexWriter.h>
 #include <moai-sim/MOAIImage.h>
 
 class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAITextureBase;
+class MOAISingleTexture;
 class MOAIVertexFormat;
 class MOAIViewport;
 
@@ -33,9 +30,7 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxDevice :
-	public virtual MOAIGfxDeviceBase,
-	public virtual MOAIGfxDeviceMtxCache,
-	public virtual MOAIGfxDeviceVertexWriter,
+	public MOAIGfxDeviceVertexWriter,
 	public MOAIGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
 public:
 	
@@ -45,37 +40,20 @@ public:
 	};
 	
 private:
+
+	bool									mHasContext;
+
+	bool									mIsFramebufferSupported;
+	bool									mIsOpenGLES;
+
+	u32										mMajorVersion;
+	u32										mMinorVersion;
 	
-	int						mCullFunc;
-	int						mDepthFunc;
-	bool					mDepthMask;
+	size_t									mTextureMemoryUsage;
+	u32										mMaxTextureSize;
 
-	MOAIBlendMode			mBlendMode;
-	bool					mBlendEnabled;
-
-	bool					mHasContext;
-
-	bool					mIsFramebufferSupported;
-	bool					mIsOpenGLES;
-
-	u32						mMajorVersion;
-	u32						mMinorVersion;
-	
-	float					mPenWidth;
-	float					mPointSize;
-
-	ZLRect					mScissorRect;
-	MOAIShaderProgram*		mShaderProgram;
-	
-	ZLLeanArray < MOAITextureBase* >	mTextureUnits;
-	u32									mActiveTextures;
-	size_t								mTextureMemoryUsage;
-	u32									mMaxTextureSize;
-
-	MOAILuaSharedPtr < MOAITexture >	mDefaultTexture;
-
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultBuffer;
-	MOAIFrameBuffer*						mFrameBuffer;
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
+	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 
 	//----------------------------------------------------------------//
 	static int			_getFrameBuffer				( lua_State* L );
@@ -86,16 +64,13 @@ private:
 	static int			_setPenWidth				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				Clear						();
-	void				DisableTextureUnits			( u32 activeTextures );
-	bool				SetTexture					( u32 textureUnit, MOAITextureBase* texture );
 	void				TransformAndWriteQuad		( ZLVec4D* vtx, ZLVec2D* uv );
 	
 public:
 	
 	friend class MOAIGfxResource;
 	friend class MOAIShaderProgram;
-	friend class MOAITextureBase;
+	friend class MOAISingleTexture;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
@@ -108,7 +83,8 @@ public:
 	
 	GET ( MOAIBlendMode, BlendMode, mBlendMode )
 	
-	GET ( MOAIFrameBuffer*, DefaultBuffer, mDefaultBuffer )
+	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
+	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
 	
@@ -137,35 +113,11 @@ public:
 	
 	void			ResetDrawCount			();
 	void			ResetState				();
-
-	void			SetBlendMode			();
-	void			SetBlendMode			( const MOAIBlendMode& blendMode );
-	void			SetBlendMode			( int srcFactor, int dstFactor, int equation = 0 );
 	
 	void			SetBufferScale			( float scale );
 	void			SetBufferSize			( u32 width, u32 height );
 	
-	void			SetCullFunc				();
-	void			SetCullFunc				( int cullFunc );
-
-	void			SetDepthFunc			();
-	void			SetDepthFunc			( int depthFunc );
-	void			SetDepthMask			( bool depthMask );
-	void			SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
-	bool			SetGfxState				( MOAIGfxState* gfxState );
-	
-	void			SetPenWidth				( float penWidth );
-	void			SetScissorRect			();
-	void			SetScissorRect			( ZLRect rect );
 	void			SetScreenSpace			( MOAIViewport& viewport );
-	
-	void			SetShader				( MOAIShader* shader = 0 );
-	void			SetShader				( u32 preset );
-	void			SetShader				( MOAIShaderProgram* program = 0 );
-	
-	bool			SetTexture				();
-	bool			SetTexture				( MOAITextureBase* texture );
-	bool			SetTexture				( MOAIMultiTexture* multi );
 
 	void			SetViewRect				();
 	void			SetViewRect				( ZLRect rect );

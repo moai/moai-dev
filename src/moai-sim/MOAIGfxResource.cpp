@@ -9,20 +9,6 @@
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
-// MOAIGfxState
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIGfxState::MOAIGfxState () {
-
-	RTTI_SINGLE ( MOAILuaObject )
-}
-
-//----------------------------------------------------------------//
-MOAIGfxState::~MOAIGfxState () {
-}
-
-//================================================================//
 // lua
 //================================================================//
 
@@ -231,7 +217,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mLastRenderCount ( 0 ),
 	mLoadingPolicy ( LOADING_POLICY_NONE ) {
 
-	RTTI_SINGLE ( MOAIGfxState )
+	RTTI_SINGLE ( MOAILuaObject )
 
 	this->mLink.Data ( this );
 	
