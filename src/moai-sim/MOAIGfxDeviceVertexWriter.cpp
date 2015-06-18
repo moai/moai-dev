@@ -96,7 +96,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
-				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, 0 );
+				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetAddress ());
 				this->mDrawCount++;
 			}
 		}
@@ -147,10 +147,7 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
 	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
-	this->mVtxBuffer.ReserveVBOs ( 2 );
-	
 	this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
-	this->mIdxBuffer.ReserveVBOs ( 2 );
 }
 
 //----------------------------------------------------------------//

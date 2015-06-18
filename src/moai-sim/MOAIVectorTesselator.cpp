@@ -519,8 +519,8 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	
 	u32 totalElements = 0;
 	
-	MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
-	MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
+	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
 
 	if ( vtxBuffer && idxBuffer ) {
 	
@@ -1028,7 +1028,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes ) {
+int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes ) {
 
 	assert ( vtxBuffer && idxBuffer );
 	

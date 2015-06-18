@@ -4,7 +4,8 @@
 #ifndef MOAIREGION_H
 #define MOAIREGION_H
 
-class MOAIGfxBuffer;
+class MOAIIndexBuffer;
+class MOAIVertexBuffer;
 
 //================================================================//
 // MOAIRegion
@@ -36,7 +37,7 @@ public:
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );
 	const ZLPolygon2D&		GetPolygon				( u32 idx ) const;
-	u32						GetTriangles			( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytex ) const;
+	u32						GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 							MOAIRegion				();
 							~MOAIRegion				();
 	bool					PointInside				( const ZLVec2D& p ) const;

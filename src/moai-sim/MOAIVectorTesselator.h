@@ -136,7 +136,7 @@ public:
 	int					Tesselate					( SafeTesselator* tess );
 	int					Tesselate					( MOAIRegion* region );
 	int					Tesselate					( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format );
-	int					Tesselate					( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes );
+	int					Tesselate					( MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes );
 	void				WriteSkirt					( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 };

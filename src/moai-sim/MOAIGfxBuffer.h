@@ -76,8 +76,9 @@ public:
 	
 	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
-	
 	GET ( u32, Target, mTarget )
+	
+	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
 	void					Clear					();

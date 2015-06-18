@@ -87,8 +87,8 @@ void MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 			this->mCurrentVtxBuffer->Unbind ();
 		}
 		
+		this->BindVertexFormat ();
 		this->mCurrentVtxBuffer = buffer;
-		this->mCurrentVtxFormat = 0;
 	
 		if ( buffer ) {
 			buffer->Bind ();

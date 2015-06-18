@@ -3,10 +3,11 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <tesselator.h>
 
 //================================================================//
@@ -61,8 +62,8 @@ int MOAIRegion::_getDistance ( lua_State* L ) {
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
-	MOAIGfxBuffer* vtxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 2, true );
-	MOAIGfxBuffer* idxBuffer		= state.GetLuaObject < MOAIGfxBuffer >( 3, true );
+	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
+	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
 
 	u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
 
@@ -231,7 +232,7 @@ const ZLPolygon2D& MOAIRegion::GetPolygon ( u32 idx ) const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIRegion::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) const {
+u32 MOAIRegion::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
 
 	SafeTesselator tesselator;
 

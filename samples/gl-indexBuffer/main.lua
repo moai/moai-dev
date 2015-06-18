@@ -116,6 +116,8 @@ function makeCube ( size )
 
 	local mesh = MOAIMesh.new ()
 
+	mesh:reserveVAOs ( 1 )
+
 	mesh:setVertexBuffer ( vbo, vertexFormat )
 	mesh:setIndexBuffer ( ibo )
 

@@ -2,8 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -24,7 +25,7 @@ void SafeTesselator::AddContour ( int size, const void* vertices, int stride, in
 }
 
 //----------------------------------------------------------------//
-u32 SafeTesselator::GetTriangles ( MOAIGfxBuffer& vtxBuffer, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
+u32 SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
 	ZLMemStream idxStream;
 	ZLMemStream vtxStream;
@@ -165,7 +166,7 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIGfxBuffer& vtxBuffer, ZLStream& idxStream, MOAIGfxBuffer& idxBuffer, u32 idxSizeInBytes ) {
+u32 MOAIVectorUtil::GetTriangles ( ZLStream& vtxStream, MOAIVertexBuffer& vtxBuffer, ZLStream& idxStream, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
 	return 0;
 

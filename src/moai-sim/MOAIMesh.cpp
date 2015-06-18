@@ -119,7 +119,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	// TODO: make use of offset and scale
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.UnbindBufferedDrawing (); // TODO: should remove this call
 
 	this->FinishInit ();
 	gfxDevice.BindVertexArray ( this );
@@ -149,7 +148,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 			if ( this->mIndexBuffer->IsReady ()) {
 			
 				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
-			
+				
 				for ( ; span; span = span->mNext ) {
 					zglDrawElements (
 						this->mPrimType,
