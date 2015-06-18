@@ -19,13 +19,19 @@ function loadAsset(basename)
 	json = MOAIJsonParser.decode ( MOAIFileSystem.loadFile ( basename .. '.json' ))
 	assert ( json )
 
-	local CHUNKSIZE = json.chunkSize
+	local CHUNKSIZE_X = math.min(json.chunkSize, json.width)
+	local CHUNKSIZE_Y = math.min(json.chunkSize, json.height)
 
-	local WIDTH_IN_CHUNKS = math.ceil ( json.width / CHUNKSIZE )
+	local WIDTH_IN_CHUNKS = math.ceil ( json.width / CHUNKSIZE_X )
 
-	local ANCHOR_X = json.anchor.x
-	local ANCHOR_Y = json.anchor.y
+	local ANCHOR_X = 0
+	local ANCHOR_Y = 0
 
+	if (json.anchor) then
+		ANCHOR_X = json.anchor.x
+		ANCHOR_Y = json.anchor.y
+	end
+	
 	local uvRects		= {}
 	local screenRects	= {}
 	local materialIDs	= {}
@@ -40,8 +46,8 @@ function loadAsset(basename)
 
 		local screenSub, screenSubWidth, screenSubHeight = MOAIGfxQuadListDeck2D.subdivideRect (
 
-			CHUNKSIZE,
-			CHUNKSIZE,
+			CHUNKSIZE_X,
+			CHUNKSIZE_Y,
 
 			cropRect [ RECT_XMIN ],
 			cropRect [ RECT_YMIN ],
@@ -57,14 +63,14 @@ function loadAsset(basename)
 		for i, screenRect in ipairs ( screenSub ) do
 
 			print ( screenRect [ RECT_XMIN ], screenRect [ RECT_YMIN ], screenRect [ RECT_XMAX ], screenRect [ RECT_YMAX ])
-			local xChunk = math.floor ( screenRect [ RECT_XMIN ] / CHUNKSIZE )
-			local yChunk = math.floor ( screenRect [ RECT_YMIN ] / CHUNKSIZE )
+			local xChunk = math.floor ( screenRect [ RECT_XMIN ] / CHUNKSIZE_X )
+			local yChunk = math.floor ( screenRect [ RECT_YMIN ] / CHUNKSIZE_Y )
 
 			local uvRect = {
-				[ RECT_XMIN ]	= ( screenRect [ RECT_XMIN ] - ( xChunk * CHUNKSIZE )) / CHUNKSIZE,
-				[ RECT_YMIN ]	= ( screenRect [ RECT_YMIN ] - ( yChunk * CHUNKSIZE )) / CHUNKSIZE,
-				[ RECT_XMAX ]	= ( screenRect [ RECT_XMAX ] - ( xChunk * CHUNKSIZE )) / CHUNKSIZE,
-				[ RECT_YMAX ]	= ( screenRect [ RECT_YMAX ] - ( yChunk * CHUNKSIZE )) / CHUNKSIZE,
+				[ RECT_XMIN ]	= ( screenRect [ RECT_XMIN ] - ( xChunk * CHUNKSIZE_X )) / CHUNKSIZE_X,
+				[ RECT_YMIN ]	= ( screenRect [ RECT_YMIN ] - ( yChunk * CHUNKSIZE_Y )) / CHUNKSIZE_Y,
+				[ RECT_XMAX ]	= ( screenRect [ RECT_XMAX ] - ( xChunk * CHUNKSIZE_X )) / CHUNKSIZE_X,
+				[ RECT_YMAX ]	= ( screenRect [ RECT_YMAX ] - ( yChunk * CHUNKSIZE_Y )) / CHUNKSIZE_Y,
 			}
 
 			screenRect [ RECT_XMIN ] = screenRect [ RECT_XMIN ] - xOff
@@ -101,8 +107,8 @@ function loadAsset(basename)
 		return image
 	end
 
-	local maxCols = math.ceil(json.width / CHUNKSIZE)
-	local maxRows = math.ceil(json.height / CHUNKSIZE)
+	local maxCols = math.ceil(json.width / CHUNKSIZE_X)
+	local maxRows = math.ceil(json.height / CHUNKSIZE_Y)
 
 	local fileCount = maxCols * maxRows
 
@@ -224,8 +230,10 @@ layer:insertProp ( label )
 -- loadAsset('r/worry_bear_run_left')
 
 -- single frame smallest than the tile size
-loadAsset('r/worry_bear_idle')
+-- loadAsset('r/worry_bear_run_left')
 
+-- single, small rectangle (smaller than chunk size)
+loadAsset('r/rect')
 
 
 
