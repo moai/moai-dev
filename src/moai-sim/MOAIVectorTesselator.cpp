@@ -517,6 +517,7 @@ int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
+	u32 base = 0;
 	u32 totalElements = 0;
 	
 	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
@@ -527,6 +528,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
+		base = idxBuffer->GetCursor () / idxSizeInBytes;
 		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
 	}
 	else {
@@ -534,6 +536,8 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
 		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
 		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
+	
+		base = idxStream->GetCursor () / 4;
 	
 		if ( vtxStream && idxStream ) {
 			totalElements = self->Tesselate ( vtxStream, idxStream, format );
@@ -547,7 +551,9 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	}
 	
 	state.Push ( totalElements );
-	return 1;
+	state.Push ( base );
+	state.Push ( base + totalElements );
+	return 3;
 }
 
 //----------------------------------------------------------------//
