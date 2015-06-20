@@ -19,21 +19,21 @@ function loadAsset(basename)
 	json = MOAIJsonParser.decode ( MOAIFileSystem.loadFile ( basename .. '.json' ))
 	assert ( json )
 
-	-- local CHUNKSIZE_X = math.min(json.chunkSize, json.width)
-	-- local CHUNKSIZE_Y = math.min(json.chunkSize, json.height)
-	local CHUNKSIZE_X = json.chunkSize
-	local CHUNKSIZE_Y = json.chunkSize
+	-- if I understand things correctly, chunksize is the *maximum* size of an image tile.
+	-- image tiles are laid out left to right and top to bottom, and all tiles chunksize
+	-- *unless* they are along the right or bottom of the image *and* the image isn't
+	-- an even multiple of chunksize
+	local CHUNKSIZE = json.chunkSize
 
-	local WIDTH_IN_CHUNKS = math.ceil ( json.width / CHUNKSIZE_X )
+	-- image width and height. we only need these to detect the edge case when the image
+	-- size is not a clean multiple of chunksize and the border tiles are therefore
+	-- smaller than chunksize
+	local WIDTH			= json.width
+	local HEIGHT		= json.height
 
-	local ANCHOR_X = 0
-	local ANCHOR_Y = 0
+	local ANCHOR_X		= json.anchor and json.anchor.x or 0
+	local ANCHOR_Y		= json.anchor and json.anchor.y or 0
 
-	if (json.anchor) then
-		ANCHOR_X = json.anchor.x
-		ANCHOR_Y = json.anchor.y
-	end
-	
 	local uvRects		= {}
 	local screenRects	= {}
 	local materialIDs	= {}
@@ -48,8 +48,8 @@ function loadAsset(basename)
 
 		local screenSub, screenSubWidth, screenSubHeight = MOAIGfxQuadListDeck2D.subdivideRect (
 
-			CHUNKSIZE_X,
-			CHUNKSIZE_Y,
+			CHUNKSIZE,
+			CHUNKSIZE,
 
 			cropRect [ RECT_XMIN ],
 			cropRect [ RECT_YMIN ],
@@ -65,14 +65,26 @@ function loadAsset(basename)
 		for i, screenRect in ipairs ( screenSub ) do
 
 			print ( screenRect [ RECT_XMIN ], screenRect [ RECT_YMIN ], screenRect [ RECT_XMAX ], screenRect [ RECT_YMAX ])
-			local xChunk = math.floor ( screenRect [ RECT_XMIN ] / CHUNKSIZE_X )
-			local yChunk = math.floor ( screenRect [ RECT_YMIN ] / CHUNKSIZE_Y )
 
+			local xChunk = math.floor ( screenRect [ RECT_XMIN ] / CHUNKSIZE )
+			local yChunk = math.floor ( screenRect [ RECT_YMIN ] / CHUNKSIZE )
+
+			-- left, top coordinates of the tile in image space
+			local xTile = xChunk * CHUNKSIZE
+			local yTile = yChunk * CHUNKSIZE
+
+			-- and here's the magic: if we're in a right or bottom tile, the dimensions of the *texture*
+			-- may not be chunksize, so when we bring the rect into UV space we'll need to divide through
+			-- by the actual tile dimensions and not chunksize
+			local chunkWidth	= (( WIDTH - xTile ) < CHUNKSIZE ) and ( WIDTH - xTile ) or CHUNKSIZE
+			local chunkHeight	= (( HEIGHT - yTile ) < CHUNKSIZE ) and ( HEIGHT - yTile ) or CHUNKSIZE
+
+			-- to get the UV coordinates, just divide through by the actual chunk dimensions
 			local uvRect = {
-				[ RECT_XMIN ]	= ( screenRect [ RECT_XMIN ] - ( xChunk * CHUNKSIZE_X )) / CHUNKSIZE_X,
-				[ RECT_YMIN ]	= ( screenRect [ RECT_YMIN ] - ( yChunk * CHUNKSIZE_Y )) / CHUNKSIZE_Y,
-				[ RECT_XMAX ]	= ( screenRect [ RECT_XMAX ] - ( xChunk * CHUNKSIZE_X )) / CHUNKSIZE_X,
-				[ RECT_YMAX ]	= ( screenRect [ RECT_YMAX ] - ( yChunk * CHUNKSIZE_Y )) / CHUNKSIZE_Y,
+				[ RECT_XMIN ]	= ( screenRect [ RECT_XMIN ] - xTile ) / chunkWidth,
+				[ RECT_YMIN ]	= ( screenRect [ RECT_YMIN ] - yTile ) / chunkHeight,
+				[ RECT_XMAX ]	= ( screenRect [ RECT_XMAX ] - xTile ) / chunkWidth,
+				[ RECT_YMAX ]	= ( screenRect [ RECT_YMAX ] - yTile ) / chunkHeight,
 			}
 
 			screenRect [ RECT_XMIN ] = screenRect [ RECT_XMIN ] - xOff
@@ -83,8 +95,7 @@ function loadAsset(basename)
 			screenRect [ RECT_YMIN ] = screenRect [ RECT_YMIN ] * -1
 			screenRect [ RECT_YMAX ] = screenRect [ RECT_YMAX ] * -1
 
-			-- print ( screenRect [ RECT_XMIN ], screenRect [ RECT_YMIN ], screenRect [ RECT_XMAX ], screenRect [ RECT_YMAX ])
-
+			local WIDTH_IN_CHUNKS = math.ceil ( json.width / CHUNKSIZE )
 			local materialID = ( xChunk + ( yChunk * WIDTH_IN_CHUNKS )) + 1
 
 			table.insert ( uvRects, uvRect )
@@ -109,8 +120,8 @@ function loadAsset(basename)
 		return image
 	end
 
-	local maxCols = math.ceil(json.width / CHUNKSIZE_X)
-	local maxRows = math.ceil(json.height / CHUNKSIZE_Y)
+	local maxCols = math.ceil(json.width / CHUNKSIZE)
+	local maxRows = math.ceil(json.height / CHUNKSIZE)
 
 	local fileCount = maxCols * maxRows
 
@@ -172,6 +183,8 @@ function loadAsset(basename)
 	prop:setDeck ( gfxQuadListDeck )
 	prop:setHitGranularity ( MOAIProp.HIT_TEST_FINE )
 	layer:insertProp ( prop )
+
+	return prop
 end
 
 index = 1
@@ -202,11 +215,11 @@ end
 MOAIInputMgr.device.mouseLeft:setCallback ( function ( down ) onMouseEvent ( down, 1 ) end )
 MOAIInputMgr.device.mouseRight:setCallback ( function ( down ) onMouseEvent ( down, -1 ) end )
 
-MOAISim.openWindow ( "test", 1024, 1024 )
+MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 1024, 1024 )
-viewport:setScale ( 1024, 1024 )
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -232,16 +245,14 @@ layer:insertProp ( label )
 -- loadAsset('r/worry_bear_run_left')
 
 -- single frame smallest than the tile size
--- loadAsset('r/worry_bear_run_left')
+--loadAsset('r/worry_bear_idle')
 
 -- single, small rectangle (smaller than chunk size)
--- loadAsset('r/rect')
+--loadAsset('r/rect')
 
 -- single, large rectangle (bigger than chunk size, uses non-square blocks)
 -- a 720x720 image, with a 512 input chunkSize, will be cut in 4 pieces (from top left to bottom right)
 -- the conditioner works like this: 720 % 512 = 208. What's the nearest upper pow2 for 208? 256
 -- 512x512     256x512
 -- 512x256     256x256
-loadAsset('r/rect2')
-
-
+loadAsset('r/rect2'):setScl ( .25, .25 )
