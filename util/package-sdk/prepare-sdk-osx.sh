@@ -15,4 +15,7 @@ cd $MOAI_SDK_ROOT/xcode/libmoai
 ./build-ios.sh
 ./build-osx.sh
 
+cd $MOAI_SDK_ROOT/xcode/osx
+./build.sh
+
 popd > /dev/null

@@ -89,4 +89,6 @@ end
 util.moaiexec ( 'moaiutil make-lua-docs -o "%sdocs/sdk-lua-reference"', PACKAGE_DIR )
 util.moaiexec ( './test-build.sh %s', PACKAGE_DIR )
 
+--MOAIFileSystem.copy ( PACKAGE_DIR .. 'bin/osx/moai', MOAI_SDK_HOME .. 'bin/osx/moai' )
+
 util.zip ( string.format ( '%s%s.zip', OUTPUT_DIR, PACKAGE_NAME ), PACKAGE_DIR )

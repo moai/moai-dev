@@ -80,7 +80,13 @@ enum {
 
     //----------------------------------------------------------------//
     +( void ) appInitialize {
+
         AKUAppInitialize ();
+
+        static const int length = 255;
+		char version [ length ];
+		AKUGetMoaiVersion ( version, length );
+		printf ( "%s\n", version );
     }
 
     //----------------------------------------------------------------//
