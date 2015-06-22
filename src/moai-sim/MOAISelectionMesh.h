@@ -61,7 +61,7 @@ public:
 	void				MergeSelections				( u32 set, u32 merge );
 						MOAISelectionMesh			();
 						~MOAISelectionMesh			();
-	void				PrintSelection				( u32 idx );
+	void				PrintSelection				( u32 set );
 	void				PrintSelections				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );

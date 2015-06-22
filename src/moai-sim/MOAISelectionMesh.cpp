@@ -102,7 +102,9 @@ int MOAISelectionMesh::_setMesh ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 
-	if ( set >= this->mSets.Size ()) return;
+	if ( set <= this->mSets.Size ()) {
+		this->mSets.Resize ( set + 1, 0 );
+	}
 
 	MOAISelectionSpan* cursor = this->mSpanListHead;
 	
@@ -342,13 +344,13 @@ MOAISelectionMesh::~MOAISelectionMesh () {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::PrintSelection ( u32 idx ) {
+void MOAISelectionMesh::PrintSelection ( u32 set ) {
 
-	if ( idx < this->mSets.Size ()) {
+	if ( set < this->mSets.Size ()) {
 	
-		printf ( "set %d - ", idx );
+		printf ( "set %d - ", set );
 	
-		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ idx ];
+		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ set ];
 		for ( ; span; span = ( MOAISelectionSpan* )span->mNext ) {
 		
 			printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
@@ -405,9 +407,8 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAISelectionMesh::ReserveSelections ( u32 total ) {
 
 	this->Clear ();
-
-	this->mSets.Init ( total );
-	this->mSets.Fill ( 0 );
+	
+	this->mSets.Resize ( total, 0 );
 }
 
 //----------------------------------------------------------------//
