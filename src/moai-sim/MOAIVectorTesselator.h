@@ -9,6 +9,7 @@
 
 class MOAIGfxBuffer;
 class MOAIVectorShape;
+class MOAIVertexFormat;
 
 class SafeTesselator;
 
@@ -31,9 +32,6 @@ private:
 	
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 	bool									mPolyClosed;
-
-	ZLMemStream			mIdxStream;
-	ZLMemStream			mVtxStream;
 	
 	float				mDepthBias;
 	float				mDepthOffset;
@@ -47,19 +45,13 @@ private:
 	size_t					mVtxExtraSize;
 	ZLLeanArray < void* >	mVtxExtras;
 
-	bool					mGenerateMask;
-	SafeTesselator			mMaskTesselator;
-	
-	MOAILuaSharedPtr < MOAIRegion > mMask;
-
 	//----------------------------------------------------------------//
+	static int		_clearShapes			( lua_State* L );
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
-	static int		_getMask				( lua_State* L );
 	static int		_getTransform			( lua_State* L );
-	static int		_getTriangles			( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
@@ -86,6 +78,7 @@ private:
 	static int		_setLineColor			( lua_State* L );
 	static int		_setLineStyle			( lua_State* L );
 	static int		_setLineWidth			( lua_State* L );
+	static int		_setMergeNormals		( lua_State* L );
 	static int		_setMiterLimit			( lua_State* L );
 	static int		_setPolyClosed			( lua_State* L );
 	static int		_setShadowColor			( lua_State* L );
@@ -98,13 +91,14 @@ private:
 	static int		_setVerbose				( lua_State* L );
 	static int		_setVertexExtra			( lua_State* L );
 	static int		_setWindingRule			( lua_State* L );
+	static int		_tesselate				( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
 	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	u32				CountVertices			( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	u32				PushShape				( MOAIVectorShape* shape );
-	int				Tesselate				();
-	void			WriteVertex				( float x, float y, float z, const ZLAffine2D& transform2D, u32 color, u32 vertexExtraID );
+	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 	
 public:
 	
@@ -117,10 +111,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Clear						();
+	void				ClearShapes					();
 	void				ClearTransforms				();
-	u32					CountVertices				();
-	int					Finish						( bool generateMask );
-	SafeTesselator*		GetMaskTesselator			();
+	int					Finish						();
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
 	void				PopTransform				();
@@ -140,10 +133,12 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVertexExtras			( u32 total, size_t size );
 	void				SetVertexExtra				( u32 idx, void* extra, size_t size );
-	void				WriteContourIndices			( SafeTesselator* tess, u32 base );
-	void				WriteSkirt					( SafeTesselator* tess, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
-	void				WriteTriangleIndices		( SafeTesselator* tess, u32 base );
-	void				WriteVertices				( SafeTesselator* tess, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
+	int					Tesselate					( SafeTesselator* tess );
+	int					Tesselate					( MOAIRegion* region );
+	int					Tesselate					( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format );
+	int					Tesselate					( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes );
+	void				WriteSkirt					( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
+	void				WriteTriangles				( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 };
 
 #endif

@@ -13,10 +13,10 @@ uniform mat4 transform;
 uniform mat3 normalTransform;
 
 void main () {
+
     gl_Position = position * transform;
 	uvVarying = uv;
-	//colorVarying = color;
 	
 	vec3 tNormal = normalize ( normalTransform * normal );
-    colorVarying = mix ( color, vec4 ( 1.0,1.0,1.0,1.0 ), max ( dot ( tNormal, vec3 ( 0.0,0.0,-1.0 )), 0.0 ));
+    colorVarying = mix ( color, vec4 ( 1.0, 1.0, 1.0, 1.0 ), max ( dot ( tNormal, vec3 ( 0.0, 0.0, 1.0 )), 0.0 ));
 }

@@ -86,16 +86,16 @@ int MOAIDeck::_subdivideRect ( lua_State* L ) {
 				state.SetFieldByIndex < float >( -1, 4, sub.mYMax );
 				
 				lua_settable ( state, -3 );
-				
+	
 				xCount = ( x - x0 ) + 1;
 				yCount = ( y - y0 ) + 1;
 			}
 		}
 	}
-
+	
 	state.Push ( xCount );
 	state.Push ( yCount );
-
+	
 	return 3;
 }
 
@@ -136,48 +136,6 @@ void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset
 }
 
 //----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds () {
-
-	if ( this->mBoundsDirty ) {
-		this->mMaxBounds = this->ComputeMaxBounds ();
-		
-		// flip and expand to account for flip flags
-		ZLBox bounds = this->mMaxBounds;
-		bounds.Scale ( -1.0f );
-		bounds.Bless ();
-		
-		this->mMaxBounds.Grow ( bounds );
-		this->mBoundsDirty = false;
-	}
-	return this->mMaxBounds;
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds ( u32 idx ) {
-	
-	ZLBox bounds;
-	
-	if ( this->mBoundsDeck ) {
-		bounds = this->mBoundsDeck->GetItemBounds ( idx & MOAITileFlags::CODE_MASK );
-	}
-	else {
-		bounds = this->GetItemBounds ( idx & MOAITileFlags::CODE_MASK );
-	}
-
-	if ( idx & MOAITileFlags::FLIP_MASK ) {
-
-		ZLVec3D scale;
-		scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
-		scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;
-		scale.mZ = 1.0f;
-
-		bounds.Scale ( scale );
-		bounds.Bless ();
-	}
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 
 	shape.Set ();
@@ -196,26 +154,20 @@ bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, 
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () :
-	mBoundsDirty ( true ) {
+MOAIDeck::MOAIDeck () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMaterialBatch )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
-	
-	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
 MOAIDeck::~MOAIDeck () {
-
-	this->mBoundsDeck.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIMaterialBatch::RegisterLuaClass ( state );
 
 	luaL_Reg regTable [] = {
 		{ "subdivideRect",			_subdivideRect },
@@ -227,25 +179,5 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
-
-	MOAIMaterialBatch::RegisterLuaFuncs ( state );
-
-	luaL_Reg regTable [] = {
-		{ "setBoundsDeck",			_setBoundsDeck },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIDeck::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
-
-	return override ? *override : *this;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::SetBoundsDirty () {
-
-	this->mBoundsDirty = true;
+	UNUSED ( state );
 }

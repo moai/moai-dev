@@ -66,7 +66,6 @@ moaiexec ( './prepare-sdk-osx.sh' )
 
 for k, v in pairs ( COPY_FILES ) do
 	v = v == true and k or v
-	print ( 'COPYING:', k, v )
 	MOAIFileSystem.copy ( MOAI_SDK_HOME .. k, OUTPUT_DIR .. v )
 end
 

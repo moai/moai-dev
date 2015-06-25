@@ -29,10 +29,10 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess ) {
+int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
 
 	if ( this->mIsClosed ) {
-		return MOAIVectorShape::AddStrokeContours ( tess );
+		return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 	}
 
 	int nVerts = ( int )this->mVertices.Size ();

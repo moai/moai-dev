@@ -9,6 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void ZLStreamProxy::Compact () {
+	if ( this->mProxiedStream ) {
+		this->mProxiedStream->Compact ();
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLStreamProxy::Flush () {
 	if ( this->mProxiedStream ) {
 		this->mProxiedStream->Flush ();
@@ -49,6 +56,12 @@ size_t ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 int ZLStreamProxy::SetCursor ( long offset ) {
 
 	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : -1;
+}
+
+//----------------------------------------------------------------//
+size_t ZLStreamProxy::SetLength ( size_t length ) {
+
+	return this->mProxiedStream ? this->mProxiedStream->SetLength ( length ) : 0;
 }
 
 //----------------------------------------------------------------//

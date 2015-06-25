@@ -11,12 +11,12 @@ using namespace std;
 //================================================================//
 // STLMap
 //================================================================//
-template < typename KEY, typename TYPE >
+template < typename KEY, typename TYPE, typename COMPARE = less < KEY > >
 class STLMap :
-	public map < KEY, TYPE > {
+	public map < KEY, TYPE, COMPARE > {
 public:
 
-	typedef typename map < KEY, TYPE >::iterator iterator;
+	typedef typename map < KEY, TYPE, COMPARE >::iterator iterator;
 
 	//----------------------------------------------------------------//
 	bool contains ( const KEY& key ) const {
@@ -32,14 +32,23 @@ public:
 		}
 		return 0;
 	}
+	
+	//----------------------------------------------------------------//
+	STLMap () {
+	}
+	
+	//----------------------------------------------------------------//
+	STLMap ( const COMPARE& comp ) :
+		map < KEY, TYPE, COMPARE >( comp ) {
+	}
 };
 
 //================================================================//
 // STLMap < TYPE* >
 //================================================================//
-template < typename KEY, typename TYPE >
-class STLMap < KEY, TYPE* > :
-	public map < KEY, TYPE* > {
+template < typename KEY, typename TYPE, typename COMPARE >
+class STLMap < KEY, TYPE*, COMPARE > :
+	public map < KEY, TYPE*, COMPARE > {
 public:
 
 	typedef typename map < KEY, TYPE* >::iterator iterator;

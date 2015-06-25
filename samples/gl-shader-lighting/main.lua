@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 320, 480 )
 
@@ -157,7 +157,7 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	
 	program:reserveGlobals ( 2 )
 	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
-	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ_NORM )
+	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_VIEW_INVERSE )
 	
 	program:load ( vsh, fsh )
 

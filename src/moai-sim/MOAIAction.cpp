@@ -214,7 +214,7 @@ int MOAIAction::_isPaused ( lua_State* L ) {
 int MOAIAction::_pause ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
 
-	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_IS_PAUSED : self->mActionFlags & FLAGS_IS_PAUSED;
+	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_IS_PAUSED : self->mActionFlags & ~FLAGS_IS_PAUSED;
 	return 0;
 }
 

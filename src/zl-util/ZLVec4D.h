@@ -4,24 +4,27 @@
 #ifndef ZLVEC4D_H
 #define	ZLVEC4D_H
 
+#include <zl-util/ZLVec3D.h>
+
 //================================================================//
 // ZLMetaVec4D
 //================================================================//
 template < typename TYPE >
-class ZLMetaVec4D {
+class ZLMetaVec4D :
+	public ZLMetaVec3D < TYPE > {
 public:
 
-	TYPE	mX;
-	TYPE	mY;
-	TYPE	mZ;
+//	TYPE	mX;
+//	TYPE	mY;
+//	TYPE	mZ;
 	TYPE	mW;
 
 	//----------------------------------------------------------------//
 	void Init ( TYPE x, TYPE y, TYPE z, TYPE w ) {
-		mX = x;
-		mY = y;
-		mZ = z;
-		mW = w;
+		this->mX = x;
+		this->mY = y;
+		this->mZ = z;
+		this->mW = w;
 	}
 
 	//----------------------------------------------------------------//
@@ -48,9 +51,7 @@ public:
 
 	//----------------------------------------------------------------//
 	ZLMetaVec4D ( float x, float y, float z, float w ) :
-		mX ( x ),
-		mY ( y ),
-		mZ ( z ),
+		ZLMetaVec3D < TYPE >( x, y, z ),
 		mW ( w ) {
 	}
 

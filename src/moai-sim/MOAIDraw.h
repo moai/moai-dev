@@ -73,6 +73,7 @@ public:
 	static void			DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 );
 	static void			DrawPoint				( const ZLVec2D& loc );
 	static void			DrawPoint				( float x, float y );
+	static void			DrawPolyOutline			( const ZLPolygon2D& poly );
 	static void			DrawQuad				( const ZLQuad& quad );
 	static void			DrawRay					( float x, float y, float dx, float dy );
 	static void			DrawRectEdges			( ZLRect rect, u32 edges );

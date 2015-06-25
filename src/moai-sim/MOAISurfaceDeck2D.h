@@ -4,7 +4,7 @@
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 //================================================================//
 // MOAISurfaceBrush2D
@@ -27,7 +27,7 @@ private:
 	@text	Deck of surface edge lists. Unused in this version of Moai.
 */
 class MOAISurfaceDeck2D :
-	virtual public MOAIDeck {
+	virtual public MOAIStandardDeck {
 private:
 
 	ZLLeanArray < MOAISurfaceBrush2D > mBrushes;

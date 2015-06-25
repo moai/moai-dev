@@ -4,7 +4,7 @@
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 class MOAITextureBase;
 
@@ -28,7 +28,7 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;

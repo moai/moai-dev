@@ -41,8 +41,9 @@ private:
 	@const	PROP_WORLD_BOUNDS
 	@const	TEXT_BOX
 	@const	TEXT_BOX_BASELINES
-	@const	TEXT_BOX_LAYOUT
+	@const	TEXT_BOX_GLYPH_BOUNDS
 	@const	TEXT_BOX_GLYPHS
+	@const	TEXT_BOX_LAYOUT
 */
 class MOAIDebugLines :
 	public MOAIGlobalClass < MOAIDebugLines, MOAILuaObject > {
@@ -61,8 +62,9 @@ public:
 		PROP_WORLD_BOUNDS,
 		TEXT_BOX,
 		TEXT_BOX_BASELINES,
-		TEXT_BOX_LAYOUT,
+		TEXT_BOX_GLYPH_BOUNDS,
 		TEXT_BOX_GLYPHS,
+		TEXT_BOX_LAYOUT,
 		TOTAL_STYLES,
 	};
 

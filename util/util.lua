@@ -56,6 +56,12 @@ local		makeDlcResourceSig				= nil
 			wrap							= nil
 			zip								= nil
 
+-- HACK
+local moaiCopy = MOAIFileSystem.copy
+if osx then
+	MOAIFileSystem.copy = function ( srcpath, dstpath ) copy ( dstpath, srcpath ) end
+end
+
 ----------------------------------------------------------------
 arrayToSet = function ( array )
 
@@ -91,8 +97,20 @@ end
 ----------------------------------------------------------------
 copy = function ( dstpath, srcpath )
 
-	print ( string.format ( 'copying: %s -> %s', srcpath, dstpath ))
-	MOAIFileSystem.copy ( srcpath, dstpath )
+	if osx then
+		
+		-- awful, but until there's a better way...
+		moaiCopy( srcpath, dstpath )
+
+		-- so awful
+		os.execute ( string.format ( 'rm -fr %s', dstpath ))
+
+		local cmd = string.format ( 'cp -a %s %s', srcpath, dstpath )
+		print ( cmd )
+		os.execute ( cmd )
+	else
+		moaiCopy ( srcpath, dstpath )
+	end
 end
 
 ----------------------------------------------------------------

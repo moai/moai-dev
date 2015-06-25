@@ -853,7 +853,6 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		this->mActionTree->Update ( step );
 		
 		MOAINodeMgr::Get ().Update ();
-		MOAINodeMgr::Get ().Reset ();
 		
 		this->mSimTime += step;
 		this->mStepCount++;

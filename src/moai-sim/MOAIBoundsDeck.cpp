@@ -138,7 +138,7 @@ ZLBox MOAIBoundsDeck::GetItemBounds ( u32 idx ) {
 MOAIBoundsDeck::MOAIBoundsDeck () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -151,13 +151,13 @@ MOAIBoundsDeck::~MOAIBoundsDeck () {
 //----------------------------------------------------------------//
 void MOAIBoundsDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIBoundsDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserveBounds",			_reserveBounds },

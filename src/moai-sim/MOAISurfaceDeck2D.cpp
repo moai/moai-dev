@@ -296,7 +296,7 @@ ZLBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIStandardDeck )
 	//this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 
@@ -307,13 +307,13 @@ MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaClass ( state );
+	this->MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaFuncs ( state );
+	this->MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserveSurfaceLists",	_reserveSurfaceLists },

@@ -90,14 +90,14 @@ TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name, bool verbose ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-ZLMetaRect < TYPE > MOAILuaState::GetRect ( int idx ) {
+ZLMetaRect < TYPE > MOAILuaState::GetRect ( int idx, TYPE value ) {
 
 	ZLMetaRect < TYPE > rect;
 	
-	rect.mXMin = this->GetValue < TYPE >( idx++, 0 );
-	rect.mYMin = this->GetValue < TYPE >( idx++, 0 );
-	rect.mXMax = this->GetValue < TYPE >( idx++, 0 );
-	rect.mYMax = this->GetValue < TYPE >( idx, 0 );
+	rect.mXMin = this->GetValue < TYPE >( idx++, value );
+	rect.mYMin = this->GetValue < TYPE >( idx++, value );
+	rect.mXMax = this->GetValue < TYPE >( idx++, value );
+	rect.mYMax = this->GetValue < TYPE >( idx, value );
 	
 	return rect;
 }
