@@ -16,4 +16,4 @@ for filename in lfs.dir(directorypath) do
         upload = filename
     end
 end
-os.execute("s3cmd put "..upload .." s3://moai-downloads/develop" )
+os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
