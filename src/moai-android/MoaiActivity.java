@@ -111,7 +111,7 @@ public class MoaiActivity extends Activity {
 			    Moai.mount ( "bundle", myApp.publicSourceDir );
 			}
 			
-			Moai.setWorkingDirectory ( "bundle/assets" ); // TODO: this should be set from a string resource or a manifest entry
+			Moai.setWorkingDirectory ( "bundle/assets/lua" ); // TODO: this should be set from a string resource or a manifest entry
 		} catch ( NameNotFoundException e ) {
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}
@@ -145,7 +145,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		Moai.runScript ( "main.lua" ); // TODO: this should be set from a string resource or a manifest entry
+		Moai.runScript ( "bootstrap.lua" ); // TODO: this should be set from a string resource or a manifest entry
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 
