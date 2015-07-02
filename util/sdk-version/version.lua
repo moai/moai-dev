@@ -1,5 +1,5 @@
 return {
 	MAJOR			= 1,
 	MINOR			= 6,
-	REVISION		= 7, -- to start counter over, set to 'nil'
+	REVISION		= 8, -- to start counter over, set to 'nil'
 }
