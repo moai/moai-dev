@@ -159,7 +159,7 @@ void MOAIVertexArray::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAIVertexArray::OnGPUBind () {
 
-	u32 vao = 0;
+	ZLGfxHandle* vao = 0;
 
 	if ( this->mUseVAOs && this->mNeedsFlush ) {
 	
@@ -173,7 +173,7 @@ void MOAIVertexArray::OnGPUBind () {
 	
 	if ( vao ) {
 
-		zglBindVertexArray ( vao );
+		MOAIGfxDevice::GetAPI ().BindVertexArray ( vao );
 
 		if ( this->mNeedsFlush ) {
 			this->BindVertexArrayItems ();
@@ -196,7 +196,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 	if ( totalVAOs ) {
 		
 		for ( size_t i = 0; i < totalVAOs; ++i ) {
-			u32 vao = zglCreateVertexArray (); // OK for this to return 0
+			ZLGfxHandle* vao = MOAIGfxDevice::GetAPI ().CreateVertexArray (); // OK for this to return 0
 			if ( !vao ) return true;
 			this->mVAOs [ i ] = vao;
 		}
@@ -219,7 +219,7 @@ void MOAIVertexArray::OnGPULost () {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		zglBindVertexArray ( 0 );
+		MOAIGfxDevice::GetAPI ().BindVertexArray ( 0 );
 	}
 	this->UnbindVertexArrayItems ();
 }
@@ -250,7 +250,7 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxResourceMgr::IsValid ()) {
 		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVAOs [ i ]);
 		}
 	}
 	this->mVAOs.Init ( total );

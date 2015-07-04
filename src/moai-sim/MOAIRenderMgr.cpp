@@ -178,7 +178,9 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
+	gfx.Begin ();
 
 	MOAIGfxResourceMgr::Get ().Update ();
 
@@ -206,7 +208,7 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
-	zglEnd ();
+	gfx.End ();
 }
 
 //----------------------------------------------------------------//

@@ -40,10 +40,10 @@ protected:
 		UPDATE_MODE_SUBDATA,
 	};
 	
-	ZLLeanArray < u32 >		mVBOs;
-	u32						mCurrentVBO;
-	u32						mTarget;
-	bool					mNeedsFlush;
+	ZLLeanArray < ZLGfxHandle* >	mVBOs;
+	u32								mCurrentVBO;
+	u32								mTarget;
+	bool							mNeedsFlush;
 
 	MOAIGfxBufferLoader*	mLoader;
 	void*					mData;

@@ -307,11 +307,13 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		default:
 			return false;
 	}
+	
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
 
-	u32 glTexID = zglCreateTexture ();
+	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
 
-		zglBindTexture ( glTexID );
+		gfx.BindTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		
@@ -339,12 +341,12 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 						this->CleanupTexture ( texture );
 						return false;
 					}
-					zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.Data ());
+					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.Data ());
 				
 				#endif
 			}
 			else {
-				zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
+				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
 			}
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {

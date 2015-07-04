@@ -7,28 +7,6 @@
 class MOAIGfxResource;
 
 //================================================================//
-// MOAIGfxDeleter
-//================================================================//
-class MOAIGfxDeleter {
-public:
-
-	enum {
-		DELETE_BUFFER,
-		DELETE_FRAMEBUFFER,
-		DELETE_PROGRAM,
-		DELETE_SHADER,
-		DELETE_TEXTURE,
-		DELETE_RENDERBUFFER,
-	};
-
-	u32		mResourceID;
-	u32		mType;
-
-	//----------------------------------------------------------------//
-	void		Delete			();
-};
-
-//================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
 class MOAIGfxResourceMgr :
@@ -39,7 +17,7 @@ private:
 	ZLLeanList < MOAIGfxResource* > mResources;
 	ZLLeanList < MOAIGfxResource* > mPending;
 	
-	ZLLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
+	ZLLeanStack < ZLGfxHandle*, 32 > mDeleterStack;
 
 	u32				mResourceLoadingPolicy;
 
@@ -67,7 +45,7 @@ public:
 					MOAIGfxResourceMgr		();
 					~MOAIGfxResourceMgr		();
 	void			PurgeResources			( u32 age = 0 );
-	void			PushDeleter				( u32 type, u32 id );
+	void			PushDeleter				( ZLGfxHandle* handle );
 	void			RegisterLuaClass		( MOAILuaState& state );
 };
 

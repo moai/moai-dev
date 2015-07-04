@@ -32,7 +32,7 @@ void MOAIGfxDeviceStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 		
 		this->OnGfxStateWillChange ();
 		
-		zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
+		this->mGfx->BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
 		this->mCurrentFrameBuffer = frameBuffer;
 	}
 }
@@ -151,7 +151,7 @@ void MOAIGfxDeviceStateCache::SetBlendMode () {
 	
 		this->OnGfxStateWillChange ();
 		
-		zglDisable ( ZGL_PIPELINE_BLEND );
+		this->mGfx->Disable ( ZGL_PIPELINE_BLEND );
 		this->mBlendEnabled = false;
 	}
 }
@@ -163,11 +163,11 @@ void MOAIGfxDeviceStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 	
 		this->OnGfxStateWillChange ();
 		
-		zglEnable ( ZGL_PIPELINE_BLEND );
+		this->mGfx->Enable ( ZGL_PIPELINE_BLEND );
 		
 		this->mBlendMode = blendMode;
-		zglBlendMode ( this->mBlendMode.mEquation );
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mGfx->BlendMode ( this->mBlendMode.mEquation );
+		this->mGfx->BlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 		this->mBlendEnabled = true;
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
@@ -175,8 +175,8 @@ void MOAIGfxDeviceStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 		this->OnGfxStateWillChange ();
 		
 		this->mBlendMode = blendMode;
-		zglBlendMode ( this->mBlendMode.mEquation );
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mGfx->BlendMode ( this->mBlendMode.mEquation );
+		this->mGfx->BlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
@@ -206,11 +206,11 @@ void MOAIGfxDeviceStateCache::SetCullFunc ( int cullFunc ) {
 		this->mCullFunc = cullFunc;
 	
 		if ( cullFunc ) {
-			zglEnable ( ZGL_PIPELINE_CULL );
-			zglCullFace ( this->mCullFunc );
+			this->mGfx->Enable ( ZGL_PIPELINE_CULL );
+			this->mGfx->CullFace ( this->mCullFunc );
 		}
 		else {
-			zglDisable ( ZGL_PIPELINE_CULL );
+			this->mGfx->Disable ( ZGL_PIPELINE_CULL );
 		}
 	}
 }
@@ -231,11 +231,11 @@ void MOAIGfxDeviceStateCache::SetDepthFunc ( int depthFunc ) {
 		this->mDepthFunc = depthFunc;
 	
 		if ( depthFunc ) {
-			zglEnable ( ZGL_PIPELINE_DEPTH );
-			zglDepthFunc ( this->mDepthFunc );
+			this->mGfx->Enable ( ZGL_PIPELINE_DEPTH );
+			this->mGfx->DepthFunc ( this->mDepthFunc );
 		}
 		else {
-			zglDisable ( ZGL_PIPELINE_DEPTH );
+			this->mGfx->Disable ( ZGL_PIPELINE_DEPTH );
 		}
 	}
 }
@@ -248,7 +248,7 @@ void MOAIGfxDeviceStateCache::SetDepthMask ( bool depthMask ) {
 		this->OnGfxStateWillChange ();
 
 		this->mDepthMask = depthMask;
-		zglDepthMask ( this->mDepthMask );
+		this->mGfx->DepthMask ( this->mDepthMask );
 	}
 }
 
@@ -258,7 +258,7 @@ void MOAIGfxDeviceStateCache::SetPenWidth ( float penWidth ) {
 	if ( this->mPenWidth != penWidth ) {
 		this->OnGfxStateWillChange ();
 		this->mPenWidth = penWidth;
-		zglLineWidth ( penWidth );
+		this->mGfx->LineWidth ( penWidth );
 	}
 }
 
@@ -266,7 +266,7 @@ void MOAIGfxDeviceStateCache::SetPenWidth ( float penWidth ) {
 void MOAIGfxDeviceStateCache::SetScissorRect () {
 
 	this->SetScissorRect ( this->mCurrentFrameBuffer->GetBufferRect ());
-	zglDisable ( ZGL_PIPELINE_SCISSOR );
+	this->mGfx->Disable ( ZGL_PIPELINE_SCISSOR );
 }
 
 //----------------------------------------------------------------//
@@ -295,10 +295,10 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 		w = h == 0 ? 0 : w;
 		h = w == 0 ? 0 : h;
 		
-		zglScissor ( x, y, w, h );
+		this->mGfx->Scissor ( x, y, w, h );
 		this->mScissorRect = rect;
 	
-		zglEnable ( ZGL_PIPELINE_SCISSOR );
+		this->mGfx->Enable ( ZGL_PIPELINE_SCISSOR );
 	}
 }
 
@@ -373,7 +373,7 @@ void MOAIGfxDeviceStateCache::SetTexture ( u32 textureUnit, MOAISingleTexture* t
 	
 		this->OnGfxStateWillChange ();
 	
-		zglActiveTexture ( textureUnit );
+		this->mGfx->ActiveTexture ( textureUnit );
 	
 		if ( currentTexture && ( !texture )) {
 			currentTexture->Unbind ();

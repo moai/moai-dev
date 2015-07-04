@@ -15,6 +15,9 @@ class MOAIVertexFormat;
 class MOAIGfxDeviceBase {
 protected:
 
+	ZLGfxImmediate	mGfxImmediate;
+	ZLGfx*			mGfx;
+
 	bool			mShaderDirty;
 	ZLRect			mViewRect;
 	ZLFrustum		mViewVolume;
@@ -29,7 +32,9 @@ public:
 	GET ( const ZLFrustum&, ViewVolume, mViewVolume )
 	GET ( const ZLRect&, ViewRect, mViewRect )
 	
-	GET ( u32, DrawCount, mDrawCount );
+	GET ( u32, DrawCount, mDrawCount )
+	
+	GET ( ZLGfx&, API, *mGfx )
 	
 	//----------------------------------------------------------------//
 					MOAIGfxDeviceBase			();

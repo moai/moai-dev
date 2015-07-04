@@ -3,43 +3,9 @@
 
 #include "pch.h"
 
+#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
-
-//================================================================//
-// MOAIGfxDeleter
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxDeleter::Delete () {
-
-	switch ( this->mType ) {
-		
-		case DELETE_BUFFER:
-			zglDeleteBuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_FRAMEBUFFER:
-			zglDeleteFramebuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_PROGRAM:
-			zglDeleteProgram ( this->mResourceID );
-			break;
-		
-		case DELETE_SHADER:
-			zglDeleteShader ( this->mResourceID );
-			break;
-		
-		case DELETE_TEXTURE:
-			zglDeleteTexture ( this->mResourceID );
-			break;
-		
-		case DELETE_RENDERBUFFER:
-			zglDeleteRenderbuffer ( this->mResourceID );
-			break;
-	}
-}
 
 //================================================================//
 // lua
@@ -52,9 +18,11 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
+	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
-	zglEnd ();
+	ZLGfxDevice::End ();
 	
 	return 0;
 }
@@ -64,9 +32,11 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
+	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
-	zglEnd ();
+	ZLGfxDevice::End ();
 	
 	return 0;
 }
@@ -111,15 +81,10 @@ void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::PushDeleter ( u32 type, u32 id ) {
+void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
 
-	if ( id ) {
-	
-		MOAIGfxDeleter deleter;
-		deleter.mType = type;
-		deleter.mResourceID = id;
-		
-		this->mDeleterStack.Push ( deleter );
+	if ( handle ) {
+		this->mDeleterStack.Push ( handle );
 	}
 }
 
@@ -169,22 +134,24 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::Update () {
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
+	ZLGfxDevice::Begin ();
 	
 	u32 top = this->mDeleterStack.GetTop ();
 	
 	if ( top ) {
-		zglFlush ();
+		gfx.Flush ();
 	}
 	
 	for ( u32 i = 0; i < top; ++i ) {
-		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
-		deleter.Delete ();
+		ZLGfxHandle* handle = this->mDeleterStack [ i ];
+		gfx.DeleteHandle ( handle );
 	}
 	this->mDeleterStack.Reset ();
 	
 	if ( top ) {
-		zglFlush ();
+		gfx.Flush ();
 	}
 	
 	ResourceIt resourceIt = this->mPending.Head ();
@@ -196,5 +163,5 @@ void MOAIGfxResourceMgr::Update () {
 		this->mResources.PushBack ( resource->mLink );
 	}
 	
-	zglEnd ();
+	ZLGfxDevice::End ();
 }

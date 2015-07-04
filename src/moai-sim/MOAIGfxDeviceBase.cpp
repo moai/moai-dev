@@ -15,6 +15,7 @@
 
 //----------------------------------------------------------------//
 MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
+	mGfx ( &this->mGfxImmediate ),
 	mShaderDirty ( false ),
 	mDrawCount ( 0 ) {
 	

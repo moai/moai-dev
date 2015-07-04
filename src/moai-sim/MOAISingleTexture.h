@@ -35,7 +35,7 @@ protected:
 	STLString			mDebugName;
 
 	// GL texture
-	u32					mGLTexID;
+	ZLGfxHandle*		mGLTexID;
 	
 	// size of the original texture
 	u32					mWidth;
@@ -77,14 +77,14 @@ protected:
 	void				OnGPUDestroy				();
 	void				OnGPULost					();
 	void				OnGPUUnbind					();
-	void				SetTextureID				( u32 glTexID, int internalFormat, int pixelType, size_t textureSize );
+	void				SetTextureID				( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
 	bool				ShouldGenerateMipmaps		();
 	void				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
 	
 public:
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
-	GET ( u32, TextureID, mGLTexID );
+	GET ( ZLGfxHandle*, TextureID, mGLTexID );
 
 	//----------------------------------------------------------------//
 	u32					CountActiveUnits			();

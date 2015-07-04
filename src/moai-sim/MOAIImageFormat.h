@@ -33,7 +33,7 @@ protected:
 	void				SetColorFormat				( MOAIImage& image, ZLColor::ColorFormat colorFormat ) const;
 	bool				SetDimensions				( MOAIImage& image, u32 width, u32 height, u32 transform ) const;
 	void				SetPixelFormat				( MOAIImage& image, MOAIImage::PixelFormat pixelFormat ) const;
-	void				SetTextureID				( MOAISingleTexture& texture, u32 glTexID, int internalFormat, int pixelType, size_t textureSize );
+	void				SetTextureID				( MOAISingleTexture& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
 
 public:
 

@@ -131,16 +131,17 @@ bool MOAIGfxResource::DoCPUAffirm () {
 				MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
 			
 			#else
+		
+				ZLGfx& gfx = MOAIGfxDevice::Get ().GetAPI ();;
 			
-				zglBegin ();
+				ZLGfxDevice::Begin ();
 				this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
 				if ( this->mState == STATE_READY_TO_BIND ) {
 					this->OnCPUDestroy ();
 				}
-				zglEnd ();
+				ZLGfxDevice::End ();
 			
 			#endif
-		
 		}
 	}
 	

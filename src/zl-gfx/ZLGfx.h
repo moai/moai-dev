@@ -1,0 +1,128 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#ifndef ZLGFX_H
+#define ZLGFX_H
+
+#include <zl-util/ZLMatrix3x3.h>
+#include <zl-util/ZLMatrix4x4.h>
+
+//================================================================//
+// ZLGfxHandle
+//================================================================//
+class ZLGfxHandle {
+private:
+
+	friend class ZLGfx;
+	friend class ZLGfxImmediate;
+	friend class ZLGfxRetained;
+
+	u32		mType;
+	u32		mGLID;
+
+	//----------------------------------------------------------------//
+	ZLGfxHandle ( u32 type, u32 glid ) :
+		mType ( type ),
+		mGLID ( glid ) {
+	}
+
+public:
+
+	enum {
+		BUFFER,
+		FRAMEBUFFER,
+		PROGRAM,
+		SHADER,
+		TEXTURE,
+		RENDERBUFFER,
+		VERTEXARRAY,
+	};
+	
+	//----------------------------------------------------------------//
+					ZLGfxHandle				() {}
+					~ZLGfxHandle			() {}
+};
+
+//================================================================//
+// ZLGfx
+//================================================================//
+class ZLGfx {	
+public:
+
+	// api for drawing
+
+	//----------------------------------------------------------------//
+	virtual void				ActiveTexture				( u32 textureUnit ) = 0;
+	virtual void				AttachShader				( ZLGfxHandle* program, ZLGfxHandle* shader ) = 0;
+	
+	virtual void				BindAttribLocation			( ZLGfxHandle* program, u32 index, cc8* name ) = 0;
+	
+	virtual void				BindBuffer					( u32 target, ZLGfxHandle* buffer ) = 0;
+	virtual void				BindFramebuffer				( u32 target, ZLGfxHandle* frameBuffer ) = 0;
+	virtual void				BindRenderbuffer			( ZLGfxHandle* renderbuffer ) = 0;
+	virtual void				BindTexture					( ZLGfxHandle* texID ) = 0;
+	virtual void				BindVertexArray				( ZLGfxHandle* vertexArrayID ) = 0;
+	
+	virtual void				BlendFunc					( u32 sourceFactor, u32 destFactor ) = 0;
+	virtual void				BlendMode					( u32 mode ) = 0;
+	
+	virtual void				BufferData					( u32 target, u32 size, const void* data, u32 usage ) = 0;
+	virtual void				BufferSubData				( u32 target, u32 offset, u32 size, const void* data ) = 0;
+	
+	virtual void				Clear						( u32 mask ) = 0;
+	virtual void				ClearColor					( float r, float g, float b, float a ) = 0;
+	virtual void				Color						( float r, float g, float b, float a ) = 0;
+	
+	virtual void				CompileShader				( ZLGfxHandle* shader ) = 0;
+	
+	virtual ZLGfxHandle*		CreateBuffer				() = 0;
+	virtual ZLGfxHandle*		CreateFramebuffer			() = 0;
+	virtual ZLGfxHandle*		CreateProgram				() = 0;
+	virtual ZLGfxHandle*		CreateRenderbuffer			() = 0;
+	virtual ZLGfxHandle*		CreateShader				( u32 shaderType ) = 0;
+	virtual ZLGfxHandle*		CreateTexture				() = 0;
+	virtual ZLGfxHandle*		CreateVertexArray			() = 0;
+	
+	virtual void				CullFace					( u32 mode ) = 0;
+	
+	virtual void				DeleteHandle				( ZLGfxHandle* handle ) = 0;
+	
+	virtual void				DepthFunc					( u32 depthFunc ) = 0;
+	virtual void				DepthMask					( bool flag ) = 0;
+	virtual void				Disable						( u32 cap ) = 0;
+	virtual void				DisableClientState			( u32 cap ) = 0;
+	virtual void				DisableVertexAttribArray	( u32 index ) = 0;
+	virtual void				DrawArrays					( u32 primType, u32 first, u32 count ) = 0;
+	virtual void				DrawElements				( u32 primType, u32 count, u32 indexType, const void* indices ) = 0;
+	virtual void				Enable						( u32 cap ) = 0;
+	virtual void				EnableClientState			( u32 cap ) = 0;
+	virtual void				EnableVertexAttribArray		( u32 index ) = 0;
+	virtual void				Flush						() = 0;
+	virtual void				FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer ) = 0;
+	virtual void				FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level ) = 0;
+	virtual void				LineWidth					( float width ) = 0;
+	
+	virtual void				LinkProgram					( ZLGfxHandle* program ) = 0;
+	
+	virtual void				RenderbufferStorage			( u32 internalFormat, u32 width, u32 height ) = 0;
+	virtual void				Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;
+	
+	virtual void				ShaderSource				( ZLGfxHandle* shader, u32 count, const char** string, const s32* length ) = 0;
+	
+	virtual void				TexEnvi						( u32 pname, s32 param ) = 0;
+	virtual void				TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data ) = 0;
+	virtual void				TexParameteri				( u32 pname, s32 param ) = 0;
+	virtual void				TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data ) = 0;
+	virtual void				Uniform1f					( u32 location, float v0 ) = 0;
+	virtual void				Uniform1i					( u32 location, s32 v0 ) = 0;
+	virtual void				Uniform4fv					( u32 location, u32 count, const float* value ) = 0;
+	virtual void				UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
+	virtual void				UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
+	virtual void				UseProgram					( ZLGfxHandle* program ) = 0;
+	virtual void				VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) = 0;
+	virtual void				Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;
+								ZLGfx						() {}
+	virtual						~ZLGfx						() {}
+};
+
+#endif

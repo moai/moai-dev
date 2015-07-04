@@ -191,11 +191,13 @@ void MOAIGfxBuffer::OnGPUBind () {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 	}
 	
-	u32 vbo = this->mVBOs [ this->mCurrentVBO ];
+	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
 	
 	if ( vbo ) {
 		
-		zglBindBuffer ( this->mTarget, vbo );
+		ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+		
+		gfx.BindBuffer ( this->mTarget, vbo );
 		
 		if ( dirty ) {
 			
@@ -208,7 +210,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 			//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 			//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 			
-			zglBufferSubData ( this->mTarget, 0, this->GetCursor (), this->mData );
+			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->mData );
 			
 			this->mNeedsFlush = false;
 		}
@@ -224,14 +226,16 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 	u32 count = 0;
 	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		
-		u32 vbo = zglCreateBuffer ();
+		ZLGfxHandle* vbo = gfx.CreateBuffer ();
 		if ( vbo ) {
 		
-			zglBindBuffer ( this->mTarget, vbo );
-			zglBufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->mData : 0, hint );
-			zglBindBuffer ( this->mTarget, 0 );
+			gfx.BindBuffer ( this->mTarget, vbo );
+			gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->mData : 0, hint );
+			gfx.BindBuffer ( this->mTarget, 0 );
 			
 			count++;
 		}
@@ -245,7 +249,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 void MOAIGfxBuffer::OnGPUDestroy () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVBOs [ i ]);
+		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVBOs [ i ]);
 		this->mVBOs [ i ] = 0;
 	}
 }
@@ -261,7 +265,7 @@ void MOAIGfxBuffer::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	zglBindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxDevice::GetAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
 }
 
 //----------------------------------------------------------------//

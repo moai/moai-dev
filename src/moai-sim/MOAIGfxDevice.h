@@ -116,13 +116,17 @@ public:
 	
 	void			SetBufferScale			( float scale );
 	void			SetBufferSize			( u32 width, u32 height );
-	
-	void			SetScreenSpace			( MOAIViewport& viewport );
 
 	void			SetViewRect				();
 	void			SetViewRect				( ZLRect rect );
 		
 	void			UpdateShaderGlobals		();
+	
+	//----------------------------------------------------------------//
+	static ZLGfx& GetAPI () {
+	
+		return MOAIGfxDevice::Get ().GetAPI ();
+	}
 };
 
 #endif

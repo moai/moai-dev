@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
+#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIShaderUniform.h>
 
 //================================================================//
@@ -389,30 +390,32 @@ void MOAIShaderUniform::Bind () {
 
 	if ( this->mAddr == ZGL_INVALID_UNIFORM_ADDR ) return;
 
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
 	switch ( this->mType ) {
 
 		case UNIFORM_FLOAT:
-			zglUniform1f ( this->mAddr, this->mFloat );
+			gfx.Uniform1f ( this->mAddr, this->mFloat );
 			break;
 
 		case UNIFORM_INDEX:
-			zglUniform1i ( this->mAddr, this->mInt - 1 );
+			gfx.Uniform1i ( this->mAddr, this->mInt - 1 );
 			break;
 
 		case UNIFORM_INT:
-			zglUniform1i ( this->mAddr, this->mInt );
+			gfx.Uniform1i ( this->mAddr, this->mInt );
 			break;
 
 		case UNIFORM_MATRIX_F3:
-    		zglUniformMatrix3fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+    		gfx.UniformMatrix3fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
     		break;
 
 		case UNIFORM_MATRIX_F4:
-			zglUniformMatrix4fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+			gfx.UniformMatrix4fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
 			break;
 
 		case UNIFORM_VECTOR_F4:
-			zglUniform4fv ( this->mAddr, 1, ( float* )this->mBuffer.Data ());
+			gfx.Uniform4fv ( this->mAddr, 1, ( float* )this->mBuffer.Data ());
 			break;
 	}
 }

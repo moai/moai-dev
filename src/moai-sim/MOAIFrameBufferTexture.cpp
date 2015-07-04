@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
@@ -94,66 +95,70 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	this->mBufferWidth = this->mWidth;
 	this->mBufferHeight = this->mHeight;
 	
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	
 	// bail and retry (no error) if GL cannot generate buffer ID
-	this->mGLFrameBufferID = zglCreateFramebuffer ();
+	this->mGLFrameBufferID = gfx.CreateFramebuffer ();
 	if ( !this->mGLFrameBufferID ) return false;
 	
 	if ( this->mColorFormat ) {
-		this->mGLColorBufferID = zglCreateRenderbuffer ();
-		zglBindRenderbuffer ( this->mGLColorBufferID );
-		zglRenderbufferStorage ( this->mColorFormat, this->mWidth, this->mHeight );
+		this->mGLColorBufferID = gfx.CreateRenderbuffer ();
+		gfx.BindRenderbuffer ( this->mGLColorBufferID );
+		gfx.RenderbufferStorage ( this->mColorFormat, this->mWidth, this->mHeight );
 	}
 	
 	if ( this->mDepthFormat ) {
-		this->mGLDepthBufferID = zglCreateRenderbuffer ();
-		zglBindRenderbuffer ( this->mGLDepthBufferID );
-		zglRenderbufferStorage ( this->mDepthFormat, this->mWidth, this->mHeight );
+		this->mGLDepthBufferID = gfx.CreateRenderbuffer ();
+		gfx.BindRenderbuffer ( this->mGLDepthBufferID );
+		gfx.RenderbufferStorage ( this->mDepthFormat, this->mWidth, this->mHeight );
 	}
 	
 	if ( this->mStencilFormat ) {
-		this->mGLStencilBufferID = zglCreateRenderbuffer ();
-		zglBindRenderbuffer ( this->mGLStencilBufferID );
-		zglRenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
+		this->mGLStencilBufferID = gfx.CreateRenderbuffer ();
+		gfx.BindRenderbuffer ( this->mGLStencilBufferID );
+		gfx.RenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
 	}
 	
-	zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBufferID );
+	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBufferID );
 	
 	if ( this->mGLColorBufferID ) {
-		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBufferID );
+		gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBufferID );
 	}
 	
 	if ( this->mGLDepthBufferID ) {
-		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
+		gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
 	}
 	
 	if ( this->mGLStencilBufferID ) {
-		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
+		gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
 	}
 	
+	// TODO: GFX
+	
 	// TODO: handle error; clear
-	u32 status = zglCheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
+//	u32 status = gfx.CheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
+//	
+//	if ( status == ZGL_FRAMEBUFFER_STATUS_COMPLETE ) {
 	
-	if ( status == ZGL_FRAMEBUFFER_STATUS_COMPLETE ) {
-	
-		this->mGLTexID = zglCreateTexture ();
-		zglBindTexture ( this->mGLTexID );
-		zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
-		zglFramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
+		this->mGLTexID = gfx.CreateTexture ();
+		gfx.BindTexture ( this->mGLTexID );
+		gfx.TexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
+		gfx.FramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
 				
 		// refresh tex params on next bind
 		this->mIsDirty = true;
 		
         // clearing framebuffer because it might contain garbage
-        zglClearColor ( 0, 0, 0, 0 );
-        zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
+        gfx.ClearColor ( 0, 0, 0, 0 );
+        gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 		
 		return true;
-	}
+//	}
 	
-	zglDeleteFramebuffer ( this->mGLFrameBufferID );
-	zglDeleteRenderbuffer ( this->mGLColorBufferID );
-	zglDeleteRenderbuffer ( this->mGLDepthBufferID );
-	zglDeleteRenderbuffer ( this->mGLStencilBufferID );
+	gfx.DeleteHandle ( this->mGLFrameBufferID );
+	gfx.DeleteHandle ( this->mGLColorBufferID );
+	gfx.DeleteHandle ( this->mGLDepthBufferID );
+	gfx.DeleteHandle ( this->mGLStencilBufferID );
 	
 	return false;
 }
@@ -161,16 +166,16 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::OnGPUDestroy () {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
 	this->mGLFrameBufferID = 0;
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLColorBufferID );
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLColorBufferID );
 	this->mGLColorBufferID = 0;
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLDepthBufferID );
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLDepthBufferID );
 	this->mGLDepthBufferID = 0;
 	
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLStencilBufferID );
 	this->mGLStencilBufferID = 0;
 	
 	this->MOAISingleTexture::OnGPUDestroy ();

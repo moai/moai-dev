@@ -105,7 +105,7 @@ void MOAIClearableView::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		zglClearColor (
+		MOAIGfxDevice::GetAPI ().ClearColor (
 			clearColor.mR,
 			clearColor.mG,
 			clearColor.mB,
@@ -255,7 +255,10 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
-	this->mGLFrameBufferID = zglGetCurrentFramebuffer ();
+
+	// TODO: GFX
+
+	//this->mGLFrameBufferID = ZLGfxDevice::GetCurrentFramebuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -273,28 +276,30 @@ ZLRect MOAIFrameBuffer::GetBufferRect () const {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
 
-	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
+	// TODO: GFX
 
-	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
-
-	//image is flipped vertically, flip it back
-	int index,indexInvert;
-	for ( u32 y = 0; y < ( this->mBufferHeight / 2 ); ++y ) {
-		for ( u32 x = 0; x < this->mBufferWidth; ++x ) {
-			for ( u32 i = 0; i < 4; ++i ) {
-
-				index = i + ( x * 4 ) + ( y * this->mBufferWidth * 4 );
-				indexInvert = i + ( x * 4 ) + (( this->mBufferHeight - 1 - y ) * this->mBufferWidth * 4 );
-
-				unsigned char temp = buffer [ indexInvert ];
-				buffer [ indexInvert ] = buffer [ index ];
-				buffer [ index ] = temp;
-			}
-		}
-	}
-
-	image->Init ( buffer, this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
-	free ( buffer );
+//	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
+//
+//	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
+//
+//	//image is flipped vertically, flip it back
+//	int index,indexInvert;
+//	for ( u32 y = 0; y < ( this->mBufferHeight / 2 ); ++y ) {
+//		for ( u32 x = 0; x < this->mBufferWidth; ++x ) {
+//			for ( u32 i = 0; i < 4; ++i ) {
+//
+//				index = i + ( x * 4 ) + ( y * this->mBufferWidth * 4 );
+//				indexInvert = i + ( x * 4 ) + (( this->mBufferHeight - 1 - y ) * this->mBufferWidth * 4 );
+//
+//				unsigned char temp = buffer [ indexInvert ];
+//				buffer [ indexInvert ] = buffer [ index ];
+//				buffer [ index ] = temp;
+//			}
+//		}
+//	}
+//
+//	image->Init ( buffer, this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
+//	free ( buffer );
 }
 
 //----------------------------------------------------------------//
@@ -419,7 +424,7 @@ void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::SetGLFrameBufferID ( u32 frameBufferID ){
+void MOAIFrameBuffer::SetGLFrameBufferID ( ZLGfxHandle* frameBufferID ){
   this->mGLFrameBufferID = frameBufferID;
 }
 

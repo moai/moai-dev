@@ -4,6 +4,7 @@
 #include <zl-vfs/assert.h>
 #include "pch.h"
 #include <zl-gfx/headers.h>
+#include <zl-gfx/zl_gfx_enum.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 
@@ -487,7 +488,7 @@ void zglInitialize () {
 		}
 	#endif
 
-	string version = zglGetString ( ZGL_STRING_VERSION );
+	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
 	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
 	
 	string gles = "opengl es";
@@ -826,17 +827,6 @@ void zglViewport ( s32 x, s32 y, u32 w, u32 h ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void zglColorPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
-
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glColorPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
-	#endif
-}
-
-//----------------------------------------------------------------//
 void zglDisableClientState ( u32 cap ) {
 
 
@@ -855,27 +845,6 @@ void zglDisableVertexAttribArray ( u32 index ) {
 }
 
 //----------------------------------------------------------------//
-void zglNormalPointer ( u32 type, u32 stride, const void* pointer ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glNormalPointer ( _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglTexCoordPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
-
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glTexCoordPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
-	#endif
-}
-
-//----------------------------------------------------------------//
 void zglVertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) {
 
 	ASSERT_OPERATION_DEPTH ();
@@ -888,16 +857,6 @@ void zglVertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u3
 		( GLsizei )stride,
 		( const GLvoid* )pointer
 	);
-}
-
-//----------------------------------------------------------------//
-void zglVertexPointer ( u32 size, u32 type, u32 stride, const void* pointer ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glVertexPointer (( GLint )size, _remapEnum ( type ), ( GLsizei )stride, ( const GLvoid* )pointer );
-	#endif
 }
 
 //----------------------------------------------------------------//

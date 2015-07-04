@@ -139,7 +139,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 void MOAIGfxDevice::ClearErrors () {
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			while ( zglGetError () != ZGL_ERROR_NONE );
+			while ( ZLGfxDevice::GetError () != ZGL_ERROR_NONE );
 		}
 	#endif
 }
@@ -149,12 +149,12 @@ void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
 
 	if ( clearFlags ) {
 		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
-			zglDepthMask ( true );
-			zglClear ( clearFlags );
-			zglDepthMask ( false );
+			this->mGfx->DepthMask ( true );
+			this->mGfx->Clear ( clearFlags );
+			this->mGfx->DepthMask ( false );
 		}
 		else {
-			zglClear ( clearFlags );
+			this->mGfx->Clear ( clearFlags );
 		}
 	}
 }
@@ -164,31 +164,31 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mHasContext = true;
 	
-	zglBegin ();
+	ZLGfxDevice::Begin ();
 	
-	zglInitialize ();
+	ZLGfxDevice::Initialize ();
 	
-	u32 maxTextureUnits = zglGetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
+	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
 	this->mTextureUnits.Init ( maxTextureUnits );
 	this->mTextureUnits.Fill ( 0 );
 	
-	this->mMaxTextureSize = zglGetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
+	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
-	zglEnd ();
+	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectFramebuffer () {
 	
-	zglBegin ();
+	ZLGfxDevice::Begin ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
-	zglEnd ();
+	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
@@ -245,8 +245,8 @@ u32 MOAIGfxDevice::LogErrors () {
 	u32 count = 0;
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			for ( u32 error = zglGetError (); error != ZGL_ERROR_NONE; error = zglGetError (), ++count ) {
-				MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, zglGetErrorString ( error ));
+			for ( u32 error = ZLGfxDevice::GetError (); error != ZGL_ERROR_NONE; error = ZLGfxDevice::GetError (), ++count ) {
+				MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, ZLGfxDevice::GetErrorString ( error ));
 			}
 		}
 	#endif
@@ -351,19 +351,19 @@ void MOAIGfxDevice::ResetState () {
 	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
-	zglDisable ( ZGL_PIPELINE_BLEND );
+	this->mGfx->Disable ( ZGL_PIPELINE_BLEND );
 	this->mBlendEnabled = false;
 	
 	// disable backface culling
-	zglDisable ( ZGL_PIPELINE_CULL );
+	this->mGfx->Disable ( ZGL_PIPELINE_CULL );
 	this->mCullFunc = 0;
 	
 	// disable depth test
-	zglDisable ( ZGL_PIPELINE_DEPTH );
+	this->mGfx->Disable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
 	// disable depth write
-	zglDepthMask ( false );
+	this->mGfx->DepthMask ( false );
 	this->mDepthMask = false;
 	
 	// clear the vertex format
@@ -374,11 +374,11 @@ void MOAIGfxDevice::ResetState () {
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
-	zglLineWidth ( this->mPenWidth );
+	this->mGfx->LineWidth ( this->mPenWidth );
 	
 	// reset the scissor rect
 	ZLRect scissorRect = this->mCurrentFrameBuffer->GetBufferRect ();
-	zglScissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
+	this->mGfx->Scissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
 	
 	this->mScissorRect = scissorRect;
 }
@@ -393,22 +393,6 @@ void MOAIGfxDevice::SetBufferScale ( float scale ) {
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
 	this->mDefaultFrameBuffer->SetBufferSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
-	UNUSED ( viewport );
-
-	// TODO
-
-	//glMatrixMode ( GL_MODELVIEW );
-	//glLoadIdentity ();
-	//
-	//ZLMatrix4x4 wndToNorm;
-	//viewport.GetWndToNormMtx ( wndToNorm );
-	//
-	//glMatrixMode ( GL_PROJECTION );
-	//MOAIGfxDevice::LoadMatrix ( wndToNorm );
 }
 
 //----------------------------------------------------------------//
@@ -436,7 +420,7 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	u32 w = ( u32 )( deviceRect.Width () + 0.5f );
 	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 	
-	zglViewport ( x, y, w, h );
+	this->mGfx->Viewport ( x, y, w, h );
 	
 	this->mViewRect = rect;
 	this->mShaderDirty = true;
