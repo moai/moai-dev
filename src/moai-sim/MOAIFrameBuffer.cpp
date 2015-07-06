@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -256,9 +257,7 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
-	// TODO: GFX
-
-	//this->mGLFrameBufferID = ZLGfxDevice::GetCurrentFramebuffer ();
+	this->mGLFrameBufferID = MOAIGfxDevice::GetAPI ().GetCurrentFramebuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -320,6 +319,9 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
+
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
+	this->mGLFrameBufferID = 0;
 
 	this->mFrameImage.Set ( *this, 0 );
 }

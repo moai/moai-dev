@@ -11,6 +11,15 @@
 //================================================================//
 class ZLGfxImmediate :
 	public ZLGfx {
+private:
+
+	friend class ZLGfxRetained;
+
+	bool	mError;
+
+	//----------------------------------------------------------------//
+	void					Create						( ZLGfxHandle* handle, u32 param );
+
 public:
 
 	//----------------------------------------------------------------//
@@ -29,11 +38,14 @@ public:
 	void					BlendMode					( u32 mode );
 	void					BufferData					( u32 target, u32 size, const void* data, u32 usage );
 	void					BufferSubData				( u32 target, u32 offset, u32 size, const void* data );
+
+	void					CheckFramebufferStatus		( u32 target );
+
 	void					Clear						( u32 mask );
 	void					ClearColor					( float r, float g, float b, float a );
 	void					Color						( float r, float g, float b, float a );
 	
-	void					CompileShader				( ZLGfxHandle* shader );
+	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -60,9 +72,17 @@ public:
 	void					Flush						();
 	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
+	
+	ZLGfxHandle*			GetCurrentFramebuffer		();
+	
 	void					LineWidth					( float width );
 	
-	void					LinkProgram					( ZLGfxHandle* program );
+	void					LinkProgram					( ZLGfxHandle* program, bool verbose );
+	
+	void					PopSection					();
+	bool					PushErrorHandler			();
+	void					PushSection					();
+	bool					PushSuccessHandler			();
 	
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
@@ -81,6 +101,8 @@ public:
 	void					UseProgram					( ZLGfxHandle* program );
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );
+							ZLGfxImmediate				();
+							~ZLGfxImmediate				();
 };
 
 #endif

@@ -133,12 +133,14 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 		gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
 	}
 	
-	// TODO: GFX
+	gfx.PushSection ();
 	
 	// TODO: handle error; clear
-//	u32 status = gfx.CheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
-//	
-//	if ( status == ZGL_FRAMEBUFFER_STATUS_COMPLETE ) {
+	gfx.CheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
+	
+	bool status = false;
+	
+	if ( gfx.PushSuccessHandler ()) {
 	
 		this->mGLTexID = gfx.CreateTexture ();
 		gfx.BindTexture ( this->mGLTexID );
@@ -152,15 +154,20 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
         gfx.ClearColor ( 0, 0, 0, 0 );
         gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 		
-		return true;
-//	}
+		status = true;
+	}
 	
-	gfx.DeleteHandle ( this->mGLFrameBufferID );
-	gfx.DeleteHandle ( this->mGLColorBufferID );
-	gfx.DeleteHandle ( this->mGLDepthBufferID );
-	gfx.DeleteHandle ( this->mGLStencilBufferID );
+	if ( gfx.PushErrorHandler ()) {
 	
-	return false;
+		gfx.DeleteHandle ( this->mGLFrameBufferID );
+		gfx.DeleteHandle ( this->mGLColorBufferID );
+		gfx.DeleteHandle ( this->mGLDepthBufferID );
+		gfx.DeleteHandle ( this->mGLStencilBufferID );
+	}
+
+	gfx.PopSection ();
+	
+	return status;
 }
 
 //----------------------------------------------------------------//

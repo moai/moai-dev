@@ -125,7 +125,7 @@ public:
 	//----------------------------------------------------------------//
 	static ZLGfx& GetAPI () {
 	
-		return MOAIGfxDevice::Get ().GetAPI ();
+		return *MOAIGfxDevice::Get ().mGfx;
 	}
 };
 

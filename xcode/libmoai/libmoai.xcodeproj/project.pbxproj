@@ -3730,6 +3730,14 @@
 		CDA132691B478F9A0044E1B0 /* ZLGfxDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */; };
 		CDA1326B1B47AC090044E1B0 /* ZLGfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */; };
 		CDA1326C1B47AC090044E1B0 /* ZLGfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */; };
+		CDA1327E1B4A341B0044E1B0 /* ZLRevBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1327A1B4A341B0044E1B0 /* ZLRevBuffer.cpp */; };
+		CDA1327F1B4A341B0044E1B0 /* ZLRevBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1327A1B4A341B0044E1B0 /* ZLRevBuffer.cpp */; };
+		CDA132801B4A341B0044E1B0 /* ZLRevBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1327B1B4A341B0044E1B0 /* ZLRevBuffer.h */; };
+		CDA132811B4A341B0044E1B0 /* ZLRevBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1327B1B4A341B0044E1B0 /* ZLRevBuffer.h */; };
+		CDA132821B4A341B0044E1B0 /* ZLRevBufferStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1327C1B4A341B0044E1B0 /* ZLRevBufferStream.cpp */; };
+		CDA132831B4A341B0044E1B0 /* ZLRevBufferStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1327C1B4A341B0044E1B0 /* ZLRevBufferStream.cpp */; };
+		CDA132841B4A341B0044E1B0 /* ZLRevBufferStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1327D1B4A341B0044E1B0 /* ZLRevBufferStream.h */; };
+		CDA132851B4A341B0044E1B0 /* ZLRevBufferStream.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1327D1B4A341B0044E1B0 /* ZLRevBufferStream.h */; };
 		CDADCCF81A3576A10029FEDA /* MOAITrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */; };
 		CDADCCF91A3576A10029FEDA /* MOAITrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */; };
 		CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDADCCF71A3576A10029FEDA /* MOAITrace.h */; };
@@ -7816,6 +7824,10 @@
 		CDA132641B478F9A0044E1B0 /* ZLGfxDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxDevice.cpp; sourceTree = "<group>"; };
 		CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxDevice.h; sourceTree = "<group>"; };
 		CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfx.cpp; sourceTree = "<group>"; };
+		CDA1327A1B4A341B0044E1B0 /* ZLRevBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRevBuffer.cpp; sourceTree = "<group>"; };
+		CDA1327B1B4A341B0044E1B0 /* ZLRevBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLRevBuffer.h; sourceTree = "<group>"; };
+		CDA1327C1B4A341B0044E1B0 /* ZLRevBufferStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRevBufferStream.cpp; sourceTree = "<group>"; };
+		CDA1327D1B4A341B0044E1B0 /* ZLRevBufferStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLRevBufferStream.h; sourceTree = "<group>"; };
 		CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-billing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B8241808AC6E000129F9 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B89A1808AC82000129F9 /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9110,6 +9122,7 @@
 				CD17563D1A199905009C430A /* math */,
 				CD1756411A1999E8009C430A /* os */,
 				CD1756401A19998D009C430A /* parser */,
+				CDA132791B4A33E10044E1B0 /* revbuffer */,
 				CDB718A81A44E71D003DFFBA /* socket */,
 				CD17563E1A19990B009C430A /* stl */,
 				CDF0D37B19FCCC7C001C64C5 /* stream */,
@@ -12505,6 +12518,17 @@
 			name = "moai-audio-sampler";
 			sourceTree = "<group>";
 		};
+		CDA132791B4A33E10044E1B0 /* revbuffer */ = {
+			isa = PBXGroup;
+			children = (
+				CDA1327A1B4A341B0044E1B0 /* ZLRevBuffer.cpp */,
+				CDA1327B1B4A341B0044E1B0 /* ZLRevBuffer.h */,
+				CDA1327C1B4A341B0044E1B0 /* ZLRevBufferStream.cpp */,
+				CDA1327D1B4A341B0044E1B0 /* ZLRevBufferStream.h */,
+			);
+			name = revbuffer;
+			sourceTree = "<group>";
+		};
 		CDA4B7331808AB19000129F9 /* moai-ios-billing */ = {
 			isa = PBXGroup;
 			children = (
@@ -14006,6 +14030,7 @@
 				89BE695F173974FD00DFE837 /* STLArray.h in Headers */,
 				89BE6961173974FD00DFE837 /* STLIteration.h in Headers */,
 				CDA132681B478F9A0044E1B0 /* ZLGfxDevice.h in Headers */,
+				CDA132841B4A341B0044E1B0 /* ZLRevBufferStream.h in Headers */,
 				89BE6963173974FD00DFE837 /* STLList.h in Headers */,
 				89BE6965173974FD00DFE837 /* STLMap.h in Headers */,
 				CDA132561B47873A0044E1B0 /* ZLGfxRetained.h in Headers */,
@@ -14052,6 +14077,7 @@
 				89BE6A0B173974FD00DFE837 /* ZLLeanPool.h in Headers */,
 				89BE6A0D173974FD00DFE837 /* ZLLeanStack.h in Headers */,
 				89BE6A11173974FD00DFE837 /* ZLLexStream.h in Headers */,
+				CDA132801B4A341B0044E1B0 /* ZLRevBuffer.h in Headers */,
 				89BE6A13173974FD00DFE837 /* ZLList.h in Headers */,
 				89BE6A17173974FD00DFE837 /* ZLLog.h in Headers */,
 				89BE6A19173974FD00DFE837 /* ZLMathConsts.h in Headers */,
@@ -14119,6 +14145,7 @@
 				89BE696E173974FD00DFE837 /* ZLAccessors.h in Headers */,
 				89BE6970173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
 				CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */,
+				CDA132851B4A341B0044E1B0 /* ZLRevBufferStream.h in Headers */,
 				CDA132601B478B650044E1B0 /* zl_gfx_enum.h in Headers */,
 				89BE6976173974FD00DFE837 /* ZLAffine2D.h in Headers */,
 				89BE6978173974FD00DFE837 /* ZLAffine3D.h in Headers */,
@@ -14126,6 +14153,7 @@
 				89BE6980173974FD00DFE837 /* ZLBase64Reader.h in Headers */,
 				89BE6984173974FD00DFE837 /* ZLBase64Writer.h in Headers */,
 				CDE440151AC0D27600C745DB /* ZLFrustum.h in Headers */,
+				CDA132811B4A341B0044E1B0 /* ZLRevBuffer.h in Headers */,
 				89BE6986173974FD00DFE837 /* ZLBinarySearch.h in Headers */,
 				89BE698A173974FD00DFE837 /* ZLBox.h in Headers */,
 				89BE698E173974FD00DFE837 /* ZLByteStream.h in Headers */,
@@ -17413,6 +17441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE694F173974FD00DFE837 /* pch.cpp in Sources */,
+				CDA1327E1B4A341B0044E1B0 /* ZLRevBuffer.cpp in Sources */,
 				89BE695B173974FD00DFE837 /* pch.cpp in Sources */,
 				89BE6969173974FD00DFE837 /* STLString.cpp in Sources */,
 				89BE6971173974FD00DFE837 /* ZLAdapterInfo_posix.cpp in Sources */,
@@ -17458,6 +17487,7 @@
 				89BE6A25173974FD00DFE837 /* ZLMercator.cpp in Sources */,
 				89BE6A29173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2D173974FD00DFE837 /* ZLPlane.cpp in Sources */,
+				CDA132821B4A341B0044E1B0 /* ZLRevBufferStream.cpp in Sources */,
 				CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
 				89BE6A31173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A39173974FD00DFE837 /* ZLPrism.cpp in Sources */,
@@ -17485,6 +17515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE6950173974FD00DFE837 /* pch.cpp in Sources */,
+				CDA1327F1B4A341B0044E1B0 /* ZLRevBuffer.cpp in Sources */,
 				89BE695C173974FD00DFE837 /* pch.cpp in Sources */,
 				89BE696A173974FD00DFE837 /* STLString.cpp in Sources */,
 				89BE6972173974FD00DFE837 /* ZLAdapterInfo_posix.cpp in Sources */,
@@ -17530,6 +17561,7 @@
 				89BE6A26173974FD00DFE837 /* ZLMercator.cpp in Sources */,
 				89BE6A2A173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2E173974FD00DFE837 /* ZLPlane.cpp in Sources */,
+				CDA132831B4A341B0044E1B0 /* ZLRevBufferStream.cpp in Sources */,
 				CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
 				89BE6A32173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A3A173974FD00DFE837 /* ZLPrism.cpp in Sources */,

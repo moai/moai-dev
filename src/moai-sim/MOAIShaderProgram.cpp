@@ -249,19 +249,16 @@ ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
 	sources [ 2 ] = source;
 
+	gfx.PushSection ();
+
 	gfx.ShaderSource ( shader, 3, sources, NULL );
-	gfx.CompileShader ( shader );
+	gfx.CompileShader ( shader, true );
 
-	// TODO: GFX
+	if ( gfx.PushErrorHandler ()) {
+		gfx.DeleteHandle ( shader );
+	}
 
-//	s32 status;
-//	gfx.GetShaderiv ( shader, ZGL_SHADER_INFO_COMPILE_STATUS, &status );
-//
-//	if ( status == 0 ) {
-//		this->PrintShaderLog ( shader );
-//		gfx.DeleteHandle ( shader );
-//		return 0;
-//	}
+	gfx.PopSection ();
 
 	return shader;
 }
@@ -378,26 +375,25 @@ bool MOAIShaderProgram::OnGPUCreate () {
 		gfx.BindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
 	}
 
-    // link program.
-	gfx.LinkProgram ( this->mProgram );
+	gfx.LinkProgram ( this->mProgram, true );
 
 	// TODO: GFX
 
 //	s32 status;
-//	gfx.GetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
+//	zglGetProgramiv ( this->mProgram->mGLID, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
 //
 //	if ( status == 0 ) {
-//		this->PrintProgramLog ( this->mProgram );
+//		this->PrintProgramLog ( this->mProgram->mGLID );
 //		this->Clear ();
 //		return false;
 //	}
-
+//
 //	// get the uniform locations and clear out the names (no longer needed)
 //	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
 //		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 //
 //		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
-//			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
+//			uniform.mAddr = zglGetUniformLocation ( this->mProgram->mGLID, uniform.mName );
 //			uniform.ClearValue ();
 //		}
 //	}
@@ -439,38 +435,6 @@ void MOAIShaderProgram::OnGPULost () {
 void MOAIShaderProgram::OnGPUUnbind () {
 
 	MOAIGfxDevice::GetAPI ().UseProgram ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::PrintShaderLog ( u32 shader ) {
-
-	// TODO: GFX
-
-//	s32 logLength;
-//	zglGetShaderiv ( shader, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
-//
-//	if ( logLength > 1 ) {
-//		char* log = ( char* )malloc ( logLength );
-//		zglGetShaderInfoLog ( shader, logLength, ( u32* )&logLength, log );
-//		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-//		free ( log );
-//	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::PrintProgramLog ( u32 program ) {
-
-	// TODO: GFX
-
-//	s32 logLength;
-//	zglGetProgramiv ( program, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
-//
-//	if ( logLength > 1 ) {
-//		char* log = ( char* )malloc ( logLength );
-//		zglGetProgramInfoLog ( program, logLength, ( u32* )&logLength, log );
-//		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-//		free ( log );
-//	}
 }
 
 //----------------------------------------------------------------//
@@ -668,31 +632,4 @@ void MOAIShaderProgram::UpdateGlobals () {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgram::Validate () {
-
-	// TODO: GFX
-
-//    s32 logLength;
-//
-//	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
-//
-//    gfxValidateProgram ( this->mProgram );
-//    zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_LOG_LENGTH, &logLength );
-//
-//    if ( logLength > 0 ) {
-//        char* log = ( char* )malloc ( logLength );
-//        zglGetProgramInfoLog ( this->mProgram, logLength, ( u32* )&logLength, log );
-//        MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
-//        free ( log );
-//    }
-//
-//	s32 status;
-//    zglGetProgramiv ( this->mProgram, ZGL_PROGRAM_INFO_VALIDATE_STATUS, &status );
-//    if ( status == 0 ) {
-//		return false;
-//	}
-	return true;
 }

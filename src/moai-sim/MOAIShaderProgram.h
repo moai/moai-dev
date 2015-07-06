@@ -82,8 +82,6 @@ protected:
 	//----------------------------------------------------------------//
 	ZLGfxHandle*	CompileShader				( u32 type, cc8* source );
 	u32				GetLoadingPolicy			();
-	void			PrintProgramLog				( u32 program );
-	void			PrintShaderLog				( u32 shader );
 	bool			OnCPUCreate					();
 	void			OnCPUDestroy				();
 	void			OnGPUBind					();
@@ -91,7 +89,6 @@ protected:
 	void			OnGPUDestroy				();
 	void			OnGPULost					();
 	void			OnGPUUnbind					();
-	bool			Validate					();
 
 public:
 

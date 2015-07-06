@@ -15,6 +15,7 @@ class MOAIVertexFormat;
 class MOAIGfxDeviceBase {
 protected:
 
+	ZLGfxRetained	mGfxRetained;
 	ZLGfxImmediate	mGfxImmediate;
 	ZLGfx*			mGfx;
 
@@ -34,9 +35,10 @@ public:
 	
 	GET ( u32, DrawCount, mDrawCount )
 	
-	GET ( ZLGfx&, API, *mGfx )
+	//GET ( ZLGfx&, API, *mGfx )
 	
 	//----------------------------------------------------------------//
+	void			Draw						();
 					MOAIGfxDeviceBase			();
 	virtual			~MOAIGfxDeviceBase			();
 };

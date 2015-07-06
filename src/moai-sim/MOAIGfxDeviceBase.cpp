@@ -14,6 +14,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxDeviceBase::Draw () {
+
+	this->mGfxRetained.Draw ( this->mGfxImmediate );
+	this->mGfxRetained.Reset ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
 	mGfx ( &this->mGfxImmediate ),
 	mShaderDirty ( false ),

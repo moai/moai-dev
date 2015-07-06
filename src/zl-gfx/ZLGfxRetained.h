@@ -70,6 +70,7 @@ private:
 		BLEND_MODE,
 		BUFFER_DATA,
 		BUFFER_SUB_DATA,
+		CHECK_FRAMEBUFFER_STATUS,
 		CLEAR,
 		CLEAR_COLOR,
 		COLOR,
@@ -90,6 +91,7 @@ private:
 		FLUSH,
 		FRAMEBUFFER_RENDERBUFFER,
 		FRAMEBUFFER_TEXTURE_2D,
+		GET_CURRENT_FRAMEBUFFER,
 		LINE_WIDTH,
 		LINK_PROGRAM,
 		RENDER_BUFFER_STORAGE,
@@ -112,6 +114,9 @@ private:
 	ZLMemStream		mMemStream;
 	ZLStream*		mStream;
 
+	//----------------------------------------------------------------//
+	void					Create						( ZLGfxHandle* handle, u32 param );
+
 public:
 
 	//----------------------------------------------------------------//
@@ -130,11 +135,14 @@ public:
 	void					BlendMode					( u32 mode );
 	void					BufferData					( u32 target, u32 size, const void* data, u32 usage );
 	void					BufferSubData				( u32 target, u32 offset, u32 size, const void* data );
+	
+	void					CheckFramebufferStatus		( u32 target );
+	
 	void					Clear						( u32 mask );
 	void					ClearColor					( float r, float g, float b, float a );
 	void					Color						( float r, float g, float b, float a );
 	
-	void					CompileShader				( ZLGfxHandle* shader );
+	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -162,9 +170,17 @@ public:
 	void					Flush						();
 	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
+	
+	ZLGfxHandle*			GetCurrentFramebuffer		();
+	
 	void					LineWidth					( float width );
 	
-	void					LinkProgram					( ZLGfxHandle* program );
+	void					LinkProgram					( ZLGfxHandle* program, bool verbose );
+	
+	void					PopSection					();
+	bool					PushErrorHandler			();
+	void					PushSection					();
+	bool					PushSuccessHandler			();
 	
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	void					Reset						();

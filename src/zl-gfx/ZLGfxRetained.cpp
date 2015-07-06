@@ -109,6 +109,39 @@ void ZLGfxRetained::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxRetained::BufferData ( u32 target, u32 size, const void* data, u32 usage ) {
+
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( BUFFER_DATA );
+	this->mStream->Write < u32 >( target );
+	this->mStream->Write < u32 >( size );
+	this->mStream->Write < const void* >( data );
+	this->mStream->Write < u32 >( usage );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
+
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( BUFFER_SUB_DATA );
+	this->mStream->Write < u32 >( target );
+	this->mStream->Write < u32 >( offset );
+	this->mStream->Write < u32 >( size );
+	this->mStream->Write < const void* >( data );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::CheckFramebufferStatus ( u32 target ) {
+
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( CHECK_FRAMEBUFFER_STATUS );
+	this->mStream->Write < u32 >( target );
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::Clear ( u32 mask ) {
 
 	assert ( this->mStream );
@@ -142,12 +175,23 @@ void ZLGfxRetained::Color ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader ) {
+void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( COMPILE_SHADER );
 	this->mStream->Write < ZLGfxHandle* >( shader );
+	this->mStream->Write < bool >( verbose );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::Create ( ZLGfxHandle* handle, u32 param ) {
+
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( CREATE );
+	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( param );
 }
 
 //----------------------------------------------------------------//
@@ -155,10 +199,11 @@ ZLGfxHandle* ZLGfxRetained::CreateBuffer () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -168,10 +213,11 @@ ZLGfxHandle* ZLGfxRetained::CreateFramebuffer () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -181,10 +227,11 @@ ZLGfxHandle* ZLGfxRetained::CreateProgram () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -194,10 +241,11 @@ ZLGfxHandle* ZLGfxRetained::CreateRenderbuffer () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -207,10 +255,11 @@ ZLGfxHandle* ZLGfxRetained::CreateShader ( u32 shaderType ) {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::SHADER, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::SHADER, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( shaderType );
 	
 	return handle;
 }
@@ -220,10 +269,11 @@ ZLGfxHandle* ZLGfxRetained::CreateTexture () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -233,10 +283,11 @@ ZLGfxHandle* ZLGfxRetained::CreateVertexArray () {
 
 	assert ( this->mStream );
 
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0 );
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0, false );
 	
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( 0 );
 	
 	return handle;
 }
@@ -318,7 +369,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 	
 		u32 command = this->mStream->Read < u32 >( UNKNOWN );
 	
-		if ( command == UNKNOWN ) break;
+		if ( command == UNKNOWN ) {
+			printf ( "UNKOWN\n" );
+			break;
+		}
 	
 		switch ( command ) {
 	
@@ -329,11 +383,25 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case ATTACH_SHADER: {
-				// TODO: GFX
+				draw.AttachShader (
+					this->mStream->Read < ZLGfxHandle* >( 0 ),
+					this->mStream->Read < ZLGfxHandle* >( 0 )
+				);
 				break;
 			}
 			case BIND_ATTRIB_LOCATION: {
-				// TODO: GFX
+			
+				ZLGfxHandle* handle		= this->mStream->Read < ZLGfxHandle* >( 0 );
+				u32 index				= this->mStream->Read < u32 >( 0 );
+	
+				size_t size				= this->mStream->Read < size_t >( 0 );
+				
+				char* name = ( char* )alloca ( size + 1 );
+				this->mStream->ReadBytes ( name, size );
+				name [ size ] = 0;
+				
+				draw.BindAttribLocation ( handle, index, name );
+				
 				break;
 			}
 			case BIND_BUFFER: {
@@ -381,6 +449,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				);
 				break;
 			}
+			case CHECK_FRAMEBUFFER_STATUS: {
+				// TODO: GFX
+				break;
+			}
 			case CLEAR: {
 				draw.Clear (
 					this->mStream->Read < u32 >( 0 )
@@ -406,17 +478,29 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case COMPILE_SHADER: {
-				// TODO: GFX
+				draw.CompileShader (
+					this->mStream->Read < ZLGfxHandle* >( 0 ),
+					this->mStream->Read < bool >( true )
+				);
 				break;
 			}
 			case CREATE: {
-				// TODO: GFX
+			
+				ZLGfxHandle* handle = this->mStream->Read < ZLGfxHandle* >( 0 );
+				u32 param = this->mStream->Read < u32 >( 0 );
+				draw.Create ( handle, param );
 				break;
 			}
 			case CULL_FACE: {
 				draw.CullFace (
 					this->mStream->Read < u32 >( 0 )
 				);
+				break;
+			}
+			case DELETE: {
+			
+				ZLGfxHandle* handle = this->mStream->Read < ZLGfxHandle* >( 0 );
+				draw.DeleteHandle ( handle );
 				break;
 			}
 			case DEPTH_FUNC: {
@@ -458,7 +542,12 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case DRAW_ELEMENTS: {
-				// TODO: GFX
+				draw.DrawElements (
+					this->mStream->Read < u32 >( 0 ),
+					this->mStream->Read < u32 >( 0 ),
+					this->mStream->Read < u32 >( 0 ),
+					this->mStream->Read < const void* >( 0 )
+				);
 				break;
 			}
 			case ENABLE: {
@@ -491,6 +580,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				// TODO: GFX
 				break;
 			}
+			case GET_CURRENT_FRAMEBUFFER: {
+				// TODO: GFX
+				break;
+			}
 			case LINE_WIDTH: {
 				draw.LineWidth (
 					this->mStream->Read < float >( 0 )
@@ -498,7 +591,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case LINK_PROGRAM: {
-				// TODO: GFX
+				draw.LinkProgram (
+					this->mStream->Read < ZLGfxHandle* >( 0 ),
+					this->mStream->Read < bool >( true )
+				);
 				break;
 			}
 			case RENDER_BUFFER_STORAGE: {
@@ -515,7 +611,26 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case SHADER_SOURCE: {
-				// TODO: GFX
+			
+				ZLGfxHandle* handle		= this->mStream->Read < ZLGfxHandle* >( 0 );
+				u32 count				= this->mStream->Read < s32 >( 0 );
+				const char** strBuffer	= this->mStream->Read < const char** >( 0 );
+				s32* lenBuffer			= this->mStream->Read < s32* >( 0 );
+			
+				draw.ShaderSource (
+					handle,
+					count,
+					strBuffer,
+					lenBuffer
+				);
+				
+				if ( strBuffer ) {
+					free ( strBuffer );
+				}
+				
+				if ( lenBuffer ) {
+					free ( lenBuffer );
+				}
 				break;
 			}
 			case TEX_ENVI: {
@@ -526,7 +641,17 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case TEX_IMAGE_2D: {
-				// TODO: GFX
+			
+				u32 level				= this->mStream->Read < u32 >( 0 );
+				u32 internalFormat		= this->mStream->Read < u32 >( 0 );
+				u32 width				= this->mStream->Read < u32 >( 0 );
+				u32 height				= this->mStream->Read < u32 >( 0 );
+				u32 format				= this->mStream->Read < u32 >( 0 );
+				u32 type				= this->mStream->Read < u32 >( 0 );
+				void* data				= this->mStream->Read < void* >( 0 );
+				
+				draw.TexImage2D ( level, internalFormat, width, height, format, type, data );
+				
 				break;
 			}
 			case TEX_PARAMETERI: {
@@ -592,9 +717,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case USE_PROGRAM: {
-//				draw.UseProgram (
-//					this->mStream->Read < u32 >( 0 )
-//				);
+				draw.UseProgram (
+					this->mStream->Read < ZLGfxHandle* >( 0 )
+				);
 				break;
 			}
 			case VERTEX_ATTRIB_POINTER: {
@@ -644,30 +769,6 @@ void ZLGfxRetained::DrawElements ( u32 primType, u32 count, u32 indexType, const
 	this->mStream->Write < u32 >( count );
 	this->mStream->Write < u32 >( indexType );
 	this->mStream->Write < const void* >( indices );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::BufferData ( u32 target, u32 size, const void* data, u32 usage ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( BUFFER_DATA );
-	this->mStream->Write < u32 >( target );
-	this->mStream->Write < u32 >( size );
-	this->mStream->Write < const void* >( data );
-	this->mStream->Write < u32 >( usage );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( BUFFER_SUB_DATA );
-	this->mStream->Write < u32 >( target );
-	this->mStream->Write < u32 >( offset );
-	this->mStream->Write < u32 >( size );
-	this->mStream->Write < const void* >( data );
 }
 
 //----------------------------------------------------------------//
@@ -729,6 +830,19 @@ void ZLGfxRetained::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxHand
 }
 
 //----------------------------------------------------------------//
+ZLGfxHandle* ZLGfxRetained::GetCurrentFramebuffer () {
+
+	assert ( this->mStream );
+
+	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, false );
+	
+	this->mStream->Write < u32 >( GET_CURRENT_FRAMEBUFFER );
+	this->mStream->Write < ZLGfxHandle* >( handle );
+	
+	return handle;
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::LineWidth ( float width ) {
 
 	assert ( this->mStream );
@@ -738,12 +852,33 @@ void ZLGfxRetained::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program ) {
+void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( LINK_PROGRAM );
 	this->mStream->Write < ZLGfxHandle* >( program );
+	this->mStream->Write < bool >( verbose );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::PopSection () {
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxRetained::PushErrorHandler () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::PushSection () {
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxRetained::PushSuccessHandler () {
+
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -785,8 +920,30 @@ void ZLGfxRetained::ShaderSource ( ZLGfxHandle* shader, u32 count, const char** 
 	this->mStream->Write < u32 >( SHADER_SOURCE );
 	this->mStream->Write < ZLGfxHandle* >( shader );
 	this->mStream->Write < u32 >( count );
-	this->mStream->Write < const char** >( string );
-	this->mStream->Write < const s32* >( length );
+	
+	if ( string ) {
+	
+		size_t strBufferLen = sizeof ( const char* ) * count;
+		const char** strBuffer = ( const char** )malloc ( strBufferLen );
+		memcpy ( strBuffer, string, strBufferLen );
+		
+		this->mStream->Write < const char** >( strBuffer );
+	}
+	else {
+		this->mStream->Write < const char** >( 0 );
+	}
+	
+	if ( length ) {
+	
+		size_t lenBufferLen = sizeof ( const s32 ) * count;
+		s32* lenBuffer = ( s32* )malloc ( lenBufferLen );
+		memcpy ( lenBuffer, length, lenBufferLen );
+		
+		this->mStream->Write < const s32* >( lenBuffer );
+	}
+	else {
+		this->mStream->Write < const s32* >( 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -806,6 +963,7 @@ void ZLGfxRetained::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 h
 
 	this->mStream->Write < u32 >( TEX_IMAGE_2D );
 	this->mStream->Write < u32 >( level );
+	this->mStream->Write < u32 >( internalFormat );
 	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( format );
@@ -873,7 +1031,7 @@ void ZLGfxRetained::UniformMatrix3fv ( u32 location, u32 count, bool transpose, 
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( UNIFORM_4FV );
+	this->mStream->Write < u32 >( UNIFORM_MATRIX_3FV );
 	this->mStream->Write < u32 >( location );
 	this->mStream->Write < u32 >( count );
 	this->mStream->Write < bool >( transpose );
@@ -885,7 +1043,7 @@ void ZLGfxRetained::UniformMatrix4fv ( u32 location, u32 count, bool transpose, 
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( UNIFORM_4FV );
+	this->mStream->Write < u32 >( UNIFORM_MATRIX_4FV );
 	this->mStream->Write < u32 >( location );
 	this->mStream->Write < u32 >( count );
 	this->mStream->Write < bool >( transpose );
@@ -897,7 +1055,7 @@ void ZLGfxRetained::UseProgram ( ZLGfxHandle* program ) {
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( UNIFORM_4FV );
+	this->mStream->Write < u32 >( USE_PROGRAM );
 	this->mStream->Write < ZLGfxHandle* >( program );
 }
 

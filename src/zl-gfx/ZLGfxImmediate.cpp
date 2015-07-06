@@ -84,6 +84,16 @@ void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, const voi
 }
 
 //----------------------------------------------------------------//
+void ZLGfxImmediate::CheckFramebufferStatus ( u32 target ) {
+
+	u32 status = zglCheckFramebufferStatus ( target );
+	
+	if ( status == ZGL_FRAMEBUFFER_STATUS_COMPLETE ) {
+		this->mError = false;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::Clear ( u32 mask ) {
 
 	zglClear ( mask );
@@ -102,51 +112,110 @@ void ZLGfxImmediate::Color ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader ) {
+void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 
 	zglCompileShader ( shader ? shader->mGLID : 0 );
+	
+	s32 status;
+	zglGetShaderiv ( shader->mGLID, ZGL_SHADER_INFO_COMPILE_STATUS, &status );
+	
+	if ( status == 0 ) {
+	
+		this->mError = true;
+	
+		if ( verbose ) {
+	
+			s32 logLength;
+			zglGetShaderiv ( shader->mGLID, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
+
+			if ( logLength > 1 ) {
+				char* log = ( char* )malloc ( logLength );
+				zglGetShaderInfoLog ( shader->mGLID, logLength, ( u32* )&logLength, log );
+				printf ( "%s\n", log );
+				free ( log );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {
+
+	if ( handle ) {
+	
+		switch ( handle->mType ) {
+		
+			case ZLGfxHandle::BUFFER:
+				handle->mGLID = zglCreateBuffer ();
+				break;
+				
+			case ZLGfxHandle::FRAMEBUFFER:
+				handle->mGLID = zglCreateFramebuffer ();
+				break;
+				
+			case ZLGfxHandle::PROGRAM:
+				handle->mGLID = zglCreateProgram ();
+				break;
+				
+			case ZLGfxHandle::SHADER:
+				handle->mGLID = zglCreateShader ( param );
+				break;
+				
+			case ZLGfxHandle::TEXTURE:
+				handle->mGLID = zglCreateTexture ();
+				break;
+				
+			case ZLGfxHandle::RENDERBUFFER:
+				handle->mGLID = zglCreateRenderbuffer ();
+				break;
+				
+			case ZLGfxHandle::VERTEXARRAY:
+				handle->mGLID = zglCreateVertexArray ();
+				break;
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateBuffer () {
 
-	return 0;
+	return new ZLGfxHandle ( ZLGfxHandle::BUFFER, zglCreateBuffer (), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateFramebuffer () {
 
-	return new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, zglCreateFramebuffer ());
+	return new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, zglCreateFramebuffer (), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateProgram () {
 
-	return new ZLGfxHandle ( ZLGfxHandle::PROGRAM, zglCreateProgram ());
+	return new ZLGfxHandle ( ZLGfxHandle::PROGRAM, zglCreateProgram (), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateRenderbuffer () {
 
-	return new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, zglCreateRenderbuffer ());
+	return new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, zglCreateRenderbuffer (), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateShader ( u32 shaderType ) {
 
-	return new ZLGfxHandle ( ZLGfxHandle::SHADER, zglCreateShader ( shaderType ));
+	return new ZLGfxHandle ( ZLGfxHandle::SHADER, zglCreateShader ( shaderType ), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateTexture () {
 
-	return new ZLGfxHandle ( ZLGfxHandle::TEXTURE, zglCreateTexture ());
+	return new ZLGfxHandle ( ZLGfxHandle::TEXTURE, zglCreateTexture (), true );
 }
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateVertexArray () {
 
-	return new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, zglCreateVertexArray ());
+	return new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, zglCreateVertexArray (), true );
 }
 
 //----------------------------------------------------------------//
@@ -160,7 +229,7 @@ void ZLGfxImmediate::DeleteHandle ( ZLGfxHandle* handle ) {
 
 	if ( !handle ) return;
 	
-	switch ( handle->mType ) {
+	switch ( handle->mOwns && handle->mType ) {
 	
 		case ZLGfxHandle::BUFFER:
 			zglDeleteBuffer ( handle->mGLID );
@@ -273,15 +342,64 @@ void ZLGfxImmediate::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxHan
 }
 
 //----------------------------------------------------------------//
+ZLGfxHandle* ZLGfxImmediate::GetCurrentFramebuffer () {
+
+	return new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, zglGetCurrentFramebuffer (), false );
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::LineWidth ( float width ) {
 
 	zglLineWidth ( width );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program ) {
+void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
 
 	zglLinkProgram ( program ? program->mGLID : 0 );
+	
+	s32 status;
+	zglGetProgramiv ( program->mGLID, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
+	
+	if ( status == 0 ) {
+	
+		this->mError = true;
+	
+		if ( verbose ) {
+	
+			s32 logLength;
+			zglGetProgramiv ( program->mGLID, ZGL_SHADER_INFO_LOG_LENGTH, &logLength );
+
+			if ( logLength > 1 ) {
+				char* log = ( char* )malloc ( logLength );
+				zglGetProgramInfoLog ( program->mGLID, logLength, ( u32* )&logLength, log );
+				printf ( "%s\n", log );
+				free ( log );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxImmediate::PopSection () {
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxImmediate::PushErrorHandler () {
+
+	return this->mError;
+}
+
+//----------------------------------------------------------------//
+void ZLGfxImmediate::PushSection () {
+
+	this->mError = false;
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxImmediate::PushSuccessHandler () {
+
+	return !this->mError;
 }
 
 //----------------------------------------------------------------//
@@ -359,7 +477,7 @@ void ZLGfxImmediate::UniformMatrix4fv ( u32 location, u32 count, bool transpose,
 //----------------------------------------------------------------//
 void ZLGfxImmediate::UseProgram ( ZLGfxHandle* program ) {
 
-	zglUseProgram ( program ? program->mType : 0 );
+	zglUseProgram ( program ? program->mGLID : 0 );
 }
 
 //----------------------------------------------------------------//
@@ -372,4 +490,13 @@ void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool n
 void ZLGfxImmediate::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 
 	zglViewport ( x, y, w, h );
+}
+
+//----------------------------------------------------------------//
+ZLGfxImmediate::ZLGfxImmediate () :
+	mError ( false ) {
+}
+
+//----------------------------------------------------------------//
+ZLGfxImmediate::~ZLGfxImmediate () {
 }

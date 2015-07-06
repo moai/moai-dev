@@ -178,6 +178,8 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
+	this->mGfx = &this->mGfxRetained;
+	
 	ZLGfxDevice::End ();
 }
 

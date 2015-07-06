@@ -4,6 +4,8 @@
 #ifndef ZLGFX_H
 #define ZLGFX_H
 
+#include <zl-util/ZLLeanArray.h>
+#include <zl-util/ZLLeanStack.h>
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
 
@@ -11,7 +13,7 @@
 // ZLGfxHandle
 //================================================================//
 class ZLGfxHandle {
-private:
+public:
 
 	friend class ZLGfx;
 	friend class ZLGfxImmediate;
@@ -19,11 +21,13 @@ private:
 
 	u32		mType;
 	u32		mGLID;
+	bool	mOwns;
 
 	//----------------------------------------------------------------//
-	ZLGfxHandle ( u32 type, u32 glid ) :
+	ZLGfxHandle ( u32 type, u32 glid, bool owns ) :
 		mType ( type ),
-		mGLID ( glid ) {
+		mGLID ( glid ),
+		mOwns ( owns ) {
 	}
 
 public:
@@ -41,12 +45,24 @@ public:
 	//----------------------------------------------------------------//
 					ZLGfxHandle				() {}
 					~ZLGfxHandle			() {}
+	
+	//----------------------------------------------------------------//
+	static u32 GLID ( ZLGfxHandle* handle ) {
+		return handle ? handle->mGLID : 0;
+	}
 };
 
 //================================================================//
 // ZLGfx
 //================================================================//
-class ZLGfx {	
+class ZLGfx {
+
+	friend class ZLGfxImmediate;
+	friend class ZLGfxRetained;
+
+	//----------------------------------------------------------------//
+	virtual void				Create						( ZLGfxHandle* handle, u32 param ) = 0;
+
 public:
 
 	// api for drawing
@@ -69,11 +85,13 @@ public:
 	virtual void				BufferData					( u32 target, u32 size, const void* data, u32 usage ) = 0;
 	virtual void				BufferSubData				( u32 target, u32 offset, u32 size, const void* data ) = 0;
 	
+	virtual void				CheckFramebufferStatus		( u32 target ) = 0;
+	
 	virtual void				Clear						( u32 mask ) = 0;
 	virtual void				ClearColor					( float r, float g, float b, float a ) = 0;
 	virtual void				Color						( float r, float g, float b, float a ) = 0;
 	
-	virtual void				CompileShader				( ZLGfxHandle* shader ) = 0;
+	virtual void				CompileShader				( ZLGfxHandle* shader, bool verbose ) = 0;
 	
 	virtual ZLGfxHandle*		CreateBuffer				() = 0;
 	virtual ZLGfxHandle*		CreateFramebuffer			() = 0;
@@ -97,12 +115,21 @@ public:
 	virtual void				Enable						( u32 cap ) = 0;
 	virtual void				EnableClientState			( u32 cap ) = 0;
 	virtual void				EnableVertexAttribArray		( u32 index ) = 0;
+	
 	virtual void				Flush						() = 0;
 	virtual void				FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer ) = 0;
 	virtual void				FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level ) = 0;
+	
+	virtual ZLGfxHandle*		GetCurrentFramebuffer		() = 0;
+	
 	virtual void				LineWidth					( float width ) = 0;
 	
-	virtual void				LinkProgram					( ZLGfxHandle* program ) = 0;
+	virtual void				LinkProgram					( ZLGfxHandle* program, bool verbose ) = 0;
+	
+	virtual void				PopSection					() = 0;
+	virtual bool				PushErrorHandler			() = 0;
+	virtual void				PushSection					() = 0;
+	virtual bool				PushSuccessHandler			() = 0;
 	
 	virtual void				RenderbufferStorage			( u32 internalFormat, u32 width, u32 height ) = 0;
 	virtual void				Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;
