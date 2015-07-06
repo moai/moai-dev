@@ -4,68 +4,65 @@
 #include "pch.h"
 #import <moaiext-iphone/MOAIKeyboardIOS.h>
 
-//================================================================//
-// MOAIGameCenterIOSLeaderboardDelegate
-//================================================================//
-@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate > {
-@private
-
-	NSRange		mRange;
-}
-
-	//----------------------------------------------------------------//
-	-( void )	onChanged					:( NSString* )string;
-	-( BOOL )	textField					:( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string;
-	-( BOOL )	textFieldShouldReturn		:( UITextField* )textField;
-
-@end
+//@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate > {
+//@private
+//
+//	//NSRange		mRange;
+//}
+//
+//	//----------------------------------------------------------------//
+//	-( void )	onChanged					:( NSNotification* )notification;
+////	-( BOOL )	textField					:( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string;
+////	-( BOOL )	textFieldShouldReturn		:( UITextField* )textField;
+//
+//@end
 
 @implementation MOAITextFieldDelegate
 
 	//----------------------------------------------------------------//
-	-( void ) onChanged :( NSString* )string {
+	-( void ) onChanged :( NSNotification* )notification {
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
+		UITextField* textField = (UITextField*)notification.object;
+		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
-			state.Push ( mRange.location );
-			state.Push ( mRange.length );
-			state.Push ([ string UTF8String ]);
-			state.DebugCall ( 3, 0 );
+			state.Push ([ [ textField text ] UTF8String ]);
+			state.DebugCall ( 1, 0 );
 		}
 	}
 
-	//----------------------------------------------------------------//
-	-( BOOL ) textField :( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string {
-		UNUSED ( textField );
-		
-		mRange = range;
-		[ self performSelector:@selector(onChanged:) withObject:string afterDelay:0.0f ];
-		
-		return YES;
-	}
-	
-	//----------------------------------------------------------------//
-	-( BOOL ) textFieldShouldReturn :( UITextField* )textField {
-		UNUSED ( textField );
-		
-		BOOL result = YES;
-		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
-		
-		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
-			state.DebugCall ( 0, 1 );
-			result = state.GetValue < bool >( -1, true );
-		}
-		
-		if ( result ) {
-			keyboard.Finish ();
-		}
-		
-		return result;
-	}
+//	//----------------------------------------------------------------//
+//	-( BOOL ) textField :( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string {
+//		UNUSED ( textField );
+//		
+//		mRange = range;
+//		[ self performSelector:@selector(onChanged:) withObject:string afterDelay:0.0f ];
+//		
+//		return YES;
+//	}
+//	
+//	//----------------------------------------------------------------//
+//	-( BOOL ) textFieldShouldReturn :( UITextField* )textField {
+//		UNUSED ( textField );
+//		
+//		BOOL result = YES;
+//		
+//		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+//		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
+//		
+//		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
+//			state.DebugCall ( 0, 1 );
+//			result = state.GetValue < bool >( -1, true );
+//		}
+//		
+//		if ( result ) {
+//			keyboard.Finish ();
+//		}
+//		
+//		return result;
+//	}
 
 @end
 
@@ -213,12 +210,14 @@ void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool se
 		
 		CGRect frame = CGRectMake ( 0, 0, 320, 24 );
 		this->mTextField = [[ UITextField alloc ] initWithFrame:frame ];
-		[ this->mTextField setDelegate:[[ MOAITextFieldDelegate alloc ] init ]];
+		//[ this->mTextField setDelegate:[[ MOAITextFieldDelegate alloc ] init ]];
+		this->mListenerDelegate = [[ MOAITextFieldDelegate alloc ] init ];
+		[[NSNotificationCenter defaultCenter] addObserver:this->mListenerDelegate selector:@selector(onChanged:) name:UITextFieldTextDidChangeNotification object:this->mTextField];
 		
 		[ window addSubview:this->mTextField ];
 	}
 	
-	[ this->mTextField setHidden:YES ];
+	//[ this->mTextField setHidden:YES ];
 	[ this->mTextField setText:[ NSString stringWithUTF8String:text ]];
 	
 	[ this->mTextField setAutocapitalizationType:( UITextAutocapitalizationType )autocap ];

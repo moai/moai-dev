@@ -937,6 +937,8 @@
 		66459FBB1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
 		66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
 		66459FBD1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
+		665A0DEB1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 665A0DE91B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.h */; };
+		665A0DEC1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 665A0DEA1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.m */; };
 		667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
 		667AE73B154A09CA00CCE42D /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
 		667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */; };
@@ -2669,6 +2671,8 @@
 		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
 		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
 		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
+		665A0DE91B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIKeyboardIOSListener.h; sourceTree = "<group>"; };
+		665A0DEA1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAIKeyboardIOSListener.m; sourceTree = "<group>"; };
 		667AE739154A09CA00CCE42D /* MOAIFoo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFoo.cpp; sourceTree = "<group>"; };
 		667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFooMgr.cpp; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
@@ -4960,6 +4964,8 @@
 				E9CA1E58151C8578005F39B7 /* MOAIWebViewIOS.h */,
 				E9CA1E59151C8578005F39B7 /* MOAIWebViewIOS.mm */,
 				CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */,
+				665A0DE91B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.h */,
+				665A0DEA1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.m */,
 			);
 			name = "moaiext-iphone";
 			sourceTree = "<group>";
@@ -6008,6 +6014,7 @@
 				F055A97F1846AD470031F295 /* ldo.h in Headers */,
 				F055A9651846ACA90031F295 /* sha_locl.h in Headers */,
 				F055A94B1846ABF40031F295 /* sha.h in Headers */,
+				665A0DEB1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.h in Headers */,
 				0324E69513564BC8000ADC60 /* AKU.h in Headers */,
 				E9A41A95151A61A200650276 /* USRhombus.h in Headers */,
 				0324E69913564BC8000ADC60 /* pch.h in Headers */,
@@ -7412,6 +7419,7 @@
 				E9C4062D151861A700C7AB04 /* MOAIGlyphCacheBase.cpp in Sources */,
 				E9C4062E151861A700C7AB04 /* MOAIGlyphCachePage.cpp in Sources */,
 				E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */,
+				665A0DEC1B4B3F4B008ACFEE /* MOAIKeyboardIOSListener.m in Sources */,
 				E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */,
 				E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */,
 				0324E69413564BC8000ADC60 /* AKU.cpp in Sources */,

@@ -8,6 +8,10 @@
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
 
+@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate >
+-( void )	onChanged					:( NSNotification* )notification;
+@end
+
 //================================================================//
 // MOAIKeyboardIOS
 //================================================================//
@@ -108,6 +112,8 @@ private:
 	};
 
 	UITextField*	mTextField;
+	MOAITextFieldDelegate* mListenerDelegate;
+		
 
 	//----------------------------------------------------------------//
 	static int		_getText				( lua_State* L );
