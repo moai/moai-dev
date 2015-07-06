@@ -237,6 +237,13 @@ int MOAIGfxQuadDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIQuadBrush& MOAIGfxQuadDeck2D::AffirmQuad ( u32 idx ) {
+
+	this->mQuads.Grow ( idx, 1 );
+	return this->mQuads [ idx ];
+}
+
+//----------------------------------------------------------------//
 ZLBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 
 	ZLRect rect;
@@ -261,7 +268,7 @@ void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 		idx = idx - 1;
 		u32 itemIdx = idx % size;
 
-		materials.LoadGfxState ( this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER );
+		materials.LoadGfxState ( this, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER );
 
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -295,14 +302,14 @@ ZLBox MOAIGfxQuadDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+bool MOAIGfxQuadDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
 		idx = ( idx - 1 ) % size;
 		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
-		return this->TestHit ( quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
+		return materials.TestHit ( this, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
 	}
 	return false;
 }
@@ -311,7 +318,7 @@ bool MOAIGfxQuadDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -324,13 +331,13 @@ MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },

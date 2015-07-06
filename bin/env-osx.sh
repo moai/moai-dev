@@ -1,13 +1,19 @@
 #!/bin/bash
 
 if [ ! "$0" == "-bash" ]; then
+  ruby -e "exit '$0'.end_with? '.sh'"
+  if [ $? -ne 0 ]; then
   echo ERROR: This file is meant to be be sourced by running with: source ./bin/env-osx.sh
+  echo was run with: $0
 	exit 1
+fi
 fi
 
 #--config
-NDK_PATH=/Users/david/Downloads/android-ndk-r9d
-EMSDK_PATH=/Users/david/moai/emsdk_portable
+NDK_PATH=${NDK_PATH:-/Users/david/Downloads/android-ndk-r9d}
+EMSDK_PATH=${EMSDK_PATH:-/Users/david/moai/emsdk_portable}
+DOXYGEN_PATH=${DOXYGEN_PATH:-/Applications/Doxygen.app/Contents/Resources}
+
 
 #--check for reqs
 error=false
@@ -37,7 +43,7 @@ echo "Setting up MoaiUtil path..."
 
 UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
-export PATH=$PATH:$UTIL_PATH
+export PATH=$PATH:$UTIL_PATH:$DOXYGEN_PATH
 
 
 echo "Path setup complete"

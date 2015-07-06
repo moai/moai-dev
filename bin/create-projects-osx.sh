@@ -13,5 +13,7 @@ cd moai-osx
 cmake \
 -G "Xcode" \
 -DBUILD_OSX=TRUE \
+-DMOAI_APPLE=TRUE \
+-DMOAI_SDL=TRUE \
 ../../hosts/host-osx-sdl
 

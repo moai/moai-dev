@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAIVectorTesselator.h>
 
+class MOAIVertexFormat;
 class SafeTesselator;
 
 //================================================================//
@@ -20,7 +21,6 @@ protected:
 	bool					mCanGroup;
 
 	//----------------------------------------------------------------//
-	static void			CopyAndTransformVertices	( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total );
 	void				CopyBoundaries				( SafeTesselator* dest, SafeTesselator* src );
 	void				Stroke						( SafeTesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
 	void				StrokeBoundaries			( SafeTesselator* tess, SafeTesselator* outline, float width, bool forward, bool interior );
@@ -33,14 +33,16 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual int			AddFillContours				( SafeTesselator* tess );
-	virtual int			AddStrokeContours			( SafeTesselator* tess );
+	virtual int			AddStrokeContours			( SafeTesselator* tess, bool inside, bool outside );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		IsClosed					() = 0;
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
-	virtual int			Tesselate					( MOAIVectorTesselator& drawing );
+	
+	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator* tess );
+	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream* vertexStream, ZLStream* indexStream, MOAIVertexFormat* format );
 };
 
 #endif

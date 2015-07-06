@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAINode.h>
 
+
 //================================================================//
 // MOAIScriptNode
 //================================================================//
@@ -19,12 +20,13 @@ class MOAIScriptNode :
 private:
 
 	MOAILuaMemberRef mOnUpdate;
-	ZLLeanArray < float > mAttributes;
+	ZLLeanArray < float >	mAttributes;
+	ZLLeanArray < cc8* >	mAttrNames;
 
 	//----------------------------------------------------------------//
 	static int		_reserveAttrs			( lua_State* L );
 	static int		_setCallback			( lua_State* L );
-	
+	static int		_setAttrName			( lua_State* L );
 
 protected:
 
@@ -39,6 +41,9 @@ public:
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
+	void			NamedAttrAdd			( u32 attrID, MOAIAttrOp& attrOp );
+	void			NamedAttrGet			( u32 attrID, MOAIAttrOp& attrOp );
+	void			NamedAttrSet			( u32 attrID, MOAIAttrOp& attrOp );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

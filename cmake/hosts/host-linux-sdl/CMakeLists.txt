@@ -65,7 +65,7 @@ if (NOT LIB_PATH)
 endif (NOT LIB_PATH)
 
 
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11" )
+#set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
 
 # Use all cpp files in directory as source code
 file ( GLOB HOST_SDL_SRC "${HOST_ROOT}/host-sdl/*.cpp" "${HOST_ROOT}/host-sdl/*.h" )
@@ -78,6 +78,7 @@ target_link_libraries ( moai
   moai-sim
   moai-util
   moai-core
+  moai-sdl
   zlcore
   SDL2-static
   pthread 

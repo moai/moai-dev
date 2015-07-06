@@ -8,8 +8,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIImageFormatPvr.h>
 
-#include "PVRTTexture.h"
-#include "PVRTDecompress.h"
+#include <PVRTTexture.h>
+#include <PVRTDecompress.h>
 
 //================================================================//
 // MOAIPvrMipLevelInfo
@@ -331,7 +331,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 				
 					zglCompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
 				
-				#else if MOAI_WITH_LIBPVR
+				#elif MOAI_WITH_LIBPVR
 				
 					ZLLeanArray < char > buffer;
 					buffer.Init ( info.mSizeDecompressed );

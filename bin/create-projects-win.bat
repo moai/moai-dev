@@ -31,6 +31,7 @@ cd %targetDir%
 cmake ^
 -G "%generator%" ^
 -DBUILD_WINDOWS=TRUE ^
+-DMOAI_SDL=TRUE ^
 ..\..\hosts\host-win-sdl\
 
 :end

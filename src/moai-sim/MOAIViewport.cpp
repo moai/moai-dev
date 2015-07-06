@@ -9,6 +9,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIViewport::_getFrame ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIViewport, "U" )
+	
+	state.Push ( self->mXMin );
+	state.Push ( self->mYMin );
+	state.Push ( self->mXMax );
+	state.Push ( self->mYMax );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIViewport::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIViewport, "U" )
+	
+	state.Push ( self->Width ());
+	state.Push ( self->Height ());
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setOffset
 	@text	Sets the viewport offset in normalized view space (size of
 			viewport is -1 to 1 in both directions).
@@ -374,6 +398,8 @@ void MOAIViewport::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIViewport::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getFrame",		_getFrame },
+		{ "getSize",		_getSize },
 		{ "setOffset",		_setOffset },
 		{ "setRotation",	_setRotation },
 		{ "setScale",		_setScale },

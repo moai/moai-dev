@@ -12,6 +12,10 @@
 	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );			\
 	if ( !self ) return 0;
 
+#define MOAI_LUA_SETUP_CLASS(str)												\
+	MOAILuaState state ( L );													\
+	if ( !MOAILogMgr::Get ().LuaSetupClass ( state, str )) return 0;
+
 #define MOAI_LUA_SETUP_SINGLE(type,str)											\
 	MOAILuaState state ( L );													\
 	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );		\
@@ -80,6 +84,7 @@ public:
 	void			CloseFile				();
 	void			Log						( lua_State *L, u32 messageID, ... );
 	void			LogVar					( lua_State *L, u32 messageID, va_list args );
+	bool			LuaSetupClass			( MOAILuaState& state, cc8* typeStr );
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );

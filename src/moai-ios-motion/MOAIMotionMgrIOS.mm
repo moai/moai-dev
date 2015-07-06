@@ -3,11 +3,9 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAICompassSensor.h>
-#include <moai-sim/MOAILocationSensor.h>
-#include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAIVectorSensor.h>
 #include <moai-ios-motion/MOAIMotionMgrIOS.h>
+#include <moai-sim/MOAIVectorSensor.h>
+
 
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
@@ -287,7 +285,7 @@ bool MOAIMotionMgrIOS::IsDone () {
 //----------------------------------------------------------------//
 MOAIMotionMgrIOS::MOAIMotionMgrIOS () :
 	mIsHeadingActive ( false ),
-	mIsLocationActive ( false ),
+	//mIsLocationActive ( false ),
 	mInputDeviceID ( 0 ),
 	mRawInputDeviceID ( 0 ),
 	mLocationMgr ( 0 ),

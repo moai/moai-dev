@@ -12,6 +12,35 @@ function table.contains(table, element)
   return false
 end
 
+
+function findAndroidSdk()
+  local isWindows = MOAIEnvironment.osBrand == 'Windows'
+  if isWindows then
+    local appdata = os.getenv("LOCALAPPDATA")
+    if (appdata and MOAIFileSystem.checkPathExists(appdata.."\\android\\sdk")) then
+      return appdata.."\\android\\sdk"   
+    end
+  end
+  
+  if MOAIEnvironment.osBrand == "OSX" then
+    local home = os.getenv("HOME")
+    if (home and MOAIFileSystem.checkPathExists(home.."/Library/Android/sdk")) then
+      return home.."/Library/Android/sdk"
+    end
+  end
+  
+  if MOAIEnvironment.osBrand == "linux" then
+    local home = os.getenv("HOME")
+    local sdkpath = home..""
+    if (home and MOAIFileSystem.checkPathExists(sdkpath)) then
+      return sdkpath
+    end
+  end
+  
+  return false
+end
+
+
 --==============================================================
 -- args
 --==============================================================
@@ -19,8 +48,6 @@ local hostconfig = {
     AppName = "Moai Template",
     CompanyName = "Zipline Games",
     ApplicationId = "com.getmoai.MoaiTemplate",
-    SdkDir = "",
-    NdkDir = ""..(os.getenv("ANDROID_NDK") and MOAIFileSystem.getAbsoluteDirectoryPath(os.getenv("ANDROID_NDK"))),
     Modules = {},
     LuaSrc = MOAI_SDK_HOME..'samples/hello-moai',
     FBAppId = 0,
@@ -77,7 +104,7 @@ copyhostfiles = function()
 			MOAIFileSystem.copy(fullpath, output..entry)
 	end
 
-    
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'host-templates/android/studio/MoaiTemplate/local.properties.template', output..'local.properties')
     local hostmodules = MOAI_SDK_HOME..'src/host-modules'
     MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/moai.cpp', output..'app/src/main/jni/moai.cpp')
 
@@ -116,6 +143,20 @@ copyhostfiles = function()
 
 end
 
+getAbsoluteLuaRoot = function()
+  local oldworkingdir = MOAIFileSystem.getWorkingDirectory()
+  --get lua path relative to config file as absolute
+  MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
+  
+  local luasrc = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['LuaSrc'])
+  
+  MOAIFileSystem.setWorkingDirectory(oldworkingdir)
+  
+  return luasrc
+end
+
+
+
 applyConfigFile = function(configFile)
   print("reading config from "..configFile)
   util.dofileWithEnvironment(configFile, hostconfig)
@@ -129,7 +170,48 @@ applyConfigFile = function(configFile)
   
   hostconfig["HostSettings"] = nil
   
+  
+  
+  
+  --validation
+  
+  --validate lua path
+  
+  local luapath = getAbsoluteLuaRoot()
+  if not MOAIFileSystem.checkFileExists(luapath.."main.lua") then
+    print ("Your configured lua path does not contain a main.lua")
+    print ("configured path (absolute): ", luapath)
+    os.exit(1)
+  end
+  
+  
+  --valid sdk and ndk dirs
+  --try a default
+  if (not hostconfig['SdkDir']) or (hostconfig['SdkDir'] == "") then hostconfig['SdkDir'] = findAndroidSdk() end
+  -- check it
+  if (not hostconfig['SdkDir']) or not MOAIFileSystem.checkPathExists(MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['SdkDir']).."platforms") then
+    print ("Error locating the defined sdk path (HostSettings.android-gradle.SdkDir).")
+    print ("ensure it contains platforms subfolder. This setting is required")
+    print ("you can usually find it in your ~/.android folder or in %userprofile%/appdata/local/android/sdk")
+    print ("configured sdk path was: ", hostconfig['SdkDir'])
+    os.exit(1)
+  end
+  
+  if not hostconfig['NdkDir'] or hostconfig['NdkDir'] == "" then 
+    hostconfig['NdkDir'] = os.getenv("ANDROID_NDK")
+  end
+  if not hostconfig['NdkDir'] or not MOAIFileSystem.checkPathExists(MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['NdkDir']).."platforms") then
+  print ("Error locating the defined ndk path (HostSettings.android-gradle.NdkDir).")
+  print ("ensure it contains platforms subfolder. Android NDK r9d is required")
+  
+  print ("configured Ndk path was: ", hostconfig['NdkDir'])
+  os.exit(1)
 end
+  
+  
+end
+
+
 
 configureHost = function()
   local output = config.OUTPUT_DIR
@@ -156,21 +238,16 @@ configureHost = function()
   end
   print("configuring lua source root")
   local oldworkingdir = MOAIFileSystem.getWorkingDirectory()
-  --get lua path relative to config file as absolute
-  MOAIFileSystem.setWorkingDirectory(INVOKE_DIR)
   
-  local luasrc = MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['LuaSrc'])
-  --change to host output folder
-
-  MOAIFileSystem.setWorkingDirectory(output)
+  
+  local luasrc = getAbsoluteLuaRoot()
+  
   --now get lua path (currently absolute) as relative to gradle.properties
-  luasrc = MOAIFileSystem.getRelativePath(luasrc, MOAIFileSystem.getWorkingDirectory() )
+  luasrc = MOAIFileSystem.getRelativePath(luasrc, output )
   
   if (not luasrc) then
-    error("Error configuring lua source folder "..hostconfig['LuaSrc'])
+    error("Error configuring lua source folder as relative "..hostconfig['LuaSrc'])
   end
-  --restore working dir
-  MOAIFileSystem.setWorkingDirectory(oldworkingdir)
   
   local patternFor = function(name) 
     return '(<string name="'..name..'">)(.-)(</string>)'

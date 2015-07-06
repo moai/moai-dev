@@ -186,7 +186,7 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( idx, MOAIShaderMgr::DECK2D_SHADER );
+	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -198,11 +198,10 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D o
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
-	UNUSED ( idx );
+bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//
@@ -218,7 +217,7 @@ ZLBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -235,7 +234,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "FILTER_POINT",	( u32 )ZGL_SAMPLE_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP",	( u32 )ZGL_SAMPLE_LINEAR );
@@ -244,7 +243,7 @@ void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },

@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIShader.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
@@ -25,6 +26,20 @@ int MOAIShader::_setProgram ( lua_State* L ) {
 //================================================================//
 // MOAIShader
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
+
+	MOAIShader* shader = 0;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		shader = MOAIShaderMgr::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgr::UNKNOWN_SHADER ));
+	}
+	else {
+		shader = state.GetLuaObject < MOAIShader >( 2, true );
+	}
+	return shader;
+}
 
 //----------------------------------------------------------------//
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {

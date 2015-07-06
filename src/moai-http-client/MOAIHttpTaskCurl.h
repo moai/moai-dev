@@ -29,7 +29,7 @@ private:
 
 	STLString			mUrl;
 	u32					mDefaultTimeout;
-	//u32					m
+
 	CURL*				mEasyHandle;
 	curl_slist*			mHeaderList;
 

@@ -120,7 +120,7 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( idx - 1, MOAIShaderMgr::LINE_SHADER );
+	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER );
 	
 	if ( this->mOnDraw ) {
 	
@@ -174,7 +174,7 @@ ZLBox MOAIScriptDeck::GetItemBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIScriptDeck::MOAIScriptDeck () {
 	
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIStandardDeck )
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
@@ -186,13 +186,13 @@ MOAIScriptDeck::~MOAIScriptDeck () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaClass ( state );
+	this->MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIScriptDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaFuncs ( state );
+	this->MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setDrawCallback",		_setDrawCallback },

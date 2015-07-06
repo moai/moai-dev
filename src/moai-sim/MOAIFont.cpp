@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>
+#include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>
 #include <moai-sim/MOAITextureBase.h>
 
@@ -344,6 +345,18 @@ int MOAIFont::_setReader ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	MOAIShader* shader = MOAIShader::AffirmShader ( state, 2 );
+	self->mShader.Set ( *self, shader );
+
+	state.Push ( shader );
+	return 1;
+}
+
 //================================================================//
 // DOXYGEN
 //================================================================//
@@ -564,6 +577,7 @@ MOAIFont::~MOAIFont () {
 
 	this->mReader.Set ( *this, 0 );
 	this->mCache.Set ( *this, 0 );
+	this->mShader.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -734,6 +748,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFlags",					_setFlags },
 		{ "setImage",					_setImage },
 		{ "setReader",					_setReader },
+		{ "setShader",					_setShader },
 		{ NULL, NULL }
 	};
 	

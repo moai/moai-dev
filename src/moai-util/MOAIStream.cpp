@@ -11,6 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStream::_compact ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	self->Compact ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	flush
 	@text	Forces any remaining buffered data into the stream.
 	
@@ -222,7 +230,7 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 	@text	Repositions the cursor in the stream.
 	
 	@in		MOAIStream self
-	@in		number offset		Value from the stream.
+	@opt	number offset		Value from the stream. Default value is 0.
 	@opt	number mode			One of MOAIStream.SEEK_CUR, MOAIStream.SEEK_END, MOAIStream.SEEK_SET.
 								Default value is MOAIStream.SEEK_SET.
 	@out	nil
@@ -230,7 +238,7 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 int MOAIStream::_seek ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	
-	u32 offset	= state.GetValue < u32 >( 2, 0 );
+	s32 offset	= state.GetValue < s32 >( 2, 0 );
 	u32 mode	= state.GetValue < u32 >( 3, SEEK_SET );
 	
 	self->Seek ( offset, mode );
@@ -301,6 +309,31 @@ int MOAIStream::_write16 ( lua_State* L ) {
 int MOAIStream::_write32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < s32 >( state, 2 );
+}
+
+//----------------------------------------------------------------//
+/**	@lua	writeColor32
+	@text	Write a packed 32-bit color to the vertex buffer.
+	
+	@in		MOAIStream self
+	@opt	number r				Default value is 1.
+	@opt	number g				Default value is 1.
+	@opt	number b				Default value is 1.
+	@opt	number a				Default value is 1.
+	@out	nil
+*/
+int MOAIStream::_writeColor32 ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" )
+	
+	float r = state.GetValue < float >( 2, 1.0f );
+	float g = state.GetValue < float >( 3, 1.0f );
+	float b = state.GetValue < float >( 4, 1.0f );
+	float a = state.GetValue < float >( 5, 1.0f );
+	
+	u32 color = ZLColor::PackRGBA ( r, g, b, a );
+	self->Write < u32 >( color );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -590,6 +623,7 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "compact",			_compact },
 		{ "flush",				_flush },
 		{ "getCursor",			_getCursor },
 		{ "getLength",			_getLength },
@@ -608,6 +642,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "write8",				_write8 },
 		{ "write16",			_write16 },
 		{ "write32",			_write32 },
+		{ "writeColor32",		_writeColor32 },
 		{ "writeDouble",		_writeDouble },
 		{ "writeFloat",			_writeFloat },
 		{ "writeFormat",		_writeFormat },

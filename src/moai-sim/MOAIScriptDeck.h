@@ -4,7 +4,7 @@
 #ifndef	MOAISCRIPTDECK_H
 #define	MOAISCRIPTDECK_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 //================================================================//
 // MOAIScriptDeck
@@ -13,10 +13,10 @@
 	@text Scriptable deck object.
 */
 class MOAIScriptDeck :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 
-	ZLRect				mRect;
+	ZLRect					mRect;
 
 	MOAILuaMemberRef		mOnDraw;
 	MOAILuaMemberRef		mOnRect;

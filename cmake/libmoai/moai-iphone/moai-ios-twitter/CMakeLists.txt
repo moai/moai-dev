@@ -10,7 +10,7 @@ target_include_directories(moai-ios-twitter PUBLIC
         "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>"
 	)
 
-target_link_libraries( moai-ios-twitter moai-sim moai-util moai-core)
+target_link_libraries( moai-ios-twitter moai-sim moai-util moai-core moai-apple)
 set_target_properties( moai-ios-twitter PROPERTIES FOLDER Modules)
 install(TARGETS moai-ios-twitter EXPORT libmoai ARCHIVE DESTINATION lib)
 install(FILES ${MOAI_ROOT}/src/moai-ios-twitter/host.h DESTINATION include/moai-ios-twitter)

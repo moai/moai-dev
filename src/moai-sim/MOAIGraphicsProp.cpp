@@ -28,6 +28,18 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGraphicsProp::_getIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	if ( self->mMaterialBatch ) {
+		state.Push ( self->mMaterialBatch->GetIndexBatchSize ());
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGraphicsProp::_getMaterialBatch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -53,21 +65,28 @@ int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	getTexture
-	@text	Returns the texture.
+// TODO: doxygen
+int MOAIGraphicsProp::_getShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
-	@in		MOAIGraphicsProp self
-	@out	MOAITexture texture
-*/
-//int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-//	
-//	if ( self->mTexture ) {
-//		self->mTexture->PushLuaUserdata ( state );
-//		return 1;
-//	}
-//	return 0;
-//}
+	if ( self->mMaterialBatch ) {
+		state.Push ( self->mMaterialBatch->RawGetShader ( state.GetValue < u32 >( 2, 1 ) - 1 ));
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	if ( self->mMaterialBatch ) {
+		state.Push ( self->mMaterialBatch->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
+		return 1;
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	isVisible
@@ -90,6 +109,16 @@ int	MOAIGraphicsProp::_isVisible ( lua_State* L ) {
 		lua_pushboolean ( state, self->IsVisible ());
 	}
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_reserveMaterials ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
+	materialBatch->Reserve ( state.GetValue < u32 >( 2, 0 ));
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -237,6 +266,17 @@ int MOAIGraphicsProp::_setDepthTest ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGraphicsProp::_setIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
+	materialBatch->SetIndexBatchSize ( state.GetValue < u32 >( 2, 1 ));
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -252,7 +292,7 @@ int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
 		flags |= LOD_FLAGS_MAX_LIMIT;
 	}
 
-	self->mLODFlags = flags;	
+	self->mLODFlags = flags;
 	return 0;
 }
 
@@ -262,6 +302,7 @@ int MOAIGraphicsProp::_setMaterialBatch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
 	self->mMaterialBatch.Set ( *self, state.GetLuaObject < MOAIMaterialBatch >( 2, true ));
+	
 	return 0;
 }
 
@@ -305,46 +346,26 @@ int MOAIGraphicsProp::_setScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setShader
-	@text	Sets or clears the prop's shader. The prop's shader takes
-			precedence over any shader specified by the deck or its
-			elements.
+// TODO: doxygen
+int MOAIGraphicsProp::_setShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
-	@in		MOAIGraphicsProp self
-	@opt	MOAIShader shader	Default value is nil.
-	@out	nil
-*/
-//int MOAIGraphicsProp::_setShader ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-//	
-//	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
-//	self->SetDependentMember < MOAIShader >( self->mShader, shader );
-//	
-//	return 0;
-//}
+	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
+	state.Push ( materialBatch->SetShader ( state, 2 ));
+	
+	return 1;
+}
 
 //----------------------------------------------------------------//
-/**	@lua	setTexture
-	@text	Set or load a texture for this prop. The prop's texture will
-			override the deck's texture.
+// TODO: doxygen
+int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
-	@in		MOAIGraphicsProp self
-	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
-	@out	MOAIGfxState texture
-*/
-//int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
-//
-//	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
-//	self->mTexture.Set ( *self, texture );
-//
-//	if ( texture ) {
-//		self->mTexture->PushLuaUserdata ( state );
-//		return 1;
-//	}
-//	return 0;
-//}
+	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
+	state.Push ( materialBatch->SetTexture ( state, 2 ));
+	
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	setUVTransform
@@ -383,6 +404,15 @@ int MOAIGraphicsProp::_setVisible ( lua_State* L ) {
 //================================================================//
 // MOAIGraphicsProp
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIMaterialBatch* MOAIGraphicsProp::AffirmMaterialBatch () {
+
+	if ( !this->mMaterialBatch ) {
+		this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch );
+	}
+	return this->mMaterialBatch;
+}
 
 //----------------------------------------------------------------//
 u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
@@ -429,12 +459,13 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 
 	if ( !this->IsVisible ( lod )) return;
 	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
 
 	this->LoadGfxState ();
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	MOAIMaterialBatch* materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
+	MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
 	
 	if ( this->mGrid ) {
 	
@@ -447,10 +478,10 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 		else {
 			c0 = c1 = grid.GetCellCoord ( subPrimID );
 		}
-		grid.Draw ( this->mDeck, this->mRemapper, *materials, c0, c1 );
+		grid.Draw ( this->mDeck, this->mRemapper, materials, c0, c1 );
 	}
 	else {
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), *materials );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials );
 	}
 }
 
@@ -534,6 +565,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 
 	MOAIViewport* viewport = renderMgr.GetViewport ();
 	MOAICamera* camera = renderMgr.GetCamera ();
+	
 	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
 
 	ZLMatrix4x4 worldDrawingMtx;
@@ -545,7 +577,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			ZLAffine3D billboardMtx;
 			billboardMtx.Init ( camera->GetBillboardMtx ());
 			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
-			
 			break;
 		}
 		
@@ -623,6 +654,30 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			break;
 		}
 		
+		case BILLBOARD_SCREEN: {
+			
+			MOAIGfxDevice::Get ().GetWorldToWndMtx ();
+			
+			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
+			
+			ZLMatrix4x4 localToWorldMtx;
+			worldDrawingMtx.Init (this->GetLocalToWorldMtx ());
+			
+			// TODO: check that pivot is supported correctly
+			ZLVec3D loc;
+			worldDrawingMtx.GetTranslation ( loc );
+			viewProjMtx.Project ( loc );
+			
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = loc.mX;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = loc.mY;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = loc.mZ;
+			
+			viewProjMtx.Inverse ();
+			worldDrawingMtx.Append ( viewProjMtx );
+			
+			break;
+		}
+		
 		case BILLBOARD_NONE:
 		default:
 		
@@ -630,6 +685,23 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	}
 	
 	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::Inside ( ZLVec3D vec, float pad ) {
+
+	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
+	worldToLocal.Transform ( vec );
+
+	bool passTrivial = this->InsideModelBounds ( vec, pad );
+	
+	// TODO: handle grids
+	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
+	
+		MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
+		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials, this->mHitGranularity, vec, pad );
+	}
+	return passTrivial;
 }
 
 //----------------------------------------------------------------//
@@ -799,6 +871,7 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
 	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
 	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
+	state.SetField ( -1, "BILLBOARD_SCREEN",			( u32 )BILLBOARD_SCREEN );
 }
 
 //----------------------------------------------------------------//
@@ -808,21 +881,28 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "getMaterialBatch",	_getMaterialBatch },
-		{ "getScissorRect",		_getScissorRect },
-		{ "isVisible",			_isVisible },
-		{ "setBillboard",		_setBillboard },
-		{ "setBlendEquation",	_setBlendEquation },
-		{ "setBlendMode",		_setBlendMode },
-		{ "setCullMode",		_setCullMode },
-		{ "setDepthMask",		_setDepthMask },
-		{ "setDepthTest",		_setDepthTest },
-		{ "setLODLimits",		_setLODLimits },
-		{ "setMaterialBatch",	_setMaterialBatch },
-		{ "setParent",			_setParent },
-		{ "setScissorRect",		_setScissorRect },
-		{ "setUVTransform",		_setUVTransform },
-		{ "setVisible",			_setVisible },
+		{ "getIndexBatchSize",		_getIndexBatchSize },
+		{ "getMaterialBatch",		_getMaterialBatch },
+		{ "getScissorRect",			_getScissorRect },
+		{ "getShader",				_getShader },
+		{ "getTexture",				_getTexture },
+		{ "isVisible",				_isVisible },
+		{ "reserveMaterials",		_reserveMaterials },
+		{ "setBillboard",			_setBillboard },
+		{ "setBlendEquation",		_setBlendEquation },
+		{ "setBlendMode",			_setBlendMode },
+		{ "setCullMode",			_setCullMode },
+		{ "setDepthMask",			_setDepthMask },
+		{ "setDepthTest",			_setDepthTest },
+		{ "setIndexBatchSize",		_setIndexBatchSize },
+		{ "setLODLimits",			_setLODLimits },
+		{ "setMaterialBatch",		_setMaterialBatch },
+		{ "setParent",				_setParent },
+		{ "setScissorRect",			_setScissorRect },
+		{ "setShader",				_setShader },
+		{ "setTexture",				_setTexture },
+		{ "setUVTransform",			_setUVTransform },
+		{ "setVisible",				_setVisible },
 		{ NULL, NULL }
 	};
 	

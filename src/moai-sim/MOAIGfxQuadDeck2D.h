@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADDECK2D_H
 #define	MOAIGFXQUADDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 class MOAITextureBase;
@@ -16,7 +16,7 @@ class MOAITextureBase;
 	@text	Deck of textured quads.
 */
 class MOAIGfxQuadDeck2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 
 	ZLLeanArray < MOAIQuadBrush >		mQuads;
@@ -33,8 +33,9 @@ private:
 	static int	_transformUV			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	ZLBox		ComputeMaxBounds		();
-	ZLBox		GetItemBounds			( u32 idx );
+	MOAIQuadBrush&		AffirmQuad				( u32 idx );
+	ZLBox				ComputeMaxBounds		();
+	ZLBox				GetItemBounds			( u32 idx );
 	
 public:
 	
@@ -42,7 +43,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
-	bool		Inside					( u32 idx, ZLVec3D vec, float pad );
+	bool		Inside					( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );

@@ -51,6 +51,8 @@ target_link_libraries ( moai
   moai-sim
   moai-util
   moai-core
+  moai-apple
+  moai-sdl
   zlcore
   SDL2-static
     ${APPLICATION_SERVICES_LIBRARY}

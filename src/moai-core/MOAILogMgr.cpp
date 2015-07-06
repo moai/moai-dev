@@ -110,7 +110,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	STLString log;
 	log.write ( "[%s] %s", token, msg );
 
-	ZLLog::LogF ( ZLLog::CONSOLE, log.c_str ());
+	ZLLog::LogF ( ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
 
 	return 0;
 }
@@ -245,6 +245,15 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAILogMgr::LuaSetupClass( MOAILuaState& state, cc8* typeStr ) {
+
+	if ( this->mTypeCheckLuaParams && typeStr ) {
+		return state.CheckParams ( 1, typeStr, true );
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

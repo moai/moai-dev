@@ -9,13 +9,12 @@
 #ifndef OGGAUDIOSOURCE_H_
 #define OGGAUDIOSOURCE_H_
 
-#include "BufferedAudioSource.h"
 #include <threading/Threading.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
-#include <vector>
 #include <cstdio>
-#include <iostream>
+
+#include "BufferedAudioSource.h"
 
 class OggAudioSource : public BufferedAudioSource
 {
@@ -37,10 +36,35 @@ public:
 	
 private:
 	void setDecoderPosition(double position);
+	const char* getErrorDescription(const int status) const;
+
+/*
+ * TODO: MOAI C++11, maybe to 2020 :)
+#ifdef _DEBUG
+	template<typename... Arguments>
+		static inline void printError(const char* const message, Arguments... argv) {
+			printf(message, argv...);
+		}
+#else
+	template<typename... Arguments>
+		static inline void printError(const char* const message, Arguments... argv) { }
+#endif 
+*/
+
+#if _DEBUG
+	static inline void printError(const char* const message, ...) {
+		va_list vl;
+		va_start(vl, message);
+		printf(message, vl);
+		va_end(vl);
+	}
+#else
+	static inline void printError(const char* const message, ...) { }
+#endif
+
+
 
 	RCriticalSection mDecodeLock;
-	RString mPath;
-	FILE* mInFile;
 	vorbis_info* mpOggInfo;
 	OggVorbis_File mOggFile;
 };

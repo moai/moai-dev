@@ -38,9 +38,8 @@ int MOAIShaderProgram::_clearUniform ( lua_State* L ) {
 	@in		MOAIShaderProgram self
 	@in		number idx
 	@in		string name
-	@opt	number type		One of MOAIShaderProgram.UNIFORM_COLOR, MOAIShaderProgram.UNIFORM_FLOAT, MOAIShaderProgram.UNIFORM_INT,
-							MOAIShaderProgram.UNIFORM_TRANSFORM, MOAIShaderProgram.UNIFORM_PEN_COLOR, MOAIShaderProgram.UNIFORM_VIEW_PROJ,
-							MOAIShaderProgram.UNIFORM_WORLD, MOAIShaderProgram.UNIFORM_WORLD_VIEW, MOAIShaderProgram.UNIFORM_NORMAL, MOAIShaderProgram.UNIFORM_WORLD_VIEW_PROJ
+	@opt	number type		One of MOAIShaderProgram.UNIFORM_FLOAT, MOAIShaderProgram.UNIFORM_INDEX, MOAIShaderProgram.UNIFORM_INT,
+							MOAIShaderProgram.UNIFORM_MATRIX_F3, MOAIShaderProgram.UNIFORM_MATRIX_F4, MOAIShaderProgram.UNIFORM_VECTOR_F4
 	@out	nil
 */
 int MOAIShaderProgram::_declareUniform ( lua_State* L ) {
@@ -479,9 +478,10 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )GLOBAL_VIEW_WIDTH );
 	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )GLOBAL_VIEW_HEIGHT );
 	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )GLOBAL_WORLD );
+	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )GLOBAL_WORLD_INVERSE );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )GLOBAL_WORLD_VIEW );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )GLOBAL_WORLD_VIEW_INVERSE );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )GLOBAL_WORLD_VIEW_PROJ );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ_NORM",			( u32 )GLOBAL_WORLD_VIEW_PROJ_NORM );
 }
 
 //----------------------------------------------------------------//
@@ -555,6 +555,9 @@ void MOAIShaderProgram::UpdateGlobals () {
 	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
 	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
 
+	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
+	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
+
 	for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
 	
 		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
@@ -608,10 +611,31 @@ void MOAIShaderProgram::UpdateGlobals () {
 				}
 				break;
 			}
+			case GLOBAL_WORLD_INVERSE: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Inverse ();
+				
+				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
 			case GLOBAL_WORLD_VIEW: {
 			
 				ZLMatrix4x4 mtx = world;
 				mtx.Append ( view );
+				
+				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_WORLD_VIEW_INVERSE: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				mtx.Inverse ();
 				
 				if ( uniform.SetValue ( mtx, true )) {
 					uniform.Bind ();
@@ -625,21 +649,6 @@ void MOAIShaderProgram::UpdateGlobals () {
 				mtx.Append ( proj );
 				
 				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_PROJ_NORM: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Append ( proj );
-
-				ZLMatrix3x3 finalMtx;
-				finalMtx.Init ( mtx );
-				finalMtx.Inverse ( finalMtx );
-				
-				if ( uniform.SetValue ( finalMtx, true )) {
 					uniform.Bind ();
 				}
 				break;

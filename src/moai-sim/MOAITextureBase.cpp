@@ -166,6 +166,11 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
+		case ZLColor::LA_8:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+		
 		case ZLColor::RGB_888:
 			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
 			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;

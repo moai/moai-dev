@@ -34,6 +34,7 @@ namespace ZLColor {
 		A_1,
 		A_4,
 		A_8,
+		LA_8,
 		RGB_888,
 		RGB_565,
 		RGBA_5551,

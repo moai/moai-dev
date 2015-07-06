@@ -17,7 +17,7 @@
 	#include <moai-sim/MOAIImageFormatWebP.h>
 #endif
 
-#if MOAI_WITH_PVR
+#if MOAI_WITH_LIBPVR
 	#include <moai-sim/MOAIImageFormatPvr.h>
 #endif
 
@@ -98,7 +98,7 @@ MOAIImageFormatMgr::MOAIImageFormatMgr () {
 		this->RegisterFormat < MOAIImageFormatWebP >( "webp" );
 	#endif
 	
-	#if MOAI_WITH_PVR
+	#if MOAI_WITH_LIBPVR
 		this->RegisterFormat < MOAIImageFormatPvr >( "pvr" );
 	#endif
 }

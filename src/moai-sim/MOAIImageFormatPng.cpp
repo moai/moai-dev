@@ -7,6 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_LIBPNG
 
 #include <moai-sim/MOAIImageFormatPng.h>
+#include <moai-sim/MOAITextureBase.h>
 
 #include <png.h>
 
@@ -134,6 +135,11 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 		case PNG_COLOR_TYPE_GRAY:
 			pngPixelFormat = MOAIImage::TRUECOLOR;
 			pngColorFormat = ZLColor::A_8;
+			break;
+		
+		case PNG_COLOR_TYPE_GRAY_ALPHA:
+			pngPixelFormat = MOAIImage::TRUECOLOR;
+			pngColorFormat = ZLColor::LA_8;
 			break;
 		
 		case PNG_COLOR_TYPE_PALETTE:

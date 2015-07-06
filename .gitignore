@@ -13,8 +13,6 @@ Thumbs.db
 
 /src/config
 
-lib/
-
 build/
 xcuserdata/
 DerivedData/
@@ -39,3 +37,5 @@ cmake/projects/
 
 bin/api-reference-parser/vendor
 docs/api-reference
+moai-sdk/
+/lib/

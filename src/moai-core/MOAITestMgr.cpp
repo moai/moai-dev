@@ -83,6 +83,7 @@ json_t* MOAITestResult::ToJson () {
 //================================================================//
 
 //----------------------------------------------------------------//
+#ifndef _assert
 int MOAITestMgr::_assert ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
@@ -92,6 +93,7 @@ int MOAITestMgr::_assert ( lua_State* L ) {
 	}
 	return 0;
 }
+#endif
 
 //----------------------------------------------------------------//
 int MOAITestMgr::_comment ( lua_State* L ) {
@@ -299,7 +301,9 @@ void MOAITestMgr::PushTest ( cc8* name ) {
 void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+#ifndef _assert
 		{ "assert",					_assert },
+#endif
 		{ "comment",				_comment },
 		{ "error",					_error },
 		{ "popTest",				_popTest },

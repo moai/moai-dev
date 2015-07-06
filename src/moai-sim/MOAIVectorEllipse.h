@@ -23,7 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator* tess );
-	int				AddStrokeContours		( SafeTesselator* tess );
+	int				AddStrokeContours		( SafeTesselator* tess, bool inside, bool outside );
 	void			Init					( float x, float y, float xRad, float yRad );
 	bool			IsClosed				();
 					MOAIVectorEllipse		();

@@ -156,7 +156,7 @@ public:
 	template < typename TYPE > TYPE						GetField			( int idx, cc8* key, TYPE value );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, bool verbose );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name, bool verbose );
-	template < typename TYPE > ZLMetaRect < TYPE >		GetRect				( int idx );
+	template < typename TYPE > ZLMetaRect < TYPE >		GetRect				( int idx, TYPE value = 0 );
 	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
 	template < typename TYPE > ZLMetaVec2D < TYPE >		GetVec2D			( int idx, TYPE value = 0 );
 	template < typename TYPE > ZLMetaVec3D < TYPE >		GetVec3D			( int idx, TYPE value = 0 );
