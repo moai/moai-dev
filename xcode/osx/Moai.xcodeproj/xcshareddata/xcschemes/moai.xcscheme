@@ -17,7 +17,7 @@
                BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
                BuildableName = "moai"
                BlueprintName = "moai"
-               ReferencedContainer = "container:MoaiSample.xcodeproj">
+               ReferencedContainer = "container:Moai.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,7 +74,7 @@
             BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
-            ReferencedContainer = "container:MoaiSample.xcodeproj">
+            ReferencedContainer = "container:Moai.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
