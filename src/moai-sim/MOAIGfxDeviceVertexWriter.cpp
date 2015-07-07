@@ -96,7 +96,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
-				this->mGfx->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetAddress ());
+				this->mGfx->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetBuffer (), 0 );
 				this->mDrawCount++;
 			}
 		}
@@ -119,8 +119,8 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 		
 		this->mIsDrawing = false;
 		
-		this->mVtxBuffer.Seek ( 0 );
-		this->mIdxBuffer.Seek ( 0 );
+		this->mVtxBuffer.Reset ();
+		this->mIdxBuffer.Reset ();
 	
 		this->mPrimTopIdx	= 0;
 		this->mPrimTopVtx	= 0;

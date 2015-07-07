@@ -118,7 +118,7 @@ void MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format ) {
 		
 			assert ( this->mCurrentVtxBuffer ); // must currently have a valid vertex buffer bound (to receive the vertex format)
 		
-			format->Bind ( this->mCurrentVtxBuffer->GetAddress ());
+			format->Bind ( this->mCurrentVtxBuffer->GetBuffer ());
 		}
 	}
 }

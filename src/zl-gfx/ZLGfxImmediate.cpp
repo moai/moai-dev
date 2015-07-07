@@ -72,15 +72,17 @@ void ZLGfxImmediate::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferData ( u32 target, u32 size, const void* data, u32 usage ) {
+void ZLGfxImmediate::BufferData ( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage ) {
 
-	zglBufferData ( target, size, data, usage );
+	const void* addr = buffer ? buffer->GetData () : 0;
+	zglBufferData ( target, size, ( const void* )(( size_t )addr + offset ), usage );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
+void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset ) {
 
-	zglBufferSubData ( target, offset, size, data );
+	const void* addr = buffer ? buffer->GetData () : 0;
+	zglBufferSubData ( target, offset, size, ( const void* )(( size_t )addr + offset ));
 }
 
 //----------------------------------------------------------------//
@@ -300,9 +302,10 @@ void ZLGfxImmediate::DrawArrays ( u32 primType, u32 first, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, const void* indices ) {
+void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset ) {
 
-	zglDrawElements ( primType, count, indexType, indices );
+	const void* addr = buffer ? buffer->GetData () : 0;
+	zglDrawElements ( primType, count, indexType, ( const void* )(( size_t )addr + offset ));
 }
 
 //----------------------------------------------------------------//
@@ -481,9 +484,10 @@ void ZLGfxImmediate::UseProgram ( ZLGfxHandle* program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) {
+void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset ) {
 
-	zglVertexAttribPointer ( index, size, type, normalized, stride, pointer );
+	const void* addr = buffer ? buffer->GetData () : 0;
+	zglVertexAttribPointer ( index, size, type, normalized, stride, ( const void* )(( size_t )addr + offset ));
 }
 
 //----------------------------------------------------------------//

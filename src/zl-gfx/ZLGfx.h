@@ -8,6 +8,7 @@
 #include <zl-util/ZLLeanStack.h>
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
+#include <zl-util/ZLRevBufferStream.h>
 
 //================================================================//
 // ZLGfxHandle
@@ -82,8 +83,8 @@ public:
 	virtual void				BlendFunc					( u32 sourceFactor, u32 destFactor ) = 0;
 	virtual void				BlendMode					( u32 mode ) = 0;
 	
-	virtual void				BufferData					( u32 target, u32 size, const void* data, u32 usage ) = 0;
-	virtual void				BufferSubData				( u32 target, u32 offset, u32 size, const void* data ) = 0;
+	virtual void				BufferData					( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage ) = 0;
+	virtual void				BufferSubData				( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset ) = 0;
 	
 	virtual void				CheckFramebufferStatus		( u32 target ) = 0;
 	
@@ -111,7 +112,7 @@ public:
 	virtual void				DisableClientState			( u32 cap ) = 0;
 	virtual void				DisableVertexAttribArray	( u32 index ) = 0;
 	virtual void				DrawArrays					( u32 primType, u32 first, u32 count ) = 0;
-	virtual void				DrawElements				( u32 primType, u32 count, u32 indexType, const void* indices ) = 0;
+	virtual void				DrawElements				( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset ) = 0;
 	virtual void				Enable						( u32 cap ) = 0;
 	virtual void				EnableClientState			( u32 cap ) = 0;
 	virtual void				EnableVertexAttribArray		( u32 index ) = 0;
@@ -146,7 +147,7 @@ public:
 	virtual void				UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
 	virtual void				UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
 	virtual void				UseProgram					( ZLGfxHandle* program ) = 0;
-	virtual void				VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) = 0;
+	virtual void				VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset ) = 0;
 	virtual void				Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;
 								ZLGfx						() {}
 	virtual						~ZLGfx						() {}

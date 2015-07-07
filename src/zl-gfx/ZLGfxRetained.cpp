@@ -109,19 +109,19 @@ void ZLGfxRetained::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferData ( u32 target, u32 size, const void* data, u32 usage ) {
+void ZLGfxRetained::BufferData ( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( BUFFER_DATA );
 	this->mStream->Write < u32 >( target );
 	this->mStream->Write < u32 >( size );
-	this->mStream->Write < const void* >( data );
+	this->WriteBuffer ( buffer, offset );
 	this->mStream->Write < u32 >( usage );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, const void* data ) {
+void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset ) {
 
 	assert ( this->mStream );
 
@@ -129,7 +129,7 @@ void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, const void
 	this->mStream->Write < u32 >( target );
 	this->mStream->Write < u32 >( offset );
 	this->mStream->Write < u32 >( size );
-	this->mStream->Write < const void* >( data );
+	this->WriteBuffer ( buffer, srcOffset );
 }
 
 //----------------------------------------------------------------//
@@ -449,6 +449,30 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				);
 				break;
 			}
+			case BUFFER_DATA: {
+			
+				u32 target						= this->mStream->Read < u32 >( 0 );
+				u32 size						= this->mStream->Read < u32 >( 0 );
+				ZLRevBufferEdition* buffer		= this->mStream->Read < ZLRevBufferEdition* >( 0 );
+				size_t offset					= this->mStream->Read < size_t >( 0 );
+				u32 usage						= this->mStream->Read < u32 >( 0 );
+			
+				draw.BufferData ( target, size, buffer, offset,usage );
+				
+				break;
+			}
+			case BUFFER_SUB_DATA: {
+			
+				u32 target						= this->mStream->Read < u32 >( 0 );
+				u32 offset						= this->mStream->Read < u32 >( 0 );
+				u32 size						= this->mStream->Read < u32 >( 0 );
+				ZLRevBufferEdition* buffer		= this->mStream->Read < ZLRevBufferEdition* >( 0 );
+				size_t srcOffset				= this->mStream->Read < size_t >( 0 );
+				
+				draw.BufferSubData ( target, offset, size, buffer, srcOffset );
+				
+				break;
+			}
 			case CHECK_FRAMEBUFFER_STATUS: {
 				// TODO: GFX
 				break;
@@ -542,12 +566,15 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case DRAW_ELEMENTS: {
-				draw.DrawElements (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < const void* >( 0 )
-				);
+			
+				u32 primType					= this->mStream->Read < u32 >( 0 );
+				u32 count						= this->mStream->Read < u32 >( 0 );
+				u32 indexType					= this->mStream->Read < u32 >( 0 );
+				ZLRevBufferEdition* buffer		= this->mStream->Read < ZLRevBufferEdition* >( 0 );
+				size_t offset					= this->mStream->Read < size_t >( 0 );
+			
+				draw.DrawElements ( primType, count, indexType, buffer, offset );
+				
 				break;
 			}
 			case ENABLE: {
@@ -723,14 +750,25 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case VERTEX_ATTRIB_POINTER: {
+			
+				u32 index						= this->mStream->Read < u32 >( 0 );
+				u32 size						= this->mStream->Read < u32 >( 0 );
+				u32 type						= this->mStream->Read < u32 >( 0 );
+				bool normalized					= this->mStream->Read < bool >( false );
+				u32 stride						= this->mStream->Read < u32 >( 0 );
+				ZLRevBufferEdition* buffer		= this->mStream->Read < ZLRevBufferEdition* >( 0 );
+				size_t offset					= this->mStream->Read < size_t >( 0 );
+				
 				draw.VertexAttribPointer (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < bool >( false ),
-					this->mStream->Read < u32 >( 0 ),
-					( void* )this->mStream->Read < size_t >( 0 ) // TODO: fix to use buffer object
+					index,
+					size,
+					type,
+					normalized,
+					stride,
+					buffer,
+					offset
 				);
+				
 				break;
 			}
 			case VIEWPORT: {
@@ -760,7 +798,7 @@ void ZLGfxRetained::DrawArrays ( u32 primType, u32 first, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DrawElements ( u32 primType, u32 count, u32 indexType, const void* indices ) {
+void ZLGfxRetained::DrawElements ( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset ) {
 
 	assert ( this->mStream );
 
@@ -768,7 +806,7 @@ void ZLGfxRetained::DrawElements ( u32 primType, u32 count, u32 indexType, const
 	this->mStream->Write < u32 >( primType );
 	this->mStream->Write < u32 >( count );
 	this->mStream->Write < u32 >( indexType );
-	this->mStream->Write < const void* >( indices );
+	this->WriteBuffer ( buffer, offset );
 }
 
 //----------------------------------------------------------------//
@@ -898,6 +936,11 @@ void ZLGfxRetained::Reset () {
 	assert ( this->mStream );
 
 	this->mStream->Seek ( 0, SEEK_SET );
+	
+	while ( this->mReleaseStack.GetTop ()) {
+		ZLRevBufferEdition* buffer = this->mReleaseStack.Pop ();
+		buffer->Release ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1060,7 +1103,7 @@ void ZLGfxRetained::UseProgram ( ZLGfxHandle* program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer ) {
+void ZLGfxRetained::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset ) {
 
 	assert ( this->mStream );
 
@@ -1070,7 +1113,7 @@ void ZLGfxRetained::VertexAttribPointer ( u32 index, u32 size, u32 type, bool no
 	this->mStream->Write < u32 >( type );
 	this->mStream->Write < bool >( normalized );
 	this->mStream->Write < u32 >( stride );
-	this->mStream->Write < size_t >(( size_t )pointer ); // TODO: fix to use buffer object
+	this->WriteBuffer ( buffer, offset );
 }
 
 //----------------------------------------------------------------//
@@ -1083,6 +1126,19 @@ void ZLGfxRetained::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 	this->mStream->Write < s32 >( y );
 	this->mStream->Write < u32 >( w );
 	this->mStream->Write < u32 >( h );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::WriteBuffer ( ZLRevBufferEdition* buffer, size_t offset ) {
+
+	assert ( this->mStream );
+
+	if ( buffer ) {
+		buffer->Retain ();
+		this->mReleaseStack.Push ( buffer );
+	}
+	this->mStream->Write < ZLRevBufferEdition* >( buffer );
+	this->mStream->Write < size_t >( offset );
 }
 
 //----------------------------------------------------------------//

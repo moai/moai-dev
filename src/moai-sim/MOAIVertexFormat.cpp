@@ -149,7 +149,7 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( const void* buffer ) const {
+void MOAIVertexFormat::Bind ( ZLRevBufferEdition* buffer ) const {
 
 	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
 
@@ -157,7 +157,7 @@ void MOAIVertexFormat::Bind ( const void* buffer ) const {
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
-		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, ( const void* )(( size_t )buffer + attr.mOffset ));
+		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
 		gfx.EnableVertexAttribArray ( attr.mIndex );
 	}
 }

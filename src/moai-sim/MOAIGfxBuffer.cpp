@@ -110,8 +110,10 @@ void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {
 
-	this->Reserve ( 0 );
-	this->ReserveVBOs ( 0 );
+	this->ZLRevBufferStream::Clear ();
+
+	this->mVBOs.Clear ();
+	this->mCurrentVBO = 0;
 	
 	this->Destroy ();
 }
@@ -127,9 +129,9 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-const void* MOAIGfxBuffer::GetAddress () {
+ZLRevBufferEdition* MOAIGfxBuffer::GetBuffer () {
 
-	return this->mUseVBOs ? 0 : this->mData;
+	return this->mUseVBOs ? 0 : this->GetEdition ();
 }
 
 //----------------------------------------------------------------//
@@ -150,7 +152,6 @@ MOAIGfxBuffer::MOAIGfxBuffer () :
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mNeedsFlush ( false ),
 	mLoader ( 0 ),
-	mData ( 0 ),
 	mUseVBOs ( false ) {
 	
 	RTTI_BEGIN
@@ -210,7 +211,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 			//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 			//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 			
-			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->mData );
+			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetEdition (), 0 );
 			
 			this->mNeedsFlush = false;
 		}
@@ -234,7 +235,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 		if ( vbo ) {
 		
 			gfx.BindBuffer ( this->mTarget, vbo );
-			gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->mData : 0, hint );
+			gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->GetBuffer () : 0, 0, hint );
 			gfx.BindBuffer ( this->mTarget, 0 );
 			
 			count++;
@@ -301,15 +302,10 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Reserve ( u32 size ) {
 	
-	if ( this->mData ) {
-		free ( this->mData );
-		this->mData = 0;
-	}
+	this->Clear ();
 	
 	if ( size ) {
-		this->mData = calloc ( size, 1 );
-		this->SetBuffer ( this->mData, size, size );
-		this->mNeedsFlush = true;
+		this->ZLRevBufferStream::Reserve ( size );
 		this->FinishInit ();
 	}
 }
@@ -336,39 +332,39 @@ void MOAIGfxBuffer::ScheduleFlush () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
-	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
-
-	this->Reserve ( size );
-	this->ReserveVBOs ( totalVBOs );
-	
-	state.GetField ( -1, "mData" );
-	if ( state.IsType ( -1, LUA_TSTRING )) {
-		
-		STLString zipString = lua_tostring ( state, -1 );
-		size_t unzipLen = zipString.zip_inflate ( this->mData, size );
-		assert ( unzipLen == size ); // TODO: fail gracefully
-		
-		this->Seek ( size, SEEK_SET );
-	}
-	lua_pop ( state, 1 );
-	
-	this->ScheduleFlush ();
-	this->FinishInit ();
+//	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
+//	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
+//
+//	this->Reserve ( size );
+//	this->ReserveVBOs ( totalVBOs );
+//	
+//	state.GetField ( -1, "mData" );
+//	if ( state.IsType ( -1, LUA_TSTRING )) {
+//		
+//		STLString zipString = lua_tostring ( state, -1 );
+//		size_t unzipLen = zipString.zip_inflate ( this->mData, size );
+//		assert ( unzipLen == size ); // TODO: fail gracefully
+//		
+//		this->Seek ( size, SEEK_SET );
+//	}
+//	lua_pop ( state, 1 );
+//	
+//	this->ScheduleFlush ();
+//	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	u32 size = ( u32 )this->GetLength ();
-
-	state.SetField < u32 >( -1, "mTotalVBOs", this->mVBOs.Size ());
-	state.SetField < u32 >( -1, "mSize", size );
-	
-	STLString zipString;
-	zipString.zip_deflate ( this->mData, size );
-	
-	lua_pushstring ( state, zipString.str ());
-	lua_setfield ( state, -2, "mData" );
+//	u32 size = ( u32 )this->GetLength ();
+//
+//	state.SetField < u32 >( -1, "mTotalVBOs", this->mVBOs.Size ());
+//	state.SetField < u32 >( -1, "mSize", size );
+//	
+//	STLString zipString;
+//	zipString.zip_deflate ( this->mData, size );
+//	
+//	lua_pushstring ( state, zipString.str ());
+//	lua_setfield ( state, -2, "mData" );
 }
 

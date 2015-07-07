@@ -308,7 +308,7 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	mesh->SetTotalElements ( totalElements );
 	
 	ZLBox bounds;
-	format.ComputeBounds ( bounds, vtxBuffer->GetReadBuffer (), vtxBuffer->GetSize ());
+	format.ComputeBounds ( bounds, vtxBuffer->GetBuffer ()->GetData (), vtxBuffer->GetSize ());
 	
 	mesh->SetBounds ( bounds );
 	

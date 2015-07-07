@@ -28,7 +28,7 @@ public:
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
 	public MOAIStream,
-	public ZLByteStream {
+	public ZLRevBufferStream {
 protected:
 	
 	friend class MOAIGfxDeviceBase;
@@ -46,7 +46,6 @@ protected:
 	bool							mNeedsFlush;
 
 	MOAIGfxBufferLoader*	mLoader;
-	void*					mData;
 
 	bool					mUseVBOs;
 
@@ -74,7 +73,6 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxBuffer )
 	
-	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	GET ( u32, Target, mTarget )
 	
@@ -83,7 +81,7 @@ public:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					CopyFromStream			( ZLStream& stream );
-	const void*				GetAddress				();
+	ZLRevBufferEdition*		GetBuffer				();
 	size_t					GetSize					();
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();

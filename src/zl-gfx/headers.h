@@ -10,8 +10,6 @@
 #include <zl-gfx/zl_gfx_enum.h>
 
 #include <zl-gfx/ZLGfx.h>
-#include <zl-gfx/ZLGfxBuffer.h>
-#include <zl-gfx/ZLGfxBufferStream.h>
 #include <zl-gfx/ZLGfxDevice.h>
 #include <zl-gfx/ZLGfxImmediate.h>
 #include <zl-gfx/ZLGfxRetained.h>

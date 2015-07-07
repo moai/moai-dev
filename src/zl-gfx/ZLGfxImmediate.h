@@ -36,8 +36,8 @@ public:
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );
-	void					BufferData					( u32 target, u32 size, const void* data, u32 usage );
-	void					BufferSubData				( u32 target, u32 offset, u32 size, const void* data );
+	void					BufferData					( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage );
+	void					BufferSubData				( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset );
 
 	void					CheckFramebufferStatus		( u32 target );
 
@@ -65,7 +65,7 @@ public:
 	void					DisableClientState			( u32 cap );
 	void					DisableVertexAttribArray	( u32 index );
 	void					DrawArrays					( u32 primType, u32 first, u32 count );
-	void					DrawElements				( u32 primType, u32 count, u32 indexType, const void* indices );
+	void					DrawElements				( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset );
 	void					Enable						( u32 cap );
 	void					EnableClientState			( u32 cap );
 	void					EnableVertexAttribArray		( u32 index );
@@ -99,8 +99,9 @@ public:
 	void					UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx );
 	void					UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx );
 	void					UseProgram					( ZLGfxHandle* program );
-	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, const void* pointer );
+	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );
+	
 							ZLGfxImmediate				();
 							~ZLGfxImmediate				();
 };

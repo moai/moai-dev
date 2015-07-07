@@ -155,7 +155,8 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 						this->mPrimType,
 						span->mTop - span->mBase,
 						indexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-						( const void* )(( size_t )this->mIndexBuffer->GetAddress () + ( span->mBase * indexSizeInBytes ))
+						this->mIndexBuffer->GetBuffer (),
+						span->mBase * indexSizeInBytes
 					);
 				}
 				gfxDevice.BindIndexBuffer ();
