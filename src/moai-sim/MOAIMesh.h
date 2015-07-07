@@ -20,6 +20,7 @@ public:
 	size_t				mBase;
 	size_t				mTop;
 	
+	MOAIMeshSpan*		mPrev;
 	MOAIMeshSpan*		mNext;
 };
 
