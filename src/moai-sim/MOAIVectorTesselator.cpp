@@ -518,7 +518,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
 	u32 base = 0;
-	u32 totalElements = 0;
+	int totalElements = 0;
 	
 	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
 	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
@@ -1017,7 +1017,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 	assert ( idxStream );
 
 	int error = this->Finish ();
-	if ( error ) return error;
+	if ( error ) return -1;
 
 	int base = idxStream->GetLength ();
 
@@ -1026,7 +1026,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this, vtxStream, idxStream, format );
-		if ( error ) return error;
+		if ( error ) return -1;
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
@@ -1041,10 +1041,14 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer* vtxBuffer, MOAIIndexBuff
 	ZLMemStream vtxStream;
 	ZLMemStream idxStream;
 	
-	if ( this->Tesselate ( &vtxStream, &idxStream, format )) {
+	int totalIndices = this->Tesselate ( &vtxStream, &idxStream, format );
+	
+	if ( totalIndices > 0) {
 		return MOAIVectorUtil::GetTriangles ( vtxStream, *vtxBuffer, idxStream, *idxBuffer, idxSizeInBytes );
 	}
-	return 0;
+	
+	// something went wrong, return error code
+	return totalIndices;
 }
 
 //----------------------------------------------------------------//
