@@ -6,54 +6,35 @@
 
 #include <zl-gfx/ZLGfx.h>
 #include <zl-util/ZLMemStream.h>
+#include <zl-util/ZLRefCountedObject.h>
 
 //================================================================//
-// ZLPointerCacheEntry
+// ZLGfxRetainedListenerRecord
 //================================================================//
-class ZLPointerCacheEntry {
+class ZLGfxRetainedListenerRecord {
 private:
 
 	friend class ZLGfxRetained;
 
-	void*		mPointer;
-	u32			mSize;
-	u32			mStride;
-};
-
-//================================================================//
-// ZLPointerCache
-//================================================================//
-class ZLPointerCache {
-private:
-
-	friend class ZLGfxRetained;
-
-	enum {
-		USAGE_COLOR_POINTER,
-		USAGE_NORMAL_POINTER,
-		USAGE_TEX_COORD_POINTER,
-		USAGE_VERTEX_ATTRIB_POINTER,
-		USAGE_VERTEX_POINTER,
-		USAGE_TOTAL,
-	};
-	
-	ZLPointerCacheEntry mEntries [ USAGE_TOTAL ];
-
-	//----------------------------------------------------------------//
+	u32						mCommand;
+	ZLGfxListenerHandle*	mListenerHandle;
+	void*					mUserdata;
+	u32						mUniformAddr;
+	u32						mSignal;
 
 public:
 
 	//----------------------------------------------------------------//
-				ZLPointerCache			();
-				~ZLPointerCache			();
-
+				ZLGfxRetainedListenerRecord			();
+				~ZLGfxRetainedListenerRecord		();
 };
 
 //================================================================//
 // ZLGfxRetained
 //================================================================//
 class ZLGfxRetained :
-	public ZLGfx {
+	public ZLGfx,
+	public ZLGfxListener {
 private:
 
 	enum {
@@ -62,50 +43,61 @@ private:
 		ATTACH_SHADER,
 		BIND_ATTRIB_LOCATION,
 		BIND_BUFFER,
+		
 		BIND_FRAMEBUFFER,
 		BIND_RENDERBUFFER,
 		BIND_TEXTURE,
 		BIND_VERTEX_ARRAY,
 		BLEND_FUNC,
+		
 		BLEND_MODE,
 		BUFFER_DATA,
 		BUFFER_SUB_DATA,
 		CHECK_FRAMEBUFFER_STATUS,
 		CLEAR,
+		
 		CLEAR_COLOR,
 		COLOR,
 		COMPILE_SHADER,
 		CREATE,
 		CULL_FACE,
+		
 		DELETE,
 		DEPTH_FUNC,
 		DEPTH_MASK,
 		DISABLE,
 		DISABLE_CLIENT_STATE,
+		
 		DISABLE_VERTEX_ATTRIB_ARRAY,
 		DRAW_ARRAYS,
 		DRAW_ELEMENTS,
 		ENABLE,
 		ENABLE_CLIENT_STATE,
+		
 		ENABLE_VERTEX_ATTRIB_ARRAY,
 		FLUSH,
 		FRAMEBUFFER_RENDERBUFFER,
 		FRAMEBUFFER_TEXTURE_2D,
 		GET_CURRENT_FRAMEBUFFER,
+		
+		GET_UNIFORM_LOCATION,
 		LINE_WIDTH,
 		LINK_PROGRAM,
 		RENDER_BUFFER_STORAGE,
 		SCISSOR,
+		
 		SHADER_SOURCE,
 		TEX_ENVI,
 		TEX_IMAGE_2D,
 		TEX_PARAMETERI,
 		TEX_SUB_IMAGE_2D,
+		
 		UNIFORM_1F,
 		UNIFORM_1I,
 		UNIFORM_4FV,
 		UNIFORM_MATRIX_3FV,
 		UNIFORM_MATRIX_4FV,
+		
 		USE_PROGRAM,
 		VERTEX_ATTRIB_POINTER,
 		VIEWPORT,
@@ -114,10 +106,12 @@ private:
 	ZLMemStream		mMemStream;
 	ZLStream*		mStream;
 
-	ZLLeanStack < ZLRevBufferEdition*, 32 > mReleaseStack;
+	ZLLeanStack < ZLRefCountedObject*, 32 > mReleaseStack;
+	ZLLeanStack < ZLGfxRetainedListenerRecord, 32 > mListenerRecords;
 
 	//----------------------------------------------------------------//
 	void					Create						( ZLGfxHandle* handle, u32 param );
+	void					OnUniformLocation			( u32 addr, void* userdata );
 	void					WriteBuffer					( ZLRevBufferEdition* buffer, size_t offset );
 
 public:
@@ -175,12 +169,16 @@ public:
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
 	
 	ZLGfxHandle*			GetCurrentFramebuffer		();
+	void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata );
 	
 	void					LineWidth					( float width );
 	
 	void					LinkProgram					( ZLGfxHandle* program, bool verbose );
 	
 	void					PopSection					();
+	
+	void					PublishEvents				( bool reset = true );
+	
 	bool					PushErrorHandler			();
 	void					PushSection					();
 	bool					PushSuccessHandler			();

@@ -6,6 +6,24 @@
 #include <zl-gfx/ZLGfxRetained.h>
 
 //================================================================//
+// ZLGfxRetainedListenerRecord
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLGfxRetainedListenerRecord::ZLGfxRetainedListenerRecord () :
+	mCommand ( 0 ),
+	mListenerHandle ( 0 ),
+	mUserdata ( 0 ),
+	mUniformAddr ( 0 ),
+	mSignal ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+ZLGfxRetainedListenerRecord::~ZLGfxRetainedListenerRecord () {
+}
+
+
+//================================================================//
 // ZLGfxRetained
 //================================================================//
 
@@ -368,6 +386,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 	while ( this->mStream->GetCursor () < top ) {
 	
 		u32 command = this->mStream->Read < u32 >( UNKNOWN );
+		
 	
 		if ( command == UNKNOWN ) {
 			printf ( "UNKOWN\n" );
@@ -609,6 +628,21 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case GET_CURRENT_FRAMEBUFFER: {
 				// TODO: GFX
+				break;
+			}
+			case GET_UNIFORM_LOCATION: {
+			
+				ZLGfxHandle* handle = this->mStream->Read < ZLGfxHandle* >( 0 );
+				size_t size = this->mStream->Read < size_t >( 0 );
+				
+				char* name = ( char* )alloca ( size + 1 );
+				this->mStream->ReadBytes ( name, size );
+				name [ size ] = 0;
+				
+				void* userdata = this->mStream->Read < void* >( 0 );
+				
+				draw.GetUniformLocation ( handle, name, this, userdata );
+				
 				break;
 			}
 			case LINE_WIDTH: {
@@ -881,6 +915,36 @@ ZLGfxHandle* ZLGfxRetained::GetCurrentFramebuffer () {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxRetained::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
+
+	assert ( this->mStream );
+
+	if ( listener ) {
+	
+		ZLGfxListenerHandle* listenerHandle = listener->GetHandle ();
+		listenerHandle->Retain ();
+		this->mReleaseStack.Push ( listenerHandle );
+	
+		u32 idx = this->mListenerRecords.GetTop ();
+		ZLGfxRetainedListenerRecord& record = this->mListenerRecords.Push ();
+
+		record.mCommand			= GET_UNIFORM_LOCATION;
+		record.mListenerHandle	= listenerHandle;
+		record.mUserdata		= userdata;
+		record.mUniformAddr		= 0;
+
+		this->mStream->Write < u32 >( GET_UNIFORM_LOCATION );
+		this->mStream->Write < ZLGfxHandle* >( program );
+		
+		size_t size = strlen ( uniformName );
+		this->mStream->Write < size_t >( size );
+		this->mStream->WriteBytes ( uniformName, size );
+		
+		this->mStream->Write < void* >(( void* )idx );
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::LineWidth ( float width ) {
 
 	assert ( this->mStream );
@@ -900,7 +964,43 @@ void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxRetained::OnUniformLocation ( u32 addr, void* userdata ) {
+	
+	u32 idx = ( u32 )userdata;
+	if ( idx < this->mListenerRecords.GetTop ()) {
+		this->mListenerRecords [ idx ].mUniformAddr = addr;
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::PopSection () {
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::PublishEvents ( bool reset ) {
+
+	size_t top = this->mListenerRecords.GetTop ();
+	for ( size_t i = 0; i < top; ++i ) {
+		ZLGfxRetainedListenerRecord& record = this->mListenerRecords [ i ];
+		
+		ZLGfxListener* listener = record.mListenerHandle->GetListener ();
+		if ( ! listener ) continue;
+		
+		switch ( record.mCommand ) {
+		
+			case GET_UNIFORM_LOCATION:
+			
+				listener->OnUniformLocation ( record.mUniformAddr, record.mUserdata );
+				break;
+			
+			default:
+				listener->OnSignal ( record.mSignal, record.mUserdata );
+		}
+	}
+	
+	if ( reset ) {
+		this->mListenerRecords.Reset ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -935,11 +1035,16 @@ void ZLGfxRetained::Reset () {
 
 	assert ( this->mStream );
 
+	if ( this->mListenerRecords.GetTop () > 0 ) {
+		this->Abandon ();
+		this->mListenerRecords.Reset ();
+	}
+
 	this->mStream->Seek ( 0, SEEK_SET );
 	
 	while ( this->mReleaseStack.GetTop ()) {
-		ZLRevBufferEdition* buffer = this->mReleaseStack.Pop ();
-		buffer->Release ();
+		ZLRefCountedObject* object = this->mReleaseStack.Pop ();
+		object->Release ();
 	}
 }
 
@@ -1046,6 +1151,7 @@ void ZLGfxRetained::Uniform1f ( u32 location, float v0 ) {
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( UNIFORM_1F );
+	this->mStream->Write < u32 >( location );
 	this->mStream->Write < float >( v0 );
 }
 
@@ -1055,6 +1161,7 @@ void ZLGfxRetained::Uniform1i ( u32 location, s32 v0 ) {
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( UNIFORM_1I );
+	this->mStream->Write < u32 >( location );
 	this->mStream->Write < s32 >( v0 );
 }
 

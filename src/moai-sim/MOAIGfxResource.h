@@ -13,7 +13,8 @@
 			context (if possible).
 */
 class MOAIGfxResource :
-	public virtual MOAILuaObject {
+	public virtual MOAILuaObject,
+	public ZLGfxListener {
 private:
 
 	friend class MOAIGfxDevice;

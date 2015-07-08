@@ -74,6 +74,7 @@ public:
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
 	
 	ZLGfxHandle*			GetCurrentFramebuffer		();
+	void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata );
 	
 	void					LineWidth					( float width );
 	

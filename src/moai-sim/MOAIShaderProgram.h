@@ -89,6 +89,7 @@ protected:
 	void			OnGPUDestroy				();
 	void			OnGPULost					();
 	void			OnGPUUnbind					();
+	void			OnUniformLocation			( u32 addr, void* userdata );
 
 public:
 

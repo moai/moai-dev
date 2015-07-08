@@ -17,6 +17,8 @@
 void MOAIGfxDeviceBase::Draw () {
 
 	this->mGfxRetained.Draw ( this->mGfxImmediate );
+	
+	this->mGfxRetained.PublishEvents ();
 	this->mGfxRetained.Reset ();
 }
 

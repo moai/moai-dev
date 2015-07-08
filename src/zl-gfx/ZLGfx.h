@@ -8,6 +8,7 @@
 #include <zl-util/ZLLeanStack.h>
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
+#include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLRevBufferStream.h>
 
 //================================================================//
@@ -51,6 +52,55 @@ public:
 	static u32 GLID ( ZLGfxHandle* handle ) {
 		return handle ? handle->mGLID : 0;
 	}
+};
+
+class ZLGfxListener;
+
+//================================================================//
+// ZLGfxListenerHandle
+//================================================================//
+class ZLGfxListenerHandle :
+	private ZLRefCountedObject {
+private:
+
+	friend class ZLGfx;
+	friend class ZLGfxImmediate;
+	friend class ZLGfxListener;
+	friend class ZLGfxRetained;
+
+	ZLGfxListener*		mListener;
+
+	GET ( ZLGfxListener*, Listener, mListener )
+
+	//----------------------------------------------------------------//
+	static ZLGfxListener*		Listener					( ZLGfxListenerHandle* handle );
+								ZLGfxListenerHandle			();
+								~ZLGfxListenerHandle		();
+
+public:
+
+	//----------------------------------------------------------------//
+	
+};
+
+//================================================================//
+// ZLGfxListener
+//================================================================//
+class ZLGfxListener {
+private:
+
+	ZLGfxListenerHandle*	mHandle;
+
+public:
+
+	GET ( ZLGfxListenerHandle*, Handle, mHandle )
+
+	//----------------------------------------------------------------//
+	void					Abandon					();
+	virtual	void			OnSignal				( u32 signal, void* userdata );
+	virtual void			OnUniformLocation		( u32 addr, void* userdata );
+							ZLGfxListener			();
+	virtual					~ZLGfxListener			();
 };
 
 //================================================================//
@@ -122,6 +172,7 @@ public:
 	virtual void				FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level ) = 0;
 	
 	virtual ZLGfxHandle*		GetCurrentFramebuffer		() = 0;
+	virtual void				GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
 	
 	virtual void				LineWidth					( float width ) = 0;
 	

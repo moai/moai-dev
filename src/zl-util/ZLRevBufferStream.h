@@ -9,6 +9,7 @@
 
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLLeanStack.h>
+#include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLStream.h>
 
 class ZLRevBufferStream;
@@ -31,12 +32,12 @@ public:
 //================================================================//
 // ZLRevBufferEdition
 //================================================================//
-class ZLRevBufferEdition {
+class ZLRevBufferEdition :
+	public ZLRefCountedObject {
 private:
 
 	friend class ZLRevBufferStream;
 
-	u32					mRefCount;
 	void*				mData;
 	size_t				mSize;
 	
@@ -51,8 +52,6 @@ public:
 	GET ( const void*, Data, mData );
 
 	//----------------------------------------------------------------//
-	void				Release						();
-	void				Retain						();
 };
 
 //================================================================//

@@ -351,6 +351,15 @@ ZLGfxHandle* ZLGfxImmediate::GetCurrentFramebuffer () {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxImmediate::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
+
+	if ( listener) {
+		u32 addr = zglGetUniformLocation ( ZLGfxHandle::GLID ( program ), uniformName );
+		listener->OnUniformLocation ( addr, userdata );
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::LineWidth ( float width ) {
 
 	zglLineWidth ( width );

@@ -387,16 +387,16 @@ bool MOAIShaderProgram::OnGPUCreate () {
 //		this->Clear ();
 //		return false;
 //	}
-//
-//	// get the uniform locations and clear out the names (no longer needed)
-//	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-//		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-//
-//		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
-//			uniform.mAddr = zglGetUniformLocation ( this->mProgram->mGLID, uniform.mName );
-//			uniform.ClearValue ();
-//		}
-//	}
+
+	// get the uniform locations and clear out the names (no longer needed)
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+
+		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
+			gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )i );
+			uniform.ClearValue ();
+		}
+	}
 
 	gfx.DeleteHandle ( this->mVertexShader );
 	this->mVertexShader = 0;
@@ -435,6 +435,16 @@ void MOAIShaderProgram::OnGPULost () {
 void MOAIShaderProgram::OnGPUUnbind () {
 
 	MOAIGfxDevice::GetAPI ().UseProgram ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::OnUniformLocation ( u32 addr, void* userdata ) {
+
+	u32 i = ( u32 )userdata;
+	
+	if ( i < this->mUniforms.Size ()) {
+		this->mUniforms [ i ].mAddr = addr;
+	}
 }
 
 //----------------------------------------------------------------//

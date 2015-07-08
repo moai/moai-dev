@@ -10,26 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLRevBufferEdition::Release () {
-
-	if ( this->mRefCount > 0 ) {
-		--this->mRefCount;
-	}
-	
-	if ( this->mRefCount == 0 ) {
-		delete ( this );
-	}
-}
-
-//----------------------------------------------------------------//
-void ZLRevBufferEdition::Retain () {
-
-	this->mRefCount++;
-}
-
-//----------------------------------------------------------------//
 ZLRevBufferEdition::ZLRevBufferEdition () :
-	mRefCount ( 0 ),
 	mData ( 0 ),
 	mSize ( 0 ),
 	mAllocator ( 0 ) {
@@ -95,7 +76,7 @@ size_t ZLRevBufferStream::GetLength () {
 //----------------------------------------------------------------//
 void ZLRevBufferStream::MakeDirty () {
 
-	if ( this->mEdition->mRefCount > 1 ) {
+	if ( this->mEdition->GetRefCount () > 1 ) {
 	
 		ZLRevBufferEdition* prevEdition = this->mEdition;
 		prevEdition->Release ();
