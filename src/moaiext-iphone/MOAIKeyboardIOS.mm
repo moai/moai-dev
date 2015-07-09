@@ -4,66 +4,73 @@
 #include "pch.h"
 #import <moaiext-iphone/MOAIKeyboardIOS.h>
 
-//@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate > {
-//@private
-//
-//	//NSRange		mRange;
-//}
-//
-//	//----------------------------------------------------------------//
-//	-( void )	onChanged					:( NSNotification* )notification;
-////	-( BOOL )	textField					:( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string;
-////	-( BOOL )	textFieldShouldReturn		:( UITextField* )textField;
-//
-//@end
+@implementation MOAIKeyboardIOSEventListener
+	- (void) keyboardDidShow:(NSNotification*)notification {
+		CGFloat height = [[notification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+		
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
+		
+		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_SHOW, state )) {
+			state.Push ( height );
+			state.DebugCall ( 1, 0 );
+		}
+		
+	}
+@end
 
 @implementation MOAITextFieldDelegate
 
 	//----------------------------------------------------------------//
-	-( void ) onChanged :( NSNotification* )notification {
+	-( void ) onChanged :( NSString* )string {
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
-		UITextField* textField = (UITextField*)notification.object;
-		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
-			state.Push ([ [ textField text ] UTF8String ]);
-			state.DebugCall ( 1, 0 );
+			state.Push ( mRange.location );
+			state.Push ( mRange.length );
+			state.Push ([ string UTF8String ]);
+			state.DebugCall ( 3, 0 );
 		}
 	}
 
-//	//----------------------------------------------------------------//
-//	-( BOOL ) textField :( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string {
-//		UNUSED ( textField );
-//		
-//		mRange = range;
-//		[ self performSelector:@selector(onChanged:) withObject:string afterDelay:0.0f ];
-//		
-//		return YES;
-//	}
-//	
-//	//----------------------------------------------------------------//
-//	-( BOOL ) textFieldShouldReturn :( UITextField* )textField {
-//		UNUSED ( textField );
-//		
-//		BOOL result = YES;
-//		
-//		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-//		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
-//		
-//		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
-//			state.DebugCall ( 0, 1 );
-//			result = state.GetValue < bool >( -1, true );
-//		}
-//		
-//		if ( result ) {
-//			keyboard.Finish ();
-//		}
-//		
-//		return result;
-//	}
+	//----------------------------------------------------------------//
+	-( BOOL ) textField :( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string {
+		UNUSED ( textField );
+		
+		mRange = range;
+		[ self performSelector:@selector(onChanged:) withObject:string afterDelay:0.0f ];
+		
+		return YES;
+	}
+	
+	//----------------------------------------------------------------//
+	-( BOOL ) textFieldShouldReturn :( UITextField* )textField {
+		UNUSED ( textField );
+		
+		BOOL result = YES;
+		
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
+		
+		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {
+			state.DebugCall ( 0, 1 );
+			result = state.GetValue < bool >( -1, true );
+		}
+		
+		if ( result ) {
+			keyboard.Finish ();
+		}
+		
+		return result;
+	}
 
+
+	-( BOOL ) textFieldShouldEndEditing:(UITextField *)textField {
+		UNUSED (textField);
+		return NO;
+	}
 @end
 
 //================================================================//
@@ -118,6 +125,27 @@ int MOAIKeyboardIOS::_showKeyboard ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	hideKeyboard
+ @text	Hide the native software keyboard.
+ 
+ @out	nil
+ */
+int MOAIKeyboardIOS::_hideKeyboard ( lua_State* L ) {
+	UNUSED (L);
+	
+	MOAIKeyboardIOS::Get ().Finish();
+	return 0;
+}
+
+int MOAIKeyboardIOS::_resetText ( lua_State* L ) {
+	UNUSED (L);
+	
+	MOAIKeyboardIOS::Get ().ResetText ();
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIKeyboardIOS
 //================================================================//
@@ -164,6 +192,7 @@ void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_INPUT",					( u32 )EVENT_INPUT );
 	state.SetField ( -1, "EVENT_RETURN",				( u32 )EVENT_RETURN );
+	state.SetField ( -1, "EVENT_SHOW",					( u32 )EVENT_SHOW );
 
 	state.SetField ( -1, "AUTOCAP_ALL",					( u32 )AUTOCAP_ALL );
 	state.SetField ( -1, "AUTOCAP_NONE",				( u32 )AUTOCAP_NONE );
@@ -196,6 +225,8 @@ void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getText",			_getText },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIKeyboardIOS > },
 		{ "showKeyboard",		_showKeyboard },
+		{ "hideKeyboard",		_hideKeyboard },
+		{ "resetText",			_resetText },
 		{ NULL, NULL }
 	};
 
@@ -208,16 +239,20 @@ void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool se
 	if ( !this->mTextField ) {
 		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		
+		this->mDelegate = [[ MOAITextFieldDelegate alloc ] init ];
+		
 		CGRect frame = CGRectMake ( 0, 0, 320, 24 );
 		this->mTextField = [[ UITextField alloc ] initWithFrame:frame ];
-		//[ this->mTextField setDelegate:[[ MOAITextFieldDelegate alloc ] init ]];
-		this->mListenerDelegate = [[ MOAITextFieldDelegate alloc ] init ];
-		[[NSNotificationCenter defaultCenter] addObserver:this->mListenerDelegate selector:@selector(onChanged:) name:UITextFieldTextDidChangeNotification object:this->mTextField];
+		[ this->mTextField setDelegate:this->mDelegate ];
 		
 		[ window addSubview:this->mTextField ];
 	}
 	
-	//[ this->mTextField setHidden:YES ];
+	if ( !this->mListener) {
+		this->mListener = [[MOAIKeyboardIOSEventListener alloc] init];
+	}
+	
+	[ this->mTextField setHidden:YES ];
 	[ this->mTextField setText:[ NSString stringWithUTF8String:text ]];
 	
 	[ this->mTextField setAutocapitalizationType:( UITextAutocapitalizationType )autocap ];
@@ -230,4 +265,17 @@ void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool se
 	[ this->mTextField setSecureTextEntry:secure ];
 
 	[ this->mTextField becomeFirstResponder ];
+	
+	
+	[[NSNotificationCenter defaultCenter] addObserver:this->mListener selector:@selector(keyboardDidShow:)
+												 name:UIKeyboardDidShowNotification object:nil];
+}
+
+void MOAIKeyboardIOS::ResetText () {
+	[this->mTextField setText:@""];
+}
+
+void MOAIKeyboardIOS::KeyboardDidShow (NSNotification* notification)
+{
+	UNUSED (notification);
 }

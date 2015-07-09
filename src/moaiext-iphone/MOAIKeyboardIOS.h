@@ -8,8 +8,27 @@
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
 
-@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate >
--( void )	onChanged					:( NSNotification* )notification;
+@interface MOAIKeyboardIOSEventListener : NSObject {
+	
+}
+- ( void )	keyboardDidShow		:(NSNotification*)notification;
+@end
+
+//================================================================//
+// MOAITextFieldDelegate
+//================================================================//
+@interface MOAITextFieldDelegate : NSObject < UITextFieldDelegate > {
+@private
+	
+	NSRange		mRange;
+}
+
+//----------------------------------------------------------------//
+-( void )	onChanged					:( NSString* )string;
+-( BOOL )	textField					:( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string;
+-( BOOL )	textFieldShouldReturn		:( UITextField* )textField;
+-( BOOL )	textFieldShouldEndEditing	:(UITextField *)textField;
+
 @end
 
 //================================================================//
@@ -50,6 +69,7 @@
 	
 	@const	EVENT_INPUT
 	@const	EVENT_RETURN
+	@const	EVENT_SHOW
 	
 	@const	AUTOCAP_ALL
 	@const	AUTOCAP_NONE
@@ -111,16 +131,20 @@ private:
 		RETURN_KEY_SEND			= UIReturnKeySend,
 	};
 
-	UITextField*	mTextField;
-	MOAITextFieldDelegate* mListenerDelegate;
-		
+	UITextField*			mTextField;
+	MOAITextFieldDelegate*	mDelegate;
+	MOAIKeyboardIOSEventListener* mListener;
 
 	//----------------------------------------------------------------//
 	static int		_getText				( lua_State* L );
 	static int		_showKeyboard			( lua_State* L );
+	static int		_hideKeyboard			( lua_State* L );
+	static int		_resetText				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			ShowKeyboard			( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
+	void			ResetText				();
+	void			KeyboardDidShow			(NSNotification* notification);
 
 public:
 	
@@ -129,6 +153,7 @@ public:
 	enum {
 		EVENT_INPUT,
 		EVENT_RETURN,
+		EVENT_SHOW
 	};
 	
 	//----------------------------------------------------------------//
