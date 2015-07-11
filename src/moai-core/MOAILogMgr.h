@@ -39,11 +39,11 @@ class MOAILogMessage {
 /**	@lua	MOAILogMgr
 	@text	Singleton for managing debug log messages and log level.
 
-	@const LOG_NONE
-	@const LOG_ERROR
-	@const LOG_WARNING
-	@const LOG_STATUS
-	@const LOG_DEBUG
+	@const LOG_NONE		No logging
+	@const LOG_ERROR	Error level
+	@const LOG_WARNING	Warning level
+	@const LOG_STATUS	Status level
+	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
 	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {

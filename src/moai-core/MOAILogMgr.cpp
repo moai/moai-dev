@@ -82,8 +82,20 @@ int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 /**	@lua	log
 	@text	Alias for print.
 
-	@in		string message
-	@out	nil
+	@overload
+		@in		string message
+		@out	nil
+	
+	@overload
+		@in		number level	Default: LOG_STATUS
+		@in		string message
+		@out	nil
+	
+	@overload
+		@in		number level	Default: LOG_STATUS
+		@in		string token
+		@in		string message
+		@out	nil
 */
 int MOAILogMgr::_log ( lua_State* L ) {
 	MOAILuaState state ( L );

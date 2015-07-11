@@ -34,12 +34,15 @@ namespace MOAIImageTransform {
 	@flag	PIXEL_FMT_INDEX_4
 	@flag	PIXEL_FMT_INDEX_8
 	
-	@flag	COLOR_FMT_A_8
-	@flag	COLOR_FMT_RGB_888
-	@flag	COLOR_FMT_RGB_565
-	@flag	COLOR_FMT_RGBA_5551
-	@flag	COLOR_FMT_RGBA_4444
-	@flag	COLOR_FMT_RGBA_8888
+	@flag	COLOR_FMT_A_1			Alpha only, 1 bit per pixel
+	@flag	COLOR_FMT_A_4			Alpha only, 4 bits per pixel
+	@flag	COLOR_FMT_A_8			Alpha only, 8 bits per pixel
+	@flag	COLOR_FMT_LA_8			Grayscale + alpha, 16 bits per pixel
+	@flag	COLOR_FMT_RGB_888		RGB, 24 bits per pixel
+	@flag	COLOR_FMT_RGB_565		RGB, 16 bits per pixel
+	@flag	COLOR_FMT_RGBA_5551		RGBA, 16 bits per pixel (1 bit alpha)
+	@flag	COLOR_FMT_RGBA_4444		RGBA, 16 bits per pixel (4 bits per channel)
+	@flag	COLOR_FMT_RGBA_8888		RGBA, 32 bits per pixel
 */
 class MOAIImage :
 	public virtual MOAILuaObject {
