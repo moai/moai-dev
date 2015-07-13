@@ -107,7 +107,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		if ( vtxBuffer && idxBuffer ) {
 			
 			u32 idxSizeInBytes = state.GetValue < u32 >( 6, 4 );
-			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, *vtxStream, *idxStream, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 			
 			state.Push ( totalElements );
 			return 1;
@@ -115,7 +115,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		else {
 	
 			u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-			MOAIMesh* mesh = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, idxSizeInBytes );
+			MOAIMesh* mesh = MOAIGeometryWriter::GetMesh ( *format, *vtxStream, *idxStream, idxSizeInBytes );
 			state.Push ( mesh );
 			return 1;
 		}
@@ -292,12 +292,12 @@ void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, Z
 }
 
 //----------------------------------------------------------------//
-MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes ) {
+MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes ) {
 
 	MOAIVertexBuffer* vtxBuffer = new MOAIVertexBuffer ();
 	MOAIIndexBuffer* idxBuffer = new MOAIIndexBuffer ();
 
-	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	
 	MOAIMesh* mesh = new MOAIMesh ();
 	
@@ -316,37 +316,42 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, u32 idxSizeInBytes ) {
+u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
-	assert ( vtxStream );
-	assert ( idxStream );
+	size_t vtxStreamBase = vtxStream.GetCursor ();
+	size_t idxStreamBase = idxStream.GetCursor ();
 	
-	vtxBuffer->Clear ();
-	idxBuffer->Clear ();
+	vtxStream.Seek ( 0, SEEK_SET );
+	idxStream.Seek ( 0, SEEK_SET );
 	
-	size_t vtxStreamBase = vtxStream->GetCursor ();
-	size_t idxStreamBase = idxStream->GetCursor ();
+	if ( vtxBuffer.GetBufferCount () == 0 ) {
+		vtxBuffer.ReserveVBOs ( 1 );
+	}
 	
-	vtxBuffer->CopyFromStream ( *vtxStream );
+	if ( idxBuffer.GetBufferCount () == 0 ) {
+		idxBuffer.ReserveVBOs ( 1 );
+	}
 	
-	idxBuffer->SetIndexSize ( idxSizeInBytes );
+	vtxBuffer.CopyFromStream ( vtxStream );
 	
-	if ( idxStream->GetLength ()) {
+	idxBuffer.SetIndexSize ( idxSizeInBytes );
+	
+	if ( idxStream.GetLength ()) {
 		
-		idxBuffer->CopyFromStream ( *idxStream, 4 );
+		idxBuffer.CopyFromStream ( idxStream, 4 );
 	}
 	else {
 	
-		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
+		u32 totalVertices = vtxBuffer.GetSize () / format.GetVertexSize ();
 		for ( u32 i = 0; i < totalVertices; ++i ) {
-			idxBuffer->WriteIndex ( i );
+			idxBuffer.WriteIndex ( i );
 		}
 	}
 	
-	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
-	idxStream->Seek ( idxStreamBase, SEEK_SET );
+	vtxStream.Seek ( vtxStreamBase, SEEK_SET );
+	idxStream.Seek ( idxStreamBase, SEEK_SET );
 	
-	return idxBuffer->GetSize () / idxSizeInBytes;
+	return idxBuffer.GetSize () / idxSizeInBytes;
 }
 
 //----------------------------------------------------------------//

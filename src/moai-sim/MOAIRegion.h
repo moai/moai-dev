@@ -6,6 +6,7 @@
 
 class MOAIIndexBuffer;
 class MOAIVertexBuffer;
+class MOAIVertexFormat;
 
 //================================================================//
 // MOAIRegion
@@ -32,12 +33,14 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIRegion )
 
+	GET ( size_t, Size, mPolygons.Size ())
+
 	//----------------------------------------------------------------//
 	void					DrawDebug				() const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );
 	const ZLPolygon2D&		GetPolygon				( u32 idx ) const;
-	u32						GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
+	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 							MOAIRegion				();
 							~MOAIRegion				();
 	bool					PointInside				( const ZLVec2D& p ) const;

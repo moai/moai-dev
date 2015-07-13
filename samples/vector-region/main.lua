@@ -31,21 +31,19 @@ tess:pushCombo ()
 	tess:pushPoly ( 25, -25, -25, -25, -25, 25, 25, 25 )
 tess:finish ()
 
---tess:finish ( true )
-
 local region = MOAIRegion.new ()
 tess:tesselate ( region )
 
 local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
-local vtxBuffer = MOAIGfxBuffer.new ()
-local idxBuffer = MOAIGfxBuffer.new ()
+local vtxBuffer = MOAIVertexBuffer.new ()
+local idxBuffer = MOAIIndexBuffer.new ()
 
-local totalElements = region:getTriangles ( vtxBuffer, idxBuffer, 2 );
+local totalElements = region:getTriangles ( vtxBuffer, idxBuffer, 2, vtxFormat );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-mesh:setIndexBuffer ( idxBuffer, 2 )
+mesh:setIndexBuffer ( idxBuffer )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 mesh:setTotalElements ( totalElements )

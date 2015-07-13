@@ -72,8 +72,6 @@ protected:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIGfxBuffer )
-	
 	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	GET ( u32, Target, mTarget )

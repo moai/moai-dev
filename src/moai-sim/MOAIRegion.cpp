@@ -65,11 +65,13 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
 	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
 
-	u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
-
 	u32 totalElements = 0;
 	if ( vtxBuffer && idxBuffer ) {
-		totalElements = self->GetTriangles ( *vtxBuffer, *idxBuffer, idxSizeInBytes );
+	
+		u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
+		MOAIVertexFormat* format		= state.GetLuaObject < MOAIVertexFormat >( 5, false );
+	
+		totalElements = self->GetTriangles ( *format, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	}
 	state.Push ( totalElements );
 	return 1;
@@ -232,7 +234,7 @@ const ZLPolygon2D& MOAIRegion::GetPolygon ( u32 idx ) const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIRegion::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
+u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
 
 	SafeTesselator tesselator;
 
@@ -242,9 +244,9 @@ u32 MOAIRegion::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idx
 		tesselator.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), poly.GetSize ());
 	}
 	
-	int error = tesselator.Tesselate ( TESS_WINDING_ODD, TESS_POLYGONS, 3, 2 );
+	int error = tesselator.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, 3, 2 );
 	if ( !error ) {
-		return tesselator.GetTriangles ( vtxBuffer, idxBuffer, idxSizeInBytes );
+		return tesselator.GetTriangles ( format, vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
 	return 0;
 }

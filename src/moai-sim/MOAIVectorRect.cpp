@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
+int MOAIVectorRect::AddFillContours ( SafeTesselator& tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * 4 );
 
@@ -28,13 +28,13 @@ int MOAIVectorRect::AddFillContours ( SafeTesselator* tess ) {
 	verts [ 3 ].mX = this->mRect.mXMin;
 	verts [ 3 ].mY = this->mRect.mYMax;
 
-	tess->AddContour ( 2, verts, sizeof ( ZLVec2D ), 4 );
+	tess.AddContour ( 2, verts, sizeof ( ZLVec2D ), 4 );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorRect::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
+int MOAIVectorRect::AddStrokeContours ( SafeTesselator& tess, bool inside, bool outside ) {
 
 	return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 }
