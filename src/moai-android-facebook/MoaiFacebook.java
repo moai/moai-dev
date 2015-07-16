@@ -17,6 +17,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+//import com.facebook;
+/*
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
@@ -26,12 +28,12 @@ import com.facebook.AccessTokenSource;
 import com.facebook.NonCachingTokenCachingStrategy;
 import com.facebook.Session;
 import com.facebook.SessionState;
-
+*/
 //================================================================//
 // MoaiFacebook
 //================================================================//
 public class MoaiFacebook {
-
+/*
 	public enum DialogResultCode {
 
 		RESULT_SUCCESS,
@@ -56,33 +58,34 @@ public class MoaiFacebook {
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
 	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
-
+*/
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
-		MoaiLog.i ( "MoaiFacebook onActivityResult: Calling Session onActivityResult ()" );
+		/*MoaiLog.i ( "MoaiFacebook onActivityResult: Calling Session onActivityResult ()" );
 
 		Session session = Session.getActiveSession ();
 		if ( session != null ) {
 		      session.onActivityResult ( sActivity, requestCode, resultCode, data );
 		  }
+		  */
 	}
 
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 
-		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
+		// MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
 
-		sActivity = activity;
+		// sActivity = activity;
 	}
 
 	//----------------------------------------------------------------//
 	public static void onResume ( ) {
 
-		MoaiLog.i("MoaiFacebook on resume");
-		if(sAppId != null) {
-			com.facebook.AppEventsLogger.activateApp(sActivity, sAppId);
-		}
+		// MoaiLog.i("MoaiFacebook on resume");
+		// if(sAppId != null) {
+		// 	com.facebook.AppEventsLogger.activateApp(sActivity, sAppId);
+		// }
 	}
 
 	//================================================================//
@@ -92,14 +95,14 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static String getToken () {
 
-		MoaiLog.i ( "MoaiFacebook: getToken" );
-		Session session = Session.getActiveSession ();
-		if (( session != null ) && session.isOpened ()) {
-			String token =  session.getAccessToken ();
-			MoaiLog.i ( token );
-			return token;
-		}
-		MoaiLog.i ( "MoaiFacebook: NO ACTIVE SESSION OR TOKEN" );
+		// MoaiLog.i ( "MoaiFacebook: getToken" );
+		// Session session = Session.getActiveSession ();
+		// if (( session != null ) && session.isOpened ()) {
+		// 	String token =  session.getAccessToken ();
+		// 	MoaiLog.i ( token );
+		// 	return token;
+		// }
+		// MoaiLog.i ( "MoaiFacebook: NO ACTIVE SESSION OR TOKEN" );
 		return null;
 	}
 
@@ -121,7 +124,7 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static void init ( String appId ) {
 
-		sAppId = appId;
+		//sAppId = appId;
 		//sFacebook = new Facebook ( appId );
 		//sFacebook.extendAccessTokenIfNeeded ( sActivity, null );
 	}
@@ -129,48 +132,48 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static boolean isSessionValid () {
 
-		MoaiLog.i ( "MoaiFacebook: isSessionValid" );
-		Session session = Session.getActiveSession ();
-		if (( session != null ) && session.isOpened ()) {
-			MoaiLog.i ( "MoaiFacebook: session is valid" );
-			return true;
-		}
-		MoaiLog.i ( "MoaiFacebook: SESSION IS INVALID" );
+		// MoaiLog.i ( "MoaiFacebook: isSessionValid" );
+		// Session session = Session.getActiveSession ();
+		// if (( session != null ) && session.isOpened ()) {
+		// 	MoaiLog.i ( "MoaiFacebook: session is valid" );
+		// 	return true;
+		// }
+		// MoaiLog.i ( "MoaiFacebook: SESSION IS INVALID" );
 		return false;
 	}
 
 	//----------------------------------------------------------------//
 	public static void login ( String [] permissions ) {
 
-		MoaiLog.i ( "MoaiFacebook: login" );
+		// MoaiLog.i ( "MoaiFacebook: login" );
 
-		openActiveSession ( sActivity, true, Arrays.asList ( permissions ), new Session.StatusCallback () {
+		// openActiveSession ( sActivity, true, Arrays.asList ( permissions ), new Session.StatusCallback () {
 			
-			@Override
-			public void call ( Session session, SessionState state, Exception exception ) {
+		// 	@Override
+		// 	public void call ( Session session, SessionState state, Exception exception ) {
 			
-				switch ( state ) {
+		// 		switch ( state ) {
 					
-					case CLOSED:
-					case CLOSED_LOGIN_FAILED:
-						MoaiLog.i ( "MoaiFacebook: LOGIN FAILED" );
-						synchronized ( Moai.sAkuLock ) {
-							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal ());
-						}
-						break;
+		// 			case CLOSED:
+		// 			case CLOSED_LOGIN_FAILED:
+		// 				MoaiLog.i ( "MoaiFacebook: LOGIN FAILED" );
+		// 				synchronized ( Moai.sAkuLock ) {
+		// 					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_ERROR.ordinal ());
+		// 				}
+		// 				break;
 					
-					case OPENED:
-					case OPENED_TOKEN_UPDATED:
-						MoaiLog.i ( "MoaiFacebook: LOGIN SUCCEEDED" );
-						synchronized ( Moai.sAkuLock ) {
-							AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal ());
-						}
-						break;
+		// 			case OPENED:
+		// 			case OPENED_TOKEN_UPDATED:
+		// 				MoaiLog.i ( "MoaiFacebook: LOGIN SUCCEEDED" );
+		// 				synchronized ( Moai.sAkuLock ) {
+		// 					AKUNotifyFacebookLoginComplete ( DialogResultCode.RESULT_SUCCESS.ordinal ());
+		// 				}
+		// 				break;
 						
-					default:
-				}
-			}
-		});
+		// 			default:
+		// 		}
+		// 	}
+		// });
 
 		/*
 		sFacebook.authorize ( sActivity, permissions, new DialogListener () {
@@ -213,31 +216,31 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static void logout () {
 
-		Session session = Session.getActiveSession ();
-		if ( session != null ) {
-			session.closeAndClearTokenInformation ();
-		}
+		// Session session = Session.getActiveSession ();
+		// if ( session != null ) {
+		// 	session.closeAndClearTokenInformation ();
+		// }
 	}
 
 	//----------------------------------------------------------------//
-	private static Session newSession () {
-		Session.Builder builder = new Session.Builder ( sActivity );
-		builder.setApplicationId ( sAppId );
-		builder.setTokenCachingStrategy ( new NonCachingTokenCachingStrategy ());
-		return builder.build ();
-	}
+	//private static Session newSession () {
+		// Session.Builder builder = new Session.Builder ( sActivity );
+		// builder.setApplicationId ( sAppId );
+		// builder.setTokenCachingStrategy ( new NonCachingTokenCachingStrategy ());
+		// return builder.build ();
+	//}
 
 	//----------------------------------------------------------------//
-	private static Session openActiveSession ( Activity activity, boolean allowLoginUI, List < String > permissions, Session.StatusCallback callback ) {
-	    Session.OpenRequest openRequest = new Session.OpenRequest ( activity ).setPermissions ( permissions ).setCallback ( callback );
-	    Session session = new Session.Builder ( activity ).build ();
-	    if ( SessionState.CREATED_TOKEN_LOADED.equals ( session.getState ()) || allowLoginUI ) {
-	        Session.setActiveSession ( session );
-	        session.openForRead ( openRequest );
-	        return session;
-	    }
-	    return null;
-	}
+	//private static Session openActiveSession ( Activity activity, boolean allowLoginUI, List < String > permissions, Session.StatusCallback callback ) {
+	    // Session.OpenRequest openRequest = new Session.OpenRequest ( activity ).setPermissions ( permissions ).setCallback ( callback );
+	    // Session session = new Session.Builder ( activity ).build ();
+	    // if ( SessionState.CREATED_TOKEN_LOADED.equals ( session.getState ()) || allowLoginUI ) {
+	    //     Session.setActiveSession ( session );
+	    //     session.openForRead ( openRequest );
+	    //     return session;
+	    // }
+	//    return null;
+	//}
 
 	//----------------------------------------------------------------//
 	public static void postToFeed ( String link, String picture, String name, String caption, String description, String message ) {
@@ -302,10 +305,10 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static boolean restoreSession () {
 
-		MoaiLog.i ( "MoaiFacebook: restoreSession" );
+		// MoaiLog.i ( "MoaiFacebook: restoreSession" );
 
-		Session session = Session.openActiveSessionFromCache ( sActivity );
-		return session != null;
+		// Session session = Session.openActiveSessionFromCache ( sActivity );
+		// return session != null;
 
 		/*
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences ( sActivity ); 
@@ -328,7 +331,7 @@ public class MoaiFacebook {
 		
 		MoaiLog.i ( "MoaiFacebook: SESSION NOT RESTORED" );
 		return false;
-		*/
+		*/return false;
 	}
 
 	//----------------------------------------------------------------//

@@ -12,6 +12,8 @@
 	<dict>
 		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
 		<string>https://github.com/moai/moai-dev.git</string>
+		<key>FB0B2D1A263DC23C66CC9024F8CE5F606995C66B</key>
+		<string>https://github.com/fallguyconsulting/casinowonders.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>xcode/libmoai/libmoai.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
 		<string>../../../..</string>
+		<key>FB0B2D1A263DC23C66CC9024F8CE5F606995C66B</key>
+		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/moai/moai-dev.git</string>
@@ -28,6 +32,14 @@
 	<string>63C4897045D0EF88507AD257AEF500CB53038CE0</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FB0B2D1A263DC23C66CC9024F8CE5F606995C66B</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

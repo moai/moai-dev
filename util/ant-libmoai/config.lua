@@ -183,7 +183,8 @@ MODULES = {
 		},
 		
 		JAVA = {
-			MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			--MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			MOAI_SDK_HOME .. '3rdparty-android/facebook-v4.4.1',
 			MOAI_SDK_HOME .. 'src/moai-android-facebook',
 		},
 
