@@ -2518,6 +2518,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "desaturate",					_desaturate },
 		{ "fillCircle",					_fillCircle },
 		{ "fillRect",					_fillRect },
+		{ "gammaCorrection",			_gammaCorrection },
 		{ "generateOutlineFromSDF",		_generateOutlineFromSDF },
 		{ "generateSDF",				_generateSDF },
 		{ "generateSDFAA",				_generateSDFAA },
