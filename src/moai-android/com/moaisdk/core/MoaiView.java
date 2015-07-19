@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.core;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

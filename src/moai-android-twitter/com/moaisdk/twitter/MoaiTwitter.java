@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.twitter;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,7 +28,7 @@ import twitter4j.auth.RequestToken;
 import com.neovisionaries.TwitterOAuthView;
 import com.neovisionaries.TwitterOAuthView.Result;
 
-import com.ziplinegames.moai.TwitterOAuthActivity;
+import com.moaisdk.twitter.TwitterOAuthActivity;
 
 //================================================================//
 // MoaiTwitter

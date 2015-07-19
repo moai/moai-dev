@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.facebook;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

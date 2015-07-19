@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.fortumo;
 
 import android.content.Context;
 import android.content.Intent;

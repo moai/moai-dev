@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.googleplayservices;
 
 import android.app.Activity;
 import android.app.Dialog;

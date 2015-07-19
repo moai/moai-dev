@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.amazonbilling;
 
 import android.app.Activity;
 import android.os.Bundle;

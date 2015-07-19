@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.core;
 
 import android.app.Notification;
 import android.app.NotificationManager;

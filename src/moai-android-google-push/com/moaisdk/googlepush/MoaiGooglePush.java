@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
+package com.moaisdk.googlepush;
 
 import android.app.Activity;
 import android.app.PendingIntent;

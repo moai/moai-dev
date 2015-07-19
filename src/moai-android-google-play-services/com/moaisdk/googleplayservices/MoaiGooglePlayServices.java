@@ -4,8 +4,9 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.ziplinegames.moai;
-import com.ziplinegames.moai.*;
+package com.moaisdk.googleplayservices;
+
+import com.moaisdk.core.*;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
