@@ -6,10 +6,14 @@
 
 package com.moaisdk.crittercism;
 
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
 
 import com.crittercism.app.Crittercism;
 import com.crittercism.app.CrittercismConfig;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiCrittercism

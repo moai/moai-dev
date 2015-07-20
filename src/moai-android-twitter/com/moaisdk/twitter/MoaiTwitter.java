@@ -6,13 +6,11 @@
 
 package com.moaisdk.twitter;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
+import com.moaisdk.core.Moai;
+import com.moaisdk.core.MoaiLog;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
 
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
@@ -23,12 +21,10 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.TwitterMethod;
 import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
 
 import com.neovisionaries.TwitterOAuthView;
-import com.neovisionaries.TwitterOAuthView.Result;
 
-import com.moaisdk.twitter.TwitterOAuthActivity;
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiTwitter

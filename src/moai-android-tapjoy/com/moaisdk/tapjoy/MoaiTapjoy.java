@@ -6,11 +6,16 @@
 
 package com.moaisdk.tapjoy;
 
+import com.moaisdk.core.Moai;
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
 
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyOffersNotifier;
 import com.tapjoy.TapjoyVideoNotifier;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiTapjoy

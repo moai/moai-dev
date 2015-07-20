@@ -6,15 +6,14 @@
 
 package com.moaisdk.fortumo;
 
+import com.moaisdk.core.MoaiLog;
+
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.os.Bundle;
 import android.content.BroadcastReceiver;
 
-import com.fortumo.android.Fortumo;
-
-import java.util.ArrayList;
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiFortumoReceiver

@@ -7,6 +7,8 @@
 
 package com.moaisdk.amazonbilling;
 
+@SuppressWarnings("unused")
+
 //================================================================//
 // MoaiAmazonBillingConstants
 //================================================================//

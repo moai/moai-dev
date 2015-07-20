@@ -28,6 +28,8 @@ import java.io.IOException;
 // Support multiple videos to be played in order.
 // On backgrounding... Lock screen...
 
+@SuppressWarnings("unused")
+
 //================================================================//
 // MoaiMoviePlayer
 //================================================================//

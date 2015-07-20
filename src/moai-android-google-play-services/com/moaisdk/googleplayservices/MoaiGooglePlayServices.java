@@ -6,27 +6,21 @@
 
 package com.moaisdk.googleplayservices;
 
-import com.moaisdk.core.*;
+import com.moaisdk.core.MoaiLog;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.google.android.gms.auth.*;
 import com.google.android.gms.common.*;
-import com.google.android.gms.common.GooglePlayServicesClient.*;
 import com.google.android.gms.games.*;
 import com.google.android.gms.games.GamesClient;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiGooglePlayServices
@@ -132,21 +126,17 @@ public class MoaiGooglePlayServices {
 
 	          // Start the user recoverable action using the intent returned by getIntent ()
 	          sActivity.startActivityForResult ( userAuthEx.getIntent (), AUTH_REQUEST_CODE );
-	          return;
 
 		 } catch ( IOException transientEx ) {
 
 		      // network or server error, the call is expected to succeed if you try again later.
 	          // Don't attempt to call again immediately - the request is likely to
 	          // fail, you'll hit quotas or back-off.
-	          return;
 
 		 } catch ( GoogleAuthException authEx ) {
 
 		      // Failure. The call is not expected to ever succeed so it should not be
 	          // retried.
-
-	          return;
 	     }
 	}
 

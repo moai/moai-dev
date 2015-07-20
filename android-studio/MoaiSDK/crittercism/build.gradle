@@ -27,4 +27,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile files('../../../3rdparty-android/crittercism-4.4.0/lib/crittercism_v4_4_0_sdkonly.jar')
+    compile project(':core')
 }

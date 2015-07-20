@@ -6,12 +6,15 @@
 
 package com.moaisdk.chartboost;
 
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
-import android.view.View;
 
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
 import com.chartboost.sdk.ChartboostDelegate;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiChartBoost
@@ -32,10 +35,7 @@ public class MoaiChartBoost extends ChartboostDelegate {
 		
         MoaiLog.i ( "MoaiChartBoost: onBackPressed" );
 
-		if ( Chartboost.onBackPressed ()) {
-        	return;
-		}
-    	else {
+		if ( !Chartboost.onBackPressed ()) {
         	activity.onBackPressed ();
     	}
     }

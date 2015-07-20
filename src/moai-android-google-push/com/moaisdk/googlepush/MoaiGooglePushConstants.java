@@ -7,6 +7,8 @@
 
 package com.moaisdk.googlepush;
 
+@SuppressWarnings("unused")
+
 //================================================================//
 // MoaiGooglePushConstants
 //================================================================//

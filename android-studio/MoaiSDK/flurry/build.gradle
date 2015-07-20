@@ -27,4 +27,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile files('../../../3rdparty-android/flurry-3.3.4/lib/FlurryAnalytics_3.3.4.jar')
+    compile project(':core')
 }

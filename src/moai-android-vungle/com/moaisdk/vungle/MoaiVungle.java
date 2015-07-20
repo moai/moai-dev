@@ -6,9 +6,13 @@
 
 package com.moaisdk.vungle;
 
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
 
 import com.vungle.sdk.VunglePub;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiVungle

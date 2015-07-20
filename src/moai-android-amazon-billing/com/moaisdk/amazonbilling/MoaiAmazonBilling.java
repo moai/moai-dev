@@ -6,21 +6,21 @@
 
 package com.moaisdk.amazonbilling;
 
-import android.app.Activity;
-import android.os.Bundle;
+import com.moaisdk.core.MoaiLog;
 
-import java.util.HashSet;
+import android.app.Activity;
 import java.util.HashMap;
 
 import com.amazon.inapp.purchasing.BasePurchasingObserver;
 import com.amazon.inapp.purchasing.GetUserIdResponse;
-import com.amazon.inapp.purchasing.Item;
 import com.amazon.inapp.purchasing.ItemDataResponse;
 import com.amazon.inapp.purchasing.Offset;
 import com.amazon.inapp.purchasing.PurchaseResponse;
 import com.amazon.inapp.purchasing.PurchasingManager;
 import com.amazon.inapp.purchasing.PurchaseUpdatesResponse;
 import com.amazon.inapp.purchasing.Receipt;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiAmazonBilling

@@ -37,6 +37,7 @@ import android.text.TextWatcher;
 import android.text.Editable;
 import android.util.AttributeSet;
 
+@SuppressWarnings("unused")
 
 public class LinearLayoutIMETrap extends LinearLayout {
 	Activity activityReference;

@@ -6,17 +6,11 @@
 
 package com.moaisdk.fortumo;
 
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
-import android.os.Bundle;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-
-import com.fortumo.android.Fortumo;
-import com.fortumo.android.PaymentActivity;
-import com.fortumo.android.PaymentRequestBuilder;
-import com.fortumo.android.PaymentRequest;
-import com.fortumo.android.PaymentResponse;
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiFortumo

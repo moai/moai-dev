@@ -6,14 +6,15 @@
 
 package com.moaisdk.googleplayservices;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
+import com.moaisdk.core.MoaiLog;
+
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 
 import com.google.android.gms.common.*;
 import com.google.android.gms.common.GooglePlayServicesClient.*;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiPlayServicesCallbacks

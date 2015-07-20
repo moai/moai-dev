@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+@SuppressWarnings("unused")
+
 public class MoaiCamera  {
 
 	private static Activity sActivity;

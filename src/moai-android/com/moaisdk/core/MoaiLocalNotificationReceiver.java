@@ -16,6 +16,8 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
+
 //================================================================//
 // MoaiLocalNotificationReceiver
 //================================================================//

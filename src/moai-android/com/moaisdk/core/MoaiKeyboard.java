@@ -27,6 +27,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.Editable;
 
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiLog

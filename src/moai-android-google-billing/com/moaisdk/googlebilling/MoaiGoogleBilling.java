@@ -6,12 +6,14 @@
 
 package com.moaisdk.googlebilling;
 
+import com.moaisdk.core.Moai;
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.android.vending.billing.IInAppBillingService;
 import android.app.PendingIntent;
 import android.content.ServiceConnection;
 import android.content.ComponentName;
@@ -24,6 +26,10 @@ import android.os.RemoteException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
+
+import com.android.vending.billing.IInAppBillingService;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiGoogleBilling

@@ -1,4 +1,6 @@
-package com.ziplinegames.moai;
+package com.moaisdk.twitter;
+
+import com.moaisdk.core.MoaiLog;
 
 import twitter4j.auth.AccessToken;
 import com.neovisionaries.TwitterOAuthView;
@@ -6,8 +8,6 @@ import com.neovisionaries.TwitterOAuthView.Result;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.ziplinegames.moai.MoaiTwitter;
 
 //================================================================//
 // TwitterOAuthActivity 

@@ -6,13 +6,14 @@
 
 package com.moaisdk.adcolony;
 
-import android.app.Activity;
-import android.os.Bundle;
+import com.moaisdk.core.Moai;
+import com.moaisdk.core.MoaiLog;
 
-import java.util.Arrays;
-import java.util.ArrayList;
+import android.app.Activity;
 
 import com.jirbo.adcolony.*;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiAdColony
@@ -78,8 +79,7 @@ public class MoaiAdColony implements AdColonyAdListener {
 	public static boolean isVideoReady ( String zoneId ) {
 
 		String zoneStatus = AdColony.statusForZone ( zoneId );
-		boolean result = new AdColonyVideoAd ( zoneId ).isReady ();
-		return result;
+		return new AdColonyVideoAd ( zoneId ).isReady ();
 	}
 
 	//----------------------------------------------------------------//

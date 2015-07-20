@@ -6,10 +6,15 @@
 
 package com.moaisdk.googlepush;
 
+import com.moaisdk.core.Moai;
+import com.moaisdk.core.MoaiLog;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiGooglePush

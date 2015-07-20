@@ -19,7 +19,9 @@ import android.view.MotionEvent;
 import android.util.DisplayMetrics;
 
 // Moai
-import com.ziplinegames.moai.*;
+import com.moaisdk.core.*;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiView

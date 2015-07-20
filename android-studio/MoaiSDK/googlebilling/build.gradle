@@ -20,6 +20,7 @@ android {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs += '../../../src/moai-android-google-billing'
+            aidl.srcDirs += '../../../3rdparty-android/google-billing-v3/src'
         }
     }
 }
@@ -27,4 +28,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile project(':core')
 }

@@ -27,4 +27,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+    compile files('../../../3rdparty-android/amazon-billing-1.0.3/lib/in-app-purchasing-1.0.3.jar')
+    compile project(':core')
 }

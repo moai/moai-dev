@@ -6,11 +6,15 @@
 
 package com.moaisdk.flurry;
 
+import com.moaisdk.core.MoaiLog;
+
 import java.util.Map;
 import android.app.Activity;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
+
+@SuppressWarnings("unused")
 
 //================================================================//
 // MoaiFlurry
