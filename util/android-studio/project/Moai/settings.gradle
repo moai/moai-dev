@@ -1,0 +1,4 @@
+include ':app'
+
+include ':core'
+project(':core').projectDir = new File('../../../../android-studio/MoaiSDK/core')
