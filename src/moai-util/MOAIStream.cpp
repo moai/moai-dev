@@ -26,7 +26,7 @@ int MOAIStream::_collapse ( lua_State* L ) {
 	u32 clipBase		= state.GetValue < u32 >( idx++, 0 );
 	u32 clipSize		= state.GetValue < u32 >( idx++, 0 );
 	u32 chunkSize		= state.GetValue < u32 >( idx++, 0 );
-	u32 size			= state.GetValue < u32 >( idx++, stream->GetLength () - stream->GetCursor ());
+	u32 size			= state.GetValue < u32 >( idx++, ( u32 )( stream->GetLength () - stream->GetCursor ()));
 	bool invert			= state.GetValue < bool >( idx++, false );
 	
 	size_t result = self->Collapse ( *stream, clipBase, clipSize, chunkSize, size, invert );
