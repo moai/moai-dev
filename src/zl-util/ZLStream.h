@@ -25,6 +25,8 @@ public:
 
 	//----------------------------------------------------------------//
 	bool				CheckCaps				( u32 flags );
+	size_t				Collapse				( size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
+	size_t				Collapse				( ZLStream& source, size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
 	virtual void		Compact					();
 	virtual void		Flush					();
 	virtual u32			GetCaps					() = 0;

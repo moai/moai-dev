@@ -4,6 +4,7 @@
 #ifndef	MOAIGEOMETRYWRITER_H
 #define	MOAIGEOMETRYWRITER_H
 
+#include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
 class MOAIIndexBuffer;
@@ -20,6 +21,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_applyColor				( lua_State* L );
+	static int			_applyLightFromImage	( lua_State* L );
 	static int			_applyLinearGradient	( lua_State* L );
 	static int			_getMesh				( lua_State* L );
 	static int			_pruneVertices			( lua_State* L );
@@ -42,6 +44,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, const ZLColorVec& color );
+	static void			ApplyLightFromImage		( const MOAIVertexFormat& format, ZLStream& stream, MOAIImage& image );
 	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
 	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes );
 	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );

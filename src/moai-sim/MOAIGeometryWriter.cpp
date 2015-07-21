@@ -68,6 +68,21 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGeometryWriter::_applyLightFromImage ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
+	
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	MOAIImage* image			= MOAIImage::AffirmImage ( state, 3 );
+	
+	if ( format && stream && image ) {
+		self->ApplyLightFromImage ( *format, *stream, *image );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -244,6 +259,35 @@ void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& 
 	for ( u32 i = 0; i < total; ++i ) {
 		format.SeekVertex ( stream, base, i );
 		format.WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
+	}
+	
+	stream.Seek ( base, SEEK_SET );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, ZLStream& stream, MOAIImage& image ) {
+	
+	float width		= image.GetWidth ();
+	float height	= image.GetHeight ();
+	
+	size_t base = stream.GetCursor ();
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		format.SeekVertex ( stream, base, i );
+	
+		ZLVec3D normal = format.ReadNormal ( stream );
+
+		ZLVec2D hVec ( normal.mX, normal.mY );
+		hVec.Norm ();
+
+		float x = ( hVec.Radians () / TWOPI ) * width;
+		float y = ( normal.Radians ( ZLVec3D::Z_AXIS ) / PI ) * height;
+
+		u32 color = image.SampleColor ( x, y, MOAIImage::FILTER_LINEAR );
+
+		format.WriteColor ( stream, color);
 	}
 	
 	stream.Seek ( base, SEEK_SET );
@@ -453,6 +497,7 @@ void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "applyColor",				_applyColor },
+		{ "applyLightFromImage",	_applyLightFromImage },
 		{ "applyLinearGradient",	_applyLinearGradient },
 		{ "getMesh",				_getMesh },
 		{ "pruneVertices",			_pruneVertices },
