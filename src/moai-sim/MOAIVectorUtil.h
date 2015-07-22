@@ -9,6 +9,7 @@
 class MOAIIndexBuffer;
 class MOAIVectorShape;
 class MOAIVertexBuffer;
+class MOAIVertexFormat;
 
 struct TESStesselator;
 typedef float TESSreal;
@@ -25,7 +26,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void			AddContour				( int size, const void* vertices, int stride, int numVertices );
-	u32				GetTriangles			( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
+	void			AddPolygon				( const ZLPolygon2D& poly );
+	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
 	void			Reset					();
 					SafeTesselator			();
 					~SafeTesselator			();

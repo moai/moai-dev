@@ -45,7 +45,7 @@ public:
 
 	enum {
 	
-		// these are the known uses, supported by fixed function
+		// these are the known attribute types
 		ARRAY_COLOR,
 		ARRAY_NORMAL,
 		ARRAY_TEX_COORD,

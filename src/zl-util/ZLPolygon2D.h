@@ -132,6 +132,23 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void Clear () {
+	
+		this->mVertices.Clear ();
+		this->mInfo = POLY_UNKNOWN;
+	}
+	
+	//----------------------------------------------------------------//
+	void Copy ( const ZLMetaPolygon2D < TYPE >& src ) {
+	
+		this->Clear ();
+	
+		this->mInfo = src.mInfo;
+		this->mBounds = src.Bounds;
+		this->mVertices.CopyFrom ( src.mVertices );
+	}
+	
+	//----------------------------------------------------------------//
 	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d, ZLMetaVec2D < TYPE >& p ) const {
 		UNUSED ( d );
 	

@@ -4,6 +4,7 @@
 #ifndef	MOAIGEOMETRYWRITER_H
 #define	MOAIGEOMETRYWRITER_H
 
+#include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
 class MOAIIndexBuffer;
@@ -20,6 +21,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_applyColor				( lua_State* L );
+	static int			_applyLightFromImage	( lua_State* L );
 	static int			_applyLinearGradient	( lua_State* L );
 	static int			_getMesh				( lua_State* L );
 	static int			_pruneVertices			( lua_State* L );
@@ -32,6 +34,8 @@ private:
 	static int			_writeUVSphere			( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	static void			WriteColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, u32 color );
+	static void			WriteColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, float r, float b, float g, float a );
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0 );
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0, const ZLVec3D& n1, const ZLVec3D& n2, const ZLVec3D& n3 );
 	static void			WriteVertex				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal );
@@ -40,11 +44,19 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAIGeometryWriter )
 	
+	enum {
+		COLOR_ADD,
+		COLOR_MULTIPLY,
+		COLOR_OVERWRITE,
+		COLOR_SUBTRACT,
+	};
+	
 	//----------------------------------------------------------------//
-	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, const ZLColorVec& color );
-	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
-	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes );
-	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, u32 idxSizeInBytes );
+	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLColorVec& color );
+	static void			ApplyLightFromImage		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image );
+	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
+	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes );
+	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
 						MOAIGeometryWriter		();
 						~MOAIGeometryWriter		();
 	static void			PruneVertices			( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream );

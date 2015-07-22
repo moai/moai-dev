@@ -57,11 +57,28 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 	
 	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
 	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	u32 mode					= state.GetValue < u32 >( 3, COLOR_MULTIPLY );
 	
 	if ( format && stream ) {
 	
 		ZLColorVec color = state.GetColor ( 3, 0.0f, 0.0f, 0.0f, 1.0f );
-		MOAIGeometryWriter::ApplyColor ( *format, *stream, color );
+		MOAIGeometryWriter::ApplyColor ( *format, *stream,mode, color );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGeometryWriter::_applyLightFromImage ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
+	
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	MOAIImage* image			= MOAIImage::AffirmImage ( state, 3 );
+	u32 mode					= state.GetValue < u32 >( 4, COLOR_MULTIPLY );
+	
+	if ( format && stream && image ) {
+		self->ApplyLightFromImage ( *format, *stream, mode, *image );
 	}
 	return 0;
 }
@@ -83,9 +100,11 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 		ZLColorVec c1	= state.GetColor ( 13, 0.0f, 0.0f, 0.0f, 1.0f );
 		
 		bool cap0		= state.GetValue < bool >( 17, false );
-		bool cap1		= state.GetValue < bool >( 17, false );
+		bool cap1		= state.GetValue < bool >( 18, false );
 		
-		MOAIGeometryWriter::ApplyLinearGradient ( *format, *stream, v0, v1, c0, c1, cap0, cap1 );
+		u32 mode		= state.GetValue < u32 >( 19, COLOR_MULTIPLY );
+		
+		MOAIGeometryWriter::ApplyLinearGradient ( *format, *stream, mode, v0, v1, c0, c1, cap0, cap1 );
 	}
 	return 0;
 }
@@ -107,7 +126,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		if ( vtxBuffer && idxBuffer ) {
 			
 			u32 idxSizeInBytes = state.GetValue < u32 >( 6, 4 );
-			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, *vtxStream, *idxStream, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 			
 			state.Push ( totalElements );
 			return 1;
@@ -115,7 +134,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		else {
 	
 			u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-			MOAIMesh* mesh = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, idxSizeInBytes );
+			MOAIMesh* mesh = MOAIGeometryWriter::GetMesh ( *format, *vtxStream, *idxStream, idxSizeInBytes );
 			state.Push ( mesh );
 			return 1;
 		}
@@ -236,21 +255,50 @@ int MOAIGeometryWriter::_writeUVSphere ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& stream, const ZLColorVec& color ) {
+void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLColorVec& color ) {
 	
 	size_t base = stream.GetCursor ();
 	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		format.SeekVertex ( stream, base, i );
-		format.WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
+		MOAIGeometryWriter::WriteColor ( format, stream, mode, color.mR, color.mG, color.mB, color.mA );
 	}
 	
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 ) {
+void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image ) {
+	
+	float width		= image.GetWidth ();
+	float height	= image.GetHeight ();
+	
+	size_t base = stream.GetCursor ();
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		format.SeekVertex ( stream, base, i );
+	
+		ZLVec3D normal = format.ReadNormal ( stream );
+
+		ZLVec2D hVec ( normal.mX, normal.mY );
+		hVec.Norm ();
+
+		float x = ( hVec.Radians () / TWOPI ) * width;
+		float y = ( normal.Radians ( ZLVec3D::Z_AXIS ) / PI ) * height;
+
+		u32 color = image.SampleColor ( x, y, MOAIImage::FILTER_LINEAR );
+
+		MOAIGeometryWriter::WriteColor ( format, stream, mode, color );
+	}
+	
+	stream.Seek ( base, SEEK_SET );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 ) {
 	
 	ZLVec3D norm = v1;
 	norm.Sub ( v0 );
@@ -285,19 +333,19 @@ void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, Z
 		
 			color.Lerp ( ZLInterpolate::kLinear, c0, c1, dist / length );
 		}
-		format.WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
+		MOAIGeometryWriter::WriteColor ( format, stream, mode, color.mR, color.mG, color.mB, color.mA );
 	}
 	
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes ) {
+MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes ) {
 
 	MOAIVertexBuffer* vtxBuffer = new MOAIVertexBuffer ();
 	MOAIIndexBuffer* idxBuffer = new MOAIIndexBuffer ();
 
-	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	
 	MOAIMesh* mesh = new MOAIMesh ();
 	
@@ -316,37 +364,42 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexBuffer* vtxBuffer, MOAIIndexBuffer* idxBuffer, u32 idxSizeInBytes ) {
+u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
 
-	assert ( vtxStream );
-	assert ( idxStream );
+	size_t vtxStreamBase = vtxStream.GetCursor ();
+	size_t idxStreamBase = idxStream.GetCursor ();
 	
-	vtxBuffer->Clear ();
-	idxBuffer->Clear ();
+	vtxStream.Seek ( 0, SEEK_SET );
+	idxStream.Seek ( 0, SEEK_SET );
 	
-	size_t vtxStreamBase = vtxStream->GetCursor ();
-	size_t idxStreamBase = idxStream->GetCursor ();
+	if ( vtxBuffer.GetBufferCount () == 0 ) {
+		vtxBuffer.ReserveVBOs ( 1 );
+	}
 	
-	vtxBuffer->CopyFromStream ( *vtxStream );
+	if ( idxBuffer.GetBufferCount () == 0 ) {
+		idxBuffer.ReserveVBOs ( 1 );
+	}
 	
-	idxBuffer->SetIndexSize ( idxSizeInBytes );
+	vtxBuffer.CopyFromStream ( vtxStream );
 	
-	if ( idxStream->GetLength ()) {
+	idxBuffer.SetIndexSize ( idxSizeInBytes );
+	
+	if ( idxStream.GetLength ()) {
 		
-		idxBuffer->CopyFromStream ( *idxStream, 4 );
+		idxBuffer.CopyFromStream ( idxStream, 4 );
 	}
 	else {
 	
-		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
+		u32 totalVertices = vtxBuffer.GetSize () / format.GetVertexSize ();
 		for ( u32 i = 0; i < totalVertices; ++i ) {
-			idxBuffer->WriteIndex ( i );
+			idxBuffer.WriteIndex ( i );
 		}
 	}
 	
-	vtxStream->Seek ( vtxStreamBase, SEEK_SET );
-	idxStream->Seek ( idxStreamBase, SEEK_SET );
+	vtxStream.Seek ( vtxStreamBase, SEEK_SET );
+	idxStream.Seek ( idxStreamBase, SEEK_SET );
 	
-	return idxBuffer->GetSize () / idxSizeInBytes;
+	return idxBuffer.GetSize () / idxSizeInBytes;
 }
 
 //----------------------------------------------------------------//
@@ -446,8 +499,14 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "COLOR_ADD",				( u32 )COLOR_ADD );
+	state.SetField ( -1, "COLOR_MULTIPLY",			( u32 )COLOR_MULTIPLY );
+	state.SetField ( -1, "COLOR_OVERWRITE",			( u32 )COLOR_OVERWRITE );
+	state.SetField ( -1, "COLOR_SUBTRACT",			( u32 )COLOR_SUBTRACT );
+
 	luaL_Reg regTable [] = {
 		{ "applyColor",				_applyColor },
+		{ "applyLightFromImage",	_applyLightFromImage },
 		{ "applyLinearGradient",	_applyLinearGradient },
 		{ "getMesh",				_getMesh },
 		{ "pruneVertices",			_pruneVertices },
@@ -525,6 +584,62 @@ void MOAIGeometryWriter::WriteBox ( const MOAIVertexFormat& format, ZLStream& st
 	MOAIGeometryWriter::WriteQuad ( format, stream, v2, v7, v6, v3, ZLVec3D ( 0.0f, 1.0f, 0.0f )); // top
 	
 	stream.Seek ( base, SEEK_SET );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::WriteColor ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, u32 color ) {
+
+	u32 dstColor = color;
+	
+	if ( mode != COLOR_OVERWRITE ) {
+	
+		u32 srcColor = dstColor;
+		dstColor = format.ReadColor( stream ).PackRGBA ();
+
+		switch ( mode ) {
+		
+			case COLOR_ADD:
+				dstColor = ZLColor::AddAndClamp ( dstColor, srcColor );
+				break;
+
+			case COLOR_MULTIPLY:
+				dstColor = ZLColor::Mul ( dstColor, srcColor );
+				break;
+
+			case COLOR_SUBTRACT:
+				dstColor = ZLColor::SubAndClamp ( dstColor, srcColor );
+				break;
+		}
+	}
+	format.WriteColor ( stream, dstColor );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::WriteColor ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, float r, float b, float g, float a ) {
+
+	ZLColorVec dstColor ( r, g, b, a );
+	
+	if ( mode != COLOR_OVERWRITE ) {
+	
+		ZLColorVec srcColor = dstColor;
+		dstColor = format.ReadColor( stream );
+
+		switch ( mode ) {
+		
+			case COLOR_ADD:
+				dstColor.AddAndClamp ( srcColor );
+				break;
+
+			case COLOR_MULTIPLY:
+				dstColor.Modulate ( srcColor );
+				break;
+
+			case COLOR_SUBTRACT:
+				dstColor.SubAndClamp ( srcColor );
+				break;
+		}
+	}
+	format.WriteColor ( stream, dstColor.mR, dstColor.mG, dstColor.mB, dstColor.mA );
 }
 
 //----------------------------------------------------------------//

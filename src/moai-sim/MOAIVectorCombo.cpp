@@ -12,14 +12,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorCombo::AddFillContours ( SafeTesselator* tess ) {
+int MOAIVectorCombo::AddFillContours ( SafeTesselator& tess ) {
 
 	SafeTesselator outline;
 	int error = 0;
 
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
 		MOAIVectorShape& shape = *this->mShapes [ i ];
-		error = shape.AddFillContours ( &outline );
+		error = shape.AddFillContours ( outline );
 		if ( error ) return error;
 	}
 	

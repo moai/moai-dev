@@ -56,6 +56,19 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 					format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
 					format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
 					break;
+				
+				case XYZWNNNC:
+					format->DeclareAttribute ( XYZWNNNC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+					format->DeclareAttribute ( XYZWNNNC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					break;
+				
+				case XYZWNNNUVC:
+					format->DeclareAttribute ( XYZWNNNUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+					format->DeclareAttribute ( XYZWNNNUVC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWNNNUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					break;
 			}
 			
 			this->mFormats [ formatID ] = format;
@@ -97,6 +110,8 @@ void MOAIVertexFormatMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "XYZC",			( u32 )XYZC );
 	state.SetField ( -1, "XYZWC",			( u32 )XYZWC );
 	state.SetField ( -1, "XYZWUVC",			( u32 )XYZWUVC );
+	state.SetField ( -1, "XYZWNNNC",		( u32 )XYZWNNNC );
+	state.SetField ( -1, "XYZWNNNUVC",		( u32 )XYZWNNNUVC );
 	
 	luaL_Reg regTable [] = {
 		{ "getFormat",				_getFormat },
