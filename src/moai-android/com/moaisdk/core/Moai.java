@@ -139,19 +139,21 @@ public class Moai {
     }
 
 	private static String [] sExternalClasses = {
-		"com.ziplinegames.moai.MoaiAdColony",
-		"com.ziplinegames.moai.MoaiAmazonBilling",
-		"com.ziplinegames.moai.MoaiChartBoost",
-		"com.ziplinegames.moai.MoaiCrittercism",
-		"com.ziplinegames.moai.MoaiFacebook",
-		"com.ziplinegames.moai.MoaiFlurry",
-		"com.ziplinegames.moai.MoaiGoogleBilling",
-		"com.ziplinegames.moai.MoaiGooglePlayServices",
-		"com.ziplinegames.moai.MoaiGooglePush",
-		"com.ziplinegames.moai.MoaiKeyboard",
-		"com.ziplinegames.moai.MoaiMoviePlayer",
-		"com.ziplinegames.moai.MoaiTapjoy",
-		"com.ziplinegames.moai.MoaiVungle",
+		"com.moaisdk.adcolony.MoaiAdColony",
+		"com.moaisdk.amazonbilling.MoaiAmazonBilling",
+		"com.moaisdk.chartboost.MoaiChartBoost",
+		"com.moaisdk.crittercism.MoaiCrittercism",
+		"com.moaisdk.facebook.MoaiFacebook",
+        "com.moaisdk.fortumo.MoaiFortumo",
+		"com.moaisdk.flurry.MoaiFlurry",
+		"com.moaisdk.googlebilling.MoaiGoogleBilling",
+		"com.moaisdk.googleplayservices.MoaiGooglePlayServices",
+		"com.moaisdk.googlepush.MoaiGooglePush",
+		"com.moaisdk.core.MoaiKeyboard",
+		"com.moaisdk.core.MoaiMoviePlayer",
+		"com.moaisdk.tapjoy.MoaiTapjoy",
+        "com.moaisdk.twitter.MoaiTwitter",
+		"com.moaisdk.vungle.MoaiVungle",
 	};
 
 	private static Activity 				sActivity = null;

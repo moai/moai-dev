@@ -179,7 +179,7 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 		
-	this->SetClass ( "com/ziplinegames/moai/MoaiFacebook" );
+	this->SetClass ( "com/moaisdk/facebook/MoaiFacebook" );
 	
 	this->mJava_GetToken			= this->GetStaticMethod ( "getToken", "()Ljava/lang/String;" );
 	//this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
@@ -258,25 +258,25 @@ void MOAIFacebookAndroid::NotifyRequestFailed () {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookLoginComplete ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_facebook_MoaiFacebook_AKUNotifyFacebookLoginComplete ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIFacebookAndroid::Get ().NotifyLoginComplete ( code );
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookDialogComplete ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_facebook_MoaiFacebook_AKUNotifyFacebookDialogComplete ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIFacebookAndroid::Get ().NotifyDialogComplete ( code );
 }
 
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookRequestComplete ( JNIEnv* env, jclass obj, jstring jresponse ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_facebook_MoaiFacebook_AKUNotifyFacebookRequestComplete ( JNIEnv* env, jclass obj, jstring jresponse ) {
 
     JNI_GET_CSTRING ( jresponse, response );
 	MOAIFacebookAndroid::Get ().NotifyRequestComplete ( response );
 	JNI_RELEASE_CSTRING ( jresponse, response );
 }
 
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookRequestFailed ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_facebook_MoaiFacebook_AKUNotifyFacebookRequestFailed ( JNIEnv* env, jclass obj ) {
 
 	MOAIFacebookAndroid::Get ().NotifyRequestFailed ( );
 }

@@ -66,7 +66,7 @@ public class MoaiActivity extends Activity {
 	static {
 		
 		MoaiLog.i ( "Loading libmoai.so" );
-		System.loadLibrary ( "moai" );
+		System.loadLibrary ( "moai-google" );
 	}
 
 	//----------------------------------------------------------------//
@@ -147,7 +147,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		Moai.runScript ( "main.lua" ); // TODO: this should be set from a string resource or a manifest entry
+		Moai.runScript ( "lua/bootstrap.lua" ); // TODO: this should be set from a string resource or a manifest entry
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 

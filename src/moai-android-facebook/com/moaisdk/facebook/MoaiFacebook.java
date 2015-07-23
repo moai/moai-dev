@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collection;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +20,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.facebook.*;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 
 @SuppressWarnings("unused")
 
@@ -47,7 +49,7 @@ public class MoaiFacebook {
     }
 
 	private static Activity sActivity = null;
-	//private static Facebook	sFacebook = null;
+	//private static FacebookSdk	sFacebook = null;
 	private static String sAppId = null;
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
@@ -70,6 +72,11 @@ public class MoaiFacebook {
 		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
 
 		sActivity = activity;
+        FacebookSdk.sdkInitialize ( sActivity );
+
+        List<String> permissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
+
+       // LoginManager.getInstance().logInWithReadPermissions ( sActivity, permissions );
 	}
 
 	//----------------------------------------------------------------//
