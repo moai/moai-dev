@@ -34,8 +34,7 @@ private:
 	static int			_writeUVSphere			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	static void			WriteColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, u32 color );
-	static void			WriteColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, float r, float b, float g, float a );
+	static void			WriteColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, float r, float g, float b, float a );
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0 );
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0, const ZLVec3D& n1, const ZLVec3D& n2, const ZLVec3D& n3 );
 	static void			WriteVertex				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal );
@@ -53,7 +52,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLColorVec& color );
-	static void			ApplyLightFromImage		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image );
+	static void			ApplyLightFromImage		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image, bool gradient, float a0, float a1, const ZLVec3D& v0, const ZLVec3D& v1 );
 	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
 	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes );
 	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );

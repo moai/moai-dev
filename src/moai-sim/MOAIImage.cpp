@@ -2610,7 +2610,7 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, ZLIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIImage::SampleColor ( float x, float y, u32 filter ) const {
+u32 MOAIImage::SampleColor ( float x, float y, u32 filter, bool wrapX, bool wrapY ) const {
 
 	u32 x0 = ( u32 )floorf ( x );
 	u32 y0 = ( u32 )floorf ( y );
@@ -2619,11 +2619,11 @@ u32 MOAIImage::SampleColor ( float x, float y, u32 filter ) const {
 	u32 y1 = y0 + 1;
 	
 	if ( x1 >= this->mWidth ) {
-		x1 = this->mWidth - 1;
+		x1 = wrapX ? x1 % this->mWidth : this->mWidth - 1;
 	}
 	
 	if ( y1 >= this->mHeight ) {
-		y1 = this->mHeight - 1;
+		y1 = wrapY ? y1 % this->mHeight : this->mHeight - 1;
 	}
 	
 	u32 c0 = this->GetColor ( x0, y0 );
