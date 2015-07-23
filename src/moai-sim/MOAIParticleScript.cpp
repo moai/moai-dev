@@ -268,10 +268,10 @@ int MOAIParticleScript::_angleVec ( lua_State* L ) {
  run in registers.
  
  @in		MOAIParticleScript self
- @in		number r0 (r)
- @in		number r1 (g)
- @in		number r2 (b)
- @in		number r3 (a) (optional)
+ @in		number r0	r
+ @in		number r1	g
+ @in		number r2	b
+ @opt		number r3	a
  @out	nil
  */
 int MOAIParticleScript::_color ( lua_State* L ) {

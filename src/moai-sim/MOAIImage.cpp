@@ -176,6 +176,9 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 	@opt	number destYMax		Default value is destYMin + srcYMax - srcYMin;
 	@opt	number filter		One of MOAIImage.FILTER_LINEAR, MOAIImage.FILTER_NEAREST.
 								Default value is MOAIImage.FILTER_LINEAR.
+	@opt	number srcFactor	Default value is BLEND_FACTOR_SRC_ALPHA
+	@opt	number dstFactor	Default value is BLEND_FACTOR_ONE_MINUS_SRC_ALPHA
+	@opt	number equation		Default value is BLEND_EQ_ADD
 	@out	nil
 */
 int MOAIImage::_copyRect ( lua_State* L ) {
@@ -294,7 +297,7 @@ int MOAIImage::_fillRect ( lua_State* L ) {
 	@text	Apply gamma correction.
 
 	@in		MOAIImage self
-	@opt	gamma			Default value is 1.
+	@opt	number gamma			Default value is 1.
 	@out	nil
 */
 int MOAIImage::_gammaCorrection ( lua_State* L ) {
@@ -373,7 +376,7 @@ int MOAIImage::_generateSDF( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number threshold default is 0.2
+	@opt	number threshold	Default is 0.2
 	@out	nil
 */
 int MOAIImage::_generateSDFAA ( lua_State* L ) {
@@ -397,7 +400,7 @@ int MOAIImage::_generateSDFAA ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number threshold default is 256
+	@opt	number threshold	Default is 256
 	@out	nil
 */
 int MOAIImage::_generateSDFDeadReckoning( lua_State* L ) {
@@ -608,11 +611,23 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 			may be rearranged or blended.
 	
 	@in		MOAIImage self
-	@opt	r1, r2, r3, r4
-	@opt	g1, g2, g3, g4
-	@opt	b1, b2, b3, b4
-	@opt	a1, a2, a3, a4
-	@opt	K					Default value is 1.
+	@opt	number r1
+	@opt	number r2
+	@opt	number r3
+	@opt	number r4
+	@opt	number g1
+	@opt	number g2
+	@opt	number g3
+	@opt	number g4
+	@opt	number b1
+	@opt	number b2
+	@opt	number b3
+	@opt	number b4
+	@opt	number a1
+	@opt	number a2
+	@opt	number a3
+	@opt	number a4
+	@opt	number K					Default value is 1.
 	@out	nil
 */
 int MOAIImage::_mix ( lua_State* L ) {
@@ -2503,6 +2518,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "desaturate",					_desaturate },
 		{ "fillCircle",					_fillCircle },
 		{ "fillRect",					_fillRect },
+		{ "gammaCorrection",			_gammaCorrection },
 		{ "generateOutlineFromSDF",		_generateOutlineFromSDF },
 		{ "generateSDF",				_generateSDF },
 		{ "generateSDFAA",				_generateSDFAA },

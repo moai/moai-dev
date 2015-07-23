@@ -96,7 +96,7 @@ int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
 	
 	@in		MOAIGraphicsProp self
 	@opt	number lod
-	@out	boolean is visible
+	@out	boolean isVisible		Indicates whether the prop is visible.
 */
 int	MOAIGraphicsProp::_isVisible ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
