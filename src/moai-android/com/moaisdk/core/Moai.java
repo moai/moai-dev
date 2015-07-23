@@ -345,7 +345,7 @@ public class Moai {
 				udid = "UNKNOWN";
 			}
 
-			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "@OS_BRAND@", Build.VERSION.RELEASE, udid );
+			AKUSetDeviceProperties ( appName, appId, appVersion, Build.CPU_ABI, Build.BRAND, Build.DEVICE, Build.MANUFACTURER, Build.MODEL, Build.PRODUCT, Runtime.getRuntime ().availableProcessors (), "Android", Build.VERSION.RELEASE, udid );
 			AKUSetDeviceLocale ( Locale.getDefault ().getLanguage (), Locale.getDefault ().getCountry ());
 		}
 	}
