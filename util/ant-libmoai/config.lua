@@ -484,7 +484,7 @@ TARGETS = {
 	-- Like modules, new targets may be added in subsequent config files and existing
 	-- targets may be overwritten.
 
-	-- Targets may be overwritten via the command line, or be specifying an empty/nameless
+	-- Targets may be overwritten via the command line, or by specifying an empty/nameless
 	-- target override in a subsequent config file.
 
 	-- Target contents:

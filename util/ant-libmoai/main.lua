@@ -243,7 +243,7 @@ local importJava = function ( path, namespace )
 
 	if JAVA_DIR then
 
-		-- the entre foler tree names 'src'
+		-- the entire folder tree named 'src'
 		local srcPath = path .. 'src/'
 		if MOAIFileSystem.checkPathExists ( srcPath ) then
 			MOAIFileSystem.copy (  srcPath, JAVA_DIR )
