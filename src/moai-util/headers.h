@@ -27,7 +27,6 @@
 #include <moai-util/MOAITask.h>
 #include <moai-util/MOAITaskQueue.h>
 #include <moai-util/MOAITaskSubscriber.h>
-#include <moai-util/MOAITaskThread.h>
 #include <moai-util/MOAIThread.h>
 #include <moai-util/MOAIThread_posix.h>
 #include <moai-util/MOAIThread_win32.h>

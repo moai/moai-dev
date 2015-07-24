@@ -72,6 +72,32 @@ MOAIGfxResourceMgr::~MOAIGfxResourceMgr () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResourceMgr::ProcessDeleters () {
+
+	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+
+	ZLGfxDevice::Begin ();
+	
+	u32 top = this->mDeleterStack.GetTop ();
+	
+	if ( top ) {
+		gfx.Flush ();
+	}
+	
+	for ( u32 i = 0; i < top; ++i ) {
+		ZLGfxHandle* handle = this->mDeleterStack [ i ];
+		gfx.DeleteHandle ( handle );
+	}
+	this->mDeleterStack.Reset ();
+	
+	if ( top ) {
+		gfx.Flush ();
+	}
+	
+	ZLGfxDevice::End ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 	
 	ResourceIt resourceIt = this->mResources.Head ();
@@ -138,21 +164,7 @@ void MOAIGfxResourceMgr::Update () {
 
 	ZLGfxDevice::Begin ();
 	
-	u32 top = this->mDeleterStack.GetTop ();
-	
-	if ( top ) {
-		gfx.Flush ();
-	}
-	
-	for ( u32 i = 0; i < top; ++i ) {
-		ZLGfxHandle* handle = this->mDeleterStack [ i ];
-		gfx.DeleteHandle ( handle );
-	}
-	this->mDeleterStack.Reset ();
-	
-	if ( top ) {
-		gfx.Flush ();
-	}
+	this->ProcessDeleters ();
 	
 	ResourceIt resourceIt = this->mPending.Head ();
 	while ( resourceIt ) {

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAIGlobals.h>
 
 //================================================================//
@@ -34,6 +35,12 @@ MOAIGlobals::~MOAIGlobals () {
 
 	size_t total = this->mGlobals.Size ();
 	
+	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	
+	// Lua runtime gets special treatment
+	u32 luaRuntimeID = MOAIGlobalID < MOAILuaRuntime >::GetID ();
+	this->mGlobals [ luaRuntimeID ].mIsValid = false;
+	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
@@ -45,8 +52,8 @@ MOAIGlobals::~MOAIGlobals () {
 	}
 	
 	// marke everything as invalid
-	for ( size_t i = 1; i <= total; ++i ) {
-		this->mGlobals [ total - i ].mIsValid = false;
+	for ( size_t i = 0; i <= total; ++i ) {
+		this->mGlobals [ i ].mIsValid = false;
 	}
 
 	// and officially delete everything
@@ -110,8 +117,8 @@ void MOAIGlobalsMgr::Finalize () {
 
 		GlobalsSetIt globalsIt = sGlobalsSet->begin ();
 		for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
-			MOAIGlobals* globals = *globalsIt;
-			delete globals;
+			sInstance = *globalsIt;
+			delete sInstance;
 		}
 		
 		sGlobalsSet->clear ();

@@ -28,7 +28,6 @@ void AKUUtilContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIByteStream )
 	REGISTER_LUA_CLASS ( MOAIDataBuffer )
 	REGISTER_LUA_CLASS ( MOAIDataBufferStream )
-	REGISTER_LUA_CLASS ( MOAIDataIOTask )
 	REGISTER_LUA_CLASS ( MOAIFileStream )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIHashWriter )
@@ -36,7 +35,6 @@ void AKUUtilContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIMemStream )
 	REGISTER_LUA_CLASS ( MOAIStreamAdapter )
 	REGISTER_LUA_CLASS ( MOAITaskQueue )
-	REGISTER_LUA_CLASS ( MOAITaskThread )
 	
 	#if MOAI_WITH_JANSSON
 		REGISTER_LUA_CLASS ( MOAIJsonParser )

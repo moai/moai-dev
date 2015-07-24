@@ -7,8 +7,8 @@
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIInputMgr.h>
+#include <moai-util/MOAITaskQueue.h>
 #include <moai-util/MOAITaskSubscriber.h>
-#include <moai-util/MOAITaskThread.h>
 
 class MOAIProp;
 

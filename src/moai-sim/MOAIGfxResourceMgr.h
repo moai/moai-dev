@@ -28,6 +28,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );
+	void			ProcessDeleters			();
 	void			RemoveGfxResource		( MOAIGfxResource& resource );
 	void			RenewResources			();
 	void			ScheduleGPUAffirm		( MOAIGfxResource& resource );

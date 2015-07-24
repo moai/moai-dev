@@ -261,7 +261,6 @@ void ZLGfxImmediate::DeleteHandle ( ZLGfxHandle* handle ) {
 			zglDeleteVertexArray ( handle->mGLID );
 			break;
 	}
-	
 	delete handle;
 }
 

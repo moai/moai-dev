@@ -279,13 +279,15 @@ MOAIGfxDevice::MOAIGfxDevice () :
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::~MOAIGfxDevice () {
-
-	this->mDefaultFrameBuffer.Set ( *this, 0 );
-	this->mDefaultTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::OnGlobalsFinalize () {
+
+	this->mDefaultFrameBuffer.Set ( *this, 0 );
+	this->mDefaultTexture.Set ( *this, 0 );
+	
+	MOAIGfxResourceMgr::Get ().ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//

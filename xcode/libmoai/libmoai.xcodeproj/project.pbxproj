@@ -867,18 +867,14 @@
 		89BE6D411739A42500DFE837 /* MOAITask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CE61739A42500DFE837 /* MOAITask.cpp */; };
 		89BE6D421739A42500DFE837 /* MOAITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CE71739A42500DFE837 /* MOAITask.h */; };
 		89BE6D431739A42500DFE837 /* MOAITask.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CE71739A42500DFE837 /* MOAITask.h */; };
-		89BE6D441739A42500DFE837 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CE81739A42500DFE837 /* MOAITaskQueue.cpp */; };
-		89BE6D451739A42500DFE837 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CE81739A42500DFE837 /* MOAITaskQueue.cpp */; };
-		89BE6D461739A42500DFE837 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CE91739A42500DFE837 /* MOAITaskQueue.h */; };
-		89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CE91739A42500DFE837 /* MOAITaskQueue.h */; };
 		89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEA1739A42500DFE837 /* MOAITaskSubscriber.cpp */; };
 		89BE6D491739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEA1739A42500DFE837 /* MOAITaskSubscriber.cpp */; };
 		89BE6D4A1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CEB1739A42500DFE837 /* MOAITaskSubscriber.h */; };
 		89BE6D4B1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CEB1739A42500DFE837 /* MOAITaskSubscriber.h */; };
-		89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEC1739A42500DFE837 /* MOAITaskThread.cpp */; };
-		89BE6D4D1739A42500DFE837 /* MOAITaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEC1739A42500DFE837 /* MOAITaskThread.cpp */; };
-		89BE6D4E1739A42500DFE837 /* MOAITaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CED1739A42500DFE837 /* MOAITaskThread.h */; };
-		89BE6D4F1739A42500DFE837 /* MOAITaskThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CED1739A42500DFE837 /* MOAITaskThread.h */; };
+		89BE6D4C1739A42500DFE837 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEC1739A42500DFE837 /* MOAITaskQueue.cpp */; };
+		89BE6D4D1739A42500DFE837 /* MOAITaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEC1739A42500DFE837 /* MOAITaskQueue.cpp */; };
+		89BE6D4E1739A42500DFE837 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CED1739A42500DFE837 /* MOAITaskQueue.h */; };
+		89BE6D4F1739A42500DFE837 /* MOAITaskQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CED1739A42500DFE837 /* MOAITaskQueue.h */; };
 		89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEE1739A42500DFE837 /* MOAIThread.cpp */; };
 		89BE6D511739A42500DFE837 /* MOAIThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6CEE1739A42500DFE837 /* MOAIThread.cpp */; };
 		89BE6D521739A42500DFE837 /* MOAIThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CEF1739A42500DFE837 /* MOAIThread.h */; };
@@ -4816,6 +4812,14 @@
 		CDECEE2D18E0CD6E00546426 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
 		CDECEE2E18E0CD6E00546426 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
 		CDECEE2F18E0CD6E00546426 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
+		CDED94CD1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDED94C91B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp */; };
+		CDED94CE1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDED94C91B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp */; };
+		CDED94CF1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDED94CA1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h */; };
+		CDED94D01B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDED94CA1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h */; };
+		CDED94D11B5F3ABE00BE0848 /* MOAIConditionVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDED94CB1B5F3ABE00BE0848 /* MOAIConditionVariable.cpp */; };
+		CDED94D21B5F3ABE00BE0848 /* MOAIConditionVariable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDED94CB1B5F3ABE00BE0848 /* MOAIConditionVariable.cpp */; };
+		CDED94D31B5F3ABE00BE0848 /* MOAIConditionVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = CDED94CC1B5F3ABE00BE0848 /* MOAIConditionVariable.h */; };
+		CDED94D41B5F3ABE00BE0848 /* MOAIConditionVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = CDED94CC1B5F3ABE00BE0848 /* MOAIConditionVariable.h */; };
 		CDEFD566181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */; };
 		CDEFD567181ECB3E0058D772 /* MOAITextDesignParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */; };
 		CDEFD568181ECB3E0058D772 /* MOAITextDesignParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFD55B181ECB3E0058D772 /* MOAITextDesignParser.h */; };
@@ -5884,12 +5888,10 @@
 		89BE6CE51739A42500DFE837 /* MOAIStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamWriter.h; sourceTree = "<group>"; };
 		89BE6CE61739A42500DFE837 /* MOAITask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITask.cpp; sourceTree = "<group>"; };
 		89BE6CE71739A42500DFE837 /* MOAITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITask.h; sourceTree = "<group>"; };
-		89BE6CE81739A42500DFE837 /* MOAITaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskQueue.cpp; sourceTree = "<group>"; };
-		89BE6CE91739A42500DFE837 /* MOAITaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskQueue.h; sourceTree = "<group>"; };
 		89BE6CEA1739A42500DFE837 /* MOAITaskSubscriber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskSubscriber.cpp; sourceTree = "<group>"; };
 		89BE6CEB1739A42500DFE837 /* MOAITaskSubscriber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskSubscriber.h; sourceTree = "<group>"; };
-		89BE6CEC1739A42500DFE837 /* MOAITaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskThread.cpp; sourceTree = "<group>"; };
-		89BE6CED1739A42500DFE837 /* MOAITaskThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskThread.h; sourceTree = "<group>"; };
+		89BE6CEC1739A42500DFE837 /* MOAITaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITaskQueue.cpp; sourceTree = "<group>"; };
+		89BE6CED1739A42500DFE837 /* MOAITaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITaskQueue.h; sourceTree = "<group>"; };
 		89BE6CEE1739A42500DFE837 /* MOAIThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread.cpp; sourceTree = "<group>"; };
 		89BE6CEF1739A42500DFE837 /* MOAIThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIThread.h; sourceTree = "<group>"; };
 		89BE6CF01739A42500DFE837 /* MOAIThread_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIThread_posix.cpp; sourceTree = "<group>"; };
@@ -7967,6 +7969,10 @@
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
 		CDE7C5671B0C00440038A8C9 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDED94C91B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIConditionVariable_posix.cpp; sourceTree = "<group>"; };
+		CDED94CA1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIConditionVariable_posix.h; sourceTree = "<group>"; };
+		CDED94CB1B5F3ABE00BE0848 /* MOAIConditionVariable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIConditionVariable.cpp; sourceTree = "<group>"; };
+		CDED94CC1B5F3ABE00BE0848 /* MOAIConditionVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIConditionVariable.h; sourceTree = "<group>"; };
 		CDEFD55A181ECB3E0058D772 /* MOAITextDesignParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextDesignParser.cpp; sourceTree = "<group>"; };
 		CDEFD55B181ECB3E0058D772 /* MOAITextDesignParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextDesignParser.h; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
@@ -9354,6 +9360,10 @@
 				89BE6CC31739A42500DFE837 /* headers.h */,
 				89BE6CC41739A42500DFE837 /* host.cpp */,
 				89BE6CC51739A42500DFE837 /* host.h */,
+				CDED94C91B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp */,
+				CDED94CA1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h */,
+				CDED94CB1B5F3ABE00BE0848 /* MOAIConditionVariable.cpp */,
+				CDED94CC1B5F3ABE00BE0848 /* MOAIConditionVariable.h */,
 				89BE6CC61739A42500DFE837 /* MOAIDataBuffer.cpp */,
 				89BE6CC71739A42500DFE837 /* MOAIDataBuffer.h */,
 				89BE6CCA1739A42500DFE837 /* MOAIDataIOTask.cpp */,
@@ -9374,12 +9384,10 @@
 				89BE6CDF1739A42500DFE837 /* MOAIParser.h */,
 				89BE6CE61739A42500DFE837 /* MOAITask.cpp */,
 				89BE6CE71739A42500DFE837 /* MOAITask.h */,
-				89BE6CE81739A42500DFE837 /* MOAITaskQueue.cpp */,
-				89BE6CE91739A42500DFE837 /* MOAITaskQueue.h */,
 				89BE6CEA1739A42500DFE837 /* MOAITaskSubscriber.cpp */,
 				89BE6CEB1739A42500DFE837 /* MOAITaskSubscriber.h */,
-				89BE6CEC1739A42500DFE837 /* MOAITaskThread.cpp */,
-				89BE6CED1739A42500DFE837 /* MOAITaskThread.h */,
+				89BE6CEC1739A42500DFE837 /* MOAITaskQueue.cpp */,
+				89BE6CED1739A42500DFE837 /* MOAITaskQueue.h */,
 				89BE6CEE1739A42500DFE837 /* MOAIThread.cpp */,
 				89BE6CEF1739A42500DFE837 /* MOAIThread.h */,
 				89BE6CF01739A42500DFE837 /* MOAIThread_posix.cpp */,
@@ -13203,6 +13211,7 @@
 				89BE6D1F1739A42500DFE837 /* MOAIMath.h in Headers */,
 				89BE6D231739A42500DFE837 /* MOAIMemStream.h in Headers */,
 				89BE6D271739A42500DFE837 /* MOAIMutex.h in Headers */,
+				CDED94D41B5F3ABE00BE0848 /* MOAIConditionVariable.h in Headers */,
 				89BE6D2B1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
 				CD1845C31A62751300FCCCE0 /* MOAIEnvironment.h in Headers */,
 				89BE6D2F1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
@@ -13212,10 +13221,10 @@
 				89BE6D3F1739A42500DFE837 /* MOAIStreamWriter.h in Headers */,
 				CDADCCFB1A3576A10029FEDA /* MOAITrace.h in Headers */,
 				89BE6D431739A42500DFE837 /* MOAITask.h in Headers */,
-				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */,
+				CDED94D01B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h in Headers */,
 				89BE6D4B1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */,
-				89BE6D4F1739A42500DFE837 /* MOAITaskThread.h in Headers */,
+				89BE6D4F1739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				89BE6D531739A42500DFE837 /* MOAIThread.h in Headers */,
 				89BE6D571739A42500DFE837 /* MOAIThread_posix.h in Headers */,
 				89BE6D5B1739A42500DFE837 /* MOAIThread_win32.h in Headers */,
@@ -13417,6 +13426,7 @@
 				89BE6B4A173975E500DFE837 /* MOAISharedPtr.h in Headers */,
 				89BE6B4C173975E500DFE837 /* MOAIWeakPtr.h in Headers */,
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
+				CDED94CF1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.h in Headers */,
 				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
@@ -13441,10 +13451,10 @@
 				89BE6D3A1739A42500DFE837 /* MOAIStreamReader.h in Headers */,
 				89BE6D3E1739A42500DFE837 /* MOAIStreamWriter.h in Headers */,
 				89BE6D421739A42500DFE837 /* MOAITask.h in Headers */,
-				89BE6D461739A42500DFE837 /* MOAITaskQueue.h in Headers */,
+				CDED94D31B5F3ABE00BE0848 /* MOAIConditionVariable.h in Headers */,
 				CD1844DD1A6269AB00FCCCE0 /* MOAIKeyboardIOS.h in Headers */,
 				89BE6D4A1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */,
-				89BE6D4E1739A42500DFE837 /* MOAITaskThread.h in Headers */,
+				89BE6D4E1739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				89BE6D521739A42500DFE837 /* MOAIThread.h in Headers */,
 				89BE6D561739A42500DFE837 /* MOAIThread_posix.h in Headers */,
 				89BE6D5A1739A42500DFE837 /* MOAIThread_win32.h in Headers */,
@@ -16538,7 +16548,9 @@
 				89BE6CFD1739A42500DFE837 /* host.cpp in Sources */,
 				89BE6D011739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
 				89BE6D051739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
+				CDED94CE1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp in Sources */,
 				89BE6D091739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
+				CDED94D21B5F3ABE00BE0848 /* MOAIConditionVariable.cpp in Sources */,
 				89BE6D0D1739A42500DFE837 /* MOAIFileStream.cpp in Sources */,
 				89BE6D111739A42500DFE837 /* MOAIFileSystem.cpp in Sources */,
 				89BE6D151739A42500DFE837 /* MOAIHashWriter.cpp in Sources */,
@@ -16554,11 +16566,10 @@
 				89BE6D391739A42500DFE837 /* MOAIStreamReader.cpp in Sources */,
 				89BE6D3D1739A42500DFE837 /* MOAIStreamWriter.cpp in Sources */,
 				89BE6D411739A42500DFE837 /* MOAITask.cpp in Sources */,
-				89BE6D451739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				CD1975F71A8037D9006E3917 /* MOAIKeyCode.cpp in Sources */,
 				CDF3592F1ADB93AB00C26CD5 /* MOAIMaterialBatch.cpp in Sources */,
 				89BE6D491739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
-				89BE6D4D1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
+				89BE6D4D1739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				89BE6D511739A42500DFE837 /* MOAIThread.cpp in Sources */,
 				89BE6D551739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
 				89BE6D591739A42500DFE837 /* MOAIThread_win32.cpp in Sources */,
@@ -16866,9 +16877,11 @@
 				89BE6D181739A42500DFE837 /* MOAIJsonParser.cpp in Sources */,
 				89BE6D1C1739A42500DFE837 /* MOAIMath.cpp in Sources */,
 				89BE6D201739A42500DFE837 /* MOAIMemStream.cpp in Sources */,
+				CDED94CD1B5F3ABE00BE0848 /* MOAIConditionVariable_posix.cpp in Sources */,
 				89BE6D241739A42500DFE837 /* MOAIMutex.cpp in Sources */,
 				89BE6D281739A42500DFE837 /* MOAIMutex_posix.cpp in Sources */,
 				CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */,
+				CDED94D11B5F3ABE00BE0848 /* MOAIConditionVariable.cpp in Sources */,
 				CD1844D51A6269AB00FCCCE0 /* host.mm in Sources */,
 				89BE6D2C1739A42500DFE837 /* MOAIMutex_win32.cpp in Sources */,
 				CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */,
@@ -16878,9 +16891,8 @@
 				89BE6D3C1739A42500DFE837 /* MOAIStreamWriter.cpp in Sources */,
 				CD1844DC1A6269AB00FCCCE0 /* MOAIDialogIOS.mm in Sources */,
 				89BE6D401739A42500DFE837 /* MOAITask.cpp in Sources */,
-				89BE6D441739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
-				89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
+				89BE6D4C1739A42500DFE837 /* MOAITaskQueue.cpp in Sources */,
 				89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */,
 				CD1844E41A6269AB00FCCCE0 /* MOAIWebViewIOS.mm in Sources */,
 				89BE6D541739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,

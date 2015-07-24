@@ -10,18 +10,17 @@ class MOAIMutexImpl;
 // MOAIMutex
 //================================================================//
 class MOAIMutex {
-private:
+protected:
 
-	MOAIMutexImpl*	mImpl;
+	MOAIMutexImpl*	mMutexImpl;
 
-	//----------------------------------------------------------------//
-	void			Affirm			();
-	void			Clear			();
-					MOAIMutex		( const MOAIMutex& ) {}
-	
 	//----------------------------------------------------------------//
 	MOAIMutex& operator = ( const MOAIMutex& ) {
 		return *this;
+	}
+
+	//----------------------------------------------------------------//
+	MOAIMutex ( const MOAIMutex& ) {
 	}
 
 public:
@@ -29,7 +28,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Lock				();
 					MOAIMutex			();
-					~MOAIMutex			();
+	virtual			~MOAIMutex			();
 	void			Unlock				();
 };
 
@@ -39,13 +38,14 @@ public:
 // TODO: rename to MOAIScopedLock?
 class MOAIAutoLock {
 private:
+
 	MOAIMutex&		mMutex;
 	
 public:
 	
 	//----------------------------------------------------------------//
-	MOAIAutoLock					( MOAIMutex& );
-	~MOAIAutoLock					();
+					MOAIAutoLock		( MOAIMutex& );
+					~MOAIAutoLock		();
 };
 
 #endif

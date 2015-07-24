@@ -4,7 +4,7 @@
 #ifndef MOAITASKQUEUE_H
 #define MOAITASKQUEUE_H
 
-#include <moai-util/MOAIMutex.h>
+#include <moai-util/MOAIConditionVariable.h>
 #include <moai-util/MOAIThread.h>
 #include <moai-util/MOAITask.h>
 
@@ -15,18 +15,27 @@ class MOAITaskSubscriber;
 //================================================================//
 class MOAITaskQueue :
 	public virtual MOAILuaObject {
-protected:
+private:
 
 	friend class MOAITask;
 
-	MOAIMutex					mMutex;
+	MOAIThread		mThread; // TODO: inherit?
+	
+	MOAIConditionVariable		mCondition;
 	ZLLeanList < MOAITask* >	mPendingTasks;
+	bool						mIsRunning;
+	
+	//----------------------------------------------------------------//
+	static void		_main					( void* param, MOAIThreadState& threadState );
 
 	//----------------------------------------------------------------//
-	virtual void	PushTask				( MOAITask& task );
+	void			Main					();
+	void			PushTask				( MOAITask& task );
 	void			Process					();
 
 public:
+
+	friend class MOAITaskBase;
 
 	DECL_LUA_FACTORY ( MOAITaskQueue )
 
@@ -35,6 +44,7 @@ public:
 					~MOAITaskQueue			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Stop					();
 };
 
 #endif

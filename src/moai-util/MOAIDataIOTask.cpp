@@ -28,24 +28,26 @@ void MOAIDataIOTask::Execute () {
 void MOAIDataIOTask::Init ( cc8* filename, MOAIDataBuffer& target, u32 action ) {
 
 	this->mFilename = filename;
-	this->mData.Set ( *this, &target );
 	this->mAction = action;
+	this->mData = &target;
+	
+	this->mData->LuaRetain ( this->mData );
 }
 
 //----------------------------------------------------------------//
 MOAIDataIOTask::MOAIDataIOTask () :
+	mData ( 0 ),
 	mAction ( NONE ),
 	mInflateOnLoad ( false ),
 	mInflateOnTaskThread ( false ),
 	mWindowBits ( 0 ) {
-	
-	RTTI_SINGLE ( MOAITask )
 }
 
 //----------------------------------------------------------------//
 MOAIDataIOTask::~MOAIDataIOTask () {
 
-	this->mData.Set ( *this, 0 );
+	this->mData->LuaRelease ( this->mData );
+	this->mData = 0;
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +80,7 @@ void MOAIDataIOTask::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIDataIOTask::SetCallback ( lua_State* L, int idx ) {
 
 	MOAILuaState state ( L );
-	this->mOnFinish.SetRef ( *this, state, idx );
+	this->mOnFinish.SetRef ( state, idx );
 }
 
 //----------------------------------------------------------------//

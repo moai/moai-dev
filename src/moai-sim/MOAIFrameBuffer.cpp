@@ -322,7 +322,6 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 
 	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
 	this->mGLFrameBufferID = 0;
-
 	this->mFrameImage.Set ( *this, 0 );
 }
 
