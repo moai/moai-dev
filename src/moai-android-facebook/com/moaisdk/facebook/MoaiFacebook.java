@@ -6,6 +6,7 @@
 
 package com.moaisdk.facebook;
 
+import com.facebook.FacebookCallback;
 import com.moaisdk.core.MoaiLog;
 
 import java.io.IOException;
@@ -20,8 +21,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 @SuppressWarnings("unused")
 
@@ -49,7 +53,10 @@ public class MoaiFacebook {
     }
 
 	private static Activity sActivity = null;
-	//private static FacebookSdk	sFacebook = null;
+    private static List<String> sPermissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
+    private static CallbackManager sCallbackManager;
+
+    //private static FacebookSdk	sFacebook = null;
 	private static String sAppId = null;
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
@@ -59,6 +66,7 @@ public class MoaiFacebook {
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
 		MoaiLog.i ( "MoaiFacebook onActivityResult: Calling Session onActivityResult ()" );
+        sCallbackManager.onActivityResult(requestCode, resultCode, data);
 
 //		Session session = Session.getActiveSession ();
 //		if ( session != null ) {
@@ -72,11 +80,31 @@ public class MoaiFacebook {
 		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
 
 		sActivity = activity;
+        sCallbackManager = CallbackManager.Factory.create();
+
         FacebookSdk.sdkInitialize ( sActivity );
+        FacebookCallback callback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
 
-        List<String> permissions = Arrays.asList("user_photos", "friends_photos", "email", "user_birthday", "user_friends");
+                MoaiLog.i ( "MoaiFacebook onSuccess" );
+            }
+            @Override
+            public void onCancel() {
+                // App code
 
-       // LoginManager.getInstance().logInWithReadPermissions ( sActivity, permissions );
+                MoaiLog.i ( "MoaiFacebook onCancel" );
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+
+                MoaiLog.i ( "MoaiFacebook onError" );
+            }
+        };
+
+        LoginManager.getInstance().registerCallback ( sCallbackManager, callback );
 	}
 
 	//----------------------------------------------------------------//
@@ -125,8 +153,6 @@ public class MoaiFacebook {
 	public static void init ( String appId ) {
 
 		sAppId = appId;
-		//sFacebook = new Facebook ( appId );
-		//sFacebook.extendAccessTokenIfNeeded ( sActivity, null );
 	}
 
 	//----------------------------------------------------------------//
@@ -146,6 +172,7 @@ public class MoaiFacebook {
 	public static void login ( String [] permissions ) {
 
 		MoaiLog.i ( "MoaiFacebook: login" );
+        LoginManager.getInstance().logInWithReadPermissions ( sActivity, sPermissions );
 
 //		openActiveSession ( sActivity, true, Arrays.asList ( permissions ), new Session.StatusCallback () {
 //
