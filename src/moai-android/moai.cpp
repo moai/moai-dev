@@ -129,16 +129,16 @@
 //================================================================//
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUAppInitialize ( JNIEnv* env, jclass obj ) {
 
 		inputQueue = new LockingQueue < InputEvent > ();
 
 		AKUAppInitialize ();
-		AKUModulesAppInitialize ();   
+		AKUModulesAppInitialize ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT jint JNICALL Java_com_ziplinegames_moai_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT jint JNICALL Java_com_moaisdk_core_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 
 		AKUContextID context = AKUCreateContext ();
 		if ( context ) {
@@ -148,19 +148,19 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUDeleteContext ( JNIEnv* env, jclass obj, jint contextId ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDeleteContext ( JNIEnv* env, jclass obj, jint contextId ) {
 
 		AKUDeleteContext ( contextId );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUDetectGfxContext ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDetectGfxContext ( JNIEnv* env, jclass obj ) {
 
 		AKUDetectGfxContext ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat heading ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat heading ) {
 
 		InputEvent ievent;
 
@@ -175,7 +175,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
 
 		InputEvent ievent;
 
@@ -192,7 +192,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
 
 		InputEvent ievent;
 
@@ -212,7 +212,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y ) {
 
 		InputEvent ievent;
 
@@ -230,15 +230,15 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
-        
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
+
         AKUModulesAndroidAppFinalize ();
         AKUModulesAppFinalize();
         AKUAppFinalize ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUModulesUpdate ( JNIEnv* env, jclass obj ) {
 
 		InputEvent ievent;
 		while ( inputQueue->Pop ( ievent )) {
@@ -264,7 +264,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
 
 		JNI_GET_CSTRING ( jvirtualPath, virtualPath );
 		JNI_GET_CSTRING ( jarchive, archive );
@@ -276,31 +276,31 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 
 		AKUModulesPause ( paused );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKURender ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKURender ( JNIEnv* env, jclass obj ) {
 
 		AKURender ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUReserveInputDevices ( JNIEnv* env, jclass obj, jint total ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUReserveInputDevices ( JNIEnv* env, jclass obj, jint total ) {
 
 		AKUReserveInputDevices ( total );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUReserveInputDeviceSensors ( JNIEnv* env, jclass obj, jint deviceId, jint total ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUReserveInputDeviceSensors ( JNIEnv* env, jclass obj, jint deviceId, jint total ) {
 
 		AKUReserveInputDeviceSensors ( deviceId, total );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 
 		JNI_GET_CSTRING ( jfilename, filename );
 		AKULoadFuncFromFile ( filename );
@@ -309,20 +309,20 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
 
 		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_connectionType,	( int )connectionType );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetContext ( JNIEnv* env, jclass obj, jint contextId ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetContext ( JNIEnv* env, jclass obj, jint contextId ) {
 
 		AKUSetContext ( contextId );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {
-	
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetDeviceLocale ( JNIEnv* env, jclass obj, jstring jlangCode, jstring jcountryCode ) {
+
 		JNI_GET_CSTRING ( jlangCode, langCode );
 		JNI_GET_CSTRING ( jcountryCode, countryCode );
 
@@ -336,7 +336,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jint jnumProcessors, jstring josBrand, jstring josVersion, jstring judid ) {
 
 		JNI_GET_CSTRING ( jappName, appName );
 		JNI_GET_CSTRING ( jappId, appId );
@@ -382,7 +382,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
 
 		JNI_GET_CSTRING ( jpath, path );
 		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_documentDirectory,	path );
@@ -390,15 +390,15 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetCacheDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
-		
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetCacheDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+
 		JNI_GET_CSTRING ( jpath, path );
 		MOAIEnvironment::Get ().SetValue ( MOAI_ENV_cacheDirectory,	path );
 		JNI_RELEASE_CSTRING ( jpath, path );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputConfigurationName ( name );
@@ -406,7 +406,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputDevice ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputDevice ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputDevice ( deviceId, name );
@@ -414,7 +414,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputDeviceCompass ( deviceId, sensorId, name );
@@ -422,7 +422,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputDeviceLevel ( deviceId, sensorId, name );
@@ -430,7 +430,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputDeviceLocation ( deviceId, sensorId, name );
@@ -438,7 +438,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceTouch ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetInputDeviceTouch ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
 
 		JNI_GET_CSTRING ( jname, name );
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
@@ -446,25 +446,25 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetScreenDpi ( JNIEnv* env, jclass obj, jint dpi ) {
 
 		AKUSetScreenDpi ( dpi );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
 
 		AKUSetScreenSize ( width, height );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetViewSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetViewSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
 
 		AKUSetViewSize ( width, height );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_Moai_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
 
 		JNI_GET_CSTRING ( jpath, path );
 

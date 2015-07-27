@@ -26,10 +26,10 @@ int MOAIGooglePlayServicesAndroid::_connect ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAILuaState state ( L );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID connect = env->GetStaticMethodID ( playserv, "connect", "()Z" );
@@ -60,10 +60,10 @@ int MOAIGooglePlayServicesAndroid::_isConnected ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAILuaState state ( L );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID isConnected = env->GetStaticMethodID ( playserv, "isConnected", "()Z" );
@@ -109,10 +109,10 @@ int MOAIGooglePlayServicesAndroid::_showAchievements ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAILuaState state ( L );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "ccom/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID showAchievements = env->GetStaticMethodID ( playserv, "showAchievements", "()V" );
@@ -144,10 +144,10 @@ int MOAIGooglePlayServicesAndroid::_showLeaderboard ( lua_State* L ) {
 
 	MOAIJString jboard = JNI_GET_JSTRING ( board );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID showLeaderboard = env->GetStaticMethodID ( playserv, "showLeaderboard", "(Ljava/lang/String;)V" );
@@ -181,10 +181,10 @@ int MOAIGooglePlayServicesAndroid::_submitScore ( lua_State* L ) {
 
 	MOAIJString jboard = JNI_GET_JSTRING ( board );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID submitScore = env->GetStaticMethodID ( playserv, "submitScore", "(Ljava/lang/String;J)V" );
@@ -216,10 +216,10 @@ int MOAIGooglePlayServicesAndroid::_unlockAchievement ( lua_State* L ) {
 
 	MOAIJString jach = JNI_GET_JSTRING ( ach );
 
-	jclass playserv = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePlayServices" );
+	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePlayServices" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID unlockAchievement = env->GetStaticMethodID ( playserv, "unlockAchievement", "(Ljava/lang/String;)V" );
@@ -285,7 +285,7 @@ void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 // AKU Callbacks
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googleplayservices_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
 
 	MOAIGooglePlayServicesAndroid::Get ().NotifyConnectionComplete ();
 }

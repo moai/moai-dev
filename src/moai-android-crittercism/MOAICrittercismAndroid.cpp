@@ -30,10 +30,10 @@ int MOAICrittercismAndroid::_forceException ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+	jclass crittercism = env->FindClass ( "com/moaisdk/crittercism/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/moaisdk/crittercism/MoaiCrittercism" );
     } else {
 
     	jmethodID forceException = env->GetStaticMethodID ( crittercism, "forceException", "()V" );
@@ -66,10 +66,10 @@ int MOAICrittercismAndroid::_init ( lua_State* L ) {
 
 	MOAIJString jidentifier = JNI_GET_JSTRING ( identifier );
 
-	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+	jclass crittercism = env->FindClass ( "com/moaisdk/crittercism/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/moaisdk/crittercism/MoaiCrittercism" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( crittercism, "init", "(Ljava/lang/String;)V" );
@@ -102,10 +102,10 @@ int MOAICrittercismAndroid::_leaveBreadcrumb ( lua_State* L ) {
 
 	MOAIJString jbreadcrumb = JNI_GET_JSTRING ( breadcrumb );
 
-	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+	jclass crittercism = env->FindClass ( "com/moaisdk/crittercism/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/moaisdk/crittercism/MoaiCrittercism" );
     } else {
 
     	jmethodID leaveBreadcrumb = env->GetStaticMethodID ( crittercism, "leaveBreadcrumb", "(Ljava/lang/String;)V" );
@@ -138,10 +138,10 @@ int MOAICrittercismAndroid::_setUser ( lua_State* L ) {
 
 	MOAIJString jident = JNI_GET_JSTRING ( ident );
 
-	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+	jclass crittercism = env->FindClass ( "com/moaisdk/crittercism/MoaiCrittercism" );
     if ( crittercism == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "MOAICrittercismAndroid: Unable to find java class %s", "com/moaisdk/crittercism/MoaiCrittercism" );
     } else {
 
     	jmethodID setUser = env->GetStaticMethodID ( crittercism, "setUser", "(Ljava/lang/String;)V" );
