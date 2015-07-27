@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <zl-gfx/zl_gfx.h>
 #include <zl-gfx/ZLGfxRetained.h>
 
 //================================================================//
@@ -375,6 +376,8 @@ void ZLGfxRetained::DisableVertexAttribArray ( u32 index ) {
 
 //----------------------------------------------------------------//
 void ZLGfxRetained::Draw ( ZLGfx& draw ) {
+
+	zglBegin ();
 
 	assert ( this->mStream );
 
@@ -818,6 +821,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 	}
 	
 	this->mStream->Seek ( top, SEEK_SET );
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//

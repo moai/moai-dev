@@ -119,7 +119,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	// TODO: make use of offset and scale
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLGfx& gfx = gfxDevice.GetAPI ();
+	ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
 
 	this->FinishInit ();
 	gfxDevice.BindVertexArray ( this );

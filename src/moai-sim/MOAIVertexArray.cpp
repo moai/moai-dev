@@ -173,7 +173,7 @@ void MOAIVertexArray::OnGPUBind () {
 	
 	if ( vao ) {
 
-		MOAIGfxDevice::GetAPI ().BindVertexArray ( vao );
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
 
 		if ( this->mNeedsFlush ) {
 			this->BindVertexArrayItems ();
@@ -196,7 +196,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 	if ( totalVAOs ) {
 		
 		for ( size_t i = 0; i < totalVAOs; ++i ) {
-			ZLGfxHandle* vao = MOAIGfxDevice::GetAPI ().CreateVertexArray (); // OK for this to return 0
+			ZLGfxHandle* vao = MOAIGfxDevice::GetDrawingAPI ().CreateVertexArray (); // OK for this to return 0
 			if ( !vao ) return true;
 			this->mVAOs [ i ] = vao;
 		}
@@ -219,7 +219,7 @@ void MOAIVertexArray::OnGPULost () {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		MOAIGfxDevice::GetAPI ().BindVertexArray ( 0 );
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( 0 );
 	}
 	this->UnbindVertexArrayItems ();
 }

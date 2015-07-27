@@ -196,7 +196,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 	if ( vbo ) {
 		
-		ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		
@@ -227,7 +227,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 	u32 count = 0;
 	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		
@@ -266,7 +266,7 @@ void MOAIGfxBuffer::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
 }
 
 //----------------------------------------------------------------//

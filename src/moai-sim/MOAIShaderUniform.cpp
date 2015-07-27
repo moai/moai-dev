@@ -390,7 +390,7 @@ void MOAIShaderUniform::Bind () {
 
 	if ( this->mAddr == ZGL_INVALID_UNIFORM_ADDR ) return;
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	switch ( this->mType ) {
 

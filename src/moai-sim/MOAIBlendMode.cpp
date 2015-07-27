@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIBlendMode::Bind () {
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 	
 	gfx.Enable ( ZGL_PIPELINE_BLEND );
 	gfx.BlendMode ( this->mEquation );

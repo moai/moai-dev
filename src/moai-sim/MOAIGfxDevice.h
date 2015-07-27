@@ -123,9 +123,12 @@ public:
 	void			UpdateShaderGlobals		();
 	
 	//----------------------------------------------------------------//
-	static ZLGfx& GetAPI () {
+	static ZLGfx& GetDrawingAPI () {
 	
-		return *MOAIGfxDevice::Get ().mGfx;
+		ZLGfx* gfx = MOAIGfxDevice::Get ().mDrawingAPI;
+		assert ( gfx );
+		
+		return *gfx;
 	}
 };
 

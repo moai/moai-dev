@@ -151,7 +151,7 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Bind ( ZLRevBufferEdition* buffer ) const {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
@@ -685,7 +685,7 @@ void MOAIVertexFormat::Unbind () const {
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-		MOAIGfxDevice::GetAPI ().DisableVertexAttribArray ( attr.mIndex );
+		MOAIGfxDevice::GetDrawingAPI ().DisableVertexAttribArray ( attr.mIndex );
 	}
 }
 

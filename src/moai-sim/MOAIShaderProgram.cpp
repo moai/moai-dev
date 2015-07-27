@@ -234,7 +234,7 @@ void MOAIShaderProgram::ClearUniform ( u32 idx ) {
 ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLGfx& gfx = gfxDevice.GetAPI ();
+	ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
 
 	ZLGfxHandle* shader = gfx.CreateShader ( type );
 
@@ -343,7 +343,7 @@ void MOAIShaderProgram::OnCPUDestroy () {
 void MOAIShaderProgram::OnGPUBind () {
 
 	// use shader program.
-	MOAIGfxDevice::GetAPI ().UseProgram ( this->mProgram );
+	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( this->mProgram );
 
 	// reload the uniform values
 	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
@@ -354,7 +354,7 @@ void MOAIShaderProgram::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIShaderProgram::OnGPUCreate () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
@@ -434,7 +434,7 @@ void MOAIShaderProgram::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetAPI ().UseProgram ( 0 );
+	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//

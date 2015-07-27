@@ -132,7 +132,7 @@ bool MOAIGfxResource::DoCPUAffirm () {
 			
 			#else
 		
-				ZLGfx& gfx = MOAIGfxDevice::Get ().GetAPI ();;
+				ZLGfx& gfx = MOAIGfxDevice::Get ().GetDrawingAPI ();;
 			
 				ZLGfxDevice::Begin ();
 				this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;

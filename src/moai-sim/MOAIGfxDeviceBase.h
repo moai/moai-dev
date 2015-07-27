@@ -10,25 +10,77 @@ class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
 //================================================================//
+// MOAIGfxThreadPipeline
+//================================================================//
+class MOAIGfxThreadPipeline {
+friend class MOAIGfxDeviceBase;
+
+	ZLLeanArray < ZLGfxRetained* > mDisplayLists;
+	ZLLeanStack < ZLGfxRetained* > mFreeDisplayLists;
+	ZLLeanStack < ZLGfxRetained* > mFinishedDisplayLists;
+
+	enum {
+		PIPELINE_LOGIC,			// busy on the main thread
+		PIPELINE_PENDING,		// waiting for the graphics thread
+		PIPELINE_RENDER,		// busy for the graphics thread
+		PIPELINE_TOTAL,
+	};
+
+	enum {
+		LOGIC_PHASE,
+		RENDER_PHASE,
+	};
+
+	ZLGfxRetained* mPipeline [ PIPELINE_TOTAL ];
+
+	//----------------------------------------------------------------//
+	ZLGfxRetained*		GetList						();
+						MOAIGfxThreadPipeline		();
+						~MOAIGfxThreadPipeline		();
+	void				PhaseBegin					( u32 phase );
+	void				PhaseEnd					( u32 phase );
+	void				PublishAndReset				();
+	void				ReleaseList					( ZLGfxRetained* list );
+};
+
+//================================================================//
 // MOAIGfxDeviceBase
 //================================================================//
 class MOAIGfxDeviceBase {
+public:
+
+	enum {
+		DRAWING_LIST,
+		LOADING_LIST,
+		TOTAL_LISTS,
+	};
+
 protected:
 
-	ZLGfxRetained	mGfxRetained;
-	ZLGfxImmediate	mGfxImmediate;
-	ZLGfx*			mGfx;
+	ZLGfxImmediate				mGfxImmediate;
 
-	bool			mShaderDirty;
-	ZLRect			mViewRect;
-	ZLFrustum		mViewVolume;
+	MOAIGfxThreadPipeline*		mLists [ TOTAL_LISTS ];
 	
-	u32				mDrawCount;
+	ZLGfx*						mDrawingAPI;
+	
+	bool						mShaderDirty;
+	ZLRect						mViewRect;
+	ZLFrustum					mViewVolume;
+	
+	u32							mDrawCount;
 
 	//----------------------------------------------------------------//
-	virtual void	UpdateShaderGlobals			() = 0;
+	void				BeginPhase					( u32 list, u32 phase );
+	void				EndPhase					( u32 list, u32 phase );
+	virtual void		UpdateShaderGlobals			() = 0;
 
 public:
+	
+	enum {
+		LOGIC_PHASE,
+		LOADING_PHASE,
+		RENDER_PHASE,
+	};
 	
 	GET ( const ZLFrustum&, ViewVolume, mViewVolume )
 	GET ( const ZLRect&, ViewRect, mViewRect )
@@ -38,9 +90,15 @@ public:
 	//GET ( ZLGfx&, API, *mGfx )
 	
 	//----------------------------------------------------------------//
-	void			Draw						();
-					MOAIGfxDeviceBase			();
-	virtual			~MOAIGfxDeviceBase			();
+	void				BeginPhase					( u32 phase );
+	void				EnableList					( u32 list );
+	void				EndPhase					( u32 phase );
+						MOAIGfxDeviceBase			();
+	virtual				~MOAIGfxDeviceBase			();
+	void				ProcessList					( u32 list );
+	void				PublishAndResetList			( u32 list );
+	void				SelectList					();
+	void				SelectList					( u32 list );
 };
 
 #endif

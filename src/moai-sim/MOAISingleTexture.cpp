@@ -104,7 +104,7 @@ int MOAISingleTexture::_setWrap ( lua_State* L ) {
 void MOAISingleTexture::CleanupOnError () {
 
 	this->mTextureSize = 0;
-	MOAIGfxDevice::GetAPI ().DeleteHandle ( this->mGLTexID );
+	MOAIGfxDevice::GetDrawingAPI ().DeleteHandle ( this->mGLTexID );
 	this->mGLTexID = 0;
 	this->mWidth = 0;
 	this->mHeight = 0;
@@ -122,7 +122,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	MOAIImage altImage;
 
@@ -311,7 +311,7 @@ void MOAISingleTexture::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUBind () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	gfx.BindTexture ( this->mGLTexID );
 	
@@ -353,7 +353,7 @@ void MOAISingleTexture::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetAPI ().BindTexture ( 0 );
+	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -473,7 +473,7 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 		this->mGLTexID = 0;	
 	}
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image

@@ -98,10 +98,14 @@ void _AKUExitFullscreenModeFunc () {
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	if ( !sWindow ) {
+	
 		sWindow = SDL_CreateWindow ( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
 		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
+		
 		AKUDetectGfxContext ();
+		AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
+		
 		AKUSetViewSize ( width, height );
 		AKUSdlSetWindow ( sWindow );
 
@@ -165,9 +169,9 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetInputConfigurationName ( "SDL" );
 
-	SetScreenSize( SDL_GetDesktopDisplayMode );
+	SetScreenSize ( SDL_GetDesktopDisplayMode );
 
-    SetScreenDpi();
+    SetScreenDpi ();
 
 	AKUReserveInputDevices			( InputDeviceID::TOTAL );
 	AKUSetInputDevice				( InputDeviceID::DEVICE, "device" );
@@ -429,7 +433,20 @@ void MainLoop () {
 		
 		AKUModulesUpdate ();
 		
+		AKUDisplayListPublishAndReset ();
+		
+		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
 		AKURender ();
+		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+		
+		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+		AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
+		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+		
+		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+		AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
+		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+		
 		SDL_GL_SwapWindow ( sWindow );
 		
 		Uint32 frameDelta = ( Uint32 )( AKUGetSimStep () * 1000.0 );

@@ -137,6 +137,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearErrors () {
+
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
 			while ( ZLGfxDevice::GetError () != ZGL_ERROR_NONE );
@@ -149,12 +150,12 @@ void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
 
 	if ( clearFlags ) {
 		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
-			this->mGfx->DepthMask ( true );
-			this->mGfx->Clear ( clearFlags );
-			this->mGfx->DepthMask ( false );
+			this->mDrawingAPI->DepthMask ( true );
+			this->mDrawingAPI->Clear ( clearFlags );
+			this->mDrawingAPI->DepthMask ( false );
 		}
 		else {
-			this->mGfx->Clear ( clearFlags );
+			this->mDrawingAPI->Clear ( clearFlags );
 		}
 	}
 }
@@ -177,8 +178,6 @@ void MOAIGfxDevice::DetectContext () {
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
-	
-	this->mGfx = &this->mGfxRetained;
 	
 	ZLGfxDevice::End ();
 }
@@ -355,19 +354,19 @@ void MOAIGfxDevice::ResetState () {
 	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
-	this->mGfx->Disable ( ZGL_PIPELINE_BLEND );
+	this->mDrawingAPI->Disable ( ZGL_PIPELINE_BLEND );
 	this->mBlendEnabled = false;
 	
 	// disable backface culling
-	this->mGfx->Disable ( ZGL_PIPELINE_CULL );
+	this->mDrawingAPI->Disable ( ZGL_PIPELINE_CULL );
 	this->mCullFunc = 0;
 	
 	// disable depth test
-	this->mGfx->Disable ( ZGL_PIPELINE_DEPTH );
+	this->mDrawingAPI->Disable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
 	// disable depth write
-	this->mGfx->DepthMask ( false );
+	this->mDrawingAPI->DepthMask ( false );
 	this->mDepthMask = false;
 	
 	// clear the vertex format
@@ -378,11 +377,11 @@ void MOAIGfxDevice::ResetState () {
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
-	this->mGfx->LineWidth ( this->mPenWidth );
+	this->mDrawingAPI->LineWidth ( this->mPenWidth );
 	
 	// reset the scissor rect
 	ZLRect scissorRect = this->mCurrentFrameBuffer->GetBufferRect ();
-	this->mGfx->Scissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
+	this->mDrawingAPI->Scissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
 	
 	this->mScissorRect = scissorRect;
 }
@@ -424,7 +423,7 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	u32 w = ( u32 )( deviceRect.Width () + 0.5f );
 	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
 	
-	this->mGfx->Viewport ( x, y, w, h );
+	this->mDrawingAPI->Viewport ( x, y, w, h );
 	
 	this->mViewRect = rect;
 	this->mShaderDirty = true;

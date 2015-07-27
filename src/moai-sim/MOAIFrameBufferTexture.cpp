@@ -95,7 +95,7 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	this->mBufferWidth = this->mWidth;
 	this->mBufferHeight = this->mHeight;
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
 	this->mGLFrameBufferID = gfx.CreateFramebuffer ();

@@ -180,20 +180,20 @@ void MOAIRenderMgr::Render () {
 
 	ZLGfxDevice::Begin ();
 
-	MOAIGfxResourceMgr::Get ().Update ();
-
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	device.ResetDrawCount ();
 
+	device.SelectList ( MOAIGfxDevice::DRAWING_LIST );
+
 	if ( this->mBufferTable ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mBufferTable );
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );
-	}	
+	}
 	
 	device.GetDefaultFrameBuffer ()->Render ();
 	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
@@ -205,8 +205,6 @@ void MOAIRenderMgr::Render () {
 	this->mRenderTime += this->mRenderDuration;
 	
 	this->mFrameBuffer = 0;
-	
-	MOAIGfxDevice::Get ().Draw ();
 	
 	ZLGfxDevice::End ();
 }

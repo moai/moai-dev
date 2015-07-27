@@ -32,7 +32,6 @@ private:
 	void			RemoveGfxResource		( MOAIGfxResource& resource );
 	void			RenewResources			();
 	void			ScheduleGPUAffirm		( MOAIGfxResource& resource );
-	void			Update					();
 	
 public:
 	
@@ -48,6 +47,7 @@ public:
 	void			PurgeResources			( u32 age = 0 );
 	void			PushDeleter				( ZLGfxHandle* handle );
 	void			RegisterLuaClass		( MOAILuaState& state );
+	void			Update					();
 };
 
 #endif

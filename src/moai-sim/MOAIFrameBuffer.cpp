@@ -106,7 +106,7 @@ void MOAIClearableView::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		MOAIGfxDevice::GetAPI ().ClearColor (
+		MOAIGfxDevice::GetDrawingAPI ().ClearColor (
 			clearColor.mR,
 			clearColor.mG,
 			clearColor.mB,
@@ -257,7 +257,7 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
-	this->mGLFrameBufferID = MOAIGfxDevice::GetAPI ().GetCurrentFramebuffer ();
+	this->mGLFrameBufferID = MOAIGfxDevice::GetDrawingAPI ().GetCurrentFramebuffer ();
 }
 
 //----------------------------------------------------------------//

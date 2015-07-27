@@ -18,7 +18,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
@@ -32,7 +32,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
@@ -74,7 +74,7 @@ MOAIGfxResourceMgr::~MOAIGfxResourceMgr () {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::ProcessDeleters () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	
@@ -160,9 +160,11 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::Update () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetAPI ();
-
 	ZLGfxDevice::Begin ();
+
+	MOAIGfxDevice::Get ().SelectList ( MOAIGfxDevice::LOADING_LIST );
+
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 	
 	this->ProcessDeleters ();
 	
