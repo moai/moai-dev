@@ -109,10 +109,10 @@ public class MoaiFacebook {
                                     System.out.println("Success");
                                     try {
 
-                                        sUserEmail      = json.getString("email");
+                                        //sUserEmail      = json.getString("email");
                                         sUserID         = json.getString("id");
-                                        sUserFirstName  = json.getString("first_name");
-                                        sUserLastName   = json.getString("last_name");
+                                        //sUserFirstName  = json.getString("first_name");
+                                        //sUserLastName   = json.getString("last_name");
 
                                         AKUNotifyFacebookLoginSuccess ();
 
