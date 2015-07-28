@@ -108,7 +108,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	}
 
 	STLString log;
-	log.write ( "[%s] %s", token, msg );
+	log.write ( "[%s-%d] %s", token, level, msg );
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
 
