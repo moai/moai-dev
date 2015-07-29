@@ -144,7 +144,9 @@ public:
 		this->Clear ();
 	
 		this->mInfo = src.mInfo;
-		this->mBounds = src.Bounds;
+		this->mBounds = src.mBounds;
+		
+		this->mVertices.Init ( src.mVertices.Size ());
 		this->mVertices.CopyFrom ( src.mVertices );
 	}
 	
