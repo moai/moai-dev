@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
@@ -57,12 +58,24 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 	
 	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
 	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
-	u32 mode					= state.GetValue < u32 >( 3, COLOR_MULTIPLY );
 	
 	if ( format && stream ) {
 	
-		ZLColorVec color = state.GetColor ( 3, 0.0f, 0.0f, 0.0f, 1.0f );
-		MOAIGeometryWriter::ApplyColor ( *format, *stream,mode, color );
+		ZLColorVec color	= state.GetColor ( 3, 0.0f, 0.0f, 0.0f, 1.0f );
+		MOAIRegion* region	= state.GetLuaObject < MOAIRegion >( 7, false );
+		
+		if ( region ) {
+		
+			float pad	= state.GetValue < float >( 8, 0.0f );
+			u32 mode	= state.GetValue < u32 >( 9, COLOR_MULTIPLY );
+			
+			MOAIGeometryWriter::ApplyColor ( *format, *stream, mode, *region, pad, color );
+		}
+		else {
+		
+			u32 mode	= state.GetValue < u32 >( 7, COLOR_MULTIPLY );
+			MOAIGeometryWriter::ApplyColor ( *format, *stream, mode, color );
+		}
 	}
 	return 0;
 }
@@ -277,6 +290,28 @@ void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& 
 }
 
 //----------------------------------------------------------------//
+void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const MOAIRegion& region, float pad, const ZLColorVec& color ) {
+	
+	size_t base = stream.GetCursor ();
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		format.SeekVertex ( stream, base, i );
+
+		ZLVec3D coord = format.ReadCoord ( stream );
+		ZLVec2D point ( coord.mX, coord.mY );
+
+		if ( region.PointInside ( point, pad )) {
+			MOAIGeometryWriter::WriteColor ( format, stream, mode, color.mR, color.mG, color.mB, color.mA );
+		}
+	}
+	
+	stream.Seek ( base, SEEK_SET );
+}
+
+
+//----------------------------------------------------------------//
 void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image, bool gradient, float a0, float a1, const ZLVec3D& v0, const ZLVec3D& v1 ) {
 	
 	float width		= image.GetWidth ();
@@ -480,7 +515,7 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 		
 		if ( existing != vertexMap.end ()) {
 			index = existing->second;
-			//printf ( "REDUCE: %d -> %d\n", i, index );
+			printf ( "REDUCE: %d -> %d\n", i, index );
 		}
 		else {
 		
@@ -497,10 +532,10 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 		}
 		indexMap [ i ] = index;
 		
-		//printf ( "INDEX: %d -> %d\n", i, index );
+		printf ( "INDEX: %d -> %d\n", i, index );
 	}
 	
-	size_t totalIdx = idxStream.GetLength () >> 2; // index size is assumed always be 4 bytes
+	size_t totalIdx = idxStream.GetLength () >> 2; // index size is assumed to always be 4 bytes
 	
 	if ( totalIdx ) {
 	

@@ -63,13 +63,16 @@ public:
 	void					Copy					( const SafeTesselator& tess, ZLAffine2D& transform );
 	void					DrawDebug				() const;
 	void					Edge					( const MOAIRegion& region, const ZLVec2D& offset );
+	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );
 	const ZLPolygon2D&		GetPolygon				( u32 idx ) const;
+	u32						GetTriangles			( SafeTesselator& tess ) const;
+	u32						GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const;
 	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 							MOAIRegion				();
 							~MOAIRegion				();
-	bool					PointInside				( const ZLVec2D& p ) const;
+	bool					PointInside				( const ZLVec2D& p, float pad ) const;
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					ReservePolygons			( u32 size );

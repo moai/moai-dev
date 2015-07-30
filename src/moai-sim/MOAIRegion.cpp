@@ -102,20 +102,37 @@ int MOAIRegion::_getDistance ( lua_State* L ) {
 // TODO: doxygen
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	u32 base = 0;
+	int totalElements = 0;
+	
+	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
 
-	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, true );
-	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, true );
-
-	u32 totalElements = 0;
 	if ( vtxBuffer && idxBuffer ) {
 	
-		u32 idxSizeInBytes				= state.GetValue < u32 >( 4, 4 );
-		MOAIVertexFormat* format		= state.GetLuaObject < MOAIVertexFormat >( 5, false );
-	
+		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
+		
+		base = idxBuffer->GetCursor () / idxSizeInBytes;
 		totalElements = self->GetTriangles ( *format, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	}
+	else {
+		
+		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
+		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
+		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
+		
+		if ( vtxStream && idxStream && format ) {
+			base = idxStream->GetCursor () / 4;
+			totalElements = self->GetTriangles ( *format, *vtxStream, *idxStream );
+		}
+	}
+	
 	state.Push ( totalElements );
-	return 1;
+	state.Push ( base );
+	state.Push ( base + totalElements );
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -123,10 +140,11 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 int MOAIRegion::_pointInside ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UNN" )
 	
-	float x = state.GetValue < float >( 2, 0.0f );
-	float y = state.GetValue < float >( 3, 0.0f );
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float pad	= state.GetValue < float >( 4, 0.0f );
 
-	state.Push ( self->PointInside ( ZLVec2D ( x, y )));
+	state.Push ( self->PointInside ( ZLVec2D ( x, y ), pad ));
 	
 	return 1;
 }
@@ -460,6 +478,13 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d ) const {
+
+	ZLVec2D unused;
+	return this->GetDistance ( point, d, unused );
+}
+
+//----------------------------------------------------------------//
 bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) const {
 
 	bool foundResult = false;
@@ -496,19 +521,37 @@ const ZLPolygon2D& MOAIRegion::GetPolygon ( u32 idx ) const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
-
-	SafeTesselator tesselator;
+u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 
 	u32 nPolys = this->mPolygons.Size ();
 	for ( u32 i = 0; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
-		tesselator.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), poly.GetSize ());
+		tess.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), poly.GetSize ());
 	}
 	
-	int error = tesselator.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, 3, 2 );
+	return tess.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, 3, 2 );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const {
+
+	SafeTesselator tess;
+	int error = this->GetTriangles ( tess );
+	
 	if ( !error ) {
-		return tesselator.GetTriangles ( format, vtxBuffer, idxBuffer, idxSizeInBytes );
+		return tess.GetTriangles ( format, vtxStream, idxStream );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
+
+	SafeTesselator tess;
+	int error = this->GetTriangles ( tess );
+	
+	if ( !error ) {
+		return tess.GetTriangles ( format, vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
 	return 0;
 }
@@ -524,15 +567,31 @@ MOAIRegion::~MOAIRegion () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIRegion::PointInside ( const ZLVec2D& p ) const {
+bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
+
+	u32 nPolys = this->mPolygons.Size ();
+
+	if ( pad != 0.0f ) {
+		float dist = 0.0f;
+		if ( this->GetDistance ( p, dist )) {
+			if ( dist <= ABS ( pad ) ) {
+				return pad < 0.0f ? false : true;
+			}
+		}
+	}
 
 	bool inside = false;
 
-	u32 nPolys = this->mPolygons.Size ();
 	for ( u32 i = 0; i < nPolys; ++i ) {
-		const ZLPolygon2D& poly = this->mPolygons [ i ];
-		if ( poly.PointInside ( p )) {
-			inside = !inside;
+		
+		switch ( this->mPolygons [ i ].PointInside ( p )) {
+		
+			case ZLPolygon2D::POINT_ON_EDGE:
+				return true;
+			
+			case ZLPolygon2D::POINT_INSIDE:
+				inside = !inside;
+				break;
 		}
 	}
 	return inside;

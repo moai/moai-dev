@@ -9,6 +9,7 @@
 
 class MOAIIndexBuffer;
 class MOAIMesh;
+class MOAIRegion;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
@@ -52,6 +53,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLColorVec& color );
+	static void			ApplyColor				( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const MOAIRegion& region, float pad, const ZLColorVec& color );
 	static void			ApplyLightFromImage		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image, bool gradient, float a0, float a1, const ZLVec3D& v0, const ZLVec3D& v1 );
 	static void			ApplyLinearGradient		( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 );
 	static MOAIMesh*	GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, u32 idxSizeInBytes );

@@ -33,10 +33,7 @@ void SafeTesselator::AddPolygon ( const ZLPolygon2D& poly ) {
 }
 
 //----------------------------------------------------------------//
-u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
-
-	ZLMemStream idxStream;
-	ZLMemStream vtxStream;
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) {
 
 	const int* elems = tessGetElements ( this->mTess );
 	const int nelems = tessGetElementCount ( this->mTess );
@@ -62,6 +59,18 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 		format.WriteColor ( vtxStream, 0xffffffff );
 		format.SeekVertex ( vtxStream, base, i + 1 );
 	}
+
+	// idx stream is 32-bits, so divide by 4 to get total indices
+	return ( idxStream.GetLength () - base ) >> 2;
+}
+
+//----------------------------------------------------------------//
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
+
+	ZLMemStream idxStream;
+	ZLMemStream vtxStream;
+
+	this->GetTriangles ( format, vtxStream, idxStream );
 	
 	return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 }

@@ -27,6 +27,12 @@ public:
 	static const u32 POLY_CLOCKWISE_CONVEX			= POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT;
 	static const u32 POLY_CLOCKWISE_CONCAVE			= POLY_KNOWN_BIT | POLY_CONCAVE_BIT | POLY_CLOCKWISE_BIT;
 
+	enum {
+		POINT_OUTSIDE,
+		POINT_INSIDE,
+		POINT_ON_EDGE,
+	};
+
 private:
 	
 	u32										mInfo;
@@ -151,6 +157,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d ) const {
+	
+		ZLMetaVec2D < TYPE > p;
+		return this->GetDistance ( point, d, p );
+	}
+	
+	
+	//----------------------------------------------------------------//
 	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d, ZLMetaVec2D < TYPE >& p ) const {
 		UNUSED ( d );
 	
@@ -253,44 +267,65 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool PointInside ( const ZLMetaVec2D < TYPE >& p ) const {
+	u32 PointInside ( const ZLMetaVec2D < TYPE >& p, TYPE pad = 0.0f ) const {
 
-		bool inPoly = false;	// start off assuming it _isn't_ in the polygon
-
-		if ( !this->mBounds.Contains ( p )) return false;
-
-		TYPE x = p.mX;
-		TYPE y = p.mY;
-		
-		u32 totalVerts = this->mVertices.Size ();
-		for ( u32 i = 0; i < totalVerts; i++ ) {
-
-			ZLMetaVec2D < TYPE >& p1 = this->mVertices [ i ];
-			ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 1 ) % totalVerts ];
+		if ( pad != 0.0f ) {
 			
-			// Components of points
-			TYPE p1X = p1.mX;
-			TYPE p1Y = p1.mY;
-			TYPE p2X = p2.mX;
-			TYPE p2Y = p2.mY;
+			TYPE dist = 0.0f;
 			
-			// Reject line segs above, below or horizontal
-			if ( y <= MIN ( p1Y, p2Y )) continue;
-			if ( y > MAX ( p1Y, p2Y )) continue;
-			if ( p1Y == p2Y ) continue;
-			
-			// Segment is behind point, so skip
-			if ( x > MAX ( p1X, p2X )) continue;
-			
-			// x intersect w/ line seg
-			TYPE xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
-			
-			// If point is to the left of or on line, toggle state
-			if ( p1X == p2X || x <= xIntersect ) {
-				inPoly = !inPoly; // Crossed an edge, so flip the state
+			if ( this->GetDistance ( p, dist )) {
+				if ( dist <= ABS ( pad ) ) {
+					return pad < 0.0f ? POINT_OUTSIDE : POINT_ON_EDGE;
+				}
 			}
 		}
-		return inPoly;
+
+		bool inPoly = false; // start off assuming it _isn't_ in the polygon
+
+		if ( this->mBounds.Contains ( p )) {
+
+			TYPE x = p.mX;
+			TYPE y = p.mY;
+			
+			u32 totalVerts = this->mVertices.Size ();
+			for ( u32 i = 0; i < totalVerts; i++ ) {
+
+				ZLMetaVec2D < TYPE >& p1 = this->mVertices [ i ];
+				ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 1 ) % totalVerts ];
+				
+				// Components of points
+				TYPE p1X = p1.mX;
+				TYPE p1Y = p1.mY;
+				TYPE p2X = p2.mX;
+				TYPE p2Y = p2.mY;
+				
+				// Segment is behind point, so skip
+				if ( x > MAX ( p1X, p2X )) continue;
+				
+				// Special case if edge is parallel
+				if ( p1Y == p2Y ) {
+					if (( p1Y == y ) && (( x <= p1X ) || ( x <= p2X ))) return POINT_ON_EDGE;
+					continue;
+				}
+				
+				// Reject line segs above, below or horizontal
+				if ( y <= MIN ( p1Y, p2Y )) continue;
+				if ( y > MAX ( p1Y, p2Y )) continue;
+				
+				// x intersect w/ line seg
+				TYPE xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
+				
+				// If we're on the line, return true
+				if ( x == xIntersect ) return POINT_ON_EDGE;
+				
+				// If point is to the left of or on line, toggle state
+				if ( p1X == p2X || x <= xIntersect ) {
+					inPoly = !inPoly; // Crossed an edge, so flip the state
+				}
+			}
+		}
+		
+		return inPoly ? POINT_INSIDE : POINT_OUTSIDE;
 	}
 
 	//----------------------------------------------------------------//

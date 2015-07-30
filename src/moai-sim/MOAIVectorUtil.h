@@ -27,6 +27,7 @@ public:
 	//----------------------------------------------------------------//
 	void			AddContour				( int size, const void* vertices, int stride, int numVertices );
 	void			AddPolygon				( const ZLPolygon2D& poly );
+	u32				GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream );
 	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
 	void			Reset					();
 					SafeTesselator			();
