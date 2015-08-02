@@ -47,28 +47,28 @@ private:
 	STLMap < STLString, MOAITextStyleRef > mStyleSet;
 	
 	// anonymous styles - these are created on the fly as text is being styled
-	ZLLeanStack < MOAITextStyleRef, 8 > mAnonymousStyles;
+	ZLLeanStack < MOAITextStyleState*, 8 > mAnonymousStyles;
 	
 	//----------------------------------------------------------------//
-	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
-	void				ReleaseStyle			( MOAITextStyle* style );
-	void				RetainStyle				( MOAITextStyle* style );
+	MOAITextStyleState*		AddAnonymousStyle		( MOAITextStyleState* source );
+	void					ReleaseStyle			( MOAITextStyle* style );
+	void					RetainStyle				( MOAITextStyle* style );
 
 public:
 
 	GET_SET ( MOAINode*, Owner, mOwner )
 	
 	//----------------------------------------------------------------//
-	bool				CheckStylesChanged		();
-	void				Clear					();
-	void				ClearAnonymousStyles	();
-	void				ClearNamedStyles		();
-	MOAITextStyle*		GetStyle				();
-	MOAITextStyle*		GetStyle				( cc8* styleName );
-						MOAITextStyleCache		();
-						~MOAITextStyleCache		();
-	void				SetStyle				( MOAITextStyle* style );
-	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
+	bool					CheckStylesChanged		();
+	void					Clear					();
+	void					ClearAnonymousStyles	();
+	void					ClearNamedStyles		();
+	MOAITextStyle*			GetStyle				();
+	MOAITextStyle*			GetStyle				( cc8* styleName );
+							MOAITextStyleCache		();
+							~MOAITextStyleCache		();
+	void					SetStyle				( MOAITextStyle* style );
+	void					SetStyle				( cc8* styleName, MOAITextStyle* style );
 };
 
 #endif

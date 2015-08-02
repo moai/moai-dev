@@ -505,7 +505,7 @@ u32 MOAITextDesignParser::NextChar () {
 	
 		if ( newSpan ) {
 		
-			MOAITextStyle* defaultStyle = this->mStyleCache->GetStyle ();
+			MOAITextStyleState* defaultStyle = this->mStyleCache->GetStyle ();
 			MOAIFont* defaultFont = defaultStyle ? defaultStyle->mFont : 0;
 		
 			if ( this->mIdx < this->mStyleSpan->mBase ) {
