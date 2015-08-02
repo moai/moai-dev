@@ -136,7 +136,7 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 		return 0;
 	}
 	
-	u32 materialID = state.IsType ( 5, LUA_TNUMBER ) ? state.GetValue < u32 >( 5, 1 ) - 1 : MOAIMaterialBatch::UNKNOWN;
+	u32 materialID = state.GetValue < u32 >( 5, 1 ) - 1;
 	
 	self->SetPair ( idx, uvQuadID, quadID, materialID );
 

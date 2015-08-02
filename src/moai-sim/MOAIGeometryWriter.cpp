@@ -515,7 +515,7 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 		
 		if ( existing != vertexMap.end ()) {
 			index = existing->second;
-			printf ( "REDUCE: %d -> %d\n", i, index );
+			//printf ( "REDUCE: %d -> %d\n", i, index );
 		}
 		else {
 		
@@ -532,7 +532,7 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 		}
 		indexMap [ i ] = index;
 		
-		printf ( "INDEX: %d -> %d\n", i, index );
+		//printf ( "INDEX: %d -> %d\n", i, index );
 	}
 	
 	size_t totalIdx = idxStream.GetLength () >> 2; // index size is assumed to always be 4 bytes

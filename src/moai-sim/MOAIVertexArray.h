@@ -20,7 +20,7 @@ public:
 	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
 	
 	//----------------------------------------------------------------//
-	void		Bind					();
+	void		Bind					( bool useVAOs );
 				MOAIVertexArrayItem		();
 				~MOAIVertexArrayItem	();
 	void		SetBufferAndFormat		( MOAIVertexArray& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
@@ -28,7 +28,7 @@ public:
 };
 
 //================================================================//
-// MOAIMesh
+// MOAIVertexArray
 //================================================================//
 // TODO: doxygen
 class MOAIVertexArray :
@@ -64,7 +64,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexArray )
 	
-	IS ( UsingVBOs, mUseVAOs, true )
+	IS ( UsingVAOs, mUseVAOs, true )
 	
 	//----------------------------------------------------------------//
 						MOAIVertexArray				();

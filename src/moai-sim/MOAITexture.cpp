@@ -201,11 +201,6 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		this->FinishInit ();
 		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
 	}
-	else {
-	
-		STLString expand = ZLFileSys::GetAbsoluteFilePath ( filename );
-		MOAILog ( NULL, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
-	}
 }
 
 //----------------------------------------------------------------//
