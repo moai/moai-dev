@@ -1,6 +1,14 @@
 require "lfs"
 
 
+for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
+  
+  if param then
+
+    print()
+
+  end
+end
 
 directorypath = "./" -- current working directory
 upload = ""
@@ -109,3 +117,4 @@ for index = #t-1,2,-1 do
 end
 endhtml()
 file:close()
+os.execute("s3cmd put ".."moai-downloads.html" .." s3://moai-downloads/".."moai-downloads.html" )
