@@ -17,7 +17,7 @@ for filename in lfs.dir(directorypath) do
         upload = filename
     end
 end
-os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
+--os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
 
 os.execute("s3cmd ls s3://moai-downloads/develop/ > output.txt")
 
@@ -50,7 +50,7 @@ function Beginhtml(  )
     <thead>
       <tr>
         <th>File name</th>
-        <th>Type</th>
+        <th>Build number</th>
         <th>Date</th>
       </tr>
     </thead>
@@ -67,7 +67,6 @@ function midhtml(  )
     <thead>
       <tr>
         <th>File name</th>
-        <th>Type</th>
         <th>Build number</th>
         <th>Date</th>
       </tr>
@@ -102,11 +101,19 @@ function writebinaryinfo( T )
 ]])
 end
 
+function cmp_date(op1, op2)
+    local date1, date2 = op1[1], op2[1]
+    return date1<date2
+    
+end
+
+
+table.sort( t ,cmp_date)
 print(t[#t][4])
 start,endchar = string.find(t[#t][4],"%d+%.%d+%.%d+")
 print(string.sub(t[#t][4],start,endchar))
 
-for index = #t-1,2,-1 do
+for index = #t,2,-1 do
 	print(t[index][4])
 end
 Beginhtml()
