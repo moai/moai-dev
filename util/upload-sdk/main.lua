@@ -17,7 +17,7 @@ for filename in lfs.dir(directorypath) do
         upload = filename
     end
 end
---os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
+os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
 
 os.execute("s3cmd ls s3://moai-downloads/develop/ > output.txt")
 
@@ -35,14 +35,6 @@ end
 local file = io.open("moai-downloads.html","w")
 function Beginhtml(  )
   file:write([[
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Download Moai SDK</title>
-  <meta charset="utf-8">
-</head>
-<body>
-
 <div class="container">
   <h2>Moai SDK</h2>
   <p>Most-recent builds</p>            
@@ -79,9 +71,6 @@ function endhtml( )
     </tbody>
   </table>
 </div>
-
-</body>
-</html>
 ]])
 end
 
