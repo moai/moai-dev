@@ -35,10 +35,10 @@ end
 local file = io.open("moai-downloads.html","w")
 function Beginhtml(  )
   file:write([[
-<div class="container">
+<div class="container" style="font-family:arial">
   <h2>Moai SDK</h2>
   <p>Most-recent builds</p>            
-  <table class="table table-hover">
+  <table class="table table-hover" width="100%">
     <thead>
       <tr>
         <th>File name</th>
