@@ -980,7 +980,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion& region ) {
 	if ( !error ) {
 		
 		region.Copy ( tess );
-		region.Transform ( this->mStyle.mDrawingToWorld );
+		region.Transform ( region, this->mStyle.mDrawingToWorld );
 		region.Bless ();
 		
 		return region.GetSize ();

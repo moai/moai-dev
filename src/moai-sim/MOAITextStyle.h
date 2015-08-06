@@ -40,7 +40,7 @@ public:
 	void				AffirmGlyph				( u32 c );
 	virtual void		Init					( MOAITextStyleState& style );
 						MOAITextStyleState		();
-						~MOAITextStyleState		();
+	virtual				~MOAITextStyleState		();
 	bool				NeedsLayout				( const MOAITextStyleState& compare ) const;
 	virtual void		SetFont					( MOAIFont* font );
 	virtual void		SetShader				( MOAIShader* shader );

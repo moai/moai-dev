@@ -29,7 +29,6 @@ int MOAIRegion::_bless ( lua_State* L ) {
 int MOAIRegion::_boolean ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UUU" )
 
-
 	MOAIRegion* regionA		= state.GetLuaObject < MOAIRegion >( 2, false );
 	MOAIRegion* regionB		= state.GetLuaObject < MOAIRegion >( 3, false );
 
@@ -49,6 +48,24 @@ int MOAIRegion::_copy ( lua_State* L ) {
 
 	if ( region ) {
 		self->Copy ( *region );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_cull ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* region		= state.GetLuaObject < MOAIRegion >( 2, false );
+	
+	if ( region ) {
+	
+		u32 flag			= state.GetValue < u32 >( 3, ZLPolygon2D::IS_CLOCKWISE );
+
+		bool checkArea		= state.IsType ( 4, LUA_TNUMBER );
+		float minArea		= state.GetValue < float >( 4, 0.0f );
+
+		self->Cull ( *region, flag, checkArea, minArea );
 	}
 	return 0;
 }
@@ -151,6 +168,15 @@ int MOAIRegion::_pointInside ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_print ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	self->Print ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_reservePolygons ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -173,6 +199,19 @@ int MOAIRegion::_reserveVertices ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_reverseWinding ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	MOAIRegion* region		= state.GetLuaObject < MOAIRegion >( 2, false );
+	
+	if ( region ) {
+		self->ReverseWinding ( *region );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_setVertex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UNNNN" )
 	
@@ -184,6 +223,30 @@ int MOAIRegion::_setVertex ( lua_State* L ) {
 	
 	self->mPolygons [ polyIdx ].SetVert ( vertIdx, x, y );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_setWinding ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_snap ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	MOAIRegion* region		= state.GetLuaObject < MOAIRegion >( 2, false );
+
+	if ( region ) {
+	
+		float xSnap = state.GetValue < float >( 3, 0.0f );
+		float ySnap = state.GetValue < float >( 4, 0.0f );
+
+		self->Snap ( *region, xSnap, ySnap );
+	}
 	return 0;
 }
 
@@ -221,6 +284,49 @@ int MOAIRegion::_stroke ( lua_State* L ) {
 		else {
 			self->Copy ( *region );
 		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_tesselate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* regionA		= state.GetLuaObject < MOAIRegion >( 2, false );
+
+	if ( regionA ) {
+	
+		MOAIRegion* regionB		= state.GetLuaObject < MOAIRegion >( 3, false );
+	
+		if ( regionB ) {
+		
+			u32 windingRule		= state.GetValue < u32 >( 4, TESS_WINDING_ODD );
+			self->CombineAndTesselate ( *regionA, *regionB, windingRule );
+		}
+		else {
+		
+			u32 windingRule		= state.GetValue < u32 >( 3, TESS_WINDING_ODD );
+			self->Tesselate ( *regionA, windingRule );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_translate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
+	
+	if ( region ) {
+	
+		float xOff = state.GetValue < float >( 2, 0.0f );
+		float yOff = state.GetValue < float >( 3, 0.0f );
+		
+		ZLAffine2D mtx;
+		mtx.Translate ( xOff, yOff );
+		
+		self->Transform ( *region, mtx );
 	}
 	return 0;
 }
@@ -296,6 +402,7 @@ void MOAIRegion::BooleanNot ( const MOAIRegion& regionA, const MOAIRegion& regio
 void MOAIRegion::BooleanOr ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
 
 	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE );
+	this->Print ();
 }
 
 //----------------------------------------------------------------//
@@ -317,6 +424,7 @@ int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegio
 	if ( !error ) {
 		this->Copy ( tess );
 		this->Bless ();
+		this->Cull ( *this, ZLPolygon2D::IS_CORRUPT );
 	}
 	return error;
 }
@@ -358,6 +466,44 @@ void MOAIRegion::Copy ( const SafeTesselator& tess ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, float minArea ) {
+
+	size_t count	= 0;
+	size_t size		= region.mPolygons.Size ();
+	
+	for ( size_t i = 0; i < size; ++i ) {
+		ZLPolygon2D& poly = region.mPolygons [ i ];
+		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
+			count++;
+		}
+	}
+	
+	if ( count == region.mPolygons.Size ()) {
+		this->Copy ( region );
+		return;
+	}
+	
+	const MOAIRegion* srcRegion = &region;
+	MOAIRegion copyRegion;
+	
+	if ( this == srcRegion ) {
+		copyRegion.Copy ( region );
+		srcRegion = &copyRegion;
+	}
+	
+	this->ReservePolygons ( count );
+	
+	count = 0;
+	
+	for ( size_t i = 0; i < size; ++i ) {
+		ZLPolygon2D& poly = srcRegion->mPolygons [ i ];
+		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
+			this->mPolygons [ count++ ].Copy ( poly );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIRegion::DrawDebug () const {
 
 	static u32 POLY_UNKNOWN_COLOR					= ZLColor::PackRGBA ( 0.5f, 0.5f, 0.5f, 1.0f );
@@ -386,7 +532,7 @@ void MOAIRegion::DrawDebug () const {
 				gfxDevice.SetPenWidth ( 1.0f );
 				break;
 			}
-			case ZLPolygon2D::POLY_COMPLEX: {
+			case ZLPolygon2D::POLY_COMPLEX_BIT: {
 				gfxDevice.SetPenColor ( POLY_COMPLEX_COLOR );
 				gfxDevice.SetPenWidth ( 1.0f );
 				break;
@@ -598,12 +744,52 @@ bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 }
 
 //----------------------------------------------------------------//
+void MOAIRegion::Print () const {
+
+	size_t nPolys = this->mPolygons.Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
+	
+		const ZLPolygon2D& poly = this->mPolygons [ i ];
+		
+		printf ( "poly %d:\n", i );
+	
+		size_t nVerts = poly.GetSize ();
+		for ( size_t j = 0; j < nVerts; ++j ) {
+		
+			const ZLVec2D& v = poly.GetVertex ( j );
+			printf ( "\t%d: (%f, %f)\n", j, v.mX, v.mY );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIRegion::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "BOOLEAN_AND",			( u32 )MOAIRegion::BOOLEAN_AND );
-	state.SetField ( -1, "BOOLEAN_NOT",			( u32 )MOAIRegion::BOOLEAN_NOT );
-	state.SetField ( -1, "BOOLEAN_OR",			( u32 )MOAIRegion::BOOLEAN_OR );
-	state.SetField ( -1, "BOOLEAN_XOR",			( u32 )MOAIRegion::BOOLEAN_XOR );
+	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
+	state.SetField ( -1, "BOOLEAN_NOT",					( u32 )BOOLEAN_NOT );
+	state.SetField ( -1, "BOOLEAN_OR",					( u32 )BOOLEAN_OR );
+	state.SetField ( -1, "BOOLEAN_XOR",					( u32 )BOOLEAN_XOR );
+	
+	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
+	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
+	state.SetField ( -1, "TESS_WINDING_POSITIVE",		( u32 )TESS_WINDING_POSITIVE );
+	state.SetField ( -1, "TESS_WINDING_NEGATIVE",		( u32 )TESS_WINDING_NEGATIVE );
+	state.SetField ( -1, "TESS_WINDING_ABS_GEQ_TWO",	( u32 )TESS_WINDING_ABS_GEQ_TWO );
+	
+	state.SetField ( -1, "IS_COMPLEX",					( u32 )ZLPolygon2D::IS_COMPLEX );
+	state.SetField ( -1, "IS_CORRUPT",					( u32 )ZLPolygon2D::IS_CORRUPT );
+	state.SetField ( -1, "IS_UNKNOWN",					( u32 )ZLPolygon2D::IS_UNKNOWN );
+	state.SetField ( -1, "IS_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
+	state.SetField ( -1, "IS_CONCAVE",					( u32 )ZLPolygon2D::IS_CONCAVE );
+	state.SetField ( -1, "IS_CLOCKWISE",				( u32 )ZLPolygon2D::IS_CLOCKWISE );
+	state.SetField ( -1, "IS_ANTICLOCKWISE",			( u32 )ZLPolygon2D::IS_ANTICLOCKWISE );
+	state.SetField ( -1, "IS_CLOCKWISE_CONVEX",			( u32 )ZLPolygon2D::IS_CLOCKWISE_CONVEX );
+	state.SetField ( -1, "IS_CLOCKWISE_CONCAVE",		( u32 )ZLPolygon2D::IS_CLOCKWISE_CONCAVE );
+	state.SetField ( -1, "IS_ANTICLOCKWISE_CONVEX",		( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONVEX );
+	state.SetField ( -1, "IS_ANTICLOCKWISE_CONCAVE",	( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONCAVE );
+	
+	state.SetField ( -1, "MAKE_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
+	state.SetField ( -1, "MAKE_CONCAVE",				( u32 )ZLPolygon2D::IS_CONCAVE );
 }
 
 //----------------------------------------------------------------//
@@ -613,15 +799,22 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "bless",				_bless },
 		{ "boolean",			_boolean },
 		{ "copy",				_copy },
+		{ "cull",				_cull },
 		{ "drawDebug",			_drawDebug },
 		{ "edge",				_edge },
 		{ "getDistance",		_getDistance },
 		{ "getTriangles",		_getTriangles },
 		{ "pointInside",		_pointInside },
+		{ "print",				_print },
 		{ "reservePolygons",	_reservePolygons },
 		{ "reserveVertices",	_reserveVertices },
+		{ "reverseWinding",		_reverseWinding },
 		{ "setVertex",			_setVertex },
+		{ "setWinding",			_setWinding },
+		{ "snap",				_snap },
 		{ "stroke",				_stroke },
+		{ "tesselate",			_tesselate },
+		{ "translate",			_translate },
 		{ NULL, NULL }
 	};
 
@@ -632,6 +825,19 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIRegion::ReservePolygons ( u32 size ) {
 
 	this->mPolygons.Init ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::ReverseWinding ( const MOAIRegion& region ) {
+
+	this->Copy ( region );
+
+	size_t size = this->mPolygons.Size ();
+	
+	for ( size_t i = 0; i < size; ++i ) {
+		ZLPolygon2D& polygon = this->mPolygons [ i ];
+		polygon.ReverseWinding ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -669,6 +875,24 @@ void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 		state.Push (( u32 )i + 1 );
 		lua_pushlstring ( state, ( cc8* )poly.GetVertices (), poly.GetSize () * sizeof ( ZLVec2D ));
 		lua_settable ( state, -3 );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIRegion::ShouldCull ( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea ) {
+	
+	return poly.Check ( flag ) || (( checkArea == true ) && ( !poly.Check ( ZLPolygon2D::HAS_AREA ) || poly.GetArea () < minArea ));
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::Snap ( const MOAIRegion& region, float xSnap, float ySnap ) {
+
+	this->Copy ( region );
+	
+	size_t size = this->mPolygons.Size ();
+	
+	for ( size_t i = 0; i < size; ++i ) {
+		this->mPolygons [ i ].Snap ( xSnap, ySnap );
 	}
 }
 
@@ -724,7 +948,25 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::Transform ( const ZLAffine2D& transform ) {
+int MOAIRegion::Tesselate ( const MOAIRegion& region, int windingRule ) {
+
+	SafeTesselator tess;
+	
+	region.AddFillContours ( tess );
+	
+	int error = tess.Tesselate ( windingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
+
+	if ( !error ) {
+		this->Copy ( tess );
+		this->Bless ();
+	}
+	return error;
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::Transform ( const MOAIRegion& region, const ZLAffine2D& transform ) {
+
+	this->Copy ( region );
 
 	size_t nPolys = this->mPolygons.Size ();
 	for ( size_t i = 0; i < nPolys; ++i ) {
