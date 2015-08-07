@@ -38,6 +38,7 @@ private:
 	jmethodID	mJava_PostToFeed;
 	jmethodID	mJava_RestoreSession;
 	jmethodID	mJava_SendRequest;
+	jmethodID	mJava_ShowInviteDialog;
 
 	//----------------------------------------------------------------//
 	static int	_getUserID			( lua_State* L );
@@ -50,6 +51,7 @@ private:
 	static int	_restoreSession		( lua_State* L );
 	static int	_sendRequest		( lua_State* L );
 	static int	_sessionValid		( lua_State* L );
+	static int	_showInviteDialog	( lua_State* L );
 
 public:
 

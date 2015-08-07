@@ -186,6 +186,21 @@ int MOAIFacebookAndroid::_sessionValid ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@lua	showInviteDialog
+	@text	Displays Facebook invite dialog.
+
+	@out	void
+*/
+int MOAIFacebookAndroid::_showInviteDialog ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
+
+	MOAIJString linkURL = self->GetJString ( lua_tostring ( state, 1 ));
+	MOAIJString imgURL = self->GetJString ( lua_tostring ( state, 2 ));
+	self->CallStaticVoidMethod ( self->mJava_ShowInviteDialog, ( jstring )linkURL, ( jstring )imgURL );
+	return 0;
+}
+
 //================================================================//
 // MOAIFacebookAndroid
 //================================================================//
@@ -207,6 +222,7 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 	this->mJava_PostToFeed			= this->GetStaticMethod ( "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	this->mJava_RestoreSession		= this->GetStaticMethod ( "restoreSession", "()Z" );
 	this->mJava_SendRequest			= this->GetStaticMethod ( "sendRequest", "(Ljava/lang/String;)V" );
+	this->mJava_ShowInviteDialog	= this->GetStaticMethod ( "showInviteDialog", "(Ljava/lang/String;Ljava/lang/String;)V" );
 }
 
 //----------------------------------------------------------------//
@@ -234,6 +250,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "sendRequest",			_sendRequest },
 		{ "sessionValid",			_sessionValid },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebookAndroid > },
+		{ "showInviteDialog",		_showInviteDialog },
 		{ NULL, NULL }
 	};
 

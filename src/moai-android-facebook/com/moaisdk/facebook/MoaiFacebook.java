@@ -32,6 +32,9 @@ import com.facebook.GraphRequest;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.share.widget.AppInviteDialog;
+import com.facebook.share.model.AppInviteContent;
+
 import java.net.URL;
 import java.util.HashMap;
 
@@ -179,7 +182,6 @@ public class MoaiFacebook {
     //----------------------------------------------------------------//
     public static String getUserID () {
 
-        MoaiLog.i ( "MoaiFacebook: getUserID" );
         return sUserID;
     }
 
@@ -212,6 +214,7 @@ public class MoaiFacebook {
         permissions.add ( "user_friends" );
         permissions.add ( "user_photos" );
         permissions.add ( "public_profile" );
+        permissions.add ( "email" );
         LoginManager.getInstance().logInWithReadPermissions ( sActivity, permissions );
 	}
 
@@ -234,4 +237,18 @@ public class MoaiFacebook {
 
         return false;
 	}
+
+    //----------------------------------------------------------------//
+    public static void showInviteDialog ( String linkURL, String imgURL ) {
+
+        MoaiLog.i ( "MoaiFacebook: showInviteDialog" );
+
+        if ( AppInviteDialog.canShow()) {
+            AppInviteContent content = new AppInviteContent.Builder ()
+                    .setApplinkUrl ( linkURL )
+                    .setPreviewImageUrl ( imgURL )
+                    .build ();
+            AppInviteDialog.show ( sActivity, content );
+        }
+    }
 }
