@@ -496,8 +496,8 @@ ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 
 //----------------------------------------------------------------//
 #ifdef MOAI_COMPILER_MSVC
-	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 
+	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 		*fp = zl_fopen ( filename, mode );
 		return errno;
 	}
