@@ -28,6 +28,7 @@ public:
 	int				Flush				();
 	int				GetChar				();
 	int				GetError			();
+	void*			GetFileHandle		();
 	int				GetFileNum			();
 	int				GetPos				( fpos_t* position );
 	char*			GetString			( char* string, int length );

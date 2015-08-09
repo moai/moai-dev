@@ -28,9 +28,9 @@ public:
 	u32					mUncompressedSize;
 	
 	size_t				mOffsetToHeader;
-	size_t				mOffsetToData;
 	
 	//----------------------------------------------------------------//
+	FILE*				Open						();
 						ZLVfsVirtualPathInfo		();
 };
 
