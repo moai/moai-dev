@@ -246,7 +246,9 @@ MOAIMaterialBatch::~MOAIMaterialBatch () {
 //----------------------------------------------------------------//
 MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( u32 idx ) {
 
-	return ( idx < this->mMaterials.Size ()) ? &this->mMaterials [ idx ] : 0;
+	//return ( idx < this->mMaterials.Size ()) ? &this->mMaterials [ idx ] : 0;
+	size_t size = this->mMaterials.Size ();
+	return size ? &this->mMaterials [ idx % size ] : 0;
 }
 
 //----------------------------------------------------------------//
