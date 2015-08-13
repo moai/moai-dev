@@ -32,7 +32,7 @@ class ZLVfsZipStream {
 private:
 
 	FILE*				mFile;					// archive file
-	ZLVfsZipFileEntry*		mEntry;					// address of the zip entry in the archive
+	ZLVfsZipFileEntry*	mEntry;					// address of the zip entry in the archive
 	size_t				mBaseAddr;				// address of the zip data in the archive
 	
 	size_t				mCompressedCursor;		// cursor in the main stream
@@ -70,15 +70,15 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void					Close				();
-	int						IsAtEnd				();
-	static ZLVfsZipStream*		Open				( ZLVfsZipArchive* archive, const char* entryname );
-	size_t					Read				( void* buffer, size_t size );
-	int						Seek				( long int offset, int origin );
-	size_t					Tell				();
-	int						UnGetChar			( char c );
-							ZLVfsZipStream			();
-							~ZLVfsZipStream		();
+	void						Close					();
+	int							IsAtEnd					();
+	static ZLVfsZipStream*		Open					( ZLVfsZipArchive* archive, const char* entryname );
+	size_t						Read					( void* buffer, size_t size );
+	int							Seek					( long int offset, int origin );
+	size_t						Tell					();
+	int							UnGetChar				( char c );
+								ZLVfsZipStream			();
+								~ZLVfsZipStream			();
 };
 
 #endif

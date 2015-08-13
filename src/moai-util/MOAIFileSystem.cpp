@@ -3,6 +3,9 @@
 
 #include "pch.h"
 #include <moai-util/MOAIFileSystem.h>
+#include <zl-vfs/ZLVfsFileSystem.h>
+#include <zl-vfs/ZLVfsVirtualPath.h>
+#include <zl-vfs/ZLVfsZipArchive.h>
 
 // TODO: these are getting reintroduced somewhere; find them and kill them
 
@@ -195,6 +198,34 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 	
 	lua_pushstring ( state, result );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_getVirtualPathInfo ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* path = state.GetValue < cc8* >( 1, "" );
+
+	ZLVfsVirtualPathInfo info = ZLVfsFileSystem::Get ().GetVirtualPathInfo ( path );
+
+	int top = state.GetTop ();
+
+	if ( info.mIsVirtual ) {
+	
+		state.Push ( info.mPathToArchive.c_str ());
+		state.Push ( info.mLocalPath.c_str ());
+		
+		if ( info.mIsFile ) {
+			state.Push (( u32 )info.mOffsetToHeader );
+			state.Push (( u32 )info.mUncompressedSize );
+			
+			if ( info.mIsCompressed ) {
+				state.Push (( u32 )info.mCompressedSize );
+			}
+		}
+	}
+	return state.GetTop () - top;
 }
 
 //----------------------------------------------------------------//
@@ -447,6 +478,7 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getAbsoluteDirectoryPath",	_getAbsoluteDirectoryPath },
 		{ "getRelativePath",			_getRelativePath },
 		{ "getWorkingDirectory",		_getWorkingDirectory },
+		{ "getVirtualPathInfo",			_getVirtualPathInfo },
 		{ "listDirectories",			_listDirectories },
 		{ "listFiles",					_listFiles },
 		{ "loadFile",					_loadFile },
