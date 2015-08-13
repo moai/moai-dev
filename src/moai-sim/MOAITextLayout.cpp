@@ -223,7 +223,7 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 		u32 size = this->mSprites.GetTop ();
 		for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
-			const MOAITextStyle* style = sprite.mStyle;
+			const MOAITextStyleState* style = sprite.mStyle;
 			
 			rgba0 = ( sprite.mMask & MOAITextSprite::MASK_COLOR ) ? sprite.mRGBA : sprite.mStyle->mColor;
 			
@@ -414,7 +414,7 @@ void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLRect& rect, float h
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float xScale, float yScale ) {
+void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y, float xScale, float yScale ) {
 	
 	MOAITextSprite textSprite;
 	

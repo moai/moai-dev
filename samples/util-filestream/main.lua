@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 stream = MOAIFileStream.new ()
-stream:open ( 'test.bin', MOAIFileStream.READ_WRITE_NEW )
+stream:open ( '../temp/test.bin', MOAIFileStream.READ_WRITE_NEW )
 
 stream:write8 ()
 stream:write8 ( -8, 9, -10 )

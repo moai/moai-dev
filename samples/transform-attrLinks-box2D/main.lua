@@ -47,7 +47,7 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( 2 )
 world:start ()
-layer:setBox2DWorld ( world )
+layer:setUnderlayTable ({ world })
 
 body = world:addBody ( MOAIBox2DBody.KINEMATIC )
 

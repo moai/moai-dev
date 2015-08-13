@@ -231,6 +231,7 @@ int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, co
 	// bail if glyph has no outline we can render
 	if ( face->glyph->format!= FT_GLYPH_FORMAT_OUTLINE ) return FONT_ERROR;
 	
+	// TODO: not clear what is going on here - why are we checking mAntiAlias?
 	if ( this->mAntiAlias ) {
 	
 		// set up the render params in case they are needed

@@ -25,7 +25,7 @@
 //----------------------------------------------------------------//
 void MOAITextStyleParser::BuildStyleMap ( MOAITextStyleMap& styleMap, MOAITextStyleCache& styleCache, cc8* str ) {
 	
-	MOAITextStyle* defaultStyle = styleCache.GetStyle ();
+	MOAITextStyleState* defaultStyle = styleCache.GetStyle ();
 	if ( !( defaultStyle && defaultStyle->mFont )) return;
 	
 	this->mDefaultStyle = defaultStyle;
@@ -182,7 +182,7 @@ void MOAITextStyleParser::Parse () {
 	
 	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
 	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
-		MOAITextStyle* style = this->mActiveStyles [ i ];
+		MOAITextStyleState* style = this->mActiveStyles [ i ];
 		assert ( style->mFont );
 		style->mFont->ProcessGlyphs ();
 	}
@@ -281,7 +281,7 @@ bool MOAITextStyleParser::ParseStyle () {
 				
 				this->FinishToken ();
 				
-				MOAITextStyle* style = this->mStyleCache->AddAnonymousStyle ( this->mCurrentStyle );
+				MOAITextStyleState* style = this->mStyleCache->AddAnonymousStyle ( this->mCurrentStyle );
 				style->mColor = this->PackColor ( color, colorSize );
 				this->PushStyle ( style );
 				
@@ -317,7 +317,7 @@ bool MOAITextStyleParser::ParseStyle () {
 				memcpy ( name, &this->mStr [ startIdx + 1 ], namesize );
 				name [ namesize ] = 0;
 				
-				MOAITextStyle* style = this->mStyleCache->GetStyle ( name );
+				MOAITextStyleState* style = this->mStyleCache->GetStyle ( name );
 				this->PushStyle ( style );
 				
 				TRANSITION ( DONE );
@@ -363,7 +363,7 @@ void MOAITextStyleParser::PopStyle () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyleParser::PushStyle ( MOAITextStyle* style ) {
+void MOAITextStyleParser::PushStyle ( MOAITextStyleState* style ) {
 
 	assert ( style );
 	

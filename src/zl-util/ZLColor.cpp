@@ -281,7 +281,7 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 			
 				for ( u32 i = 0; i < copy; ++i ) {
 				
-					color = *( u32* )src;
+					color = *( u16* )src;
 					src = ( void* )(( size_t )src + 2 );
 					
 					u8 r = ( color >> 0x0C ) & 0x0F;

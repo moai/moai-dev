@@ -25,6 +25,7 @@ private:
 	static int		_getAbsoluteFilePath		( lua_State* L );
 	static int		_getRelativePath			( lua_State* L );
 	static int		_getWorkingDirectory		( lua_State* L );
+	static int		_getVirtualPathInfo			( lua_State* L );
 	static int		_listDirectories			( lua_State* L );
 	static int		_listFiles					( lua_State* L );
 	static int		_loadFile					( lua_State* L );

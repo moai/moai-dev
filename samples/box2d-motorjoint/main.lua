@@ -2,8 +2,8 @@
 -- Click the mouse to move the prop/body, watch the Box2D motorJoint return the body to rest.
 -- Author: www.fivevolthigh.com
 
-local width = MOAIEnvironment.horizontalResolution or 640
-local height = MOAIEnvironment.verticalResolution or 480
+local width = 640
+local height = 480
 MOAISim.openWindow ( "Box2D 2.3.0 MotorJoint", width ,height  )
 
 viewport = MOAIViewport.new ()
@@ -18,7 +18,7 @@ MOAISim.pushRenderPass ( layer )
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
 world:setUnitsToMeters(0.05)
-layer:setBox2DWorld ( world )
+layer:setUnderlayTable ({ world })
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 

@@ -69,7 +69,7 @@ ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetViewProjMtx () const {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetWorldToWndMtx () const {
 
-	return this->GetNormToWndMtx ( this->mViewRect );
+	return this->GetWorldToWndMtx ( this->mViewRect );
 }
 
 //----------------------------------------------------------------//
@@ -107,7 +107,7 @@ ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetWndToNormMtx ( const ZLRect& wndRect ) con
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetWndToWorldMtx () const {
 
-	return this->GetNormToWndMtx ( this->mViewRect );
+	return this->GetWndToWorldMtx ( this->mViewRect );
 }
 
 //----------------------------------------------------------------//

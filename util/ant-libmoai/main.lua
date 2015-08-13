@@ -377,6 +377,9 @@ makeTarget = function ( target )
 		preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -D%s=%d\n', k, v )
 	end
 
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DNDEBUG\n' )
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DMOAI_KEEP_ASSERT=1\n' )
+
 	util.replaceInFile ( targetMakefile, {
 		[ '@LIB_NAME@' ]					= target.NAME,
 		[ '@AKU_PREPROCESSOR@' ]			= preprocessorString,

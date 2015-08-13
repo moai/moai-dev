@@ -236,6 +236,11 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 
 				this->PrintVar ( message.mFormatString, args );
 				
+				size_t msgSize = message.mFormatString.size ();
+				if ( msgSize && ( message.mFormatString [ msgSize - 1 ] != '\n' )) {
+					this->Print ( "\n" );
+				}
+				
 				if ( L ) {
 					this->Print ( "\n" );
 					MOAILuaState state ( L );

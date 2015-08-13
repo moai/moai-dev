@@ -79,6 +79,7 @@ extern int					zl_feof					( ZLFILE* fp );
 extern int					zl_ferror				( ZLFILE* fp );
 extern int					zl_fflush				( ZLFILE* fp );
 extern int					zl_fgetc				( ZLFILE* fp );
+extern void*				zl_fgethandle			( ZLFILE* fp ); // return the native OS file handle
 extern int					zl_fgetpos				( ZLFILE* fp, fpos_t* position );
 extern char* 				zl_fgets				( char* string, int length, ZLFILE* fp );
 extern int					zl_fileno				( ZLFILE* fp );

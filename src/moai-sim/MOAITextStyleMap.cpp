@@ -38,7 +38,7 @@ MOAITextStyleMap::~MOAITextStyleMap () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyleMap::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
+void MOAITextStyleMap::PushStyleSpan ( int base, int top, MOAITextStyleState& style ) {
 
 	MOAITextStyleSpan span;
 	

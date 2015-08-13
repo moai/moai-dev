@@ -7,7 +7,6 @@
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLPrism.h>
 #include <zl-util/ZLRhombus.h>
-#include <float.h>
 
 //================================================================//
 // local

@@ -261,6 +261,8 @@ void MOAIGfxBuffer::OnGPULost () {
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		this->mVBOs [ i ] = 0;
 	}
+	
+	this->mNeedsFlush = true;
 }
 
 //----------------------------------------------------------------//

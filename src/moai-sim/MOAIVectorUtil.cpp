@@ -33,10 +33,12 @@ void SafeTesselator::AddPolygon ( const ZLPolygon2D& poly ) {
 }
 
 //----------------------------------------------------------------//
-u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) {
 
-	ZLMemStream idxStream;
-	ZLMemStream vtxStream;
+	size_t idxCursor = idxStream.GetCursor ();
+	size_t vtxCursor = vtxStream.GetCursor ();
+	
+	size_t idxBase = ( vtxCursor / format.GetVertexSize ());
 
 	const int* elems = tessGetElements ( this->mTess );
 	const int nelems = tessGetElementCount ( this->mTess );
@@ -44,15 +46,13 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 	for ( int i = 0; i < nelems; ++i ) {
 		const int* tri = &elems [ i * 3 ];
 		
-		idxStream.Write < u32 >( tri [ 0 ]);
-		idxStream.Write < u32 >( tri [ 1 ]);
-		idxStream.Write < u32 >( tri [ 2 ]);
+		idxStream.Write < u32 >( idxBase + tri [ 0 ]);
+		idxStream.Write < u32 >( idxBase + tri [ 1 ]);
+		idxStream.Write < u32 >( idxBase + tri [ 2 ]);
 	}
 
 	const float* verts = tessGetVertices ( this->mTess );
 	const int nverts = tessGetVertexCount ( this->mTess );
-	
-	size_t base = vtxStream.GetCursor ();
 	
 	for ( int i = 0; i < nverts; ++i ) {
 		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
@@ -60,8 +60,20 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 		format.WriteAhead ( vtxStream );
 		format.WriteCoord ( vtxStream, vert.mX, vert.mY, 0.0f, 1.0f );
 		format.WriteColor ( vtxStream, 0xffffffff );
-		format.SeekVertex ( vtxStream, base, i + 1 );
+		format.SeekVertex ( vtxStream, vtxCursor, i + 1 );
 	}
+
+	// idx stream is 32-bits, so divide by 4 to get total indices written
+	return ( idxStream.GetLength () - idxCursor ) >> 2;
+}
+
+//----------------------------------------------------------------//
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
+
+	ZLMemStream idxStream;
+	ZLMemStream vtxStream;
+
+	this->GetTriangles ( format, vtxStream, idxStream );
 	
 	return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 }
