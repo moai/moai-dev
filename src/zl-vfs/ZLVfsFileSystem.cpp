@@ -31,14 +31,41 @@ using namespace std;
 //================================================================//
 
 //----------------------------------------------------------------//
+FILE* ZLVfsVirtualPathInfo::Open () {
+
+	if ( !this->mIsFile ) return 0;
+	
+	FILE* file = fopen ( this->mPathToArchive.c_str (), "rb" );
+	if ( !file ) goto error;
+
+	// seek to the base of the zip file header
+	if ( fseek ( file, this->mOffsetToHeader, SEEK_SET )) goto error;
+
+	// read local header
+	ZLVfsZipFileHeader fileHeader;
+	if ( fileHeader.Read ( file )) goto error;
+
+	// skip the extra field, etc.
+	if ( fseek ( file, fileHeader.mNameLength + fileHeader.mExtraFieldLength, SEEK_CUR )) goto error;
+
+	return file;
+
+error:
+
+	if ( file ) {
+		fclose ( file );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 ZLVfsVirtualPathInfo::ZLVfsVirtualPathInfo () :
 	mIsVirtual ( false ),
 	mIsFile ( false ),
 	mIsCompressed ( 0 ),
 	mCompressedSize ( 0 ),
 	mUncompressedSize ( 0 ),
-	mOffsetToHeader ( 0 ),
-	mOffsetToData ( 0 ) {
+	mOffsetToHeader ( 0 ) {
 }
 
 //================================================================//
@@ -388,7 +415,6 @@ ZLVfsVirtualPathInfo ZLVfsFileSystem::GetVirtualPathInfo ( char const* path ) {
 				info.mUncompressedSize		= entry->mUncompressedSize;
 				
 				info.mOffsetToHeader		= entry->mFileHeaderAddr;
-				info.mOffsetToData			= entry->mFileHeaderAddr + ZLVfsZipFileHeader::SIZE;
 			}
 		}
 	}

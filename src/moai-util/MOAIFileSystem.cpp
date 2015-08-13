@@ -218,7 +218,6 @@ int MOAIFileSystem::_getVirtualPathInfo ( lua_State* L ) {
 		
 		if ( info.mIsFile ) {
 			state.Push (( u32 )info.mOffsetToHeader );
-			state.Push (( u32 )info.mOffsetToData );
 			state.Push (( u32 )info.mUncompressedSize );
 			
 			if ( info.mIsCompressed ) {

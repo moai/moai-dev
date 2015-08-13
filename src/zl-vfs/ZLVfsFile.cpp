@@ -99,6 +99,12 @@ int ZLVfsFile::GetError () {
 }
 
 //----------------------------------------------------------------//
+void* ZLVfsFile::GetFileHandle () {
+
+	return this->mIsZip ? 0 : this->mPtr.mFile;;
+}
+
+//----------------------------------------------------------------//
 int	ZLVfsFile::GetFileNum () {
 	
 	// TODO:
