@@ -59,6 +59,7 @@ private:
 		CLEAR_COLOR,
 		COLOR,
 		COMPILE_SHADER,
+		COMPRESSED_TEX_IMAGE_2D,
 		CREATE,
 		CULL_FACE,
 		
@@ -110,7 +111,7 @@ private:
 	ZLLeanStack < ZLGfxRetainedListenerRecord, 32 > mListenerRecords;
 
 	//----------------------------------------------------------------//
-	void					Create						( ZLGfxHandle* handle, u32 param );
+	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
 	void					OnUniformLocation			( u32 addr, void* userdata );
 	void					WriteBuffer					( ZLRevBufferEdition* buffer, size_t offset );
 
@@ -140,6 +141,7 @@ public:
 	void					Color						( float r, float g, float b, float a );
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
+	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();

@@ -440,7 +440,7 @@ void MOAIShaderProgram::OnGPUUnbind () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnUniformLocation ( u32 addr, void* userdata ) {
 
-	u32 i = ( u32 )userdata;
+	size_t i = ( size_t )userdata;
 	
 	if ( i < this->mUniforms.Size ()) {
 		this->mUniforms [ i ].mAddr = addr;

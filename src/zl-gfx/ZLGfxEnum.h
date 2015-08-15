@@ -228,7 +228,15 @@ enum {
 
 #define ZGL_INVALID_UNIFORM_ADDR (( u32 )-1 )
 
-//----------------------------------------------------------------//
-extern u32		zglMapFromGLEnum		( u32 glEnum ); // don't do this; this should be local to the OpenGL implementation
+//================================================================//
+// ZLGfxEnum
+//================================================================//
+class ZLGfxEnum {
+public:
+
+	//----------------------------------------------------------------//
+	static u32		MapNativeToZL		( u32 value );
+	static u32		MapZLToNative		( u32 value );
+};
 
 #endif

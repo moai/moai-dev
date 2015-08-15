@@ -331,7 +331,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			
 				#if ZGL_DEVCAPS_PVR_TEXTURE
 				
-					zglCompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
+					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
 				
 				#elif MOAI_WITH_LIBPVR
 				

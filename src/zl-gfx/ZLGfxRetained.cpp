@@ -204,13 +204,29 @@ void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Create ( ZLGfxHandle* handle, u32 param ) {
+void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( COMPRESSED_TEX_IMAGE_2D );
+	this->mStream->Write < u32 >( level );
+	this->mStream->Write < u32 >( internalFormat );
+	this->mStream->Write < u32 >( width );
+	this->mStream->Write < u32 >( height );
+	this->mStream->Write < u32 >( imageSize );
+	this->mStream->Write < const void* >( data );
+}
+
+//----------------------------------------------------------------//
+ZLGfxHandle* ZLGfxRetained::Create ( ZLGfxHandle* handle, u32 param ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( CREATE );
 	this->mStream->Write < ZLGfxHandle* >( handle );
 	this->mStream->Write < u32 >( param );
+	
+	return handle;
 }
 
 //----------------------------------------------------------------//
@@ -377,7 +393,7 @@ void ZLGfxRetained::DisableVertexAttribArray ( u32 index ) {
 //----------------------------------------------------------------//
 void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 
-	zglBegin ();
+	//zglBegin ();
 
 	assert ( this->mStream );
 
@@ -528,6 +544,19 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 					this->mStream->Read < ZLGfxHandle* >( 0 ),
 					this->mStream->Read < bool >( true )
 				);
+				break;
+			}
+			case COMPRESSED_TEX_IMAGE_2D: {
+			
+				u32 level				= this->mStream->Read < u32 >( 0 );
+				u32 internalFormat		= this->mStream->Read < u32 >( 0 );
+				u32 width				= this->mStream->Read < u32 >( 0 );
+				u32 height				= this->mStream->Read < u32 >( 0 );
+				u32 imagSize			= this->mStream->Read < u32 >( 0 );
+				void* data				= this->mStream->Read < void* >( 0 );
+				
+				draw.CompressedTexImage2D ( level, internalFormat, width, height, imagSize, data );
+			
 				break;
 			}
 			case CREATE: {
@@ -822,7 +851,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 	
 	this->mStream->Seek ( top, SEEK_SET );
 	
-	zglEnd ();
+	//zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -971,7 +1000,7 @@ void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
 //----------------------------------------------------------------//
 void ZLGfxRetained::OnUniformLocation ( u32 addr, void* userdata ) {
 	
-	u32 idx = ( u32 )userdata;
+	size_t idx = ( size_t )userdata;
 	if ( idx < this->mListenerRecords.GetTop ()) {
 		this->mListenerRecords [ idx ].mUniformAddr = addr;
 	}

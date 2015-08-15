@@ -18,7 +18,7 @@ private:
 	bool	mError;
 
 	//----------------------------------------------------------------//
-	void					Create						( ZLGfxHandle* handle, u32 param );
+	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
 
 public:
 
@@ -46,6 +46,7 @@ public:
 	void					Color						( float r, float g, float b, float a );
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
+	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();

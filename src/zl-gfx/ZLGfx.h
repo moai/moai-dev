@@ -11,6 +11,13 @@
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLRevBufferStream.h>
 
+// hardware PVR support is based on device
+#ifdef MOAI_OS_IPHONE
+	#define ZGL_DEVCAPS_PVR_TEXTURE 1
+#else
+	#define ZGL_DEVCAPS_PVR_TEXTURE 0
+#endif
+
 //================================================================//
 // ZLGfxHandle
 //================================================================//
@@ -112,7 +119,7 @@ class ZLGfx {
 	friend class ZLGfxRetained;
 
 	//----------------------------------------------------------------//
-	virtual void				Create						( ZLGfxHandle* handle, u32 param ) = 0;
+	virtual ZLGfxHandle*		Create						( ZLGfxHandle* handle, u32 param ) = 0;
 
 public:
 
@@ -143,6 +150,7 @@ public:
 	virtual void				Color						( float r, float g, float b, float a ) = 0;
 	
 	virtual void				CompileShader				( ZLGfxHandle* shader, bool verbose ) = 0;
+	virtual void				CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) = 0;
 	
 	virtual ZLGfxHandle*		CreateBuffer				() = 0;
 	virtual ZLGfxHandle*		CreateFramebuffer			() = 0;

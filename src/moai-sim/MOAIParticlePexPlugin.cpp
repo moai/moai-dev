@@ -186,9 +186,9 @@ void MOAIParticlePexPlugin::Parse( cc8* filename, MOAIParticlePexPlugin& plugin,
 					plugin.mAngleRegister = plugin.mSize++;
 			}
 			else if(text == "blendFuncSource")
-				plugin.mBlendFuncSrc = zglMapFromGLEnum( atoi(attribute->Value()));
+				plugin.mBlendFuncSrc = ZLGfxEnum::MapNativeToZL( atoi(attribute->Value()));
 			else if(text == "blendFuncDestination")
-				plugin.mBlendFuncDst = zglMapFromGLEnum( atoi(attribute->Value()));
+				plugin.mBlendFuncDst = ZLGfxEnum::MapNativeToZL( atoi(attribute->Value()));
 			else if(text == "duration")
 				plugin.mDuration = (float)atof(attribute->Value());
 			else if(text == "emitterType")
