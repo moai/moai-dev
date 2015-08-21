@@ -238,20 +238,18 @@ ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
 	ZLGfxHandle* shader = gfx.CreateShader ( type );
 
-	cc8* sources [ 3 ];
+	STLString buffer;
 
-	sources [ 0 ] = gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC;
-	if ((type == ZGL_SHADER_TYPE_FRAGMENT) && gfxDevice.IsOpenGLES() ) {
-		sources [ 1 ] = WEBGL_PREPROC;
-	} else {
-		sources [ 1 ] = " ";
+	buffer.append ( gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
+	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxDevice.IsOpenGLES ()) {
+		buffer.append ( WEBGL_PREPROC );
 	}
 
-	sources [ 2 ] = source;
+	buffer.append ( source );
 
 	gfx.PushSection ();
 
-	gfx.ShaderSource ( shader, 3, sources, NULL );
+	gfx.ShaderSource ( shader, buffer.c_str (), buffer.size ());
 	gfx.CompileShader ( shader, true );
 
 	if ( gfx.PushErrorHandler ()) {

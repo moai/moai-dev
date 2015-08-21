@@ -204,7 +204,7 @@ void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLGfxBufferRef bufferRef ) {
 
 	assert ( this->mStream );
 
@@ -214,7 +214,7 @@ void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 wi
 	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( imageSize );
-	this->mStream->Write < const void* >( data );
+	this->mStream->Write < const void* >( bufferRef.mBuffer );
 }
 
 //----------------------------------------------------------------//
@@ -552,10 +552,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				u32 internalFormat		= this->mStream->Read < u32 >( 0 );
 				u32 width				= this->mStream->Read < u32 >( 0 );
 				u32 height				= this->mStream->Read < u32 >( 0 );
-				u32 imagSize			= this->mStream->Read < u32 >( 0 );
+				u32 imageSize			= this->mStream->Read < u32 >( 0 );
 				void* data				= this->mStream->Read < void* >( 0 );
 				
-				draw.CompressedTexImage2D ( level, internalFormat, width, height, imagSize, data );
+				draw.CompressedTexImage2D ( level, internalFormat, width, height, imageSize, draw.RetainBuffer ( data, imageSize ));
 			
 				break;
 			}
@@ -706,24 +706,17 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case SHADER_SOURCE: {
 			
 				ZLGfxHandle* handle		= this->mStream->Read < ZLGfxHandle* >( 0 );
-				u32 count				= this->mStream->Read < s32 >( 0 );
-				const char** strBuffer	= this->mStream->Read < const char** >( 0 );
-				s32* lenBuffer			= this->mStream->Read < s32* >( 0 );
+				size_t length			= this->mStream->Read < size_t >( 0 );
+				
+				char* source = ( char* )alloca ( length + 1 );
+				this->mStream->ReadBytes ( source, length );
+				source [ length ] = 0;
 			
 				draw.ShaderSource (
 					handle,
-					count,
-					strBuffer,
-					lenBuffer
+					source,
+					length
 				);
-				
-				if ( strBuffer ) {
-					free ( strBuffer );
-				}
-				
-				if ( lenBuffer ) {
-					free ( lenBuffer );
-				}
 				break;
 			}
 			case TEX_ENVI: {
@@ -741,9 +734,11 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				u32 height				= this->mStream->Read < u32 >( 0 );
 				u32 format				= this->mStream->Read < u32 >( 0 );
 				u32 type				= this->mStream->Read < u32 >( 0 );
+				
+				size_t size				= this->mStream->Read < size_t >( 0 );
 				void* data				= this->mStream->Read < void* >( 0 );
 				
-				draw.TexImage2D ( level, internalFormat, width, height, format, type, data );
+				draw.TexImage2D ( level, internalFormat, width, height, format, type, draw.RetainBuffer ( data, size ));
 				
 				break;
 			}
@@ -755,7 +750,20 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case TEX_SUB_IMAGE_2D: {
-				// TODO: GFX
+				
+				u32 level				= this->mStream->Read < u32 >( 0 );
+				u32 xOffset				= this->mStream->Read < u32 >( 0 );
+				u32 yOffset				= this->mStream->Read < u32 >( 0 );
+				u32 width				= this->mStream->Read < u32 >( 0 );
+				u32 height				= this->mStream->Read < u32 >( 0 );
+				u32 format				= this->mStream->Read < u32 >( 0 );
+				u32 type				= this->mStream->Read < u32 >( 0 );
+				
+				size_t size				= this->mStream->Read < size_t >( 0 );
+				void* data				= this->mStream->Read < void* >( 0 );
+				
+				draw.TexSubImage2D ( level, xOffset, yOffset, width, height, format, type, draw.RetainBuffer ( data, size ));
+				
 				break;
 			}
 			case UNIFORM_1F: {
@@ -1080,6 +1088,51 @@ void ZLGfxRetained::Reset () {
 		ZLRefCountedObject* object = this->mReleaseStack.Pop ();
 		object->Release ();
 	}
+	
+	STLList < ZLGfxBufferRef >::iterator bufferRefsIt = this->mBufferRefs.begin ();
+	for ( ; bufferRefsIt != this->mBufferRefs.end (); ++bufferRefsIt ) {
+		ZLGfxBufferRef& ref = *bufferRefsIt;
+		if ( ref.mBufferStore ) {
+			free ( ref.mBufferStore );
+		}
+	}
+	this->mBufferRefs.clear ();
+	this->mSharedBuffers.clear ();
+}
+
+//----------------------------------------------------------------//
+const ZLGfxBufferRef ZLGfxRetained::RetainBuffer ( const void* buffer, size_t size ) {
+
+	ZLGfxBufferRef bufferRef;
+	bufferRef.mSize = size;
+	bufferRef.mBufferStore = 0;
+	bufferRef.mBuffer = 0;
+	
+	if ( size && buffer ) {
+		
+		bufferRef.mBufferStore = malloc ( size );
+		assert ( bufferRef.mBufferStore  );
+		memcpy ( bufferRef.mBufferStore, buffer, size );
+	
+		bufferRef.mBuffer = bufferRef.mBufferStore;
+		this->mBufferRefs.push_back ( bufferRef );
+	}
+	return bufferRef;
+}
+
+//----------------------------------------------------------------//
+const ZLGfxBufferRef ZLGfxRetained::RetainBuffer ( const ZLCowBuffer& buffer ) {
+
+	const void* addr = buffer.GetBuffer ();
+
+	ZLGfxBufferRef bufferRef;
+	bufferRef.mSize = buffer.GetSize ();
+	bufferRef.mBuffer = addr;
+	
+	if ( addr && ( !this->mSharedBuffers.contains ( addr ))) {
+		this->mSharedBuffers [ addr ] = buffer;
+	}
+	return bufferRef;
 }
 
 //----------------------------------------------------------------//
@@ -1095,37 +1148,16 @@ void ZLGfxRetained::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::ShaderSource ( ZLGfxHandle* shader, u32 count, const char** string, const s32* length ) {
+void ZLGfxRetained::ShaderSource ( ZLGfxHandle* shader, cc8* source, size_t length ) {
+
+	printf ( "%s\n", source );
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( SHADER_SOURCE );
 	this->mStream->Write < ZLGfxHandle* >( shader );
-	this->mStream->Write < u32 >( count );
-	
-	if ( string ) {
-	
-		size_t strBufferLen = sizeof ( const char* ) * count;
-		const char** strBuffer = ( const char** )malloc ( strBufferLen );
-		memcpy ( strBuffer, string, strBufferLen );
-		
-		this->mStream->Write < const char** >( strBuffer );
-	}
-	else {
-		this->mStream->Write < const char** >( 0 );
-	}
-	
-	if ( length ) {
-	
-		size_t lenBufferLen = sizeof ( const s32 ) * count;
-		s32* lenBuffer = ( s32* )malloc ( lenBufferLen );
-		memcpy ( lenBuffer, length, lenBufferLen );
-		
-		this->mStream->Write < const s32* >( lenBuffer );
-	}
-	else {
-		this->mStream->Write < const s32* >( 0 );
-	}
+	this->mStream->Write < size_t >( length );
+	this->mStream->WriteBytes ( source, length );
 }
 
 //----------------------------------------------------------------//
@@ -1139,7 +1171,7 @@ void ZLGfxRetained::TexEnvi ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+void ZLGfxRetained::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
 	
 	assert ( this->mStream );
 
@@ -1150,7 +1182,9 @@ void ZLGfxRetained::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 h
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( format );
 	this->mStream->Write < u32 >( type );
-	this->mStream->Write < const void* >( data );
+	
+	this->mStream->Write < size_t >( bufferRef.mSize );
+	this->mStream->Write < const void* >( bufferRef.mBuffer );
 }
 
 //----------------------------------------------------------------//
@@ -1164,7 +1198,7 @@ void ZLGfxRetained::TexParameteri ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
 
 	assert ( this->mStream );
 
@@ -1176,7 +1210,9 @@ void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wid
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( format );
 	this->mStream->Write < u32 >( type );
-	this->mStream->Write < const void* >( data );
+
+	this->mStream->Write < size_t >( bufferRef.mSize );
+	this->mStream->Write < const void* >( bufferRef.mBuffer );
 }
 
 //----------------------------------------------------------------//

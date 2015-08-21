@@ -4,7 +4,6 @@
 #ifndef ZLCOWBUFFER_H
 #define ZLCOWBUFFER_H
 
-#include <zl-util/ZLLeanList.h>
 #include <zl-util/ZLRefCountedObject.h>
 
 // ZL Copy On Write buffer. Moo!
@@ -49,7 +48,11 @@ public:
 	void				Free					();
 	const void*			GetBuffer				() const;
 	void*				GetBufferMutable		();
+	size_t				GetSize					() const;
 						ZLCowBuffer				();
+						ZLCowBuffer				( size_t size );
+						ZLCowBuffer				( size_t size, u8 fill );
+						ZLCowBuffer				( size_t size, const void* fill );
 						ZLCowBuffer				( const ZLCowBuffer& assign );
 						~ZLCowBuffer			();
 	

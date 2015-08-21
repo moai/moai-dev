@@ -39,6 +39,8 @@ void ZLCowBuffer::AffirmInternal () {
 void* ZLCowBuffer::Alloc ( size_t size ) {
 
 	this->Free ();
+	if ( !size ) return 0;
+	
 	this->AffirmInternal ();
 	
 	void* buffer = malloc ( size );
@@ -54,6 +56,8 @@ void* ZLCowBuffer::Alloc ( size_t size ) {
 void* ZLCowBuffer::Alloc ( size_t size, u8 fill ) {
 
 	this->Free ();
+	if ( !size ) return 0;
+	
 	this->AffirmInternal ();
 	
 	void* buffer = fill == 0 ? calloc ( 1, size ) : malloc ( size );
@@ -74,6 +78,8 @@ void* ZLCowBuffer::Alloc ( size_t size, u8 fill ) {
 void* ZLCowBuffer::Alloc ( size_t size, const void* fill ) {
 
 	this->Free ();
+	if ( !size ) return 0;
+	
 	this->AffirmInternal ();
 	
 	void* buffer = fill == 0 ? calloc ( 1, size ) : malloc ( size );
@@ -92,6 +98,8 @@ void* ZLCowBuffer::Alloc ( size_t size, const void* fill ) {
 
 //----------------------------------------------------------------//
 void ZLCowBuffer::Assign ( const ZLCowBuffer& assign ) {
+
+	if ( this->mInternal != assign.mInternal ) return;
 
 	this->Free ();
 	this->mInternal = assign.mInternal;
@@ -130,8 +138,35 @@ void* ZLCowBuffer::GetBufferMutable () {
 }
 
 //----------------------------------------------------------------//
+size_t ZLCowBuffer::GetSize () const {
+
+	return this->mInternal ? this->mInternal->mSize : 0;
+}
+
+//----------------------------------------------------------------//
 ZLCowBuffer::ZLCowBuffer () :
 	mInternal ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+ZLCowBuffer::ZLCowBuffer ( size_t size ) :
+	mInternal ( 0 ) {
+	
+	this->Alloc ( size );
+}
+
+//----------------------------------------------------------------//
+ZLCowBuffer::ZLCowBuffer ( size_t size, u8 fill ) :
+	mInternal ( 0 ) {
+	
+	this->Alloc ( size, fill );
+}
+
+//----------------------------------------------------------------//
+ZLCowBuffer::ZLCowBuffer ( size_t size, const void* fill ) :
+	mInternal ( 0 ) {
+	
+	this->Alloc ( size, fill );
 }
 
 //----------------------------------------------------------------//

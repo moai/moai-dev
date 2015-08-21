@@ -5,6 +5,7 @@
 #define ZLGFXIMMEDIATE_H
 
 #include <zl-gfx/ZLGfx.h>
+#include <zl-util/ZLCowBuffer.h>
 
 //================================================================//
 // ZLGfxImmediate
@@ -46,7 +47,7 @@ public:
 	void					Color						( float r, float g, float b, float a );
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
-	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data );
+	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLGfxBufferRef bufferRef );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -87,14 +88,18 @@ public:
 	bool					PushSuccessHandler			();
 	
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
+	
+	const ZLGfxBufferRef	RetainBuffer				( const void* buffer, size_t size );
+	const ZLGfxBufferRef	RetainBuffer				( const ZLCowBuffer& buffer );
+	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
 	
-	void					ShaderSource				( ZLGfxHandle* shader, u32 count, const char** string, const s32* length );
+	void					ShaderSource				( ZLGfxHandle* shader, cc8* source, size_t length );
 	
 	void					TexEnvi						( u32 pname, s32 param );
-	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data );
+	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef );
 	void					TexParameteri				( u32 pname, s32 param );
-	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data );
+	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef );
 	void					Uniform1f					( u32 location, float v0 );
 	void					Uniform1i					( u32 location, s32 v0 );
 	void					Uniform4fv					( u32 location, u32 count, const float* value );

@@ -214,8 +214,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		this->mWidth,  
 		this->mHeight,  
 		this->mGLInternalFormat,
-		this->mGLPixelType,  
-		image.GetBitmap ()
+		this->mGLPixelType,
+		gfx.RetainBuffer ( image.GetBitmap (), image.GetBitmapSize ())
 	);
 	
 	this->mTextureSize = image.GetBitmapSize ();
@@ -239,8 +239,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 				mipmap.GetWidth (),  
 				mipmap.GetHeight (),  
 				this->mGLInternalFormat,
-				this->mGLPixelType,  
-				mipmap.GetBitmap ()
+				this->mGLPixelType,
+				gfx.RetainBuffer ( mipmap.GetBitmap (), mipmap.GetBitmapSize ())
 			);
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {
@@ -486,11 +486,13 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 		imageRect.Clip ( rect );
 		
 		const void* buffer = image.GetBitmap ();
+		size_t size = image.GetBitmapSize ();
 		
 		MOAIImage subImage;
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
 			subImage.GetSubImage ( image, rect ); // TODO: need to convert to correct format for texture
 			buffer = subImage.GetBitmap ();
+			size = subImage.GetBitmapSize ();
 		}
 
 		gfx.TexSubImage2D (
@@ -501,7 +503,7 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 			rect.Height (),
 			this->mGLInternalFormat,
 			this->mGLPixelType,  
-			buffer
+			gfx.RetainBuffer ( buffer, size )
 		);
 		
 		MOAIGfxDevice::Get ().LogErrors ();

@@ -341,12 +341,14 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 						this->CleanupTexture ( texture );
 						return false;
 					}
-					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.Data ());
+					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, gfx.RetainBuffer ( buffer.Data (), buffer.Size ()));
 				
 				#endif
 			}
 			else {
-				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
+				// TODO: imageData isn't right
+				assert ( false ); // until we can test this
+				//gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
 			}
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {

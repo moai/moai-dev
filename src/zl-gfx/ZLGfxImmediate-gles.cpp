@@ -159,7 +159,7 @@ void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, const void* data ) {
+void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLGfxBufferRef bufferRef ) {
 	
 	glCompressedTexImage2D (
 		GL_TEXTURE_2D,
@@ -169,7 +169,7 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 		( GLsizei )height,
 		0,
 		( GLsizei )imageSize,
-		( const GLvoid* )data
+		( const GLvoid* )bufferRef.mBuffer
 	);
 }
 
@@ -485,15 +485,34 @@ void ZLGfxImmediate::RenderbufferStorage ( u32 internalFormat, u32 width, u32 he
 }
 
 //----------------------------------------------------------------//
+const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const void* buffer, size_t size ) {
+
+	ZLGfxBufferRef bufferRef;
+	bufferRef.mBufferStore = 0;
+	bufferRef.mBuffer = buffer;
+	bufferRef.mSize = size;
+	return bufferRef;
+}
+
+//----------------------------------------------------------------//
+const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const ZLCowBuffer& buffer ) {
+
+	return this->RetainBuffer ( buffer.GetBuffer (), buffer.GetSize ());
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 
 	glScissor (( GLint )x, ( GLint )y, ( GLsizei )w, ( GLsizei )h );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::ShaderSource ( ZLGfxHandle* shader, u32 count, const char** string, const s32* length ) {
+void ZLGfxImmediate::ShaderSource ( ZLGfxHandle* shader, cc8* source, size_t length ) {
 
-	glShaderSource (( GLuint )( shader ? shader->mGLID : 0 ), ( GLsizei )count, ( const GLchar** )string, ( const GLint* )length );
+	const GLchar* stringArray [] = {( GLchar* )source };
+	const GLint lengthArray [] = {( GLint )length };
+
+	glShaderSource (( GLuint )( shader ? shader->mGLID : 0 ), 1, stringArray, lengthArray );
 }
 
 //----------------------------------------------------------------//
@@ -505,7 +524,7 @@ void ZLGfxImmediate::TexEnvi ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -518,7 +537,7 @@ void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 
 		0,
 		ZLGfxEnum::MapZLToNative ( format ),
 		ZLGfxEnum::MapZLToNative ( type ),
-		( const GLvoid* )data
+		( const GLvoid* )bufferRef.mBuffer
 	);
 }
 
@@ -529,7 +548,7 @@ void ZLGfxImmediate::TexParameteri ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, const void* data ) {
+void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -542,7 +561,7 @@ void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wi
 		( GLsizei )height,
 		ZLGfxEnum::MapZLToNative ( format ),
 		ZLGfxEnum::MapZLToNative ( type ),
-		( const GLvoid* )data
+		( const GLvoid* )bufferRef.mBuffer
 	);
 }
 
