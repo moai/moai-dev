@@ -62,18 +62,6 @@
 
 	#define GL_WRITE_ONLY			0x88B9
 
-	typedef void*		( GL_APIENTRYP PFNGLMAPBUFFEROESPROC )			( GLenum target, GLenum access );
-	typedef GLboolean	( GL_APIENTRYP PFNGLUNMAPBUFFEROESPROC )		( GLenum target );
-	typedef void		( GL_APIENTRYP PFNGLGETBINDVERTEXARRAYPROC )	( GLuint array );
-	typedef void		( GL_APIENTRYP PFNGLGETGENVERTEXARRAYSPROC )	( GLsizei n, GLuint* arrays );
-	typedef void		( GL_APIENTRYP PFNGLDELETEVERTEXARRAYSPROC )	( GLsizei n, const GLuint* arrays );
-
-	//static PFNGLMAPBUFFEROESPROC		glMapBuffer				= ( PFNGLMAPBUFFEROESPROC )eglGetProcAddress ( "glMapBufferOES" );
-	//static PFNGLUNMAPBUFFEROESPROC		glUnmapBuffer			= ( PFNGLUNMAPBUFFEROESPROC )eglGetProcAddress ( "glUnmapBufferOES" );
-	//static PFNGLGETGENVERTEXARRAYSPROC	glGenVertexArrays		= ( PFNGLGETGENVERTEXARRAYSPROC )eglGetProcAddress ( "glGenVertexArraysOES" );
-	//static PFNGLGETBINDVERTEXARRAYPROC	glBindVertexArray		= ( PFNGLGETBINDVERTEXARRAYPROC )eglGetProcAddress ( "glBindVertexArrayOES" );
-	//static PFNGLDELETEVERTEXARRAYSPROC	glDeleteVertexArrays	= ( PFNGLDELETEVERTEXARRAYSPROC )eglGetProcAddress ( "glDeleteVertexArraysOES" );
-
 #endif
 
 #ifdef MOAI_OS_LINUX

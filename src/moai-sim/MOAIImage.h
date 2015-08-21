@@ -65,9 +65,6 @@ private:
 	void*	mBitmap;
 	void*	mPalette;
 
-	//GET_SET ( void*, Bitmap, mBitmap );
-	//GET_SET ( void*, Palette, mPalette );
-
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
 
