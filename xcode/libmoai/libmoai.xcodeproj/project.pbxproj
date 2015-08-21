@@ -19686,11 +19686,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21014,11 +21014,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25470,11 +25470,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25899,11 +25899,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;

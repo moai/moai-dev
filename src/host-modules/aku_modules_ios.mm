@@ -147,6 +147,29 @@ void AKUModulesIosAppInitialize () {
 }
 
 //----------------------------------------------------------------//
+BOOL AKUModulesIosApplicationDidFinishLaunchingWithOptions ( UIApplication* application, NSDictionary* launchOptions ) {
+
+    BOOL status = YES;
+
+    // return
+    #if AKU_WITH_IOS_FACEBOOK
+        status = status && AKUIosFacebookApplicationDidFinishLaunchingWithOptions ( application, launchOptions );
+    #endif
+    
+    return status;
+}
+
+//----------------------------------------------------------------//
+BOOL AKUModulesIosApplicationOpenURL ( UIApplication* application,  NSURL* url, NSString* sourceApplication, id annotation ) {
+
+    #if AKU_WITH_IOS_FACEBOOK
+        if ( AKUIosFacebookApplicationOpenURL ( application, url, sourceApplication, annotation )) return YES;
+    #endif
+
+    return NO;
+}
+
+//----------------------------------------------------------------//
 void AKUModulesIosContextInitialize () {
 
 	#if AKU_WITH_IOS
