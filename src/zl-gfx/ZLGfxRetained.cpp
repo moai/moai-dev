@@ -1150,8 +1150,6 @@ void ZLGfxRetained::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 //----------------------------------------------------------------//
 void ZLGfxRetained::ShaderSource ( ZLGfxHandle* shader, cc8* source, size_t length ) {
 
-	printf ( "%s\n", source );
-
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( SHADER_SOURCE );

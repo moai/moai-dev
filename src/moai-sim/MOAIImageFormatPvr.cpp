@@ -415,7 +415,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
 	this->Alloc ( image );
 	
-	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmap ( image ), image.GetBitmapSize (), stream )) {
+	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmapMutable ( image ), image.GetBitmapSize (), stream )) {
 		ZLLog::LogF ( ZLLog::CONSOLE, "Error loading or decompressing PVR at mip level %d\n", info.mLevel );
 		return false;
 	}

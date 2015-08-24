@@ -32,21 +32,27 @@ bool MOAIImageFormat::CreateTexture ( MOAISingleTexture& texture, const void* da
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
+const void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
 
-	return image.mBitmap;
+	return image.mBitmap.GetBuffer ();
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetRowAddr ( MOAIImage& image, u32 y ) const {
+void* MOAIImageFormat::GetBitmapMutable ( MOAIImage& image ) const {
 
-	return image.GetRowAddr ( y );
+	return image.mBitmap.GetBufferMutable ();
 }
 
 //----------------------------------------------------------------//
 const void* MOAIImageFormat::GetRowAddr ( const MOAIImage& image, u32 y ) const {
 
 	return image.GetRowAddr ( y );
+}
+
+//----------------------------------------------------------------//
+void* MOAIImageFormat::GetRowAddrMutable ( MOAIImage& image, u32 y ) const {
+
+	return image.GetRowAddrMutable ( y );
 }
 
 //----------------------------------------------------------------//

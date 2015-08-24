@@ -62,8 +62,11 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	void*	mBitmap;
-	void*	mPalette;
+	ZLCowBuffer	mBitmap;
+	ZLCowBuffer	mPalette;
+	
+//	void*	mBitmap;
+//	void*	mPalette;
 
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
@@ -107,8 +110,8 @@ private:
 	void			Alloc					();
 	void			ComparePixel			( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
 	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
-	void*			GetRowAddr				( u32 y );
 	const void*		GetRowAddr				( u32 y ) const;
+	void*			GetRowAddrMutable		( u32 y );
 	virtual void	OnImageStatusChanged	( bool isOK );
 
 public:
@@ -121,8 +124,11 @@ public:
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
 	
-	GET_CONST ( void*, Bitmap, mBitmap );
-	GET_CONST ( void*, Palette, mPalette );
+	GET_CONST ( void*, Bitmap, mBitmap.GetBuffer ())
+	GET_CONST ( void*, Palette, mPalette.GetBuffer ())
+	
+	GET ( ZLCowBuffer, BitmapCow, mBitmap )
+	GET ( ZLCowBuffer, PaletteCow, mPalette )
 	
 	enum {
 		FILTER_LINEAR,

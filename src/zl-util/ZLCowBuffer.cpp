@@ -99,7 +99,7 @@ void* ZLCowBuffer::Alloc ( size_t size, const void* fill ) {
 //----------------------------------------------------------------//
 void ZLCowBuffer::Assign ( const ZLCowBuffer& assign ) {
 
-	if ( this->mInternal != assign.mInternal ) return;
+	if ( this->mInternal == assign.mInternal ) return;
 
 	this->Free ();
 	this->mInternal = assign.mInternal;
