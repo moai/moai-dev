@@ -221,7 +221,7 @@ void MOAITestMgr::Error ( cc8* msg ) {
 		testResult.mPassed = false;
 		testResult.mErrorMsg = msg;
 		
-		ZLLog::LogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
+		ZLLogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
 	}
 }
 

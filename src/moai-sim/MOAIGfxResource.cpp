@@ -264,7 +264,7 @@ bool MOAIGfxResource::PrepareForBind () {
 	if (( this->mState == STATE_NEW ) || ( this->mState == STATE_ERROR )) return false;
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
-		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+		MOAILogF ( 0, ZLLog::LOG_FATAL, MOAILogMessages::MOAIGfxResource_MissingDevice );
 		return false;
 	}
 

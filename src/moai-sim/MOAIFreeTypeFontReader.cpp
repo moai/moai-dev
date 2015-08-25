@@ -194,7 +194,7 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 		this->mFace = 0;
 		this->mLibrary = 0;
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "FONT_ERROR loading font: %s\n", filename );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "FONT_ERROR loading font: %s\n", filename );
 		return FONT_ERROR;
 	}
 	return OK;

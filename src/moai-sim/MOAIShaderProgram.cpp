@@ -443,7 +443,7 @@ void MOAIShaderProgram::PrintShaderLog ( u32 shader ) {
 	if ( logLength > 1 ) {
 		char* log = ( char* )malloc ( logLength );
 		zglGetShaderInfoLog ( shader, logLength, ( u32* )&logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		MOAILogF ( 0, ZLLog::LOG_ERROR, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		free ( log );
 	}
 }
@@ -457,7 +457,7 @@ void MOAIShaderProgram::PrintProgramLog ( u32 program ) {
 	if ( logLength > 1 ) {
 		char* log = ( char* )malloc ( logLength );
 		zglGetProgramInfoLog ( program, logLength, ( u32* )&logLength, log );
-		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+		MOAILogF ( 0, ZLLog::LOG_ERROR, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		free ( log );
 	}
 }
@@ -670,7 +670,7 @@ bool MOAIShaderProgram::Validate () {
     if ( logLength > 0 ) {
         char* log = ( char* )malloc ( logLength );
         zglGetProgramInfoLog ( this->mProgram, logLength, ( u32* )&logLength, log );
-        MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
+        MOAILogF ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
         free ( log );
     }
 
