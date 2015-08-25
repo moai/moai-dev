@@ -106,20 +106,20 @@ void MOAIGlobalsMgr::Delete ( MOAIGlobals* globals ) {
 //----------------------------------------------------------------//
 void MOAIGlobalsMgr::Finalize () {
 
-	if ( sGlobalsSet ) {
+    if ( sGlobalsSet ) {
 
-		GlobalsSetIt globalsIt = sGlobalsSet->begin ();
-		for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
-			MOAIGlobals* globals = *globalsIt;
-			delete globals;
-		}
-		
-		sGlobalsSet->clear ();
-		sInstance = 0;
-		
-		delete sGlobalsSet;
-		sGlobalsSet = 0;
-	}
+        GlobalsSetIt globalsIt = sGlobalsSet->begin ();
+        for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
+            sInstance = *globalsIt;
+            delete sInstance;
+        }
+        
+        sGlobalsSet->clear ();
+        sInstance = 0;
+        
+        delete sGlobalsSet;
+        sGlobalsSet = 0;
+    }
 }
 
 //----------------------------------------------------------------//
