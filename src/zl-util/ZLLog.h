@@ -32,8 +32,6 @@ private:
 	static u32		sLogLevel;
 	static FILE*	sConsoleRedirect;
 
-	// TODO: some danger here if the caller isn't using VFS; should change this to
-	// not take a file pointer. implementers will need to provide their own.
 	typedef void ( *LogFunc )( cc8* format, va_list args, void* userdata );
 	
 	static LogFunc	sLogFunc;
