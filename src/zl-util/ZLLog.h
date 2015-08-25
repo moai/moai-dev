@@ -34,7 +34,7 @@ private:
 
 	// TODO: some danger here if the caller isn't using VFS; should change this to
 	// not take a file pointer. implementers will need to provide their own.
-	typedef void ( *LogFunc )( void* file, cc8* format, va_list args, void* userdata );
+	typedef void ( *LogFunc )( cc8* format, va_list args, void* userdata );
 	
 	static LogFunc	sLogFunc;
 	static void*	sLogFuncUserdata;

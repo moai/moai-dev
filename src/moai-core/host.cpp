@@ -449,6 +449,12 @@ void AKUSetFunc_ErrorTraceback ( AKUErrorTracebackFunc func ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetLogLevel ( int logLevel ) {
+
+	ZLLog::SetLogLevel ( logLevel );
+}
+
+//----------------------------------------------------------------//
 void AKUSetUserdata ( void* userdata ) {
 
 	if ( sContext ) {

@@ -497,17 +497,19 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 			object:[ UIApplication sharedApplication ]
 			queue:nil
 			usingBlock:^( NSNotification* notification ) {
-			
+				
+				ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIAppIOS: received notification '%s'\n", [ notification.name UTF8String ]);
+				
 				MOAIScopedContext scopedContext;
-
+				
 				if ( !MOAIGlobalsMgr::Check ( context )) return;
 				MOAIGlobalsMgr::Set ( context );
-			
-				NSLog ( @"%@", notification.name );
+				
 				this->InvokeListener ( eventID );
 				
 				if ( eventID == WILL_TERMINATE ) {
 					AKUAppFinalize ();
+					scopedContext.Clear ();
 				}
 			}
 		];
