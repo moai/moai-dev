@@ -5,118 +5,114 @@
 ----------------------------------------------------------------
 
 function makeCube ( size )
-	local vertexFormat = MOAIVertexFormat.new ()
 
+	size = size * 0.5
+
+	local vertexFormat = MOAIVertexFormat.new ()
 	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
-	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
-	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+	vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 	local vbo = MOAIVertexBuffer.new ()
-	vbo:setFormat ( vertexFormat )
-	vbo:reserveVerts ( 8 )
+	vbo:reserve ( 8 * vertexFormat:getVertexSize ())
 
-	-- 1: top back left
+	-- 0: top back left
 	vbo:writeFloat ( -size, size, -size )
-	vbo:writeFloat ( 0, 1 )
-	vbo:writeColor32 ( 0, 1, 1 )
+	vbo:writeColor32 ( 1, 1, 0.5 )
 
-	-- 2: top back right
+	-- 1: top back right
 	vbo:writeFloat ( size, size, -size )
-	vbo:writeFloat ( 1, 1 )
-	vbo:writeColor32 ( 1, 0, 1 )
+	vbo:writeColor32 ( 1, 1, 0.75 )
 
-	-- 3: top front right
+	-- 2: top front right
 	vbo:writeFloat ( size, size, size )
-	vbo:writeFloat ( 1, 0 )
-	vbo:writeColor32 ( 0, 1, 0 )
+	vbo:writeColor32 ( 1, 0.5, 0.25 )
 
-	-- 4: top front left
+	-- 3: top front left
 	vbo:writeFloat ( -size, size, size )
-	vbo:writeFloat ( 0, 0 )
-	vbo:writeColor32 ( 1, 0, 0 )
+	vbo:writeColor32 ( 1, 0.5, 0 )
 
-	-- 5: bottom back left
+	-- 4: bottom back left
 	vbo:writeFloat ( -size, -size, -size )
-	vbo:writeFloat ( 0, 1 )
-	vbo:writeColor32 ( 1, 1, 1 )
+	vbo:writeColor32 ( 1, 0.5, 0.5 )
 
-	-- 6: bottom back right
+	-- 5: bottom back right
 	vbo:writeFloat ( size, -size, -size )
-	vbo:writeFloat ( 1, 1 )
-	vbo:writeColor32 ( 1, 0, 0 )
+	vbo:writeColor32 ( 1, 0.5, 0.75 )
 
-	-- 7: bottom front right
+	-- 6: bottom front right
 	vbo:writeFloat ( size, -size, size )
-	vbo:writeFloat ( 1, 0 )
-	vbo:writeColor32 ( 0, 0, 1 )
+	vbo:writeColor32 ( 1, 0, 0.25 )
 
-	-- 8: bottom front left
+	-- 7: bottom front left
 	vbo:writeFloat ( -size, -size, size )
-	vbo:writeFloat ( 0, 0 )
-	vbo:writeColor32 ( 1, 1, 0 )
-
-	vbo:bless ()
+	vbo:writeColor32 ( 1, 0, 0 )
 
 	local ibo = MOAIIndexBuffer.new ()
-	ibo:reserve ( 36 )
+	ibo:setIndexSize ( 2 )
+	ibo:reserve ( 36 * 2 )
 
 	-- front
-	ibo:setIndex ( 1, 3 )
-	ibo:setIndex ( 2, 4 )
-	ibo:setIndex ( 3, 8 )
-	ibo:setIndex ( 4, 8 )
-	ibo:setIndex ( 5, 7 )
-	ibo:setIndex ( 6, 3 )
+	ibo:writeU16 ( 2 )
+	ibo:writeU16 ( 3 )
+	ibo:writeU16 ( 7 )
+	ibo:writeU16 ( 7 )
+	ibo:writeU16 ( 6 )
+	ibo:writeU16 ( 2 )
 
 	-- right
-	ibo:setIndex ( 7, 2 )
-	ibo:setIndex ( 8, 3 )
-	ibo:setIndex ( 9, 7 )
-	ibo:setIndex ( 10, 7 )
-	ibo:setIndex ( 11, 6 )
-	ibo:setIndex ( 12, 2 )
+	ibo:writeU16 ( 1 )
+	ibo:writeU16 ( 2 )
+	ibo:writeU16 ( 6 )
+	ibo:writeU16 ( 6 )
+	ibo:writeU16 ( 5 )
+	ibo:writeU16 ( 1 )
 
 	-- back
-	ibo:setIndex ( 13, 1 )
-	ibo:setIndex ( 14, 2 )
-	ibo:setIndex ( 15, 6 )
-	ibo:setIndex ( 16, 6 )
-	ibo:setIndex ( 17, 5 )
-	ibo:setIndex ( 18, 1 )
+	ibo:writeU16 ( 0 )
+	ibo:writeU16 ( 1 )
+	ibo:writeU16 ( 5 )
+	ibo:writeU16 ( 5 )
+	ibo:writeU16 ( 4 )
+	ibo:writeU16 ( 0 )
 
 	-- left
-	ibo:setIndex ( 19, 4 )
-	ibo:setIndex ( 20, 1 )
-	ibo:setIndex ( 21, 5 )
-	ibo:setIndex ( 22, 5 )
-	ibo:setIndex ( 23, 8 )
-	ibo:setIndex ( 24, 4 )
+	ibo:writeU16 ( 3 )
+	ibo:writeU16 ( 0 )
+	ibo:writeU16 ( 4 )
+	ibo:writeU16 ( 4 )
+	ibo:writeU16 ( 7 )
+	ibo:writeU16 ( 3 )
 
 	-- top
-	ibo:setIndex ( 25, 2 )
-	ibo:setIndex ( 26, 1 )
-	ibo:setIndex ( 27, 4 )
-	ibo:setIndex ( 28, 4 )
-	ibo:setIndex ( 29, 3 )
-	ibo:setIndex ( 30, 2 )
+	ibo:writeU16 ( 1 )
+	ibo:writeU16 ( 0 )
+	ibo:writeU16 ( 3 )
+	ibo:writeU16 ( 3 )
+	ibo:writeU16 ( 2 )
+	ibo:writeU16 ( 1 )
 
 	-- bottom
-	ibo:setIndex ( 31, 8 )
-	ibo:setIndex ( 32, 5 )
-	ibo:setIndex ( 33, 6 )
-	ibo:setIndex ( 34, 6 )
-	ibo:setIndex ( 35, 7 )
-	ibo:setIndex ( 36, 8 )
+	ibo:writeU16 ( 7 )
+	ibo:writeU16 ( 4 )
+	ibo:writeU16 ( 5 )
+	ibo:writeU16 ( 5 )
+	ibo:writeU16 ( 6 )
+	ibo:writeU16 ( 7 )
 
 	local mesh = MOAIMesh.new ()
-	mesh:setTexture ( "moai.png" )
-	mesh:setVertexBuffer ( vbo )
+
+	mesh:setVertexBuffer ( vbo, vertexFormat )
 	mesh:setIndexBuffer ( ibo )
+
+	mesh:setTotalElements ( 36 )
+	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
+
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 	local prop = MOAIProp.new ()
 	prop:setDeck ( mesh )
-	prop:setCullMode ( MOAIProp.CULL_BACK )
+	prop:setCullMode ( MOAIProp.CULL_NONE )
 	prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS_EQUAL )
 	
 	return prop

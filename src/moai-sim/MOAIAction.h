@@ -59,7 +59,7 @@ private:
 	
 	ZLLeanLink < MOAIAction* > mLink;
 	
-	ChildIt mChildIt; // this iterator is used when updating the action tree
+	ChildIt mNextChildIt; // this iterator is used when updating the action tree
 	
 	float	mThrottle;
 	

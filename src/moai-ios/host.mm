@@ -110,6 +110,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID ( frameBuffer );
+	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( frameBuffer );
 }
 

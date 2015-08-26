@@ -151,63 +151,11 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Bind ( const void* buffer ) const {
 
-	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
-		this->BindProgrammable ( buffer );
-	}
-	else {
-		this->BindFixed ( buffer );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::BindFixed ( const void* buffer ) const {
-	UNUSED ( buffer );
-
-	#if USE_OPENGLES1
-		for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
-		
-			const MOAIVertexAttributeUse& attrUse = this->mAttributeUseTable [ i ];
-			
-			if ( attrUse.mAttrID == NULL_INDEX ) {
-				zglDisableClientState ( attrUse.mUse );
-			}
-			else {
-			
-				MOAIVertexAttribute& attr = this->mAttributes [ attrUse.mAttrID ];
-				
-				void* addr = ( void* )(( size_t )buffer + attr.mOffset );
-				
-				switch ( attrUse.mUse ) {
-					case ZGL_PIPELINE_COLOR_ARRAY:
-						zglColorPointer ( attr.mSize, attr.mType, this->mVertexSize, addr );
-						break;
-					case ZGL_PIPELINE_NORMAL_ARRAY:
-						zglNormalPointer ( attr.mType, this->mVertexSize, addr );
-						break;
-					case ZGL_PIPELINE_TEXTURE_COORD_ARRAY:
-						zglTexCoordPointer ( attr.mSize, attr.mType, this->mVertexSize, addr );
-						break;
-					case ZGL_PIPELINE_VERTEX_ARRAY:
-						zglVertexPointer ( attr.mSize, attr.mType, this->mVertexSize, addr );
-						break;
-					default:
-						break;
-				}
-				zglEnableClientState ( attrUse.mUse );
-			}
-		}
-	#endif
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::BindProgrammable ( const void* buffer ) const {
-
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
-		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-
-		void* addr = ( void* )(( size_t )buffer + attr.mOffset );
-		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, addr );
+		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
+		
+		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, ( const void* )(( size_t )buffer + attr.mOffset ));
 		zglEnableVertexAttribArray ( attr.mIndex );
 	}
 }
@@ -359,33 +307,27 @@ u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 
 //----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetIndexForUse ( u32 use ) {
-	UNUSED ( use );
 
-	#if USE_OPENGLES1
-		switch ( use ) {
-			case ZGL_PIPELINE_COLOR_ARRAY:			return ARRAY_COLOR;
-			case ZGL_PIPELINE_NORMAL_ARRAY:			return ARRAY_NORMAL;
-			case ZGL_PIPELINE_TEXTURE_COORD_ARRAY:	return ARRAY_TEX_COORD;
-			case ZGL_PIPELINE_VERTEX_ARRAY:			return ARRAY_VERTEX;
-			default:								break;
-		}
-	#endif
+	switch ( use ) {
+		case ZGL_PIPELINE_COLOR_ARRAY:			return ARRAY_COLOR;
+		case ZGL_PIPELINE_NORMAL_ARRAY:			return ARRAY_NORMAL;
+		case ZGL_PIPELINE_TEXTURE_COORD_ARRAY:	return ARRAY_TEX_COORD;
+		case ZGL_PIPELINE_VERTEX_ARRAY:			return ARRAY_VERTEX;
+		default:								break;
+	}
 	return NULL_INDEX;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetUseForIndex ( u32 idx ) {
-	UNUSED ( idx );
 
-	#if USE_OPENGLES1
-		switch ( idx ) {
-			case ARRAY_COLOR:			return ZGL_PIPELINE_COLOR_ARRAY;
-			case ARRAY_NORMAL:			return ZGL_PIPELINE_NORMAL_ARRAY;
-			case ARRAY_TEX_COORD:		return ZGL_PIPELINE_TEXTURE_COORD_ARRAY;
-			case ARRAY_VERTEX:			return ZGL_PIPELINE_VERTEX_ARRAY;
-			default:					break;
-		}
-	#endif
+	switch ( idx ) {
+		case ARRAY_COLOR:			return ZGL_PIPELINE_COLOR_ARRAY;
+		case ARRAY_NORMAL:			return ZGL_PIPELINE_NORMAL_ARRAY;
+		case ARRAY_TEX_COORD:		return ZGL_PIPELINE_TEXTURE_COORD_ARRAY;
+		case ARRAY_VERTEX:			return ZGL_PIPELINE_VERTEX_ARRAY;
+		default:					break;
+	}
 	return 0;
 }
 
@@ -737,27 +679,6 @@ void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Unbind () const {
-
-	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
-		this->UnbindProgrammable ();
-	}
-	else {
-		this->UnbindFixed ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::UnbindFixed () const {
-
-	#if USE_OPENGLES1
-		for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
-			zglDisableClientState ( this->mAttributeUseTable [ i ].mUse );
-		}
-	#endif
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::UnbindProgrammable () const {
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		

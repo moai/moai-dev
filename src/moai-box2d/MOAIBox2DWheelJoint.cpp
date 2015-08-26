@@ -39,7 +39,7 @@ int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -61,7 +61,7 @@ int MOAIBox2DWheelJoint::_getJointSpeed ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -81,7 +81,7 @@ int MOAIBox2DWheelJoint::_isMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -102,7 +102,7 @@ int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -123,7 +123,7 @@ int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -145,7 +145,7 @@ int MOAIBox2DWheelJoint::_getMaxMotorTorque ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -168,7 +168,7 @@ int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -192,7 +192,7 @@ int MOAIBox2DWheelJoint::_getSpringFrequencyHz ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -217,7 +217,7 @@ int MOAIBox2DWheelJoint::_setMotor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -249,7 +249,7 @@ int MOAIBox2DWheelJoint::_setMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -273,7 +273,7 @@ int MOAIBox2DWheelJoint::_setMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -298,7 +298,7 @@ int MOAIBox2DWheelJoint::_setMaxMotorTorque ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -323,7 +323,7 @@ int MOAIBox2DWheelJoint::_setSpringDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -347,7 +347,7 @@ int MOAIBox2DWheelJoint::_setSpringFrequencyHz ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	

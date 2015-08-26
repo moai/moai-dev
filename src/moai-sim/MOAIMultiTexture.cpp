@@ -2,9 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIMultiTexture.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAISingleTexture.h>
 
 //================================================================//
 // local
@@ -34,14 +33,14 @@ int MOAIMultiTexture::_reserve ( lua_State* L ) {
 	
 	@in		MOAIMultiTexture self
 	@in		number index
-	@opt	MOAITextureBase texture		Default value is nil.
+	@opt	MOAISingleTexture texture		Default value is nil.
 	@out	nil
 */
 int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "UN" )
 	
 	u32 idx						= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 3, true );
+	MOAISingleTexture* texture	= state.GetLuaObject < MOAISingleTexture >( 3, true );
 	
 	self->SetTexture ( idx, texture );
 	
@@ -53,9 +52,16 @@ int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIMultiTexture::LoadGfxState () {
+u32 MOAIMultiTexture::CountActiveUnits () {
 
-	return MOAIGfxDevice::Get ().SetTexture ( this );
+	return this->mTextures.Size ();
+}
+
+//----------------------------------------------------------------//
+MOAISingleTexture* MOAIMultiTexture::GetTextureForUnit ( u32 unit ) {
+
+	assert ( unit < this->mTextures.Size ());
+	return this->mTextures [ unit ];
 }
 
 //----------------------------------------------------------------//
@@ -105,7 +111,7 @@ void MOAIMultiTexture::Reserve ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMultiTexture::SetTexture ( u32 idx, MOAITextureBase* texture ) {
+void MOAIMultiTexture::SetTexture ( u32 idx, MOAISingleTexture* texture ) {
 
 	if ( idx >= this->mTextures.Size ()) return;
 	if ( this->mTextures [ idx ] == texture ) return;

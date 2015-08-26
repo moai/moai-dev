@@ -24,7 +24,7 @@
 int MOAIAdColonyAndroid::_init ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIAdColonyAndroid, "" )
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIAdColonyAndroid::_init\n" );
+	ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIAdColonyAndroid::_init\n" );
 
 	MOAIJString jidentifier		= self->GetJString ( lua_tostring ( state, 1 ));
 	MOAIJString joptions		= self->GetJString ( lua_tostring ( state, 2 ));
@@ -118,6 +118,6 @@ void MOAIAdColonyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_adcolony_MoaiAdColony_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_moaisdk_adcolony_MoaiAdColony_AKUInvokeListener\n" );
+	ZLLog::LogF ( 1, ZLLog::CONSOLE, "Java_com_moaisdk_adcolony_MoaiAdColony_AKUInvokeListener\n" );
 	MOAIAdColonyAndroid::Get ().InvokeListener (( u32 )eventID );
 }

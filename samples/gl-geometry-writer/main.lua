@@ -45,7 +45,8 @@ function makeCube ( size )
 			0, 0, 0, 1,
 			1, 0, 0, 1,
 			false,
-			false
+			false,
+			MOAIGeometryWriter.COLOR_OVERWRITE
 		)
 		
 		vtxStream:seek ( 0, MOAIMemStream.SEEK_END )

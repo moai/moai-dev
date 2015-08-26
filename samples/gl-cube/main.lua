@@ -78,7 +78,7 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	local vbo = MOAIGfxBuffer.new ()
+	local vbo = MOAIVertexBuffer.new ()
 	vbo:reserve ( 36 * vertexFormat:getVertexSize ())
 	
 	writeFace ( vbo, p [ 1 ], p [ 2 ], p [ 3 ], p [ 4 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])

@@ -23,18 +23,8 @@ tess:setFillStyle ( MOAIVectorTesselator.FILL_SOLID )
 tess:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
 
 tess:pushCombo ()
-
 	tess:pushPoly ( 150, -150, -150, -150, -150, 150, 150, 150 )
-
 	tess:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
-
-	--[[
-	tess:pushPoly ( -50, 100, 50, 100, 0, 0 )
-	tess:pushPoly ( 50, -100, -50, -100, 0, 0 )
-	tess:pushPoly ( 0, 0, 100, -50, 100, 50 )
-	tess:pushPoly ( 0, 0, -100, 50, -100, -50 )
-	tess:pushPoly ( 25, -25, -25, -25, -25, 25, 25, 25 )
-	]]--
 tess:finish ()
 
 local region = MOAIRegion.new ()

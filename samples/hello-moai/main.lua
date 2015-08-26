@@ -34,7 +34,7 @@ textbox:setYFlip ( true )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
 layer:insertProp ( textbox )
 
-textbox:setString ( "Moai has installed correctly! Check out the samples folder.\n<c:0F0>Meow.<c>" )
+textbox:setString ( "Moai has installed correctly! <c:0F0>Check out the samples folder.<c>" )
 textbox:spool ()
 
 function twirlingTowardsFreedom ()

@@ -18,8 +18,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	int				AddFillContours			( SafeTesselator* tess );
-	int				AddStrokeContours		( SafeTesselator* tess, bool inside, bool outside );
+	int				AddFillContours			( SafeTesselator& tess );
+	int				AddStrokeContours		( SafeTesselator& tess, bool inside, bool outside );
 	void			Init					( float xMin, float yMin, float xMax, float yMax );
 	bool			IsClosed				();
 					MOAIVectorRect			();

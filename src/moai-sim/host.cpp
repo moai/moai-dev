@@ -65,7 +65,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
 	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
 	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
-	REGISTER_LUA_CLASS ( MOAIGfxBuffer )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
@@ -79,6 +78,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGridFancy )
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
+	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIInputMgr )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
@@ -126,6 +126,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
 	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
+	REGISTER_LUA_CLASS ( MOAIVertexArray )
+	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
 	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
 	REGISTER_LUA_CLASS ( MOAIViewport )
@@ -415,7 +417,7 @@ void AKUSetInputTimestamp ( double timestamp ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	

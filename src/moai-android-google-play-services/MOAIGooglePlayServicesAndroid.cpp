@@ -29,13 +29,13 @@ int MOAIGooglePlayServicesAndroid::_connect ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID connect = env->GetStaticMethodID ( playserv, "connect", "()Z" );
    		if ( connect == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "connect" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "connect" );
 		} else {
 
 			bool success = ( bool ) env->CallStaticBooleanMethod ( playserv, connect );
@@ -63,13 +63,13 @@ int MOAIGooglePlayServicesAndroid::_isConnected ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID isConnected = env->GetStaticMethodID ( playserv, "isConnected", "()Z" );
    		if ( isConnected == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "isConnected" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "isConnected" );
 		} else {
 
 			bool success = ( bool ) env->CallStaticBooleanMethod ( playserv, isConnected );
@@ -112,13 +112,13 @@ int MOAIGooglePlayServicesAndroid::_showAchievements ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "ccom/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "ccom/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID showAchievements = env->GetStaticMethodID ( playserv, "showAchievements", "()V" );
    		if ( showAchievements == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "showAchievements" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "showAchievements" );
 		} else {
 
 			env->CallStaticVoidMethod ( playserv, showAchievements );
@@ -147,13 +147,13 @@ int MOAIGooglePlayServicesAndroid::_showLeaderboard ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID showLeaderboard = env->GetStaticMethodID ( playserv, "showLeaderboard", "(Ljava/lang/String;)V" );
    		if ( showLeaderboard == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "showLeaderboard" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "showLeaderboard" );
 		} else {
 
 			env->CallStaticVoidMethod ( playserv, showLeaderboard, ( jstring )jboard );
@@ -184,13 +184,13 @@ int MOAIGooglePlayServicesAndroid::_submitScore ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID submitScore = env->GetStaticMethodID ( playserv, "submitScore", "(Ljava/lang/String;J)V" );
    		if ( submitScore == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "submitScore" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "submitScore" );
 		} else {
 
 			env->CallStaticVoidMethod ( playserv, submitScore, ( jstring )jboard, score );
@@ -219,13 +219,13 @@ int MOAIGooglePlayServicesAndroid::_unlockAchievement ( lua_State* L ) {
 	jclass playserv = env->FindClass ( "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     if ( playserv == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find java class %s", "com/moaisdk/googleplayservices/MoaiGooglePlayServices" );
     } else {
 
     	jmethodID unlockAchievement = env->GetStaticMethodID ( playserv, "unlockAchievement", "(Ljava/lang/String;)V" );
    		if ( unlockAchievement == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "unlockAchievement" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIGooglePlayServicesAndroid: Unable to find static java method %s", "unlockAchievement" );
 		} else {
 
 			env->CallStaticVoidMethod ( playserv, unlockAchievement, ( jstring )jach );

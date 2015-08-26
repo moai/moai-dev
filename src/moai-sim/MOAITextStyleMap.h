@@ -15,9 +15,9 @@ class MOAITextStyleParser;
 class MOAITextStyleSpan {
 public:
 
-	int					mBase;		// base index of first utf-8 character in span
-	int					mTop;		// size of span
-	MOAITextStyle*		mStyle;		// style for span
+	int						mBase;		// base index of first utf-8 character in span
+	int						mTop;		// size of span
+	MOAITextStyleState*		mStyle;		// style for span
 };
 
 //================================================================//
@@ -35,7 +35,7 @@ private:
 	friend class MOAITextStyleParser;
 	
 	//----------------------------------------------------------------//
-	void				PushStyleSpan				( int base, int top, MOAITextStyle& style );
+	void				PushStyleSpan				( int base, int top, MOAITextStyleState& style );
 
 public:
 	

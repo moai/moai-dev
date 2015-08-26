@@ -49,8 +49,8 @@ prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
 layer:insertProp ( prop )
 
---prop:moveRot ( 360, 6 )
---prop:moveLoc ( -512, 0, 6 )
+prop:moveRot ( 360, 6 )
+prop:moveLoc ( -512, 0, 6 )
 
 program = MOAIShaderProgram.new ()
 

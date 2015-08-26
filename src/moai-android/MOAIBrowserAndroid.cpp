@@ -40,7 +40,7 @@ int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
 int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURL");
+	ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURL");
 
 	MOAIJString jurl = self->GetJString ( lua_tostring ( state, 1 ));
 	self->CallStaticVoidMethod ( self->mJava_OpenURL, ( jstring )jurl );

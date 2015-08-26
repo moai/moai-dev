@@ -91,7 +91,7 @@ function makeMesh ()
 	vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 	vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	local vbo = MOAIGfxBuffer.new ()
+	local vbo = MOAIVertexBuffer.new ()
 	vbo:reserve ( 4 * 36 * vertexFormat:getVertexSize ())
 	
 	writeCube ( vbo, -64, -64, 0, 32 )
@@ -125,9 +125,9 @@ end
 mesh:reserveSelections ( 4 )
 
 mesh:addSelection ( 1, 1, 36 )
-mesh:addSelection ( 2, 37, 36 )
-mesh:addSelection ( 3, 73, 36 )
-mesh:addSelection ( 4, 109, 36 )
+mesh:addSelection ( 2, 37, 37 + 36 )
+mesh:addSelection ( 3, 73, 73 + 36 )
+mesh:addSelection ( 4, 109, 109 + 36 )
 
 local function makeProp ( idx )
 

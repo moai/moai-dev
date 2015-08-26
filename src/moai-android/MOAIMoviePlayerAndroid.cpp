@@ -35,13 +35,13 @@ int MOAIMoviePlayerAndroid::_init ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( movie, "init", "(Ljava/lang/String;)V" );
     	if ( init == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "init" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "init" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, init, ( jstring )jurl );
@@ -66,13 +66,13 @@ int MOAIMoviePlayerAndroid::_play ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID play = env->GetStaticMethodID ( movie, "play", "()V" );
     	if ( play == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "play" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "play" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, play );
@@ -97,13 +97,13 @@ int MOAIMoviePlayerAndroid::_pause ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID pause = env->GetStaticMethodID ( movie, "pause", "()V" );
     	if ( pause == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "pause" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "pause" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, pause );	
@@ -143,13 +143,13 @@ int MOAIMoviePlayerAndroid::_stop ( lua_State* L ) {
 	jclass movie = env->FindClass ( "com/ziplinegames/moai/MoaiMoviePlayer" );
     if ( movie == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiMoviePlayer" );
     } else {
 
     	jmethodID stop = env->GetStaticMethodID ( movie, "stop", "()V" );
     	if ( stop == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "stop" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIMoviePlayerAndroid: Unable to find static java method %s", "stop" );
     	} else {
 
 			env->CallStaticVoidMethod ( movie, stop );

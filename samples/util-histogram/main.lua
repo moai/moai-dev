@@ -18,7 +18,7 @@ table.insert ( objects, MOAILayer.new ())
 table.insert ( objects, MOAITransform.new ())
 
 print ( "REPORTING HISTOGRAM" )
-MOAILuaRuntime.reportHistogram ( 'report.txt' )
+MOAILuaRuntime.reportHistogram ( '../temp/report.txt' )
 print ()
 
 print ( "GETTING, ITERATING HISTOGRAM" )

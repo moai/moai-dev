@@ -452,6 +452,16 @@ int zl_fgetc ( ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+void* zl_fgethandle ( ZLFILE* fp ) {
+
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
+	if ( file ) {
+		return file->GetFileHandle ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int zl_fgetpos ( ZLFILE* fp, fpos_t* position ) {
 	(( void )fp );
 	(( void )position );
@@ -496,14 +506,14 @@ ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 
 //----------------------------------------------------------------//
 #ifdef MOAI_COMPILER_MSVC
-	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 
+	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 		*fp = zl_fopen ( filename, mode );
 		return errno;
 	}
 
 	ZLFILE *zl_wfopen(const wchar_t *filename, const wchar_t *mode) {
-		ZLVfsFile* file = new ZLVfsFile();
+		ZLVfsFile* file = new ZLVfsFile ();
 
 		//Convert to ansi for our zlvfsfile functions
 		char filenameA[260];

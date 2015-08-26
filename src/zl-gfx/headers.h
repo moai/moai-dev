@@ -218,8 +218,6 @@ enum {
 };
 
 enum {
-	ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED,
-	ZGL_CAPS_IS_PROGRAMMABLE,
 	ZGL_CAPS_MAX_TEXTURE_SIZE,
 	ZGL_CAPS_MAX_TEXTURE_UNITS,
 };
@@ -266,11 +264,6 @@ extern u32		zglGetError				();
 extern cc8*		zglGetErrorString		( u32 error );
 extern cc8*		zglGetString			( u32 stringID );
 extern void		zglLineWidth			( float width );
-extern void		zglLoadIdentity			();
-extern void		zglLoadMatrix			( const float* matrix );
-extern void		zglMatrixMode			( u32 mode );
-extern void		zglMultMatrix			( const float* matrix );
-extern void		zglPointSize			( float size );
 extern void		zglReadPixels			( s32 x, s32 y, u32 width, u32 height, void* data );
 extern void		zglScissor				( s32 x, s32 y, u32 w, u32 h );
 extern void		zglViewport				( s32 x, s32 y, u32 w, u32 h );

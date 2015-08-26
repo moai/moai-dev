@@ -45,7 +45,7 @@ pushCircle ( -100, 100, 100 )
 vtxStream:seek ()
 idxStream:seek ()
 
-local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream, 2 )
+local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 local selectionMesh = MOAISelectionMesh.new ()
@@ -55,9 +55,10 @@ selectionMesh:reserveSelections ( #sizes )
 
 local base = 1
 for i, n in ipairs ( sizes ) do
-	print ( base, n )
-	selectionMesh:addSelection ( i, base, n )
-	base = base + n
+	local top = base + n
+	print ( base, top )
+	selectionMesh:addSelection ( i, base, top )
+	base = top
 end
 
 selectionMesh:printSelection ()

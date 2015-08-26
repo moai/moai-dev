@@ -75,12 +75,9 @@ int MOAIShaderMgr::_getShader ( lua_State* L ) {
 void MOAIShaderMgr::BindShader ( u32 shaderID ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	if ( gfxDevice.IsProgrammable ()) {
 
-		MOAIShader* shader = this->GetShader ( shaderID );
-		gfxDevice.SetShader ( shader );
-	}
+	MOAIShader* shader = this->GetShader ( shaderID );
+	gfxDevice.SetShader ( shader );
 }
 
 //----------------------------------------------------------------//

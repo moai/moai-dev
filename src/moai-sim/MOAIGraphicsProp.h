@@ -14,7 +14,6 @@ class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIDeck;
 class MOAIDeckRemapper;
-class MOAIGfxState;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIMaterialBatch;
@@ -26,7 +25,7 @@ class MOAIPartitionResultBuffer;
 class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
-class MOAITextureBase;
+class MOAISingleTexture;
 
 //================================================================//
 // MOAIGraphicsProp

@@ -15,6 +15,14 @@ class MOAIShader;
 class MOAITextStyleState {
 protected:
 
+	friend class MOAITextLabel;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyle;
+	friend class MOAITextStyleParser;
+	friend class MOAITextStyleCache;
+	friend class MOAITextStyleMap;
+
 	MOAIFont*		mFont;
 	MOAIShader*		mShader;
 	float			mSize;
@@ -24,11 +32,18 @@ protected:
 
 public:
 
-	//----------------------------------------------------------------//
-				MOAITextStyleState		();
-				~MOAITextStyleState		();
-	bool		NeedsLayout				( const MOAITextStyleState& compare ) const;
+	GET ( MOAIFont*, Font, mFont );
+	GET_SET ( float, Size, mSize );
+	GET_SET ( u32, Color, mColor );
 
+	//----------------------------------------------------------------//
+	void				AffirmGlyph				( u32 c );
+	virtual void		Init					( MOAITextStyleState& style );
+						MOAITextStyleState		();
+	virtual				~MOAITextStyleState		();
+	bool				NeedsLayout				( const MOAITextStyleState& compare ) const;
+	virtual void		SetFont					( MOAIFont* font );
+	virtual void		SetShader				( MOAIShader* shader );
 };
 
 //================================================================//
@@ -66,13 +81,8 @@ public:
 
 	DECL_LUA_FACTORY ( MOAITextStyle )
 	
-	GET ( MOAIFont*, Font, mFont );
-	GET ( float, Size, mSize );
-	GET_SET ( u32, Color, mColor );
-	
 	//----------------------------------------------------------------//
-	void			AffirmGlyph				( u32 c );
-	void			Init					( MOAITextStyle& style );
+	void			Init					( MOAITextStyleState& style );
 					MOAITextStyle			();
 					~MOAITextStyle			();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -81,7 +91,6 @@ public:
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
 	void			SetShader				( MOAIShader* shader );
-	void			SetSize					( float size );
 };
 
 #endif

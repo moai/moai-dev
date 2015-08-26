@@ -526,7 +526,7 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAISingleTexture* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( this->mCache );
 	return this->mCache->GetGlyphTexture ( glyph );

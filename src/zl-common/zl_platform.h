@@ -113,6 +113,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
+#include <float.h>
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>

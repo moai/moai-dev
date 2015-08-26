@@ -25,7 +25,7 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 top			= state.GetValue < u32 >( 4, 0 ) + base;
+	u32 top			= state.GetValue < u32 >( 4, 1 ) - 1;
 
 	self->AddSelection ( set, base, top );
 
@@ -39,20 +39,28 @@ int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	self->ClearSelection ( set );
-
+	if ( state.CheckParams ( 3, "NN" )) {
+	
+		u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
+		u32 top			= state.GetValue < u32 >( 4, 1 ) - 1;
+	
+		self->ClearSelection ( set, base, top );
+	}
+	else {
+		self->ClearSelection ( set );
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAISelectionMesh::_mergeSelections ( lua_State* L ) {
+int MOAISelectionMesh::_mergeSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN" )
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 merge		= state.GetValue < u32 >( 3, 1 ) - 1;
 
-	self->MergeSelections ( set, merge );
+	self->MergeSelection ( set, merge );
 
 	return 0;
 }
@@ -102,130 +110,96 @@ int MOAISelectionMesh::_setMesh ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 
-	if ( set >= this->mSets.Size ()) return;
+	// the approach here is to insert the new span after the last span that has a
+	// base entirely below the new span, then clean up any overlaps.
+
+	// there are a few edge cases dealing with inserting the span after an existing span:
+	//   the new span may match the previous span
+	//   the new span may clip the previous span
+	//   the new span may be entirely inside the previous span
+	//   the previous span is entirely below the new span (top and bottom)
+
+	// once the insertion edge cases have been dealt with, the new span will be inserted
+	// cleanly (i.e. no overlap) after the previous span. one this is done, any subsequent
+	// spans the new span overlaps will be removed, and any span left straddling the top
+	// of the new span will be clipped.
+
+	// make sure the array of sets is big enough
+	this->mSets.Grow ( set + 1, 1, 0 );
+	
+	// identify the previous span in both the master and set lists.
+	// a span is only 'previous' if its base is entirely below the new span's base.
+	// if the base is the same, then it the new span is added *before* it and it is cured by FixOverlaps ().
+	
+	MOAISelectionSpan* prevInSet		= 0;
+	MOAISelectionSpan* prevInMaster		= 0;
 
 	MOAISelectionSpan* cursor = this->mSpanListHead;
+	for ( ; cursor && ( cursor->mBase < base ); cursor = cursor->mNextInMaster ) {
 	
-	MOAISelectionSpan* prevInSet = 0;
-	MOAISelectionSpan* prevAdjacentInSet = 0;
-	MOAISelectionSpan* spanListTail = 0;
-	
-	for ( ; cursor && ( cursor->mTop < base ); cursor = cursor->mNextInMaster ) {
-	
-		spanListTail = cursor;
+		prevInMaster = cursor;
 	
 		if ( cursor->mSetID == set ) {
-		
 			prevInSet = cursor;
-		
-			if ( cursor->mTop == base ) {
-				prevAdjacentInSet = cursor;
-			}
 		}
 	}
-
-	MOAISelectionSpan* span = 0;
-
-	if ( cursor ) {
 	
-		if ( prevAdjacentInSet ) {
-			cursor = prevAdjacentInSet;
-			prevAdjacentInSet = 0;
-		}
-		else if ( cursor->mBase == base ) {
-			this->ChangeSpanSet ( cursor, set );
-		}
+	if ( prevInMaster ) {
+	
+		// we have a span with a base entirely below the new span's base.
+		// wacky edge cases ensue.
+	
+		if ( prevInMaster->mTop >= base ) {
 		
-		if ( cursor->mSetID == set ) {
+			// previous span touches or overlaps the new span
 			
-			if ( cursor->mTop <= top ) {
+			if ( prevInMaster->mTop <= top ) {
 			
-				MOAISelectionSpan* next = cursor->mNextInMaster;
+				// previous span only overlaps the base of the new span.
+				// clip it to the base and inser the new span after it
+				// or, if it matches the new span, extend it.
+			
+				if ( prevInMaster->mSetID == set ) {
 				
-				while ( next && ( next->mTop <= top )) {
-				
-					if ( cursor->mNext == next ) {
-						cursor->mNext = next->mNext;
-					}
-					next = this->FreeSpanAndGetNext ( next );
+					// make the previous span longer and clean up any overlaps.
+					prevInMaster->mTop = top;
+					this->FixOverlaps ( prevInMaster );
 				}
+				else {
 				
-				if ( next && ( next->mSetID == set ) && ( next->mBase <= top )) {
-					top = next->mTop;
-					cursor->mNext = next->mNext;
-					next = this->FreeSpanAndGetNext ( next );
+					// clip the previous span, add the new span and fix overlaps.
+					prevInMaster->mTop = base;
+					this->FixOverlaps ( this->InsertSpan ( this->AllocSpan ( set, base, top ), prevInMaster, prevInSet ));
 				}
+			}
+			else {
 				
-				cursor->mNextInMaster = next;
-				cursor->mTop = top;
+				// new span lies fully inside of previous span.
+				// if new span is in a different set, split previous span in two.
+				if ( prevInMaster->mSetID != set ) {
 				
-				if ( next ) {
-					next->mBase = top;
+				
+					MOAISelectionSpan* span = this->AllocSpan ( set, base, top );
+					MOAISelectionSpan* tail = this->AllocSpan ( prevInMaster->mSetID, top, prevInMaster->mTop );
+					
+					this->InsertSpan ( span, prevInMaster, prevInSet );
+					this->InsertSpan ( tail, span, prevInMaster );
+					
+					prevInMaster->mTop = base;
 				}
 			}
 		}
 		else {
 		
-			if ( cursor->mTop <= top ) {
-			
-				cursor->mTop = base;
-				MOAISelectionSpan* next = cursor->mNextInMaster;
-				
-				if ( next && ( next->mSetID == set )) {
-					
-					// next span is already in the set, so just move the boundary
-					next->mBase = base;
-				}
-				else {
-				
-					// create a new span and add it
-					span = this->AllocSpan ( set, base, top );
-				
-					span->mNextInMaster = cursor->mNextInMaster;
-					cursor->mNextInMaster = span;
-				}
-			}
-			else {
-			
-				// we need to split the span
-				span = this->AllocSpan ( set, base, top );
-				MOAISelectionSpan* cap = this->AllocSpan ( cursor->mSetID, top, cursor->mTop );
-				
-				cap->mNextInMaster = cursor->mNextInMaster;
-				span->mNextInMaster = cap;
-				cursor->mNextInMaster = span;
-				
-				cap->mNext = cursor->mNext;
-				cursor->mNext = cap;
-				
-				cursor->mTop = base;
-			}
+			// previous span is entirely below the new span.
+			// create a new span and clean up its overlaps.
+			this->FixOverlaps ( this->InsertSpan ( this->AllocSpan ( set, base, top ), prevInMaster, prevInSet ));
 		}
 	}
 	else {
 	
-		if ( prevAdjacentInSet ) {
-			prevAdjacentInSet->mTop = top;
-		}
-		else {
-	
-			span = this->AllocSpan ( set, base, top );
-			
-			if ( spanListTail ) {
-				spanListTail->mNextInMaster = span;
-			}
-			else {
-				this->mSpanListHead = span;
-			}
-		}
-	}
-	
-	// if there's a new span
-	if ( span ) {
-		if ( prevInSet ) {
-			span->mNext = prevInSet->mNext;
-			prevInSet->mNext = span;
-		}
+		// insert the new span at the head of the list and fix all the overlaps.
+		this->FixOverlaps ( this->InsertSpan ( this->AllocSpan ( set, base, top ), 0, 0 ));
 	}
 }
 
@@ -240,19 +214,19 @@ MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( u32 set, size_t base, size_t t
 	span->mBase = base;
 	span->mTop = top;
 	
+	span->mPrev = 0;
+	span->mPrevInMaster = 0;
 	span->mNextInMaster = 0;
+	
 	span->mNext = 0;
 	
-	if ( !this->mSets [ set ]) {
-		this->mSets [ set ] = span;
-	}
 	return span;
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, u32 set ) {
 
-	if ( span && span->mSetID != set ) {
+	if ( span && ( span->mSetID != set )) {
 
 		if ( this->mSets [ span->mSetID ] == span ) {
 			this->mSets [ span->mSetID ] = span->mNext;
@@ -271,20 +245,59 @@ void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, u32 set ) {
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::Clear () {
-
-	MOAISelectionSpan* next = this->mSpanListHead;
-	while ( next ) {
-		next = FreeSpanAndGetNext ( next );
-	}
 	
+	this->mSpanPool.Clear ();
 	this->mSets.Clear ();
 	
 	this->mSpanListHead = 0;
-	//this->mSpanListTail = 0;
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::ClearSelection ( u32 set ) {
+}
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
+
+	MOAISelectionSpan* cursor = this->mSpanListHead;
+	for ( ; cursor; cursor = cursor->mNextInMaster ) {
+	
+		if (( cursor->mSetID == set ) && ((( cursor->mBase <= base ) && ( cursor->mTop >= base )) || (( cursor->mBase <= top ) && ( cursor->mTop >= top )))) break;
+	}
+	
+	if ( cursor ) {
+	
+		if (( cursor->mBase < base ) && ( cursor->mTop > top )) {
+			
+			this->InsertSpan ( this->AllocSpan ( set, top, cursor->mTop ), cursor, cursor );
+			cursor->mTop = base;
+		}
+		else {
+		
+		
+			while ( cursor && ( cursor->mBase < top )) {
+			
+				MOAISelectionSpan* span = cursor;
+				cursor = cursor->mNextInMaster;
+			
+				if ( span->mSetID == set ) {
+				
+				
+					if ( span->mBase < base ) {
+						span->mTop = base;
+						continue;
+					}
+					
+					if ( span->mTop > top ) {
+						span->mBase = top;
+						break;
+					}
+					
+					this->FreeSpan ( span );
+				}
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -307,24 +320,156 @@ void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 }
 
 //----------------------------------------------------------------//
-MOAISelectionSpan* MOAISelectionMesh::FreeSpanAndGetNext ( MOAISelectionSpan* span ) {
+void MOAISelectionMesh::FixOverlaps ( MOAISelectionSpan* span ) {
 
-	MOAISelectionSpan* next = 0;
-
-	if ( span ) {
+	// we expect the new span to be *entirely* after the base of the previous span and
+	// for the previous span to have already been clipped.
 	
-		if ( this->mSets [ span->mSetID ] == span ) {
-			this->mSets [ span->mSetID ] = span->mNext;
-		}
+	// in other words, we only fix overlaps for *subsequent* spans in the list.
+	
+	// note that the base of the next span may coincide with the base of the new span.
+
+	MOAISelectionSpan* cursor = span->mNextInMaster;
+	while ( cursor && ( cursor->mBase <= span->mTop )) {
+	
+		MOAISelectionSpan* overlap = cursor;
+		cursor = cursor->mNextInMaster;
 		
-		next = span->mNextInMaster;
-		this->mSpanPool.Free ( span );
+		if ( overlap->mTop <= span->mTop ) {
+			// the span we're evalutating is entirely covered by the new span.
+			this->FreeSpan ( overlap );
+		}
+		else {
+			// just the base overlaps the new span, so clip it.
+			overlap->mBase = span->mTop;
+			break;
+		}
 	}
-	return next;
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MergeSelections ( u32 set, u32 merge ) {
+void MOAISelectionMesh::FreeSpan ( MOAISelectionSpan* span ) {
+
+	if ( span ) {
+	
+		if ( span->mPrevInMaster ) {
+			span->mPrevInMaster->mNextInMaster = span->mNextInMaster;
+		}
+		else {
+			this->mSpanListHead = span->mNextInMaster;
+		}
+		
+		if ( span->mPrev ) {
+			span->mPrev->mNext = span->mNext;
+		}
+		else {
+			this->mSets [ span->mSetID ] = span->mNext;
+		}
+		
+		if ( span->mNextInMaster ) {
+			span->mNextInMaster->mPrevInMaster = span->mPrevInMaster;
+		}
+		
+		if ( span->mNext ) {
+			span->mNext->mPrev = span->mPrev;
+		}
+		
+		this->mSpanPool.Free ( span );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAISelectionSpan* MOAISelectionMesh::InsertSpan ( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet ) {
+
+	if ( prevInMaster ) {
+	
+		span->mPrevInMaster = prevInMaster;
+		span->mNextInMaster = prevInMaster->mNextInMaster;
+		prevInMaster->mNextInMaster = span;
+	}
+	else {
+	
+		span->mNextInMaster = this->mSpanListHead;
+		this->mSpanListHead = span;
+	}
+	
+	if ( prevInSet ) {
+	
+		span->mPrev = prevInSet;
+		span->mNext = prevInSet->mNext;
+		prevInSet->mNext = span;
+	}
+	else {
+	
+		span->mNext = this->mSets [ span->mSetID ];
+		this->mSets [ span->mSetID ] = span;
+	}
+	
+	if ( span->mNextInMaster ) {
+		span->mNextInMaster->mPrevInMaster = span;
+	}
+	
+	if ( span->mNext ) {
+		span->mNext->mPrev = span;
+	}
+	
+	return span;
+}
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
+
+	MOAISelectionSpan* cursor = this->mSpanListHead;
+	
+	if ( cursor ) {
+	
+		MOAISelectionSpan* prevInSet = 0;
+	
+		if ( cursor->mSetID == merge ) {
+		
+			u32 base = cursor->mBase;
+			u32 top = cursor->mTop;
+		
+			this->FreeSpan ( cursor );
+			cursor = this->InsertSpan ( this->AllocSpan ( set, base, top ), 0, 0 );
+			
+			prevInSet = cursor;
+		}
+		
+		cursor = cursor->mNextInMaster;
+		
+		while ( cursor ) {
+		
+			MOAISelectionSpan* span = cursor;
+			cursor = cursor->mNextInMaster;
+			
+			if ( span->mSetID == merge ) {
+			
+				MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
+			
+				u32 base = span->mBase;
+				u32 top = span->mTop;
+			
+				this->FreeSpan ( span );
+				span = this->InsertSpan ( this->AllocSpan ( set, base, top ), prevInMaster, prevInSet );
+				prevInSet = span;
+			}
+			
+			if ( span->mSetID == set ) {
+			
+				if (( span->mPrevInMaster->mSetID == set ) && ( span->mPrevInMaster->mTop == span->mBase )) {
+				
+					span->mPrevInMaster->mTop = span->mTop;
+					this->FreeSpan ( span );
+				}
+				else {
+					prevInSet = span;
+				}
+			}
+		}
+	}
+	
+	this->mSets [ merge ] = 0;
 }
 
 //----------------------------------------------------------------//
@@ -342,13 +487,13 @@ MOAISelectionMesh::~MOAISelectionMesh () {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::PrintSelection ( u32 idx ) {
+void MOAISelectionMesh::PrintSelection ( u32 set ) {
 
-	if ( idx < this->mSets.Size ()) {
+	if ( set < this->mSets.Size ()) {
 	
-		printf ( "set %d - ", idx );
+		printf ( "set %d - ", set );
 	
-		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ idx ];
+		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ set ];
 		for ( ; span; span = ( MOAISelectionSpan* )span->mNext ) {
 		
 			printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
@@ -390,7 +535,7 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
 		{ "clearSelection",			_clearSelection },
-		{ "mergeSelections",		_mergeSelections },
+		{ "mergeSelection",			_mergeSelection },
 		{ "printSelection",			_printSelection },
 		{ "reserveSelections",		_reserveSelections },
 		{ "setDeck",				_setMesh }, // override
@@ -405,9 +550,8 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAISelectionMesh::ReserveSelections ( u32 total ) {
 
 	this->Clear ();
-
-	this->mSets.Init ( total );
-	this->mSets.Fill ( 0 );
+	
+	this->mSets.Resize ( total, 0 );
 }
 
 //----------------------------------------------------------------//

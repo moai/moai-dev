@@ -16,9 +16,6 @@ viewport:setSize ( 768, 768 )
 viewport:setScale ( 768, -768 )
 layer:setViewport ( viewport )
 
-camera = MOAITransform.new ()
-layer:setCamera ( camera )
-
 texture = MOAITexture.new ()
 texture:load ( "iso-tiles.png" )
 

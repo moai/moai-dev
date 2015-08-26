@@ -307,12 +307,13 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	if ( oldParent ) {
 	
 		// if we're detaching the action while the parent action is updating
-		// then we need to handle the edge case where the action is referenced
-		// by mChildIt
-		if (( oldParent->mActionFlags & FLAGS_IS_UPDATING ) && ( oldParent->mChildIt == &this->mLink )) {
-			oldParent->mChildIt = oldParent->mChildIt->Next ();
-			if ( oldParent->mChildIt ) {
-				oldParent->mChildIt->Data ()->Retain ();
+		// and the action we are detaching is *next in line* for an update, then we
+		// need to *skip* the action, update the cursor, retain it (if it exists) and
+		// release the action we are detaching
+		if (( oldParent->mActionFlags & FLAGS_IS_UPDATING ) && ( oldParent->mNextChildIt == &this->mLink )) {
+			oldParent->mNextChildIt = oldParent->mNextChildIt->Next (); // skip this link
+			if ( oldParent->mNextChildIt ) {
+				oldParent->mNextChildIt->Data ()->Retain ();
 			}
 			this->Release ();
 		}
@@ -336,11 +337,16 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	
 		this->mParent = parent;
 		parent->mChildren.PushBack ( this->mLink );
-		this->ResetPass ( defer ? parent->mPass + 1 : parent->mPass );
 		
-		if ( !parent->mChildIt ) {
-			parent->mChildIt = &this->mLink;
+		// if we're attaching the action while while the previous action is updating, then
+		// the previous action will *always* be the tail and the *next* action it will therefore
+		// be *nil*; in this case we can should update the iterator and do an extra retain
+		if (( parent->mActionFlags & FLAGS_IS_UPDATING ) && ( !parent->mNextChildIt )) {
+			this->Retain (); // extra retain
+			parent->mNextChildIt = &this->mLink; // in case more actions are added
 		}
+		
+		this->ResetPass ( defer ? parent->mPass + 1 : parent->mPass );
 	}
 	
 	if (( !oldParent ) && parent ) {
@@ -413,7 +419,7 @@ STLString MOAIAction::GetDebugInfo() const {
 MOAIAction::MOAIAction () :
 	mPass ( 0 ),
 	mParent ( 0 ),
-	mChildIt ( 0 ),
+	mNextChildIt ( 0 ),
 	mThrottle ( 1.0f ),
 	mActionFlags ( FLAGS_AUTO_STOP ) {
 
@@ -503,8 +509,8 @@ void MOAIAction::ResetPass ( u32 pass ) {
 
 	if ( this->mPass > pass ) {
 		ChildIt childIt = this->mChildren.Head ();
-		for ( ; childIt; childIt = this->mChildIt->Next ()) {
-			this->mChildIt->Data ()->ResetPass ( pass );
+		for ( ; childIt; childIt = this->mNextChildIt->Next ()) {
+			this->mNextChildIt->Data ()->ResetPass ( pass );
 		}
 	}
 	this->mPass = pass;
@@ -544,7 +550,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		double elapsed = ZLDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
 			STLString debugInfo = this->GetDebugInfo();
-			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
+			MOAILogF ( 0, ZLLog::LOG_STATUS, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
 	
@@ -556,20 +562,20 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 	// we retain the head child in the list (if any)
 	// here because the first child retained inside the loop (below)
 	// is the *second* child in the list
-	this->mChildIt = this->mChildren.Head ();
-	if ( this->mChildIt ) {
-		this->mChildIt->Data ()->Retain ();
+	this->mNextChildIt = this->mChildren.Head ();
+	if ( this->mNextChildIt ) {
+		this->mNextChildIt->Data ()->Retain ();
 	}
 	
 	MOAIAction* child = 0;
-	while ( this->mChildIt ) {
+	while ( this->mNextChildIt ) {
 		
-		child = this->mChildIt->Data ();
+		child = this->mNextChildIt->Data ();
 		
 		// retain the *next* child in the list (if any)
-		this->mChildIt = this->mChildIt->Next ();
-		if ( this->mChildIt ) {
-			this->mChildIt->Data ()->Retain ();
+		this->mNextChildIt = this->mNextChildIt->Next ();
+		if ( this->mNextChildIt ) {
+			this->mNextChildIt->Data ()->Retain ();
 		}
 		
 		if ( child->mParent && ( child->mPass <= this->mPass )) {
@@ -581,7 +587,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 	}
 	
 	this->mActionFlags &= ~FLAGS_IS_UPDATING;
-	this->mChildIt = 0;
+	this->mNextChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Detach ();

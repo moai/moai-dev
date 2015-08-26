@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
@@ -517,37 +518,42 @@ int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	u32 totalElements = 0;
+	u32 base = 0;
+	int totalElements = 0;
 	
-	MOAIGfxBuffer* vtxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 2, false );
-	MOAIGfxBuffer* idxBuffer	= state.GetLuaObject < MOAIGfxBuffer >( 3, false );
+	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
 
 	if ( vtxBuffer && idxBuffer ) {
 	
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
-		totalElements = self->Tesselate ( vtxBuffer, idxBuffer, format, idxSizeInBytes );
+		base = idxBuffer->GetCursor () / idxSizeInBytes;
+		totalElements = self->Tesselate ( *vtxBuffer, *idxBuffer, *format, idxSizeInBytes );
 	}
 	else {
 		
 		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
 		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
 		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
-	
-		if ( vtxStream && idxStream ) {
-			totalElements = self->Tesselate ( vtxStream, idxStream, format );
+		
+		if ( vtxStream && idxStream && format ) {
+			base = idxStream->GetCursor () / 4;
+			totalElements = self->Tesselate ( *vtxStream, *idxStream, *format );
 		}
 	}
 	
 	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
 	
 	if ( region ) {
-		totalElements = self->Tesselate ( region );
+		totalElements = self->Tesselate ( *region );
 	}
 	
 	state.Push ( totalElements );
-	return 1;
+	state.Push ( base );
+	state.Push ( base + totalElements );
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -950,12 +956,10 @@ void MOAIVectorTesselator::SetVertexExtra ( u32 idx, void* extra, size_t size ) 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( SafeTesselator* tess ) {
+int MOAIVectorTesselator::Tesselate ( SafeTesselator& tess ) {
 
 	int error = this->Finish ();
 	if ( error ) return error;
-
-	assert ( tess );
 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
@@ -966,87 +970,64 @@ int MOAIVectorTesselator::Tesselate ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIRegion* region ) {
-
-	assert ( region );
+int MOAIVectorTesselator::Tesselate ( MOAIRegion& region ) {
 
 	SafeTesselator tess;
-	if ( !this->Tesselate ( &tess )) return 0;
+	if ( !this->Tesselate ( tess )) return 0;
 	
 	int error = tess.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
 
 	if ( !error ) {
 		
-		const int* elems	= tessGetElements ( tess.mTess );
-		int nelems			= tessGetElementCount ( tess.mTess );
-		const float* verts	= tessGetVertices ( tess.mTess );
-
-		// each elem is an edge loop
-		region->ReservePolygons ( nelems );
+		region.Copy ( tess );
+		region.Transform ( region, this->mStyle.mDrawingToWorld );
+		region.Bless ();
 		
-		for ( int i = 0; i < nelems; ++i ) {
-		
-			ZLPolygon2D& poly = region->GetPolygon ( i );
-			
-			int b = elems [( i * 2 )];
-			int n = elems [( i * 2 ) + 1 ];
-			
-			poly.SetVertices (( ZLVec2D* )&verts [ b * 2 ], n );
-			
-			// TODO: think this needs to move to inside MOAIVectorShape::Tesselate ()
-			poly.Transform ( this->mStyle.mDrawingToWorld );
-			poly.Bless ();
-			
-//			printf ( "WINDING: %s\n", poly.GetInfoString ());
-		}
-		return nelems;
+		return region.GetSize ();
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format ) {
-
-	assert ( vtxStream );
-	assert ( idxStream );
+int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format ) {
 
 	int error = this->Finish ();
-	if ( error ) return error;
+	if ( error ) return -1;
 
-	int base = idxStream->GetLength ();
+	int base = idxStream.GetLength ();
 
 	this->mDepthOffset = 0.0f;
 
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this, vtxStream, idxStream, format );
-		if ( error ) return error;
+		if ( error ) return -1;
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
-	return ( idxStream->GetLength () - base ) >> 2;
+	return ( idxStream.GetLength () - base ) >> 2;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes ) {
-
-	assert ( vtxBuffer && idxBuffer );
+int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes ) {
 	
 	ZLMemStream vtxStream;
 	ZLMemStream idxStream;
 	
-	if ( this->Tesselate ( &vtxStream, &idxStream, format )) {
-		return MOAIVectorUtil::GetTriangles ( vtxStream, *vtxBuffer, idxStream, *idxBuffer, idxSizeInBytes );
+	int totalIndices = this->Tesselate ( vtxStream, idxStream, format );
+	
+	if ( totalIndices > 0 ) {
+		return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
-	return 0;
+	
+	// something went wrong, return error code
+	return totalIndices;
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteSkirt ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID ) {
 
-	assert ( vtxStream && idxStream );
-
-	u32 base = this->CountVertices ( *format, *vtxStream );
+	u32 base = this->CountVertices ( format, vtxStream );
 	float z = style.GetExtrude ();
 	float zOff = style.GetZOffset ();
 
@@ -1070,9 +1051,9 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 
 	u32 color32 = fillColor.PackRGBA ();
 
-	const int* elems = tessGetElements ( tess->mTess );
-	const int nelems = tessGetElementCount ( tess->mTess );
-	const float* verts = tessGetVertices ( tess->mTess );
+	const int* elems = tessGetElements ( tess.mTess );
+	const int nelems = tessGetElementCount ( tess.mTess );
+	const float* verts = tessGetVertices ( tess.mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		
@@ -1153,18 +1134,18 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 				color1 = color.PackRGBA ();
 			}
 			
-			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v0.mX, v0.mY, z + zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
-			this->WriteVertex ( *vtxStream, format, v1.mX, v1.mY, z + zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
+			this->WriteVertex ( vtxStream, format, v0.mX, v0.mY, zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( vtxStream, format, v1.mX, v1.mY, zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
+			this->WriteVertex ( vtxStream, format, v0.mX, v0.mY, z + zOff, normal0.mX, normal0.mY, 0.0f, color0, vertexExtraID );
+			this->WriteVertex ( vtxStream, format, v1.mX, v1.mY, z + zOff, normal1.mX, normal1.mY, 0.0f, color1, vertexExtraID );
 			
-			idxStream->Write < u32 >( base + 0 );
-			idxStream->Write < u32 >( base + 1 );
-			idxStream->Write < u32 >( base + 3 );
+			idxStream.Write < u32 >( base + 0 );
+			idxStream.Write < u32 >( base + 1 );
+			idxStream.Write < u32 >( base + 3 );
 			
-			idxStream->Write < u32 >( base + 0 );
-			idxStream->Write < u32 >( base + 3 );
-			idxStream->Write < u32 >( base + 2 );
+			idxStream.Write < u32 >( base + 0 );
+			idxStream.Write < u32 >( base + 3 );
+			idxStream.Write < u32 >( base + 2 );
 			
 			base += 4;
 		}
@@ -1172,11 +1153,9 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator* tess, ZLStream* vtxStrea
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID ) {
+void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID ) {
 
-	assert ( vtxStream && idxStream );
-
-	u32 base = this->CountVertices ( *format, *vtxStream );
+	u32 base = this->CountVertices ( format, vtxStream );
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
@@ -1187,8 +1166,8 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 		log.write ( "WRITING VERTICES:\n" );
 	}
 
-	const float* verts = tessGetVertices ( tess->mTess );
-	const int nverts = tessGetVertexCount ( tess->mTess );
+	const float* verts = tessGetVertices ( tess.mTess );
+	const int nverts = tessGetVertexCount ( tess.mTess );
 	
 	for ( int i = 0; i < nverts; ++i ) {
 		
@@ -1199,50 +1178,47 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator* tess, ZLStream* vtxS
 		}
 		
 		style.mDrawingToWorld.Transform ( vert );
-		this->WriteVertex ( *vtxStream, format, vert.mX, vert.mY, z, 0.0f, 0.0f, 1.0f, color, vertexExtraID );
+		this->WriteVertex ( vtxStream, format, vert.mX, vert.mY, z, 0.0f, 0.0f, 1.0f, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {
 		log.write ( "\n" );
-		MOAILog ( 0, 0, log.c_str ());
+		ZLLogF ( ZLLog::CONSOLE, log.c_str ());
 	}
 
 	this->mDepthOffset += this->mDepthBias;
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "WRITING INDICES:\n" );
+		ZLLogF ( ZLLog::CONSOLE, "WRITING INDICES:\n" );
 	}
 
-	const int* elems = tessGetElements ( tess->mTess );
-	const int nelems = tessGetElementCount ( tess->mTess );
+	const int* elems = tessGetElements ( tess.mTess );
+	const int nelems = tessGetElementCount ( tess.mTess );
 	
 	for ( int i = 0; i < nelems; ++i ) {
 		const int* tri = &elems [ i * 3 ];
 		
 		if ( this->mVerbose ) {
-			MOAIPrint ( "%d: %d, %d, %d\n", i, tri [ 0 ], tri [ 1 ], tri [ 2 ]);
+			ZLLogF ( ZLLog::CONSOLE, "%d: %d, %d, %d\n", i, tri [ 0 ], tri [ 1 ], tri [ 2 ]);
 		}
 		
-		idxStream->Write < u32 >( base + tri [ 0 ]);
-		idxStream->Write < u32 >( base + tri [ 1 ]);
-		idxStream->Write < u32 >( base + tri [ 2 ]);
+		idxStream.Write < u32 >( base + tri [ 0 ]);
+		idxStream.Write < u32 >( base + tri [ 1 ]);
+		idxStream.Write < u32 >( base + tri [ 2 ]);
 	}
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "\n" );
+		ZLLogF ( ZLLog::CONSOLE, "\n" );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID ) {
-
-	format = format ? format : MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZC );
-	assert ( format );
+void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID ) {
 
 	size_t base = stream.GetCursor ();
-	format->WriteAhead ( stream );
+	format.WriteAhead ( stream );
 
-	size_t vertexSize = format->GetVertexSize ();
+	size_t vertexSize = format.GetVertexSize ();
 	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
 		stream.Seek ( base + ( vertexSize - this->mVtxExtraSize ), SEEK_SET );
@@ -1253,10 +1229,10 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat* for
 		stream.Seek ( base, SEEK_SET );
 	}
 	
-	format->WriteCoord ( stream, x, y, z, 1.0f );
-	format->WriteColor ( stream, color );
-	format->WriteNormal ( stream, xn, yn, zn );
+	format.WriteCoord ( stream, x, y, z, 1.0f );
+	format.WriteColor ( stream, color );
+	format.WriteNormal ( stream, xn, yn, zn );
 	
 	// next vertex
-	format->SeekVertex ( stream, base, 1 );
+	format.SeekVertex ( stream, base, 1 );
 }

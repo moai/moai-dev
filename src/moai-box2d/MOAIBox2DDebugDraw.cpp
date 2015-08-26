@@ -174,12 +174,10 @@ void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Colo
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPointSize(size);
 	gfxDevice.BeginPrim(ZGL_PRIM_POINTS);
 	gfxDevice.SetPenColor(color.r, color.g, color.b, 1.0f);
 	this->WriteVtx(gfxDevice, p.x, p.y);
 	gfxDevice.EndPrim();
-	gfxDevice.SetPointSize(1.0f);
 }
 
 //----------------------------------------------------------------//

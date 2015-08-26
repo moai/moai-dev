@@ -45,7 +45,7 @@ public:
 
 	enum {
 	
-		// these are the known uses, supported by fixed function
+		// these are the known attribute types
 		ARRAY_COLOR,
 		ARRAY_NORMAL,
 		ARRAY_TEX_COORD,
@@ -58,6 +58,10 @@ public:
 	};
 
 private:
+
+	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
 
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;
@@ -80,20 +84,16 @@ private:
 	static int					_getVertexSize					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						BindFixed						( const void* buffer ) const;
-	void						BindProgrammable				( const void* buffer ) const;
+	void						Bind							( const void* buffer ) const;
 	static u32					GetComponentSize				( u32 size, u32 type );
 	static u32					GetIndexForUse					( u32 use );
 	static u32					GetUseForIndex					( u32 idx );
 	static size_t				PackAttribute					( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute );
-	void						UnbindFixed						() const;
-	void						UnbindProgrammable				() const;
 	static ZLVec4D				UnpackAttribute					( const void* buffer, const MOAIVertexAttribute& attribute, float zFallback, float wFallback );
 	static ZLVec4D				UnpackCoord						( const void* buffer, const MOAIVertexAttribute& attribute );
+	void						Unbind							() const;
 	
 public:
-	
-	friend class MOAIGfxDevice;
 	
 	DECL_LUA_FACTORY ( MOAIVertexFormat )
 	
@@ -101,8 +101,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIVertexFormat*	AffirmVertexFormat				( MOAILuaState& state, int idx );
-	void						Bind							( const void* buffer ) const;
-	
 	int							Compare							( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const;
 	
 	bool						ComputeBounds					( ZLBox& bounds, const void* buffer, size_t size ) const;
@@ -128,7 +126,6 @@ public:
 	
 	void						SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
 	void						SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
-	void						Unbind							() const;
 	
 	void						WriteAhead						( ZLStream& stream ) const; // writes an empty vertex as a placeholder
 	void						WriteAttribute					( ZLStream& stream, u32 attrID, float x, float y, float z, float w ) const;
