@@ -61,13 +61,13 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
     if ( moai == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
     } else {
 
     	jmethodID showDialog = env->GetStaticMethodID ( moai, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
     	if ( showDialog == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
+			ZLLogF ( ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find static java method %s", "showDialog" );
     	} else {
 
 			env->CallStaticVoidMethod ( moai, showDialog, ( jstring )jtitle, ( jstring )jmessage, ( jstring )jpositive, ( jstring )jnuetral, ( jstring )jnegative, cancelable );	
