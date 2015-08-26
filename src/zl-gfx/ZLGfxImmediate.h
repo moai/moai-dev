@@ -5,7 +5,7 @@
 #define ZLGFXIMMEDIATE_H
 
 #include <zl-gfx/ZLGfx.h>
-#include <zl-util/ZLCowBuffer.h>
+#include <zl-util/ZLCopyOnWrite.h>
 
 //================================================================//
 // ZLGfxImmediate
@@ -90,7 +90,7 @@ public:
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	
 	const ZLGfxBufferRef	RetainBuffer				( const void* buffer, size_t size );
-	const ZLGfxBufferRef	RetainBuffer				( const ZLCowBuffer& buffer );
+	const ZLGfxBufferRef	RetainBuffer				( const ZLCopyOnWrite& buffer );
 	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
 	

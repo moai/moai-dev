@@ -485,7 +485,7 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 		ZLIntRect imageRect = image.GetRect ();
 		imageRect.Clip ( rect );
 		
-		ZLCowBuffer bitmapCow = image.GetBitmapCow ();
+		ZLCopyOnWrite bitmapCow = image.GetBitmapCow ();
 		
 		MOAIImage subImage;
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {

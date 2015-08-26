@@ -495,7 +495,7 @@ const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const void* buffer, size_t s
 }
 
 //----------------------------------------------------------------//
-const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const ZLCowBuffer& buffer ) {
+const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const ZLCopyOnWrite& buffer ) {
 
 	return this->RetainBuffer ( buffer.GetBuffer (), buffer.GetSize ());
 }

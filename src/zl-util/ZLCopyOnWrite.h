@@ -1,39 +1,37 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef ZLCOWBUFFER_H
-#define ZLCOWBUFFER_H
+#ifndef ZLCOPYONWRITE_H
+#define ZLCOPYONWRITE_H
 
 #include <zl-util/ZLRefCountedObject.h>
 
-// ZL Copy On Write buffer. Moo!
-
 //================================================================//
-// ZLCowBufferInternal
+// ZLCopyOnWriteBuffer
 //================================================================//
-class ZLCowBufferInternal :
+class ZLCopyOnWriteBuffer :
 	public ZLRefCountedObject {
 private:
 
-	friend class ZLCowBuffer;
+	friend class ZLCopyOnWrite;
 
 	void*				mBuffer;
 	size_t				mSize;
 
 	//----------------------------------------------------------------//
-						ZLCowBufferInternal		();
-						~ZLCowBufferInternal	();
+						ZLCopyOnWriteBuffer		();
+						~ZLCopyOnWriteBuffer	();
 };
 
 //================================================================//
-// ZLCowBuffer
+// ZLCopyOnWrite
 //================================================================//
-class ZLCowBuffer {
+class ZLCopyOnWrite {
 private:
 
 	friend class ZLRevBufferStream;
 
-	ZLCowBufferInternal* mInternal;
+	ZLCopyOnWriteBuffer* mInternal;
 
 	//----------------------------------------------------------------//
 	void				AffirmInternal			();
@@ -44,20 +42,20 @@ public:
 	void*				Alloc					( size_t size );
 	void*				Alloc					( size_t size, u8 fill );
 	void*				Alloc					( size_t size, const void* fill );
-	void				Assign					( const ZLCowBuffer& assign );
+	void				Assign					( const ZLCopyOnWrite& assign );
 	void				Free					();
 	const void*			GetBuffer				() const;
 	void*				GetBufferMutable		();
 	size_t				GetSize					() const;
-						ZLCowBuffer				();
-						ZLCowBuffer				( size_t size );
-						ZLCowBuffer				( size_t size, u8 fill );
-						ZLCowBuffer				( size_t size, const void* fill );
-						ZLCowBuffer				( const ZLCowBuffer& assign );
-						~ZLCowBuffer			();
+						ZLCopyOnWrite			();
+						ZLCopyOnWrite			( size_t size );
+						ZLCopyOnWrite			( size_t size, u8 fill );
+						ZLCopyOnWrite			( size_t size, const void* fill );
+						ZLCopyOnWrite			( const ZLCopyOnWrite& assign );
+						~ZLCopyOnWrite			();
 	
 	//----------------------------------------------------------------//
-	inline ZLCowBuffer& operator= ( const ZLCowBuffer& rhs ) {
+	inline ZLCopyOnWrite& operator= ( const ZLCopyOnWrite& rhs ) {
 		this->Assign ( rhs );
 		return *this;
 	}

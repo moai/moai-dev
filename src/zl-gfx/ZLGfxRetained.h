@@ -7,7 +7,7 @@
 #include <zl-gfx/ZLGfx.h>
 #include <zl-util/STLList.h>
 #include <zl-util/STLMap.h>
-#include <zl-util/ZLCowBuffer.h>
+#include <zl-util/ZLCopyOnWrite.h>
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLRefCountedObject.h>
 
@@ -114,7 +114,7 @@ private:
 	ZLLeanStack < ZLGfxRetainedListenerRecord, 32 >		mListenerRecords;
 
 	STLList < ZLGfxBufferRef >				mBufferRefs;
-	STLMap < const void*, ZLCowBuffer >		mSharedBuffers;
+	STLMap < const void*, ZLCopyOnWrite >		mSharedBuffers;
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
@@ -195,7 +195,7 @@ public:
 	void					Reset						();
 	
 	const ZLGfxBufferRef	RetainBuffer				( const void* buffer, size_t size );
-	const ZLGfxBufferRef	RetainBuffer				( const ZLCowBuffer& buffer );
+	const ZLGfxBufferRef	RetainBuffer				( const ZLCopyOnWrite& buffer );
 	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
 	

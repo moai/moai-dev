@@ -1121,7 +1121,7 @@ const ZLGfxBufferRef ZLGfxRetained::RetainBuffer ( const void* buffer, size_t si
 }
 
 //----------------------------------------------------------------//
-const ZLGfxBufferRef ZLGfxRetained::RetainBuffer ( const ZLCowBuffer& buffer ) {
+const ZLGfxBufferRef ZLGfxRetained::RetainBuffer ( const ZLCopyOnWrite& buffer ) {
 
 	const void* addr = buffer.GetBuffer ();
 

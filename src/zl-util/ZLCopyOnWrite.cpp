@@ -2,20 +2,20 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-util/ZLCowBuffer.h>
+#include <zl-util/ZLCopyOnWrite.h>
 
 //================================================================//
-// ZLCowBufferInternal
+// ZLCopyOnWriteBuffer
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLCowBufferInternal::ZLCowBufferInternal () :
+ZLCopyOnWriteBuffer::ZLCopyOnWriteBuffer () :
 	mBuffer ( 0 ),
 	mSize ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLCowBufferInternal::~ZLCowBufferInternal () {
+ZLCopyOnWriteBuffer::~ZLCopyOnWriteBuffer () {
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
@@ -23,20 +23,20 @@ ZLCowBufferInternal::~ZLCowBufferInternal () {
 }
 
 //================================================================//
-// ZLCowBuffer
+// ZLCopyOnWrite
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLCowBuffer::AffirmInternal () {
+void ZLCopyOnWrite::AffirmInternal () {
 
 	if ( !this->mInternal ) {
-		this->mInternal = new ZLCowBufferInternal ();
+		this->mInternal = new ZLCopyOnWriteBuffer ();
 		this->mInternal->Retain ();
 	}
 }
 
 //----------------------------------------------------------------//
-void* ZLCowBuffer::Alloc ( size_t size ) {
+void* ZLCopyOnWrite::Alloc ( size_t size ) {
 
 	this->Free ();
 	if ( !size ) return 0;
@@ -53,7 +53,7 @@ void* ZLCowBuffer::Alloc ( size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void* ZLCowBuffer::Alloc ( size_t size, u8 fill ) {
+void* ZLCopyOnWrite::Alloc ( size_t size, u8 fill ) {
 
 	this->Free ();
 	if ( !size ) return 0;
@@ -75,7 +75,7 @@ void* ZLCowBuffer::Alloc ( size_t size, u8 fill ) {
 }
 
 //----------------------------------------------------------------//
-void* ZLCowBuffer::Alloc ( size_t size, const void* fill ) {
+void* ZLCopyOnWrite::Alloc ( size_t size, const void* fill ) {
 
 	this->Free ();
 	if ( !size ) return 0;
@@ -97,7 +97,7 @@ void* ZLCowBuffer::Alloc ( size_t size, const void* fill ) {
 }
 
 //----------------------------------------------------------------//
-void ZLCowBuffer::Assign ( const ZLCowBuffer& assign ) {
+void ZLCopyOnWrite::Assign ( const ZLCopyOnWrite& assign ) {
 
 	if ( this->mInternal == assign.mInternal ) return;
 
@@ -109,7 +109,7 @@ void ZLCowBuffer::Assign ( const ZLCowBuffer& assign ) {
 }
 
 //----------------------------------------------------------------//
-void ZLCowBuffer::Free () {
+void ZLCopyOnWrite::Free () {
 
 	if ( this->mInternal ) {
 		this->mInternal->Release ();
@@ -118,15 +118,15 @@ void ZLCowBuffer::Free () {
 }
 
 //----------------------------------------------------------------//
-const void* ZLCowBuffer::GetBuffer () const {
+const void* ZLCopyOnWrite::GetBuffer () const {
 
 	return this->mInternal ? this->mInternal->mBuffer : 0;
 }
 
 //----------------------------------------------------------------//
-void* ZLCowBuffer::GetBufferMutable () {
+void* ZLCopyOnWrite::GetBufferMutable () {
 
-	ZLCowBufferInternal* internal = this->mInternal;
+	ZLCopyOnWriteBuffer* internal = this->mInternal;
 
 	if ( internal ) {
 		if ( internal->GetRefCount () > 1 ) {
@@ -138,46 +138,46 @@ void* ZLCowBuffer::GetBufferMutable () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLCowBuffer::GetSize () const {
+size_t ZLCopyOnWrite::GetSize () const {
 
 	return this->mInternal ? this->mInternal->mSize : 0;
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::ZLCowBuffer () :
+ZLCopyOnWrite::ZLCopyOnWrite () :
 	mInternal ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::ZLCowBuffer ( size_t size ) :
+ZLCopyOnWrite::ZLCopyOnWrite ( size_t size ) :
 	mInternal ( 0 ) {
 	
 	this->Alloc ( size );
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::ZLCowBuffer ( size_t size, u8 fill ) :
+ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, u8 fill ) :
 	mInternal ( 0 ) {
 	
 	this->Alloc ( size, fill );
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::ZLCowBuffer ( size_t size, const void* fill ) :
+ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, const void* fill ) :
 	mInternal ( 0 ) {
 	
 	this->Alloc ( size, fill );
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::ZLCowBuffer ( const ZLCowBuffer& copy ) :
+ZLCopyOnWrite::ZLCopyOnWrite ( const ZLCopyOnWrite& copy ) :
 	mInternal ( 0 ) {
 	
 	this->Assign ( copy );
 }
 
 //----------------------------------------------------------------//
-ZLCowBuffer::~ZLCowBuffer () {
+ZLCopyOnWrite::~ZLCopyOnWrite () {
 
 	this->Free ();
 }

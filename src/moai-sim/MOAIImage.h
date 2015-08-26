@@ -62,8 +62,8 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	ZLCowBuffer	mBitmap;
-	ZLCowBuffer	mPalette;
+	ZLCopyOnWrite	mBitmap;
+	ZLCopyOnWrite	mPalette;
 	
 //	void*	mBitmap;
 //	void*	mPalette;
@@ -127,8 +127,8 @@ public:
 	GET_CONST ( void*, Bitmap, mBitmap.GetBuffer ())
 	GET_CONST ( void*, Palette, mPalette.GetBuffer ())
 	
-	GET ( ZLCowBuffer, BitmapCow, mBitmap )
-	GET ( ZLCowBuffer, PaletteCow, mPalette )
+	GET ( ZLCopyOnWrite, BitmapCow, mBitmap )
+	GET ( ZLCopyOnWrite, PaletteCow, mPalette )
 	
 	enum {
 		FILTER_LINEAR,

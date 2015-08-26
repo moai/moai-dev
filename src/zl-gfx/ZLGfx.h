@@ -4,7 +4,7 @@
 #ifndef ZLGFX_H
 #define ZLGFX_H
 
-#include <zl-util/ZLCowBuffer.h>
+#include <zl-util/ZLCopyOnWrite.h>
 #include <zl-util/ZLLeanArray.h>
 #include <zl-util/ZLLeanStack.h>
 #include <zl-util/ZLMatrix3x3.h>
@@ -210,7 +210,7 @@ public:
 	virtual void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height ) = 0;
 	
 	virtual const ZLGfxBufferRef	RetainBuffer				( const void* buffer, size_t size ) = 0;
-	virtual const ZLGfxBufferRef	RetainBuffer				( const ZLCowBuffer& buffer ) = 0;
+	virtual const ZLGfxBufferRef	RetainBuffer				( const ZLCopyOnWrite& buffer ) = 0;
 	
 	virtual void					Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;
 	
