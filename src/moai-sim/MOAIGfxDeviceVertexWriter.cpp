@@ -119,8 +119,8 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 		
 		this->mIsDrawing = false;
 		
-		this->mVtxBuffer.Reset ();
-		this->mIdxBuffer.Reset ();
+		this->mVtxBuffer.SetLength ( 0 );
+		this->mIdxBuffer.SetLength ( 0 );
 	
 		this->mPrimTopIdx	= 0;
 		this->mPrimTopVtx	= 0;

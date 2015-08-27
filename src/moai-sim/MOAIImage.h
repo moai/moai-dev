@@ -130,6 +130,9 @@ public:
 	GET ( ZLCopyOnWrite, BitmapCow, mBitmap )
 	GET ( ZLCopyOnWrite, PaletteCow, mPalette )
 	
+	GET ( ZLSharedConstBuffer*, BitmapBuffer, mBitmap.GetSharedConstBuffer ())
+	GET ( ZLSharedConstBuffer*, PaletteBuffer, mBitmap.GetSharedConstBuffer ())
+	
 	enum {
 		FILTER_LINEAR,
 		FILTER_NEAREST,

@@ -5,7 +5,6 @@
 #define ZLGFXIMMEDIATE_H
 
 #include <zl-gfx/ZLGfx.h>
-#include <zl-util/ZLCopyOnWrite.h>
 
 //================================================================//
 // ZLGfxImmediate
@@ -16,7 +15,7 @@ private:
 
 	friend class ZLGfxRetained;
 
-	bool	mError;
+	bool					mError;
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
@@ -37,8 +36,8 @@ public:
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );
-	void					BufferData					( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage );
-	void					BufferSubData				( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset );
+	void					BufferData					( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage );
+	void					BufferSubData				( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset );
 
 	void					CheckFramebufferStatus		( u32 target );
 
@@ -47,7 +46,7 @@ public:
 	void					Color						( float r, float g, float b, float a );
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
-	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLGfxBufferRef bufferRef );
+	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -67,7 +66,7 @@ public:
 	void					DisableClientState			( u32 cap );
 	void					DisableVertexAttribArray	( u32 index );
 	void					DrawArrays					( u32 primType, u32 first, u32 count );
-	void					DrawElements				( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset );
+	void					DrawElements				( u32 primType, u32 count, u32 indexType, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Enable						( u32 cap );
 	void					EnableClientState			( u32 cap );
 	void					EnableVertexAttribArray		( u32 index );
@@ -89,24 +88,21 @@ public:
 	
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	
-	const ZLGfxBufferRef	RetainBuffer				( const void* buffer, size_t size );
-	const ZLGfxBufferRef	RetainBuffer				( const ZLCopyOnWrite& buffer );
-	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
 	
 	void					ShaderSource				( ZLGfxHandle* shader, cc8* source, size_t length );
 	
 	void					TexEnvi						( u32 pname, s32 param );
-	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef );
+	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					TexParameteri				( u32 pname, s32 param );
-	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef );
+	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					Uniform1f					( u32 location, float v0 );
 	void					Uniform1i					( u32 location, s32 v0 );
 	void					Uniform4fv					( u32 location, u32 count, const float* value );
 	void					UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx );
 	void					UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx );
 	void					UseProgram					( ZLGfxHandle* program );
-	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset );
+	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );
 	
 							ZLGfxImmediate				();

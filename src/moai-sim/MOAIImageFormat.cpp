@@ -40,7 +40,7 @@ const void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
 //----------------------------------------------------------------//
 void* MOAIImageFormat::GetBitmapMutable ( MOAIImage& image ) const {
 
-	return image.mBitmap.GetBufferMutable ();
+	return image.mBitmap.Invalidate ();
 }
 
 //----------------------------------------------------------------//

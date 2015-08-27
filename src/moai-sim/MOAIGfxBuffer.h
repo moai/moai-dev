@@ -28,7 +28,7 @@ public:
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
 	public MOAIStream,
-	public ZLRevBufferStream {
+	public ZLCopyOnWrite {
 protected:
 	
 	friend class MOAIGfxDeviceBase;
@@ -45,9 +45,9 @@ protected:
 	u32								mTarget;
 	bool							mNeedsFlush;
 
-	MOAIGfxBufferLoader*	mLoader;
+	MOAIGfxBufferLoader*			mLoader;
 
-	bool					mUseVBOs;
+	bool							mUseVBOs;
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
@@ -55,7 +55,6 @@ protected:
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
-	static int				_reset					( lua_State* L );
 	static int				_scheduleFlush			( lua_State* L );
 	
 	//----------------------------------------------------------------//
@@ -77,20 +76,20 @@ public:
 	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
-	void					Clear					();
-	void					CopyFromStream			( ZLStream& stream );
-	ZLRevBufferEdition*		GetBuffer				();
-	size_t					GetSize					();
-							MOAIGfxBuffer			();
-							~MOAIGfxBuffer			();
-	bool					NeedsFlush				();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					Reserve					( u32 size );
-	void					ReserveVBOs				( u32 gpuBuffers );
-	void					ScheduleFlush			();
-	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void						Clear					();
+	void						CopyFromStream			( ZLStream& stream );
+	ZLSharedConstBuffer*	GetBuffer				();
+	size_t						GetSize					();
+								MOAIGfxBuffer			();
+								~MOAIGfxBuffer			();
+	bool						NeedsFlush				();
+	void						RegisterLuaClass		( MOAILuaState& state );
+	void						RegisterLuaFuncs		( MOAILuaState& state );
+	void						Reserve					( u32 size );
+	void						ReserveVBOs				( u32 gpuBuffers );
+	void						ScheduleFlush			();
+	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

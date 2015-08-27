@@ -335,13 +335,14 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 				
 				#elif MOAI_WITH_LIBPVR
 				
-					ZLLeanArray < char > buffer;
-					buffer.Init ( info.mSizeDecompressed );
-					if ( !this->Decompress ( *header, info, buffer.Data (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
+					ZLCopyOnWrite buffer;
+					buffer.Reserve ( info.mSizeDecompressed );
+				
+					if ( !this->Decompress ( *header, info, buffer.Invalidate (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
 						this->CleanupTexture ( texture );
 						return false;
 					}
-					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, gfx.RetainBuffer ( buffer.Data (), buffer.Size ()));
+					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 				
 				#endif
 			}

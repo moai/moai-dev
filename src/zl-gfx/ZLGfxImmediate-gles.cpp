@@ -74,16 +74,16 @@ void ZLGfxImmediate::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferData ( u32 target, u32 size, ZLRevBufferEdition* buffer, size_t offset, u32 usage ) {
+void ZLGfxImmediate::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
 
-	const GLvoid* data = ( const GLvoid* )(( size_t )( buffer ? buffer->GetData () : 0 ) + offset );
+	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset );
 	glBufferData ( ZLGfxEnum::MapZLToNative ( target ), ( GLsizeiptr )size, data, ZLGfxEnum::MapZLToNative ( usage ));
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, ZLRevBufferEdition* buffer, size_t srcOffset ) {
+void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
-	const GLvoid* data = ( const GLvoid* )(( size_t )( buffer ? buffer->GetData () : 0 ) + offset );
+	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset );
 	glBufferSubData ( ZLGfxEnum::MapZLToNative ( target ), ( GLintptr )offset, ( GLsizeiptr )size, data );
 }
 
@@ -159,7 +159,7 @@ void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLGfxBufferRef bufferRef ) {
+void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
 	
 	glCompressedTexImage2D (
 		GL_TEXTURE_2D,
@@ -169,7 +169,7 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 		( GLsizei )height,
 		0,
 		( GLsizei )imageSize,
-		( const GLvoid* )bufferRef.mBuffer
+		( const GLvoid* )ZLSharedConstBuffer::GetConstData ( buffer )
 	);
 }
 
@@ -344,13 +344,13 @@ void ZLGfxImmediate::DrawArrays ( u32 primType, u32 first, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, ZLRevBufferEdition* buffer, size_t offset ) {
+void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	glDrawElements (
 		ZLGfxEnum::MapZLToNative ( primType ),
 		( GLsizei )count,
 		ZLGfxEnum::MapZLToNative ( indexType ),
-		( const GLvoid* )(( size_t )(  buffer ? buffer->GetData () : 0 ) + offset )
+		( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset )
 	);
 }
 
@@ -485,22 +485,6 @@ void ZLGfxImmediate::RenderbufferStorage ( u32 internalFormat, u32 width, u32 he
 }
 
 //----------------------------------------------------------------//
-const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const void* buffer, size_t size ) {
-
-	ZLGfxBufferRef bufferRef;
-	bufferRef.mBufferStore = 0;
-	bufferRef.mBuffer = buffer;
-	bufferRef.mSize = size;
-	return bufferRef;
-}
-
-//----------------------------------------------------------------//
-const ZLGfxBufferRef ZLGfxImmediate::RetainBuffer ( const ZLCopyOnWrite& buffer ) {
-
-	return this->RetainBuffer ( buffer.GetBuffer (), buffer.GetSize ());
-}
-
-//----------------------------------------------------------------//
 void ZLGfxImmediate::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 
 	glScissor (( GLint )x, ( GLint )y, ( GLsizei )w, ( GLsizei )h );
@@ -524,7 +508,7 @@ void ZLGfxImmediate::TexEnvi ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
+void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -537,7 +521,7 @@ void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 
 		0,
 		ZLGfxEnum::MapZLToNative ( format ),
 		ZLGfxEnum::MapZLToNative ( type ),
-		( const GLvoid* )bufferRef.mBuffer
+		( const GLvoid* )ZLSharedConstBuffer::GetConstData ( buffer )
 	);
 }
 
@@ -548,7 +532,7 @@ void ZLGfxImmediate::TexParameteri ( u32 pname, s32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLGfxBufferRef bufferRef ) {
+void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
@@ -561,7 +545,7 @@ void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wi
 		( GLsizei )height,
 		ZLGfxEnum::MapZLToNative ( format ),
 		ZLGfxEnum::MapZLToNative ( type ),
-		( const GLvoid* )bufferRef.mBuffer
+		( const GLvoid* )ZLSharedConstBuffer::GetConstData ( buffer )
 	);
 }
 
@@ -602,7 +586,7 @@ void ZLGfxImmediate::UseProgram ( ZLGfxHandle* program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLRevBufferEdition* buffer, size_t offset ) {
+void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	glVertexAttribPointer (
 		( GLuint )index,
@@ -610,7 +594,7 @@ void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool n
 		ZLGfxEnum::MapZLToNative ( type ),
 		normalized ? GL_TRUE : GL_FALSE,
 		( GLsizei )stride,
-		( const GLvoid* )(( size_t )( buffer ? buffer->GetData () : 0 ) + offset )
+		( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset )
 	);
 }
 

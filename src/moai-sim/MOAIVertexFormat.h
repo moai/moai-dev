@@ -84,7 +84,7 @@ private:
 	static int					_getVertexSize					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						Bind							( ZLRevBufferEdition* buffer ) const;
+	void						Bind							( ZLSharedConstBuffer* buffer ) const;
 	static u32					GetComponentSize				( u32 size, u32 type );
 	static u32					GetIndexForUse					( u32 use );
 	static u32					GetUseForIndex					( u32 idx );

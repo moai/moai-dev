@@ -76,21 +76,6 @@ int	MOAIGfxBuffer::_reserveVBOs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	reset
-	@text	Resets the vertex stream writing to the head of the stream.
-	
-	@in		MOAIGfxBuffer self
-	@out	nil
-*/
-int MOAIGfxBuffer::_reset ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
-	
-	//self->SetBuffer ( self->mBuffer, self->mBuffer.Size ());
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
@@ -110,7 +95,7 @@ void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {
 
-	this->ZLRevBufferStream::Clear ();
+	this->ZLCopyOnWrite::Free ();
 
 	this->mVBOs.Clear ();
 	this->mCurrentVBO = 0;
@@ -128,10 +113,12 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 	this->mNeedsFlush = true;
 }
 
-//----------------------------------------------------------------//
-ZLRevBufferEdition* MOAIGfxBuffer::GetBuffer () {
+ZLSharedConstBuffer*	GetBuffer				();
 
-	return this->mUseVBOs ? 0 : this->GetEdition ();
+//----------------------------------------------------------------//
+ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
+
+	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -211,7 +198,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 			//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 			//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 			
-			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetEdition (), 0 );
+			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetSharedConstBuffer (), 0 );
 			
 			this->mNeedsFlush = false;
 		}
@@ -293,7 +280,6 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },
-		{ "reset",					_reset },
 		{ "scheduleFlush",			_scheduleFlush },
 		{ NULL, NULL }
 	};
@@ -307,7 +293,7 @@ void MOAIGfxBuffer::Reserve ( u32 size ) {
 	this->Clear ();
 	
 	if ( size ) {
-		this->ZLRevBufferStream::Reserve ( size );
+		this->ZLCopyOnWrite::Reserve ( size );
 		this->FinishInit ();
 	}
 }

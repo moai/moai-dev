@@ -149,7 +149,7 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( ZLRevBufferEdition* buffer ) const {
+void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer ) const {
 
 	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
