@@ -361,6 +361,8 @@ UInt32 System::getSampleRate()
 
 void System::setSampleRate(UInt32 sampleRate)
 {
+	IosSystemData *data = (IosSystemData *)mpData;
+	data->mAudioFormat.mSampleRate = sampleRate;
 }
 
 void System::setVolume(float volume)
