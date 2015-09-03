@@ -9,6 +9,7 @@
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLSharedHandle.h>
 
 // hardware PVR support is based on device
 #ifdef MOAI_OS_IPHONE
@@ -60,54 +61,25 @@ public:
 	}
 };
 
-class ZLGfxListener;
-
-//================================================================//
-// ZLGfxListenerHandle
-//================================================================//
-class ZLGfxListenerHandle :
-	private ZLRefCountedObject {
-private:
-
-	friend class ZLGfx;
-	friend class ZLGfxImmediate;
-	friend class ZLGfxListener;
-	friend class ZLGfxRetained;
-
-	ZLGfxListener*		mListener;
-
-	GET ( ZLGfxListener*, Listener, mListener )
-
-	//----------------------------------------------------------------//
-	static ZLGfxListener*		Listener					( ZLGfxListenerHandle* handle );
-								ZLGfxListenerHandle			();
-								~ZLGfxListenerHandle		();
-
-public:
-
-	//----------------------------------------------------------------//
-	
-};
-
 //================================================================//
 // ZLGfxListener
 //================================================================//
-class ZLGfxListener {
+class ZLGfxListener :
+	public ZLSharedHandleTarget < ZLGfxListener > {
 private:
 
-	ZLGfxListenerHandle*	mHandle;
+	GET ( ZLGfxListener*, HandleTarget, this )
 
 public:
 
-	GET ( ZLGfxListenerHandle*, Handle, mHandle )
-
 	//----------------------------------------------------------------//
-	void					Abandon					();
-	virtual	void			OnSignal				( u32 signal, void* userdata );
+	virtual	void			OnGfxEvent				( u32 event, void* userdata );
 	virtual void			OnUniformLocation		( u32 addr, void* userdata );
 							ZLGfxListener			();
 	virtual					~ZLGfxListener			();
 };
+
+typedef ZLSharedHandle < ZLGfxListener > ZLGfxListenerHandle;
 
 //================================================================//
 // ZLGfx
@@ -173,6 +145,8 @@ public:
 	virtual void					Enable						( u32 cap ) = 0;
 	virtual void					EnableClientState			( u32 cap ) = 0;
 	virtual void					EnableVertexAttribArray		( u32 index ) = 0;
+	
+	virtual void					Event						( ZLGfxListener* listener, u32 event, void* userdata ) = 0;
 	
 	virtual void					Flush						() = 0;
 	virtual void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer ) = 0;

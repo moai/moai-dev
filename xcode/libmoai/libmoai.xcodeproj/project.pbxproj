@@ -3411,6 +3411,8 @@
 		CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
+		CD87A0301B91406700C05E1F /* ZLSharedHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD87A02D1B91406700C05E1F /* ZLSharedHandle.h */; };
+		CD87A0311B91406700C05E1F /* ZLSharedHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD87A02D1B91406700C05E1F /* ZLSharedHandle.h */; };
 		CD881ED319FF66E5004498E8 /* alpha.c in Sources */ = {isa = PBXBuildFile; fileRef = CD881EC419FF66E5004498E8 /* alpha.c */; };
 		CD881ED419FF66E5004498E8 /* alpha.c in Sources */ = {isa = PBXBuildFile; fileRef = CD881EC419FF66E5004498E8 /* alpha.c */; };
 		CD881ED519FF66E5004498E8 /* alphai.h in Headers */ = {isa = PBXBuildFile; fileRef = CD881EC519FF66E5004498E8 /* alphai.h */; };
@@ -7671,6 +7673,7 @@
 		CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIIso8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.m; sourceTree = "<group>"; };
 		CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moai-ios/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moai-ios/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
+		CD87A02D1B91406700C05E1F /* ZLSharedHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSharedHandle.h; sourceTree = "<group>"; };
 		CD881EC419FF66E5004498E8 /* alpha.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = alpha.c; path = "../../3rdparty/libwebp-0.4.1/src/dec/alpha.c"; sourceTree = "<group>"; };
 		CD881EC519FF66E5004498E8 /* alphai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alphai.h; path = "../../3rdparty/libwebp-0.4.1/src/dec/alphai.h"; sourceTree = "<group>"; };
 		CD881EC619FF66E5004498E8 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = "../../3rdparty/libwebp-0.4.1/src/dec/buffer.c"; sourceTree = "<group>"; };
@@ -9156,6 +9159,7 @@
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
 				CDD38C161B4D082800A30275 /* ZLRefCountedObject.cpp */,
 				CDD38C171B4D082800A30275 /* ZLRefCountedObject.h */,
+				CD87A02D1B91406700C05E1F /* ZLSharedHandle.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
 				89BE691F173974FD00DFE837 /* ZLTypedPtr.h */,
 				89BE6920173974FD00DFE837 /* ZLTypeID.h */,
@@ -14040,6 +14044,7 @@
 				CDA1325F1B478B650044E1B0 /* ZLGfxEnum.h in Headers */,
 				89BE6951173974FD00DFE837 /* pch.h in Headers */,
 				89BE6959173974FD00DFE837 /* headers.h in Headers */,
+				CD87A0301B91406700C05E1F /* ZLSharedHandle.h in Headers */,
 				89BE695D173974FD00DFE837 /* pch.h in Headers */,
 				CDD38C1A1B4D082800A30275 /* ZLRefCountedObject.h in Headers */,
 				89BE695F173974FD00DFE837 /* STLArray.h in Headers */,
@@ -14204,6 +14209,7 @@
 				CDA1324F1B47873A0044E1B0 /* ZLGfx.h in Headers */,
 				89BE6A12173974FD00DFE837 /* ZLLexStream.h in Headers */,
 				89BE6A14173974FD00DFE837 /* ZLList.h in Headers */,
+				CD87A0311B91406700C05E1F /* ZLSharedHandle.h in Headers */,
 				89BE6A18173974FD00DFE837 /* ZLLog.h in Headers */,
 				89BE6A1A173974FD00DFE837 /* ZLMathConsts.h in Headers */,
 				89BE6A1C173974FD00DFE837 /* ZLMatrix.h in Headers */,

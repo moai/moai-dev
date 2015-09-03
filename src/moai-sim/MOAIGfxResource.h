@@ -22,17 +22,8 @@ private:
 	friend class MOAIGfxDeviceStateCache;
 	friend class MOAIGfxResourceMgr;
 
-	enum {
-		STATE_NEW, // we use this state to ensure we call DoCPUAffirm after init
-		STATE_NEEDS_CPU_CREATE,
-		STATE_NEEDS_GPU_CREATE,
-		STATE_READY_TO_BIND,
-		STATE_ERROR,
-	};
-
 	u32					mState;
 	u32					mLastRenderCount;
-	u32					mLoadingPolicy;
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
 
@@ -41,14 +32,16 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
+	static int		_getResourceState			( lua_State* L );
+	static int		_preload					( lua_State* L );
 	static int		_purge						( lua_State* L );
-	static int		_setLoadingPolicy			( lua_State* L );
+	static int		_scheduleForGPUCreate		( lua_State* L );
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool			Bind						(); // bind for drawing; go to STATE_READY
-	bool			DoGPUAffirm					(); // gets ready to bind
-	void			InvokeLoader				();
+	bool			DoGPUCreate					(); // gets ready to bind
+	bool			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 	void			Unbind						();
 
@@ -68,36 +61,29 @@ protected:
 
 public:
 
-	GET ( u32, State, mState )
-	IS ( Ready, mState, STATE_READY_TO_BIND )
-	
-	SET ( u32, LoadingPolicy, mLoadingPolicy )
-	
 	enum {
-		LOADING_POLICY_NONE,				// don't care and/or use global policy
-		LOADING_POLICY_CPU_GPU_ASAP,		// load everything asap
-		LOADING_POLICY_CPU_ASAP_GPU_NEXT,	// load the cpu part asap; load the gpu part next render
-		LOADING_POLICY_CPU_ASAP_GPU_BIND,	// load the cpu part asap, load the gpu part on bind (during render)
-		LOADING_POLICY_CPU_GPU_BIND,		// load the cpu and gpu part on bind (during render)
+		STATE_UNINITIALIZED, // we use this state to ensure we call DoCPUAffirm after init
+		STATE_READY_FOR_CPU_CREATE,
+		STATE_READY_FOR_GPU_CREATE,
+		STATE_READY_TO_BIND,
+		
+		STATE_SCHEDULED_FOR_GPU_CREATE,
+		
+		STATE_ERROR,
 	};
 
-	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_ASAP_GPU_NEXT;
-
-	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only effects
-	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time
-	// we render.
+	GET ( u32, State, mState )
+	IS ( Ready, mState, STATE_READY_TO_BIND )
 
 	//----------------------------------------------------------------//
-	bool			DoCPUAffirm					(); // preload CPU portion
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
-	void			ForceCPUCreate				();
-	virtual u32		GetLoadingPolicy			();
+	bool			DoCPUCreate					(); // preload CPU portion
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
+	bool			ScheduleForGPUCreate		();
 	bool			Purge						( u32 age );
-	bool			PrepareForBind				();
 };
 
 #endif

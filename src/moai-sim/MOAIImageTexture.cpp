@@ -78,7 +78,6 @@ void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 
 	if ( isOK ) {
 		this->FinishInit ();
-		this->DoCPUAffirm ();
 	}
 }
 

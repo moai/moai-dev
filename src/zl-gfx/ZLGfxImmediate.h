@@ -70,6 +70,9 @@ public:
 	void					Enable						( u32 cap );
 	void					EnableClientState			( u32 cap );
 	void					EnableVertexAttribArray		( u32 index );
+
+	void					Event						( ZLGfxListener* listener, u32 event, void* userdata );
+
 	void					Flush						();
 	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );

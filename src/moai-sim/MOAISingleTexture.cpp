@@ -25,7 +25,7 @@
 int MOAISingleTexture::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 	
-	self->ForceCPUCreate ();
+	self->DoCPUCreate ();
 	
 	lua_pushnumber ( state, self->mWidth );
 	lua_pushnumber ( state, self->mHeight );

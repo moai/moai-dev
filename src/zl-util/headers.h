@@ -77,6 +77,7 @@
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLRhombus.h>
+#include <zl-util/ZLSharedHandle.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLStreamAdapter.h>
 #include <zl-util/ZLSurface2D.h>

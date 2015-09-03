@@ -375,6 +375,14 @@ void ZLGfxImmediate::EnableVertexAttribArray ( u32 index ) {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxImmediate::Event ( ZLGfxListener* listener, u32 event, void* userdata ) {
+
+	if ( listener ) {
+		listener->OnGfxEvent ( event, userdata );
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::Flush () {
 
 	glFlush ();

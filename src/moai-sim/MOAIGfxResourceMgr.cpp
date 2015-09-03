@@ -41,15 +41,6 @@ int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResourceMgr::_setResourceLoadingPolicy ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	MOAIGfxResourceMgr::Get ().mResourceLoadingPolicy = state.GetValue < u32 >( 1, MOAIGfxResource::DEFAULT_LOADING_POLICY );
-	return 0;
-}
-
 //================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
@@ -61,8 +52,7 @@ void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceMgr::MOAIGfxResourceMgr () :
-	mResourceLoadingPolicy ( MOAIGfxResource::DEFAULT_LOADING_POLICY ) {
+MOAIGfxResourceMgr::MOAIGfxResourceMgr () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -117,15 +107,9 @@ void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_NEXT );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
-
 	luaL_Reg regTable [] = {
 		{ "purgeResources",				_purgeResources },
 		{ "renewResources",				_renewResources },
-		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
 		{ NULL, NULL }
 	};
 
@@ -173,7 +157,7 @@ void MOAIGfxResourceMgr::Update () {
 		MOAIGfxResource* resource = resourceIt->Data ();
 		resourceIt = resourceIt->Next ();
 	
-		resource->DoGPUAffirm ();
+		resource->DoGPUCreate ();
 		this->mResources.PushBack ( resource->mLink );
 	}
 	

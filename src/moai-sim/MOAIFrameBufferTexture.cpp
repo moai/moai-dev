@@ -59,7 +59,6 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 	this->mStencilFormat	= stencilFormat;
 	
 	this->FinishInit ();
-	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//
@@ -223,9 +222,10 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::Render () {
 
-	if ( this->PrepareForBind ()) {
+	// TODO: gfx
+	//if ( this->PrepareForBind ()) {
 		MOAIFrameBuffer::Render ();
-	}
+	//}
 }
 
 //----------------------------------------------------------------//

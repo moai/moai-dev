@@ -12,24 +12,31 @@
 #include <zl-util/ZLRefCountedObject.h>
 
 //================================================================//
-// ZLGfxRetainedListenerRecord
+// ZLGfxListenerRecord
 //================================================================//
-class ZLGfxRetainedListenerRecord {
+class ZLGfxListenerRecord {
 private:
 
 	friend class ZLGfxRetained;
 
-	u32						mCommand;
+	enum {
+		ON_EVENT,
+		ON_UNIFORM_LOCATION,
+		UNKNOWN,
+	};
+	
 	ZLGfxListenerHandle*	mListenerHandle;
 	void*					mUserdata;
+	
+	u32						mCallbackID;
+	u32						mEvent;
 	u32						mUniformAddr;
-	u32						mSignal;
 
 public:
 
 	//----------------------------------------------------------------//
-				ZLGfxRetainedListenerRecord			();
-				~ZLGfxRetainedListenerRecord		();
+				ZLGfxListenerRecord			();
+				~ZLGfxListenerRecord		();
 };
 
 //================================================================//
@@ -77,8 +84,10 @@ private:
 		DRAW_ELEMENTS,
 		ENABLE,
 		ENABLE_CLIENT_STATE,
-		
 		ENABLE_VERTEX_ATTRIB_ARRAY,
+		
+		EVENT,
+		
 		FLUSH,
 		FRAMEBUFFER_RENDERBUFFER,
 		FRAMEBUFFER_TEXTURE_2D,
@@ -111,12 +120,14 @@ private:
 	ZLStream*		mStream;
 
 	ZLLeanStack < ZLRefCountedObject*, 32 >				mReleaseStack;
-	ZLLeanStack < ZLGfxRetainedListenerRecord, 32 >		mListenerRecords;
+	ZLLeanStack < ZLGfxListenerRecord, 32 >				mListenerRecords;
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
+	void					OnGfxEvent					( u32 event, void* userdata );
 	void					OnUniformLocation			( u32 addr, void* userdata );
-	void					RetainBuffer				( ZLSharedConstBuffer* buffer );
+	void					Retain						( ZLRefCountedObject* object );
+	ZLGfxListenerRecord&	WriteListenerRecord			( u32 command, ZLGfxListener* listener, void* userdata );
 
 public:
 
@@ -169,6 +180,9 @@ public:
 	void					Enable						( u32 cap );
 	void					EnableClientState			( u32 cap );
 	void					EnableVertexAttribArray		( u32 index );
+	
+	void					Event						( ZLGfxListener* listener, u32 event, void* userdata );
+	
 	void					Flush						();
 	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
@@ -182,7 +196,7 @@ public:
 	
 	void					PopSection					();
 	
-	void					PublishEvents				( bool reset = true );
+	void					PublishEvents				();
 	
 	bool					PushErrorHandler			();
 	void					PushSection					();

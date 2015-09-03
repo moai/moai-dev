@@ -64,9 +64,6 @@ private:
 	
 	ZLCopyOnWrite	mBitmap;
 	ZLCopyOnWrite	mPalette;
-	
-//	void*	mBitmap;
-//	void*	mPalette;
 
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )

@@ -297,12 +297,6 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderProgram::GetLoadingPolicy () {
-
-	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
-}
-
-//----------------------------------------------------------------//
 bool MOAIShaderProgram::LoadGfxState () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -374,17 +368,6 @@ bool MOAIShaderProgram::OnGPUCreate () {
 	}
 
 	gfx.LinkProgram ( this->mProgram, true );
-
-	// TODO: GFX
-
-//	s32 status;
-//	zglGetProgramiv ( this->mProgram->mGLID, ZGL_PROGRAM_INFO_LINK_STATUS, &status );
-//
-//	if ( status == 0 ) {
-//		this->PrintProgramLog ( this->mProgram->mGLID );
-//		this->Clear ();
-//		return false;
-//	}
 
 	// get the uniform locations and clear out the names (no longer needed)
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {

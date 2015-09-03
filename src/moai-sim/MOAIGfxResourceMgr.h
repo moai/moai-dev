@@ -14,17 +14,14 @@ class MOAIGfxResourceMgr :
 private:
 	
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
-	ZLLeanList < MOAIGfxResource* > mResources;
-	ZLLeanList < MOAIGfxResource* > mPending;
+	ZLLeanList < MOAIGfxResource* >		mResources;
+	ZLLeanList < MOAIGfxResource* >		mPending;
 	
-	ZLLeanStack < ZLGfxHandle*, 32 > mDeleterStack;
-
-	u32				mResourceLoadingPolicy;
+	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
 	static int		_purgeResources				( lua_State* L );
 	static int		_renewResources				( lua_State* L );
-	static int		_setResourceLoadingPolicy	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );

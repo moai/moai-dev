@@ -128,12 +128,6 @@ size_t MOAIGfxBuffer::GetSize () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxBuffer::GetLoadingPolicy () {
-
-	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
-}
-
-//----------------------------------------------------------------//
 MOAIGfxBuffer::MOAIGfxBuffer () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),

@@ -8,44 +8,12 @@
 #include <zl-gfx/ZLGfx.h>
 
 //================================================================//
-// ZLGfxListenerHandle
-//================================================================//
-
-//----------------------------------------------------------------//
-ZLGfxListener* ZLGfxListenerHandle::Listener ( ZLGfxListenerHandle* handle ) {
-
-	return handle ? handle->mListener : 0;
-}
-
-//----------------------------------------------------------------//
-ZLGfxListenerHandle::ZLGfxListenerHandle () :
-	mListener ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-ZLGfxListenerHandle::~ZLGfxListenerHandle () {
-}
-
-//================================================================//
 // ZLGfxListener
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLGfxListener::Abandon () {
-
-	if ( this->mHandle ) {
-		this->mHandle->mListener = 0;
-		this->mHandle->Release ();
-	}
-	
-	this->mHandle = new ZLGfxListenerHandle ();
-	this->mHandle->Retain ();
-	this->mHandle->mListener = this;
-}
-
-//----------------------------------------------------------------//
-void ZLGfxListener::OnSignal ( u32 signal, void* userdata ) {
-	UNUSED ( signal );
+void ZLGfxListener::OnGfxEvent ( u32 event, void* userdata ) {
+	UNUSED ( event );
 	UNUSED ( userdata );
 }
 
@@ -56,15 +24,9 @@ void ZLGfxListener::OnUniformLocation ( u32 addr, void* userdata ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxListener::ZLGfxListener () :
-	mHandle ( 0 ) {
-
-	this->Abandon ();
+ZLGfxListener::ZLGfxListener () {
 }
 
 //----------------------------------------------------------------//
 ZLGfxListener::~ZLGfxListener () {
-
-	this->mHandle->mListener = 0;
-	this->mHandle->Release ();
 }

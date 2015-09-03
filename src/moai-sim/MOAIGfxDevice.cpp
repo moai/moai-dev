@@ -175,6 +175,8 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
+	// renew resources in immediate mode
+	this->SelectList ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
@@ -291,11 +293,6 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
-
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_NEXT );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 

@@ -59,7 +59,6 @@ protected:
 	
 	//----------------------------------------------------------------//
 	void					BindVertexFormat		( MOAIVertexFormat* format );
-	u32						GetLoadingPolicy		();
 	bool					OnCPUCreate				();
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
@@ -78,7 +77,7 @@ public:
 	//----------------------------------------------------------------//
 	void						Clear					();
 	void						CopyFromStream			( ZLStream& stream );
-	ZLSharedConstBuffer*	GetBuffer				();
+	ZLSharedConstBuffer*		GetBuffer				();
 	size_t						GetSize					();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();
