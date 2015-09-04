@@ -111,7 +111,7 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 	#if MOAI_WITH_TINYXML
 		MOAILuaState state ( L );										
 		if ( !state.CheckParams ( 1, "S" )) {							
-			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
+			MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_ParamTypeMismatch );		
 			return 0;													
 		}																
 			

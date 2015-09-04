@@ -63,7 +63,7 @@ void _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
 		status = state.DebugCall ( totalArgs, 0 );
 	}
 	
-	state.PrintErrors ( ZLLog::CONSOLE, status );
+	state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status );
 }
 
 //----------------------------------------------------------------//
@@ -75,7 +75,7 @@ int _loadContextFunc ( MOAILuaState& state ) {
 		return 0;
 	}
 	
-	ZLLog::LogF ( ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
+	ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
 	return 1;
 }
 
@@ -159,7 +159,7 @@ void AKUCallFunc () {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( _loadContextFunc ( state ) != 0 ) return;
 	int status = state.DebugCall ( 0, 0 );
-	state.PrintErrors ( ZLLog::CONSOLE, status );
+	state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status );
 }
 
 //----------------------------------------------------------------//
@@ -346,7 +346,7 @@ void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compress
 		lua_getglobal ( state, "loadstring" );
 		state.Push ( data, size );
 		int status = state.DebugCall ( 1, 1 );
-		if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+		if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
 			sContext->mLuaFunc.SetRef ( state, -1 );
 		}
 	}
@@ -364,7 +364,7 @@ void AKULoadFuncFromFile ( const char* filename ) {
 	sContext->mLuaFunc.Clear ();
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
 		return;
 	}
 
@@ -374,16 +374,19 @@ void AKULoadFuncFromFile ( const char* filename ) {
 	
 	lua_getglobal ( state, "loadfile" );
 	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Missing global Lua function 'loadfile'\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadfile'\n" );
 	}
 	
 	state.Push ( filename );
 	
 	int status = state.DebugCall ( 1, 2 );
-	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+	if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
 		if ( state.IsNil ( -2 )) {
+		
 			cc8* msg = state.GetValue < cc8* >( -1, "loafile returned 'nil'" );
-			printf ( "%s\n", msg );
+			UNUSED ( msg );
+			
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
 		}
 		else {
 			sContext->mLuaFunc.SetRef ( state, -2 );
@@ -400,13 +403,13 @@ void AKULoadFuncFromString ( const char* script ) {
 	
 	lua_getglobal ( state, "loadstring" );
 	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
 	}
 	
 	state.Push ( script );
 	
 	int status = state.DebugCall ( 1, 1 );
-	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
+	if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
 		sContext->mLuaFunc.SetRef ( state, -1 );
 	}
 }
@@ -416,7 +419,7 @@ int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 
 	int result = zl_mount_virtual ( virtualPath, archive );
 	if ( result ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Error mounting %s at path %s\n", archive, virtualPath );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error mounting %s at path %s\n", archive, virtualPath );
 	}
 	return result;
 }
@@ -443,6 +446,12 @@ int AKUSetContext ( AKUContextID contextID ) {
 void AKUSetFunc_ErrorTraceback ( AKUErrorTracebackFunc func ) {
 
 	MOAILuaRuntime::Get ().SetTracebackFunc ( func );
+}
+
+//----------------------------------------------------------------//
+void AKUSetLogLevel ( int logLevel ) {
+
+	ZLLog::SetLogLevel ( logLevel );
 }
 
 //----------------------------------------------------------------//

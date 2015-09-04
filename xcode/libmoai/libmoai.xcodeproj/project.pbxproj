@@ -9155,6 +9155,8 @@
 				89BE68CB173974FC00DFE837 /* ZLHashedString.h */,
 				89BE68E0173974FC00DFE837 /* ZLHexDump.cpp */,
 				89BE68E1173974FC00DFE837 /* ZLHexDump.h */,
+				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
+				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
 				CDD38C161B4D082800A30275 /* ZLRefCountedObject.cpp */,
@@ -9964,8 +9966,6 @@
 				89BE68BF173974FC00DFE837 /* ZLDirectoryItr.h */,
 				89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */,
 				89BE68C6173974FC00DFE837 /* ZLFileSys.h */,
-				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
-				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 			);
 			name = os;
 			sourceTree = "<group>";
@@ -16200,7 +16200,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";

@@ -1183,13 +1183,13 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxS
 	
 	if ( this->mVerbose ) {
 		log.write ( "\n" );
-		MOAILog ( 0, 0, log.c_str ());
+		ZLLogF ( ZLLog::CONSOLE, log.c_str ());
 	}
 
 	this->mDepthOffset += this->mDepthBias;
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "WRITING INDICES:\n" );
+		ZLLogF ( ZLLog::CONSOLE, "WRITING INDICES:\n" );
 	}
 
 	const int* elems = tessGetElements ( tess.mTess );
@@ -1199,7 +1199,7 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxS
 		const int* tri = &elems [ i * 3 ];
 		
 		if ( this->mVerbose ) {
-			MOAIPrint ( "%d: %d, %d, %d\n", i, tri [ 0 ], tri [ 1 ], tri [ 2 ]);
+			ZLLogF ( ZLLog::CONSOLE, "%d: %d, %d, %d\n", i, tri [ 0 ], tri [ 1 ], tri [ 2 ]);
 		}
 		
 		idxStream.Write < u32 >( base + tri [ 0 ]);
@@ -1208,7 +1208,7 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxS
 	}
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "\n" );
+		ZLLogF ( ZLLog::CONSOLE, "\n" );
 	}
 }
 

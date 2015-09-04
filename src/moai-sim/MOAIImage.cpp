@@ -2258,7 +2258,7 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 		this->OnImageStatusChanged ( this->IsOK ());
 	}
 	else {
-		MOAILog ( NULL, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_FileOpenError_S, filename );
 	}
 	return this->IsOK ();
 }

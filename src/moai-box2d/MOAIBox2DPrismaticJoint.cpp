@@ -25,7 +25,7 @@ int MOAIBox2DPrismaticJoint::_getJointSpeed ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -47,7 +47,7 @@ int MOAIBox2DPrismaticJoint::_getJointTranslation ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -69,7 +69,7 @@ int MOAIBox2DPrismaticJoint::_getLowerLimit ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -91,7 +91,7 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -115,7 +115,7 @@ int MOAIBox2DPrismaticJoint::_getMotorSpeed ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -137,7 +137,7 @@ int MOAIBox2DPrismaticJoint::_getUpperLimit ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -158,7 +158,7 @@ int MOAIBox2DPrismaticJoint::_isLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -179,7 +179,7 @@ int MOAIBox2DPrismaticJoint::_isMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -202,7 +202,7 @@ int MOAIBox2DPrismaticJoint::_setLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -230,7 +230,7 @@ int MOAIBox2DPrismaticJoint::_setLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -255,7 +255,7 @@ int MOAIBox2DPrismaticJoint::_setMaxMotorForce ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -282,7 +282,7 @@ int MOAIBox2DPrismaticJoint::_setMotor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -312,7 +312,7 @@ int MOAIBox2DPrismaticJoint::_setMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -337,7 +337,7 @@ int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 

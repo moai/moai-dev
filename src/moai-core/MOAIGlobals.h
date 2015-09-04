@@ -241,6 +241,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
+	void				Clear						();
 						MOAIScopedContext			();
 						~MOAIScopedContext			();
 };

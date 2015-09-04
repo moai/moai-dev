@@ -497,7 +497,7 @@ void MOAITouchSensor::PrintStacks () {
 	
 	stacks.write ( " ]\n" );
 	
-	MOAILog ( 0, 0, stacks.c_str ());
+	ZLLogF ( ZLLog::CONSOLE, stacks.c_str ());
 }
 
 //----------------------------------------------------------------//

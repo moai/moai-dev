@@ -54,7 +54,7 @@ int MOAIBox2DGearJoint::_getRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DGearJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -76,7 +76,7 @@ int MOAIBox2DGearJoint::_setRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DGearJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 

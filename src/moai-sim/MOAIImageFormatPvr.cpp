@@ -409,7 +409,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 		//case OGL_BGRA_8888:
 		
 		default:
-			ZLLog::LogF ( ZLLog::CONSOLE, "Unsupported texture format\n" ); // TODO: Support more formats
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "Unsupported texture format\n" ); // TODO: Support more formats
 			return false;
 	}
 
@@ -417,7 +417,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	this->Alloc ( image );
 	
 	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmapMutable ( image ), image.GetBitmapSize (), stream )) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Error loading or decompressing PVR at mip level %d\n", info.mLevel );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading or decompressing PVR at mip level %d\n", info.mLevel );
 		return false;
 	}
 
@@ -438,7 +438,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	}
 
 	if ( stream.ReadBytes ( srcBuffer, info.mSizeCompressed ) != ( size_t )info.mSizeCompressed ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "End of file, pixel data incomplete\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "End of file, pixel data incomplete\n" );
 		return false;
 	}
 	
@@ -451,12 +451,12 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	bool isCompressed = header.IsCompressed ();
 
 	if ( srcBufferSize < info.mSizeCompressed ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Source buffer not large enough to hold compressed bitmap\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Source buffer not large enough to hold compressed bitmap\n" );
 		return false;
 	}
 
 	if ( bufferSize < info.mSizeDecompressed ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Buffer not large enough to hold decompressed bitmap\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Buffer not large enough to hold decompressed bitmap\n" );
 		return false;
 	}
 
@@ -469,7 +469,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 		#endif
 	
 		if ( resultSize != info.mSizeCompressed ) {
-			ZLLog::LogF ( ZLLog::CONSOLE, "Error decompressing PVR at mip level %d\n", info.mLevel );
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "Error decompressing PVR at mip level %d\n", info.mLevel );
 			return false;
 		}
 	}
@@ -521,13 +521,13 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 	
 	// Perform checks for old PVR psPVRHeader
 	if ( header.mHeaderSize != sizeof ( MOAIPvrHeader )) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "Bad PVR file\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Bad PVR file\n" );
 		return false;
 	}
 
 	#if !MOAI_WITH_LIBPVR
 		if ( header.IsCompressed ()) {
-			ZLLog::LogF ( ZLLog::CONSOLE, "Software PVR decompression not supported; build Moai SDK using MOAI_WITH_LIBPVR\n" );
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "Software PVR decompression not supported; build Moai SDK using MOAI_WITH_LIBPVR\n" );
 			return false;
 		}
 	#endif

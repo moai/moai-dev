@@ -113,7 +113,7 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	if ( !self->mFixture ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
 		return 0;
 	}
 	
@@ -138,7 +138,7 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	if ( !self->mFixture ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
 		return 0;
 	}
 	
@@ -164,7 +164,7 @@ int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	if ( !self->mFixture ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
 		return 0;
 	}
 	
@@ -186,7 +186,7 @@ int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	if ( !self->mFixture ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
 		return 0;
 	}
 	
@@ -208,7 +208,7 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
 	
 	if ( !self->mFixture ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
 		return 0;
 	}
 	
