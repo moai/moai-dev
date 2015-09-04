@@ -13,7 +13,7 @@
 			context (if possible).
 */
 class MOAIGfxResource :
-	public virtual MOAILuaObject,
+	public virtual MOAIInstanceEventSource,
 	public ZLGfxListener {
 private:
 
@@ -23,6 +23,7 @@ private:
 	friend class MOAIGfxResourceMgr;
 
 	u32					mState;
+	bool				mScheduled;
 	u32					mLastRenderCount;
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
@@ -47,12 +48,18 @@ private:
 
 protected:
 
+	enum {
+		GFX_EVENT_CREATED,
+	};
+
 	//----------------------------------------------------------------//
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
-	
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
+	
+	void			OnGfxEvent					( u32 event, void* userdata );
+	
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
 	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
@@ -66,14 +73,12 @@ public:
 		STATE_READY_FOR_CPU_CREATE,
 		STATE_READY_FOR_GPU_CREATE,
 		STATE_READY_TO_BIND,
-		
-		STATE_SCHEDULED_FOR_GPU_CREATE,
-		
 		STATE_ERROR,
 	};
 
 	GET ( u32, State, mState )
 	IS ( Ready, mState, STATE_READY_TO_BIND )
+	IS ( Scheduled, mScheduled, true )
 
 	//----------------------------------------------------------------//
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
@@ -82,7 +87,7 @@ public:
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	bool			ScheduleForGPUCreate		();
+	bool			ScheduleForGPUCreate		( u32 listID );
 	bool			Purge						( u32 age );
 };
 

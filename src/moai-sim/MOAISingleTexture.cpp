@@ -251,6 +251,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		}
 	}
 	
+	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
+	
 	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	this->mIsDirty = true;
 	return true;

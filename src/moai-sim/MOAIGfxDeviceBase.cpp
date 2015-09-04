@@ -206,6 +206,12 @@ void MOAIGfxDeviceBase::EndPhase ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDeviceBase::IsListEnabled ( u32 list ) {
+
+	return ( list < TOTAL_LISTS ) && ( this->mLists [ list ] != NULL );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDeviceBase::EndPhase ( u32 list, u32 phase ) {
 
 	if ( list < TOTAL_LISTS ) {

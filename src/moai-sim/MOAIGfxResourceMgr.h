@@ -15,7 +15,9 @@ private:
 	
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	ZLLeanList < MOAIGfxResource* >		mResources;
-	ZLLeanList < MOAIGfxResource* >		mPending;
+	
+	ZLLeanList < MOAIGfxResource* >		mPendingForLoadList;
+	ZLLeanList < MOAIGfxResource* >		mPendingForDrawList;
 	
 	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
 
@@ -26,9 +28,10 @@ private:
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );
 	void			ProcessDeleters			();
+	void			ProcessPending			( ZLLeanList < MOAIGfxResource* > &list );
 	void			RemoveGfxResource		( MOAIGfxResource& resource );
 	void			RenewResources			();
-	void			ScheduleGPUAffirm		( MOAIGfxResource& resource );
+	void			ScheduleGPUAffirm		( MOAIGfxResource& resource, u32 listID );
 	
 public:
 	

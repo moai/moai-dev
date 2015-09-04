@@ -935,7 +935,7 @@ void ZLGfxRetained::Event ( ZLGfxListener* listener, u32 event, void* userdata )
 	if ( listener ) {
 	
 		this->mStream->Write < u32 >( EVENT );
-		this->WriteListenerRecord ( EVENT, listener, userdata );
+		this->WriteListenerRecord ( event, listener, userdata );
 	}
 }
 
@@ -1301,7 +1301,7 @@ void ZLGfxRetained::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( u32 command, ZLGfxListener* listener, void* userdata ) {
+ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( u32 event, ZLGfxListener* listener, void* userdata ) {
 
 	ZLGfxListenerHandle* listenerHandle = listener->GetRetainedHandle ();
 	this->mReleaseStack.Push ( listenerHandle );
@@ -1315,7 +1315,7 @@ ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( u32 command, ZLGfxList
 	record.mEvent				= 0;
 	record.mUniformAddr			= 0;
 
-	
+	this->mStream->Write < u32 >( event );
 	this->mStream->Write < u32 >( idx );
 	
 	return record;

@@ -93,6 +93,7 @@ public:
 	void				BeginPhase					( u32 phase );
 	void				EnableList					( u32 list );
 	void				EndPhase					( u32 phase );
+	bool				IsListEnabled				( u32 list );
 						MOAIGfxDeviceBase			();
 	virtual				~MOAIGfxDeviceBase			();
 	void				ProcessList					( u32 list );

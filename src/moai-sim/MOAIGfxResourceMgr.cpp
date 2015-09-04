@@ -88,12 +88,30 @@ void MOAIGfxResourceMgr::ProcessDeleters () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list ) {
+	
+	this->ProcessDeleters ();
+	
+	ResourceIt resourceIt = list.Head ();
+	while ( resourceIt ) {
+		MOAIGfxResource* resource = resourceIt->Data ();
+		resourceIt = resourceIt->Next ();
+	
+		resource->DoGPUCreate ();
+		resource->mScheduled = false;
+		
+		this->mResources.PushBack ( resource->mLink );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Purge ( age );
 	}
+	this->mResources.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -120,7 +138,8 @@ void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
 	this->mResources.Remove ( resource.mLink );
-	this->mPending.Remove ( resource.mLink );
+	this->mPendingForLoadList.Remove ( resource.mLink );
+	this->mPendingForDrawList.Remove ( resource.mLink );
 }
 
 //----------------------------------------------------------------//
@@ -136,9 +155,18 @@ void MOAIGfxResourceMgr::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource ) {
+void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 listID ) {
 
-	this->mPending.PushBack ( resource.mLink );
+	switch ( listID ) {
+
+		case MOAIGfxDevice::LOADING_LIST:
+			this->mPendingForLoadList.PushBack ( resource.mLink );
+			break;
+		
+		case MOAIGfxDevice::DRAWING_LIST:
+			this->mPendingForDrawList.PushBack ( resource.mLink );
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -147,19 +175,11 @@ void MOAIGfxResourceMgr::Update () {
 	ZLGfxDevice::Begin ();
 
 	MOAIGfxDevice::Get ().SelectList ( MOAIGfxDevice::LOADING_LIST );
-
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-	
 	this->ProcessDeleters ();
+	this->ProcessPending ( this->mPendingForLoadList );
 	
-	ResourceIt resourceIt = this->mPending.Head ();
-	while ( resourceIt ) {
-		MOAIGfxResource* resource = resourceIt->Data ();
-		resourceIt = resourceIt->Next ();
-	
-		resource->DoGPUCreate ();
-		this->mResources.PushBack ( resource->mLink );
-	}
+	MOAIGfxDevice::Get ().SelectList ( MOAIGfxDevice::DRAWING_LIST );
+	this->ProcessPending ( this->mPendingForDrawList );
 	
 	ZLGfxDevice::End ();
 }

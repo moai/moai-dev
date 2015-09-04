@@ -127,7 +127,7 @@ private:
 	void					OnGfxEvent					( u32 event, void* userdata );
 	void					OnUniformLocation			( u32 addr, void* userdata );
 	void					Retain						( ZLRefCountedObject* object );
-	ZLGfxListenerRecord&	WriteListenerRecord			( u32 command, ZLGfxListener* listener, void* userdata );
+	ZLGfxListenerRecord&	WriteListenerRecord			( u32 event, ZLGfxListener* listener, void* userdata );
 
 public:
 

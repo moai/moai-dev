@@ -78,6 +78,8 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 int MOAIGfxResource::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
+	u32 listID = state.GetValue < u32 >( 2, MOAIGfxDevice::DRAWING_LIST );
+	self->ScheduleForGPUCreate ( listID );
 	return 0;
 }
 
@@ -192,6 +194,7 @@ bool MOAIGfxResource::InvokeLoader () {
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_UNINITIALIZED ),
+	mScheduled ( false ),
 	mLastRenderCount ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
@@ -218,8 +221,9 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )STATE_READY_FOR_CPU_CREATE );
 	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )STATE_READY_FOR_GPU_CREATE );
 	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )STATE_READY_TO_BIND );
-	state.SetField ( -1, "STATE_SCHEDULED_FOR_GPU_CREATE",		( u32 )STATE_SCHEDULED_FOR_GPU_CREATE );
 	state.SetField ( -1, "STATE_ERROR",							( u32 )STATE_ERROR );
+	
+	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )GFX_EVENT_CREATED );
 }
 
 //----------------------------------------------------------------//
@@ -236,6 +240,14 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::OnGfxEvent ( u32 event, void* userdata ) {
+
+	if ( event == GFX_EVENT_CREATED ) {
+		this->InvokeListener ( GFX_EVENT_CREATED );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -268,14 +280,14 @@ void MOAIGfxResource::Renew () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::ScheduleForGPUCreate () {
+bool MOAIGfxResource::ScheduleForGPUCreate ( u32 listID ) {
 
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	if ( this->mState != STATE_SCHEDULED_FOR_GPU_CREATE ) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this );
-		this->mState = STATE_SCHEDULED_FOR_GPU_CREATE;
+	if ( this->mScheduled ) {
+		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, listID );
+		this->mScheduled = true;
 	}
 	return true;
 }
