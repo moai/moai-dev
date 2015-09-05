@@ -55,7 +55,7 @@ void ZLLog::LogV ( u32 level, FILE* file, cc8* format, va_list args ) {
 		}
 		else {
 		
-			const FILE* file = file ? file : ( sConsoleRedirect ? sConsoleRedirect : CONSOLE );
+			file = file ? file : ( sConsoleRedirect ? sConsoleRedirect : CONSOLE );
 		
 			if ( file ) {
 				zl_vfprintf (( FILE* )file, format, args );

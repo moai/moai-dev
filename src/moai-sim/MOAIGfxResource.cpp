@@ -102,6 +102,10 @@ bool MOAIGfxResource::Affirm () {
 
 	if ( this->mState != STATE_READY_TO_BIND ) {
 		if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
+		
+		if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
+			this->InvokeLoader ();
+		}
 		return this->DoGPUCreate ();
 	}
 	return true;
@@ -141,9 +145,7 @@ bool MOAIGfxResource::DoCPUCreate () {
 
 	// whether or not GPU is deferred, do the CPU part
 	if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
-	
-		bool created = this->InvokeLoader () ? true : this->OnCPUCreate ();
-		this->mState = created ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
+		this->mState = this->OnCPUCreate () ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
 	}
 	return this->mState != STATE_ERROR;
 }
@@ -172,8 +174,9 @@ bool MOAIGfxResource::DoGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::FinishInit () {
 
-	this->mState = STATE_READY_FOR_CPU_CREATE;
-	this->DoCPUCreate ();
+	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
+		this->mState = STATE_READY_FOR_CPU_CREATE;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -189,6 +192,7 @@ bool MOAIGfxResource::InvokeLoader () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->mReloader.PushRef ( state )) {
 			state.DebugCall ( 0, 0 );
+			this->mState = STATE_READY_FOR_GPU_CREATE;
 			return true;
 		}
 	}
@@ -215,6 +219,30 @@ MOAIGfxResource::~MOAIGfxResource () {
 		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
 	}
 	this->mReloader.Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::OnGfxEvent ( u32 event, void* userdata ) {
+
+	if ( event == GFX_EVENT_CREATED ) {
+		this->InvokeListener ( GFX_EVENT_CREATED );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::Purge ( u32 age ) {
+
+	if ( this->mState == STATE_ERROR ) return false;
+
+	age = MOAIRenderMgr::Get ().GetRenderCounter () - age;
+
+	if ( this->mLastRenderCount <= age ) {
+		this->OnCPUDestroy ();
+		this->OnGPUDestroy ();
+		this->mState = STATE_READY_FOR_CPU_CREATE;
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -247,30 +275,6 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::OnGfxEvent ( u32 event, void* userdata ) {
-
-	if ( event == GFX_EVENT_CREATED ) {
-		this->InvokeListener ( GFX_EVENT_CREATED );
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxResource::Purge ( u32 age ) {
-
-	if ( this->mState == STATE_ERROR ) return false;
-
-	age = MOAIRenderMgr::Get ().GetRenderCounter () - age;
-
-	if ( this->mLastRenderCount <= age ) {
-		this->OnCPUDestroy ();
-		this->OnGPUDestroy ();
-		this->mState = STATE_READY_FOR_CPU_CREATE;
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResource::Renew () {
 
 	// any (valid) state other than error we go back to square zero
@@ -278,7 +282,7 @@ void MOAIGfxResource::Renew () {
 	
 		this->OnGPULost (); // clear out the resource id (if any)
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-	
+		this->InvokeLoader ();
 		this->DoGPUCreate ();
 	}
 }

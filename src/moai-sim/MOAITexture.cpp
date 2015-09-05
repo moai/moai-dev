@@ -161,6 +161,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -178,6 +179,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->FinishInit ();
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -197,6 +199,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->FinishInit ();
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -210,6 +213,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->FinishInit ();
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 

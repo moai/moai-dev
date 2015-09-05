@@ -111,7 +111,6 @@ void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Purge ( age );
 	}
-	this->mResources.Clear ();
 }
 
 //----------------------------------------------------------------//
