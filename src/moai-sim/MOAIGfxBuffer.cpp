@@ -314,39 +314,39 @@ void MOAIGfxBuffer::ScheduleFlush () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-//	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
-//	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
-//
-//	this->Reserve ( size );
-//	this->ReserveVBOs ( totalVBOs );
-//	
-//	state.GetField ( -1, "mData" );
-//	if ( state.IsType ( -1, LUA_TSTRING )) {
-//		
-//		STLString zipString = lua_tostring ( state, -1 );
-//		size_t unzipLen = zipString.zip_inflate ( this->mData, size );
-//		assert ( unzipLen == size ); // TODO: fail gracefully
-//		
-//		this->Seek ( size, SEEK_SET );
-//	}
-//	lua_pop ( state, 1 );
-//	
-//	this->ScheduleFlush ();
-//	this->FinishInit ();
+	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
+	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
+
+	this->Reserve ( size );
+	this->ReserveVBOs ( totalVBOs );
+	
+	state.GetField ( -1, "mData" );
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+		
+		STLString zipString = lua_tostring ( state, -1 );
+		size_t unzipLen = zipString.zip_inflate ( this->ZLCopyOnWrite::Invalidate (), size );
+		assert ( unzipLen == size ); // TODO: fail gracefully
+		
+		this->Seek ( size, SEEK_SET );
+	}
+	lua_pop ( state, 1 );
+	
+	this->ScheduleFlush ();
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-//	u32 size = ( u32 )this->GetLength ();
-//
-//	state.SetField < u32 >( -1, "mTotalVBOs", this->mVBOs.Size ());
-//	state.SetField < u32 >( -1, "mSize", size );
-//	
-//	STLString zipString;
-//	zipString.zip_deflate ( this->mData, size );
-//	
-//	lua_pushstring ( state, zipString.str ());
-//	lua_setfield ( state, -2, "mData" );
+	u32 size = ( u32 )this->GetLength ();
+
+	state.SetField < u32 >( -1, "mTotalVBOs", this->mVBOs.Size ());
+	state.SetField < u32 >( -1, "mSize", size );
+	
+	STLString zipString;
+	zipString.zip_deflate ( this->ZLCopyOnWrite::GetBuffer (), size );
+	
+	lua_pushstring ( state, zipString.str ());
+	lua_setfield ( state, -2, "mData" );
 }
 
