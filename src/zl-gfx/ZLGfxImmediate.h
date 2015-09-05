@@ -19,6 +19,7 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
+	void					LogErrors					( cc8* origin );
 
 public:
 

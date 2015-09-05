@@ -145,7 +145,9 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 		gfx.BindTexture ( this->mGLTexID );
 		gfx.TexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
 		gfx.FramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
-				
+		
+		
+		
 		// refresh tex params on next bind
 		this->mIsDirty = true;
 		
@@ -223,9 +225,9 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIFrameBufferTexture::Render () {
 
 	// TODO: gfx
-	//if ( this->PrepareForBind ()) {
+	if ( this->Affirm ()) {
 		MOAIFrameBuffer::Render ();
-	//}
+	}
 }
 
 //----------------------------------------------------------------//

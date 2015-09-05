@@ -81,6 +81,7 @@ public:
 	IS ( Scheduled, mScheduled, true )
 
 	//----------------------------------------------------------------//
+	bool			Affirm						();
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
 	bool			DoCPUCreate					(); // preload CPU portion
 					MOAIGfxResource				();

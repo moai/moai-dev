@@ -98,6 +98,16 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIGfxResource::Affirm () {
+
+	if ( this->mState != STATE_READY_TO_BIND ) {
+		if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
+		return this->DoGPUCreate ();
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
@@ -105,16 +115,10 @@ bool MOAIGfxResource::Bind () {
 //		return false;
 //	}
 
-	if ( this->mState != STATE_READY_TO_BIND ) {
-
-		if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
-
-		if ( !this->DoGPUCreate ()) return false;
-		
+	if ( this->Affirm ()) {
 		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
+		this->OnGPUBind ();
 	}
-
-	this->OnGPUBind ();
 	return true;
 }
 

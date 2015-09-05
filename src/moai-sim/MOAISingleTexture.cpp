@@ -240,7 +240,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 				mipmap.GetHeight (),  
 				this->mGLInternalFormat,
 				this->mGLPixelType,
-				image.GetBitmapBuffer ()
+				mipmap.GetBitmapBuffer ()
 			);
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {

@@ -19694,7 +19694,7 @@
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -19739,7 +19739,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -19781,7 +19781,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -19796,7 +19796,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -19899,6 +19899,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					NDEBUG,
 					USE_OPENSSL,
 					USE_SSLEAY,
@@ -19921,7 +19922,6 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
-					"$(inherited)",
 					"MOAI_WITH_ARES=0",
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
@@ -20267,7 +20267,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20303,7 +20303,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20339,7 +20339,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20375,7 +20375,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20411,7 +20411,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20449,7 +20449,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20487,7 +20487,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20525,7 +20525,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20683,7 +20683,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20719,7 +20719,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20755,7 +20755,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -20791,7 +20791,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21067,7 +21067,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21103,7 +21103,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21139,7 +21139,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21175,7 +21175,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21227,6 +21227,9 @@
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					DEBUG,
+					_DEBUG,
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -21248,7 +21251,7 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
-					"$(inherited)",
+					ZGL_ASSERT_ON_ERROR,
 					"MOAI_WITH_ARES=0",
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
@@ -21371,7 +21374,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21387,7 +21390,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21463,7 +21466,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21500,7 +21503,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21537,7 +21540,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21552,7 +21555,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21567,7 +21570,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21582,7 +21585,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21854,7 +21857,7 @@
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21899,7 +21902,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21945,7 +21948,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -21991,7 +21994,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22033,7 +22036,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22070,7 +22073,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22107,7 +22110,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22144,7 +22147,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22824,7 +22827,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22841,7 +22844,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22858,7 +22861,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -22875,7 +22878,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23153,7 +23156,7 @@
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23198,7 +23201,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23244,7 +23247,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23290,7 +23293,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23332,7 +23335,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23348,7 +23351,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23364,7 +23367,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23380,7 +23383,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23396,7 +23399,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23434,7 +23437,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23472,7 +23475,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23510,7 +23513,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23677,7 +23680,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23715,7 +23718,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23753,7 +23756,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -23791,7 +23794,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -24844,7 +24847,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -24881,7 +24884,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25307,7 +25310,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25346,7 +25349,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25385,7 +25388,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25424,7 +25427,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25463,7 +25466,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25504,7 +25507,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25545,7 +25548,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25586,7 +25589,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25683,6 +25686,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					NDEBUG,
 					USE_OPENSSL,
 					USE_SSLEAY,
@@ -25705,7 +25709,6 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
-					"$(inherited)",
 					"MOAI_WITH_ARES=0",
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
@@ -25945,7 +25948,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -25964,7 +25967,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26006,7 +26009,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26043,7 +26046,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26080,7 +26083,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26112,6 +26115,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
 					NDEBUG,
 					USE_OPENSSL,
 					USE_SSLEAY,
@@ -26134,7 +26138,6 @@
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
 					OPENSSL_NO_HW,
-					"$(inherited)",
 					"MOAI_WITH_ARES=0",
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
@@ -26374,7 +26377,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26393,7 +26396,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26435,7 +26438,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26472,7 +26475,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
@@ -26509,7 +26512,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
+					"$(inherited)",
 					MACOSX,
 					LUA_USE_MACOSX,
 				);

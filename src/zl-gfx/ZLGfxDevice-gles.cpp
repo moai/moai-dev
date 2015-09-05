@@ -57,9 +57,7 @@ u32 ZLGfxDevice::GetError () {
 	GLenum error = glGetError ();
 
 	switch ( error ) {
-
 		case GL_NO_ERROR:			return ZGL_ERROR_NONE;
-
 		case GL_INVALID_ENUM:		return ZGL_ERROR_INVALID_ENUM;
 		case GL_INVALID_OPERATION:	return ZGL_ERROR_INVALID_OPERATION;
 		case GL_INVALID_VALUE:		return ZGL_ERROR_INVALID_VALUE;
