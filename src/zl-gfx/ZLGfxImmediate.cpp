@@ -585,6 +585,44 @@ bool ZLGfxImmediate::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) {
+
+	if ( listener ) {
+
+		ZLCopyOnWrite copyOnWrite;
+		unsigned char* buffer = ( unsigned char* )copyOnWrite.Alloc ( width * height * pixelSize );
+
+		glReadPixels (
+			( GLint )x,
+			( GLint )y,
+			( GLsizei )width,
+			( GLsizei )height,
+			ZLGfxEnum::MapZLToNative ( format ),
+			ZLGfxEnum::MapZLToNative ( type ),
+			( GLvoid* )buffer
+		);
+		
+		//image is flipped vertically, flip it back
+		int index,indexInvert;
+		for ( u32 y = 0; y < ( height / 2 ); ++y ) {
+			for ( u32 x = 0; x < width; ++x ) {
+				for ( u32 i = 0; i < pixelSize; ++i ) {
+
+					index = i + ( x * pixelSize ) + ( y * width * pixelSize );
+					indexInvert = i + ( x * pixelSize ) + (( height - 1 - y ) * width * pixelSize );
+
+					unsigned char temp = buffer [ indexInvert ];
+					buffer [ indexInvert ] = buffer [ index ];
+					buffer [ index ] = temp;
+				}
+			}
+		}
+		
+		listener->OnReadPixels ( copyOnWrite );
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::RenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
 
 	glRenderbufferStorage ( GL_RENDERBUFFER, ZLGfxEnum::MapZLToNative ( internalFormat ), ( GLsizei )width, ( GLsizei )height );

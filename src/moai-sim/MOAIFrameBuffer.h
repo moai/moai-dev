@@ -55,7 +55,8 @@ public:
 			indexed from 1.
 */
 class MOAIFrameBuffer :
-	public MOAIClearableView {
+	public MOAIClearableView,
+	public virtual ZLGfxListener {
 protected:
 	
 	friend class MOAIGfxDevice;
@@ -83,6 +84,7 @@ protected:
 	static int			_setRenderTable				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				OnReadPixels				( const ZLCopyOnWrite& buffer );
 	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:

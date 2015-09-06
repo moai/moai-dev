@@ -90,6 +90,7 @@ public:
 	void					PushSection					();
 	bool					PushSuccessHandler			();
 	
+	void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener );
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );

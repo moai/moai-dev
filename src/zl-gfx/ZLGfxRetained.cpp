@@ -1090,6 +1090,18 @@ bool ZLGfxRetained::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) {
+	UNUSED ( x );
+	UNUSED ( y );
+	UNUSED ( width );
+	UNUSED ( height );
+	UNUSED ( format );
+	UNUSED ( type );
+	UNUSED ( pixelSize );
+	UNUSED ( listener );
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::RenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
 	
 	assert ( this->mStream );

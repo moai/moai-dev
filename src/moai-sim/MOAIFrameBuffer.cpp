@@ -326,6 +326,25 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
+void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer ) {
+
+	MOAIImage* image = this->mFrameImage;
+	
+	if ( image ) {
+
+		image->Init ( buffer.GetBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
+
+		if ( this->mOnFrameFinish ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			if ( this->mOnFrameFinish.PushRef ( state )) {
+				this->mFrameImage.PushRef ( state );
+				state.DebugCall ( 1, 0 );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIFrameBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIClearableView::RegisterLuaClass ( state );
@@ -370,16 +389,9 @@ void MOAIFrameBuffer::Render () {
 
 	if ( this->mGrabNextFrame ) {
 
-		this->GrabImage ( this->mFrameImage );
+		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this );
 		mGrabNextFrame = false;
-
-		if ( this->mOnFrameFinish ) {
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-			if ( this->mOnFrameFinish.PushRef ( state )) {
-				this->mFrameImage.PushRef ( state );
-				state.DebugCall ( 1, 0 );
-			}
-		}
 	}
 	
 	this->mRenderCounter++;

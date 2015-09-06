@@ -14,7 +14,7 @@
 */
 class MOAIGfxResource :
 	public virtual MOAIInstanceEventSource,
-	public ZLGfxListener {
+	public virtual ZLGfxListener {
 private:
 
 	friend class MOAIGfxDevice;

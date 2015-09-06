@@ -18,6 +18,11 @@ void ZLGfxListener::OnGfxEvent ( u32 event, void* userdata ) {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxListener::OnReadPixels ( const ZLCopyOnWrite& copyOnWrite ) {
+	UNUSED ( copyOnWrite );
+}
+
+//----------------------------------------------------------------//
 void ZLGfxListener::OnUniformLocation ( u32 addr, void* userdata ) {
 	UNUSED ( addr );
 	UNUSED ( userdata );

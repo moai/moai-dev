@@ -173,7 +173,7 @@ public:
 	void					GetSubImage					( const MOAIImage& image, ZLIntRect rect );
 	void					Init						( const MOAIImage& image );
 	void					Init						( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
-	void					Init						( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
+	void					Init						( const void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
 	bool					IsPow2						();
 	static bool				IsPow2						( u32 n );
 	bool					Load						( cc8* filename, u32 transform = 0 );

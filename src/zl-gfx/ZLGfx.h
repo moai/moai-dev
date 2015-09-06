@@ -11,6 +11,8 @@
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLSharedHandle.h>
 
+class ZLCopyOnWrite;
+
 // hardware PVR support is based on device
 #ifdef MOAI_OS_IPHONE
 	#define ZGL_DEVCAPS_PVR_TEXTURE 1
@@ -74,6 +76,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual	void			OnGfxEvent				( u32 event, void* userdata );
+	virtual void			OnReadPixels			( const ZLCopyOnWrite& copyOnWrite );
 	virtual void			OnUniformLocation		( u32 addr, void* userdata );
 							ZLGfxListener			();
 	virtual					~ZLGfxListener			();
@@ -164,6 +167,7 @@ public:
 	virtual void					PushSection					() = 0;
 	virtual bool					PushSuccessHandler			() = 0;
 	
+	virtual void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) = 0;
 	virtual void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height ) = 0;
 	
 	virtual void					Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;

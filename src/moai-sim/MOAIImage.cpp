@@ -2215,7 +2215,7 @@ void MOAIImage::Init ( u32 width, u32 height, ZLColor::ColorFormat colorFmt, Pix
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Init ( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt ) {
+void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt ) {
 
 	this->Clear ();
 
