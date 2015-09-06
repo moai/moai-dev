@@ -2599,8 +2599,8 @@
 		CD6AFDA61B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */; };
 		CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */; };
 		CD6AFDA81B1683F800A36954 /* MOAIGeometryWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */; };
-		CD6C53251B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp */; };
-		CD6C53261B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp */; };
+		CD6C53251B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp */; };
+		CD6C53261B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp */; };
 		CD6C53271B7C7E2A00BEEDD0 /* ZLGfx-gles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6C53241B7C7E2A00BEEDD0 /* ZLGfx-gles.h */; };
 		CD6C53281B7C7E2A00BEEDD0 /* ZLGfx-gles.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6C53241B7C7E2A00BEEDD0 /* ZLGfx-gles.h */; };
 		CD6D74C017EE415D00964415 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6930173974FD00DFE837 /* headers.h */; };
@@ -3718,14 +3718,14 @@
 		CDA132551B47873A0044E1B0 /* ZLGfxRetained.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1324C1B47873A0044E1B0 /* ZLGfxRetained.cpp */; };
 		CDA132561B47873A0044E1B0 /* ZLGfxRetained.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1324D1B47873A0044E1B0 /* ZLGfxRetained.h */; };
 		CDA132571B47873A0044E1B0 /* ZLGfxRetained.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1324D1B47873A0044E1B0 /* ZLGfxRetained.h */; };
-		CDA1325A1B4789050044E1B0 /* ZLGfxEnum-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132581B4789050044E1B0 /* ZLGfxEnum-gles.cpp */; };
-		CDA1325B1B4789050044E1B0 /* ZLGfxEnum-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132581B4789050044E1B0 /* ZLGfxEnum-gles.cpp */; };
+		CDA1325A1B4789050044E1B0 /* ZLGfxEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132581B4789050044E1B0 /* ZLGfxEnum.cpp */; };
+		CDA1325B1B4789050044E1B0 /* ZLGfxEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132581B4789050044E1B0 /* ZLGfxEnum.cpp */; };
 		CDA1325C1B4789050044E1B0 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA132591B4789050044E1B0 /* zl_gfx.h */; };
 		CDA1325D1B4789050044E1B0 /* zl_gfx.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA132591B4789050044E1B0 /* zl_gfx.h */; };
 		CDA1325F1B478B650044E1B0 /* ZLGfxEnum.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1325E1B478B650044E1B0 /* ZLGfxEnum.h */; };
 		CDA132601B478B650044E1B0 /* ZLGfxEnum.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1325E1B478B650044E1B0 /* ZLGfxEnum.h */; };
-		CDA132661B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132641B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp */; };
-		CDA132671B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132641B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp */; };
+		CDA132661B478F9A0044E1B0 /* ZLGfxDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132641B478F9A0044E1B0 /* ZLGfxDevice.cpp */; };
+		CDA132671B478F9A0044E1B0 /* ZLGfxDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA132641B478F9A0044E1B0 /* ZLGfxDevice.cpp */; };
 		CDA132681B478F9A0044E1B0 /* ZLGfxDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */; };
 		CDA132691B478F9A0044E1B0 /* ZLGfxDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */; };
 		CDA1326B1B47AC090044E1B0 /* ZLGfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */; };
@@ -6693,7 +6693,7 @@
 		CD69AB3617FA6CF90053E028 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
 		CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGeometryWriter.cpp; sourceTree = "<group>"; };
 		CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGeometryWriter.h; sourceTree = "<group>"; };
-		CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ZLGfxImmediate-gles.cpp"; sourceTree = "<group>"; };
+		CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxImmediate.cpp; sourceTree = "<group>"; };
 		CD6C53241B7C7E2A00BEEDD0 /* ZLGfx-gles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZLGfx-gles.h"; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6ECF6A1A6E247C004813FF /* MOAIMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMatrix.cpp; sourceTree = "<group>"; };
@@ -7826,10 +7826,10 @@
 		CDA1324B1B47873A0044E1B0 /* ZLGfxImmediate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxImmediate.h; sourceTree = "<group>"; };
 		CDA1324C1B47873A0044E1B0 /* ZLGfxRetained.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxRetained.cpp; sourceTree = "<group>"; };
 		CDA1324D1B47873A0044E1B0 /* ZLGfxRetained.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxRetained.h; sourceTree = "<group>"; };
-		CDA132581B4789050044E1B0 /* ZLGfxEnum-gles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ZLGfxEnum-gles.cpp"; sourceTree = "<group>"; };
+		CDA132581B4789050044E1B0 /* ZLGfxEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxEnum.cpp; sourceTree = "<group>"; };
 		CDA132591B4789050044E1B0 /* zl_gfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_gfx.h; sourceTree = "<group>"; };
 		CDA1325E1B478B650044E1B0 /* ZLGfxEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxEnum.h; sourceTree = "<group>"; };
-		CDA132641B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ZLGfxDevice-gles.cpp"; sourceTree = "<group>"; };
+		CDA132641B478F9A0044E1B0 /* ZLGfxDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxDevice.cpp; sourceTree = "<group>"; };
 		CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxDevice.h; sourceTree = "<group>"; };
 		CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfx.cpp; sourceTree = "<group>"; };
 		CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-billing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9115,12 +9115,12 @@
 				CDA1326A1B47AC090044E1B0 /* ZLGfx.cpp */,
 				CDA132491B47873A0044E1B0 /* ZLGfx.h */,
 				CD6C53241B7C7E2A00BEEDD0 /* ZLGfx-gles.h */,
+				CDA132641B478F9A0044E1B0 /* ZLGfxDevice.cpp */,
 				CDA132651B478F9A0044E1B0 /* ZLGfxDevice.h */,
-				CDA132641B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp */,
+				CDA132581B4789050044E1B0 /* ZLGfxEnum.cpp */,
 				CDA1325E1B478B650044E1B0 /* ZLGfxEnum.h */,
-				CDA132581B4789050044E1B0 /* ZLGfxEnum-gles.cpp */,
+				CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp */,
 				CDA1324B1B47873A0044E1B0 /* ZLGfxImmediate.h */,
-				CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp */,
 				CDA1324C1B47873A0044E1B0 /* ZLGfxRetained.cpp */,
 				CDA1324D1B47873A0044E1B0 /* ZLGfxRetained.h */,
 				CDA132591B4789050044E1B0 /* zl_gfx.h */,
@@ -17476,7 +17476,7 @@
 				89BE6987173974FD00DFE837 /* ZLBox.cpp in Sources */,
 				89BE698B173974FD00DFE837 /* ZLByteStream.cpp in Sources */,
 				89BE698F173974FD00DFE837 /* ZLCgt.cpp in Sources */,
-				CD6C53251B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp in Sources */,
+				CD6C53251B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp in Sources */,
 				89BE6993173974FD00DFE837 /* ZLColor.cpp in Sources */,
 				89BE6997173974FD00DFE837 /* ZLCurve.cpp in Sources */,
 				CDE440121AC0D27600C745DB /* ZLFrustum.cpp in Sources */,
@@ -17496,14 +17496,14 @@
 				89BE69CF173974FD00DFE837 /* ZLHashWriterAdler32.cpp in Sources */,
 				89BE69D3173974FD00DFE837 /* ZLHashWriterCRC32.cpp in Sources */,
 				89BE69EF173974FD00DFE837 /* ZLHashWriterWhirlpool.cpp in Sources */,
-				CDA1325A1B4789050044E1B0 /* ZLGfxEnum-gles.cpp in Sources */,
+				CDA1325A1B4789050044E1B0 /* ZLGfxEnum.cpp in Sources */,
 				89BE69F3173974FD00DFE837 /* ZLHexDump.cpp in Sources */,
 				89BE69F7173974FD00DFE837 /* ZLHexAdapter.cpp in Sources */,
 				89BE69FF173974FD00DFE837 /* ZLInterpolate.cpp in Sources */,
 				CDE440161AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
 				89BE6A03173974FD00DFE837 /* ZLIntersect.cpp in Sources */,
 				89BE6A0F173974FD00DFE837 /* ZLLexStream.cpp in Sources */,
-				CDA132661B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp in Sources */,
+				CDA132661B478F9A0044E1B0 /* ZLGfxDevice.cpp in Sources */,
 				89BE6A15173974FD00DFE837 /* ZLLog.cpp in Sources */,
 				CDA132541B47873A0044E1B0 /* ZLGfxRetained.cpp in Sources */,
 				89BE6A21173974FD00DFE837 /* ZLMemStream.cpp in Sources */,
@@ -17550,7 +17550,7 @@
 				89BE6988173974FD00DFE837 /* ZLBox.cpp in Sources */,
 				89BE698C173974FD00DFE837 /* ZLByteStream.cpp in Sources */,
 				89BE6990173974FD00DFE837 /* ZLCgt.cpp in Sources */,
-				CD6C53261B7C7E2A00BEEDD0 /* ZLGfxImmediate-gles.cpp in Sources */,
+				CD6C53261B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp in Sources */,
 				89BE6994173974FD00DFE837 /* ZLColor.cpp in Sources */,
 				89BE6998173974FD00DFE837 /* ZLCurve.cpp in Sources */,
 				CDE440131AC0D27600C745DB /* ZLFrustum.cpp in Sources */,
@@ -17570,14 +17570,14 @@
 				89BE69D0173974FD00DFE837 /* ZLHashWriterAdler32.cpp in Sources */,
 				89BE69D4173974FD00DFE837 /* ZLHashWriterCRC32.cpp in Sources */,
 				89BE69F0173974FD00DFE837 /* ZLHashWriterWhirlpool.cpp in Sources */,
-				CDA1325B1B4789050044E1B0 /* ZLGfxEnum-gles.cpp in Sources */,
+				CDA1325B1B4789050044E1B0 /* ZLGfxEnum.cpp in Sources */,
 				89BE69F4173974FD00DFE837 /* ZLHexDump.cpp in Sources */,
 				89BE69F8173974FD00DFE837 /* ZLHexAdapter.cpp in Sources */,
 				89BE6A00173974FD00DFE837 /* ZLInterpolate.cpp in Sources */,
 				CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
 				89BE6A04173974FD00DFE837 /* ZLIntersect.cpp in Sources */,
 				89BE6A10173974FD00DFE837 /* ZLLexStream.cpp in Sources */,
-				CDA132671B478F9A0044E1B0 /* ZLGfxDevice-gles.cpp in Sources */,
+				CDA132671B478F9A0044E1B0 /* ZLGfxDevice.cpp in Sources */,
 				89BE6A16173974FD00DFE837 /* ZLLog.cpp in Sources */,
 				CDA132551B47873A0044E1B0 /* ZLGfxRetained.cpp in Sources */,
 				89BE6A22173974FD00DFE837 /* ZLMemStream.cpp in Sources */,
