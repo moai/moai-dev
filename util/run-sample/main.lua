@@ -13,8 +13,12 @@ local gMarked	= MOAIFileSystem.checkFileExists ( MARKED_FILENAME ) and dofile ( 
 
 local gDirectories = MOAIFileSystem.listDirectories ( SAMPLES_DIRECTORY );
 
+local PREV		= -1
+local NONE		= 0
+local NEXT		= 1
+
 local gRun		= true
-local gNext		= false
+local gStep		= NONE
 
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
@@ -77,12 +81,16 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	end
 
 	if escape == 'n' or escape == 'next' then
-		gNext = true
+		gStep = NEXT
+	end
+
+	if escape == 'p' or escape == 'prev' then
+		gStep = PREV
 	end
 
 	if escape == 's' or escape == 'skip' then
 		gRun = false
-		gNext = true
+		gStep = NEXT
 	end
 
 	if escape == 'x' or escape == 'xclear' then
@@ -94,8 +102,16 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	end
 end
 
-if gNext then
+if gStep == NEXT then
 	gCount = gCount + 1
+end
+
+if gStep == PREV then
+	gCount = gCount - 1
+end
+
+if gCount < 1 then
+	gCount = #gDirectories
 end
 
 if not gDirectories [ gCount ] then

@@ -158,6 +158,15 @@ int ZLVfsFile::IsEOF () {
 }
 
 //----------------------------------------------------------------//
+void ZLVfsFile::Lock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		flockfile ( this->mPtr.mFile );
+	}
+}
+
+//----------------------------------------------------------------//
 int ZLVfsFile::Open ( const char* filename, const char* mode ) {
 	
 	ZLVfsVirtualPath* mount;
@@ -304,6 +313,25 @@ int ZLVfsFile::SetPos ( const fpos_t * pos ) {
 long ZLVfsFile::Tell () {
 
 	return ( this->mIsZip ) ? ( long )this->mPtr.mZip->Tell () : ftell ( this->mPtr.mFile );
+}
+
+//----------------------------------------------------------------//
+int ZLVfsFile::TryLock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		ftrylockfile ( this->mPtr.mFile );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFile::Unlock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		funlockfile ( this->mPtr.mFile );
+	}
 }
 
 //----------------------------------------------------------------//

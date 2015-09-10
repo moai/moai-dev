@@ -490,6 +490,8 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
 
+	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
@@ -502,31 +504,19 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
+	ZLBox modelBounds;
+	this->OnGetModelBounds ( modelBounds );
+	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_AXIS )) {
-		
-		ZLBox bounds;
-		u32 status = this->OnGetModelBounds ( bounds );
-		if ( status == BOUNDS_OK ) {
-			draw.DrawBoxAxis ( bounds );
-		}
+		draw.DrawBoxAxis ( modelBounds );
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_DIAGONALS )) {
-		
-		ZLBox bounds;
-		u32 status = this->OnGetModelBounds ( bounds );
-		if ( status == BOUNDS_OK ) {
-			draw.DrawBoxDiagonals ( bounds );
-		}
+		draw.DrawBoxDiagonals ( modelBounds );
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
-		
-		ZLBox bounds;
-		u32 status = this->OnGetModelBounds ( bounds );
-		if ( status == BOUNDS_OK ) {
-			draw.DrawBoxOutline ( bounds );
-		}
+		draw.DrawBoxOutline ( modelBounds );
 	}
 	
 	// clear out the world transform (draw in world space)

@@ -382,7 +382,13 @@ void MOAIGfxDeviceStateCache::SetTexture ( u32 textureUnit, MOAISingleTexture* t
 		this->mTextureUnits [ textureUnit ] = texture;
 		
 		if ( texture ) {
-			texture->Bind ();
+			if ( !texture->Bind ()) {
+			
+				MOAITexture* defaultTexture = this->GetDefaultTexture ();
+				if ( texture != defaultTexture ) {
+					this->SetTexture ( textureUnit, defaultTexture );
+				}
+			}
 		}
 	}
 }

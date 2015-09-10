@@ -55,7 +55,9 @@ private:
 	u32							mInterfaceMask;
 	u32							mQueryMask;
 	s32							mPriority;
+	
 	ZLBox						mWorldBounds;
+	u32							mBoundsStatus;
 	
 	//----------------------------------------------------------------//
 	static int			_getBounds					( lua_State* L );
@@ -147,6 +149,8 @@ public:
 	
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
+	
+	GET ( u32, BoundsStatus, mBoundsStatus )
 	GET ( ZLBox, Bounds, mWorldBounds )
 	GET ( ZLVec3D, BoundsMax, mWorldBounds.mMax )
 	GET ( ZLVec3D, BoundsMin, mWorldBounds.mMin )
