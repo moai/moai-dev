@@ -617,7 +617,7 @@ MOAIApp = MOAIApp or MOAIAppAndroid or MOAIAppIOS
 MOAIAudioSampler = MOAIAudioSampler or MOAIAudioSamplerCocoa or MOAIAudioSamplerAndroid
 MOAIBrowser = MOAIBrowser or MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS
-MOAIDialog = MOAIDialog or MOAIDialogAndroid or MOAIDialogIOS
+MOAIDialog = MOAIDialog or MOAIDialogAndroid or MOAIDialogIOS or MOAIDialogSDL
 MOAIMoviePlayer = MOAIMoviePlayer or MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
 
 -- Optional 3rd party extensions

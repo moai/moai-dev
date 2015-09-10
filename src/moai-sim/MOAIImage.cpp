@@ -2705,6 +2705,8 @@ void MOAIImage::Take ( MOAIImage& image ) {
 	this->mBitmap		= image.mBitmap;
 	this->mPalette		= image.mPalette;
 
+	this->OnImageStatusChanged ( true );
+
 	// kill the data before clear
 	image.mBitmap = 0;
 	image.mPalette = 0;

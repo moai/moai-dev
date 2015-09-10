@@ -200,7 +200,8 @@ MOAITrace::MOAITrace () :
 	mLastRunAt ( 0 ),
 	mCurrentThread ( 0 ),
 	mCurrentThreadTrace ( 0 ),
-	mVerbose ( false ) {
+	mVerbose ( false ),
+	mListener ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }

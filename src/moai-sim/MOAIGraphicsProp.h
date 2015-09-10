@@ -169,7 +169,7 @@ public:
 		LOD_FLAGS_MAX_LIMIT			= 0x02,
 	};
 
-	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
+	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
 	static const u32 DEFAULT_LOD_FLAGS	= 0;
 
 	GET_SET ( int, CullMode, mCullMode )

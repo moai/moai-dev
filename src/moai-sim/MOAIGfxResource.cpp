@@ -122,8 +122,9 @@ bool MOAIGfxResource::Bind () {
 	if ( this->Affirm ()) {
 		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
 		this->OnGPUBind ();
+		return true;
 	}
-	return true;
+	return false;
 }
 
 //----------------------------------------------------------------//
