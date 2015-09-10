@@ -1265,6 +1265,8 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 	
 	this->mBitmap		= image.mBitmap;
 	this->mPalette		= image.mPalette;
+	
+	this->OnImageStatusChanged ( true );
 }
 
 //----------------------------------------------------------------//
