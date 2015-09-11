@@ -6,14 +6,13 @@
 
 package com.ziplinegames.moai;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
+import com.ziplinegames.moai.MoaiGooglePlayServices;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
 
 import com.google.android.gms.common.*;
-import com.google.android.gms.common.GooglePlayServicesClient.*;
+//import com.google.android.gms.common.GooglePlayServicesClient.*;
+import com.google.android.gms.common.api.GoogleApiClient.*;
 
 //================================================================//
 // MoaiPlayServicesCallbacks
@@ -25,14 +24,14 @@ public class MoaiPlayServicesCallbacks implements ConnectionCallbacks, OnConnect
 	public void onConnected ( Bundle connectionHint ) {
 
 		MoaiLog.i ( "MoaiPlayServicesCallbacks onConnected" );
-		MoaiGooglePlayServices.AKUNotifyConnectionComplete ();
+		MoaiGooglePlayServices.connectionComplete();
 	}
 
 	//----------------------------------------------------------------//
 	@Override
-	public void onDisconnected () {
+	public void onConnectionSuspended (int id) {
 
-		MoaiLog.i ( "MoaiPlayServicesCallbacks onDisconnected" );
+		MoaiLog.i ( "MoaiPlayServicesCallbacks onConnectionSuspended" );
 	}
 
 	//----------------------------------------------------------------//

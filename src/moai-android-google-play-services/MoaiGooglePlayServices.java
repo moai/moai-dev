@@ -5,27 +5,19 @@
 //----------------------------------------------------------------//
 
 package com.ziplinegames.moai;
-import com.ziplinegames.moai.*;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.google.android.gms.auth.*;
 import com.google.android.gms.common.*;
-import com.google.android.gms.common.GooglePlayServicesClient.*;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.*;
-import com.google.android.gms.games.GamesClient;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
 
 //================================================================//
 // MoaiGooglePlayServices
@@ -34,12 +26,14 @@ public class MoaiGooglePlayServices {
 
 	private static Activity 					sActivity = null;
 
-	private static GamesClient					sGameClient = null;
+	private static GoogleApiClient				sGameClient = null;
 	private static MoaiPlayServicesCallbacks 	sConnectionCallbacks = null;
 	private static MoaiPlayServicesCallbacks 	sFailedCallback = null;
 	private static String						sAccountName = null;
 	private static int							sServicesStatus;
 	private static String						sToken = null;
+
+	protected static native void	AKUNotifyConnectionComplete ();
 
 	public static final int 					ALERT_DIALOG_REQUEST_CODE = 7007;
 	public static final int 					ACCOUNT_PICKER_REQUEST_CODE = 7117;
@@ -47,9 +41,6 @@ public class MoaiGooglePlayServices {
 	public static final int 					LEADERBOARD_REQUEST_CODE = 7337;
 	public static final int						CONNECTION_RESOLUTION_CODE = 7447;
 	public static final int						ACHIEVEMENT_REQUEST_CODE = 7557;
-
-	// AKU callbacks
-	public static native void	 				AKUNotifyConnectionComplete ();
 
 	//----------------------------------------------------------------//
 	public static Activity getActivity () {
@@ -59,7 +50,6 @@ public class MoaiGooglePlayServices {
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-
 		MoaiLog.i ( "MoaiGooglePlayServices onActivityResult: " + requestCode + " " + resultCode );
 		if ( requestCode == ACCOUNT_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK ) {
 
@@ -84,7 +74,12 @@ public class MoaiGooglePlayServices {
 
 		sConnectionCallbacks = new MoaiPlayServicesCallbacks ();
 		sFailedCallback = new MoaiPlayServicesCallbacks ();
-		sGameClient = new GamesClient.Builder ( sActivity, sConnectionCallbacks, sFailedCallback ).create ();
+		sGameClient = new GoogleApiClient.Builder(sActivity)
+        .addApi(Games.API)
+        .addScope(Games.SCOPE_GAMES)
+        .addConnectionCallbacks(sConnectionCallbacks)
+        .addOnConnectionFailedListener(sFailedCallback)
+        .build();  
 	}
 
 	//----------------------------------------------------------------//
@@ -107,6 +102,12 @@ public class MoaiGooglePlayServices {
 
 		MoaiLog.i ( "MoaiGooglePlayServices onStop" );
 		sGameClient.disconnect ();
+	}
+
+	public static void connectionComplete() {
+		synchronized ( Moai.sAkuLock ) {
+			AKUNotifyConnectionComplete ( );
+		}
 	}
 
 	//================================================================//
@@ -213,7 +214,7 @@ public class MoaiGooglePlayServices {
 
 		if ( isServicesAvailable ( true )) {
 
-			Intent achIntent = sGameClient.getAchievementsIntent ( );
+			Intent achIntent = Games.Achievements.getAchievementsIntent(sGameClient);
 			sActivity.startActivityForResult ( achIntent, ACHIEVEMENT_REQUEST_CODE );
 		}
 	}
@@ -221,9 +222,8 @@ public class MoaiGooglePlayServices {
 	//----------------------------------------------------------------//
 	public static void showLeaderboard ( String leaderboardID ) {
 
-		if ( isServicesAvailable ( true )) {
-
-			Intent lbIntent = sGameClient.getLeaderboardIntent ( leaderboardID );
+		if ( isServicesAvailable ( true )) {	
+			Intent lbIntent = Games.Leaderboards.getLeaderboardIntent( sGameClient, leaderboardID );
 			sActivity.startActivityForResult ( lbIntent, LEADERBOARD_REQUEST_CODE );
 		}
 	}
@@ -232,8 +232,7 @@ public class MoaiGooglePlayServices {
 	public static void submitScore ( String leaderboardID, long score ) {
 
 		if ( isServicesAvailable ( false )) {
-
-			sGameClient.submitScore ( leaderboardID, score );
+			Games.Leaderboards.submitScore ( sGameClient, leaderboardID, score );
 		}
 	}
 
@@ -241,8 +240,7 @@ public class MoaiGooglePlayServices {
 	public static void unlockAchievement ( String achID ) {
 
 		if ( isServicesAvailable ( false )) {
-
-			sGameClient.unlockAchievement ( achID );
+			Games.Achievements.unlock(sGameClient, achID);
 		}
 	}
 }
