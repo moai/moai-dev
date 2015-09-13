@@ -1299,36 +1299,6 @@
 		CD1BF8AA1940564E0066877A /* MOAIBox2DMotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF8A71940564E0066877A /* MOAIBox2DMotorJoint.cpp */; };
 		CD1BF8AB1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
 		CD1BF8AC1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
-		CD218FA013A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD218FA113A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
-		CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD218FA613A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
-		CD218FA713A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD218FA813A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD218FAC13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD218FAD13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
-		CD218FAE13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
-		CD218FAF13A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD218FB013A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
-		CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD218FB513A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
-		CD218FB613A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD218FB713A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
-		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
 		CD23665C180A5454006A7236 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD52323F1808ADDA00B81720 /* host.h */; };
 		CD23665D180A5454006A7236 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232401808ADDA00B81720 /* host.mm */; };
 		CD23665E180A5454006A7236 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */; };
@@ -1404,14 +1374,8 @@
 		CD32B3E119F9EDD10059D019 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
 		CD32B3E219F9EDD10059D019 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD32B3E319F9EDD10059D019 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD32B3E419F9EDD10059D019 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD32B3E519F9EDD10059D019 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
 		CD32B3E619F9EDD10059D019 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD32B3E719F9EDD10059D019 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD32B3E819F9EDD10059D019 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
 		CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD32B3EA19F9EDD10059D019 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD32B3EB19F9EDD10059D019 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
@@ -1530,15 +1494,6 @@
 		CD32B46519F9EDD10059D019 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		CD32B46619F9EDD10059D019 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		CD32B46719F9EDD10059D019 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
-		CD32B46819F9EDD10059D019 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD32B46919F9EDD10059D019 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD32B46A19F9EDD10059D019 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD32B46B19F9EDD10059D019 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD32B46C19F9EDD10059D019 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD32B46D19F9EDD10059D019 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD32B46E19F9EDD10059D019 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD32B46F19F9EDD10059D019 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD32B47019F9EDD10059D019 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
 		CD32B47119F9EDD10059D019 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD32B47219F9EDD10059D019 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
 		CD32B47319F9EDD10059D019 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490044141AB6EC00913D80 /* lbaselib.c */; };
@@ -2631,6 +2586,42 @@
 		CD73A60D188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */; };
 		CD73A60E188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */; };
 		CD73A60F188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */; };
+		CD73D0061BA3FFB800BB50C3 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF01BA3FFB800BB50C3 /* dump.c */; };
+		CD73D0071BA3FFB800BB50C3 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF01BA3FFB800BB50C3 /* dump.c */; };
+		CD73D0081BA3FFB800BB50C3 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF11BA3FFB800BB50C3 /* error.c */; };
+		CD73D0091BA3FFB800BB50C3 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF11BA3FFB800BB50C3 /* error.c */; };
+		CD73D00A1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */; };
+		CD73D00B1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */; };
+		CD73D00C1BA3FFB800BB50C3 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF31BA3FFB800BB50C3 /* hashtable.c */; };
+		CD73D00D1BA3FFB800BB50C3 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF31BA3FFB800BB50C3 /* hashtable.c */; };
+		CD73D00E1BA3FFB800BB50C3 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF41BA3FFB800BB50C3 /* hashtable.h */; };
+		CD73D00F1BA3FFB800BB50C3 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF41BA3FFB800BB50C3 /* hashtable.h */; };
+		CD73D0101BA3FFB800BB50C3 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */; };
+		CD73D0111BA3FFB800BB50C3 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */; };
+		CD73D0121BA3FFB800BB50C3 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */; };
+		CD73D0131BA3FFB800BB50C3 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */; };
+		CD73D0141BA3FFB800BB50C3 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF91BA3FFB800BB50C3 /* jansson.h */; };
+		CD73D0151BA3FFB800BB50C3 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF91BA3FFB800BB50C3 /* jansson.h */; };
+		CD73D0161BA3FFB800BB50C3 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFA1BA3FFB800BB50C3 /* load.c */; };
+		CD73D0171BA3FFB800BB50C3 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFA1BA3FFB800BB50C3 /* load.c */; };
+		CD73D0181BA3FFB800BB50C3 /* lookup3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */; };
+		CD73D0191BA3FFB800BB50C3 /* lookup3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */; };
+		CD73D01A1BA3FFB800BB50C3 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFE1BA3FFB800BB50C3 /* memory.c */; };
+		CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFE1BA3FFB800BB50C3 /* memory.c */; };
+		CD73D01C1BA3FFB800BB50C3 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */; };
+		CD73D01D1BA3FFB800BB50C3 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */; };
+		CD73D01E1BA3FFB800BB50C3 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0001BA3FFB800BB50C3 /* strbuffer.c */; };
+		CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0001BA3FFB800BB50C3 /* strbuffer.c */; };
+		CD73D0201BA3FFB800BB50C3 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0011BA3FFB800BB50C3 /* strbuffer.h */; };
+		CD73D0211BA3FFB800BB50C3 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0011BA3FFB800BB50C3 /* strbuffer.h */; };
+		CD73D0221BA3FFB800BB50C3 /* strconv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0021BA3FFB800BB50C3 /* strconv.c */; };
+		CD73D0231BA3FFB800BB50C3 /* strconv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0021BA3FFB800BB50C3 /* strconv.c */; };
+		CD73D0241BA3FFB800BB50C3 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0031BA3FFB800BB50C3 /* utf.c */; };
+		CD73D0251BA3FFB800BB50C3 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0031BA3FFB800BB50C3 /* utf.c */; };
+		CD73D0261BA3FFB800BB50C3 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0041BA3FFB800BB50C3 /* utf.h */; };
+		CD73D0271BA3FFB800BB50C3 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0041BA3FFB800BB50C3 /* utf.h */; };
+		CD73D0281BA3FFB800BB50C3 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0051BA3FFB800BB50C3 /* value.c */; };
+		CD73D0291BA3FFB800BB50C3 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0051BA3FFB800BB50C3 /* value.c */; };
 		CD7548A51AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
 		CD7548A61AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
 		CD7548A71AEDA92300AD7FD8 /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7548A41AEDA92300AD7FD8 /* MOAISelectionMesh.h */; };
@@ -2662,14 +2653,8 @@
 		CD80790B1831C3B500E658D9 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
 		CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD80790F1831C3B500E658D9 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD8079101831C3B500E658D9 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD8079111831C3B500E658D9 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
 		CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD8079131831C3B500E658D9 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD8079141831C3B500E658D9 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
 		CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD8079161831C3B500E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD8079171831C3B500E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
@@ -6407,21 +6392,6 @@
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
 		CD218F8D13A7FD89008337E7 /* luacurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luacurl.c; path = "../../3rdparty/luacurl-1.2.1/luacurl.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9113A7FDBA008337E7 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = "../../3rdparty/jansson-2.1/src/dump.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9213A7FDBA008337E7 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = "../../3rdparty/jansson-2.1/src/error.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9313A7FDBA008337E7 /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = "../../3rdparty/jansson-2.1/src/hashtable.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9413A7FDBA008337E7 /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = "../../3rdparty/jansson-2.1/src/hashtable.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9513A7FDBA008337E7 /* jansson_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_config.h; path = "../../3rdparty/jansson-2.1/src/jansson_config.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9613A7FDBA008337E7 /* jansson_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_private.h; path = "../../3rdparty/jansson-2.1/src/jansson_private.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9713A7FDBA008337E7 /* jansson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson.h; path = "../../3rdparty/jansson-2.1/src/jansson.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9813A7FDBA008337E7 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = load.c; path = "../../3rdparty/jansson-2.1/src/load.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9913A7FDBA008337E7 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = "../../3rdparty/jansson-2.1/src/memory.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9A13A7FDBA008337E7 /* pack_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack_unpack.c; path = "../../3rdparty/jansson-2.1/src/pack_unpack.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9B13A7FDBA008337E7 /* strbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuffer.c; path = "../../3rdparty/jansson-2.1/src/strbuffer.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9C13A7FDBA008337E7 /* strbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuffer.h; path = "../../3rdparty/jansson-2.1/src/strbuffer.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
 		CD257BA21A6255380057A53A /* libmoai-ios-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD257BA31A6255D00057A53A /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-apple/headers.h"; sourceTree = "<group>"; };
 		CD257BA41A6255D00057A53A /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-apple/host.h"; sourceTree = "<group>"; };
@@ -6633,6 +6603,24 @@
 		CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsProp.h; sourceTree = "<group>"; };
 		CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGraphicsProp2D.cpp; sourceTree = "<group>"; };
 		CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsProp2D.h; sourceTree = "<group>"; };
+		CD73CFF01BA3FFB800BB50C3 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = "../../3rdparty/jansson-2.7/src/dump.c"; sourceTree = "<group>"; };
+		CD73CFF11BA3FFB800BB50C3 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = "../../3rdparty/jansson-2.7/src/error.c"; sourceTree = "<group>"; };
+		CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable_seed.c; path = "../../3rdparty/jansson-2.7/src/hashtable_seed.c"; sourceTree = "<group>"; };
+		CD73CFF31BA3FFB800BB50C3 /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = "../../3rdparty/jansson-2.7/src/hashtable.c"; sourceTree = "<group>"; };
+		CD73CFF41BA3FFB800BB50C3 /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = "../../3rdparty/jansson-2.7/src/hashtable.h"; sourceTree = "<group>"; };
+		CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_config.h; path = "../../3rdparty/jansson-2.7/src/jansson_config.h"; sourceTree = "<group>"; };
+		CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_private.h; path = "../../3rdparty/jansson-2.7/src/jansson_private.h"; sourceTree = "<group>"; };
+		CD73CFF91BA3FFB800BB50C3 /* jansson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson.h; path = "../../3rdparty/jansson-2.7/src/jansson.h"; sourceTree = "<group>"; };
+		CD73CFFA1BA3FFB800BB50C3 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = load.c; path = "../../3rdparty/jansson-2.7/src/load.c"; sourceTree = "<group>"; };
+		CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lookup3.h; path = "../../3rdparty/jansson-2.7/src/lookup3.h"; sourceTree = "<group>"; };
+		CD73CFFE1BA3FFB800BB50C3 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = "../../3rdparty/jansson-2.7/src/memory.c"; sourceTree = "<group>"; };
+		CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack_unpack.c; path = "../../3rdparty/jansson-2.7/src/pack_unpack.c"; sourceTree = "<group>"; };
+		CD73D0001BA3FFB800BB50C3 /* strbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuffer.c; path = "../../3rdparty/jansson-2.7/src/strbuffer.c"; sourceTree = "<group>"; };
+		CD73D0011BA3FFB800BB50C3 /* strbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuffer.h; path = "../../3rdparty/jansson-2.7/src/strbuffer.h"; sourceTree = "<group>"; };
+		CD73D0021BA3FFB800BB50C3 /* strconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strconv.c; path = "../../3rdparty/jansson-2.7/src/strconv.c"; sourceTree = "<group>"; };
+		CD73D0031BA3FFB800BB50C3 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.7/src/utf.c"; sourceTree = "<group>"; };
+		CD73D0041BA3FFB800BB50C3 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.7/src/utf.h"; sourceTree = "<group>"; };
+		CD73D0051BA3FFB800BB50C3 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.7/src/value.c"; sourceTree = "<group>"; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
 		CD74E47C1377D9C10093EE68 /* aes_cfb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cfb.c; sourceTree = "<group>"; };
 		CD74E47D1377D9C10093EE68 /* aes_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_core.c; sourceTree = "<group>"; };
@@ -10039,21 +10027,24 @@
 		CD218F9013A7FD8F008337E7 /* jansson */ = {
 			isa = PBXGroup;
 			children = (
-				CD218F9113A7FDBA008337E7 /* dump.c */,
-				CD218F9213A7FDBA008337E7 /* error.c */,
-				CD218F9313A7FDBA008337E7 /* hashtable.c */,
-				CD218F9413A7FDBA008337E7 /* hashtable.h */,
-				CD218F9513A7FDBA008337E7 /* jansson_config.h */,
-				CD218F9613A7FDBA008337E7 /* jansson_private.h */,
-				CD218F9713A7FDBA008337E7 /* jansson.h */,
-				CD218F9813A7FDBA008337E7 /* load.c */,
-				CD218F9913A7FDBA008337E7 /* memory.c */,
-				CD218F9A13A7FDBA008337E7 /* pack_unpack.c */,
-				CD218F9B13A7FDBA008337E7 /* strbuffer.c */,
-				CD218F9C13A7FDBA008337E7 /* strbuffer.h */,
-				CD218F9D13A7FDBA008337E7 /* utf.c */,
-				CD218F9E13A7FDBA008337E7 /* utf.h */,
-				CD218F9F13A7FDBA008337E7 /* value.c */,
+				CD73CFF01BA3FFB800BB50C3 /* dump.c */,
+				CD73CFF11BA3FFB800BB50C3 /* error.c */,
+				CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */,
+				CD73CFF31BA3FFB800BB50C3 /* hashtable.c */,
+				CD73CFF41BA3FFB800BB50C3 /* hashtable.h */,
+				CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */,
+				CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */,
+				CD73CFF91BA3FFB800BB50C3 /* jansson.h */,
+				CD73CFFA1BA3FFB800BB50C3 /* load.c */,
+				CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */,
+				CD73CFFE1BA3FFB800BB50C3 /* memory.c */,
+				CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */,
+				CD73D0001BA3FFB800BB50C3 /* strbuffer.c */,
+				CD73D0011BA3FFB800BB50C3 /* strbuffer.h */,
+				CD73D0021BA3FFB800BB50C3 /* strconv.c */,
+				CD73D0031BA3FFB800BB50C3 /* utf.c */,
+				CD73D0041BA3FFB800BB50C3 /* utf.h */,
+				CD73D0051BA3FFB800BB50C3 /* value.c */,
 			);
 			name = jansson;
 			sourceTree = "<group>";
@@ -12887,12 +12878,14 @@
 				CDD48B5417FA794B00525B77 /* SFMT-params4253.h in Headers */,
 				CD881F6519FF671C004498E8 /* backward_references.h in Headers */,
 				CDCDD0281A23F233008779B5 /* xmlrole.h in Headers */,
+				CD73D0111BA3FFB800BB50C3 /* jansson_config.h in Headers */,
 				CD881FE519FF6736004498E8 /* thread.h in Headers */,
 				CD881EE819FF66E5004498E8 /* vp8i.h in Headers */,
 				03240CD513564CB0000ADC60 /* ft2build.h in Headers */,
 				03240CD613564CB0000ADC60 /* ftconfig.h in Headers */,
 				CDCDD0121A23F233008779B5 /* expat_external.h in Headers */,
 				03240CD713564CB0000ADC60 /* ftheader.h in Headers */,
+				CD73D0271BA3FFB800BB50C3 /* utf.h in Headers */,
 				03240CD813564CB0000ADC60 /* ftmodule.h in Headers */,
 				03240CD913564CB0000ADC60 /* ftoption.h in Headers */,
 				03240CDA13564CB0000ADC60 /* ftstdlib.h in Headers */,
@@ -12902,20 +12895,14 @@
 				03240D0913564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD69AB4E17FA6CF90053E028 /* sweep.h in Headers */,
-				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
-				CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */,
 				CDD48B5A17FA794B00525B77 /* SFMT-params216091.h in Headers */,
 				CD881FF419FF6743004498E8 /* demux.h in Headers */,
 				CD881FC919FF6736004498E8 /* filters.h in Headers */,
 				CD881F4019FF670D004498E8 /* yuv_tables_sse2.h in Headers */,
 				CD881FFC19FF6743004498E8 /* mux.h in Headers */,
-				CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */,
-				CD218FB513A7FDBA008337E7 /* jansson.h in Headers */,
 				CDCDD0141A23F233008779B5 /* expat.h in Headers */,
 				CD69AB3A17FA6CF90053E028 /* bucketalloc.h in Headers */,
 				CD881FBF19FF6736004498E8 /* bit_writer.h in Headers */,
-				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
-				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
 				CDCDD0201A23F233008779B5 /* utf8tab.h in Headers */,
 				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
@@ -12932,16 +12919,19 @@
 				CD4900BF141AB6EC00913D80 /* llimits.h in Headers */,
 				CD4900C2141AB6EC00913D80 /* lmem.h in Headers */,
 				CD4900C5141AB6EC00913D80 /* lobject.h in Headers */,
+				CD73D0211BA3FFB800BB50C3 /* strbuffer.h in Headers */,
 				CD4900C7141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD4900CA141AB6EC00913D80 /* lparser.h in Headers */,
 				CD881F8D19FF671C004498E8 /* vp8li.h in Headers */,
 				CDD48B5617FA794B00525B77 /* SFMT-params19937.h in Headers */,
 				CD4900CC141AB6EC00913D80 /* lstate.h in Headers */,
 				CDCDD0181A23F233008779B5 /* internal.h in Headers */,
+				CD73D0151BA3FFB800BB50C3 /* jansson.h in Headers */,
 				CD4900CE141AB6EC00913D80 /* lstring.h in Headers */,
 				CD4900D1141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881F9719FF6728004498E8 /* muxi.h in Headers */,
 				CD4900D4141AB6EC00913D80 /* ltm.h in Headers */,
+				CD73D0131BA3FFB800BB50C3 /* jansson_private.h in Headers */,
 				CD4900D5141AB6EC00913D80 /* lua.h in Headers */,
 				CD881FD919FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3219FF670D004498E8 /* lossless.h in Headers */,
@@ -12949,6 +12939,7 @@
 				CD881FE119FF6736004498E8 /* rescaler.h in Headers */,
 				CD4900D6141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD4900D7141AB6EC00913D80 /* lualib.h in Headers */,
+				CD73D0191BA3FFB800BB50C3 /* lookup3.h in Headers */,
 				CD4900D9141AB6EC00913D80 /* lundump.h in Headers */,
 				CD4900DB141AB6EC00913D80 /* lvm.h in Headers */,
 				CD881FC519FF6736004498E8 /* endian_inl.h in Headers */,
@@ -12973,6 +12964,7 @@
 				07952A701447907100143A72 /* jversion.h in Headers */,
 				CD3024D61A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
+				CD73D00F1BA3FFB800BB50C3 /* hashtable.h in Headers */,
 				CD3024DA1A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
 				CDCDD01E1A23F233008779B5 /* nametab.h in Headers */,
@@ -13111,12 +13103,14 @@
 				CD881FE419FF6736004498E8 /* thread.h in Headers */,
 				CD881EE719FF66E5004498E8 /* vp8i.h in Headers */,
 				03240E7D13564CB0000ADC60 /* ftheader.h in Headers */,
+				CD73D0101BA3FFB800BB50C3 /* jansson_config.h in Headers */,
 				03240E7E13564CB0000ADC60 /* ftmodule.h in Headers */,
 				03240E7F13564CB0000ADC60 /* ftoption.h in Headers */,
 				03240E8013564CB0000ADC60 /* ftstdlib.h in Headers */,
 				03240EA913564CB0000ADC60 /* png.h in Headers */,
 				CDCDD0111A23F233008779B5 /* expat_external.h in Headers */,
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
+				CD73D0261BA3FFB800BB50C3 /* utf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */,
@@ -13136,14 +13130,8 @@
 				CD69AB4D17FA6CF90053E028 /* sweep.h in Headers */,
 				CDD48B7217FA794E00525B77 /* SFMT-params2281.h in Headers */,
 				CDCDD0131A23F233008779B5 /* expat.h in Headers */,
-				CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */,
 				CD881FBE19FF6736004498E8 /* bit_writer.h in Headers */,
-				CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */,
-				CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */,
-				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
 				CDCDD01F1A23F233008779B5 /* utf8tab.h in Headers */,
-				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
-				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
 				CD490076141AB6EC00913D80 /* lapi.h in Headers */,
 				CD490078141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD49007B141AB6EC00913D80 /* lcode.h in Headers */,
@@ -13156,16 +13144,19 @@
 				CD490085141AB6EC00913D80 /* lgc.h in Headers */,
 				CD490089141AB6EC00913D80 /* llex.h in Headers */,
 				CD49008A141AB6EC00913D80 /* llimits.h in Headers */,
+				CD73D0201BA3FFB800BB50C3 /* strbuffer.h in Headers */,
 				CD49008D141AB6EC00913D80 /* lmem.h in Headers */,
 				CD490090141AB6EC00913D80 /* lobject.h in Headers */,
 				CD881F8C19FF671C004498E8 /* vp8li.h in Headers */,
 				CD490092141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD490095141AB6EC00913D80 /* lparser.h in Headers */,
 				CDCDD0171A23F233008779B5 /* internal.h in Headers */,
+				CD73D0141BA3FFB800BB50C3 /* jansson.h in Headers */,
 				CD490097141AB6EC00913D80 /* lstate.h in Headers */,
 				CDD48B6E17FA794E00525B77 /* SFMT-common.h in Headers */,
 				CD881F9619FF6728004498E8 /* muxi.h in Headers */,
 				CD490099141AB6EC00913D80 /* lstring.h in Headers */,
+				CD73D0121BA3FFB800BB50C3 /* jansson_private.h in Headers */,
 				CD49009C141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881FD819FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3119FF670D004498E8 /* lossless.h in Headers */,
@@ -13173,6 +13164,7 @@
 				CD881FE019FF6736004498E8 /* rescaler.h in Headers */,
 				CD49009F141AB6EC00913D80 /* ltm.h in Headers */,
 				CDD48B7117FA794E00525B77 /* SFMT-params1279.h in Headers */,
+				CD73D0181BA3FFB800BB50C3 /* lookup3.h in Headers */,
 				CD4900A0141AB6EC00913D80 /* lua.h in Headers */,
 				CD4900A1141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD881FC419FF6736004498E8 /* endian_inl.h in Headers */,
@@ -13197,6 +13189,7 @@
 				07952A131447907100143A72 /* jmorecfg.h in Headers */,
 				CD3024D51A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07952A141447907100143A72 /* jpegint.h in Headers */,
+				CD73D00E1BA3FFB800BB50C3 /* hashtable.h in Headers */,
 				CD3024D91A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07952A151447907100143A72 /* jpeglib.h in Headers */,
 				CDCDD01D1A23F233008779B5 /* nametab.h in Headers */,
@@ -14330,20 +14323,14 @@
 				CD32B3E319F9EDD10059D019 /* sweep.h in Headers */,
 				CD32B5D219F9EF2E0059D019 /* SDL_error_c.h in Headers */,
 				CD32B5B319F9EF200059D019 /* SDL_x11window.h in Headers */,
-				CD32B3E419F9EDD10059D019 /* hashtable.h in Headers */,
-				CD32B3E519F9EDD10059D019 /* jansson_config.h in Headers */,
 				CD32B56119F9EEE50059D019 /* mmx.h in Headers */,
 				CD32B52C19F9EE3F0059D019 /* SDL_events_c.h in Headers */,
 				CD32B56319F9EEE50059D019 /* SDL_sysrender.h in Headers */,
 				CD32B55319F9EEDC0059D019 /* SDL_draw.h in Headers */,
 				CD32B53E19F9EE550059D019 /* SDL_haptic_c.h in Headers */,
 				CD32B3E619F9EDD10059D019 /* SFMT-params216091.h in Headers */,
-				CD32B3E719F9EDD10059D019 /* jansson_private.h in Headers */,
-				CD32B3E819F9EDD10059D019 /* jansson.h in Headers */,
 				CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */,
 				CD32B5B719F9EF260059D019 /* SDL_blit.h in Headers */,
-				CD32B3EA19F9EDD10059D019 /* strbuffer.h in Headers */,
-				CD32B3EB19F9EDD10059D019 /* utf.h in Headers */,
 				CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */,
 				CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */,
@@ -14651,16 +14638,10 @@
 				CD8080C01831C68C00E658D9 /* bio.h in Headers */,
 				CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */,
 				CD80790F1831C3B500E658D9 /* sweep.h in Headers */,
-				CD8079101831C3B500E658D9 /* hashtable.h in Headers */,
-				CD8079111831C3B500E658D9 /* jansson_config.h in Headers */,
 				CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */,
 				CD807FF61831C63B00E658D9 /* hmac.h in Headers */,
-				CD8079131831C3B500E658D9 /* jansson_private.h in Headers */,
-				CD8079141831C3B500E658D9 /* jansson.h in Headers */,
 				CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */,
 				CD8080661831C66C00E658D9 /* safestack.h in Headers */,
-				CD8079161831C3B500E658D9 /* strbuffer.h in Headers */,
-				CD8079171831C3B500E658D9 /* utf.h in Headers */,
 				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
 				CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
@@ -16115,6 +16096,7 @@
 				03240CE713564CB0000ADC60 /* pfr.c in Sources */,
 				03240CE813564CB0000ADC60 /* psaux.c in Sources */,
 				CD881EE419FF66E5004498E8 /* tree.c in Sources */,
+				CD73D0091BA3FFB800BB50C3 /* error.c in Sources */,
 				CD881F1A19FF670D004498E8 /* dec_sse2.c in Sources */,
 				03240CE913564CB0000ADC60 /* pshinter.c in Sources */,
 				03240CEA13564CB0000ADC60 /* psmodule.c in Sources */,
@@ -16132,6 +16114,7 @@
 				03240CF313564CB0000ADC60 /* bdf.c in Sources */,
 				03240CF413564CB0000ADC60 /* cff.c in Sources */,
 				03240CF513564CB0000ADC60 /* ftbase.c in Sources */,
+				CD73D00D1BA3FFB800BB50C3 /* hashtable.c in Sources */,
 				CD881FDF19FF6736004498E8 /* rescaler.c in Sources */,
 				03240CF613564CB0000ADC60 /* ftbitmap.c in Sources */,
 				CD881FC119FF6736004498E8 /* color_cache.c in Sources */,
@@ -16169,6 +16152,7 @@
 				CD881F3E19FF670D004498E8 /* yuv_sse2.c in Sources */,
 				CD881F6D19FF671C004498E8 /* filter.c in Sources */,
 				03240D0C13564CB0000ADC60 /* pngrtran.c in Sources */,
+				CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */,
 				03240D0D13564CB0000ADC60 /* pngrutil.c in Sources */,
 				03240D0E13564CB0000ADC60 /* pngset.c in Sources */,
 				03240D1013564CB0000ADC60 /* pngtrans.c in Sources */,
@@ -16185,20 +16169,11 @@
 				CD881FE719FF6736004498E8 /* utils.c in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
-				CD218FAF13A7FDBA008337E7 /* dump.c in Sources */,
-				CD218FB013A7FDBA008337E7 /* error.c in Sources */,
-				CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */,
-				CD218FB613A7FDBA008337E7 /* load.c in Sources */,
 				CD881F2C19FF670D004498E8 /* lossless_neon.c in Sources */,
-				CD218FB713A7FDBA008337E7 /* memory.c in Sources */,
-				CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */,
 				CD881EF319FF66FF004498E8 /* demux.c in Sources */,
 				CD881F1019FF670D004498E8 /* alpha_processing.c in Sources */,
-				CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */,
-				CD218FBB13A7FDBA008337E7 /* utf.c in Sources */,
 				CD881F7B19FF671C004498E8 /* picture_rescale.c in Sources */,
 				CD881FC719FF6736004498E8 /* filters.c in Sources */,
-				CD218FBD13A7FDBA008337E7 /* value.c in Sources */,
 				CD881EDE19FF66E5004498E8 /* idec.c in Sources */,
 				CD4900AA141AB6EC00913D80 /* lapi.c in Sources */,
 				CD4900AC141AB6EC00913D80 /* lauxlib.c in Sources */,
@@ -16212,6 +16187,7 @@
 				CD4900B2141AB6EC00913D80 /* ldebug.c in Sources */,
 				CD4900B4141AB6EC00913D80 /* ldo.c in Sources */,
 				CD4900B6141AB6EC00913D80 /* ldump.c in Sources */,
+				CD73D0251BA3FFB800BB50C3 /* utf.c in Sources */,
 				CD4900B7141AB6EC00913D80 /* lfunc.c in Sources */,
 				CD4900B9141AB6EC00913D80 /* lgc.c in Sources */,
 				CD4900BB141AB6EC00913D80 /* linit.c in Sources */,
@@ -16254,6 +16230,7 @@
 				07952A381447907100143A72 /* jccolor.c in Sources */,
 				07952A391447907100143A72 /* jcdctmgr.c in Sources */,
 				CD881FDB19FF6736004498E8 /* random.c in Sources */,
+				CD73D0291BA3FFB800BB50C3 /* value.c in Sources */,
 				07952A3A1447907100143A72 /* jchuff.c in Sources */,
 				07952A3B1447907100143A72 /* jcinit.c in Sources */,
 				CD881F1619FF670D004498E8 /* dec_mips32.c in Sources */,
@@ -16272,6 +16249,7 @@
 				07952A461447907100143A72 /* jdapistd.c in Sources */,
 				07952A471447907100143A72 /* jdarith.c in Sources */,
 				07952A481447907100143A72 /* jdatadst.c in Sources */,
+				CD73D0171BA3FFB800BB50C3 /* load.c in Sources */,
 				07952A491447907100143A72 /* jdatasrc.c in Sources */,
 				CD881F9B19FF6728004498E8 /* muxread.c in Sources */,
 				07952A4A1447907100143A72 /* jdcoefct.c in Sources */,
@@ -16283,6 +16261,7 @@
 				07952A4F1447907100143A72 /* jdinput.c in Sources */,
 				07952A501447907100143A72 /* jdmainct.c in Sources */,
 				07952A511447907100143A72 /* jdmarker.c in Sources */,
+				CD73D00B1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */,
 				07952A521447907100143A72 /* jdmaster.c in Sources */,
 				07952A531447907100143A72 /* jdmerge.c in Sources */,
 				07952A541447907100143A72 /* jdpostct.c in Sources */,
@@ -16301,6 +16280,7 @@
 				CD881F7919FF671C004498E8 /* picture_psnr.c in Sources */,
 				07952A5E1447907100143A72 /* jidctfst.c in Sources */,
 				07952A5F1447907100143A72 /* jidctint.c in Sources */,
+				CD73D0231BA3FFB800BB50C3 /* strconv.c in Sources */,
 				CD881F8719FF671C004498E8 /* tree.c in Sources */,
 				07952A651447907100143A72 /* jmemmgr.c in Sources */,
 				07952A671447907100143A72 /* jmemnobs.c in Sources */,
@@ -16308,6 +16288,7 @@
 				07952A6E1447907100143A72 /* jquant2.c in Sources */,
 				07952A6F1447907100143A72 /* jutils.c in Sources */,
 				CDCDD0261A23F233008779B5 /* xmlrole.c in Sources */,
+				CD73D0071BA3FFB800BB50C3 /* dump.c in Sources */,
 				0765874F145CD06900723A7D /* tlsf.c in Sources */,
 				CD69AB4417FA6CF90053E028 /* mesh.c in Sources */,
 				CD69AB4817FA6CF90053E028 /* priorityq.c in Sources */,
@@ -16315,6 +16296,7 @@
 				CD04AED214725714009C20E5 /* compress.c in Sources */,
 				CD04AED514725714009C20E5 /* crc32.c in Sources */,
 				CD04AEDB14725714009C20E5 /* deflate.c in Sources */,
+				CD73D01D1BA3FFB800BB50C3 /* pack_unpack.c in Sources */,
 				CD04AEE114725714009C20E5 /* gzio.c in Sources */,
 				CD04AEE414725714009C20E5 /* infback.c in Sources */,
 				CD04AEE714725714009C20E5 /* inffast.c in Sources */,
@@ -16324,6 +16306,7 @@
 				CD04AF0214725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
 				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
+				CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD3024D41A68F34E00CCEE32 /* PVRTError.cpp in Sources */,
 				CD69AB3C17FA6CF90053E028 /* dict.c in Sources */,
@@ -16414,6 +16397,7 @@
 				03240EAB13564CB0000ADC60 /* pngerror.c in Sources */,
 				03240EAC13564CB0000ADC60 /* pngget.c in Sources */,
 				03240EAD13564CB0000ADC60 /* pngmem.c in Sources */,
+				CD73D01E1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				03240EAE13564CB0000ADC60 /* pngpread.c in Sources */,
 				CD881F3519FF670D004498E8 /* upsampling_neon.c in Sources */,
 				03240EB013564CB0000ADC60 /* pngread.c in Sources */,
@@ -16428,6 +16412,7 @@
 				CDD4912217FA7A8600525B77 /* ftstroke.c in Sources */,
 				CD881F8419FF671C004498E8 /* token.c in Sources */,
 				03240EB613564CB0000ADC60 /* pngtrans.c in Sources */,
+				CD73D0281BA3FFB800BB50C3 /* value.c in Sources */,
 				03240EB713564CB0000ADC60 /* pngwio.c in Sources */,
 				CD881F7819FF671C004498E8 /* picture_psnr.c in Sources */,
 				03240EB813564CB0000ADC60 /* pngwrite.c in Sources */,
@@ -16443,6 +16428,7 @@
 				CDD4910D17FA7A8000525B77 /* psmodule.c in Sources */,
 				CD881FB819FF6736004498E8 /* bit_reader.c in Sources */,
 				CD881F1119FF670D004498E8 /* cpu.c in Sources */,
+				CD73D0241BA3FFB800BB50C3 /* utf.c in Sources */,
 				CD881F1719FF670D004498E8 /* dec_neon.c in Sources */,
 				CD69AB4717FA6CF90053E028 /* priorityq.c in Sources */,
 				CD881FDE19FF6736004498E8 /* rescaler.c in Sources */,
@@ -16457,6 +16443,7 @@
 				CDD4911617FA7A8600525B77 /* bdf.c in Sources */,
 				CDD4910117FA7A8000525B77 /* ftmm.c in Sources */,
 				CD3024DB1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */,
+				CD73D0161BA3FFB800BB50C3 /* load.c in Sources */,
 				CDD4911717FA7A8600525B77 /* cff.c in Sources */,
 				CDD4911317FA7A8000525B77 /* type42.c in Sources */,
 				CDD4912317FA7A8600525B77 /* ftsystem.c in Sources */,
@@ -16471,6 +16458,7 @@
 				CD881F2319FF670D004498E8 /* enc_neon.c in Sources */,
 				CD881F5E19FF671C004498E8 /* alpha.c in Sources */,
 				CDD4911D17FA7A8600525B77 /* ftgasp.c in Sources */,
+				CD73D00A1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */,
 				CDD4910417FA7A8000525B77 /* ftpfr.c in Sources */,
 				CDD4911217FA7A8000525B77 /* type1cid.c in Sources */,
 				CD69AB3F17FA6CF90053E028 /* geom.c in Sources */,
@@ -16488,6 +16476,7 @@
 				CDD4911817FA7A8600525B77 /* ftbase.c in Sources */,
 				CDD4910817FA7A8000525B77 /* ftxf86.c in Sources */,
 				CDD4911417FA7A8000525B77 /* winfnt.c in Sources */,
+				CD73D0221BA3FFB800BB50C3 /* strconv.c in Sources */,
 				CD881F6C19FF671C004498E8 /* filter.c in Sources */,
 				CDD4911117FA7A8000525B77 /* type1.c in Sources */,
 				CD3024CF1A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */,
@@ -16495,20 +16484,11 @@
 				CDD4910517FA7A8000525B77 /* ftsynth.c in Sources */,
 				CD881F3919FF670D004498E8 /* upsampling.c in Sources */,
 				CD881F4119FF670D004498E8 /* yuv.c in Sources */,
-				CD218FA013A7FDBA008337E7 /* dump.c in Sources */,
-				CD218FA113A7FDBA008337E7 /* error.c in Sources */,
-				CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */,
-				CD218FA713A7FDBA008337E7 /* load.c in Sources */,
-				CD218FA813A7FDBA008337E7 /* memory.c in Sources */,
 				CD881F2119FF670D004498E8 /* enc_mips32.c in Sources */,
-				CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */,
 				CD881F8A19FF671C004498E8 /* vp8l.c in Sources */,
 				CD881F7E19FF671C004498E8 /* picture.c in Sources */,
-				CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD881FE619FF6736004498E8 /* utils.c in Sources */,
-				CD218FAC13A7FDBA008337E7 /* utf.c in Sources */,
 				CDCDD02D1A23F233008779B5 /* xmltok_ns.c in Sources */,
-				CD218FAE13A7FDBA008337E7 /* value.c in Sources */,
 				CD490075141AB6EC00913D80 /* lapi.c in Sources */,
 				CD490077141AB6EC00913D80 /* lauxlib.c in Sources */,
 				CD490079141AB6EC00913D80 /* lbaselib.c in Sources */,
@@ -16522,6 +16502,7 @@
 				CD490081141AB6EC00913D80 /* ldump.c in Sources */,
 				CD490082141AB6EC00913D80 /* lfunc.c in Sources */,
 				CDD4910C17FA7A8000525B77 /* pshinter.c in Sources */,
+				CD73D01A1BA3FFB800BB50C3 /* memory.c in Sources */,
 				CD490084141AB6EC00913D80 /* lgc.c in Sources */,
 				CD881EED19FF66E5004498E8 /* webp.c in Sources */,
 				CD490086141AB6EC00913D80 /* linit.c in Sources */,
@@ -16562,6 +16543,7 @@
 				079529DF1447907100143A72 /* jcapistd.c in Sources */,
 				079529E01447907100143A72 /* jcarith.c in Sources */,
 				079529E11447907100143A72 /* jccoefct.c in Sources */,
+				CD73D01C1BA3FFB800BB50C3 /* pack_unpack.c in Sources */,
 				079529E21447907100143A72 /* jccolor.c in Sources */,
 				079529E31447907100143A72 /* jcdctmgr.c in Sources */,
 				CD881FD619FF6736004498E8 /* quant_levels.c in Sources */,
@@ -16591,9 +16573,11 @@
 				079529F71447907100143A72 /* jddctmgr.c in Sources */,
 				079529F81447907100143A72 /* jdhuff.c in Sources */,
 				079529F91447907100143A72 /* jdinput.c in Sources */,
+				CD73D00C1BA3FFB800BB50C3 /* hashtable.c in Sources */,
 				CDD4912417FA7A8600525B77 /* smooth.c in Sources */,
 				CD881F6619FF671C004498E8 /* config.c in Sources */,
 				079529FA1447907100143A72 /* jdmainct.c in Sources */,
+				CD73D0081BA3FFB800BB50C3 /* error.c in Sources */,
 				079529FB1447907100143A72 /* jdmarker.c in Sources */,
 				079529FC1447907100143A72 /* jdmaster.c in Sources */,
 				CD881F3719FF670D004498E8 /* upsampling_sse2.c in Sources */,
@@ -16644,6 +16628,7 @@
 				CD04AEFA14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0014725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0914725714009C20E5 /* zutil.c in Sources */,
+				CD73D0061BA3FFB800BB50C3 /* dump.c in Sources */,
 				66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CD881F2519FF670D004498E8 /* enc_sse2.c in Sources */,
 			);
@@ -17623,18 +17608,9 @@
 				CD32B46619F9EDD10059D019 /* tinyxmlerror.cpp in Sources */,
 				CD32B46719F9EDD10059D019 /* tinyxmlparser.cpp in Sources */,
 				CD32B54619F9EEBA0059D019 /* SDL_sysloadso.c in Sources */,
-				CD32B46819F9EDD10059D019 /* dump.c in Sources */,
-				CD32B46919F9EDD10059D019 /* error.c in Sources */,
 				CD32B5CC19F9EF260059D019 /* SDL_stretch.c in Sources */,
-				CD32B46A19F9EDD10059D019 /* hashtable.c in Sources */,
 				CD32B5A919F9EF200059D019 /* SDL_x11opengles.c in Sources */,
-				CD32B46B19F9EDD10059D019 /* load.c in Sources */,
-				CD32B46C19F9EDD10059D019 /* memory.c in Sources */,
-				CD32B46D19F9EDD10059D019 /* pack_unpack.c in Sources */,
-				CD32B46E19F9EDD10059D019 /* strbuffer.c in Sources */,
-				CD32B46F19F9EDD10059D019 /* utf.c in Sources */,
 				CD32B54219F9EE610059D019 /* SDL_joystick.c in Sources */,
-				CD32B47019F9EDD10059D019 /* value.c in Sources */,
 				CD32B47119F9EDD10059D019 /* lapi.c in Sources */,
 				CD32B5C519F9EF260059D019 /* SDL_pixels.c in Sources */,
 				CD32B53119F9EE3F0059D019 /* SDL_mouse.c in Sources */,
@@ -19724,56 +19700,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/zl-vfs\"",
-					"\"../../src/config\"",
-					"\"../../src/config-default\"",
-					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.4\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
-					"\"../../3rdparty/openssl-1.0.0m/include\"",
-					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
-					"\"../../3rdparty/openssl-1.0.0m\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.3.0\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0/include\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
-					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
@@ -21051,56 +20977,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/zl-vfs\"",
-					"\"../../src/config\"",
-					"\"../../src/config-default\"",
-					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.4\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
-					"\"../../3rdparty/openssl-1.0.0m/include\"",
-					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
-					"\"../../3rdparty/openssl-1.0.0m\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.3.0\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0/include\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
-					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
@@ -25508,56 +25384,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/zl-vfs\"",
-					"\"../../src/config\"",
-					"\"../../src/config-default\"",
-					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.4\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
-					"\"../../3rdparty/openssl-1.0.0m/include\"",
-					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
-					"\"../../3rdparty/openssl-1.0.0m\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.3.0\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0/include\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
-					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
@@ -25937,56 +25763,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../../src/zl-vfs\"",
-					"\"../../src/config\"",
-					"\"../../src/config-default\"",
-					"\"../../src\"",
-					"\"../../3rdparty\"",
-					"\"../../3rdparty/lua-5.1.3/src\"",
-					"\"../../3rdparty/contrib\"",
-					"\"../../3rdparty/tinyxml\"",
-					"\"../../3rdparty/lpng140\"",
-					"\"../../3rdparty/libpvr-3.4\"",
-					"\"../../3rdparty/c-ares-1.7.5\"",
-					"\"../../3rdparty/openssl-1.0.0m/include-iphone\"",
-					"\"../../3rdparty/openssl-1.0.0m/include\"",
-					"\"../../3rdparty/openssl-1.0.0m/crypto\"",
-					"\"../../3rdparty/openssl-1.0.0m\"",
-					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
-					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
-					"\"../../3rdparty/freeglut-2.8.1/include\"",
-					"\"../../3rdparty/freetype-2.4.4/include\"",
-					"\"../../3rdparty/box2d-2.3.0\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include\"",
-					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
-					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
-					"\"../../3rdparty/jpeg-8c\"",
-					"\"../../3rdparty/untz/include\"",
-					"\"../../3rdparty/untz/src\"",
-					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
-					"\"../../3rdparty/libvorbis-1.3.2/include\"",
-					"\"../../3rdparty/tlsf-2.0\"",
-					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/ooid-0.99\"",
-					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
-					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
-					"\"../../3rdparty/mongoose\"",
-					"\"../../3rdparty/sdl2-2.0.0/include\"",
-					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/sfmt-1.4\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
-					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
-					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
-					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
-				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
