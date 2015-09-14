@@ -328,13 +328,13 @@ int zl_socket_select ( zl_socket n, fd_set *rfds, fd_set *wfds, fd_set *efds, do
 }
 
 //----------------------------------------------------------------//
-int zl_socket_send ( zl_socket n, cc8*data, size_t count, size_t *sent, double tm ) {
+int zl_socket_send ( zl_socket n, cc8* data, size_t count, size_t* sent, double tm ) {
 
 	return zl_socket_sendto ( n, data, count, sent, 0, 0, tm );
 }
 
 //----------------------------------------------------------------//
-int zl_socket_sendto ( zl_socket n, cc8*data, size_t count, size_t *sent, zl_sockaddr *addr, socklen_t len, double tm ) {
+int zl_socket_sendto ( zl_socket n, cc8* data, size_t count, size_t* sent, zl_sockaddr* addr, socklen_t len, double tm ) {
 	
     *sent = 0;
 	
@@ -357,7 +357,7 @@ int zl_socket_sendto ( zl_socket n, cc8*data, size_t count, size_t *sent, zl_soc
 		if ( put == 0 || err == EPIPE ) return IO_CLOSED; // send can't really return 0, but EPIPE means the connection was closed
         if ( err == EINTR ) continue; // we call was interrupted, just try again
         if ( err != EAGAIN ) return err; // if failed fatal reason, report error
-        if (( err = zl_socket_waitfd ( n + 1, WAITFD_W, tm )) != IO_DONE) return err; // wait until we can send something or we timeout
+        if (( err = zl_socket_waitfd ( n + 1, WAITFD_W, tm )) != IO_DONE ) return err; // wait until we can send something or we timeout
     }
 
     return IO_UNKNOWN; // can't reach here
