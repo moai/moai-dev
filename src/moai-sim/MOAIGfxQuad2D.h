@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUAD2D_H
 #define	MOAIGFXQUAD2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 class MOAIGfxState;
@@ -16,7 +16,7 @@ class MOAIGfxState;
 	@text	Single textured quad.
 */
 class MOAIGfxQuad2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 
 	MOAIQuadBrush mQuad;

@@ -217,7 +217,7 @@ ZLBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -234,7 +234,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "FILTER_POINT",	( u32 )ZGL_SAMPLE_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP",	( u32 )ZGL_SAMPLE_LINEAR );
@@ -243,7 +243,7 @@ void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },

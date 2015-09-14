@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+ // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -51,13 +51,15 @@ public:
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
-	if ( stream ) {
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream ) {
 	
 		ZLColorVec color = state.GetColor ( 3, 0.0f, 0.0f, 0.0f, 1.0f );
-		self->ApplyColor ( *stream, color );
+		MOAIGeometryWriter::ApplyColor ( *format, *stream, color );
 	}
 	return 0;
 }
@@ -65,10 +67,12 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
-	if ( stream ) {
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream  ) {
 	
 		ZLVec3D v0		= state.GetVec3D ( 3, 0.0f );
 		ZLVec3D v1		= state.GetVec3D ( 6, 0.0f );
@@ -79,7 +83,7 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 		bool cap0		= state.GetValue < bool >( 17, false );
 		bool cap1		= state.GetValue < bool >( 17, false );
 		
-		self->ApplyLinearGradient ( *stream, v0, v1, c0, c1, cap0, cap1 );
+		MOAIGeometryWriter::ApplyLinearGradient ( *format, *stream, v0, v1, c0, c1, cap0, cap1 );
 	}
 	return 0;
 }
@@ -87,12 +91,13 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 
-	MOAIStream* vtxStream	= state.GetLuaObject < MOAIStream >( 2, false );
-	MOAIStream* idxStream	= state.GetLuaObject < MOAIStream >( 3, false );
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
+	MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
 	
-	if ( vtxStream && idxStream ) {
+	if ( format && vtxStream && idxStream ) {
 	
 		MOAIGfxBuffer* vtxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 4, false );
 		MOAIGfxBuffer* idxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 5, false );
@@ -100,7 +105,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		if ( vtxBuffer && idxBuffer ) {
 		
 			u32 idxSizeInBytes = state.GetValue < u32 >( 6, 4 );
-			u32 totalElements = self->GetMesh ( vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+			u32 totalElements = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 			
 			state.Push ( totalElements );
 			return 1;
@@ -108,7 +113,7 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 		else {
 	
 			u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-			MOAIMesh* mesh = self->GetMesh ( vtxStream, idxStream, idxSizeInBytes );
+			MOAIMesh* mesh = MOAIGeometryWriter::GetMesh ( *format, vtxStream, idxStream, idxSizeInBytes );
 			state.Push ( mesh );
 			return 1;
 		}
@@ -118,39 +123,33 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIGeometryWriter::_pruneVertices ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* vtxStream	= state.GetLuaObject < MOAIStream >( 2, true );
-	MOAIStream* idxStream	= state.GetLuaObject < MOAIStream >( 3, true );
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, true );
+	MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, true );
 	
-	if ( vtxStream && idxStream ) {
-		self->PruneVertices ( *vtxStream, *idxStream );
+	if ( format && vtxStream && idxStream ) {
+		MOAIGeometryWriter::PruneVertices ( *format, *vtxStream, *idxStream );
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGeometryWriter::_setVertexFormat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
-	
-	self->mVertexFormat.Set ( *self, MOAIVertexFormat::AffirmVertexFormat ( state, 2 ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIGeometryWriter::_snapCoords ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
-	if ( stream ) {
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream  ) {
 	
 		float xSnap = state.GetValue < float >( 2, 0.0f );
 		float ySnap = state.GetValue < float >( 3, xSnap );
 		float zSnap = state.GetValue < float >( 4, ySnap );
 	
-		self->SnapCoords ( *stream, xSnap, ySnap, zSnap );
+		MOAIGeometryWriter::SnapCoords ( *format, *stream, xSnap, ySnap, zSnap );
 	}
 	return 0;
 }
@@ -158,11 +157,13 @@ int MOAIGeometryWriter::_snapCoords ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeBox ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
-	if ( stream ) {
-		self->WriteBox ( *stream, state.GetBox ( 3 ));
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream  ) {
+		MOAIGeometryWriter::WriteBox ( *format, *stream, state.GetBox ( 3 ));
 	}
 	return 0;
 }
@@ -170,17 +171,19 @@ int MOAIGeometryWriter::_writeBox ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeCone ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
-	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
-	if ( stream ) {
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream  ) {
 	
 		float size = state.GetValue < float >( 3, 0.0f );
 		if ( size > 0.0f ) {
@@ -199,7 +202,7 @@ int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
 			box.mMax.mY = origin.mY + halfSize;
 			box.mMax.mZ = origin.mZ + halfSize;
 	
-			self->WriteBox ( *stream, box );
+			MOAIGeometryWriter::WriteBox ( *format, *stream, box );
 		}
 	}
 	return 0;
@@ -208,21 +211,21 @@ int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeCylinder ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeIcoSphere ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGeometryWriter::_writeUVSphere ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGeometryWriter, "U" )
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
@@ -231,25 +234,21 @@ int MOAIGeometryWriter::_writeUVSphere ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::ApplyColor ( ZLStream& stream, const ZLColorVec& color ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& stream, const ZLColorVec& color ) {
 	
 	size_t base = stream.GetCursor ();
-	u32 total = ( u32 )(( stream.GetLength () - base ) / this->mVertexFormat->GetVertexSize ());
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
 	
 	for ( u32 i = 0; i < total; ++i ) {
-		this->mVertexFormat->SeekVertex ( stream, base, i );
-		this->mVertexFormat->WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
+		format.SeekVertex ( stream, base, i );
+		format.WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
 	}
 	
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::ApplyLinearGradient ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLColorVec& c0, const ZLColorVec& c1, bool cap0, bool cap1 ) {
 	
 	ZLVec3D norm = v1;
 	norm.Sub ( v0 );
@@ -259,13 +258,13 @@ void MOAIGeometryWriter::ApplyLinearGradient ( ZLStream& stream, const ZLVec3D& 
 	plane.Init ( v0, norm );
 	
 	size_t base = stream.GetCursor ();
-	u32 total = ( u32 )(( stream.GetLength () - base ) / this->mVertexFormat->GetVertexSize ());
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
 	
 	for ( u32 i = 0; i < total; ++i ) {
 	
-		this->mVertexFormat->SeekVertex ( stream, base, i );
+		format.SeekVertex ( stream, base, i );
 	
-		ZLVec3D coord = this->mVertexFormat->ReadCoord ( stream );
+		ZLVec3D coord = format.ReadCoord ( stream );
 		float dist = ZLDist::VecToPlane ( coord, plane );
 		
 		ZLColorVec color;
@@ -284,23 +283,23 @@ void MOAIGeometryWriter::ApplyLinearGradient ( ZLStream& stream, const ZLVec3D& 
 		
 			color.Lerp ( ZLInterpolate::kLinear, c0, c1, dist / length );
 		}
-		this->mVertexFormat->WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
+		format.WriteColor ( stream, color.mR, color.mG, color.mB, color.mA );
 	}
 	
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-MOAIMesh* MOAIGeometryWriter::GetMesh ( ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes ) {
+MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, u32 idxSizeInBytes ) {
 
 	MOAIGfxBuffer* vtxBuffer = new MOAIGfxBuffer ();
 	MOAIGfxBuffer* idxBuffer = new MOAIGfxBuffer ();
 
-	u32 totalElements = this->GetMesh ( vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+	u32 totalElements = MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
 	
 	MOAIMesh* mesh = new MOAIMesh ();
 	
-	mesh->SetVertexBuffer ( 0, vtxBuffer, this->mVertexFormat );
+	mesh->SetVertexBuffer ( 0, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
 	mesh->SetIndexBuffer ( idxBuffer );
 	mesh->SetIndexSizeInBytes ( idxSizeInBytes );
 
@@ -308,7 +307,7 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( ZLStream* vtxStream, ZLStream* idxStream
 	mesh->SetTotalElements ( totalElements );
 	
 	ZLBox bounds;
-	this->mVertexFormat->ComputeBounds ( bounds, vtxBuffer->GetReadBuffer (), vtxBuffer->GetSize ());
+	format.ComputeBounds ( bounds, vtxBuffer->GetReadBuffer (), vtxBuffer->GetSize ());
 	
 	mesh->SetBounds ( bounds );
 	
@@ -316,12 +315,10 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( ZLStream* vtxStream, ZLStream* idxStream
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGeometryWriter::GetMesh ( ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes ) {
+u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream* vtxStream, ZLStream* idxStream, MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, u32 idxSizeInBytes ) {
 
 	assert ( vtxStream );
 	assert ( idxStream );
-	
-	assert ( this->mVertexFormat );
 	
 	vtxBuffer->Clear ();
 	idxBuffer->Clear ();
@@ -334,12 +331,12 @@ u32 MOAIGeometryWriter::GetMesh ( ZLStream* vtxStream, ZLStream* idxStream, MOAI
 	
 	idxBuffer->SetTarget ( ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
 	
-	if ( idxStream->GetLength()) {
+	if ( idxStream->GetLength ()) {
 		idxBuffer->CopyFromStream ( *idxStream, idxSizeInBytes, 4 );
 	}
 	else {
 	
-		u32 totalVertices = vtxBuffer->GetSize () / this->mVertexFormat->GetVertexSize ();
+		u32 totalVertices = vtxBuffer->GetSize () / format.GetVertexSize ();
 		
 		for ( u32 i = 0; i < totalVertices; ++i ) {
 		
@@ -366,19 +363,15 @@ MOAIGeometryWriter::MOAIGeometryWriter () {
 
 //----------------------------------------------------------------//
 MOAIGeometryWriter::~MOAIGeometryWriter () {
-
-	this->mVertexFormat.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::PruneVertices ( MOAIStream& vtxStream, MOAIStream& idxStream ) {
+void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream ) {
 
 	size_t vtxStreamBase = vtxStream.GetCursor ();
 	size_t idxStreamBase = idxStream.GetCursor ();
 
-	assert ( this->mVertexFormat );
-
-	size_t vtxSize = this->mVertexFormat->GetVertexSize ();
+	size_t vtxSize = format.GetVertexSize ();
 	u32 inputVtxCount = ( u32 )(( vtxStream.GetLength () - vtxStreamBase ) / vtxSize );
 	
 	if ( !inputVtxCount ) return;
@@ -392,7 +385,7 @@ void MOAIGeometryWriter::PruneVertices ( MOAIStream& vtxStream, MOAIStream& idxS
 	typedef STLMap < size_t, u32, VertexComparator > VertexMap;
 	typedef VertexMap::iterator VertexMapIt;
 
-	VertexMap vertexMap ( VertexComparator ( vtxStream, *this->mVertexFormat, vtxBuffer0, vtxBuffer1 ));
+	VertexMap vertexMap ( VertexComparator ( vtxStream, format, vtxBuffer0, vtxBuffer1 ));
 	
 	size_t vtxCount = 0;
 	
@@ -458,17 +451,12 @@ void MOAIGeometryWriter::PruneVertices ( MOAIStream& vtxStream, MOAIStream& idxS
 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIGeometryWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "applyColor",				_applyColor },
 		{ "applyLinearGradient",	_applyLinearGradient },
 		{ "getMesh",				_getMesh },
 		{ "pruneVertices",			_pruneVertices },
-		{ "setVertexFormat",		_setVertexFormat },
 		{ "snapCoords",				_snapCoords },
 		{ "writeBox",				_writeBox },
 		{ "writeCone",				_writeCone },
@@ -483,32 +471,33 @@ void MOAIGeometryWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::SnapCoords ( ZLStream& stream, float xSnap, float ySnap, float zSnap ) {
+void MOAIGeometryWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
 
-	assert ( this->mVertexFormat );
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::SnapCoords ( const MOAIVertexFormat& format, ZLStream& stream, float xSnap, float ySnap, float zSnap ) {
 	
 	size_t base = stream.GetCursor ();
-	u32 total = ( u32 )(( stream.GetLength () - base ) / this->mVertexFormat->GetVertexSize ());
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		this->mVertexFormat->SeekVertex ( stream, base, i );
+		format.SeekVertex ( stream, base, i );
 		
-		ZLVec4D coord = this->mVertexFormat->ReadCoord ( stream );
+		ZLVec4D coord = format.ReadCoord ( stream );
 		
 		coord.mX = xSnap == 0.0f ? coord.mX : floorf (( coord.mX / xSnap ) + 0.5f ) * xSnap;
 		coord.mY = ySnap == 0.0f ? coord.mY : floorf (( coord.mY / ySnap ) + 0.5f ) * ySnap;
 		coord.mZ = zSnap == 0.0f ? coord.mZ : floorf (( coord.mZ / zSnap ) + 0.5f ) * zSnap;
 		
-		this->mVertexFormat->WriteCoord ( stream, coord.mX, coord.mY, coord.mZ, coord.mW );
+		format.WriteCoord ( stream, coord.mX, coord.mY, coord.mZ, coord.mW );
 	}
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteBox ( ZLStream& stream, const ZLBox& box ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::WriteBox ( const MOAIVertexFormat& format, ZLStream& stream, const ZLBox& box ) {
 
 	float xMin = box.mMin.mX;
 	float yMin = box.mMin.mY;
@@ -532,60 +521,54 @@ void MOAIGeometryWriter::WriteBox ( ZLStream& stream, const ZLBox& box ) {
 
 	size_t base = stream.GetCursor ();
 
-	this->WriteQuad ( stream, v0, v1, v2, v3, ZLVec3D ( 0.0f, 0.0f, -1.0f )); // back
-	this->WriteQuad ( stream, v4, v5, v6, v7, ZLVec3D ( 0.0f, 0.0f, 1.0f )); // front
+	MOAIGeometryWriter::WriteQuad ( format, stream, v0, v1, v2, v3, ZLVec3D ( 0.0f, 0.0f, -1.0f )); // back
+	MOAIGeometryWriter::WriteQuad ( format, stream, v4, v5, v6, v7, ZLVec3D ( 0.0f, 0.0f, 1.0f )); // front
 	
-	this->WriteQuad ( stream, v1, v4, v7, v2, ZLVec3D ( -1.0f, 0.0f, 0.0f )); // left
-	this->WriteQuad ( stream, v5, v0, v3, v6, ZLVec3D ( 1.0f, 0.0f, 0.0f )); // right
+	MOAIGeometryWriter::WriteQuad ( format, stream, v1, v4, v7, v2, ZLVec3D ( -1.0f, 0.0f, 0.0f )); // left
+	MOAIGeometryWriter::WriteQuad ( format, stream, v5, v0, v3, v6, ZLVec3D ( 1.0f, 0.0f, 0.0f )); // right
 
-	this->WriteQuad ( stream, v5, v4, v1, v0, ZLVec3D ( 0.0f, -1.0f, 0.0f )); // bottom
-	this->WriteQuad ( stream, v2, v7, v6, v3, ZLVec3D ( 0.0f, 1.0f, 0.0f )); // top
+	MOAIGeometryWriter::WriteQuad ( format, stream, v5, v4, v1, v0, ZLVec3D ( 0.0f, -1.0f, 0.0f )); // bottom
+	MOAIGeometryWriter::WriteQuad ( format, stream, v2, v7, v6, v3, ZLVec3D ( 0.0f, 1.0f, 0.0f )); // top
 	
 	stream.Seek ( base, SEEK_SET );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteCylinder ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec2D& r0, const ZLVec2D& r1 ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::WriteCylinder ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec2D& r0, const ZLVec2D& r1 ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteIcoSphere ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::WriteIcoSphere ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteQuad ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0 ) {
+void MOAIGeometryWriter::WriteQuad ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0 ) {
 
-	this->WriteQuad ( stream, v0, v1, v2, v3, n0, n0, n0, n0 );
+	MOAIGeometryWriter::WriteQuad ( format, stream, v0, v1, v2, v3, n0, n0, n0, n0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteQuad ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0, const ZLVec3D& n1, const ZLVec3D& n2, const ZLVec3D& n3 ) {
+void MOAIGeometryWriter::WriteQuad ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0, const ZLVec3D& n1, const ZLVec3D& n2, const ZLVec3D& n3 ) {
 
-	this->WriteVertex ( stream, v0, n0 );
-	this->WriteVertex ( stream, v1, n1 );
-	this->WriteVertex ( stream, v2, n2 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v0, n0 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v1, n1 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v2, n2 );
 	
-	this->WriteVertex ( stream, v0, n0 );
-	this->WriteVertex ( stream, v2, n2 );
-	this->WriteVertex ( stream, v3, n3 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v0, n0 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v2, n2 );
+	MOAIGeometryWriter::WriteVertex ( format, stream, v3, n3 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteUVSphere ( ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
-
-	assert ( this->mVertexFormat );
+void MOAIGeometryWriter::WriteUVSphere ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::WriteVertex ( ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal ) {
+void MOAIGeometryWriter::WriteVertex ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal ) {
 
 	size_t base = stream.GetCursor ();
-	this->mVertexFormat->WriteAhead ( stream );
-	this->mVertexFormat->WriteCoord ( stream, coord.mX, coord.mY, coord.mZ, 1.0f );
-	this->mVertexFormat->WriteNormal ( stream, normal.mX, normal.mY, normal.mZ );
-	this->mVertexFormat->SeekVertex ( stream, base, 1 );
+	format.WriteAhead ( stream );
+	format.WriteCoord ( stream, coord.mX, coord.mY, coord.mZ, 1.0f );
+	format.WriteNormal ( stream, normal.mX, normal.mY, normal.mZ );
+	format.SeekVertex ( stream, base, 1 );
 }

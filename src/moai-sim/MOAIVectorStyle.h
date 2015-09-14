@@ -61,6 +61,7 @@ public:
 	u32					mCircleResolution;
 	
 	float				mExtrude;
+	float				mZOffset;
 	
 	ZLVec3D				mLightVec;
 	
@@ -97,6 +98,7 @@ public:
 	GET_SET_CONST ( u32, CircleResolution, mCircleResolution )
 	
 	GET_SET_CONST ( float, Extrude, mExtrude )
+	GET_SET_CONST ( float, ZOffset, mZOffset )
 	
 	GET_SET_CONST ( ZLVec3D&, LightVec, mLightVec )
 	

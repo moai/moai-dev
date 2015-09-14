@@ -15,6 +15,36 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getRect
+	@text	Set model space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+ */
+int MOAIGfxQuadDeck2D::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	if ( idx < self->mQuads.Size ()) {
+		
+		ZLRect rect = self->mQuads [ idx ].GetVtxBounds();
+		
+		lua_pushnumber ( state, rect.mXMin );
+		lua_pushnumber ( state, rect.mYMin );
+		lua_pushnumber ( state, rect.mXMax );
+		lua_pushnumber ( state, rect.mYMax );
+		return 4;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserve
 	@text	Set capacity of quad deck.
 	
@@ -318,7 +348,7 @@ bool MOAIGfxQuadDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 gran
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -331,15 +361,16 @@ MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "getRect",			_getRect },
 		{ "reserve",			_reserve },
 		{ "setMaterialID",		_setMaterialID },
 		{ "setQuad",			_setQuad },

@@ -4,11 +4,24 @@
 #ifndef	MOAIMESH_H
 #define	MOAIMESH_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 class MOAIGfxBuffer;
 class MOAIMesh;
+class MOAISelectionSpan;
 class MOAITextureBase;
+
+//================================================================//
+// MOAIMeshSpan
+//================================================================//
+class MOAIMeshSpan {
+public:
+	
+	size_t				mBase;
+	size_t				mTop;
+	
+	MOAIMeshSpan*		mNext;
+};
 
 //================================================================//
 // MOAIVertexBuffer
@@ -16,8 +29,8 @@ class MOAITextureBase;
 class MOAIVertexBuffer {
 public:
 	
-	MOAILuaSharedPtr < MOAIGfxBuffer >		mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >	mFormat;
+	MOAILuaSharedPtr < MOAIGfxBuffer >			mBuffer;
+	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
 	
 	//----------------------------------------------------------------//
 	void		Bind					();
@@ -43,7 +56,7 @@ public:
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIMesh :
-	public MOAIDeck,
+	public MOAIStandardDeck,
 	public MOAIGfxResource {
 protected:
 
@@ -103,6 +116,7 @@ public:
 	//----------------------------------------------------------------//
 	void				ClearBounds					();
 	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 	MOAIGfxState*		GetShaderDefault			();
 						MOAIMesh					();
 						~MOAIMesh					();

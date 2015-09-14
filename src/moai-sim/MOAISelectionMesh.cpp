@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAIShader.h>
@@ -81,6 +82,19 @@ int MOAISelectionMesh::_reserveSelections ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISelectionMesh::_setMesh ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
+
+	MOAIMesh* mesh = state.GetLuaObject < MOAIMesh >( 2, true );
+
+	self->mDeck.Set ( *self, mesh );
+	self->mMesh = mesh;
+
+	return 0;
+}
+
 //================================================================//
 // MOAISelectionMesh
 //================================================================//
@@ -96,7 +110,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	MOAISelectionSpan* prevAdjacentInSet = 0;
 	MOAISelectionSpan* spanListTail = 0;
 	
-	for ( ; cursor && ( cursor->mTop < base ); cursor = cursor->mNext ) {
+	for ( ; cursor && ( cursor->mTop < base ); cursor = cursor->mNextInMaster ) {
 	
 		spanListTail = cursor;
 	
@@ -126,23 +140,23 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 			
 			if ( cursor->mTop <= top ) {
 			
-				MOAISelectionSpan* next = cursor->mNext;
+				MOAISelectionSpan* next = cursor->mNextInMaster;
 				
 				while ( next && ( next->mTop <= top )) {
 				
-					if ( cursor->mNextInSet == next ) {
-						cursor->mNextInSet = next->mNextInSet;
+					if ( cursor->mNext == next ) {
+						cursor->mNext = next->mNext;
 					}
 					next = this->FreeSpanAndGetNext ( next );
 				}
 				
 				if ( next && ( next->mSetID == set ) && ( next->mBase <= top )) {
 					top = next->mTop;
-					cursor->mNextInSet = next->mNextInSet;
+					cursor->mNext = next->mNext;
 					next = this->FreeSpanAndGetNext ( next );
 				}
 				
-				cursor->mNext = next;
+				cursor->mNextInMaster = next;
 				cursor->mTop = top;
 				
 				if ( next ) {
@@ -155,7 +169,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 			if ( cursor->mTop <= top ) {
 			
 				cursor->mTop = base;
-				MOAISelectionSpan* next = cursor->mNext;
+				MOAISelectionSpan* next = cursor->mNextInMaster;
 				
 				if ( next && ( next->mSetID == set )) {
 					
@@ -167,8 +181,8 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 					// create a new span and add it
 					span = this->AllocSpan ( set, base, top );
 				
-					span->mNext = cursor->mNext;
-					cursor->mNext = span;
+					span->mNextInMaster = cursor->mNextInMaster;
+					cursor->mNextInMaster = span;
 				}
 			}
 			else {
@@ -177,12 +191,12 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 				span = this->AllocSpan ( set, base, top );
 				MOAISelectionSpan* cap = this->AllocSpan ( cursor->mSetID, top, cursor->mTop );
 				
-				cap->mNext = cursor->mNext;
-				span->mNext = cap;
-				cursor->mNext = span;
+				cap->mNextInMaster = cursor->mNextInMaster;
+				span->mNextInMaster = cap;
+				cursor->mNextInMaster = span;
 				
-				cap->mNextInSet = cursor->mNextInSet;
-				cursor->mNextInSet = cap;
+				cap->mNext = cursor->mNext;
+				cursor->mNext = cap;
 				
 				cursor->mTop = base;
 			}
@@ -198,7 +212,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 			span = this->AllocSpan ( set, base, top );
 			
 			if ( spanListTail ) {
-				spanListTail->mNext = span;
+				spanListTail->mNextInMaster = span;
 			}
 			else {
 				this->mSpanListHead = span;
@@ -209,8 +223,8 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	// if there's a new span
 	if ( span ) {
 		if ( prevInSet ) {
-			span->mNextInSet = prevInSet->mNextInSet;
-			prevInSet->mNextInSet = span;
+			span->mNext = prevInSet->mNext;
+			prevInSet->mNext = span;
 		}
 	}
 }
@@ -226,8 +240,8 @@ MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( u32 set, size_t base, size_t t
 	span->mBase = base;
 	span->mTop = top;
 	
+	span->mNextInMaster = 0;
 	span->mNext = 0;
-	span->mNextInSet = 0;
 	
 	if ( !this->mSets [ set ]) {
 		this->mSets [ set ] = span;
@@ -241,13 +255,13 @@ void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, u32 set ) {
 	if ( span && span->mSetID != set ) {
 
 		if ( this->mSets [ span->mSetID ] == span ) {
-			this->mSets [ span->mSetID ] = span->mNextInSet;
+			this->mSets [ span->mSetID ] = span->mNext;
 		}
 		
-		MOAISelectionSpan* firstInSet = this->mSets [ set ];
+		MOAIMeshSpan* firstInSet = this->mSets [ set ];
 		
 		if (( firstInSet && ( span->mBase <= firstInSet->mBase )) || !firstInSet ) {
-			span->mNextInSet = firstInSet;
+			span->mNext = firstInSet;
 			this->mSets [ set ] = span;
 		}
 		
@@ -278,58 +292,18 @@ void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 	UNUSED ( offset );
 	UNUSED ( scale );
 	
+	if ( !this->mMesh ) return;
+	
 	size_t size = this->mSets.Size ();
 	if ( !size ) return;
 
 	idx = idx - 1;
 	u32 itemIdx = idx % size;
 	
-	MOAISelectionSpan* span = this->mSets [ itemIdx ];
+	MOAIMeshSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;
 
-	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
-
-	// TODO: make use of offset and scale
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.Flush (); // TODO: should remove this call
-	MOAIGfxDevice::Get ().SetVertexFormat ();
-
-	this->FinishInit ();
-
-	if ( this->Bind ()) {
-
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
-		gfxDevice.SetPenWidth ( this->mPenWidth );
-		gfxDevice.SetPointSize ( this->mPointSize );
-		
-		gfxDevice.UpdateShaderGlobals ();
-		
-		// TODO: use gfxDevice to cache buffers
-		if ( this->mIndexBuffer ) {
-			if ( this->mIndexBuffer->Bind ()) {
-			
-				for ( ; span; span = span->mNextInSet ) {
-					
-					zglDrawElements (
-						this->mPrimType,
-						span->mTop - span->mBase,
-						this->mIndexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-						( const void* )span->mBase
-					);
-				}
-			}
-		}
-		else {
-		
-			for ( ; span; span = span->mNextInSet ) {
-				zglDrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
-			}
-		}
-		this->Unbind ();
-	}
+	this->mMesh->DrawIndex ( idx, span, materials, offset, scale );
 }
 
 //----------------------------------------------------------------//
@@ -340,10 +314,10 @@ MOAISelectionSpan* MOAISelectionMesh::FreeSpanAndGetNext ( MOAISelectionSpan* sp
 	if ( span ) {
 	
 		if ( this->mSets [ span->mSetID ] == span ) {
-			this->mSets [ span->mSetID ] = span->mNextInSet;
+			this->mSets [ span->mSetID ] = span->mNext;
 		}
 		
-		next = span->mNext;
+		next = span->mNextInMaster;
 		this->mSpanPool.Free ( span );
 	}
 	return next;
@@ -355,19 +329,16 @@ void MOAISelectionMesh::MergeSelections ( u32 set, u32 merge ) {
 
 //----------------------------------------------------------------//
 MOAISelectionMesh::MOAISelectionMesh () :
-	mSpanListHead ( 0 ) {
+	mSpanListHead ( 0 ),
+	mMesh ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMesh )
+		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAISelectionMesh::~MOAISelectionMesh () {
-
-	this->ReserveVAOs ( 0 );
-	this->ReserveVertexBuffers ( 0 );
-	this->SetIndexBuffer ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -377,12 +348,12 @@ void MOAISelectionMesh::PrintSelection ( u32 idx ) {
 	
 		printf ( "set %d - ", idx );
 	
-		MOAISelectionSpan* span = this->mSets [ idx ];
-		for ( ; span; span = span->mNextInSet ) {
+		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ idx ];
+		for ( ; span; span = ( MOAISelectionSpan* )span->mNext ) {
 		
 			printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
 			
-			if ( span->mNextInSet ) {
+			if ( span->mNext ) {
 				printf ( ", " );
 			}
 		}
@@ -394,11 +365,11 @@ void MOAISelectionMesh::PrintSelection ( u32 idx ) {
 void MOAISelectionMesh::PrintSelections () {
 
 	MOAISelectionSpan* span = this->mSpanListHead;
-	for ( ; span; span = span->mNext ) {
+	for ( ; span; span = span->mNextInMaster ) {
 	
 		printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
 		
-		if ( span->mNext ) {
+		if ( span->mNextInMaster ) {
 			printf ( ", " );
 		}
 	}
@@ -408,13 +379,13 @@ void MOAISelectionMesh::PrintSelections () {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIMesh::RegisterLuaClass ( state );
+	MOAIDeckProxy::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIMesh::RegisterLuaFuncs ( state );
+	MOAIDeckProxy::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
@@ -422,6 +393,8 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "mergeSelections",		_mergeSelections },
 		{ "printSelection",			_printSelection },
 		{ "reserveSelections",		_reserveSelections },
+		{ "setDeck",				_setMesh }, // override
+		{ "setMesh",				_setMesh },
 		{ NULL, NULL }
 	};
 	
@@ -440,11 +413,11 @@ void MOAISelectionMesh::ReserveSelections ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIMesh::SerializeIn ( state, serializer );
+	MOAIDeckProxy::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIMesh::SerializeOut ( state, serializer );
+	MOAIDeckProxy::SerializeOut ( state, serializer );
 }

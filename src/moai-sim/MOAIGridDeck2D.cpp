@@ -222,7 +222,7 @@ ZLBox MOAIGridDeck2D::GetItemBounds ( u32 idx ) {
 MOAIGridDeck2D::MOAIGridDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
 	//this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -240,13 +240,13 @@ MOAIGridDeck2D::~MOAIGridDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGridDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGridDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveBrushes",		_reserveBrushes },

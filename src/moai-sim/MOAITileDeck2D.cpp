@@ -282,7 +282,7 @@ bool MOAITileDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granula
 MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStandardDeck )
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
@@ -297,14 +297,14 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStandardDeck::RegisterLuaClass ( state );
 	MOAIGridSpace::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	MOAIGridSpace::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

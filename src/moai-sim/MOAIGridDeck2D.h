@@ -4,7 +4,7 @@
 #ifndef	MOAIGRIDDECK2D_H
 #define	MOAIGRIDDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 //================================================================//
 // MOAIGridDeckBrush
@@ -33,7 +33,7 @@ public:
 			Each 'brush' defines a rectangle of tiles to draw and an offset.
 */
 class MOAIGridDeck2D :
-	public MOAIDeck {
+	public MOAIStandardDeck {
 private:
 	
 	ZLLeanArray < MOAIGridDeckBrush > mBrushes;

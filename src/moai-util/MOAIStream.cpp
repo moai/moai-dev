@@ -230,13 +230,13 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 	@text	Repositions the cursor in the stream.
 	
 	@in		MOAIStream self
-	@in		number offset		Value from the stream.
+	@opt	number offset		Value from the stream. Default value is 0.
 	@opt	number mode			One of MOAIStream.SEEK_CUR, MOAIStream.SEEK_END, MOAIStream.SEEK_SET.
 								Default value is MOAIStream.SEEK_SET.
 	@out	nil
 */
 int MOAIStream::_seek ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIStream, "UN" );
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	
 	s32 offset	= state.GetValue < s32 >( 2, 0 );
 	u32 mode	= state.GetValue < u32 >( 3, SEEK_SET );

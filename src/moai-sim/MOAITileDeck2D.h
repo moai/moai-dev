@@ -4,7 +4,7 @@
 #ifndef	MOAITILEDECK2D_H
 #define	MOAITILEDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStandardDeck.h>
 
 class MOAITextureBase;
 
@@ -16,7 +16,7 @@ class MOAITextureBase;
 			from the texture's left top to right bottom.
 */
 class MOAITileDeck2D :
-	public MOAIDeck,
+	public MOAIStandardDeck,
 	public MOAIGridSpace {
 private:
 	

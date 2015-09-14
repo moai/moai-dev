@@ -213,7 +213,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream* vtxStr
 		if ( error ) return error;
 		
 		if ( vtxStream && idxStream ) {
-			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
+			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
 		}
 	}
 	
@@ -242,7 +242,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream* vtxStr
 		if ( error ) return error;
 		
 		if ( vtxStream && idxStream ) {
-			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
+			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
 		}
 	}
 	

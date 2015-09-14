@@ -46,6 +46,7 @@ private:
 	ZLLeanArray < void* >	mVtxExtras;
 
 	//----------------------------------------------------------------//
+	static int		_clearShapes			( lua_State* L );
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
@@ -95,6 +96,7 @@ private:
 	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	u32				CountVertices			( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	u32				PushShape				( MOAIVectorShape* shape );
 	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 	
@@ -109,8 +111,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Clear						();
+	void				ClearShapes					();
 	void				ClearTransforms				();
-	u32					CountVertices				( ZLStream& vtxStream );
 	int					Finish						();
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();

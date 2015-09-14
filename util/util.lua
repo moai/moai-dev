@@ -30,14 +30,17 @@ local  		iterateFilesImplementation		= nil
 			joinTables						= nil
 			listDirectories					= nil
 			listFiles						= nil
+			loadFileAsString				= nil
 local		makeDlcResourceSig				= nil
 			makeExecutable					= nil
 			makeStoreEntryFunc				= nil
 			mergeTables						= nil
+			moaiexec						= nil
 			move							= nil
 			onEntryCompile					= nil
 			onEntryCopy						= nil
 			onEntryStore					= nil
+			os								= nil
 			pack							= nil
 			package							= nil
 			pairsByKeys						= nil
@@ -50,6 +53,7 @@ local		makeDlcResourceSig				= nil
 			replaceInFiles					= nil
 			saveTable						= nil
 			scanFiles						= nil
+			timestamp						= nil
 			tokens							= nil
 			tokenize						= nil
 			trim							= nil
@@ -466,13 +470,13 @@ loadFileAsString = function ( filename )
 	
 	return str
 end
+
 ----------------------------------------------------------------
 makeExecutable = function ( path )
 	if MOAIEnvironment.osBrand ~= 'Windows' then
-		os.execute("chmod a+x "..path)
+		os.execute ( "chmod a+x "..path )
 	end
-end 
-
+end
 
 ----------------------------------------------------------------
 makeDlcResourceSig = function ( path, md5 )
@@ -512,10 +516,23 @@ mergeTables = function ( t1, t2 )
 end
 
 ----------------------------------------------------------------
+moaiexec = function ( cmd, ... )
+	local result = os.execute ( string.format ( cmd, ... ))
+	if not result == 0 then os.exit ( result ) end
+	return result
+end
+
+----------------------------------------------------------------
 move = function ( dstpath, srcpath )
 
 	local cmd = osx and 'mv -f %s %s' or 'move /y %s %s'
 	exec ( cmd, srcpath, dstpath )
+end
+
+----------------------------------------------------------------
+osname = function ()
+
+	return osx and 'osx' or 'win'
 end
 
 ----------------------------------------------------------------
@@ -766,6 +783,11 @@ scanFiles = function ( srcRoot, dstRoot, exclude, process, localPath )
 			scanFiles ( srcRoot, dstRoot, exclude, process, localPath .. entry .. '/' )
 		end
 	end
+end
+
+---------------------------------------------------------------
+timestamp = function ()
+	return os.date ( '%y_%m_%d_%H.%M.%S', os.time ())
 end
 
 ---------------------------------------------------------------

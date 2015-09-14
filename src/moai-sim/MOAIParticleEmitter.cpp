@@ -67,6 +67,16 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIParticleEmitter::_setMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
+	
+	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIProp >( 2, true ));
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setRadius
 	@text	Set the shape and radius of the emitter.
 	
@@ -220,6 +230,12 @@ bool MOAIParticleEmitter::IsDone () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
+
+	return this->mMaskProp ? this->mMaskProp->Inside ( loc, 0.0f ) : true;
+}
+
+//----------------------------------------------------------------//
 MOAIParticleEmitter::MOAIParticleEmitter () :
 	mShapeID ( POINT ),
 	mInnerRadius ( 0.0f ),
@@ -242,6 +258,7 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 MOAIParticleEmitter::~MOAIParticleEmitter () {
 
 	this->mSystem.Set ( *this, 0 );
+	this->mMaskProp.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -256,8 +273,12 @@ void MOAIParticleEmitter::OnDepNodeUpdate () {
 		for ( u32 i = 0; i < this->mEmission; ++i ) {
 			this->GetRandomParticle ( loc, vec );
 			this->mLocalToWorldMtx.Transform ( loc );
-			this->mLocalToWorldMtx.TransformVec ( vec );
-			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+			
+			if ( this->MaskParticle ( loc )) {
+			
+				this->mLocalToWorldMtx.TransformVec ( vec );
+				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+			}
 		}
 	}
 	
@@ -281,6 +302,7 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAngle",			_setAngle },
 		{ "setEmission",		_setEmission },
 		{ "setMagnitude",		_setMagnitude },
+		{ "setMask",			_setMask },
 		{ "setRadius",			_setRadius },
 		{ "setRect",			_setRect },
 		{ "setSystem",			_setSystem },

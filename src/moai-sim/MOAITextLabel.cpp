@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -816,14 +817,15 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 		
 			MOAIViewport* viewport = renderMgr.GetViewport ();
 			assert ( viewport );
+			ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
 
-			ZLMatrix4x4 view = camera->GetViewMtx ();
+			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 
-			ZLVec3D upVec = view.GetYAxis ();
+			viewProj.TransformVec ( upVec );
 
 			// For text flipping when orbiting around the map. Tilting should not affect this
-			if ( upVec.mY < 0.0f ) {
-			
+			if ( upVec.mY > 0.0f ) {
+
 				ZLMatrix4x4 flip;
 				flip.Scale ( -1.0f, -1.0f, 1.0f );
 				
