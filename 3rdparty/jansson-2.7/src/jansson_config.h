@@ -36,4 +36,9 @@
    otherwise to 0. */
 #define JSON_HAVE_LOCALECONV 1
 
+/* Change for MOAI */
+#ifdef NDEBUG
+	#undef NDEBUG
+#endif
+
 #endif
