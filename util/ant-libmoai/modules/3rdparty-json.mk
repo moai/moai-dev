@@ -15,11 +15,14 @@
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/dump.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/error.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/hashtable.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/hashtable_seed.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/load.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/memory.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/pack_unpack.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/strbuffer.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/strconv.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/utf.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/jansson-2.7/src/value.c
+
 
 	include $(BUILD_STATIC_LIBRARY)
