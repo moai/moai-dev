@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 512, 512 )
-
 function printTable ( t, tableName, indentationLevel )
 		
 	if type ( t ) ~= "table" then
@@ -52,8 +50,8 @@ end
 
 print ( "Mounting test.zip: " .. tostring ( MOAIFileSystem.mountVirtualDirectory ( "testzip", "../resources/test.zip" )))
 
-print ( "Checking if file exists: " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/levels/main.lua" ) ) )
-print ( "Checking if file exists: " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/main.lua" ) ) )
-print ( "Checking if file exists: " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/bogus.zip" ) ) )
-print ( "Checking if file exists: " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/test.zip" ) ) )
-print ( "Checking if file exists: " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/main.lua" ) ) )
+print ( "Checking if file exists: testzip/assets/levels/main.lua - " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/levels/main.lua" )))
+print ( "Checking if file exists: testzip/assets/main.lua - " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/main.lua" )))
+print ( "Checking if file exists: testzip/assets/bogus.zip - " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/assets/bogus.zip" )))
+print ( "Checking if file exists: testzip/test.zip - " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/test.zip" )))
+print ( "Checking if file exists: testzip/main.lua - " .. tostring ( MOAIFileSystem.checkFileExists ( "testzip/main.lua" )))

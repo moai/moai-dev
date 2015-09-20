@@ -110,7 +110,13 @@ if gRun then
 
 	if sample then
 		MOAIFileSystem.setWorkingDirectory ( SAMPLES_DIRECTORY .. sample )
+
 		print ( 'RUNNING SAMPLE:', sample, '\n' )
-		dofile ( 'main.lua' )
+
+		if MOAIFileSystem.checkFileExists ( 'main.lua') then
+			dofile ( 'main.lua' )
+		else
+			print ( 'WARNING: no main.lua found' )
+		end
 	end
 end

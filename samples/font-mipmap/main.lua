@@ -22,7 +22,7 @@ text = 'The quick brown fox jumps over the lazy dog.'
 
 textbox = MOAITextBox.new ()
 font = MOAIFont.new ()
-font:setFilter ( MOAITexture.GL_LINEAR_MIPMAP_LINEAR, MOAITexture.GL_LINEAR_MIPMAP_LINEAR )
+font:setFilter ( MOAITexture.GL_LINEAR_MIPMAP_LINEAR, MOAITexture.GL_LINEAR )
 font:loadFromTTF ( 'times.ttf', charcodes, 12, 163 )
 
 textbox:setString ( text )
