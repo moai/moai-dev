@@ -104,8 +104,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 		SDL_GL_SetSwapInterval ( 1 );
 		
 		AKUDetectGfxContext ();
-		//AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
-		//AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
+		AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
+		AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
 		
 		AKUSetViewSize ( width, height );
 		AKUSdlSetWindow ( sWindow );
