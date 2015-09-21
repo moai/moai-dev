@@ -215,7 +215,7 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 		u32 rgba1 = 0xffffffff;
 		
 		if ( !useSpriteShaders ) {
-			gfxDevice.SetShader ( defaultShader );
+			if ( !gfxDevice.BindShader ( defaultShader )) return;
 		}
 
 		MOAIShader* currentShader = 0;
@@ -239,7 +239,7 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					gfxDevice.SetShader ( spriteShader );
+					if ( !gfxDevice.BindShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}

@@ -373,7 +373,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		bool hasMaterials = materials.Size () > 0;
 		
 		if ( !hasMaterials ) {
-			materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
+			if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 		}
 
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -398,7 +398,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 			
 			if (( hasMaterials ) && ( materialID != spritePair.mMaterialID )) {
 				materialID = spritePair.mMaterialID;
-				materials.LoadGfxState ( this, materialID, idx, MOAIShaderMgr::DECK2D_SHADER );
+				if ( !materials.LoadGfxState ( this, materialID, idx, MOAIShaderMgr::DECK2D_SHADER )) continue;
 			}
 			
 			ZLQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 

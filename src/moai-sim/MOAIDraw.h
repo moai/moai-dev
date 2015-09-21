@@ -54,7 +54,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			BeginDrawString			( float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY );
-	static void			Bind					();
+	static bool			Bind					();
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	static void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );

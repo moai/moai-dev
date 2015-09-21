@@ -297,12 +297,11 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgram::LoadGfxState () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetShader ( this );
-	return true;
-}
+//bool MOAIShaderProgram::LoadGfxState () {
+//
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	return gfxDevice.BindShader ( this );
+//}
 
 //----------------------------------------------------------------//
 MOAIShaderProgram::MOAIShaderProgram () :
@@ -384,6 +383,8 @@ bool MOAIShaderProgram::OnGPUCreate () {
 
 	gfx.DeleteHandle ( this->mFragmentShader );
 	this->mFragmentShader = 0;
+
+	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
 
 	//AJV TODO - does the attribute map ever need to be cleared?
 	//this->mAttributeMap.clear ();

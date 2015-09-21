@@ -112,19 +112,29 @@ bool MOAIGfxResource::Affirm () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::Bind () {
+u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
 //		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
 
-	if ( this->Affirm ()) {
+	// if we're in either create state, do the affirm
+	if (( this->mState == STATE_READY_FOR_CPU_CREATE ) || ( this->mState == STATE_READY_FOR_GPU_CREATE )) {
+		
+		// if affirm fails, something was missing so go to the error state
+		if ( !this->Affirm ()) {
+			this->mState = STATE_ERROR;
+		}
+	}
+
+	// we're ready to bind, so do it
+	if ( this->mState == STATE_READY_TO_BIND ) {
 		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
 		this->OnGPUBind ();
-		return true;
 	}
-	return false;
+	
+	return this->mState;
 }
 
 //----------------------------------------------------------------//
@@ -164,8 +174,14 @@ bool MOAIGfxResource::DoGPUCreate () {
 	}
 
 	if ( this->mState == STATE_READY_FOR_GPU_CREATE ) {
-		this->mState = this->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
-		if ( this->mState == STATE_READY_TO_BIND ) {
+	
+		// set this now; in immediate mode we'll go straight to STATE_READY_TO_BIND on success
+		// otherwise we'll go there later when we get GFX_EVENT_CREATED
+		this->mState = STATE_PENDING;
+	
+		this->mState = this->OnGPUCreate () ? this->mState : STATE_ERROR;
+		
+		if ( this->mState != STATE_ERROR ) {
 			this->OnCPUDestroy ();
 		}
 	}
@@ -226,6 +242,11 @@ MOAIGfxResource::~MOAIGfxResource () {
 void MOAIGfxResource::OnGfxEvent ( u32 event, void* userdata ) {
 
 	if ( event == GFX_EVENT_CREATED ) {
+	
+		// we should only get this event if the creation sequence was successful
+		this->mState = STATE_READY_TO_BIND;
+		
+		// let Lua know the resource is ready for use
 		this->InvokeListener ( GFX_EVENT_CREATED );
 	}
 }

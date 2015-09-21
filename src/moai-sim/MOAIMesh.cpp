@@ -114,7 +114,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER );
+	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER )) return;
 
 	// TODO: make use of offset and scale
 

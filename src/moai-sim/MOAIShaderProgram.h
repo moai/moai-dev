@@ -118,7 +118,7 @@ public:
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, float value );
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, int value );
 	bool			IsValid						();
-	bool			LoadGfxState				();
+	//bool			LoadGfxState				();
 					MOAIShaderProgram			();
 					~MOAIShaderProgram			();
 	void			RegisterLuaClass			( MOAILuaState& state );

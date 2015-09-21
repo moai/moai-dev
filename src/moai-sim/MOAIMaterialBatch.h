@@ -28,7 +28,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void				LoadGfxState			( MOAIMaterial* fallback, u32 defaultShader );
+	bool				LoadGfxState			( MOAIMaterial* fallback, u32 defaultShader );
 						MOAIMaterial			();
 	virtual				~MOAIMaterial			();
 	bool				TestHit					( float x, float y ); // in local (uv) space of the mask
@@ -78,14 +78,14 @@ public:
 	void				Clear						();
 	MOAIMaterial*		GetMaterial					( u32 idx );
 	MOAIMaterial*		GetMaterial					( u32 materialID, u32 deckIndex );
-	void				LoadGfxState				( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader );
-	void				LoadGfxState				( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader );
+	bool				LoadGfxState				( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader );
+	bool				LoadGfxState				( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader );
 						MOAIMaterialBatch			();
 	virtual				~MOAIMaterialBatch			();
 	MOAIMaterial*		RawGetMaterial				( u32 idx );
 	MOAIShader*			RawGetShader				( u32 idx );
-	MOAITextureBase*		RawGetTexture				( u32 idx );
-	void				RawLoadGfxState				( u32 idx, u32 defaultShader );
+	MOAITextureBase*	RawGetTexture				( u32 idx );
+	//void				RawLoadGfxState				( u32 idx, u32 defaultShader );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				Reserve						( u32 n );
@@ -103,7 +103,7 @@ public:
 	void				SetShader					( u32 idx, MOAIShader* shader );
 	MOAIShader*			SetShader					( MOAILuaState& state, u32 idx );
 	void				SetTexture					( u32 idx, MOAITextureBase* texture );
-	MOAITextureBase*		SetTexture					( MOAILuaState& state, u32 idx );
+	MOAITextureBase*	SetTexture					( MOAILuaState& state, u32 idx );
 	size_t				Size						();
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 idx, float x, float y );
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, float x, float y );

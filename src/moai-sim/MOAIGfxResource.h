@@ -40,7 +40,7 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			Bind						(); // bind for drawing; go to STATE_READY
+	u32				Bind						(); // bind OR create
 	bool			DoGPUCreate					(); // gets ready to bind
 	bool			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
@@ -53,6 +53,7 @@ protected:
 	};
 
 	//----------------------------------------------------------------//
+	bool			Affirm						();
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
@@ -69,19 +70,20 @@ protected:
 public:
 
 	enum {
-		STATE_UNINITIALIZED, // we use this state to ensure we call DoCPUAffirm after init
+		STATE_UNINITIALIZED,			// we use this state to ensure we call DoCPUAffirm after init
 		STATE_READY_FOR_CPU_CREATE,
 		STATE_READY_FOR_GPU_CREATE,
+		STATE_PENDING,					// waiting for GPU
 		STATE_READY_TO_BIND,
 		STATE_ERROR,
 	};
 
 	GET ( u32, State, mState )
+	IS ( Pending, mState, STATE_PENDING )
 	IS ( Ready, mState, STATE_READY_TO_BIND )
 	IS ( Scheduled, mScheduled, true )
 
 	//----------------------------------------------------------------//
-	bool			Affirm						();
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
 	bool			DoCPUCreate					(); // preload CPU portion
 					MOAIGfxResource				();

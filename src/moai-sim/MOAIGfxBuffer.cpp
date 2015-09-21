@@ -89,8 +89,8 @@ int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
-}
+//void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {

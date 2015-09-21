@@ -194,7 +194,8 @@ void MOAIDraw::EndDrawString () {
 	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
-	gfxDevice.SetShader ( MOAIShaderMgr::FONT_SHADER );
+	if ( !gfxDevice.BindShader ( MOAIShaderMgr::FONT_SHADER )) return;
+	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -678,12 +679,12 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDraw::Bind () {
+bool MOAIDraw::Bind () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetTexture ();
-	gfxDevice.SetShader ( MOAIShaderMgr::LINE_SHADER );
+	if ( !gfxDevice.BindTexture ()) return;
+	if ( !gfxDevice.BindShader ( MOAIShaderMgr::LINE_SHADER )) return;
 	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
 }
 
@@ -1244,8 +1245,8 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 	if ( texture ) {
 
 //		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
-		gfxDevice.SetTexture ( texture );
-		gfxDevice.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+		if ( !gfxDevice.BindTexture ( texture )) return;
+		if ( !gfxDevice.BindShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
 
 		const ZLColorVec& orgColor = gfxDevice.GetPenColor ();
 		gfxDevice.SetPenColor ( 1, 1, 1, 1 );
