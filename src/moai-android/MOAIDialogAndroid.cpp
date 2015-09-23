@@ -58,10 +58,10 @@ int MOAIDialogAndroid::_showDialog ( lua_State* L ) {
 	MOAIJString jnuetral = JNI_GET_JSTRING ( neutral );
 	MOAIJString jnegative = JNI_GET_JSTRING ( negative );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/Moai" );
     if ( moai == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAIDialogAndroid: Unable to find java class %s", "com/moaisdk/core/Moai" );
     } else {
 
     	jmethodID showDialog = env->GetStaticMethodID ( moai, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );

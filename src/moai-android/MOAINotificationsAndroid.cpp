@@ -129,10 +129,10 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 		jkeys = env->NewObjectArray ( 0, env->FindClass( "java/lang/String" ), 0 );
 	}
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/Moai" );
     if ( moai == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/moaisdk/core/Moai" );
     } else {
 
     	jmethodID localNotificationInSeconds = env->GetStaticMethodID ( moai, "localNotificationInSeconds", "(ILjava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V" );
@@ -165,10 +165,10 @@ int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 	
 	MOAIJString jalias = JNI_GET_JSTRING ( alias );
 
-	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
+	jclass push = env->FindClass ( "com/moaisdk/core/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/moaisdk/core/MoaiGooglePush" );
     } else {
 
     	jmethodID registerForRemoteNotifications = env->GetStaticMethodID ( push, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
@@ -222,10 +222,10 @@ int MOAINotificationsAndroid::_unregisterForRemoteNotifications ( lua_State* L )
 	
 	JNI_GET_ENV ( jvm, env );
 
-	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
+	jclass push = env->FindClass ( "com/moaisdk/core/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/moaisdk/core/MoaiGooglePush" );
     } else {
 
     	jmethodID unregisterForRemoteNotifications = env->GetStaticMethodID ( push, "unregisterForRemoteNotifications", "()V" );
