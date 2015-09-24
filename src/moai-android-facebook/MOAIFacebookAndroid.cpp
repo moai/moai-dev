@@ -32,6 +32,22 @@ int MOAIFacebookAndroid::_getUserID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getUserName
+	@text	Retrieve the Facebook user name
+
+	@out	string	name
+*/
+int MOAIFacebookAndroid::_getUserName ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
+
+	MOAIJString jName = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetUserName );
+	cc8* name = self->GetCString ( jName );
+	lua_pushstring ( state, name );
+	self->ReleaseCString ( jName, name );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getToken
 	@text	Retrieve the Facebook login token.
 				
@@ -214,6 +230,7 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 	
 	this->mJava_GetToken			= this->GetStaticMethod ( "getToken", "()Ljava/lang/String;" );
 	this->mJava_GetUserID			= this->GetStaticMethod ( "getUserID", "()Ljava/lang/String;" );
+	this->mJava_GetUserName			= this->GetStaticMethod ( "getUserName", "()Ljava/lang/String;" );
 	//this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
 	this->mJava_Init				= this->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
 	this->mJava_IsSessionValid		= this->GetStaticMethod ( "isSessionValid", "()Z" );
@@ -240,6 +257,7 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIFacebookAndroid > },
 		{ "getUserID",				_getUserID },
+		{ "getUserName",			_getUserName },
 		{ "getToken",				_getToken },
 		{ "graphRequest",			_graphRequest },
 		{ "init",					_init },

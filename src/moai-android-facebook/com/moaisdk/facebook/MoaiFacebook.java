@@ -186,6 +186,13 @@ public class MoaiFacebook {
         return sUserID;
     }
 
+    //----------------------------------------------------------------//
+    public static String getUserName () {
+
+        //MoaiLog.i ( "MoaiFacebook: getUserID" );
+        return sUserName;
+    }
+
 	//----------------------------------------------------------------//
 	public static void init ( String appId ) {
 

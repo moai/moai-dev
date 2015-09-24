@@ -30,6 +30,7 @@ private:
 
 	jmethodID	mJava_GetToken;
 	jmethodID	mJava_GetUserID;
+	jmethodID	mJava_GetUserName;
 	jmethodID	mJava_GraphRequest;
 	jmethodID	mJava_Init;
 	jmethodID	mJava_IsSessionValid;
@@ -42,6 +43,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_getUserID			( lua_State* L );
+	static int	_getUserName		( lua_State* L );
 	static int	_getToken			( lua_State* L );
 	static int	_graphRequest		( lua_State* L );
 	static int	_init				( lua_State* L );
