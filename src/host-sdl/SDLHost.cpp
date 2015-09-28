@@ -526,6 +526,7 @@ void MainLoop () {
 		}
 	}
 	
+	loadingThread.Stop ();
 	renderThread.Stop ();
 }
 
