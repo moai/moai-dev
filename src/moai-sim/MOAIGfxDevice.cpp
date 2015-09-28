@@ -176,7 +176,7 @@ void MOAIGfxDevice::DetectContext () {
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
 	// renew resources in immediate mode
-	this->SelectList ();
+	this->SelectPipeline ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
@@ -296,8 +296,8 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
-	state.SetField ( -1, "DRAWING_LIST",	( u32 )DRAWING_LIST );
-	state.SetField ( -1, "LOADING_LIST",	( u32 )LOADING_LIST );
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
 		{ "getFrameBuffer",				_getFrameBuffer },

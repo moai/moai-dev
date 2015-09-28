@@ -55,16 +55,16 @@ class MOAIGfxDeviceBase {
 public:
 
 	enum {
-		DRAWING_LIST,
-		LOADING_LIST,
-		TOTAL_LISTS,
+		DRAWING_PIPELINE,
+		LOADING_PIPELINE,
+		TOTAL_PIPELINES,
 	};
 
 protected:
 
 	ZLGfxImmediate				mGfxImmediate;
 
-	MOAIGfxThreadPipeline*		mLists [ TOTAL_LISTS ];
+	MOAIGfxThreadPipeline*		mPipelines [ TOTAL_PIPELINES ];
 	
 	ZLGfx*						mDrawingAPI;
 	MOAIGfxThreadPipeline*		mPipeline;
@@ -97,16 +97,16 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 phase );
-	void				EnableList					( u32 list );
+	void				EnablePipeline				( u32 pipelineID );
 	void				EndPhase					( u32 phase );
-	bool				HasContent					( u32 list );
-	bool				IsListEnabled				( u32 list );
+	bool				HasContent					( u32 pipelineID );
+	bool				IsPipelineEnabled			( u32 pipelineID );
 						MOAIGfxDeviceBase			();
 	virtual				~MOAIGfxDeviceBase			();
-	void				ProcessList					( u32 list );
-	void				PublishAndResetList			( u32 list );
-	void				SelectList					();
-	void				SelectList					( u32 list );
+	void				ProcessPipeline				( u32 pipelineID );
+	void				PublishAndReset				( u32 pipelineID );
+	void				SelectPipeline				();
+	void				SelectPipeline				( u32 pipelineID );
 	void				UpdateResetPoint			();
 };
 

@@ -164,32 +164,32 @@ void MOAIGfxDeviceBase::BeginPhase ( u32 phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->PublishAndResetList ( LOADING_LIST );
-			this->PublishAndResetList ( DRAWING_LIST );
+			this->PublishAndReset ( LOADING_PIPELINE );
+			this->PublishAndReset ( DRAWING_PIPELINE );
 		
-			this->BeginPhase ( DRAWING_LIST, MOAIGfxThreadPipeline::LOGIC_PHASE );
-			this->BeginPhase ( LOADING_LIST, MOAIGfxThreadPipeline::LOGIC_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxThreadPipeline::LOGIC_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxThreadPipeline::LOGIC_PHASE );
 			
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->BeginPhase ( LOADING_LIST, MOAIGfxThreadPipeline::RENDER_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxThreadPipeline::RENDER_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->BeginPhase ( DRAWING_LIST, MOAIGfxThreadPipeline::RENDER_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxThreadPipeline::RENDER_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::BeginPhase ( u32 list, u32 phase ) {
+void MOAIGfxDeviceBase::BeginPhase ( u32 pipelineID, u32 phase ) {
 
-	if ( list < TOTAL_LISTS ) {
+	if ( pipelineID < TOTAL_PIPELINES ) {
 	
-		MOAIGfxThreadPipeline* pipeline = this->mLists [ list ];
+		MOAIGfxThreadPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline) {
 			pipeline->PhaseBegin ( phase );
@@ -198,10 +198,10 @@ void MOAIGfxDeviceBase::BeginPhase ( u32 list, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::EnableList ( u32 list ) {
+void MOAIGfxDeviceBase::EnablePipeline ( u32 pipelineID ) {
 	
-	assert ( list < TOTAL_LISTS );
-	this->mLists [ list ] = new MOAIGfxThreadPipeline ();
+	assert ( pipelineID < TOTAL_PIPELINES );
+	this->mPipelines [ pipelineID ] = new MOAIGfxThreadPipeline ();
 }
 
 //----------------------------------------------------------------//
@@ -211,40 +211,40 @@ void MOAIGfxDeviceBase::EndPhase ( u32 phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->EndPhase ( DRAWING_LIST, MOAIGfxThreadPipeline::LOGIC_PHASE );
-			this->EndPhase ( LOADING_LIST, MOAIGfxThreadPipeline::LOGIC_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxThreadPipeline::LOGIC_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, MOAIGfxThreadPipeline::LOGIC_PHASE );
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->EndPhase ( LOADING_LIST, MOAIGfxThreadPipeline::RENDER_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, MOAIGfxThreadPipeline::RENDER_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->EndPhase ( DRAWING_LIST, MOAIGfxThreadPipeline::RENDER_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxThreadPipeline::RENDER_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDeviceBase::HasContent ( u32 list ) {
+bool MOAIGfxDeviceBase::HasContent ( u32 pipelineID ) {
 
-	assert ( list < TOTAL_LISTS );
-	return this->mLists [ list ]->HasContent ();
+	assert ( pipelineID < TOTAL_PIPELINES );
+	return this->mPipelines [ pipelineID ]->HasContent ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDeviceBase::IsListEnabled ( u32 list ) {
+bool MOAIGfxDeviceBase::IsPipelineEnabled ( u32 pipelineID ) {
 
-	return ( list < TOTAL_LISTS ) && ( this->mLists [ list ] != NULL );
+	return ( pipelineID < TOTAL_PIPELINES ) && ( this->mPipelines [ pipelineID ] != NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::EndPhase ( u32 list, u32 phase ) {
+void MOAIGfxDeviceBase::EndPhase ( u32 pipelineID, u32 phase ) {
 
-	if ( list < TOTAL_LISTS ) {
-		MOAIGfxThreadPipeline* pipeline = this->mLists [ list ];
+	if ( pipelineID < TOTAL_PIPELINES ) {
+		MOAIGfxThreadPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline ) {
 			pipeline->PhaseEnd ( phase );
@@ -260,24 +260,24 @@ MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
 	
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
-	memset ( this->mLists, 0, sizeof ( this->mLists ));
+	memset ( this->mPipelines, 0, sizeof ( this->mPipelines ));
 }
 
 //----------------------------------------------------------------//
 MOAIGfxDeviceBase::~MOAIGfxDeviceBase () {
 
-	for ( u32 i = 0; i < TOTAL_LISTS; ++i ) {
-		if ( this->mLists [ i ]) {
-			delete this->mLists [ i ];
+	for ( u32 i = 0; i < TOTAL_PIPELINES; ++i ) {
+		if ( this->mPipelines [ i ]) {
+			delete this->mPipelines [ i ];
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::ProcessList ( u32 list ) {
+void MOAIGfxDeviceBase::ProcessPipeline ( u32 pipelineID ) {
 
-	assert ( list < TOTAL_LISTS );
-	MOAIGfxThreadPipeline* pipeline = this->mLists [ list ];
+	assert ( pipelineID < TOTAL_PIPELINES );
+	MOAIGfxThreadPipeline* pipeline = this->mPipelines [ pipelineID ];
 	
 	if ( pipeline && pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_RENDER ]) {
 
@@ -287,7 +287,7 @@ void MOAIGfxDeviceBase::ProcessList ( u32 list ) {
 		
 			retained->Draw ( this->mGfxImmediate );
 			
-			if ( list == LOADING_LIST ) {
+			if ( pipelineID == LOADING_PIPELINE ) {
 				this->mGfxImmediate.Flush ( true );
 			}
 		}
@@ -295,10 +295,10 @@ void MOAIGfxDeviceBase::ProcessList ( u32 list ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::PublishAndResetList ( u32 list ) {
+void MOAIGfxDeviceBase::PublishAndReset ( u32 pipelineID ) {
 
-	assert ( list < TOTAL_LISTS );
-	MOAIGfxThreadPipeline* pipeline = this->mLists [ list ];
+	assert ( pipelineID < TOTAL_PIPELINES );
+	MOAIGfxThreadPipeline* pipeline = this->mPipelines [ pipelineID ];
 	
 	if ( pipeline ) {
 		pipeline->PublishAndReset ();
@@ -306,27 +306,27 @@ void MOAIGfxDeviceBase::PublishAndResetList ( u32 list ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::SelectList () {
+void MOAIGfxDeviceBase::SelectPipeline () {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceBase::SelectList ( u32 list ) {
+void MOAIGfxDeviceBase::SelectPipeline ( u32 pipelineID ) {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 	this->mPipeline = 0;
 
-	if ( list < TOTAL_LISTS ) {
+	if ( pipelineID < TOTAL_PIPELINES ) {
 	
-		MOAIGfxThreadPipeline* pipeline = this->mLists [ list ];
+		MOAIGfxThreadPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline ) {
 			this->mDrawingAPI = pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_LOGIC ];
 			this->mPipeline = pipeline;
 		}
-		else if ( list == LOADING_LIST ) {
-			this->SelectList ( DRAWING_LIST );
+		else if ( pipelineID == LOADING_PIPELINE ) {
+			this->SelectPipeline ( DRAWING_PIPELINE );
 		}
 	}
 }

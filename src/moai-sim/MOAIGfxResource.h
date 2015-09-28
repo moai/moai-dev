@@ -73,6 +73,7 @@ public:
 		STATE_READY_FOR_GPU_CREATE,
 		STATE_PENDING,					// waiting for GPU
 		STATE_READY_TO_BIND,
+		STATE_NEEDS_UPDATE,				// more data to send to GPU
 		STATE_ERROR,
 	};
 

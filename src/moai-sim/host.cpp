@@ -30,7 +30,7 @@ void AKUDisplayListBeginPhase ( int phase ) {
 //----------------------------------------------------------------//
 void AKUDisplayListEnable ( int list ) {
 
-	MOAIGfxDevice::Get ().EnableList ( list );
+	MOAIGfxDevice::Get ().EnablePipeline ( list );
 }
 
 //----------------------------------------------------------------//
@@ -48,14 +48,14 @@ bool AKUDisplayListHasContent ( int list ) {
 //----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
-	MOAIGfxDevice::Get ().ProcessList ( list );
+	MOAIGfxDevice::Get ().ProcessPipeline ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxDevice::Get ().PublishAndResetList ( MOAIGfxDevice::LOADING_LIST );
-	MOAIGfxDevice::Get ().PublishAndResetList ( MOAIGfxDevice::DRAWING_LIST );
+	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::LOADING_PIPELINE );
+	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//

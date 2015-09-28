@@ -78,7 +78,7 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 int MOAIGfxResource::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
-	u32 listID = state.GetValue < u32 >( 2, MOAIGfxDevice::DRAWING_LIST );
+	u32 listID = state.GetValue < u32 >( 2, MOAIGfxDevice::DRAWING_PIPELINE );
 	self->ScheduleForGPUCreate ( listID );
 	return 0;
 }
@@ -169,7 +169,7 @@ void MOAIGfxResource::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_LIST );
+		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_PIPELINE );
 	}
 }
 
@@ -256,8 +256,8 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_LIST",						( u32 )MOAIGfxDevice::DRAWING_LIST );
-	state.SetField ( -1, "LOADING_LIST",						( u32 )MOAIGfxDevice::LOADING_LIST );
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxDevice::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxDevice::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//

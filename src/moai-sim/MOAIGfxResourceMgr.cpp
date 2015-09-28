@@ -157,11 +157,11 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 
 	switch ( listID ) {
 
-		case MOAIGfxDevice::LOADING_LIST:
+		case MOAIGfxDevice::LOADING_PIPELINE:
 			this->mPendingForLoadList.PushBack ( resource.mLink );
 			break;
 		
-		case MOAIGfxDevice::DRAWING_LIST:
+		case MOAIGfxDevice::DRAWING_PIPELINE:
 			this->mPendingForDrawList.PushBack ( resource.mLink );
 			break;
 	}
@@ -174,17 +174,17 @@ void MOAIGfxResourceMgr::Update () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SelectList ( MOAIGfxDevice::LOADING_LIST );
+	gfxDevice.SelectPipeline ( MOAIGfxDevice::LOADING_PIPELINE );
 	this->ProcessDeleters ();
 	this->ProcessPending ( this->mPendingForLoadList );
 	gfxDevice.UpdateResetPoint ();
 	
-	gfxDevice.SelectList ( MOAIGfxDevice::DRAWING_LIST );
+	gfxDevice.SelectPipeline ( MOAIGfxDevice::DRAWING_PIPELINE );
 	this->ProcessPending ( this->mPendingForDrawList );
 	gfxDevice.UpdateResetPoint ();
 	
 	// TODO: there's a nasty edge case where a resource gets scheduled for an update but then
-	// the render is aborted. we then lost the update forever. this is especially noticeable
+	// the render is aborted. we then lose the update forever. this is especially noticeable
 	// in font rendering, which updates the image resource dynamically.
 	// to counter this we need to formalize the notion of updating a resource with an
 	// additional flag or state. if the render is aborted, we need to re-populate
