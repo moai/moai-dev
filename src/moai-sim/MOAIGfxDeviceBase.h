@@ -32,9 +32,11 @@ friend class MOAIGfxDeviceBase;
 	};
 
 	ZLGfxRetained* mPipeline [ PIPELINE_TOTAL ];
+	bool mHasContent;
 
 	//----------------------------------------------------------------//
 	ZLGfxRetained*		GetList						();
+	bool				HasContent					();
 						MOAIGfxThreadPipeline		();
 						~MOAIGfxThreadPipeline		();
 	void				PhaseBegin					( u32 phase );
@@ -93,6 +95,7 @@ public:
 	void				BeginPhase					( u32 phase );
 	void				EnableList					( u32 list );
 	void				EndPhase					( u32 phase );
+	bool				HasContent					( u32 list );
 	bool				IsListEnabled				( u32 list );
 						MOAIGfxDeviceBase			();
 	virtual				~MOAIGfxDeviceBase			();

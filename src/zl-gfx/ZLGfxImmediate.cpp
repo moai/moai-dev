@@ -455,9 +455,12 @@ void ZLGfxImmediate::Event ( ZLGfxListener* listener, u32 event, void* userdata 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Flush () {
+void ZLGfxImmediate::Flush ( bool finish ) {
 
 	glFlush ();
+	if ( finish ) {
+		glFinish ();
+	}
 	GL_LOG_ERRORS ( "glFlush" )
 }
 

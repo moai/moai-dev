@@ -151,7 +151,7 @@ public:
 	
 	virtual void					Event						( ZLGfxListener* listener, u32 event, void* userdata ) = 0;
 	
-	virtual void					Flush						() = 0;
+	virtual void					Flush						( bool finish = false ) = 0;
 	virtual void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer ) = 0;
 	virtual void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level ) = 0;
 	

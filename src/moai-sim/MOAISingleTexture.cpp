@@ -140,7 +140,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	MOAIImage& image = altImage.IsOK () ? altImage : srcImage;
 	if ( !image.IsOK ()) return false;
 
-	MOAIGfxDevice::Get ().ClearErrors ();
+	//MOAIGfxDevice::Get ().ClearErrors ();
 	this->mGLTexID = gfx.CreateTexture ();
 	if ( !this->mGLTexID ) return false;
 
@@ -219,12 +219,15 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	);
 	
 	this->mTextureSize = image.GetBitmapSize ();
+
+	// TODO: error handling
+//	if ( MOAIGfxDevice::Get ().LogErrors ()) {
+//		this->CleanupOnError ();
+//		return false;
+//	}
+//	else if ( this->ShouldGenerateMipmaps ()) {
 	
-	if ( MOAIGfxDevice::Get ().LogErrors ()) {
-		this->CleanupOnError ();
-		return false;
-	}
-	else if ( this->ShouldGenerateMipmaps ()) {
+	if ( this->ShouldGenerateMipmaps ()) {
 	
 		u32 mipLevel = 1;
 		
@@ -253,7 +256,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	
 	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
 	
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	//MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	this->mIsDirty = true;
 	return true;
 }
@@ -308,6 +311,13 @@ bool MOAISingleTexture::OnCPUCreate () {
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAISingleTexture::OnGfxEvent ( u32 event, void* userdata ) {
+
+	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	MOAIGfxResource::OnGfxEvent ( event, userdata );
 }
 
 //----------------------------------------------------------------//

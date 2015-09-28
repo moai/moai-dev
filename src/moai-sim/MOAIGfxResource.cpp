@@ -222,7 +222,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mScheduled ( false ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIInstanceEventSource )
 
 	this->mLink.Data ( this );
 	
@@ -269,7 +269,8 @@ bool MOAIGfxResource::Purge ( u32 age ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	
+	MOAIInstanceEventSource::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )STATE_UNINITIALIZED );
 	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )STATE_READY_FOR_CPU_CREATE );
@@ -278,10 +279,15 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "STATE_ERROR",							( u32 )STATE_ERROR );
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )GFX_EVENT_CREATED );
+	
+	state.SetField ( -1, "DRAWING_LIST",						( u32 )MOAIGfxDevice::DRAWING_LIST );
+	state.SetField ( -1, "LOADING_LIST",						( u32 )MOAIGfxDevice::LOADING_LIST );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },
@@ -315,7 +321,7 @@ bool MOAIGfxResource::ScheduleForGPUCreate ( u32 listID ) {
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	if ( this->mScheduled ) {
+	if ( !this->mScheduled ) {
 		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, listID );
 		this->mScheduled = true;
 	}

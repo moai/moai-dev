@@ -73,6 +73,7 @@ protected:
 	bool				CreateTextureFromImage		( MOAIImage& srcImage );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();
+	void				OnGfxEvent					( u32 event, void* userdata );
 	void				OnGPUBind					();
 	void				OnGPUDestroy				();
 	void				OnGPULost					();

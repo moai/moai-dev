@@ -294,7 +294,10 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
+	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
+	
+	state.SetField ( -1, "DRAWING_LIST",	( u32 )DRAWING_LIST );
+	state.SetField ( -1, "LOADING_LIST",	( u32 )LOADING_LIST );
 
 	luaL_Reg regTable [] = {
 		{ "getFrameBuffer",				_getFrameBuffer },

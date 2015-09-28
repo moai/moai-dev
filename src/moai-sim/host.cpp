@@ -40,6 +40,12 @@ void AKUDisplayListEndPhase ( int phase ) {
 }
 
 //----------------------------------------------------------------//
+bool AKUDisplayListHasContent ( int list ) {
+
+	return MOAIGfxDevice::Get ().HasContent ( list );
+}
+
+//----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
 	MOAIGfxDevice::Get ().ProcessList ( list );

@@ -690,7 +690,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case FLUSH: {
 			
-				draw.Flush ();
+				bool finish				= this->mStream->Read < bool >( 0 );
+			
+				draw.Flush ( finish );
 				break;
 			}
 			case FRAMEBUFFER_RENDERBUFFER: {
@@ -998,11 +1000,12 @@ void ZLGfxRetained::Event ( ZLGfxListener* listener, u32 event, void* userdata )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Flush () {
+void ZLGfxRetained::Flush ( bool finish ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( FLUSH );
+	this->mStream->Write < bool >( finish );
 }
 
 //----------------------------------------------------------------//
@@ -1057,6 +1060,12 @@ void ZLGfxRetained::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName,
 		
 		this->WriteListenerRecord ( GET_UNIFORM_LOCATION, listener, userdata );
 	}
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxRetained::HasContent () {
+
+	return ( this->mMemStream.GetCursor () > 0 );
 }
 
 //----------------------------------------------------------------//

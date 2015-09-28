@@ -10,7 +10,7 @@
 
 #ifdef MOAI_OS_WINDOWS
     #include <windows.h>
-#elif defined(MOAI_OS_LINUX)
+#elif defined ( MOAI_OS_LINUX )
     #include <X11/Xlib.h>      //XOpenDisplay,etc
     #include <xcb/xcb.h>
     #include <xcb/xcb_aux.h> 
@@ -24,8 +24,8 @@
 #include "SDLKeyCodeMapping.h"
 
 #ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <limits.h>
+	#include <CoreFoundation/CoreFoundation.h>
+	#include <limits.h>
 #endif
 
 #define UNUSED(p) (( void )p)
@@ -56,6 +56,152 @@ static SDL_Window* sWindow = 0;
 typedef int ( *DisplayModeFunc ) (int, SDL_DisplayMode *);
 
 static void SetScreenSize ( DisplayModeFunc func);
+
+//================================================================//
+// WorkerThreadInfo
+//================================================================//
+class WorkerThreadInfo {
+public:
+
+	enum {
+		LOADING_FLAG		= 0x01,
+		RENDER_FLAG			= 0x02,
+	};
+	
+private:
+
+	static SDL_mutex*		sDisplayListMutex;
+	//static SDL_GLContext	sSharedContext;
+
+	SDL_Thread*		mThread;
+	SDL_cond*		mCondition;
+	SDL_mutex*		mConditionMutex;
+	bool			mIsDone;
+	
+	SDL_GLContext	mContext;
+	
+	int				mMask;
+	
+	//----------------------------------------------------------------//
+	static int ThreadMain ( void* data ) {
+
+		SDL_LockMutex ( sDisplayListMutex );
+
+		WorkerThreadInfo* info = ( WorkerThreadInfo* )data;
+
+		SDL_GL_MakeCurrent ( sWindow, info->mContext );
+		
+		if ( info->mMask & LOADING_FLAG ) {
+			AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
+		}
+		
+		if ( info->mMask & RENDER_FLAG ) {
+			AKUDetectGfxContext ();
+			AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
+		}
+
+		SDL_UnlockMutex ( sDisplayListMutex );
+
+		while ( info->mIsDone == false ) {
+		
+			SDL_LockMutex ( info->mConditionMutex );
+			SDL_CondWait ( info->mCondition, info->mConditionMutex );
+			SDL_UnlockMutex ( info->mConditionMutex );
+			
+			if ( info->mMask & LOADING_FLAG ) {
+				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+				AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
+				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+			}
+			
+			if ( info->mMask & RENDER_FLAG ) {
+				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+				AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
+				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+				
+				SDL_GL_SwapWindow ( sWindow );
+			}
+		}
+		
+		SDL_GL_DeleteContext ( info->mContext );
+		
+		return 0;
+	}
+
+public:
+
+	//----------------------------------------------------------------//
+	static void DisplayListBeginPhase ( int list ) {
+	
+		SDL_LockMutex ( sDisplayListMutex );
+		AKUDisplayListBeginPhase ( list );
+		SDL_UnlockMutex ( sDisplayListMutex );
+	}
+	
+	//----------------------------------------------------------------//
+	static void DisplayListEndPhase ( int list ) {
+	
+		SDL_LockMutex (sDisplayListMutex );
+		AKUDisplayListEndPhase ( list );
+		SDL_UnlockMutex ( sDisplayListMutex );
+	}
+
+	//----------------------------------------------------------------//
+	void Signal () {
+	
+		bool hasContent = false;
+		
+		if (( this->mMask & LOADING_FLAG ) && AKUDisplayListHasContent ( AKU_DISPLAY_LIST_LOADING )) {
+			hasContent = true;
+		}
+		
+		if (( this->mMask & RENDER_FLAG ) && AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) {
+			hasContent = true;
+		}
+	
+		if ( hasContent ) {
+			SDL_LockMutex ( this->mConditionMutex );
+			SDL_CondSignal ( this->mCondition );
+			SDL_UnlockMutex ( this->mConditionMutex );
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	void Start ( int mask, const char* name ) {
+
+		this->mContext = SDL_GL_CreateContext ( sWindow );
+		SDL_GL_SetSwapInterval ( 1 );
+
+		this->mMask					= mask;
+		this->mCondition			= SDL_CreateCond ();
+		this->mConditionMutex		= SDL_CreateMutex ();
+		this->mThread				= SDL_CreateThread ( WorkerThreadInfo::ThreadMain, name, this );
+	}
+	
+	//----------------------------------------------------------------//
+	void Stop () {
+	
+		SDL_LockMutex ( this->mConditionMutex );
+		this->mIsDone = true;
+		SDL_CondSignal ( this->mCondition );
+		SDL_UnlockMutex ( this->mConditionMutex );
+		SDL_WaitThread ( this->mThread, 0 );
+	}
+	
+	//----------------------------------------------------------------//
+	WorkerThreadInfo () :
+		mThread ( 0 ),
+		mCondition ( 0 ),
+		mConditionMutex ( 0 ),
+		mIsDone ( false ) {
+		
+		if ( !sDisplayListMutex ) {
+			sDisplayListMutex = SDL_CreateMutex ();
+		}
+	}
+};
+
+SDL_mutex* WorkerThreadInfo::sDisplayListMutex = 0;
 
 //================================================================//
 // aku callbacks
@@ -99,13 +245,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	if ( !sWindow ) {
 	
+		SDL_GL_SetAttribute ( SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1 );
 		sWindow = SDL_CreateWindow ( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
-		SDL_GL_CreateContext ( sWindow );
-		SDL_GL_SetSwapInterval ( 1 );
-		
-		AKUDetectGfxContext ();
-		//AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
-		//AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
 		
 		AKUSetViewSize ( width, height );
 		AKUSdlSetWindow ( sWindow );
@@ -122,6 +263,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 //----------------------------------------------------------------//
 void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
+
 	SDL_Rect sdlRect;
 	sdlRect.x = xMin;
 	sdlRect.y = yMin;
@@ -136,11 +278,12 @@ void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
 // helpers
 //================================================================//
 
-static void	Finalize			();
-static void	Init				( int argc, char** argv );
-static void	MainLoop			();
-static void	PrintMoaiVersion	();
-static void SetScreenDpi        ();
+static void			Finalize				();
+static void			Init					( int argc, char** argv );
+static void			MainLoop				();
+static Uint32		OnTimer					( Uint32 interval, void* param );
+static void			PrintMoaiVersion		();
+static void			SetScreenDpi			();
 
 //----------------------------------------------------------------//
 void Finalize () {
@@ -194,7 +337,7 @@ void Init ( int argc, char** argv ) {
 
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	
-	AKUSetFunc_SetTextInputRect( _AKUSetTextInputRectFunc );
+	AKUSetFunc_SetTextInputRect ( _AKUSetTextInputRectFunc );
 	
 	#ifdef __APPLE__
 			//are we a bundle?
@@ -215,97 +358,43 @@ void Init ( int argc, char** argv ) {
 					AKUCallFunc();
 			}
 	#else
-			
-			
+	
 		AKUModulesParseArgs ( argc, argv );
+	
 	#endif
 
-	
 	atexit ( Finalize ); // do this *after* SDL_Init
-}
-
-// based on host-glut 
-//void _onMultiButton( int touch_id, float x, float y, int state );
-//void _onMultiButton( int touch_id, float x, float y, int state ) {
-//
-//	AKUEnqueueTouchEvent (
-//		InputDeviceID::DEVICE,
-//		InputSensorID::TOUCH,
-//		touch_id,
-//		state == SDL_FINGERDOWN,
-//		( float )x,
-//		( float )y
-//	);
-//}
-
-
-
-//----------------------------------------------------------------//
-void SetScreenSize(DisplayModeFunc func ) {
-
-    SDL_DisplayMode dm;
-
-    if ( func != NULL && func( 0, &dm ) == 0 ) {
-    	AKUSetScreenSize(dm.w, dm.h);
-    }
-}
-
-
-//----------------------------------------------------------------//
-void SetScreenDpi() {
-
-#ifdef MOAI_OS_WINDOWS
-
-    HDC hDC = GetWindowDC(NULL);
-    int widthInMm = GetDeviceCaps(hDC, HORZSIZE);
-    double widthInInches = widthInMm / 25.4;
-    int widthInPixels = GetDeviceCaps(hDC, HORZRES);
-    AKUSetScreenDpi(( int )( widthInPixels / widthInInches ));
-
-#elif defined(MOAI_OS_LINUX)
-
-	char* display_name = getenv( "DISPLAY" );
-	if ( !display_name ) return;
-
-	int nscreen = 0;
-	xcb_connection_t* conn = xcb_connect( display_name, &nscreen );
-	if ( !conn ) return;
-
-	xcb_screen_t* screen = xcb_aux_get_screen( conn, nscreen );
-
-	double widthInInches = screen->width_in_millimeters / 25.4;
-	int widthInPixels = screen->width_in_pixels;
-
-	AKUSetScreenDpi(( int )widthInPixels / widthInInches );
-
-	xcb_disconnect( conn );
-  
-#endif
-
 }
 
 //----------------------------------------------------------------//
 void MainLoop () {
+	
+	WorkerThreadInfo loadingThread;
+	loadingThread.Start ( WorkerThreadInfo::LOADING_FLAG, "Loading Thread" );
+	
+	WorkerThreadInfo renderThread;
+	renderThread.Start ( WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
+
+	SDL_GL_MakeCurrent ( sWindow, NULL );
 
 	// TODO: array's of Joysticks
 	Joystick * joystick0 = NULL;
 
-	if ( SDL_NumJoysticks() < 1 ) {
+	if ( SDL_NumJoysticks () < 1 ) {
 		
 		std::cerr << "No Joysticks connected." << std::endl;
-
-	} else {
+	}
+	else {
 		
-		joystick0 = new Joystick(0); // 0 == first joystick of system.
+		joystick0 = new Joystick ( 0 ); // 0 == first joystick of system.
 
-		if ( joystick0->isOpen() || !joystick0->Open() )
-		{
+		if ( joystick0->isOpen () || !joystick0->Open ()) {
 			delete joystick0;
 			joystick0 = NULL;
 		}
 	}
 
-	Uint32 lastFrame = SDL_GetTicks();
+	SDL_AddTimer (( Uint32 )( AKUGetSimStep () * 1000.0 ), OnTimer, 0 );
 	
 	bool running = true;
 	while ( running ) {
@@ -398,6 +487,20 @@ void MainLoop () {
 					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
 					break;
 
+				case SDL_USEREVENT:
+				
+					AKUModulesUpdate ();
+					AKUDisplayListPublishAndReset ();
+					
+					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+					AKURender ();
+					WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+					
+					loadingThread.Signal ();
+					renderThread.Signal ();
+				
+					break;
+
 				case SDL_WINDOWEVENT:
 					// Note: this only support fullscreen videomode change.
 					// Not for the event "resize", by default SDL main window is not resizable(at least Linux)
@@ -405,60 +508,44 @@ void MainLoop () {
 							sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED ) {
 						
 						AKUSetViewSize(sdlEvent.window.data1, sdlEvent.window.data2);
-					} else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_LOST ) {
+					}
+					else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_LOST ) {
 						// If the focus is lost, it must be stopped.
 						SDL_StopTextInput();
 						
 						// Clear Editing text.
 						AKUEnqueueKeyboardEditEvent ( InputDeviceID::DEVICE, InputSensorID::KEYBOARD, "", 0, 0, SDL_TEXTEDITINGEVENT_TEXT_SIZE );
-					} else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_GAINED ) {
+					}
+					else if ( sdlEvent.window.event == SDL_WINDOWEVENT_FOCUS_GAINED ) {
 						// Start when the focus is given.
 						// TODO:Restored the edit text.
 						SDL_StartTextInput();
 					}
 					break;
-
-//                case SDL_FINGERDOWN:
-//                case SDL_FINGERUP:
-//                case SDL_FINGERMOTION:
-//                    const int id    = ( int )sdlEvent.tfinger.fingerId;
-//					const float x   = sdlEvent.tfinger.x;
-//					const float y   = sdlEvent.tfinger.y;
-//					const int state = ( sdlEvent.type == SDL_FINGERDOWN || sdlEvent.type == SDL_FINGERMOTION ) ? SDL_FINGERDOWN : SDL_FINGERUP;
-//
-//					_onMultiButton(id, x, y, state);
-//
-//					break;
-			} //end_switch
-		}//end_while
-		
-		AKUModulesUpdate ();
-		
-		AKUDisplayListPublishAndReset ();
-		
-		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
-		AKURender ();
-		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
-		
-		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
-		AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
-		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
-		
-		AKUDisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
-		AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
-		AKUDisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
-		
-		SDL_GL_SwapWindow ( sWindow );
-		
-		Uint32 frameDelta = ( Uint32 )( AKUGetSimStep () * 1000.0 );
-		Uint32 currentFrame = SDL_GetTicks ();
-		Uint32 delta = currentFrame - lastFrame;
-		
-		if ( delta < frameDelta ) {
-			SDL_Delay ( frameDelta - delta );
+			}
 		}
-		lastFrame = SDL_GetTicks();
 	}
+	
+	renderThread.Stop ();
+}
+
+//----------------------------------------------------------------//
+Uint32 OnTimer ( Uint32 interval, void* param ) {
+	UNUSED ( param );
+
+    SDL_UserEvent userevent;
+    userevent.type = SDL_USEREVENT;
+    userevent.code = 0;
+    userevent.data1 = NULL;
+    userevent.data2 = NULL;
+
+	SDL_Event event;
+    event.type = SDL_USEREVENT;
+    event.user = userevent;
+
+    SDL_PushEvent ( &event );
+	
+    return interval;
 }
 
 //----------------------------------------------------------------//
@@ -468,6 +555,49 @@ void PrintMoaiVersion () {
 	char version [ length ];
 	AKUGetMoaiVersion ( version, length );
 	printf ( "%s\n", version );
+}
+
+//----------------------------------------------------------------//
+void SetScreenSize ( DisplayModeFunc func ) {
+
+    SDL_DisplayMode dm;
+
+    if ( func != NULL && func( 0, &dm ) == 0 ) {
+    	AKUSetScreenSize(dm.w, dm.h);
+    }
+}
+
+
+//----------------------------------------------------------------//
+void SetScreenDpi() {
+
+	#ifdef MOAI_OS_WINDOWS
+
+		HDC hDC = GetWindowDC ( NULL );
+		int widthInMm = GetDeviceCaps ( hDC, HORZSIZE );
+		double widthInInches = widthInMm / 25.4;
+		int widthInPixels = GetDeviceCaps ( hDC, HORZRES );
+		AKUSetScreenDpi (( int )( widthInPixels / widthInInches ));
+
+	#elif defined ( MOAI_OS_LINUX )
+
+		char* display_name = getenv( "DISPLAY" );
+		if ( !display_name ) return;
+
+		int nscreen = 0;
+		xcb_connection_t* conn = xcb_connect( display_name, &nscreen );
+		if ( !conn ) return;
+
+		xcb_screen_t* screen = xcb_aux_get_screen( conn, nscreen );
+
+		double widthInInches = screen->width_in_millimeters / 25.4;
+		int widthInPixels = screen->width_in_pixels;
+
+		AKUSetScreenDpi(( int )widthInPixels / widthInInches );
+
+		xcb_disconnect( conn );
+	  
+	#endif
 }
 
 //================================================================//
@@ -482,6 +612,5 @@ int SDLHost ( int argc, char** argv ) {
 	if ( sWindow ) {
 		MainLoop ();
 	}
-
 	return 0;
 }

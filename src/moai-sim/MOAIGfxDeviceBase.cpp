@@ -27,7 +27,14 @@ ZLGfxRetained* MOAIGfxThreadPipeline::GetList () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxThreadPipeline::MOAIGfxThreadPipeline () {
+bool MOAIGfxThreadPipeline::HasContent () {
+
+	return this->mHasContent;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxThreadPipeline::MOAIGfxThreadPipeline () :
+	mHasContent ( false ) {
 
 	memset ( this->mPipeline, 0, sizeof ( this->mPipeline ));
 }
@@ -46,6 +53,8 @@ void MOAIGfxThreadPipeline::PhaseBegin ( u32 phase ) {
 	switch ( phase ) {
 	
 		case LOGIC_PHASE: {
+		
+			this->mHasContent = false;
 		
 			// put these back
 			while ( this->mFinishedDisplayLists.GetTop ()) {
@@ -89,6 +98,8 @@ void MOAIGfxThreadPipeline::PhaseEnd ( u32 phase ) {
 		
 			ZLGfxRetained* gfx = this->mPipeline [ PIPELINE_LOGIC ];
 			assert ( gfx );
+			
+			this->mHasContent = gfx->HasContent ();
 			
 			this->mPipeline [ PIPELINE_LOGIC ] = 0;
 			
@@ -206,6 +217,13 @@ void MOAIGfxDeviceBase::EndPhase ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDeviceBase::HasContent ( u32 list ) {
+
+	assert ( list < TOTAL_LISTS );
+	return this->mLists [ list ]->HasContent ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxDeviceBase::IsListEnabled ( u32 list ) {
 
 	return ( list < TOTAL_LISTS ) && ( this->mLists [ list ] != NULL );
@@ -252,7 +270,16 @@ void MOAIGfxDeviceBase::ProcessList ( u32 list ) {
 	
 	if ( pipeline && pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_RENDER ]) {
 
-		pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_RENDER ]->Draw ( this->mGfxImmediate );
+		ZLGfxRetained* retained = pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_RENDER ];
+
+		if ( retained->HasContent ()) {
+		
+			retained->Draw ( this->mGfxImmediate );
+			
+			if ( list == LOADING_LIST ) {
+				this->mGfxImmediate.Flush ( true );
+			}
+		}
 	}
 }
 

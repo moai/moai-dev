@@ -183,12 +183,14 @@ public:
 	
 	void					Event						( ZLGfxListener* listener, u32 event, void* userdata );
 	
-	void					Flush						();
+	void					Flush						( bool finish );
 	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
 	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
 	
 	ZLGfxHandle*			GetCurrentFramebuffer		();
 	void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata );
+	
+	bool					HasContent					();
 	
 	void					LineWidth					( float width );
 	
