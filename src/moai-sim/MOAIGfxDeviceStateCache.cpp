@@ -59,7 +59,7 @@ bool MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 		this->mCurrentIdxBuffer->Bind ();
 	}
 	
-	return true;
+	return buffer ? buffer->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
@@ -85,22 +85,19 @@ bool MOAIGfxDeviceStateCache::BindShader ( MOAIShaderProgram* program ) {
 	if ( this->mShaderProgram != program ) {
 	
 		this->OnGfxStateWillChange ();
+		
+		if ( this->mShaderProgram ) {
+			this->mShaderProgram->Unbind ();
+		}
+		
 		this->mShaderProgram = program;
 		
 		if ( program ) {
 			program->Bind ();
 		}
-		else {
-			program->Unbind ();
-		}
 	}
 	this->mShaderDirty = true;
 	
-	// if resource is still pending, force a re-bind
-	if ( this->mShaderProgram && this->mShaderProgram->IsPending ()) {
-		this->mShaderProgram = 0;
-		return false;
-	}
 	return this->mShaderProgram ? this->mShaderProgram->IsReady () : true;
 }
 
@@ -140,38 +137,30 @@ bool MOAIGfxDeviceStateCache::BindTexture ( MOAITextureBase* textureSet ) {
 bool MOAIGfxDeviceStateCache::BindTexture ( u32 textureUnit, MOAISingleTexture* texture ) {
 	
 	MOAISingleTexture* currentTexture = this->mTextureUnits [ textureUnit ];
+	MOAISingleTexture* bindTexture = texture;
 	
-	if ( currentTexture != texture ) {
+	if ( texture && ( !texture->IsReady ())) {
+		bindTexture = this->GetDefaultTexture ();
+	}
 	
+	if ( currentTexture != bindTexture ) {
+		
 		this->OnGfxStateWillChange ();
-	
+		
 		this->mDrawingAPI->ActiveTexture ( textureUnit );
-	
-		if ( currentTexture && ( !texture )) {
+		
+		if ( currentTexture ) {
 			currentTexture->Unbind ();
 		}
 		
-		this->mTextureUnits [ textureUnit ] = texture;
+		this->mTextureUnits [ textureUnit ] = bindTexture;
 		
-		if ( texture ) {
-			if ( !texture->Bind ()) {
-			
-				MOAITexture* defaultTexture = this->GetDefaultTexture ();
-				if ( texture != defaultTexture ) {
-					this->BindTexture ( textureUnit, defaultTexture );
-				}
-			}
+		if ( bindTexture ) {
+			bindTexture->Bind ();
 		}
 	}
 	
-	currentTexture = this->mTextureUnits [ textureUnit ];
-	
-	// if resource is still pending, force a re-bind
-	if ( currentTexture && currentTexture->IsPending ()) {
-		this->mTextureUnits [ textureUnit ] = 0;
-		return false;
-	}
-	return currentTexture ? currentTexture->IsReady () : true;
+	return texture ? ( bindTexture && bindTexture->IsReady ()) : true;
 }
 
 //----------------------------------------------------------------//
@@ -191,7 +180,7 @@ bool MOAIGfxDeviceStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 		}
 	}
 	
-	return true;
+	return vtxArray ? vtxArray->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
@@ -218,7 +207,7 @@ bool MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 		this->mCurrentVtxFormat = 0;
 	}
 	
-	return true;
+	return buffer ? buffer->IsReady () : true;
 }
 
 //----------------------------------------------------------------//

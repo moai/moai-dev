@@ -98,20 +98,6 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::Affirm () {
-
-	if ( this->mState != STATE_READY_TO_BIND ) {
-		if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
-		
-		if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
-			this->InvokeLoader ();
-		}
-		return this->DoGPUCreate ();
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
@@ -119,21 +105,11 @@ u32 MOAIGfxResource::Bind () {
 //		return false;
 //	}
 
-	// if we're in either create state, do the affirm
-	if (( this->mState == STATE_READY_FOR_CPU_CREATE ) || ( this->mState == STATE_READY_FOR_GPU_CREATE )) {
-		
-		// if affirm fails, something was missing so go to the error state
-		if ( !this->Affirm ()) {
-			this->mState = STATE_ERROR;
-		}
-	}
-
 	// we're ready to bind, so do it
 	if ( this->mState == STATE_READY_TO_BIND ) {
 		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
 		this->OnGPUBind ();
 	}
-	
 	return this->mState;
 }
 
@@ -193,6 +169,7 @@ void MOAIGfxResource::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
+		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_LIST );
 	}
 }
 
@@ -219,7 +196,6 @@ bool MOAIGfxResource::InvokeLoader () {
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_UNINITIALIZED ),
-	mScheduled ( false ),
 	mLastRenderCount ( 0 ) {
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
@@ -321,10 +297,7 @@ bool MOAIGfxResource::ScheduleForGPUCreate ( u32 listID ) {
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	if ( !this->mScheduled ) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, listID );
-		this->mScheduled = true;
-	}
+	MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, listID );
 	return true;
 }
 

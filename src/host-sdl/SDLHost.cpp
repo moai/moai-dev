@@ -109,12 +109,14 @@ private:
 			SDL_UnlockMutex ( info->mConditionMutex );
 			
 			if ( info->mMask & LOADING_FLAG ) {
+			
 				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
 				AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
 				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
 			}
 			
 			if ( info->mMask & RENDER_FLAG ) {
+				
 				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
 				AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
 				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
@@ -281,7 +283,6 @@ void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
 static void			Finalize				();
 static void			Init					( int argc, char** argv );
 static void			MainLoop				();
-static Uint32		OnTimer					( Uint32 interval, void* param );
 static void			PrintMoaiVersion		();
 static void			SetScreenDpi			();
 
@@ -340,22 +341,23 @@ void Init ( int argc, char** argv ) {
 	AKUSetFunc_SetTextInputRect ( _AKUSetTextInputRectFunc );
 	
 	#ifdef __APPLE__
-			//are we a bundle?
-			CFBundleRef bref = CFBundleGetMainBundle();
-			if (bref == NULL || CFBundleGetIdentifier(bref) == NULL) {
-	AKUModulesParseArgs ( argc, argv );
 	
-			} else {
+			//are we a bundle?
+			CFBundleRef bref = CFBundleGetMainBundle ();
+			if ( bref == NULL || CFBundleGetIdentifier ( bref ) == NULL ) {
+				AKUModulesParseArgs ( argc, argv );
+			}
+			else {
 			
-					CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL(bref);
-					assert(bundleurl != NULL);
-					
-					UInt8 buf[PATH_MAX];
-					CFURLGetFileSystemRepresentation(bundleurl, true, buf, PATH_MAX);
+				CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL ( bref );
+				assert ( bundleurl != NULL );
+				
+				UInt8 buf [ PATH_MAX ];
+				CFURLGetFileSystemRepresentation ( bundleurl, true, buf, PATH_MAX );
 
-					AKUSetWorkingDirectory((const char *)buf);
-					AKULoadFuncFromFile("bootstrap.lua");
-					AKUCallFunc();
+				AKUSetWorkingDirectory(( const char * )buf );
+				AKULoadFuncFromFile ( "bootstrap.lua" );
+				AKUCallFunc ();
 			}
 	#else
 	
@@ -393,8 +395,8 @@ void MainLoop () {
 			joystick0 = NULL;
 		}
 	}
-
-	SDL_AddTimer (( Uint32 )( AKUGetSimStep () * 1000.0 ), OnTimer, 0 );
+	
+	Uint32 lastFrame = SDL_GetTicks();
 	
 	bool running = true;
 	while ( running ) {
@@ -487,20 +489,6 @@ void MainLoop () {
 					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
 					break;
 
-				case SDL_USEREVENT:
-				
-					AKUModulesUpdate ();
-					AKUDisplayListPublishAndReset ();
-					
-					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
-					AKURender ();
-					WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
-					
-					loadingThread.Signal ();
-					renderThread.Signal ();
-				
-					break;
-
 				case SDL_WINDOWEVENT:
 					// Note: this only support fullscreen videomode change.
 					// Not for the event "resize", by default SDL main window is not resizable(at least Linux)
@@ -524,29 +512,29 @@ void MainLoop () {
 					break;
 			}
 		}
+		
+		AKUModulesUpdate ();
+		AKUDisplayListPublishAndReset ();
+		
+		WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+		AKURender ();
+		WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+		
+		loadingThread.Signal ();
+		renderThread.Signal ();
+		
+		Uint32 frameDelta = ( Uint32 )( AKUGetSimStep () * 1000.0 );
+		Uint32 currentFrame = SDL_GetTicks ();
+		Uint32 delta = currentFrame - lastFrame;
+		
+		if ( delta < frameDelta ) {
+			SDL_Delay ( frameDelta - delta );
+		}
+		lastFrame = SDL_GetTicks();
 	}
 	
 	loadingThread.Stop ();
 	renderThread.Stop ();
-}
-
-//----------------------------------------------------------------//
-Uint32 OnTimer ( Uint32 interval, void* param ) {
-	UNUSED ( param );
-
-    SDL_UserEvent userevent;
-    userevent.type = SDL_USEREVENT;
-    userevent.code = 0;
-    userevent.data1 = NULL;
-    userevent.data2 = NULL;
-
-	SDL_Event event;
-    event.type = SDL_USEREVENT;
-    event.user = userevent;
-
-    SDL_PushEvent ( &event );
-	
-    return interval;
 }
 
 //----------------------------------------------------------------//

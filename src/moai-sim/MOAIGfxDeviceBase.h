@@ -34,6 +34,8 @@ friend class MOAIGfxDeviceBase;
 	ZLGfxRetained* mPipeline [ PIPELINE_TOTAL ];
 	bool mHasContent;
 
+	size_t mResetPoint;
+
 	//----------------------------------------------------------------//
 	ZLGfxRetained*		GetList						();
 	bool				HasContent					();
@@ -43,6 +45,7 @@ friend class MOAIGfxDeviceBase;
 	void				PhaseEnd					( u32 phase );
 	void				PublishAndReset				();
 	void				ReleaseList					( ZLGfxRetained* list );
+	void				UpdateResetPoint			();
 };
 
 //================================================================//
@@ -64,6 +67,7 @@ protected:
 	MOAIGfxThreadPipeline*		mLists [ TOTAL_LISTS ];
 	
 	ZLGfx*						mDrawingAPI;
+	MOAIGfxThreadPipeline*		mPipeline;
 	
 	bool						mShaderDirty;
 	ZLRect						mViewRect;
@@ -103,6 +107,7 @@ public:
 	void				PublishAndResetList			( u32 list );
 	void				SelectList					();
 	void				SelectList					( u32 list );
+	void				UpdateResetPoint			();
 };
 
 #endif

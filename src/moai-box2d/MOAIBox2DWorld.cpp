@@ -1206,9 +1206,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::Render () {
 
-	if ( this->mDebugDraw ) {
-		
-		MOAIDraw::Bind ();
+	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
 		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		

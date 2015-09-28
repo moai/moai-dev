@@ -34,7 +34,8 @@ bool MOAIGfxThreadPipeline::HasContent () {
 
 //----------------------------------------------------------------//
 MOAIGfxThreadPipeline::MOAIGfxThreadPipeline () :
-	mHasContent ( false ) {
+	mHasContent ( false ),
+	mResetPoint ( 0 ) {
 
 	memset ( this->mPipeline, 0, sizeof ( this->mPipeline ));
 }
@@ -53,22 +54,24 @@ void MOAIGfxThreadPipeline::PhaseBegin ( u32 phase ) {
 	switch ( phase ) {
 	
 		case LOGIC_PHASE: {
-		
-			this->mHasContent = false;
-		
+			
 			// put these back
 			while ( this->mFinishedDisplayLists.GetTop ()) {
 				this->ReleaseList ( this->mFinishedDisplayLists.Pop ());
 			}
 
 			// illegal to begin while already in progress
-			assert ( !this->mPipeline [ PIPELINE_LOGIC ]);
+			assert ( this->mPipeline [ PIPELINE_LOGIC ] == 0 );
 			
-			ZLGfxRetained* gfx = this->GetList ();
+			ZLGfxRetained* gfx = this->mResetPoint ? this->mPipeline [ PIPELINE_PENDING ] : this->GetList ();
 			assert ( gfx );
 			
+			gfx->GetStream ()->Seek ( this->mResetPoint );
 			this->mPipeline [ PIPELINE_LOGIC ] = gfx;
-		
+			this->mPipeline [ PIPELINE_PENDING ] = 0;
+			
+			this->mHasContent = false;
+			
 			break;
 		}
 		
@@ -82,6 +85,7 @@ void MOAIGfxThreadPipeline::PhaseBegin ( u32 phase ) {
 			if ( gfx ) {
 				this->mPipeline [ PIPELINE_RENDER ] = gfx;
 				this->mPipeline [ PIPELINE_PENDING ] = 0;
+				this->mResetPoint = 0;
 			}
 		
 			break;
@@ -96,18 +100,15 @@ void MOAIGfxThreadPipeline::PhaseEnd ( u32 phase ) {
 	
 		case LOGIC_PHASE: {
 		
+			assert ( this->mPipeline [ PIPELINE_PENDING ] == 0 );
+		
 			ZLGfxRetained* gfx = this->mPipeline [ PIPELINE_LOGIC ];
 			assert ( gfx );
 			
-			this->mHasContent = gfx->HasContent ();
-			
 			this->mPipeline [ PIPELINE_LOGIC ] = 0;
-			
-			if ( this->mPipeline [ PIPELINE_PENDING ]) {
-				this->ReleaseList ( this->mPipeline [ PIPELINE_PENDING ]);
-			}
-			
 			this->mPipeline [ PIPELINE_PENDING ] = gfx;
+			
+			this->mHasContent = gfx->HasContent ();
 		
 			break;
 		}
@@ -140,6 +141,16 @@ void MOAIGfxThreadPipeline::PublishAndReset () {
 void MOAIGfxThreadPipeline::ReleaseList ( ZLGfxRetained* list ) {
 
 	this->mFreeDisplayLists.Push ( list );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxThreadPipeline::UpdateResetPoint () {
+
+	ZLGfxRetained* gfx = this->mPipeline [ PIPELINE_LOGIC ];
+	
+	if ( gfx ) {
+		this->mResetPoint = gfx->GetStream ()->GetCursor ();
+	}
 }
 
 //================================================================//
@@ -304,6 +315,7 @@ void MOAIGfxDeviceBase::SelectList () {
 void MOAIGfxDeviceBase::SelectList ( u32 list ) {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
+	this->mPipeline = 0;
 
 	if ( list < TOTAL_LISTS ) {
 	
@@ -311,9 +323,18 @@ void MOAIGfxDeviceBase::SelectList ( u32 list ) {
 		
 		if ( pipeline ) {
 			this->mDrawingAPI = pipeline->mPipeline [ MOAIGfxThreadPipeline::PIPELINE_LOGIC ];
+			this->mPipeline = pipeline;
 		}
 		else if ( list == LOADING_LIST ) {
 			this->SelectList ( DRAWING_LIST );
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDeviceBase::UpdateResetPoint () {
+
+	if ( this->mPipeline ) {
+		this->mPipeline->UpdateResetPoint ();
 	}
 }

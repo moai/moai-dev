@@ -119,12 +119,9 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	// TODO: make use of offset and scale
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+	if ( gfxDevice.BindVertexArray ( this )) {
 
-	this->FinishInit ();
-	gfxDevice.BindVertexArray ( this );
-
-	if ( this->IsReady ()) {
+		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
 
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
@@ -144,9 +141,8 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 		
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
-			gfxDevice.BindIndexBuffer ( this->mIndexBuffer );
 			
-			if ( this->mIndexBuffer->IsReady ()) {
+			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
 			
 				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
 				

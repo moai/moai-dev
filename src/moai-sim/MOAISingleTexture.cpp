@@ -445,12 +445,13 @@ void MOAISingleTexture::SetFilter ( int min, int mag ) {
 //----------------------------------------------------------------//
 void MOAISingleTexture::SetTextureID ( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
 
+	MOAIGfxDevice::GetDrawingAPI ().Event ( this, MOAIGfxResource::GFX_EVENT_CREATED, 0 );
+
 	this->mGLTexID = glTexID;
 	this->mGLInternalFormat = internalFormat;
 	this->mGLPixelType = pixelType;
 	this->mTextureSize = textureSize;
 
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, textureSize );
 	this->mIsDirty = true;
 }
 

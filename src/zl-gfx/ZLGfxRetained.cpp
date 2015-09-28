@@ -995,7 +995,8 @@ void ZLGfxRetained::Event ( ZLGfxListener* listener, u32 event, void* userdata )
 	if ( listener ) {
 	
 		this->mStream->Write < u32 >( EVENT );
-		this->WriteListenerRecord ( event, listener, userdata );
+		this->mStream->Write < u32 >( event );
+		this->WriteListenerRecord ( listener, userdata );
 	}
 }
 
@@ -1058,14 +1059,14 @@ void ZLGfxRetained::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName,
 		this->mStream->Write < size_t >( size );
 		this->mStream->WriteBytes ( uniformName, size );
 		
-		this->WriteListenerRecord ( GET_UNIFORM_LOCATION, listener, userdata );
+		this->WriteListenerRecord ( listener, userdata );
 	}
 }
 
 //----------------------------------------------------------------//
 bool ZLGfxRetained::HasContent () {
 
-	return ( this->mMemStream.GetCursor () > 0 );
+	return ( this->mStream->GetCursor () > 0 );
 }
 
 //----------------------------------------------------------------//
@@ -1382,7 +1383,7 @@ void ZLGfxRetained::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( u32 event, ZLGfxListener* listener, void* userdata ) {
+ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listener, void* userdata ) {
 
 	ZLGfxListenerHandle* listenerHandle = listener->GetRetainedHandle ();
 	this->mReleaseStack.Push ( listenerHandle );
@@ -1396,7 +1397,6 @@ ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( u32 event, ZLGfxListen
 	record.mEvent				= 0;
 	record.mUniformAddr			= 0;
 
-	this->mStream->Write < u32 >( event );
 	this->mStream->Write < u32 >( idx );
 	
 	return record;

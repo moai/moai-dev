@@ -166,6 +166,8 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 
 	gfx.PopSection ();
 	
+	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
+	
 	return status;
 }
 
@@ -223,9 +225,9 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIFrameBufferTexture::Render () {
 
 	// TODO: gfx
-	if ( this->Affirm ()) {
+	//if ( this->Affirm ()) {
 		MOAIFrameBuffer::Render ();
-	}
+	//}
 }
 
 //----------------------------------------------------------------//

@@ -102,7 +102,6 @@ int MOAIVertexArray::_setVertexBuffer ( lua_State* L ) {
 	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( baseParam++, false );
 	
 	self->SetVertexBuffer ( idx, buffer, format );
-	self->FinishInit ();
 
 	return 0;
 }
@@ -189,6 +188,8 @@ void MOAIVertexArray::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIVertexArray::OnGPUCreate () {
 
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
 	this->mUseVAOs = false;
 	
 	size_t totalVAOs = this->mVAOs.Size ();
@@ -196,12 +197,16 @@ bool MOAIVertexArray::OnGPUCreate () {
 	if ( totalVAOs ) {
 		
 		for ( size_t i = 0; i < totalVAOs; ++i ) {
-			ZLGfxHandle* vao = MOAIGfxDevice::GetDrawingAPI ().CreateVertexArray (); // OK for this to return 0
-			if ( !vao ) return true;
-			this->mVAOs [ i ] = vao;
+			ZLGfxHandle* vao = gfx.CreateVertexArray (); // OK for this to return 0
+			if ( vao ) {
+				this->mVAOs [ i ] = vao;
+				this->mUseVAOs = true;
+			}
 		}
-		this->mUseVAOs = true;
 	}
+	
+	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
+	
 	return true;
 }
 
@@ -255,6 +260,8 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 	}
 	this->mVAOs.Init ( total );
 	this->mVAOs.Fill ( 0 );
+	
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
@@ -264,6 +271,8 @@ void MOAIVertexArray::ReserveVertexBuffers ( u32 total ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
+	
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//

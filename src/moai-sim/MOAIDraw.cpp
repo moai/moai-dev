@@ -683,9 +683,11 @@ bool MOAIDraw::Bind () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	if ( !gfxDevice.BindTexture ()) return;
-	if ( !gfxDevice.BindShader ( MOAIShaderMgr::LINE_SHADER )) return;
+	if ( !gfxDevice.BindTexture ()) return false;
+	if ( !gfxDevice.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
+	
 	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	return true;
 }
 
 //----------------------------------------------------------------//

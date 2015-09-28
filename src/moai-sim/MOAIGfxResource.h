@@ -23,7 +23,6 @@ private:
 	friend class MOAIGfxResourceMgr;
 
 	u32					mState;
-	bool				mScheduled;
 	u32					mLastRenderCount;
 
 	ZLLeanLink < MOAIGfxResource* > mLink;
@@ -53,7 +52,6 @@ protected:
 	};
 
 	//----------------------------------------------------------------//
-	bool			Affirm						();
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
@@ -81,7 +79,6 @@ public:
 	GET ( u32, State, mState )
 	IS ( Pending, mState, STATE_PENDING )
 	IS ( Ready, mState, STATE_READY_TO_BIND )
-	IS ( Scheduled, mScheduled, true )
 
 	//----------------------------------------------------------------//
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW

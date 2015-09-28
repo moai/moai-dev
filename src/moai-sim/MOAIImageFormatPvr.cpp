@@ -318,6 +318,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		size_t textureSize = 0;
 		
 		const void* imageData = header->GetFileData ( data, size );
+		ZLCopyOnWrite buffer;
 		
 		int nLevels = header->mMipMapCount + 1;
 		for ( int level = 0; level < nLevels; ++level ) {
@@ -331,11 +332,12 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			
 				#if ZGL_DEVCAPS_PVR_TEXTURE
 				
-					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
+					buffer.Alloc ( info.mSizeCompressed, imageData );
+					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, buffer.GetSharedConstBuffer ());
 				
 				#elif MOAI_WITH_LIBPVR
 				
-					ZLCopyOnWrite buffer;
+				
 					buffer.Reserve ( info.mSizeDecompressed );
 				
 					if ( !this->Decompress ( *header, info, buffer.Invalidate (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
@@ -347,9 +349,9 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 				#endif
 			}
 			else {
-				// TODO: imageData isn't right
-				assert ( false ); // until we can test this
-				//gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
+			
+				buffer.Alloc ( info.mSizeDecompressed, imageData );
+				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer () );
 			}
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {
@@ -362,6 +364,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		}
 
 		this->SetTextureID ( texture, glTexID, internalFormat, pixelType, textureSize );
+		
 		return true;
 	}
 	return false;

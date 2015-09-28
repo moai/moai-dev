@@ -202,27 +202,32 @@ void MOAIGfxBuffer::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIGfxBuffer::OnGPUCreate () {
 
-	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
-	if ( !this->mUseVBOs ) return true;
-
 	u32 count = 0;
-	u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
-
 	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
-	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		
-		ZLGfxHandle* vbo = gfx.CreateBuffer ();
-		if ( vbo ) {
-		
-			gfx.BindBuffer ( this->mTarget, vbo );
-			gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->GetBuffer () : 0, 0, hint );
-			gfx.BindBuffer ( this->mTarget, 0 );
+	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
+	
+	if ( this->mUseVBOs ) {
+
+		u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+
+		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 			
-			count++;
+			ZLGfxHandle* vbo = gfx.CreateBuffer ();
+			if ( vbo ) {
+			
+				gfx.BindBuffer ( this->mTarget, vbo );
+				gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->GetBuffer () : 0, 0, hint );
+				gfx.BindBuffer ( this->mTarget, 0 );
+				
+				count++;
+			}
+			this->mVBOs [ i ] = vbo;
 		}
-		this->mVBOs [ i ] = vbo;
 	}
+	
+	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
+	
 	this->mNeedsFlush = false;
 	return count == this->mVBOs.Size ();
 }
