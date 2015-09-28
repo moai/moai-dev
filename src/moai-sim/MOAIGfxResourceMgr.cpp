@@ -183,5 +183,15 @@ void MOAIGfxResourceMgr::Update () {
 	this->ProcessPending ( this->mPendingForDrawList );
 	gfxDevice.UpdateResetPoint ();
 	
+	// TODO: there's a nasty edge case where a resource gets scheduled for an update but then
+	// the render is aborted. we then lost the update forever. this is especially noticeable
+	// in font rendering, which updates the image resource dynamically.
+	// to counter this we need to formalize the notion of updating a resource with an
+	// additional flag or state. if the render is aborted, we need to re-populate
+	// the list with the update (before the reset point).
+	// we should also think about cases where we can get async results back on the
+	// same display list so we can remove the one-frame lag when creating resources
+	// in retained mode.
+	
 	ZLGfxDevice::End ();
 }
