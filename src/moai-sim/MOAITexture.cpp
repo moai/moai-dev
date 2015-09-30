@@ -355,10 +355,13 @@ bool MOAITexture::OnGPUCreate () {
 	else if ( this->mTextureDataFormat && this->mTextureData ) {
 		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
 	}
-	if ( success ) return true;
 	
-	this->Clear ();
-	return false;
+	if ( !success ) {
+		this->Clear ();
+		return false;
+	}
+	
+	return this->OnGPUUpdate ();
 }
 
 //----------------------------------------------------------------//

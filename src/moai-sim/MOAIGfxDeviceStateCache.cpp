@@ -54,10 +54,6 @@ bool MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 			buffer->Bind ();
 		}
 	}
-	else if ( this->mCurrentIdxBuffer && this->mCurrentIdxBuffer->NeedsFlush ()) {
-		
-		this->mCurrentIdxBuffer->Bind ();
-	}
 	
 	return buffer ? buffer->IsReady () : true;
 }
@@ -108,6 +104,8 @@ bool MOAIGfxDeviceStateCache::BindTexture ( MOAITextureBase* textureSet ) {
 
 	if ( this->mCurrentTexture != textureSet ) {
 
+		this->OnGfxStateWillChange ();
+
 		this->mCurrentTexture = textureSet;
 
 		u32 unitsEnabled = 0;
@@ -116,7 +114,7 @@ bool MOAIGfxDeviceStateCache::BindTexture ( MOAITextureBase* textureSet ) {
 
 			unitsEnabled = textureSet->CountActiveUnits ();
 			
-			// bind of unbind textues depending on state of texture set
+			// bind or unbind textues depending on state of texture set
 			for ( u32 i = 0; i < unitsEnabled; ++i ) {
 				if ( !this->BindTexture ( i, textureSet->GetTextureForUnit ( i ))) {
 					result = false;
@@ -128,6 +126,8 @@ bool MOAIGfxDeviceStateCache::BindTexture ( MOAITextureBase* textureSet ) {
 		for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
 			this->BindTexture ( i, 0 );
 		}
+		
+		this->mActiveTextures = unitsEnabled;
 	}
 	
 	return result;
@@ -200,11 +200,6 @@ bool MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 		if ( buffer ) {
 			buffer->Bind ();
 		}
-	}
-	else if ( this->mCurrentVtxBuffer && this->mCurrentVtxBuffer->NeedsFlush ()) {
-		
-		this->mCurrentVtxBuffer->Bind ();
-		this->mCurrentVtxFormat = 0;
 	}
 	
 	return buffer ? buffer->IsReady () : true;
@@ -411,4 +406,20 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 	
 		this->mDrawingAPI->Enable ( ZGL_PIPELINE_SCISSOR );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDeviceStateCache::UnbindAll () {
+
+	this->mDrawingAPI->Comment ( "GFX UNBIND ALL" );
+
+	this->BindFrameBuffer ();
+	this->BindIndexBuffer ();
+	this->BindShader ();
+	this->BindTexture ();
+	this->BindVertexArray ();
+	this->BindVertexBuffer ();
+	this->BindVertexFormat ();
+	
+	ZGL_COMMENT ( *this->mDrawingAPI, "" );
 }

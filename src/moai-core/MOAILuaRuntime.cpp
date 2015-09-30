@@ -810,7 +810,7 @@ MOAILuaState& MOAILuaRuntime::GetMainState () {
 //----------------------------------------------------------------//
 int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, u32 type ) {
 	
-	if ( lua_isnil ( state, idx )) return LUA_NOREF;
+	if ( state.IsNilOrNone ( idx )) return LUA_NOREF;
 	return ( type == MOAILuaRef::MAKE_WEAK ) ? ( this->mWeakRefs.Ref ( state, idx ) | WEAK_REF_BIT ) : this->mStrongRefs.Ref ( state, idx );
 }
 

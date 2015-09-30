@@ -999,15 +999,16 @@ bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::IsNil () {
-
-	return ( !this->mState );
-}
-
-//----------------------------------------------------------------//
 bool MOAILuaState::IsNil ( int idx ) {
 
 	return lua_isnil ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::IsNilOrNone ( int idx ) {
+
+	int t = lua_type ( this->mState, idx );
+	return (( t == LUA_TNONE ) || ( t == LUA_TNIL ));
 }
 
 //----------------------------------------------------------------//
@@ -1036,6 +1037,12 @@ bool MOAILuaState::IsType ( int idx, int type ) {
 bool MOAILuaState::IsType ( int idx, cc8* name, int type ) {
 	
 	return this->HasField ( idx, name, type );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::IsValid () {
+
+	return ( this->mState != 0 );
 }
 
 //----------------------------------------------------------------//

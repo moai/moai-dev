@@ -23,6 +23,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxDevice::_enablePipelineLogging ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxDevice, "" )
+
+	self->mEnablePipelineLogging = state.GetValue < bool >( 1, false );
+
+	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
+	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
@@ -176,7 +189,7 @@ void MOAIGfxDevice::DetectContext () {
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
 	// renew resources in immediate mode
-	this->SelectPipeline ();
+	this->SelectDrawingAPI ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
@@ -300,6 +313,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
+		{ "enablePipelineLogging",		_enablePipelineLogging },
 		{ "getFrameBuffer",				_getFrameBuffer },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
@@ -338,20 +352,14 @@ void MOAIGfxDevice::ResetDrawCount () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ResetState () {
 
-	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
-	}
-	this->mUVTransform.Ident ();
-	this->mCpuVertexTransformMtx.Ident ();
+	ZGL_COMMENT ( *this->mDrawingAPI, "GFX RESET STATE" );
 	
-	this->mVertexMtxInput = VTX_STAGE_MODEL;
-	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+	// reset the active texture
+	this->mDrawingAPI->ActiveTexture ( 0 );
+	this->mDrawingAPI->BindTexture ( 0 );
 
-	//this->mTop = 0;
-	//this->mPrimCount = 0;
-
-	// turn off texture
-	this->mTextureUnits [ 0 ] = 0;
+	// rezet the shader
+	this->mDrawingAPI->UseProgram ( 0 );
 	
 	// turn off blending
 	this->mDrawingAPI->Disable ( ZGL_PIPELINE_BLEND );
@@ -369,12 +377,6 @@ void MOAIGfxDevice::ResetState () {
 	this->mDrawingAPI->DepthMask ( false );
 	this->mDepthMask = false;
 	
-	// clear the vertex format
-	this->UnbindBufferedDrawing ();
-
-	// clear the shader
-	this->mShaderProgram = 0;
-	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
 	this->mDrawingAPI->LineWidth ( this->mPenWidth );
@@ -382,8 +384,19 @@ void MOAIGfxDevice::ResetState () {
 	// reset the scissor rect
 	ZLRect scissorRect = this->mCurrentFrameBuffer->GetBufferRect ();
 	this->mDrawingAPI->Scissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
-	
 	this->mScissorRect = scissorRect;
+	
+	// clear the CPU matrix pipeline
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
+	
+	this->mVertexMtxInput = VTX_STAGE_MODEL;
+	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+	
+	ZGL_COMMENT ( *this->mDrawingAPI, "" );
 }
 
 //----------------------------------------------------------------//

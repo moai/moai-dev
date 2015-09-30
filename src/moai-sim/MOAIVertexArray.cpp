@@ -130,8 +130,7 @@ void MOAIVertexArray::BindVertexArrayItems () {
 
 //----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () :
-	mUseVAOs ( false ),
-	mNeedsFlush ( false ) {
+	mUseVAOs ( false ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -158,29 +157,12 @@ void MOAIVertexArray::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAIVertexArray::OnGPUBind () {
 
-	ZLGfxHandle* vao = 0;
-
-	if ( this->mUseVAOs && this->mNeedsFlush ) {
+	if ( this->mUseVAOs && this->mVAOs.Size ()) {
 	
-		if ( !this->mVAOs.Size ()) return;
-	
-		if ( this->mNeedsFlush ) {
-			this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
-		}
-		vao = this->mVAOs [ this->mCurrentVAO ];
-	}
-	
-	if ( vao ) {
-
+		ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
 		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
-
-		if ( this->mNeedsFlush ) {
-			this->BindVertexArrayItems ();
-			this->mNeedsFlush = false;
-		}
 	}
 	else {
-	
 		this->BindVertexArrayItems ();
 	}
 }
@@ -205,7 +187,8 @@ bool MOAIVertexArray::OnGPUCreate () {
 		}
 	}
 	
-	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
+	this->mCurrentVAO = 0;
+	this->OnGPUUpdate ();
 	
 	return true;
 }
@@ -227,6 +210,23 @@ void MOAIVertexArray::OnGPUUnbind () {
 		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( 0 );
 	}
 	this->UnbindVertexArrayItems ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexArray::OnGPUUpdate () {
+
+	if ( !this->mUseVAOs ) return true;
+	if ( !this->mVAOs.Size ()) return false;
+
+	this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
+	ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
+	
+	if ( vao ) {
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
+		this->BindVertexArrayItems ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -295,8 +295,6 @@ void MOAIVertexArray::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seria
 		}
 		state.Pop ();
 	}
-	
-	this->mNeedsFlush = true;
 	this->FinishInit ();
 }
 
@@ -322,7 +320,7 @@ void MOAIVertexArray::SetVertexBuffer ( u32 idx, MOAIVertexBuffer* vtxBuffer, MO
 
 	if ( this->AffirmVertexBuffers ( idx )) {
 		this->mVertexBuffers [ idx ].SetBufferAndFormat ( *this, vtxBuffer, vtxFormat );
-		this->mNeedsFlush = true;
+		this->ScheduleForGPUUpdate ();
 	}
 }
 

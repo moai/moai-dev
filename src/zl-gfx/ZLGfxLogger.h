@@ -1,27 +1,32 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef ZLGFXIMMEDIATE_H
-#define ZLGFXIMMEDIATE_H
+#ifndef ZLGFXLOGGER_H
+#define ZLGFXLOGGER_H
 
 #include <zl-gfx/ZLGfx.h>
 
+class ZLGfxRetained;
+
 //================================================================//
-// ZLGfxImmediate
+// ZLGfxLogger
 //================================================================//
-class ZLGfxImmediate :
+class ZLGfxLogger :
 	public ZLGfx {
 private:
 
-	//friend class ZLGfxRetained;
-
-	bool					mError;
-
+	const void*		mPrefix;
+	size_t			mLineNo;
+	size_t			mCommentNo;
+	FILE*			mFile;
+	
 	//----------------------------------------------------------------//
-	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
-	void					LogErrors					( cc8* origin );
+	void					PrintLine					( cc8* format, ... );
 
 public:
+
+	GET ( size_t, CommandCount, mLineNo );
+	GET ( size_t, CommentCount, mCommentNo );
 
 	//----------------------------------------------------------------//
 	void					ActiveTexture				( u32 textureUnit );
@@ -50,6 +55,8 @@ public:
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
+	
+	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -88,6 +95,9 @@ public:
 	void					LinkProgram					( ZLGfxHandle* program, bool verbose );
 	
 	void					PopSection					();
+	
+	void					Print						( cc8* filename, ZLGfxRetained& gfx );
+	
 	bool					PushErrorHandler			();
 	void					PushSection					();
 	bool					PushSuccessHandler			();
@@ -112,8 +122,8 @@ public:
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );
 	
-							ZLGfxImmediate				();
-							~ZLGfxImmediate				();
+							ZLGfxLogger					();
+							~ZLGfxLogger				();
 };
 
 #endif

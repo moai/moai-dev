@@ -58,8 +58,6 @@ protected:
 	int					mGLPixelType;
 	
 	size_t				mTextureSize;
-	
-	bool				mIsDirty;
 
 	//----------------------------------------------------------------//
 	static int			_getSize				( lua_State* L );
@@ -78,9 +76,10 @@ protected:
 	void				OnGPUDestroy				();
 	void				OnGPULost					();
 	void				OnGPUUnbind					();
+	bool				OnGPUUpdate					();
 	void				SetTextureID				( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
 	bool				ShouldGenerateMipmaps		();
-	void				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
+	bool				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
 	
 public:
 	
@@ -94,7 +93,7 @@ public:
 	MOAISingleTexture*	GetTextureForUnit			( u32 unit );
 	u32					GetWidth					();
 	bool				IsValid						();
-						MOAISingleTexture				();
+						MOAISingleTexture			();
 						~MOAISingleTexture			();
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );

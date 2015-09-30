@@ -146,12 +146,11 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 		gfx.TexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
 		gfx.FramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
 		
-		// refresh tex params on next bind
-		this->mIsDirty = true;
-		
         // clearing framebuffer because it might contain garbage
         gfx.ClearColor ( 0, 0, 0, 0 );
         gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
+		
+		this->OnGPUUpdate ();
 		
 		status = true;
 	}
@@ -165,8 +164,6 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	}
 
 	gfx.PopSection ();
-	
-	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
 	
 	return status;
 }
@@ -224,10 +221,7 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::Render () {
 
-	// TODO: gfx
-	//if ( this->Affirm ()) {
-		MOAIFrameBuffer::Render ();
-	//}
+	MOAIFrameBuffer::Render ();
 }
 
 //----------------------------------------------------------------//

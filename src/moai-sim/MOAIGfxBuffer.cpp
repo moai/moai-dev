@@ -80,7 +80,7 @@ int	MOAIGfxBuffer::_reserveVBOs ( lua_State* L ) {
 int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 	
-	self->mNeedsFlush = true;
+	self->ScheduleForGPUUpdate ();
 	return 0;
 }
 
@@ -110,10 +110,8 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 	this->Reserve (( u32 )size );
 	this->WriteStream ( stream );
 	
-	this->mNeedsFlush = true;
+	this->ScheduleForGPUUpdate ();
 }
-
-ZLSharedConstBuffer*	GetBuffer				();
 
 //----------------------------------------------------------------//
 ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
@@ -122,16 +120,9 @@ ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIGfxBuffer::GetSize () {
-
-	return this->GetLength ();
-}
-
-//----------------------------------------------------------------//
 MOAIGfxBuffer::MOAIGfxBuffer () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
-	mNeedsFlush ( false ),
 	mLoader ( 0 ),
 	mUseVBOs ( false ) {
 	
@@ -139,12 +130,6 @@ MOAIGfxBuffer::MOAIGfxBuffer () :
 		RTTI_EXTEND ( MOAIGfxResource )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxBuffer::NeedsFlush () {
-
-	return this->mNeedsFlush;
 }
 
 //----------------------------------------------------------------//
@@ -167,35 +152,10 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 	if ( !this->mUseVBOs ) return;
 	
-	bool dirty = this->mNeedsFlush && this->GetCursor ();
-	
-	if ( dirty ) {
-		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
-	}
-	
 	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
 	
 	if ( vbo ) {
-		
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-		
-		gfx.BindBuffer ( this->mTarget, vbo );
-		
-		if ( dirty ) {
-			
-			// TODO: There are a few different ways to approach updating buffers with varying performance
-			// on different platforms. The approach here is just to multi-buffer the VBO and replace its
-			// contents via zglBufferSubData when they change. The TODO here is to do performance tests
-			// on multiple devices, evaluate other approaches and possible expose the configuration of
-			// those to the end user via Lua.
-		
-			//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
-			//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
-			
-			gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetSharedConstBuffer (), 0 );
-			
-			this->mNeedsFlush = false;
-		}
+		MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
 
@@ -217,7 +177,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			if ( vbo ) {
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
-				gfx.BufferData ( this->mTarget, this->GetLength (), this->mNeedsFlush ? this->GetBuffer () : 0, 0, hint );
+				gfx.BufferData ( this->mTarget, this->GetLength (), this->GetCursor () ? this->GetBuffer () : 0, 0, hint );
 				gfx.BindBuffer ( this->mTarget, 0 );
 				
 				count++;
@@ -226,9 +186,6 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 		}
 	}
 	
-	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
-	
-	this->mNeedsFlush = false;
 	return count == this->mVBOs.Size ();
 }
 
@@ -247,14 +204,45 @@ void MOAIGfxBuffer::OnGPULost () {
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		this->mVBOs [ i ] = 0;
 	}
-	
-	this->mNeedsFlush = true;
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
 	MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxBuffer::OnGPUUpdate () {
+
+	if ( !this->mUseVBOs ) return true;
+	
+	bool dirty = this->GetCursor ();
+	
+	if ( dirty ) {
+		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
+	}
+	
+	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	
+	if ( dirty && vbo ) {
+		
+		// TODO: There are a few different ways to approach updating buffers with varying performance
+		// on different platforms. The approach here is just to multi-buffer the VBO and replace its
+		// contents via zglBufferSubData when they change. The TODO here is to do performance tests
+		// on multiple devices, evaluate other approaches and possible expose the configuration of
+		// those to the end user via Lua.
+	
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		
+		gfx.BindBuffer ( this->mTarget, vbo );
+		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetSharedConstBuffer (), 0 );
+	
+		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
+	}
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -311,12 +299,6 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::ScheduleFlush () {
-
-	this->mNeedsFlush = true;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
@@ -336,7 +318,7 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 	}
 	lua_pop ( state, 1 );
 	
-	this->ScheduleFlush ();
+	this->ScheduleForGPUUpdate ();
 	this->FinishInit ();
 }
 
@@ -354,4 +336,3 @@ void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 	lua_pushstring ( state, zipString.str ());
 	lua_setfield ( state, -2, "mData" );
 }
-

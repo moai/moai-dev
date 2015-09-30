@@ -79,12 +79,13 @@ public:
 	bool			HexDecode					( int idx );
 	bool			HexEncode					( int idx );
 	bool			Inflate						( int idx, int windowBits );
-	bool			IsNil						();
 	bool			IsNil						( int idx );
+	bool			IsNilOrNone					( int idx );
 	bool			IsTableOrUserdata			( int idx );
 	bool			IsTrueOrNotNil				( int idx );
 	bool			IsType						( int idx, int type );
 	bool			IsType						( int idx, cc8* name, int type );
+	bool			IsValid						();
 	void			LoadLibs					();
 	
 	bool			LogErrors					( u32 level, FILE* file, int status );

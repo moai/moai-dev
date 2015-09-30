@@ -65,7 +65,7 @@ public:
 	bool			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
 	bool			BindShader					( MOAIShader* shader = 0 );
 	bool			BindShader					( u32 preset );
-	bool			BindShader					( MOAIShaderProgram* program = 0 );
+	bool			BindShader					( MOAIShaderProgram* program );
 	bool			BindTexture					( MOAITextureBase* textureSet = 0 );
 	bool			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
@@ -91,6 +91,8 @@ public:
 	
 	void			SetScissorRect				();
 	void			SetScissorRect				( ZLRect rect );
+	
+	void			UnbindAll					();
 };
 
 #endif

@@ -51,6 +51,14 @@ namespace InputSensorID {
 	};
 }
 
+// run with multithreaded host or not
+#define GFX_ASYNC 1
+
+// counters for testing async timing issues (dropped frames)
+static const int SIM_UPDATE_INTERVAL		= 1;
+static const int LOAD_UPDATE_INTERVAL		= 1;
+static const int RENDER_UPDATE_INTERVAL		= 1;
+
 static SDL_Window* sWindow = 0;
 
 typedef int ( *DisplayModeFunc ) (int, SDL_DisplayMode *);
@@ -102,27 +110,42 @@ private:
 
 		SDL_UnlockMutex ( sDisplayListMutex );
 
+		int loadUpdateCounter = 0;
+		int renderUpdateCounter = 0;
+
 		while ( info->mIsDone == false ) {
 		
 			SDL_LockMutex ( info->mConditionMutex );
 			SDL_CondWait ( info->mCondition, info->mConditionMutex );
 			SDL_UnlockMutex ( info->mConditionMutex );
 			
-			if ( info->mMask & LOADING_FLAG ) {
 			
-				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
-				AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
-				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+			if ( loadUpdateCounter >= ( LOAD_UPDATE_INTERVAL - 1 )) {
+				loadUpdateCounter = 0;
+			
+				if ( info->mMask & LOADING_FLAG ) {
+				
+					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+					AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
+					WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
+				}
 			}
 			
-			if ( info->mMask & RENDER_FLAG ) {
-				
-				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
-				AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
-				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
-				
-				SDL_GL_SwapWindow ( sWindow );
+			if ( renderUpdateCounter >= ( RENDER_UPDATE_INTERVAL - 1 )) {
+				renderUpdateCounter = 0;
+			
+				if ( info->mMask & RENDER_FLAG ) {
+					
+					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+					AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
+					WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
+					
+					SDL_GL_SwapWindow ( sWindow );
+				}
 			}
+			
+			loadUpdateCounter++;
+			renderUpdateCounter++;
 		}
 		
 		SDL_GL_DeleteContext ( info->mContext );
@@ -143,7 +166,7 @@ public:
 	//----------------------------------------------------------------//
 	static void DisplayListEndPhase ( int list ) {
 	
-		SDL_LockMutex (sDisplayListMutex );
+		SDL_LockMutex ( sDisplayListMutex );
 		AKUDisplayListEndPhase ( list );
 		SDL_UnlockMutex ( sDisplayListMutex );
 	}
@@ -371,13 +394,22 @@ void Init ( int argc, char** argv ) {
 //----------------------------------------------------------------//
 void MainLoop () {
 	
-	WorkerThreadInfo loadingThread;
-	loadingThread.Start ( WorkerThreadInfo::LOADING_FLAG, "Loading Thread" );
+	#if GFX_ASYNC
 	
-	WorkerThreadInfo renderThread;
-	renderThread.Start ( WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
+		WorkerThreadInfo loadingThread;
+		loadingThread.Start ( WorkerThreadInfo::LOADING_FLAG, "Loading Thread" );
+		
+		WorkerThreadInfo renderThread;
+		renderThread.Start ( WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
 
-	SDL_GL_MakeCurrent ( sWindow, NULL );
+		SDL_GL_MakeCurrent ( sWindow, NULL );
+	#else
+	
+		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		SDL_GL_SetSwapInterval ( 1 );
+	
+		AKUDetectGfxContext ();
+	#endif
 
 	// TODO: array's of Joysticks
 	Joystick * joystick0 = NULL;
@@ -395,6 +427,8 @@ void MainLoop () {
 			joystick0 = NULL;
 		}
 	}
+	
+	int simUpdateCounter = 0;
 	
 	Uint32 lastFrame = SDL_GetTicks();
 	
@@ -514,14 +548,33 @@ void MainLoop () {
 		}
 		
 		AKUModulesUpdate ();
-		AKUDisplayListPublishAndReset ();
 		
-		WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
-		AKURender ();
-		WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+		//AKUDisplayListPublishAndReset ();
 		
-		loadingThread.Signal ();
-		renderThread.Signal ();
+		if ( simUpdateCounter >= ( SIM_UPDATE_INTERVAL - 1 )) {
+			simUpdateCounter = 0;
+		
+			#if GFX_ASYNC
+			
+				WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+				AKURender ();
+				WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
+				
+				loadingThread.Signal ();
+				renderThread.Signal ();
+			
+			#else
+			
+				if ( simUpdateCounter >= ( SIM_UPDATE_INTERVAL - 1 )) {
+					simUpdateCounter = 0;
+					AKURender ();
+					SDL_GL_SwapWindow ( sWindow );
+				}
+			
+			#endif
+			
+			simUpdateCounter++;
+		}
 		
 		Uint32 frameDelta = ( Uint32 )( AKUGetSimStep () * 1000.0 );
 		Uint32 currentFrame = SDL_GetTicks ();
@@ -533,8 +586,14 @@ void MainLoop () {
 		lastFrame = SDL_GetTicks();
 	}
 	
-	loadingThread.Stop ();
-	renderThread.Stop ();
+	#if GFX_ASYNC
+	
+		loadingThread.Stop ();
+		renderThread.Stop ();
+	#else
+	
+		SDL_GL_DeleteContext ( context );
+	#endif
 }
 
 //----------------------------------------------------------------//

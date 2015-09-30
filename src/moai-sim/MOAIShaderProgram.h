@@ -88,6 +88,7 @@ protected:
 	void			OnGPUDestroy				();
 	void			OnGPULost					();
 	void			OnGPUUnbind					();
+	bool			OnGPUUpdate					();
 	void			OnUniformLocation			( u32 addr, void* userdata );
 
 public:

@@ -56,6 +56,7 @@ private:
 	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 
 	//----------------------------------------------------------------//
+	static int			_enablePipelineLogging		( lua_State* L );
 	static int			_getFrameBuffer				( lua_State* L );
 	static int			_getMaxTextureUnits			( lua_State* L );
 	static int			_getViewSize				( lua_State* L );

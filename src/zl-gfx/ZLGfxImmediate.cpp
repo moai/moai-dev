@@ -152,6 +152,11 @@ void ZLGfxImmediate::Color ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
+void ZLGfxImmediate::Comment ( cc8* comment ) {
+	UNUSED ( comment );
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 
 	GLuint shaderID = ( GLuint )( shader ? shader->mGLID : 0 );

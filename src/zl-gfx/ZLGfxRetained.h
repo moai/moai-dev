@@ -68,6 +68,7 @@ private:
 		
 		CLEAR_COLOR,
 		COLOR,
+		COMMENT,
 		COMPILE_SHADER,
 		COMPRESSED_TEX_IMAGE_2D,
 		CREATE,
@@ -131,7 +132,7 @@ private:
 
 public:
 
-	GET ( ZLStream*, Stream, this->mStream )
+	GET ( size_t, Length, this->mStream->GetCursor ())
 
 	//----------------------------------------------------------------//
 	void					ActiveTexture				( u32 textureUnit );
@@ -155,6 +156,8 @@ public:
 	void					Clear						( u32 mask );
 	void					ClearColor					( float r, float g, float b, float a );
 	void					Color						( float r, float g, float b, float a );
+	
+	void					Comment						( cc8* comment );
 	
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
@@ -201,6 +204,7 @@ public:
 	void					PopSection					();
 	
 	void					PublishEvents				();
+	void					PublishEventsAndReset		();
 	
 	bool					PushErrorHandler			();
 	void					PushSection					();

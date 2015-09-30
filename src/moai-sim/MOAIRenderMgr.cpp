@@ -186,7 +186,11 @@ void MOAIRenderMgr::Render () {
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	device.ResetDrawCount ();
 
-	device.SelectPipeline ( MOAIGfxDevice::DRAWING_PIPELINE );
+	ZLGfx& gfx = device.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE );
+
+	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
+
+	device.ResetState ();
 
 	if ( this->mBufferTable ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -205,6 +209,8 @@ void MOAIRenderMgr::Render () {
 	this->mRenderTime += this->mRenderDuration;
 	
 	this->mFrameBuffer = 0;
+	
+	device.UnbindAll ();
 	
 	ZLGfxDevice::End ();
 }

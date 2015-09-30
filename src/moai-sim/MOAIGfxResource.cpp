@@ -98,6 +98,18 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::Affirm () {
+
+	if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
+		this->DoGPUUpdate ();
+	}
+	else {
+		this->InvokeLoader ();
+		this->DoGPUCreate ();
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
@@ -155,13 +167,24 @@ bool MOAIGfxResource::DoGPUCreate () {
 		// otherwise we'll go there later when we get GFX_EVENT_CREATED
 		this->mState = STATE_PENDING;
 	
-		this->mState = this->OnGPUCreate () ? this->mState : STATE_ERROR;
-		
-		if ( this->mState != STATE_ERROR ) {
+		if ( this->OnGPUCreate ()) {
+			MOAIGfxDevice::GetDrawingAPI ().Event ( this, GFX_EVENT_CREATED, 0 );
 			this->OnCPUDestroy ();
+		}
+		else {
+			this->mState = STATE_ERROR;
 		}
 	}
 	return this->mState == STATE_READY_TO_BIND;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::DoGPUUpdate () {
+
+	if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
+		this->mState = this->OnGPUUpdate () ? STATE_READY_TO_BIND : STATE_ERROR;
+	}
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -170,6 +193,9 @@ void MOAIGfxResource::FinishInit () {
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_PIPELINE );
+	}
+	else {
+		this->ScheduleForGPUUpdate ();
 	}
 }
 
@@ -186,7 +212,6 @@ bool MOAIGfxResource::InvokeLoader () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->mReloader.PushRef ( state )) {
 			state.DebugCall ( 0, 0 );
-			this->mState = STATE_READY_FOR_GPU_CREATE;
 			return true;
 		}
 	}
@@ -200,7 +225,8 @@ MOAIGfxResource::MOAIGfxResource () :
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
 
-	this->mLink.Data ( this );
+	this->mMasterLink.Data ( this );
+	this->mPendingLink.Data ( this );
 	
 	MOAIGfxResourceMgr::Get ().InsertGfxResource ( *this );
 }
@@ -212,6 +238,10 @@ MOAIGfxResource::~MOAIGfxResource () {
 		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
 	}
 	this->mReloader.Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::OnClearDirty () {
 }
 
 //----------------------------------------------------------------//
@@ -238,6 +268,9 @@ bool MOAIGfxResource::Purge ( u32 age ) {
 		this->OnCPUDestroy ();
 		this->OnGPUDestroy ();
 		this->mState = STATE_READY_FOR_CPU_CREATE;
+		
+		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_PIPELINE );
+		
 		return true;
 	}
 	return false;
@@ -292,12 +325,27 @@ void MOAIGfxResource::Renew () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::ScheduleForGPUCreate ( u32 listID ) {
+bool MOAIGfxResource::ScheduleForGPUCreate ( u32 pipelineID ) {
 
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, listID );
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, pipelineID );
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::ScheduleForGPUUpdate () {
+
+	if ( this->mState != STATE_READY_TO_BIND ) return false;
+
+	this->mState = STATE_NEEDS_GPU_UPDATE;
+
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, MOAIGfxDevice::DRAWING_PIPELINE ); // always update in the drawing pipeline
+	}
 	return true;
 }
 

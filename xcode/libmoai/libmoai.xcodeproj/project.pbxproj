@@ -1347,6 +1347,10 @@
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
 		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
+		CD283D4E1BBB33F200824C25 /* ZLGfxLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD283D4C1BBB33F200824C25 /* ZLGfxLogger.cpp */; };
+		CD283D4F1BBB33F200824C25 /* ZLGfxLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD283D4C1BBB33F200824C25 /* ZLGfxLogger.cpp */; };
+		CD283D501BBB33F200824C25 /* ZLGfxLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = CD283D4D1BBB33F200824C25 /* ZLGfxLogger.h */; };
+		CD283D511BBB33F200824C25 /* ZLGfxLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = CD283D4D1BBB33F200824C25 /* ZLGfxLogger.h */; };
 		CD2BA7961B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */; };
 		CD2BA7971B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */; };
 		CD2BA7981B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h */; };
@@ -6516,6 +6520,8 @@
 		CD27BE12191DA1C5000A7770 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-adcolony/host.mm"; sourceTree = "<group>"; };
 		CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColonyIOS.h; path = "moai-ios-adcolony/MOAIAdColonyIOS.h"; sourceTree = "<group>"; };
 		CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moai-ios-adcolony/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
+		CD283D4C1BBB33F200824C25 /* ZLGfxLogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxLogger.cpp; sourceTree = "<group>"; };
+		CD283D4D1BBB33F200824C25 /* ZLGfxLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxLogger.h; sourceTree = "<group>"; };
 		CD2B7C3117FA56A100EBA2DB /* MOAIAppIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAppIOS.h; path = "moai-ios/MOAIAppIOS.h"; sourceTree = "<group>"; };
 		CD2B7C3217FA56A100EBA2DB /* MOAIAppIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppIOS.mm; path = "moai-ios/MOAIAppIOS.mm"; sourceTree = "<group>"; };
 		CD2B7C3717FA56A100EBA2DB /* MOAIDialogIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDialogIOS.h; path = "moai-ios/MOAIDialogIOS.h"; sourceTree = "<group>"; };
@@ -9121,6 +9127,8 @@
 				CDA1325E1B478B650044E1B0 /* ZLGfxEnum.h */,
 				CD6C53231B7C7E2A00BEEDD0 /* ZLGfxImmediate.cpp */,
 				CDA1324B1B47873A0044E1B0 /* ZLGfxImmediate.h */,
+				CD283D4C1BBB33F200824C25 /* ZLGfxLogger.cpp */,
+				CD283D4D1BBB33F200824C25 /* ZLGfxLogger.h */,
 				CDA1324C1B47873A0044E1B0 /* ZLGfxRetained.cpp */,
 				CDA1324D1B47873A0044E1B0 /* ZLGfxRetained.h */,
 				CDA132591B4789050044E1B0 /* zl_gfx.h */,
@@ -14068,6 +14076,7 @@
 				89BE6985173974FD00DFE837 /* ZLBinarySearch.h in Headers */,
 				89BE6989173974FD00DFE837 /* ZLBox.h in Headers */,
 				89BE698D173974FD00DFE837 /* ZLByteStream.h in Headers */,
+				CD283D501BBB33F200824C25 /* ZLGfxLogger.h in Headers */,
 				89BE6991173974FD00DFE837 /* ZLCgt.h in Headers */,
 				89BE6995173974FD00DFE837 /* ZLColor.h in Headers */,
 				89BE6999173974FD00DFE837 /* ZLCurve.h in Headers */,
@@ -14162,6 +14171,7 @@
 				89BE6968173974FD00DFE837 /* STLSet.h in Headers */,
 				89BE696C173974FD00DFE837 /* STLString.h in Headers */,
 				CDA132531B47873A0044E1B0 /* ZLGfxImmediate.h in Headers */,
+				CD283D511BBB33F200824C25 /* ZLGfxLogger.h in Headers */,
 				89BE696E173974FD00DFE837 /* ZLAccessors.h in Headers */,
 				CD6C53281B7C7E2A00BEEDD0 /* ZLGfx-gles.h in Headers */,
 				89BE6970173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
@@ -17483,6 +17493,7 @@
 				89BE699B173974FD00DFE837 /* ZLDeflateReader.cpp in Sources */,
 				89BE699F173974FD00DFE837 /* ZLDeflateWriter.cpp in Sources */,
 				89BE69A7173974FD00DFE837 /* ZLDeviceTime_apple.cpp in Sources */,
+				CD283D4E1BBB33F200824C25 /* ZLGfxLogger.cpp in Sources */,
 				89BE69A9173974FD00DFE837 /* ZLDeviceTime_nacl.cpp in Sources */,
 				89BE69AB173974FD00DFE837 /* ZLDeviceTime_posix.cpp in Sources */,
 				89BE69AD173974FD00DFE837 /* ZLDeviceTime_win32.cpp in Sources */,
@@ -17557,6 +17568,7 @@
 				89BE699C173974FD00DFE837 /* ZLDeflateReader.cpp in Sources */,
 				89BE69A0173974FD00DFE837 /* ZLDeflateWriter.cpp in Sources */,
 				89BE69A8173974FD00DFE837 /* ZLDeviceTime_apple.cpp in Sources */,
+				CD283D4F1BBB33F200824C25 /* ZLGfxLogger.cpp in Sources */,
 				89BE69AA173974FD00DFE837 /* ZLDeviceTime_nacl.cpp in Sources */,
 				89BE69AC173974FD00DFE837 /* ZLDeviceTime_posix.cpp in Sources */,
 				89BE69AE173974FD00DFE837 /* ZLDeviceTime_win32.cpp in Sources */,

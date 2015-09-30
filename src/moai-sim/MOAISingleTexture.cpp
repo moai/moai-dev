@@ -254,10 +254,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		}
 	}
 	
-	gfx.Event ( this, GFX_EVENT_CREATED, 0 );
-	
 	//MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-	this->mIsDirty = true;
+	
 	return true;
 }
 
@@ -288,8 +286,7 @@ MOAISingleTexture::MOAISingleTexture () :
 	mMinFilter ( ZGL_SAMPLE_LINEAR ),
 	mMagFilter ( ZGL_SAMPLE_NEAREST ),
 	mWrap ( ZGL_WRAP_MODE_CLAMP ),
-	mTextureSize ( 0 ),
-	mIsDirty ( false ) {
+	mTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -323,20 +320,7 @@ void MOAISingleTexture::OnGfxEvent ( u32 event, void* userdata ) {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUBind () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-
-	gfx.BindTexture ( this->mGLTexID );
-	
-	if ( this->mIsDirty ) {
-		
-		gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
-		gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
-		
-		gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
-		gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
-		
-		this->mIsDirty = false;
-	}
+	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( this->mGLTexID );
 }
 
 //----------------------------------------------------------------//
@@ -366,6 +350,20 @@ void MOAISingleTexture::OnGPULost () {
 void MOAISingleTexture::OnGPUUnbind () {
 
 	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAISingleTexture::OnGPUUpdate () {
+
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
+		
+	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
+	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -439,27 +437,26 @@ void MOAISingleTexture::SetFilter ( int min, int mag ) {
 	this->mMinFilter = min;
 	this->mMagFilter = mag;
 	
-	this->mIsDirty = true;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::SetTextureID ( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
-
-	MOAIGfxDevice::GetDrawingAPI ().Event ( this, MOAIGfxResource::GFX_EVENT_CREATED, 0 );
 
 	this->mGLTexID = glTexID;
 	this->mGLInternalFormat = internalFormat;
 	this->mGLPixelType = pixelType;
 	this->mTextureSize = textureSize;
 
-	this->mIsDirty = true;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
-	this->mIsDirty = true;
+	
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -474,7 +471,7 @@ bool MOAISingleTexture::ShouldGenerateMipmaps () {
 }
 
 //----------------------------------------------------------------//
-void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
+bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
 	// TODO: what happens when image is an unsupported format?
 
@@ -483,7 +480,13 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
-		this->mGLTexID = 0;	
+		this->mGLTexID = 0;
+		
+		if ( this->CreateTextureFromImage ( image )) {
+			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+			return true;
+		}
+		return false;
 	}
 	
 	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
@@ -518,9 +521,9 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 		);
 		
 		MOAIGfxDevice::Get ().LogErrors ();
+		
+		return true;
 	}
-	else {
 	
-		this->CreateTextureFromImage ( image );
-	}
+	return false;
 }

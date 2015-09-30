@@ -27,8 +27,8 @@ void MOAIGfxDeviceVertexWriter::BeginPrim () {
 
 	if ( this->mPrimSize ) {
 
-		u32 totalIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
-		u32 totalVertices	= this->mVtxBuffer.GetLength() / this->mVertexSize;
+		u32 totalIndices	= this->mIdxBuffer.GetSize () / INDEX_SIZE;
+		u32 totalVertices	= this->mVtxBuffer.GetSize () / this->mVertexSize;
 
 		u32 maxVertices		= MIN ( totalIndices, totalVertices );
 		
@@ -88,8 +88,10 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.ScheduleFlush ();
-				this->mIdxBuffer.ScheduleFlush ();
+				this->mVtxBuffer.OnGPUUpdate ();
+				this->mIdxBuffer.OnGPUUpdate ();
+				
+				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
 				this->BindVertexFormat ( this->mVertexFormat );
@@ -106,7 +108,9 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.ScheduleFlush ();
+				this->mVtxBuffer.OnGPUUpdate ();
+				
+				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
 				this->BindVertexFormat ( this->mVertexFormat );

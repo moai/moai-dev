@@ -17,6 +17,10 @@ class MOAIGfxResource :
 	public virtual ZLGfxListener {
 private:
 
+	enum {
+		GFX_EVENT_CREATED,
+	};
+
 	friend class MOAIGfxDevice;
 	friend class MOAIGfxDeviceBase;
 	friend class MOAIGfxDeviceStateCache;
@@ -25,7 +29,8 @@ private:
 	u32					mState;
 	u32					mLastRenderCount;
 
-	ZLLeanLink < MOAIGfxResource* > mLink;
+	ZLLeanLink < MOAIGfxResource* > mMasterLink;
+	ZLLeanLink < MOAIGfxResource* > mPendingLink;
 
 	// for custom loading function
 	MOAILuaMemberRef	mReloader;
@@ -39,31 +44,29 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			Affirm						();
 	u32				Bind						(); // bind OR create
 	bool			DoGPUCreate					(); // gets ready to bind
+	bool			DoGPUUpdate					();
 	bool			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 	void			Unbind						();
 
 protected:
 
-	enum {
-		GFX_EVENT_CREATED,
-	};
-
 	//----------------------------------------------------------------//
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
+	virtual void	OnClearDirty				();
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
-	
 	void			OnGfxEvent					( u32 event, void* userdata );
-	
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
 	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
 	virtual void	OnGPULost					() = 0; // clear any handles or references to GPU-side (called by 'Abandon')
 	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
+	virtual bool	OnGPUUpdate					() = 0;
 
 public:
 
@@ -73,7 +76,7 @@ public:
 		STATE_READY_FOR_GPU_CREATE,
 		STATE_PENDING,					// waiting for GPU
 		STATE_READY_TO_BIND,
-		STATE_NEEDS_UPDATE,				// more data to send to GPU
+		STATE_NEEDS_GPU_UPDATE,
 		STATE_ERROR,
 	};
 
@@ -88,7 +91,8 @@ public:
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	bool			ScheduleForGPUCreate		( u32 listID );
+	bool			ScheduleForGPUCreate		( u32 pipelineID );
+	bool			ScheduleForGPUUpdate		();
 	bool			Purge						( u32 age );
 };
 

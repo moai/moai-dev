@@ -20,6 +20,8 @@ class ZLCopyOnWrite;
 	#define ZGL_DEVCAPS_PVR_TEXTURE 0
 #endif
 
+#define ZGL_COMMENT(gfx,comment) ( gfx ).Comment ( comment )
+
 //================================================================//
 // ZLGfxHandle
 //================================================================//
@@ -122,6 +124,8 @@ public:
 	virtual void					Clear						( u32 mask ) = 0;
 	virtual void					ClearColor					( float r, float g, float b, float a ) = 0;
 	virtual void					Color						( float r, float g, float b, float a ) = 0;
+	
+	virtual void					Comment						( cc8* comment = 0 ) = 0;
 	
 	virtual void					CompileShader				( ZLGfxHandle* shader, bool verbose ) = 0;
 	virtual void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) = 0;

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <zl-gfx/zl_gfx.h>
+#include <zl-gfx/ZLGfxLogger.h>
 #include <zl-gfx/ZLGfxRetained.h>
 
 //================================================================//
@@ -197,6 +198,18 @@ void ZLGfxRetained::Color ( float r, float g, float b, float a ) {
 	this->mStream->Write < float >( g );
 	this->mStream->Write < float >( b );
 	this->mStream->Write < float >( a );
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::Comment ( cc8* comment ) {
+	
+	assert ( this->mStream );
+
+	this->mStream->Write < u32 >( COMMENT );
+	
+	size_t size = comment ? strlen ( comment ) : 0;
+	this->mStream->Write < size_t >( size );
+	this->mStream->WriteBytes ( comment, size );
 }
 
 //----------------------------------------------------------------//
@@ -559,6 +572,21 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 					this->mStream->Read < float >( 0 ),
 					this->mStream->Read < float >( 0 )
 				);
+				break;
+			}
+			case COMMENT: {
+	
+				size_t size				= this->mStream->Read < size_t >( 0 );
+				
+				if ( size ) {
+					char* comment = ( char* )alloca ( size + 1 );
+					this->mStream->ReadBytes ( comment, size );
+					comment [ size ] = 0;
+					draw.Comment ( comment );
+				}
+				else {
+					draw.Comment ();
+				}
 				break;
 			}
 			case COMPILE_SHADER: {
@@ -1139,6 +1167,13 @@ void ZLGfxRetained::PublishEvents () {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::PublishEventsAndReset () {
+
+	this->PublishEvents ();
+	this->Reset ();
 }
 
 //----------------------------------------------------------------//

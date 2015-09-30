@@ -48,7 +48,7 @@ int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
 
-	this->mResources.PushBack ( resource.mLink );
+	this->mResources.PushBack ( resource.mMasterLink );
 }
 
 //----------------------------------------------------------------//
@@ -97,10 +97,9 @@ void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list 
 		MOAIGfxResource* resource = resourceIt->Data ();
 		resourceIt = resourceIt->Next ();
 	
-		resource->DoGPUCreate ();
-		
-		this->mResources.PushBack ( resource->mLink );
+		resource->Affirm ();
 	}
+	list.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -135,9 +134,9 @@ void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
-	this->mResources.Remove ( resource.mLink );
-	this->mPendingForLoadList.Remove ( resource.mLink );
-	this->mPendingForDrawList.Remove ( resource.mLink );
+	this->mResources.Remove ( resource.mMasterLink );
+	this->mPendingForLoadList.Remove ( resource.mPendingLink );
+	this->mPendingForDrawList.Remove ( resource.mPendingLink );
 }
 
 //----------------------------------------------------------------//
@@ -158,11 +157,11 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 	switch ( listID ) {
 
 		case MOAIGfxDevice::LOADING_PIPELINE:
-			this->mPendingForLoadList.PushBack ( resource.mLink );
+			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
 		case MOAIGfxDevice::DRAWING_PIPELINE:
-			this->mPendingForDrawList.PushBack ( resource.mLink );
+			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
 }
@@ -174,22 +173,28 @@ void MOAIGfxResourceMgr::Update () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SelectPipeline ( MOAIGfxDevice::LOADING_PIPELINE );
-	this->ProcessDeleters ();
-	this->ProcessPending ( this->mPendingForLoadList );
-	gfxDevice.UpdateResetPoint ();
+	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-	gfxDevice.SelectPipeline ( MOAIGfxDevice::DRAWING_PIPELINE );
-	this->ProcessPending ( this->mPendingForDrawList );
-	gfxDevice.UpdateResetPoint ();
+		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::LOADING_PIPELINE, true );
+		
+		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
+		gfxDevice.ResetState ();
+		this->ProcessDeleters ();
+		this->ProcessPending ( this->mPendingForLoadList );
+		gfxDevice.UnbindAll ();
+	}
 	
-	// TODO: there's a nasty edge case where a resource gets scheduled for an update but then
-	// the render is aborted. we then lose the update forever. this is especially noticeable
-	// in font rendering, which updates the image resource dynamically.
-	// to counter this we need to formalize the notion of updating a resource with an
-	// additional flag or state. if the render is aborted, we need to re-populate
-	// the list with the update (before the reset point).
-	// we should also think about cases where we can get async results back on the
+	if ( this->mPendingForDrawList.Count ()) {
+	
+		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE, true );
+		
+		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
+		gfxDevice.ResetState ();
+		this->ProcessPending ( this->mPendingForDrawList );
+		gfxDevice.UnbindAll ();
+	}
+
+	// TODO: think about cases where we can get async results back on the
 	// same display list so we can remove the one-frame lag when creating resources
 	// in retained mode.
 	

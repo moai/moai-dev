@@ -27,7 +27,7 @@ public:
 // TODO: doxygen
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
-	public MOAIStream,
+	public virtual MOAIStream,
 	public ZLCopyOnWrite {
 protected:
 	
@@ -43,7 +43,6 @@ protected:
 	ZLLeanArray < ZLGfxHandle* >	mVBOs;
 	u32								mCurrentVBO;
 	u32								mTarget;
-	bool							mNeedsFlush;
 
 	MOAIGfxBufferLoader*			mLoader;
 
@@ -78,15 +77,13 @@ public:
 	void						Clear					();
 	void						CopyFromStream			( ZLStream& stream );
 	ZLSharedConstBuffer*		GetBuffer				();
-	size_t						GetSize					();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();
-	bool						NeedsFlush				();
+	bool						OnGPUUpdate				();
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	void						Reserve					( u32 size );
 	void						ReserveVBOs				( u32 gpuBuffers );
-	void						ScheduleFlush			();
 	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
