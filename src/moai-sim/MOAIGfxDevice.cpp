@@ -190,9 +190,10 @@ void MOAIGfxDevice::DetectContext () {
 
 	// renew resources in immediate mode
 	this->SelectDrawingAPI ();
-	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
+	
+	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	ZLGfxDevice::End ();
 }

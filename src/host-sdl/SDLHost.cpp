@@ -28,6 +28,9 @@
 	#include <limits.h>
 #endif
 
+#include <OpenGL/gl.h>
+#include <OpenGL/glext.h>
+
 #define UNUSED(p) (( void )p)
 
 namespace InputDeviceID {
@@ -407,6 +410,9 @@ void MainLoop () {
 	
 		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
+	
+		GLint buffer;
+		glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
 	
 		AKUDetectGfxContext ();
 	#endif
