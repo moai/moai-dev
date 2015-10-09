@@ -337,7 +337,7 @@ int MOAICoroutine::Resume ( float step ) {
 					if ( msg ) {
 						ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
 					}
-					state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
+					//TODO What happened to this guy? state.GetStackTrace( PrintErrors( ZLLog::CONSOLE, NULL, 0 );
 				#else
 					MOAILuaRuntime::Get ().PushTraceback ( state );
 					state.Push ( msg );

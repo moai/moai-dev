@@ -346,6 +346,7 @@ int MOAIRegion::AddFillContours ( SafeTesselator& tess, u32 mask ) const {
 			tess.AddPolygon ( this->mPolygons [ i ]);
 		}
 	}
+	return 0; //TODO what should this be?
 }
 
 //----------------------------------------------------------------//
